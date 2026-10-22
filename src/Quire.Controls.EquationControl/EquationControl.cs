@@ -78,6 +78,8 @@ public partial class EquationControl : CalculatableRegionControl
     /// <summary>The formatted result currently shown after "=", if any.</summary>
     public MathExpr? DisplayedResult => _view.Result;
 
+    public new IResultNode Result => null;
+
     /// <summary>Raised whenever the committed statement changes.</summary>
     public event EventHandler? StatementChanged;
 
@@ -85,7 +87,7 @@ public partial class EquationControl : CalculatableRegionControl
     {
         var rl = MathNodeToRlTransform.Transform(statement);
         // only reuse a result that belongs to the current Rl
-        bool sameMeaning = rl == Rl && _parseError == null && Result != null && SynchronizationStatus == SynchronizationStatus.Synchronized;
+        bool sameMeaning = rl == Rl && _parseError == null && base.Result != null && SynchronizationStatus == SynchronizationStatus.Synchronized;
         _statement = statement;
         _source = source;
         _parseError = null;
@@ -93,7 +95,7 @@ public partial class EquationControl : CalculatableRegionControl
         if (sameMeaning)
         {
             // e.g. only spacing changed: the engine won't recalculate, so keep showing the last result
-            OnResult(Result!);
+            OnResult(base.Result!);
         }
         else
         {

@@ -215,8 +215,8 @@
   Quire.Media3D.HollowCylinderMesh M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.HollowCylinderMesh M protected override Triangulate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Media3D.Vector3DCollection,System.Windows.Media.Int32Collection,System.Windows.Media.PointCollection) -> System.Void
   Quire.Media3D.HollowCylinderMesh M public .ctor`0() -> System.Void
-  Quire.Media3D.IViewportsListManager M public virtual AddToList`0(System.Windows.Controls.Viewport3D) -> System.Void
-  Quire.Media3D.IViewportsListManager M public virtual RemoveFromList`0(System.Windows.Controls.Viewport3D) -> System.Void
+  Quire.Media3D.IViewportsListManager M public abstract AddToList`0(System.Windows.Controls.Viewport3D) -> System.Void
+  Quire.Media3D.IViewportsListManager M public abstract RemoveFromList`0(System.Windows.Controls.Viewport3D) -> System.Void
   Quire.Media3D.IcosahedronMesh F private static readonly System.Double G
   Quire.Media3D.IcosahedronMesh F private static readonly System.Windows.Media.Media3D.Point3D[,] faces
   Quire.Media3D.IcosahedronMesh M protected override CreateInstanceCore`0() -> System.Windows.Freezable

@@ -17,6 +17,19 @@ internal sealed class FakeCalculatable(string rl) : ICalculatable
     public void SetSynchronizationStatus(SynchronizationStatus status) => SynchronizationStatus = status;
     public void SetResult(CalculationResult result) => Result = result;
     public double Value => ((IUnitedValueResultNode)Result!.Value).DisplayValue;
+
+    // Mathcad's ICalculatable members; the controller under test does not use them.
+    event Action<ICalculatable> ICalculatable.RequestEvaluation { add { } remove { } }
+    event Func<ICalculatable, string, IResultNode> ICalculatable.GetValueOfIdentifierBefore { add { } remove { } }
+    event Action<ICalculatable> ICalculatable.TreatAsUpToDate { add { } remove { } }
+    void ICalculatable.Commit() { }
+    void ICalculatable.SetStatusSynchronized() { }
+    void ICalculatable.SetCalculatingStatus(CalculatingStatus computingStatus) { }
+    void ICalculatable.SetResult(IResultNode result) { }
+    void ICalculatable.SetError(EngineError error) { }
+    void ICalculatable.SetIdentifierLabels(IDictionary<ResolvedId, string[]> idLabelMap) { }
+    void ICalculatable.SetAutoSelectAlgorithm(IDictionary<int, string> autoAlgorithmMap) { }
+    void ICalculatable.SetRedefinitionWarnings(IList<EngineRedefInfo> warnings) { }
 }
 
 internal sealed class FakeContext : ICalculatableContext
@@ -60,6 +73,26 @@ internal sealed class FakeContext : ICalculatableContext
     public void SetAutoCalc(bool on) { IsAutoCalcOn = on; AutoCalcChanged?.Invoke(this, EventArgs.Empty); }
     public void CalculateNow() => CalculateNowRequested?.Invoke(this, EventArgs.Empty);
     public void RecalculateAll() => RecalculateAllRequested?.Invoke(this, EventArgs.Empty);
+
+    // Mathcad's ICalculatableContext/ICalculatableContainer members; the controller under test does not use them.
+    bool ICalculatableContext.IsCalculating { get; set; }
+    bool ICalculatableContext.EvaluatingEnabled { get; set; }
+    event Func<string> ICalculatableContext.GetEngineVersion { add { } remove { } }
+    event Action ICalculatableContext.StartEvaluating { add { } remove { } }
+    event Action ICalculatableContext.StopEvaluating { add { } remove { } }
+    event Action<bool> ICalculatableContext.SimplifyUnitsFlagUpdated { add { } remove { } }
+    event Action<string, object> ICalculatableContext.CalculationOptionUpdated { add { } remove { } }
+    event Action<string, object> ICalculatableContext.SystemVariableUpdated { add { } remove { } }
+    event Action ICalculatableContext.StartAutoCalc { add { } remove { } }
+    event Action ICalculatableContext.StopAutoCalc { add { } remove { } }
+    event Action<IEnumerable<ICalculatable>> ICalculatableContext.CommitAndNotifyDependentCalculatables { add { } remove { } }
+    event Action ICalculatableContext.ContextUnloaded { add { } remove { } }
+    event Action<int, System.Windows.Threading.DispatcherPriority> ICalculatableContext.WaitForCalculationIdle { add { } remove { } }
+    event Func<string, object> ICalculatableContext.GetEngineOption { add { } remove { } }
+    IEnumerable<ICalculatable> ICalculatableContainer.CalculatableChildren => _items;
+    event Action<ICalculatableContainer, ICalculatable> ICalculatableContainer.CalculatableAdded { add { } remove { } }
+    event Action<ICalculatable> ICalculatableContainer.CalculatableRemoved { add { } remove { } }
+    event Action<ICalculatable> ICalculatableContainer.CalculatableMoved { add { } remove { } }
 }
 
 public class CalculationControllerTests

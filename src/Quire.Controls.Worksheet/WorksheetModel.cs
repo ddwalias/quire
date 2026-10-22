@@ -39,6 +39,15 @@ public sealed partial class WorksheetModel : IWorksheetModel
     public event EventHandler<CalculatableEventArgs>? CalculatableAdded;
     public event EventHandler<CalculatableEventArgs>? CalculatableRemoved;
     public event EventHandler<CalculatableEventArgs>? CalculatableMoved;
+
+    // Mathcad's ICalculatableContainer events, raised alongside Quire's richer ones above.
+    private Action<ICalculatableContainer, ICalculatable>? _containerAdded;
+    private Action<ICalculatable>? _containerRemoved;
+    private Action<ICalculatable>? _containerMoved;
+
+    event Action<ICalculatableContainer, ICalculatable> ICalculatableContainer.CalculatableAdded { add => _containerAdded += value; remove => _containerAdded -= value; }
+    event Action<ICalculatable> ICalculatableContainer.CalculatableRemoved { add => _containerRemoved += value; remove => _containerRemoved -= value; }
+    event Action<ICalculatable> ICalculatableContainer.CalculatableMoved { add => _containerMoved += value; remove => _containerMoved -= value; }
     public event EventHandler? RecalculateAllRequested;
     public event EventHandler? CalculateNowRequested;
     public event EventHandler? AutoCalcChanged;
@@ -76,7 +85,11 @@ public sealed partial class WorksheetModel : IWorksheetModel
         _locations[item] = location;
         _items.Insert(InsertionIndex(location), item);
         item.ApplyResultFormat(ResultFormat);
-        if (item is ICalculatable c) CalculatableAdded?.Invoke(this, new CalculatableEventArgs(c, PreviousCalculatable(item)));
+        if (item is ICalculatable c)
+        {
+            CalculatableAdded?.Invoke(this, new CalculatableEventArgs(c, PreviousCalculatable(item)));
+            _containerAdded?.Invoke(this, c);
+        }
     }
 
     public void RemoveItem(RegionControl item)
@@ -85,7 +98,11 @@ public sealed partial class WorksheetModel : IWorksheetModel
         var prev = PreviousCalculatable(item);
         _items.Remove(item);
         _locations.Remove(item);
-        if (item is ICalculatable c) CalculatableRemoved?.Invoke(this, new CalculatableEventArgs(c, prev));
+        if (item is ICalculatable c)
+        {
+            CalculatableRemoved?.Invoke(this, new CalculatableEventArgs(c, prev));
+            _containerRemoved?.Invoke(c);
+        }
     }
 
     public void MoveItem(RegionControl item, Point location)
@@ -98,7 +115,11 @@ public sealed partial class WorksheetModel : IWorksheetModel
         if (item is ICalculatable c)
         {
             var newPrev = PreviousCalculatable(item);
-            if (!ReferenceEquals(oldPrev, newPrev)) CalculatableMoved?.Invoke(this, new CalculatableEventArgs(c, newPrev));
+            if (!ReferenceEquals(oldPrev, newPrev))
+            {
+                CalculatableMoved?.Invoke(this, new CalculatableEventArgs(c, newPrev));
+                _containerMoved?.Invoke(c);
+            }
         }
     }
 

@@ -241,15 +241,15 @@
   Quire.Engine.Misc.XmlUtils M public static UnorderedEqual`0(System.String,System.String) -> System.Boolean
   Quire.Engine.Misc.XmlUtils M public static UnorderedEqual`0(System.String,System.String,System.Boolean) -> System.Boolean
   Quire.Engine.Misc.XmlUtils P TightenXmlnsAttributes : System.Boolean static get:public set:public
-  Quire.utl_mgd.Function M public virtual Invoke0`0() -> System.Object
-  Quire.utl_mgd.Function M public virtual Invoke1`0(System.Object) -> System.Object
-  Quire.utl_mgd.Function M public virtual Invoke2`0(System.Object,System.Object) -> System.Object
-  Quire.utl_mgd.Function M public virtual Invoke3`0(System.Object,System.Object,System.Object) -> System.Object
-  Quire.utl_mgd.Function M public virtual Invoke4`0(System.Object,System.Object,System.Object,System.Object) -> System.Object
-  Quire.utl_mgd.Function M public virtual Invoke5`0(System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object
-  Quire.utl_mgd.Function M public virtual Invoke6`0(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object
-  Quire.utl_mgd.Function M public virtual Invoke7`0(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object
-  Quire.utl_mgd.Function M public virtual Invoke`0(System.Object[]) -> System.Object
+  Quire.utl_mgd.Function M public abstract Invoke0`0() -> System.Object
+  Quire.utl_mgd.Function M public abstract Invoke1`0(System.Object) -> System.Object
+  Quire.utl_mgd.Function M public abstract Invoke2`0(System.Object,System.Object) -> System.Object
+  Quire.utl_mgd.Function M public abstract Invoke3`0(System.Object,System.Object,System.Object) -> System.Object
+  Quire.utl_mgd.Function M public abstract Invoke4`0(System.Object,System.Object,System.Object,System.Object) -> System.Object
+  Quire.utl_mgd.Function M public abstract Invoke5`0(System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object
+  Quire.utl_mgd.Function M public abstract Invoke6`0(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object
+  Quire.utl_mgd.Function M public abstract Invoke7`0(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object
+  Quire.utl_mgd.Function M public abstract Invoke`0(System.Object[]) -> System.Object
   Quire.utl_mgd.FunctionBase M public .ctor`0() -> System.Void
   Quire.utl_mgd.FunctionBase M public abstract Invoke`0(System.Object[]) -> System.Object
   Quire.utl_mgd.FunctionBase M public virtual Invoke0`0() -> System.Object

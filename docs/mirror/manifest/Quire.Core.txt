@@ -27,18 +27,18 @@
   Quire.AssertionResult M public static op_Inequality`0(Quire.AssertionResult,Quire.AssertionResult) -> System.Boolean
   Quire.AssertionResult P Failed : System.Boolean get:public
   Quire.AssertionResult P Passed : System.Boolean get:public
-  Quire.Core.ICurrentTextFormatProperty P CurrentTextFormat : Quire.Core.TextFormat virtual get:public set:public
-  Quire.Core.IHelpSettings P DocOptionsEnabled : System.Boolean virtual get:public set:public
-  Quire.Core.IHelpSettings P HelpPath : System.String virtual get:public set:public
-  Quire.Core.IHelpSettings P IsHelpDefault : System.Boolean virtual get:public set:public
-  Quire.Core.IMaybeHasPointThatSnapsToPixel P SnappingHelper : Quire.Core.ISnapToPixelHelper virtual get:public
-  Quire.Core.ISnapToPixelHelper P HasPointThatSnapsToPixel : System.Boolean virtual get:public
-  Quire.Core.ISnapToPixelHelper P ItemElement : System.Windows.UIElement virtual get:public
-  Quire.Core.ISnapToPixelHelper P TransformFromPoint : System.Windows.Media.GeneralTransform virtual get:public
-  Quire.Core.ISnappableItemHelper P IsPageDescendant : System.Boolean virtual get:public
-  Quire.Core.ISnappableItemHelper P RenderTarget : System.Windows.UIElement virtual get:public
-  Quire.Core.ITextFormatCreation M public virtual ApplyTextFormatPropertyValueToControl`0(System.Windows.DependencyProperty,System.Object,System.Windows.Documents.Block) -> System.Void
-  Quire.Core.ITextFormatOwner M public virtual SetTextFormatPropertyValue`0(System.Windows.DependencyProperty,System.Object,System.Boolean) -> System.Void
+  Quire.Core.ICurrentTextFormatProperty P CurrentTextFormat : Quire.Core.TextFormat abstract get:public set:public
+  Quire.Core.IHelpSettings P DocOptionsEnabled : System.Boolean abstract get:public set:public
+  Quire.Core.IHelpSettings P HelpPath : System.String abstract get:public set:public
+  Quire.Core.IHelpSettings P IsHelpDefault : System.Boolean abstract get:public set:public
+  Quire.Core.IMaybeHasPointThatSnapsToPixel P SnappingHelper : Quire.Core.ISnapToPixelHelper abstract get:public
+  Quire.Core.ISnapToPixelHelper P HasPointThatSnapsToPixel : System.Boolean abstract get:public
+  Quire.Core.ISnapToPixelHelper P ItemElement : System.Windows.UIElement abstract get:public
+  Quire.Core.ISnapToPixelHelper P TransformFromPoint : System.Windows.Media.GeneralTransform abstract get:public
+  Quire.Core.ISnappableItemHelper P IsPageDescendant : System.Boolean abstract get:public
+  Quire.Core.ISnappableItemHelper P RenderTarget : System.Windows.UIElement abstract get:public
+  Quire.Core.ITextFormatCreation M public abstract ApplyTextFormatPropertyValueToControl`0(System.Windows.DependencyProperty,System.Object,System.Windows.Documents.Block) -> System.Void
+  Quire.Core.ITextFormatOwner M public abstract SetTextFormatPropertyValue`0(System.Windows.DependencyProperty,System.Object,System.Boolean) -> System.Void
   Quire.Core.MaybeHasPointThatSnapsToPixelExtensions M public static HasPointThatSnapsToPixel`0(Quire.Core.IMaybeHasPointThatSnapsToPixel) -> System.Boolean
   Quire.Core.MessageBoxTraceListener F private static System.Boolean _dialogShown
   Quire.Core.MessageBoxTraceListener F private static System.Collections.Concurrent.ConcurrentQueue`1<System.String> _messages
@@ -398,7 +398,6 @@
   Quire.FrameworkVersion+Versions V v452 = 2
   Quire.FrameworkVersion+Versions V v452_patched = 3
   Quire.FunctionalitiesLimitation.BaseFunctionalityCommandWrapper E public virtual System.EventHandler CanExecuteChanged
-  Quire.FunctionalitiesLimitation.BaseFunctionalityCommandWrapper F private System.EventHandler CanExecuteChanged
   Quire.FunctionalitiesLimitation.BaseFunctionalityCommandWrapper M protected .ctor`0(Quire.FunctionalitiesLimitation.BaseFunctionalityCommandWrapper) -> System.Void
   Quire.FunctionalitiesLimitation.BaseFunctionalityCommandWrapper M protected .ctor`0(System.Windows.Input.RoutedUICommand) -> System.Void
   Quire.FunctionalitiesLimitation.BaseFunctionalityCommandWrapper M public virtual CanExecute`0(System.Object) -> System.Boolean
@@ -1340,28 +1339,28 @@
   Quire.HashAlgorithmProvider M public GetDisposableHash`0() -> System.Security.Cryptography.HashAlgorithm
   Quire.HashAlgorithmProvider P IsConnected : System.Boolean get:public set:public
   Quire.HashAlgorithmProvider P Sha256Service : System.Security.Cryptography.HashAlgorithm static get:private
-  Quire.IClipboard M public virtual Clear`0() -> System.Void
-  Quire.IClipboard M public virtual GetFormattedText`0(out System.String&,out System.Boolean&) -> System.String
-  Quire.IClipboard M public virtual GetImage`0() -> System.Windows.Media.Imaging.BitmapSource
-  Quire.IClipboard M public virtual GetPrimeObject`0() -> System.Object
-  Quire.IClipboard M public virtual GetPrimeXamlStream`0() -> System.IO.Stream
-  Quire.IClipboard M public virtual GetSExpression`0() -> System.String
-  Quire.IClipboard M public virtual GetText`0() -> System.String
-  Quire.IClipboard M public virtual GetXMLSpreadsheet`0() -> System.Xml.XmlDocument
-  Quire.IClipboard M public virtual HasImage`0() -> System.Boolean
-  Quire.IClipboard M public virtual HasPrimeObject`0() -> System.Boolean
-  Quire.IClipboard M public virtual HasSExpression`0() -> System.Boolean
-  Quire.IClipboard M public virtual HasText`0() -> System.Boolean
-  Quire.IClipboard M public virtual HasXMLSpreadsheet`0() -> System.Boolean
-  Quire.IClipboard M public virtual SetSExpression`0(System.String) -> System.Void
-  Quire.IClipboard M public virtual SetText`0(System.String) -> System.Void
-  Quire.IEncryptor M public virtual Encrypt`0(System.String) -> System.Byte[]
-  Quire.IEncryptor M public virtual MatchesEncrypted`0(System.Byte[],System.String) -> System.Boolean
-  Quire.IEncryptor M public virtual ShouldUpdateEncryption`0(System.Version) -> System.Boolean
-  Quire.IEncryptor M public virtual UpdateEncryption`0(System.Byte[],System.Version) -> System.Byte[]
-  Quire.IHashAlgorithmProvider M public virtual ComputeHash`0(System.Byte[]) -> System.Byte[]
-  Quire.IHashAlgorithmProvider M public virtual ComputeHash`0(System.IO.Stream) -> System.Byte[]
-  Quire.IHashAlgorithmProvider M public virtual GetDisposableHash`0() -> System.Security.Cryptography.HashAlgorithm
+  Quire.IClipboard M public abstract Clear`0() -> System.Void
+  Quire.IClipboard M public abstract GetFormattedText`0(out System.String&,out System.Boolean&) -> System.String
+  Quire.IClipboard M public abstract GetImage`0() -> System.Windows.Media.Imaging.BitmapSource
+  Quire.IClipboard M public abstract GetPrimeObject`0() -> System.Object
+  Quire.IClipboard M public abstract GetPrimeXamlStream`0() -> System.IO.Stream
+  Quire.IClipboard M public abstract GetSExpression`0() -> System.String
+  Quire.IClipboard M public abstract GetText`0() -> System.String
+  Quire.IClipboard M public abstract GetXMLSpreadsheet`0() -> System.Xml.XmlDocument
+  Quire.IClipboard M public abstract HasImage`0() -> System.Boolean
+  Quire.IClipboard M public abstract HasPrimeObject`0() -> System.Boolean
+  Quire.IClipboard M public abstract HasSExpression`0() -> System.Boolean
+  Quire.IClipboard M public abstract HasText`0() -> System.Boolean
+  Quire.IClipboard M public abstract HasXMLSpreadsheet`0() -> System.Boolean
+  Quire.IClipboard M public abstract SetSExpression`0(System.String) -> System.Void
+  Quire.IClipboard M public abstract SetText`0(System.String) -> System.Void
+  Quire.IEncryptor M public abstract Encrypt`0(System.String) -> System.Byte[]
+  Quire.IEncryptor M public abstract MatchesEncrypted`0(System.Byte[],System.String) -> System.Boolean
+  Quire.IEncryptor M public abstract ShouldUpdateEncryption`0(System.Version) -> System.Boolean
+  Quire.IEncryptor M public abstract UpdateEncryption`0(System.Byte[],System.Version) -> System.Byte[]
+  Quire.IHashAlgorithmProvider M public abstract ComputeHash`0(System.Byte[]) -> System.Byte[]
+  Quire.IHashAlgorithmProvider M public abstract ComputeHash`0(System.IO.Stream) -> System.Byte[]
+  Quire.IHashAlgorithmProvider M public abstract GetDisposableHash`0() -> System.Security.Cryptography.HashAlgorithm
   Quire.IO.EmbeddedResourceCopier M public static Copy`0(System.Reflection.Assembly,System.String,System.String) -> System.Void
   Quire.IO.FileFormatBlockedByFreemiumException M public .ctor`0() -> System.Void
   Quire.IO.FileIsUsedByAnotherProcessException M public .ctor`0(System.IO.IOException) -> System.Void
@@ -1398,42 +1397,42 @@
   Quire.IO.FileUtils M public static GetLocalConfigFolderPath`0(System.Boolean) -> System.String
   Quire.IO.FileUtils M public static GetNextNumberedFileName`0(System.String,System.String,System.Boolean) -> System.String
   Quire.IO.FileUtils M public static IsLocalIpAddress`0(System.String) -> System.Boolean
-  Quire.IO.IFileOperationsProvider M public virtual CreateDirectory`0(System.String) -> System.Exception
-  Quire.IO.IFileOperationsProvider M public virtual DirectoryExists`0(System.String) -> System.Boolean
-  Quire.IO.IFileOperationsProvider M public virtual FileExists`0(System.String) -> System.Boolean
-  Quire.IO.IFileOperationsProvider M public virtual GetDirectories`0(System.String) -> System.String[]
-  Quire.IO.IFileOperationsProvider M public virtual GetDirectories`0(System.String,System.String) -> System.String[]
-  Quire.IO.IFileOperationsProvider M public virtual GetExtension`0(System.String) -> System.String
-  Quire.IO.IFileOperationsProvider M public virtual GetFileReader`0(System.String) -> System.IO.TextReader
-  Quire.IO.IFileOperationsProvider M public virtual GetFileWriter`0(System.String) -> System.IO.TextWriter
-  Quire.IO.IFileOperationsProvider M public virtual GetFileWriter`0(System.String,System.Boolean) -> System.IO.TextWriter
-  Quire.IO.IFileOperationsProvider M public virtual GetFiles`0(System.String) -> System.String[]
-  Quire.IO.IFileOperationsProvider M public virtual GetFiles`0(System.String,System.String) -> System.String[]
-  Quire.IO.IFileOperationsProvider M public virtual GetFullPath`0(System.String) -> System.String
-  Quire.IO.IFileOperationsProvider P CurrentDirectory : System.String virtual get:public set:public
-  Quire.IO.IPackageOperationsProvider M public virtual AddCoreMetadataPartToPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
-  Quire.IO.IPackageOperationsProvider M public virtual AddFooterPartToPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
-  Quire.IO.IPackageOperationsProvider M public virtual AddFootersContainerPartToPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
-  Quire.IO.IPackageOperationsProvider M public virtual AddHeaderPartToPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
-  Quire.IO.IPackageOperationsProvider M public virtual AddHeadersContainerPartToPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
-  Quire.IO.IPackageOperationsProvider M public virtual AddMainPartToPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
-  Quire.IO.IPackageOperationsProvider M public virtual AddPartToPackage`0(System.IO.Packaging.Package,System.String,System.String) -> System.IO.Packaging.PackagePart
-  Quire.IO.IPackageOperationsProvider M public virtual CountPartsByContentType`0(System.IO.Packaging.Package,System.String) -> System.Int32
-  Quire.IO.IPackageOperationsProvider M public virtual DeletePartFromPackage`0(System.IO.Packaging.Package,System.String) -> System.Void
-  Quire.IO.IPackageOperationsProvider M public virtual GetCoreMetadataPartFromPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
-  Quire.IO.IPackageOperationsProvider M public virtual GetFooterPartFromPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
-  Quire.IO.IPackageOperationsProvider M public virtual GetFootersContainerPartFromPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
-  Quire.IO.IPackageOperationsProvider M public virtual GetHeaderPartFromPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
-  Quire.IO.IPackageOperationsProvider M public virtual GetHeadersContainerPartFromPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
-  Quire.IO.IPackageOperationsProvider M public virtual GetMainPartFromPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
-  Quire.IO.IPackageOperationsProvider M public virtual GetPackageForRead`0(System.String) -> System.IO.Packaging.Package
-  Quire.IO.IPackageOperationsProvider M public virtual GetPackageForWrite`0(System.IO.FileStream) -> System.IO.Packaging.Package
-  Quire.IO.IPackageOperationsProvider M public virtual GetPackageForWrite`0(System.String) -> System.IO.Packaging.Package
-  Quire.IO.IPackageOperationsProvider M public virtual GetPartsByContentType`0(System.IO.Packaging.Package,System.String) -> System.Collections.Generic.List`1<System.IO.Packaging.PackagePart>
-  Quire.IO.IPackageOperationsProvider M public virtual GetSinglePartByContentType`0(System.IO.Packaging.Package,System.String) -> System.IO.Packaging.PackagePart
-  Quire.IO.IPackageOperationsProvider M public virtual GetSinglePartByRelationshipType`0(System.IO.Packaging.Package,System.String) -> System.IO.Packaging.PackagePart
-  Quire.IO.IPackageOperationsProvider M public virtual GetSinglePartByRelationshipType`0(System.IO.Packaging.PackagePart,System.String) -> System.IO.Packaging.PackagePart
-  Quire.IO.IPackageOperationsProvider P CompressionLevel : System.IO.Packaging.CompressionOption virtual get:public set:public
+  Quire.IO.IFileOperationsProvider M public abstract CreateDirectory`0(System.String) -> System.Exception
+  Quire.IO.IFileOperationsProvider M public abstract DirectoryExists`0(System.String) -> System.Boolean
+  Quire.IO.IFileOperationsProvider M public abstract FileExists`0(System.String) -> System.Boolean
+  Quire.IO.IFileOperationsProvider M public abstract GetDirectories`0(System.String) -> System.String[]
+  Quire.IO.IFileOperationsProvider M public abstract GetDirectories`0(System.String,System.String) -> System.String[]
+  Quire.IO.IFileOperationsProvider M public abstract GetExtension`0(System.String) -> System.String
+  Quire.IO.IFileOperationsProvider M public abstract GetFileReader`0(System.String) -> System.IO.TextReader
+  Quire.IO.IFileOperationsProvider M public abstract GetFileWriter`0(System.String) -> System.IO.TextWriter
+  Quire.IO.IFileOperationsProvider M public abstract GetFileWriter`0(System.String,System.Boolean) -> System.IO.TextWriter
+  Quire.IO.IFileOperationsProvider M public abstract GetFiles`0(System.String) -> System.String[]
+  Quire.IO.IFileOperationsProvider M public abstract GetFiles`0(System.String,System.String) -> System.String[]
+  Quire.IO.IFileOperationsProvider M public abstract GetFullPath`0(System.String) -> System.String
+  Quire.IO.IFileOperationsProvider P CurrentDirectory : System.String abstract get:public set:public
+  Quire.IO.IPackageOperationsProvider M public abstract AddCoreMetadataPartToPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
+  Quire.IO.IPackageOperationsProvider M public abstract AddFooterPartToPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
+  Quire.IO.IPackageOperationsProvider M public abstract AddFootersContainerPartToPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
+  Quire.IO.IPackageOperationsProvider M public abstract AddHeaderPartToPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
+  Quire.IO.IPackageOperationsProvider M public abstract AddHeadersContainerPartToPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
+  Quire.IO.IPackageOperationsProvider M public abstract AddMainPartToPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
+  Quire.IO.IPackageOperationsProvider M public abstract AddPartToPackage`0(System.IO.Packaging.Package,System.String,System.String) -> System.IO.Packaging.PackagePart
+  Quire.IO.IPackageOperationsProvider M public abstract CountPartsByContentType`0(System.IO.Packaging.Package,System.String) -> System.Int32
+  Quire.IO.IPackageOperationsProvider M public abstract DeletePartFromPackage`0(System.IO.Packaging.Package,System.String) -> System.Void
+  Quire.IO.IPackageOperationsProvider M public abstract GetCoreMetadataPartFromPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
+  Quire.IO.IPackageOperationsProvider M public abstract GetFooterPartFromPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
+  Quire.IO.IPackageOperationsProvider M public abstract GetFootersContainerPartFromPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
+  Quire.IO.IPackageOperationsProvider M public abstract GetHeaderPartFromPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
+  Quire.IO.IPackageOperationsProvider M public abstract GetHeadersContainerPartFromPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
+  Quire.IO.IPackageOperationsProvider M public abstract GetMainPartFromPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
+  Quire.IO.IPackageOperationsProvider M public abstract GetPackageForRead`0(System.String) -> System.IO.Packaging.Package
+  Quire.IO.IPackageOperationsProvider M public abstract GetPackageForWrite`0(System.IO.FileStream) -> System.IO.Packaging.Package
+  Quire.IO.IPackageOperationsProvider M public abstract GetPackageForWrite`0(System.String) -> System.IO.Packaging.Package
+  Quire.IO.IPackageOperationsProvider M public abstract GetPartsByContentType`0(System.IO.Packaging.Package,System.String) -> System.Collections.Generic.List`1<System.IO.Packaging.PackagePart>
+  Quire.IO.IPackageOperationsProvider M public abstract GetSinglePartByContentType`0(System.IO.Packaging.Package,System.String) -> System.IO.Packaging.PackagePart
+  Quire.IO.IPackageOperationsProvider M public abstract GetSinglePartByRelationshipType`0(System.IO.Packaging.Package,System.String) -> System.IO.Packaging.PackagePart
+  Quire.IO.IPackageOperationsProvider M public abstract GetSinglePartByRelationshipType`0(System.IO.Packaging.PackagePart,System.String) -> System.IO.Packaging.PackagePart
+  Quire.IO.IPackageOperationsProvider P CompressionLevel : System.IO.Packaging.CompressionOption abstract get:public set:public
   Quire.IO.NavigateUrlErrorWarningKeys V AccessSecurityIssue = 5
   Quire.IO.NavigateUrlErrorWarningKeys V DontOpenWhileSaveAs = 6
   Quire.IO.NavigateUrlErrorWarningKeys V FailedToOpenUrl = 0
@@ -1536,53 +1535,53 @@
   Quire.IO.UrlUtils+UriProtocolCreationData P SchemeWithDelimiter : System.String get:public
   Quire.IO.UrlUtils+UriProtocols F private static readonly System.Collections.Generic.HashSet`1<System.String> Protocols
   Quire.IO.UrlUtils+UriProtocols M public static Contains`0(System.String) -> System.Boolean
-  Quire.IPositionProvider M public virtual PointToScreen`0(System.Windows.Point) -> System.Windows.Point
-  Quire.IPositionProvider M public virtual TranslatePoint`0(System.Windows.Point,System.Windows.UIElement) -> System.Windows.Point
-  Quire.IPositionProvider P ActualHeight : System.Double virtual get:public
-  Quire.IPositionProvider P ActualWidth : System.Double virtual get:public
-  Quire.IPositionProvider P IsVisible : System.Boolean virtual get:public
-  Quire.IReflectionVisitor M public virtual Visit`0(System.Object) -> System.Void
-  Quire.ITextStyle M public virtual GetSetterValue`0(System.String,System.Boolean) -> System.Object
-  Quire.ITextStyle M public virtual GetSetters`0(System.Windows.Style,System.Collections.Generic.Dictionary`2<System.String,Quire.TextStylePropertyInfoExt>,System.Boolean) -> System.Collections.Generic.Dictionary`2<System.String,Quire.TextStylePropertyInfoExt>
-  Quire.ITextStyle M public virtual IsDeletedProperty`0(System.String,System.Object) -> System.Boolean
-  Quire.ITextStyle M public virtual IsModifyPropertyCollection`0(System.String,System.Collections.ICollection) -> System.Boolean
-  Quire.ITextStyle M public virtual IsModifyPropertyString`0(System.String,System.Object) -> System.Boolean
-  Quire.ITextStyle M public virtual IsModifyProperty`0(System.String,System.Double,System.Double) -> System.Boolean
-  Quire.ITextStyle M public virtual IsModifyProperty`0(System.String,System.Object) -> System.Boolean
-  Quire.ITextStyle M public virtual MergeBasedOn`0() -> System.Void
-  Quire.ITextStyle M public virtual UpdateBasedOn`0(Quire.ITextStyle,System.Collections.Generic.ICollection`1<Quire.TextStyleData>,System.Boolean) -> System.Void
-  Quire.ITextStyle P Background : System.Windows.Media.Brush virtual get:public set:public
-  Quire.ITextStyle P BaselineAlignment : System.Nullable`1<System.Windows.BaselineAlignment> virtual get:public set:public
-  Quire.ITextStyle P Bold : System.Boolean virtual get:public
-  Quire.ITextStyle P Condenst : System.Boolean virtual get:public
-  Quire.ITextStyle P FontFamily : System.Windows.Media.FontFamily virtual get:public set:public
-  Quire.ITextStyle P FontSize : System.Nullable`1<System.Double> virtual get:public set:public
-  Quire.ITextStyle P FontStyle : System.Nullable`1<System.Windows.FontStyle> virtual get:public set:public
-  Quire.ITextStyle P FontVariants : System.Nullable`1<System.Windows.FontVariants> virtual get:public set:public
-  Quire.ITextStyle P FontWeight : System.Nullable`1<System.Windows.FontWeight> virtual get:public set:public
-  Quire.ITextStyle P Foreground : System.Windows.Media.Brush virtual get:public set:public
-  Quire.ITextStyle P Italic : System.Boolean virtual get:public
-  Quire.ITextStyle P Margin : System.Nullable`1<System.Windows.Thickness> virtual get:public set:public
-  Quire.ITextStyle P MarkerStyle : System.Nullable`1<System.Windows.TextMarkerStyle> virtual get:public set:public
-  Quire.ITextStyle P Normal : System.Boolean virtual get:public
-  Quire.ITextStyle P Oblique : System.Boolean virtual get:public
-  Quire.ITextStyle P Stretch : System.Double virtual get:public
-  Quire.ITextStyle P Style : System.Windows.Style virtual get:public
-  Quire.ITextStyle P TextAlignment : System.Nullable`1<System.Windows.TextAlignment> virtual get:public set:public
-  Quire.ITextStyle P TextAlignmentExt : System.Nullable`1<Quire.Core.TextAlignmentExt> virtual get:public
-  Quire.ITextStyle P TextEffects : System.Windows.Media.TextEffectCollection virtual get:public
-  Quire.ITextStyle P TextIndent : System.Nullable`1<System.Double> virtual get:public set:public
-  Quire.ITextStyle P Weight : System.Double virtual get:public
-  Quire.ITextStyleChangedHandler E public virtual Quire.Delegate1`1<Quire.Core.TextFormat> StyleCreateRequest
-  Quire.ITextStyleChangedHandler E public virtual Quire.Delegate1`1<System.Collections.Generic.ICollection`1<Quire.TextStyleData>> StyleChanged
-  Quire.ITextStyleChangedHandler M public virtual CreateNewStyle`0(Quire.Core.TextFormat) -> System.Void
-  Quire.ITextStyleChangedHandler M public virtual UpdateStyle`0(System.Collections.Generic.ICollection`1<Quire.TextStyleData>) -> System.Void
-  Quire.ITextStyleObject P BasedOnKey : System.String virtual get:public set:public
-  Quire.ITextStyleObject P Name : System.String virtual get:public set:public
-  Quire.ITextStyleObject P StyleKey : System.String virtual get:public set:public
-  Quire.ITextStyleObject P TextDecorations : System.Windows.TextDecorationCollection virtual get:public set:public
-  Quire.IVisitableFunc`2 M public virtual Accept`0(!0) -> !1
-  Quire.IVisitable`1 M public virtual Accept`0(!0) -> System.Void
+  Quire.IPositionProvider M public abstract PointToScreen`0(System.Windows.Point) -> System.Windows.Point
+  Quire.IPositionProvider M public abstract TranslatePoint`0(System.Windows.Point,System.Windows.UIElement) -> System.Windows.Point
+  Quire.IPositionProvider P ActualHeight : System.Double abstract get:public
+  Quire.IPositionProvider P ActualWidth : System.Double abstract get:public
+  Quire.IPositionProvider P IsVisible : System.Boolean abstract get:public
+  Quire.IReflectionVisitor M public abstract Visit`0(System.Object) -> System.Void
+  Quire.ITextStyle M public abstract GetSetterValue`0(System.String,System.Boolean) -> System.Object
+  Quire.ITextStyle M public abstract GetSetters`0(System.Windows.Style,System.Collections.Generic.Dictionary`2<System.String,Quire.TextStylePropertyInfoExt>,System.Boolean) -> System.Collections.Generic.Dictionary`2<System.String,Quire.TextStylePropertyInfoExt>
+  Quire.ITextStyle M public abstract IsDeletedProperty`0(System.String,System.Object) -> System.Boolean
+  Quire.ITextStyle M public abstract IsModifyPropertyCollection`0(System.String,System.Collections.ICollection) -> System.Boolean
+  Quire.ITextStyle M public abstract IsModifyPropertyString`0(System.String,System.Object) -> System.Boolean
+  Quire.ITextStyle M public abstract IsModifyProperty`0(System.String,System.Double,System.Double) -> System.Boolean
+  Quire.ITextStyle M public abstract IsModifyProperty`0(System.String,System.Object) -> System.Boolean
+  Quire.ITextStyle M public abstract MergeBasedOn`0() -> System.Void
+  Quire.ITextStyle M public abstract UpdateBasedOn`0(Quire.ITextStyle,System.Collections.Generic.ICollection`1<Quire.TextStyleData>,System.Boolean) -> System.Void
+  Quire.ITextStyle P Background : System.Windows.Media.Brush abstract get:public set:public
+  Quire.ITextStyle P BaselineAlignment : System.Nullable`1<System.Windows.BaselineAlignment> abstract get:public set:public
+  Quire.ITextStyle P Bold : System.Boolean abstract get:public
+  Quire.ITextStyle P Condenst : System.Boolean abstract get:public
+  Quire.ITextStyle P FontFamily : System.Windows.Media.FontFamily abstract get:public set:public
+  Quire.ITextStyle P FontSize : System.Nullable`1<System.Double> abstract get:public set:public
+  Quire.ITextStyle P FontStyle : System.Nullable`1<System.Windows.FontStyle> abstract get:public set:public
+  Quire.ITextStyle P FontVariants : System.Nullable`1<System.Windows.FontVariants> abstract get:public set:public
+  Quire.ITextStyle P FontWeight : System.Nullable`1<System.Windows.FontWeight> abstract get:public set:public
+  Quire.ITextStyle P Foreground : System.Windows.Media.Brush abstract get:public set:public
+  Quire.ITextStyle P Italic : System.Boolean abstract get:public
+  Quire.ITextStyle P Margin : System.Nullable`1<System.Windows.Thickness> abstract get:public set:public
+  Quire.ITextStyle P MarkerStyle : System.Nullable`1<System.Windows.TextMarkerStyle> abstract get:public set:public
+  Quire.ITextStyle P Normal : System.Boolean abstract get:public
+  Quire.ITextStyle P Oblique : System.Boolean abstract get:public
+  Quire.ITextStyle P Stretch : System.Double abstract get:public
+  Quire.ITextStyle P Style : System.Windows.Style abstract get:public
+  Quire.ITextStyle P TextAlignment : System.Nullable`1<System.Windows.TextAlignment> abstract get:public set:public
+  Quire.ITextStyle P TextAlignmentExt : System.Nullable`1<Quire.Core.TextAlignmentExt> abstract get:public
+  Quire.ITextStyle P TextEffects : System.Windows.Media.TextEffectCollection abstract get:public
+  Quire.ITextStyle P TextIndent : System.Nullable`1<System.Double> abstract get:public set:public
+  Quire.ITextStyle P Weight : System.Double abstract get:public
+  Quire.ITextStyleChangedHandler E public abstract Quire.Delegate1`1<Quire.Core.TextFormat> StyleCreateRequest
+  Quire.ITextStyleChangedHandler E public abstract Quire.Delegate1`1<System.Collections.Generic.ICollection`1<Quire.TextStyleData>> StyleChanged
+  Quire.ITextStyleChangedHandler M public abstract CreateNewStyle`0(Quire.Core.TextFormat) -> System.Void
+  Quire.ITextStyleChangedHandler M public abstract UpdateStyle`0(System.Collections.Generic.ICollection`1<Quire.TextStyleData>) -> System.Void
+  Quire.ITextStyleObject P BasedOnKey : System.String abstract get:public set:public
+  Quire.ITextStyleObject P Name : System.String abstract get:public set:public
+  Quire.ITextStyleObject P StyleKey : System.String abstract get:public set:public
+  Quire.ITextStyleObject P TextDecorations : System.Windows.TextDecorationCollection abstract get:public set:public
+  Quire.IVisitableFunc`2 M public abstract Accept`0(!0) -> !1
+  Quire.IVisitable`1 M public abstract Accept`0(!0) -> System.Void
   Quire.Interval F public System.Double Lower
   Quire.Interval F public System.Double Upper
   Quire.Interval M public Contains`0(System.Double) -> System.Boolean
@@ -1595,11 +1594,11 @@
   Quire.IsProtectedConverter F public static readonly Quire.IsProtectedConverter Instance
   Quire.IsProtectedConverter M public virtual ConvertBack`0(System.Object,System.Type,System.Object,System.Globalization.CultureInfo) -> System.Object
   Quire.IsProtectedConverter M public virtual Convert`0(System.Object,System.Type,System.Object,System.Globalization.CultureInfo) -> System.Object
-  Quire.Matrices.IMatrix`1 P Columns : System.Int32 virtual get:public
-  Quire.Matrices.IMatrix`1 P Item[Quire.TableCoordinate] : !0 virtual get:public set:public
-  Quire.Matrices.IMatrix`1 P Item[System.Int32,System.Int32] : !0 virtual get:public set:public
-  Quire.Matrices.IMatrix`1 P Rows : System.Int32 virtual get:public
-  Quire.Matrices.IMatrix`1 P Size : Quire.TableSize virtual get:public
+  Quire.Matrices.IMatrix`1 P Columns : System.Int32 abstract get:public
+  Quire.Matrices.IMatrix`1 P Item[Quire.TableCoordinate] : !0 abstract get:public set:public
+  Quire.Matrices.IMatrix`1 P Item[System.Int32,System.Int32] : !0 abstract get:public set:public
+  Quire.Matrices.IMatrix`1 P Rows : System.Int32 abstract get:public
+  Quire.Matrices.IMatrix`1 P Size : Quire.TableSize abstract get:public
   Quire.Matrices.MatrixHelper M private static Swap`1(!!0&,!!0&) -> System.Void
   Quire.Matrices.MatrixHelper M public .ctor`0() -> System.Void
   Quire.Matrices.MatrixHelper M public static AddColumn`1(System.Int32,System.Int32,System.Int32,!!0[],Quire.DelegateFunction0`1<!!0>) -> !!0[]
@@ -1714,36 +1713,36 @@
   Quire.Native.PtcCore.SnapToRootVisualUtils M public static GetTransformToRootVisual`0(System.Windows.Media.Visual) -> System.Windows.Media.GeneralTransform
   Quire.Native.PtcCore.SnapToRootVisualUtils P DpiScale : System.Windows.Media.ScaleTransform static get:private
   Quire.NullableExtensions M public static GetValueOrDefault`1(System.Nullable`1<!!0>,out !!0&) -> System.Boolean
-  Quire.OLE.IOleSiteManager E public virtual System.Action Closed
-  Quire.OLE.IOleSiteManager E public virtual System.Action DataChanged
-  Quire.OLE.IOleSiteManager E public virtual System.Action EditingEnded
-  Quire.OLE.IOleSiteManager E public virtual System.Action EditingStarted
-  Quire.OLE.IOleSiteManager E public virtual System.Action Hidden
-  Quire.OLE.IOleSiteManager E public virtual System.Action Saved
-  Quire.OLE.IOleSiteManager E public virtual System.Action Shown
-  Quire.OLE.IOleSiteManager E public virtual System.Action ViewChanged
-  Quire.OLE.IOleSiteManager M public virtual ActivateInPlace`0() -> System.Boolean
-  Quire.OLE.IOleSiteManager M public virtual ActivateOutOfPlace`0() -> System.Boolean
-  Quire.OLE.IOleSiteManager M public virtual ActivatePrimary`0() -> System.Boolean
-  Quire.OLE.IOleSiteManager M public virtual CreateHBitmap`0(System.Windows.Int32Rect,System.IntPtr) -> System.IntPtr
-  Quire.OLE.IOleSiteManager M public virtual CreateSiteFromFile`0(System.String,System.Boolean,System.String) -> System.Boolean
-  Quire.OLE.IOleSiteManager M public virtual CreateSiteFromProgID`0(System.String,System.String) -> System.Boolean
-  Quire.OLE.IOleSiteManager M public virtual CreateSiteWithDialog`0(System.IntPtr,System.String,System.String,out System.Boolean&,out System.Boolean&,out System.Boolean&) -> System.Boolean
-  Quire.OLE.IOleSiteManager M public virtual Deactivate`0() -> System.Void
-  Quire.OLE.IOleSiteManager M public virtual GetExtent`0(out System.Int32&,out System.Int32&) -> System.Void
-  Quire.OLE.IOleSiteManager M public virtual GetOleObject`0(System.Boolean) -> System.Object
-  Quire.OLE.IOleSiteManager M public virtual Load`0(System.String,System.Collections.Generic.Dictionary`2<System.Guid,System.Guid>) -> System.Boolean
-  Quire.OLE.IOleSiteManager M public virtual Run`0() -> Quire.OLE.OleResult
-  Quire.OLE.IOleSiteManager M public virtual Save`0(System.String,System.String[]) -> System.Boolean
-  Quire.OLE.IOleSiteManager M public virtual SetExtent`0(System.Int32,System.Int32) -> System.Boolean
-  Quire.OLE.IOleSiteManager M public virtual SetHostNames`0(System.String,System.String) -> System.Void
-  Quire.OLE.IOleSiteManager M public virtual SetOleContainerPath`0(System.String) -> System.Void
-  Quire.OLE.IOleSiteManager M public virtual UpdateLink`0() -> Quire.OLE.OleResult
-  Quire.OLE.IOleSiteManager M public virtual UpdateStorage`0() -> System.Boolean
-  Quire.OLE.IOleSiteManager P IsOutOfPlaceActive : System.Boolean virtual get:public
-  Quire.OLE.IOleSiteManager P IsRunning : System.Boolean virtual get:public
-  Quire.OLE.IOleSiteManager P ProgId : System.String virtual get:public
-  Quire.OLE.IOleSiteManager P SiteCreated : System.Boolean virtual get:public
+  Quire.OLE.IOleSiteManager E public abstract System.Action Closed
+  Quire.OLE.IOleSiteManager E public abstract System.Action DataChanged
+  Quire.OLE.IOleSiteManager E public abstract System.Action EditingEnded
+  Quire.OLE.IOleSiteManager E public abstract System.Action EditingStarted
+  Quire.OLE.IOleSiteManager E public abstract System.Action Hidden
+  Quire.OLE.IOleSiteManager E public abstract System.Action Saved
+  Quire.OLE.IOleSiteManager E public abstract System.Action Shown
+  Quire.OLE.IOleSiteManager E public abstract System.Action ViewChanged
+  Quire.OLE.IOleSiteManager M public abstract ActivateInPlace`0() -> System.Boolean
+  Quire.OLE.IOleSiteManager M public abstract ActivateOutOfPlace`0() -> System.Boolean
+  Quire.OLE.IOleSiteManager M public abstract ActivatePrimary`0() -> System.Boolean
+  Quire.OLE.IOleSiteManager M public abstract CreateHBitmap`0(System.Windows.Int32Rect,System.IntPtr) -> System.IntPtr
+  Quire.OLE.IOleSiteManager M public abstract CreateSiteFromFile`0(System.String,System.Boolean,System.String) -> System.Boolean
+  Quire.OLE.IOleSiteManager M public abstract CreateSiteFromProgID`0(System.String,System.String) -> System.Boolean
+  Quire.OLE.IOleSiteManager M public abstract CreateSiteWithDialog`0(System.IntPtr,System.String,System.String,out System.Boolean&,out System.Boolean&,out System.Boolean&) -> System.Boolean
+  Quire.OLE.IOleSiteManager M public abstract Deactivate`0() -> System.Void
+  Quire.OLE.IOleSiteManager M public abstract GetExtent`0(out System.Int32&,out System.Int32&) -> System.Void
+  Quire.OLE.IOleSiteManager M public abstract GetOleObject`0(System.Boolean) -> System.Object
+  Quire.OLE.IOleSiteManager M public abstract Load`0(System.String,System.Collections.Generic.Dictionary`2<System.Guid,System.Guid>) -> System.Boolean
+  Quire.OLE.IOleSiteManager M public abstract Run`0() -> Quire.OLE.OleResult
+  Quire.OLE.IOleSiteManager M public abstract Save`0(System.String,System.String[]) -> System.Boolean
+  Quire.OLE.IOleSiteManager M public abstract SetExtent`0(System.Int32,System.Int32) -> System.Boolean
+  Quire.OLE.IOleSiteManager M public abstract SetHostNames`0(System.String,System.String) -> System.Void
+  Quire.OLE.IOleSiteManager M public abstract SetOleContainerPath`0(System.String) -> System.Void
+  Quire.OLE.IOleSiteManager M public abstract UpdateLink`0() -> Quire.OLE.OleResult
+  Quire.OLE.IOleSiteManager M public abstract UpdateStorage`0() -> System.Boolean
+  Quire.OLE.IOleSiteManager P IsOutOfPlaceActive : System.Boolean abstract get:public
+  Quire.OLE.IOleSiteManager P IsRunning : System.Boolean abstract get:public
+  Quire.OLE.IOleSiteManager P ProgId : System.String abstract get:public
+  Quire.OLE.IOleSiteManager P SiteCreated : System.Boolean abstract get:public
   Quire.OLE.OleResult V AppNotRegistered = 4
   Quire.OLE.OleResult V CantOpenFile = 2
   Quire.OLE.OleResult V MissingData = 3
@@ -1785,21 +1784,21 @@
   Quire.PersistentData.AreaType P Regions : System.Collections.Generic.IEnumerable`1<Quire.PersistentDataObjects.IRegionType> override get:public set:public
   Quire.PersistentData.AreaType P regions : Quire.PersistentDataObjects.worksheetRegionType[] get:public set:public
   Quire.PersistentData.AreaType X Quire.PersistentData.IProtectableDataType::get_XmlRootElementName
-  Quire.PersistentData.IAreaType P IsBorderVisible : System.Boolean virtual get:public set:public
-  Quire.PersistentData.IAreaType P IsCollapsed : System.Boolean virtual get:public set:public
-  Quire.PersistentData.IAreaType P ProtectionDataWrapper : Quire.ProtectionData virtual get:public set:public
-  Quire.PersistentData.IOleSizeData P AutoResize : System.Boolean virtual get:public
-  Quire.PersistentData.IOleSizeData P HasFakeOleViewportSize : System.Boolean virtual get:public
-  Quire.PersistentData.IOleSizeData P OleViewportSize : System.Windows.Size virtual get:public
-  Quire.PersistentData.IPersist M public virtual GetClassID`0() -> System.Guid
-  Quire.PersistentData.IProtectableDataType M public virtual GetXmlSerializer`0(System.Boolean) -> System.Xml.Serialization.XmlSerializer
-  Quire.PersistentData.IProtectableDataType P Protect : System.Boolean virtual get:public
-  Quire.PersistentData.IProtectableDataType P XmlRootElementName : System.String virtual get:public
-  Quire.PersistentData.IRegionCollectionSerializer M public virtual Deserialize`0(System.Xml.XmlElement,System.Boolean) -> System.Void
-  Quire.PersistentData.IRegionCollectionSerializer M public virtual Serialize`0(System.Xml.XmlDocument,System.Boolean) -> System.Xml.XmlElement
-  Quire.PersistentData.IRegionCollectionSerializer P Regions : System.Collections.Generic.IEnumerable`1<Quire.PersistentDataObjects.IRegionType> virtual get:public set:public
-  Quire.PersistentData.IRegionCollectionSerializer P RootNodeName : System.String virtual get:public
-  Quire.PersistentData.IRegionCollectionType P Regions : System.Collections.Generic.IEnumerable`1<Quire.PersistentDataObjects.IRegionType> virtual get:public set:public
+  Quire.PersistentData.IAreaType P IsBorderVisible : System.Boolean abstract get:public set:public
+  Quire.PersistentData.IAreaType P IsCollapsed : System.Boolean abstract get:public set:public
+  Quire.PersistentData.IAreaType P ProtectionDataWrapper : Quire.ProtectionData abstract get:public set:public
+  Quire.PersistentData.IOleSizeData P AutoResize : System.Boolean abstract get:public
+  Quire.PersistentData.IOleSizeData P HasFakeOleViewportSize : System.Boolean abstract get:public
+  Quire.PersistentData.IOleSizeData P OleViewportSize : System.Windows.Size abstract get:public
+  Quire.PersistentData.IPersist M public abstract GetClassID`0() -> System.Guid
+  Quire.PersistentData.IProtectableDataType M public abstract GetXmlSerializer`0(System.Boolean) -> System.Xml.Serialization.XmlSerializer
+  Quire.PersistentData.IProtectableDataType P Protect : System.Boolean abstract get:public
+  Quire.PersistentData.IProtectableDataType P XmlRootElementName : System.String abstract get:public
+  Quire.PersistentData.IRegionCollectionSerializer M public abstract Deserialize`0(System.Xml.XmlElement,System.Boolean) -> System.Void
+  Quire.PersistentData.IRegionCollectionSerializer M public abstract Serialize`0(System.Xml.XmlDocument,System.Boolean) -> System.Xml.XmlElement
+  Quire.PersistentData.IRegionCollectionSerializer P Regions : System.Collections.Generic.IEnumerable`1<Quire.PersistentDataObjects.IRegionType> abstract get:public set:public
+  Quire.PersistentData.IRegionCollectionSerializer P RootNodeName : System.String abstract get:public
+  Quire.PersistentData.IRegionCollectionType P Regions : System.Collections.Generic.IEnumerable`1<Quire.PersistentDataObjects.IRegionType> abstract get:public set:public
   Quire.PersistentData.IntegerSizeType F private System.Int32 heightField
   Quire.PersistentData.IntegerSizeType F private System.Int32 widthField
   Quire.PersistentData.IntegerSizeType M public .ctor`0() -> System.Void
@@ -2147,35 +2146,35 @@
   Quire.PersistentDataObjects.DataVectorsType P ValuesType : Quire.PersistentDataObjects.ValuesTypeEnum get:public set:public
   Quire.PersistentDataObjects.DataVectorsType P VectorLength : System.String get:public set:public
   Quire.PersistentDataObjects.DataVectorsType P VectorsType : Quire.PersistentDataObjects.VectorsTypeEnum get:public set:public
-  Quire.PersistentDataObjects.ICalculationHideable P IsCalculationDisabled : System.Boolean virtual get:public
-  Quire.PersistentDataObjects.IHasPreSerialize M public virtual PreSerialize`0() -> System.Void
-  Quire.PersistentDataObjects.IMC14AnnotationProvider P MC14ConversionLossAnnotations : System.Collections.Generic.IEnumerable`1<System.String> virtual get:public
-  Quire.PersistentDataObjects.IMC14AnnotationProvider P MC14ConversionLossAnnotationsLocal : System.Collections.Generic.List`1<System.String> virtual get:public set:public
+  Quire.PersistentDataObjects.ICalculationHideable P IsCalculationDisabled : System.Boolean abstract get:public
+  Quire.PersistentDataObjects.IHasPreSerialize M public abstract PreSerialize`0() -> System.Void
+  Quire.PersistentDataObjects.IMC14AnnotationProvider P MC14ConversionLossAnnotations : System.Collections.Generic.IEnumerable`1<System.String> abstract get:public
+  Quire.PersistentDataObjects.IMC14AnnotationProvider P MC14ConversionLossAnnotationsLocal : System.Collections.Generic.List`1<System.String> abstract get:public set:public
   Quire.PersistentDataObjects.IMC14AnnotationProviderExtensions M public static AddMC14ConversionLossAnnotations`0(Quire.PersistentDataObjects.IMC14AnnotationProvider,Quire.PersistentDataObjects.MC14ConversionAnnotationType) -> System.Void
   Quire.PersistentDataObjects.IMC14AnnotationProviderExtensions M public static AddMC14ConversionLossAnnotations`0(Quire.PersistentDataObjects.IMC14AnnotationProvider,System.Collections.Generic.IEnumerable`1<Quire.PersistentDataObjects.MC14ConversionAnnotationType>) -> System.Void
   Quire.PersistentDataObjects.IMC14AnnotationProviderExtensions M public static ConvertMC14ConversionLossAnnotationsToStringArray`0(System.Collections.Generic.IEnumerable`1<Quire.PersistentDataObjects.MC14ConversionAnnotationType>) -> System.String[]
-  Quire.PersistentDataObjects.IRegionInTextType P textcaretposition : System.String virtual get:public set:public
-  Quire.PersistentDataObjects.IRegionInWhiteboardType P Location : System.Windows.Point virtual get:public set:public
-  Quire.PersistentDataObjects.IRegionInWhiteboardType P left : System.Double virtual get:public set:public
-  Quire.PersistentDataObjects.IRegionInWhiteboardType P top : System.Double virtual get:public set:public
-  Quire.PersistentDataObjects.IRegionType M public virtual SetHeight`0(System.Double) -> System.Void
-  Quire.PersistentDataObjects.IRegionType M public virtual SetWidth`0(System.Double) -> System.Void
-  Quire.PersistentDataObjects.IRegionType P ConvertedFromMC14 : System.Boolean virtual get:public
-  Quire.PersistentDataObjects.IRegionType P Item : System.Object virtual get:public set:public
-  Quire.PersistentDataObjects.IRegionType P ShowBorder : System.Boolean virtual get:public set:public
-  Quire.PersistentDataObjects.IRegionType P Tag : System.String virtual get:public set:public
-  Quire.PersistentDataObjects.IRegionType P actualHeight : System.Double virtual get:public set:public
-  Quire.PersistentDataObjects.IRegionType P actualHeightSpecified : System.Boolean virtual get:public set:public
-  Quire.PersistentDataObjects.IRegionType P actualWidth : System.Double virtual get:public set:public
-  Quire.PersistentDataObjects.IRegionType P actualWidthSpecified : System.Boolean virtual get:public set:public
-  Quire.PersistentDataObjects.IRegionType P height : System.Double virtual get:public
-  Quire.PersistentDataObjects.IRegionType P heightSpecified : System.Boolean virtual get:public
-  Quire.PersistentDataObjects.IRegionType P mc14conversionloss : System.Boolean virtual get:public
-  Quire.PersistentDataObjects.IRegionType P mc14conversionlossannotations : System.String[] virtual get:public set:public
-  Quire.PersistentDataObjects.IRegionType P regionid : System.String virtual get:public set:public
-  Quire.PersistentDataObjects.IRegionType P width : System.Double virtual get:public
-  Quire.PersistentDataObjects.IRegionType P widthSpecified : System.Boolean virtual get:public
-  Quire.PersistentDataObjects.IWorksheetMathPresentation P getDerivativeStyle : Quire.PersistentDataObjects.presentationMathRenderingOperatorsDerivative virtual get:public
+  Quire.PersistentDataObjects.IRegionInTextType P textcaretposition : System.String abstract get:public set:public
+  Quire.PersistentDataObjects.IRegionInWhiteboardType P Location : System.Windows.Point abstract get:public set:public
+  Quire.PersistentDataObjects.IRegionInWhiteboardType P left : System.Double abstract get:public set:public
+  Quire.PersistentDataObjects.IRegionInWhiteboardType P top : System.Double abstract get:public set:public
+  Quire.PersistentDataObjects.IRegionType M public abstract SetHeight`0(System.Double) -> System.Void
+  Quire.PersistentDataObjects.IRegionType M public abstract SetWidth`0(System.Double) -> System.Void
+  Quire.PersistentDataObjects.IRegionType P ConvertedFromMC14 : System.Boolean abstract get:public
+  Quire.PersistentDataObjects.IRegionType P Item : System.Object abstract get:public set:public
+  Quire.PersistentDataObjects.IRegionType P ShowBorder : System.Boolean abstract get:public set:public
+  Quire.PersistentDataObjects.IRegionType P Tag : System.String abstract get:public set:public
+  Quire.PersistentDataObjects.IRegionType P actualHeight : System.Double abstract get:public set:public
+  Quire.PersistentDataObjects.IRegionType P actualHeightSpecified : System.Boolean abstract get:public set:public
+  Quire.PersistentDataObjects.IRegionType P actualWidth : System.Double abstract get:public set:public
+  Quire.PersistentDataObjects.IRegionType P actualWidthSpecified : System.Boolean abstract get:public set:public
+  Quire.PersistentDataObjects.IRegionType P height : System.Double abstract get:public
+  Quire.PersistentDataObjects.IRegionType P heightSpecified : System.Boolean abstract get:public
+  Quire.PersistentDataObjects.IRegionType P mc14conversionloss : System.Boolean abstract get:public
+  Quire.PersistentDataObjects.IRegionType P mc14conversionlossannotations : System.String[] abstract get:public set:public
+  Quire.PersistentDataObjects.IRegionType P regionid : System.String abstract get:public set:public
+  Quire.PersistentDataObjects.IRegionType P width : System.Double abstract get:public
+  Quire.PersistentDataObjects.IRegionType P widthSpecified : System.Boolean abstract get:public
+  Quire.PersistentDataObjects.IWorksheetMathPresentation P getDerivativeStyle : Quire.PersistentDataObjects.presentationMathRenderingOperatorsDerivative abstract get:public
   Quire.PersistentDataObjects.InputControlMemberType V None = 0
   Quire.PersistentDataObjects.InputControlMemberType V Scriptable = 1
   Quire.PersistentDataObjects.InputControlMemberType V Web = 2
@@ -3662,25 +3661,25 @@
   Quire.ProtectionLevel V DisplayState = 256
   Quire.ProtectionLevel V None = 0
   Quire.ProtectionLevel V Selection = 16
-  Quire.QualityAgentManager.IQualityAgentManager M public virtual SendReport`0() -> System.Boolean
-  Quire.QualityAgentManager.IQualityAgentManager M public virtual SendReport`0(out Quire.QualityAgentManager.IQualityAgentReportData&) -> System.Boolean
-  Quire.QualityAgentManager.IQualityAgentManager P IsReportSendingEnabled : System.Boolean virtual set:public
-  Quire.QualityAgentManager.IQualityAgentReportData P Bitness : System.String virtual get:public
-  Quire.QualityAgentManager.IQualityAgentReportData P Checksum : System.String virtual get:public
-  Quire.QualityAgentManager.IQualityAgentReportData P CurrentCulture : System.String virtual get:public
-  Quire.QualityAgentManager.IQualityAgentReportData P CurrentUICulture : System.String virtual get:public
-  Quire.QualityAgentManager.IQualityAgentReportData P DomainName : System.String virtual get:public
-  Quire.QualityAgentManager.IQualityAgentReportData P EndTime : System.String virtual get:public
-  Quire.QualityAgentManager.IQualityAgentReportData P HostID : System.String virtual get:public
-  Quire.QualityAgentManager.IQualityAgentReportData P InstallSource : System.String virtual get:public
-  Quire.QualityAgentManager.IQualityAgentReportData P InstallationDate : System.String virtual get:public
-  Quire.QualityAgentManager.IQualityAgentReportData P LicenseDate : System.String virtual get:public
-  Quire.QualityAgentManager.IQualityAgentReportData P LicenseType : System.String virtual get:public
-  Quire.QualityAgentManager.IQualityAgentReportData P MathcadReleaseVersion : System.String virtual get:public
-  Quire.QualityAgentManager.IQualityAgentReportData P MathcadVersion : System.String virtual get:public
-  Quire.QualityAgentManager.IQualityAgentReportData P Scn : System.String virtual get:public
-  Quire.QualityAgentManager.IQualityAgentReportData P StartTime : System.String virtual get:public
-  Quire.QualityAgentManager.IQualityAgentReportData P TimeZone : System.String virtual get:public
+  Quire.QualityAgentManager.IQualityAgentManager M public abstract SendReport`0() -> System.Boolean
+  Quire.QualityAgentManager.IQualityAgentManager M public abstract SendReport`0(out Quire.QualityAgentManager.IQualityAgentReportData&) -> System.Boolean
+  Quire.QualityAgentManager.IQualityAgentManager P IsReportSendingEnabled : System.Boolean abstract set:public
+  Quire.QualityAgentManager.IQualityAgentReportData P Bitness : System.String abstract get:public
+  Quire.QualityAgentManager.IQualityAgentReportData P Checksum : System.String abstract get:public
+  Quire.QualityAgentManager.IQualityAgentReportData P CurrentCulture : System.String abstract get:public
+  Quire.QualityAgentManager.IQualityAgentReportData P CurrentUICulture : System.String abstract get:public
+  Quire.QualityAgentManager.IQualityAgentReportData P DomainName : System.String abstract get:public
+  Quire.QualityAgentManager.IQualityAgentReportData P EndTime : System.String abstract get:public
+  Quire.QualityAgentManager.IQualityAgentReportData P HostID : System.String abstract get:public
+  Quire.QualityAgentManager.IQualityAgentReportData P InstallSource : System.String abstract get:public
+  Quire.QualityAgentManager.IQualityAgentReportData P InstallationDate : System.String abstract get:public
+  Quire.QualityAgentManager.IQualityAgentReportData P LicenseDate : System.String abstract get:public
+  Quire.QualityAgentManager.IQualityAgentReportData P LicenseType : System.String abstract get:public
+  Quire.QualityAgentManager.IQualityAgentReportData P MathcadReleaseVersion : System.String abstract get:public
+  Quire.QualityAgentManager.IQualityAgentReportData P MathcadVersion : System.String abstract get:public
+  Quire.QualityAgentManager.IQualityAgentReportData P Scn : System.String abstract get:public
+  Quire.QualityAgentManager.IQualityAgentReportData P StartTime : System.String abstract get:public
+  Quire.QualityAgentManager.IQualityAgentReportData P TimeZone : System.String abstract get:public
   Quire.QualityAgentManager.QualityAgentManager F private Quire.QualityAgentManager.IQualityAgentReportData _reportData
   Quire.QualityAgentManager.QualityAgentManager F private System.String _mathcadPrimeChecksum
   Quire.QualityAgentManager.QualityAgentManager F private const System.String Dummy
@@ -3747,65 +3746,65 @@
   Quire.Serialization.ExternalObjectType V Chart = 2
   Quire.Serialization.ExternalObjectType V Excel = 0
   Quire.Serialization.ExternalObjectType V Ole = 1
-  Quire.Serialization.IBaseS11NProvider P Helper : Quire.Serialization.ISerializationHelper virtual get:public
-  Quire.Serialization.IBaseS11NProvider P NameSpaceManager : System.Xml.XmlNamespaceManager virtual get:public
-  Quire.Serialization.IBaseS11NProvider P PackagePart : System.IO.Packaging.PackagePart virtual get:public
-  Quire.Serialization.IBaseS11NProvider P UseOverrides : System.Boolean virtual get:public
-  Quire.Serialization.IBaseS11NProvider P XmlContentDocument : System.Xml.XmlDocument virtual get:public
-  Quire.Serialization.IDeS11NConsumer P DeS11NProvider : Quire.Serialization.IDeS11NProvider virtual get:public set:public
-  Quire.Serialization.IDeS11NProvider M public virtual UnpackExternalObject`0(System.String) -> System.String
-  Quire.Serialization.IDeS11NProvider M public virtual UnpackFlowDocument`0(System.Windows.Documents.FlowDocument&,System.String) -> System.Void
-  Quire.Serialization.IDeS11NProvider M public virtual UnpackProtectedPart`0(System.String) -> System.IO.Stream
-  Quire.Serialization.IDeS11NProvider P FilePath : System.String virtual get:public
-  Quire.Serialization.IDeS11NProvider P SkipRegionsNotAffectingCalculation : System.Boolean virtual get:public
-  Quire.Serialization.IDeS11NProvider P TextStyleChangedHandler : Quire.ITextStyleChangedHandler virtual get:public
-  Quire.Serialization.IHasS11NProvider P S11NProvider : Quire.Serialization.IS11NProvider virtual get:public
-  Quire.Serialization.IPersistentDataProvider M public virtual GetRegionPersistentData`0(Quire.Serialization.IS11NProvider) -> System.Object
-  Quire.Serialization.IPersistentDataProvider M public virtual SetRegionPersistentData`0(Quire.Serialization.IDeS11NProvider,System.Object) -> System.Collections.Generic.IList`1<Quire.Serialization.IRegionPersistentData>
-  Quire.Serialization.IRegionPersistentData M public virtual DeserializeEpilog`0() -> System.Void
-  Quire.Serialization.IRegionPersistentData M public virtual Deserialize`0(Quire.PersistentDataObjects.IRegionType) -> System.Void
-  Quire.Serialization.IRegionPersistentData P AllDeserializationExceptions : System.Collections.Generic.IEnumerable`1<System.Exception> virtual get:public
-  Quire.Serialization.IRegionPersistentData P Children : System.Collections.Generic.IList`1<Quire.Serialization.IRegionPersistentData> virtual set:public
-  Quire.Serialization.IRegionPersistentData P Control : System.Windows.UIElement virtual get:public
-  Quire.Serialization.IRegionPersistentData P DeserializationException : System.Exception virtual set:public
-  Quire.Serialization.IRegionPersistentData P HasDeserializationErrors : System.Boolean virtual get:public
-  Quire.Serialization.IRegionPersistentData P Location : System.Windows.Point virtual get:public set:public
-  Quire.Serialization.IRegionPersistentData P RegionData : Quire.PersistentDataObjects.IRegionType virtual get:public
-  Quire.Serialization.IS11NConsumer P S11NProvider : Quire.Serialization.IS11NProvider virtual get:public set:public
-  Quire.Serialization.IS11NProvider M public virtual PackExternalObject`0(System.String,System.String,Quire.Serialization.ExternalObjectType) -> System.String
-  Quire.Serialization.IS11NProvider M public virtual PackFlowDocument`0(System.Windows.Documents.FlowDocument,System.String) -> System.String
-  Quire.Serialization.IS11NProvider M public virtual PackImage`0(Quire.Wpf.ImagePackagingInformation) -> System.String
-  Quire.Serialization.IS11NProvider M public virtual PackIncludedWorksheet`0(System.String,System.DateTime,System.String,System.Func`3<System.IO.Packaging.Package,System.String,System.IO.Packaging.PackagePart>) -> System.String
-  Quire.Serialization.IS11NProvider M public virtual PackProtectedPart`0(System.IO.Stream,System.String,System.String) -> System.String
-  Quire.Serialization.IS11NProvider P TextStyleChangedHandler : Quire.ITextStyleChangedHandler virtual get:public
+  Quire.Serialization.IBaseS11NProvider P Helper : Quire.Serialization.ISerializationHelper abstract get:public
+  Quire.Serialization.IBaseS11NProvider P NameSpaceManager : System.Xml.XmlNamespaceManager abstract get:public
+  Quire.Serialization.IBaseS11NProvider P PackagePart : System.IO.Packaging.PackagePart abstract get:public
+  Quire.Serialization.IBaseS11NProvider P UseOverrides : System.Boolean abstract get:public
+  Quire.Serialization.IBaseS11NProvider P XmlContentDocument : System.Xml.XmlDocument abstract get:public
+  Quire.Serialization.IDeS11NConsumer P DeS11NProvider : Quire.Serialization.IDeS11NProvider abstract get:public set:public
+  Quire.Serialization.IDeS11NProvider M public abstract UnpackExternalObject`0(System.String) -> System.String
+  Quire.Serialization.IDeS11NProvider M public abstract UnpackFlowDocument`0(System.Windows.Documents.FlowDocument&,System.String) -> System.Void
+  Quire.Serialization.IDeS11NProvider M public abstract UnpackProtectedPart`0(System.String) -> System.IO.Stream
+  Quire.Serialization.IDeS11NProvider P FilePath : System.String abstract get:public
+  Quire.Serialization.IDeS11NProvider P SkipRegionsNotAffectingCalculation : System.Boolean abstract get:public
+  Quire.Serialization.IDeS11NProvider P TextStyleChangedHandler : Quire.ITextStyleChangedHandler abstract get:public
+  Quire.Serialization.IHasS11NProvider P S11NProvider : Quire.Serialization.IS11NProvider abstract get:public
+  Quire.Serialization.IPersistentDataProvider M public abstract GetRegionPersistentData`0(Quire.Serialization.IS11NProvider) -> System.Object
+  Quire.Serialization.IPersistentDataProvider M public abstract SetRegionPersistentData`0(Quire.Serialization.IDeS11NProvider,System.Object) -> System.Collections.Generic.IList`1<Quire.Serialization.IRegionPersistentData>
+  Quire.Serialization.IRegionPersistentData M public abstract DeserializeEpilog`0() -> System.Void
+  Quire.Serialization.IRegionPersistentData M public abstract Deserialize`0(Quire.PersistentDataObjects.IRegionType) -> System.Void
+  Quire.Serialization.IRegionPersistentData P AllDeserializationExceptions : System.Collections.Generic.IEnumerable`1<System.Exception> abstract get:public
+  Quire.Serialization.IRegionPersistentData P Children : System.Collections.Generic.IList`1<Quire.Serialization.IRegionPersistentData> abstract set:public
+  Quire.Serialization.IRegionPersistentData P Control : System.Windows.UIElement abstract get:public
+  Quire.Serialization.IRegionPersistentData P DeserializationException : System.Exception abstract set:public
+  Quire.Serialization.IRegionPersistentData P HasDeserializationErrors : System.Boolean abstract get:public
+  Quire.Serialization.IRegionPersistentData P Location : System.Windows.Point abstract get:public set:public
+  Quire.Serialization.IRegionPersistentData P RegionData : Quire.PersistentDataObjects.IRegionType abstract get:public
+  Quire.Serialization.IS11NConsumer P S11NProvider : Quire.Serialization.IS11NProvider abstract get:public set:public
+  Quire.Serialization.IS11NProvider M public abstract PackExternalObject`0(System.String,System.String,Quire.Serialization.ExternalObjectType) -> System.String
+  Quire.Serialization.IS11NProvider M public abstract PackFlowDocument`0(System.Windows.Documents.FlowDocument,System.String) -> System.String
+  Quire.Serialization.IS11NProvider M public abstract PackImage`0(Quire.Wpf.ImagePackagingInformation) -> System.String
+  Quire.Serialization.IS11NProvider M public abstract PackIncludedWorksheet`0(System.String,System.DateTime,System.String,System.Func`3<System.IO.Packaging.Package,System.String,System.IO.Packaging.PackagePart>) -> System.String
+  Quire.Serialization.IS11NProvider M public abstract PackProtectedPart`0(System.IO.Stream,System.String,System.String) -> System.String
+  Quire.Serialization.IS11NProvider P TextStyleChangedHandler : Quire.ITextStyleChangedHandler abstract get:public
   Quire.Serialization.IS11NProviderExtensions M public static PackExternalObjectExt`0(Quire.Serialization.IS11NProvider,System.String,System.String,Quire.Serialization.ExternalObjectType) -> System.String
   Quire.Serialization.IS11NProviderExtensions M public static PackImageExt`0(Quire.Serialization.IS11NProvider,Quire.Wpf.ImagePackagingInformation) -> System.String
-  Quire.Serialization.ISerializationHelper M public virtual AddCachedPartPath`0(Quire.Pair`2<System.String,System.DateTime>,Quire.Pair`2<System.String,System.Uri>) -> System.Void
-  Quire.Serialization.ISerializationHelper M public virtual AddImagePath`0(System.String,System.Byte[],Quire.Pair`2<System.String,System.Uri>) -> System.Void
-  Quire.Serialization.ISerializationHelper M public virtual AssignNextRegionId`0(System.Windows.UIElement) -> System.Void
-  Quire.Serialization.ISerializationHelper M public virtual CleanSerializerTempData`0(System.Collections.Generic.IList`1<System.Windows.UIElement>) -> System.Void
-  Quire.Serialization.ISerializationHelper M public virtual GetCachedWorksheetPath`0(Quire.Pair`2<System.String,System.DateTime>) -> Quire.Pair`2<System.String,System.Uri>
-  Quire.Serialization.ISerializationHelper M public virtual GetImagePath`0(System.String,System.Byte[]) -> Quire.Pair`2<System.String,System.Uri>
-  Quire.Serialization.ISerializationHelper M public virtual GetNextRegionId`0() -> System.Int64
-  Quire.Serialization.ISerializationHelper M public virtual GetRegionById`0(System.Collections.Generic.IEnumerable`1<System.Windows.UIElement>,System.Int64) -> System.Windows.UIElement
-  Quire.Serialization.ISerializationHelper M public virtual GetRegionId`0(System.Windows.UIElement) -> System.Int64
-  Quire.Serialization.ISerializationHelper M public virtual InitializeForWrite`0(System.String) -> System.Void
-  Quire.Serialization.ISerializationHelper M public virtual Reset`0() -> System.Void
-  Quire.Serialization.ISerializationHelper M public virtual SetRegionId`0(System.Windows.UIElement,System.Int64) -> System.Void
-  Quire.Serialization.ISerializationHelper P AppVersion : System.Version virtual get:public set:public
-  Quire.Serialization.ISerializationHelper P ApplicationName : System.String virtual get:public set:public
-  Quire.Serialization.ISerializationHelper P EngineVersion : System.String virtual get:public set:public
-  Quire.Serialization.ISerializationHelper P ErrorsOccurredWhenLoadingRegions : System.Boolean virtual get:public
-  Quire.Serialization.ISerializationHelper P FirstPageFooterRegions : System.Collections.Generic.IList`1<Quire.Serialization.IRegionPersistentData> virtual get:public set:public
-  Quire.Serialization.ISerializationHelper P FirstPageHeaderRegions : System.Collections.Generic.IList`1<Quire.Serialization.IRegionPersistentData> virtual get:public set:public
-  Quire.Serialization.ISerializationHelper P FooterRegions : System.Collections.Generic.IList`1<Quire.Serialization.IRegionPersistentData> virtual get:public set:public
-  Quire.Serialization.ISerializationHelper P FormatVersion : System.Version virtual get:public set:public
-  Quire.Serialization.ISerializationHelper P HeaderRegions : System.Collections.Generic.IList`1<Quire.Serialization.IRegionPersistentData> virtual get:public set:public
-  Quire.Serialization.ISerializationHelper P MainRegions : System.Collections.Generic.IList`1<Quire.Serialization.IRegionPersistentData> virtual get:public set:public
-  Quire.Serialization.ISerializationHelper P Release : System.String virtual get:public set:public
-  Quire.Serialization.ISerializationHelper P SerializedSchemaVersions : System.Collections.Generic.IDictionary`2<Quire.Xml.SchemasManager+SchemaNameEnum,System.Version> virtual get:public
-  Quire.Serialization.IShouldValidate P ShouldValidateOnRead : System.Boolean virtual get:public
-  Quire.Serialization.IShouldValidate P ShouldValidateOnWrite : System.Boolean virtual get:public
+  Quire.Serialization.ISerializationHelper M public abstract AddCachedPartPath`0(Quire.Pair`2<System.String,System.DateTime>,Quire.Pair`2<System.String,System.Uri>) -> System.Void
+  Quire.Serialization.ISerializationHelper M public abstract AddImagePath`0(System.String,System.Byte[],Quire.Pair`2<System.String,System.Uri>) -> System.Void
+  Quire.Serialization.ISerializationHelper M public abstract AssignNextRegionId`0(System.Windows.UIElement) -> System.Void
+  Quire.Serialization.ISerializationHelper M public abstract CleanSerializerTempData`0(System.Collections.Generic.IList`1<System.Windows.UIElement>) -> System.Void
+  Quire.Serialization.ISerializationHelper M public abstract GetCachedWorksheetPath`0(Quire.Pair`2<System.String,System.DateTime>) -> Quire.Pair`2<System.String,System.Uri>
+  Quire.Serialization.ISerializationHelper M public abstract GetImagePath`0(System.String,System.Byte[]) -> Quire.Pair`2<System.String,System.Uri>
+  Quire.Serialization.ISerializationHelper M public abstract GetNextRegionId`0() -> System.Int64
+  Quire.Serialization.ISerializationHelper M public abstract GetRegionById`0(System.Collections.Generic.IEnumerable`1<System.Windows.UIElement>,System.Int64) -> System.Windows.UIElement
+  Quire.Serialization.ISerializationHelper M public abstract GetRegionId`0(System.Windows.UIElement) -> System.Int64
+  Quire.Serialization.ISerializationHelper M public abstract InitializeForWrite`0(System.String) -> System.Void
+  Quire.Serialization.ISerializationHelper M public abstract Reset`0() -> System.Void
+  Quire.Serialization.ISerializationHelper M public abstract SetRegionId`0(System.Windows.UIElement,System.Int64) -> System.Void
+  Quire.Serialization.ISerializationHelper P AppVersion : System.Version abstract get:public set:public
+  Quire.Serialization.ISerializationHelper P ApplicationName : System.String abstract get:public set:public
+  Quire.Serialization.ISerializationHelper P EngineVersion : System.String abstract get:public set:public
+  Quire.Serialization.ISerializationHelper P ErrorsOccurredWhenLoadingRegions : System.Boolean abstract get:public
+  Quire.Serialization.ISerializationHelper P FirstPageFooterRegions : System.Collections.Generic.IList`1<Quire.Serialization.IRegionPersistentData> abstract get:public set:public
+  Quire.Serialization.ISerializationHelper P FirstPageHeaderRegions : System.Collections.Generic.IList`1<Quire.Serialization.IRegionPersistentData> abstract get:public set:public
+  Quire.Serialization.ISerializationHelper P FooterRegions : System.Collections.Generic.IList`1<Quire.Serialization.IRegionPersistentData> abstract get:public set:public
+  Quire.Serialization.ISerializationHelper P FormatVersion : System.Version abstract get:public set:public
+  Quire.Serialization.ISerializationHelper P HeaderRegions : System.Collections.Generic.IList`1<Quire.Serialization.IRegionPersistentData> abstract get:public set:public
+  Quire.Serialization.ISerializationHelper P MainRegions : System.Collections.Generic.IList`1<Quire.Serialization.IRegionPersistentData> abstract get:public set:public
+  Quire.Serialization.ISerializationHelper P Release : System.String abstract get:public set:public
+  Quire.Serialization.ISerializationHelper P SerializedSchemaVersions : System.Collections.Generic.IDictionary`2<Quire.Xml.SchemasManager+SchemaNameEnum,System.Version> abstract get:public
+  Quire.Serialization.IShouldValidate P ShouldValidateOnRead : System.Boolean abstract get:public
+  Quire.Serialization.IShouldValidate P ShouldValidateOnWrite : System.Boolean abstract get:public
   Quire.Serialization.Mathcad14Resolver M protected override SchemaName`0(System.Uri) -> System.String
   Quire.Serialization.Mathcad14Resolver M public .ctor`0() -> System.Void
   Quire.Serialization.Mathcad14Resolver M public static InitializeDocument`0(System.Xml.XmlDocument) -> System.Void
@@ -3946,30 +3945,30 @@
   Quire.Services.FunctionalityServiceWrapper M public GetFunctionalityBehaviorKey`0(Quire.FunctionalitiesLimitation.EnumFunctionalityKey) -> Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey
   Quire.Services.FunctionalityServiceWrapper M public IsFunctionalityEnabled`0(Quire.FunctionalitiesLimitation.EnumFunctionalityKey) -> System.Boolean
   Quire.Services.FunctionalityServiceWrapper P Instance : Quire.Services.FunctionalityServiceWrapper static get:public
-  Quire.Services.IApplicationBehaviorOptions P CollectInputOutputStatesTimeout : System.Int32 virtual get:public set:public
-  Quire.Services.IApplicationBehaviorOptions P DelayRecalculationInMsecAfterCloseExcel : System.Int32 virtual get:public set:public
-  Quire.Services.IApplicationLogger M public virtual GetApplicationStartTime`0() -> System.String
-  Quire.Services.IApplicationLogger M public virtual GetEnvironmentVariablesAndCommandLineArgumentsData`0() -> System.String
-  Quire.Services.IApplicationLogger M public virtual GetLastApplicationLogPath`0() -> System.String
-  Quire.Services.IApplicationLogger M public virtual GetListOfLoadedModulesData`0() -> System.String
-  Quire.Services.IApplicationLogger M public virtual GetMiscInfo`0() -> System.String
-  Quire.Services.IApplicationLogger M public virtual GetSystemInfoIfAvailable`0() -> System.String
-  Quire.Services.IApplicationLogger M public virtual WriteToLog`0(System.String,System.String) -> System.String
-  Quire.Services.IApplicationLogger P LogFolder : System.String virtual get:public set:public
-  Quire.Services.IExceptionLogger M public virtual GetExceptionInfo`0(System.Collections.Generic.IEnumerable`1<System.Exception>) -> System.String
-  Quire.Services.IExceptionLogger M public virtual LogException`0(System.Exception) -> System.String
-  Quire.Services.IExceptionLogger M public virtual LogExceptions`0(System.Collections.Generic.IEnumerable`1<System.Exception>) -> System.String
-  Quire.Services.IFunctionalityService M public virtual IsFunctionalityEnabled`0(Quire.FunctionalitiesLimitation.EnumFunctionalityKey) -> System.Boolean
-  Quire.Services.IFunctionalityService M public virtual IsFunctionalityHasUnsupportedLicenseTypes`0(Quire.FunctionalitiesLimitation.EnumFunctionalityKey) -> System.Boolean
-  Quire.Services.IMouseFacade M public virtual ClearOverrideCursor`0() -> System.Void
-  Quire.Services.IMouseFacade M public virtual GetOverrideCursor`0() -> System.Windows.Input.Cursor
-  Quire.Services.IMouseFacade M public virtual SetCursor`0(System.Windows.Input.Cursor) -> System.Boolean
-  Quire.Services.IMouseFacade M public virtual SetOverrideCursor`0(System.Windows.Input.Cursor) -> System.Windows.Input.Cursor
-  Quire.Services.IMouseFacade M public virtual ShowWaitCursor`0() -> System.Windows.Input.Cursor
-  Quire.Services.IService P IsConnected : System.Boolean virtual get:public set:public
-  Quire.Services.IServiceRegistry M public virtual AddService`1(Quire.Services.IService,System.Boolean) -> System.Void
-  Quire.Services.IServiceRegistry M public virtual GetService`1() -> !!0
-  Quire.Services.IServiceRegistry M public virtual RemoveService`1(System.Boolean) -> System.Void
+  Quire.Services.IApplicationBehaviorOptions P CollectInputOutputStatesTimeout : System.Int32 abstract get:public set:public
+  Quire.Services.IApplicationBehaviorOptions P DelayRecalculationInMsecAfterCloseExcel : System.Int32 abstract get:public set:public
+  Quire.Services.IApplicationLogger M public abstract GetApplicationStartTime`0() -> System.String
+  Quire.Services.IApplicationLogger M public abstract GetEnvironmentVariablesAndCommandLineArgumentsData`0() -> System.String
+  Quire.Services.IApplicationLogger M public abstract GetLastApplicationLogPath`0() -> System.String
+  Quire.Services.IApplicationLogger M public abstract GetListOfLoadedModulesData`0() -> System.String
+  Quire.Services.IApplicationLogger M public abstract GetMiscInfo`0() -> System.String
+  Quire.Services.IApplicationLogger M public abstract GetSystemInfoIfAvailable`0() -> System.String
+  Quire.Services.IApplicationLogger M public abstract WriteToLog`0(System.String,System.String) -> System.String
+  Quire.Services.IApplicationLogger P LogFolder : System.String abstract get:public set:public
+  Quire.Services.IExceptionLogger M public abstract GetExceptionInfo`0(System.Collections.Generic.IEnumerable`1<System.Exception>) -> System.String
+  Quire.Services.IExceptionLogger M public abstract LogException`0(System.Exception) -> System.String
+  Quire.Services.IExceptionLogger M public abstract LogExceptions`0(System.Collections.Generic.IEnumerable`1<System.Exception>) -> System.String
+  Quire.Services.IFunctionalityService M public abstract IsFunctionalityEnabled`0(Quire.FunctionalitiesLimitation.EnumFunctionalityKey) -> System.Boolean
+  Quire.Services.IFunctionalityService M public abstract IsFunctionalityHasUnsupportedLicenseTypes`0(Quire.FunctionalitiesLimitation.EnumFunctionalityKey) -> System.Boolean
+  Quire.Services.IMouseFacade M public abstract ClearOverrideCursor`0() -> System.Void
+  Quire.Services.IMouseFacade M public abstract GetOverrideCursor`0() -> System.Windows.Input.Cursor
+  Quire.Services.IMouseFacade M public abstract SetCursor`0(System.Windows.Input.Cursor) -> System.Boolean
+  Quire.Services.IMouseFacade M public abstract SetOverrideCursor`0(System.Windows.Input.Cursor) -> System.Windows.Input.Cursor
+  Quire.Services.IMouseFacade M public abstract ShowWaitCursor`0() -> System.Windows.Input.Cursor
+  Quire.Services.IService P IsConnected : System.Boolean abstract get:public set:public
+  Quire.Services.IServiceRegistry M public abstract AddService`1(Quire.Services.IService,System.Boolean) -> System.Void
+  Quire.Services.IServiceRegistry M public abstract GetService`1() -> !!0
+  Quire.Services.IServiceRegistry M public abstract RemoveService`1(System.Boolean) -> System.Void
   Quire.Services.MouseFacade M public .ctor`0() -> System.Void
   Quire.Services.MouseFacade M public ClearOverrideCursor`0() -> System.Void
   Quire.Services.MouseFacade M public GetOverrideCursor`0() -> System.Windows.Input.Cursor
@@ -4391,11 +4390,11 @@
   Quire.Undo.CompoundCommand M public virtual UndoSideEffects`0() -> System.Void
   Quire.Undo.CompoundCommand M public virtual Undo`0() -> System.Void
   Quire.Undo.CompoundCommand P Name : System.String get:public set:public
-  Quire.Undo.ICollectableCommand M public virtual CollectNewCommand`0(Quire.Undo.ICollectableCommand) -> System.Boolean
-  Quire.Undo.IUndoableCommand M public virtual Do`0() -> System.Boolean
-  Quire.Undo.IUndoableCommand M public virtual Redo`0() -> System.Void
-  Quire.Undo.IUndoableCommand M public virtual Undo`0() -> System.Void
-  Quire.Undo.IUndoableCommand P Name : System.String virtual get:public
+  Quire.Undo.ICollectableCommand M public abstract CollectNewCommand`0(Quire.Undo.ICollectableCommand) -> System.Boolean
+  Quire.Undo.IUndoableCommand M public abstract Do`0() -> System.Boolean
+  Quire.Undo.IUndoableCommand M public abstract Redo`0() -> System.Void
+  Quire.Undo.IUndoableCommand M public abstract Undo`0() -> System.Void
+  Quire.Undo.IUndoableCommand P Name : System.String abstract get:public
   Quire.Undo.SetPropertyCommand F private System.Boolean _hasLocalValue
   Quire.Undo.SetPropertyCommand F private System.Object _oldValue
   Quire.Undo.SetPropertyCommand F private readonly System.Object _newValue
@@ -5062,45 +5061,45 @@
   Quire.Wpf.HyperlinkExtensions M public static RecursiveRemoveEmptyInlinesIncludingSelf`0(System.Windows.Documents.Span) -> System.Windows.Documents.Span
   Quire.Wpf.HyperlinkExtensions M public static ResetLinkStyleProps`0(System.Windows.Documents.Hyperlink) -> System.Void
   Quire.Wpf.HyperlinkExtensions M public static SetTextFormatForLinkRemoval`0(System.Windows.Documents.Hyperlink,out System.Collections.Generic.List`1<System.Windows.Documents.Inline>&) -> System.Void
-  Quire.Wpf.IAlignedRoot P Visual : System.Windows.Media.Visual virtual get:public
-  Quire.Wpf.ICanBlockUndoRedo P BlockUndoRedo : System.Boolean virtual get:public
-  Quire.Wpf.ICustomFontSizeOwner P FontSizeForReport : System.Double virtual get:public
-  Quire.Wpf.ICustomFontSizeOwner P FontSizeToRestore : System.Nullable`1<System.Double> virtual set:public
-  Quire.Wpf.IDialogManager M public virtual ShowDialog`0(Microsoft.Win32.FileDialog) -> System.Nullable`1<System.Boolean>
-  Quire.Wpf.IDialogManager M public virtual ShowDialog`0(System.Windows.Forms.FileDialog) -> System.Windows.Forms.DialogResult
-  Quire.Wpf.IDialogManager P IsDialogOpen : System.Boolean virtual get:public set:public
-  Quire.Wpf.IHasFunctionalityKey P FunctionalityKey : Quire.FunctionalitiesLimitation.EnumFunctionalityKey virtual get:public
-  Quire.Wpf.IHasFunctionalityKeyAccordingToParameter M public virtual GetFunctionalityKeyAccordingParameter`0(System.Object,System.Boolean) -> Quire.FunctionalitiesLimitation.EnumFunctionalityKey
-  Quire.Wpf.IMessageBoxManager M public virtual ShowError`0(System.String,System.String) -> System.Windows.MessageBoxResult
-  Quire.Wpf.IMessageBoxManager M public virtual ShowError`0(System.Windows.Window,System.String,System.String) -> System.Windows.MessageBoxResult
-  Quire.Wpf.IMessageBoxManager M public virtual ShowInfo`0(System.String,System.String) -> System.Windows.MessageBoxResult
-  Quire.Wpf.IMessageBoxManager M public virtual ShowInfo`0(System.Windows.Window,System.String,System.String) -> System.Windows.MessageBoxResult
-  Quire.Wpf.IMessageBoxManager M public virtual ShowOkDialog`0(System.Windows.Window,System.String,System.String,System.Windows.MessageBoxImage) -> System.Windows.MessageBoxResult
-  Quire.Wpf.IMessageBoxManager M public virtual ShowQuestionWithOptions`0(System.Windows.Window,System.String,System.String,System.Windows.MessageBoxImage,Quire.Wpf.CheckBoxData[],System.String[],System.String,System.String) -> System.Int32
-  Quire.Wpf.IMessageBoxManager M public virtual ShowQuestion`0(System.String,System.String,System.Windows.MessageBoxButton) -> System.Windows.MessageBoxResult
-  Quire.Wpf.IMessageBoxManager M public virtual ShowQuestion`0(System.Windows.Window,System.String,System.String,System.Windows.MessageBoxButton) -> System.Windows.MessageBoxResult
-  Quire.Wpf.IMessageBoxManager M public virtual ShowWarning`0(System.String,System.String) -> System.Windows.MessageBoxResult
-  Quire.Wpf.IMessageBoxManager M public virtual ShowWarning`0(System.Windows.Window,System.String,System.String) -> System.Windows.MessageBoxResult
-  Quire.Wpf.IMessageBoxManager P IsDisabled : System.Boolean virtual get:public set:public
-  Quire.Wpf.IMessageBoxManager P ShowCriticalErrorMessage : System.Func`4<System.Windows.Window,System.String,System.String,System.Windows.MessageBoxResult> virtual get:public set:public
-  Quire.Wpf.IMessageBoxManager P ShowCriticalQuestionMessage : System.Func`5<System.Windows.Window,System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxResult> virtual get:public set:public
-  Quire.Wpf.IMessageBoxManager P ShowCriticalWarningMessage : System.Func`4<System.Windows.Window,System.String,System.String,System.Windows.MessageBoxResult> virtual get:public set:public
-  Quire.Wpf.IMessageBoxManager P ShowExceptionMessage : System.Action`1<System.String> virtual get:public set:public
-  Quire.Wpf.INotifyCollectionRangeChanged E public virtual System.Collections.Specialized.NotifyCollectionChangedEventHandler RangeChanged
-  Quire.Wpf.INotifyCollectionRangeChanged E public virtual System.Collections.Specialized.NotifyCollectionChangedEventHandler RangeChanging
-  Quire.Wpf.INotifyCollectionRangeChanged M public virtual Count`0() -> System.Int32
-  Quire.Wpf.INotifyCollectionRangeChanged M public virtual IsEmpty`0() -> System.Boolean
-  Quire.Wpf.INotifyProgress E public virtual System.Action`1<System.Boolean> ProgressStopped
-  Quire.Wpf.INotifyProgress E public virtual System.ComponentModel.ProgressChangedEventHandler ProgressChanged
-  Quire.Wpf.INotifyProgress M public virtual AbortProgressTracking`0() -> System.Void
-  Quire.Wpf.INotifyProgress M public virtual IsProgressTrackingAborted`0() -> System.Boolean
-  Quire.Wpf.INotifyProgress M public virtual SetProgressAbortTimeout`0(System.Int32) -> System.Void
-  Quire.Wpf.INotifyProgress M public virtual StartProgressTracking`0() -> System.Void
-  Quire.Wpf.INotifyProgress P IsTrackingInProgress : System.Boolean virtual get:public
-  Quire.Wpf.IObservableRangeCollection`1 M public virtual AddRange`0(System.Collections.Generic.IEnumerable`1<!0>) -> System.Void
-  Quire.Wpf.IObservableRangeCollection`1 M public virtual RemoveRange`0(System.Collections.Generic.IEnumerable`1<!0>) -> System.Int32
-  Quire.Wpf.IPropertyChangedEventArgsExtended P NewValue : System.Object virtual get:public
-  Quire.Wpf.IPropertyChangedEventArgsExtended P OldValue : System.Object virtual get:public
+  Quire.Wpf.IAlignedRoot P Visual : System.Windows.Media.Visual abstract get:public
+  Quire.Wpf.ICanBlockUndoRedo P BlockUndoRedo : System.Boolean abstract get:public
+  Quire.Wpf.ICustomFontSizeOwner P FontSizeForReport : System.Double abstract get:public
+  Quire.Wpf.ICustomFontSizeOwner P FontSizeToRestore : System.Nullable`1<System.Double> abstract set:public
+  Quire.Wpf.IDialogManager M public abstract ShowDialog`0(Microsoft.Win32.FileDialog) -> System.Nullable`1<System.Boolean>
+  Quire.Wpf.IDialogManager M public abstract ShowDialog`0(System.Windows.Forms.FileDialog) -> System.Windows.Forms.DialogResult
+  Quire.Wpf.IDialogManager P IsDialogOpen : System.Boolean abstract get:public set:public
+  Quire.Wpf.IHasFunctionalityKey P FunctionalityKey : Quire.FunctionalitiesLimitation.EnumFunctionalityKey abstract get:public
+  Quire.Wpf.IHasFunctionalityKeyAccordingToParameter M public abstract GetFunctionalityKeyAccordingParameter`0(System.Object,System.Boolean) -> Quire.FunctionalitiesLimitation.EnumFunctionalityKey
+  Quire.Wpf.IMessageBoxManager M public abstract ShowError`0(System.String,System.String) -> System.Windows.MessageBoxResult
+  Quire.Wpf.IMessageBoxManager M public abstract ShowError`0(System.Windows.Window,System.String,System.String) -> System.Windows.MessageBoxResult
+  Quire.Wpf.IMessageBoxManager M public abstract ShowInfo`0(System.String,System.String) -> System.Windows.MessageBoxResult
+  Quire.Wpf.IMessageBoxManager M public abstract ShowInfo`0(System.Windows.Window,System.String,System.String) -> System.Windows.MessageBoxResult
+  Quire.Wpf.IMessageBoxManager M public abstract ShowOkDialog`0(System.Windows.Window,System.String,System.String,System.Windows.MessageBoxImage) -> System.Windows.MessageBoxResult
+  Quire.Wpf.IMessageBoxManager M public abstract ShowQuestionWithOptions`0(System.Windows.Window,System.String,System.String,System.Windows.MessageBoxImage,Quire.Wpf.CheckBoxData[],System.String[],System.String,System.String) -> System.Int32
+  Quire.Wpf.IMessageBoxManager M public abstract ShowQuestion`0(System.String,System.String,System.Windows.MessageBoxButton) -> System.Windows.MessageBoxResult
+  Quire.Wpf.IMessageBoxManager M public abstract ShowQuestion`0(System.Windows.Window,System.String,System.String,System.Windows.MessageBoxButton) -> System.Windows.MessageBoxResult
+  Quire.Wpf.IMessageBoxManager M public abstract ShowWarning`0(System.String,System.String) -> System.Windows.MessageBoxResult
+  Quire.Wpf.IMessageBoxManager M public abstract ShowWarning`0(System.Windows.Window,System.String,System.String) -> System.Windows.MessageBoxResult
+  Quire.Wpf.IMessageBoxManager P IsDisabled : System.Boolean abstract get:public set:public
+  Quire.Wpf.IMessageBoxManager P ShowCriticalErrorMessage : System.Func`4<System.Windows.Window,System.String,System.String,System.Windows.MessageBoxResult> abstract get:public set:public
+  Quire.Wpf.IMessageBoxManager P ShowCriticalQuestionMessage : System.Func`5<System.Windows.Window,System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxResult> abstract get:public set:public
+  Quire.Wpf.IMessageBoxManager P ShowCriticalWarningMessage : System.Func`4<System.Windows.Window,System.String,System.String,System.Windows.MessageBoxResult> abstract get:public set:public
+  Quire.Wpf.IMessageBoxManager P ShowExceptionMessage : System.Action`1<System.String> abstract get:public set:public
+  Quire.Wpf.INotifyCollectionRangeChanged E public abstract System.Collections.Specialized.NotifyCollectionChangedEventHandler RangeChanged
+  Quire.Wpf.INotifyCollectionRangeChanged E public abstract System.Collections.Specialized.NotifyCollectionChangedEventHandler RangeChanging
+  Quire.Wpf.INotifyCollectionRangeChanged M public abstract Count`0() -> System.Int32
+  Quire.Wpf.INotifyCollectionRangeChanged M public abstract IsEmpty`0() -> System.Boolean
+  Quire.Wpf.INotifyProgress E public abstract System.Action`1<System.Boolean> ProgressStopped
+  Quire.Wpf.INotifyProgress E public abstract System.ComponentModel.ProgressChangedEventHandler ProgressChanged
+  Quire.Wpf.INotifyProgress M public abstract AbortProgressTracking`0() -> System.Void
+  Quire.Wpf.INotifyProgress M public abstract IsProgressTrackingAborted`0() -> System.Boolean
+  Quire.Wpf.INotifyProgress M public abstract SetProgressAbortTimeout`0(System.Int32) -> System.Void
+  Quire.Wpf.INotifyProgress M public abstract StartProgressTracking`0() -> System.Void
+  Quire.Wpf.INotifyProgress P IsTrackingInProgress : System.Boolean abstract get:public
+  Quire.Wpf.IObservableRangeCollection`1 M public abstract AddRange`0(System.Collections.Generic.IEnumerable`1<!0>) -> System.Void
+  Quire.Wpf.IObservableRangeCollection`1 M public abstract RemoveRange`0(System.Collections.Generic.IEnumerable`1<!0>) -> System.Int32
+  Quire.Wpf.IPropertyChangedEventArgsExtended P NewValue : System.Object abstract get:public
+  Quire.Wpf.IPropertyChangedEventArgsExtended P OldValue : System.Object abstract get:public
   Quire.Wpf.ImagePackagingInformation F public System.Byte[] ImageOriginalStreamHash
   Quire.Wpf.ImagePackagingInformation F public System.String ImageExtension
   Quire.Wpf.ImagePackagingInformation F public System.Uri ImageSourceUri
@@ -5238,12 +5237,12 @@
   Quire.Wpf.PreemptiveCommandBinding M private static EmptyEventHandler`0(System.Object,System.EventArgs) -> System.Void
   Quire.Wpf.PreemptiveCommandBinding M public Add`0() -> System.Void
   Quire.Wpf.PreemptiveCommandBinding M public Remove`0() -> System.Void
-  Quire.Wpf.Printing.IPrintDialogOptions P FileName : System.String virtual get:public
-  Quire.Wpf.Printing.IPrintDialogOptions P PageRange : Quire.Wpf.Printing.PageIndexRange virtual get:public
-  Quire.Wpf.Printing.IPrintDialogOptions P PrintQueue : System.Printing.PrintQueue virtual get:public
-  Quire.Wpf.Printing.IPrintDialogOptions P PrintRange : Quire.Wpf.Printing.Win32PrintRange virtual get:public
-  Quire.Wpf.Printing.IPrintDialogOptions P PrintTicket : System.Printing.PrintTicket virtual get:public
-  Quire.Wpf.Printing.IPrintDialogOptions P PrintToFile : System.Boolean virtual get:public
+  Quire.Wpf.Printing.IPrintDialogOptions P FileName : System.String abstract get:public
+  Quire.Wpf.Printing.IPrintDialogOptions P PageRange : Quire.Wpf.Printing.PageIndexRange abstract get:public
+  Quire.Wpf.Printing.IPrintDialogOptions P PrintQueue : System.Printing.PrintQueue abstract get:public
+  Quire.Wpf.Printing.IPrintDialogOptions P PrintRange : Quire.Wpf.Printing.Win32PrintRange abstract get:public
+  Quire.Wpf.Printing.IPrintDialogOptions P PrintTicket : System.Printing.PrintTicket abstract get:public
+  Quire.Wpf.Printing.IPrintDialogOptions P PrintToFile : System.Boolean abstract get:public
   Quire.Wpf.Printing.LocalPrintServerExtensions M public static GetLocalNonRedirectedPrintQueues`0(System.Printing.LocalPrintServer) -> System.Collections.Generic.IEnumerable`1<System.Printing.PrintQueue>
   Quire.Wpf.Printing.PageIndexRange M public .ctor`0(System.Int32,System.Nullable`1<System.Int32>) -> System.Void
   Quire.Wpf.Printing.PageIndexRange M public .ctor`0(System.Windows.Controls.PageRange) -> System.Void
@@ -5297,11 +5296,11 @@
   Quire.Wpf.Printing.Win32PrintRange V SomePages = 2
   Quire.Wpf.Printing.XpsPrintInterop M private static StartXpsPrintJob`0(System.String,System.String,System.String,System.IntPtr,Microsoft.Win32.SafeHandles.SafeWaitHandle,System.Byte[],System.UInt32,out Quire.Wpf.Printing.XpsPrintInterop+IXpsPrintJob&,out Quire.Wpf.Printing.XpsPrintInterop+IXpsPrintJobStream&,System.IntPtr) -> System.Int32
   Quire.Wpf.Printing.XpsPrintInterop M public static XpsFileToPrinterFile`0(System.String,System.String,System.String,out System.Int32&) -> System.Void
-  Quire.Wpf.Printing.XpsPrintInterop+IXpsPrintJob M public virtual Cancel`0() -> System.Void
-  Quire.Wpf.Printing.XpsPrintInterop+IXpsPrintJob M public virtual GetJobStatus`0() -> Quire.Wpf.Printing.XpsPrintInterop+XPS_JOB_STATUS
-  Quire.Wpf.Printing.XpsPrintInterop+IXpsPrintJobStream M public virtual Close`0() -> System.Void
-  Quire.Wpf.Printing.XpsPrintInterop+IXpsPrintJobStream M public virtual Read`0(System.Byte[],System.UInt32,out System.UInt32&) -> System.Void
-  Quire.Wpf.Printing.XpsPrintInterop+IXpsPrintJobStream M public virtual Write`0(System.Byte[],System.UInt32,out System.UInt32&) -> System.Void
+  Quire.Wpf.Printing.XpsPrintInterop+IXpsPrintJob M public abstract Cancel`0() -> System.Void
+  Quire.Wpf.Printing.XpsPrintInterop+IXpsPrintJob M public abstract GetJobStatus`0() -> Quire.Wpf.Printing.XpsPrintInterop+XPS_JOB_STATUS
+  Quire.Wpf.Printing.XpsPrintInterop+IXpsPrintJobStream M public abstract Close`0() -> System.Void
+  Quire.Wpf.Printing.XpsPrintInterop+IXpsPrintJobStream M public abstract Read`0(System.Byte[],System.UInt32,out System.UInt32&) -> System.Void
+  Quire.Wpf.Printing.XpsPrintInterop+IXpsPrintJobStream M public abstract Write`0(System.Byte[],System.UInt32,out System.UInt32&) -> System.Void
   Quire.Wpf.Printing.XpsPrintInterop+XPS_JOB_COMPLETION V XPS_JOB_CANCELLED = 2
   Quire.Wpf.Printing.XpsPrintInterop+XPS_JOB_COMPLETION V XPS_JOB_COMPLETED = 1
   Quire.Wpf.Printing.XpsPrintInterop+XPS_JOB_COMPLETION V XPS_JOB_FAILED = 3
@@ -5545,245 +5544,245 @@
   Quire.Wpf.UnsafeNativeMethods+GetPositionFromPointFlags V GXFPF_NEAREST = 2
   Quire.Wpf.UnsafeNativeMethods+GetPositionFromPointFlags V GXFPF_ROUND_NEAREST = 1
   Quire.Wpf.UnsafeNativeMethods+GetRenderingMarkupFlags V TF_GRM_INCLUDE_PROPERTY = 1
-  Quire.Wpf.UnsafeNativeMethods+IEnumITfCompositionView M public virtual Clone`0(out Quire.Wpf.UnsafeNativeMethods+IEnumTfRanges&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+IEnumITfCompositionView M public virtual Next`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfCompositionView[],out System.Int32&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+IEnumITfCompositionView M public virtual Reset`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+IEnumITfCompositionView M public virtual Skip`0(System.Int32) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+IEnumTfLanguageProfiles M public virtual Clone`0(out Quire.Wpf.UnsafeNativeMethods+IEnumTfLanguageProfiles&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+IEnumTfLanguageProfiles M public virtual Next`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TF_LANGUAGEPROFILE[],out System.Int32&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+IEnumTfLanguageProfiles M public virtual Reset`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+IEnumTfLanguageProfiles M public virtual Skip`0(System.Int32) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+IEnumTfRanges M public virtual Clone`0(out Quire.Wpf.UnsafeNativeMethods+IEnumTfRanges&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+IEnumTfRanges M public virtual Next`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange[],out System.Int32&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+IEnumTfRanges M public virtual Reset`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+IEnumTfRanges M public virtual Skip`0(System.Int32) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+IEnumTfRenderingMarkup M public virtual Clone`0(out Quire.Wpf.UnsafeNativeMethods+IEnumTfRenderingMarkup&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+IEnumTfRenderingMarkup M public virtual Next`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TF_RENDERINGMARKUP[],out System.Int32&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+IEnumTfRenderingMarkup M public virtual Reset`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+IEnumTfRenderingMarkup M public virtual Skip`0(System.Int32) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITextStoreACPSink M public virtual OnAttrsChange`0(System.Int32,System.Int32,System.Int32,System.Guid[]) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITextStoreACPSink M public virtual OnEndEditTransaction`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITextStoreACPSink M public virtual OnLayoutChange`0(Quire.Wpf.UnsafeNativeMethods+TsLayoutCode,System.Int32) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITextStoreACPSink M public virtual OnLockGranted`0(Quire.Wpf.UnsafeNativeMethods+LockFlags) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITextStoreACPSink M public virtual OnSelectionChange`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITextStoreACPSink M public virtual OnStartEditTransaction`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITextStoreACPSink M public virtual OnStatusChange`0(Quire.Wpf.UnsafeNativeMethods+DynamicStatusFlags) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITextStoreACPSink M public virtual OnTextChange`0(Quire.Wpf.UnsafeNativeMethods+OnTextChangeFlags,Quire.Wpf.UnsafeNativeMethods+TS_TEXTCHANGE&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCandidateList M public virtual EnumCandidates`0(out System.Object&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCandidateList M public virtual GetCandidateNum`0(out System.Int32&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCandidateList M public virtual GetCandidate`0(System.Int32,out Quire.Wpf.UnsafeNativeMethods+ITfCandidateString&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCandidateList M public virtual SetResult`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfCandidateResult) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCandidateString M public virtual GetIndex`0(out System.Int32&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCandidateString M public virtual GetString`0(out System.String&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public virtual GetGUID`0(System.Int32,out System.Guid&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public virtual stub_EnumCategoriesInItem`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public virtual stub_EnumItemsInCategory`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public virtual stub_FindClosestCategory`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public virtual stub_GetGUIDDWORD`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public virtual stub_GetGUIDDescription`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public virtual stub_IsEqualTfGuidAtom`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public virtual stub_RegisterCategory`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public virtual stub_RegisterGUIDDWORD`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public virtual stub_RegisterGUIDDescription`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public virtual stub_RegisterGUID`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public virtual stub_UnregisterCategory`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public virtual stub_UnregisterGUIDDWORD`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public virtual stub_UnregisterGUIDDescription`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCompartment M public virtual GetValue`0(out System.Object&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCompartment M public virtual SetValue`0(System.Int32,System.Object&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfCompartmentEventSink M public virtual OnChange`0(System.Guid&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCompartmentMgr M public virtual ClearCompartment`0(System.Int32,System.Guid) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCompartmentMgr M public virtual EnumCompartments`0(out System.Object&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCompartmentMgr M public virtual GetCompartment`0(System.Guid&,out Quire.Wpf.UnsafeNativeMethods+ITfCompartment&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCompositionView M public virtual GetOwnerClsid`0(out System.Guid&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfCompositionView M public virtual GetRange`0(out Quire.Wpf.UnsafeNativeMethods+ITfRange&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContext M public virtual GetProperty`0(System.Guid&,out Quire.Wpf.UnsafeNativeMethods+ITfProperty&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContext M public virtual GetStart`0(System.Int32,out Quire.Wpf.UnsafeNativeMethods+ITfRange&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContext M public virtual InWriteSession`0(System.Int32,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContext M public virtual stub_CreateRangeBackup`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContext M public virtual stub_EnumProperties`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContext M public virtual stub_EnumViews`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContext M public virtual stub_GetActiveView`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContext M public virtual stub_GetAppProperty`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContext M public virtual stub_GetDocumentMgr`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContext M public virtual stub_GetEnd`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContext M public virtual stub_GetSelection`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContext M public virtual stub_GetStatus`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContext M public virtual stub_RequestEditSession`0() -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfContext M public virtual stub_SetSelection`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContext M public virtual stub_TrackProperties`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextComposition M public virtual EnumCompositions`0(out Quire.Wpf.UnsafeNativeMethods+IEnumITfCompositionView&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextComposition M public virtual FindComposition`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,out System.Object&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextComposition M public virtual StartComposition`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,System.Object,out System.Object&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextComposition M public virtual TakeOwnership`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfCompositionView,System.Object,out System.Object&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwner M public virtual GetACPFromPoint`0(Quire.Wpf.UnsafeNativeMethods+POINT&,Quire.Wpf.UnsafeNativeMethods+GetPositionFromPointFlags,out System.Int32&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwner M public virtual GetScreenExt`0(out Quire.Wpf.UnsafeNativeMethods+RECT&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwner M public virtual GetStatus`0(out Quire.Wpf.UnsafeNativeMethods+TS_STATUS&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwner M public virtual GetTextExt`0(System.Int32,System.Int32,out Quire.Wpf.UnsafeNativeMethods+RECT&,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwner M public virtual GetValue`0(System.Guid&,out System.Object&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwner M public virtual GetWnd`0(out System.IntPtr&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionServices M public virtual EnumCompositions`0(out System.Object&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionServices M public virtual FindComposition`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,out System.Object&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionServices M public virtual StartComposition`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,System.Object,out System.Object&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionServices M public virtual TakeOwnership`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfCompositionView,System.Object,out System.Object&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionServices M public virtual TerminateComposition`0(Quire.Wpf.UnsafeNativeMethods+ITfCompositionView) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionSink M public virtual OnEndComposition`0(Quire.Wpf.UnsafeNativeMethods+ITfCompositionView) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionSink M public virtual OnStartComposition`0(Quire.Wpf.UnsafeNativeMethods+ITfCompositionView,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionSink M public virtual OnUpdateComposition`0(Quire.Wpf.UnsafeNativeMethods+ITfCompositionView,Quire.Wpf.UnsafeNativeMethods+ITfRange) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerServices M public virtual CreateRange`0(System.Int32,System.Int32,out Quire.Wpf.UnsafeNativeMethods+ITfRangeACP&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerServices M public virtual stub_ForceLoadProperty`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerServices M public virtual stub_OnAttributeChange`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerServices M public virtual stub_OnLayoutChange`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerServices M public virtual stub_OnStatusChange`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerServices M public virtual stub_Serialize`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerServices M public virtual stub_Unserialize`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextRenderingMarkup M public virtual FindNextRenderingMarkup`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+FindRenderingMarkupFlags,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out Quire.Wpf.UnsafeNativeMethods+ITfRange&,out Quire.Wpf.UnsafeNativeMethods+TF_RENDERINGMARKUP&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfContextRenderingMarkup M public virtual GetRenderingMarkup`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+GetRenderingMarkupFlags,Quire.Wpf.UnsafeNativeMethods+ITfRange,out Quire.Wpf.UnsafeNativeMethods+IEnumTfRenderingMarkup&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeInfo M public virtual GetAttributeInfo`0(out Quire.Wpf.UnsafeNativeMethods+TF_DISPLAYATTRIBUTE&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeInfo M public virtual stub_GetDescription`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeInfo M public virtual stub_GetGUID`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeInfo M public virtual stub_Reset`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeInfo M public virtual stub_SetAttributeInfo`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeMgr M public virtual GetDisplayAttributeInfo`0(System.Guid&,out Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeInfo&,out System.Guid&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeMgr M public virtual OnUpdateInfo`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeMgr M public virtual stub_EnumDisplayAttributeInfo`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr M public virtual CreateContext`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+CreateContextFlags,System.Object,out Quire.Wpf.UnsafeNativeMethods+ITfContext&,out System.Int32&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr M public virtual EnumContexts`0(out System.Object&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr M public virtual GetBase`0(out Quire.Wpf.UnsafeNativeMethods+ITfContext&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr M public virtual GetTop`0(out Quire.Wpf.UnsafeNativeMethods+ITfContext&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr M public virtual Pop`0(Quire.Wpf.UnsafeNativeMethods+PopFlags) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr M public virtual Push`0(Quire.Wpf.UnsafeNativeMethods+ITfContext) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfEditRecord M public virtual GetSelectionStatus`0(out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfEditRecord M public virtual GetTextAndPropertyUpdates`0(System.Int32,System.IntPtr&,System.Int32,out Quire.Wpf.UnsafeNativeMethods+IEnumTfRanges&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfFnConfigure M public virtual GetDisplayName`0(out System.String&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfFnConfigure M public virtual Show`0(System.IntPtr,System.Int16,System.Guid&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfFnConfigureRegisterWord M public virtual GetDisplayName`0(out System.String&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfFnConfigureRegisterWord M public virtual Show`0(System.IntPtr,System.Int16,System.Guid&,System.String) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfFnReconversion M public virtual GetDisplayName`0(out System.String&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfFnReconversion M public virtual GetReconversion`0(Quire.Wpf.UnsafeNativeMethods+ITfRange,out Quire.Wpf.UnsafeNativeMethods+ITfCandidateList&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfFnReconversion M public virtual QueryRange`0(Quire.Wpf.UnsafeNativeMethods+ITfRange,out Quire.Wpf.UnsafeNativeMethods+ITfRange&,out System.Boolean&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfFnReconversion M public virtual Reconvert`0(Quire.Wpf.UnsafeNativeMethods+ITfRange) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfFunction M public virtual GetDisplayName`0(out System.String&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfFunctionProvider M public virtual GetDescription`0(out System.String&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfFunctionProvider M public virtual GetFunction`0(System.Guid&,System.Guid&,out System.Object&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfFunctionProvider M public virtual GetType`0(out System.Guid&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual ActivateLanguageProfile`0(System.Guid&,System.Int16,System.Guid&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual ChangeCurrentLanguage`0(System.Int16) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual EnumLanguageProfiles`0(System.Int16,out Quire.Wpf.UnsafeNativeMethods+IEnumTfLanguageProfiles&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual GetActiveLanguageProfile`0(System.Guid&,out System.Int16&,out System.Guid&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual GetCurrentLanguage`0(out System.Int16&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual GetLanguageList`0(out System.IntPtr&,out System.Int32&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual stub_AddLanguageProfile`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual stub_EnableLanguageProfileByDefault`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual stub_EnableLanguageProfile`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual stub_EnumInputProcessorInfo`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual stub_GetDefaultLanguageProfile`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual stub_GetLanguageProfileDescription`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual stub_IsEnabledLanguageProfile`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual stub_Register`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual stub_RemoveLanguageProfile`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual stub_SetDefaultLanguageProfile`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual stub_SubstituteKeyboardLayout`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public virtual stub_Unregister`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfInputScope M public virtual GetInputScopes`0(out System.IntPtr&,out System.Int32&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfInputScope M public virtual GetPhrase`0(out System.IntPtr&,out System.Int32&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfInputScope M public virtual GetRegularExpression`0(out System.String&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfInputScope M public virtual GetSRGC`0(out System.String&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfInputScope M public virtual GetXML`0(out System.String&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public virtual AdviseKeyEventSink`0(System.Int32,System.Object,System.Boolean) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public virtual GetForeground`0(out System.Guid&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public virtual GetPreservedKeyDescription`0(System.Guid&,out System.String&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public virtual GetPreservedKey`0(Quire.Wpf.UnsafeNativeMethods+ITfContext,Quire.Wpf.UnsafeNativeMethods+TF_PRESERVEDKEY&,out System.Guid&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public virtual IsPreservedKey`0(System.Guid&,Quire.Wpf.UnsafeNativeMethods+TF_PRESERVEDKEY&,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public virtual KeyDown`0(System.Int32,System.Int32,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public virtual KeyUp`0(System.Int32,System.Int32,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public virtual PreserveKey`0(System.Int32,System.Guid&,Quire.Wpf.UnsafeNativeMethods+TF_PRESERVEDKEY&,System.Char[],System.Int32) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public virtual SetPreservedKeyDescription`0(System.Guid&,System.Char[],System.Int32) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public virtual SimulatePreservedKey`0(Quire.Wpf.UnsafeNativeMethods+ITfContext,System.Guid&,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public virtual TestKeyDown`0(System.Int32,System.Int32,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public virtual TestKeyUp`0(System.Int32,System.Int32,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public virtual UnadviseKeyEventSink`0(System.Int32) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public virtual UnpreserveKey`0(System.Guid&,Quire.Wpf.UnsafeNativeMethods+TF_PRESERVEDKEY&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfLanguageProfileNotifySink M public virtual OnLanguageChange`0(System.Int16,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfLanguageProfileNotifySink M public virtual OnLanguageChanged`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfMessagePump M public virtual GetMessageA`0(System.Windows.Interop.MSG&,System.Int32,System.Int32,System.Int32,out System.Int32&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfMessagePump M public virtual GetMessageW`0(System.Windows.Interop.MSG&,System.Int32,System.Int32,System.Int32,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfMessagePump M public virtual PeekMessageA`0(System.Windows.Interop.MSG&,System.Int32,System.Int32,System.Int32,System.Int32,out System.Int32&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfMessagePump M public virtual PeekMessageW`0(System.Windows.Interop.MSG&,System.Int32,System.Int32,System.Int32,System.Int32,out System.Int32&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfMouseSink M public virtual OnMouseEvent`0(System.Int32,System.Int32,System.Int32,out System.Boolean&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfMouseTrackerACP M public virtual AdviceMouseSink`0(Quire.Wpf.UnsafeNativeMethods+ITfRangeACP,Quire.Wpf.UnsafeNativeMethods+ITfMouseSink,out System.Int32&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfMouseTrackerACP M public virtual UnadviceMouseSink`0(System.Int32) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfProperty M public virtual Clear`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfProperty M public virtual EnumRanges`0(System.Int32,out Quire.Wpf.UnsafeNativeMethods+IEnumTfRanges&,Quire.Wpf.UnsafeNativeMethods+ITfRange) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfProperty M public virtual FindRange`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,out Quire.Wpf.UnsafeNativeMethods+ITfRange&,Quire.Wpf.UnsafeNativeMethods+TfAnchor) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfProperty M public virtual GetContext`0(out Quire.Wpf.UnsafeNativeMethods+ITfContext&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfProperty M public virtual GetType`0(out System.Guid&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfProperty M public virtual GetValue`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,out System.Object&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfProperty M public virtual SetValue`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,System.Object) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfProperty M public virtual stub_SetValueStore`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual AdjustForInsert`0(System.Int32,System.Int32,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual Clone`0(out Quire.Wpf.UnsafeNativeMethods+ITfRange&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual Collapse`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfAnchor) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual CompareEnd`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out System.Int32&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual CompareStart`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out System.Int32&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual GetContext`0(out Quire.Wpf.UnsafeNativeMethods+ITfContext&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual GetEmbedded`0(System.Int32,System.Guid&,System.Guid&,out System.Object&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual GetFormattedText`0(System.Int32,out System.Object&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual GetGravity`0(out Quire.Wpf.UnsafeNativeMethods+TfGravity&,out Quire.Wpf.UnsafeNativeMethods+TfGravity&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual GetText`0(System.Int32,System.Int32,System.Char[],System.Int32,out System.Int32&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual InsertEmbedded`0(System.Int32,System.Int32,System.Object) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual IsEmpty`0(System.Int32,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual IsEqualEnd`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual IsEqualStart`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual SetGravity`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfGravity,Quire.Wpf.UnsafeNativeMethods+TfGravity) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual SetText`0(System.Int32,System.Int32,System.Char[],System.Int32) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual ShiftEndRegion`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfShiftDir,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual ShiftEndToRange`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual ShiftEnd`0(System.Int32,System.Int32,out System.Int32&,System.Int32) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual ShiftStartRegion`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfShiftDir,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual ShiftStartToRange`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRange M public virtual ShiftStart`0(System.Int32,System.Int32,out System.Int32&,System.Int32) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual AdjustForInsert`0(System.Int32,System.Int32,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual Clone`0(out Quire.Wpf.UnsafeNativeMethods+ITfRange&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual Collapse`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfAnchor) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual CompareEnd`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out System.Int32&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual CompareStart`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out System.Int32&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual GetContext`0(out Quire.Wpf.UnsafeNativeMethods+ITfContext&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual GetEmbedded`0(System.Int32,System.Guid&,System.Guid&,out System.Object&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual GetExtent`0(out System.Int32&,out System.Int32&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual GetFormattedText`0(System.Int32,out System.Object&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual GetGravity`0(out Quire.Wpf.UnsafeNativeMethods+TfGravity&,out Quire.Wpf.UnsafeNativeMethods+TfGravity&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual GetText`0(System.Int32,System.Int32,System.Char[],System.Int32,out System.Int32&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual InsertEmbedded`0(System.Int32,System.Int32,System.Object) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual IsEmpty`0(System.Int32,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual IsEqualEnd`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual IsEqualStart`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual SetExtent`0(System.Int32,System.Int32) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual SetGravity`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfGravity,Quire.Wpf.UnsafeNativeMethods+TfGravity) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual SetText`0(System.Int32,System.Int32,System.Char[],System.Int32) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual ShiftEndRegion`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfShiftDir,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual ShiftEndToRange`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual ShiftEnd`0(System.Int32,System.Int32,out System.Int32&,System.Int32) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual ShiftStartRegion`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfShiftDir,out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual ShiftStartToRange`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public virtual ShiftStart`0(System.Int32,System.Int32,out System.Int32&,System.Int32) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfSource M public virtual AdviseSink`0(System.Guid&,System.Object,out System.Int32&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfSource M public virtual UnadviseSink`0(System.Int32) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfTextEditSink M public virtual OnEndEdit`0(Quire.Wpf.UnsafeNativeMethods+ITfContext,System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfEditRecord) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfThreadFocusSink M public virtual OnKillThreadFocus`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfThreadFocusSink M public virtual OnSetThreadFocus`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public virtual Activate`0(out System.Int32&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public virtual AssociateFocus`0(System.IntPtr,Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr,out Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public virtual CreateDocumentMgr`0(out Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public virtual Deactivate`0() -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public virtual EnumDocumentMgrs`0(out Quire.Wpf.UnsafeNativeMethods+IEnumTfDocumentMgrs&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public virtual EnumFunctionProviders`0(out Quire.Wpf.UnsafeNativeMethods+IEnumTfFunctionProviders&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public virtual GetFocus`0(out Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public virtual GetFunctionProvider`0(System.Guid&,out Quire.Wpf.UnsafeNativeMethods+ITfFunctionProvider&) -> System.Int32
-  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public virtual GetGlobalCompartment`0(out Quire.Wpf.UnsafeNativeMethods+ITfCompartmentMgr&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public virtual IsThreadFocus`0(out System.Boolean&) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public virtual SetFocus`0(Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr) -> System.Void
-  Quire.Wpf.UnsafeNativeMethods+ITfTransitoryExtensionSink M public virtual OnTransitoryExtensionUpdated`0(Quire.Wpf.UnsafeNativeMethods+ITfContext,System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+ITfRange,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+IEnumITfCompositionView M public abstract Clone`0(out Quire.Wpf.UnsafeNativeMethods+IEnumTfRanges&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+IEnumITfCompositionView M public abstract Next`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfCompositionView[],out System.Int32&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+IEnumITfCompositionView M public abstract Reset`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+IEnumITfCompositionView M public abstract Skip`0(System.Int32) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+IEnumTfLanguageProfiles M public abstract Clone`0(out Quire.Wpf.UnsafeNativeMethods+IEnumTfLanguageProfiles&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+IEnumTfLanguageProfiles M public abstract Next`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TF_LANGUAGEPROFILE[],out System.Int32&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+IEnumTfLanguageProfiles M public abstract Reset`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+IEnumTfLanguageProfiles M public abstract Skip`0(System.Int32) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+IEnumTfRanges M public abstract Clone`0(out Quire.Wpf.UnsafeNativeMethods+IEnumTfRanges&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+IEnumTfRanges M public abstract Next`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange[],out System.Int32&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+IEnumTfRanges M public abstract Reset`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+IEnumTfRanges M public abstract Skip`0(System.Int32) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+IEnumTfRenderingMarkup M public abstract Clone`0(out Quire.Wpf.UnsafeNativeMethods+IEnumTfRenderingMarkup&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+IEnumTfRenderingMarkup M public abstract Next`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TF_RENDERINGMARKUP[],out System.Int32&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+IEnumTfRenderingMarkup M public abstract Reset`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+IEnumTfRenderingMarkup M public abstract Skip`0(System.Int32) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITextStoreACPSink M public abstract OnAttrsChange`0(System.Int32,System.Int32,System.Int32,System.Guid[]) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITextStoreACPSink M public abstract OnEndEditTransaction`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITextStoreACPSink M public abstract OnLayoutChange`0(Quire.Wpf.UnsafeNativeMethods+TsLayoutCode,System.Int32) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITextStoreACPSink M public abstract OnLockGranted`0(Quire.Wpf.UnsafeNativeMethods+LockFlags) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITextStoreACPSink M public abstract OnSelectionChange`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITextStoreACPSink M public abstract OnStartEditTransaction`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITextStoreACPSink M public abstract OnStatusChange`0(Quire.Wpf.UnsafeNativeMethods+DynamicStatusFlags) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITextStoreACPSink M public abstract OnTextChange`0(Quire.Wpf.UnsafeNativeMethods+OnTextChangeFlags,Quire.Wpf.UnsafeNativeMethods+TS_TEXTCHANGE&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCandidateList M public abstract EnumCandidates`0(out System.Object&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCandidateList M public abstract GetCandidateNum`0(out System.Int32&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCandidateList M public abstract GetCandidate`0(System.Int32,out Quire.Wpf.UnsafeNativeMethods+ITfCandidateString&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCandidateList M public abstract SetResult`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfCandidateResult) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCandidateString M public abstract GetIndex`0(out System.Int32&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCandidateString M public abstract GetString`0(out System.String&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public abstract GetGUID`0(System.Int32,out System.Guid&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public abstract stub_EnumCategoriesInItem`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public abstract stub_EnumItemsInCategory`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public abstract stub_FindClosestCategory`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public abstract stub_GetGUIDDWORD`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public abstract stub_GetGUIDDescription`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public abstract stub_IsEqualTfGuidAtom`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public abstract stub_RegisterCategory`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public abstract stub_RegisterGUIDDWORD`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public abstract stub_RegisterGUIDDescription`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public abstract stub_RegisterGUID`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public abstract stub_UnregisterCategory`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public abstract stub_UnregisterGUIDDWORD`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCategoryMgr M public abstract stub_UnregisterGUIDDescription`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCompartment M public abstract GetValue`0(out System.Object&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCompartment M public abstract SetValue`0(System.Int32,System.Object&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfCompartmentEventSink M public abstract OnChange`0(System.Guid&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCompartmentMgr M public abstract ClearCompartment`0(System.Int32,System.Guid) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCompartmentMgr M public abstract EnumCompartments`0(out System.Object&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCompartmentMgr M public abstract GetCompartment`0(System.Guid&,out Quire.Wpf.UnsafeNativeMethods+ITfCompartment&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCompositionView M public abstract GetOwnerClsid`0(out System.Guid&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfCompositionView M public abstract GetRange`0(out Quire.Wpf.UnsafeNativeMethods+ITfRange&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContext M public abstract GetProperty`0(System.Guid&,out Quire.Wpf.UnsafeNativeMethods+ITfProperty&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContext M public abstract GetStart`0(System.Int32,out Quire.Wpf.UnsafeNativeMethods+ITfRange&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContext M public abstract InWriteSession`0(System.Int32,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContext M public abstract stub_CreateRangeBackup`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContext M public abstract stub_EnumProperties`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContext M public abstract stub_EnumViews`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContext M public abstract stub_GetActiveView`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContext M public abstract stub_GetAppProperty`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContext M public abstract stub_GetDocumentMgr`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContext M public abstract stub_GetEnd`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContext M public abstract stub_GetSelection`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContext M public abstract stub_GetStatus`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContext M public abstract stub_RequestEditSession`0() -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfContext M public abstract stub_SetSelection`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContext M public abstract stub_TrackProperties`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextComposition M public abstract EnumCompositions`0(out Quire.Wpf.UnsafeNativeMethods+IEnumITfCompositionView&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextComposition M public abstract FindComposition`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,out System.Object&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextComposition M public abstract StartComposition`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,System.Object,out System.Object&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextComposition M public abstract TakeOwnership`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfCompositionView,System.Object,out System.Object&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwner M public abstract GetACPFromPoint`0(Quire.Wpf.UnsafeNativeMethods+POINT&,Quire.Wpf.UnsafeNativeMethods+GetPositionFromPointFlags,out System.Int32&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwner M public abstract GetScreenExt`0(out Quire.Wpf.UnsafeNativeMethods+RECT&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwner M public abstract GetStatus`0(out Quire.Wpf.UnsafeNativeMethods+TS_STATUS&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwner M public abstract GetTextExt`0(System.Int32,System.Int32,out Quire.Wpf.UnsafeNativeMethods+RECT&,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwner M public abstract GetValue`0(System.Guid&,out System.Object&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwner M public abstract GetWnd`0(out System.IntPtr&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionServices M public abstract EnumCompositions`0(out System.Object&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionServices M public abstract FindComposition`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,out System.Object&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionServices M public abstract StartComposition`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,System.Object,out System.Object&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionServices M public abstract TakeOwnership`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfCompositionView,System.Object,out System.Object&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionServices M public abstract TerminateComposition`0(Quire.Wpf.UnsafeNativeMethods+ITfCompositionView) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionSink M public abstract OnEndComposition`0(Quire.Wpf.UnsafeNativeMethods+ITfCompositionView) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionSink M public abstract OnStartComposition`0(Quire.Wpf.UnsafeNativeMethods+ITfCompositionView,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionSink M public abstract OnUpdateComposition`0(Quire.Wpf.UnsafeNativeMethods+ITfCompositionView,Quire.Wpf.UnsafeNativeMethods+ITfRange) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerServices M public abstract CreateRange`0(System.Int32,System.Int32,out Quire.Wpf.UnsafeNativeMethods+ITfRangeACP&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerServices M public abstract stub_ForceLoadProperty`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerServices M public abstract stub_OnAttributeChange`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerServices M public abstract stub_OnLayoutChange`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerServices M public abstract stub_OnStatusChange`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerServices M public abstract stub_Serialize`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextOwnerServices M public abstract stub_Unserialize`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextRenderingMarkup M public abstract FindNextRenderingMarkup`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+FindRenderingMarkupFlags,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out Quire.Wpf.UnsafeNativeMethods+ITfRange&,out Quire.Wpf.UnsafeNativeMethods+TF_RENDERINGMARKUP&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfContextRenderingMarkup M public abstract GetRenderingMarkup`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+GetRenderingMarkupFlags,Quire.Wpf.UnsafeNativeMethods+ITfRange,out Quire.Wpf.UnsafeNativeMethods+IEnumTfRenderingMarkup&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeInfo M public abstract GetAttributeInfo`0(out Quire.Wpf.UnsafeNativeMethods+TF_DISPLAYATTRIBUTE&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeInfo M public abstract stub_GetDescription`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeInfo M public abstract stub_GetGUID`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeInfo M public abstract stub_Reset`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeInfo M public abstract stub_SetAttributeInfo`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeMgr M public abstract GetDisplayAttributeInfo`0(System.Guid&,out Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeInfo&,out System.Guid&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeMgr M public abstract OnUpdateInfo`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfDisplayAttributeMgr M public abstract stub_EnumDisplayAttributeInfo`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr M public abstract CreateContext`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+CreateContextFlags,System.Object,out Quire.Wpf.UnsafeNativeMethods+ITfContext&,out System.Int32&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr M public abstract EnumContexts`0(out System.Object&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr M public abstract GetBase`0(out Quire.Wpf.UnsafeNativeMethods+ITfContext&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr M public abstract GetTop`0(out Quire.Wpf.UnsafeNativeMethods+ITfContext&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr M public abstract Pop`0(Quire.Wpf.UnsafeNativeMethods+PopFlags) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr M public abstract Push`0(Quire.Wpf.UnsafeNativeMethods+ITfContext) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfEditRecord M public abstract GetSelectionStatus`0(out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfEditRecord M public abstract GetTextAndPropertyUpdates`0(System.Int32,System.IntPtr&,System.Int32,out Quire.Wpf.UnsafeNativeMethods+IEnumTfRanges&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfFnConfigure M public abstract GetDisplayName`0(out System.String&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfFnConfigure M public abstract Show`0(System.IntPtr,System.Int16,System.Guid&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfFnConfigureRegisterWord M public abstract GetDisplayName`0(out System.String&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfFnConfigureRegisterWord M public abstract Show`0(System.IntPtr,System.Int16,System.Guid&,System.String) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfFnReconversion M public abstract GetDisplayName`0(out System.String&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfFnReconversion M public abstract GetReconversion`0(Quire.Wpf.UnsafeNativeMethods+ITfRange,out Quire.Wpf.UnsafeNativeMethods+ITfCandidateList&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfFnReconversion M public abstract QueryRange`0(Quire.Wpf.UnsafeNativeMethods+ITfRange,out Quire.Wpf.UnsafeNativeMethods+ITfRange&,out System.Boolean&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfFnReconversion M public abstract Reconvert`0(Quire.Wpf.UnsafeNativeMethods+ITfRange) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfFunction M public abstract GetDisplayName`0(out System.String&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfFunctionProvider M public abstract GetDescription`0(out System.String&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfFunctionProvider M public abstract GetFunction`0(System.Guid&,System.Guid&,out System.Object&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfFunctionProvider M public abstract GetType`0(out System.Guid&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract ActivateLanguageProfile`0(System.Guid&,System.Int16,System.Guid&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract ChangeCurrentLanguage`0(System.Int16) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract EnumLanguageProfiles`0(System.Int16,out Quire.Wpf.UnsafeNativeMethods+IEnumTfLanguageProfiles&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract GetActiveLanguageProfile`0(System.Guid&,out System.Int16&,out System.Guid&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract GetCurrentLanguage`0(out System.Int16&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract GetLanguageList`0(out System.IntPtr&,out System.Int32&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract stub_AddLanguageProfile`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract stub_EnableLanguageProfileByDefault`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract stub_EnableLanguageProfile`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract stub_EnumInputProcessorInfo`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract stub_GetDefaultLanguageProfile`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract stub_GetLanguageProfileDescription`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract stub_IsEnabledLanguageProfile`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract stub_Register`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract stub_RemoveLanguageProfile`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract stub_SetDefaultLanguageProfile`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract stub_SubstituteKeyboardLayout`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles M public abstract stub_Unregister`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfInputScope M public abstract GetInputScopes`0(out System.IntPtr&,out System.Int32&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfInputScope M public abstract GetPhrase`0(out System.IntPtr&,out System.Int32&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfInputScope M public abstract GetRegularExpression`0(out System.String&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfInputScope M public abstract GetSRGC`0(out System.String&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfInputScope M public abstract GetXML`0(out System.String&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public abstract AdviseKeyEventSink`0(System.Int32,System.Object,System.Boolean) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public abstract GetForeground`0(out System.Guid&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public abstract GetPreservedKeyDescription`0(System.Guid&,out System.String&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public abstract GetPreservedKey`0(Quire.Wpf.UnsafeNativeMethods+ITfContext,Quire.Wpf.UnsafeNativeMethods+TF_PRESERVEDKEY&,out System.Guid&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public abstract IsPreservedKey`0(System.Guid&,Quire.Wpf.UnsafeNativeMethods+TF_PRESERVEDKEY&,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public abstract KeyDown`0(System.Int32,System.Int32,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public abstract KeyUp`0(System.Int32,System.Int32,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public abstract PreserveKey`0(System.Int32,System.Guid&,Quire.Wpf.UnsafeNativeMethods+TF_PRESERVEDKEY&,System.Char[],System.Int32) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public abstract SetPreservedKeyDescription`0(System.Guid&,System.Char[],System.Int32) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public abstract SimulatePreservedKey`0(Quire.Wpf.UnsafeNativeMethods+ITfContext,System.Guid&,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public abstract TestKeyDown`0(System.Int32,System.Int32,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public abstract TestKeyUp`0(System.Int32,System.Int32,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public abstract UnadviseKeyEventSink`0(System.Int32) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr M public abstract UnpreserveKey`0(System.Guid&,Quire.Wpf.UnsafeNativeMethods+TF_PRESERVEDKEY&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfLanguageProfileNotifySink M public abstract OnLanguageChange`0(System.Int16,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfLanguageProfileNotifySink M public abstract OnLanguageChanged`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfMessagePump M public abstract GetMessageA`0(System.Windows.Interop.MSG&,System.Int32,System.Int32,System.Int32,out System.Int32&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfMessagePump M public abstract GetMessageW`0(System.Windows.Interop.MSG&,System.Int32,System.Int32,System.Int32,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfMessagePump M public abstract PeekMessageA`0(System.Windows.Interop.MSG&,System.Int32,System.Int32,System.Int32,System.Int32,out System.Int32&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfMessagePump M public abstract PeekMessageW`0(System.Windows.Interop.MSG&,System.Int32,System.Int32,System.Int32,System.Int32,out System.Int32&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfMouseSink M public abstract OnMouseEvent`0(System.Int32,System.Int32,System.Int32,out System.Boolean&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfMouseTrackerACP M public abstract AdviceMouseSink`0(Quire.Wpf.UnsafeNativeMethods+ITfRangeACP,Quire.Wpf.UnsafeNativeMethods+ITfMouseSink,out System.Int32&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfMouseTrackerACP M public abstract UnadviceMouseSink`0(System.Int32) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfProperty M public abstract Clear`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfProperty M public abstract EnumRanges`0(System.Int32,out Quire.Wpf.UnsafeNativeMethods+IEnumTfRanges&,Quire.Wpf.UnsafeNativeMethods+ITfRange) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfProperty M public abstract FindRange`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,out Quire.Wpf.UnsafeNativeMethods+ITfRange&,Quire.Wpf.UnsafeNativeMethods+TfAnchor) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfProperty M public abstract GetContext`0(out Quire.Wpf.UnsafeNativeMethods+ITfContext&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfProperty M public abstract GetType`0(out System.Guid&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfProperty M public abstract GetValue`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,out System.Object&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfProperty M public abstract SetValue`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,System.Object) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfProperty M public abstract stub_SetValueStore`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract AdjustForInsert`0(System.Int32,System.Int32,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract Clone`0(out Quire.Wpf.UnsafeNativeMethods+ITfRange&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract Collapse`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfAnchor) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract CompareEnd`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out System.Int32&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract CompareStart`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out System.Int32&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract GetContext`0(out Quire.Wpf.UnsafeNativeMethods+ITfContext&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract GetEmbedded`0(System.Int32,System.Guid&,System.Guid&,out System.Object&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract GetFormattedText`0(System.Int32,out System.Object&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract GetGravity`0(out Quire.Wpf.UnsafeNativeMethods+TfGravity&,out Quire.Wpf.UnsafeNativeMethods+TfGravity&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract GetText`0(System.Int32,System.Int32,System.Char[],System.Int32,out System.Int32&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract InsertEmbedded`0(System.Int32,System.Int32,System.Object) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract IsEmpty`0(System.Int32,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract IsEqualEnd`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract IsEqualStart`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract SetGravity`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfGravity,Quire.Wpf.UnsafeNativeMethods+TfGravity) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract SetText`0(System.Int32,System.Int32,System.Char[],System.Int32) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract ShiftEndRegion`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfShiftDir,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract ShiftEndToRange`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract ShiftEnd`0(System.Int32,System.Int32,out System.Int32&,System.Int32) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract ShiftStartRegion`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfShiftDir,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract ShiftStartToRange`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRange M public abstract ShiftStart`0(System.Int32,System.Int32,out System.Int32&,System.Int32) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract AdjustForInsert`0(System.Int32,System.Int32,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract Clone`0(out Quire.Wpf.UnsafeNativeMethods+ITfRange&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract Collapse`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfAnchor) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract CompareEnd`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out System.Int32&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract CompareStart`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out System.Int32&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract GetContext`0(out Quire.Wpf.UnsafeNativeMethods+ITfContext&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract GetEmbedded`0(System.Int32,System.Guid&,System.Guid&,out System.Object&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract GetExtent`0(out System.Int32&,out System.Int32&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract GetFormattedText`0(System.Int32,out System.Object&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract GetGravity`0(out Quire.Wpf.UnsafeNativeMethods+TfGravity&,out Quire.Wpf.UnsafeNativeMethods+TfGravity&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract GetText`0(System.Int32,System.Int32,System.Char[],System.Int32,out System.Int32&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract InsertEmbedded`0(System.Int32,System.Int32,System.Object) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract IsEmpty`0(System.Int32,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract IsEqualEnd`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract IsEqualStart`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract SetExtent`0(System.Int32,System.Int32) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract SetGravity`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfGravity,Quire.Wpf.UnsafeNativeMethods+TfGravity) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract SetText`0(System.Int32,System.Int32,System.Char[],System.Int32) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract ShiftEndRegion`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfShiftDir,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract ShiftEndToRange`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract ShiftEnd`0(System.Int32,System.Int32,out System.Int32&,System.Int32) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract ShiftStartRegion`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+TfShiftDir,out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract ShiftStartToRange`0(System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+TfAnchor) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfRangeACP M public abstract ShiftStart`0(System.Int32,System.Int32,out System.Int32&,System.Int32) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfSource M public abstract AdviseSink`0(System.Guid&,System.Object,out System.Int32&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfSource M public abstract UnadviseSink`0(System.Int32) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfTextEditSink M public abstract OnEndEdit`0(Quire.Wpf.UnsafeNativeMethods+ITfContext,System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfEditRecord) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfThreadFocusSink M public abstract OnKillThreadFocus`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfThreadFocusSink M public abstract OnSetThreadFocus`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public abstract Activate`0(out System.Int32&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public abstract AssociateFocus`0(System.IntPtr,Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr,out Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public abstract CreateDocumentMgr`0(out Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public abstract Deactivate`0() -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public abstract EnumDocumentMgrs`0(out Quire.Wpf.UnsafeNativeMethods+IEnumTfDocumentMgrs&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public abstract EnumFunctionProviders`0(out Quire.Wpf.UnsafeNativeMethods+IEnumTfFunctionProviders&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public abstract GetFocus`0(out Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public abstract GetFunctionProvider`0(System.Guid&,out Quire.Wpf.UnsafeNativeMethods+ITfFunctionProvider&) -> System.Int32
+  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public abstract GetGlobalCompartment`0(out Quire.Wpf.UnsafeNativeMethods+ITfCompartmentMgr&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public abstract IsThreadFocus`0(out System.Boolean&) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfThreadMgr M public abstract SetFocus`0(Quire.Wpf.UnsafeNativeMethods+ITfDocumentMgr) -> System.Void
+  Quire.Wpf.UnsafeNativeMethods+ITfTransitoryExtensionSink M public abstract OnTransitoryExtensionUpdated`0(Quire.Wpf.UnsafeNativeMethods+ITfContext,System.Int32,Quire.Wpf.UnsafeNativeMethods+ITfRange,Quire.Wpf.UnsafeNativeMethods+ITfRange,out System.Boolean&) -> System.Void
   Quire.Wpf.UnsafeNativeMethods+InsertAtSelectionFlags V TS_IAS_NOQUERY = 1
   Quire.Wpf.UnsafeNativeMethods+InsertAtSelectionFlags V TS_IAS_QUERYONLY = 2
   Quire.Wpf.UnsafeNativeMethods+InsertEmbeddedFlags V TS_IE_CORRECTION = 1

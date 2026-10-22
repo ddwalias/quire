@@ -66,7 +66,7 @@ public class WorksheetControlTests
         await Settle(ws);
 
         Assert.Equal(6, Value(eval));
-        Assert.Equal("m", Assert.Single(((IUnitedValueResultNode)eval.Result!.Value).Units).Name);
+        Assert.Equal("m", Assert.Single(((IUnitedValueResultNode)((CalculatableRegionControl)eval).Result!.Value).Units).Name);
         Assert.Equal(2, ws.RegionCount);
     });
 
@@ -91,7 +91,7 @@ public class WorksheetControlTests
 
         ws.MoveRegion(use, new Point(0, 0));
         await Settle(ws);
-        Assert.Equal("k", use.Result!.Error!.Symbol);
+        Assert.Equal("k", ((CalculatableRegionControl)use).Result!.Error!.Symbol);
         Assert.True(use.HasError);
         Assert.Equal(1, ws.ErrorCount);
     });

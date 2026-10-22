@@ -11,7 +11,7 @@ namespace Quire.Media3D;
 public abstract partial class MeshGeneratorBase : Animatable
 {
     public static readonly DependencyProperty NameProperty;
-    private static readonly DependencyPropertyKey GeometryKey;
+    private static DependencyPropertyKey GeometryKey;
     public static readonly DependencyProperty GeometryProperty;
 
     static MeshGeneratorBase()

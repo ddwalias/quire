@@ -115,188 +115,188 @@
   Quire.EngNotebook.Automation.HRESULT F internal const System.Int32 S_OK
   Quire.EngNotebook.Automation.HRESULT F public const System.Int32 CLASS_E_NOTLICENSED
   Quire.EngNotebook.Automation.HRESULT F public const System.Int32 E_INVALIDARG
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication M public virtual Activate`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication M public virtual InitializeEvents`0(Quire.EngNotebook.Automation.IMathcadPrimeEvents) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication M public virtual Open`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeWorksheet
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication M public virtual Quit`0(Quire.EngNotebook.Automation.SaveOption) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication P ActiveWorksheet : Quire.EngNotebook.Automation.IMathcadPrimeWorksheet virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication P Visible : System.Boolean virtual get:public set:public
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 M public virtual Activate`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 M public virtual CloseAll`0(Quire.EngNotebook.Automation.SaveOption) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 M public virtual GetVersion`0() -> System.String
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 M public virtual InitializeEvents`0(Quire.EngNotebook.Automation.IMathcadPrimeEvents) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 M public virtual Open`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeWorksheet
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 M public virtual Quit`0(Quire.EngNotebook.Automation.SaveOption) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 P ActiveWorksheet : Quire.EngNotebook.Automation.IMathcadPrimeWorksheet virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 P Visible : System.Boolean virtual get:public set:public
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 P Worksheets : Quire.EngNotebook.Automation.IMathcadPrimeWorksheets virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public virtual Activate`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public virtual CloseAll`0(Quire.EngNotebook.Automation.SaveOption) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public virtual CreateWorksheetReadonlyOptions`0() -> Quire.EngNotebook.Automation.IMathcadPrimeWorksheetReadonlyOptions
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public virtual GetVersion`0() -> System.String
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public virtual InitializeEvents2`0(Quire.EngNotebook.Automation.IMathcadPrimeEvents2,System.Boolean) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public virtual InitializeEvents`0(Quire.EngNotebook.Automation.IMathcadPrimeEvents) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public virtual OpenEx`0(System.String,Quire.EngNotebook.Automation.IMathcadPrimeWorksheetReadonlyOptions) -> Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public virtual Open`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeWorksheet
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public virtual Quit`0(Quire.EngNotebook.Automation.SaveOption) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public virtual SetContextData`0(System.String[]) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public virtual SubscribeEvent`0(Quire.EngNotebook.Automation.MathcadPrimeEvents) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public virtual UnsubscribeEvent`0(Quire.EngNotebook.Automation.MathcadPrimeEvents) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public virtual UpdateInputs`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 P ActiveWorksheet : Quire.EngNotebook.Automation.IMathcadPrimeWorksheet virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 P Visible : System.Boolean virtual get:public set:public
-  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 P Worksheets : Quire.EngNotebook.Automation.IMathcadPrimeWorksheets virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeEvents M public virtual OnExit`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeEvents M public virtual OnSave`0(System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeEvents M public virtual OnSelect`0(Quire.EngNotebook.Automation.IMathcadPrimeInputs,Quire.EngNotebook.Automation.IMathcadPrimeOutputs) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public virtual OnExit`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public virtual OnWorksheetClosed`0(System.String,System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public virtual OnWorksheetInputsOutputsSelected`0(System.String,System.String,Quire.EngNotebook.Automation.IMathcadPrimeInputs,Quire.EngNotebook.Automation.IMathcadPrimeOutputs) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public virtual OnWorksheetModified`0(System.String,System.String,System.Boolean) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public virtual OnWorksheetRenamed`0(System.String,System.String,System.String,System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public virtual OnWorksheetRequestToUpdateInputs`0(System.String,System.String,Quire.EngNotebook.Automation.IMathcadPrimeValuesSetter) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public virtual OnWorksheetSaved`0(System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public virtual OnWorksheetStatesGenerated`0(System.String,System.String,Quire.EngNotebook.Automation.WorksheetOperations,Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates,Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsConflicts) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public virtual OnWorksheetStatesGenerating`0(System.String,System.String,Quire.EngNotebook.Automation.WorksheetOperations,Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates,Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsConflicts) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public virtual Ping`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult P ErrorCode : System.Int32 virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult P MatrixResult : Quire.EngNotebook.Automation.IMathcadPrimeMatrix virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult P RealResult : System.Double virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult P ResultType : Quire.EngNotebook.Automation.ValueResultTypes virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult P StringResult : System.String virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult P Units : System.String virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeInputMatrixResult P ErrorCode : System.Int32 virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeInputMatrixResult P MatrixResult : Quire.EngNotebook.Automation.IMathcadPrimeMatrix virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeInputMatrixResult P Units : System.String virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeInputResult P ErrorCode : System.Int32 virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeInputResult P RealResult : System.Double virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeInputResult P Units : System.String virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeInputs M public virtual GetAliasByIndex`0(System.Int32) -> System.String
-  Quire.EngNotebook.Automation.IMathcadPrimeInputs P Count : System.Int32 virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsConflicts M public virtual AddGeneralError`0(System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsConflicts M public virtual AddGeneralWarning`0(System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsConflicts M public virtual AddItemError`0(System.String,System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsConflicts M public virtual AddItemWarning`0(System.String,System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates M public virtual GetInputScalarStateByAlias`0(System.String,out System.Double&,out System.String&) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates M public virtual GetInputScalarStateByIndex`0(System.Int32,out System.String&,out System.Double&,out System.String&) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates M public virtual GetOutputScalarStateByAlias`0(System.String,out System.Double&,out System.String&) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates M public virtual GetOutputScalarStateByIndex`0(System.Int32,out System.String&,out System.Double&,out System.String&) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates P ScalarInputsCount : System.Int32 virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates P ScalarOutputsCount : System.Int32 virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeMatrix M public virtual GetMatrixElement`0(System.Int32,System.Int32,out System.Double&) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeMatrix M public virtual SetMatrixElement`0(System.Int32,System.Int32,System.Double) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeMatrix P Columns : System.Double virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeMatrix P Matrix : System.Double[][] virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeMatrix P Rows : System.Double virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResult P ErrorCode : System.Int32 virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResult P MatrixResult : Quire.EngNotebook.Automation.IMathcadPrimeMatrix virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResult P Units : System.String virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResultAs P ErrorCode : System.Int32 virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResultAs P MatrixResult : Quire.EngNotebook.Automation.IMathcadPrimeMatrix virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeOutputResult P ErrorCode : System.Int32 virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeOutputResult P RealResult : System.Double virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeOutputResult P Units : System.String virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeOutputResultAs P ErrorCode : System.Int32 virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeOutputResultAs P RealResult : System.Double virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeOutputs M public virtual GetAliasByIndex`0(System.Int32) -> System.String
-  Quire.EngNotebook.Automation.IMathcadPrimeOutputs P Count : System.Int32 virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeSetValueResults M public virtual GetResultByAlias`0(System.String) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeSetValueResults M public virtual GetResultByIndex`0(System.Int32) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeSetValueResults P Count : System.Int32 virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeValuesSetter M public virtual AddMatrixValue`0(System.String,System.Object[,],System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeValuesSetter M public virtual AddSExprValue`0(System.String,System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeValuesSetter M public virtual AddScalarValue`0(System.String,System.Double,System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeValuesSetter M public virtual AddStringValue`0(System.String,System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeValuesSetter M public virtual SetValues`0(System.Int32) -> Quire.EngNotebook.Automation.IMathcadPrimeSetValueResults
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public virtual InputGetRealValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeInputResult
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public virtual OutputGetRealValueAs`0(System.String,System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputResultAs
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public virtual OutputGetRealValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputResult
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public virtual PauseCalculation`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public virtual ResumeCalculation`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public virtual SaveAs`0(System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public virtual Save`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public virtual SetRealValue`0(System.String,System.Double,System.String) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public virtual SetTitle`0(System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public virtual Synchronize`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet P FullName : System.String virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet P Inputs : Quire.EngNotebook.Automation.IMathcadPrimeInputs virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet P IsReadOnly : System.Boolean virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet P Modified : System.Boolean virtual get:public set:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet P Name : System.String virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet P Outputs : Quire.EngNotebook.Automation.IMathcadPrimeOutputs virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual Activate`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual Close`0(Quire.EngNotebook.Automation.SaveOption) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual CreateMatrix`0(System.Int32,System.Int32) -> Quire.EngNotebook.Automation.IMathcadPrimeMatrix
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual InputGetMatrixValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeInputMatrixResult
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual InputGetRealValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeInputResult
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual IsOpen`0() -> System.Boolean
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual OutputGetMatrixValueAs`0(System.String,System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResultAs
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual OutputGetMatrixValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResult
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual OutputGetRealValueAs`0(System.String,System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputResultAs
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual OutputGetRealValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputResult
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual PauseCalculation`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual ResumeCalculation`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual SaveAs`0(System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual Save`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual SetMatrixValue`0(System.String,Quire.EngNotebook.Automation.IMathcadPrimeMatrix,System.String) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual SetRealValue`0(System.String,System.Double,System.String) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual SetTitle`0(System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public virtual Synchronize`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 P FullName : System.String virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 P Inputs : Quire.EngNotebook.Automation.IMathcadPrimeInputs virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 P IsReadOnly : System.Boolean virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 P Modified : System.Boolean virtual get:public set:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 P Name : System.String virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 P Outputs : Quire.EngNotebook.Automation.IMathcadPrimeOutputs virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual Activate`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual Close`0(Quire.EngNotebook.Automation.SaveOption) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual CreateMatrix`0(System.Int32,System.Int32) -> Quire.EngNotebook.Automation.IMathcadPrimeMatrix
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual CreateValuesSetter`0() -> Quire.EngNotebook.Automation.IMathcadPrimeValuesSetter
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual GetTitle`0() -> System.String
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual GetWorksheetReadOnlyOptionValue`0(Quire.EngNotebook.Automation.WorksheetReadonlyOptionNames) -> System.Object
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual InputGetMatrixValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeInputMatrixResult
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual InputGetRealValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeInputResult
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual InputGetSExprValue`0(System.String) -> System.String
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual InputGetStringValue`0(System.String) -> System.String
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual InputGetValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual IsOpen`0() -> System.Boolean
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual OutputGetMatrixValueAs`0(System.String,System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResultAs
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual OutputGetMatrixValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResult
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual OutputGetRealValueAs`0(System.String,System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputResultAs
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual OutputGetRealValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputResult
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual OutputGetStringValue`0(System.String) -> System.String
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual OutputGetValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual PauseCalculation`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual ResumeCalculation`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual SaveAndPush`0(Quire.EngNotebook.Automation.SaveOption) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual SaveAs`0(System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual Save`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual SetMatrixValue`0(System.String,Quire.EngNotebook.Automation.IMathcadPrimeMatrix,System.String) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual SetRealValue`0(System.String,System.Double,System.String) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual SetSExprValue`0(System.String,System.String) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual SetStringValue`0(System.String,System.String) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual SetTitle`0(System.String) -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public virtual Synchronize`0() -> System.Void
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P DefaultCalculationTimeout : System.Int32 virtual get:public set:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P FullName : System.String virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P Inputs : Quire.EngNotebook.Automation.IMathcadPrimeInputs virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P IsReadOnly : System.Boolean virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P Modified : System.Boolean virtual get:public set:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P Name : System.String virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P Outputs : Quire.EngNotebook.Automation.IMathcadPrimeOutputs virtual get:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P WorksheetClosingPrompt : System.String virtual get:public set:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P WorksheetDisplayedFilePath : System.String virtual get:public set:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P WorksheetTabIcon : System.String virtual get:public set:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P WorksheetTabName : System.String virtual get:public set:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P WorksheetWorkingDirectory : System.String virtual get:public set:public
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheetReadonlyOptions M public virtual SetOptionValue`0(Quire.EngNotebook.Automation.WorksheetReadonlyOptionNames,System.Object) -> System.Int32
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheets M public virtual Item`0(System.Int32) -> Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2
-  Quire.EngNotebook.Automation.IMathcadPrimeWorksheets P Count : System.Int32 virtual get:public
-  Quire.EngNotebook.Automation.IProxyComClassManagerAgent`1 M public virtual Release`0() -> System.Void
-  Quire.EngNotebook.Automation.IProxyComClassManagerAgent`1 P IsRegistered : System.Boolean virtual get:public
-  Quire.EngNotebook.Automation.IProxyComClassManagerAgent`1 P IsReleased : System.Boolean virtual get:public
-  Quire.EngNotebook.Automation.IProxyComRealSubject`1 P RealSubjectInstance : !0 virtual get:public
-  Quire.EngNotebook.Automation.IReleasableRealSubject M public virtual ReleaseComEvents`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication M public abstract Activate`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication M public abstract InitializeEvents`0(Quire.EngNotebook.Automation.IMathcadPrimeEvents) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication M public abstract Open`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeWorksheet
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication M public abstract Quit`0(Quire.EngNotebook.Automation.SaveOption) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication P ActiveWorksheet : Quire.EngNotebook.Automation.IMathcadPrimeWorksheet abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication P Visible : System.Boolean abstract get:public set:public
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 M public abstract Activate`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 M public abstract CloseAll`0(Quire.EngNotebook.Automation.SaveOption) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 M public abstract GetVersion`0() -> System.String
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 M public abstract InitializeEvents`0(Quire.EngNotebook.Automation.IMathcadPrimeEvents) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 M public abstract Open`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeWorksheet
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 M public abstract Quit`0(Quire.EngNotebook.Automation.SaveOption) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 P ActiveWorksheet : Quire.EngNotebook.Automation.IMathcadPrimeWorksheet abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 P Visible : System.Boolean abstract get:public set:public
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication2 P Worksheets : Quire.EngNotebook.Automation.IMathcadPrimeWorksheets abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public abstract Activate`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public abstract CloseAll`0(Quire.EngNotebook.Automation.SaveOption) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public abstract CreateWorksheetReadonlyOptions`0() -> Quire.EngNotebook.Automation.IMathcadPrimeWorksheetReadonlyOptions
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public abstract GetVersion`0() -> System.String
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public abstract InitializeEvents2`0(Quire.EngNotebook.Automation.IMathcadPrimeEvents2,System.Boolean) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public abstract InitializeEvents`0(Quire.EngNotebook.Automation.IMathcadPrimeEvents) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public abstract OpenEx`0(System.String,Quire.EngNotebook.Automation.IMathcadPrimeWorksheetReadonlyOptions) -> Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public abstract Open`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeWorksheet
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public abstract Quit`0(Quire.EngNotebook.Automation.SaveOption) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public abstract SetContextData`0(System.String[]) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public abstract SubscribeEvent`0(Quire.EngNotebook.Automation.MathcadPrimeEvents) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public abstract UnsubscribeEvent`0(Quire.EngNotebook.Automation.MathcadPrimeEvents) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 M public abstract UpdateInputs`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 P ActiveWorksheet : Quire.EngNotebook.Automation.IMathcadPrimeWorksheet abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 P Visible : System.Boolean abstract get:public set:public
+  Quire.EngNotebook.Automation.IMathcadPrimeApplication3 P Worksheets : Quire.EngNotebook.Automation.IMathcadPrimeWorksheets abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeEvents M public abstract OnExit`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeEvents M public abstract OnSave`0(System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeEvents M public abstract OnSelect`0(Quire.EngNotebook.Automation.IMathcadPrimeInputs,Quire.EngNotebook.Automation.IMathcadPrimeOutputs) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public abstract OnExit`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public abstract OnWorksheetClosed`0(System.String,System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public abstract OnWorksheetInputsOutputsSelected`0(System.String,System.String,Quire.EngNotebook.Automation.IMathcadPrimeInputs,Quire.EngNotebook.Automation.IMathcadPrimeOutputs) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public abstract OnWorksheetModified`0(System.String,System.String,System.Boolean) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public abstract OnWorksheetRenamed`0(System.String,System.String,System.String,System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public abstract OnWorksheetRequestToUpdateInputs`0(System.String,System.String,Quire.EngNotebook.Automation.IMathcadPrimeValuesSetter) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public abstract OnWorksheetSaved`0(System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public abstract OnWorksheetStatesGenerated`0(System.String,System.String,Quire.EngNotebook.Automation.WorksheetOperations,Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates,Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsConflicts) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public abstract OnWorksheetStatesGenerating`0(System.String,System.String,Quire.EngNotebook.Automation.WorksheetOperations,Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates,Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsConflicts) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeEvents2 M public abstract Ping`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult P ErrorCode : System.Int32 abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult P MatrixResult : Quire.EngNotebook.Automation.IMathcadPrimeMatrix abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult P RealResult : System.Double abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult P ResultType : Quire.EngNotebook.Automation.ValueResultTypes abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult P StringResult : System.String abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult P Units : System.String abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeInputMatrixResult P ErrorCode : System.Int32 abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeInputMatrixResult P MatrixResult : Quire.EngNotebook.Automation.IMathcadPrimeMatrix abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeInputMatrixResult P Units : System.String abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeInputResult P ErrorCode : System.Int32 abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeInputResult P RealResult : System.Double abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeInputResult P Units : System.String abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeInputs M public abstract GetAliasByIndex`0(System.Int32) -> System.String
+  Quire.EngNotebook.Automation.IMathcadPrimeInputs P Count : System.Int32 abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsConflicts M public abstract AddGeneralError`0(System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsConflicts M public abstract AddGeneralWarning`0(System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsConflicts M public abstract AddItemError`0(System.String,System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsConflicts M public abstract AddItemWarning`0(System.String,System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates M public abstract GetInputScalarStateByAlias`0(System.String,out System.Double&,out System.String&) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates M public abstract GetInputScalarStateByIndex`0(System.Int32,out System.String&,out System.Double&,out System.String&) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates M public abstract GetOutputScalarStateByAlias`0(System.String,out System.Double&,out System.String&) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates M public abstract GetOutputScalarStateByIndex`0(System.Int32,out System.String&,out System.Double&,out System.String&) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates P ScalarInputsCount : System.Int32 abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates P ScalarOutputsCount : System.Int32 abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeMatrix M public abstract GetMatrixElement`0(System.Int32,System.Int32,out System.Double&) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeMatrix M public abstract SetMatrixElement`0(System.Int32,System.Int32,System.Double) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeMatrix P Columns : System.Double abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeMatrix P Matrix : System.Double[][] abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeMatrix P Rows : System.Double abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResult P ErrorCode : System.Int32 abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResult P MatrixResult : Quire.EngNotebook.Automation.IMathcadPrimeMatrix abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResult P Units : System.String abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResultAs P ErrorCode : System.Int32 abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResultAs P MatrixResult : Quire.EngNotebook.Automation.IMathcadPrimeMatrix abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeOutputResult P ErrorCode : System.Int32 abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeOutputResult P RealResult : System.Double abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeOutputResult P Units : System.String abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeOutputResultAs P ErrorCode : System.Int32 abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeOutputResultAs P RealResult : System.Double abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeOutputs M public abstract GetAliasByIndex`0(System.Int32) -> System.String
+  Quire.EngNotebook.Automation.IMathcadPrimeOutputs P Count : System.Int32 abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeSetValueResults M public abstract GetResultByAlias`0(System.String) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeSetValueResults M public abstract GetResultByIndex`0(System.Int32) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeSetValueResults P Count : System.Int32 abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeValuesSetter M public abstract AddMatrixValue`0(System.String,System.Object[,],System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeValuesSetter M public abstract AddSExprValue`0(System.String,System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeValuesSetter M public abstract AddScalarValue`0(System.String,System.Double,System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeValuesSetter M public abstract AddStringValue`0(System.String,System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeValuesSetter M public abstract SetValues`0(System.Int32) -> Quire.EngNotebook.Automation.IMathcadPrimeSetValueResults
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public abstract InputGetRealValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeInputResult
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public abstract OutputGetRealValueAs`0(System.String,System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputResultAs
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public abstract OutputGetRealValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputResult
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public abstract PauseCalculation`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public abstract ResumeCalculation`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public abstract SaveAs`0(System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public abstract Save`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public abstract SetRealValue`0(System.String,System.Double,System.String) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public abstract SetTitle`0(System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet M public abstract Synchronize`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet P FullName : System.String abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet P Inputs : Quire.EngNotebook.Automation.IMathcadPrimeInputs abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet P IsReadOnly : System.Boolean abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet P Modified : System.Boolean abstract get:public set:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet P Name : System.String abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet P Outputs : Quire.EngNotebook.Automation.IMathcadPrimeOutputs abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract Activate`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract Close`0(Quire.EngNotebook.Automation.SaveOption) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract CreateMatrix`0(System.Int32,System.Int32) -> Quire.EngNotebook.Automation.IMathcadPrimeMatrix
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract InputGetMatrixValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeInputMatrixResult
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract InputGetRealValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeInputResult
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract IsOpen`0() -> System.Boolean
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract OutputGetMatrixValueAs`0(System.String,System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResultAs
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract OutputGetMatrixValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResult
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract OutputGetRealValueAs`0(System.String,System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputResultAs
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract OutputGetRealValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputResult
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract PauseCalculation`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract ResumeCalculation`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract SaveAs`0(System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract Save`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract SetMatrixValue`0(System.String,Quire.EngNotebook.Automation.IMathcadPrimeMatrix,System.String) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract SetRealValue`0(System.String,System.Double,System.String) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract SetTitle`0(System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 M public abstract Synchronize`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 P FullName : System.String abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 P Inputs : Quire.EngNotebook.Automation.IMathcadPrimeInputs abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 P IsReadOnly : System.Boolean abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 P Modified : System.Boolean abstract get:public set:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 P Name : System.String abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 P Outputs : Quire.EngNotebook.Automation.IMathcadPrimeOutputs abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract Activate`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract Close`0(Quire.EngNotebook.Automation.SaveOption) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract CreateMatrix`0(System.Int32,System.Int32) -> Quire.EngNotebook.Automation.IMathcadPrimeMatrix
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract CreateValuesSetter`0() -> Quire.EngNotebook.Automation.IMathcadPrimeValuesSetter
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract GetTitle`0() -> System.String
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract GetWorksheetReadOnlyOptionValue`0(Quire.EngNotebook.Automation.WorksheetReadonlyOptionNames) -> System.Object
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract InputGetMatrixValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeInputMatrixResult
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract InputGetRealValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeInputResult
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract InputGetSExprValue`0(System.String) -> System.String
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract InputGetStringValue`0(System.String) -> System.String
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract InputGetValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract IsOpen`0() -> System.Boolean
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract OutputGetMatrixValueAs`0(System.String,System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResultAs
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract OutputGetMatrixValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResult
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract OutputGetRealValueAs`0(System.String,System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputResultAs
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract OutputGetRealValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeOutputResult
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract OutputGetStringValue`0(System.String) -> System.String
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract OutputGetValue`0(System.String) -> Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract PauseCalculation`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract ResumeCalculation`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract SaveAndPush`0(Quire.EngNotebook.Automation.SaveOption) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract SaveAs`0(System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract Save`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract SetMatrixValue`0(System.String,Quire.EngNotebook.Automation.IMathcadPrimeMatrix,System.String) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract SetRealValue`0(System.String,System.Double,System.String) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract SetSExprValue`0(System.String,System.String) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract SetStringValue`0(System.String,System.String) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract SetTitle`0(System.String) -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 M public abstract Synchronize`0() -> System.Void
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P DefaultCalculationTimeout : System.Int32 abstract get:public set:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P FullName : System.String abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P Inputs : Quire.EngNotebook.Automation.IMathcadPrimeInputs abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P IsReadOnly : System.Boolean abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P Modified : System.Boolean abstract get:public set:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P Name : System.String abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P Outputs : Quire.EngNotebook.Automation.IMathcadPrimeOutputs abstract get:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P WorksheetClosingPrompt : System.String abstract get:public set:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P WorksheetDisplayedFilePath : System.String abstract get:public set:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P WorksheetTabIcon : System.String abstract get:public set:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P WorksheetTabName : System.String abstract get:public set:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3 P WorksheetWorkingDirectory : System.String abstract get:public set:public
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheetReadonlyOptions M public abstract SetOptionValue`0(Quire.EngNotebook.Automation.WorksheetReadonlyOptionNames,System.Object) -> System.Int32
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheets M public abstract Item`0(System.Int32) -> Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2
+  Quire.EngNotebook.Automation.IMathcadPrimeWorksheets P Count : System.Int32 abstract get:public
+  Quire.EngNotebook.Automation.IProxyComClassManagerAgent`1 M public abstract Release`0() -> System.Void
+  Quire.EngNotebook.Automation.IProxyComClassManagerAgent`1 P IsRegistered : System.Boolean abstract get:public
+  Quire.EngNotebook.Automation.IProxyComClassManagerAgent`1 P IsReleased : System.Boolean abstract get:public
+  Quire.EngNotebook.Automation.IProxyComRealSubject`1 P RealSubjectInstance : !0 abstract get:public
+  Quire.EngNotebook.Automation.IReleasableRealSubject M public abstract ReleaseComEvents`0() -> System.Void
   Quire.EngNotebook.Automation.InputMatrixResult F private readonly Quire.EngNotebook.Automation.IMathcadPrimeInputMatrixResult _realSubjectInstance
   Quire.EngNotebook.Automation.InputMatrixResult M internal .ctor`0(Quire.EngNotebook.Automation.IMathcadPrimeInputMatrixResult) -> System.Void
   Quire.EngNotebook.Automation.InputMatrixResult M protected override Finalize`0() -> System.Void

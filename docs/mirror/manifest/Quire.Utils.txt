@@ -18,9 +18,9 @@
   Quire.Utils.COMStreamAdaptor P CanWrite : System.Boolean override get:public
   Quire.Utils.COMStreamAdaptor P Length : System.Int64 override get:public
   Quire.Utils.COMStreamAdaptor P Position : System.Int64 override get:public set:public
-  Quire.Utils.IImageConverter M public virtual ImageStreamToImageStream`0(Quire.Utils.ImageFormatter,System.Object,System.Object) -> System.Void
-  Quire.Utils.IJPEGFormatter P Quality : System.Int64 virtual get:public set:public
-  Quire.Utils.ITransformHelper M public virtual Base64JPGToBase64PNG`0(System.String) -> System.String
+  Quire.Utils.IImageConverter M public abstract ImageStreamToImageStream`0(Quire.Utils.ImageFormatter,System.Object,System.Object) -> System.Void
+  Quire.Utils.IJPEGFormatter P Quality : System.Int64 abstract get:public set:public
+  Quire.Utils.ITransformHelper M public abstract Base64JPGToBase64PNG`0(System.String) -> System.String
   Quire.Utils.ImageConverter M protected GetStream`0(System.Object,System.Boolean) -> System.IO.Stream
   Quire.Utils.ImageConverter M protected SaveImageToStream`0(System.Drawing.Image,Quire.Utils.ImageFormatter,System.IO.Stream) -> System.Void
   Quire.Utils.ImageConverter M public .ctor`0() -> System.Void
