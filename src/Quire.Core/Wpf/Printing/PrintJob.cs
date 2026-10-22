@@ -54,6 +54,20 @@ public partial class PrintJob
     }
 
     [MirrorVerified("Release IL")]
+    private void AttachWriteEventHandlers(XpsDocumentWriter docWriter)
+    {
+        docWriter.WritingCompleted += HandleWritingCompleted;
+        docWriter.WritingCancelled += HandleWritingCancelled;
+    }
+
+    [MirrorVerified("Release IL")]
+    private void DetachWriteEventHandlers(XpsDocumentWriter docWriter)
+    {
+        docWriter.WritingCompleted -= HandleWritingCompleted;
+        docWriter.WritingCancelled -= HandleWritingCancelled;
+    }
+
+    [MirrorVerified("Release IL")]
     private void HandleWritingCancelled(object sender, WritingCancelledEventArgs cancelledArgs) => HandleWritingCompleted(sender, new WritingCompletedEventArgs(true, null, cancelledArgs.Error));
 
     [MirrorVerified("Release IL")]

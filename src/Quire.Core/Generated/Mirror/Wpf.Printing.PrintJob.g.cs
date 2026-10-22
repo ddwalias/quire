@@ -24,10 +24,6 @@ public partial class PrintJob
     [global::Quire.Mirror.MirrorStub]
     private void WriteAsync(global::System.Windows.Xps.XpsDocumentWriter docWriter, global::System.Printing.PrintTicket ticket) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void AttachWriteEventHandlers(global::System.Windows.Xps.XpsDocumentWriter docWriter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DetachWriteEventHandlers(global::System.Windows.Xps.XpsDocumentWriter docWriter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Xps.XpsDocumentWriter GetXpsDocumentWriter(string filePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool JobInitialize(global::System.Windows.Xps.XpsDocumentWriter docWriter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
