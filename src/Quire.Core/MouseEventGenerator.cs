@@ -44,4 +44,17 @@ public partial class MouseEventGenerator
         SendMouseInput(0, 0, (SendMouseInputFlags)16386);
         SendMouseInput(0, 0, (SendMouseInputFlags)16388);
     }
+
+    [MirrorVerified("Release IL")]
+    private static void NormalizeCoordinates(Point rawPoint, out int x, out int y)
+    {
+        int num = User32.GetSystemMetrics(78);
+        int num2 = User32.GetSystemMetrics(79);
+        int num3 = User32.GetSystemMetrics(76);
+        int num4 = User32.GetSystemMetrics(77);
+        double num5 = (rawPoint.X - (double)num3) * 65536.0 / (double)num + (double)(65536 / (num * 2));
+        double num6 = (rawPoint.Y - (double)num4) * 65536.0 / (double)num2 + (double)(65536 / (num2 * 2));
+        x = (int)num5;
+        y = (int)num6;
+    }
 }
