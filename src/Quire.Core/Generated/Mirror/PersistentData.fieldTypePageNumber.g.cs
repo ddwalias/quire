@@ -13,8 +13,17 @@ public partial class fieldTypePageNumber
 {
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.Dictionary<string, string> _enumSerializationValues;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.Dictionary<string, string> EnumSerializationValues { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public static global::System.Collections.Generic.Dictionary<string, string> EnumSerializationValues
+    {
+        get
+        {
+            if (_enumSerializationValues == null)
+            {
+                _enumSerializationValues = GetEnumSerializationValues(typeof(global::Quire.PersistentData.pageNumberTemplate));
+            }
+            return _enumSerializationValues;
+        }
+    }
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.Dictionary<string, string> GetEnumSerializationValues(global::System.Type enumType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
