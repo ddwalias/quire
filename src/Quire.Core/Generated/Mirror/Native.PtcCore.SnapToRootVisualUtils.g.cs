@@ -13,8 +13,19 @@ public static partial class SnapToRootVisualUtils
 {
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Windows.Media.ScaleTransform _dpiScale;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.Media.ScaleTransform DpiScale { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    private static global::System.Windows.Media.ScaleTransform DpiScale
+    {
+        get
+        {
+            if (_dpiScale == null)
+            {
+                global::System.Windows.Size dpiScale = global::Quire.Wpf.ImageUtils.DpiScaleForApplication();
+                _dpiScale = new global::System.Windows.Media.ScaleTransform(dpiScale.Width, dpiScale.Height);
+                _dpiScale.Freeze();
+            }
+            return _dpiScale;
+        }
+    }
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.Visual GetSnappableRootVisual(global::System.Windows.Media.Visual visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
