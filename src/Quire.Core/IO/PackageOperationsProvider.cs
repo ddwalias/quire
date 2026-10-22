@@ -55,6 +55,15 @@ public partial class PackageOperationsProvider
     }
 
     [MirrorVerified("Release IL")]
+    public PackagePart AddCoreMetadataPartToPackage(Package package)
+    {
+        Uri uri = new Uri("/docProps/core.xml", UriKind.Relative);
+        PackagePart result = CreatePackagePart(package, uri, CoreMetadataContentType);
+        package.CreateRelationship(uri, TargetMode.Internal, CoreMetadataRelashinshipType);
+        return result;
+    }
+
+    [MirrorVerified("Release IL")]
     public PackagePart AddPartToPackage(Package package, string uriString, string contentType)
     {
         Uri uri = new Uri(uriString, UriKind.Relative);

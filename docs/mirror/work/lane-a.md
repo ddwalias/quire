@@ -4,7 +4,7 @@
 - Status: active; passing batches are being landed.
 - Owner: Lane A.
 - Branch: `mirror/a-core-20261021-quirecore`; worktree: `C:/Projects/Quire-wt/lane-a-core`.
-- Members: latest exact member: `IO.PackageOperationsProvider.AddPartToPackage`; 579 unfinished methods remain.
-- Release IL report: `.mirror-cache/release-il-c837a6c2852a/release-il.json` — PASS, 2,945 exact, 0 mismatches.
+- Members: latest exact member: `IO.PackageOperationsProvider.AddCoreMetadataPartToPackage`; 578 unfinished methods remain.
+- Release IL report: `.mirror-cache/release-il-b753d5412014/release-il.json` — PASS, 2,946 exact, 0 mismatches.
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).
