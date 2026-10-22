@@ -17,6 +17,4 @@ public partial class VCardContentLine
     private static readonly char[] equals;
     [global::Quire.Mirror.MirrorStub]
     public VCardContentLine(string line) { }
-    [global::Quire.Mirror.MirrorStub]
-    private static string DecodePrinatbleQuoted(string encodedString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -55,4 +55,21 @@ public partial class VCardContentLine
     ReturnValue:
         return Values[index];
     }
+
+    [MirrorVerified("Release IL")]
+    private static string DecodePrinatbleQuoted(string encodedString)
+    {
+        System.Text.StringBuilder builder = new System.Text.StringBuilder(encodedString.Length);
+        for (int i = 0; i < encodedString.Length; i++)
+        {
+            char character = encodedString[i];
+            if (character == '=')
+            {
+                character = (char)int.Parse(encodedString.Substring(i + 1, 2), System.Globalization.NumberStyles.HexNumber);
+                i += 2;
+            }
+            builder.Append(character);
+        }
+        return builder.ToString();
+    }
 }
