@@ -15,8 +15,30 @@ public sealed partial class ApplicationVariant
     private static global::System.Nullable<bool> _isEngNbPlus;
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Nullable<bool> _isEngNb;
-    public static global::System.Nullable<bool> IsEngNbPlus { get => _isEngNbPlus; private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    public static global::System.Nullable<bool> IsEngNb { get => _isEngNb; private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public static global::System.Nullable<bool> IsEngNbPlus
+    {
+        get => _isEngNbPlus;
+        private set
+        {
+            global::System.Nullable<bool> current = _isEngNbPlus;
+            if (!current.HasValue)
+            {
+                _isEngNbPlus = value;
+            }
+        }
+    }
+    public static global::System.Nullable<bool> IsEngNb
+    {
+        get => _isEngNb;
+        private set
+        {
+            global::System.Nullable<bool> current = _isEngNb;
+            if (!current.HasValue)
+            {
+                _isEngNb = value;
+            }
+        }
+    }
     [global::Quire.Mirror.MirrorStub]
     public static void ApplyIsEngNbVariants() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
