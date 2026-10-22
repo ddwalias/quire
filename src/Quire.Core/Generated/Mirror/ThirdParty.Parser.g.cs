@@ -241,7 +241,22 @@ public sealed partial class Parser
         [global::Quire.Mirror.MirrorStub]
         public bool Finish(object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
-        private bool ReportMissingRequiredArgument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        private bool ReportMissingRequiredArgument()
+        {
+            if (IsRequired && !SeenValue)
+            {
+                if (IsDefault)
+                {
+                    reporter(global::System.String.Format("Missing required argument '<{0}>'.", LongName));
+                }
+                else
+                {
+                    reporter(global::System.String.Format("Missing required argument '/{0}'.", LongName));
+                }
+                return true;
+            }
+            return false;
+        }
         [global::Quire.Mirror.MirrorStub]
         public bool SetValue(string value, object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
