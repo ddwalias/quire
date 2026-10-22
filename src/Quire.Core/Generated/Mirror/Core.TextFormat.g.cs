@@ -28,8 +28,6 @@ public partial class TextFormat : global::System.Windows.DependencyObject, globa
     [global::Quire.Mirror.MirrorStub]
     private static void HandleTextFormatPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void HandleTextAlignmentChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void SetTextFormat(global::System.Windows.DependencyProperty property, object value, global::System.Windows.Documents.FlowDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ApplyPropertyValueFormat(global::System.Windows.DependencyProperty property, object value, global::System.Windows.Documents.TextRange textRange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

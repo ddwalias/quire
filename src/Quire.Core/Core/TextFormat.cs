@@ -122,6 +122,29 @@ public partial class TextFormat
     }
 
     [MirrorVerified("Release IL")]
+    private static void HandleTextAlignmentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is TextFormat textFormat)
+        {
+            if (EnumHelper.TryParse<TextAlignmentExt>(e.NewValue, out var enumValue))
+            {
+                if (textFormat.TextAlignmentExt != enumValue)
+                {
+                    textFormat.TextAlignmentExt = enumValue;
+                }
+            }
+            else
+            {
+                DebugTools.DevAssert(false, null);
+            }
+            if (textFormat.FormatChanged != null)
+            {
+                textFormat.FormatChanged(e);
+            }
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     private static object HandleBrushCoerceValue(DependencyObject d, object basevalue)
     {
         if (basevalue is Brush brush && !((Freezable)brush).IsFrozen)
