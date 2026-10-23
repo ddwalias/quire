@@ -13,8 +13,4 @@ public static partial class TextElementPropertiesBlocker
 {
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.IList<global::System.Windows.DependencyProperty> _dependencyPropertiesToFixate;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.DependencyProperty[] ReadInheritedDependencyProperties(global::System.Collections.Generic.IEnumerable<global::System.Type> typesListToScan) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.List<global::System.Windows.DependencyProperty> ReadInheritedDependencyProperties(global::System.Type typeToScan) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
