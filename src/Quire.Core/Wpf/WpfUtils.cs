@@ -31,6 +31,23 @@ public static partial class WpfUtils
         return child.TryFindVisualAncestor<T>(includeLogical);
     }
 
+    public static T1 TryFindAncestorIncludingSelfLimited<T1, T2>(this DependencyObject child, bool includeLogical = false) where T1 : class where T2 : class
+    {
+        if (child == null)
+        {
+            return null;
+        }
+        if (child is T1 result)
+        {
+            return result;
+        }
+        if (child is T2)
+        {
+            return null;
+        }
+        return child.TryFindVisualAncestorLimited<T1, T2>(includeLogical);
+    }
+
     public static bool? IsLoaded(DependencyObject depObj)
     {
         switch (depObj)
