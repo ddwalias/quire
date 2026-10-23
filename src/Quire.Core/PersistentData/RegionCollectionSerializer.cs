@@ -21,6 +21,12 @@ public partial class RegionCollectionSerializer<TCollection>
         return item;
     }
 
+    public void Deserialize(System.Xml.XmlElement regionCollectionXml, bool useOverrides)
+    {
+        using System.Xml.XmlNodeReader xmlReader = new System.Xml.XmlNodeReader(regionCollectionXml);
+        RegionCollection = GetXmlSerializer(useOverrides).Deserialize(xmlReader) as TCollection;
+    }
+
     public abstract string RootNodeName { get; }
     public abstract TCollection RegionCollection { get; protected set; }
 
