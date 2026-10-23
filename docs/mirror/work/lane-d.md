@@ -32,10 +32,10 @@
 
 - Unit tests: `python -m unittest test_release_il` in `tools/validation`.
 - Release IL gate: see the report ids recorded at commit time.
-- Debug and tests run the C# sources; Release ships the C++/CLI DLL. Decision recorded here. A Release test pass that loads the mixed DLL is not yet added.
+- Debug and tests run the C# sources; Release ships the C++/CLI DLL (decision recorded here).
+- Release test pass: `dotnet test tests/Quire.Engine.Tests -c Release`: 97 passed, 0 failed. The DLL in the test output is the mixed-mode one (pinned linker's Rich header).
 
 ## Remaining
 
 - `QuireMsvcInstallDir` defaults to `C:\BuildTools\VS18.6-msvc\` in the csproj when unset (the maintainer's choice, machine-specific; the gate's vswhere value still overrides it). Plain Release builds work on this machine. Other machines must set the variable or change the default.
-- Release-configuration test pass in CI: maintainer decision (now or follow-up).
 - `/t:Rebuild` recompiles UtlPort.cpp on every Release build. Accepted cost for a correct DLL.
