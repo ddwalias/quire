@@ -27,7 +27,7 @@ public partial class RedefinitionWarningsDictionary
             return;
         }
         _contentLoaded = true;
-        Uri resourceLocator = new Uri("/Ptc.Calculation.Core;component/redefinitionwarningsdictionary.xaml", UriKind.Relative);
+        Uri resourceLocator = new Uri("/Quire.Calculation.Core;component/redefinitionwarningsdictionary.xaml", UriKind.Relative);
         Application.LoadComponent(this, resourceLocator);
     }
 

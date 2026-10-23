@@ -87,6 +87,23 @@ not from file names: the `-mgd` suffix does not mean C++/CLI.
   `Quire.Engine.Utl` is 1:1 but still C#; it splits when its `.vcxproj` lands in `src/`. A C++/CLI target that
   still hosts other assemblies (`Quire.Engine` hosts `engutils-mgd`) splits after them; MirrorGen refuses otherwise.
 
+## D21: own-assembly resource URIs and product-only members (2026-10-23)
+
+The XAML compiler writes the building assembly's name into `InitializeComponent`'s pack URI
+(`/Ptc.Calculation.Core;component/…`). Quire's assemblies have their own names, and renaming them would
+collide with the Mathcad DLLs. MethodAudit therefore compares a string literal that starts with a pack URI
+naming the assembly holding it as `<self>` on both sides; the rest of the literal must match, and a URI
+naming another assembly is compared as written. Mirrored code names its own Quire assembly in such URIs.
+The resources behind them must be Quire-authored XAML built from Quire's own data, never Mathcad's XAML
+or BAML. On 2026-10-23 none exists yet: `defaultunitdescriptortable.xaml` (lane C, from `BuiltinUnits`),
+`engineerrormessages.xaml`, `redefinitionwarningsdictionary.xaml` and
+`functionalitieslimitation/functionalitieslimitationdictionary.xaml` still fail to load.
+
+A member with no Mathcad counterpart before and after a change may be changed or removed: it cannot
+affect parity, and callers must be able to move onto mirrored APIs. A new member without a counterpart,
+a member that loses its counterpart, a compiler-generated helper of a mirrored type, and an explicitly
+selected member still fail when changed.
+
 ## Mapping and scope
 
 - **D1:** `Mcd` maps to `Quire.Mcd`.

@@ -18,7 +18,8 @@ reads production assemblies directly, without a test host. It never runs tests.
 
 The check requires changed/new methods and every previously exact method in affected projects
 to match Mathcad. Removed methods fail. Unchanged unfinished methods are reported but do not
-block. Use `--type` or exact `--method 'Type::signature'` selections when checking members
+block. Existing methods without a Mathcad counterpart may change or be removed; new ones fail
+([D21](decisions.md)). Use `--type` or exact `--method 'Type::signature'` selections when checking members
 whose IL was already unchanged; selections must exist. Selecting a type includes its stubs.
 
 The report is `.mirror-cache/release-il-<id>/release-il.json`, with base/candidate inventories
@@ -130,6 +131,9 @@ IDs/signatures use that canonical identity, while `declared_signature` retains t
 spelling. Changing `global::` or namespace qualification therefore does not remove a method.
 Selectors accept both canonical and declared signatures.
 Field `ldtoken` operands include their field type and available RVA data hash in strict IL.
+A string literal starting with a pack URI that names the assembly holding it
+(`/Ptc.Calculation.Core;component/…` in Mathcad, `/Quire.Calculation.Core;component/…` in Quire)
+compares with that name as `<self>`; the rest must match ([D21](decisions.md)).
 
 ## Merge
 

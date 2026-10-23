@@ -78,7 +78,7 @@ public partial class EngineErrorMessages : ResourceDictionary, IComponentConnect
             return;
         }
         _contentLoaded = true;
-        Uri uri = new Uri("/Ptc.Calculation.Core;component/engineerrormessages.xaml", UriKind.Relative);
+        Uri uri = new Uri("/Quire.Calculation.Core;component/engineerrormessages.xaml", UriKind.Relative);
         Application.LoadComponent(this, uri);
     }
 

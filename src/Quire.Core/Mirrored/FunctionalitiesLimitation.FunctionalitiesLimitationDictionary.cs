@@ -35,7 +35,7 @@ partial class FunctionalitiesLimitationDictionary
         }
 
         _contentLoaded = true;
-        global::System.Uri resourceLocator = new("/Ptc.Core;component/functionalitieslimitation/functionalitieslimitationdictionary.xaml", global::System.UriKind.Relative);
+        global::System.Uri resourceLocator = new("/Quire.Core;component/functionalitieslimitation/functionalitieslimitationdictionary.xaml", global::System.UriKind.Relative);
         global::System.Windows.Application.LoadComponent(this, resourceLocator);
     }
 

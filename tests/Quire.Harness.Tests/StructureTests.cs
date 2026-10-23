@@ -175,6 +175,29 @@ public class StructureTests
         Assert.Equal(["B"], TestTypes.References(md, pe, a).Select(h => TestTypes.Name(md, h)));
     }
 
+    private static Uri OwnResource() => new("/Quire.Harness.Tests;component/table.xaml", UriKind.Relative);
+    private static Uri OtherResource() => new("/MathcadPrime;component/table.xaml", UriKind.Relative);
+
+    /// <summary>D21: a pack URI naming the assembly that holds the literal compares by role, not by name.</summary>
+    [Fact]
+    public void Own_assembly_component_uris_compare_as_self()
+    {
+        Assert.Equal("/<self>;component/a.xaml", StructureReader.OwnComponent("Ptc.Calculation.Core", "/Ptc.Calculation.Core;component/a.xaml"));
+        Assert.Equal("/<self>;component/a.xaml", StructureReader.OwnComponent("Quire.Calculation.Core", "/quire.calculation.core;component/a.xaml"));
+        Assert.Equal("pack://application:,,,/<self>;v1.0.0.0;component/a.xaml",
+            StructureReader.OwnComponent("Ptc.Core", "pack://application:,,,/Ptc.Core;v1.0.0.0;component/a.xaml"));
+        Assert.Equal("/<self>;0123456789abcdef;component/a.xaml", StructureReader.OwnComponent("Ptc.Core", "/Ptc.Core;0123456789abcdef;component/a.xaml"));
+        Assert.Equal("/<self>;v1.0.0.0;0123456789abcdef;component/a.xaml",
+            StructureReader.OwnComponent("Ptc.Core", "/Ptc.Core;v1.0.0.0;0123456789abcdef;component/a.xaml"));
+        Assert.Equal("/Ptc.Core;v;component/a.xaml", StructureReader.OwnComponent("Ptc.Core", "/Ptc.Core;v;component/a.xaml"));
+        Assert.Equal("/Ptc.Core;component/a.xaml", StructureReader.OwnComponent("Ptc.Calculation.Core", "/Ptc.Core;component/a.xaml"));
+        Assert.Equal("/Ptc.CoreX;component/a.xaml", StructureReader.OwnComponent("Ptc.Core", "/Ptc.CoreX;component/a.xaml"));
+        Assert.Equal("see /Ptc.Core;component/a.xaml", StructureReader.OwnComponent("Ptc.Core", "see /Ptc.Core;component/a.xaml"));
+        Assert.Equal("/Ptc.Core;other/a.xaml", StructureReader.OwnComponent("Ptc.Core", "/Ptc.Core;other/a.xaml"));
+        Assert.Contains("ldstr str /<self>;component/table.xaml", Read(nameof(OwnResource)).Code);
+        Assert.Contains("ldstr str /MathcadPrime;component/table.xaml", Read(nameof(OtherResource)).Code);
+    }
+
     [Fact]
     public void Quire_types_are_named_after_their_Mathcad_binding()
     {

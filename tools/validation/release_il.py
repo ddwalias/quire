@@ -111,7 +111,8 @@ def compare(before, after, types=(), methods=()):
     never-exact generated stub (hand-written code now provides the member) does not fail;
     implemented members and previously exact methods are judged as before.
     Removing a compiler-generated member with no Mathcad counterpart (a renumbered
-    closure or state machine) does not fail the gate.
+    closure or state machine) does not fail the gate. Nor does changing or removing an
+    existing product-only member (D21); a new member without a counterpart still fails.
     """
     old = {m['id']: m for m in before['methods']}
     new = {m['id']: m for m in after['methods']}
@@ -124,6 +125,7 @@ def compare(before, after, types=(), methods=()):
     # Signatures name the Quire assembly of each type ([Quire.Engine.Utl]...), which a move changes.
     place = lambda m: (m['type'], re.sub(r'\[Quire(\.[\w.]+)?\]', '[Quire]', m['signature']))
     moved = {place(m): m for k, m in old.items() if k not in new}
+    mirrored = {m['type'].split('+')[0] for m in (*old.values(), *new.values()) if m.get('original') is not None}
     failures, checked = [], []
     for key, row in new.items():
         previous = old.get(key)
@@ -154,6 +156,12 @@ def compare(before, after, types=(), methods=()):
             continue
         if row.get('engine_native') is True:
             continue
+        # D21: an existing product-only member (no Mathcad counterpart before or after) may change; new ones still fail.
+        # Not a compiler-generated helper of a mirrored type (a closure whose ordinal missed), nor a selected member.
+        if row.get('original') is None and previous is not None and previous.get('original') is None \
+                and not ('<' in row['type'] + row['signature'] and row['type'].split('+')[0] in mirrored) \
+                and not selected(row, types, methods):
+            continue
         if row.get('shape_matches') is not True or not (row.get('exact_match') is True or row.get('declaration_only') is True):
             reason = ('no Mathcad counterpart' if row.get('original') is None else
                       'declaration differs' if row.get('shape_matches') is not True else
@@ -169,9 +177,8 @@ def compare(before, after, types=(), methods=()):
         # A never-exact generated stub MirrorGen no longer writes (hand-written code now provides the member).
         if stub(old[key]) and old[key].get('exact_match') is not True:
             continue
-        # D19: C# stand-ins without a counterpart (destructor/finalizer names) replaced by a C++/CLI build.
-        if old[key].get('original') is None and any(m.get('mixed_mode') and m.get('project') == old[key].get('project')
-                                                    for m in new.values()):
+        # D19/D21: a product-only member (no Mathcad counterpart, so never exact) may be removed.
+        if old[key].get('original') is None and old[key].get('exact_match') is not True:
             continue
         failures.append({'method': key, 'reason': 'method removed'})
     for name in types:

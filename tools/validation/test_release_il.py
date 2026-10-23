@@ -161,9 +161,34 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         stand_in = method('_tildeSafeMutex', exact=False, original=None, project='P')
         mixed = method('Other', mixed_mode=True, project='P')
         self.assertTrue(compare(inventory(stand_in), inventory(mixed))['passed'])
-        self.assertFalse(compare(inventory(stand_in), inventory(method('Other', project='P')))['passed'])
         mapped = method('Enter', exact=False, project='P')
         self.assertFalse(compare(inventory(mapped), inventory(mixed))['passed'])
+
+    def test_existing_product_only_members_may_change_or_be_removed(self):
+        product = method('get_DisplayValue', exact=False, original=None)
+        self.assertTrue(compare(inventory(product), inventory())['passed'])
+        changed = compare(inventory(product), inventory(dict(product, body_sha256='rewired')))
+        self.assertTrue(changed['passed'])
+        self.assertEqual(changed['checked'], ['P::T::get_DisplayValue'])
+        self.assertFalse(compare(inventory(), inventory(product))['passed'])
+        self.assertFalse(compare(inventory(method('get_Value', exact=False)), inventory())['passed'])
+        lost = compare(inventory(method(exact=False)), inventory(method(body='other', exact=False, original=None)))
+        self.assertEqual(lost['failures'][0]['reason'], 'no Mathcad counterpart')
+        # Any project, not only mixed-mode ones (D19 allowed it there first).
+        self.assertTrue(compare(inventory(dict(product, project='P')), inventory(method('Other', project='P')))['passed'])
+        # Explicitly selected members are still judged.
+        self.assertFalse(compare(inventory(product), inventory(dict(product, body_sha256='rewired')),
+                                 methods=['T::get_DisplayValue'])['passed'])
+
+    def test_generated_helpers_of_mirrored_types_are_not_product_only(self):
+        def closure(body, type_='T+<>c'):
+            row = method('<Get>b__5_0', body=body, exact=False, original=None)
+            row.update(id=f'P::{type_}::<Get>b__5_0', type=type_)
+            return row
+        mirrored = method('Get', exact=True)
+        self.assertFalse(compare(inventory(mirrored, closure('a')), inventory(mirrored, closure('b')))['passed'])
+        record = dict(closure('a', 'R'), id='P::R::<Clone>$', signature='<Clone>$')
+        self.assertTrue(compare(inventory(mirrored, record), inventory(mirrored, dict(record, body_sha256='b')))['passed'])
 
     def test_builds_never_see_the_mathcad_install(self):
         env, hidden = without_install(Path('work'), {'MATHCAD_DIR': r'C:\PTC', 'PATH': 'p'})

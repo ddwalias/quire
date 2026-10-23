@@ -32,7 +32,7 @@ public partial class DefaultUnitDescriptorTable
             return;
         }
         _contentLoaded = true;
-        Uri resourceLocator = new Uri("/Ptc.Calculation.Core;component/defaultunitdescriptortable.xaml", UriKind.Relative);
+        Uri resourceLocator = new Uri("/Quire.Calculation.Core;component/defaultunitdescriptortable.xaml", UriKind.Relative);
         Application.LoadComponent(this, resourceLocator);
     }
 

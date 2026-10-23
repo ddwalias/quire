@@ -76,6 +76,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
     Func<string, string> typeName, Func<int, string?> methodName, bool exact = false, string? root = null)
 {
     private readonly string? root = root is null ? null : Path.GetFullPath(root);
+    private readonly string? self = md.IsAssembly ? md.GetString(md.GetAssemblyDefinition().Name) : null;
 
     internal static readonly Dictionary<ushort, OpCode> Codes = typeof(OpCodes)
         .GetFields(BindingFlags.Public | BindingFlags.Static)
@@ -145,7 +146,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                     operand = releaseIl ? $"r8 0x{BitConverter.DoubleToInt64Bits(number):x16}" : $"r8 {number:R}";
                     break;
                 case OperandType.InlineString:
-                    constants.Add(operand = "str " + md.GetUserString(MetadataTokens.UserStringHandle(il.ReadInt32())));
+                    constants.Add(operand = "str " + OwnComponent(self, md.GetUserString(MetadataTokens.UserStringHandle(il.ReadInt32()))));
                     break;
                 case OperandType.InlineMethod:
                     calls.Add($"{code.Name} {operand = Method(MetadataTokens.EntityHandle(il.ReadInt32()))}");
@@ -345,6 +346,16 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                 System.Text.RegularExpressions.Regex.Escape(form) + @"(?=[/\\]|$)", "<repo>");
         return literal;
     }
+
+    /// <summary>A string literal that starts with a WPF pack URI naming <paramref name="assembly"/>, the assembly that
+    /// holds it (<c>/Ptc.Calculation.Core;component/…</c>, optionally <c>pack://application:,,,</c>-prefixed, with a
+    /// version or key), with that name replaced by <c>&lt;self&gt;</c> (D21). The XAML compiler writes the building
+    /// assembly's name there, which Quire's own identity changes; the rest of the literal still has to match. A URI
+    /// naming another assembly is left as it is.</summary>
+    internal static string OwnComponent(string? assembly, string literal) => assembly is null ? literal :
+        System.Text.RegularExpressions.Regex.Replace(literal,
+            @"^((?:pack://application:,,,)?/)" + System.Text.RegularExpressions.Regex.Escape(assembly) + @"(?=(?:;v[0-9.]+)?(?:;[0-9a-fA-F]{16})?;component/)",
+            "$1<self>", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.CultureInvariant);
 
     private bool IsField(EntityHandle handle) => handle.Kind == HandleKind.FieldDefinition
         || handle.Kind == HandleKind.MemberReference
