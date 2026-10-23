@@ -101,6 +101,12 @@ public partial class EditorGesture
         return text;
     }
 
+    public override int GetHashCode()
+    {
+        return (((((CharsPressed != null) ? CharsPressed.GetHashCode() : 0) * 397) ^ KeyPressed.GetHashCode()) * 397)
+            ^ ((KeyGesture != null) ? KeyGesture.GetHashCode() : 0);
+    }
+
     [MirrorVerified("PtcWpfEditorGestureMechanicalDifferentialTests")]
     public static bool operator ==(EditorGesture left, EditorGesture right) => object.Equals(left, right);
 
