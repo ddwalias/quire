@@ -81,4 +81,13 @@ public partial class TextStyleData
         StyleName = string.Empty;
         BaseOnKey = string.Empty;
     }
+
+    public TextStyleData(string name, string key, Style style, string baseOnKey = null)
+    {
+        StyleKey = key;
+        StyleName = name ?? key;
+        Style = style;
+        BaseOnKey = baseOnKey;
+        StyleChanged += BasedOnStyleChanged;
+    }
 }
