@@ -91,6 +91,16 @@ public partial class EditorGesture
         return false;
     }
 
+    public override string ToString()
+    {
+        string text = new EditorGestureConverter().ConvertTo(this, typeof(string)) as string;
+        if (!DebugTools.AssertNotNull(text, null).Passed)
+        {
+            return string.Empty;
+        }
+        return text;
+    }
+
     [MirrorVerified("PtcWpfEditorGestureMechanicalDifferentialTests")]
     public static bool operator ==(EditorGesture left, EditorGesture right) => object.Equals(left, right);
 

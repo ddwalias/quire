@@ -12,7 +12,5 @@ namespace Quire.Wpf;
 public partial class EditorGesture
 {
     [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
     public override int GetHashCode() => base.GetHashCode();
 }
