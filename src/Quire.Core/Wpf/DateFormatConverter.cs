@@ -10,6 +10,25 @@ public partial class DateFormatConverter
     [MirrorVerified("PtcWpfDateFormatConverterMechanicalDifferentialTests")]
     public DateFormatConverter() { }
 
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        string text = "00";
+        if (parameter != null)
+        {
+            text = parameter.ToString().Trim();
+        }
+        if (value is int)
+        {
+            return string.Format("{0:" + text + "}", value);
+        }
+        if (value is DateTime) goto DateTimeValue;
+        return string.Empty;
+
+    DateTimeValue:
+        DateTime dateTime = (DateTime)value;
+        return dateTime.ToString(text, culture);
+    }
+
     [MirrorVerified("Release IL")]
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
