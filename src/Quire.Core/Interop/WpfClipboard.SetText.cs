@@ -5,6 +5,31 @@ namespace Quire;
 
 public partial class WpfClipboard
 {
+    [MirrorVerified("Release IL")]
+    public static bool CopyItemAsImageToDataObject(System.Windows.DataObject dataObject, object whiteboardItem)
+    {
+        System.Windows.FrameworkElement element = whiteboardItem as System.Windows.FrameworkElement;
+        if (element == null)
+        {
+            return false;
+        }
+        System.Windows.Media.Imaging.BitmapSource bitmapSource;
+        bool result;
+        try
+        {
+            bitmapSource = Quire.Wpf.ImageUtils.CreatePngFromElement(element);
+            dataObject.SetImage(bitmapSource);
+            result = true;
+            goto Success;
+        }
+        catch
+        {
+        }
+        return false;
+    Success:
+        return result;
+    }
+
     [MirrorVerified("PtcWpfClipboardMechanicalDifferentialTests")]
     public void Clear() => System.Windows.Clipboard.Clear();
 
