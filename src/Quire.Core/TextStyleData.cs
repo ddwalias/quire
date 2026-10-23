@@ -1,4 +1,5 @@
 #nullable disable
+using System.Linq;
 using System.Windows;
 using System.Windows;
 using Quire.Mirror;
@@ -8,6 +9,19 @@ namespace Quire;
 
 public partial class TextStyleData
 {
+    private void BasedOnStyleChanged(TextStyleData basedOn)
+    {
+        if (BaseOnKey == basedOn.StyleKey)
+        {
+            Style style = new Style(Style.TargetType, basedOn.Style);
+            foreach (Setter item in Style.Setters.OfType<Setter>())
+            {
+                style.Setters.Add(new Setter(item.Property, item.Value));
+            }
+            Style = style;
+        }
+    }
+
     public void UpdateStyle(string name, Style style, string basedOnKey, Style basedOnOldStyle)
     {
         _oldStyle = TextStyleBase.CloneStyle(Style);
