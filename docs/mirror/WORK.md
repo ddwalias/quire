@@ -11,6 +11,7 @@ acceptance rule. Never inspect Debug IL.
 | [B](work/lane-b.md) | `Quire.Mpl.Emit` | `mirror/b-mpl-emit-<unique>` | `C:/Projects/Quire-wt/lane-b-mpl-emit` |
 | [C](work/lane-c.md) | `Quire.Automation`, `Quire.EngNotebook.Automation`, `Quire.EngNotebookPlus.Automation`, `Quire.Calculation.Core`, `Quire.Media3D` | `mirror/c-calc-core-20261021-c17` | `C:/Projects/Quire-wt/lane-c-automation` |
 | [D](work/lane-d.md) | `Quire.Engine.Utl` | `mirror/d-engine-utl-<unique>` | `C:/Projects/Quire-wt/lane-d-engine-utl` |
+| [F](work/lane-f.md) | `Quire.Mpl` | `mirror/f-mpl-<unique>` | `C:/Projects/Quire-wt/lane-f-mpl` |
 
 The user launches these agents in separate Codex/AGY/Claude threads using the
 [copyable prompts](work/agent-prompts.md). No worker is currently running. Worktree paths
