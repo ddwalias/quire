@@ -196,6 +196,22 @@ public partial class UserSettingsProvider
         }
     }
 
+    private void ObtainConfigFiles(ExeConfigurationFileMap FileMap, out Configuration modifiedConfig)
+    {
+        try
+        {
+            modifiedConfig = ConfigurationManager.OpenMappedExeConfiguration(FileMap, ConfigurationUserLevel.None);
+        }
+        catch (Exception ex)
+        {
+            if (!(ex is ConfigurationErrorsException) || !((ex as ConfigurationErrorsException).InnerException is UnauthorizedAccessException))
+            {
+                DebugTools.FailAssertion(ex.Message);
+            }
+            modifiedConfig = null;
+        }
+    }
+
     public override SettingsPropertyValueCollection GetPropertyValues(SettingsContext context, SettingsPropertyCollection props)
     {
         SettingsPropertyValueCollection settingsPropertyValueCollection = new SettingsPropertyValueCollection();

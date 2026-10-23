@@ -26,8 +26,6 @@ public partial class UserSettingsProvider : global::System.Configuration.Setting
     [global::Quire.Mirror.MirrorStub]
     private static bool _useAssemblyVersionInConfigPath;
     [global::Quire.Mirror.MirrorStub]
-    private void ObtainConfigFiles(global::System.Configuration.ExeConfigurationFileMap FileMap, out global::System.Configuration.Configuration modifiedConfig) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void CopyPrevUserConfig(global::System.Version version) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.UserSettingsProvider+GetSectionStatusEnum, Ptc.Core")]
