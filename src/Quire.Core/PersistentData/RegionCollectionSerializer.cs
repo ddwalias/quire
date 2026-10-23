@@ -7,6 +7,9 @@ namespace Quire.PersistentData;
 
 public partial class RegionCollectionSerializer<TCollection>
 {
+    public abstract string RootNodeName { get; }
+    public abstract TCollection RegionCollection { get; protected set; }
+
     [MirrorVerified("PtcPersistentDataRegionCollectionSerializer1MechanicalDifferentialTests")]
     protected RegionCollectionSerializer() { }
 

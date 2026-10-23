@@ -5,6 +5,8 @@ namespace Quire.PersistentData;
 
 public partial class RegionCollectionPreSerializer
 {
+    public abstract IEnumerable<PersistentDataObjects.IRegionType> Regions { get; set; }
+
     [MirrorVerified("Release IL")]
     public void PreSerialize()
     {

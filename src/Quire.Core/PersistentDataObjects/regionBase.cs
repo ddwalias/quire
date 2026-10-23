@@ -10,6 +10,9 @@ namespace Quire.PersistentDataObjects;
 
 public partial class regionBase
 {
+    public abstract object Item { get; set; }
+    public abstract string[] mc14conversionlossannotations { get; set; }
+
     [MirrorVerified("PtcPersistentDataObjectsregionBaseMechanicalDifferentialTests")]
     private string regionidField;
 

@@ -8,6 +8,8 @@ namespace Quire.PersistentData;
 
 public partial class oleBaseContainerType
 {
+    protected abstract ExternalObjectType ExternalObjectType { get; }
+
     [MirrorVerified("PtcPersistentDataoleBaseContainerTypeMechanicalDifferentialTests")]
     protected oleBaseContainerType() { }
 

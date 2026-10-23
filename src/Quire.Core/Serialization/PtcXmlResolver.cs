@@ -10,6 +10,8 @@ namespace Quire.Serialization;
 
 public partial class PtcXmlResolver
 {
+    protected abstract string SchemaName(Uri absoluteUri);
+
     [MirrorVerified("Release IL")]
     public Stream GetStream(string schemaName)
     {

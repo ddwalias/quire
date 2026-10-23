@@ -18,10 +18,6 @@ public abstract partial class RegionCollectionSerializer<TCollection> : global::
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Xml.Serialization.XmlSerializer _worksheetXmlSerializerDefault;
     [global::Quire.Mirror.MirrorStub]
-    public abstract string RootNodeName { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract TCollection RegionCollection { get; protected set; }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlElement Serialize(global::System.Xml.XmlDocument xmlContentDocument, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.PersistentDataObjects.IRegionType AddProtectionIfNeeded(global::Quire.PersistentDataObjects.IRegionType item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

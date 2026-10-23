@@ -11,6 +11,4 @@ namespace Quire.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Serialization.PtcXmlResolver, Ptc.Core")]
 public abstract partial class PtcXmlResolver : global::System.Xml.XmlResolver
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract string SchemaName(global::System.Uri absoluteUri);
 }

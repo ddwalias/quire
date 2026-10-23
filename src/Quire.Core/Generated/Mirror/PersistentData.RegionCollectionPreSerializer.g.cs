@@ -11,6 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.RegionCollectionPreSerializer, Ptc.Core")]
 public abstract partial class RegionCollectionPreSerializer
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.IRegionType> Regions { get; set; }
 }

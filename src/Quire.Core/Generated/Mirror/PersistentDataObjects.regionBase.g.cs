@@ -14,10 +14,6 @@ public abstract partial class regionBase : global::Quire.PersistentDataObjects.I
     [global::Quire.Mirror.MirrorStub]
     public const float PageUnitsConvertionFactor = 1.3333334f;
     [global::Quire.Mirror.MirrorStub]
-    public abstract object Item { get; set; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract string[] mc14conversionlossannotations { get; set; }
-    [global::Quire.Mirror.MirrorStub]
     private void CollectAllAnnotations() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void PreSerialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
