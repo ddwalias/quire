@@ -7,6 +7,9 @@ namespace Quire.Wpf;
 public partial class StyleNameToCategoryConverter
 {
     [MirrorVerified("Release IL")]
+    public static StyleNameToCategoryConverter Instance = new StyleNameToCategoryConverter();
+
+    [MirrorVerified("Release IL")]
     public object Convert(object values, Type targetType, object parameter, CultureInfo culture)
     {
         if (values.ToString().StartsWith("Legacy"))

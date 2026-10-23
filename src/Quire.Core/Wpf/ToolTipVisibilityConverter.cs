@@ -8,6 +8,9 @@ namespace Quire.Wpf;
 public partial class ToolTipVisibilityConverter
 {
     [MirrorVerified("Release IL")]
+    public static ToolTipVisibilityConverter Instance = new ToolTipVisibilityConverter();
+
+    [MirrorVerified("Release IL")]
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return string.IsNullOrEmpty((string)value) ? Visibility.Collapsed : Visibility.Visible;

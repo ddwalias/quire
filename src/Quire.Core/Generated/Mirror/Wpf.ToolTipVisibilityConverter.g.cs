@@ -11,6 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ToolTipVisibilityConverter, Ptc.Core")]
 public partial class ToolTipVisibilityConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Wpf.ToolTipVisibilityConverter Instance;
 }
