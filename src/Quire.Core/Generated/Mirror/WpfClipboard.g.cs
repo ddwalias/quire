@@ -32,8 +32,6 @@ public partial class WpfClipboard : global::Quire.IClipboard
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Windows.Media.Imaging.BitmapSource CreateBitmapSourceFromStream(global::System.IO.Stream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.Media.Imaging.BitmapSource CreateBitmapSourceFromWpfClipboardGetImage() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Stream GetPrimeXamlStream() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object GetPrimeObject() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
