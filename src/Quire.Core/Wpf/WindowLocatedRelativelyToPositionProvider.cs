@@ -23,6 +23,25 @@ public partial class WindowLocatedRelativelyToPositionProvider
         return new global::System.Windows.Rect(val.X / dpiFactor.DpiFactorX, val.Y / dpiFactor.DpiFactorY, val.Width / dpiFactor.DpiFactorX, val.Height / dpiFactor.DpiFactorY);
     }
 
+    private ItemQuarterLocationInOwnerWindow GetPositionProviderQuarterPosition(global::System.Windows.Point positionProviderRelativePointFromOwner)
+    {
+        bool flag = positionProviderRelativePointFromOwner.Y <= Owner.ActualHeight / 2.0;
+        bool flag2 = positionProviderRelativePointFromOwner.X <= Owner.ActualWidth / 2.0;
+        if (!flag)
+        {
+            if (!flag2)
+            {
+                return ItemQuarterLocationInOwnerWindow.BottomRight;
+            }
+            return ItemQuarterLocationInOwnerWindow.BottomLeft;
+        }
+        if (!flag2)
+        {
+            return ItemQuarterLocationInOwnerWindow.TopRight;
+        }
+        return ItemQuarterLocationInOwnerWindow.TopLeft;
+    }
+
     [MirrorVerified("PtcWpfWindowLocatedRelativelyToPositionProviderMechanicalDifferentialTests")]
     protected IPositionProvider PositionProvider { get; set; }
 
