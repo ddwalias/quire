@@ -16,9 +16,5 @@ internal partial class XmlConverter : global::System.ComponentModel.ExpandableOb
     [global::Quire.Mirror.MirrorStub]
     private const string ArrayXmlNodeWrapperEnd = "</array>";
     [global::Quire.Mirror.MirrorStub]
-    public override bool CanConvertFrom(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Type sourceType) => base.CanConvertFrom(context, sourceType);
-    [global::Quire.Mirror.MirrorStub]
-    public override bool CanConvertTo(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Type destinationType) => base.CanConvertTo(context, destinationType);
-    [global::Quire.Mirror.MirrorStub]
     public override object ConvertTo(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value, global::System.Type destinationType) => base.ConvertTo(context, culture, value, destinationType);
 }

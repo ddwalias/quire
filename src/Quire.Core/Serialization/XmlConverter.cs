@@ -9,6 +9,34 @@ namespace Quire.Serialization;
 
 internal partial class XmlConverter
 {
+    public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+    {
+        bool result;
+        if (typeof(string) == sourceType)
+        {
+            result = true;
+        }
+        else
+        {
+            result = base.CanConvertTo(context, sourceType);
+        }
+        return result;
+    }
+
+    public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
+    {
+        bool result;
+        if (typeof(string) == destinationType)
+        {
+            result = true;
+        }
+        else
+        {
+            result = base.CanConvertTo(context, destinationType);
+        }
+        return result;
+    }
+
     private XmlNode ConvertStringToXmlNode(string nodeString)
     {
         XmlDocument xmlDocument = new XmlDocument();
