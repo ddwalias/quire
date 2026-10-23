@@ -23,6 +23,4 @@ public partial class CommandScope : global::System.IDisposable
     private static readonly global::System.Collections.Generic.Stack<global::Quire.Undo.CommandScope> _scopeStack;
     [global::Quire.Mirror.MirrorStub]
     public static bool RequireTreeOperationsInUndoScope;
-    [global::Quire.Mirror.MirrorStub]
-    public void Dispose() { }
 }
