@@ -21,7 +21,7 @@ from pathlib import Path
 import subprocess
 import sys
 
-from release_il import ROOT
+from release_il import ROOT, native_pair, toolset_support
 
 
 def command(args):
@@ -102,15 +102,17 @@ def mirror_status(originals, stub_count, audit, revision, clean_sources, split):
     if not audit or not audit['rows']:
         return ('incomplete' if stub_count else 'unconfirmed'), None
     rows = audit['rows']
+    # D19: the gate settles native-to-native pairs and unpaired MSVC support members without an IL match; so does the map.
+    settled = [r for r in rows if r.get('shape_matches') is True
+               and (r.get('exact_match') is True or r.get('declaration_only') is True) or native_pair(r) or toolset_support(r)]
     counts = {'exact': sum(r.get('exact_match') is True for r in rows),
               'declarations': sum(r.get('declaration_only') is True and r.get('shape_matches') is True for r in rows),
-              'remaining': sum(not (r.get('exact_match') is True and r.get('shape_matches') is True
-                                   or r.get('declaration_only') is True and r.get('shape_matches') is True) for r in rows),
+              'native_pairs': sum(native_pair(r) for r in rows),
+              'toolset_support': sum(toolset_support(r) for r in rows),
+              'remaining': len(rows) - len(settled),
               'report': audit['report']}
     # Whole-assembly completion also needs original-to-Quire coverage, not just Quire-to-original matching.
-    covered = {(r['original']['assembly'].lower(), r['original']['token_hex']) for r in rows
-               if r.get('original') and r.get('shape_matches') is True
-               and (r.get('exact_match') is True or r.get('declaration_only') is True)}
+    covered = {(r['original']['assembly'].lower(), r['original']['token_hex']) for r in settled if r.get('original')}
     expected = {(a['name'].lower(), token) for a in originals for token in a.get('expected_methods', [])}
     counts['missing_original_methods'] = len(expected - covered)
     identities = {r['original']['assembly'].lower(): r['original']['mvid'] for r in rows if r.get('original')}
@@ -197,7 +199,8 @@ def render(data):
               '|---|---|---|---|---|---:|---|---|---|']
     for u in managed:
         audit = u['audit']
-        count = f"{audit['exact']} exact; {audit['declarations']} declarations; {audit['remaining']} unresolved" if audit else 'Not recorded'
+        count = (f"{audit['exact']} exact; {audit['declarations']} declarations; {audit['native_pairs']} native pairs; "
+                 f"{audit['remaining']} unresolved") if audit else 'Not recorded'
         host = 'split' if u['split'] else f"`{u['host']}`"
         stubs = u['stub_bodies'] if u['split'] else f"{u['stub_bodies']} (host)"
         lines.append(f"| `{u['name']}` | `{u['original']['file']}` | {u['language']} | {host} | " +
@@ -263,7 +266,7 @@ def main(argv=None):
     units = []
     for a in originals:
         name = a['project']
-        # Split: the target exists in the original's language and hosts nothing else (D2 hosts reuse some names).
+        # Split: MirrorGen's Rules.IsSplit, and the target hosts nothing else (D2 hosts reuse some names).
         split = a['language'] != 'Native' and a['target_exists'] and a.get('host') == name and len(hosted[name]) == 1
         refs = [r for r in a.get('references', []) + a.get('native_imports', [])
                 if r.lower() in lookup and r.lower() != a['name'].lower()]

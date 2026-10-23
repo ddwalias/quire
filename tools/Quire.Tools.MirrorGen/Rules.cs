@@ -201,15 +201,42 @@ public sealed class Rules
     /// The project MirrorGen writes an assembly's members to now: its D20 target once that project exists in the
     /// original's language, otherwise its D2 host. Mpl targets have no project format until the Mpl toolchain lands.
     /// </summary>
-    public string HostFor(string asm)
+    public string HostFor(string asm) => IsSplit(asm) ? ProjectFor(asm) : D2Host(asm);
+
+    /// <summary>
+    /// D20: the assembly's target project exists in the original's language. A C++/CLI target counts once its
+    /// .vcxproj exists anywhere in the project folder, including behind a .csproj wrapper (Quire.Engine.Utl).
+    /// </summary>
+    public bool IsSplit(string asm)
     {
         string target = ProjectFor(asm);
-        string? extension = LanguageOf(asm) switch { Language.CSharp => ".csproj", Language.CppCli => ".vcxproj", _ => null };
-        return extension != null && File.Exists(Path.Combine(Repo, "src", target, target + extension)) ? target : D2Host(asm);
+        return LanguageOf(asm) switch
+        {
+            Language.CSharp => File.Exists(ProjectFile(target, ".csproj")),
+            Language.CppCli => VcxProject(target) != null,
+            _ => false,
+        };
     }
 
-    /// <summary>True when a project is C++/CLI source: MirrorGen generates no C# into it.</summary>
-    public bool IsCppProject(string project) => File.Exists(Path.Combine(Repo, "src", project, project + ".vcxproj"));
+    /// <summary>
+    /// True when a project is C++/CLI with no .csproj: MirrorGen generates no C# into it. A .csproj wrapper that runs
+    /// a .vcxproj in Release still compiles its C# stand-in for Debug and for dotnet-only builds, so it keeps it.
+    /// </summary>
+    public bool IsCppProject(string project) => VcxProject(project) != null && !File.Exists(ProjectFile(project, ".csproj"));
+
+    /// <summary>The project file other projects reference: the .csproj when there is one, else the .vcxproj.</summary>
+    public string ReferenceFile(string project) => IsCppProject(project) ? VcxProject(project)! : ProjectFile(project, ".csproj");
+
+    private string ProjectFile(string project, string extension) => Path.Combine(Repo, "src", project, project + extension);
+
+    private string? VcxProject(string project)
+    {
+        string dir = Path.Combine(Repo, "src", project);
+        return Directory.Exists(dir)
+            ? Directory.EnumerateFiles(dir, project + ".vcxproj", SearchOption.AllDirectories)
+                .FirstOrDefault(p => !Path.GetRelativePath(dir, p).Split(Path.DirectorySeparatorChar).Any(s => s is "bin" or "obj"))
+            : null;
+    }
 
     /// <summary>
     /// D2's consolidated hosts, kept only until each assembly's D20 target is split out. Only assemblies in the D20

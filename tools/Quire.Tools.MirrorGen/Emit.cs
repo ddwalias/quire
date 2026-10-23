@@ -288,9 +288,9 @@ public static class Emit
         foreach (var p in d.Projects.Prepend("Quire.Mirror").Distinct())
         {
             // D20: a split C++/CLI project is referenced through its .vcxproj.
-            string extension = rules.IsCppProject(p) ? ".vcxproj" : ".csproj";
+            string reference = Path.GetRelativePath(Path.Combine(repo, "src", project), rules.ReferenceFile(p));
             if (!existing.Contains($"\\{p}.csproj\"") && !existing.Contains($"\\{p}.vcxproj\""))
-                sb.AppendLine($@"    <ProjectReference Include=""..\{p}\{p}{extension}"" />");
+                sb.AppendLine($@"    <ProjectReference Include=""{reference}"" />");
         }
         foreach (var pkg in d.Packages.Values)
             if (!existing.Contains($"\"{pkg.Id}\""))

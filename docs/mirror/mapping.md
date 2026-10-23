@@ -29,12 +29,16 @@ original's language ([decisions](decisions.md#d20-one-quire-project-per-mathcad-
 | Native DLLs | `Quire.Native.` + `NativeAssemblyName` | `utl` → `Quire.Native.Utl`, `efistatsci_` → `Quire.Native.EfistatsciImpl` |
 
 **Hosting during the migration.** A target counts as split once its project exists in the original's language
-(`.csproj` for C#, `.vcxproj` for C++/CLI). The Mpl project format arrives with the Mpl toolchain, so no Mpl target is
+(`Rules.IsSplit`): `src/<P>/<P>.csproj` for C#, and `<P>.vcxproj` anywhere under `src/<P>/` for C++/CLI. A C++/CLI
+project may keep a `.csproj` wrapper that runs the `.vcxproj` in Release, as `Quire.Engine.Utl` does with
+`MixedMode/Quire.Engine.Utl.vcxproj`. The wrapper's C# stand-in is its Debug and `dotnet`-only build, so MirrorGen keeps
+generating it and other projects reference the wrapper. Only a bare `.vcxproj` project gets no C# and is referenced
+directly. The Release IL gate measures the mixed-mode DLL either way. The Mpl project format arrives with the Mpl toolchain, so no Mpl target is
 split yet. Until then MirrorGen keeps writing an assembly's members to its D2 host: `Quire.Mpl.Modules` (`mpl*`,
 `hashtable`, `mcdrun`, `mcdstaticunitsystem*`), `Quire.Efi` (`efi*`), `Quire.Automation.Native` (`automation`,
 `automationmgd`, `componentsmgd`), `Quire.Engine` (`iengine`, `engutils-mgd`), `Quire.Mcd` (the other `mcd*`) and
 `Quire.Engine.Native` (`mccore12`, `mcfront12`, `mceng`, `msclr`, `msgen`, `mslisp`, `mspcons-mgd`). MirrorGen never
-writes C# into a split C++/CLI target, and refuses to run while one still hosts another assembly (split
+writes C# into a bare C++/CLI project, and refuses to run while one still hosts another assembly (split
 `engutils-mgd` out of `Quire.Engine` before `iengine` becomes C++/CLI). Each split moves that assembly's hand-written
 members to the target in the same change.
 

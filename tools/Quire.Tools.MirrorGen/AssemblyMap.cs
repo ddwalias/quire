@@ -67,17 +67,16 @@ public static class AssemblyMap
         Console.WriteLine(JsonSerializer.Serialize(assemblies, new JsonSerializerOptions { WriteIndented = true }));
     }
 
-    /// <summary>The D20 target, the current host, the language and whether the target project exists in that language.</summary>
+    /// <summary>The D20 target, the current host, the language and whether the target is split (Rules.IsSplit).</summary>
     private static (string? Project, string? Host, string? Language, bool Exists) Target(Rules rules, string asm)
     {
         try
         {
             string project = Rules.ProjectFor(asm);
             var language = Rules.LanguageOf(asm);
-            string extension = language is Language.CSharp ? ".csproj" : ".vcxproj";
-            string? host = language is Language.Native ? null : rules.HostFor(asm);
-            return (project, host, language.ToString(), File.Exists(Path.Combine(rules.Repo, "src", project, project + extension))
-                && language is not Language.Mpl);
+            if (language is Language.Native)
+                return (project, null, language.ToString(), File.Exists(Path.Combine(rules.Repo, "src", project, project + ".vcxproj")));
+            return (project, rules.HostFor(asm), language.ToString(), rules.IsSplit(asm));
         }
         catch (ArgumentException) { return (null, null, null, false); }
     }

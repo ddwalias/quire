@@ -83,8 +83,8 @@ not from file names: the `-mgd` suffix does not mean C++/CLI.
 - **Migration is progressive.** `Rules.ProjectFor` names each assembly's target. MirrorGen writes an assembly's
   members to its target once that project exists in the original's language, and to its D2 project until then.
   Splitting an assembly out is therefore creating its target project. The Release IL gate is unchanged and gains
-  no exemption. Lanes A–C (`Quire.Core`, `Quire.Mpl.Emit`, `Quire.Utils`) are already split. Lane D's
-  `Quire.Engine.Utl` is 1:1 but still C#; it splits when its `.vcxproj` lands in `src/`. A C++/CLI target that
+  no exemption. All four lane projects are split: lane D's `Quire.Engine.Utl` builds
+  `MixedMode/Quire.Engine.Utl.vcxproj` behind a `.csproj` wrapper ([mapping](mapping.md)). A C++/CLI target that
   still hosts other assemblies (`Quire.Engine` hosts `engutils-mgd`) splits after them; MirrorGen refuses otherwise.
 
 ## D21: own-assembly resource URIs and product-only members (2026-10-23)
