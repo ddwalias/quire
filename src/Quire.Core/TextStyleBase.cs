@@ -194,6 +194,17 @@ public partial class TextStyleBase
         }
     }
 
+    protected void CloneSetters(SetterBaseCollection setters, Style style)
+    {
+        foreach (Setter setter in setters.OfType<Setter>())
+        {
+            style.Setters.Add(new Setter(setter.Property, setter.Value));
+            _htPropertyToIndex[setter.Property.Name] = style.Setters.Count - 1;
+            _htDeletedPropertyToIndex.Remove(setter.Property.Name);
+            UpdateMemberValue(setter.Property.Name, setter.Value);
+        }
+    }
+
     [MirrorVerified("Release IL")]
     public void MergeBasedOn()
     {
