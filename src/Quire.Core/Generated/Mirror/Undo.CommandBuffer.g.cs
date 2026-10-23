@@ -20,8 +20,6 @@ public partial class CommandBuffer
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Undo.CompoundCommand SafeDo(global::Quire.Undo.IUndoableCommand command) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Undo.IUndoableCommand GetTopCommand(global::Quire.Undo.IUndoableCommand cmd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void RemoveTopUndo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

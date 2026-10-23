@@ -221,6 +221,15 @@ public partial class CommandBuffer
         return commands;
     }
 
+    private static IUndoableCommand GetTopCommand(IUndoableCommand cmd)
+    {
+        if (!(cmd is MasterCommand masterCommand))
+        {
+            return cmd;
+        }
+        return masterCommand.Top;
+    }
+
     partial class MasterCommand
     {
         [MirrorVerified("Release IL")]
