@@ -19,6 +19,4 @@ public partial class WeakDelegate
     public WeakDelegate(global::System.Delegate realDelegate) { }
     [global::Quire.Mirror.MirrorStub]
     public void Invoke(object[] arguments) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Equal(global::System.Delegate realDelegate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
