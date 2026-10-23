@@ -11,6 +11,4 @@ namespace Quire.Utils;
 [global::Quire.Mirror.MirrorOf("Mathsoft.Utils.BMPFormatter, utilsmgd")]
 public partial class BMPFormatter : global::Quire.Utils.ImageFormatter, global::Quire.Utils.IBMPFormatter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public BMPFormatter() { }
 }

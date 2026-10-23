@@ -11,6 +11,4 @@ namespace Quire.Utils;
 [global::Quire.Mirror.MirrorOf("Mathsoft.Utils.PNGFormatter, utilsmgd")]
 public partial class PNGFormatter : global::Quire.Utils.ImageFormatter, global::Quire.Utils.IPNGFormatter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public PNGFormatter() { }
 }

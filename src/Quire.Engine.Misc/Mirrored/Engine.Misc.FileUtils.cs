@@ -78,7 +78,7 @@ partial class FileUtils
                 {
                     if (num > 0)
                     {
-                        throw new global::System.Exception(string.Format("End of file within comment.", default(global::System.ReadOnlySpan<object>)));
+                        throw new global::System.Exception(string.Format("End of file within comment."));
                     }
                     stack.Pop();
                     stack2.Pop();
