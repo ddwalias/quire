@@ -14,9 +14,5 @@ public partial struct TableCoordinate
     [global::Quire.Mirror.MirrorStub]
     public static bool operator ==(global::Quire.TableCoordinate a, global::Quire.TableCoordinate b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool Equals(global::Quire.TableCoordinate obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override bool Equals(object obj) => base.Equals(obj);
-    [global::Quire.Mirror.MirrorStub]
-    public override int GetHashCode() => base.GetHashCode();
 }
