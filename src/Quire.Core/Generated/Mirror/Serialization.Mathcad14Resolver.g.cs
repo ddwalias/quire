@@ -11,6 +11,4 @@ namespace Quire.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Serialization.Mathcad14Resolver, Ptc.Core")]
 public partial class Mathcad14Resolver : global::Quire.Serialization.PtcXmlResolver
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void InitializeDocument(global::System.Xml.XmlDocument xmlMetadata) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
