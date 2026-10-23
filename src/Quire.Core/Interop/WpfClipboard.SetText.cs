@@ -6,6 +6,22 @@ namespace Quire;
 public partial class WpfClipboard
 {
     [MirrorVerified("Release IL")]
+    private static void CreateBitmapFromDib(System.IO.Stream dib, System.IO.Stream outStream)
+    {
+        int dibHeaderSize = new System.IO.BinaryReader(dib).ReadInt32();
+        int dataSize = (int)dib.Length - dibHeaderSize;
+        int fileSize = 14 + dibHeaderSize + dataSize;
+        System.IO.BinaryWriter writer = new System.IO.BinaryWriter(outStream);
+        writer.Write((byte)66);
+        writer.Write((byte)77);
+        writer.Write(fileSize);
+        writer.Write(0);
+        writer.Write(14 + dibHeaderSize);
+        dib.Position = 0L;
+        Quire.IO.StreamUtils.CopyStream(dib, outStream);
+    }
+
+    [MirrorVerified("Release IL")]
     public static bool CopyItemAsImageToDataObject(System.Windows.DataObject dataObject, object whiteboardItem)
     {
         System.Windows.FrameworkElement element = whiteboardItem as System.Windows.FrameworkElement;
