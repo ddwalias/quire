@@ -20,6 +20,21 @@ partial class WeakDelegate
     public bool IsWeakReferenceAlive { get => _weakReference == null || _weakReference.Target != null; }
 
     [MirrorVerified("Release IL")]
+    public void Invoke(object[] arguments)
+    {
+        if (_weakReference == null)
+        {
+            _method.Invoke(null, arguments);
+            return;
+        }
+        object target = _weakReference.Target;
+        if (target != null)
+        {
+            _method.Invoke(target, arguments);
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     public bool Equal(System.Delegate realDelegate)
     {
         if (realDelegate == null)
