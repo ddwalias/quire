@@ -5,6 +5,32 @@ namespace Quire.VCard;
 
 public partial class VCardContentLine
 {
+    public VCardContentLine(string line)
+    {
+        int separator = line.IndexOf(":");
+        string nameAndParameters = line.Substring(0, separator);
+        string valueText = line.Substring(separator + 1);
+        string[] nameAndParametersParts = nameAndParameters.Split(semicolon, StringSplitOptions.None);
+        string[] values = valueText.Split(semicolon, StringSplitOptions.None);
+        Name = nameAndParametersParts[0];
+        Values = values;
+        Params = new Dictionary<string, string>();
+        for (int i = 1; i < nameAndParametersParts.Length; i++)
+        {
+            string[] parameterParts = nameAndParametersParts[i].Split(equals, StringSplitOptions.None);
+            string key = parameterParts[0];
+            string value = parameterParts.Length > 1 ? parameterParts[1] : "";
+            Params.Add(key, value);
+        }
+        if (GetParam("ENCODING") == "QUOTED-PRINTABLE")
+        {
+            for (int i = 0; i < Values.Length; i++)
+            {
+                Values[i] = DecodePrinatbleQuoted(Values[i]);
+            }
+        }
+    }
+
     [MirrorVerified("PtcVCardVCardContentLineMechanicalDifferentialTests")]
     public string Name { get; private set; }
 

@@ -15,6 +15,4 @@ public partial class VCardContentLine
     private static readonly char[] semicolon;
     [global::Quire.Mirror.MirrorStub]
     private static readonly char[] equals;
-    [global::Quire.Mirror.MirrorStub]
-    public VCardContentLine(string line) { }
 }
