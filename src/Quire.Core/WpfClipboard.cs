@@ -41,9 +41,6 @@ public partial class WpfClipboard
     public bool HasXMLSpreadsheet() => Clipboard.ContainsData(_xmlSpreadsheetDataType);
 
     [MirrorVerified("PtcWpfClipboardMechanicalDifferentialTests")]
-    public bool HasSExpression() => Clipboard.ContainsData(_mathNodeSExpression);
-
-    [MirrorVerified("PtcWpfClipboardMechanicalDifferentialTests")]
     internal static readonly string _richTextEmbeddedItemsInfo;
 
     [MirrorVerified("PtcWpfClipboardMechanicalDifferentialTests")]
@@ -75,6 +72,4 @@ public partial class WpfClipboard
         public void Dispose() => _current = _oldClipboard;
     }
 
-    [MirrorVerified("Release IL")]
-    public string GetSExpression() => Clipboard.GetData(_mathNodeSExpression) as string;
 }
