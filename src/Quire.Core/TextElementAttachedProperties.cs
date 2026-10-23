@@ -1,6 +1,8 @@
 #nullable disable
 using System.Windows;
 using System.Windows.Documents;
+using System.Linq;
+using System.Windows.Media;
 using System.Windows;
 using Quire.Mirror;
 using Quire.Mirror;
@@ -109,6 +111,70 @@ public static partial class TextElementAttachedProperties
             if (margin.HasValue)
             {
                 frameworkContentElement.SetValue(Block.MarginProperty, textStyle.Margin);
+            }
+        }
+    }
+
+    private static void SetTextStyleOnTextRegion(FrameworkContentElement element, ITextStyle textStyle, bool isApply, bool isSelected, System.Windows.Controls.RichTextBox rtb = default)
+    {
+        if (rtb != null)
+        {
+            if (textStyle.MarkerStyle.HasValue)
+            {
+                if (isApply)
+                {
+                    if ((textStyle.MarkerStyle != TextMarkerStyle.None) & isSelected)
+                    {
+                        rtb.SelectAll();
+                    }
+                    Block block = Quire.Wpf.WpfUtils.FindLogicalAncestor<List>(element);
+                    if (block == null)
+                    {
+                        block = Quire.Wpf.WpfUtils.FindLogicalAncestor<Paragraph>(element);
+                    }
+                    SetTextStyleMarker(element, textStyle, isApply, isSelected, block, rtb);
+                }
+                else
+                {
+                    foreach (Block item in rtb.Document.Blocks.ToList())
+                    {
+                        SetTextStyleMarker(element, textStyle, isApply, isSelected, item, rtb);
+                    }
+                }
+            }
+            else
+            {
+                List lastBlockForBullets = rtb.Document.Blocks.LastBlock as List;
+                if (lastBlockForBullets != null
+                    && lastBlockForBullets.MarkerStyle == TextMarkerStyle.Disc
+                    && textStyle.IsDeletedProperty(Quire.Core.TextFormat.MarkerStyleProperty.Name, TextMarkerStyle.Disc))
+                {
+                    EditingCommands.ToggleBullets.Execute(null, rtb);
+                }
+                else
+                {
+                    List lastBlockForNumbering = rtb.Document.Blocks.LastBlock as List;
+                    if (lastBlockForNumbering != null
+                        && lastBlockForNumbering.MarkerStyle == TextMarkerStyle.Decimal
+                        && textStyle.IsDeletedProperty(Quire.Core.TextFormat.MarkerStyleProperty.Name, TextMarkerStyle.Decimal))
+                    {
+                        EditingCommands.ToggleNumbering.Execute(null, rtb);
+                    }
+                }
+            }
+            if (textStyle.Background != null
+                && (
+                    (isSelected & isApply)
+                    || (
+                        rtb.Document.Background != null
+                        && ((SolidColorBrush)rtb.Document.Background).Color != Colors.Transparent
+                        && !isApply
+                        && !textStyle.IsModifyPropertyString(TextElement.BackgroundProperty.Name, rtb.Document.GetValue(TextElement.BackgroundProperty))
+                    )
+                )
+            )
+            {
+                rtb.Document.SetValue(TextElement.BackgroundProperty, textStyle.Background);
             }
         }
     }
