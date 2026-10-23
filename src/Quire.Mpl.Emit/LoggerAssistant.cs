@@ -43,6 +43,7 @@ public static partial class LoggerAssistant
     {
         string value = member.DeclaringType?.Assembly?.GetName().Name;
         string declaringTypeName = member.DeclaringType?.FullName;
+        // Up-front declarations: the Release IL differs when each formatter moves into its branch.
         MethodInfo method;
         DefaultInterpolatedStringHandler methodFormatter;
         ConstructorInfo ctor;

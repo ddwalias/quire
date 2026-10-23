@@ -37,6 +37,7 @@ public static partial class StackBehaviourExtensions
 
     public static int GetPopCount(this StackBehaviour behaviour, OpCode opCode, object operand = null)
     {
+        // Up-front locals: the Release IL differs when they move to first use.
         MethodInfo methodInfo;
         ConstructorInfo constructorInfo;
         MethodInfo methodOperand;

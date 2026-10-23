@@ -18,6 +18,17 @@
 - Report: `.mirror-cache/release-il-9526d9e04f7b/release-il.json` (PASS, 682 checked).
 - Failed idiomatic forms: none.
 
+## Batch 3 — formatting and ILSpy-isms
+
+- Scope: tab indentation and misnested blocks in `ILCodeConverter.Members.cs`, `CustomAttributeBuilder.EmitValue.cs`, `MetadataReferenceTracker.FMethodReference.cs`, `MetadataReferenceTracker.IConstructorReference.cs`, `ModuleBuilder.BAddTargetFrameworkAttribute.cs`; blank-line runs removed; method-local declarations moved to first use in `MetadataReferenceTracker.FMethodReference.cs` and `MetadataReferenceTracker.IConstructorReference.cs`.
+- Failed idiomatic forms (kept, with a comment in the source):
+  - `LocalBuilder.IsConstructor` / `IsMethod`: `is` instead of `as … != null` fails. The report says Mathcad calls `ConstructorInfo::op_Inequality` / `MethodInfo::op_Inequality`, which `is` drops.
+  - `LoggerAssistant.GetFullNameWithAssembly`: pattern variables with formatters declared in each branch fails ("Release IL differs").
+  - `SignatureHelper.MethodSignatureEnconder` (ParameterInfo overload): `?:` and `?.` in place of the null checks fails ("Release IL differs").
+  - `StackBehaviourExtensions.GetPopCount`: pattern variables with `&&` short-circuit fails ("Release IL differs").
+  - The last three were restructured together and not isolated one change at a time; the comments state only what was tested.
+- Report: `.mirror-cache/release-il-e5f0992bcc34/release-il.json` (PASS, 682 checked).
+
 ## Remaining mismatches
 
-None reported at batch 2.
+None reported at batch 3.

@@ -8,6 +8,7 @@ internal static partial class SignatureHelper
 {
     internal static BlobBuilder MethodSignatureEnconder(ParameterInfo[]? parameters, ParameterInfo? returnType, bool isInstance)
     {
+        // Up-front locals and separate null checks: the Release IL differs when inlined.
         Type[] parameterTypes = null;
         Type returnValueType = null;
         if (parameters != null)

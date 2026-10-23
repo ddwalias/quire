@@ -51,11 +51,13 @@ public partial class LocalBuilder
 
     internal bool IsConstructor()
     {
+        // Mathcad calls op_Inequality on the as-result; "is" drops that call.
         return m_methodBuilder as ConstructorBuilder != null;
     }
 
     internal bool IsMethod()
     {
+        // Mathcad calls op_Inequality on the as-result; "is" drops that call.
         return m_methodBuilder as MethodBuilder != null;
     }
 }
