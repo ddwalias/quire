@@ -1,3 +1,5 @@
+// File-name letters AZ and B set the compile order of the ModuleBuilder partials; Roslyn numbers closure ordinals in that order.
+// Renaming them fails the Release IL gate (closure ordinals shift).
 using System;
 using System.Collections.Generic;
 using System.Reflection;

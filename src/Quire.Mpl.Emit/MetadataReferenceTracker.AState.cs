@@ -1,3 +1,5 @@
+// File-name letters A–J set the compile order of these partials; Roslyn numbers closure ordinals in that order.
+// Renaming them fails the Release IL gate (closure ordinals shift).
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Metadata;

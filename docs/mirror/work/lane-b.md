@@ -35,6 +35,13 @@
 - Failed idiomatic forms: none.
 - Report: `.mirror-cache/release-il-a53eb31d5796/release-il.json` (PASS, 682 checked).
 
+## Batch 5 — file-order prefixes
+
+- Kept the prefixes and added one comment at the top of the first file in each set (`MetadataReferenceTracker.AState.cs`, `ModuleBuilder.AppendMetadata.cs`).
+- Gate test, prefixes removed from `MetadataReferenceTracker.*.cs` (letters stripped): FAIL, 14 failures ("method removed", "calls differ", "no Mathcad counterpart" on closure display classes). Report: `.mirror-cache/release-il-80e268e9948f/release-il.json`.
+- Gate test, `ModuleBuilder.AZDefineType.cs` and `BAddTargetFrameworkAttribute.cs` renamed without their letters: FAIL. Report: `.mirror-cache/release-il-19588f32948a/release-il.json`.
+- Both renames were reverted. Final report: `.mirror-cache/release-il-c70255b5e22b/release-il.json` (PASS, 682 checked).
+
 ## Remaining mismatches
 
-None reported at batch 4.
+None reported at batch 5.
