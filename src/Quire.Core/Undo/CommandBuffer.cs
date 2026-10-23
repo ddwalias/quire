@@ -154,6 +154,20 @@ public partial class CommandBuffer
         _currentInstance._undoStack.Push(command);
     }
 
+    public IUndoableCommand[] GetUndoCommands()
+    {
+        IUndoableCommand[] commands = _undoStack.ToArray();
+        Array.Reverse(commands);
+        return commands;
+    }
+
+    public IUndoableCommand[] GetRedoCommands()
+    {
+        IUndoableCommand[] commands = _redoStack.ToArray();
+        Array.Reverse(commands);
+        return commands;
+    }
+
     partial class MasterCommand
     {
         [MirrorVerified("Release IL")]
