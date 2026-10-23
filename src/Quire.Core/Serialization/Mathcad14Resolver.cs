@@ -1,5 +1,6 @@
 #nullable disable
 using System.IO;
+using System;
 using Quire.Mirror;
 
 namespace Quire.Serialization;
@@ -11,4 +12,14 @@ public partial class Mathcad14Resolver
 
     [MirrorVerified("PtcSerializationMathcad14ResolverMechanicalDifferentialTests")]
     public Stream MainStream => GetStream("worksheet30.xsd");
+
+    protected override string SchemaName(Uri absoluteUri)
+    {
+        string text = absoluteUri.Segments[^1];
+        if ("EN" == text)
+        {
+            text = "XMLSchema.dtd";
+        }
+        return text;
+    }
 }

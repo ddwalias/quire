@@ -13,6 +13,4 @@ public partial class Mathcad14Resolver : global::Quire.Serialization.PtcXmlResol
 {
     [global::Quire.Mirror.MirrorStub]
     public static void InitializeDocument(global::System.Xml.XmlDocument xmlMetadata) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override string SchemaName(global::System.Uri absoluteUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
