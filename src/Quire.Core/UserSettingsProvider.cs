@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Configuration;
 using System.IO;
 using System.Xml;
+using System.Xml.Serialization;
 using Quire.IO;
 using Quire.Mirror;
 using Quire.Mirror;
@@ -37,6 +38,89 @@ public partial class UserSettingsProvider
             name = GetType().Name;
         }
         base.Initialize(name, values);
+    }
+
+    public override void SetPropertyValues(SettingsContext context, SettingsPropertyValueCollection propvals)
+    {
+        Configuration origConfig;
+        Configuration modifiedConfig;
+        ClientSettingsSection section2;
+        GetSectionStatusEnum section = GetSection(context, out section2, out origConfig, out modifiedConfig);
+        if (section == GetSectionStatusEnum.NoSection)
+        {
+            DebugTools.FailAssertion(null, Array.Empty<object>());
+            return;
+        }
+        foreach (SettingsPropertyValue propval in propvals)
+        {
+            if (!propval.IsDirty || propval.SerializedValue == null)
+            {
+                continue;
+            }
+            if (!IsUserScoped(propval.Property))
+            {
+                DebugTools.FailAssertion(null, Array.Empty<object>());
+                continue;
+            }
+            foreach (SettingElement setting in section2.Settings)
+            {
+                if (setting.Name != propval.Name)
+                {
+                    continue;
+                }
+                object propertyValue = propval.PropertyValue;
+                XmlNode valueXml = setting.Value.ValueXml;
+                switch (setting.SerializeAs)
+                {
+                    case SettingsSerializeAs.String:
+                        valueXml.InnerText = propertyValue.ToString();
+                        break;
+                    case SettingsSerializeAs.Xml:
+                    {
+                        using (StringWriter stringWriter = new StringWriter())
+                        {
+                            new XmlSerializer(propertyValue.GetType()).Serialize(stringWriter, propertyValue);
+                            XmlDocument xmlDocument = new XmlDocument();
+                            xmlDocument.LoadXml(stringWriter.GetStringBuilder().ToString());
+                            if (DebugTools.AssertNotNull(valueXml.OwnerDocument, null).Passed
+                                && DebugTools.AssertNotNull(xmlDocument.DocumentElement, null).Passed)
+                            {
+                                XmlNode xmlNode = valueXml.OwnerDocument.ImportNode(xmlDocument.DocumentElement, deep: true);
+                                XmlNode xmlNode2 = valueXml.SelectSingleNode(xmlNode.Name);
+                                if (DebugTools.AssertNotNull(xmlNode2, null).Passed)
+                                {
+                                    valueXml.ReplaceChild(xmlNode, xmlNode2);
+                                }
+                            }
+                        }
+                        break;
+                    }
+                    default:
+                        DebugTools.FailAssertion(setting.SerializeAs.ToString());
+                        break;
+                }
+                setting.Value.ValueXml = null;
+                setting.Value.ValueXml = valueXml;
+            }
+        }
+        try
+        {
+            if (section == GetSectionStatusEnum.ModifiedSection)
+            {
+                modifiedConfig.Save();
+            }
+            else if (modifiedConfig != null)
+            {
+                origConfig.SaveAs(modifiedConfig.FilePath);
+            }
+        }
+        catch (Exception ex)
+        {
+            if (!(ex is UnauthorizedAccessException))
+            {
+                DebugTools.FailAssertion(null, Array.Empty<object>());
+            }
+        }
     }
 
     [MirrorVerified("Release IL")]
