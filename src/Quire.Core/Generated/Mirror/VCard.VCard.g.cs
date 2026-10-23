@@ -13,6 +13,4 @@ public partial class VCard
 {
     [global::Quire.Mirror.MirrorStub]
     private static readonly string[] Newline;
-    [global::Quire.Mirror.MirrorStub]
-    public VCard(string vCardString) { }
 }

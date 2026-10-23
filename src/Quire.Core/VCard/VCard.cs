@@ -5,6 +5,90 @@ namespace Quire.VCard;
 
 public partial class VCard
 {
+    public VCard(string vCardString)
+    {
+        foreach (string vCardStringLine in GetVCardStringLines(vCardString))
+        {
+            VCardContentLine vCardContentLine = new VCardContentLine(vCardStringLine);
+            bool flag;
+            Telephone telephone;
+            switch (vCardContentLine.Name)
+            {
+                case "VERSION":
+                    Version = vCardContentLine.Value;
+                    break;
+                case "FN":
+                    FormattedName = vCardContentLine.Value;
+                    break;
+                case "N":
+                    Name = new Name
+                    {
+                        FamilyName = vCardContentLine.GetValue(0),
+                        GivenName = vCardContentLine.GetValue(1),
+                        AdditionalNames = vCardContentLine.GetValue(2),
+                        HonorificPrefixes = vCardContentLine.GetValue(3),
+                        HonorificSuffixes = vCardContentLine.GetValue(4)
+                    };
+                    break;
+                case "TITLE":
+                    Title = vCardContentLine.Value;
+                    break;
+                case "ORG":
+                    Organization = vCardContentLine.Value;
+                    break;
+                case "ADR":
+                    DeliveryAddress = new Address
+                    {
+                        POBox = vCardContentLine.GetValue(0),
+                        ExtendedAddress = vCardContentLine.GetValue(1),
+                        StreetAddress = vCardContentLine.GetValue(2),
+                        City = vCardContentLine.GetValue(3),
+                        StateOrProvince = vCardContentLine.GetValue(4),
+                        PostalCode = vCardContentLine.GetValue(5),
+                        CountryName = vCardContentLine.GetValue(6)
+                    };
+                    break;
+                case "TEL":
+                case "X-MS-TEL":
+                {
+                    flag = vCardContentLine.GetParam("FAX") != null;
+                    Telephone telephoneValue = default;
+                    telephoneValue.IsFax = flag;
+                    telephoneValue.IsVoice = !flag;
+                    telephoneValue.Number = vCardContentLine.Value;
+                    telephoneValue.Type = Telephone.Types.Work;
+                    telephone = telephoneValue;
+                    if (TelephoneList == null)
+                    {
+                        TelephoneList = new Telephone[1];
+                        TelephoneList[0] = telephone;
+                        break;
+                    }
+                    Telephone[] array = new Telephone[TelephoneList.Length + 1];
+                    for (int i = 0; i < TelephoneList.Length; i++)
+                    {
+                        array[i] = TelephoneList[i];
+                    }
+                    array[TelephoneList.Length] = telephone;
+                    TelephoneList = array;
+                    break;
+                }
+                case "EMAIL":
+                    Email = vCardContentLine.Value;
+                    break;
+                case "URL":
+                    Url = vCardContentLine.Value;
+                    break;
+                case "LABEL":
+                    AddressLabel = vCardContentLine.Value;
+                    break;
+                case "PHOTO":
+                    Photo = Convert.FromBase64String(vCardContentLine.Value);
+                    break;
+            }
+        }
+    }
+
     private static IEnumerable<string> GetVCardStringLines(string vCardString)
     {
         string[] lines = vCardString.Replace("\r\n ", "").Replace("\r\n\t", "").Split(Newline, StringSplitOptions.RemoveEmptyEntries);
