@@ -18,6 +18,19 @@ namespace Quire.Wpf;
 
 public static partial class WpfUtils
 {
+    public static T TryFindAncestorIncludingSelf<T>(this DependencyObject child, bool includeLogical = false) where T : class
+    {
+        if (child == null)
+        {
+            return null;
+        }
+        if (child is T result)
+        {
+            return result;
+        }
+        return child.TryFindVisualAncestor<T>(includeLogical);
+    }
+
     public static bool? IsLoaded(DependencyObject depObj)
     {
         switch (depObj)
