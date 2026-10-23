@@ -1,6 +1,7 @@
 #nullable disable
 using System.Collections.Specialized;
 using System.Collections.Generic;
+using System.Linq;
 using System.Collections.Specialized;
 using Quire.Mirror;
 using Quire.Mirror;
@@ -94,6 +95,23 @@ public partial class ObservableRangeCollection<T>
     {
         base.OnCollectionChanged(args);
         FireRangeChanged(args);
+    }
+
+    protected override void ClearItems()
+    {
+        List<T> list = Items.ToList();
+        if (list.Count > 0)
+        {
+            FireRangeChanging(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, list, 0));
+        }
+        using (new RangeChangeLock(this))
+        {
+            base.ClearItems();
+        }
+        if (list.Count > 0)
+        {
+            FireRangeChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, list, 0));
+        }
     }
 
     partial class RangeChangeLock

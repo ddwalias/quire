@@ -15,8 +15,6 @@ public partial class ObservableRangeCollection<T> : global::System.Collections.O
     public void AddRange(global::System.Collections.Generic.IEnumerable<T> itemsToAdd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int RemoveRange(global::System.Collections.Generic.IEnumerable<T> itemsToRemove) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void ClearItems() => base.ClearItems();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ObservableRangeCollection`1+RangeChangeLock, Ptc.Core")]
     private partial class RangeChangeLock : global::System.IDisposable
