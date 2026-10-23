@@ -45,3 +45,16 @@
 ## Remaining mismatches
 
 None reported at batch 5.
+
+## Batch 6 — Logger static constructor
+
+- Owner: Lane B. Branch: `mirror/b-mpl-emit-cctor-202610232359`. Worktree: `C:/Projects/Quire-wt/lane-b-mpl-emit-cctor`.
+- Claimed: `Logger::.cctor` (mplasb 0x06000153) and its `<>c` closure `<.cctor>b__15_0` (0x06000297, `<>c..ctor`, `<>c..cctor`).
+- Member moves:
+  - Static fields with initializers `_lock`, `path1`, `_logFileName`, `_isEnabled`, `_logQueue`, `_logSignal` leave `Generated/` and move into `Logger.BStaticConstructor.cs`. `_logThread` has no initializer and stays generated.
+  - `_isRunning` and `GetCurrentThreadId` leave `Mirrored/System.Reflection.Emit.Quire.Mpl.Logger.cs` (file removed) and move into `Logger.BStaticConstructor.cs`.
+  - `Logger.Properties.cs` is renamed `Logger.AProperties.cs` so it compiles before the constructor.
+- Compile order: partials sort by relative path. The constructor's ordinal (15) counts `_logThread` (generated), the six property members, and the eight members in `B`, so `Log`, `ProcessLogQueue` and `Shutdown` must sort after `B`.
+- Result: `Logger::.cctor` and `<.cctor>b__15_0` exact; the other Logger members stay exact. Idiomatic form matched on the first try; the only unusual shape is the file-name letters A and B.
+- Report: `.mirror-cache/release-il-d70f8d14531d/release-il.json` (PASS, 686 checked, 0 failures).
+- Remaining mismatches: none.

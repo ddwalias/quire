@@ -12,17 +12,5 @@ namespace System.Reflection.Emit.Quire.Mpl;
 public static partial class Logger
 {
     [global::Quire.Mirror.MirrorStub]
-    private static readonly object _lock;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly string path1;
-    [global::Quire.Mirror.MirrorStub]
-    private static string _logFileName;
-    [global::Quire.Mirror.MirrorStub]
-    private static bool _isEnabled;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Collections.Concurrent.ConcurrentQueue<string> _logQueue;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Threading.AutoResetEvent _logSignal;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Threading.Thread _logThread;
 }
