@@ -36,4 +36,24 @@ public static partial class TextElementAttachedProperties
         }
         element.SetValue(StyleKeyProperty, value);
     }
+
+    public static void SetTextStyleAndBind(DependencyObject element, TextStyleData styleData, bool isApply, bool isSelected, System.Windows.Controls.RichTextBox rtb = default)
+    {
+        FrameworkContentElement frameworkContentElement = element as FrameworkContentElement;
+        if (frameworkContentElement == null)
+        {
+            return;
+        }
+        if (styleData != null)
+        {
+            frameworkContentElement.Tag = styleData.StyleKey;
+            TextStyle textStyle = new TextStyle(styleData, true);
+            SetTextStyleOnTextRegion(frameworkContentElement, textStyle, isApply, isSelected, rtb);
+            SetTextStyleOnElement(frameworkContentElement, textStyle, isApply, isSelected);
+            SetTextStyleOnParagraph(frameworkContentElement, textStyle, isApply, isSelected);
+            SetStyleKey(frameworkContentElement, styleData.StyleKey);
+            return;
+        }
+        frameworkContentElement.ClearValue(FrameworkElement.StyleProperty);
+    }
 }
