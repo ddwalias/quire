@@ -45,8 +45,6 @@ public partial class WpfClipboard : global::Quire.IClipboard
     public string GetFormattedText(out string dataFormat, out bool isPlainText) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetSExpression(string sExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool CanPasteIntoTextRegion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.WpfClipboard+ClipboardOverride, Ptc.Core")]
     private partial class ClipboardOverride : global::System.IDisposable
