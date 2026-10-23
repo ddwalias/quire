@@ -18,8 +18,6 @@ public static partial class TextRegionSerializationHelper
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Version _firstVerToNotPackFlowDocumentImages;
     [global::Quire.Mirror.MirrorStub]
-    private static string GetAttributeValueAndRemoveIt(global::System.Xml.XmlNode xmlNode, string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.XmlNamespaceManager CreateNamespaceManagerForTextRegions(global::System.Xml.XmlNode root) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void CopyImagesFromPackageIntoFlowDocument(global::System.Xml.XmlNode flowDocumentXaml, global::Quire.Serialization.IDeS11NProvider d11NProvider, global::System.Xml.XmlNamespaceManager nsManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
