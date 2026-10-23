@@ -13,6 +13,4 @@ public partial class SpiritResolver : global::Quire.Serialization.PtcXmlResolver
 {
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Serialization.SpiritResolver _instance;
-    [global::Quire.Mirror.MirrorStub]
-    protected override string SchemaName(global::System.Uri absoluteUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
