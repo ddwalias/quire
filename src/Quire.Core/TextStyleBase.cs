@@ -55,6 +55,15 @@ public partial class TextStyleBase
         return null;
     }
 
+    public bool IsDeletedProperty(string propertyName, object value)
+    {
+        if (_htDeletedPropertyToIndex.ContainsKey(propertyName) && value != null)
+        {
+            return _htOldPropertyToIndex[propertyName].ToString().Equals(value.ToString());
+        }
+        return false;
+    }
+
     [MirrorVerified("Release IL")]
     public void MergeBasedOn()
     {

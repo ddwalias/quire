@@ -48,8 +48,6 @@ public abstract partial class TextStyleBase : global::Quire.ITextStyle, global::
     [global::Quire.Mirror.MirrorStub]
     protected void CloneSetters(global::System.Windows.SetterBaseCollection setters, global::System.Windows.Style style) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool IsDeletedProperty(string propertyName, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public bool IsModifyProperty(string propertyName, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool IsModifyPropertyCollection(string propertyName, global::System.Collections.ICollection value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
