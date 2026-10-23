@@ -121,24 +121,6 @@ public partial class UnsafeNativeMethods
     public const uint CFS_FORCE_POSITION = 32u;
     [global::Quire.Mirror.MirrorStub]
     public const uint WM_IME_COMPOSITION = 271u;
-    [global::Quire.Mirror.MirrorStub]
-    public static int TF_CreateThreadMgr(out global::Quire.Wpf.UnsafeNativeMethods.ITfThreadMgr threadManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int TF_CreateInputProcessorProfiles(out global::Quire.Wpf.UnsafeNativeMethods.ITfInputProcessorProfiles profiles) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int TF_CreateDisplayAttributeMgr(out global::Quire.Wpf.UnsafeNativeMethods.ITfDisplayAttributeMgr dam) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int TF_CreateCategoryMgr(out global::Quire.Wpf.UnsafeNativeMethods.ITfCategoryMgr catmgr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int GetKeyboardLayoutList(int size, nint[] hkls) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static nint ImmGetContext(nint hWnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int ImmReleaseContext(nint hWnd, nint hIMC) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool ImmSetCompositionWindow(nint hIMC, ref global::Quire.Wpf.UnsafeNativeMethods.COMPOSITIONFORM lpCompForm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool ImmGetOpenStatus(nint hIMC) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+PopFlags, Ptc.Core")]
     [global::System.Flags]

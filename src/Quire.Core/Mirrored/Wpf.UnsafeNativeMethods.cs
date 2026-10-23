@@ -6,6 +6,41 @@ namespace Quire.Wpf;
 partial class UnsafeNativeMethods
 {
 
+    [System.Runtime.InteropServices.DllImport("msctf.dll")]
+    [System.Security.SuppressUnmanagedCodeSecurity]
+    [System.Security.SecurityCritical]
+    public static extern int TF_CreateThreadMgr(out ITfThreadMgr threadManager);
+
+    [System.Runtime.InteropServices.DllImport("msctf.dll")]
+    [System.Security.SecurityCritical]
+    [System.Security.SuppressUnmanagedCodeSecurity]
+    public static extern int TF_CreateInputProcessorProfiles(out ITfInputProcessorProfiles profiles);
+
+    [System.Runtime.InteropServices.DllImport("msctf.dll")]
+    [System.Security.SuppressUnmanagedCodeSecurity]
+    [System.Security.SecurityCritical]
+    public static extern int TF_CreateDisplayAttributeMgr(out ITfDisplayAttributeMgr dam);
+
+    [System.Runtime.InteropServices.DllImport("msctf.dll")]
+    [System.Security.SuppressUnmanagedCodeSecurity]
+    [System.Security.SecurityCritical]
+    public static extern int TF_CreateCategoryMgr(out ITfCategoryMgr catmgr);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto, ExactSpelling = true, SetLastError = true)]
+    public static extern int GetKeyboardLayoutList(int size, [System.Runtime.InteropServices.Out][System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.LPArray)] nint[] hkls);
+
+    [System.Runtime.InteropServices.DllImport("imm32.dll")]
+    public static extern nint ImmGetContext(nint hWnd);
+
+    [System.Runtime.InteropServices.DllImport("imm32.dll")]
+    public static extern int ImmReleaseContext(nint hWnd, nint hIMC);
+
+    [System.Runtime.InteropServices.DllImport("imm32.dll")]
+    public static extern bool ImmSetCompositionWindow(nint hIMC, ref COMPOSITIONFORM lpCompForm);
+
+    [System.Runtime.InteropServices.DllImport("imm32.dll")]
+    public static extern bool ImmGetOpenStatus(nint hIMC);
+
     partial interface ITfMessagePump
     {
         void PeekMessageA(ref global::System.Windows.Interop.MSG msg, int hwnd, int msgFilterMin, int msgFilterMax, int removeMsg, out int result);
