@@ -32,8 +32,6 @@ public partial class ApplicationLogger : global::Quire.Services.IApplicationLogg
     [global::Quire.Mirror.MirrorStub]
     public string GetSystemInfoIfAvailable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public string GetApplicationStartTime() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public string WriteToLog(string logType, string logContents) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string GetEnvironmentVariablesAndCommandLineArgumentsData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
