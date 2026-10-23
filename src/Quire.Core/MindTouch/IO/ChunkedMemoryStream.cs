@@ -252,6 +252,44 @@ public partial class ChunkedMemoryStream
         return _position = num;
     }
 
+    public override void SetLength(long value)
+    {
+        EnsureOpen();
+        if (_fixed && value > Capacity)
+        {
+            throw new NotSupportedException("Expanding this ChunkedMemoryStream is not supported");
+        }
+        if (_readonly)
+        {
+            throw new NotSupportedException("Cannot write to this ChunkedMemoryStream");
+        }
+        if (value < 0)
+        {
+            throw new ArgumentOutOfRangeException("value");
+        }
+        EnsureCapacity(value);
+        int offset;
+        int num = GetChunkIndex(value, out offset);
+        if (_chunks != null && num < _chunks.Length)
+        {
+            if (offset > 0)
+            {
+                byte[] array = _chunks[num];
+                if (array != null)
+                {
+                    Array.Clear(array, offset, ChunkSize - offset);
+                }
+                num++;
+            }
+            for (int i = num; i < _chunks.Length; i++)
+            {
+                _chunks[i] = null;
+            }
+        }
+        _length = value;
+        _position = Math.Min(_position, _length);
+    }
+
     [MirrorVerified("Release IL")]
     public long Capacity
     {
