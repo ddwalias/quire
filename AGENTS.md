@@ -32,6 +32,14 @@ needs Mathcad's member ordinal while other members are unfinished, declare those
 unmarked placeholder stubs (`=> throw global::Quire.Mirror.MirrorStub.NotImplemented();`) in
 Mathcad order in the hand-written file ([validation](docs/mirror/validation.md)).
 
+Write idiomatic C#: the source the original author wrote, not a transcription of the IL or
+ILSpy output. Roslyn emits the `as`/null-test/`goto` shapes of a type-pattern `switch` and the
+bottom-tested branches of `while` loops, so write those instead of labels. Local names are not
+in Release IL; never keep `value2`/`field3`-style names. Use the repo's 4-space formatting.
+Try the idiomatic form first and keep an unusual shape only when the Release IL comparison
+shows the idiomatic form differs, with a one-line comment saying what the IL requires.
+Compile-order devices (file-name prefixes that fix closure ordinals) need the same comment.
+
 Tests, coverage, mutation, status ladders, evidence essays, approval handoffs and phase
 audits are not batch requirements. Keep only a short checkpoint: owner, branch, members,
 Release IL report, remaining mismatches. This is the complete workflow (decision D17).
