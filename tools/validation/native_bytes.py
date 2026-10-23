@@ -106,6 +106,7 @@ class PeImage:
             self.sections.append((va, vsize, raw, raw_size))
         self.exports = self._read_exports(dirs)
         self.functions = self._read_pdata(dirs)
+        self.imports = self._read_imports(dirs)
 
     def _read_exports(self, dirs):
         d = self.data
@@ -136,6 +137,29 @@ class PeImage:
             begin, end, _ = struct.unpack_from("<III", d, base + 12 * i)
             out[begin] = end
         return out
+
+    def _read_imports(self, dirs):
+        """Import address table slot RVA -> imported function name (ordinal imports are named by their number)."""
+        d = self.data
+        rva, _ = struct.unpack_from("<II", d, dirs + 8)
+        if not rva:
+            return {}
+        table = {}
+        desc = _rva_offset(self.sections, rva)
+        while struct.unpack_from("<I", d, desc + 16)[0]:  # FirstThunk is non-zero for every real descriptor
+            lookup, _, _, _, first = struct.unpack_from("<IIIII", d, desc)
+            thunks = _rva_offset(self.sections, lookup or first)
+            for i in range(1 << 20):
+                entry = struct.unpack_from("<Q", d, thunks + 8 * i)[0]
+                if not entry:
+                    break
+                if entry >> 63:
+                    name = f"#{entry & 0xFFFF}"
+                else:
+                    name = _cstr(d, _rva_offset(self.sections, entry & 0x7FFFFFFF) + 2)
+                table[first + 8 * i] = name
+            desc += 20
+        return table
 
     def export_extent(self, name):
         """(begin RVA, end RVA) of an exported function, or None if the export is missing."""
@@ -261,7 +285,8 @@ def compare_code(name, original, original_relocs, candidate, candidate_relocs):
 def check_targets(image, begin, function):
     """Verify each relocation whose target is an export of the original: its address there must be the export's RVA.
 
-    Returns (mismatch messages, number of relocations that could not be verified).
+    Imports are checked the same way: a call through `__imp_<name>` must reach the import slot the original imports
+    <name> through. Returns (mismatch messages, number of relocations that could not be verified).
     """
     mismatches, unverified = [], 0
     for r in function.relocs:
@@ -276,7 +301,15 @@ def check_targets(image, begin, function):
             resolved = at + 4 + (r.kind - IMAGE_REL_AMD64_REL32) + image.read_i32(at)
         else:
             raise ValueError(f"unsupported relocation type {r.kind:#x} at offset {r.offset:#x}")
-        if target is None or target not in image.exports:
+        if target is not None and target.startswith("__imp_"):
+            imported = target[len("__imp_"):]
+            if resolved not in image.imports:
+                mismatches.append(f"{imported} at +{r.offset:#x}: original resolves to RVA {resolved:#x}, "
+                                  f"which is not an import slot")
+            elif image.imports[resolved] != imported:
+                mismatches.append(f"{imported} at +{r.offset:#x}: original calls import "
+                                  f"{image.imports[resolved]}")
+        elif target is None or target not in image.exports:
             unverified += 1
         elif image.exports[target] != resolved:
             mismatches.append(f"{target} at +{r.offset:#x}: original resolves to RVA {resolved:#x}, "
@@ -307,11 +340,13 @@ def compare_object(original_dll, candidate_obj, symbols=None):
         # The original is linked, so it has no relocation records. Its displacements sit at the candidate's relocation
         # offsets because both sides encode the same instructions; the candidate's sites mask both.
         byte_result = compare_code(f.name, code, f.relocs, f.code, f.relocs)
-        mismatches, unverified = check_targets(image, begin, f)
+        # Relocation offsets only line up when the lengths agree; otherwise the target check would read the wrong bytes.
+        mismatches, unverified = check_targets(image, begin, f) if len(code) == len(f.code) else ([], 0)
+        reasons = [] if byte_result.ok else [byte_result.reason]
         if mismatches:
-            results.append(Result(f.name, False, "call target differs: " + "; ".join(mismatches), unverified))
-        else:
-            results.append(Result(f.name, byte_result.ok, byte_result.reason, unverified))
+            reasons.append("call target differs: " + "; ".join(mismatches))
+        ok = byte_result.ok and not mismatches
+        results.append(Result(f.name, ok, "; ".join(reasons) if reasons else byte_result.reason, unverified))
     return results
 
 

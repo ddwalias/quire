@@ -57,9 +57,10 @@ class FakeImage:
 
     image_base = 0x180000000
 
-    def __init__(self, exports, memory):
+    def __init__(self, exports, memory, imports=None):
         self.exports = exports
         self.memory = memory
+        self.imports = imports or {}
 
     def read_i32(self, rva):
         return struct.unpack_from("<i", self.memory, rva)[0]
@@ -179,6 +180,24 @@ class CallTargetTests(unittest.TestCase):
         struct.pack_into("<i", self.memory, 0x1001, 0x1100 - (0x1001 + 4 + 1))
         rel32_1 = Function("caller", self.call.code, [Reloc(1, 0x0005, 0)], {1: "callee"})
         self.assertEqual(self.check({"callee": 0x1100}, function=rel32_1), ([], 0))
+
+    def test_call_through_the_import_slot_it_names_verifies(self):
+        call_import = Function("caller", self.call.code, [Reloc(1, 0x0004, 0)], {1: "__imp_alloc"})
+        image = FakeImage({}, self.memory, imports={0x1100: "alloc"})
+        self.assertEqual(check_targets(image, 0x1000, call_import), ([], 0))
+
+    def test_call_through_a_different_import_is_a_mismatch(self):
+        call_import = Function("caller", self.call.code, [Reloc(1, 0x0004, 0)], {1: "__imp_free"})
+        image = FakeImage({}, self.memory, imports={0x1100: "alloc"})
+        mismatches, _ = check_targets(image, 0x1000, call_import)
+        self.assertEqual(len(mismatches), 1)
+        self.assertIn("alloc", mismatches[0])
+
+    def test_call_through_a_non_import_slot_is_a_mismatch(self):
+        call_import = Function("caller", self.call.code, [Reloc(1, 0x0004, 0)], {1: "__imp_alloc"})
+        mismatches, _ = check_targets(FakeImage({}, self.memory), 0x1000, call_import)
+        self.assertEqual(len(mismatches), 1)
+        self.assertIn("not an import slot", mismatches[0])
 
     def test_absolute_address_resolves_against_the_image_base(self):
         struct.pack_into("<Q", self.memory, 0x1000, FakeImage.image_base + 0x1300)
