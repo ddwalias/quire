@@ -7,11 +7,15 @@
   4. `Quire.Calculation.Core` — `Ptc.Calculation.Core.dll`
   5. `Quire.Media3D` — `Ptc.Media3D.dll`
 - Status: in progress. Quire.Automation, Quire.EngNotebook.Automation, and Quire.EngNotebookPlus.Automation actionable members completed. Quire.Calculation.Core actionable members landed around tooling blockers. Quire.Media3D in progress.
-- Worktree: `C:/Projects/Quire-wt/lane-c-automation`.
-- Branch: mirror/c-calc-core-20261021-c17.
+- Worktree: `C:/Projects/Quire-wt/lane-c-calc-media3d` (current checkpoint; `lane-c-automation` is retired and must not be used).
+- Branch: mirror/c-calc-media3d-202610231251 (from main 4fe52924).
 - UTC start time: 2026-10-21T13:33:29Z.
 - Eight-hour deadline: 2026-10-21T21:33:29Z.
 - Current assembly: Quire.Calculation.Core (in progress).
+- Batch 1 checkpoint (Trace2DResultConverter): 7 members exact (ctor, GetDataSourceType, BuildTraceData, TryParseResult, ReadAsColumns, GetTraceTypePreset, GetMatrixToVectorsConverter). Remaining stubs: DissectUnits (blocked, see below), ConvertToVectorsForm (blocked, see below). Report: `release-il.json` in the Lane C scratchpad, 528 checked, 528 exact, 0 failures, 274 unfinished.
+- Blockers for maintainer:
+  - `IUnitedValueResultNode.Units`: the original contract is `IList<Unit>` (get_Units in DissectUnits IL), but the hand-written product partial in `src/Quire.Calculation.Core/ResultNodes.cs` declares `IReadOnlyList<UnitPower> Units`. DissectUnits cannot match until the product result-node contract and the mirror agree. Left as a generated stub.
+  - `ConvertToVectorsForm`: the original stores the axis info with `stloc.s 12; ldloc.s 12` for an assignment used as a value in an argument list (legacy CSC shape). Roslyn emits `dup; stloc.s 12`; tried the argument-assignment form, no Roslyn shape matched. Left as a generated stub.
 - Selected members:
   - Quire.Automation:
     - Batch 1: Result interfaces and classes (IMathcadPrimeGetValueResult, IMathcadPrimeInputResult, IMathcadPrimeInputMatrixResult, IMathcadPrimeOutputResult, IMathcadPrimeOutputResultAs, IMathcadPrimeOutputMatrixResult, IMathcadPrimeOutputMatrixResultAs, IMathcadPrimeSetValueResults and implementations).
