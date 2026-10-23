@@ -43,16 +43,62 @@ The C++/CLI build uses the compiler that built `utl-mgd.dll`. Its Rich header sh
 (Visual Studio 2026 18.6.2). The gate builds with that exact instance and rejects other linker builds
 ([validation](validation.md#ccli-candidate)).
 
+## D20: one Quire project per Mathcad assembly, in its original language (2026-10-23)
+
+The user replaced D2's consolidation with a strict 1:1 layout. Every in-scope Mathcad assembly gets its own Quire
+project holding only that assembly's members, built from source in the original's language with the original's
+compiler. Classification comes from PE data (CLR `ILONLY` flag, Rich header, linker version, assembly attributes),
+not from file names: the `-mgd` suffix does not mean C++/CLI.
+
+| Language | Count | Build | Assemblies |
+|---|---:|---|---|
+| C# | 30 | Roslyn `.csproj` | `Ptc.*`, `MathcadPrime`, `automation`, `automationmgd`, `componentsmgd`, `efiio-csharp`, `efiplot_`, `efisixsigma_`, `mcmisc`, `mplasb`, `mplrun`, `utilsmgd` |
+| C++/CLI | 31 | `.vcxproj`, MSVC 19.51.36246 (D19) | `efi*_` except `efiplot_`/`efisixsigma_`, `efiutl`, `engutils-mgd`, `iengine`, `mccore12`, `mcdepman`, `mceng`, `mcfront12`, `msclr`, `msgen`, `mslisp`, `mspcons-mgd`, `utl-mgd` |
+| Mpl | 51 | Quire's own Mpl toolchain | `efi*` without `_` except `efiio-csharp`, `efiutl`, `efisymbolics-umgd`; `mpl*` except `mplasb`/`mplrun`, `mcd*` except `mcdepman`, `hashtable` |
+| Native | 10 | native `.vcxproj`, outside the IL gate (D10) | `efistatsci_`, `efisymbolics-umgd`, `engutils`, `mcaduser`, `mctranslator`, `mshex`, `msmpl`, `mspcons`, `msprolog`, `utl` |
+
+`Ptc.License.Plpf` and `Ptc.OleInterop` (C++/CLI) and `creo3dfit` (native) stay deferred (D5).
+
+- **Mpl modules** are emitted by Mathcad's Mpl compiler: every method has `.maxstack 48` and many calls carry
+  `tail.`, which Roslyn never emits. They are written as Quire-owned Mpl source and compiled at build time by the
+  mirrored toolchain: `msmpl` and `mshex` (native ports), `msgen` and `msclr` (C++/CLI), `mplasb` and `mplrun`
+  (C#). C# stand-ins for the 51 modules can never pass the gate. They finish after that chain exists.
+- **Native DLLs** are PTC closed source and ship no import libraries. The end state follows the likely original:
+  Quire headers declare the exports with `UTL_API`-style `__declspec(dllexport/dllimport)` macros (`extern "C"`
+  for `mcaduser`'s documented C API), and the import library is a by-product of linking the native project.
+  As a stopgap, until a native DLL is ported, its import library may be generated with `lib.exe` from a `.def`
+  in the repository, and the mirrors load Mathcad's DLL at run time. This is a narrow amendment to D19: the
+  stopgap import library is the only build output allowed to carry original export names, and each one is
+  replaced when its DLL is ported. Third-party imports link against their vendors' libraries (MKL); Knitro stays
+  with D6.
+- **Shared-header types** follow each original's metadata: where an original defines a type, its project defines
+  it; where it only references one, the project references the owner. C++/CLI projects include one shared header,
+  so each DLL compiles its own copy, as Mathcad's build did. The C# public duplicates (`Mathcad.IValue`,
+  `IMatrixValue`) are embedded COM interop types and come from embedding the interop types.
+- **Support projects** with no Mathcad counterpart are allowed as an explicit list (`Quire.Mirror`,
+  `Quire.Mpl.Runtime`, and a home for `Quire.Engine`'s own interpreter code). Mirrored method bodies never call
+  into them; that would change the IL.
+- **Cycles:** the original graph has none, counting managed references and native imports. A cycle is reported as
+  an error, never resolved by merging assemblies.
+- **Migration is progressive.** `Rules.ProjectFor` names each assembly's target. MirrorGen writes an assembly's
+  members to its target once that project exists in the original's language, and to its D2 project until then.
+  Splitting an assembly out is therefore creating its target project. The Release IL gate is unchanged and gains
+  no exemption. Lanes A–C (`Quire.Core`, `Quire.Mpl.Emit`, `Quire.Utils`) are already split. Lane D's
+  `Quire.Engine.Utl` is 1:1 but still C#; it splits when its `.vcxproj` lands in `src/`. A C++/CLI target that
+  still hosts other assemblies (`Quire.Engine` hosts `engutils-mgd`) splits after them; MirrorGen refuses otherwise.
+
 ## Mapping and scope
 
 - **D1:** `Mcd` maps to `Quire.Mcd`.
-- **D2:** Project consolidation follows [mapping.md](mapping.md); `Rules.ProjectFor` owns routing.
+- **D2 (superseded by D20):** The engine assemblies were consolidated into shared projects. Those projects remain
+  hosts only until each assembly's D20 target exists; `Rules.ProjectFor` owns routing ([mapping.md](mapping.md)).
 - **D3:** Preserve visibility, including internal and private members.
 - **D8:** `System.Reflection.Emit.PTC.Mathcad.Mpl` maps to `System.Reflection.Emit.Quire.Mpl`.
 - **D4:** Unimplemented features stay hidden in the shipping UI.
 - **D5:** Creo platform and licensing libraries remain deferred ([scope](scope.md)).
 - **D10:** Native engine internals have no managed IL counterpart and remain outside this
-  workflow. Their integration behavior is a separate engineering concern.
+  workflow. Their integration behavior is a separate engineering concern. Under D20 each native DLL is a native
+  project that the C++/CLI mirrors link against.
 - **D11:** [Tier lists](tiers/) select work: A covers runtime/calculation/I/O, A2 covers the
   equation tree, and B covers mechanical members. All three use the same exact Release IL
   acceptance rule. C is deferred and D is out of scope. Matching abstract/delegate declarations

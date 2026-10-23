@@ -17,6 +17,15 @@ public enum Disposition
 
 public sealed record ScopeEntry(string Assembly, string MathcadType, string Kind, string QuireType, Disposition Disposition, int? Phase);
 
+/// <summary>What built a Mathcad assembly, read from its PE data (D20). The Quire project uses the same.</summary>
+public enum Language
+{
+    CSharp,  // Roslyn: ILONLY, linker 48, CompilationRelaxations
+    CppCli,  // MSVC /clr mixed mode: Rich header, not ILONLY
+    Mpl,     // Mathcad's Mpl compiler (msmpl/msgen/msclr via mplasb): .maxstack 48, tail. calls
+    Native,  // no CLR header; outside the IL gate (D10)
+}
+
 /// <summary>
 /// The mirroring rules: which Mathcad types are in scope (from the reviewed docs/mirror/type-map.csv), how names map,
 /// and which Quire project each Mathcad assembly lands in.
@@ -24,6 +33,9 @@ public sealed record ScopeEntry(string Assembly, string MathcadType, string Kind
 public sealed class Rules
 {
     public Dictionary<(string Asm, string Type), ScopeEntry> Scope { get; } = new(new ScopeKeyComparer());
+
+    /// <summary>The repository root; a D20 target counts as split once its project exists under src/.</summary>
+    public required string Repo { get; init; }
 
     public bool TryFind(string asm, string type, out ScopeEntry entry) => Scope.TryGetValue((asm, type), out entry!);
 
@@ -36,9 +48,10 @@ public sealed class Rules
             HashCode.Combine(StringComparer.OrdinalIgnoreCase.GetHashCode(k.Asm), k.Type);
     }
 
-    public static Rules Load(string typeMapCsv)
+    public static Rules Load(string repo)
     {
-        var rules = new Rules();
+        string typeMapCsv = Path.Combine(repo, "docs", "mirror", "type-map.csv");
+        var rules = new Rules { Repo = repo };
         foreach (var line in File.ReadLines(typeMapCsv).Skip(1))
         {
             var f = SplitCsv(line);
@@ -120,9 +133,48 @@ public sealed class Rules
         return s.EndsWith('_') ? s.TrimEnd('_') + "Impl" : s;
     }
 
-    // ---------------------------------------------------------------- projects (D2)
+    // ---------------------------------------------------------------- projects (D20)
 
-    /// <summary>The Quire project that hosts a Mathcad assembly's types.</summary>
+    /// <summary>
+    /// Every non-Ptc Mathcad assembly by language, in its metadata-name casing (D20). Classified from PE data, not
+    /// file names: the -mgd suffix does not mean C++/CLI. Every Ptc assembly not listed here and MathcadPrime are C#.
+    /// </summary>
+    private static readonly Dictionary<string, (Language Language, string Name)> Assemblies = Table(
+        (Language.CSharp, ["automation", "automationmgd", "componentsmgd", "efiio-csharp", "efiplot_", "efisixsigma_",
+            "mcmisc", "mplasb", "mplrun", "utilsmgd"]),
+        (Language.CppCli, ["efibessel_", "eficalculus_", "eficore_", "efidata_", "efidebug_", "efidiffeq_",
+            "efifinance_", "efifitting_", "efifourier_", "efigraphics_", "efiimage_", "efiio_", "efimatrix_",
+            "efisignal_", "efisolver_", "efispecial_", "efistatistics_", "efisymbolics_", "efiutl", "efiwavelets_",
+            "engutils-mgd", "iengine", "mccore12", "mcdepman", "mceng", "mcfront12", "msclr", "msgen", "mslisp",
+            "mspcons-mgd", "utl-mgd", "Ptc.License.Plpf", "Ptc.OleInterop"]),
+        (Language.Mpl, ["EfiAffine", "EfiBessel", "EfiCalculus", "EfiCore", "EfiData", "EfiDebug", "EfiDiffEQ",
+            "EfiFinance", "EfiFitting", "EfiFourier", "EfiGraphics", "EfiImage", "EfiIO", "EfiMatrix", "EfiPlot",
+            "EfiSignal", "EfiSixsigma", "EfiSolver", "EfiSpecial", "EfiStatistics", "EfiSymbolics",
+            "EfiSymbolicsEmitter", "EfiSymbolicsLabels", "EfiSymbolicsLexer", "EfiSymbolicsMacros", "EfiSymbolicsMap",
+            "EfiSymbolicsParser", "EfiWavelets", "Hashtable", "McdDynamicEfi", "McdEfi", "McdRun", "McdStaticUnitSystem",
+            "McdStaticUnitSystemCGS", "McdStaticUnitSystemMKS", "McdStaticUnitSystemNone", "McdStaticUnitSystemSI",
+            "McdStaticUnitSystemUS", "McdTranslator", "McdUnitSystemCGS", "McdUnitSystemMKS", "McdUnitSystemNone",
+            "McdUnitSystemSI", "McdUnitSystemUS", "Mpl", "MplConstants", "MplMacro", "MplPrelude", "MplPrimitives",
+            "MplSexpr", "MplUnitSystemSI"]),
+        (Language.Native, ["efistatsci_", "efisymbolics-umgd", "engutils", "mcaduser", "mctranslator", "mshex", "msmpl",
+            "mspcons", "msprolog", "utl"]));
+
+    private static Dictionary<string, (Language, string)> Table(params (Language Language, string[] Names)[] groups) =>
+        groups.SelectMany(g => g.Names.Select(n => (n, g.Language)))
+            .ToDictionary(x => x.n, x => (x.Language, x.n), StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>The listed assemblies built in <paramref name="language"/>, by metadata name.</summary>
+    public static IEnumerable<string> AssembliesIn(Language language) =>
+        Assemblies.Values.Where(a => a.Language == language).Select(a => a.Name).Order(StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>The language a Mathcad assembly was built in, and so the language of its Quire project.</summary>
+    public static Language LanguageOf(string asm) =>
+        Assemblies.TryGetValue(asm, out var a) ? a.Language
+        : asm.Equals("MathcadPrime", StringComparison.OrdinalIgnoreCase) || asm.StartsWith("Ptc.", StringComparison.OrdinalIgnoreCase)
+            ? Language.CSharp
+            : throw new ArgumentException($"no language rule for {asm}");
+
+    /// <summary>D20: the one Quire project a Mathcad assembly maps to, holding only that assembly's members.</summary>
     public static string ProjectFor(string asm) => asm.ToLowerInvariant() switch
     {
         "mathcadprime" => "Quire",
@@ -130,7 +182,42 @@ public sealed class Rules
         "ptc.engnotebook.automation" => "Quire.EngNotebook.Automation",
         "ptc.engnotebookplus.automation" => "Quire.EngNotebookPlus.Automation",
         var a when a.StartsWith("ptc.") => "Quire." + asm[4..],
-        // D2: consolidated, following the layers of Mathcad's own assembly graph so the projects stay acyclic.
+        // Already 1:1 before D20; the names stay.
+        "mplasb" => "Quire.Mpl.Emit",
+        "mplrun" => "Quire.Mpl",
+        "utilsmgd" => "Quire.Utils",
+        "utl-mgd" => "Quire.Engine.Utl",
+        "mcmisc" => "Quire.Engine.Misc",
+        "iengine" => "Quire.Engine",
+        // The plain name is taken: Quire.Automation is Ptc.MathcadPrime.Automation and Quire.Mpl is mplrun.
+        "automation" => "Quire.Automation.Native",
+        "mpl" => "Quire.MplModule",
+        _ when Assemblies.TryGetValue(asm, out var a) =>
+            (a.Language == Language.Native ? "Quire.Native." : "Quire.") + NativeAssemblyName(a.Name),
+        _ => throw new ArgumentException($"no project rule for {asm}"),
+    };
+
+    /// <summary>
+    /// The project MirrorGen writes an assembly's members to now: its D20 target once that project exists in the
+    /// original's language, otherwise its D2 host. Mpl targets have no project format until the Mpl toolchain lands.
+    /// </summary>
+    public string HostFor(string asm)
+    {
+        string target = ProjectFor(asm);
+        string? extension = LanguageOf(asm) switch { Language.CSharp => ".csproj", Language.CppCli => ".vcxproj", _ => null };
+        return extension != null && File.Exists(Path.Combine(Repo, "src", target, target + extension)) ? target : D2Host(asm);
+    }
+
+    /// <summary>True when a project is C++/CLI source: MirrorGen generates no C# into it.</summary>
+    public bool IsCppProject(string project) => File.Exists(Path.Combine(Repo, "src", project, project + ".vcxproj"));
+
+    /// <summary>
+    /// D2's consolidated hosts, kept only until each assembly's D20 target is split out. Only assemblies in the D20
+    /// table reach it (ProjectFor throws first), so the prefix arms no longer route unlisted names.
+    /// </summary>
+    private static string D2Host(string asm) => asm.ToLowerInvariant() switch
+    {
+        var a when a.StartsWith("ptc.") || a == "mathcadprime" => ProjectFor(asm),
         "mplasb" => "Quire.Mpl.Emit",
         "mplrun" => "Quire.Mpl",
         var a when a.StartsWith("mpl") || a is "hashtable" or "mcdrun" || a.StartsWith("mcdstaticunitsystem") => "Quire.Mpl.Modules",

@@ -15,7 +15,7 @@ if (args is ["shape", var shapeAssembly])
 
 string repo = FindRepoRoot();
 string install = Universe.InstallDir;
-var rules = args[0] == "types" ? null! : Rules.Load(Path.Combine(repo, "docs", "mirror", "type-map.csv"));
+var rules = args[0] == "types" ? null! : Rules.Load(repo);
 
 switch (args[0])
 {

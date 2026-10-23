@@ -17,12 +17,22 @@ public static class Emit
         var externals = Externals.Load();
         var projects = mapper.Types.Select(t => t.Project!).Distinct().OrderBy(p => p, StringComparer.Ordinal).ToList();
         var handWritten = HandWritten.Load(repo, projects);
-        var plan = new Planner(mapper, externals, handWritten, Friends(mathcad, projects));
+        var plan = new Planner(mapper, externals, handWritten, Friends(mathcad, rules, projects));
         plan.Run();
         var writer = new CSharpWriter(mapper, plan);
+        // D20: a split C++/CLI target is hand-written C++; its types stay in the model only so references resolve.
+        var csharp = projects.Where(p => !rules.IsCppProject(p)).ToList();
+        // A C++/CLI target that is still another assembly's D2 host would silently lose that assembly's C#
+        // (iengine's Quire.Engine hosts engutils-mgd): split the hosted assembly first.
+        var stranded = rules.Scope.Values.Select(e => e.Assembly).Distinct(StringComparer.OrdinalIgnoreCase)
+            .Where(a => !Rules.IsDeferredAssembly(a) && rules.IsCppProject(rules.HostFor(a)) && rules.HostFor(a) != Rules.ProjectFor(a))
+            .ToList();
+        if (stranded.Count > 0)
+            throw new InvalidOperationException("split these before their C++/CLI host: " +
+                string.Join(", ", stranded.Select(a => $"{a} (in {rules.HostFor(a)})")));
 
         int files = 0, skipped = 0;
-        foreach (var project in projects)
+        foreach (var project in csharp)
         {
             string dir = Path.Combine(repo, "src", project, GeneratedDir, MirrorDir);
             Directory.CreateDirectory(dir);
@@ -39,9 +49,9 @@ public static class Emit
                 if (!written.Contains(Path.GetFileName(stale))) File.Delete(stale);
         }
 
-        var deps = Dependencies(repo, mapper, plan, mathcad);
-        foreach (var project in projects) WriteProject(repo, project, deps[project]);
-        AddToSolution(repo, projects.Append("Quire.Mirror"), ["tools/Quire.Tools.MirrorGen/Quire.Tools.MirrorGen.csproj"]);
+        var deps = Dependencies(repo, mapper, plan, mathcad, rules);
+        foreach (var project in csharp) WriteProject(repo, project, deps[project], rules);
+        AddToSolution(repo, csharp.Append("Quire.Mirror"), ["tools/Quire.Tools.MirrorGen/Quire.Tools.MirrorGen.csproj"]);
         WriteNotes(repo, mapper, plan);
         UpdateTypeMap(repo, mapper, rules);
         Console.WriteLine($"{mapper.Types.Count} types in {projects.Count} projects; {files} files written, {skipped} types left to hand-written code");
@@ -75,7 +85,7 @@ public static class Emit
         public HashSet<string> NeedsWindowsDesktop { get; } = [];
     }
 
-    private static Dictionary<string, ProjectDeps> Dependencies(string repo, Mapper mapper, Planner plan, Universe mathcad)
+    private static Dictionary<string, ProjectDeps> Dependencies(string repo, Mapper mapper, Planner plan, Universe mathcad, Rules rules)
     {
         var deps = mapper.Types.Select(t => t.Project!).Distinct().ToDictionary(p => p, _ => new ProjectDeps());
         foreach (var t in mapper.Types)
@@ -100,18 +110,18 @@ public static class Emit
             foreach (var reference in BuiltReferences(repo, project))
                 if (reference != project && deps.ContainsKey(reference)) d.Projects.Add(reference);
 
-        // InternalsVisibleTo, as Mathcad declares it, mapped to the consolidated projects.
+        // InternalsVisibleTo, as Mathcad declares it, mapped to the host projects.
         foreach (var asm in mathcad.Assemblies.Values)
         {
             string project;
-            try { project = Rules.ProjectFor(FileStem(asm, mathcad)); }
+            try { project = rules.HostFor(FileStem(asm, mathcad)); }
             catch (ArgumentException) { continue; }
             if (!deps.TryGetValue(project, out var d)) continue;
             foreach (var friend in asm.InternalsVisibleTo)
             {
                 try
                 {
-                    string fp = Rules.ProjectFor(friend);
+                    string fp = rules.HostFor(friend);
                     if (fp != project && deps.ContainsKey(fp)) d.Friends.Add(fp);
                 }
                 catch (ArgumentException) { }
@@ -136,19 +146,19 @@ public static class Emit
     }
 
     /// <summary>Project → the projects it grants InternalsVisibleTo, as Mathcad's assemblies declare it.</summary>
-    private static Dictionary<string, HashSet<string>> Friends(Universe mathcad, IEnumerable<string> projects)
+    private static Dictionary<string, HashSet<string>> Friends(Universe mathcad, Rules rules, IEnumerable<string> projects)
     {
         var known = projects.ToHashSet();
         var result = new Dictionary<string, HashSet<string>>();
         foreach (var asm in mathcad.Assemblies.Values)
         {
             string project;
-            try { project = Rules.ProjectFor(Path.GetFileNameWithoutExtension(asm.Path)); }
+            try { project = rules.HostFor(Path.GetFileNameWithoutExtension(asm.Path)); }
             catch (ArgumentException) { continue; }
             if (!result.TryGetValue(project, out var set)) result[project] = set = [];
             foreach (var friend in asm.InternalsVisibleTo)
             {
-                try { if (known.Contains(Rules.ProjectFor(friend))) set.Add(Rules.ProjectFor(friend)); }
+                try { if (known.Contains(rules.HostFor(friend))) set.Add(rules.HostFor(friend)); }
                 catch (ArgumentException) { }
             }
         }
@@ -231,7 +241,7 @@ public static class Emit
         return [.. md.AssemblyReferences.Select(h => md.GetString(md.GetAssemblyReference(h).Name))];
     }
 
-    private static void WriteProject(string repo, string project, ProjectDeps d)
+    private static void WriteProject(string repo, string project, ProjectDeps d, Rules rules)
     {
         string dir = Path.Combine(repo, "src", project);
         string csproj = Path.Combine(dir, project + ".csproj");
@@ -276,8 +286,12 @@ public static class Emit
             sb.AppendLine(@"    <Using Remove=""System.Drawing"" />");
         }
         foreach (var p in d.Projects.Prepend("Quire.Mirror").Distinct())
-            if (!existing.Contains($"\\{p}.csproj\""))
-                sb.AppendLine($@"    <ProjectReference Include=""..\{p}\{p}.csproj"" />");
+        {
+            // D20: a split C++/CLI project is referenced through its .vcxproj.
+            string extension = rules.IsCppProject(p) ? ".vcxproj" : ".csproj";
+            if (!existing.Contains($"\\{p}.csproj\"") && !existing.Contains($"\\{p}.vcxproj\""))
+                sb.AppendLine($@"    <ProjectReference Include=""..\{p}\{p}{extension}"" />");
+        }
         foreach (var pkg in d.Packages.Values)
             if (!existing.Contains($"\"{pkg.Id}\""))
                 sb.AppendLine($@"    <PackageReference Include=""{pkg.Id}"" Version=""{pkg.Version}"" />");

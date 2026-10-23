@@ -43,7 +43,7 @@ public sealed class Mapper
             foreach (var t in asm.Types)
             {
                 if (!_rules.TryFind(asm.Name, t.FullName, out var e)) continue;
-                string project = Rules.ProjectFor(e.Assembly);
+                string project = _rules.HostFor(e.Assembly);
                 switch (e.Disposition)
                 {
                     case Disposition.Mirror:
