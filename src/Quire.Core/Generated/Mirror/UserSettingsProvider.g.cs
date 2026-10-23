@@ -26,8 +26,6 @@ public partial class UserSettingsProvider : global::System.Configuration.Setting
     [global::Quire.Mirror.MirrorStub]
     private static bool _useAssemblyVersionInConfigPath;
     [global::Quire.Mirror.MirrorStub]
-    public override void Initialize(string name, global::System.Collections.Specialized.NameValueCollection values) => base.Initialize(name, values);
-    [global::Quire.Mirror.MirrorStub]
     public override void SetPropertyValues(global::System.Configuration.SettingsContext context, global::System.Configuration.SettingsPropertyValueCollection propvals) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Configuration.SettingsPropertyValueCollection GetPropertyValues(global::System.Configuration.SettingsContext context, global::System.Configuration.SettingsPropertyCollection props) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -29,6 +29,15 @@ public partial class UserSettingsProvider
     [MirrorVerified("PtcUserSettingsProviderMechanicalDifferentialTests")]
     public override string ApplicationName { get; set; }
 
+    public override void Initialize(string name, global::System.Collections.Specialized.NameValueCollection values)
+    {
+        if (string.IsNullOrEmpty(name))
+        {
+            name = GetType().Name;
+        }
+        base.Initialize(name, values);
+    }
+
     [MirrorVerified("Release IL")]
     private bool IsApplicationScoped(SettingsProperty prop) => HasSettingScope(prop, typeof(ApplicationScopedSettingAttribute));
 
