@@ -32,6 +32,12 @@
      non-delegate, non-P/Invoke member with no body reports "not compared: no IL body", so it is never exact
      or declaration-only.
    - Needs a decision on the ComImport-class source form and on how the gate matches no-body runtime members.
+   - Origin: the coclass wrapper was most likely produced by the type-library importer (reflection emit), not
+     compiled from C# source. Evidence: `interop.mathcadautomationprivate.dll` (`ImportedFromTypeLibAttribute`)
+     has a coclass with the same `import` flag and no-body `.ctor() runtime managed internalcall`; the Automation
+     DLL's coclass has the same shape but no importer marker. Not yet checked against the `.tlb` GUID.
+   - Candidate route: Quire-authored type library for the coclass, imported at build time. Needs a maintainer
+     decision and a toolchain check; a build must not read the Mathcad install (D19).
 2. `tools/reference/reference.py` cannot read ilspycmd output containing non-UTF-8 bytes (`run()` returns
    None on Windows; `TypeError` in `write_text`). Reproduced for `Engine.Misc.FileUtils` (mcmisc). Workaround
    used: run `ilspycmd -il` into the ignored cache and extract the type block.
