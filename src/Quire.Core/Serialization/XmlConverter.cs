@@ -1,5 +1,7 @@
 #nullable disable
 using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
 using System.Xml;
 using Quire.Mirror;
 
@@ -12,6 +14,28 @@ internal partial class XmlConverter
         XmlDocument xmlDocument = new XmlDocument();
         xmlDocument.LoadXml(nodeString);
         return xmlDocument.DocumentElement;
+    }
+
+    public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+    {
+        object result;
+        if (value is string)
+        {
+            string text = value as string;
+            if (text.StartsWith("<array>"))
+            {
+                result = ConvertStringToXmlNode(text).ChildNodes.Cast<XmlNode>().ToArray();
+            }
+            else
+            {
+                result = ConvertStringToXmlNode(text);
+            }
+        }
+        else
+        {
+            result = base.ConvertFrom(context, culture, value);
+        }
+        return result;
     }
 
     [MirrorVerified("PtcSerializationXmlConverterMechanicalDifferentialTests")]
