@@ -38,8 +38,6 @@ public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperat
     [global::Quire.Mirror.MirrorStub]
     public const string ProtectedRegionRelationshipUri = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/ProtectedData";
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.IO.IPackageOperationsProvider Instance;
-    [global::Quire.Mirror.MirrorStub]
     public const string OleMimeType = "application/vnd.openxmlformats-officedocument.oleObject";
     [global::Quire.Mirror.MirrorStub]
     public const string ProtectedMimeType = "application/octet-stream";

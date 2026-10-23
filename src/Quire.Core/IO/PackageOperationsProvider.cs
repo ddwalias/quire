@@ -7,6 +7,9 @@ namespace Quire.IO;
 
 public partial class PackageOperationsProvider
 {
+    [MirrorVerified("Release IL")]
+    public static IPackageOperationsProvider Instance = new PackageOperationsProvider();
+
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
     public Package GetPackageForWrite(string packageName) => Package.Open(packageName, (FileMode)2);
 
@@ -170,31 +173,31 @@ public partial class PackageOperationsProvider
     }
 
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
-    private static readonly Uri _worksheet;
+    private static readonly Uri _worksheet = new Uri("/mathcad/worksheet.xml", UriKind.Relative);
 
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
     public PackagePart GetMainPartFromPackage(Package package) => package.GetPart(_worksheet);
 
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
-    private static readonly Uri _header;
+    private static readonly Uri _header = new Uri("/mathcad/header.xml", UriKind.Relative);
 
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
     public PackagePart GetHeaderPartFromPackage(Package package) => GetPartIfExists(package, _header);
 
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
-    private static readonly Uri _footer;
+    private static readonly Uri _footer = new Uri("/mathcad/footer.xml", UriKind.Relative);
 
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
     public PackagePart GetFooterPartFromPackage(Package package) => GetPartIfExists(package, _footer);
 
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
-    private static readonly Uri _headersContainer;
+    private static readonly Uri _headersContainer = new Uri("/mathcad/headers.xml", UriKind.Relative);
 
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
     public PackagePart GetHeadersContainerPartFromPackage(Package package) => GetPartIfExists(package, _headersContainer);
 
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
-    private static readonly Uri _footersContainer;
+    private static readonly Uri _footersContainer = new Uri("/mathcad/footers.xml", UriKind.Relative);
 
     [MirrorVerified("Release IL")]
     public static PackagePart CreateNewImagePart(PackagePart referencingPackagePart, global::System.Windows.Media.Imaging.BitmapSource image, string imageExtension, byte[] originalStreamHash, string uniqueImageName, Uri imageSourceUri)
