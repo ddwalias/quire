@@ -141,6 +141,23 @@ public partial class CommandBuffer
         CurrentInstance = _defaultBuffer = new CommandBuffer();
     }
 
+    public static CommandBuffer SwitchBuffer(object key)
+    {
+        if (_currentInstance != _defaultBuffer && !_instances.ContainsValue(_currentInstance))
+        {
+            global::Quire.DebugTools.FailAssertion("Old instance is missing");
+        }
+        else if (!_instances.ContainsKey(key))
+        {
+            global::Quire.DebugTools.FailAssertion("New instance is missing");
+        }
+        else
+        {
+            CurrentInstance = _instances[key];
+        }
+        return CurrentInstance;
+    }
+
     [MirrorVerified("Release IL")]
     public static bool Execute(string name, DelegateFunction0<bool> doMethod, Delegate0 undoMethod) => Execute(new UndoableCommand(name, doMethod, undoMethod), null);
 
