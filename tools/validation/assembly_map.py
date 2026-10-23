@@ -183,6 +183,16 @@ def render(data):
             lines.append(f"| `{u['name']}` | `{u['original']['file']}` | " +
                          (', '.join(f'`{d}`' for d in u['dependencies']) or 'None') + ' | ' +
                          (', '.join(f'`{d}`' for d in u['dependents']) or 'None') + ' |')
+    lines += ['', '## Native completion order', '',
+              'Native ports ordered among themselves. A port’s managed prerequisites must also be complete first;',
+              'they are scheduled in the completion order above.', '',
+              '| Wave | Native projects | Managed prerequisites |', '|---|---|---|']
+    for i, layer in enumerate(data['native_waves'], 1):
+        prerequisites = [(p, [d for d in by_name[p]['dependencies'] if by_name[d]['language'] != 'Native']) for p in layer]
+        lines.append(f"| {i} | " + ', '.join(f'`{p}`' for p in layer) + ' | ' +
+                     ('; '.join(f'`{p}`: ' + ', '.join(f'`{d}`' for d in m) for p, m in prerequisites if m) or 'None') + ' |')
+    if data['native_blocked']:
+        lines += ['', '**Native cycles:** ' + ', '.join(data['native_blocked'])]
     lines += ['', '## Dependency graph', '',
               'Solid arrows are references of split projects. Dashed arrows come from the original Mathcad references',
               'and native imports. Transitive references are omitted.', '',
@@ -305,6 +315,8 @@ def main(argv=None):
     available = set(support) | {u['name'] for u in units if u['status'] in ('complete', 'link input')}
     layers, blocked = waves(graph, available)
     scenarios, _ = waves(graph, available | set(args.assume_complete))
+    native = {u['name'] for u in units if u['language'] == 'Native'}
+    native_layers, native_blocked = waves({n: [d for d in graph[n] if d in native] for n in native}, set())
     ready_now = layers[0] if layers else []
     initial_unlocks = {}
     for unit in ready_now:
@@ -317,7 +329,8 @@ def main(argv=None):
     data = {'generated_at': datetime.now(timezone.utc).isoformat(timespec='seconds'), 'revision': revision,
             'units': units, 'hosts': hosts, 'support': support,
             'available': sorted(available), 'ready_now': ready_now, 'initial_unlocks': initial_unlocks,
-            'waves': layers, 'blocked': blocked, 'assume_complete': args.assume_complete,
+            'waves': layers, 'blocked': blocked, 'native_waves': native_layers, 'native_blocked': native_blocked,
+            'assume_complete': args.assume_complete,
             'scenario_ready': scenarios[0] if scenarios else [],
             'scenario_unlocked': sorted(set(scenarios[0] if scenarios else []) - set(layers[0] if layers else []))}
     args.output.parent.mkdir(parents=True, exist_ok=True)

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-23T16:12:13+00:00",
-  "revision": "333c71168c851ece76f0c9cf7eacd594e71a0428",
+  "generated_at": "2026-10-23T18:26:10+00:00",
+  "revision": "9f2cb15c67485655e11d772c466f3a29289535ff",
   "units": [
     {
       "name": "Quire.Automation.Native",
@@ -36,7 +36,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 401,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 1,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 33,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 33,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.Calculation",
         "Quire.Controls.ExcelComponent"
@@ -83,7 +92,16 @@
       "scope": "active / mixed",
       "stub_bodies": 401,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 3,
+        "declarations": 5,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 318,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 320,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.Automation.Native",
         "Quire.Calculation",
@@ -135,7 +153,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 401,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 5,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 115,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 140,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdTranslator"
       ]
@@ -175,7 +202,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 3,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -213,7 +249,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 3,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -418,7 +463,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 40,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 40,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdDynamicEfi"
       ]
@@ -460,7 +514,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 19,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 20,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -669,7 +732,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 20,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 20,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiCalculus",
         "Quire.EfidataImpl",
@@ -721,7 +793,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 30,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 32,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiMatrix",
         "Quire.McdDynamicEfi"
@@ -928,7 +1009,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 89,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 92,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiCore",
         "Quire.EfiMatrix",
@@ -982,7 +1072,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 3,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -1197,7 +1296,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 48,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 48,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfisixsigmaImpl",
         "Quire.McdDynamicEfi"
@@ -1238,7 +1346,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 6,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 7,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdDynamicEfi"
       ]
@@ -1443,7 +1560,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 4,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 4,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdDynamicEfi"
       ]
@@ -1489,7 +1615,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 4,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 15,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdDynamicEfi"
       ]
@@ -1700,7 +1835,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 8,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 93,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 129,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiDiffEQ",
         "Quire.McdDynamicEfi"
@@ -1741,7 +1885,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 3,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -1948,7 +2101,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 22,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 25,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdDynamicEfi"
       ]
@@ -1990,7 +2152,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 3,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 4,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -2202,7 +2373,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 1,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 81,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 85,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiFitting",
         "Quire.EfidataImpl",
@@ -2247,7 +2427,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 3,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -2454,7 +2643,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 26,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 26,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiimageImpl",
         "Quire.EfisignalImpl",
@@ -2504,7 +2702,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 11,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 18,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdDynamicEfi"
       ]
@@ -2709,7 +2916,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 10,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 11,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiGraphics",
         "Quire.EfiplotImpl",
@@ -2752,7 +2968,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 3,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -2962,7 +3187,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 137,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 138,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfifittingImpl",
         "Quire.McdDynamicEfi"
@@ -3003,7 +3237,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 3,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -3216,7 +3459,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 2,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 87,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 90,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdDynamicEfi"
       ]
@@ -3260,7 +3512,16 @@
       "scope": "active / mixed",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 3,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 99,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 101,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiioImpl"
       ]
@@ -3308,7 +3569,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 12,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 18,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiPlot",
         "Quire.EfiplotImpl",
@@ -3521,7 +3791,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 130,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 131,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiDiffEQ",
         "Quire.EfiMatrix",
@@ -3581,7 +3860,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 7,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 9,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -3632,7 +3920,16 @@
       "scope": "active / mixed",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 10,
+        "declarations": 5,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 311,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 318,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiPlot",
         "Quire.McdDynamicEfi",
@@ -3674,7 +3971,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 3,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -3888,7 +4194,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 76,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 76,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdDynamicEfi"
       ]
@@ -3928,7 +4243,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 3,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -3974,7 +4298,16 @@
       "scope": "active / mixed",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 8,
+        "declarations": 5,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 214,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 215,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdDynamicEfi"
       ]
@@ -4022,7 +4355,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 25,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 28,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -4235,7 +4577,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 60,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 62,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiSolver"
       ]
@@ -4275,7 +4626,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 3,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -4480,7 +4840,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 16,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 16,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdDynamicEfi"
       ]
@@ -4520,7 +4889,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 3,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -4730,7 +5108,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 98,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 98,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfidataImpl",
         "Quire.EfisixsigmaImpl",
@@ -4792,7 +5179,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 63,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 88,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdTranslator"
       ]
@@ -5003,7 +5399,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 4,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 56,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 59,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiSymbolics",
         "Quire.EfiSymbolicsEmitter",
@@ -5073,7 +5478,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 262,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 416,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.Automationmgd",
         "Quire.EfiSymbolics"
@@ -5122,7 +5536,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 24,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 30,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiSymbolics",
         "Quire.EfiSymbolicsEmitter",
@@ -5180,7 +5603,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 728,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 1150,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiSymbolics",
         "Quire.EfiSymbolicsEmitter",
@@ -5230,7 +5662,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 9,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 23,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiSymbolicsEmitter",
         "Quire.EfiSymbolicsLexer",
@@ -5282,7 +5723,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 19,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 27,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiSymbolics",
         "Quire.EfiSymbolicsEmitter",
@@ -5337,7 +5787,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 167,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 229,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiSymbolics",
         "Quire.EfiSymbolicsEmitter",
@@ -5545,7 +6004,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 103,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 223,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 233,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfibesselImpl",
         "Quire.EficalculusImpl",
@@ -5607,7 +6075,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 3,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -5815,7 +6292,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2592,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 118,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 119,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdDynamicEfi"
       ]
@@ -6025,7 +6511,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 137,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 77,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 83,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.Engine",
         "Quire.Mccore12",
@@ -6074,7 +6569,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 381,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 20,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 23,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiCore",
         "Quire.EfiSymbolics",
@@ -6289,7 +6793,16 @@
       "scope": "active / mixed",
       "stub_bodies": 137,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 28,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 101,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 108,
+        "current_revision": false
+      },
       "dependents": [
         "Quire",
         "Quire.Calculation",
@@ -6399,7 +6912,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 2407,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 167,
+        "declarations": 67,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2810,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 2785,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -6625,7 +7147,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 1053,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 101,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 119,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.Mceng",
         "Quire.Mcfront12"
@@ -6714,7 +7245,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 562,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 107,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 120,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -6752,7 +7292,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 562,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 3,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -6962,7 +7511,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 562,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 28,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 362,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 372,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.Mccore12",
         "Quire.Mcfront12"
@@ -7006,7 +7564,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 381,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 217,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 265,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiCore",
         "Quire.EfiDiffEQ",
@@ -7069,7 +7636,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 381,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 24,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 27,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdStaticUnitSystemCGS",
         "Quire.McdStaticUnitSystemSI"
@@ -7116,7 +7692,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 381,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 12,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 13,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdUnitSystemCGS"
       ]
@@ -7160,7 +7745,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 381,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 11,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 12,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdUnitSystemMKS"
       ]
@@ -7202,7 +7796,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 381,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 3,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 4,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdUnitSystemNone"
       ]
@@ -7248,7 +7851,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 381,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 4,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 5,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdStaticUnitSystemMKS",
         "Quire.McdStaticUnitSystemUS",
@@ -7294,7 +7906,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 381,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 11,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 12,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdUnitSystemUS"
       ]
@@ -7354,7 +7975,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 562,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 110,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 116,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -7396,7 +8026,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 562,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 11,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 12,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -7440,7 +8079,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 562,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 3,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 4,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -7482,7 +8130,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 562,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 11,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 12,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -7530,7 +8187,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 562,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 11,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 16,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.McdUnitSystemMKS",
         "Quire.McdUnitSystemUS"
@@ -7577,7 +8243,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 562,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 4,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 5,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -7791,7 +8466,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 1053,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 12,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 13,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -8017,7 +8701,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 1053,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 44,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 388,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 399,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.Mceng"
       ]
@@ -8054,7 +8747,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 0,
       "status": "unconfirmed",
-      "audit": null,
+      "audit": {
+        "exact": 127,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 2,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfidataImpl",
         "Quire.Mcfront12"
@@ -8095,7 +8797,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 381,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 10,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 12,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfibesselImpl",
         "Quire.EficalculusImpl",
@@ -8159,7 +8870,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 0,
       "status": "unconfirmed",
-      "audit": null,
+      "audit": {
+        "exact": 686,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 0,
+        "report": ".mirror-cache/gate-il-aa78ee8d903a/run/release-il.json",
+        "missing_original_methods": 0,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiAffine",
         "Quire.EfiBessel",
@@ -8253,7 +8973,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 381,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 3,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.MplUnitSystemSI"
       ]
@@ -8295,7 +9024,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 381,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 28,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 37,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiSymbolicsMacros"
       ]
@@ -8336,7 +9074,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 381,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 109,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 152,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiCore",
         "Quire.EfiGraphics",
@@ -8395,7 +9142,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 381,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 8,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 10,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -8436,7 +9192,16 @@
       "scope": "active / mixed",
       "stub_bodies": 0,
       "status": "unconfirmed",
-      "audit": null,
+      "audit": {
+        "exact": 1865,
+        "declarations": 165,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 0,
+        "current_revision": false
+      },
       "dependents": [
         "Quire",
         "Quire.Automation.Native",
@@ -8563,7 +9328,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 381,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 32,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 34,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -8605,7 +9379,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 381,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 2,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 3,
+        "current_revision": false
+      },
       "dependents": []
     },
     {
@@ -8809,7 +9592,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 1053,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 3,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 6,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 9,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiAffine",
         "Quire.EfiBessel",
@@ -9067,7 +9859,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 1053,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 7,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 617,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 676,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiAffine",
         "Quire.EfiBessel",
@@ -9326,7 +10127,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 1053,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 33,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 316,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 320,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.Mceng",
         "Quire.Mcfront12"
@@ -9528,7 +10338,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 1053,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 0,
+        "declarations": 16,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 27,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 28,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.Mcfront12",
         "Quire.Mslisp"
@@ -9591,7 +10410,16 @@
       "scope": "active / mixed",
       "stub_bodies": 142,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 19,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 240,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 182,
+        "current_revision": false
+      },
       "dependents": [
         "Quire",
         "Quire.Controls.ExcelComponent",
@@ -9646,7 +10474,16 @@
       "scope": "active / mixed",
       "stub_bodies": 72,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 528,
+        "declarations": 228,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 274,
+        "report": ".mirror-cache/gate-il-222d55b68783/run/release-il.json",
+        "missing_original_methods": 62,
+        "current_revision": false
+      },
       "dependents": [
         "Quire",
         "Quire.Calculation",
@@ -9741,7 +10578,16 @@
       "scope": "active / mixed",
       "stub_bodies": 525,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 275,
+        "declarations": 12,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 605,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 620,
+        "current_revision": false
+      },
       "dependents": [
         "Quire"
       ]
@@ -9798,7 +10644,16 @@
       "scope": "active / mixed",
       "stub_bodies": 161,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 16,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 209,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 220,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.Controls.Worksheet"
       ]
@@ -9865,7 +10720,16 @@
       "scope": "active / mixed",
       "stub_bodies": 2588,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 828,
+        "declarations": 64,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 3020,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 3100,
+        "current_revision": false
+      },
       "dependents": [
         "Quire",
         "Quire.Controls",
@@ -9951,7 +10815,16 @@
       "scope": "active / mixed",
       "stub_bodies": 3507,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 590,
+        "declarations": 54,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 4510,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 4583,
+        "current_revision": false
+      },
       "dependents": [
         "Quire",
         "Quire.Controls",
@@ -10032,7 +10905,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 897,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 81,
+        "declarations": 26,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 1171,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 1200,
+        "current_revision": false
+      },
       "dependents": [
         "Quire",
         "Quire.Controls",
@@ -10092,7 +10974,16 @@
       "scope": "active / mixed",
       "stub_bodies": 456,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 59,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 494,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 504,
+        "current_revision": false
+      },
       "dependents": [
         "Quire",
         "Quire.Controls",
@@ -10165,7 +11056,16 @@
       "scope": "active / mixed",
       "stub_bodies": 4306,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 354,
+        "declarations": 73,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 4889,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 4940,
+        "current_revision": false
+      },
       "dependents": [
         "Quire",
         "Quire.Controls",
@@ -10229,7 +11129,16 @@
       "scope": "active / mixed",
       "stub_bodies": 308,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 28,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 422,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 273,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.Controls.Worksheet"
       ]
@@ -10287,7 +11196,16 @@
       "scope": "active / mixed",
       "stub_bodies": 564,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 36,
+        "declarations": 0,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 677,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 700,
+        "current_revision": false
+      },
       "dependents": [
         "Quire",
         "Quire.Controls.Plots",
@@ -10351,7 +11269,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 808,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 79,
+        "declarations": 28,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 929,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 1003,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.Controls.CollapsibleArea",
         "Quire.Controls.ExcelComponent",
@@ -10448,7 +11375,16 @@
       "scope": "active / mixed",
       "stub_bodies": 2757,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 143,
+        "declarations": 16,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 3275,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 3364,
+        "current_revision": false
+      },
       "dependents": [
         "Quire",
         "Quire.Controls"
@@ -10523,9 +11459,18 @@
         "abstract": 595
       },
       "scope": "active / mixed",
-      "stub_bodies": 270,
+      "stub_bodies": 255,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 3194,
+        "declarations": 747,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 388,
+        "report": ".mirror-cache/gate-il-03588d4d7c3c/run/release-il.json",
+        "missing_original_methods": 347,
+        "current_revision": false
+      },
       "dependents": [
         "Quire",
         "Quire.Calculation",
@@ -10575,7 +11520,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 0,
       "status": "unconfirmed",
-      "audit": null,
+      "audit": {
+        "exact": 216,
+        "declarations": 198,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 1,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 1,
+        "current_revision": false
+      },
       "dependents": [
         "Quire"
       ]
@@ -10610,7 +11564,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 0,
       "status": "unconfirmed",
-      "audit": null,
+      "audit": {
+        "exact": 215,
+        "declarations": 197,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 1,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 1,
+        "current_revision": false
+      },
       "dependents": [
         "Quire"
       ]
@@ -10672,7 +11635,16 @@
       "scope": "active / mixed",
       "stub_bodies": 3878,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 167,
+        "declarations": 56,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 5284,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 4689,
+        "current_revision": false
+      },
       "dependents": [
         "Quire",
         "Quire.Controls",
@@ -10712,7 +11684,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 0,
       "status": "unconfirmed",
-      "audit": null,
+      "audit": {
+        "exact": 232,
+        "declarations": 194,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 1,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 1,
+        "current_revision": false
+      },
       "dependents": [
         "Quire"
       ]
@@ -10757,7 +11738,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 3,
       "status": "incomplete",
-      "audit": null,
+      "audit": {
+        "exact": 629,
+        "declarations": 7,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 5,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 6,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.Controls.Plots"
       ]
@@ -10792,7 +11782,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 0,
       "status": "unconfirmed",
-      "audit": null,
+      "audit": {
+        "exact": 37,
+        "declarations": 5,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 0,
+        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "missing_original_methods": 0,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.Automationmgd"
       ]
@@ -10978,7 +11977,7 @@
       },
       "language": "CppCli",
       "host": "Quire.Engine.Utl",
-      "split": false,
+      "split": true,
       "project_references": [],
       "dependencies": [
         "Quire.Native.Utl"
@@ -10994,7 +11993,16 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 0,
       "status": "unconfirmed",
-      "audit": null,
+      "audit": {
+        "exact": 346,
+        "declarations": 18,
+        "native_pairs": 55,
+        "toolset_support": 0,
+        "remaining": 0,
+        "report": ".mirror-cache/gate-il-685cc6bb78a3/run/release-il.json",
+        "missing_original_methods": 0,
+        "current_revision": false
+      },
       "dependents": [
         "Quire.EfiSymbolicsEmitter",
         "Quire.EfiSymbolicsLabels",
@@ -11747,6 +12755,25 @@
     ]
   ],
   "blocked": [],
+  "native_waves": [
+    [
+      "Quire.Native.EfistatsciImpl",
+      "Quire.Native.Mshex",
+      "Quire.Native.Mspcons",
+      "Quire.Native.Utl"
+    ],
+    [
+      "Quire.Native.EfisymbolicsUmgd",
+      "Quire.Native.Engutils",
+      "Quire.Native.Mcaduser",
+      "Quire.Native.Msmpl",
+      "Quire.Native.Msprolog"
+    ],
+    [
+      "Quire.Native.Mctranslator"
+    ]
+  ],
+  "native_blocked": [],
   "assume_complete": [],
   "scenario_ready": [
     "Quire.Automation",
