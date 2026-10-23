@@ -1,5 +1,6 @@
 #nullable disable
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows;
 using Quire.Mirror;
 using Quire.Mirror;
@@ -55,5 +56,60 @@ public static partial class TextElementAttachedProperties
             return;
         }
         frameworkContentElement.ClearValue(FrameworkElement.StyleProperty);
+    }
+
+    private static void SetTextStyleOnParagraph(FrameworkContentElement element, ITextStyle textStyle, bool isApply, bool isSelected)
+    {
+        FrameworkContentElement frameworkContentElement;
+        double? textIndent;
+        Paragraph paragraph;
+        TextAlignment? textAlignment;
+        Thickness? margin;
+
+        frameworkContentElement = Quire.Wpf.WpfUtils.FindLogicalAncestor<List>(element);
+        if (frameworkContentElement == null)
+        {
+            frameworkContentElement = Quire.Wpf.WpfUtils.FindLogicalAncestor<Paragraph>(element);
+        }
+        if (frameworkContentElement != null)
+        {
+            textIndent = textStyle.TextIndent;
+            if (textIndent.HasValue)
+            {
+                if (!isApply)
+                {
+                    paragraph = element.Parent as Paragraph;
+                    if (paragraph == null || textStyle.IsModifyProperty(Paragraph.TextIndentProperty.Name, paragraph.GetValue(Paragraph.TextIndentProperty)))
+                    {
+                        goto AfterTextIndent;
+                    }
+                }
+                frameworkContentElement.SetValue(Paragraph.TextIndentProperty, textStyle.TextIndent);
+            AfterTextIndent:;
+            }
+            else if (textStyle.IsDeletedProperty(Block.TextAlignmentProperty.Name, frameworkContentElement.GetValue(Paragraph.TextIndentProperty)))
+            {
+                frameworkContentElement.SetValue(Paragraph.TextIndentProperty, 0.0);
+            }
+
+            textAlignment = textStyle.TextAlignment;
+            if (textAlignment.HasValue)
+            {
+                if (isApply || !textStyle.IsModifyProperty(Block.TextAlignmentProperty.Name, element.GetValue(Block.TextAlignmentProperty)))
+                {
+                    frameworkContentElement.SetValue(Block.TextAlignmentProperty, textStyle.TextAlignment);
+                }
+            }
+            else if (textStyle.IsDeletedProperty(Block.TextAlignmentProperty.Name, element.GetValue(Block.TextAlignmentProperty)))
+            {
+                frameworkContentElement.SetValue(Block.TextAlignmentProperty, TextAlignment.Left);
+            }
+
+            margin = textStyle.Margin;
+            if (margin.HasValue)
+            {
+                frameworkContentElement.SetValue(Block.MarginProperty, textStyle.Margin);
+            }
+        }
     }
 }
