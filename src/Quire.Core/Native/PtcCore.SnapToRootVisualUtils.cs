@@ -25,4 +25,24 @@ public static partial class SnapToRootVisualUtils
         }
         return result;
     }
+
+    public static GeneralTransform GetTransformToRootVisual(Visual visual)
+    {
+        Visual snappableRootVisual = GetSnappableRootVisual(visual);
+        if (!global::Quire.DebugTools.AssertNotNull(snappableRootVisual, null).Failed)
+        {
+            return visual.TransformToAncestor(snappableRootVisual);
+        }
+        return null;
+    }
+
+    public static GeneralTransform GetTransformToRootVisualConsideringDpi(Visual visual)
+    {
+        GeneralTransform transformToRootVisual = GetTransformToRootVisual(visual);
+        if (transformToRootVisual != null)
+        {
+            return WpfUtils.GroupTransformsAsFrozen(transformToRootVisual, DpiScale);
+        }
+        return null;
+    }
 }
