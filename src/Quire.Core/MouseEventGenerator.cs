@@ -12,6 +12,13 @@ namespace Quire;
 
 public partial class MouseEventGenerator
 {
+    private const SendMouseInputFlags _moveFlags = (SendMouseInputFlags)49153;
+    private const SendMouseInputFlags _moveRelativeFlags = (SendMouseInputFlags)16385;
+    private const SendMouseInputFlags _downHereFlags = (SendMouseInputFlags)16386;
+    private const SendMouseInputFlags _upHereFlags = (SendMouseInputFlags)16388;
+    private const SendMouseInputFlags _downFlags = (SendMouseInputFlags)49154;
+    private const SendMouseInputFlags _upFlags = (SendMouseInputFlags)49156;
+
     public static void GenerateMouseMove(Point point)
     {
         NormalizeCoordinates(point, out var x, out var y);

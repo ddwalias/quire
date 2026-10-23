@@ -11,16 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.MouseEventGenerator, Ptc.Core")]
 public partial class MouseEventGenerator
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const global::Quire.Win32.SendMouseInputFlags _moveFlags = (global::Quire.Win32.SendMouseInputFlags)(49153);
-    [global::Quire.Mirror.MirrorStub]
-    private const global::Quire.Win32.SendMouseInputFlags _moveRelativeFlags = (global::Quire.Win32.SendMouseInputFlags)(16385);
-    [global::Quire.Mirror.MirrorStub]
-    private const global::Quire.Win32.SendMouseInputFlags _downHereFlags = (global::Quire.Win32.SendMouseInputFlags)(16386);
-    [global::Quire.Mirror.MirrorStub]
-    private const global::Quire.Win32.SendMouseInputFlags _upHereFlags = (global::Quire.Win32.SendMouseInputFlags)(16388);
-    [global::Quire.Mirror.MirrorStub]
-    private const global::Quire.Win32.SendMouseInputFlags _downFlags = (global::Quire.Win32.SendMouseInputFlags)(49154);
-    [global::Quire.Mirror.MirrorStub]
-    private const global::Quire.Win32.SendMouseInputFlags _upFlags = (global::Quire.Win32.SendMouseInputFlags)(49156);
 }
