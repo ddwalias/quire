@@ -78,8 +78,6 @@ public static partial class User32
     [global::Quire.Mirror.MirrorStub]
     public static int SendInput(int nInputs, ref global::Quire.Win32.User32.INPUT mi, int cbSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static bool GetCursorPos(ref global::Quire.Win32.User32.POINT pt) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static int MapVirtualKey(int nVirtKey, int nMapType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static int GetAsyncKeyState(int nVirtKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

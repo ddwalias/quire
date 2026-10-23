@@ -6,6 +6,9 @@ namespace Quire.Win32;
 
 public static partial class User32
 {
+    [System.Runtime.InteropServices.DllImport("user32.dll", SetLastError = true)]
+    public static extern bool GetCursorPos(ref POINT pt);
+
     partial struct HWND
     {
         [MirrorVerified("PtcWin32User32MechanicalDifferentialTests")]
