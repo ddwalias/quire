@@ -26,8 +26,6 @@ public abstract partial class TextStyleBase : global::Quire.ITextStyle, global::
     [global::Quire.Mirror.MirrorStub]
     protected TextStyleBase(global::Quire.TextStyleData textStyleData, bool basedOnValues = true) { }
     [global::Quire.Mirror.MirrorStub]
-    public void UpdateDeletedProperties(global::System.Windows.Style oldStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected TextStyleBase(global::System.Windows.Style style) { }
     [global::Quire.Mirror.MirrorStub]
     protected TextStyleBase(global::Quire.Core.TextFormat textFormat, bool reset = false) { }

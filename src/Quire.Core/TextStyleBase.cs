@@ -226,6 +226,41 @@ public partial class TextStyleBase
         }
     }
 
+    public void UpdateDeletedProperties(Style oldStyle)
+    {
+        if (oldStyle != null)
+        {
+            int index = 0;
+            foreach (Setter setter in oldStyle.Setters.OfType<Setter>())
+            {
+                _htDeletedPropertyToIndex[setter.Property.Name] = index;
+                _htOldPropertyToIndex[setter.Property.Name] = setter.Value;
+                index++;
+            }
+            if (!_htOldPropertyToIndex.ContainsKey(global::System.Windows.Documents.TextElement.ForegroundProperty.Name))
+            {
+                _htOldPropertyToIndex[global::System.Windows.Documents.TextElement.ForegroundProperty.Name] = GetBasedOnSetterValue(oldStyle, global::System.Windows.Documents.TextElement.ForegroundProperty.Name) ?? new SolidColorBrush(Colors.Black);
+            }
+            if (!_htOldPropertyToIndex.ContainsKey(global::System.Windows.Documents.TextElement.BackgroundProperty.Name))
+            {
+                _htOldPropertyToIndex[global::System.Windows.Documents.TextElement.BackgroundProperty.Name] = GetBasedOnSetterValue(oldStyle, global::System.Windows.Documents.TextElement.BackgroundProperty.Name) ?? new SolidColorBrush(Colors.Transparent);
+            }
+            if (!_htOldPropertyToIndex.ContainsKey(global::System.Windows.Documents.TextElement.FontWeightProperty.Name))
+            {
+                _htOldPropertyToIndex[global::System.Windows.Documents.TextElement.FontWeightProperty.Name] = GetBasedOnSetterValue(oldStyle, global::System.Windows.Documents.TextElement.FontWeightProperty.Name) ?? (object)FontWeights.Normal;
+            }
+            if (!_htOldPropertyToIndex.ContainsKey(global::System.Windows.Documents.TextElement.FontStyleProperty.Name))
+            {
+                _htOldPropertyToIndex[global::System.Windows.Documents.TextElement.FontStyleProperty.Name] = GetBasedOnSetterValue(oldStyle, global::System.Windows.Documents.TextElement.FontStyleProperty.Name) ?? (object)FontStyles.Normal;
+            }
+            if (!_htOldPropertyToIndex.ContainsKey(global::System.Windows.Documents.TextElement.FontSizeProperty.Name))
+            {
+                _htOldPropertyToIndex[global::System.Windows.Documents.TextElement.FontSizeProperty.Name] = GetBasedOnSetterValue(oldStyle, global::System.Windows.Documents.TextElement.FontSizeProperty.Name) ?? (object)global::Quire.Wpf.WpfUtils.PointsToDips(11.0);
+            }
+        }
+        oldStyle = null;
+    }
+
     [MirrorVerified("Release IL")]
     public void MergeBasedOn()
     {
