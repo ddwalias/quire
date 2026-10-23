@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Xml;
 using Quire.Mirror;
 
@@ -62,6 +63,37 @@ internal partial class XmlConverter
         else
         {
             result = base.ConvertFrom(context, culture, value);
+        }
+        return result;
+    }
+
+    public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+    {
+        object result;
+        if (typeof(string) == destinationType)
+        {
+            if (value is XmlNode)
+            {
+                result = (value as XmlNode).OuterXml;
+            }
+            else if (value is XmlNode[])
+            {
+                StringBuilder builder = new StringBuilder("<array>");
+                (value as XmlNode[]).Each((XmlNode node) =>
+                {
+                    builder.Append(node.OuterXml);
+                });
+                builder.Append("</array>");
+                result = builder.ToString();
+            }
+            else
+            {
+                result = base.ConvertTo(context, culture, value, destinationType);
+            }
+        }
+        else
+        {
+            result = base.ConvertTo(context, culture, value, destinationType);
         }
         return result;
     }
