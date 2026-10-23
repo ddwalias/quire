@@ -21,6 +21,11 @@ public partial class ObservableRangeCollection<T>
     [MirrorVerified("PtcWpfObservableRangeCollection1MechanicalDifferentialTests")]
     public event NotifyCollectionChangedEventHandler RangeChanged;
 
+    int INotifyCollectionRangeChanged.Count()
+    {
+        return Count;
+    }
+
     private void FireRangeChanged(NotifyCollectionChangedEventArgs args)
     {
         if (_fireRangeChangesAllowed)
