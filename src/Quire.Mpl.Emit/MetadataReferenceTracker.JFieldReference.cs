@@ -14,7 +14,7 @@ public partial class MetadataReferenceTracker
         {
             return value;
         }
-        if ((object)fieldInfo.DeclaringType == null)
+        if (fieldInfo.DeclaringType is null)
         {
             throw new InvalidOperationException("fieldInfo.DeclaringType must be not null");
         }

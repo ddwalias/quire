@@ -101,7 +101,7 @@ internal partial class ILCodeConverter
         }
         else if (inst.OpCode == OpCodes.Box)
         {
-            if ((object)inst.decalaredType == null)
+            if (inst.decalaredType is null)
             {
                 throw new InvalidOperationException("Declared type must be not null");
             }
@@ -129,7 +129,7 @@ internal partial class ILCodeConverter
         }
         else if (inst.OpCode == OpCodes.Unbox)
         {
-            if ((object)inst.decalaredType == null)
+            if (inst.decalaredType is null)
             {
                 throw new InvalidOperationException("Declared type must be not null");
             }
@@ -157,7 +157,7 @@ internal partial class ILCodeConverter
         }
         else if (inst.OpCode == OpCodes.Ldobj)
         {
-            if ((object)inst.decalaredType == null)
+            if (inst.decalaredType is null)
             {
                 throw new InvalidOperationException("Declared type must be not null");
             }
@@ -185,7 +185,7 @@ internal partial class ILCodeConverter
         }
         else if (inst.OpCode == OpCodes.Isinst)
         {
-            if ((object)inst.decalaredType == null)
+            if (inst.decalaredType is null)
             {
                 throw new InvalidOperationException("Declared type must be not null");
             }
@@ -213,7 +213,7 @@ internal partial class ILCodeConverter
         }
         else if (inst.OpCode == OpCodes.Newarr)
         {
-            if ((object)inst.decalaredType == null)
+            if (inst.decalaredType is null)
             {
                 throw new InvalidOperationException("Declared type must be not null");
             }
@@ -241,7 +241,7 @@ internal partial class ILCodeConverter
         }
         else if (inst.OpCode == OpCodes.Stfld || inst.OpCode == OpCodes.Stsfld)
         {
-            if ((object)inst.decalaredType == null)
+            if (inst.decalaredType is null)
             {
                 throw new InvalidOperationException("Declared type must be not null");
             }
@@ -270,7 +270,7 @@ internal partial class ILCodeConverter
         }
         else if (inst.OpCode == OpCodes.Ldfld || inst.OpCode == OpCodes.Ldsfld)
         {
-            if ((object)inst.decalaredType == null)
+            if (inst.decalaredType is null)
             {
                 throw new InvalidOperationException("Declared type must be not null");
             }
@@ -299,7 +299,7 @@ internal partial class ILCodeConverter
         }
         else if (inst.OpCode == OpCodes.Callvirt)
         {
-            if ((object)inst.decalaredType == null)
+            if (inst.decalaredType is null)
             {
                 throw new InvalidOperationException("Declared type must be not null");
             }
@@ -332,7 +332,7 @@ internal partial class ILCodeConverter
         }
         else if (inst.OpCode == OpCodes.Ldftn)
         {
-            if ((object)inst.decalaredType == null)
+            if (inst.decalaredType is null)
             {
                 throw new InvalidOperationException("Declared type must be not null");
             }
@@ -360,7 +360,7 @@ internal partial class ILCodeConverter
         }
         else if (inst.OpCode == OpCodes.Call)
         {
-            if ((object)inst.decalaredType == null)
+            if (inst.decalaredType is null)
             {
                 throw new InvalidOperationException("Declared type must be not null");
             }
@@ -390,7 +390,7 @@ internal partial class ILCodeConverter
         }
         else if (inst.OpCode == OpCodes.Newobj)
         {
-            if ((object)inst.decalaredType == null)
+            if (inst.decalaredType is null)
             {
                 throw new InvalidOperationException("Declared type must be not null");
             }
@@ -774,7 +774,7 @@ internal partial class ILCodeConverter
     private void ConvertBeginCatchBlock(MetadataBuilder metadata, TypeBuilder typeBuilder, ILInstruction inst, InstructionEncoder instructionEncoder)
     {
         TryCatchBlockInfo tryCatchInfo = _tryCatchStack.Peek();
-        if ((object)inst.decalaredType == null)
+        if (inst.decalaredType is null)
         {
             throw new InvalidOperationException("Declared type must be not null");
         }

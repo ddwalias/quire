@@ -29,6 +29,12 @@
   - The last three were restructured together and not isolated one change at a time; the comments state only what was tested.
 - Report: `.mirror-cache/release-il-e5f0992bcc34/release-il.json` (PASS, 682 checked).
 
+## Batch 4 — null checks
+
+- Scope: `(object)x == null` sites. The assignment counted 18; batch 1 already removed five of them with the switch conversions, leaving 13 (12 in `ILCodeConverter.Members.cs`, 1 in `MetadataReferenceTracker.JFieldReference.cs`). All 13 changed to `is null`.
+- Failed idiomatic forms: none.
+- Report: `.mirror-cache/release-il-a53eb31d5796/release-il.json` (PASS, 682 checked).
+
 ## Remaining mismatches
 
-None reported at batch 3.
+None reported at batch 4.
