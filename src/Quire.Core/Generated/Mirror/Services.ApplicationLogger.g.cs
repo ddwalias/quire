@@ -24,10 +24,6 @@ public partial class ApplicationLogger : global::Quire.Services.IApplicationLogg
     [global::Quire.Mirror.MirrorStub]
     private string _subProduct;
     [global::Quire.Mirror.MirrorStub]
-    private string _fullProductName;
-    [global::Quire.Mirror.MirrorStub]
-    private string _logFolder;
-    [global::Quire.Mirror.MirrorStub]
     public virtual string GetMiscInfo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string GetSystemInfoIfAvailable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -43,6 +39,4 @@ public partial class ApplicationLogger : global::Quire.Services.IApplicationLogg
     protected global::System.IO.TextWriter CreateApplicationLog(string logType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static string GetExceptionLogLocation(string appConfigFolderPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public ApplicationLogger() { }
 }

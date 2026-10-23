@@ -5,6 +5,11 @@ namespace Quire.Services;
 
 partial class ApplicationLogger
 {
+    private string _fullProductName = _product;
+    private string _logFolder = _defaultApplicationLogFolderPath;
+
+    public ApplicationLogger() { }
+
     public string GetApplicationStartTime()
     {
         global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder();
