@@ -7,38 +7,18 @@ internal partial class MethodHandleResolver
 {
     public static Handle? ResolveMethod(TypeBuilder thisTypeBuilder, MethodBase method)
     {
-        ConstructorBuilder constructorBuilder;
-        ConstructorInfo constructorInfo;
-        MethodBuilder methodBuilder;
-        MethodInfo methodInfo;
-        MethodBase methodBase = method;
-
-        constructorBuilder = methodBase as ConstructorBuilder;
-        if (constructorBuilder is { })
-            goto ConstructorBuilderResolved;
-        constructorInfo = methodBase as ConstructorInfo;
-        if (constructorInfo is { })
-            goto ConstructorInfoResolved;
-        methodBuilder = methodBase as MethodBuilder;
-        if (methodBuilder is { })
-            goto MethodBuilderResolved;
-        methodInfo = methodBase as MethodInfo;
-        if ((object)methodInfo == null)
-            goto DefaultMethodInfo;
-        goto MethodInfoResolved;
-
-    ConstructorBuilderResolved:
-        return ResolveConstructor(thisTypeBuilder, constructorBuilder);
-    ConstructorInfoResolved:
-        if (constructorInfo.GetType().Name == "RuntimeConstructorInfo")
-            return ResolveConstructor(thisTypeBuilder, constructorInfo);
-        goto DefaultMethodInfo;
-    MethodBuilderResolved:
-        return ResolveMethod(thisTypeBuilder, methodBuilder);
-    MethodInfoResolved:
-        if (methodInfo.GetType().Name == "RuntimeMethodBase")
-            return ResolveMethod(thisTypeBuilder, methodInfo);
-    DefaultMethodInfo:
-        return ResolveMethod(thisTypeBuilder, (MethodInfo)method);
+        switch (method)
+        {
+            case ConstructorBuilder constructorBuilder:
+                return ResolveConstructor(thisTypeBuilder, constructorBuilder);
+            case ConstructorInfo constructorInfo when constructorInfo.GetType().Name == "RuntimeConstructorInfo":
+                return ResolveConstructor(thisTypeBuilder, constructorInfo);
+            case MethodBuilder methodBuilder:
+                return ResolveMethod(thisTypeBuilder, methodBuilder);
+            case MethodInfo methodInfo when methodInfo.GetType().Name == "RuntimeMethodBase":
+                return ResolveMethod(thisTypeBuilder, methodInfo);
+            default:
+                return ResolveMethod(thisTypeBuilder, (MethodInfo)method);
+        }
     }
 }

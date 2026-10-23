@@ -21,37 +21,24 @@ internal partial class FieldHandleResolver
     public static Handle? ResolveType(TypeBuilder typeBuilder, FieldInfo field)
     {
         ModuleBuilder module = typeBuilder.Module;
-        EntityWrappers.FieldReferenceWrapper key;
-        FieldBuilder field2;
-        FieldInfo field3;
-        Handle? handle;
-        field2 = field as FieldBuilder;
-        if (field2 is not null)
+        switch (field)
         {
-            goto ResolveDefinedField;
+            case FieldBuilder fieldBuilder:
+                EntityWrappers.FieldReferenceWrapper key = new EntityWrappers.FieldReferenceWrapper(fieldBuilder);
+                if (module._definedFields.ContainsKey(key))
+                {
+                    return module._definedFields[key];
+                }
+                return null;
+            case FieldInfo externalField:
+                if (module._metadataReferenceTracker == null)
+                {
+                    throw new InvalidOperationException("module._metadataReferenceTracker must be not null");
+                }
+                return module._metadataReferenceTracker.GetOrAddFieldReference(externalField);
+            default:
+                throw new InvalidDataException("Unknown field " + field.Name);
         }
-        if ((object)field == null) goto UnknownField;
-        goto ResolveExternalField;
-
-    ResolveDefinedField:
-        key = new EntityWrappers.FieldReferenceWrapper(field2);
-        if (module._definedFields.ContainsKey(key))
-        {
-            return module._definedFields[key];
-        }
-        handle = null;
-        return handle;
-
-    ResolveExternalField:
-        field3 = field;
-        if (module._metadataReferenceTracker == null)
-        {
-            throw new InvalidOperationException("module._metadataReferenceTracker must be not null");
-        }
-        return module._metadataReferenceTracker.GetOrAddFieldReference(field3);
-
-    UnknownField:
-        throw new InvalidDataException("Unknown field " + field.Name);
     }
 }
 
@@ -73,36 +60,23 @@ internal partial class TypeHandleResolver
     public static Handle? ResolveType(TypeBuilder typeBuilder, Type type)
     {
         ModuleBuilder module = typeBuilder.Module;
-        EntityWrappers.TypeReferenceWrapper key;
-        TypeBuilder type2;
-        Type type3;
-        Handle? handle;
-        type2 = type as TypeBuilder;
-        if (type2 is not null)
+        switch (type)
         {
-            goto ResolveDefinedType;
+            case TypeBuilder typeBuilder2:
+                EntityWrappers.TypeReferenceWrapper key = new EntityWrappers.TypeReferenceWrapper(typeBuilder2);
+                if (module._definedTypes.ContainsKey(key))
+                {
+                    return module._definedTypes[key];
+                }
+                return null;
+            case Type externalType:
+                if (module._metadataReferenceTracker == null)
+                {
+                    throw new InvalidOperationException("module._metadataReferenceTracker must be not null");
+                }
+                return module._metadataReferenceTracker.GetOrAddTypeReference(externalType);
+            default:
+                throw new InvalidDataException("Unknown type " + type.Name);
         }
-        if ((object)type == null) goto UnknownType;
-        goto ResolveExternalType;
-
-    ResolveDefinedType:
-        key = new EntityWrappers.TypeReferenceWrapper(type2);
-        if (module._definedTypes.ContainsKey(key))
-        {
-            return module._definedTypes[key];
-        }
-        handle = null;
-        return handle;
-
-    ResolveExternalType:
-        type3 = type;
-        if (module._metadataReferenceTracker == null)
-        {
-            throw new InvalidOperationException("module._metadataReferenceTracker must be not null");
-        }
-        return module._metadataReferenceTracker.GetOrAddTypeReference(type3);
-
-    UnknownType:
-        throw new InvalidDataException("Unknown type " + type.Name);
     }
 }

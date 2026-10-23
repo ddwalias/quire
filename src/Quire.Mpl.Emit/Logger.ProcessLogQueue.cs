@@ -7,31 +7,19 @@ public static partial class Logger
 {
     private static void ProcessLogQueue()
     {
-        goto OuterCondition;
-    OuterLoop:
-        _logSignal.WaitOne();
-        string result;
-    InnerLoop:
-        if (_logQueue.TryDequeue(out result))
+        while (_isRunning)
         {
-            try
+            _logSignal.WaitOne();
+            while (_logQueue.TryDequeue(out string result))
             {
-                File.AppendAllText(_logFileName, result);
-                goto InnerLoop;
+                try
+                {
+                    File.AppendAllText(_logFileName, result);
+                }
+                catch (Exception)
+                {
+                }
             }
-            catch (Exception)
-            {
-                goto InnerLoop;
-            }
-        }
-        else
-        {
-            goto OuterCondition;
-        }
-    OuterCondition:
-        if (_isRunning)
-        {
-            goto OuterLoop;
         }
     }
 }

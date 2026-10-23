@@ -16,20 +16,14 @@ internal partial class MethodHandleResolver
             return module._definedMethods[key];
         if (module._metadataReferenceTracker == null)
             throw new ArgumentNullException("_metadataReferenceTracker must be not null");
-        MethodBuilder methodBuilder;
-        MethodInfo methodInfoLocal = methodInfo;
-        methodBuilder = methodInfoLocal as MethodBuilder;
-        if (methodBuilder is { })
-            goto ResolvedMethodBuilder;
-        if ((object)methodInfoLocal == null)
-            goto DefaultMethodInfo;
-        goto RuntimeMethodInfo;
-    ResolvedMethodBuilder:
-        return module._metadataReferenceTracker.GetOrAddMethodHandle(methodBuilder);
-    RuntimeMethodInfo:
-        if (methodInfoLocal.GetType().Name == "RuntimeMethodBase")
-            return module._metadataReferenceTracker.GetOrAddMethodHandle(methodInfoLocal);
-    DefaultMethodInfo:
-        return module._metadataReferenceTracker.GetOrAddMethodHandle(methodInfo);
+        switch (methodInfo)
+        {
+            case MethodBuilder methodBuilder:
+                return module._metadataReferenceTracker.GetOrAddMethodHandle(methodBuilder);
+            case MethodInfo runtimeMethod when runtimeMethod.GetType().Name == "RuntimeMethodBase":
+                return module._metadataReferenceTracker.GetOrAddMethodHandle(runtimeMethod);
+            default:
+                return module._metadataReferenceTracker.GetOrAddMethodHandle(methodInfo);
+        }
     }
 }
