@@ -14,9 +14,5 @@ public partial class Encryptor : global::Quire.IEncryptor, global::Quire.Service
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.SortedDictionary<global::System.Version, global::System.Security.Cryptography.ICryptoTransform> _legacyDecryptorsDictionary;
     [global::Quire.Mirror.MirrorStub]
-    internal static byte[] Encrypt(global::System.Security.Cryptography.ICryptoTransform encryptor, string data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static string Decrypt(global::System.Security.Cryptography.ICryptoTransform decryptor, byte[] encryptedData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private Encryptor() { }
 }
