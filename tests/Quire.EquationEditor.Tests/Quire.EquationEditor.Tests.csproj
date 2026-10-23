@@ -16,6 +16,7 @@
     <ProjectReference Include="..\..\src\Quire.Calculation\Quire.Calculation.csproj" />
     <ProjectReference Include="..\..\src\Quire.Engine\Quire.Engine.csproj" />
     <ProjectReference Include="..\..\src\Quire.Mpl\Quire.Mpl.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Mpl.Runtime\Quire.Mpl.Runtime.csproj" />
     <ProjectReference Include="..\..\src\Quire.Calculation.Core\Quire.Calculation.Core.csproj" />
   </ItemGroup>
 </Project>

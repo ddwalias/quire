@@ -15,5 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Quire.Mpl\Quire.Mpl.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Mpl.Runtime\Quire.Mpl.Runtime.csproj" />
   </ItemGroup>
 </Project>

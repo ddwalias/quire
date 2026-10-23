@@ -8,16 +8,6 @@
     <DefineConstants>$(DefineConstants);QUIRE_MIRROR_STUB_FREE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <!-- Quire's built-in unit table (Quire.Mpl.Internal) has no Mathcad counterpart in metadata. -->
-    <InternalsVisibleTo Include="Quire.Engine" />
-    <InternalsVisibleTo Include="Quire.Calculation" />
-    <InternalsVisibleTo Include="Quire.EquationEditor" />
-    <InternalsVisibleTo Include="Quire" />
-    <InternalsVisibleTo Include="Quire.Engine.Tests" />
-    <InternalsVisibleTo Include="Quire.EquationEditor.Tests" />
-    <InternalsVisibleTo Include="Quire.Calculation.Tests" />
-  </ItemGroup>
-  <ItemGroup>
     <!-- Generated enums the hand-written runtime refers to, kept in the stub-free build (Directory.Build.targets). -->
     <MirrorWholeType Include="Generated\Mirror\Mcd.MangledIdOptions.g.cs" />
     <MirrorWholeType Include="Generated\Mirror\Mcd.Flags.g.cs" />

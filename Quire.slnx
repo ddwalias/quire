@@ -30,6 +30,7 @@
     <Project Path="src/Quire.Mpl.Emit/Quire.Mpl.Emit.csproj" />
     <Project Path="src/Quire.Mpl.Modules/Quire.Mpl.Modules.csproj" />
     <Project Path="src/Quire.Mpl/Quire.Mpl.csproj" />
+    <Project Path="src/Quire.Mpl.Runtime/Quire.Mpl.Runtime.csproj" />
     <Project Path="src/Quire.Utils/Quire.Utils.csproj" />
     <Project Path="src/Quire/Quire.csproj" />
   </Folder>
