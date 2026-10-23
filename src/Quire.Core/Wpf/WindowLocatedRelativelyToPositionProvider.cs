@@ -48,6 +48,22 @@ public partial class WindowLocatedRelativelyToPositionProvider
         return IsPopUpWindowWillFullyShowOnScreen(popupLocationPoint);
     }
 
+    private bool IsPopUpWindowWillFullyShowOnScreen(global::System.Windows.Point popupLocationPoint)
+    {
+        try
+        {
+            DpiFactors dpiFactor = GetDpiFactor();
+            popupLocationPoint = new global::System.Windows.Point(popupLocationPoint.X * dpiFactor.DpiFactorX, popupLocationPoint.Y * dpiFactor.DpiFactorY);
+            global::System.Drawing.Point point = new global::System.Drawing.Point(global::System.Convert.ToInt32(popupLocationPoint.X), global::System.Convert.ToInt32(popupLocationPoint.Y));
+            return global::System.Windows.Forms.Screen.FromPoint(point).WorkingArea.Contains(new global::System.Drawing.Rectangle(point, new global::System.Drawing.Size(global::System.Convert.ToInt32(ActualWidth * dpiFactor.DpiFactorX), global::System.Convert.ToInt32(ActualHeight * dpiFactor.DpiFactorY))));
+        }
+        catch (global::System.Exception ex)
+        {
+            DebugTools.DevAssert(false, "Problem with using Windows Forms API usage: " + ex.Message);
+            return false;
+        }
+    }
+
     [MirrorVerified("PtcWpfWindowLocatedRelativelyToPositionProviderMechanicalDifferentialTests")]
     public WindowLocatedRelativelyToPositionProvider() { }
 

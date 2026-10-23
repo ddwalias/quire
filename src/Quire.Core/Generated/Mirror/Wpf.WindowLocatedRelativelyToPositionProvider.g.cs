@@ -15,8 +15,6 @@ public partial class WindowLocatedRelativelyToPositionProvider : global::System.
     protected override void OnRenderSizeChanged(global::System.Windows.SizeChangedInfo sizeInfo) => base.OnRenderSizeChanged(sizeInfo);
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Point GetPopupLocation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsPopUpWindowWillFullyShowOnScreen(global::System.Windows.Point popupLocationPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.WindowLocatedRelativelyToPositionProvider+DpiFactors, Ptc.Core")]
     private partial struct DpiFactors
