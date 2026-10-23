@@ -10,6 +10,15 @@ namespace Quire.PersistentDataObjects;
 
 public partial class worksheetRegionType
 {
+    public static XmlSerializer GetXmlSerializer(bool useOverrides)
+    {
+        if (useOverrides)
+        {
+            return _xmlSerializerWithOverrides ?? (_xmlSerializerWithOverrides = CreateSerializerWithOverrides(_typeOfThis, "region"));
+        }
+        return _xmlSerializerDefault ?? (_xmlSerializerDefault = CreateDefaultSerializer(_typeOfThis, "region"));
+    }
+
     [MirrorVerified("PtcPersistentDataObjectsWorksheetRegionTypeSerializerMechanicalDifferentialTests")]
     public static XmlSerializer CreateDefaultSerializer(Type typeOfRoot, string rootNodeName)
     {
