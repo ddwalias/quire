@@ -12,7 +12,5 @@ namespace Quire.Wpf;
 public abstract partial class SerializableCollection<T> : global::Quire.Wpf.ObservableRangeCollection<T>, global::System.Runtime.Serialization.ISerializable where T : class
 {
     [global::Quire.Mirror.MirrorStub]
-    public virtual void GetObjectData(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected SerializableCollection(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : this() { }
 }
