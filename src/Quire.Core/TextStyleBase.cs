@@ -120,6 +120,51 @@ public partial class TextStyleBase
         return null;
     }
 
+    public void SetSetterValue(string propertyName, object value)
+    {
+        if (value == null)
+        {
+            if (!_htPropertyToIndex.ContainsKey(propertyName)) goto Return;
+            Style.Setters.RemoveAt((int)_htPropertyToIndex[propertyName]);
+            _htPropertyToIndex.Remove(propertyName);
+            return;
+        }
+        if (_htPropertyToIndex.ContainsKey(propertyName))
+        {
+            ((Setter)Style.Setters[(int)_htPropertyToIndex[propertyName]]).Value = value;
+            return;
+        }
+        global::System.Reflection.FieldInfo dependencyProperties = GetDependencyProperties(typeof(System.Windows.Documents.TextElement), propertyName);
+        if (dependencyProperties == null)
+        {
+            dependencyProperties = GetDependencyProperties(typeof(System.Windows.Documents.Inline), propertyName);
+        }
+        if (dependencyProperties == null)
+        {
+            dependencyProperties = GetDependencyProperties(typeof(System.Windows.Documents.Block), propertyName);
+        }
+        if (dependencyProperties == null)
+        {
+            dependencyProperties = GetDependencyProperties(typeof(global::Quire.Core.TextFormat), propertyName);
+        }
+        if (dependencyProperties == null)
+        {
+            dependencyProperties = GetDependencyProperties(typeof(System.Windows.Documents.Paragraph), propertyName);
+        }
+        if (dependencyProperties == null)
+        {
+            dependencyProperties = GetDependencyProperties(typeof(System.Windows.Documents.Typography), propertyName);
+        }
+        if (dependencyProperties != null)
+        {
+            Style.Setters.Add(new Setter((DependencyProperty)dependencyProperties.GetValue(null), value));
+            _htPropertyToIndex[propertyName] = Style.Setters.Count - 1;
+        }
+
+    Return:
+        return;
+    }
+
     protected void ClearHeritageProperties()
     {
         if (Style.BasedOn != null)
