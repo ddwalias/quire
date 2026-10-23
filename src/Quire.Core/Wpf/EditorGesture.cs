@@ -57,6 +57,40 @@ public partial class EditorGesture
         return false;
     }
 
+    public override bool Equals(object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj.GetType() == typeof(EditorGesture))
+        {
+            return Equals((EditorGesture)obj);
+        }
+        return false;
+    }
+
+    public bool Equals(EditorGesture other)
+    {
+        if ((object)other == null)
+        {
+            return false;
+        }
+        if ((object)this == other)
+        {
+            return true;
+        }
+        if (object.Equals(other.CharsPressed, CharsPressed) && object.Equals(other.KeyPressed, KeyPressed))
+        {
+            return object.Equals(other.KeyGesture, KeyGesture);
+        }
+        return false;
+    }
+
     [MirrorVerified("PtcWpfEditorGestureMechanicalDifferentialTests")]
     public static bool operator ==(EditorGesture left, EditorGesture right) => object.Equals(left, right);
 

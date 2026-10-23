@@ -14,9 +14,5 @@ public partial class EditorGesture
     [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]
-    public override bool Equals(object obj) => base.Equals(obj);
-    [global::Quire.Mirror.MirrorStub]
-    public bool Equals(global::Quire.Wpf.EditorGesture other) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override int GetHashCode() => base.GetHashCode();
 }
