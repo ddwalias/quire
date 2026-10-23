@@ -100,6 +100,17 @@ public partial class UserSettingsProvider
         return result;
     }
 
+    public void Reset(SettingsContext context)
+    {
+        Configuration origConfig = null;
+        Configuration modifiedConfig = null;
+        ClientSettingsSection section = null;
+        if (GetSection(context, out section, out origConfig, out modifiedConfig) == GetSectionStatusEnum.ModifiedSection)
+        {
+            new FileInfo(modifiedConfig.FilePath).Delete();
+        }
+    }
+
     [MirrorVerified("Release IL")]
     internal static string ConfigFilenameFromApplicationConfigPath(string applicationConfigPath) => Path.GetFileNameWithoutExtension(applicationConfigPath) + ".V7" + Path.GetExtension(applicationConfigPath);
 
