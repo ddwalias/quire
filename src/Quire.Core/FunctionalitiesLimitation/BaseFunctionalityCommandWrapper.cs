@@ -6,6 +6,8 @@ namespace Quire.FunctionalitiesLimitation;
 
 public partial class BaseFunctionalityCommandWrapper
 {
+    public abstract EnumFunctionalityBehaviorKey CommandFunctionalityBehaviorKey { get; }
+
     [MirrorVerified("Release IL")]
     protected BaseFunctionalityCommandWrapper(BaseFunctionalityCommandWrapper previousBaseFunctionalityCommandWrapper)
     {

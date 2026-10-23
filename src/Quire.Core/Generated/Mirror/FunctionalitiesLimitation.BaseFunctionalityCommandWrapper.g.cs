@@ -11,6 +11,4 @@ namespace Quire.FunctionalitiesLimitation;
 [global::Quire.Mirror.MirrorOf("Ptc.FunctionalitiesLimitation.BaseFunctionalityCommandWrapper, Ptc.Core")]
 public abstract partial class BaseFunctionalityCommandWrapper : global::System.Windows.Input.ICommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey CommandFunctionalityBehaviorKey { get; }
 }
