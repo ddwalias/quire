@@ -33,7 +33,28 @@ public static partial class TextElementPropertiesBlocker
         }
     }
 
-    private static global::System.Windows.DependencyProperty[] ReadInheritedDependencyProperties(global::System.Collections.Generic.IEnumerable<global::System.Type> typesListToScan) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static global::System.Windows.DependencyProperty[] ReadInheritedDependencyProperties(global::System.Collections.Generic.IEnumerable<global::System.Type> typesListToScan)
+    {
+        global::System.Collections.Generic.List<global::System.Windows.DependencyProperty> res = new global::System.Collections.Generic.List<global::System.Windows.DependencyProperty>();
+        global::System.Collections.Generic.List<global::System.Type> extendedTypesList = new global::System.Collections.Generic.List<global::System.Type>(typesListToScan);
+        try
+        {
+            typesListToScan.Each((global::System.Type typeToScan) =>
+            {
+                extendedTypesList.AddRange((from type in global::System.Reflection.Assembly.GetAssembly(typeToScan).GetTypes()
+                                        where type != typeToScan && type.IsSubclassOf(typeToScan)
+                                        select type).ToList());
+            });
+            extendedTypesList.Each((global::System.Type typeToScan) =>
+            {
+                res.AddRange(ReadInheritedDependencyProperties(typeToScan));
+            });
+        }
+        catch
+        {
+        }
+        return res.Distinct().ToArray();
+    }
 
     private static global::System.Collections.Generic.List<global::System.Windows.DependencyProperty> ReadInheritedDependencyProperties(global::System.Type typeToScan)
     {
