@@ -16,4 +16,13 @@ public static partial class TextElementAttachedProperties
 
     [MirrorVerified("Release IL")]
     public static string GetStyleKey(DependencyObject element) => element.GetValue(StyleKeyProperty) as string;
+
+    public static void SetStyleKey(DependencyObject element, string value)
+    {
+        if (value.IsNullOrEmpty())
+        {
+            value = DefaultTextStyle;
+        }
+        element.SetValue(StyleKeyProperty, value);
+    }
 }

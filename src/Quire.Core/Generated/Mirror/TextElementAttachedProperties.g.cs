@@ -20,8 +20,6 @@ public static partial class TextElementAttachedProperties
     [global::Quire.Mirror.MirrorStub]
     private static void HandleTextStyleDataChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void SetStyleKey(global::System.Windows.DependencyObject element, string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void SetTextStyleAndBind(global::System.Windows.DependencyObject element, global::Quire.TextStyleData styleData, bool isApply, bool isSelected, global::System.Windows.Controls.RichTextBox rtb = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetTextStyleOnElement(global::System.Windows.FrameworkContentElement element, global::Quire.ITextStyle textStyle, bool isApply, bool isSelected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
