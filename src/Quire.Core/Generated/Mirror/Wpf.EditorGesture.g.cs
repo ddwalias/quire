@@ -12,10 +12,6 @@ namespace Quire.Wpf;
 public partial class EditorGesture
 {
     [global::Quire.Mirror.MirrorStub]
-    public bool Matches(global::System.Windows.Input.KeyEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Matches(string charsPressed) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]
     public override bool Equals(object obj) => base.Equals(obj);

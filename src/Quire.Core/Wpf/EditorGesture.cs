@@ -35,6 +35,28 @@ public partial class EditorGesture
         KeyGesture = keyGesture;
     }
 
+    public bool Matches(KeyEventArgs args)
+    {
+        if (KeyGesture != null && KeyGesture.Matches(null, args))
+        {
+            return true;
+        }
+        if (KeyPressed == args.Key)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool Matches(string charsPressed)
+    {
+        if (!string.IsNullOrEmpty(charsPressed))
+        {
+            return CharsPressed == charsPressed;
+        }
+        return false;
+    }
+
     [MirrorVerified("PtcWpfEditorGestureMechanicalDifferentialTests")]
     public static bool operator ==(EditorGesture left, EditorGesture right) => object.Equals(left, right);
 
