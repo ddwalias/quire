@@ -1,11 +1,19 @@
 #nullable disable
 using System.ComponentModel;
+using System.Xml;
 using Quire.Mirror;
 
 namespace Quire.Serialization;
 
 internal partial class XmlConverter
 {
+    private XmlNode ConvertStringToXmlNode(string nodeString)
+    {
+        XmlDocument xmlDocument = new XmlDocument();
+        xmlDocument.LoadXml(nodeString);
+        return xmlDocument.DocumentElement;
+    }
+
     [MirrorVerified("PtcSerializationXmlConverterMechanicalDifferentialTests")]
     public override object CreateInstance(ITypeDescriptorContext context, global::System.Collections.IDictionary propertyValues) => base.CreateInstance(context, propertyValues);
 
