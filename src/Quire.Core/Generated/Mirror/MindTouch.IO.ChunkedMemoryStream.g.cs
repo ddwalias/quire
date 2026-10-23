@@ -32,8 +32,6 @@ public partial class ChunkedMemoryStream : global::System.IO.Stream
     [global::Quire.Mirror.MirrorStub]
     private readonly bool _publiclyVisible;
     [global::Quire.Mirror.MirrorStub]
-    public ChunkedMemoryStream(int capacity) { }
-    [global::Quire.Mirror.MirrorStub]
     public ChunkedMemoryStream(byte[] buffer, bool writable) { }
     [global::Quire.Mirror.MirrorStub]
     public ChunkedMemoryStream(byte[] buffer, int index, int count, bool writable, bool publiclyVisible) { }

@@ -6,6 +6,16 @@ namespace Quire.MindTouch.IO;
 
 public partial class ChunkedMemoryStream
 {
+    public ChunkedMemoryStream(int capacity)
+    {
+        if (capacity < 0)
+        {
+            throw new ArgumentOutOfRangeException("capacity");
+        }
+        _buffer = new byte[capacity];
+        _publiclyVisible = true;
+    }
+
     protected override void Dispose(bool disposing)
     {
         try
