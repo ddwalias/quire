@@ -158,6 +158,36 @@ public partial class CommandBuffer
         return CurrentInstance;
     }
 
+    public static CommandBuffer CreateBufferForKey(object key)
+    {
+        if (_instances.ContainsKey(key))
+        {
+            global::Quire.DebugTools.DevAssert(false, null);
+            return _instances[key];
+        }
+        CommandBuffer commandBuffer = new CommandBuffer();
+        _instances[key] = commandBuffer;
+        global::Quire.EnvironmentScope.RegisterWithCommandBuffer(commandBuffer);
+        return commandBuffer;
+    }
+
+    public static void RemoveBufferForKey(object key)
+    {
+        if (_instances.TryGetValue(key, out CommandBuffer commandBuffer))
+        {
+            if (commandBuffer.Equals(_currentInstance))
+            {
+                _currentInstance = _defaultBuffer;
+            }
+            _instances.Remove(key);
+            global::Quire.EnvironmentScope.UnregisterWithCommandBuffer(commandBuffer);
+        }
+        else
+        {
+            global::Quire.DebugTools.DevAssert(false, null);
+        }
+    }
+
     [MirrorVerified("Release IL")]
     public static bool Execute(string name, DelegateFunction0<bool> doMethod, Delegate0 undoMethod) => Execute(new UndoableCommand(name, doMethod, undoMethod), null);
 

@@ -16,10 +16,6 @@ public partial class CommandBuffer
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.Dictionary<object, global::Quire.Undo.CommandBuffer> _instances;
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Undo.CommandBuffer CreateBufferForKey(object key) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void RemoveBufferForKey(object key) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool Execute(global::Quire.Undo.IUndoableCommand command, global::Quire.Undo.CompoundCommand attachToCommand = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool ExecuteAndAttach(global::Quire.Undo.IUndoableCommand command) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
