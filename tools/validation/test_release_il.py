@@ -184,6 +184,15 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
     def test_section_names_reads_the_pe_section_table(self):
         self.assertIn('.text', section_names(sys.executable))
 
+    def test_member_moved_to_another_project_keeps_its_obligations(self):
+        def row(project, exact=True, **extra):
+            return dict(method(exact=exact, project=project, **extra), id=f'{project}::T::M')
+        self.assertTrue(compare(inventory(row('Utl')), inventory(row('Misc')))['passed'])
+        self.assertFalse(compare(inventory(row('Utl')), inventory(row('Misc', exact=False)))['passed'])
+        self.assertTrue(compare(inventory(row('Utl', exact=False, stub_body=True)),
+                                inventory(row('Misc', exact=False, stub_body=True)))['passed'])
+        self.assertFalse(compare(inventory(row('Utl')), inventory())['passed'])
+
     def test_matching_declaration_needs_no_body(self):
         row = method(exact=None)
         row.update(body_sha256=None, declaration_only=True)

@@ -19,10 +19,10 @@
 
 **D2 layout, as built.** The consolidated projects follow the layers of Mathcad's own assembly graph, which keeps
 them acyclic: `Quire.Mpl.Emit` (mplasb) → `Quire.Mpl` (mplrun) → `Quire.Mpl.Modules` (compiled Mpl modules:
-`mpl*`, `hashtable`, `mcdrun`, `mcdstaticunitsystem*`) → `Quire.Engine.Utl` (utl-mgd, mcmisc) → `Quire.Efi`
+`mpl*`, `hashtable`, `mcdrun`, `mcdstaticunitsystem*`) → `Quire.Engine.Utl` (utl-mgd, C++/CLI per D19) → `Quire.Efi`
 (efi*) → `Quire.Automation.Native` (automation, automationmgd, componentsmgd) → `Quire.Engine` (iengine,
 engutils-mgd) → `Quire.Mcd` (the other mcd*) → `Quire.Engine.Native` (mccore12, mcfront12, mceng, msclr, msgen,
-mslisp, mspcons-mgd). `Quire.Utils` holds utilsmgd.
+mslisp, mspcons-mgd). `Quire.Utils` holds utilsmgd and `Quire.Engine.Misc` holds mcmisc.
 
 **Duplicates.** A type compiled into several assemblies from a shared header is defined once per Quire project when
 it is internal (as Mathcad has it, one copy per DLL), and once overall when it is public, in the lowest project of the
