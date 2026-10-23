@@ -3,7 +3,8 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
-from release_il import compare, ordinalless, reads_install, section_names, without_install
+from release_il import (LINKER_PRODUCT, MSVC_BUILD, compare, msvc_mismatch, ordinalless, reads_install,
+                        section_names, without_install)
 
 
 def method(name='M', body='same', exact=True, **extra):
@@ -180,6 +181,28 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
             (root / 'src' / 'P' / 'X.Targets').write_text('$(MATHCAD_DIR)')
             (root / 'Directory.Build.props').write_text('$(MathcadInstallDir)')
             self.assertEqual(reads_install(root, ['P']), [str(Path('Directory.Build.props')), str(Path('src/P/X.Targets'))])
+
+    def test_mixed_mode_dll_must_come_from_the_pinned_msvc(self):
+        def image(entries, key=0x1234ABCD):
+            words = [0x536E6144 ^ key, key, key, key]
+            for product, build in entries:
+                words += [(product << 16 | build) ^ key, 1 ^ key]
+            rich = b''.join(w.to_bytes(4, 'little') for w in words) + b'Rich' + key.to_bytes(4, 'little')
+            data = bytearray(0x80) + rich + bytearray(8)
+            data[0x3c:0x40] = len(data).to_bytes(4, 'little')
+            return bytes(data) + b'PE\0\0'
+        with tempfile.TemporaryDirectory() as temp:
+            dll = Path(temp) / 'x.dll'
+            dll.write_bytes(image([(261, 35721), (261, MSVC_BUILD), (LINKER_PRODUCT, MSVC_BUILD)]))
+            self.assertIsNone(msvc_mismatch(dll))
+            dll.write_bytes(image([(261, MSVC_BUILD + 14), (LINKER_PRODUCT, MSVC_BUILD + 14)]))
+            self.assertIn('required', msvc_mismatch(dll))
+            dll.write_bytes(image([(261, MSVC_BUILD)]))  # no linker record
+            self.assertIn('required', msvc_mismatch(dll))
+            no_rich = bytearray(0x80)
+            no_rich[0x3c:0x40] = (0x80).to_bytes(4, 'little')
+            dll.write_bytes(bytes(no_rich) + b'PE\0\0')
+            self.assertIsNone(msvc_mismatch(dll))
 
     def test_section_names_reads_the_pe_section_table(self):
         self.assertIn('.text', section_names(sys.executable))

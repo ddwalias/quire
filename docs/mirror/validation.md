@@ -34,16 +34,24 @@ python tools/validation/release_il.py --base main --project Quire.Engine.Utl --c
 
 The base is still the project's C# Release build. The candidate is built from the `.vcxproj` with
 MSBuild (`-t:Rebuild -p:Configuration=Release -p:Platform=x64`, OutDir/IntDir in the temporary
-directory) and must produce `<project>.dll` (its `TargetName`). It needs Windows, Visual Studio with
-the C++/CLI component (`Microsoft.VisualStudio.Component.VC.CLI.Support`, found through `vswhere`),
-the v145 MSVC x64 toolset, the Windows SDK desktop x64 libraries, and the .NET 10 SDK. MethodAudit
-reads the Mathcad install; builds never do: every build runs without `MATHCAD_DIR` and with
-`MathcadInstallDir` pointing at an empty path ([D19](decisions.md)). A missing prerequisite fails the run. The path must be inside the repository. Release is
-selected by configuration name; the DebuggableAttribute Debug check is not verified for MSVC
-output, so exact IL matching is what rules out a Debug-shaped candidate.
+directory) and must produce `<project>.dll` (its `TargetName`). It needs Windows, the Windows SDK
+desktop x64 libraries, the .NET 10 SDK, and the exact compiler Mathcad used: **MSVC 19.51.36246**,
+from Visual Studio 2026 **18.6.2** Build Tools with `Microsoft.VisualStudio.Component.VC.CLI.Support`.
+Install it side by side from the 18.6.2 fixed-version Build Tools bootstrapper on the Visual Studio
+2026 release history page, never update that instance, and check that its `cl.exe` reports
+`19.51.36246`. Its toolset folder is still named `14.51.36231`, so the folder name does not identify
+the build. The gate finds the instance through `vswhere` by compiler build, not `-latest`. It uses
+that instance's MSBuild, gives builds of projects containing a `.vcxproj` its path as the
+`QuireMsvcInstallDir` environment property, and fails a DLL whose Rich header shows another linker
+build or a newer tool build. MethodAudit reads the Mathcad install; builds never do: every build
+runs without `MATHCAD_DIR` and with `MathcadInstallDir` pointing at an empty path
+([D19](decisions.md)). A missing prerequisite fails the run. The path must be inside the
+repository. Release is selected by configuration name; the DebuggableAttribute Debug check is not
+verified for MSVC output, so exact IL matching is what rules out a Debug-shaped candidate.
 
 The production `src/Quire.Engine.Utl` `.csproj` builds the mixed-mode DLL in Release itself, so the
-plain `--project Quire.Engine.Utl` command (and `lane_merge.py`) checks that candidate.
+plain `--project Quire.Engine.Utl` command (and `lane_merge.py`) checks that candidate. It must build
+its `.vcxproj` with the MSBuild under `$(QuireMsvcInstallDir)` and fail when that property is empty.
 
 MethodAudit reads the mixed image's metadata and IL bodies with the same exactness rules. For a
 mixed-mode Quire assembly it pairs what the C++/CLI compiler emits as follows:

@@ -39,6 +39,10 @@ native bodies whose Mathcad counterpart is native too. Removing the C# stand-ins
 counterpart is allowed. Every method with a counterpart must match exactly, as before.
 `mcmisc.dll` is plain C# and moves to its own project, `Quire.Engine.Misc`.
 
+The C++/CLI build uses the compiler that built `utl-mgd.dll`. Its Rich header shows MSVC 19.51.36246
+(Visual Studio 2026 18.6.2). The gate builds with that exact instance and rejects other linker builds
+([validation](validation.md#ccli-candidate)).
+
 ## Mapping and scope
 
 - **D1:** `Mcd` maps to `Quire.Mcd`.

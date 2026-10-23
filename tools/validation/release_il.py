@@ -201,16 +201,54 @@ def run(command, cwd, log, timeout, env=None):
         raise RuntimeError(f'command failed ({result.returncode}); see {log}\n{detail}')
 
 
-def msbuild(environ=os.environ):
-    """MSBuild of the latest Visual Studio with the C++/CLI component; fails closed without one."""
+# Mathcad's utl-mgd.dll was compiled and linked by MSVC 19.51.36246 (Visual Studio 18.6.2), per its Rich header.
+MSVC_BUILD = 36246
+LINKER_PRODUCT = 258  # Rich-header product id of the MSVC 14.x linker
+
+
+def msvc_instance(environ=os.environ):
+    """The Visual Studio instance with C++/CLI support whose x64 compiler is build MSVC_BUILD; fails closed."""
     vswhere = Path(environ.get('ProgramFiles(x86)', r'C:\Program Files (x86)'), 'Microsoft Visual Studio', 'Installer', 'vswhere.exe')
     if not vswhere.is_file():
-        raise RuntimeError(f'a .vcxproj candidate needs Visual Studio on Windows; {vswhere} not found')
-    found = subprocess.run([vswhere, '-latest', '-products', '*', '-requires', 'Microsoft.VisualStudio.Component.VC.CLI.Support',
-                            '-find', r'MSBuild\**\Bin\MSBuild.exe'], capture_output=True, text=True, check=True).stdout.splitlines()
-    if not found:
-        raise RuntimeError('no Visual Studio with C++/CLI support (Microsoft.VisualStudio.Component.VC.CLI.Support)')
-    return found[0]
+        raise RuntimeError(f'a C++/CLI candidate needs Visual Studio on Windows; {vswhere} not found')
+    paths = subprocess.run([vswhere, '-all', '-products', '*', '-requires', 'Microsoft.VisualStudio.Component.VC.CLI.Support',
+                            '-property', 'installationPath'], capture_output=True, text=True, check=True).stdout.splitlines()
+    for path in map(Path, filter(None, paths)):
+        for cl in path.glob('VC/Tools/MSVC/*/bin/Hostx64/x64/cl.exe'):
+            banner = subprocess.run([cl], capture_output=True, text=True).stderr
+            if f'Version 19.51.{MSVC_BUILD} ' in banner:
+                return path
+    raise RuntimeError(f'no Visual Studio with C++/CLI support has MSVC 19.51.{MSVC_BUILD} (install Build Tools 18.6.2)')
+
+
+def msbuild(environ=os.environ):
+    """MSBuild of the pinned MSVC instance."""
+    return msvc_instance(environ) / 'MSBuild' / 'Current' / 'Bin' / 'amd64' / 'MSBuild.exe'
+
+
+def rich_builds(dll):
+    """(product id, build) pairs of a PE's Rich header; empty for images without one (Roslyn output)."""
+    data = Path(dll).read_bytes()
+    pe = int.from_bytes(data[0x3c:0x40], 'little')
+    end = data.find(b'Rich', 0x80, pe)
+    if end < 0:
+        return []
+    key = int.from_bytes(data[end + 4:end + 8], 'little')
+    start = data.rfind((0x536E6144 ^ key).to_bytes(4, 'little'), 0, end)  # 'DanS'
+    entries = (int.from_bytes(data[o:o + 4], 'little') ^ key for o in range(start + 16, end, 8))
+    return [(comp >> 16, comp & 0xFFFF) for comp in entries]
+
+
+def msvc_mismatch(dll):
+    """Why a mixed-mode DLL was not linked by the pinned MSVC (None when it was, or for IL-only images)."""
+    builds = rich_builds(dll)
+    if not builds:
+        return None
+    linkers = {build for product, build in builds if product == LINKER_PRODUCT}
+    newer = sorted({build for _, build in builds if build > MSVC_BUILD})
+    if linkers != {MSVC_BUILD} or newer:
+        return f'linker builds {sorted(linkers)}, newer tool builds {newer}; MSVC 19.51.{MSVC_BUILD} is required'
+    return None
 
 
 def without_install(work, environ=os.environ):
@@ -253,6 +291,9 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
     if found := reads_install(root, projects, vcxproj):
         raise RuntimeError(f'builds must not read the Mathcad install (D19): {", ".join(found)}')
     env, hidden = without_install(work)
+    # C++/CLI builds use the pinned MSVC; the production .csproj receives it as QuireMsvcInstallDir.
+    if vcxproj or any(p.suffix.lower() == '.vcxproj' for project in projects for p in (root / 'src' / project).rglob('*')):
+        env['QuireMsvcInstallDir'] = f'{msvc_instance()}{os.sep}'
     if vcxproj:
         # OutDir/IntDir keep outputs out of the tree; MethodAudit then requires <project>.dll there (the TargetName).
         run([msbuild(), vcxproj, '-t:Rebuild', '-p:Configuration=Release', '-p:Platform=x64', hidden,
@@ -267,6 +308,8 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
     for project in projects:
         if '.ilnew' in section_names(assemblies / f'{project}.dll'):
             raise RuntimeError(f'{project}.dll has an IL-patching .ilnew section (D19)')
+        if reason := msvc_mismatch(assemblies / f'{project}.dll'):
+            raise RuntimeError(f'{project}.dll: {reason}')
     inventory = work / 'inventory.json'
     run([dotnet, tool, '--repo', root, '--assemblies', assemblies, '--install', install,
          '--output', inventory, '--release-il',
