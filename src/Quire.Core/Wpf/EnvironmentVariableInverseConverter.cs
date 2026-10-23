@@ -8,6 +8,9 @@ namespace Quire.Wpf;
 
 public partial class EnvironmentVariableInverseConverter
 {
+    [MirrorVerified("Release IL")]
+    public static EnvironmentVariableInverseConverter Instance = new EnvironmentVariableInverseConverter();
+
     [MirrorVerified("PtcWpfEnvironmentVariableInverseConverterMechanicalDifferentialTests")]
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
 

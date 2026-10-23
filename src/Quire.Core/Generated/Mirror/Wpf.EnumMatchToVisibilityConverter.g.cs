@@ -11,8 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.EnumMatchToVisibilityConverter, Ptc.Core")]
 public partial class EnumMatchToVisibilityConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::Quire.Wpf.EnumMatchToBooleanConverter EnumMatchToBooleanConverterInstance;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Wpf.EnumMatchToVisibilityConverter Instance;
 }

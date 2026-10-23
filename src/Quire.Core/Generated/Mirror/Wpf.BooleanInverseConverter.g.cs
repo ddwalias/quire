@@ -11,6 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.BooleanInverseConverter, Ptc.Core")]
 public partial class BooleanInverseConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Wpf.BooleanInverseConverter Instance;
 }

@@ -9,6 +9,9 @@ namespace Quire.Wpf;
 public partial class DropDownListFontFamilyConverter
 {
     [MirrorVerified("Release IL")]
+    public static DropDownListFontFamilyConverter Instance = new DropDownListFontFamilyConverter();
+
+    [MirrorVerified("Release IL")]
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value == null)

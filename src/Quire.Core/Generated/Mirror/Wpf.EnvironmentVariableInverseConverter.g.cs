@@ -11,6 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.EnvironmentVariableInverseConverter, Ptc.Core")]
 public partial class EnvironmentVariableInverseConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Wpf.EnvironmentVariableInverseConverter Instance;
 }

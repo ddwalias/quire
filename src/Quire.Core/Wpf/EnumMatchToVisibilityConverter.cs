@@ -6,6 +6,11 @@ namespace Quire.Wpf;
 
 public partial class EnumMatchToVisibilityConverter
 {
+    private static readonly EnumMatchToBooleanConverter EnumMatchToBooleanConverterInstance = new EnumMatchToBooleanConverter();
+
+    [MirrorVerified("Release IL")]
+    public static EnumMatchToVisibilityConverter Instance = new EnumMatchToVisibilityConverter();
+
     [MirrorVerified("PtcWpfEnumMatchToVisibilityConverterMechanicalDifferentialTests")]
     private EnumMatchToVisibilityConverter() { }
 

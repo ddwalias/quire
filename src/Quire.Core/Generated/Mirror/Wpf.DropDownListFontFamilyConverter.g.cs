@@ -11,6 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.DropDownListFontFamilyConverter, Ptc.Core")]
 public partial class DropDownListFontFamilyConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Wpf.DropDownListFontFamilyConverter Instance;
 }
