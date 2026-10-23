@@ -7,9 +7,12 @@ using Quire.Tools.MirrorGen;
 
 /// <summary><paramref name="Modifiers"/>: the custom modifiers of the return type and each parameter, which the key leaves
 /// out (see ModifierProvider). <paramref name="Import"/>: the P/Invoke metadata of a pinvokeimpl method, which has no
-/// IL body to compare. <paramref name="NativeCode"/>: the RVA holds machine code (C++/CLI), not an IL body.</summary>
+/// IL body to compare. <paramref name="NativeCode"/>: the RVA holds machine code (C++/CLI), not an IL body.
+/// <paramref name="Signature"/>: the decoded signature, from which a global (<c>&lt;Module&gt;</c>) function, which has
+/// no type model, is keyed with its types mapped.</summary>
 sealed record RawMethod(string Owner, string Name, string Key, int Token, string Access, bool Abstract, int BodyRva,
-    string Modifiers = "", int? MaxStack = null, PInvoke? Import = null, bool NativeCode = false);
+    string Modifiers = "", int? MaxStack = null, PInvoke? Import = null, bool NativeCode = false,
+    MethodSignature<TypeSig> Signature = default, bool Static = false);
 /// <summary>What metadata records of a P/Invoke beside its name and parameter types: the method and implementation
 /// flags, the signature calling convention, and the ImplMap module, entry point and import attributes.</summary>
 sealed record PInvoke(MethodAttributes Attributes, MethodImplAttributes ImplAttributes, SignatureHeader Header,
@@ -169,7 +172,7 @@ sealed class Artifact
                 bool native = m.RelativeVirtualAddress != 0 && ((m.ImplAttributes & MethodImplAttributes.CodeTypeMask) != MethodImplAttributes.IL
                     || (m.ImplAttributes & MethodImplAttributes.Unmanaged) != 0);
                 Methods.Add(new(owner, name, key, MetadataTokens.GetToken(mh), access,
-                    (m.Attributes & MethodAttributes.Abstract) != 0, m.RelativeVirtualAddress, modifiers, maxStack, import, native));
+                    (m.Attributes & MethodAttributes.Abstract) != 0, m.RelativeVirtualAddress, modifiers, maxStack, import, native, sig, isStatic));
             }
         }
     }

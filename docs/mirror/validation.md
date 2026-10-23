@@ -41,19 +41,31 @@ install. A missing prerequisite fails the run. The path must be inside the repos
 selected by configuration name; the DebuggableAttribute Debug check is not verified for MSVC
 output, so exact IL matching is what rules out a Debug-shaped candidate.
 
-MethodAudit reads the mixed image's metadata and IL bodies with the same exactness rules, but it
-cannot pair everything a C++/CLI build emits:
+The production `src/Quire.Engine.Utl` `.csproj` builds the mixed-mode DLL in Release itself, so the
+plain `--project Quire.Engine.Utl` command (and `lane_merge.py`) checks that candidate.
 
-- global `<Module>` functions (CRT startup, native-call stubs) have no `[MirrorOf]` binding, and
-  methods whose RVA holds native code have no IL. Both are marked `unsupported`; they are always
-  checked and always fail, even when unchanged.
+MethodAudit reads the mixed image's metadata and IL bodies with the same exactness rules. For a
+mixed-mode Quire assembly it pairs what the C++/CLI compiler emits as follows:
+
+- C++ types the compiler emits under their C++ names (`_RTL_CRITICAL_SECTION`, `std.exception`,
+  `std.basic_string<…>`, `<CrtImplementationDetails>.*`) cannot carry `[MirrorOf]`. Such a type is
+  the same-named type of a Mathcad assembly the Quire assembly already binds, when the type map lists
+  that original as `c++ artefact` or not at all (template instances and compiler-generated types,
+  which the map leaves out), and its kind and native size match. A type the map mirrors still needs
+  its reviewed `[MirrorOf]`; a type with no such original has no counterpart and fails.
+- global `<Module>` functions pair with the `<Module>` of the one mixed-mode Mathcad assembly the
+  Quire assembly binds (`utl-mgd`), by signature with those types mapped, and their IL is compared
+  like any other method's. Unpaired ones have no counterpart and fail; their row ids are the
+  signature, with custom modifiers added only where overloads share one.
+- methods whose RVA holds native code have no IL: they are marked `unsupported` and always fail, even
+  when Mathcad's counterpart is native too.
 - the D10 `engine_native` exemption applies only to IL-only Quire assemblies; a mixed candidate
   can emit those bodies, so it must match them.
-- C++/CLI support types (`<CrtImplementationDetails>.*`, `vc.cppcli.*`) have no counterpart and fail.
 
-So no current C++/CLI build can pass. The three-type Utl spike (no `[MirrorOf]`) fails with 136
-checked, 0 exact: 87 unsupported `<Module>` methods, 49 without a Mathcad counterpart (including all
-23 `Quire.utl_mgd` methods), and 292 C# methods removed.
+Names the compiler derives from the source path (`?A0x<hash>` anonymous namespaces, such as
+`vc.cppcli.attributes.?A0x….CppInlineNamespaceAttribute` and `__clr_placement_new_t`) differ between
+checkouts and never match Mathcad's. Members the original has and the candidate lacks are not
+reported; only the candidate's rows are checked.
 
 ## Inspect a mismatch
 

@@ -45,6 +45,9 @@ var errors = new List<string>();
 // Quire type -> every (Mathcad type, Mathcad assembly) the type map binds it to: one Quire name stands for one type per
 // Mathcad assembly when a source file is linked into each, or a native header compiled into several.
 var reviewed = new Dictionary<string, List<string[]>>();
+// (Mathcad assembly, Mathcad type) of every row the type map lists other than as a C++ artefact: those types are
+// mirrored, or excluded for a reason a C++/CLI build cannot share (see the same-name binding below).
+var listed = new HashSet<(string Assembly, string Type)>();
 using (var csv = new TextFieldParser(Path.Combine(repo, "docs/mirror/type-map.csv")))
 {
     csv.SetDelimiters(",");
@@ -59,6 +62,7 @@ using (var csv = new TextFieldParser(Path.Combine(repo, "docs/mirror/type-map.cs
             if (!reviewed.TryGetValue(fields[4], out var bound)) reviewed[fields[4]] = bound = [];
             bound.Add([fields[1], Path.GetFileNameWithoutExtension(fields[0])]);
         }
+        if (fields[5] != "c++ artefact") listed.Add((Path.GetFileNameWithoutExtension(fields[0]).ToLowerInvariant(), fields[1]));
     }
 }
 // Windows names assemblies case-insensitively; the type map records install file names, not assembly names.
@@ -116,6 +120,22 @@ var typeNames = new Dictionary<(string Assembly, string Name), string[]>();
 foreach (var artifact in quire)
     foreach (var t in artifact.Model.Types.Where(t => t.MirrorOf != null))
         typeNames.TryAdd((artifact.Name, t.FullName), t.MirrorOf!.Split(',').Select(s => s.Trim()).ToArray());
+// A C++/CLI build emits the C++ types it uses (Windows SDK records, STL, CRT and template instances) under their C++
+// names, where no [MirrorOf] can be written. In a mixed-mode Quire assembly such a type is the type of the same name, kind
+// and native size in a Mathcad assembly the Quire assembly binds, when the type map lists that original as a C++ artefact
+// or not at all (template instances and compiler-generated types, which it leaves out). A type the map mirrors or excludes
+// otherwise still needs its reviewed [MirrorOf]; a type without such an original stays unbound and has no counterpart.
+foreach (var artifact in quire.Where(a => !a.IlOnly))
+{
+    var bound = typeNames.Where(t => t.Key.Assembly == artifact.Name).Select(t => t.Value[1].ToLowerInvariant()).ToHashSet();
+    foreach (var type in artifact.Model.Types.Where(t => t.MirrorOf == null))
+    {
+        if (reviewed.ContainsKey(type.FullName)) continue;
+        var same = originals.Values.Where(o => bound.Contains(o.Name.ToLowerInvariant()) && !listed.Contains((o.Name.ToLowerInvariant(), type.FullName))
+            && o.Model.Types.Any(t => t.FullName == type.FullName && t.Kind == type.Kind && t.NativeSize == type.NativeSize)).ToList();
+        if (same.Count == 1) typeNames[(artifact.Name, type.FullName)] = [type.FullName, same[0].Name];
+    }
+}
 // Synthesized types cannot carry a source MirrorOf. Inherit only an exact nested name
 // under a reviewed parent, and require a compiler-generated counterpart in that artifact.
 string[]? GeneratedBinding(Artifact artifact, TypeModel type)
@@ -189,24 +209,44 @@ string OriginalKey(Artifact artifact, RawMethod raw)
     if (originalKeys.TryGetValue((artifact, raw.Token), out var key)) return key;
     return originalKeys[(artifact, raw.Token)] = artifact.ComparisonKey(raw);
 }
-var matched = new List<(Artifact Artifact, RawMethod Raw, TypeModel Type, MethodModel Method, Artifact? Original, RawMethod? Counterpart)>();
+// The global functions of a mixed-mode Quire assembly pair with those of the one mixed-mode Mathcad assembly its types
+// bind: <Module> carries no [MirrorOf], and that original is its only C++/CLI counterpart. Null otherwise.
+Artifact? ModuleOriginal(Artifact artifact)
+{
+    if (artifact.IlOnly) return null;
+    var mixed = typeNames.Where(t => t.Key.Assembly == artifact.Name).Select(t => originals.GetValueOrDefault(t.Value[1]))
+        .OfType<Artifact>().Where(o => !o.IlOnly).Distinct().ToList();
+    return mixed.Count == 1 ? mixed[0] : null;
+}
+// Keys leave out custom modifiers, which C# cannot write (C++/CLI's IsLong, IsConst...). They only break a tie between
+// originals that differ in nothing else, for the one whose modifiers are the Quire method's.
+RawMethod? Counterpart(RawMethod raw, Artifact original, List<RawMethod> sameKey)
+{
+    if (sameKey.Count > 1)
+    {
+        var tied = sameKey.Where(m => m.Modifiers == raw.Modifiers).ToList();
+        if (tied.Count != 1)
+            errors.Add($"{raw.Owner}::{raw.Key}: {sameKey.Count} methods of {original.Name} match and custom modifiers "
+                + $"do not single one out: {string.Join(", ", sameKey.Select(m => $"0x{m.Token:x8}"))}");
+        sameKey = tied.Count == 1 ? tied : [];
+    }
+    return sameKey.SingleOrDefault();
+}
+var matched = new List<(Artifact Artifact, RawMethod Raw, TypeModel? Type, MethodModel? Method, Artifact? Original, RawMethod? Counterpart)>();
 foreach (var artifact in quire)
     foreach (var raw in artifact.Methods)
     {
         var type = artifact.Model.Types.SingleOrDefault(t => t.FullName == raw.Owner);
-        // C++/CLI global functions and CRT support live on <Module>, which no [MirrorOf] can bind: report them
-        // unsupported so the Release checker blocks them, never pairs or exempts them.
+        // C++/CLI global functions and CRT support live on <Module>, which has no type model. A global function pairs
+        // with the original's of the same mapped signature, and is compared like any other method.
         if (type == null)
         {
             if (raw.Owner != "<Module>") throw new InvalidDataException($"{artifact.Name}: no type model for {raw.Owner}");
-            if (diffs == null && (selectedTypes.Count == 0 || selectedTypes.Contains(raw.Owner)))
-                rows.Add(new {
-                    // Keys omit custom modifiers, so C++/CLI overloads can share one; the token keeps each row.
-                    id = $"{artifact.Name}::{raw.Owner}::{raw.Key}@0x{raw.Token:x8}", project = artifact.Name, type = raw.Owner,
-                    signature = raw.Key, declared_signature = raw.Key, token = raw.Token, token_hex = $"0x{raw.Token:x8}",
-                    access = raw.Access, quire_sha256 = artifact.Hash, quire_mvid = artifact.Mvid, original = (object?)null,
-                    engine_native = false, declaration_only = false, shape_matches = false, exact_match = (bool?)null,
-                    unsupported = "global <Module> method has no reviewed Mathcad binding" });
+            var module = ModuleOriginal(artifact);
+            string key = Signatures.Method(raw.Name, raw.Signature.GenericParameterCount, raw.Signature.ParameterTypes.Select(Map),
+                Map(raw.Signature.ReturnType), raw.Static);
+            matched.Add((artifact, raw, null, null, module,
+                module == null ? null : Counterpart(raw, module, [.. module.Methods.Where(m => m.Owner == raw.Owner && m.Key == key)])));
             continue;
         }
         var candidates = type.Methods.Concat(type.Properties.SelectMany(p => new[] { p.Getter, p.Setter }))
@@ -214,27 +254,19 @@ foreach (var artifact in quire)
         var method = candidates.Single(m => Key(m, false) == raw.Key);
         RawMethod? counterpart = null;
         Artifact? original = null;
-        if (typeNames.TryGetValue((artifact.Name, type.FullName), out var fields))
-        {
-            if (originals.TryGetValue(fields[1].Trim(), out original))
-            {
-                var sameKey = original.Methods.Where(m => m.Owner == fields[0].Trim()
-                    && OriginalKey(original, m) == ComparisonKey(method, true)).ToList();
-                // Keys leave out custom modifiers, which C# cannot write (C++/CLI's IsLong, IsConst...). They only break a
-                // tie between originals that differ in nothing else, for the one whose modifiers are the Quire method's.
-                if (sameKey.Count > 1)
-                {
-                    var tied = sameKey.Where(m => m.Modifiers == raw.Modifiers).ToList();
-                    if (tied.Count != 1)
-                        errors.Add($"{raw.Owner}::{raw.Key}: {sameKey.Count} methods of {original.Name} match and custom modifiers "
-                            + $"do not single one out: {string.Join(", ", sameKey.Select(m => $"0x{m.Token:x8}"))}");
-                    sameKey = tied.Count == 1 ? tied : [];
-                }
-                counterpart = sameKey.SingleOrDefault();
-            }
-        }
+        if (typeNames.TryGetValue((artifact.Name, type.FullName), out var fields) && originals.TryGetValue(fields[1].Trim(), out original))
+            counterpart = Counterpart(raw, original, [.. original.Methods.Where(m => m.Owner == fields[0].Trim()
+                && OriginalKey(original, m) == ComparisonKey(method, true))]);
         matched.Add((artifact, raw, type, method, original, counterpart));
     }
+// Keys omit custom modifiers, so C++/CLI global overloads can share one: those add their modifiers to their identity,
+// and the token only where that still leaves a tie.
+var globalIds = new Dictionary<(Artifact, int), string>();
+foreach (var group in matched.Where(m => m.Type == null).GroupBy(m => (m.Artifact, m.Raw.Key)))
+    foreach (var byModifiers in group.GroupBy(m => m.Raw.Modifiers))
+        foreach (var m in byModifiers)
+            globalIds[(m.Artifact, m.Raw.Token)] = m.Raw.Key + (group.Count() == 1 ? "" : $" [{m.Raw.Modifiers}]")
+                + (byModifiers.Count() == 1 ? "" : $"@0x{m.Raw.Token:x8}");
 // Calls to Quire methods are named after their Mathcad counterparts; types after their MirrorOf binding.
 var originalNames = matched.Where(m => m.Counterpart != null)
     .ToDictionary(m => (m.Artifact.Name, m.Raw.Token), m => m.Counterpart!.Name);
@@ -249,9 +281,9 @@ var bodies = quire.ToDictionary(a => a, a => new StructureReader(a.Metadata, a.P
 foreach (var (artifact, raw, type, method, original, counterpart) in matched)
 {
     if (selectedTypes.Count > 0 && !selectedTypes.Contains(raw.Owner)) continue;
-    string identity = artifact.ComparisonKey(raw);
+    string identity = method == null ? globalIds[(artifact, raw.Token)] : artifact.ComparisonKey(raw);
     bool wanted = diffs != null && diffs.Any(d => d == raw.Owner || d == $"{raw.Owner}::{raw.Name}"
-        || d == $"{raw.Owner}::{raw.Key}" || d == $"{raw.Owner}::{Canonical.MethodName(method)}" || d == $"{raw.Owner}::{identity}");
+        || d == $"{raw.Owner}::{raw.Key}" || method != null && d == $"{raw.Owner}::{Canonical.MethodName(method)}" || d == $"{raw.Owner}::{identity}");
     if (diffs != null && !wanted) continue;
     var body = raw.BodyRva == 0 || raw.NativeCode ? null : bodies[artifact].Body(MetadataTokens.MethodDefinitionHandle(raw.Token));
     List<string>? differences = null, diff = null;
@@ -295,34 +327,35 @@ foreach (var (artifact, raw, type, method, original, counterpart) in matched)
         id = artifact.Name + "::" + raw.Owner + "::" + identity, project = artifact.Name,
         type = raw.Owner, signature = identity, declared_signature = raw.Key,
         token = raw.Token, token_hex = $"0x{raw.Token:x8}",
-        is_static = method.Static, is_constructor = method.IsConstructor, access = method.Access.ToString(),
+        is_static = raw.Static, is_constructor = method?.IsConstructor == true, access = method?.Access.ToString() ?? raw.Access,
         quire_sha256 = artifact.Hash, quire_mvid = artifact.Mvid,
         original = counterpart == null ? null : new { assembly = original!.Name, sha256 = original.Hash, mvid = original.Mvid,
             version = original.Version, token = counterpart.Token, token_hex = $"0x{counterpart.Token:x8}", type = counterpart.Owner, signature = counterpart.Key },
         // D10: utl-mgd is a mixed-mode engine boundary. Matched bodies with a 0-7 original
         // maxstack and emitted bodies lacking a managed signature match are native routines.
         // An IL-only port cannot reproduce those bodies; a mixed-mode (C++/CLI) candidate can, so it gets no exemption.
-        engine_native = artifact.IlOnly && typeNames.TryGetValue((artifact.Name, type.FullName), out var nativeBinding)
+        engine_native = artifact.IlOnly && type != null && typeNames.TryGetValue((artifact.Name, type.FullName), out var nativeBinding)
             && nativeBinding[1].Equals("utl-mgd", StringComparison.OrdinalIgnoreCase)
             && raw.BodyRva != 0
             && (counterpart == null || original?.Name.Equals("utl-mgd", StringComparison.OrdinalIgnoreCase) == true
                 && original.Methods.Single(m => m.Token == counterpart.Token).MaxStack is >= 0 and <= 7),
         declaration_only = counterpart is { BodyRva: 0 } && raw.BodyRva == 0
-            && (method.Abstract && counterpart.Abstract || type.Kind == TypeKind.Delegate),
-        shape_matches = counterpart != null && method.Access.ToString() == counterpart.Access && raw.Modifiers == counterpart.Modifiers,
+            && (raw.Abstract && counterpart.Abstract || type?.Kind == TypeKind.Delegate),
+        shape_matches = counterpart != null && (method?.Access.ToString() ?? raw.Access) == counterpart.Access && raw.Modifiers == counterpart.Modifiers,
         structure_matches = differences == null ? (bool?)null : differences.Count == 0,
         structure_differences = differences ?? [],
         // Same instructions in the same order (Structure.Exact); null where the structure is not compared.
         exact_match = differences == null ? (bool?)null : exact,
-        unsupported = raw.NativeCode ? "native code body has no IL to compare" : null,
+        unsupported = raw.NativeCode ? "native code body has no IL to compare"
+            : type == null && original == null ? "global <Module> method has no reviewed Mathcad binding" : null,
         source = raw.BodyRva == 0 ? null : artifact.Source(raw.Token),
         body_sha256 = body?.Hash,
         // A MirrorStub throw: unfinished, whichever file it records.
         stub_body = body?.Stub == true,
         // Generated: [MirrorStub] on the method, or on the property or event it is an accessor of.
-        mirror_stub = method.Stub
+        mirror_stub = method != null && type != null && (method.Stub
             || type.Properties.Any(p => p.Stub && (Same(p.Getter, method) || Same(p.Setter, method)))
-            || type.Events.Any(e => e.Stub && (Same(e.Adder, method) || Same(e.Remover, method)))
+            || type.Events.Any(e => e.Stub && (Same(e.Adder, method) || Same(e.Remover, method))))
     });
 }
 static bool Same(MethodModel? accessor, MethodModel method) =>

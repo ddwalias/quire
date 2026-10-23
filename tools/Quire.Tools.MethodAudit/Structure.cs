@@ -421,9 +421,14 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                 => md.GetTypeDefinition((TypeDefinitionHandle)type).GetLayout().Size,
             _ => 0,
         };
-        if (size <= 0) return " data ?";
-        var data = pe.GetSectionData(field.GetRelativeVirtualAddress()).GetContent(0, size);
-        return " data " + Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(data.AsSpan()));
+        int rva = field.GetRelativeVirtualAddress();
+        var section = pe.PEHeaders.SectionHeaders.FirstOrDefault(s => rva >= s.VirtualAddress && rva < s.VirtualAddress + s.VirtualSize);
+        if (size <= 0 || section.VirtualSize == 0 || rva + size > section.VirtualAddress + section.VirtualSize) return " data ?";
+        // C++/CLI places zero-initialized data past the section's raw data, which the loader fills with zeros.
+        var block = pe.GetSectionData(rva);
+        var data = new byte[size];
+        block.GetContent(0, Math.Min(size, block.Length)).CopyTo(data, 0);
+        return " data " + Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(data));
     }
 
     /// <summary>Tokens of this module's method definitions a method operand can reach.</summary>
