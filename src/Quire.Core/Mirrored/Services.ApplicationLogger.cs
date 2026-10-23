@@ -30,6 +30,17 @@ partial class ApplicationLogger
         return stringBuilder.ToString();
     }
 
+    public virtual string GetMiscInfo()
+    {
+        global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder();
+        string arg = global::Quire.Xml.XmlWorksheetData.BuildId ?? "Unknown";
+        stringBuilder.AppendLine(string.Format("Build Number : {0}", arg));
+        string value = string.Format("System Culture : {0}; Current UI Culture : {1}", global::System.Globalization.CultureInfo.InstalledUICulture, global::System.Threading.Thread.CurrentThread.CurrentUICulture);
+        stringBuilder.AppendLine(value);
+        stringBuilder.AppendLine(string.Format("Architecture: {0}", global::Quire.Xml.XmlWorksheetData.Architecture));
+        return stringBuilder.ToString();
+    }
+
     protected global::System.IO.TextWriter CreateApplicationLog(string logType)
     {
         _applicationLogFilePath = global::System.IO.Path.Combine(LogFolder, string.Format("{0}_{1}_{2}.log", FullProductName, logType, global::System.DateTime.Now.ToString("yyyyMMdd_HHmmss")));
