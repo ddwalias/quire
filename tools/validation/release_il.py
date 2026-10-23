@@ -277,6 +277,31 @@ def reads_install(root, projects, vcxproj=None):
                   if INSTALL_REFERENCE.search(p.read_text(encoding='utf-8', errors='replace')))
 
 
+PROJECT_REFERENCE = re.compile(r"""<ProjectReference\b[^>]*\bInclude=["']([^"']+)["']""", re.IGNORECASE)
+
+
+def builds_cppcli(root, projects):
+    """Whether building the projects builds a .vcxproj: one of them, or a src project they reference through
+    their .csproj/.props, holds one. Utl's dependents build its mixed DLL and need the pinned MSVC too."""
+    seen, todo = set(), list(projects)
+    while todo:
+        directory = (root / 'src' / todo.pop()).resolve()
+        if directory in seen or not directory.is_dir():
+            continue
+        seen.add(directory)
+        files = [p for p in directory.rglob('*') if p.is_file() and not {'bin', 'obj'} & set(p.relative_to(directory).parts)]
+        if any(p.suffix.lower() == '.vcxproj' for p in files):
+            return True
+        for p in files:
+            if p.suffix.lower() in ('.csproj', '.props'):
+                for include in PROJECT_REFERENCE.findall(p.read_text(encoding='utf-8', errors='replace')):
+                    # MSBuild resolves an imported .props' relative paths against the importing project.
+                    target = (directory / include.replace('\\', os.sep)).resolve().parent
+                    if target.parent == (root / 'src').resolve():
+                        todo.append(target.name)
+    return False
+
+
 def section_names(dll):
     """PE section names; an IL-patching post-build step leaves its own section (D19)."""
     data = Path(dll).read_bytes()
@@ -292,7 +317,7 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
         raise RuntimeError(f'builds must not read the Mathcad install (D19): {", ".join(found)}')
     env, hidden = without_install(work)
     # C++/CLI builds use the pinned MSVC; the production .csproj receives it as QuireMsvcInstallDir.
-    if vcxproj or any(p.suffix.lower() == '.vcxproj' for project in projects for p in (root / 'src' / project).rglob('*')):
+    if vcxproj or builds_cppcli(root, projects):
         env['QuireMsvcInstallDir'] = f'{msvc_instance()}{os.sep}'
     if vcxproj:
         # OutDir/IntDir keep outputs out of the tree; MethodAudit then requires <project>.dll there (the TargetName).

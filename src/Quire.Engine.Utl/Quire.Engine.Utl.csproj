@@ -1,6 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <UseIJWHost>true</UseIJWHost>
   </PropertyGroup>
   <Import Project="Generated\Mirror.props" />
+
+  <!-- Release replaces this C# output with the C++/CLI DLL, so the build must use the pinned MSVC that built utl-mgd.dll (D19). -->
+  <Target Name="RequirePinnedMsvcForMixedModeRelease" BeforeTargets="Build"
+          Condition="'$(Configuration)' == 'Release'">
+    <Error Condition="'$(QuireMsvcInstallDir)' == ''"
+           Text="Quire.Engine.Utl Release needs QuireMsvcInstallDir set to the MSVC 19.51.36246 Build Tools instance (D19)." />
+  </Target>
+
+  <Target Name="BuildMixedModeRelease" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <Exec Command="&quot;$(QuireMsvcInstallDir)MSBuild\Current\Bin\amd64\MSBuild.exe&quot; &quot;$(MSBuildProjectDirectory)\MixedMode\Quire.Engine.Utl.vcxproj&quot; /m /p:Configuration=Release /p:Platform=x64 /p:UtlAssemblyOutDir=&quot;$(TargetDir.TrimEnd('\'))&quot; /v:minimal" />
+    <!-- The mixed DLL cannot use the portable PDB emitted by the preceding C# reference build. -->
+    <Delete Files="$(TargetDir)Quire.Engine.Utl.pdb" />
+  </Target>
 </Project>

@@ -3,7 +3,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
-from release_il import (LINKER_PRODUCT, MSVC_BUILD, compare, msvc_mismatch, ordinalless, reads_install,
+from release_il import (LINKER_PRODUCT, MSVC_BUILD, builds_cppcli, compare, msvc_mismatch, ordinalless, reads_install,
                         section_names, without_install)
 
 
@@ -181,6 +181,25 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
             (root / 'src' / 'P' / 'X.Targets').write_text('$(MATHCAD_DIR)')
             (root / 'Directory.Build.props').write_text('$(MathcadInstallDir)')
             self.assertEqual(reads_install(root, ['P']), [str(Path('Directory.Build.props')), str(Path('src/P/X.Targets'))])
+
+    def test_dependents_of_a_cppcli_project_build_with_the_pinned_msvc(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            for name in ('Utl', 'Engine', 'Mcd', 'Plain', 'A', 'B'):
+                (root / 'src' / name / 'Generated').mkdir(parents=True)
+                (root / 'src' / name / f'{name}.csproj').write_text('<Project />')
+            (root / 'src' / 'Utl' / 'MixedMode').mkdir()
+            (root / 'src' / 'Utl' / 'MixedMode' / 'Utl.vcxproj').write_text('<Project />')
+            (root / 'src' / 'Engine' / 'Generated' / 'Mirror.props').write_text(
+                r'<ProjectReference Include="..\Utl\Utl.csproj" />')
+            self.assertTrue(builds_cppcli(root, ['Utl']))
+            self.assertTrue(builds_cppcli(root, ['Engine']))
+            (root / 'src' / 'Mcd' / 'Mcd.csproj').write_text(r"<ProjectReference Condition='x' Include='..\Engine\Engine.csproj' />")
+            self.assertTrue(builds_cppcli(root, ['Mcd']))
+            (root / 'src' / 'A' / 'A.csproj').write_text(r'<ProjectReference Include="..\B\B.csproj" />')
+            (root / 'src' / 'B' / 'B.csproj').write_text(r'<ProjectReference Include="..\A\A.csproj" />')
+            self.assertFalse(builds_cppcli(root, ['A']))
+            self.assertFalse(builds_cppcli(root, ['Plain']))
 
     def test_mixed_mode_dll_must_come_from_the_pinned_msvc(self):
         def image(entries, key=0x1234ABCD):

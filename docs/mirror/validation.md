@@ -41,9 +41,10 @@ Install it side by side from the 18.6.2 fixed-version Build Tools bootstrapper o
 2026 release history page, never update that instance, and check that its `cl.exe` reports
 `19.51.36246`. Its toolset folder is still named `14.51.36231`, so the folder name does not identify
 the build. The gate finds the instance through `vswhere` by compiler build, not `-latest`. It uses
-that instance's MSBuild, gives builds of projects containing a `.vcxproj` its path as the
-`QuireMsvcInstallDir` environment property, and fails a DLL whose Rich header shows another linker
-build or a newer tool build. MethodAudit reads the Mathcad install; builds never do: every build
+that instance's MSBuild, gives builds of projects that contain a `.vcxproj` or reference a project
+that does its path as the `QuireMsvcInstallDir` environment property, and fails a DLL whose Rich
+header shows another linker build or a newer tool build. Gates for Utl's dependents (Engine, Mcd,
+Efi, Engine.Native) therefore need the pinned instance too. MethodAudit reads the Mathcad install; builds never do: every build
 runs without `MATHCAD_DIR` and with `MathcadInstallDir` pointing at an empty path
 ([D19](decisions.md)). A missing prerequisite fails the run. The path must be inside the
 repository. Release is selected by configuration name; the DebuggableAttribute Debug check is not
