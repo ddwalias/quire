@@ -16,8 +16,6 @@ public partial class FunctionalityServiceWrapper
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Wpf.WeakMultiCastDelegate<global::System.EventHandler> _functionalityServiceLicenseTypeChanged;
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler FunctionalityServiceLicenseTypeChanged;
-    [global::Quire.Mirror.MirrorStub]
     private FunctionalityServiceWrapper() { }
     [global::Quire.Mirror.MirrorStub]
     private void OnLicenseTypeChanged(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
