@@ -7,7 +7,49 @@ namespace Quire.Win32;
 public static partial class User32
 {
     [System.Runtime.InteropServices.DllImport("user32.dll", SetLastError = true)]
+    public static extern int SendInput(int nInputs, ref INPUT mi, int cbSize);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll", SetLastError = true)]
     public static extern bool GetCursorPos(ref POINT pt);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+    public static extern int MapVirtualKey(int nVirtKey, int nMapType);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+    public static extern int GetAsyncKeyState(int nVirtKey);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+    public static extern int GetKeyState(int nVirtKey);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto, ExactSpelling = true)]
+    internal static extern int GetKeyboardState(byte[] keystate);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto, EntryPoint = "keybd_event", ExactSpelling = true)]
+    internal static extern void Keybd_event(byte vk, byte scan, int flags, int extrainfo);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto, ExactSpelling = true)]
+    internal static extern int SetKeyboardState(byte[] keystate);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+    public static extern nint SendMessage(HWND hWnd, int nMsg, nint wParam, nint lParam);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+    public static extern nint SendMessage(HWND hWnd, int nMsg, nint wParam, System.Text.StringBuilder lParam);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll")]
+    public static extern int GetSystemMetrics(int metric);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
+    public static extern int GetWindowLong(HWND hWnd, int nIndex);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll")]
+    public static extern uint GetDoubleClickTime();
+
+    [System.Runtime.InteropServices.DllImport("user32.dll")]
+    public static extern nint GetSystemMenu(nint hWnd, bool bRevert);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll")]
+    public static extern bool DeleteMenu(nint hMenu, uint uPosition, uint uFlags);
 
     partial struct HWND
     {

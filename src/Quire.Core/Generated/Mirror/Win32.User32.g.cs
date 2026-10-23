@@ -75,34 +75,6 @@ public static partial class User32
     public const uint SC_MINIMIZE = 61472u;
     [global::Quire.Mirror.MirrorStub]
     public const uint SC_MAXIMIZE = 61488u;
-    [global::Quire.Mirror.MirrorStub]
-    public static int SendInput(int nInputs, ref global::Quire.Win32.User32.INPUT mi, int cbSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int MapVirtualKey(int nVirtKey, int nMapType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int GetAsyncKeyState(int nVirtKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int GetKeyState(int nVirtKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static int GetKeyboardState(byte[] keystate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static void Keybd_event(byte vk, byte scan, int flags, int extrainfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static int SetKeyboardState(byte[] keystate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static nint SendMessage(global::Quire.Win32.User32.HWND hWnd, int nMsg, nint wParam, nint lParam) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static nint SendMessage(global::Quire.Win32.User32.HWND hWnd, int nMsg, nint wParam, global::System.Text.StringBuilder lParam) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int GetSystemMetrics(int metric) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int GetWindowLong(global::Quire.Win32.User32.HWND hWnd, int nIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static uint GetDoubleClickTime() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static nint GetSystemMenu(nint hWnd, bool bRevert) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool DeleteMenu(nint hMenu, uint uPosition, uint uFlags) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Win32.User32+INPUT, Ptc.Core")]
     public partial struct INPUT
