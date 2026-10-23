@@ -121,13 +121,15 @@ def compare(before, after, types=(), methods=()):
         if m.get('original') is None and '<' in m['id']:
             renumbered.setdefault(ordinalless(m['id']), []).append(m)
     # A type moved to another project (D2 routing) is the same member there; it keeps its obligations.
-    moved = {(m['type'], m['signature']): m for k, m in old.items() if k not in new}
+    # Signatures name the Quire assembly of each type ([Quire.Engine.Utl]...), which a move changes.
+    place = lambda m: (m['type'], re.sub(r'\[Quire(\.[\w.]+)?\]', '[Quire]', m['signature']))
+    moved = {place(m): m for k, m in old.items() if k not in new}
     failures, checked = [], []
     for key, row in new.items():
         previous = old.get(key)
-        origin = moved.get((row['type'], row['signature']))
+        origin = moved.get(place(row))
         if previous is None and origin and origin.get('project') != row.get('project'):
-            previous = moved.pop((row['type'], row['signature']))
+            previous = moved.pop(place(row))
         if previous is None and row.get('original') is None and '<' in key:
             same = [m for m in renumbered.get(ordinalless(key), []) if m.get('body_sha256') == row.get('body_sha256')]
             previous = same[0] if same else None  # identical bodies: any of them is the same member
@@ -159,7 +161,7 @@ def compare(before, after, types=(), methods=()):
             failures.append({'method': key, 'reason': reason})
     for key in old.keys() - new.keys():
         # Moved to another project (popped above): its new row was checked there.
-        if (old[key]['type'], old[key]['signature']) not in moved:
+        if place(old[key]) not in moved:
             continue
         # Renumbered compiler-generated members Mathcad never had; their replacements are new rows checked above.
         if old[key].get('original') is None and '<' in old[key]['type'] + old[key]['signature']:

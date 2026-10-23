@@ -192,6 +192,10 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         self.assertTrue(compare(inventory(row('Utl', exact=False, stub_body=True)),
                                 inventory(row('Misc', exact=False, stub_body=True)))['passed'])
         self.assertFalse(compare(inventory(row('Utl')), inventory())['passed'])
+        # Signatures name the declaring Quire assembly, which the move changes.
+        utl = dict(row('Utl'), signature='M`0()->[Quire.Engine.Utl]T|True')
+        misc = dict(row('Misc'), signature='M`0()->[Quire.Engine.Misc]T|True')
+        self.assertTrue(compare(inventory(utl), inventory(misc))['passed'])
 
     def test_matching_declaration_needs_no_body(self):
         row = method(exact=None)
