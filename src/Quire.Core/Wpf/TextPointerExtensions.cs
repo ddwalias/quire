@@ -4,6 +4,17 @@ namespace Quire.Wpf;
 
 public static partial class TextPointerExtensions
 {
+    public static Hyperlink GetHyperlinkAdjacentToTextPointer(this TextPointer textPtr, out LogicalDirection direction)
+    {
+        direction = textPtr.LogicalDirection;
+        if (textPtr.GetAdjacentElement(direction) is Hyperlink hyperlink)
+        {
+            return hyperlink;
+        }
+        direction = direction == LogicalDirection.Forward ? LogicalDirection.Backward : LogicalDirection.Forward;
+        return textPtr.GetAdjacentElement(direction) as Hyperlink;
+    }
+
     public static TextPointer GetPositionAtCharsOffset(this TextPointer startPointer, int skipNChars)
     {
         TextPointer textPointer = startPointer?.GetPositionAtOffset(0);
