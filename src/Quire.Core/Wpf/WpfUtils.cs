@@ -48,6 +48,21 @@ public static partial class WpfUtils
         return child.TryFindVisualAncestorLimited<T1, T2>(includeLogical);
     }
 
+    public static bool? IsVisibleValid(DependencyObject depObj)
+    {
+        switch (depObj)
+        {
+            case FrameworkElement frameworkElement:
+                return !frameworkElement.IsVisible || (frameworkElement.IsMeasureValid && frameworkElement.IsArrangeValid);
+            case FrameworkContentElement:
+                return true;
+            case IFrameworkInputElement frameworkInputElement:
+                DebugTools.FailAssertion(frameworkInputElement.GetType().Name);
+                break;
+        }
+        return null;
+    }
+
     public static bool? IsLoaded(DependencyObject depObj)
     {
         switch (depObj)
