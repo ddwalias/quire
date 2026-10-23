@@ -86,8 +86,6 @@ public static partial class XmlWorksheetData
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.PersistentDataObjects.propertiesTypeSerializationVersionArchitecture Architecture;
     [global::Quire.Mirror.MirrorStub]
-    public static string Stream { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public static string BuildId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static string VersionName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

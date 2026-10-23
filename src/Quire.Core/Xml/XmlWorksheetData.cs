@@ -9,6 +9,20 @@ namespace Quire.Xml;
 public static partial class XmlWorksheetData
 {
     [MirrorVerified("Release IL")]
+    public static string Stream
+    {
+        get
+        {
+            if (_stream == null)
+            {
+                Quire.AssemblyStreamAttribute assemblyStreamAttribute = System.Attribute.GetCustomAttribute(System.Reflection.Assembly.GetExecutingAssembly(), typeof(Quire.AssemblyStreamAttribute)) as Quire.AssemblyStreamAttribute;
+                _stream = assemblyStreamAttribute != null && assemblyStreamAttribute.Stream != null ? assemblyStreamAttribute.Stream : "Not Specified";
+            }
+            return _stream;
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     public static XmlNamespaceManager createMathcad14NamespaceManager(XmlDocument xmlDocument)
     {
         xmlDocument ??= new XmlDocument();
