@@ -22,8 +22,6 @@ public partial class WpfClipboard : global::Quire.IClipboard
     [global::Quire.Mirror.MirrorStub]
     public void SetText(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void SafeClipboardAction(global::System.Action clipboardAction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void SetDataObjectToClipboard(global::System.Windows.IDataObject dataObject, bool copy = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool CopyPrimeXamlToDataObject(global::System.Windows.IDataObject dataObject, object item, int itemsCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
