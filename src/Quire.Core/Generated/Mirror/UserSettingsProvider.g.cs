@@ -34,8 +34,6 @@ public partial class UserSettingsProvider : global::System.Configuration.Setting
     [global::Quire.Mirror.MirrorStub]
     public void Reset(global::System.Configuration.SettingsContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.UserSettingsProvider.GetSectionStatusEnum GetSection(global::System.Configuration.SettingsContext context, out global::System.Configuration.ClientSettingsSection section, out global::System.Configuration.Configuration origConfig, out global::System.Configuration.Configuration modifiedConfig) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ObtainConfigFiles(global::System.Configuration.ExeConfigurationFileMap FileMap, out global::System.Configuration.Configuration modifiedConfig) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void CopyPrevUserConfig(global::System.Version version) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

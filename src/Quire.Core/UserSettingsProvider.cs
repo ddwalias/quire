@@ -64,6 +64,33 @@ public partial class UserSettingsProvider
         return false;
     }
 
+    protected GetSectionStatusEnum GetSection(SettingsContext context, out ClientSettingsSection section, out Configuration origConfig, out Configuration modifiedConfig)
+    {
+        GetSectionStatusEnum result = GetSectionStatusEnum.NoSection;
+        section = null;
+        origConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+        ExeConfigurationFileMap exeConfigurationFileMap = new ExeConfigurationFileMap();
+        ConfigFolderName = global::Quire.Services.ApplicationVariant.IsEngNbPlus == true ? LocalConfigFolderName : CommonConfigFolderName;
+        exeConfigurationFileMap.ExeConfigFilename = Path.Combine(ConfigFolderName, ConfigFilenameFromApplicationConfigPath(origConfig.FilePath));
+        ObtainConfigFiles(exeConfigurationFileMap, out modifiedConfig);
+        string sectionName = GetSectionName("userSettings", context);
+        if (modifiedConfig != null)
+        {
+            section = modifiedConfig.GetSection(sectionName) as ClientSettingsSection;
+            result = GetSectionStatusEnum.ModifiedSection;
+        }
+        if (section == null)
+        {
+            section = origConfig.GetSection(sectionName) as ClientSettingsSection;
+            result = GetSectionStatusEnum.OriginalSection;
+        }
+        if (section == null)
+        {
+            result = GetSectionStatusEnum.NoSection;
+        }
+        return result;
+    }
+
     [MirrorVerified("Release IL")]
     internal static string ConfigFilenameFromApplicationConfigPath(string applicationConfigPath) => Path.GetFileNameWithoutExtension(applicationConfigPath) + ".V7" + Path.GetExtension(applicationConfigPath);
 
