@@ -6,6 +6,39 @@ namespace Quire.Wpf;
 
 public static partial class ColorUtilities
 {
+    public static List<List<Color>> GetColorsTable()
+    {
+        List<List<Color>> list = new List<List<Color>>();
+        List<Color> extendedBaseColorTable = GetExtendedBaseColorTable();
+        list.Add(extendedBaseColorTable);
+        Color[] array = grayScaleColors;
+        foreach (Color shadeColor in array)
+        {
+            List<Color> shadesList = GetShadesList(extendedBaseColorTable, shadeColor);
+            list.Add(shadesList);
+        }
+        return list;
+    }
+
+    public static List<Color> DistributeColors(List<List<Color>> colorsTable)
+    {
+        int count = colorsTable.Count;
+        int count2 = colorsTable[0].Count;
+        List<Color> list = new List<Color>(count2 * count);
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = i; j < 6; j++)
+            {
+                for (int k = 0; k < count; k++)
+                {
+                    int num = k * count2 / count;
+                    list.Add(colorsTable[k][(i + num + j * 4) % count2]);
+                }
+            }
+        }
+        return list;
+    }
+
     public static List<Color> GetExtendedBaseColorTable()
     {
         List<Color> list = new List<Color>(baseColors.Length * 4);
