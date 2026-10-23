@@ -134,6 +134,13 @@ public partial class TextStyleBase
         return clone;
     }
 
+    protected Style CloneStyleAndSetters(Style style)
+    {
+        Style clone = new Style(style.TargetType, style.BasedOn);
+        CloneSetters(style.Setters, clone);
+        return clone;
+    }
+
     public void SetSetterValue(string propertyName, object value)
     {
         if (value == null)
