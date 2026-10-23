@@ -24,6 +24,24 @@ public partial class WeakMultiCastDelegate<TDelegate> where TDelegate : class
         }
     }
 
+    public void Remove(TDelegate tDelegate)
+    {
+        if (tDelegate == null)
+        {
+            return;
+        }
+        System.Delegate[] invocationList = (tDelegate as System.Delegate).GetInvocationList();
+        foreach (System.Delegate obj in invocationList)
+        {
+            System.Delegate thisDelegate = obj;
+            WeakDelegate weakDelegate = _weakDelegates.Find((WeakDelegate item) => item != null && item.Equal(thisDelegate));
+            if (weakDelegate != null)
+            {
+                _weakDelegates.Remove(weakDelegate);
+            }
+        }
+    }
+
     [MirrorVerified("Release IL")]
     public void Invoke(object[] arguments)
     {
