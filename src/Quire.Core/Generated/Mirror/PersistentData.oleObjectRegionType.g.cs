@@ -11,6 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.oleObjectRegionType, Ptc.Core")]
 public partial class oleObjectRegionType : global::Quire.PersistentData.oleBaseContainerType, global::Quire.PersistentData.IOleObjectPersistentData, global::Quire.PersistentData.IOleSizeData
 {
-    [global::Quire.Mirror.MirrorStub]
-    public oleObjectRegionType(global::Quire.PersistentData.IOleSizeData sizeData) : this() { }
 }
