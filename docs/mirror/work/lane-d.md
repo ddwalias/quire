@@ -36,6 +36,6 @@
 
 ## Remaining
 
-- Plain `dotnet build -c Release` and Release tests fail without `QuireMsvcInstallDir` (pre-existing `RequirePinnedMsvcForMixedModeRelease` error). Proposed: csproj discovers the pinned instance through vswhere and checks `cl.exe` build 19.51.36246. Needs maintainer approval (validation.md contract).
+- `QuireMsvcInstallDir` defaults to `C:\BuildTools\VS18.6-msvc\` in the csproj when unset (the maintainer's choice, machine-specific; the gate's vswhere value still overrides it). Plain Release builds work on this machine. Other machines must set the variable or change the default.
 - Release-configuration test pass in CI: maintainer decision (now or follow-up).
 - `/t:Rebuild` recompiles UtlPort.cpp on every Release build. Accepted cost for a correct DLL.

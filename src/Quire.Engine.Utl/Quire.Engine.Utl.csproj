@@ -6,6 +6,11 @@
   </PropertyGroup>
   <Import Project="Generated\Mirror.props" />
 
+  <!-- The pinned MSVC 19.51.36246 Build Tools instance (D19). The release gate sets this from vswhere and overrides it. -->
+  <PropertyGroup>
+    <QuireMsvcInstallDir Condition="'$(QuireMsvcInstallDir)' == ''">C:\BuildTools\VS18.6-msvc\</QuireMsvcInstallDir>
+  </PropertyGroup>
+
   <!-- Release replaces this C# output with the C++/CLI DLL, so the build must use the pinned MSVC that built utl-mgd.dll (D19). -->
   <Target Name="RequirePinnedMsvcForMixedModeRelease" BeforeTargets="Build"
           Condition="'$(Configuration)' == 'Release'">
