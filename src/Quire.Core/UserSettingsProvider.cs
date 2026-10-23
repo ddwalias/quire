@@ -1,4 +1,5 @@
 #nullable disable
+using System;
 using System.Configuration;
 using System.Configuration;
 using System.IO;
@@ -33,6 +34,35 @@ public partial class UserSettingsProvider
 
     [MirrorVerified("Release IL")]
     private bool IsUserScoped(SettingsProperty prop) => HasSettingScope(prop, typeof(UserScopedSettingAttribute));
+
+    private bool HasSettingScope(SettingsProperty prop, Type attributeType)
+    {
+        bool result = prop.Attributes[typeof(SettingsManageabilityAttribute)] != null;
+        bool flag = prop.Attributes[typeof(ApplicationScopedSettingAttribute)] != null;
+        bool flag2 = prop.Attributes[typeof(UserScopedSettingAttribute)] != null;
+        if (flag2 & flag)
+        {
+            DebugTools.FailAssertion((string)null);
+        }
+        else if (!flag2 && !flag)
+        {
+            DebugTools.FailAssertion((string)null);
+        }
+        if (attributeType == typeof(ApplicationScopedSettingAttribute))
+        {
+            return flag;
+        }
+        if (attributeType == typeof(UserScopedSettingAttribute))
+        {
+            return flag2;
+        }
+        if (attributeType == typeof(SettingsManageabilityAttribute))
+        {
+            return result;
+        }
+        DebugTools.FailAssertion((string)null);
+        return false;
+    }
 
     [MirrorVerified("Release IL")]
     internal static string ConfigFilenameFromApplicationConfigPath(string applicationConfigPath) => Path.GetFileNameWithoutExtension(applicationConfigPath) + ".V7" + Path.GetExtension(applicationConfigPath);

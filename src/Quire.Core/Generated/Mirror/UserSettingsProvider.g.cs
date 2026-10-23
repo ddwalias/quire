@@ -32,8 +32,6 @@ public partial class UserSettingsProvider : global::System.Configuration.Setting
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Configuration.SettingsPropertyValueCollection GetPropertyValues(global::System.Configuration.SettingsContext context, global::System.Configuration.SettingsPropertyCollection props) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private bool HasSettingScope(global::System.Configuration.SettingsProperty prop, global::System.Type attributeType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Reset(global::System.Configuration.SettingsContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.UserSettingsProvider.GetSectionStatusEnum GetSection(global::System.Configuration.SettingsContext context, out global::System.Configuration.ClientSettingsSection section, out global::System.Configuration.Configuration origConfig, out global::System.Configuration.Configuration modifiedConfig) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
