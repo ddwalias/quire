@@ -18,4 +18,12 @@ public partial class FunctionalityServiceWrapper
         add => _functionalityServiceLicenseTypeChanged.Combine(value);
         remove => _functionalityServiceLicenseTypeChanged.Remove(value);
     }
+
+    private void FireFunctionalityServiceLicenseTypeChanged(EventArgs args)
+    {
+        if (_functionalityServiceLicenseTypeChanged != null)
+        {
+            _functionalityServiceLicenseTypeChanged.Invoke(new object[2] { this, args });
+        }
+    }
 }

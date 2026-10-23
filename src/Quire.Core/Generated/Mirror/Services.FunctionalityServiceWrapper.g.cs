@@ -20,7 +20,5 @@ public partial class FunctionalityServiceWrapper
     [global::Quire.Mirror.MirrorStub]
     private void OnLicenseTypeChanged(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void FireFunctionalityServiceLicenseTypeChanged(global::System.EventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey GetFunctionalityBehaviorKey(global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey functionality) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
