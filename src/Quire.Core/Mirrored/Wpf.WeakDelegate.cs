@@ -6,6 +6,17 @@ namespace Quire.Wpf;
 
 partial class WeakDelegate
 {
+    [MirrorVerified("Release IL")]
+    public WeakDelegate(System.Delegate realDelegate)
+    {
+        if (realDelegate == null || realDelegate.Method == null)
+        {
+            throw new System.ArgumentNullException("realDelegate");
+        }
+        _weakReference = realDelegate.Target == null ? null : new System.WeakReference(realDelegate.Target);
+        _method = realDelegate.Method;
+    }
+
     public bool IsWeakReferenceAlive { get => _weakReference == null || _weakReference.Target != null; }
 
     [MirrorVerified("Release IL")]
