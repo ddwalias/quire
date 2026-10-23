@@ -25,4 +25,29 @@ public partial class headersContainerRegionCollectionSerializer
         }
         return _xmlSerializerDefault ?? (_xmlSerializerDefault = worksheetRegionType.CreateDefaultSerializer(typeof(cachedWorksheetRegionType.headersContainer), RootNodeName));
     }
+
+    [MirrorVerified("Release IL")]
+    public void Deserialize(System.Xml.XmlElement regionCollectionXml, bool useOverrides)
+    {
+        using (var reader = new System.Xml.XmlNodeReader(regionCollectionXml))
+        {
+            var container = GetXmlSerializer(useOverrides).Deserialize(reader) as cachedWorksheetRegionType.headersContainer;
+            if (container != null)
+            {
+                _containerWrapper = new headersContainerWrapper();
+                if (container.header != null)
+                {
+                    var header = new header();
+                    header.regions = container.header.regions;
+                    _containerWrapper.Header = header;
+                }
+                if (container.firstPageHeader != null)
+                {
+                    var header = new header();
+                    header.regions = container.firstPageHeader.regions;
+                    _containerWrapper.FirstPageHeader = header;
+                }
+            }
+        }
+    }
 }

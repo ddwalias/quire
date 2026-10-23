@@ -19,6 +19,4 @@ public partial class headersContainerRegionCollectionSerializer : global::Quire.
     private static global::System.Xml.Serialization.XmlSerializer _xmlSerializerDefault;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlElement Serialize(global::System.Xml.XmlDocument xmlContentDocument, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Deserialize(global::System.Xml.XmlElement regionCollectionXml, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
