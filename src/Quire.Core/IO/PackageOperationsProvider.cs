@@ -7,6 +7,21 @@ namespace Quire.IO;
 
 public partial class PackageOperationsProvider
 {
+    private readonly string[] _compressedTypes = new string[9]
+    {
+        "application/vnd.openxmlformats-officedocument.oleObject",
+        "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.integration+xml",
+        "application/mathcad.extended-properties+xml",
+        "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.settings.calculation+xml",
+        "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.settings.presentation+xml",
+        "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.result+xml",
+        "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.main+xml",
+        "application/vnd.openxmlformats-package.core-properties+xml",
+        "application/octet-stream"
+    };
+
+    private PackageOperationsProvider() { }
+
     [MirrorVerified("Release IL")]
     public static IPackageOperationsProvider Instance = new PackageOperationsProvider();
 

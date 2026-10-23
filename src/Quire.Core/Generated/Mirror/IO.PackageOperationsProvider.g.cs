@@ -53,8 +53,4 @@ public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperat
     public const string ResultType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.result+xml";
     [global::Quire.Mirror.MirrorStub]
     private const string ImageTypePrefix = "image/";
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string[] _compressedTypes;
-    [global::Quire.Mirror.MirrorStub]
-    private PackageOperationsProvider() { }
 }
