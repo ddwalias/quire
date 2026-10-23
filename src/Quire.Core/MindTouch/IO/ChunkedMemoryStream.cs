@@ -16,6 +16,43 @@ public partial class ChunkedMemoryStream
         _publiclyVisible = true;
     }
 
+    public ChunkedMemoryStream(byte[] buffer, bool writable)
+    {
+        if (buffer == null)
+        {
+            throw new ArgumentNullException("buffer");
+        }
+        _buffer = buffer;
+        _bufferIndex = 0;
+        _bufferCount = buffer.Length;
+        _length = _bufferCount;
+        _fixed = true;
+        _readonly = !writable;
+    }
+
+    public ChunkedMemoryStream(byte[] buffer, int index, int count, bool writable, bool publiclyVisible)
+    {
+        if (buffer == null)
+        {
+            throw new ArgumentNullException("buffer");
+        }
+        if (index < 0 || index >= buffer.Length)
+        {
+            throw new ArgumentOutOfRangeException("index");
+        }
+        if (count < 0 || index >= buffer.Length - count)
+        {
+            throw new ArgumentOutOfRangeException("count");
+        }
+        _buffer = buffer;
+        _bufferIndex = index;
+        _bufferCount = count;
+        _length = _bufferCount - _bufferIndex;
+        _fixed = true;
+        _readonly = !writable;
+        _publiclyVisible = publiclyVisible;
+    }
+
     protected override void Dispose(bool disposing)
     {
         try
