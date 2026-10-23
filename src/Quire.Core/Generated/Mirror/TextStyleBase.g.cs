@@ -30,8 +30,6 @@ public abstract partial class TextStyleBase : global::Quire.ITextStyle, global::
     [global::Quire.Mirror.MirrorStub]
     protected TextStyleBase(global::Quire.Core.TextFormat textFormat, bool reset = false) { }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.Dictionary<string, global::Quire.TextStylePropertyInfoExt> GetSetters(global::System.Windows.Style textStyle, global::System.Collections.Generic.Dictionary<string, global::Quire.TextStylePropertyInfoExt> setterCollection, bool isInherited = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void UpdateBasedOn(global::Quire.ITextStyle basedOn, global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> stylesCollection, bool isFixInHeritage = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void UpdateMemberValue(string propertyName, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

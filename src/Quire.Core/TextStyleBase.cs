@@ -134,6 +134,24 @@ public partial class TextStyleBase
         return clone;
     }
 
+    public Dictionary<string, TextStylePropertyInfoExt> GetSetters(Style textStyle, Dictionary<string, TextStylePropertyInfoExt> setterCollection, bool isInherited = false)
+    {
+        if (textStyle.BasedOn != null)
+        {
+            GetSetters(textStyle.BasedOn, setterCollection, isInherited: true);
+        }
+        foreach (Setter setter in textStyle.Setters.OfType<Setter>())
+        {
+            object value = setter.Value;
+            if (setter.Property.Name == "FontSize")
+            {
+                value = Math.Round(Quire.Wpf.WpfUtils.DipsToPoints((double)value), 1);
+            }
+            setterCollection[setter.Property.Name] = new TextStylePropertyInfoExt(isInherited, value);
+        }
+        return setterCollection;
+    }
+
     protected Style CloneStyleAndSetters(Style style)
     {
         Style clone = new Style(style.TargetType, style.BasedOn);
