@@ -16,8 +16,6 @@ public static partial class EnumerableExtensions
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<int> Range(this int start, int end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static TSource MaxBy<TSource, TKey>(this global::System.Collections.Generic.IEnumerable<TSource> source, global::System.Func<TSource, TKey> selector, global::System.Collections.Generic.IComparer<TKey> comparer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static TSource MinBy<TSource, TKey>(this global::System.Collections.Generic.IEnumerable<TSource> source, global::System.Func<TSource, TKey> selector, global::System.Collections.Generic.IComparer<TKey> comparer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<T> Yield<T>(this T item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
