@@ -46,6 +46,16 @@ public partial class worksheetRegionType
         return null;
     }
 
+    public static worksheetRegionType Deserialize(System.Xml.XmlElement xmlRoot, bool useOverrides)
+    {
+        object obj;
+        using (System.Xml.XmlNodeReader xmlReader = new System.Xml.XmlNodeReader(xmlRoot))
+        {
+            obj = GetXmlSerializer(useOverrides).Deserialize(xmlReader);
+        }
+        return obj as worksheetRegionType;
+    }
+
     [MirrorVerified("PtcPersistentDataObjectsWorksheetRegionTypeSerializerMechanicalDifferentialTests")]
     public static XmlSerializer CreateDefaultSerializer(Type typeOfRoot, string rootNodeName)
     {

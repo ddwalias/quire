@@ -21,6 +21,4 @@ public partial class worksheetRegionType : global::Quire.PersistentDataObjects.r
     public const string RootAttributeName = "region";
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.Serialization.XmlSerializer CreateSerializerWithOverrides(global::System.Type typeOfRoot, string rootNodeName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.PersistentDataObjects.worksheetRegionType Deserialize(global::System.Xml.XmlElement xmlRoot, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
