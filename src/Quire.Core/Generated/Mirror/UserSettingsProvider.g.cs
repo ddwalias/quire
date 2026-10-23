@@ -28,8 +28,6 @@ public partial class UserSettingsProvider : global::System.Configuration.Setting
     [global::Quire.Mirror.MirrorStub]
     public override void SetPropertyValues(global::System.Configuration.SettingsContext context, global::System.Configuration.SettingsPropertyValueCollection propvals) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public override global::System.Configuration.SettingsPropertyValueCollection GetPropertyValues(global::System.Configuration.SettingsContext context, global::System.Configuration.SettingsPropertyCollection props) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ObtainConfigFiles(global::System.Configuration.ExeConfigurationFileMap FileMap, out global::System.Configuration.Configuration modifiedConfig) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void CopyPrevUserConfig(global::System.Version version) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

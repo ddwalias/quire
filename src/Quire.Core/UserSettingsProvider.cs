@@ -3,6 +3,7 @@ using System;
 using System.Configuration;
 using System.Configuration;
 using System.IO;
+using System.Xml;
 using Quire.IO;
 using Quire.Mirror;
 using Quire.Mirror;
@@ -109,6 +110,49 @@ public partial class UserSettingsProvider
         {
             new FileInfo(modifiedConfig.FilePath).Delete();
         }
+    }
+
+    public override SettingsPropertyValueCollection GetPropertyValues(SettingsContext context, SettingsPropertyCollection props)
+    {
+        SettingsPropertyValueCollection settingsPropertyValueCollection = new SettingsPropertyValueCollection();
+        if (GetSection(context, out ClientSettingsSection section, out _, out _) == GetSectionStatusEnum.NoSection)
+        {
+            DebugTools.FailAssertion(null, Array.Empty<object>());
+            return settingsPropertyValueCollection;
+        }
+        foreach (SettingsProperty prop in props)
+        {
+            if (!IsUserScoped(prop))
+            {
+                DebugTools.FailAssertion(null, Array.Empty<object>());
+                continue;
+            }
+            SettingsPropertyValue settingsPropertyValue = new SettingsPropertyValue(prop);
+            foreach (SettingElement setting in section.Settings)
+            {
+                if (!(setting.Name != prop.Name))
+                {
+                    XmlNode valueXml = setting.Value.ValueXml;
+                    object serializedValue = null;
+                    switch (setting.SerializeAs)
+                    {
+                        case SettingsSerializeAs.String:
+                            serializedValue = valueXml.InnerText;
+                            break;
+                        case SettingsSerializeAs.Xml:
+                            serializedValue = valueXml.InnerXml;
+                            break;
+                        default:
+                            DebugTools.FailAssertion(setting.SerializeAs.ToString());
+                            break;
+                    }
+                    settingsPropertyValue.SerializedValue = serializedValue;
+                    break;
+                }
+            }
+            settingsPropertyValueCollection.Add(settingsPropertyValue);
+        }
+        return settingsPropertyValueCollection;
     }
 
     [MirrorVerified("Release IL")]
