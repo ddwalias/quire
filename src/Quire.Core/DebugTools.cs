@@ -88,6 +88,17 @@ public static partial class DebugTools
     [MirrorVerified("Release IL")]
     public static AssertionResult AssertNotNull(object objectToCheck, string message = default, params object[] messageArgs) => DevAssert(objectToCheck != null, 1, AssertionModifiers.None, message, messageArgs);
 
+    private static bool NotCalledFromApplicationLogger(StackTrace stackTrace)
+    {
+        IEnumerable<StackFrame> frames = stackTrace.GetFrames();
+        if (frames == null || frames.Count() <= 0)
+        {
+            return true;
+        }
+        Type applicationLoggerType = typeof(global::Quire.Services.IApplicationLogger);
+        return !frames.Any((StackFrame frame) => applicationLoggerType.IsAssignableFrom(frame.GetMethod().DeclaringType));
+    }
+
     [MirrorVerified("Release IL")]
     public static AssertionResult AssertNotNullDoNotThrow(object objectToCheck, string message = default, params object[] messageArgs) => DevAssert(objectToCheck != null, 1, AssertionModifiers.DoNotThrow, message, messageArgs);
 
@@ -159,4 +170,5 @@ public static partial class DebugTools
     {
         DebugVerificationsAllowed = value && (IsDebug || ReplaceAssertionWithException);
     }
+
 }

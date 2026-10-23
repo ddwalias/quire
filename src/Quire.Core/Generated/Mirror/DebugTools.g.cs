@@ -13,8 +13,6 @@ public static partial class DebugTools
 {
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.AssertionResult DevAssert(bool condition, int framesToSkip, global::Quire.DebugTools.AssertionModifiers modifiers, string message = default, params object[] messageArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool NotCalledFromApplicationLogger(global::System.Diagnostics.StackTrace stackTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.DebugTools+AssertionOutput, Ptc.Core")]
     private enum AssertionOutput
