@@ -12,10 +12,6 @@ namespace Quire.Wpf;
 public static partial class StylesExtensions
 {
     [global::Quire.Mirror.MirrorStub]
-    public static bool HasParagraphProps(this global::System.Windows.Style style) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool HasListProps(this global::System.Windows.Style style) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<global::System.Windows.DependencyProperty> GetPropertiesForAnyType(this global::System.Windows.Style style) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<global::System.Windows.DependencyProperty> GetPropertiesForType<OwnerT>(this global::System.Windows.Style style) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
