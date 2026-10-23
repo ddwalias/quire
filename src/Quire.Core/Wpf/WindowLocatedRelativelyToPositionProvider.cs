@@ -8,6 +8,21 @@ public partial class WindowLocatedRelativelyToPositionProvider
     [MirrorVerified("PtcWpfWindowLocatedRelativelyToPositionProviderMechanicalDifferentialTests")]
     public WindowLocatedRelativelyToPositionProvider() { }
 
+    private DpiFactors GetDpiFactor()
+    {
+        global::System.Windows.Media.Matrix transformToDevice = global::System.Windows.PresentationSource.FromVisual(Owner).CompositionTarget.TransformToDevice;
+        double m = transformToDevice.M11;
+        double m2 = transformToDevice.M22;
+        return new DpiFactors(m, m2);
+    }
+
+    private global::System.Windows.Rect GetPositionProviderScreenBounds()
+    {
+        DpiFactors dpiFactor = GetDpiFactor();
+        global::System.Windows.Rect val = new global::System.Windows.Rect(PositionProvider.PointToScreen(new global::System.Windows.Point(0.0, 0.0)), PositionProvider.PointToScreen(new global::System.Windows.Point(PositionProvider.ActualWidth, PositionProvider.ActualHeight)));
+        return new global::System.Windows.Rect(val.X / dpiFactor.DpiFactorX, val.Y / dpiFactor.DpiFactorY, val.Width / dpiFactor.DpiFactorX, val.Height / dpiFactor.DpiFactorY);
+    }
+
     [MirrorVerified("PtcWpfWindowLocatedRelativelyToPositionProviderMechanicalDifferentialTests")]
     protected IPositionProvider PositionProvider { get; set; }
 
