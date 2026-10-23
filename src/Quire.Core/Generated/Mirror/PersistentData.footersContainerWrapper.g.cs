@@ -13,6 +13,4 @@ public partial class footersContainerWrapper : global::Quire.PersistentData.IReg
 {
     [global::Quire.Mirror.MirrorStub]
     public const string RootNodeName = "footers";
-    [global::Quire.Mirror.MirrorStub]
-    public footersContainerWrapper() { }
 }
