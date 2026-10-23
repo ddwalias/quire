@@ -5,6 +5,27 @@ namespace Quire.Wpf;
 
 public partial class WindowLocatedRelativelyToPositionProvider
 {
+    private void SetWindowLocation()
+    {
+        try
+        {
+            if (PositionProvider.IsVisible)
+            {
+                global::System.Windows.Point popupLocation = GetPopupLocation();
+                Left = popupLocation.X;
+                Top = popupLocation.Y;
+            }
+            else
+            {
+                DebugTools.DevAssert(false, "positionProvider is not visible in the application.");
+            }
+        }
+        catch (global::System.Exception ex)
+        {
+            DebugTools.DevAssert(false, "The following exception has been thrown when trying to set the window location:\n" + ex.Message);
+        }
+    }
+
     [MirrorVerified("PtcWpfWindowLocatedRelativelyToPositionProviderMechanicalDifferentialTests")]
     public WindowLocatedRelativelyToPositionProvider() { }
 
