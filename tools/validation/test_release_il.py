@@ -176,6 +176,10 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
             self.assertEqual(reads_install(root, ['P']), [])
             (root / 'src' / 'P' / 'P.vcxproj').write_text(r'<D>C:\Program Files\PTC\Mathcad Prime 12</D>')
             self.assertEqual(reads_install(root, ['P']), [str(Path('src/P/P.vcxproj'))])
+            (root / 'src' / 'P' / 'P.vcxproj').write_text('<Project />')
+            (root / 'src' / 'P' / 'X.Targets').write_text('$(MATHCAD_DIR)')
+            (root / 'Directory.Build.props').write_text('$(MathcadInstallDir)')
+            self.assertEqual(reads_install(root, ['P']), [str(Path('Directory.Build.props')), str(Path('src/P/X.Targets'))])
 
     def test_section_names_reads_the_pe_section_table(self):
         self.assertIn('.text', section_names(sys.executable))

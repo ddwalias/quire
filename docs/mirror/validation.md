@@ -70,12 +70,15 @@ mixed-mode Quire assembly it pairs what the C++/CLI compiler emits as follows:
   declaration they are reported as `native_pairs`; otherwise they are `unsupported` and fail.
 - removing a C# stand-in with no Mathcad counterpart (such as `_tildeSafeMutex`) passes once the
   project is mixed-mode.
-
-The gate fails closed before building when a compared project's `.csproj`, `.vcxproj`, `.props` or
-`.targets` names the install (`MathcadInstallDir`, `MATHCAD_DIR`, `Mathcad Prime`, `\PTC\`), and after
-building when an output DLL has an `.ilnew` section, the mark of IL-patching post-build steps.
 - the D10 `engine_native` exemption applies only to IL-only Quire assemblies; a mixed candidate
   can emit those bodies, so it must match them.
+
+The gate fails closed before building when a compared project's build inputs (`.csproj`,
+`.vcxproj`, `.props`, `.targets`, `.rsp`, C++ sources, and the `Directory.Build.*` files above them)
+name the install (`MathcadInstallDir`, `MATHCAD_DIR`, `Mathcad Prime`, `\PTC\`). That scan is best
+effort; the backstop is after building, when an output DLL with an `.ilnew` section (the mark of
+IL-patching post-build steps) fails. Quire-authored types under `std` or `vc::cppcli` also receive
+the toolset allowance; that is an accepted risk.
 
 Names the compiler derives from the source path (`?A0x<hash>` anonymous namespaces, such as
 `vc.cppcli.attributes.?A0x….CppInlineNamespaceAttribute` and `__clr_placement_new_t`) differ between

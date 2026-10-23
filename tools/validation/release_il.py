@@ -212,11 +212,20 @@ def without_install(work, environ=os.environ):
 INSTALL_REFERENCE = re.compile(r'MathcadInstallDir|MATHCAD_DIR|Mathcad Prime|\\PTC\\', re.IGNORECASE)
 
 
+BUILD_INPUTS = ('.csproj', '.vcxproj', '.props', '.targets', '.rsp', '.cpp', '.h', '.hpp')
+
+
 def reads_install(root, projects, vcxproj=None):
-    """D19: build files of the compared projects that name the Mathcad install."""
-    files = [p for project in projects for p in (root / 'src' / project).rglob('*')
-             if p.suffix in ('.csproj', '.vcxproj', '.props', '.targets') and not {'bin', 'obj'} & set(p.parts)]
-    return sorted(str(p.relative_to(root)) for p in files + ([vcxproj] if vcxproj else [])
+    """D19: build inputs of the compared projects (and the Directory.Build files MSBuild imports) that name the
+    Mathcad install. Best effort; the .ilnew check after the build is the backstop."""
+    dirs = [root / 'src' / project for project in projects] + ([vcxproj.parent] if vcxproj else [])
+    files = {p for d in dirs if d.is_dir() for p in d.rglob('*')
+             if p.is_file() and p.suffix.lower() in BUILD_INPUTS
+             and not {'bin', 'obj'} & set(p.relative_to(root).parts)}
+    for d in dirs:
+        for parent in [d, *d.relative_to(root).parents]:
+            files |= {f for f in (root / parent).glob('Directory.Build.*') if f.is_file()}
+    return sorted(str(p.relative_to(root)) for p in files
                   if INSTALL_REFERENCE.search(p.read_text(encoding='utf-8', errors='replace')))
 
 

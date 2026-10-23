@@ -280,11 +280,12 @@ StructureReader Reader(Artifact a, bool isQuire) => structures.TryGetValue(a, ou
 var bodies = quire.ToDictionary(a => a, a => new StructureReader(a.Metadata, a.Pe, new SigProvider(a.Name), name => name, _ => null, exact: true, root: repo));
 // D19: an unpaired mixed-mode member whose bound Mathcad assembly has a member of the same owner, name and arity is a
 // pairing miss, not compiler support Mathcad's build lacked.
-bool OriginalNameTaken(Artifact artifact, RawMethod raw, TypeModel? type, Artifact? original, RawMethod? counterpart)
+// Null when there is no single Mathcad assembly to look in, so the gate fails closed.
+bool? OriginalNameTaken(Artifact artifact, RawMethod raw, TypeModel? type, Artifact? original, RawMethod? counterpart)
 {
     if (artifact.IlOnly || counterpart != null) return false;
     var mixed = original ?? ModuleOriginal(artifact);
-    if (mixed == null) return false;
+    if (mixed == null) return null;
     string owner = type != null && typeNames.TryGetValue((artifact.Name, type.FullName), out var fields) ? fields[0].Trim() : raw.Owner;
     int arity = raw.Signature.ParameterTypes.Length;
     return mixed.Methods.Any(m => m.Owner == owner && m.Name == raw.Name && m.Signature.ParameterTypes.Length == arity);
