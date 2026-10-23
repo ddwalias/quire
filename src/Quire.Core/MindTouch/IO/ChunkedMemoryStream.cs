@@ -198,6 +198,36 @@ public partial class ChunkedMemoryStream
         _chunks = null;
     }
 
+    private void EnsureCapacity(long requested)
+    {
+        long capacity = Capacity;
+        if (requested <= capacity)
+        {
+            return;
+        }
+        if (_fixed)
+        {
+            throw new NotSupportedException("Cannot expand this ChunkedMemoryStream");
+        }
+        if (requested < 256)
+        {
+            requested = 256L;
+        }
+        if (requested < capacity * 2)
+        {
+            requested = capacity * 2;
+        }
+        if (requested > ChunkSize)
+        {
+            requested = ChunkSize;
+        }
+        if (_buffer.Length != requested)
+        {
+            Array.Resize(ref _buffer, (int)requested);
+            _bufferCount = _buffer.Length - _bufferIndex;
+        }
+    }
+
     private byte[] GetChunk(int index, out int count)
     {
         if (index == 0)

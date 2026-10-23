@@ -37,6 +37,4 @@ public partial class ChunkedMemoryStream : global::System.IO.Stream
     public override void Write(byte[] buffer, int offset, int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void WriteTo(global::System.IO.Stream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void EnsureCapacity(long requested) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
