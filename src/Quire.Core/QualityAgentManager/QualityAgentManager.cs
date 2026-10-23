@@ -36,6 +36,15 @@ public partial class QualityAgentManager
         return string.Empty;
     }
 
+    private string GetMathcadPrimeChecksum()
+    {
+        if (!_computeCheckSumOperationState.IsCompleted)
+        {
+            _computeCheckSumOperationState.Wait();
+        }
+        return _mathcadPrimeChecksum;
+    }
+
     [MirrorVerified("PtcQualityAgentManagerQualityAgentManagerMechanicalDifferentialTests")]
     private static string GetMathcadPrimeInstallationDate() => MsiHelper.GetProductInfo(MsiHelper.MathcadCurrentReleaseProductCode, MsiHelper.InstallProperty.InstallDate);
 
