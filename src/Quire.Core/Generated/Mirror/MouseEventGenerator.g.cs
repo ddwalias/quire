@@ -23,6 +23,4 @@ public partial class MouseEventGenerator
     private const global::Quire.Win32.SendMouseInputFlags _downFlags = (global::Quire.Win32.SendMouseInputFlags)(49154);
     [global::Quire.Mirror.MirrorStub]
     private const global::Quire.Win32.SendMouseInputFlags _upFlags = (global::Quire.Win32.SendMouseInputFlags)(49156);
-    [global::Quire.Mirror.MirrorStub]
-    public static void GenerateMouseMove(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

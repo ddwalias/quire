@@ -12,6 +12,32 @@ namespace Quire;
 
 public partial class MouseEventGenerator
 {
+    public static void GenerateMouseMove(Point point)
+    {
+        NormalizeCoordinates(point, out var x, out var y);
+        User32.POINT pt = default;
+        User32.GetCursorPos(ref pt);
+        NormalizeCoordinates(new Point(pt.x, pt.y), out var x2, out var y2);
+        int num = System.Math.Max(System.Math.Abs(x - x2), System.Math.Abs(y - y2));
+        int num2 = 1;
+        if (num > 50)
+        {
+            num2 = System.Math.Min(100, num / 50);
+        }
+        int num3 = num / num2 - 1;
+        double num4 = (double)(x - x2) / (double)num3;
+        double num5 = (double)(y - y2) / (double)num3;
+        for (int i = 0; i < num3; i++)
+        {
+            int x3 = x2 + (int)((double)i * num4);
+            int y3 = y2 + (int)((double)i * num5);
+            SendMouseInput(x3, y3, SendMouseInputFlags.Move | SendMouseInputFlags.Absolute | SendMouseInputFlags.VirtualDesk);
+            Quire.Wpf.WpfUtils.DoEvents();
+        }
+        SendMouseInput(x, y, SendMouseInputFlags.Move | SendMouseInputFlags.Absolute | SendMouseInputFlags.VirtualDesk);
+        Quire.Wpf.WpfUtils.DoEvents();
+    }
+
     [MirrorVerified("PtcMouseEventGeneratorMechanicalDifferentialTests")]
     public static void GenerateMouseUp() => SendMouseInput(0, 0, (SendMouseInputFlags)16388);
 
