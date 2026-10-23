@@ -11,8 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.EditorGestureConverter, Ptc.Core")]
 public partial class EditorGestureConverter : global::System.ComponentModel.TypeConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override object ConvertFrom(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value) => base.ConvertFrom(context, culture, value);
-    [global::Quire.Mirror.MirrorStub]
-    public override object ConvertTo(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value, global::System.Type destinationType) => base.ConvertTo(context, culture, value, destinationType);
 }
