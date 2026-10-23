@@ -35,6 +35,4 @@ public partial class ApplicationLogger : global::Quire.Services.IApplicationLogg
     public string GetListOfLoadedModulesData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void WriteToLog(string msg, global::System.IO.TextWriter textWriter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.IO.TextWriter CreateApplicationLog(string logType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

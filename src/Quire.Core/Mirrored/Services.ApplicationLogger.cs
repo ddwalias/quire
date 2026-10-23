@@ -30,6 +30,15 @@ partial class ApplicationLogger
         return stringBuilder.ToString();
     }
 
+    protected global::System.IO.TextWriter CreateApplicationLog(string logType)
+    {
+        _applicationLogFilePath = global::System.IO.Path.Combine(LogFolder, string.Format("{0}_{1}_{2}.log", FullProductName, logType, global::System.DateTime.Now.ToString("yyyyMMdd_HHmmss")));
+        global::System.IO.TextWriter fileWriter = _fileOperationsProvider.GetFileWriter(_applicationLogFilePath);
+        string msg = string.Format("File location : {0}", _applicationLogFilePath);
+        WriteToLog(msg, fileWriter);
+        return fileWriter;
+    }
+
     public string SubProduct { get => _subProduct; set { _subProduct = value; FullProductName = string.IsNullOrEmpty(value) ? _product : string.Format("{0}_{1}", _product, value); } }
     protected string FullProductName { get => _fullProductName; private set => _fullProductName = string.IsNullOrEmpty(value) ? _product : value; }
     public string LogFolder { get => _logFolder; set => _logFolder = string.IsNullOrEmpty(value) ? _defaultApplicationLogFolderPath : value; }
