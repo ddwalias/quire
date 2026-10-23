@@ -56,22 +56,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyObject TryFindVisualAncestorByString(string ObjectName, global::System.Windows.DependencyObject child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void ExecuteTask(global::System.Windows.Forms.MethodInvoker work, bool async) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void Blink(global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> elements, int period) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetPropertyAndNotify<T>(ref T property, T value, global::System.ComponentModel.INotifyPropertyChanged propertyOwner, global::System.ComponentModel.PropertyChangedEventHandler propertyChanged, string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void DoEvents(global::System.Windows.Threading.Dispatcher dispatcher, global::System.Windows.Threading.DispatcherPriority priority) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool WaitForIdle(global::System.Threading.Thread thread, global::System.TimeSpan timeout) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void TextRangeCopy(global::System.Windows.Documents.TextRange source, global::System.Windows.Documents.TextRange destination, string dataFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Uri CombineRelativeUris(global::System.Uri baseUri, global::System.Uri rel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ExecuteOnLoad(global::System.Windows.FrameworkElement element, global::System.Action action, bool condition = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void ExecuteOnLayoutUpdated(global::System.Windows.UIElement element, global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static T GetNamedDescendant<T>(global::System.Windows.DependencyObject obj, string nameToFind, bool shouldAssert = true) where T : global::System.Windows.FrameworkElement => throw global::Quire.Mirror.MirrorStub.NotImplemented();

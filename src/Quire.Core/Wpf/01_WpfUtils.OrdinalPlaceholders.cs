@@ -1,0 +1,21 @@
+#nullable disable
+
+namespace Quire.Wpf;
+
+public static partial class WpfUtils
+{
+    // Keep these unfinished declarations after ExecuteTask to preserve Mathcad's callback ordinal.
+    public static void Blink(global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> elements, int period) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public static void SetPropertyAndNotify<T>(ref T property, T value, global::System.ComponentModel.INotifyPropertyChanged propertyOwner, global::System.ComponentModel.PropertyChangedEventHandler propertyChanged, string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public static void DoEvents(global::System.Windows.Threading.Dispatcher dispatcher, global::System.Windows.Threading.DispatcherPriority priority) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public static bool WaitForIdle(global::System.Threading.Thread thread, global::System.TimeSpan timeout) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public static void TextRangeCopy(global::System.Windows.Documents.TextRange source, global::System.Windows.Documents.TextRange destination, string dataFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public static global::System.Uri CombineRelativeUris(global::System.Uri baseUri, global::System.Uri rel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public static void ExecuteOnLoad(global::System.Windows.FrameworkElement element, global::System.Action action, bool condition = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+}
