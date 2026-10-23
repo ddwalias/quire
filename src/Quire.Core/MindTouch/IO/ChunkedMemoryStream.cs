@@ -152,6 +152,31 @@ public partial class ChunkedMemoryStream
         return result;
     }
 
+    public override long Seek(long offset, System.IO.SeekOrigin origin)
+    {
+        EnsureOpen();
+        long num;
+        switch (origin)
+        {
+            case System.IO.SeekOrigin.Begin:
+                num = offset;
+                break;
+            case System.IO.SeekOrigin.Current:
+                num = _position + offset;
+                break;
+            case System.IO.SeekOrigin.End:
+                num = _length + offset;
+                break;
+            default:
+                throw new NotImplementedException(string.Format("unknown SeekOrigin.{0}", origin));
+        }
+        if (num < 0L)
+        {
+            throw new ArgumentException("final offset cannot be negative", "offset");
+        }
+        return _position = num;
+    }
+
     [MirrorVerified("Release IL")]
     public long Capacity
     {
