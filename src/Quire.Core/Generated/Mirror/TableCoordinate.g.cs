@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.TableCoordinate, Ptc.Core")]
 public partial struct TableCoordinate
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool operator ==(global::Quire.TableCoordinate a, global::Quire.TableCoordinate b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
