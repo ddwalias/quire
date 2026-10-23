@@ -27,10 +27,6 @@
 #ifdef IsLoggingEnabled
 #undef IsLoggingEnabled
 #endif
-#pragma warning(push)
-#pragma warning(disable:4564)
-#using <System.Linq.dll>
-#pragma warning(pop)
 
 using namespace System;
 using namespace System::Collections;
@@ -1028,12 +1024,13 @@ namespace Quire { namespace utl_mgd {
         LabelSet^ m_wild;
         LabelSet^ m_non_wild;
         System::Collections::Generic::Dictionary<String^, LabelTrie^>^ m_map;
-        static LabelTrie^ s_root;
-        static SafeReadWriteLock^ s_lock;
+        // Static initializers, not a static constructor: a .cctor the author wrote would drop Mathcad's beforefieldinit.
+        static LabelTrie^ s_root = gcnew LabelTrie(gcnew SortedStringSet());
+        static SafeReadWriteLock^ s_lock = gcnew SafeReadWriteLock();
 
     private:
-        static array<Char>^ s_braces;
-        static array<Char>^ s_comma;
+        static array<Char>^ s_braces = (static_cast<String^>("{}"))->ToCharArray();
+        static array<Char>^ s_comma = (static_cast<String^>(","))->ToCharArray();
 
     public:
         LabelTrie(SortedStringSet^ labels)
@@ -1135,14 +1132,6 @@ namespace Quire { namespace utl_mgd {
             return Find(labelSet->Labels(), wild);
         }
 
-    private:
-        static LabelTrie()
-        {
-            s_root = gcnew LabelTrie(gcnew SortedStringSet());
-            s_lock = gcnew SafeReadWriteLock();
-            s_braces = (static_cast<String^>("{}"))->ToCharArray();
-            s_comma = (static_cast<String^>(","))->ToCharArray();
-        }
     };
 }}
 
@@ -1152,7 +1141,7 @@ namespace Quire { namespace utl_mgd {
     public value class LabelUtils
     {
     public:
-        static array<Char>^ s_sharp;
+        static array<Char>^ s_sharp = (static_cast<String^>("#"))->ToCharArray();
 
         static String^ SplitName(String^ s)
         {
@@ -1277,14 +1266,8 @@ namespace Quire { namespace utl_mgd {
             return nullptr;
         }
 
-    private:
-        static LabelUtils()
-        {
-            s_sharp = (static_cast<String^>("#"))->ToCharArray();
-        }
     };
 
-#pragma managed(push, on)
     [Quire::Mirror::MirrorOfAttribute("utl_mgd.LabeledDictionary, utl-mgd")]
     public ref class LabeledDictionary : System::Collections::IDictionary
     {
@@ -1558,7 +1541,6 @@ namespace Quire { namespace utl_mgd {
             ::LeaveCriticalSection(GetCriticalSection(key, -1));
         }
     };
-#pragma managed(pop)
 }}
 
 namespace Quire { namespace utl_mgd {

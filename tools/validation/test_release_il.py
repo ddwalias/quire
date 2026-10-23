@@ -157,6 +157,19 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         self.assertFalse(compare(inventory(), inventory(native(False)))['passed'])
         self.assertFalse(compare(inventory(), inventory(native(True, mixed=False)))['passed'])
 
+    def test_native_pair_exact_in_a_mixed_mode_base_still_pairs(self):
+        native = dict(method('N', exact=True, mixed_mode=True, unsupported='native code body has no IL to compare',
+                             original={'assembly': 'utl-mgd', 'native_code': True}), shape_matches=True)
+        self.assertTrue(compare(inventory(native), inventory(dict(native)))['passed'])
+        # Losing the native counterpart is still a failure, even when the member was native before.
+        lost = dict(native, original=None)
+        self.assertFalse(compare(inventory(native), inventory(lost))['passed'])
+        # Exact before, not exact now (an import attribute changed): the exemption no longer applies.
+        changed = dict(native, exact_match=False, structure_differences=['import attributes differ'])
+        result = compare(inventory(native), inventory(changed))
+        self.assertFalse(result['passed'])
+        self.assertEqual(result['failures'][0]['reason'], 'import attributes differ')
+
     def test_counterpartless_csharp_stand_ins_may_be_replaced_by_a_mixed_mode_build(self):
         stand_in = method('_tildeSafeMutex', exact=False, original=None, project='P')
         mixed = method('Other', mixed_mode=True, project='P')
@@ -206,6 +219,21 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
             (root / 'src' / 'P' / 'X.Targets').write_text('$(MATHCAD_DIR)')
             (root / 'Directory.Build.props').write_text('$(MathcadInstallDir)')
             self.assertEqual(reads_install(root, ['P']), [str(Path('Directory.Build.props')), str(Path('src/P/X.Targets'))])
+
+    def test_reads_install_scans_every_project_the_build_references(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / 'src' / 'Utl' / 'MixedMode').mkdir(parents=True)
+            (root / 'src' / 'Utl' / 'Utl.csproj').write_text('<Project />')
+            (root / 'src' / 'Utl' / 'MixedMode' / 'Utl.vcxproj').write_text('<Project />')
+            (root / 'src' / 'Engine' / 'Generated').mkdir(parents=True)
+            (root / 'src' / 'Engine' / 'Engine.csproj').write_text('<Project />')
+            (root / 'src' / 'Engine' / 'Generated' / 'Mirror.props').write_text(
+                r'<ProjectReference Include="..\Mirror\Mirror.csproj" />')
+            (root / 'src' / 'Mirror').mkdir()
+            (root / 'src' / 'Mirror' / 'Mirror.csproj').write_text(r'<Project>C:\Program Files\PTC\Mathcad Prime 12</Project>')
+            self.assertEqual(reads_install(root, ['Engine']), [str(Path('src/Mirror/Mirror.csproj'))])
+            self.assertEqual(reads_install(root, ['Utl']), [])
 
     def test_dependents_of_a_cppcli_project_build_with_the_pinned_msvc(self):
         with tempfile.TemporaryDirectory() as temp:

@@ -147,12 +147,17 @@ def compare(before, after, types=(), methods=()):
             continue
         checked.append(key)
         # A member that was exact, or that lost its counterpart, keeps its obligations.
+        # A native pair that was exact in a mixed-mode base keeps the obligation only if it stopped being exact: its
+        # exact_match covers the import record, which is what a native pair has in place of an IL body.
         if (toolset_support(row) or native_pair(row)) and not (
                 previous and (previous.get('exact_match') is True
+                              and not (native_pair(previous) and row.get('exact_match') is True)
                               or previous.get('original') is not None and row.get('original') is None)):
             continue
         if row.get('unsupported'):
-            failures.append({'method': key, 'reason': row['unsupported']})
+            reason = (row['unsupported'] if not native_pair(row)
+                      else '; '.join(row.get('structure_differences', [])[:2]) or 'native import record differs')
+            failures.append({'method': key, 'reason': reason})
             continue
         if row.get('engine_native') is True:
             continue
@@ -270,13 +275,38 @@ INSTALL_REFERENCE = re.compile(r'MathcadInstallDir|MATHCAD_DIR|Mathcad Prime|\\P
 BUILD_INPUTS = ('.csproj', '.vcxproj', '.props', '.targets', '.rsp', '.cpp', '.h', '.hpp')
 
 
+def build_files(directory):
+    """Files of a project directory that a build can read, outside bin and obj."""
+    return [p for p in directory.rglob('*') if p.is_file() and not {'bin', 'obj'} & set(p.relative_to(directory).parts)]
+
+
+def build_closure(root, projects):
+    """The src projects the compared projects build: each one, plus the src projects its .csproj or .props
+    references, transitively. Utl's dependents build its mixed DLL through their Mirror.props reference (D19)."""
+    seen, resolved_seen, todo = [], set(), list(projects)
+    while todo:
+        directory = root / 'src' / todo.pop()
+        resolved = directory.resolve()
+        if resolved in resolved_seen or not resolved.is_dir():
+            continue
+        resolved_seen.add(resolved)
+        seen.append(directory)
+        for p in build_files(directory):
+            if p.suffix.lower() in ('.csproj', '.props'):
+                for include in PROJECT_REFERENCE.findall(p.read_text(encoding='utf-8', errors='replace')):
+                    # MSBuild resolves an imported .props' relative paths against the importing project.
+                    target = (directory / include.replace('\\', os.sep)).resolve().parent
+                    if target.parent == (root / 'src').resolve():
+                        todo.append(target.name)
+    return seen
+
+
 def reads_install(root, projects, vcxproj=None):
-    """D19: build inputs of the compared projects (and the Directory.Build files MSBuild imports) that name the
-    Mathcad install. Best effort; the .ilnew check after the build is the backstop."""
-    dirs = [root / 'src' / project for project in projects] + ([vcxproj.parent] if vcxproj else [])
-    files = {p for d in dirs if d.is_dir() for p in d.rglob('*')
-             if p.is_file() and p.suffix.lower() in BUILD_INPUTS
-             and not {'bin', 'obj'} & set(p.relative_to(root).parts)}
+    """D19: build inputs of every project the compared projects build (build_closure), and of the vcxproj's folder,
+    that name the Mathcad install, plus the Directory.Build files MSBuild imports for them. Best effort; the .ilnew
+    check after the build is the backstop."""
+    dirs = build_closure(root, projects) + ([vcxproj.parent] if vcxproj else [])
+    files = {p for d in dirs if d.is_dir() for p in build_files(d) if p.suffix.lower() in BUILD_INPUTS}
     for d in dirs:
         for parent in [d, *d.relative_to(root).parents]:
             files |= {f for f in (root / parent).glob('Directory.Build.*') if f.is_file()}
@@ -290,23 +320,7 @@ PROJECT_REFERENCE = re.compile(r"""<ProjectReference\b[^>]*\bInclude=["']([^"']+
 def builds_cppcli(root, projects):
     """Whether building the projects builds a .vcxproj: one of them, or a src project they reference through
     their .csproj/.props, holds one. Utl's dependents build its mixed DLL and need the pinned MSVC too."""
-    seen, todo = set(), list(projects)
-    while todo:
-        directory = (root / 'src' / todo.pop()).resolve()
-        if directory in seen or not directory.is_dir():
-            continue
-        seen.add(directory)
-        files = [p for p in directory.rglob('*') if p.is_file() and not {'bin', 'obj'} & set(p.relative_to(directory).parts)]
-        if any(p.suffix.lower() == '.vcxproj' for p in files):
-            return True
-        for p in files:
-            if p.suffix.lower() in ('.csproj', '.props'):
-                for include in PROJECT_REFERENCE.findall(p.read_text(encoding='utf-8', errors='replace')):
-                    # MSBuild resolves an imported .props' relative paths against the importing project.
-                    target = (directory / include.replace('\\', os.sep)).resolve().parent
-                    if target.parent == (root / 'src').resolve():
-                        todo.append(target.name)
-    return False
+    return any(p.suffix.lower() == '.vcxproj' for d in build_closure(root, projects) for p in build_files(d))
 
 
 def section_names(dll):

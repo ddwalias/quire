@@ -31,7 +31,6 @@
     <OutDir Condition="'$(UtlAssemblyOutDir)'==''">$(MSBuildThisFileDirectory)..\bin\Release\net10.0\</OutDir>
     <IntDir>$(MSBuildThisFileDirectory)..\obj\mixedmode\Release\</IntDir>
     <TargetName>Quire.Engine.Utl</TargetName>
-    <AssemblyVersion>0.1.0.0</AssemblyVersion>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -53,16 +52,19 @@
   <ItemGroup>
     <ClCompile Include="UtlPort.cpp" />
   </ItemGroup>
-  <!-- The Build Tools MSBuild cannot evaluate SDK-style projects, so Quire.Mirror is built by dotnet and forced in with /FU. -->
+  <!-- The Build Tools MSBuild cannot evaluate SDK-style projects, so Quire.Mirror is forced in with /FU. The production
+       .csproj passes the Quire.Mirror.dll it already built (QuireMirrorPath); a direct build of this project builds it with dotnet. -->
   <PropertyGroup>
+    <_BuildQuireMirrorHere Condition="'$(QuireMirrorPath)' == ''">true</_BuildQuireMirrorHere>
     <QuireMirrorOutDir>$(IntDir)Quire.Mirror\</QuireMirrorOutDir>
+    <QuireMirrorPath Condition="'$(QuireMirrorPath)' == ''">$(QuireMirrorOutDir)Quire.Mirror.dll</QuireMirrorPath>
   </PropertyGroup>
-  <Target Name="BuildQuireMirrorReference" BeforeTargets="ClCompile" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <Target Name="BuildQuireMirrorReference" BeforeTargets="ClCompile" Condition="'$(Configuration)|$(Platform)'=='Release|x64' and '$(_BuildQuireMirrorHere)' == 'true'">
     <Exec Command="dotnet build &quot;$(MSBuildThisFileDirectory)..\..\Quire.Mirror\Quire.Mirror.csproj&quot; --configuration Release --output &quot;$(QuireMirrorOutDir.TrimEnd('\'))&quot; --nologo" />
   </Target>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <ForcedUsingFiles>$(QuireMirrorOutDir)Quire.Mirror.dll;%(ForcedUsingFiles)</ForcedUsingFiles>
+      <ForcedUsingFiles>$(QuireMirrorPath);%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
   </ItemDefinitionGroup>
   <Target Name="BuildUtlLoggingImportLibrary" BeforeTargets="Link" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

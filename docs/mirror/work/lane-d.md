@@ -1,7 +1,41 @@
 # Lane D — Quire.Engine.Utl
 
-- Owner: Lane D; branch `mirror/d-engine-utl-cppcli-honest-20261023-h1`; worktree `C:/Projects/Quire-wt/lane-d-utl-cppcli-honest`.
-- Members: utl-mgd only, honest C++/CLI port (D19). The production build does not use the netmodule, `Engine.Misc` or IlMaxStack/BodyTransplant proofs. The Build Tools MSBuild builds `MixedMode/Quire.Engine.Utl.vcxproj` under `$(QuireMsvcInstallDir)` with `/std:c++17` and `/OPT:REF` (both needed to match utl-mgd).
-- Release IL: `release_il.py --base main --project Quire.Engine.Utl`: **PASS**, 0 failures, 0 unfinished, 0 toolset_support, 55 native_pairs. Report `.mirror-cache/release-il-886fd0230e64/release-il.json`. Uncommitted.
-- Remaining mismatches: none.
-- Dependents (Engine, Mcd, Efi, Engine.Native) get the pinned MSVC through `release_il.py`'s `builds_cppcli`; `--project Quire.Engine` PASS.
+- Owner: Lane D. Branch `mirror/d-engine-utl-coverage-20261023-h1` (from `main` f909e58e); worktree `C:/Projects/Quire-wt/lane-d-utl-coverage`.
+- Members: utl-mgd, honest C++/CLI port (D19): `MixedMode/Quire.Engine.Utl.vcxproj`, `/std:c++17`, `/OPT:REF`.
+- Release IL: `release_il.py --base main --project Quire.Engine.Utl` and `--project Quire.Engine` (see Status for the report ids).
+
+## Coverage audit (utl-mgd reference IL `589523c705e87663`)
+
+| Surface | Mathcad | Quire candidate | Missing | Class |
+|---|---:|---:|---|---|
+| Class headers (managed, native, toolset) | 89 | same names | 0 | — |
+| Method declarations (incl. `<Module>` globals, nested) | 370 | 370, identical signatures and visibility | 0 | — |
+| Managed fields and properties | 44 fields, 11 properties | same | 0 | — |
+| Events | 0 | 0 | 0 | — |
+| `beforefieldinit` on `LabelTrie`, `LabelUtils` | set | absent (explicit static constructor) | 2 | (a) ported |
+| Custom attributes | 261 | 286 | 25 extra `MirrorOf` (Quire metadata) | Quire-only |
+
+- (b) and (c): none. Under D18 every managed member of Utl is in scope, and no member is missing.
+- `MessageQueue::m_stack_size` is present in the candidate. The audit compares declarations; bodies are the gate's job.
+
+## Done
+
+- `LabelTrie`, `LabelUtils`: explicit static constructors replaced by static field initializers (restores `beforefieldinit`).
+- `#using <System.Linq.dll>` (unused) and `#pragma managed(push, on)/(pop)` removed; the gate passes without them.
+- vcxproj `AssemblyVersion` removed (inert). The source `[assembly:AssemblyVersionAttribute]` stays.
+- csproj nested MSBuild uses `/t:Rebuild`, so an up-to-date vcxproj cannot leave the C# DLL in `bin`. Verified: the `bin` DLL carries the pinned linker's Rich header.
+- csproj passes the `Quire.Mirror.dll` it references (`QuireMirrorPath`); the vcxproj builds Quire.Mirror with dotnet only when that property is empty (hand builds).
+- `reads_install` scans the whole ProjectReference closure (`build_closure`), with a test.
+- `release_il.py` `compare()`: a native pair that was exact in a mixed-mode base keeps its obligation once it stops being exact (import record differs). Approved by the maintainer. Tests added.
+
+## Status
+
+- Unit tests: `python -m unittest test_release_il` in `tools/validation`.
+- Release IL gate: see the report ids recorded at commit time.
+- Debug and tests run the C# sources; Release ships the C++/CLI DLL. Decision recorded here. A Release test pass that loads the mixed DLL is not yet added.
+
+## Remaining
+
+- Plain `dotnet build -c Release` and Release tests fail without `QuireMsvcInstallDir` (pre-existing `RequirePinnedMsvcForMixedModeRelease` error). Proposed: csproj discovers the pinned instance through vswhere and checks `cl.exe` build 19.51.36246. Needs maintainer approval (validation.md contract).
+- Release-configuration test pass in CI: maintainer decision (now or follow-up).
+- `/t:Rebuild` recompiles UtlPort.cpp on every Release build. Accepted cost for a correct DLL.
