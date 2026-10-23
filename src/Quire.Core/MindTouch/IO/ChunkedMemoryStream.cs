@@ -6,6 +6,23 @@ namespace Quire.MindTouch.IO;
 
 public partial class ChunkedMemoryStream
 {
+    protected override void Dispose(bool disposing)
+    {
+        try
+        {
+            if (disposing)
+            {
+                _buffer = null;
+                _chunks = null;
+                _closed = true;
+            }
+        }
+        finally
+        {
+            base.Dispose(disposing);
+        }
+    }
+
     [MirrorVerified("MindTouchIOChunkedMemoryStreamMechanicalDifferentialTests")]
     public ChunkedMemoryStream() : this(0) { }
 
