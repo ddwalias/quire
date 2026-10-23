@@ -12,12 +12,6 @@ namespace Quire.Wpf;
 public partial class ObservableRangeCollection<T> : global::System.Collections.ObjectModel.ObservableCollection<T>, global::Quire.Wpf.IObservableRangeCollection<T>, global::System.Collections.Generic.ICollection<T>, global::System.Collections.Generic.IEnumerable<T>, global::System.Collections.IEnumerable, global::Quire.Wpf.INotifyCollectionRangeChanged<T>, global::Quire.Wpf.INotifyCollectionRangeChanged, global::System.Collections.Specialized.INotifyCollectionChanged
 {
     [global::Quire.Mirror.MirrorStub]
-    private bool _fireRangeChangesAllowed;
-    [global::Quire.Mirror.MirrorStub]
-    public ObservableRangeCollection() { }
-    [global::Quire.Mirror.MirrorStub]
-    public ObservableRangeCollection(global::System.Collections.Generic.IEnumerable<T> collection) { }
-    [global::Quire.Mirror.MirrorStub]
     private void FireRangeChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void OnRangeChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -1,5 +1,6 @@
 #nullable disable
 using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using Quire.Mirror;
 using Quire.Mirror;
@@ -8,6 +9,12 @@ namespace Quire.Wpf;
 
 public partial class ObservableRangeCollection<T>
 {
+    private bool _fireRangeChangesAllowed = true;
+
+    public ObservableRangeCollection() { }
+
+    public ObservableRangeCollection(IEnumerable<T> collection) : base(collection) { }
+
     [MirrorVerified("PtcWpfObservableRangeCollection1MechanicalDifferentialTests")]
     public event NotifyCollectionChangedEventHandler RangeChanging;
 
