@@ -39,6 +39,8 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
     /// code place them where Mathcad declared them.
     /// </summary>
     public HashSet<TypeModel> HandBound { get; } = [];
+    /// <summary>Mathcad methods hand-written code declares (a subset of <see cref="Skip"/>).</summary>
+    public HashSet<MethodModel> HandWrittenMembers { get; } = new(ReferenceEqualityComparer.Instance);
 
     public void Run()
     {
@@ -256,9 +258,20 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
     /// The hand-written constructor a generated constructor must chain to, so the hand-written initialisation runs:
     /// the one with fewest required parameters. Null when the type has no hand-written constructor.
     /// </summary>
+    private static string WrittenName(MethodModel m)
+    {
+        string name = Identifier.Encode(m.Name);
+        int tick = name.LastIndexOf('`');
+        return tick > 0 && m.GenericParams.Length == 0 ? name[..tick] : name;
+    }
+
+    /// <summary>An explicit interface implementation: private, named by its interface.</summary>
+    public static bool IsExplicitImpl(MethodModel m) => m.Access == Access.Private && m.Name.Contains('.') && m.Implements.Length > 0;
+
     public MethodModel? HandConstructor(TypeModel t) =>
         handWritten.Find(t) is { } hw
-            ? hw.Methods.Where(c => c.Name == ".ctor" && !c.Stub && c.Params.All(p => p.Type is not ByRefSig))
+            ? hw.Methods.Where(c => c.Name == ".ctor" && !c.Stub && c.Params.All(p => p.Type is not ByRefSig)
+                    && !handWritten.ChainsInSource(t, c.Params.Length))  // chaining to it could reach a stub and loop
                 .OrderBy(c => c.Params.Count(p => !p.HasDefault)).FirstOrDefault()
             : null;
 
@@ -279,6 +292,7 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
                 foreach (var i in m.Implements) explicitImpls.Add($"{Substitute(i.Interface, args)}::{i.Method}");
         }
         publicKeys.UnionWith(handWritten.PublicKeys(t));
+        explicitImpls.UnionWith(handWritten.ExplicitImpls(t));
 
         // C++/CLI lists only directly implemented interfaces, so walk the closure.
         var closure = new List<TypeSig>();
@@ -352,7 +366,7 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
             t.Notes.Add("not generated: " + TypeSkip[t]);
             return;
         }
-        if (t.DeclaringType != null && hw.MirrorOf != null) HandBound.Add(t);
+        if (t.DeclaringType != null && handWritten.BindsInSource(t)) HandBound.Add(t);
         if (hw.Access != t.Access)
         {
             t.Notes.Add($"hand-written code declares it {hw.Access.ToString().ToLowerInvariant()}; Mathcad's is {t.Access.ToString().ToLowerInvariant()}");
@@ -373,14 +387,22 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
             var inheritedMethods = handWritten.InheritedMethodKeys(hw);
             foreach (var m in t.Methods.Where(m => !m.IsConstructor && inheritedMethods.Contains(HandWritten.MethodKey(m)))) { Skip.Add(m); t.Notes.Add($"method {m.Name} not generated: inherited from the hand-written base"); }
             foreach (var p in t.Properties.Where(p => inherited.Contains(p.Name))) { Skip.Add(p); t.Notes.Add($"property {p.Name} not generated: inherited from the hand-written base"); }
-            foreach (var e in t.Events.Where(e => inherited.Contains(e.Name))) { Skip.Add(e); t.Notes.Add($"event {e.Name} not generated: inherited from the hand-written base"); }
+            // Field-like events stay: generated, they work like Mathcad's (their accessors can be exact), unlike a
+            // throwing stub. Events with custom accessors are left to the hand-written base.
+            foreach (var e in t.Events.Where(e => inherited.Contains(e.Name) && !t.FieldLikeEvents.Contains(e.Name))) { Skip.Add(e); t.Notes.Add($"event {e.Name} not generated: inherited from the hand-written base"); }
             foreach (var f in t.Fields.Where(f => inherited.Contains(f.Name))) { Skip.Add(f); t.Notes.Add($"field {f.Name} not generated: inherited from the hand-written base"); }
         }
         void Conflict(string what) => t.Notes.Add($"hand-written code uses the name of {what} for a different kind of member; not generated");
         var optional = handWritten.OptionalOverloads(t);
         foreach (var m in t.Methods)
         {
-            if (keys.Contains(HandWritten.MethodKey(m))) Skip.Add(m);
+            // Hand-written code spells a member as the writer does: encoded ("!T" -> "_bangT"), without a C++/CLI arity
+            // suffix on a non-generic name ("_bangMessageQueue`3").
+            if (keys.Contains(HandWritten.MethodKey(m)) || keys.Contains(HandWritten.MethodKey(m with { Name = WrittenName(m) })))
+            {
+                Skip.Add(m);
+                HandWrittenMembers.Add(m);
+            }
             else if (nonMethods.Contains(m.Name)) { Skip.Add(m); Conflict($"method {m.Name}"); }
             else if (optional.Contains(HandWritten.MethodKey(m)))
             {
@@ -390,14 +412,19 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
                 t.Notes.Add($"{(m.IsConstructor ? "constructor" : "method " + m.Name)}({string.Join(", ", m.Params.Select(p => p.Type))}) not generated: a hand-written overload with optional parameters covers it");
             }
         }
+        // Explicit implementations match by interface identity: their qualified names are spelled differently.
+        var handExplicit = handWritten.ExplicitImpls(t);
+        bool ExplicitByHand(params MethodModel?[] accessors) =>
+            accessors.OfType<MethodModel>().ToList() is { Count: > 0 } acc
+            && acc.All(a => IsExplicitImpl(a) && a.Implements.All(i => handExplicit.Contains($"{i.Interface}::{i.Method}")));
         foreach (var p in t.Properties)
         {
-            if (nonMethods.Contains(p.Name)) Skip.Add(p);
+            if (nonMethods.Contains(p.Name) || ExplicitByHand(p.Getter, p.Setter)) Skip.Add(p);
             else if (methodNames.Contains(p.Name)) { Skip.Add(p); Conflict($"property {p.Name}"); }
         }
         foreach (var e in t.Events)
         {
-            if (nonMethods.Contains(e.Name)) Skip.Add(e);
+            if (nonMethods.Contains(e.Name) || ExplicitByHand(e.Adder, e.Remover)) Skip.Add(e);
             else if (methodNames.Contains(e.Name)) { Skip.Add(e); Conflict($"event {e.Name}"); }
         }
         foreach (var f in t.Fields)
@@ -408,10 +435,17 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
     }
 }
 
-/// <summary>Quire's own compiled assemblies: what hand-written code already declares.</summary>
+/// <summary>
+/// Quire's own compiled assemblies: what hand-written code already declares. Reads the normal Release build: every
+/// member the generator writes carries [MirrorStub], so the members without it are hand-written. A build with
+/// -p:MirrorStubs=false is read the same way.
+/// </summary>
 public sealed class HandWritten
 {
     private readonly Dictionary<(string Project, string Name), TypeModel> _types = [];
+    private readonly HashSet<string> _sourceBindings = [];
+    private readonly HashSet<(string Namespace, string Name)> _sourceTypes = [];
+    private readonly HashSet<(string Namespace, string Name, int Arity)> _chainingCtors = [];
 
     public static HandWritten Load(string repo, IEnumerable<string> projects)
     {
@@ -425,14 +459,67 @@ public sealed class HandWritten
             if (dll == null) continue;
             var model = MetadataLoader.Load(dll);
             if (model == null) continue;
-            // Only a build without the generated files shows what is hand-written (Directory.Build.targets stamps it).
-            if (model.Metadata.GetValueOrDefault("Quire.MirrorStubs") != "false")
-                throw new InvalidOperationException(
-                    $"{dll} is a build with the generated stubs. Run 'dotnet build -p:MirrorStubs=false' before 'emit'.");
             foreach (var t in model.Types) hw._types[(project, t.FullName)] = t;
+            hw.ScanSourceBindings(Path.Combine(repo, "src", project));
         }
         return hw;
     }
+
+    /// <summary>[MirrorOf] arguments written in hand-written sources (outside Generated/), which metadata can't tell
+    /// apart from the generator's.</summary>
+    private void ScanSourceBindings(string projectDir)
+    {
+        var generated = Path.Combine(projectDir, Emit.GeneratedDir) + Path.DirectorySeparatorChar;
+        foreach (var file in Directory.EnumerateFiles(projectDir, "*.cs", SearchOption.AllDirectories))
+        {
+            if (file.StartsWith(generated, StringComparison.OrdinalIgnoreCase)) continue;
+            if (file.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}")
+                || file.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}")) continue;
+            // Code only the stub-free build compiles (-p:MirrorStubs=false) is not part of the normal build read here.
+            string text = System.Text.RegularExpressions.Regex.Replace(File.ReadAllText(file),
+                @"#if\s+QUIRE_MIRROR_STUB_FREE\b.*?#endif", "", System.Text.RegularExpressions.RegexOptions.Singleline);
+            foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(
+                text, @"\bMirrorOf\(\s*""([^""]+)""\s*\)"))
+                _sourceBindings.Add(m.Groups[1].Value);
+            var ns = System.Text.RegularExpressions.Regex.Match(text, @"^\s*namespace\s+([\w.]+)", System.Text.RegularExpressions.RegexOptions.Multiline);
+            foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(
+                text, @"\b(?:class|struct|interface|record|enum)\s+(@?\w+)"))
+                _sourceTypes.Add((ns.Success ? ns.Groups[1].Value : "", m.Groups[1].Value.TrimStart('@')));
+            foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(
+                text, @"\b(?:public|internal|protected|private)[\w\s]*?\b(\w+)\s*\(([^()]*)\)\s*:\s*this\s*\("))
+            {
+                string ps = m.Groups[2].Value.Trim();
+                _chainingCtors.Add((ns.Success ? ns.Groups[1].Value : "", m.Groups[1].Value, ps.Length == 0 ? 0 : ps.Split(',').Length));
+            }
+        }
+    }
+
+    /// <summary>Whether hand-written source binds this Mathcad type with [MirrorOf].</summary>
+    public bool BindsInSource(TypeModel t) => t.MirrorOf != null && _sourceBindings.Contains(t.MirrorOf);
+
+    /// <summary>Whether hand-written source declares this type's constructor with this many parameters as
+    /// chaining to another of its constructors (": this(...)").</summary>
+    public bool ChainsInSource(TypeModel t, int arity)
+    {
+        var (ns, simple) = SourceName(t);
+        return _chainingCtors.Contains((ns, simple, arity));
+    }
+
+    private static (string Namespace, string Name) SourceName(TypeModel t)
+    {
+        string full = t.FullName;
+        int plus = full.IndexOf('+');
+        string top = plus < 0 ? full : full[..plus];
+        int dot = top.LastIndexOf('.');
+        string simple = full[(Math.Max(full.LastIndexOf('+'), full.LastIndexOf('.')) + 1)..];
+        int tick = simple.IndexOf('`');
+        if (tick >= 0) simple = simple[..tick];
+        return (dot < 0 ? "" : top[..dot], simple);
+    }
+
+    /// <summary>Whether a hand-written source declares a type of this name (namespace and simple name; a hand-written
+    /// partial with only a parameterless constructor is otherwise indistinguishable from a generated type).</summary>
+    private bool DeclaredInSource(TypeModel t) => _sourceTypes.Contains(SourceName(t));
 
     /// <summary>Any compiled Quire type by name, mirrored or not.</summary>
     public TypeModel? FindByName(string fullName) => _types.Values.FirstOrDefault(x => x.FullName == fullName);
@@ -453,7 +540,7 @@ public sealed class HandWritten
     public HashSet<string> InheritedNames(TypeModel t) =>
         [.. HandBases(t).SelectMany(b => b.Properties.Where(p => !p.Stub).Select(p => p.Name)
             .Concat(b.Events.Where(e => !e.Stub).Select(e => e.Name))
-            .Concat(b.Fields.Where(f => !f.Stub && f.Access != Access.Private).Select(f => f.Name)))];
+            .Concat(HandFields(b).Where(f => f.Access != Access.Private).Select(f => f.Name)))];
 
     /// <summary>Signature keys of the methods a hand-written type inherits from its hand-written bases.</summary>
     public HashSet<string> InheritedMethodKeys(TypeModel t) =>
@@ -462,13 +549,23 @@ public sealed class HandWritten
     public TypeModel? Find(TypeModel q)
     {
         if (!_types.TryGetValue((q.Project!, q.FullName), out var t)) return null;
-        if (t.MirrorOf != null && t.Kind is TypeKind.Enum or TypeKind.Delegate) return null; // generated whole
+        // Generated whole, unless hand-written source carries the binding itself.
+        if (t.MirrorOf != null && t.Kind is TypeKind.Enum or TypeKind.Delegate && !_sourceBindings.Contains(t.MirrorOf)) return null;
         // A type that only ever came from the generator has no hand-written part.
         bool anyHand = t.MirrorOf == null
             || HandMethodsOf(t).Any(m => !(m.Name == ".ctor" && m.Params.Length == 0))
-            || t.Fields.Any(f => !f.Stub && !f.Name.StartsWith('<') && t.Kind != TypeKind.Enum);
+            || (t.Kind != TypeKind.Enum && HandFields(t).Any())
+            || DeclaredInSource(t);
         return anyHand ? t : null;
     }
+
+    /// <summary>"Interface::member" for the explicit implementations hand-written code declares.</summary>
+    public HashSet<string> ExplicitImpls(TypeModel q) =>
+        [.. HandMethods(q).Where(Planner.IsExplicitImpl).SelectMany(m => m.Implements.Select(i => $"{i.Interface}::{i.Method}"))];
+
+    /// <summary>Hand-written fields. A field-like event's backing field shares its name but not its [MirrorStub].</summary>
+    private static IEnumerable<FieldModel> HandFields(TypeModel t) =>
+        t.Fields.Where(f => !f.Stub && !f.Name.StartsWith('<') && !t.Events.Any(e => e.Name == f.Name));
 
     public static string MethodKey(MethodModel m) =>
         $"{Canonical.MethodName(m)}`{m.GenericParams.Length}({string.Join(",", m.Params.Select(p => p.Type))})";
@@ -503,7 +600,7 @@ public sealed class HandWritten
 
     public HashSet<string> NonMethodNames(TypeModel q) =>
         Find(q) is { } t
-            ? [.. t.Fields.Where(f => !f.Stub && !f.Name.StartsWith('<')).Select(f => f.Name)
+            ? [.. HandFields(t).Select(f => f.Name)
                 .Concat(t.Properties.Where(p => !p.Stub).Select(p => p.Name))
                 .Concat(t.Events.Where(e => !e.Stub).Select(e => e.Name))]
             : [];

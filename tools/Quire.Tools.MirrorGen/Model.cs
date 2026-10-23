@@ -98,6 +98,8 @@ public sealed class TypeModel
     public List<MethodModel> Methods { get; } = [];
     public List<PropertyModel> Properties { get; } = [];
     public List<EventModel> Events { get; } = [];
+    /// <summary>Events declared field-like in Mathcad (a private backing field of the same name, dropped by the mapper).</summary>
+    public HashSet<string> FieldLikeEvents { get; } = [];
     public string? EnumUnderlying { get; init; }
     public bool IsFlags { get; init; }
     public string? DefaultMember { get; init; }

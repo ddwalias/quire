@@ -52,9 +52,21 @@ MirrorGen reads metadata to generate type/member skeletons and the manifest. It 
 visibility, nested types and signatures using `Rules.cs`, `Mapper.cs` and `Identifier.cs`.
 It does not establish IL parity.
 
-Regeneration uses a Release build with `-p:MirrorStubs=false` to discover handwritten members,
-then `MirrorGen emit`, followed by a normal Release build and the Release IL check. Keep
-original binaries and decompiled code in the ignored cache; never commit them.
+Regeneration reads the normal Release build: every member MirrorGen writes carries
+`[MirrorStub]`, so the members without it are hand-written. Hand-written `[MirrorOf]` bindings,
+type declarations and `: this(...)` constructor chains are read from sources outside `Generated/`.
+
+```powershell
+dotnet build Quire.slnx -c Release
+dotnet run -c Release --project tools/Quire.Tools.MirrorGen -- emit
+dotnet build Quire.slnx -c Release
+python tools/validation/release_il.py --base main
+```
+
+Emit drops stubs for members hand-written code now provides (on the type, or a hand-written
+base for methods); the gate does not count removing a never-exact stub, or replacing one stub
+with another, as a change. Keep original binaries and decompiled code in the ignored cache;
+never commit them.
 
 The retired runtime validators, mutation/coverage tooling and stored baselines are removed.
 Only the Release IL tools participate in batch acceptance and merging.

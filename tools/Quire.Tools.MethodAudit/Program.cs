@@ -318,9 +318,17 @@ foreach (var (artifact, raw, type, method, original, counterpart) in matched)
         source = raw.BodyRva == 0 ? null : artifact.Source(raw.Token),
         body_sha256 = body?.Hash,
         // A MirrorStub throw: unfinished, whichever file it records.
-        stub_body = body?.Stub == true
+        stub_body = body?.Stub == true,
+        // Generated: [MirrorStub] on the method, or on the property or event it is an accessor of.
+        mirror_stub = method.Stub
+            || type.Properties.Any(p => p.Stub && (Same(p.Getter, method) || Same(p.Setter, method)))
+            || type.Events.Any(e => e.Stub && (Same(e.Adder, method) || Same(e.Remover, method)))
     });
 }
+static bool Same(MethodModel? accessor, MethodModel method) =>
+    accessor != null && accessor.Name == method.Name && accessor.Params.Length == method.Params.Length
+    && accessor.Params.Zip(method.Params).All(p => p.First.Type.ToString() == p.Second.Type.ToString());
+
 if (output == null)
 {
     if (shown == 0) Console.Error.WriteLine($"No method matches {string.Join(", ", diffs!)}");

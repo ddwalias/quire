@@ -317,12 +317,21 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
             }
             text.Append('\n');
         }
-        string hash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(text.ToString())));
+        string hash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(Ordinalless(text.ToString()))));
         // Generated stubs throw MirrorStub.NotImplemented(file, member), the file from [CallerFilePath].
         bool stub = shape.Count == 4 && shape[0] == "ldstr" && shape[1] == "ldstr" && shape[3] == "throw"
             && shape[2].StartsWith("call ", StringComparison.Ordinal) && shape[2].Contains("Quire.Mirror.MirrorStub::NotImplemented", StringComparison.Ordinal);
         return new(hash.ToLowerInvariant(), [.. calls], [.. slots], [.. reads], [.. writes], [.. referenceReads], stub);
     }
+
+    /// <summary>
+    /// Text with the member ordinals of compiler-generated names replaced by <c>#</c> (<c>&lt;&gt;c__DisplayClass12_0</c>,
+    /// <c>&lt;M&gt;b__12_3</c>, <c>&lt;&gt;9__12_3</c>, <c>&lt;M&gt;g__Local|12_0</c>, <c>&lt;M&gt;d__12</c>): declaring or
+    /// removing another member renumbers them without changing what the body does. Exactness against Mathcad is still
+    /// compared on the real names.
+    /// </summary>
+    internal static string Ordinalless(string text) => System.Text.RegularExpressions.Regex.Replace(text,
+        @"(c__DisplayClass|>b__|>9__|\|)\d+(?=_\d)|(>d__)\d+", m => m.Groups[1].Success ? m.Groups[1].Value + "#" : m.Groups[2].Value + "#");
 
     /// <summary>A string literal with the checkout's path <paramref name="root"/> (either separator style, any
     /// trailing separator ignored) replaced by <c>&lt;repo&gt;</c> where it is a whole path prefix (followed by a

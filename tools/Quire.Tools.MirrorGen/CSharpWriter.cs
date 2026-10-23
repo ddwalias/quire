@@ -468,7 +468,9 @@ public sealed class CSharpWriter(Mapper mapper, Planner plan)
         bool unary = m.Name is "op_UnaryPlus" or "op_UnaryNegation" or "op_LogicalNot" or "op_OnesComplement" or "op_Increment"
             or "op_Decrement" or "op_True" or "op_False";
         if (m.Params.Length != (unary ? 1 : 2)) return null;
-        if (Pairs.TryGetValue(m.Name, out var pair) && !t.Methods.Any(o => o.Name == pair && o.SpecialName && !plan.Skip.Contains(o))) return null;
+        // The pair may be generated or hand-written; either way C# sees both operators.
+        if (Pairs.TryGetValue(m.Name, out var pair) && !t.Methods.Any(o => o.Name == pair && o.SpecialName
+                && (!plan.Skip.Contains(o) || plan.HandWrittenMembers.Contains(o)))) return null;
         return $"{T(m.Return, ctx)} operator {symbol}";
     }
 

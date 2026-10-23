@@ -94,6 +94,12 @@ public static class Emit
             if (Signatures(t, plan).Any(s => s.ToString().Contains('*'))) d.Unsafe = true;
         }
 
+        // Hand-written code may need projects the generated signatures no longer mention (a stub implemented by hand
+        // can be the last generated use of another project's type): keep what the built assembly references.
+        foreach (var (project, d) in deps)
+            foreach (var reference in BuiltReferences(repo, project))
+                if (reference != project && deps.ContainsKey(reference)) d.Projects.Add(reference);
+
         // InternalsVisibleTo, as Mathcad declares it, mapped to the consolidated projects.
         foreach (var asm in mathcad.Assemblies.Values)
         {
@@ -211,6 +217,19 @@ public static class Emit
     }
 
     // ------------------------------------------------------------------ project files
+
+    /// <summary>Assembly names the project's latest Release build references.</summary>
+    private static IEnumerable<string> BuiltReferences(string repo, string project)
+    {
+        var bin = Path.Combine(repo, "src", project, "bin", "Release");
+        if (!Directory.Exists(bin)) return [];
+        var dll = Directory.GetDirectories(bin).Select(d => Path.Combine(d, project + ".dll")).Where(File.Exists)
+            .OrderByDescending(File.GetLastWriteTimeUtc).FirstOrDefault();
+        if (dll == null) return [];
+        using var pe = new System.Reflection.PortableExecutable.PEReader(File.OpenRead(dll));
+        var md = System.Reflection.Metadata.PEReaderExtensions.GetMetadataReader(pe);
+        return [.. md.AssemblyReferences.Select(h => md.GetString(md.GetAssemblyReference(h).Name))];
+    }
 
     private static void WriteProject(string repo, string project, ProjectDeps d)
     {

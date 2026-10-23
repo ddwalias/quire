@@ -1,6 +1,6 @@
 """Acceptance checks for the Release IL gate, without executing production code."""
 import unittest
-from release_il import compare
+from release_il import compare, ordinalless
 
 
 def method(name='M', body='same', exact=True, **extra):
@@ -32,6 +32,28 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         self.assertFalse(implemented['passed'])
         self.assertFalse(compare(inventory(method(body='a.g.cs', stub_body=True)),
                                  inventory(method(body='b.cs', exact=False, stub_body=True)))['passed'])
+
+    def test_regenerated_attribute_stub_is_unchanged(self):
+        # A constructor stub whose chaining MirrorGen changed is still a stub.
+        result = compare(inventory(method(body='base()', exact=False, mirror_stub=True)),
+                         inventory(method(body='this()', exact=False, mirror_stub=True)))
+        self.assertTrue(result['passed'])
+
+    def test_removing_a_never_exact_generated_stub_passes(self):
+        self.assertTrue(compare(inventory(method(exact=False, mirror_stub=True)), inventory())['passed'])
+        self.assertTrue(compare(inventory(method(exact=False, stub_body=True)), inventory())['passed'])
+        self.assertFalse(compare(inventory(method(exact=True, mirror_stub=True)), inventory())['passed'])
+        self.assertFalse(compare(inventory(method(exact=False)), inventory())['passed'])
+
+    def test_renumbered_generated_member_is_the_same_member(self):
+        def lambda_row(n, body='same'):
+            row = method(f'<AddLine>b__{n}_5', body=body, exact=False)
+            row.update(id=f'P::T+<>c::<AddLine>b__{n}_5', type='T+<>c', original=None)
+            return row
+        self.assertTrue(compare(inventory(lambda_row(249)), inventory(lambda_row(240)))['passed'])
+        self.assertFalse(compare(inventory(lambda_row(249)), inventory(lambda_row(240, body='other')))['passed'])
+        self.assertEqual(ordinalless('T+<>c__DisplayClass249_0::<M>b__249_5|<M>g__F|251_0|<M>d__205|<>9__12_3'),
+                         'T+<>c__DisplayClass#_0::<M>b__#_5|<M>g__F|#_0|<M>d__#|<>9__#_3')
 
     def test_unchanged_unfinished_methods_do_not_block(self):
         result = compare(inventory(method(exact=False)), inventory(method(exact=False)))
