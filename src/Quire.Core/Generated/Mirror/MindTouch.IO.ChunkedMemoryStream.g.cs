@@ -48,7 +48,5 @@ public partial class ChunkedMemoryStream : global::System.IO.Stream
     [global::Quire.Mirror.MirrorStub]
     protected override void Dispose(bool disposing) => base.Dispose(disposing);
     [global::Quire.Mirror.MirrorStub]
-    private void ConsolidateChunks(long capacity) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void EnsureCapacity(long requested) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

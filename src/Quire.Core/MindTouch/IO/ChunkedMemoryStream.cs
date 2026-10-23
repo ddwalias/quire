@@ -123,6 +123,17 @@ public partial class ChunkedMemoryStream
         return num + 1;
     }
 
+    private void ConsolidateChunks(long capacity)
+    {
+        byte[] buffer = new byte[capacity];
+        long position = _position;
+        Position = 0L;
+        Read(buffer, 0, (int)_length);
+        Position = position;
+        _buffer = buffer;
+        _chunks = null;
+    }
+
     private byte[] GetChunk(int index, out int count)
     {
         if (index == 0)
