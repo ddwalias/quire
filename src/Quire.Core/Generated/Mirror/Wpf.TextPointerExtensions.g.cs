@@ -17,6 +17,4 @@ public static partial class TextPointerExtensions
     public static T GetTextElementFromTextPointer<T>(this global::System.Windows.Documents.TextPointer textPtr) where T : global::System.Windows.Documents.TextElement => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Documents.Hyperlink GetHyperlinkAdjacentToTextPointer(this global::System.Windows.Documents.TextPointer textPtr, out global::System.Windows.Documents.LogicalDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Documents.TextPointer GetPositionAtCharsOffset(this global::System.Windows.Documents.TextPointer startPointer, int skipNChars) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
