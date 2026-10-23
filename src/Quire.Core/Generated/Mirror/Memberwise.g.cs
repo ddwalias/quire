@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.Memberwise, Ptc.Core")]
 public static partial class Memberwise
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool Equal(object left, object right) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
