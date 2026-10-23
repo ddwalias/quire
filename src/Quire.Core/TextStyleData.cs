@@ -8,6 +8,16 @@ namespace Quire;
 
 public partial class TextStyleData
 {
+    public void UpdateStyle(string name, Style style, string basedOnKey, Style basedOnOldStyle)
+    {
+        _oldStyle = TextStyleBase.CloneStyle(Style);
+        _oldStyle.BasedOn = basedOnOldStyle;
+        Style = style;
+        StyleName = name;
+        BaseOnKey = basedOnKey;
+        StyleChanged?.Invoke(this);
+    }
+
     [MirrorVerified("PtcTextStyleDataMechanicalDifferentialTests")]
     public override string ToString() => StyleName;
 
