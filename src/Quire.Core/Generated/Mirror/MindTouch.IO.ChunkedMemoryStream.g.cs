@@ -55,6 +55,4 @@ public partial class ChunkedMemoryStream : global::System.IO.Stream
     private void EnsureCapacity(long requested) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private byte[] GetChunk(int index, out int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private int GetChunkIndex(long position, out int offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

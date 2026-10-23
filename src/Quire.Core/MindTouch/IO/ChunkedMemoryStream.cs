@@ -110,6 +110,19 @@ public partial class ChunkedMemoryStream
         return _buffer;
     }
 
+    private int GetChunkIndex(long position, out int offset)
+    {
+        if (position < _buffer.Length - _bufferIndex)
+        {
+            offset = (int)position + _bufferIndex;
+            return 0;
+        }
+        position -= _buffer.Length;
+        int num = (int)(position / ChunkSize);
+        offset = (int)(position % ChunkSize);
+        return num + 1;
+    }
+
     [MirrorVerified("Release IL")]
     public long Capacity
     {
