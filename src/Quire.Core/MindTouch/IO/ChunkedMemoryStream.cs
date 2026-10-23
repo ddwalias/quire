@@ -123,6 +123,35 @@ public partial class ChunkedMemoryStream
         return num + 1;
     }
 
+    private byte[] GetChunk(int index, out int count)
+    {
+        if (index == 0)
+        {
+            count = _bufferCount;
+            return _buffer;
+        }
+        index--;
+        if (_chunks == null)
+        {
+            int num;
+            for (num = 1; num <= index; num *= 2)
+            {
+            }
+            _chunks = new byte[num][];
+        }
+        else if (index >= _chunks.Length)
+        {
+            int num2;
+            for (num2 = _chunks.Length * 2; num2 <= index; num2 *= 2)
+            {
+            }
+            Array.Resize(ref _chunks, num2);
+        }
+        byte[] result = _chunks[index] ?? (_chunks[index] = new byte[ChunkSize]);
+        count = ChunkSize;
+        return result;
+    }
+
     [MirrorVerified("Release IL")]
     public long Capacity
     {
