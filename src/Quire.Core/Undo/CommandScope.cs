@@ -6,6 +6,18 @@ namespace Quire.Undo;
 
 public partial class CommandScope
 {
+    public CommandScope(string name, bool canUndoTreeOperations)
+    {
+        _canUndoTreeOperations = canUndoTreeOperations;
+        _parentBuffer = CommandBuffer.CurrentInstance;
+        CommandBuffer.CurrentInstance = (_buffer = new CommandBuffer());
+        _name = name;
+        lock (_scopeStack)
+        {
+            _scopeStack.Push(this);
+        }
+    }
+
     [MirrorVerified("PtcUndoCommandScopeMechanicalDifferentialTests")]
     public CommandScope(string name) : this(name, false) { }
 

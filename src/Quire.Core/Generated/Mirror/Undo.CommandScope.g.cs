@@ -24,7 +24,5 @@ public partial class CommandScope : global::System.IDisposable
     [global::Quire.Mirror.MirrorStub]
     public static bool RequireTreeOperationsInUndoScope;
     [global::Quire.Mirror.MirrorStub]
-    public CommandScope(string name, bool canUndoTreeOperations) { }
-    [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
 }
