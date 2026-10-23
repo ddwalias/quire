@@ -13,6 +13,4 @@ public partial class TextStyleData : global::System.Windows.DependencyObject
 {
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.Dictionary<string, global::Quire.TextStylePropertyInfoExt> GetSettersInternal(global::System.Windows.Style textStyle, global::System.Collections.Generic.Dictionary<string, global::Quire.TextStylePropertyInfoExt> setterCollection, bool isInherited = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

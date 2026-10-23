@@ -90,4 +90,22 @@ public partial class TextStyleData
         BaseOnKey = baseOnKey;
         StyleChanged += BasedOnStyleChanged;
     }
+
+    public Dictionary<string, TextStylePropertyInfoExt> GetSettersInternal(Style textStyle, Dictionary<string, TextStylePropertyInfoExt> setterCollection, bool isInherited = false)
+    {
+        if (textStyle.BasedOn != null)
+        {
+            GetSettersInternal(textStyle.BasedOn, setterCollection, isInherited: true);
+        }
+        foreach (Setter item in textStyle.Setters.OfType<Setter>())
+        {
+            object obj = item.Value;
+            if (item.Property.Name == "FontSize")
+            {
+                obj = Math.Round(global::Quire.Wpf.WpfUtils.DipsToPoints((double)obj), 1);
+            }
+            setterCollection[item.Property.Name] = new TextStylePropertyInfoExt(isInherited, obj);
+        }
+        return setterCollection;
+    }
 }
