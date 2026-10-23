@@ -8,6 +8,17 @@ namespace Quire;
 
 public static partial class TextElementAttachedProperties
 {
+    private static void HandleTextStyleDataChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        FrameworkContentElement frameworkContentElement = d as FrameworkContentElement;
+        if (frameworkContentElement != null
+            && Quire.Wpf.WpfUtils.HasLocalValue(frameworkContentElement, StyleKeyProperty)
+            && e.NewValue == null)
+        {
+            ClearTextStyleData(frameworkContentElement);
+        }
+    }
+
     [MirrorVerified("PtcTextElementAttachedPropertiesMechanicalDifferentialTests")]
     public static DependencyProperty StyleKeyProperty;
 
