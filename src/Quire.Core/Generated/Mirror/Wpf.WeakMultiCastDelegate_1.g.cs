@@ -12,9 +12,5 @@ namespace Quire.Wpf;
 public partial class WeakMultiCastDelegate<TDelegate> where TDelegate : class
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.List<global::Quire.Wpf.WeakDelegate> _weakDelegates;
-    [global::Quire.Mirror.MirrorStub]
     public void Remove(TDelegate tDelegate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public WeakMultiCastDelegate() { }
 }

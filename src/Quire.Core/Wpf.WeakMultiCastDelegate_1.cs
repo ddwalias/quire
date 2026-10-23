@@ -5,6 +5,10 @@ namespace Quire.Wpf;
 
 public partial class WeakMultiCastDelegate<TDelegate> where TDelegate : class
 {
+    private readonly System.Collections.Generic.List<WeakDelegate> _weakDelegates = new System.Collections.Generic.List<WeakDelegate>();
+
+    public WeakMultiCastDelegate() { }
+
     [MirrorVerified("Release IL")]
     public void Combine(TDelegate tDelegate)
     {
