@@ -13,6 +13,4 @@ public partial class Trace2DResultNode : global::Quire.Calculation.Core.SimpleRe
 {
     [global::Quire.Mirror.MirrorStub]
     global::System.Collections.Generic.IReadOnlyList<global::Quire.Calculation.Core.TraceData> global::Quire.Calculation.Core.ITrace2DResultNode.Traces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.ResultValueType global::Quire.Calculation.Core.IResultNode.ValueType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

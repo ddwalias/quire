@@ -6,10 +6,6 @@
 #nullable disable
 #pragma warning disable
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Quire.Engine.Misc;
 
 [global::Quire.Mirror.MirrorOf("Engine.Misc.StringUtils, mcmisc")]

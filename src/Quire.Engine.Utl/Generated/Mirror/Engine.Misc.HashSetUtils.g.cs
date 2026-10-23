@@ -6,8 +6,6 @@
 #nullable disable
 #pragma warning disable
 
-using System.Linq;
-
 namespace Quire.Engine.Misc;
 
 [global::Quire.Mirror.MirrorOf("Engine.Misc.HashSetUtils, mcmisc")]

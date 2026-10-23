@@ -11,5 +11,4 @@ namespace Quire.Xml;
 [global::Quire.Mirror.MirrorOf("Ptc.Xml.XmlHelper, Ptc.Core")]
 public static partial class XmlHelper
 {
-
 }

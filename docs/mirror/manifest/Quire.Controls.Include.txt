@@ -508,8 +508,6 @@
   Quire.Controls.Include.IncludedCalculatableAggregateWithComponentWrapper P ComponentHandle : System.Nullable`1<System.Int32> get:public set:public
   Quire.Controls.Include.IncludedCalculatableAggregateWithComponentWrapper P DataExchangeModel : Quire.Calculation.Core.IDataExchangeModel get:public
   Quire.Controls.Include.IncludedCalculatableAggregateWithComponentWrapper P WrappedCalculatableWithComponent : Quire.Calculation.Core.ICalculatableWithDataExchange get:public
-  Quire.Controls.Include.IncludedCalculatableAggregateWithComponentWrapper X Quire.Calculation.Core.ICalculatable::SetResult
-  Quire.Controls.Include.IncludedCalculatableAggregateWithComponentWrapper X Quire.Calculation.Core.ICalculatable::add_RlChanged
   Quire.Controls.Include.IncludedCalculatableAggregateWithComponentWrapper X Quire.Calculation.Core.ICalculatable::get_SynchronizationStatus
   Quire.Controls.Include.IncludedCalculatableAggregateWrapper E public System.Action`1<Quire.Calculation.Core.ICalculatable> CalculatableMoved
   Quire.Controls.Include.IncludedCalculatableAggregateWrapper E public System.Action`1<Quire.Calculation.Core.ICalculatable> CalculatableRemoved
@@ -526,8 +524,6 @@
   Quire.Controls.Include.IncludedCalculatableAggregateWrapper M public override Dispose`0() -> System.Void
   Quire.Controls.Include.IncludedCalculatableAggregateWrapper P CalculatableChildren : System.Collections.Generic.IEnumerable`1<Quire.Calculation.Core.ICalculatable> get:public
   Quire.Controls.Include.IncludedCalculatableAggregateWrapper P WrappedCalculatableAggregate : Quire.Calculation.Core.ICalculatableAggregate get:public
-  Quire.Controls.Include.IncludedCalculatableAggregateWrapper X Quire.Calculation.Core.ICalculatable::SetResult
-  Quire.Controls.Include.IncludedCalculatableAggregateWrapper X Quire.Calculation.Core.ICalculatable::add_RlChanged
   Quire.Controls.Include.IncludedCalculatableAggregateWrapper X Quire.Calculation.Core.ICalculatable::get_SynchronizationStatus
   Quire.Controls.Include.IncludedCalculatableWrapper E public Quire.Delegate1`1<Quire.Calculation.Core.EngineError> SetErrorChanged
   Quire.Controls.Include.IncludedCalculatableWrapper E public System.Action CalculatingStatusChangedEvent

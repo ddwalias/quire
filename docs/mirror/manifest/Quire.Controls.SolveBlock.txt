@@ -65,9 +65,6 @@
   Quire.Controls.SolveBlockCalculatable P InterceptAndUpdateResult : System.Boolean get:public
   Quire.Controls.SolveBlockCalculatable P UseICalculatableToRestoreResult : System.Boolean get:public
   Quire.Controls.SolveBlockCalculatable P WrappedCalculatable : Quire.Calculation.Core.ICalculatable override get:public set:protected
-  Quire.Controls.SolveBlockCalculatable X Quire.Calculation.Core.ICalculatable::SetResult
-  Quire.Controls.SolveBlockCalculatable X Quire.Calculation.Core.ICalculatable::add_RlChanged
-  Quire.Controls.SolveBlockCalculatable X Quire.Calculation.Core.ICalculatable::get_SynchronizationStatus
   Quire.Controls.SolveBlockCalculatableAggregate E public System.Action`1<Quire.Calculation.Core.ICalculatable> CalculatableMoved
   Quire.Controls.SolveBlockCalculatableAggregate E public System.Action`1<Quire.Calculation.Core.ICalculatable> CalculatableRemoved
   Quire.Controls.SolveBlockCalculatableAggregate E public System.Action`2<Quire.Calculation.Core.ICalculatableContainer,Quire.Calculation.Core.ICalculatable> CalculatableAdded
@@ -93,9 +90,6 @@
   Quire.Controls.SolveBlockCalculatableAggregate M public override Dispose`0() -> System.Void
   Quire.Controls.SolveBlockCalculatableAggregate P CalculatableChildren : System.Collections.Generic.IEnumerable`1<Quire.Calculation.Core.ICalculatable> get:public
   Quire.Controls.SolveBlockCalculatableAggregate P WrappedCalculatableAggregate : Quire.Calculation.Core.ICalculatableAggregate get:public
-  Quire.Controls.SolveBlockCalculatableAggregate X Quire.Calculation.Core.ICalculatable::SetResult
-  Quire.Controls.SolveBlockCalculatableAggregate X Quire.Calculation.Core.ICalculatable::add_RlChanged
-  Quire.Controls.SolveBlockCalculatableAggregate X Quire.Calculation.Core.ICalculatable::get_SynchronizationStatus
   Quire.Controls.SolveBlockChildManager M public .ctor`0(System.Collections.Generic.IEnumerable`1<System.Object>,System.Action`1<Quire.Calculation.Core.ICalculatable>,System.Action`1<Quire.Calculation.Core.ICalculatable>,System.Action`1<Quire.Calculation.Core.ICalculatable>,System.Func`3<Quire.Calculation.Core.ICalculatable,System.Boolean,Quire.Calculation.Core.ICalculatable>,System.Func`2<Quire.Calculation.Core.ICalculatable,Quire.Calculation.Core.ICalculatable>,System.Action`1<Quire.Calculation.Core.ICalculatable>,System.Action`2<Quire.Calculation.Core.ICalculatable,System.Boolean>,System.Action) -> System.Void
   Quire.Controls.SolveBlockChildManager M public ChildAddedCore`0(System.Object) -> System.Void
   Quire.Controls.SolveBlockChildManager M public ChildRemovedCore`0(System.Object) -> System.Void
@@ -155,17 +149,6 @@
   Quire.Controls.SolveBlockControl P SolverIndicatorBottom : System.Double get:public
   Quire.Controls.SolveBlockControl P SolverIndicatorTop : System.Double get:public
   Quire.Controls.SolveBlockControl P TextStyleChangedHandler : Quire.ITextStyleChangedHandler get:public set:public
-  Quire.Controls.SolveBlockControl X Quire.Calculation.Core.ICalculatable::Commit
-  Quire.Controls.SolveBlockControl X Quire.Calculation.Core.ICalculatable::SetAutoSelectAlgorithm
-  Quire.Controls.SolveBlockControl X Quire.Calculation.Core.ICalculatable::SetCalculatingStatus
-  Quire.Controls.SolveBlockControl X Quire.Calculation.Core.ICalculatable::SetError
-  Quire.Controls.SolveBlockControl X Quire.Calculation.Core.ICalculatable::SetIdentifierLabels
-  Quire.Controls.SolveBlockControl X Quire.Calculation.Core.ICalculatable::SetRedefinitionWarnings
-  Quire.Controls.SolveBlockControl X Quire.Calculation.Core.ICalculatable::SetResult
-  Quire.Controls.SolveBlockControl X Quire.Calculation.Core.ICalculatable::SetStatusSynchronized
-  Quire.Controls.SolveBlockControl X Quire.Calculation.Core.ICalculatable::add_GetValueOfIdentifierBefore
-  Quire.Controls.SolveBlockControl X Quire.Calculation.Core.ICalculatable::add_RequestEvaluation
-  Quire.Controls.SolveBlockControl X Quire.Calculation.Core.ICalculatable::add_TreatAsUpToDate
   Quire.Controls.SolveBlockControl X Quire.Calculation.Core.ICalculatableContainer::add_CalculatableAdded
   Quire.Controls.SolveBlockControl X Quire.Calculation.Core.ICalculatableContainer::add_CalculatableMoved
   Quire.Controls.SolveBlockControl X Quire.Calculation.Core.ICalculatableContainer::add_CalculatableRemoved
@@ -430,9 +413,6 @@
   Quire.Controls.SolverAggregate P SolverArgs : System.String[] get:private set:private
   Quire.Controls.SolverAggregate P SolverName : System.String get:private set:private
   Quire.Controls.SolverAggregate P SolverTag : System.String get:private set:private
-  Quire.Controls.SolverAggregate X Quire.Calculation.Core.ICalculatable::SetResult
-  Quire.Controls.SolverAggregate X Quire.Calculation.Core.ICalculatable::add_RlChanged
-  Quire.Controls.SolverAggregate X Quire.Calculation.Core.ICalculatable::get_SynchronizationStatus
   Quire.Controls.SolverAggregateChildWrapper F private readonly System.String _wrappedRlFormat
   Quire.Controls.SolverAggregateChildWrapper M public .ctor`0(Quire.Calculation.Core.ICalculatable) -> System.Void
   Quire.Controls.SolverAggregateChildWrapper M public ContainsError`0(Quire.Calculation.Core.EngineError) -> System.Boolean
@@ -450,9 +430,6 @@
   Quire.Controls.SolverAggregateChildWrapperAggregate M public .ctor`0(Quire.Calculation.Core.ICalculatable) -> System.Void
   Quire.Controls.SolverAggregateChildWrapperAggregate P CalculatableChildren : System.Collections.Generic.IEnumerable`1<Quire.Calculation.Core.ICalculatable> get:public
   Quire.Controls.SolverAggregateChildWrapperAggregate P WrappedCalculatableAggregate : Quire.Calculation.Core.ICalculatableAggregate get:public
-  Quire.Controls.SolverAggregateChildWrapperAggregate X Quire.Calculation.Core.ICalculatable::SetResult
-  Quire.Controls.SolverAggregateChildWrapperAggregate X Quire.Calculation.Core.ICalculatable::add_RlChanged
-  Quire.Controls.SolverAggregateChildWrapperAggregate X Quire.Calculation.Core.ICalculatable::get_SynchronizationStatus
   Quire.ProductInfo.Constants F public const System.String ConverterExe
   Quire.ProductInfo.Constants F public const System.String ConverterProductName
   Quire.ProductInfo.Constants M public .ctor`0() -> System.Void

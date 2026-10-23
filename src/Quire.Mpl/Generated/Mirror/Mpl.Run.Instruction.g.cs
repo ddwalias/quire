@@ -11,6 +11,7 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Instruction, mplrun")]
 internal partial class Instruction : global::Quire.Mpl.Run.Code
 {
+
     [global::Quire.Mirror.MirrorOf("Mpl.Run.Instruction+InstructionArgType, mplrun")]
     private partial class InstructionArgType : global::Quire.Mpl.Run.Instruction
     {

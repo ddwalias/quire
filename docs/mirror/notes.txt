@@ -1,7 +1,7 @@
 # Summary (count of notes by kind):
 #      503  renamed field: name clash (obfuscated names)
 #      251  accessor without property metadata declared as an explicit property
-#       84  added explicit interface stubs
+#       61  added explicit interface stubs
 #       50  dropped method: unlisted
 #       43  no base member for override
 #       32  dropped method: pending
@@ -152,37 +152,22 @@
 [Quire.Calculation.Core] Quire.Calculation.Core.CalculatingStatus  (Ptc.Calculation.Core.CalculatingStatus, Ptc.Calculation.Core)
   not generated: hand-written Enum
 
-[Quire.Calculation.Core] Quire.Calculation.Core.ComplexSimpleResultNode  (Ptc.Calculation.Core.ComplexSimpleResultNode, Ptc.Calculation.Core)
-  added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IResultNode.ValueType
-
 [Quire.Calculation.Core] Quire.Calculation.Core.DisplayMatrixSimpleResultNode  (Ptc.Calculation.Core.DisplayMatrixSimpleResultNode, Ptc.Calculation.Core)
-  added 6 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IMatrixResultNode.Cols, Quire.Calculation.Core.IMatrixResultNode.DisplayValues, Quire.Calculation.Core.IMatrixResultNode.Units, Quire.Calculation.Core.IMatrixResultNode.ElementUnits, Quire.Calculation.Core.IMatrixResultNode.IsRangeTable, Quire.Calculation.Core.IResultNode.ValueType
+  added 5 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IMatrixResultNode.Cols, Quire.Calculation.Core.IMatrixResultNode.DisplayValues, Quire.Calculation.Core.IMatrixResultNode.Units, Quire.Calculation.Core.IMatrixResultNode.ElementUnits, Quire.Calculation.Core.IMatrixResultNode.IsRangeTable
 
 [Quire.Calculation.Core] Quire.Calculation.Core.EagerMatrixSimpleResultNode  (Ptc.Calculation.Core.EagerMatrixSimpleResultNode, Ptc.Calculation.Core)
-  added 6 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IMatrixResultNode.Cols, Quire.Calculation.Core.IMatrixResultNode.DisplayValues, Quire.Calculation.Core.IMatrixResultNode.Units, Quire.Calculation.Core.IMatrixResultNode.ElementUnits, Quire.Calculation.Core.IMatrixResultNode.IsRangeTable, Quire.Calculation.Core.IResultNode.ValueType
-
-[Quire.Calculation.Core] Quire.Calculation.Core.EmptySimpleResultNode  (Ptc.Calculation.Core.EmptySimpleResultNode, Ptc.Calculation.Core)
-  added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IResultNode.ValueType
+  added 5 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IMatrixResultNode.Cols, Quire.Calculation.Core.IMatrixResultNode.DisplayValues, Quire.Calculation.Core.IMatrixResultNode.Units, Quire.Calculation.Core.IMatrixResultNode.ElementUnits, Quire.Calculation.Core.IMatrixResultNode.IsRangeTable
 
 [Quire.Calculation.Core] Quire.Calculation.Core.FunctionSimpleResultNode  (Ptc.Calculation.Core.FunctionSimpleResultNode, Ptc.Calculation.Core)
-  added 2 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IFunctionResultNode.Signature, Quire.Calculation.Core.IResultNode.ValueType
-
-[Quire.Calculation.Core] Quire.Calculation.Core.ImaginarySimpleResultNode  (Ptc.Calculation.Core.ImaginarySimpleResultNode, Ptc.Calculation.Core)
-  added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IResultNode.ValueType
+  added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IFunctionResultNode.Signature
 
 [Quire.Calculation.Core] Quire.Calculation.Core.LazyMatrixSimpleResultNode  (Ptc.Calculation.Core.LazyMatrixSimpleResultNode, Ptc.Calculation.Core)
-  added 6 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IMatrixResultNode.Cols, Quire.Calculation.Core.IMatrixResultNode.DisplayValues, Quire.Calculation.Core.IMatrixResultNode.Units, Quire.Calculation.Core.IMatrixResultNode.ElementUnits, Quire.Calculation.Core.IMatrixResultNode.IsRangeTable, Quire.Calculation.Core.IResultNode.ValueType
-
-[Quire.Calculation.Core] Quire.Calculation.Core.RealSimpleResultNode  (Ptc.Calculation.Core.RealSimpleResultNode, Ptc.Calculation.Core)
-  added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IResultNode.ValueType
+  added 5 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IMatrixResultNode.Cols, Quire.Calculation.Core.IMatrixResultNode.DisplayValues, Quire.Calculation.Core.IMatrixResultNode.Units, Quire.Calculation.Core.IMatrixResultNode.ElementUnits, Quire.Calculation.Core.IMatrixResultNode.IsRangeTable
 
 [Quire.Calculation.Core] Quire.Calculation.Core.ResultValueType  (Ptc.Calculation.Core.ResultValueType, Ptc.Calculation.Core)
   not generated: hand-written Enum
 
 [Quire.Calculation.Core] Quire.Calculation.Core.SimpleResultNode  (Ptc.Calculation.Core.SimpleResultNode, Ptc.Calculation.Core)
-  added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IResultNode.ValueType
-
-[Quire.Calculation.Core] Quire.Calculation.Core.StringSimpleResultNode  (Ptc.Calculation.Core.StringSimpleResultNode, Ptc.Calculation.Core)
   added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IResultNode.ValueType
 
 [Quire.Calculation.Core] Quire.Calculation.Core.Support.CalculatableWrapper  (Ptc.Calculation.Core.Support.CalculatableWrapper, Ptc.Calculation.Core)
@@ -191,39 +176,18 @@
 [Quire.Calculation.Core] Quire.Calculation.Core.Support.SimpleCalculatable  (Ptc.Calculation.Core.Support.SimpleCalculatable, Ptc.Calculation.Core)
   added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.RlChanged
 
-[Quire.Calculation.Core] Quire.Calculation.Core.SymbolicSimpleResultNode  (Ptc.Calculation.Core.SymbolicSimpleResultNode, Ptc.Calculation.Core)
-  added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IResultNode.ValueType
-
 [Quire.Calculation.Core] Quire.Calculation.Core.SynchronizationStatus  (Ptc.Calculation.Core.SynchronizationStatus, Ptc.Calculation.Core)
   not generated: hand-written Enum
 
 [Quire.Calculation.Core] Quire.Calculation.Core.Trace2DResults.Trace2DResultNode  (Ptc.Calculation.Core.Trace2DResults.Trace2DResultNode, Ptc.Calculation.Core)
-  added 2 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ITrace2DResultNode.Traces, Quire.Calculation.Core.IResultNode.ValueType
-
-[Quire.Calculation.Core] Quire.Calculation.Core.Trace2DResults.VectorListResultNode  (Ptc.Calculation.Core.Trace2DResults.VectorListResultNode, Ptc.Calculation.Core)
-  added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IResultNode.ValueType
+  added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ITrace2DResultNode.Traces
 
 [Quire.Calculation.Core] Quire.Calculation.Core.UnitedValueSimpleResultNode  (Ptc.Calculation.Core.UnitedValueSimpleResultNode, Ptc.Calculation.Core)
-  added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IUnitedValueResultNode.DisplayValue, Quire.Calculation.Core.IUnitedValueResultNode.Units, Quire.Calculation.Core.IResultNode.ValueType
+  added 2 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IUnitedValueResultNode.DisplayValue, Quire.Calculation.Core.IUnitedValueResultNode.Units
 
 [Quire.Controls] Quire.Controls.DimensionSelectorButton  (Ptc.Controls.DimensionSelectorButton, Ptc.Controls)
   interface accessor Ptc.Controls.IDimensionSelectorView.set_CommandParameter has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: Quire.Controls.IDimensionSelectorView.CommandParameter
-
-[Quire.Controls] Quire.Controls.IO.IdDefinition  (Ptc.Controls.IO.IdDefinition, Ptc.Controls)
-  added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.RlChanged
-
-[Quire.Controls] Quire.Controls.IO.MatrixDefinition  (Ptc.Controls.IO.MatrixDefinition, Ptc.Controls)
-  added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.RlChanged
-
-[Quire.Controls] Quire.Controls.IO.ScaledEvaluation  (Ptc.Controls.IO.ScaledEvaluation, Ptc.Controls)
-  added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.RlChanged
-
-[Quire.Controls] Quire.Controls.IO.SexprDefinition  (Ptc.Controls.IO.SexprDefinition, Ptc.Controls)
-  added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.RlChanged
-
-[Quire.Controls] Quire.Controls.IO.ShadowCalculatable  (Ptc.Controls.IO.ShadowCalculatable, Ptc.Controls)
-  added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.RlChanged
 
 [Quire.Controls.Core] Quire.Controls.Core.IRtfItemBase  (Ptc.Controls.Core.IRtfItemBase, Ptc.Controls.Core)
   dropped method AddItemToDocument: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
@@ -522,9 +486,6 @@
 [Quire.Controls.ExcelComponent] Quire.Controls.ExcelComponent.ExcelComponentControl  (Ptc.Controls.ExcelComponent.ExcelComponentControl, Ptc.Controls.ExcelComponent)
   added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.RlChanged
 
-[Quire.Controls.ExcelComponent] Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper  (Ptc.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper, Ptc.Controls.ExcelComponent)
-  added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.RlChanged
-
 [Quire.Controls.ExcelComponent] Quire.Controls.ExcelComponent.Model.ChartComponentModel  (Ptc.Controls.ExcelComponent.Model.ChartComponentModel, Ptc.Controls.ExcelComponent)
   added 4 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.SynchronizationStatus, Quire.Calculation.Core.ICalculatable.RlChanged
 
@@ -537,23 +498,11 @@
 [Quire.Controls.ExcelComponent] Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable  (Ptc.Controls.ExcelComponent.Model.ChartTraceCalculatable, Ptc.Controls.ExcelComponent)
   added 4 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.SynchronizationStatus, Quire.Calculation.Core.ICalculatable.RlChanged
 
-[Quire.Controls.ExcelComponent] Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper  (Ptc.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper, Ptc.Controls.ExcelComponent)
-  added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.RlChanged
-
 [Quire.Controls.ExcelComponent] Quire.Controls.ExcelComponent.Model.ExcelComponentModel  (Ptc.Controls.ExcelComponent.Model.ExcelComponentModel, Ptc.Controls.ExcelComponent)
   added 4 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.SynchronizationStatus, Quire.Calculation.Core.ICalculatable.RlChanged
 
-[Quire.Controls.ExcelComponent] Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper  (Ptc.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper, Ptc.Controls.ExcelComponent)
-  added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.RlChanged
-
 [Quire.Controls.ExcelComponent] Quire.Controls.ExcelComponent.Model.OleBaseComponentModel  (Ptc.Controls.ExcelComponent.Model.OleBaseComponentModel, Ptc.Controls.ExcelComponent)
   added 4 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.SynchronizationStatus, Quire.Calculation.Core.ICalculatable.RlChanged
-
-[Quire.Controls.ExcelComponent] Quire.Controls.ExcelComponent.Model.SimpleChartCalculatable  (Ptc.Controls.ExcelComponent.Model.SimpleChartCalculatable, Ptc.Controls.ExcelComponent)
-  added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.RlChanged
-
-[Quire.Controls.ExcelComponent] Quire.Controls.ExcelComponent.Model.SimpleOleCalculatable  (Ptc.Controls.ExcelComponent.Model.SimpleOleCalculatable, Ptc.Controls.ExcelComponent)
-  added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.RlChanged
 
 [Quire.Controls.ExcelComponent] Quire.Controls.ExcelComponent.View.ChartComponentControl  (Ptc.Controls.ExcelComponent.View.ChartComponentControl, Ptc.Controls.ExcelComponent)
   added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.RlChanged
@@ -571,12 +520,6 @@
   skipped indexed property _Default: C# allows one indexer name per type
   skipped indexed property Resize: C# allows one indexer name per type
   skipped indexed property Value: C# allows one indexer name per type
-
-[Quire.Controls.Include] Quire.Controls.Include.IncludedCalculatableAggregateWithComponentWrapper  (Ptc.Controls.Include.IncludedCalculatableAggregateWithComponentWrapper, Ptc.Controls.Include)
-  added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.RlChanged
-
-[Quire.Controls.Include] Quire.Controls.Include.IncludedCalculatableAggregateWrapper  (Ptc.Controls.Include.IncludedCalculatableAggregateWrapper, Ptc.Controls.Include)
-  added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.RlChanged
 
 [Quire.Controls.Plots] Quire.Controls.Plots.AxisLimitEditor  (Ptc.Controls.Plots.AxisLimitEditor, Ptc.Controls.Plots)
   added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.RlChanged
@@ -630,12 +573,6 @@
   no base member for override PostInitializeResizeEventsAfterLoading; declared virtual instead
   no base member for override SetGraphSize; declared virtual instead
 
-[Quire.Controls.SolveBlock] Quire.Controls.SolveBlockCalculatable  (Ptc.Controls.SolveBlockCalculatable, Ptc.Controls.SolveBlock)
-  added 4 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.SynchronizationStatus, Quire.Calculation.Core.ICalculatable.RlChanged
-
-[Quire.Controls.SolveBlock] Quire.Controls.SolveBlockCalculatableAggregate  (Ptc.Controls.SolveBlockCalculatableAggregate, Ptc.Controls.SolveBlock)
-  added 4 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.SynchronizationStatus, Quire.Calculation.Core.ICalculatable.RlChanged
-
 [Quire.Controls.SolveBlock] Quire.Controls.SolveBlockControl  (Ptc.Controls.SolveBlockControl, Ptc.Controls.SolveBlock)
   hand-written base Quire.Controls.Core.CalculatableRegionControl differs from Mathcad's Quire.Controls.Mathboard.AggregateMathboardControl; base not generated
   constructor() not generated: a hand-written overload with optional parameters covers it
@@ -647,18 +584,12 @@
   no base member for override set_DeserializationStrategy; declared virtual instead
   no base member for override get_ErrorCount; declared virtual instead
   no base member for override get_Error; declared virtual instead
-  added 140 explicit interface stub(s) for members no base provides: Quire.Controls.Mathboard.IAggregateMathboardControl.SectionIndicators, Quire.Controls.Core.IMathboardControl.HasItemInViewPort, Quire.Controls.Core.IMathboardControl.BookmarksManager, Quire.Controls.Core.Whiteboard.IWhiteboardControl.GetItemLocation, Quire.Controls.Core.Whiteboard.IWhiteboardControl.GetItemRect, Quire.Controls.Core.Whiteboard.IWhiteboardControl.SetItemLocation, Quire.Controls.Core.Whiteboard.IWhiteboardControl.GetItemGridPosition, Quire.Controls.Core.Whiteboard.IWhiteboardControl.ActivateWhiteboard
+  added 126 explicit interface stub(s) for members no base provides: Quire.Controls.Mathboard.IAggregateMathboardControl.SectionIndicators, Quire.Controls.Core.IMathboardControl.HasItemInViewPort, Quire.Controls.Core.IMathboardControl.BookmarksManager, Quire.Controls.Core.Whiteboard.IWhiteboardControl.GetItemLocation, Quire.Controls.Core.Whiteboard.IWhiteboardControl.GetItemRect, Quire.Controls.Core.Whiteboard.IWhiteboardControl.SetItemLocation, Quire.Controls.Core.Whiteboard.IWhiteboardControl.GetItemGridPosition, Quire.Controls.Core.Whiteboard.IWhiteboardControl.ActivateWhiteboard
 
 [Quire.Controls.SolveBlock] Quire.Controls.SolveBlockEquationTypes  (Ptc.Controls.SolveBlockEquationTypes, Ptc.Controls.SolveBlock)
   not generated: hand-written Enum
 
 [Quire.Controls.SolveBlock] Quire.Controls.SolveBlockModel  (Ptc.Controls.SolveBlockModel, Ptc.Controls.SolveBlock)
-  added 4 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.SynchronizationStatus, Quire.Calculation.Core.ICalculatable.RlChanged
-
-[Quire.Controls.SolveBlock] Quire.Controls.SolverAggregate  (Ptc.Controls.SolverAggregate, Ptc.Controls.SolveBlock)
-  added 4 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.SynchronizationStatus, Quire.Calculation.Core.ICalculatable.RlChanged
-
-[Quire.Controls.SolveBlock] Quire.Controls.SolverAggregateChildWrapperAggregate  (Ptc.Controls.SolverAggregateChildWrapperAggregate, Ptc.Controls.SolveBlock)
   added 4 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.SynchronizationStatus, Quire.Calculation.Core.ICalculatable.RlChanged
 
 [Quire.Controls.Text] Quire.Controls.Text.Paragraph  (Ptc.Controls.Text.Paragraph, Ptc.Controls.Text)

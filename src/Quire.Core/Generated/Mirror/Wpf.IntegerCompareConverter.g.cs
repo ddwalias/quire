@@ -11,6 +11,7 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.IntegerCompareConverter, Ptc.Core")]
 public partial class IntegerCompareConverter : global::System.Windows.Data.IValueConverter
 {
+
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.IntegerCompareConverter+CompareOperators, Ptc.Core")]
     private enum CompareOperators
     {

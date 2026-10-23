@@ -394,7 +394,7 @@ public partial class EquationControl : global::Quire.Calculation.Core.ICalculata
     [global::Quire.Mirror.MirrorStub]
     private void ToggleInput(bool setTag, string sExpr, global::System.Action<global::Quire.Controls.Core.IORegions.IInputRegion, bool> toggleInputTag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal EquationControl(global::Quire.EquationEditor.IEquationModel model) : this() { }
+    internal EquationControl(global::Quire.EquationEditor.IEquationModel model) : this(default(global::Quire.EquationEditor.Tree.Statement)) { }
     [global::Quire.Mirror.MirrorStub]
     private void SetupInputGestures() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -432,9 +432,9 @@ public partial class EquationControl : global::Quire.Calculation.Core.ICalculata
     [global::Quire.Mirror.MirrorStub]
     private void HandleExpressionValueChanged(global::Quire.Controls.Core.IEquationControl equation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public EquationControl(string sExpression) : this() { }
+    public EquationControl(string sExpression) : this(default(global::Quire.EquationEditor.Tree.Statement)) { }
     [global::Quire.Mirror.MirrorStub]
-    public EquationControl(string sExpression, bool isForEngineCalculation) : this() { }
+    public EquationControl(string sExpression, bool isForEngineCalculation) : this(default(global::Quire.EquationEditor.Tree.Statement)) { }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.EquationControl CreateWithTextInput(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -14,5 +14,5 @@ public partial class RegionCollection : global::Quire.Wpf.SerializableCollection
     [global::Quire.Mirror.MirrorStub]
     public override void GetObjectData(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) => base.GetObjectData(info, context);
     [global::Quire.Mirror.MirrorStub]
-    protected RegionCollection(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) { }
+    protected RegionCollection(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : this() { }
 }

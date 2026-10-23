@@ -9,6 +9,7 @@
     <ProjectReference Include="..\Quire.Controls.ExcelComponent\Quire.Controls.ExcelComponent.csproj" />
     <ProjectReference Include="..\Quire.Controls.Include\Quire.Controls.Include.csproj" />
     <ProjectReference Include="..\Quire.Controls.Whiteboard\Quire.Controls.Whiteboard.csproj" />
+    <ProjectReference Include="..\Quire.Engine\Quire.Engine.csproj" />
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />
     <InternalsVisibleTo Include="Quire.Mirror.Tests" />
     <InternalsVisibleTo Include="Quire.Differential.Tests" />

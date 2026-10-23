@@ -23,6 +23,4 @@ public partial class DisplayMatrixSimpleResultNode : global::Quire.Calculation.C
     global::System.Collections.Generic.IReadOnlyList<global::System.Collections.Generic.IReadOnlyList<global::Quire.Calculation.Core.UnitPower>> global::Quire.Calculation.Core.IMatrixResultNode.ElementUnits { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     bool global::Quire.Calculation.Core.IMatrixResultNode.IsRangeTable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.ResultValueType global::Quire.Calculation.Core.IResultNode.ValueType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

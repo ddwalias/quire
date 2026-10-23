@@ -139,8 +139,6 @@
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P Rl : System.String override get:public
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P RlIdWithLabel : System.String get:public
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P TraceId : System.Nullable`1<System.UInt32> get:public set:private
-  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper X Quire.Calculation.Core.ICalculatable::SetResult
-  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper X Quire.Calculation.Core.ICalculatable::add_RlChanged
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapperExtensions M public static IsCommonTraceType`0(Quire.Controls.ExcelComponent.Model.ChartWrapperType) -> System.Boolean
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapperExtensions M public static IsIndexedTraceType`0(Quire.Controls.ExcelComponent.Model.ChartWrapperType) -> System.Boolean
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapperExtensions M public static IsLimitExpression`0(Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper) -> System.Boolean
@@ -445,8 +443,6 @@
   Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper P IsOutputEquation : System.Boolean override get:public
   Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper P IsUnknownEquation : System.Boolean override get:public
   Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper P Rl : System.String override get:public
-  Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper X Quire.Calculation.Core.ICalculatable::SetResult
-  Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper X Quire.Calculation.Core.ICalculatable::add_RlChanged
   Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapperExtensions M public static IsValidType`0(Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType) -> System.Boolean
   Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType V Input = 2
   Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType V Invalid = 1
@@ -686,8 +682,6 @@
   Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper P SynchronizationStatus : Quire.Calculation.Core.SynchronizationStatus get:public
   Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper P UseICalculatableToRestoreResult : System.Boolean get:public
   Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper P WrappedCalculatable : Quire.Calculation.Core.ICalculatable override get:public set:protected
-  Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper X Quire.Calculation.Core.ICalculatable::SetResult
-  Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper X Quire.Calculation.Core.ICalculatable::add_RlChanged
   Quire.Controls.ExcelComponent.Model.OleBaseComponentErrors F public const System.String ErrorsInHiddenSectionErrorKey
   Quire.Controls.ExcelComponent.Model.OleBaseComponentErrors F public const System.String WronglyFormattedInputErrorKey
   Quire.Controls.ExcelComponent.Model.OleBaseComponentErrors F public const System.String WronglyFormattedOutputErrorKey
@@ -798,15 +792,11 @@
   Quire.Controls.ExcelComponent.Model.OleWrapperCustomErrorType V Placement = 2
   Quire.Controls.ExcelComponent.Model.QueryAttachedInputsOrOutputsHandler D Invoke`0(System.Boolean) -> System.Boolean
   Quire.Controls.ExcelComponent.Model.SimpleChartCalculatable M public .ctor`0(System.Boolean) -> System.Void
-  Quire.Controls.ExcelComponent.Model.SimpleChartCalculatable X Quire.Calculation.Core.ICalculatable::SetResult
-  Quire.Controls.ExcelComponent.Model.SimpleChartCalculatable X Quire.Calculation.Core.ICalculatable::add_RlChanged
   Quire.Controls.ExcelComponent.Model.SimpleOleCalculatable F private readonly System.Boolean _isFragment
   Quire.Controls.ExcelComponent.Model.SimpleOleCalculatable M public .ctor`0(System.Boolean) -> System.Void
   Quire.Controls.ExcelComponent.Model.SimpleOleCalculatable P IsConnectedToTheEngine : System.Boolean get:public set:public
   Quire.Controls.ExcelComponent.Model.SimpleOleCalculatable P IsFragment : Quire.Pair`2<System.Boolean,System.Boolean> get:public
   Quire.Controls.ExcelComponent.Model.SimpleOleCalculatable P Rl : System.String override get:public set:public
-  Quire.Controls.ExcelComponent.Model.SimpleOleCalculatable X Quire.Calculation.Core.ICalculatable::SetResult
-  Quire.Controls.ExcelComponent.Model.SimpleOleCalculatable X Quire.Calculation.Core.ICalculatable::add_RlChanged
   Quire.Controls.ExcelComponent.OleBaseComponentCommands F public static readonly System.Windows.Input.RoutedUICommand NewOleComponentExpression
   Quire.Controls.ExcelComponent.OleBaseComponentItemManager M public .ctor`0() -> System.Void
   Quire.Controls.ExcelComponent.OleBaseComponentItemManager M public GetItemOleComponentLocation`0(Quire.Controls.Core.IWhiteboardItem) -> System.Windows.Point

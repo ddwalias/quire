@@ -382,15 +382,19 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
         var methodNames = handWritten.MethodNames(t);
         if (DropBase.Contains(t))
         {
-            // Members inherited from the hand-written base would be hidden by generated ones of the same name.
+            // A new stub would hide the hand-written base's working member (hand-written code calling it would reach
+            // the stub). A stub already generated stays: it is mirrored surface (docs/mirror/manifest), implemented
+            // by porting Mathcad's own member.
             var inherited = handWritten.InheritedNames(hw);
             var inheritedMethods = handWritten.InheritedMethodKeys(hw);
-            foreach (var m in t.Methods.Where(m => !m.IsConstructor && inheritedMethods.Contains(HandWritten.MethodKey(m)))) { Skip.Add(m); t.Notes.Add($"method {m.Name} not generated: inherited from the hand-written base"); }
-            foreach (var p in t.Properties.Where(p => inherited.Contains(p.Name))) { Skip.Add(p); t.Notes.Add($"property {p.Name} not generated: inherited from the hand-written base"); }
-            // Field-like events stay: generated, they work like Mathcad's (their accessors can be exact), unlike a
-            // throwing stub. Events with custom accessors are left to the hand-written base.
-            foreach (var e in t.Events.Where(e => inherited.Contains(e.Name) && !t.FieldLikeEvents.Contains(e.Name))) { Skip.Add(e); t.Notes.Add($"event {e.Name} not generated: inherited from the hand-written base"); }
-            foreach (var f in t.Fields.Where(f => inherited.Contains(f.Name))) { Skip.Add(f); t.Notes.Add($"field {f.Name} not generated: inherited from the hand-written base"); }
+            var stubKeys = hw.Methods.Where(m => m.Stub).Select(HandWritten.MethodKey).ToHashSet();
+            var stubNames = hw.Properties.Where(p => p.Stub).Select(p => p.Name).Concat(hw.Events.Where(e => e.Stub).Select(e => e.Name))
+                .Concat(hw.Fields.Where(f => f.Stub).Select(f => f.Name)).ToHashSet();
+            void Inherited(object member, string what) { Skip.Add(member); t.Notes.Add($"{what} not generated: inherited from the hand-written base"); }
+            foreach (var m in t.Methods.Where(m => !m.IsConstructor && inheritedMethods.Contains(HandWritten.MethodKey(m)) && !stubKeys.Contains(HandWritten.MethodKey(m)))) Inherited(m, $"method {m.Name}");
+            foreach (var p in t.Properties.Where(p => inherited.Contains(p.Name) && !stubNames.Contains(p.Name))) Inherited(p, $"property {p.Name}");
+            foreach (var e in t.Events.Where(e => inherited.Contains(e.Name) && !stubNames.Contains(e.Name))) Inherited(e, $"event {e.Name}");
+            foreach (var f in t.Fields.Where(f => inherited.Contains(f.Name) && !stubNames.Contains(f.Name))) Inherited(f, $"field {f.Name}");
         }
         void Conflict(string what) => t.Notes.Add($"hand-written code uses the name of {what} for a different kind of member; not generated");
         var optional = handWritten.OptionalOverloads(t);

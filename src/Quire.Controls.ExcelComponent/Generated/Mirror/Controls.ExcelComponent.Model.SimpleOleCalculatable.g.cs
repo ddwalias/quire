@@ -21,8 +21,4 @@ public partial class SimpleOleCalculatable : global::Quire.Calculation.Core.Supp
     public override string Rl { get => base.Rl; set => base.Rl = value; }
     [global::Quire.Mirror.MirrorStub]
     public SimpleOleCalculatable(bool isFragment) { }
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.EventHandler global::Quire.Calculation.Core.ICalculatable.RlChanged { add { } remove { } }
 }

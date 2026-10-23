@@ -18,6 +18,7 @@
     <ProjectReference Include="..\Quire.Controls.Text\Quire.Controls.Text.csproj" />
     <ProjectReference Include="..\Quire.EngNotebook.Automation\Quire.EngNotebook.Automation.csproj" />
     <ProjectReference Include="..\Quire.EngNotebookPlus.Automation\Quire.EngNotebookPlus.Automation.csproj" />
+    <ProjectReference Include="..\Quire.EquationEditor\Quire.EquationEditor.csproj" />
     <PackageReference Include="Dirkster.AvalonDock" Version="5.0.1" />
     <PackageReference Include="Fluent.Ribbon" Version="11.0.2" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.161" />

@@ -283,7 +283,7 @@ public sealed class Mapper
         foreach (var f in src.Fields)
         {
             if (f.Name.StartsWith('<') || f.Name.StartsWith('$')) continue;
-            if (f.Access == Access.Private && eventNames.Contains(f.Name)) { q.FieldLikeEvents.Add(f.Name); continue; }
+            if (f.Access == Access.Private && eventNames.Contains(f.Name)) continue;
             if (M(f.Type, $"field {f.Name}") is { } ft)
                 q.Fields.Add(f with { Name = Identifier.Encode(f.Name), Type = ft, Value = MapConstant(f.Value) });
         }

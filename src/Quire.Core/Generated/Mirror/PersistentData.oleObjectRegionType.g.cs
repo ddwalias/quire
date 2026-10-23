@@ -12,5 +12,5 @@ namespace Quire.PersistentData;
 public partial class oleObjectRegionType : global::Quire.PersistentData.oleBaseContainerType, global::Quire.PersistentData.IOleObjectPersistentData, global::Quire.PersistentData.IOleSizeData
 {
     [global::Quire.Mirror.MirrorStub]
-    public oleObjectRegionType(global::Quire.PersistentData.IOleSizeData sizeData) { }
+    public oleObjectRegionType(global::Quire.PersistentData.IOleSizeData sizeData) : this() { }
 }

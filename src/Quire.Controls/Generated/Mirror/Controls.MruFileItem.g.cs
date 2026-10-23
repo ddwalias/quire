@@ -32,11 +32,11 @@ public partial class MruFileItem : global::System.Windows.DependencyObject
     [global::Quire.Mirror.MirrorStub]
     public string FilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public MruFileItem(string fullPathAndName) { }
+    public MruFileItem(string fullPathAndName) : this() { }
     [global::Quire.Mirror.MirrorStub]
-    public MruFileItem(string fullPathAndName, bool isPinned) { }
+    public MruFileItem(string fullPathAndName, bool isPinned) : this() { }
     [global::Quire.Mirror.MirrorStub]
-    public MruFileItem(string fullPathAndName, global::Quire.Controls.MruFileTypes mruFileType) { }
+    public MruFileItem(string fullPathAndName, global::Quire.Controls.MruFileTypes mruFileType) : this() { }
     [global::Quire.Mirror.MirrorStub]
     private static void IsPinned_Changed(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

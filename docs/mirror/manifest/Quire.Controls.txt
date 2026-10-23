@@ -806,8 +806,6 @@
   Quire.Controls.IO.IdDefinition P ScalingSExpression : System.String get:public set:private
   Quire.Controls.IO.IdDefinition P Value : System.Double get:public set:private
   Quire.Controls.IO.IdDefinition P ValueSExpression : System.String get:public set:private
-  Quire.Controls.IO.IdDefinition X Quire.Calculation.Core.ICalculatable::SetResult
-  Quire.Controls.IO.IdDefinition X Quire.Calculation.Core.ICalculatable::add_RlChanged
   Quire.Controls.IO.InputOutputItemsConflicts F private readonly System.Collections.Generic.List`1<Quire.Controls.IO.GeneralIssue> _generalErrors
   Quire.Controls.IO.InputOutputItemsConflicts F private readonly System.Collections.Generic.List`1<Quire.Controls.IO.GeneralIssue> _generalWarnings
   Quire.Controls.IO.InputOutputItemsConflicts F private readonly System.Collections.Generic.List`1<Quire.Controls.IO.ItemIssue> _itemErrors
@@ -840,8 +838,6 @@
   Quire.Controls.IO.MatrixDefinition P ScalingSExpression : System.String get:public set:private
   Quire.Controls.IO.MatrixDefinition P Value : System.Double[,] get:public set:private
   Quire.Controls.IO.MatrixDefinition P ValueSExpression : System.String get:public set:private
-  Quire.Controls.IO.MatrixDefinition X Quire.Calculation.Core.ICalculatable::SetResult
-  Quire.Controls.IO.MatrixDefinition X Quire.Calculation.Core.ICalculatable::add_RlChanged
   Quire.Controls.IO.ScaledEvaluation F internal const System.String EvalExpressionRlFormat
   Quire.Controls.IO.ScaledEvaluation F private System.String _rl
   Quire.Controls.IO.ScaledEvaluation F private const System.String EvalScaledExpressionRlFormat
@@ -856,8 +852,6 @@
   Quire.Controls.IO.ScaledEvaluation P BaseSExpression : System.String get:public set:private
   Quire.Controls.IO.ScaledEvaluation P Rl : System.String override get:public set:public
   Quire.Controls.IO.ScaledEvaluation P ScalingSExpression : System.String get:public set:private
-  Quire.Controls.IO.ScaledEvaluation X Quire.Calculation.Core.ICalculatable::SetResult
-  Quire.Controls.IO.ScaledEvaluation X Quire.Calculation.Core.ICalculatable::add_RlChanged
   Quire.Controls.IO.ScaledEvaluation+ScaledEvaluationResult V MatrixResultInvalid = 2
   Quire.Controls.IO.ScaledEvaluation+ScaledEvaluationResult V NoError = 0
   Quire.Controls.IO.ScaledEvaluation+ScaledEvaluationResult V ResultTypeIncompatible = 1
@@ -871,14 +865,10 @@
   Quire.Controls.IO.SexprDefinition P Rl : System.String override get:public set:public
   Quire.Controls.IO.SexprDefinition P ScalingSExpression : System.String get:public set:private
   Quire.Controls.IO.SexprDefinition P ValueSExpression : System.String get:public set:private
-  Quire.Controls.IO.SexprDefinition X Quire.Calculation.Core.ICalculatable::SetResult
-  Quire.Controls.IO.SexprDefinition X Quire.Calculation.Core.ICalculatable::add_RlChanged
   Quire.Controls.IO.ShadowCalculatable F public static readonly System.Windows.Threading.DispatcherPriority ShadowResultsProcessingPriority_Send
   Quire.Controls.IO.ShadowCalculatable M protected .ctor`0() -> System.Void
   Quire.Controls.IO.ShadowCalculatable M protected-internal static ConvertSExpressionToRl`0(System.String) -> System.String
   Quire.Controls.IO.ShadowCalculatable P ResultsProcessingPriority : System.Nullable`1<System.Windows.Threading.DispatcherPriority> get:public
-  Quire.Controls.IO.ShadowCalculatable X Quire.Calculation.Core.ICalculatable::SetResult
-  Quire.Controls.IO.ShadowCalculatable X Quire.Calculation.Core.ICalculatable::add_RlChanged
   Quire.Controls.IO.ShadowCalculationNotifier E public System.Collections.Specialized.NotifyCollectionChangedEventHandler CollectionChanged
   Quire.Controls.IO.ShadowCalculationNotifier F private System.Collections.Specialized.NotifyCollectionChangedEventHandler CollectionChanged
   Quire.Controls.IO.ShadowCalculationNotifier M public .ctor`0() -> System.Void

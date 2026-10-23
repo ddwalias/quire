@@ -9,4 +9,6 @@
 namespace System.Reflection.Emit.Quire.Mpl;
 
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.ILInstruction, mplasb")]
-public partial record ILInstruction;
+public partial record ILInstruction : global::System.IEquatable<global::System.Reflection.Emit.Quire.Mpl.ILInstruction>
+{
+}

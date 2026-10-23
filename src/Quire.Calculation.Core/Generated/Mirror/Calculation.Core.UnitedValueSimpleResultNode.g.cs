@@ -17,6 +17,4 @@ public partial class UnitedValueSimpleResultNode : global::Quire.Calculation.Cor
     double global::Quire.Calculation.Core.IUnitedValueResultNode.DisplayValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     global::System.Collections.Generic.IReadOnlyList<global::Quire.Calculation.Core.UnitPower> global::Quire.Calculation.Core.IUnitedValueResultNode.Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.ResultValueType global::Quire.Calculation.Core.IResultNode.ValueType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

@@ -70,7 +70,7 @@ public partial class Mathcad14TextStyle
     [global::Quire.Mirror.MirrorStub]
     public void SetInlineTextClassProperty(string elementName, global::System.Xml.XmlAttributeCollection attributes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public Mathcad14TextStyle(global::Quire.Controls.Core.MC14Conversion.Mathcad14TextStyle baseStyle) { }
+    public Mathcad14TextStyle(global::Quire.Controls.Core.MC14Conversion.Mathcad14TextStyle baseStyle) : this(default(global::System.Collections.Generic.Dictionary<string, global::Quire.Controls.Core.MC14Conversion.Mathcad14TextStyle>)) { }
     [global::Quire.Mirror.MirrorStub]
     private void SetLocalValueFromXElementValue(global::System.Xml.Linq.XElement xElement, string attributeName, global::Quire.Delegate1<string> setLocalValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

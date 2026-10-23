@@ -13,8 +13,4 @@ internal partial class SimpleChartCalculatable : global::Quire.Controls.ExcelCom
 {
     [global::Quire.Mirror.MirrorStub]
     public SimpleChartCalculatable(bool isFragment) : base(default(bool)) { }
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.EventHandler global::Quire.Calculation.Core.ICalculatable.RlChanged { add { } remove { } }
 }

@@ -11,6 +11,7 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.Automation.ProxyComClassManager`1, Ptc.MathcadPrime.Automation")]
 internal partial class ProxyComClassManager<T> where T : class
 {
+
     [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.Automation.ProxyComClassManager`1+RefineConnectionsHandler, Ptc.MathcadPrime.Automation")]
     internal delegate void RefineConnectionsHandler();
 }

@@ -16,7 +16,7 @@ public partial class TextStyleData : global::System.Windows.DependencyObject
     [global::Quire.Mirror.MirrorStub]
     public void UpdateStyle(string name, global::System.Windows.Style style, string basedOnKey, global::System.Windows.Style basedOnOldStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public TextStyleData(string name, string key, global::System.Windows.Style style, string baseOnKey = default) { }
+    public TextStyleData(string name, string key, global::System.Windows.Style style, string baseOnKey = default) : this() { }
     [global::Quire.Mirror.MirrorStub]
     private void BasedOnStyleChanged(global::Quire.TextStyleData basedOn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -23,8 +23,4 @@ public partial class IncludedCalculatableAggregateWithComponentWrapper : global:
     public IncludedCalculatableAggregateWithComponentWrapper(global::Quire.Calculation.Core.ICalculatableAggregateWithComponent wrappedCalculatableAggregate) : base(default(global::Quire.Calculation.Core.ICalculatableAggregate)) { }
     [global::Quire.Mirror.MirrorStub]
     public int IncrementComponentCookieMultiThreaded(bool isAutoCalc = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.EventHandler global::Quire.Calculation.Core.ICalculatable.RlChanged { add { } remove { } }
 }

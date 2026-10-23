@@ -68,9 +68,9 @@ public partial class ExtendedFont : global::System.Windows.Freezable, global::Sy
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Rect SafeComputeInkBoundingBox(global::System.Windows.Media.GlyphRun glyphRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public ExtendedFont(global::System.Windows.Media.FontFamily fontFamily, double fontSize, global::System.Windows.FontStyle fontStyle, global::System.Windows.FontWeight fontWeight, global::System.Windows.FontStretch fontStretch, global::System.Windows.TextDecorationCollection textDecorations, global::System.Windows.Media.Brush foreground) { }
+    public ExtendedFont(global::System.Windows.Media.FontFamily fontFamily, double fontSize, global::System.Windows.FontStyle fontStyle, global::System.Windows.FontWeight fontWeight, global::System.Windows.FontStretch fontStretch, global::System.Windows.TextDecorationCollection textDecorations, global::System.Windows.Media.Brush foreground) : this() { }
     [global::Quire.Mirror.MirrorStub]
-    public ExtendedFont(global::System.Windows.Media.Typeface typeface, double fontSize) { }
+    public ExtendedFont(global::System.Windows.Media.Typeface typeface, double fontSize) : this() { }
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.GlyphRun GenerateGlyphRun(string text, global::System.Uri fontUri, double fontSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

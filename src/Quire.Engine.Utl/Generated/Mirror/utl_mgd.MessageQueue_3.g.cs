@@ -16,6 +16,5 @@ public partial class MessageQueue<Owner, Data, Msg> : global::System.Collections
     public delegate void OnInit(Owner owner, Data data);
 
     [global::Quire.Mirror.MirrorOf("utl_mgd.MessageQueue`3+OnMessage, utl-mgd")]
-    [return: global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.U1)]
     public delegate bool OnMessage(Owner owner, Data data, Msg msg);
 }

@@ -11,6 +11,9 @@ public partial class VectorListResultNode : SimpleResultNode, IVectorListResultN
     private readonly IList<IListResultNode> _vectors;
 
     [MirrorVerified("PtcCalculationCoreTrace2DResultsVectorListResultNodeMechanicalDifferentialTests")]
+    public int ElementsCount => Count * SingleVectorLength;
+
+    [MirrorVerified("PtcCalculationCoreTrace2DResultsVectorListResultNodeMechanicalDifferentialTests")]
     public int SingleVectorLength { get; private set; }
 
     [MirrorVerified("PtcCalculationCoreTrace2DResultsVectorListResultNodeMechanicalDifferentialTests")]
@@ -24,9 +27,6 @@ public partial class VectorListResultNode : SimpleResultNode, IVectorListResultN
         _vectors = input;
         DebugTools.DevAssert(_vectors.All((IListResultNode vec) => vec.Count == singleVectorLength), null);
     }
-
-    [MirrorVerified("PtcCalculationCoreTrace2DResultsVectorListResultNodeMechanicalDifferentialTests")]
-    public int ElementsCount => Count * SingleVectorLength;
 
     [MirrorVerified("PtcCalculationCoreTrace2DResultsVectorListResultNodeMechanicalDifferentialTests")]
     public static ResultValueType GetResultType(IListResultNode resultNode)

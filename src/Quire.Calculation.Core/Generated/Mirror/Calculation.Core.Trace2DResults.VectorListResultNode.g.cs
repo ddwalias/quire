@@ -9,8 +9,6 @@
 namespace Quire.Calculation.Core.Trace2DResults;
 
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.VectorListResultNode, Ptc.Calculation.Core")]
-public partial class VectorListResultNode
+public partial class VectorListResultNode : global::Quire.Calculation.Core.SimpleResultNode, global::Quire.Calculation.Core.IVectorListResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.ResultValueType global::Quire.Calculation.Core.IResultNode.ValueType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

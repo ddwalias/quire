@@ -20,7 +20,7 @@ public partial class SetPropertyValueCommandParameter : global::System.Windows.F
     [global::Quire.Mirror.MirrorStub]
     public string PropertyName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public SetPropertyValueCommandParameter(global::Quire.Controls.Core.IPropertyAggregate obj, string propertyName, object val, string userData = default) { }
+    public SetPropertyValueCommandParameter(global::Quire.Controls.Core.IPropertyAggregate obj, string propertyName, object val, string userData = default) : this() { }
     [global::Quire.Mirror.MirrorStub]
     private static object CoercePropertyName(global::System.Windows.DependencyObject d, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

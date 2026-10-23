@@ -280,28 +280,6 @@ public partial class SolveBlockControl : global::Quire.Controls.ISolveBlockContr
     [global::Quire.Mirror.MirrorStub]
     bool global::Quire.Controls.Core.Whiteboard.IHideFromCalculationButtonStatus.HideFromCalculationButtonChecked { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetStatusSynchronized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus computingStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.IResultNode result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetIdentifierLabels(global::System.Collections.Generic.IDictionary<global::Quire.Calculation.Core.ResolvedId, string[]> idLabelMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetAutoSelectAlgorithm(global::System.Collections.Generic.IDictionary<int, string> autoAlgorithmMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetRedefinitionWarnings(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> warnings) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::Quire.Calculation.Core.ICalculatable> global::Quire.Calculation.Core.ICalculatable.RequestEvaluation { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Func<global::Quire.Calculation.Core.ICalculatable, string, global::Quire.Calculation.Core.IResultNode> global::Quire.Calculation.Core.ICalculatable.GetValueOfIdentifierBefore { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::Quire.Calculation.Core.ICalculatable> global::Quire.Calculation.Core.ICalculatable.TreatAsUpToDate { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
     bool global::Quire.Calculation.Core.ICanContainSymbolicCalculation.ContainsSymbolicEvaluation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Calculation.Core.CalculatingStatus global::Quire.Calculation.Core.ICalculatableInfo.CalculatingStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -25,6 +25,7 @@ internal partial class DynamicAssemblyModel
     private global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker _metadataReferenceTracker;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Reflection.Metadata.Ecma335.MetadataBuilder _metadata;
+
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.DynamicAssemblyModel+TypeIndexInfo, mplasb")]
     internal partial class TypeIndexInfo
     {

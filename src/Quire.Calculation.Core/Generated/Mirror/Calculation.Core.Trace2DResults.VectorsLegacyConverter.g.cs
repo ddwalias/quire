@@ -9,6 +9,6 @@
 namespace Quire.Calculation.Core.Trace2DResults;
 
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.VectorsLegacyConverter, Ptc.Calculation.Core")]
-internal partial class VectorsLegacyConverter
+internal partial class VectorsLegacyConverter : global::Quire.Calculation.Core.Trace2DResults.VectorsConverterBase, global::Quire.Calculation.Core.Trace2DResults.IMatrixToVectorsConverter
 {
 }

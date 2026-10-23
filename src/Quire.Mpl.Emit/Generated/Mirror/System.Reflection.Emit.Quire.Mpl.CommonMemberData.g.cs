@@ -9,6 +9,6 @@
 namespace System.Reflection.Emit.Quire.Mpl;
 
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.CommonMemberData, mplasb")]
-internal partial record CommonMemberData
+internal partial record CommonMemberData : global::System.IEquatable<global::System.Reflection.Emit.Quire.Mpl.CommonMemberData>
 {
 }

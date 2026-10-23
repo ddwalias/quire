@@ -9,6 +9,6 @@
 namespace Quire.Calculation.Core.Trace2DResults;
 
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.VectorsLazyMatrixConverter, Ptc.Calculation.Core")]
-public partial class VectorsLazyMatrixConverter
+public partial class VectorsLazyMatrixConverter : global::Quire.Calculation.Core.Trace2DResults.VectorsConverterBase, global::Quire.Calculation.Core.Trace2DResults.IMatrixToVectorsConverter
 {
 }

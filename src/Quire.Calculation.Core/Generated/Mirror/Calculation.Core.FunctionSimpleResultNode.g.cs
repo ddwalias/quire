@@ -13,6 +13,4 @@ public partial class FunctionSimpleResultNode : global::Quire.Calculation.Core.S
 {
     [global::Quire.Mirror.MirrorStub]
     string global::Quire.Calculation.Core.IFunctionResultNode.Signature { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.ResultValueType global::Quire.Calculation.Core.IResultNode.ValueType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

@@ -31,10 +31,6 @@ internal partial class ScaledEvaluation : global::Quire.Controls.IO.ShadowCalcul
     public global::Quire.Controls.IO.ScaledEvaluation.ScaledEvaluationResult GetComputedValue(out string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string ConstructCurrentRl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.EventHandler global::Quire.Calculation.Core.ICalculatable.RlChanged { add { } remove { } }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.ScaledEvaluation+ScaledEvaluationResult, Ptc.Controls")]
     public enum ScaledEvaluationResult

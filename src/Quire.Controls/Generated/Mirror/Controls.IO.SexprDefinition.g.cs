@@ -17,8 +17,4 @@ internal partial class SexprDefinition : global::Quire.Controls.IO.ShadowCalcula
     internal SexprDefinition(string idSexpr, string valueSexpr, string scalingSexpr = default) { }
     [global::Quire.Mirror.MirrorStub]
     private string ConstructRl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.EventHandler global::Quire.Calculation.Core.ICalculatable.RlChanged { add { } remove { } }
 }
