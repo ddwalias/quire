@@ -19,6 +19,33 @@ public partial class worksheetRegionType
         return _xmlSerializerDefault ?? (_xmlSerializerDefault = CreateDefaultSerializer(_typeOfThis, "region"));
     }
 
+    private bool Serialize(System.Xml.XmlNode regionXmlNode)
+    {
+        using (XmlNodeWriter xmlWriter = new XmlNodeWriter(regionXmlNode))
+        {
+            try
+            {
+                XmlSerializer.Serialize(xmlWriter, this);
+            }
+            catch (System.Exception ex)
+            {
+                DebugTools.DevAssert(false, string.Format("region node serialization failed: {0}", ex.Message), Array.Empty<object>());
+            }
+        }
+        return true;
+    }
+
+    public System.Xml.XmlElement Serialize()
+    {
+        PreSerialize();
+        System.Xml.XmlElement xmlElement = XmlContentDocument.CreateElement("dummy", "http://schemas.mathsoft.com/worksheet50");
+        if (Serialize(xmlElement) && xmlElement.ChildNodes.Count == 1)
+        {
+            return xmlElement.ChildNodes[0] as System.Xml.XmlElement;
+        }
+        return null;
+    }
+
     [MirrorVerified("PtcPersistentDataObjectsWorksheetRegionTypeSerializerMechanicalDifferentialTests")]
     public static XmlSerializer CreateDefaultSerializer(Type typeOfRoot, string rootNodeName)
     {

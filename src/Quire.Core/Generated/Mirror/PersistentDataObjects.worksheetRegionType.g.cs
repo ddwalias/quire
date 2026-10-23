@@ -22,9 +22,5 @@ public partial class worksheetRegionType : global::Quire.PersistentDataObjects.r
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.Serialization.XmlSerializer CreateSerializerWithOverrides(global::System.Type typeOfRoot, string rootNodeName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private bool Serialize(global::System.Xml.XmlNode regionXmlNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlElement Serialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.PersistentDataObjects.worksheetRegionType Deserialize(global::System.Xml.XmlElement xmlRoot, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
