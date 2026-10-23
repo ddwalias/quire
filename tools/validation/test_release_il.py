@@ -1,12 +1,13 @@
 """Acceptance checks for the Release IL gate, without executing production code."""
+from pathlib import Path
 import unittest
-from release_il import compare, ordinalless
+from release_il import compare, ordinalless, without_install
 
 
 def method(name='M', body='same', exact=True, **extra):
-    return dict(id=f'P::T::{name}', type='T', signature=name, body_sha256=body,
-                exact_match=exact, shape_matches=True, declaration_only=False,
-                original={'assembly': 'Mathcad'}, **extra)
+    return dict(dict(id=f'P::T::{name}', type='T', signature=name, body_sha256=body,
+                     exact_match=exact, shape_matches=True, declaration_only=False,
+                     original={'assembly': 'Mathcad'}), **extra)
 
 
 def inventory(*rows):
@@ -99,6 +100,51 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
                      engine_native=True)
         result = compare(inventory(row), inventory(row))
         self.assertEqual(result['failures'], [{'method': 'P::T::<Module>::f', 'reason': row['unsupported']}])
+
+    def test_mixed_mode_toolset_support_without_counterpart_is_reported_not_failed(self):
+        def global_row(signature, mixed=True):
+            row = method(signature, exact=None, original=None, mixed_mode=mixed,
+                         unsupported='global <Module> method has no reviewed Mathcad binding')
+            row.update(id=f'P::<Module>::{signature}', type='<Module>')
+            return row
+        support = global_row('std.basic_string<char>.{ctor}`0()->Void|True')
+        result = compare(inventory(), inventory(support, global_row('delete[]`0(Void*)->Void|True')))
+        self.assertTrue(result['passed'])
+        self.assertEqual(result['toolset_support'], 2)
+        self.assertEqual(result['unfinished'], 0)
+        crt_type = method('Throw', exact=False, original=None, mixed_mode=True)
+        crt_type.update(type='<CrtImplementationDetails>.Exception')
+        self.assertTrue(compare(inventory(), inventory(crt_type))['passed'])
+        # Our own templates and IL-only assemblies get no allowance.
+        self.assertFalse(compare(inventory(), inventory(global_row('Substring<char const >.{ctor}`0()->Void|True')))['passed'])
+        self.assertFalse(compare(inventory(), inventory(global_row('std.endl`0()->Void|True', mixed=False)))['passed'])
+
+    def test_mixed_mode_members_with_a_counterpart_must_still_match(self):
+        row = method('std.endl`0()->Void|True', exact=False, mixed_mode=True)
+        self.assertFalse(compare(inventory(), inventory(row))['passed'])
+
+    def test_native_body_passes_only_against_a_native_counterpart(self):
+        def native(original_native, mixed=True):
+            return method('N', exact=None, mixed_mode=mixed, unsupported='native code body has no IL to compare',
+                          original={'assembly': 'utl-mgd', 'native_code': original_native})
+        result = compare(inventory(), inventory(native(True)))
+        self.assertTrue(result['passed'])
+        self.assertEqual(result['native_pairs'], 1)
+        self.assertFalse(compare(inventory(), inventory(native(False)))['passed'])
+        self.assertFalse(compare(inventory(), inventory(native(True, mixed=False)))['passed'])
+
+    def test_counterpartless_csharp_stand_ins_may_be_replaced_by_a_mixed_mode_build(self):
+        stand_in = method('_tildeSafeMutex', exact=False, original=None, project='P')
+        mixed = method('Other', mixed_mode=True, project='P')
+        self.assertTrue(compare(inventory(stand_in), inventory(mixed))['passed'])
+        self.assertFalse(compare(inventory(stand_in), inventory(method('Other', project='P')))['passed'])
+        mapped = method('Enter', exact=False, project='P')
+        self.assertFalse(compare(inventory(mapped), inventory(mixed))['passed'])
+
+    def test_builds_never_see_the_mathcad_install(self):
+        env, hidden = without_install(Path('work'), {'MATHCAD_DIR': r'C:\PTC', 'PATH': 'p'})
+        self.assertEqual(env, {'PATH': 'p'})
+        self.assertTrue(hidden.startswith('-p:MathcadInstallDir=') and 'no-mathcad-install' in hidden)
 
     def test_matching_declaration_needs_no_body(self):
         row = method(exact=None)

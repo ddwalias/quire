@@ -36,8 +36,9 @@ The base is still the project's C# Release build. The candidate is built from th
 MSBuild (`-t:Rebuild -p:Configuration=Release -p:Platform=x64`, OutDir/IntDir in the temporary
 directory) and must produce `<project>.dll` (its `TargetName`). It needs Windows, Visual Studio with
 the C++/CLI component (`Microsoft.VisualStudio.Component.VC.CLI.Support`, found through `vswhere`),
-the v145 MSVC x64 toolset, the Windows SDK desktop x64 libraries, the .NET 10 SDK, and the Mathcad
-install. A missing prerequisite fails the run. The path must be inside the repository. Release is
+the v145 MSVC x64 toolset, the Windows SDK desktop x64 libraries, and the .NET 10 SDK. MethodAudit
+reads the Mathcad install; builds never do: every build runs without `MATHCAD_DIR` and with
+`MathcadInstallDir` pointing at an empty path ([D19](decisions.md)). A missing prerequisite fails the run. The path must be inside the repository. Release is
 selected by configuration name; the DebuggableAttribute Debug check is not verified for MSVC
 output, so exact IL matching is what rules out a Debug-shaped candidate.
 
@@ -57,8 +58,15 @@ mixed-mode Quire assembly it pairs what the C++/CLI compiler emits as follows:
   Quire assembly binds (`utl-mgd`), by signature with those types mapped, and their IL is compared
   like any other method's. Unpaired ones have no counterpart and fail; their row ids are the
   signature, with custom modifiers added only where overloads share one.
-- methods whose RVA holds native code have no IL: they are marked `unsupported` and always fail, even
-  when Mathcad's counterpart is native too.
+- unpaired MSVC support members are reported as `toolset_support` and do not fail ([D19](decisions.md)):
+  globals named `std.*`, `__std_*`, `_CRT*`, `__security_*`, `___Cxx*`, `__eh*`, `__Exception*`,
+  `_onexit`, `_atexit_*`, `_getFiberPtrId`, `PtrToStringChars`, `new`/`delete`, and types under
+  `std.`, `<CrtImplementationDetails>` or `vc.cppcli.`. Other unpaired members, including
+  instantiations of Mathcad's own templates, still fail.
+- methods whose RVA holds native code have no IL. Against a native Mathcad counterpart they are
+  reported as `native_pairs`; otherwise they are `unsupported` and fail.
+- removing a C# stand-in with no Mathcad counterpart (such as `_tildeSafeMutex`) passes once the
+  project is mixed-mode.
 - the D10 `engine_native` exemption applies only to IL-only Quire assemblies; a mixed candidate
   can emit those bodies, so it must match them.
 

@@ -25,6 +25,20 @@ Each assignment covers every managed member of its assembly, superseding D11's h
 C/D deferrals there. Native/unreadable bodies still cannot establish managed IL parity.
 Use D17's five steps, preserve previously exact methods, land passing batches and continue.
 
+## D19: utl-mgd is an honest C++/CLI port (2026-10-23)
+
+`utl-mgd.dll` was compiled by MSVC as C++/CLI; Roslyn cannot emit its IL. The user chose to port
+it to C++/CLI so that MSVC emits Mathcad's IL from Quire's own source. Every body must come from
+source in this repository and the compiler run on it: copying, transplanting or patching original
+IL, signatures, metadata or bytes into a build output is forbidden, and builds must not read the
+Mathcad install (the gate hides it). Only reference and validation tools read originals.
+
+For a mixed-mode candidate the gate reports, without failing, methods that MSVC emits for its own
+support and Mathcad's build lacked (`std`, CRT, exception/startup helpers, `vc.cppcli` types) and
+native bodies whose Mathcad counterpart is native too. Removing the C# stand-ins that had no
+counterpart is allowed. Every method with a counterpart must match exactly, as before.
+`mcmisc.dll` is plain C# and moves to its own project, `Quire.Engine.Misc`.
+
 ## Mapping and scope
 
 - **D1:** `Mcd` maps to `Quire.Mcd`.

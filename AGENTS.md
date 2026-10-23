@@ -44,4 +44,6 @@ Tests, coverage, mutation, status ladders, evidence essays, approval handoffs an
 audits are not batch requirements. Keep only a short checkpoint: owner, branch, members,
 Release IL report, remaining mismatches. This is the complete workflow (decision D17).
 
-Keep original binaries/decompiled code/IL in the ignored local cache. Do not commit them.
+Keep original binaries/decompiled code/IL in the ignored local cache. Do not commit them, and
+never copy original IL, signatures, metadata or bytes into a build output; builds must not
+read the Mathcad install ([D19](docs/mirror/decisions.md)).

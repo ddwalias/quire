@@ -330,7 +330,10 @@ foreach (var (artifact, raw, type, method, original, counterpart) in matched)
         is_static = raw.Static, is_constructor = method?.IsConstructor == true, access = method?.Access.ToString() ?? raw.Access,
         quire_sha256 = artifact.Hash, quire_mvid = artifact.Mvid,
         original = counterpart == null ? null : new { assembly = original!.Name, sha256 = original.Hash, mvid = original.Mvid,
-            version = original.Version, token = counterpart.Token, token_hex = $"0x{counterpart.Token:x8}", type = counterpart.Owner, signature = counterpart.Key },
+            version = original.Version, token = counterpart.Token, token_hex = $"0x{counterpart.Token:x8}", type = counterpart.Owner, signature = counterpart.Key,
+            native_code = counterpart.NativeCode },
+        // D19: a C++/CLI candidate; the gate classifies its compiler-support and native-vs-native rows.
+        mixed_mode = !artifact.IlOnly,
         // D10: utl-mgd is a mixed-mode engine boundary. Matched bodies with a 0-7 original
         // maxstack and emitted bodies lacking a managed signature match are native routines.
         // An IL-only port cannot reproduce those bodies; a mixed-mode (C++/CLI) candidate can, so it gets no exemption.
