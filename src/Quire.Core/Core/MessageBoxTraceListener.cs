@@ -24,7 +24,7 @@ public partial class MessageBoxTraceListener
     }
 
     [MirrorVerified("PtcCoreMessageBoxTraceListenerMechanicalDifferentialTests")]
-    public override void Fail(string message) => Fail(message, null);
+    public override void Fail(string message) => ((global::System.Diagnostics.TraceListener)this).Fail(message, null);
 
     [MirrorVerified("PtcCoreMessageBoxTraceListenerMechanicalDifferentialTests")]
     public override void Write(string message) { }
