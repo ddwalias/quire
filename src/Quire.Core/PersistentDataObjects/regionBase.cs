@@ -10,6 +10,39 @@ namespace Quire.PersistentDataObjects;
 
 public partial class regionBase
 {
+    private void CollectAllAnnotations()
+    {
+        List<string> list = (mc14conversionlossannotations == null) ? new List<string>() : new List<string>(mc14conversionlossannotations);
+        IMC14AnnotationProvider annotationProvider = Item as IMC14AnnotationProvider;
+        if (annotationProvider != null)
+        {
+            IEnumerable<string> annotations = annotationProvider.MC14ConversionLossAnnotations;
+            if (annotations != null)
+            {
+                list.AddRange(annotations);
+            }
+        }
+        mc14conversionlossannotations = ((list.Count > 0) ? list.ToArray() : null);
+    }
+
+    public void PreSerialize()
+    {
+        if (string.IsNullOrEmpty(regionid))
+        {
+            regionid = Helper.GetNextRegionId().ToString();
+        }
+        CollectAllAnnotations();
+        IS11NConsumer consumer = Item as IS11NConsumer;
+        if (consumer != null)
+        {
+            consumer.S11NProvider = this;
+        }
+        if (Item is IHasPreSerialize)
+        {
+            (Item as IHasPreSerialize).PreSerialize();
+        }
+    }
+
     public abstract object Item { get; set; }
     public abstract string[] mc14conversionlossannotations { get; set; }
 
