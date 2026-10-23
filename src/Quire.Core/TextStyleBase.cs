@@ -91,6 +91,34 @@ public partial class TextStyleBase
         return false;
     }
 
+    public bool IsModifyProperty(string propertyName, double value, double tolerance)
+    {
+        if (_htOldPropertyToIndex.ContainsKey(propertyName))
+        {
+            return Math.Abs(double.Parse(_htOldPropertyToIndex[propertyName].ToString()) - value) > tolerance;
+        }
+        return false;
+    }
+
+    public static object GetBasedOnSetterValue(Style style, string propertyName)
+    {
+        if (style?.BasedOn != null)
+        {
+            Style basedOn = style.BasedOn;
+            do
+            {
+                object setterValue = GetSetterValue(basedOn, propertyName);
+                if (setterValue != null)
+                {
+                    return setterValue;
+                }
+                basedOn = basedOn.BasedOn;
+            }
+            while (basedOn != null);
+        }
+        return null;
+    }
+
     [MirrorVerified("Release IL")]
     public void MergeBasedOn()
     {
