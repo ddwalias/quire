@@ -11,6 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.CloIntFunction, mplrun")]
 public partial class CloIntFunction : global::Quire.Mpl.Run.DelegateFunction
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int m_clo;
 }

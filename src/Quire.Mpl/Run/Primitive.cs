@@ -7,6 +7,12 @@ namespace Quire.Mpl.Run;
 /// <summary>Mpl's primitive comparisons: 1 when the comparison holds, else 0 (docs/mirror/evidence/Mpl.Run.Primitive.md).</summary>
 public partial class Primitive
 {
+    public string m_name;
+    public System.Reflection.Emit.OpCode[] m_opcodes;
+    public Code m_code;
+    public System.Reflection.MethodInfo m_method;
+    public string m_foreign;
+
     [MirrorVerified("PrimitiveDifferentialTests")]
     public static int ceq_i4(int x, int y) => x == y ? 1 : 0;
     [MirrorVerified("PrimitiveDifferentialTests")]

@@ -11,36 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Keyword, mplrun")]
 public partial class Keyword : global::Quire.Mpl.Run.Sym
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const int KeyDefun = 0;
-    [global::Quire.Mirror.MirrorStub]
-    public const int KeyDefine = 1;
-    [global::Quire.Mirror.MirrorStub]
-    public const int KeyDeftype = 2;
-    [global::Quire.Mirror.MirrorStub]
-    public const int KeyDefdata = 3;
-    [global::Quire.Mirror.MirrorStub]
-    public const int KeyBlock = 4;
-    [global::Quire.Mirror.MirrorStub]
-    public const int KeyDeclare = 5;
-    [global::Quire.Mirror.MirrorStub]
-    public const int KeyLambda = 6;
-    [global::Quire.Mirror.MirrorStub]
-    public const int KeyLet = 7;
-    [global::Quire.Mirror.MirrorStub]
-    public const int KeyLocally = 8;
-    [global::Quire.Mirror.MirrorStub]
-    public const int KeyIf = 9;
-    [global::Quire.Mirror.MirrorStub]
-    public const int KeyCase = 10;
-    [global::Quire.Mirror.MirrorStub]
-    public const int KeyDo = 11;
-    [global::Quire.Mirror.MirrorStub]
-    public const int KeyTry = 12;
-    [global::Quire.Mirror.MirrorStub]
-    public const int KeyList = 13;
-    [global::Quire.Mirror.MirrorStub]
-    public const int KeyTuple = 14;
-    [global::Quire.Mirror.MirrorStub]
-    public const int Nkeys = 15;
 }

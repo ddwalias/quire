@@ -79,6 +79,9 @@ public abstract partial class MplEnv
 /// </summary>
 public partial class BindingInfo
 {
+    public const int Value = 0;
+    public const int Macro = 1;
+
     private uint m_handle;
     private int m_zone;
 

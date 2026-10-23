@@ -11,8 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.BindingInfo, mplrun")]
 public partial class BindingInfo
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const int Value = 0;
-    [global::Quire.Mirror.MirrorStub]
-    public const int Macro = 1;
 }

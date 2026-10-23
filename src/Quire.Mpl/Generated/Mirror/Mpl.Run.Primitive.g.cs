@@ -11,14 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Primitive, mplrun")]
 public partial class Primitive
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string m_name;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.OpCode[] m_opcodes;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Code m_code;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.MethodInfo m_method;
-    [global::Quire.Mirror.MirrorStub]
-    public string m_foreign;
 }

@@ -362,6 +362,23 @@ public partial class char_constant : Atom
 
 public partial class Keyword : Sym
 {
+    public const int KeyDefun = 0;
+    public const int KeyDefine = 1;
+    public const int KeyDeftype = 2;
+    public const int KeyDefdata = 3;
+    public const int KeyBlock = 4;
+    public const int KeyDeclare = 5;
+    public const int KeyLambda = 6;
+    public const int KeyLet = 7;
+    public const int KeyLocally = 8;
+    public const int KeyIf = 9;
+    public const int KeyCase = 10;
+    public const int KeyDo = 11;
+    public const int KeyTry = 12;
+    public const int KeyList = 13;
+    public const int KeyTuple = 14;
+    public const int Nkeys = 15;
+
     [MirrorVerified("SexprDifferentialTests")]
     public static string keyword;
 
