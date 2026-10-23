@@ -31,6 +31,4 @@ public partial class ChunkedMemoryStream : global::System.IO.Stream
     private readonly bool _readonly;
     [global::Quire.Mirror.MirrorStub]
     private readonly bool _publiclyVisible;
-    [global::Quire.Mirror.MirrorStub]
-    public override void Write(byte[] buffer, int offset, int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

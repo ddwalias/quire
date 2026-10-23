@@ -213,6 +213,46 @@ public partial class ChunkedMemoryStream
         return result;
     }
 
+    public override void Write(byte[] buffer, int offset, int count)
+    {
+        EnsureOpen();
+        if (_readonly)
+        {
+            throw new NotSupportedException("Stream is not writable");
+        }
+        if (buffer == null)
+        {
+            throw new ArgumentNullException("buffer");
+        }
+        if (offset < 0)
+        {
+            throw new ArgumentOutOfRangeException("offset");
+        }
+        if (count < 0)
+        {
+            throw new ArgumentOutOfRangeException("count");
+        }
+        if (count > buffer.Length - offset)
+        {
+            throw new ArgumentException("count exceeds remaining bytes in buffer", "count");
+        }
+        EnsureCapacity(_position + count);
+        int offset2;
+        int chunkIndex = GetChunkIndex(_position, out offset2);
+        _position += count;
+        _length = Math.Max(_length, _position);
+        while (count > 0)
+        {
+            int count2;
+            byte[] chunk = GetChunk(chunkIndex++, out count2);
+            int num = Math.Min(count2 - offset2, count);
+            Array.Copy(buffer, offset, chunk, offset2, num);
+            count -= num;
+            offset += num;
+            offset2 = 0;
+        }
+    }
+
     private int GetChunkIndex(long position, out int offset)
     {
         if (position < _buffer.Length - _bufferIndex)
