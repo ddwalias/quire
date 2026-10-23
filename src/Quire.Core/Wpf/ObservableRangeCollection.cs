@@ -21,6 +21,38 @@ public partial class ObservableRangeCollection<T>
     [MirrorVerified("PtcWpfObservableRangeCollection1MechanicalDifferentialTests")]
     public event NotifyCollectionChangedEventHandler RangeChanged;
 
+    private void FireRangeChanged(NotifyCollectionChangedEventArgs args)
+    {
+        if (_fireRangeChangesAllowed)
+        {
+            OnRangeChanged(args);
+        }
+    }
+
+    protected virtual void OnRangeChanged(NotifyCollectionChangedEventArgs args)
+    {
+        if (RangeChanged != null)
+        {
+            RangeChanged(this, args);
+        }
+    }
+
+    private void FireRangeChanging(NotifyCollectionChangedEventArgs args)
+    {
+        if (_fireRangeChangesAllowed)
+        {
+            OnRangeChanging(args);
+        }
+    }
+
+    protected virtual void OnRangeChanging(NotifyCollectionChangedEventArgs args)
+    {
+        if (RangeChanging != null)
+        {
+            RangeChanging(this, args);
+        }
+    }
+
     [MirrorVerified("Release IL")]
     public bool IsEmpty() => base.Count == 0;
 
