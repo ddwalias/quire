@@ -15,6 +15,4 @@ public static partial class ColorUtilities
     public static global::System.Windows.Media.Color[] baseColors;
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.Color[] grayScaleColors;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.List<global::System.Windows.Media.Color> GetShadesList(global::System.Collections.Generic.List<global::System.Windows.Media.Color> hueColors, global::System.Windows.Media.Color shadeColor, float weightG = 0.5f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
