@@ -30,8 +30,6 @@ public partial class WpfClipboard : global::Quire.IClipboard
     [global::Quire.Mirror.MirrorStub]
     public object GetPrimeObject() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlDocument GetXMLSpreadsheet() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public string GetFormattedText(out string dataFormat, out bool isPlainText) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetSExpression(string sExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
