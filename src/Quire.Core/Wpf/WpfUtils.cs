@@ -18,6 +18,21 @@ namespace Quire.Wpf;
 
 public static partial class WpfUtils
 {
+    public static bool? IsLoaded(DependencyObject depObj)
+    {
+        switch (depObj)
+        {
+            case FrameworkElement frameworkElement:
+                return frameworkElement.IsLoaded;
+            case FrameworkContentElement frameworkContentElement:
+                return frameworkContentElement.IsLoaded;
+            case IFrameworkInputElement frameworkInputElement:
+                Quire.DebugTools.FailAssertion(frameworkInputElement.GetType().Name);
+                break;
+        }
+        return null;
+    }
+
     [MirrorVerified("PtcWpfWpfUtilsMechanicalDifferentialTests")]
     public static void QueueBackgroundTask(MethodInvoker work) => ExecuteTask(work, true);
 
