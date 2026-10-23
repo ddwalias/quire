@@ -320,6 +320,20 @@ public partial class ChunkedMemoryStream
         _position = Math.Min(_position, _length);
     }
 
+    public void WriteTo(System.IO.Stream stream)
+    {
+        long num = _length;
+        int num2 = 0;
+        while (num > 0)
+        {
+            int count;
+            byte[] chunk = GetChunk(num2++, out count);
+            int num3 = (int)Math.Min(num, count);
+            stream.Write(chunk, 0, num3);
+            num -= num3;
+        }
+    }
+
     [MirrorVerified("Release IL")]
     public long Capacity
     {
