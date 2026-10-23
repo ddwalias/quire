@@ -15,6 +15,4 @@ public partial class VCard
     private static readonly string[] Newline;
     [global::Quire.Mirror.MirrorStub]
     public VCard(string vCardString) { }
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IEnumerable<string> GetVCardStringLines(string vCardString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

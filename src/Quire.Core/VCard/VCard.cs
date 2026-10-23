@@ -5,6 +5,29 @@ namespace Quire.VCard;
 
 public partial class VCard
 {
+    private static IEnumerable<string> GetVCardStringLines(string vCardString)
+    {
+        string[] lines = vCardString.Replace("\r\n ", "").Replace("\r\n\t", "").Split(Newline, StringSplitOptions.RemoveEmptyEntries);
+        for (int i = 0; i < lines.Length; i++)
+        {
+            if (lines[i] == null)
+            {
+                break;
+            }
+
+            if (lines[i].Contains("ENCODING=QUOTED-PRINTABLE") && lines[i].EndsWith("=") && i + 1 < lines.Length)
+            {
+                lines[i] = lines[i].Substring(0, lines[i].Length - 1) + lines[i + 1];
+                for (int j = i + 1; j < lines.Length - 1; j++)
+                {
+                    lines[j] = lines[j + 1];
+                }
+                i--;
+            }
+        }
+        return lines;
+    }
+
     [MirrorVerified("PtcVCardVCardMechanicalDifferentialTests")]
     public string Version { get; private set; }
 
