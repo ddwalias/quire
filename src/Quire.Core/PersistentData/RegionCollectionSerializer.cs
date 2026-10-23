@@ -7,6 +7,21 @@ namespace Quire.PersistentData;
 
 public partial class RegionCollectionSerializer<TCollection>
 {
+    public System.Xml.XmlElement Serialize(System.Xml.XmlDocument xmlContentDocument, bool useOverrides)
+    {
+        PreSerialize();
+        Regions = global::Quire.EnumerableExtensions.CollectAsList<IRegionType, IRegionType>(Regions, AddProtectionIfNeeded);
+        using (global::Quire.Xml.XmlNodeWriter xmlWriter = new global::Quire.Xml.XmlNodeWriter(xmlContentDocument))
+        {
+            GetXmlSerializer(useOverrides).Serialize(xmlWriter, RegionCollection);
+        }
+        if (xmlContentDocument.ChildNodes.Count == 1)
+        {
+            return xmlContentDocument.ChildNodes[0] as System.Xml.XmlElement;
+        }
+        return null;
+    }
+
     private IRegionType AddProtectionIfNeeded(IRegionType item)
     {
         if (item.Item is IProtectableDataType { Protect: not false } protectableDataType)
