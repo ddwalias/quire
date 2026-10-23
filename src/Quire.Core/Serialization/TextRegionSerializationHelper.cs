@@ -13,6 +13,16 @@ namespace Quire.Serialization;
 
 public static partial class TextRegionSerializationHelper
 {
+    public static readonly string[] PTC_CONTROLS_TEXT_NAMESPACE = new string[2]
+    {
+        "pct",
+        "clr-namespace:Ptc.Controls.Text;assembly=Ptc.Controls.Text"
+    };
+
+    public static readonly string PAGE_GAP_CONTAINER_NODE_NAME = "PageGapContainer";
+
+    private static readonly System.Version _firstVerToNotPackFlowDocumentImages = new System.Version(3, 0, 0, 0);
+
     public static XmlNamespaceManager CreateNamespaceManagerForTextRegions(XmlNode root)
     {
         XmlDocument xmlDocument = (root as XmlDocument) ?? root.OwnerDocument;

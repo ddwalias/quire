@@ -12,11 +12,5 @@ namespace Quire.Serialization;
 public static partial class TextRegionSerializationHelper
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly string[] PTC_CONTROLS_TEXT_NAMESPACE;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly string PAGE_GAP_CONTAINER_NODE_NAME;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Version _firstVerToNotPackFlowDocumentImages;
-    [global::Quire.Mirror.MirrorStub]
     public static void CopyImagesFromPackageIntoFlowDocument(global::System.Xml.XmlNode flowDocumentXaml, global::Quire.Serialization.IDeS11NProvider d11NProvider, global::System.Xml.XmlNamespaceManager nsManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
