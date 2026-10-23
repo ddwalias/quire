@@ -17,6 +17,25 @@ public partial class QualityAgentManager
         return string.Empty;
     }
 
+    private static void AddArgument(ref string commandLine, string name)
+    {
+        commandLine = string.Concat(commandLine, string.Format(" -{0}", name));
+    }
+
+    private static void AddArgument(ref string commandLine, string name, string data)
+    {
+        commandLine = string.Concat(commandLine, string.Format(" -{0} \"{1}\"", name, data));
+    }
+
+    private static string GetProdDcuPath(string mathcadPrimeInstallPath)
+    {
+        if (!string.IsNullOrEmpty(mathcadPrimeInstallPath))
+        {
+            return System.IO.Path.Combine(mathcadPrimeInstallPath, "prod_dcu.exe");
+        }
+        return string.Empty;
+    }
+
     [MirrorVerified("PtcQualityAgentManagerQualityAgentManagerMechanicalDifferentialTests")]
     private static string GetMathcadPrimeInstallationDate() => MsiHelper.GetProductInfo(MsiHelper.MathcadCurrentReleaseProductCode, MsiHelper.InstallProperty.InstallDate);
 
