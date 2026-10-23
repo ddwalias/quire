@@ -22,6 +22,21 @@ public static partial class XmlWorksheetData
         return namespaceManager;
     }
 
+    [MirrorVerified("Release IL")]
+    public static XmlNamespaceManager createMcdxNamespaceManager(XmlDocument xmlDocument)
+    {
+        xmlDocument ??= new XmlDocument();
+        XmlNamespaceManager namespaceManager = new XmlNamespaceManager(xmlDocument.NameTable);
+        namespaceManager.AddNamespace(string.Empty, worksheet50);
+        namespaceManager.AddNamespace("xsi", xmlSchemaInstance);
+        namespaceManager.AddNamespace("ve", markupCompatibility);
+        namespaceManager.AddNamespace("r", officeDocumentRelationships);
+        namespaceManager.AddNamespace("ws", worksheet50);
+        namespaceManager.AddNamespace("cl", calculation10);
+        AddMcdxMLNamespaces(namespaceManager);
+        return namespaceManager;
+    }
+
     [MirrorVerified("PtcXmlXmlWorksheetDataMechanicalDifferentialTests")]
     public static XmlElement CreateMathcad14MLElement(XmlDocument document, string localName) => CreateMLElement(document, localName, "http://schemas.mathsoft.com/math30");
 
