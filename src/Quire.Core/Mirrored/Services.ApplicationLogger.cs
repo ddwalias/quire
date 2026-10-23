@@ -5,6 +5,16 @@ namespace Quire.Services;
 
 partial class ApplicationLogger
 {
+    private static string GetExceptionLogLocation(string appConfigFolderPath)
+    {
+        string text = global::System.IO.Path.Combine(appConfigFolderPath, "Logs");
+        if (!_fileOperationsProvider.DirectoryExists(text))
+        {
+            _fileOperationsProvider.CreateDirectory(text);
+        }
+        return text;
+    }
+
     private string _fullProductName = _product;
     private string _logFolder = _defaultApplicationLogFolderPath;
 

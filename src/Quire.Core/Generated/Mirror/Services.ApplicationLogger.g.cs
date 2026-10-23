@@ -37,6 +37,4 @@ public partial class ApplicationLogger : global::Quire.Services.IApplicationLogg
     protected void WriteToLog(string msg, global::System.IO.TextWriter textWriter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected global::System.IO.TextWriter CreateApplicationLog(string logType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string GetExceptionLogLocation(string appConfigFolderPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
