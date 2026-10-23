@@ -31,6 +31,29 @@ public static partial class EnumerableExtensions
         return value;
     }
 
+    [MirrorVerified("Release IL")]
+    public static TSource MinBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector, IComparer<TKey> comparer)
+    {
+        using IEnumerator<TSource> enumerator = source.GetEnumerator();
+        if (!enumerator.MoveNext())
+        {
+            throw new InvalidOperationException("Sequence was empty");
+        }
+        TSource value = enumerator.Current;
+        TKey key = selector(value);
+        while (enumerator.MoveNext())
+        {
+            TSource current = enumerator.Current;
+            TKey currentKey = selector(current);
+            if (comparer.Compare(currentKey, key) < 0)
+            {
+                value = current;
+                key = currentKey;
+            }
+        }
+        return value;
+    }
+
     public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> source) => source ?? Enumerable.Empty<T>();
 
     public static int IndexOf<T>(this IEnumerable<T> items, T item) => new List<T>(items).IndexOf(item);
