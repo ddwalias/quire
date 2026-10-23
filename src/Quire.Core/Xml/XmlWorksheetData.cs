@@ -8,6 +8,20 @@ namespace Quire.Xml;
 
 public static partial class XmlWorksheetData
 {
+    [MirrorVerified("Release IL")]
+    public static XmlNamespaceManager createMathcad14NamespaceManager(XmlDocument xmlDocument)
+    {
+        xmlDocument ??= new XmlDocument();
+        XmlNamespaceManager namespaceManager = new XmlNamespaceManager(xmlDocument.NameTable);
+        namespaceManager.AddNamespace(string.Empty, worksheet30);
+        namespaceManager.AddNamespace("xsi", xmlSchemaInstance);
+        namespaceManager.AddNamespace("ve", markupCompatibility);
+        namespaceManager.AddNamespace("r", officeDocumentRelationships);
+        namespaceManager.AddNamespace("ws", worksheet30);
+        AddMathcad14MLNamespaces(namespaceManager);
+        return namespaceManager;
+    }
+
     [MirrorVerified("PtcXmlXmlWorksheetDataMechanicalDifferentialTests")]
     public static XmlElement CreateMathcad14MLElement(XmlDocument document, string localName) => CreateMLElement(document, localName, "http://schemas.mathsoft.com/math30");
 

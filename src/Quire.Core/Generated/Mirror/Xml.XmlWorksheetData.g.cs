@@ -93,6 +93,4 @@ public static partial class XmlWorksheetData
     public static string VersionName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.XmlNamespaceManager createMcdxNamespaceManager(global::System.Xml.XmlDocument xmlDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Xml.XmlNamespaceManager createMathcad14NamespaceManager(global::System.Xml.XmlDocument xmlDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
