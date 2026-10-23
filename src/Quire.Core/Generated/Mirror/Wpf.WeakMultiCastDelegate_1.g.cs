@@ -16,7 +16,5 @@ public partial class WeakMultiCastDelegate<TDelegate> where TDelegate : class
     [global::Quire.Mirror.MirrorStub]
     public void Remove(TDelegate tDelegate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void Invoke(object[] arguments) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public WeakMultiCastDelegate() { }
 }

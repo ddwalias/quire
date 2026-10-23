@@ -19,4 +19,28 @@ public partial class WeakMultiCastDelegate<TDelegate> where TDelegate : class
             _weakDelegates.Add(new WeakDelegate(item));
         }
     }
+
+    [MirrorVerified("Release IL")]
+    public void Invoke(object[] arguments)
+    {
+        System.Collections.Generic.List<WeakDelegate> deadDelegates = new System.Collections.Generic.List<WeakDelegate>();
+        foreach (WeakDelegate weakDelegate in _weakDelegates)
+        {
+            if (weakDelegate != null)
+            {
+                if (weakDelegate.IsWeakReferenceAlive)
+                {
+                    weakDelegate.Invoke(arguments);
+                }
+                else
+                {
+                    deadDelegates.Add(weakDelegate);
+                }
+            }
+        }
+        foreach (WeakDelegate weakDelegate in deadDelegates)
+        {
+            _weakDelegates.Remove(weakDelegate);
+        }
+    }
 }
