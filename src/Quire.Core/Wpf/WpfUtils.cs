@@ -63,6 +63,24 @@ public static partial class WpfUtils
         return null;
     }
 
+    public static bool IsVisualTreeFullyUpdated(UIElement root, out bool isTreeFullyLoaded)
+    {
+        global::System.Collections.Generic.Queue<DependencyObject> queue = new global::System.Collections.Generic.Queue<DependencyObject>();
+        queue.Enqueue(root);
+        bool fullyVisible = true;
+        while (queue.IsNotEmpty() && IsLoaded(queue.Peek()) != false)
+        {
+            DependencyObject current = queue.Dequeue();
+            fullyVisible = fullyVisible && IsVisibleValid(current) != false;
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(current); i++)
+            {
+                queue.Enqueue(VisualTreeHelper.GetChild(current, i));
+            }
+        }
+        isTreeFullyLoaded = queue.IsNullOrEmpty();
+        return isTreeFullyLoaded & fullyVisible;
+    }
+
     public static bool? IsLoaded(DependencyObject depObj)
     {
         switch (depObj)
