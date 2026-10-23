@@ -76,13 +76,14 @@ def ordinalless(text):
 # D19: what MSVC emits for C++/CLI on its own (standard-library and CRT instantiations,
 # exception/startup helpers, C++ attribute and modifier types). Only these may lack a counterpart.
 TOOLSET_TYPES = ('std.', '<CrtImplementationDetails>', 'vc.cppcli.')
-TOOLSET_GLOBALS = re.compile(r'(std\.|__std_|_CRT|__security_|___Cxx|__eh|__Exception|_onexit|_atexit_|'
-                             r'_getFiberPtrId|PtrToStringChars|(new|delete)(\[\])?`)')
+TOOLSET_GLOBALS = re.compile(r'(std\.|__std_|_CRT|__security_|___Cxx|__eh|__Exception|_atexit_|'
+                             r'(_onexit|_getFiberPtrId|PtrToStringChars|new|delete|delete\[\])`)')
 
 
 def toolset_support(row):
-    """A mixed-mode compiler-support member that Mathcad's build did not need."""
-    if not row.get('mixed_mode') or row.get('original') is not None:
+    """A mixed-mode compiler-support member that Mathcad's build did not need: unpaired, and no Mathcad member
+    of the same owner, name and arity exists (that would be a pairing miss)."""
+    if not row.get('mixed_mode') or row.get('original') is not None or row.get('original_name_taken') is not False:
         return False
     if row['type'] == '<Module>':
         return bool(TOOLSET_GLOBALS.match(row['signature']))
@@ -92,7 +93,7 @@ def toolset_support(row):
 def native_pair(row):
     """A mixed-mode native body whose Mathcad counterpart is native too: no IL on either side (D10)."""
     return bool(row.get('mixed_mode') and (row.get('unsupported') or '').startswith('native code')
-                and (row.get('original') or {}).get('native_code') is True)
+                and (row.get('original') or {}).get('native_code') is True and row.get('shape_matches') is True)
 
 
 def stub(row):
@@ -136,7 +137,10 @@ def compare(before, after, types=(), methods=()):
                 or previous and previous.get('exact_match') is True):
             continue
         checked.append(key)
-        if toolset_support(row) or native_pair(row):
+        # A member that was exact, or that lost its counterpart, keeps its obligations.
+        if (toolset_support(row) or native_pair(row)) and not (
+                previous and (previous.get('exact_match') is True
+                              or previous.get('original') is not None and row.get('original') is None)):
             continue
         if row.get('unsupported'):
             failures.append({'method': key, 'reason': row['unsupported']})
@@ -205,8 +209,30 @@ def without_install(work, environ=os.environ):
     return env, f'-p:MathcadInstallDir={work / "no-mathcad-install"}{os.sep}'
 
 
+INSTALL_REFERENCE = re.compile(r'MathcadInstallDir|MATHCAD_DIR|Mathcad Prime|\\PTC\\', re.IGNORECASE)
+
+
+def reads_install(root, projects, vcxproj=None):
+    """D19: build files of the compared projects that name the Mathcad install."""
+    files = [p for project in projects for p in (root / 'src' / project).rglob('*')
+             if p.suffix in ('.csproj', '.vcxproj', '.props', '.targets') and not {'bin', 'obj'} & set(p.parts)]
+    return sorted(str(p.relative_to(root)) for p in files + ([vcxproj] if vcxproj else [])
+                  if INSTALL_REFERENCE.search(p.read_text(encoding='utf-8', errors='replace')))
+
+
+def section_names(dll):
+    """PE section names; an IL-patching post-build step leaves its own section (D19)."""
+    data = Path(dll).read_bytes()
+    pe = int.from_bytes(data[0x3c:0x40], 'little')
+    count = int.from_bytes(data[pe + 6:pe + 8], 'little')
+    table = pe + 24 + int.from_bytes(data[pe + 20:pe + 22], 'little')
+    return [data[table + 40 * i:table + 40 * i + 8].rstrip(b'\0').decode('ascii', 'replace') for i in range(count)]
+
+
 def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vcxproj=None):
     assemblies = work / 'assemblies'
+    if found := reads_install(root, projects, vcxproj):
+        raise RuntimeError(f'builds must not read the Mathcad install (D19): {", ".join(found)}')
     env, hidden = without_install(work)
     if vcxproj:
         # OutDir/IntDir keep outputs out of the tree; MethodAudit then requires <project>.dll there (the TargetName).
@@ -219,6 +245,9 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
             raise RuntimeError(f'production project missing from comparison: {target}')
         run([dotnet, 'build', target, '-c', 'Release', '--no-incremental', '-o', assemblies, hidden,
              '-nologo', '-v:q', '-p:EnableSourceControlManagerQueries=false'], root, log, timeout, env)
+    for project in projects:
+        if '.ilnew' in section_names(assemblies / f'{project}.dll'):
+            raise RuntimeError(f'{project}.dll has an IL-patching .ilnew section (D19)')
     inventory = work / 'inventory.json'
     run([dotnet, tool, '--repo', root, '--assemblies', assemblies, '--install', install,
          '--output', inventory, '--release-il',

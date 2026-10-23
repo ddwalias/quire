@@ -1,7 +1,9 @@
 """Acceptance checks for the Release IL gate, without executing production code."""
 from pathlib import Path
+import sys
+import tempfile
 import unittest
-from release_il import compare, ordinalless, without_install
+from release_il import compare, ordinalless, reads_install, section_names, without_install
 
 
 def method(name='M', body='same', exact=True, **extra):
@@ -102,8 +104,8 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         self.assertEqual(result['failures'], [{'method': 'P::T::<Module>::f', 'reason': row['unsupported']}])
 
     def test_mixed_mode_toolset_support_without_counterpart_is_reported_not_failed(self):
-        def global_row(signature, mixed=True):
-            row = method(signature, exact=None, original=None, mixed_mode=mixed,
+        def global_row(signature, mixed=True, taken=False):
+            row = method(signature, exact=None, original=None, mixed_mode=mixed, original_name_taken=taken,
                          unsupported='global <Module> method has no reviewed Mathcad binding')
             row.update(id=f'P::<Module>::{signature}', type='<Module>')
             return row
@@ -112,12 +114,28 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         self.assertTrue(result['passed'])
         self.assertEqual(result['toolset_support'], 2)
         self.assertEqual(result['unfinished'], 0)
-        crt_type = method('Throw', exact=False, original=None, mixed_mode=True)
+        crt_type = method('Throw', exact=False, original=None, mixed_mode=True, original_name_taken=False)
         crt_type.update(type='<CrtImplementationDetails>.Exception')
         self.assertTrue(compare(inventory(), inventory(crt_type))['passed'])
-        # Our own templates and IL-only assemblies get no allowance.
+        # Our own templates, IL-only assemblies, pairing misses and old inventories get no allowance.
         self.assertFalse(compare(inventory(), inventory(global_row('Substring<char const >.{ctor}`0()->Void|True')))['passed'])
         self.assertFalse(compare(inventory(), inventory(global_row('std.endl`0()->Void|True', mixed=False)))['passed'])
+        self.assertFalse(compare(inventory(), inventory(global_row('std.endl`0()->Void|True', taken=True)))['passed'])
+        untagged = global_row('std.endl`0()->Void|True')
+        del untagged['original_name_taken']
+        self.assertFalse(compare(inventory(), inventory(untagged))['passed'])
+        # Exact names are whole names, not prefixes.
+        self.assertFalse(compare(inventory(), inventory(global_row('PtrToStringCharsX`0()->Void|True')))['passed'])
+        self.assertFalse(compare(inventory(), inventory(global_row('newFoo`0()->Void|True')))['passed'])
+
+    def test_toolset_allowance_never_covers_a_member_that_was_exact_or_paired(self):
+        before = method('std.vector<Foo>.Get`0()->Void|True', mixed_mode=True)
+        after = method('std.vector<Foo>.Get`0()->Void|True', body='other', exact=None, original=None,
+                       mixed_mode=True, original_name_taken=False)
+        after['type'] = before['type'] = 'std.vector<Foo>'
+        self.assertFalse(compare(inventory(before), inventory(after))['passed'])
+        before['exact_match'] = False
+        self.assertFalse(compare(inventory(before), inventory(after))['passed'])
 
     def test_mixed_mode_members_with_a_counterpart_must_still_match(self):
         row = method('std.endl`0()->Void|True', exact=False, mixed_mode=True)
@@ -130,6 +148,11 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         result = compare(inventory(), inventory(native(True)))
         self.assertTrue(result['passed'])
         self.assertEqual(result['native_pairs'], 1)
+        # The declaration still has to match.
+        self.assertFalse(compare(inventory(), inventory(dict(native(True), shape_matches=False)))['passed'])
+        # A C# member exempted as engine-native may become a native body against a native counterpart.
+        csharp = method('N', exact=None, engine_native=True, original={'assembly': 'utl-mgd'})
+        self.assertTrue(compare(inventory(csharp), inventory(native(True)))['passed'])
         self.assertFalse(compare(inventory(), inventory(native(False)))['passed'])
         self.assertFalse(compare(inventory(), inventory(native(True, mixed=False)))['passed'])
 
@@ -145,6 +168,17 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         env, hidden = without_install(Path('work'), {'MATHCAD_DIR': r'C:\PTC', 'PATH': 'p'})
         self.assertEqual(env, {'PATH': 'p'})
         self.assertTrue(hidden.startswith('-p:MathcadInstallDir=') and 'no-mathcad-install' in hidden)
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / 'src' / 'P' / 'obj').mkdir(parents=True)
+            (root / 'src' / 'P' / 'P.csproj').write_text('<Project />')
+            (root / 'src' / 'P' / 'obj' / 'x.props').write_text('MATHCAD_DIR')
+            self.assertEqual(reads_install(root, ['P']), [])
+            (root / 'src' / 'P' / 'P.vcxproj').write_text(r'<D>C:\Program Files\PTC\Mathcad Prime 12</D>')
+            self.assertEqual(reads_install(root, ['P']), [str(Path('src/P/P.vcxproj'))])
+
+    def test_section_names_reads_the_pe_section_table(self):
+        self.assertIn('.text', section_names(sys.executable))
 
     def test_matching_declaration_needs_no_body(self):
         row = method(exact=None)

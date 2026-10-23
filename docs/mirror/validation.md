@@ -60,13 +60,20 @@ mixed-mode Quire assembly it pairs what the C++/CLI compiler emits as follows:
   signature, with custom modifiers added only where overloads share one.
 - unpaired MSVC support members are reported as `toolset_support` and do not fail ([D19](decisions.md)):
   globals named `std.*`, `__std_*`, `_CRT*`, `__security_*`, `___Cxx*`, `__eh*`, `__Exception*`,
-  `_onexit`, `_atexit_*`, `_getFiberPtrId`, `PtrToStringChars`, `new`/`delete`, and types under
-  `std.`, `<CrtImplementationDetails>` or `vc.cppcli.`. Other unpaired members, including
-  instantiations of Mathcad's own templates, still fail.
-- methods whose RVA holds native code have no IL. Against a native Mathcad counterpart they are
-  reported as `native_pairs`; otherwise they are `unsupported` and fail.
+  `_atexit_*`, or exactly `_onexit`, `_getFiberPtrId`, `PtrToStringChars`, `new`, `delete`, `delete[]`,
+  and types under `std.`, `<CrtImplementationDetails>` or `vc.cppcli.`. The allowance needs
+  MethodAudit's `original_name_taken: false`: when the bound Mathcad assembly has a member of the
+  same owner, name and arity, the row is a pairing miss and fails. Other unpaired members, including
+  instantiations of Mathcad's own templates, fail; so does a member that was exact or that lost its
+  counterpart.
+- methods whose RVA holds native code have no IL. Against a native Mathcad counterpart with a matching
+  declaration they are reported as `native_pairs`; otherwise they are `unsupported` and fail.
 - removing a C# stand-in with no Mathcad counterpart (such as `_tildeSafeMutex`) passes once the
   project is mixed-mode.
+
+The gate fails closed before building when a compared project's `.csproj`, `.vcxproj`, `.props` or
+`.targets` names the install (`MathcadInstallDir`, `MATHCAD_DIR`, `Mathcad Prime`, `\PTC\`), and after
+building when an output DLL has an `.ilnew` section, the mark of IL-patching post-build steps.
 - the D10 `engine_native` exemption applies only to IL-only Quire assemblies; a mixed candidate
   can emit those bodies, so it must match them.
 

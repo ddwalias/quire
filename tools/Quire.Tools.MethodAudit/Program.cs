@@ -278,6 +278,17 @@ StructureReader Reader(Artifact a, bool isQuire) => structures.TryGetValue(a, ou
         isQuire ? token => originalNames.GetValueOrDefault((a.Name, token)) : _ => null, exact: true);
 // Stable body hashes identify changed Release methods independently of metadata token numbering.
 var bodies = quire.ToDictionary(a => a, a => new StructureReader(a.Metadata, a.Pe, new SigProvider(a.Name), name => name, _ => null, exact: true, root: repo));
+// D19: an unpaired mixed-mode member whose bound Mathcad assembly has a member of the same owner, name and arity is a
+// pairing miss, not compiler support Mathcad's build lacked.
+bool OriginalNameTaken(Artifact artifact, RawMethod raw, TypeModel? type, Artifact? original, RawMethod? counterpart)
+{
+    if (artifact.IlOnly || counterpart != null) return false;
+    var mixed = original ?? ModuleOriginal(artifact);
+    if (mixed == null) return false;
+    string owner = type != null && typeNames.TryGetValue((artifact.Name, type.FullName), out var fields) ? fields[0].Trim() : raw.Owner;
+    int arity = raw.Signature.ParameterTypes.Length;
+    return mixed.Methods.Any(m => m.Owner == owner && m.Name == raw.Name && m.Signature.ParameterTypes.Length == arity);
+}
 foreach (var (artifact, raw, type, method, original, counterpart) in matched)
 {
     if (selectedTypes.Count > 0 && !selectedTypes.Contains(raw.Owner)) continue;
@@ -334,6 +345,7 @@ foreach (var (artifact, raw, type, method, original, counterpart) in matched)
             native_code = counterpart.NativeCode },
         // D19: a C++/CLI candidate; the gate classifies its compiler-support and native-vs-native rows.
         mixed_mode = !artifact.IlOnly,
+        original_name_taken = OriginalNameTaken(artifact, raw, type, original, counterpart),
         // D10: utl-mgd is a mixed-mode engine boundary. Matched bodies with a 0-7 original
         // maxstack and emitted bodies lacking a managed signature match are native routines.
         // An IL-only port cannot reproduce those bodies; a mixed-mode (C++/CLI) candidate can, so it gets no exemption.
