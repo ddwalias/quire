@@ -7,6 +7,15 @@ namespace Quire.PersistentData;
 
 public partial class headersContainerWrapper
 {
+    public headersContainerWrapper()
+    {
+        _container = new cachedWorksheetRegionType.headersContainer
+        {
+            header = new headerFooterRegions(),
+            firstPageHeader = new headerFooterRegions()
+        };
+    }
+
     [MirrorVerified("PtcPersistentDataheadersContainerWrapperMechanicalDifferentialTests")]
     private readonly cachedWorksheetRegionType.headersContainer _container;
 

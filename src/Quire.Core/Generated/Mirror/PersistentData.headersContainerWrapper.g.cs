@@ -13,6 +13,4 @@ public partial class headersContainerWrapper : global::Quire.PersistentData.IReg
 {
     [global::Quire.Mirror.MirrorStub]
     public const string RootNodeName = "headers";
-    [global::Quire.Mirror.MirrorStub]
-    public headersContainerWrapper() { }
 }
