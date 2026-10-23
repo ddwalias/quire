@@ -18,8 +18,6 @@ public partial class WpfClipboard : global::Quire.IClipboard
     [global::Quire.Mirror.MirrorStub]
     private static readonly string _canPasteIntoTextRegion;
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.IDisposable Override(global::Quire.IClipboard clipboard) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void SetText(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetDataObjectToClipboard(global::System.Windows.IDataObject dataObject, bool copy = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

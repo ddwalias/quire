@@ -61,6 +61,14 @@ public partial class WpfClipboard
     [MirrorVerified("PtcWpfClipboardMechanicalDifferentialTests")]
     public WpfClipboard() { }
 
+    [MirrorVerified("Release IL")]
+    public static System.IDisposable Override(IClipboard clipboard)
+    {
+        System.IDisposable clipboardOverride = new ClipboardOverride(_current);
+        _current = clipboard;
+        return clipboardOverride;
+    }
+
     partial class ClipboardOverride
     {
         [MirrorVerified("PtcWpfClipboardMechanicalDifferentialTests")]
