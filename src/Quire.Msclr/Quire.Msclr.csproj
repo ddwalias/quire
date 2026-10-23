@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <UseIJWHost>true</UseIJWHost>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Quire.Mirror\Quire.Mirror.csproj" />
+    <ProjectReference Include="..\Quire.Mpl\Quire.Mpl.csproj" />
+  </ItemGroup>
+
+  <!-- The pinned MSVC 19.51.36246 Build Tools instance (D19). The release gate sets this from vswhere and overrides it. -->
+  <PropertyGroup>
+    <QuireMsvcInstallDir Condition="'$(QuireMsvcInstallDir)' == ''">C:\BuildTools\VS18.6-msvc\</QuireMsvcInstallDir>
+  </PropertyGroup>
+
+  <!-- Release replaces this output with the C++/CLI DLL, so the build must use the pinned MSVC that built msclr.dll (D19). -->
+  <Target Name="RequirePinnedMsvcForMixedModeRelease" BeforeTargets="Build"
+          Condition="'$(Configuration)' == 'Release'">
+    <Error Condition="'$(QuireMsvcInstallDir)' == ''"
+           Text="Quire.Msclr Release needs QuireMsvcInstallDir set to the MSVC 19.51.36246 Build Tools instance (D19)." />
+  </Target>
+
+  <Target Name="BuildMixedModeRelease" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <ItemGroup>
+      <_QuireMirrorReference Include="@(ReferencePath)" Condition="'%(Filename)' == 'Quire.Mirror'" />
+      <_QuireMplReference Include="@(ReferencePath)" Condition="'%(Filename)' == 'Quire.Mpl'" />
+    </ItemGroup>
+    <Error Condition="'@(_QuireMirrorReference)' == ''" Text="Quire.Mirror.dll is not among this project's references; the mixed-mode build cannot find it." />
+    <Error Condition="'@(_QuireMplReference)' == ''" Text="Quire.Mpl.dll is not among this project's references; the mixed-mode build cannot find it." />
+    <!-- Rebuild, not an incremental build: an up-to-date vcxproj would leave the C# DLL copied into bin above in place. -->
+    <!-- The vcxproj forces in the Quire.Mirror.dll and Quire.Mpl.dll this project already built, rather than building them again. -->
+    <Exec Command="&quot;$(QuireMsvcInstallDir)MSBuild\Current\Bin\amd64\MSBuild.exe&quot; &quot;$(MSBuildProjectDirectory)\MixedMode\Quire.Msclr.vcxproj&quot; /t:Rebuild /m /p:Configuration=Release /p:Platform=x64 /p:AssemblyOutDir=&quot;$(TargetDir.TrimEnd('\'))&quot; /p:QuireMirrorPath=&quot;@(_QuireMirrorReference->'%(FullPath)')&quot; /p:QuireMplPath=&quot;@(_QuireMplReference->'%(FullPath)')&quot; /v:minimal" />
+    <!-- The mixed DLL cannot use the portable PDB emitted by the preceding C# reference build. -->
+    <Delete Files="$(TargetDir)Quire.Msclr.pdb" />
+  </Target>
+</Project>

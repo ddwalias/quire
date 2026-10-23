@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <ProjectGuid>{1FF3143C-1066-4E05-9127-B41799BAD149}</ProjectGuid>
+    <Keyword>ManagedCProj</Keyword>
+    <RootNamespace>Quire.Msclr</RootNamespace>
+    <ProjectName>Quire.Msclr</ProjectName>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CLRSupport>NetCore</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir Condition="'$(AssemblyOutDir)'!=''">$(AssemblyOutDir)\</OutDir>
+    <OutDir Condition="'$(AssemblyOutDir)'==''">$(MSBuildThisFileDirectory)..\bin\Release\net10.0\</OutDir>
+    <IntDir>$(MSBuildThisFileDirectory)..\obj\mixedmode\Release\</IntDir>
+    <TargetName>Quire.Msclr</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DisableSpecificWarnings>4679;4691</DisableSpecificWarnings>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(IntDir)Quire.Msclr.pdb</ProgramDatabaseFile>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="MsclrPort.cpp" />
+  </ItemGroup>
+  <!-- The Build Tools MSBuild cannot evaluate SDK-style projects, so the managed references are forced in with /FU. The production
+       .csproj passes the DLLs it already built (QuireMirrorPath, QuireMplPath); a direct build of this project builds them with dotnet. -->
+  <PropertyGroup>
+    <_BuildQuireMirrorHere Condition="'$(QuireMirrorPath)' == ''">true</_BuildQuireMirrorHere>
+    <QuireMirrorOutDir>$(IntDir)Quire.Mirror\</QuireMirrorOutDir>
+    <QuireMirrorPath Condition="'$(QuireMirrorPath)' == ''">$(QuireMirrorOutDir)Quire.Mirror.dll</QuireMirrorPath>
+    <_BuildQuireMplHere Condition="'$(QuireMplPath)' == ''">true</_BuildQuireMplHere>
+    <QuireMplOutDir>$(IntDir)Quire.Mpl\</QuireMplOutDir>
+    <QuireMplPath Condition="'$(QuireMplPath)' == ''">$(QuireMplOutDir)Quire.Mpl.dll</QuireMplPath>
+  </PropertyGroup>
+  <Target Name="BuildQuireMirrorReference" BeforeTargets="ClCompile" Condition="'$(Configuration)|$(Platform)'=='Release|x64' and '$(_BuildQuireMirrorHere)' == 'true'">
+    <Exec Command="dotnet build &quot;$(MSBuildThisFileDirectory)..\..\Quire.Mirror\Quire.Mirror.csproj&quot; --configuration Release --output &quot;$(QuireMirrorOutDir.TrimEnd('\'))&quot; --nologo" />
+  </Target>
+  <Target Name="BuildQuireMplReference" BeforeTargets="ClCompile" Condition="'$(Configuration)|$(Platform)'=='Release|x64' and '$(_BuildQuireMplHere)' == 'true'">
+    <Exec Command="dotnet build &quot;$(MSBuildThisFileDirectory)..\..\Quire.Mpl\Quire.Mpl.csproj&quot; --configuration Release --output &quot;$(QuireMplOutDir.TrimEnd('\'))&quot; --nologo" />
+  </Target>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <ForcedUsingFiles>$(QuireMirrorPath);$(QuireMplPath);%(ForcedUsingFiles)</ForcedUsingFiles>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>
