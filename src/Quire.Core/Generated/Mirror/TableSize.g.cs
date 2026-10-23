@@ -13,8 +13,4 @@ public partial struct TableSize
 {
     [global::Quire.Mirror.MirrorStub]
     public static bool operator ==(global::Quire.TableSize a, global::Quire.TableSize b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Equals(global::Quire.TableSize obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Equals(object obj) => base.Equals(obj);
 }
