@@ -9,12 +9,6 @@ namespace Quire;
 public partial class WpfClipboard
 {
     [MirrorVerified("PtcWpfClipboardMechanicalDifferentialTests")]
-    public void Clear() => Clipboard.Clear();
-
-    [MirrorVerified("PtcWpfClipboardMechanicalDifferentialTests")]
-    public string GetText() => Clipboard.GetText();
-
-    [MirrorVerified("PtcWpfClipboardMechanicalDifferentialTests")]
     private static readonly string _mathNodeSExpression;
 
     [MirrorVerified("PtcWpfClipboardMechanicalDifferentialTests")]
@@ -30,9 +24,6 @@ public partial class WpfClipboard
         dataObject.SetData(DataFormats.Rtf, rtfString);
         return true;
     }
-
-    [MirrorVerified("PtcWpfClipboardMechanicalDifferentialTests")]
-    public bool HasText() => Clipboard.ContainsText();
 
     [MirrorVerified("PtcWpfClipboardMechanicalDifferentialTests")]
     public bool HasImage() => Clipboard.ContainsImage();
