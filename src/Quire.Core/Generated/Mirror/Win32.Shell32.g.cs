@@ -11,10 +11,4 @@ namespace Quire.Win32;
 [global::Quire.Mirror.MirrorOf("Ptc.Win32.Shell32, Ptc.Core")]
 public static partial class Shell32
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal static void ILFree(nint pidlList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static nint ILCreateFromPathW(string pszPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static int SHOpenFolderAndSelectItems(nint pidlList, uint cild, nint children, uint dwFlags) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
