@@ -17,8 +17,6 @@ public partial class WpfClipboard : global::Quire.IClipboard
     private static global::Quire.IClipboard _current;
     [global::Quire.Mirror.MirrorStub]
     private static readonly string _canPasteIntoTextRegion;
-    [global::Quire.Mirror.MirrorStub]
-    public static bool CopyPrimeXamlToDataObject(global::System.Windows.IDataObject dataObject, object item, int itemsCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.WpfClipboard+ClipboardOverride, Ptc.Core")]
     private partial class ClipboardOverride : global::System.IDisposable

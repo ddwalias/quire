@@ -6,6 +6,75 @@ namespace Quire;
 public partial class WpfClipboard
 {
     [MirrorVerified("Release IL")]
+    public static bool CopyPrimeXamlToDataObject(System.Windows.IDataObject dataObject, object item, int itemsCount)
+    {
+        byte[] serializedData;
+        bool canPasteIntoTextRegion;
+        System.IO.MemoryStream memoryStream;
+        System.IO.Compression.DeflateStream deflateStream;
+        System.IO.StreamWriter streamWriter;
+        bool success;
+        System.ApplicationException applicationException;
+        try
+        {
+            memoryStream = new System.IO.MemoryStream();
+            try
+            {
+                deflateStream = new System.IO.Compression.DeflateStream(memoryStream, System.IO.Compression.CompressionMode.Compress, true);
+                try
+                {
+                    streamWriter = new System.IO.StreamWriter(deflateStream);
+                    try
+                    {
+                        System.Windows.Markup.XamlWriter.Save(item, streamWriter);
+                    }
+                    finally
+                    {
+                        if (streamWriter != null)
+                        {
+                            ((System.IDisposable)streamWriter).Dispose();
+                        }
+                    }
+                }
+                finally
+                {
+                    if (deflateStream != null)
+                    {
+                        ((System.IDisposable)deflateStream).Dispose();
+                    }
+                }
+                serializedData = memoryStream.ToArray();
+            }
+            finally
+            {
+                if (memoryStream != null)
+                {
+                    ((System.IDisposable)memoryStream).Dispose();
+                }
+            }
+            dataObject.SetData(_primeXamlStreamCompressed, serializedData);
+            canPasteIntoTextRegion = itemsCount < 2;
+            dataObject.SetData(_canPasteIntoTextRegion, canPasteIntoTextRegion);
+            success = true;
+            goto Success;
+        }
+        catch (System.Reflection.TargetInvocationException exception)
+        {
+            applicationException = exception.InnerException as System.ApplicationException;
+            if (applicationException != null)
+            {
+                Quire.Services.AppServiceRegistry.GetService<Quire.Wpf.IMessageBoxManager>().ShowWarning(applicationException.Message, Quire.Wpf.WpfUtils.ApplicationFullName);
+            }
+        }
+        catch
+        {
+        }
+        return false;
+    Success:
+        return success;
+    }
+
+    [MirrorVerified("Release IL")]
     private static void CreateBitmapFromDib(System.IO.Stream dib, System.IO.Stream outStream)
     {
         int dibHeaderSize = new System.IO.BinaryReader(dib).ReadInt32();
