@@ -8,6 +8,9 @@ namespace Quire.Wpf;
 
 public partial class EnumToLocalizedStringConverter
 {
+    [MirrorVerified("Release IL")]
+    public static readonly EnumToLocalizedStringConverter Instance = new EnumToLocalizedStringConverter();
+
     [MirrorVerified("PtcWpfEnumToLocalizedStringConverterMechanicalDifferentialTests")]
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
 

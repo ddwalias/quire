@@ -12,6 +12,12 @@ namespace Quire.Wpf;
 public partial class SettersToStringConverter
 {
     [MirrorVerified("Release IL")]
+    public static SettersToStringConverter Instance = new SettersToStringConverter();
+
+    [MirrorVerified("Release IL")]
+    public static readonly string EmbedFontDelimiter = "#";
+
+    [MirrorVerified("Release IL")]
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is Style style)

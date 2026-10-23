@@ -10,6 +10,9 @@ namespace Quire.Wpf;
 public partial class StyleToImageConverter
 {
     [MirrorVerified("Release IL")]
+    public static StyleToImageConverter Instance = new StyleToImageConverter();
+
+    [MirrorVerified("Release IL")]
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         TextStyle textStyle = new TextStyle((Style)value);

@@ -7,6 +7,9 @@ namespace Quire.Wpf;
 public partial class StyleNameLegacyFontStyleConverter
 {
     [MirrorVerified("Release IL")]
+    public static StyleNameLegacyFontStyleConverter Instance = new StyleNameLegacyFontStyleConverter();
+
+    [MirrorVerified("Release IL")]
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         string text = (string)value;

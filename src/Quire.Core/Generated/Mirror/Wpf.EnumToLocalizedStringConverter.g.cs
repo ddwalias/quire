@@ -11,6 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.EnumToLocalizedStringConverter, Ptc.Core")]
 public partial class EnumToLocalizedStringConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Wpf.EnumToLocalizedStringConverter Instance;
 }

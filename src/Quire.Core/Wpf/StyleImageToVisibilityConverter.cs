@@ -8,6 +8,9 @@ namespace Quire.Wpf;
 
 public partial class StyleImageToVisibilityConverter
 {
+    [MirrorVerified("Release IL")]
+    public static StyleImageToVisibilityConverter Instance = new StyleImageToVisibilityConverter();
+
     [MirrorVerified("PtcWpfStyleImageToVisibilityConverterMechanicalDifferentialTests")]
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null;
 

@@ -11,6 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.GeneralTransformToTransformConverter, Ptc.Core")]
 public partial class GeneralTransformToTransformConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Wpf.GeneralTransformToTransformConverter Instance;
 }

@@ -8,6 +8,9 @@ namespace Quire.Wpf;
 public partial class GeneralTransformToTransformConverter
 {
     [MirrorVerified("Release IL")]
+    public static GeneralTransformToTransformConverter Instance = new GeneralTransformToTransformConverter();
+
+    [MirrorVerified("Release IL")]
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is Transform result)

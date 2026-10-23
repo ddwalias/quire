@@ -11,8 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.SettersToStringConverter, Ptc.Core")]
 public partial class SettersToStringConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Wpf.SettersToStringConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly string EmbedFontDelimiter;
 }

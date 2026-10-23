@@ -11,6 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.StyleNameLegacyFontStyleConverter, Ptc.Core")]
 public partial class StyleNameLegacyFontStyleConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Wpf.StyleNameLegacyFontStyleConverter Instance;
 }
