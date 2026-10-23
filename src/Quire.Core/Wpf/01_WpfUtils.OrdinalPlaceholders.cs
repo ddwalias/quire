@@ -13,7 +13,14 @@ public static partial class WpfUtils
 
     public static bool WaitForIdle(global::System.Threading.Thread thread, global::System.TimeSpan timeout) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public static void TextRangeCopy(global::System.Windows.Documents.TextRange source, global::System.Windows.Documents.TextRange destination, string dataFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void TextRangeCopy(global::System.Windows.Documents.TextRange source, global::System.Windows.Documents.TextRange destination, string dataFormat)
+    {
+        using global::System.IO.MemoryStream memoryStream = new global::System.IO.MemoryStream();
+        source.Save(memoryStream, dataFormat, preserveTextElements: true);
+        memoryStream.Flush();
+        memoryStream.Seek(0L, global::System.IO.SeekOrigin.Begin);
+        global::Quire.Serialization.TextRangeExtensionMethods.LoadWithCustomContext(destination, memoryStream, true);
+    }
 
     public static global::System.Uri CombineRelativeUris(global::System.Uri baseUri, global::System.Uri rel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
