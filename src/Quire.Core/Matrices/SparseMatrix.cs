@@ -7,15 +7,6 @@ namespace Quire.Matrices;
 public partial class SparseMatrix<TItem>
 {
     [MirrorVerified("Release IL")]
-    private void PositionCheck(TableCoordinate position)
-    {
-        if (position.Row < 0 || position.Column < 0)
-        {
-            throw new global::System.ArgumentOutOfRangeException("position", "The position row and column values must be 0 or greater.");
-        }
-    }
-
-    [MirrorVerified("Release IL")]
     private void FireChanged(SparseMatrixItemChangedEventArgs e)
     {
         if (Changed != null)
@@ -35,6 +26,41 @@ public partial class SparseMatrix<TItem>
 
     [MirrorVerified("PtcMatricesSparseMatrix1MechanicalDifferentialTests")]
     public event SparseMatrix<TItem>.SparseMatrixChangedEventHandler Changed;
+
+    public global::Quire.TableSize Size
+    {
+        get
+        {
+            global::Quire.TableSize size = default;
+            size.Rows = Rows;
+            size.Columns = Columns;
+            return size;
+        }
+    }
+
+    public int Rows
+    {
+        get
+        {
+            if (PopulatedCount == 0)
+            {
+                return 0;
+            }
+            return PopulatedPositions.Max((TableCoordinate coord) => coord.Row) + 1;
+        }
+    }
+
+    public int Columns
+    {
+        get
+        {
+            if (PopulatedCount == 0)
+            {
+                return 0;
+            }
+            return PopulatedPositions.Max((TableCoordinate coord) => coord.Column) + 1;
+        }
+    }
 
     partial class SparseMatrixItemChangedEventArgs
     {

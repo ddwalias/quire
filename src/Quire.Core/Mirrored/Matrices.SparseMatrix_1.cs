@@ -62,14 +62,13 @@ partial class SparseMatrix<TItem>
             FireChanged(new SparseMatrixItemChangedEventArgs(new global::Quire.TableCoordinate(-1, -1), oldPosition, value));
         }
     }
-    public global::Quire.TableSize Size
+
+    [global::Quire.Mirror.MirrorVerified("Release IL")]
+    private void PositionCheck(global::Quire.TableCoordinate position)
     {
-        get
+        if (position.Row < 0 || position.Column < 0)
         {
-            global::Quire.TableSize size = default;
-            size.Rows = Rows;
-            size.Columns = Columns;
-            return size;
+            throw new global::System.ArgumentOutOfRangeException("position", "The position row and column values must be 0 or greater.");
         }
     }
 }

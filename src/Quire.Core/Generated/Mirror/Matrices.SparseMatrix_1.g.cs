@@ -16,10 +16,6 @@ public partial class SparseMatrix<TItem> : global::Quire.Matrices.IMatrix<TItem>
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.EqualityComparer<TItem> _itemEqualityComparer;
     [global::Quire.Mirror.MirrorStub]
-    public int Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Columns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public SparseMatrix() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Matrices.SparseMatrix`1+SparseMatrixChangedEventHandler, Ptc.Core")]
