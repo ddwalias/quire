@@ -17,6 +17,4 @@ public static partial class Shell32
     internal static nint ILCreateFromPathW(string pszPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static int SHOpenFolderAndSelectItems(nint pidlList, uint cild, nint children, uint dwFlags) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool OpenContainingFolderAndSelectFile(string filePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
