@@ -171,6 +171,12 @@ public partial class CommandBuffer
         return commandBuffer;
     }
 
+    public static bool ExecuteAndAttach(IUndoableCommand command)
+    {
+        CompoundCommand compoundCommand = NextUndoCommand as CompoundCommand;
+        return Execute(command, global::Quire.EnvironmentScope.IsCurrentlyInsideUndoOrRedo ? null : compoundCommand);
+    }
+
     public static void RemoveBufferForKey(object key)
     {
         if (_instances.TryGetValue(key, out CommandBuffer commandBuffer))
