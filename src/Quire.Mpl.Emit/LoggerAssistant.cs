@@ -9,8 +9,8 @@ public static partial class LoggerAssistant
     {
         Type declaringType = member.DeclaringType;
         string value = declaringType?.Assembly.GetName().Name;
-        string value2 = declaringType?.FullName;
-        return $"{value}:{value2}.{member.Name}";
+        string declaringTypeName = declaringType?.FullName;
+        return $"{value}:{declaringTypeName}.{member.Name}";
     }
 
     public static string GetFullMethodName(MethodInfo method)
@@ -42,61 +42,61 @@ public static partial class LoggerAssistant
     public static string GetFullNameWithAssembly(MemberInfo member)
     {
         string value = member.DeclaringType?.Assembly?.GetName().Name;
-        string value2 = member.DeclaringType?.FullName;
+        string declaringTypeName = member.DeclaringType?.FullName;
         MethodInfo method;
-        DefaultInterpolatedStringHandler handler;
+        DefaultInterpolatedStringHandler methodFormatter;
         ConstructorInfo ctor;
-        DefaultInterpolatedStringHandler handler2;
+        DefaultInterpolatedStringHandler ctorFormatter;
         FieldInfo fieldInfo;
-        DefaultInterpolatedStringHandler handler3;
-        DefaultInterpolatedStringHandler handler4;
+        DefaultInterpolatedStringHandler fieldFormatter;
+        DefaultInterpolatedStringHandler memberFormatter;
 
         method = member as MethodInfo;
         if (method is not null)
         {
-            handler = new DefaultInterpolatedStringHandler(3, 3);
-            handler.AppendLiteral("[");
-            handler.AppendFormatted(value);
-            handler.AppendLiteral("]");
-            handler.AppendFormatted(value2);
-            handler.AppendLiteral(".");
-            handler.AppendFormatted(GetFullMethodName(method));
-            return handler.ToStringAndClear();
+            methodFormatter = new DefaultInterpolatedStringHandler(3, 3);
+            methodFormatter.AppendLiteral("[");
+            methodFormatter.AppendFormatted(value);
+            methodFormatter.AppendLiteral("]");
+            methodFormatter.AppendFormatted(declaringTypeName);
+            methodFormatter.AppendLiteral(".");
+            methodFormatter.AppendFormatted(GetFullMethodName(method));
+            return methodFormatter.ToStringAndClear();
         }
         ctor = member as ConstructorInfo;
         if (ctor is not null)
         {
-            handler2 = new DefaultInterpolatedStringHandler(3, 3);
-            handler2.AppendLiteral("[");
-            handler2.AppendFormatted(value);
-            handler2.AppendLiteral("]");
-            handler2.AppendFormatted(value2);
-            handler2.AppendLiteral(".");
-            handler2.AppendFormatted(GetFullConstructorName(ctor));
-            return handler2.ToStringAndClear();
+            ctorFormatter = new DefaultInterpolatedStringHandler(3, 3);
+            ctorFormatter.AppendLiteral("[");
+            ctorFormatter.AppendFormatted(value);
+            ctorFormatter.AppendLiteral("]");
+            ctorFormatter.AppendFormatted(declaringTypeName);
+            ctorFormatter.AppendLiteral(".");
+            ctorFormatter.AppendFormatted(GetFullConstructorName(ctor));
+            return ctorFormatter.ToStringAndClear();
         }
         fieldInfo = member as FieldInfo;
         if (fieldInfo is not null)
         {
-            handler3 = new DefaultInterpolatedStringHandler(3, 3);
-            handler3.AppendLiteral("[");
-            handler3.AppendFormatted(value);
-            handler3.AppendLiteral("]");
-            handler3.AppendFormatted(value2);
-            handler3.AppendLiteral(".");
-            handler3.AppendFormatted(fieldInfo.Name);
-            return handler3.ToStringAndClear();
+            fieldFormatter = new DefaultInterpolatedStringHandler(3, 3);
+            fieldFormatter.AppendLiteral("[");
+            fieldFormatter.AppendFormatted(value);
+            fieldFormatter.AppendLiteral("]");
+            fieldFormatter.AppendFormatted(declaringTypeName);
+            fieldFormatter.AppendLiteral(".");
+            fieldFormatter.AppendFormatted(fieldInfo.Name);
+            return fieldFormatter.ToStringAndClear();
         }
-        handler4 = new DefaultInterpolatedStringHandler(4, 4);
-        handler4.AppendLiteral("[");
-        handler4.AppendFormatted(value);
-        handler4.AppendLiteral("]");
-        handler4.AppendFormatted(value2);
-        handler4.AppendLiteral(".");
-        handler4.AppendFormatted(member.Name);
-        handler4.AppendLiteral(".");
-        handler4.AppendFormatted(member.MemberType);
-        return handler4.ToStringAndClear();
+        memberFormatter = new DefaultInterpolatedStringHandler(4, 4);
+        memberFormatter.AppendLiteral("[");
+        memberFormatter.AppendFormatted(value);
+        memberFormatter.AppendLiteral("]");
+        memberFormatter.AppendFormatted(declaringTypeName);
+        memberFormatter.AppendLiteral(".");
+        memberFormatter.AppendFormatted(member.Name);
+        memberFormatter.AppendLiteral(".");
+        memberFormatter.AppendFormatted(member.MemberType);
+        return memberFormatter.ToStringAndClear();
     }
 
 }

@@ -8,16 +8,16 @@ internal static partial class SignatureHelper
 {
     internal static BlobBuilder MethodSignatureEnconder(ParameterInfo[]? parameters, ParameterInfo? returnType, bool isInstance)
     {
-        Type[] parameters2 = null;
-        Type returnType2 = null;
+        Type[] parameterTypes = null;
+        Type returnValueType = null;
         if (parameters != null)
         {
-            parameters2 = Array.ConvertAll(parameters, (ParameterInfo parameter) => parameter.ParameterType);
+            parameterTypes = Array.ConvertAll(parameters, (ParameterInfo parameter) => parameter.ParameterType);
         }
         if (returnType != null)
         {
-            returnType2 = returnType.ParameterType;
+            returnValueType = returnType.ParameterType;
         }
-        return MethodSignatureEnconder(parameters2, returnType2, isInstance);
+        return MethodSignatureEnconder(parameterTypes, returnValueType, isInstance);
     }
 }

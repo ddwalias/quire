@@ -28,9 +28,9 @@ public partial class AssemblyBuilder
         _assemblyDef = metadataBuilder.AddAssembly(metadataBuilder.GetOrAddString(_assemblyName.Name), _assemblyName.Version ?? new Version(0, 0, 0, 0), (_assemblyName.CultureName == null) ? default(StringHandle) : metadataBuilder.GetOrAddString(_assemblyName.CultureName), (_assemblyName.GetPublicKey() is { } publicKey) ? metadataBuilder.GetOrAddBlob(publicKey) : default(BlobHandle), AssemblyFlags.PublicKey, AssemblyHashAlgorithm.None);
         _module.AppendMetadata(metadataBuilder, methodBodyStreamEncoder);
         ManagedPEBuilder managedPEBuilder = new ManagedPEBuilder(new PEHeaderBuilder(Machine.Unknown, 8192, 512, 4194304uL, 48, 0, 4, 0, 0, 0, 4, 0, Subsystem.WindowsCui, DllCharacteristics.DynamicBase | DllCharacteristics.NxCompatible | DllCharacteristics.NoSeh | DllCharacteristics.TerminalServerAware, Characteristics.ExecutableImage | Characteristics.Dll, 1048576uL, 4096uL, 1048576uL, 4096uL), new MetadataRootBuilder(metadataBuilder), blobBuilder, null, null, null, null, 128, default, CorFlags.ILOnly | CorFlags.StrongNameSigned);
-        BlobBuilder blobBuilder2 = new BlobBuilder(256);
-        managedPEBuilder.Serialize(blobBuilder2);
+        BlobBuilder serializedBlob = new BlobBuilder(256);
+        managedPEBuilder.Serialize(serializedBlob);
         _previouslySaved = true;
-        return blobBuilder2.ToArray();
+        return serializedBlob.ToArray();
     }
 }

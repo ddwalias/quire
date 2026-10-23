@@ -21,86 +21,86 @@ public partial class ModuleBuilder
             TypeDefinitionHandle value = MetadataHelper.AddTypeDef(item, metadata, _metadataReferenceTracker, fieldToken, methodToken);
             _definedTypes.Add(new EntityWrappers.TypeReferenceWrapper(item), value);
         }
-        foreach (TypeBuilder item2 in _typeDefStore)
+        foreach (TypeBuilder typeDef in _typeDefStore)
         {
-            _currentType = item2;
-            _currentTypeHandle = _definedTypes[new EntityWrappers.TypeReferenceWrapper(item2)];
+            _currentType = typeDef;
+            _currentTypeHandle = _definedTypes[new EntityWrappers.TypeReferenceWrapper(typeDef)];
             if (!_currentTypeHandle.HasValue)
             {
                 throw new InvalidOperationException("_currentTypeHandle can not be null");
             }
-            foreach (FieldBuilder item3 in item2._fieldDefStore)
+            foreach (FieldBuilder fieldDef in typeDef._fieldDefStore)
             {
-                FieldDefinitionHandle value2 = MetadataHelper.AddFieldDefintion(metadata, item2, _currentTypeHandle.Value, item3);
-                _definedFields[new EntityWrappers.FieldReferenceWrapper(item3)] = value2;
+                FieldDefinitionHandle fieldDefHandle = MetadataHelper.AddFieldDefintion(metadata, typeDef, _currentTypeHandle.Value, fieldDef);
+                _definedFields[new EntityWrappers.FieldReferenceWrapper(fieldDef)] = fieldDefHandle;
             }
         }
-        foreach (TypeBuilder item4 in _typeDefStore)
+        foreach (TypeBuilder typeDef in _typeDefStore)
         {
-            _currentType = item4;
-            _currentTypeHandle = _definedTypes[new EntityWrappers.TypeReferenceWrapper(item4)];
+            _currentType = typeDef;
+            _currentTypeHandle = _definedTypes[new EntityWrappers.TypeReferenceWrapper(typeDef)];
             if (!_currentTypeHandle.HasValue)
             {
                 throw new InvalidOperationException("_currentTypeHandle can not be null");
             }
-            List<int> list = dynamicAssemblyModel.MethodOffset(item4);
+            List<int> list = dynamicAssemblyModel.MethodOffset(typeDef);
             int num = 0;
-            foreach (object item5 in item4._methodDefStore)
+            foreach (object methodDef in typeDef._methodDefStore)
             {
-                MethodDefinitionHandle value3;
-                if (item5 is ConstructorBuilder)
+                MethodDefinitionHandle methodDefHandle;
+                if (methodDef is ConstructorBuilder)
                 {
-                    ConstructorBuilder constructorBuilder = (item5 as ConstructorBuilder) ?? throw new InvalidOperationException("Operand must be a ConstructorBuilder");
-                    value3 = MetadataHelper.AddConstructorDefintionNoBodyWithOffset(metadata, _metadataReferenceTracker, item4, _currentTypeHandle.Value, constructorBuilder, methodBodyStreamEncoder, list[num++]);
-                    _definedConstructors[new EntityWrappers.ConstructorReferenceWrapper(constructorBuilder)] = value3;
+                    ConstructorBuilder constructorBuilder = (methodDef as ConstructorBuilder) ?? throw new InvalidOperationException("Operand must be a ConstructorBuilder");
+                    methodDefHandle = MetadataHelper.AddConstructorDefintionNoBodyWithOffset(metadata, _metadataReferenceTracker, typeDef, _currentTypeHandle.Value, constructorBuilder, methodBodyStreamEncoder, list[num++]);
+                    _definedConstructors[new EntityWrappers.ConstructorReferenceWrapper(constructorBuilder)] = methodDefHandle;
                 }
-                else if (item5 is MethodBuilder)
+                else if (methodDef is MethodBuilder)
                 {
-                    MethodBuilder methodBuilder = (item5 as MethodBuilder) ?? throw new InvalidOperationException("Operand must be a MethodBuilder");
-                    value3 = MetadataHelper.AddMethodDefintionNoBodyWithOffset(metadata, _metadataReferenceTracker, item4, _currentTypeHandle.Value, methodBuilder, methodBodyStreamEncoder, list[num++]);
-                    _definedMethods[new EntityWrappers.MethodReferenceWrapper(methodBuilder)] = value3;
+                    MethodBuilder methodBuilder = (methodDef as MethodBuilder) ?? throw new InvalidOperationException("Operand must be a MethodBuilder");
+                    methodDefHandle = MetadataHelper.AddMethodDefintionNoBodyWithOffset(metadata, _metadataReferenceTracker, typeDef, _currentTypeHandle.Value, methodBuilder, methodBodyStreamEncoder, list[num++]);
+                    _definedMethods[new EntityWrappers.MethodReferenceWrapper(methodBuilder)] = methodDefHandle;
                 }
             }
         }
-        foreach (TypeBuilder item6 in _typeDefStore)
+        foreach (TypeBuilder typeDef in _typeDefStore)
         {
-            _currentType = item6;
-            _currentTypeHandle = _definedTypes[new EntityWrappers.TypeReferenceWrapper(item6)];
+            _currentType = typeDef;
+            _currentTypeHandle = _definedTypes[new EntityWrappers.TypeReferenceWrapper(typeDef)];
             if (!_currentTypeHandle.HasValue)
             {
                 throw new InvalidOperationException("_currentTypeHandle can not be null");
             }
-            List<int> list2 = dynamicAssemblyModel.MethodOffset(item6);
-            int num2 = 0;
-            foreach (object item7 in item6._methodDefStore)
+            List<int> methodOffsets = dynamicAssemblyModel.MethodOffset(typeDef);
+            int bodyIndex = 0;
+            foreach (object methodDef in typeDef._methodDefStore)
             {
-                if (item7 is ConstructorBuilder)
+                if (methodDef is ConstructorBuilder)
                 {
-                    ConstructorBuilder ctrBuilder = (item7 as ConstructorBuilder) ?? throw new InvalidOperationException("Operand must be a ConstructorBuilder");
-                    if (MetadataHelper.AddConstructorDefintionBody(metadata, _metadataReferenceTracker, item6, _currentTypeHandle.Value, ctrBuilder, methodBodyStreamEncoder) != list2[num2++])
+                    ConstructorBuilder ctrBuilder = (methodDef as ConstructorBuilder) ?? throw new InvalidOperationException("Operand must be a ConstructorBuilder");
+                    if (MetadataHelper.AddConstructorDefintionBody(metadata, _metadataReferenceTracker, typeDef, _currentTypeHandle.Value, ctrBuilder, methodBodyStreamEncoder) != methodOffsets[bodyIndex++])
                     {
                         throw new InvalidOperationException("Wrong offset value");
                     }
                 }
-                else if (item7 is MethodBuilder)
+                else if (methodDef is MethodBuilder)
                 {
-                    MethodBuilder methodBuilder2 = (item7 as MethodBuilder) ?? throw new InvalidOperationException("Operand must be a MethodBuilder");
-                    if (MetadataHelper.AddMethodDefintionBody(metadata, _metadataReferenceTracker, item6, _currentTypeHandle.Value, methodBuilder2, methodBodyStreamEncoder) != list2[num2++])
+                    MethodBuilder methodBuilder = (methodDef as MethodBuilder) ?? throw new InvalidOperationException("Operand must be a MethodBuilder");
+                    if (MetadataHelper.AddMethodDefintionBody(metadata, _metadataReferenceTracker, typeDef, _currentTypeHandle.Value, methodBuilder, methodBodyStreamEncoder) != methodOffsets[bodyIndex++])
                     {
                         throw new InvalidOperationException("Wrong offset value");
                     }
                 }
             }
         }
-        foreach (TypeBuilder item8 in _typeDefStore)
+        foreach (TypeBuilder typeDef in _typeDefStore)
         {
-            _currentType = item8;
-            _currentTypeHandle = _definedTypes[new EntityWrappers.TypeReferenceWrapper(item8)];
+            _currentType = typeDef;
+            _currentTypeHandle = _definedTypes[new EntityWrappers.TypeReferenceWrapper(typeDef)];
             if (!_currentTypeHandle.HasValue)
             {
                 throw new InvalidOperationException("_currentTypeHandle can not be null");
             }
-            foreach (EntityWrappers.CustomAttributeWrapper customAttribute in item8._customAttributes)
+            foreach (EntityWrappers.CustomAttributeWrapper customAttribute in typeDef._customAttributes)
             {
                 MemberReferenceHandle orAddConstructorReference = _metadataReferenceTracker.GetOrAddConstructorReference(customAttribute.constructorInfo);
                 metadata.AddCustomAttribute(_currentTypeHandle.Value, orAddConstructorReference, metadata.GetOrAddBlob(customAttribute.binaryAttribute));

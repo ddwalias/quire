@@ -62,8 +62,8 @@ internal partial class TypeHandleResolver
         ModuleBuilder module = typeBuilder.Module;
         switch (type)
         {
-            case TypeBuilder typeBuilder2:
-                EntityWrappers.TypeReferenceWrapper key = new EntityWrappers.TypeReferenceWrapper(typeBuilder2);
+            case TypeBuilder definedType:
+                EntityWrappers.TypeReferenceWrapper key = new EntityWrappers.TypeReferenceWrapper(definedType);
                 if (module._definedTypes.ContainsKey(key))
                 {
                     return module._definedTypes[key];

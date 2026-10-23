@@ -24,22 +24,22 @@ internal partial class StackDepthCalculator
     private static int CalculateMaxStackDepthPushOnly(List<ILInstruction> instructions)
     {
         int num = 0;
-        int num2 = 0;
+        int maxDepth = 0;
         foreach (ILInstruction instruction in instructions)
         {
             OpCode opCode = instruction.OpCode;
             object operand = instruction.Operand;
             int pushCount = opCode.StackBehaviourPush.GetPushCount(operand);
             num += pushCount;
-            num2 = Math.Max(num2, num);
+            maxDepth = Math.Max(maxDepth, num);
         }
-        return num2;
+        return maxDepth;
     }
 
     private static int CalculateMaxStackDepthOptimistic(List<ILInstruction> instructions)
     {
         int num = 0;
-        int num2 = 0;
+        int maxDepth = 0;
         foreach (ILInstruction instruction in instructions)
         {
             OpCode opCode = instruction.OpCode;
@@ -48,12 +48,12 @@ internal partial class StackDepthCalculator
             num -= popCount;
             if (instruction.CallCommand == ILCallsEncoding.eMarkLabel || instruction.CallCommand == ILCallsEncoding.eBeginCatchBlock || instruction.CallCommand == ILCallsEncoding.eEndExceptionBlock)
             {
-                num = num2;
+                num = maxDepth;
             }
             int pushCount = opCode.StackBehaviourPush.GetPushCount(operand);
             num += pushCount;
-            num2 = Math.Max(num2, num);
+            maxDepth = Math.Max(maxDepth, num);
         }
-        return num2 * 2 + 1;
+        return maxDepth * 2 + 1;
     }
 }

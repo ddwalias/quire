@@ -20,14 +20,14 @@ public partial class ModuleBuilder
 			parameters.AddParameter().Type().String();
 		});
 		MemberReferenceHandle memberReferenceHandle = metadata.AddMemberReference(orAddTypeReference, metadata.GetOrAddString(".ctor"), metadata.GetOrAddBlob(blobBuilder));
-		BlobBuilder blobBuilder2 = new BlobBuilder();
-		blobBuilder2.WriteUInt16(1);
-		blobBuilder2.WriteSerializedString(".NETCoreApp,Version=v10.0");
-		blobBuilder2.WriteUInt16(1);
-		blobBuilder2.WriteByte(83);
-		blobBuilder2.WriteByte(14);
-		blobBuilder2.WriteSerializedString("FrameworkDisplayName");
-		blobBuilder2.WriteSerializedString(".NET 10.0");
-		metadata.AddCustomAttribute(assemblyHandle, memberReferenceHandle, metadata.GetOrAddBlob(blobBuilder2));
+		BlobBuilder attributeBlob = new BlobBuilder();
+		attributeBlob.WriteUInt16(1);
+		attributeBlob.WriteSerializedString(".NETCoreApp,Version=v10.0");
+		attributeBlob.WriteUInt16(1);
+		attributeBlob.WriteByte(83);
+		attributeBlob.WriteByte(14);
+		attributeBlob.WriteSerializedString("FrameworkDisplayName");
+		attributeBlob.WriteSerializedString(".NET 10.0");
+		metadata.AddCustomAttribute(assemblyHandle, memberReferenceHandle, metadata.GetOrAddBlob(attributeBlob));
 	}
 }

@@ -124,11 +124,11 @@ public partial class CustomAttributeBuilder
 		{
 			if (type == typeof(object))
 			{
-				Type type2 = value == null ? typeof(string) : value is Type ? typeof(Type) : value.GetType();
-				if (type2 == typeof(object))
+				Type valueType = value == null ? typeof(string) : value is Type ? typeof(Type) : value.GetType();
+				if (valueType == typeof(object))
 					throw new ArgumentException("Bad Parameter Type For CAB");
-				EmitType(writer, type2);
-				EmitValue(writer, type2, value);
+				EmitType(writer, valueType);
+				EmitValue(writer, valueType, value);
 				return;
 			}
 			if (value != null)

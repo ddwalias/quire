@@ -39,7 +39,7 @@ public static partial class StackBehaviourExtensions
     {
         MethodInfo methodInfo;
         ConstructorInfo constructorInfo;
-        MethodInfo methodInfo2;
+        MethodInfo methodOperand;
         int num;
         switch (behaviour)
         {
@@ -64,10 +64,10 @@ public static partial class StackBehaviourExtensions
             case StackBehaviour.Varpop:
                 if (IsDelegateInvocationOpCode(opCode))
                 {
-                    methodInfo2 = operand as MethodInfo;
-                    if (methodInfo2 is not null && IsDelegateInvoke(methodInfo2))
+                    methodOperand = operand as MethodInfo;
+                    if (methodOperand is not null && IsDelegateInvoke(methodOperand))
                     {
-                        return 1 + methodInfo2.GetParameters().Length;
+                        return 1 + methodOperand.GetParameters().Length;
                     }
                 }
                 methodInfo = operand as MethodInfo;

@@ -11,6 +11,13 @@
 - Report: `.mirror-cache/release-il-83e6d40fb882/release-il.json` (PASS, 682 checked).
 - Failed idiomatic forms: none.
 
+## Batch 2 — decompiler-style local and parameter names
+
+- Scope: digit-suffixed locals/parameters/lambda parameters in 19 hand-written files (`value2`, `item4`, `type6`, `methodBase5`, `handler3`, `num2`, `arg1`, and others). 274 renames, applied by line.
+- Excluded: `Probe0`/`Probe1`/`Probe_Int32_Object` (probe names, not locals); the `v10` and `net10.0` strings; `kernel32`.
+- Report: `.mirror-cache/release-il-9526d9e04f7b/release-il.json` (PASS, 682 checked).
+- Failed idiomatic forms: none.
+
 ## Remaining mismatches
 
-None reported at batch 1.
+None reported at batch 2.

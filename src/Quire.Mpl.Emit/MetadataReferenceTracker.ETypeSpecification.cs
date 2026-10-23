@@ -24,15 +24,15 @@ public partial class MetadataReferenceTracker
             SignatureTypeEncoder encoder = new SignatureTypeEncoder(blobEncoder.Builder);
             encoder.GenericInstantiation(orAddTypeReference, genericArguments.Length, isValueType: false);
             Type[] array = genericArguments;
-            foreach (Type type2 in array)
+            foreach (Type typeArgument in array)
             {
-                if (type2.IsGenericParameter)
+                if (typeArgument.IsGenericParameter)
                 {
-                    encoder.GenericTypeParameter(type2.GenericParameterPosition);
+                    encoder.GenericTypeParameter(typeArgument.GenericParameterPosition);
                 }
                 else
                 {
-                    TypeSignatureEncoderExtensions.FromType(encoder, type2, null, default);
+                    TypeSignatureEncoderExtensions.FromType(encoder, typeArgument, null, default);
                 }
             }
             value = _metadata.AddTypeSpecification(_metadata.GetOrAddBlob(blobBuilder));

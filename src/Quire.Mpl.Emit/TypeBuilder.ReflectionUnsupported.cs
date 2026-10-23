@@ -27,25 +27,25 @@ public partial class TypeBuilder
                 bool isFamily = item.IsFamily;
                 bool isAssembly = item.IsAssembly;
                 bool isFamilyOrAssembly = item.IsFamilyOrAssembly;
-                bool flag = false;
+                bool visibilityMatched = false;
                 if (isPublic && bindingAttr.HasFlag(BindingFlags.Public))
                 {
-                    flag = true;
+                    visibilityMatched = true;
                 }
                 if ((isPrivate | isFamily | isAssembly | isFamilyOrAssembly) && bindingAttr.HasFlag(BindingFlags.NonPublic))
                 {
-                    flag = true;
+                    visibilityMatched = true;
                 }
-                bool flag2 = false;
+                bool kindMatched = false;
                 if (isStatic && bindingAttr.HasFlag(BindingFlags.Static))
                 {
-                    flag2 = true;
+                    kindMatched = true;
                 }
                 if (!isStatic && bindingAttr.HasFlag(BindingFlags.Instance))
                 {
-                    flag2 = true;
+                    kindMatched = true;
                 }
-                if (flag & flag2)
+                if (visibilityMatched & kindMatched)
                 {
                     return item;
                 }

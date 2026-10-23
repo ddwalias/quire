@@ -80,21 +80,21 @@ internal partial class DynamicMethod_ILGenerator_Special
 
     public override void MarkLabel(Label lb) => _ilGenerator.MarkLabel(lb);
 
-    public static object Probe0(object arg1)
+    public static object Probe0(object value)
     {
-        string text = (string)arg1;
+        string text = (string)value;
         Logger.Log(">>> Probe0 " + text, "D:\\JAgent\\workspace\\Prime_12.0_Mathcad_Engine_Build_Release_And_Test\\Mathcad_Engine\\mpl\\mplasb\\DynamicMethod.cs", "Probe0", 493);
         return new object();
     }
 
-    public static object Probe1(object arg1)
+    public static object Probe1(object value)
     {
-        string text = (string)arg1;
+        string text = (string)value;
         Logger.Log(">>> Probe1 " + text, "D:\\JAgent\\workspace\\Prime_12.0_Mathcad_Engine_Build_Release_And_Test\\Mathcad_Engine\\mpl\\mplasb\\DynamicMethod.cs", "Probe1", 499);
         return new object();
     }
 
-    public static object Probe_Int32_Object(int arg1, object arg2) => arg2;
+    public static object Probe_Int32_Object(int index, object value) => value;
 
     public override void Emit(OpCode opcode, MethodInfo meth)
     {
@@ -113,11 +113,11 @@ internal partial class DynamicMethod_ILGenerator_Special
             _ilGenerator.Emit(opcode, meth);
             if (meth.Name != null)
             {
-                MethodInfo method2 = typeof(DynamicMethod_ILGenerator_Special).GetMethod("Probe1", BindingFlags.Static | BindingFlags.Public, null, new Type[1] { typeof(object) }, null);
+                MethodInfo probeMethod = typeof(DynamicMethod_ILGenerator_Special).GetMethod("Probe1", BindingFlags.Static | BindingFlags.Public, null, new Type[1] { typeof(object) }, null);
                 _ilGenerator.Emit(OpCodes.Ldstr, meth.DeclaringType.FullName + "::" + meth.Name);
                 Logger.Log($"IlGenerator {Id} opcode = {OpCodes.Ldstr}, str = {meth.Name}", "D:\\JAgent\\workspace\\Prime_12.0_Mathcad_Engine_Build_Release_And_Test\\Mathcad_Engine\\mpl\\mplasb\\DynamicMethod.cs", "Emit", 567);
-                _ilGenerator.Emit(OpCodes.Call, method2);
-                Logger.Log($"IlGenerator {Id} opcode = {OpCodes.Call} , MethodInfo = {LoggerAssistant.GetFullNameWithAssembly(method2)}", "D:\\JAgent\\workspace\\Prime_12.0_Mathcad_Engine_Build_Release_And_Test\\Mathcad_Engine\\mpl\\mplasb\\DynamicMethod.cs", "Emit", 568);
+                _ilGenerator.Emit(OpCodes.Call, probeMethod);
+                Logger.Log($"IlGenerator {Id} opcode = {OpCodes.Call} , MethodInfo = {LoggerAssistant.GetFullNameWithAssembly(probeMethod)}", "D:\\JAgent\\workspace\\Prime_12.0_Mathcad_Engine_Build_Release_And_Test\\Mathcad_Engine\\mpl\\mplasb\\DynamicMethod.cs", "Emit", 568);
                 _ilGenerator.Emit(OpCodes.Pop);
                 Logger.Log($"IlGenerator {Id} opcode = {OpCodes.Pop}", "D:\\JAgent\\workspace\\Prime_12.0_Mathcad_Engine_Build_Release_And_Test\\Mathcad_Engine\\mpl\\mplasb\\DynamicMethod.cs", "Emit", 570);
             }

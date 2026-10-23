@@ -6,37 +6,37 @@ internal sealed partial class TypeNameBuilder
 {
     private void AddAssemblyQualifiedName(Type type, Format format)
     {
-        Type type2 = type;
-        while (type2.HasElementType)
+        Type elementType = type;
+        while (elementType.HasElementType)
         {
-            type2 = type2.GetElementType();
+            elementType = elementType.GetElementType();
         }
         List<Type> list = new List<Type>();
-        Type type3 = type2;
-        while (type3 != null)
+        Type enclosingType = elementType;
+        while (enclosingType != null)
         {
-            list.Add(type3);
-            type3 = type3.IsGenericParameter ? null : type3.DeclaringType;
+            list.Add(enclosingType);
+            enclosingType = enclosingType.IsGenericParameter ? null : enclosingType.DeclaringType;
         }
         for (int num = list.Count - 1; num >= 0; num--)
         {
-            Type type4 = list[num];
-            string text = type4.Name;
-            if (num == list.Count - 1 && type4.Namespace != null && type4.Namespace.Length != 0)
+            Type listedType = list[num];
+            string text = listedType.Name;
+            if (num == list.Count - 1 && listedType.Namespace != null && listedType.Namespace.Length != 0)
             {
-                text = type4.Namespace + "." + text;
+                text = listedType.Namespace + "." + text;
             }
             AddName(text);
         }
-        if (type2.IsGenericType && (!type2.IsGenericTypeDefinition || format == Format.ToString))
+        if (elementType.IsGenericType && (!elementType.IsGenericTypeDefinition || format == Format.ToString))
         {
-            Type[] genericArguments = type2.GetGenericArguments();
+            Type[] genericArguments = elementType.GetGenericArguments();
             OpenGenericArguments();
             for (int i = 0; i < genericArguments.Length; i++)
             {
-                Format format2 = (format == Format.FullName) ? Format.AssemblyQualifiedName : format;
+                Format argumentFormat = (format == Format.FullName) ? Format.AssemblyQualifiedName : format;
                 OpenGenericArgument();
-                AddAssemblyQualifiedName(genericArguments[i], format2);
+                AddAssemblyQualifiedName(genericArguments[i], argumentFormat);
                 CloseGenericArgument();
             }
             CloseGenericArguments();

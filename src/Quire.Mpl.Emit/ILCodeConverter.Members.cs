@@ -68,20 +68,20 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 		}
 		else if (inst.OpCode == OpCodes.Ldc_I4)
 		{
-			int value2 = (int)inst.Operand;
+			int intOperand = (int)inst.Operand;
 			instructionEncoder.OpCode(ILOpCode.Ldc_i4);
-			instructionEncoder.CodeBuilder.WriteInt32(value2);
+			instructionEncoder.CodeBuilder.WriteInt32(intOperand);
 		}
 		else if (inst.OpCode == OpCodes.Ldc_I4_S)
 		{
-			byte value3 = (byte)inst.Operand;
+			byte byteOperand = (byte)inst.Operand;
 			instructionEncoder.OpCode(ILOpCode.Ldc_i4_s);
-			instructionEncoder.CodeBuilder.WriteByte(value3);
+			instructionEncoder.CodeBuilder.WriteByte(byteOperand);
 		}
 		else if (inst.OpCode == OpCodes.Ldstr)
 		{
-			string value4 = (inst.Operand as string) ?? throw new InvalidOperationException("Operand must be a String");
-			UserStringHandle orAddUserString = _metadata.GetOrAddUserString(value4);
+			string stringOperand = (inst.Operand as string) ?? throw new InvalidOperationException("Operand must be a String");
+			UserStringHandle orAddUserString = _metadata.GetOrAddUserString(stringOperand);
 			instructionEncoder.LoadString(orAddUserString);
 		}
 		else if (inst.OpCode == OpCodes.Ldarg_S)
@@ -92,9 +92,9 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
                 {
                     throw new ArgumentNullException("Object is null.");
                 }
-                byte value5 = (byte)inst.Operand;
+                byte byteOperand = (byte)inst.Operand;
                 instructionEncoder.OpCode(ILOpCode.Ldarg_s);
-                instructionEncoder.CodeBuilder.WriteByte(value5);
+                instructionEncoder.CodeBuilder.WriteByte(byteOperand);
 			}
             else
             {
@@ -125,9 +125,9 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 				{
 					throw new InvalidOperationException("Operand must be a TypeDefinitionHandle or TypeReferenceHandle");
 				}
-			}, (Type type6) =>
+			}, (Type unresolvedType) =>
 			{
-				throw new InvalidOperationException("Cannot resolve the handle for " + type6.Name);
+				throw new InvalidOperationException("Cannot resolve the handle for " + unresolvedType.Name);
 			});
 		}
 		else if (inst.OpCode == OpCodes.Unbox)
@@ -136,8 +136,8 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 			{
 				throw new InvalidOperationException("Declared type must be not null");
 			}
-			Type type2 = (inst.Operand as Type) ?? throw new InvalidOperationException("Operand must be a Type");
-			TypeHandleResolver.ResolveHandleEmit(_typeBuilder, type2, (Handle handle) =>
+			Type targetType = (inst.Operand as Type) ?? throw new InvalidOperationException("Operand must be a Type");
+			TypeHandleResolver.ResolveHandleEmit(_typeBuilder, targetType, (Handle handle) =>
 			{
 				if (handle.Kind == HandleKind.TypeDefinition)
 				{
@@ -154,9 +154,9 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 				{
 					throw new InvalidOperationException("Operand must be a TypeDefinitionHandle or TypeReferenceHandle");
 				}
-			}, (Type type6) =>
+			}, (Type unresolvedType) =>
 			{
-				throw new InvalidOperationException("Cannot resolve the handle for " + type6.Name);
+				throw new InvalidOperationException("Cannot resolve the handle for " + unresolvedType.Name);
 			});
 		}
 		else if (inst.OpCode == OpCodes.Ldobj)
@@ -165,8 +165,8 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 			{
 				throw new InvalidOperationException("Declared type must be not null");
 			}
-			Type type3 = (inst.Operand as Type) ?? throw new InvalidOperationException("Operand must be a Type");
-			TypeHandleResolver.ResolveHandleEmit(_typeBuilder, type3, (Handle handle) =>
+			Type targetType = (inst.Operand as Type) ?? throw new InvalidOperationException("Operand must be a Type");
+			TypeHandleResolver.ResolveHandleEmit(_typeBuilder, targetType, (Handle handle) =>
 			{
 				if (handle.Kind == HandleKind.TypeDefinition)
 				{
@@ -183,9 +183,9 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 				{
 					throw new InvalidOperationException("Operand must be a TypeDefinitionHandle or TypeReferenceHandle");
 				}
-			}, (Type type6) =>
+			}, (Type unresolvedType) =>
 			{
-				throw new InvalidOperationException("Cannot resolve the handle for " + type6.Name);
+				throw new InvalidOperationException("Cannot resolve the handle for " + unresolvedType.Name);
 			});
 		}
 		else if (inst.OpCode == OpCodes.Isinst)
@@ -194,8 +194,8 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 			{
 				throw new InvalidOperationException("Declared type must be not null");
 			}
-			Type type4 = (inst.Operand as Type) ?? throw new InvalidOperationException("Operand must be a Type");
-			TypeHandleResolver.ResolveHandleEmit(_typeBuilder, type4, (Handle handle) =>
+			Type targetType = (inst.Operand as Type) ?? throw new InvalidOperationException("Operand must be a Type");
+			TypeHandleResolver.ResolveHandleEmit(_typeBuilder, targetType, (Handle handle) =>
 			{
 				if (handle.Kind == HandleKind.TypeDefinition)
 				{
@@ -212,9 +212,9 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 				{
 					throw new InvalidOperationException("Operand must be a TypeDefinitionHandle or TypeReferenceHandle");
 				}
-			}, (Type type6) =>
+			}, (Type unresolvedType) =>
 			{
-				throw new InvalidOperationException("Cannot resolve the handle for " + type6.Name);
+				throw new InvalidOperationException("Cannot resolve the handle for " + unresolvedType.Name);
 			});
 		}
 		else if (inst.OpCode == OpCodes.Newarr)
@@ -223,8 +223,8 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 			{
 				throw new InvalidOperationException("Declared type must be not null");
 			}
-			Type type5 = (inst.Operand as Type) ?? throw new InvalidOperationException("Operand must be a Type");
-			TypeHandleResolver.ResolveHandleEmit(_typeBuilder, type5, (Handle handle) =>
+			Type targetType = (inst.Operand as Type) ?? throw new InvalidOperationException("Operand must be a Type");
+			TypeHandleResolver.ResolveHandleEmit(_typeBuilder, targetType, (Handle handle) =>
 			{
 				if (handle.Kind == HandleKind.TypeDefinition)
 				{
@@ -241,9 +241,9 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 				{
 					throw new InvalidOperationException("Operand must be a TypeDefinitionHandle or TypeReferenceHandle");
 				}
-			}, (Type type6) =>
+			}, (Type unresolvedType) =>
 			{
-				throw new InvalidOperationException("Cannot resolve the handle for " + type6.Name);
+				throw new InvalidOperationException("Cannot resolve the handle for " + unresolvedType.Name);
 			});
 		}
 		else if (inst.OpCode == OpCodes.Stfld || inst.OpCode == OpCodes.Stsfld)
@@ -283,8 +283,8 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 				throw new InvalidOperationException("Declared type must be not null");
 			}
 			ILOpCode code = ((inst.OpCode == OpCodes.Ldfld) ? ILOpCode.Ldfld : ILOpCode.Ldsfld);
-			FieldInfo field2 = (inst.Operand as FieldInfo) ?? throw new InvalidOperationException("Operand must be a FieldInfo");
-			FieldHandleResolver.ResolveHandleEmit(_typeBuilder, field2, (Handle handle) =>
+			FieldInfo fieldOperand = (inst.Operand as FieldInfo) ?? throw new InvalidOperationException("Operand must be a FieldInfo");
+			FieldHandleResolver.ResolveHandleEmit(_typeBuilder, fieldOperand, (Handle handle) =>
 			{
 				if (handle.Kind == HandleKind.FieldDefinition)
 				{
@@ -335,9 +335,9 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 				{
 					throw new InvalidOperationException("Operand must be a MethodDefinitionHandle, MethodSpecificationHandle or MemberReferenceHandle");
 				}
-			}, (MethodBase methodBase5) =>
+			}, (MethodBase unresolvedMethod) =>
 			{
-				throw new InvalidOperationException("Cannot resolve the handle for " + methodBase5.Name);
+				throw new InvalidOperationException("Cannot resolve the handle for " + unresolvedMethod.Name);
 			});
 		}
 		else if (inst.OpCode == OpCodes.Ldftn)
@@ -346,8 +346,8 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 			{
 				throw new InvalidOperationException("Declared type must be not null");
 			}
-			MethodBase methodBase2 = (inst.Operand as MethodBase) ?? throw new InvalidOperationException("Operand type must be MethodBase");
-			MethodHandleResolver.ResolveHandleEmit(typeBuilder, methodBase2, (Handle handle) =>
+			MethodBase methodOperand = (inst.Operand as MethodBase) ?? throw new InvalidOperationException("Operand type must be MethodBase");
+			MethodHandleResolver.ResolveHandleEmit(typeBuilder, methodOperand, (Handle handle) =>
 			{
 				if (handle.Kind == HandleKind.MethodDefinition)
 				{
@@ -364,9 +364,9 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 				{
 					throw new InvalidOperationException("Operand must be a MethodDefinitionHandle or MemberReferenceHandle");
 				}
-			}, (MethodBase methodBase5) =>
+			}, (MethodBase unresolvedMethod) =>
 			{
-				throw new InvalidOperationException("Cannot resolve the handle for " + methodBase5.Name);
+				throw new InvalidOperationException("Cannot resolve the handle for " + unresolvedMethod.Name);
 			});
 		}
 		else if (inst.OpCode == OpCodes.Call)
@@ -375,8 +375,8 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 			{
 				throw new InvalidOperationException("Declared type must be not null");
 			}
-			MethodBase methodBase3 = (inst.Operand as MethodBase) ?? throw new InvalidOperationException("Operand type must be MethodBase");
-			MethodHandleResolver.ResolveHandleEmit(typeBuilder, methodBase3, (Handle handle) =>
+			MethodBase methodOperand = (inst.Operand as MethodBase) ?? throw new InvalidOperationException("Operand type must be MethodBase");
+			MethodHandleResolver.ResolveHandleEmit(typeBuilder, methodOperand, (Handle handle) =>
 			{
 				if (handle.Kind == HandleKind.MethodDefinition)
 				{
@@ -395,9 +395,9 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 				{
 					throw new InvalidOperationException("Operand must be a MethodDefinitionHandle, MethodSpecificationHandle or MemberReferenceHandle");
 				}
-			}, (MethodBase methodBase5) =>
+			}, (MethodBase unresolvedMethod) =>
 			{
-				throw new InvalidOperationException("Cannot resolve the handle for " + methodBase5.Name);
+				throw new InvalidOperationException("Cannot resolve the handle for " + unresolvedMethod.Name);
 			});
 		}
 		else if (inst.OpCode == OpCodes.Newobj)
@@ -406,8 +406,8 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 			{
 				throw new InvalidOperationException("Declared type must be not null");
 			}
-			MethodBase methodBase4 = (inst.Operand as MethodBase) ?? throw new InvalidOperationException("Operand type must be MethodBase");
-			MethodHandleResolver.ResolveHandleEmit(typeBuilder, methodBase4, (Handle handle) =>
+			MethodBase methodOperand = (inst.Operand as MethodBase) ?? throw new InvalidOperationException("Operand type must be MethodBase");
+			MethodHandleResolver.ResolveHandleEmit(typeBuilder, methodOperand, (Handle handle) =>
 			{
 				if (handle.Kind == HandleKind.MethodDefinition)
 				{
@@ -424,9 +424,9 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 				{
 					throw new InvalidOperationException("Operand must be a MethodDefinitionHandle or MemberReferenceHandle");
 				}
-			}, (MethodBase methodBase5) =>
+			}, (MethodBase unresolvedMethod) =>
 			{
-				throw new InvalidOperationException("Cannot resolve the handle for method " + methodBase5.Name);
+				throw new InvalidOperationException("Cannot resolve the handle for method " + unresolvedMethod.Name);
 			});
 		}
 		else if (inst.OpCode == OpCodes.Leave)
@@ -451,8 +451,8 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 		}
 		else if (inst.OpCode == OpCodes.Ldloc)
 		{
-			LocalBuilder localBuilder2 = (inst.Operand as LocalBuilder) ?? throw new InvalidOperationException("Operand must be a LocalBuilder");
-			instructionEncoder.LoadLocal(localBuilder2.LocalIndex);
+			LocalBuilder localOperand = (inst.Operand as LocalBuilder) ?? throw new InvalidOperationException("Operand must be a LocalBuilder");
+			instructionEncoder.LoadLocal(localOperand.LocalIndex);
 		}
 		else if (inst.OpCode == OpCodes.Br)
 		{
@@ -477,8 +477,8 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 			{
 				throw new InvalidOperationException("Operand type must be Label");
 			}
-			Label label2 = (Label)inst.Operand;
-			instructionEncoder.Branch(ILOpCode.Brfalse, _labelManager.GetLabelHandle(label2));
+			Label targetLabel = (Label)inst.Operand;
+			instructionEncoder.Branch(ILOpCode.Brfalse, _labelManager.GetLabelHandle(targetLabel));
 		}
 		else if (inst.OpCode == OpCodes.Brtrue)
 		{
@@ -490,8 +490,8 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 			{
 				throw new InvalidOperationException("Operand type must be Label");
 			}
-			Label label3 = (Label)inst.Operand;
-			instructionEncoder.Branch(ILOpCode.Brtrue, _labelManager.GetLabelHandle(label3));
+			Label targetLabel = (Label)inst.Operand;
+			instructionEncoder.Branch(ILOpCode.Brtrue, _labelManager.GetLabelHandle(targetLabel));
 		}
 		else if (inst.OpCode == OpCodes.Bne_Un)
 		{
@@ -503,8 +503,8 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 			{
 				throw new InvalidOperationException("Operand type must be Label");
 			}
-			Label label4 = (Label)inst.Operand;
-			instructionEncoder.Branch(ILOpCode.Bne_un, _labelManager.GetLabelHandle(label4));
+			Label targetLabel = (Label)inst.Operand;
+			instructionEncoder.Branch(ILOpCode.Bne_un, _labelManager.GetLabelHandle(targetLabel));
 		}
 		else if (inst.OpCode == OpCodes.Switch)
 		{
@@ -518,10 +518,10 @@ private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILIn
 			}
 			LabelHandle[] array = ((Label[])inst.Operand).Select((Label l) => _labelManager.GetLabelHandle(l)).ToArray();
 			SwitchInstructionEncoder switchInstructionEncoder = instructionEncoder.Switch(array.Length);
-			LabelHandle[] array2 = array;
-			foreach (LabelHandle label5 in array2)
+			LabelHandle[] labelHandles = array;
+			foreach (LabelHandle switchLabel in labelHandles)
 			{
-				switchInstructionEncoder.Branch(label5);
+				switchInstructionEncoder.Branch(switchLabel);
 			}
 		}
 		else if (inst.OpCode == OpCodes.Ldc_I4_0)
@@ -813,9 +813,9 @@ private void ConvertBeginCatchBlock(MetadataBuilder metadata, TypeBuilder typeBu
             {
                 throw new InvalidOperationException("Operand must be a TypeDefinitionHandle or TypeReferenceHandle");
             }
-		}, (Type type2) =>
+		}, (Type unresolvedType) =>
 		{
-			throw new InvalidOperationException("Cannot resolve the handle for " + type2.Name);
+			throw new InvalidOperationException("Cannot resolve the handle for " + unresolvedType.Name);
 		});
         if (tryCatchInfo.endExceptionBlockLabel.GetType() == typeof(LabelHandle))
 		{

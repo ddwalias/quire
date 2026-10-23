@@ -70,14 +70,14 @@ public partial class CustomAttributeBuilder
         binaryWriter.Write((ushort)(namedProperties.Length + namedFields.Length));
         for (num = 0; num < namedProperties.Length; num++)
         {
-            PropertyInfo obj2 = namedProperties[num];
-            if (obj2 == null)
+            PropertyInfo namedProperty = namedProperties[num];
+            if (namedProperty == null)
             {
                 throw new ArgumentNullException("namedProperties[" + num + "]");
             }
-            Type propertyType = obj2.PropertyType;
-            object obj3 = propertyValues[num];
-            if (obj3 == null && propertyType.IsValueType)
+            Type propertyType = namedProperty.PropertyType;
+            object propertyValue = propertyValues[num];
+            if (propertyValue == null && propertyType.IsValueType)
             {
                 throw new ArgumentNullException("propertyValues[" + num + "]");
             }
@@ -85,18 +85,18 @@ public partial class CustomAttributeBuilder
             {
                 throw new ArgumentException("Bad Type In Custom Attribute");
             }
-            if (!obj2.CanWrite)
+            if (!namedProperty.CanWrite)
             {
                 throw new ArgumentException("Not A Writable Property");
             }
-            if (obj3 != null)
+            if (propertyValue != null)
             {
-                VerifyTypeAndPassedObjectType(propertyType, obj3.GetType(), $"{"propertyValues"}[{num}]");
+                VerifyTypeAndPassedObjectType(propertyType, propertyValue.GetType(), $"{"propertyValues"}[{num}]");
             }
             binaryWriter.Write((byte)84);
             EmitType(binaryWriter, propertyType);
             EmitString(binaryWriter, namedProperties[num].Name);
-            EmitValue(binaryWriter, propertyType, obj3);
+            EmitValue(binaryWriter, propertyType, propertyValue);
         }
         for (num = 0; num < namedFields.Length; num++)
         {
@@ -106,8 +106,8 @@ public partial class CustomAttributeBuilder
                 throw new ArgumentNullException("namedFields[" + num + "]");
             }
             Type fieldType = fieldInfo.FieldType;
-            object obj4 = fieldValues[num];
-            if (obj4 == null && fieldType.IsValueType)
+            object fieldValue = fieldValues[num];
+            if (fieldValue == null && fieldType.IsValueType)
             {
                 throw new ArgumentNullException("fieldValues[" + num + "]");
             }
@@ -115,14 +115,14 @@ public partial class CustomAttributeBuilder
             {
                 throw new ArgumentException("Bad Type In Custom Attribute");
             }
-            if (obj4 != null)
+            if (fieldValue != null)
             {
-                VerifyTypeAndPassedObjectType(fieldType, obj4.GetType(), $"{"fieldValues"}[{num}]");
+                VerifyTypeAndPassedObjectType(fieldType, fieldValue.GetType(), $"{"fieldValues"}[{num}]");
             }
             binaryWriter.Write((byte)83);
             EmitType(binaryWriter, fieldType);
             EmitString(binaryWriter, fieldInfo.Name);
-            EmitValue(binaryWriter, fieldType, obj4);
+            EmitValue(binaryWriter, fieldType, fieldValue);
         }
         _blob = ((MemoryStream)binaryWriter.BaseStream).ToArray();
     }

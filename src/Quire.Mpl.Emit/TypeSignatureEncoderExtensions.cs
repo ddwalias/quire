@@ -9,12 +9,12 @@ public static partial class TypeSignatureEncoderExtensions
 {
     public static void FromType(this SignatureTypeEncoder encoder, Type type, TypeBuilder typeBuilder = null, TypeDefinitionHandle? typeHandle = null)
     {
-        Type type2;
+        Type elementType;
         TypeDefinitionHandle? nullTypeHandle;
         if (type.IsArray && type.GetArrayRank() == 1)
         {
-            type2 = type.GetElementType() ?? throw new InvalidOperationException("Operand must be not null");
-            encoder.SZArray().FromType(type2, null, (nullTypeHandle = default));
+            elementType = type.GetElementType() ?? throw new InvalidOperationException("Operand must be not null");
+            encoder.SZArray().FromType(elementType, null, (nullTypeHandle = default));
             return;
         }
         if (type.GetType() != typeof(TypeBuilder) && type.IsGenericParameter)

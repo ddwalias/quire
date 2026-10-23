@@ -23,18 +23,18 @@ internal partial class DynamicAssemblyModel
             {
                 AddFieldDefinition(item);
             }
-            foreach (object item2 in types._methodDefStore)
+            foreach (object methodDef in types._methodDefStore)
             {
-                AddMethodDefinition(item2);
+                AddMethodDefinition(methodDef);
             }
         }
-        foreach (TypeBuilder types2 in typesList)
+        foreach (TypeBuilder definedType in typesList)
         {
-            _moduleBuilder._currentType = types2;
-            _moduleBuilder._currentTypeHandle = _moduleBuilder._definedTypes[new EntityWrappers.TypeReferenceWrapper(types2)];
-            foreach (object item3 in types2._methodDefStore)
+            _moduleBuilder._currentType = definedType;
+            _moduleBuilder._currentTypeHandle = _moduleBuilder._definedTypes[new EntityWrappers.TypeReferenceWrapper(definedType)];
+            foreach (object methodDef in definedType._methodDefStore)
             {
-                AddMethodBodiesOffsets(types2, item3);
+                AddMethodBodiesOffsets(definedType, methodDef);
             }
         }
         _moduleBuilder._definedTypes.Clear();
@@ -74,25 +74,25 @@ internal partial class DynamicAssemblyModel
 
         if (item is MethodBuilder)
         {
-            MethodBuilder method2 = item as MethodBuilder ?? throw new InvalidOperationException("Operand must be a MethodBuilder");
-            _moduleBuilder._definedMethods[new EntityWrappers.MethodReferenceWrapper(method2)] = default;
+            MethodBuilder definedMethod = item as MethodBuilder ?? throw new InvalidOperationException("Operand must be a MethodBuilder");
+            _moduleBuilder._definedMethods[new EntityWrappers.MethodReferenceWrapper(definedMethod)] = default;
         }
     }
 
     private void AddMethodBodiesOffsets(TypeBuilder typeBuilder, object item)
     {
-        int item2 = 0;
+        int bodyOffset = 0;
         TypeDefinitionHandle typeHandle = _moduleBuilder._currentTypeHandle ?? throw new InvalidOperationException("_moduleBuilder._currentTypeHandle can not be null");
         if (item is ConstructorBuilder)
         {
             ConstructorBuilder ctrBuilder = item as ConstructorBuilder ?? throw new InvalidOperationException("Operand must be a ConstructorBuilder");
-            item2 = MetadataHelper.AddConstructorDefintionBody(_metadata, _metadataReferenceTracker, typeBuilder, typeHandle, ctrBuilder, _methodBodyStream);
+            bodyOffset = MetadataHelper.AddConstructorDefintionBody(_metadata, _metadataReferenceTracker, typeBuilder, typeHandle, ctrBuilder, _methodBodyStream);
         }
         else if (item is MethodBuilder)
         {
             MethodBuilder methodBuilder = item as MethodBuilder ?? throw new InvalidOperationException("Operand must be a MethodBuilder");
-            item2 = MetadataHelper.AddMethodDefintionBody(_metadata, _metadataReferenceTracker, typeBuilder, typeHandle, methodBuilder, _methodBodyStream);
+            bodyOffset = MetadataHelper.AddMethodDefintionBody(_metadata, _metadataReferenceTracker, typeBuilder, typeHandle, methodBuilder, _methodBodyStream);
         }
-        _typeIndexes[new EntityWrappers.TypeReferenceWrapper(typeBuilder)].offsets.Add(item2);
+        _typeIndexes[new EntityWrappers.TypeReferenceWrapper(typeBuilder)].offsets.Add(bodyOffset);
     }
 }

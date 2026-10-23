@@ -22,13 +22,13 @@ public partial class MetadataReferenceTracker
             BlobBuilder blobBuilder = new BlobBuilder();
             BlobEncoder blobEncoder = new BlobEncoder(blobBuilder);
             GenericTypeArgumentsEncoder genericTypeArgumentsEncoder = blobEncoder.MethodSpecificationSignature(genericArguments.Length);
-            Type[] genericArguments2 = method.GetGenericArguments();
-            foreach (Type type in genericArguments2)
+            Type[] methodTypeArguments = method.GetGenericArguments();
+            foreach (Type type in methodTypeArguments)
             {
                 genericTypeArgumentsEncoder.AddArgument().FromType(type);
             }
-            MethodSpecificationHandle value2 = _metadata.AddMethodSpecification(orAddMethodReference, _metadata.GetOrAddBlob(blobBuilder));
-            _methodSpecs[key] = value2;
+            MethodSpecificationHandle methodSpecHandle = _metadata.AddMethodSpecification(orAddMethodReference, _metadata.GetOrAddBlob(blobBuilder));
+            _methodSpecs[key] = methodSpecHandle;
             return value;
         }
         throw new ArgumentException("The type should be generic with specified arguments!");
