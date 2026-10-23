@@ -64,6 +64,33 @@ public partial class TextStyleBase
         return false;
     }
 
+    public bool IsModifyProperty(string propertyName, object value)
+    {
+        if (value != null && _htOldPropertyToIndex.ContainsKey(propertyName) && !_htOldPropertyToIndex[propertyName].Equals(value))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool IsModifyPropertyCollection(string propertyName, global::System.Collections.ICollection value)
+    {
+        if (value != null && _htOldPropertyToIndex.ContainsKey(propertyName) && ((global::System.Collections.ICollection)_htOldPropertyToIndex[propertyName]).Count != value.Count)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool IsModifyPropertyString(string propertyName, object value)
+    {
+        if (value != null && _htOldPropertyToIndex.ContainsKey(propertyName) && !_htOldPropertyToIndex[propertyName].ToString().Equals(value.ToString()))
+        {
+            return true;
+        }
+        return false;
+    }
+
     [MirrorVerified("Release IL")]
     public void MergeBasedOn()
     {
