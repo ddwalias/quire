@@ -26,6 +26,28 @@ public partial class WindowLocatedRelativelyToPositionProvider
         }
     }
 
+    private bool GetPopupLocationAndVisibility(global::System.Windows.Rect positionProviderAbsoluteScreenBounds, ItemQuarterLocationInOwnerWindow quarterLocation, out global::System.Windows.Point popupLocationPoint)
+    {
+        switch (quarterLocation)
+        {
+            case ItemQuarterLocationInOwnerWindow.TopLeft:
+                popupLocationPoint = positionProviderAbsoluteScreenBounds.BottomRight;
+                break;
+            case ItemQuarterLocationInOwnerWindow.TopRight:
+                popupLocationPoint = positionProviderAbsoluteScreenBounds.BottomLeft - new global::System.Windows.Vector(ActualWidth, 0.0);
+                break;
+            case ItemQuarterLocationInOwnerWindow.BottomLeft:
+                popupLocationPoint = positionProviderAbsoluteScreenBounds.TopRight - new global::System.Windows.Vector(0.0, ActualHeight);
+                break;
+            case ItemQuarterLocationInOwnerWindow.BottomRight:
+                popupLocationPoint = positionProviderAbsoluteScreenBounds.TopLeft - new global::System.Windows.Vector(ActualWidth, ActualHeight);
+                break;
+            default:
+                throw new global::System.ArgumentOutOfRangeException("quarterLocation");
+        }
+        return IsPopUpWindowWillFullyShowOnScreen(popupLocationPoint);
+    }
+
     [MirrorVerified("PtcWpfWindowLocatedRelativelyToPositionProviderMechanicalDifferentialTests")]
     public WindowLocatedRelativelyToPositionProvider() { }
 
