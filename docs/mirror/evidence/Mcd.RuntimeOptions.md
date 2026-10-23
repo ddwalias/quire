@@ -75,7 +75,7 @@ copying the thread fields, and group members keyed by options number.
 
 - The thread-static options (the unit system included) and the `Dim` scratch vector exist only on the thread that
   ran the type initializer or that called `SyncToThread`, as in the original. Quire calls an internal
-  `RuntimeThread.Ensure()` (`src/Quire.Mpl/Internal/RuntimeThread.cs`), which syncs default options when the
+  `RuntimeThread.Ensure()` (`src/Quire.Mpl.Runtime/RuntimeThread.cs`), which syncs default options when the
   calling thread has no unit system, from the `BuiltinUnits` type initializer, `WorksheetEngine.CalculateNow` and
   the test bases. Mathcad's own hosting is assumed to sync the UI thread before evaluation; that assumption isn't
   verified.
