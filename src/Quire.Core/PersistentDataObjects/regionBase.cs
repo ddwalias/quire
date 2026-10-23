@@ -43,6 +43,36 @@ public partial class regionBase
         }
     }
 
+    public static void GetOverrides(System.Xml.Serialization.XmlAttributeOverrides overrides, Type[] typesOf)
+    {
+        foreach (Type type in typesOf)
+        {
+            System.Xml.Serialization.XmlAttributes attributes = new System.Xml.Serialization.XmlAttributes
+            {
+                XmlIgnore = true
+            };
+            System.Reflection.PropertyInfo[] properties = type.GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public);
+            foreach (System.Reflection.PropertyInfo propertyInfo in properties)
+            {
+                propertyInfo.GetCustomAttributes(inherit: false);
+                if (propertyInfo.IsDefined(typeof(System.Xml.Serialization.XmlArrayAttribute), inherit: false) || propertyInfo.IsDefined(typeof(System.Xml.Serialization.XmlElementAttribute), inherit: false))
+                {
+                    overrides.Add(type, propertyInfo.Name, attributes);
+                }
+            }
+            attributes = new System.Xml.Serialization.XmlAttributes
+            {
+                XmlIgnore = false
+            };
+            System.Xml.Serialization.XmlAnyElementAttribute attribute = new System.Xml.Serialization.XmlAnyElementAttribute
+            {
+                Order = 0
+            };
+            attributes.XmlAnyElements.Add(attribute);
+            overrides.Add(type, "InnerXml", attributes);
+        }
+    }
+
     public abstract object Item { get; set; }
     public abstract string[] mc14conversionlossannotations { get; set; }
 

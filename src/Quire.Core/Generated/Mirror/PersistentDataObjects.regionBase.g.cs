@@ -13,6 +13,4 @@ public abstract partial class regionBase : global::Quire.PersistentDataObjects.I
 {
     [global::Quire.Mirror.MirrorStub]
     public const float PageUnitsConvertionFactor = 1.3333334f;
-    [global::Quire.Mirror.MirrorStub]
-    public static void GetOverrides(global::System.Xml.Serialization.XmlAttributeOverrides overrides, global::System.Type[] typesOf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
