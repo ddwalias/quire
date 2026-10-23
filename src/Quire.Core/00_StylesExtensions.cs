@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -21,5 +22,18 @@ public static partial class StylesExtensions
     public static bool HasListProps(this Style style)
     {
         return style.Setters.OfType<Setter>().Any((Setter setter) => setter.Property.OwnerType == typeof(List));
+    }
+
+    public static IEnumerable<DependencyProperty> GetPropertiesForAnyType(this Style style)
+    {
+        return (from setter in style.Setters.OfType<Setter>()
+            select setter.Property).Distinct();
+    }
+
+    public static IEnumerable<DependencyProperty> GetPropertiesForType<OwnerT>(this Style style)
+    {
+        return (from property in style.GetPropertiesForAnyType()
+            where property.OwnerType == typeof(OwnerT)
+            select property).Distinct();
     }
 }
