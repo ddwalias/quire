@@ -1,6 +1,7 @@
 #nullable disable
 using System.Windows;
 using System.Windows.Media;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using Quire.Mirror;
@@ -117,6 +118,20 @@ public partial class TextStyleBase
             while (basedOn != null);
         }
         return null;
+    }
+
+    protected void ClearHeritageProperties()
+    {
+        if (Style.BasedOn != null)
+        {
+            foreach (Setter setter in Style.BasedOn.Setters.OfType<Setter>())
+            {
+                if (!_htPropertyToIndex.ContainsKey(setter.Property.Name))
+                {
+                    UpdateMemberValue(setter.Property.Name, null);
+                }
+            }
+        }
     }
 
     [MirrorVerified("Release IL")]
