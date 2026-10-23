@@ -12,8 +12,6 @@ namespace Quire.Wpf.Printing;
 public static partial class XpsPrintInterop
 {
     [global::Quire.Mirror.MirrorStub]
-    private static int StartXpsPrintJob(string printerName, string jobName, string outputFileName, nint progressEvent, global::Microsoft.Win32.SafeHandles.SafeWaitHandle completionEvent, byte[] printablePagesOn, uint printablePagesOnCount, out global::Quire.Wpf.Printing.XpsPrintInterop.IXpsPrintJob xpsPrintJob, out global::Quire.Wpf.Printing.XpsPrintInterop.IXpsPrintJobStream documentStream, nint printTicketStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void XpsFileToPrinterFile(string printerName, string inputXpsFile, string outputPrinterFile, out int jobId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.Printing.XpsPrintInterop+XPS_JOB_STATUS, Ptc.Core")]
