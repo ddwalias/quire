@@ -301,7 +301,10 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
                  '-c', 'Release', '-o', tool_dir, '-nologo', '-v:q'], root, log, timeout)
             tool = tool_dir / 'Quire.Tools.MethodAudit.dll'
             print('Building base Release assemblies', flush=True)
-            before = build_and_scan(original, projects, tool, work / 'before', install, dotnet, log, timeout)
+            # A project the candidate adds has no base build; its members start as new (or moved) rows.
+            existing = [p for p in projects if (original / 'src' / p / f'{p}.csproj').is_file()]
+            before = (build_and_scan(original, existing, tool, work / 'before', install, dotnet, log, timeout)
+                      if existing else {'methods': []})
             print('Building candidate Release assemblies', flush=True)
             after = build_and_scan(root, projects, tool, work / 'after', install, dotnet, log, timeout, vcxproj)
             # The same reference artifact must have been read by both scans.
