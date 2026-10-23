@@ -13,6 +13,4 @@ public partial class ApplicationBehaviorOptions : global::Quire.Services.IApplic
 {
     [global::Quire.Mirror.MirrorStub]
     private int _delayRecalculationInMsecAfterCloseExcel;
-    [global::Quire.Mirror.MirrorStub]
-    public ApplicationBehaviorOptions() { }
 }
