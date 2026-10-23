@@ -11,8 +11,4 @@ namespace Quire.Services;
 [global::Quire.Mirror.MirrorOf("Ptc.Services.ServiceRegistry, Ptc.Core")]
 public partial class ServiceRegistry : global::System.ComponentModel.Design.ServiceContainer, global::Quire.Services.IServiceRegistry, global::System.ComponentModel.Design.IServiceContainer, global::System.IServiceProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    public void AddService<T>(global::Quire.Services.IService service, bool shouldConnect = true) where T : global::Quire.Services.IService => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RemoveService<T>(bool shouldDisconnect = true) where T : class, global::Quire.Services.IService => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
