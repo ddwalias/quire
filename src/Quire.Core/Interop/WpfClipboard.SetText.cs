@@ -25,4 +25,5 @@ public partial class WpfClipboard
 
     [MirrorVerified("Release IL")]
     public static void SetDataObjectToClipboard(System.Windows.IDataObject dataObject, bool copy = false) => SafeClipboardAction(() => System.Windows.Clipboard.SetDataObject(dataObject, copy));
+
 }

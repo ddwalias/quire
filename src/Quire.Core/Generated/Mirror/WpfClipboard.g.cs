@@ -23,8 +23,6 @@ public partial class WpfClipboard : global::Quire.IClipboard
     public static bool CopyItemAsImageToDataObject(global::System.Windows.DataObject dataObject, object whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void CreateBitmapFromDib(global::System.IO.Stream dib, global::System.IO.Stream outStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetSExpression(string sExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.WpfClipboard+ClipboardOverride, Ptc.Core")]
     private partial class ClipboardOverride : global::System.IDisposable
