@@ -27,6 +27,15 @@ public partial class RegionCollectionSerializer<TCollection>
         RegionCollection = GetXmlSerializer(useOverrides).Deserialize(xmlReader) as TCollection;
     }
 
+    private System.Xml.Serialization.XmlSerializer GetXmlSerializer(bool useOverrides)
+    {
+        if (useOverrides)
+        {
+            return _worksheetXmlSerializerWithOverrides ?? (_worksheetXmlSerializerWithOverrides = worksheetRegionType.CreateSerializerWithOverrides(_typeOfCollection, RootNodeName));
+        }
+        return _worksheetXmlSerializerDefault ?? (_worksheetXmlSerializerDefault = worksheetRegionType.CreateDefaultSerializer(_typeOfCollection, RootNodeName));
+    }
+
     public abstract string RootNodeName { get; }
     public abstract TCollection RegionCollection { get; protected set; }
 

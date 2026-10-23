@@ -19,6 +19,4 @@ public abstract partial class RegionCollectionSerializer<TCollection> : global::
     private static global::System.Xml.Serialization.XmlSerializer _worksheetXmlSerializerDefault;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlElement Serialize(global::System.Xml.XmlDocument xmlContentDocument, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Xml.Serialization.XmlSerializer GetXmlSerializer(bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
