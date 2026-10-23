@@ -19,6 +19,7 @@
     <Project Path="src/Quire.Efi/Quire.Efi.csproj" />
     <Project Path="src/Quire.EngNotebook.Automation/Quire.EngNotebook.Automation.csproj" />
     <Project Path="src/Quire.EngNotebookPlus.Automation/Quire.EngNotebookPlus.Automation.csproj" />
+    <Project Path="src/Quire.Engine.Misc/Quire.Engine.Misc.csproj" />
     <Project Path="src/Quire.Engine.Native/Quire.Engine.Native.csproj" />
     <Project Path="src/Quire.Engine.Utl/Quire.Engine.Utl.csproj" />
     <Project Path="src/Quire.Engine/Quire.Engine.csproj" />
