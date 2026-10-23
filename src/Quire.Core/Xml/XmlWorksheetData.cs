@@ -9,6 +9,20 @@ namespace Quire.Xml;
 public static partial class XmlWorksheetData
 {
     [MirrorVerified("Release IL")]
+    public static string BuildId
+    {
+        get
+        {
+            if (_buildId == null)
+            {
+                Quire.AssemblyBuildIdAttribute assemblyBuildIdAttribute = System.Attribute.GetCustomAttribute(System.Reflection.Assembly.GetExecutingAssembly(), typeof(Quire.AssemblyBuildIdAttribute)) as Quire.AssemblyBuildIdAttribute;
+                _buildId = assemblyBuildIdAttribute != null && assemblyBuildIdAttribute.BuildId != null ? assemblyBuildIdAttribute.BuildId : string.Empty;
+            }
+            return string.IsNullOrEmpty(_buildId) ? null : _buildId;
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     public static string Stream
     {
         get
