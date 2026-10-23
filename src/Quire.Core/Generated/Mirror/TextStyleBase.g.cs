@@ -36,8 +36,6 @@ public abstract partial class TextStyleBase : global::Quire.ITextStyle, global::
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Style CloneStyleAndSetters(global::System.Windows.Style style) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Style CloneStyle(global::System.Windows.Style style) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void UpdateBasedOn(global::Quire.ITextStyle basedOn, global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> stylesCollection, bool isFixInHeritage = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void UpdateMemberValue(string propertyName, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

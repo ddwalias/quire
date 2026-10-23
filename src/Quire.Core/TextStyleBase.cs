@@ -120,6 +120,20 @@ public partial class TextStyleBase
         return null;
     }
 
+    public static Style CloneStyle(Style style)
+    {
+        if (style == null)
+        {
+            return null;
+        }
+        Style clone = new Style(style.TargetType, style.BasedOn);
+        foreach (Setter setter in style.Setters.OfType<Setter>())
+        {
+            clone.Setters.Add(new Setter(setter.Property, setter.Value));
+        }
+        return clone;
+    }
+
     public void SetSetterValue(string propertyName, object value)
     {
         if (value == null)
