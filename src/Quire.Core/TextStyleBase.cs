@@ -179,6 +179,21 @@ public partial class TextStyleBase
         }
     }
 
+    protected void UpdateBasedOnMembersValue(Style style)
+    {
+        if (style != null)
+        {
+            UpdateBasedOnMembersValue(style.BasedOn);
+            foreach (Setter setter in style.Setters.OfType<Setter>())
+            {
+                if (!_htPropertyToIndex.ContainsKey(setter.Property.Name))
+                {
+                    UpdateMemberValue(setter.Property.Name, setter.Value);
+                }
+            }
+        }
+    }
+
     [MirrorVerified("Release IL")]
     public void MergeBasedOn()
     {
