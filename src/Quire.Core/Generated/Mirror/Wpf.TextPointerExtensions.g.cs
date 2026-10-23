@@ -12,7 +12,5 @@ namespace Quire.Wpf;
 public static partial class TextPointerExtensions
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Documents.Hyperlink GetAdjacentHyperlink(this global::System.Windows.Documents.TextPointer startPointer, global::System.Windows.Documents.LogicalDirection searchDirection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static T GetTextElementFromTextPointer<T>(this global::System.Windows.Documents.TextPointer textPtr) where T : global::System.Windows.Documents.TextElement => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -4,6 +4,22 @@ namespace Quire.Wpf;
 
 public static partial class TextPointerExtensions
 {
+    public static Hyperlink GetAdjacentHyperlink(this TextPointer startPointer, LogicalDirection searchDirection)
+    {
+        if (startPointer == null)
+        {
+            return null;
+        }
+        Hyperlink hyperlink = null;
+        TextPointer textPointer = startPointer;
+        while (textPointer != null && hyperlink == null && new global::System.Windows.Documents.TextRange(startPointer, textPointer).Text.IsNullOrEmpty())
+        {
+            hyperlink = textPointer.GetAdjacentElement(searchDirection) as Hyperlink;
+            textPointer = textPointer.GetNextContextPosition(searchDirection);
+        }
+        return hyperlink;
+    }
+
     public static Hyperlink GetHyperlinkAdjacentToTextPointer(this TextPointer textPtr, out LogicalDirection direction)
     {
         direction = textPtr.LogicalDirection;
