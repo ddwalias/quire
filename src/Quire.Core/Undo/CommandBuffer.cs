@@ -13,7 +13,9 @@ public partial class CommandBuffer
     public static CommandBuffer CurrentInstance { get => _currentInstance; set => _currentInstance = value; }
 
     [MirrorVerified("PtcUndoCommandBufferMechanicalDifferentialTests")]
-    private readonly Stack<IUndoableCommand> _undoStack;
+    private readonly Stack<IUndoableCommand> _undoStack = new Stack<IUndoableCommand>();
+
+    public CommandBuffer() { }
 
     [MirrorVerified("PtcUndoCommandBufferMechanicalDifferentialTests")]
     public static int UndoStackDepth => _currentInstance._undoStack.Count;
@@ -123,7 +125,7 @@ public partial class CommandBuffer
     }
 
     [MirrorVerified("Release IL")]
-    private readonly Stack<IUndoableCommand> _redoStack;
+    private readonly Stack<IUndoableCommand> _redoStack = new Stack<IUndoableCommand>();
 
     [MirrorVerified("Release IL")]
     public static void Clear()

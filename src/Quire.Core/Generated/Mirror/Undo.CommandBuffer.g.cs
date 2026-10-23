@@ -37,8 +37,6 @@ public partial class CommandBuffer
     public global::Quire.Undo.IUndoableCommand[] GetUndoCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Undo.IUndoableCommand[] GetRedoCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public CommandBuffer() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Undo.CommandBuffer+MasterCommand, Ptc.Core")]
     private partial class MasterCommand : global::Quire.Undo.CompoundCommand
