@@ -46,8 +46,6 @@ public partial class QualityAgentManager : global::Quire.QualityAgentManager.IQu
     [global::Quire.Mirror.MirrorStub]
     private static string GetProdDcuPath(string mathcadPrimeInstallPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static string GetMathcadPrimeBitness() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private string GetMathcadPrimeChecksum() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ComputeCheckSum() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
