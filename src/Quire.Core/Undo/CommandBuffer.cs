@@ -252,5 +252,12 @@ public partial class CommandBuffer
             _top.Redo();
             base.RedoSideEffects();
         }
+
+        public MasterCommand Clone()
+        {
+            MasterCommand masterCommand = new MasterCommand(_top);
+            masterCommand.AddRange(this);
+            return masterCommand;
+        }
     }
 }

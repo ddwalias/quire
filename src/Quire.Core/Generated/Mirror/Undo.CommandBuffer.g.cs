@@ -31,7 +31,5 @@ public partial class CommandBuffer
         public override void UndoSideEffects() => base.UndoSideEffects();
         [global::Quire.Mirror.MirrorStub]
         public override void RedoSideEffects() => base.RedoSideEffects();
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Undo.CommandBuffer.MasterCommand Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }
