@@ -1,5 +1,6 @@
 #nullable disable
 using System.Diagnostics;
+using System.IO;
 using System.Text.RegularExpressions;
 using Quire.Mirror;
 using Quire.Mirror;
@@ -25,5 +26,16 @@ public partial class ApplicationLogger
     {
         Regex regex = new Regex("\\s+");
         return regex.Replace(stringToReplace, " ");
+    }
+
+    protected void WriteToLog(string msg, TextWriter textWriter)
+    {
+        if (string.IsNullOrWhiteSpace(msg))
+        {
+            return;
+        }
+        textWriter.WriteLine(msg);
+        textWriter.WriteLine();
+        textWriter.WriteLine();
     }
 }
