@@ -12,10 +12,6 @@ namespace Quire;
 public abstract partial class TextStyleBase : global::Quire.ITextStyle, global::Quire.ITextStyleObject
 {
     [global::Quire.Mirror.MirrorStub]
-    public const char StyleUniqueKeySign = '\u007E';
-    [global::Quire.Mirror.MirrorStub]
-    public const int FontSizeRoundingDecimal = 3;
-    [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.FontStretch _fontStretch;
     [global::Quire.Mirror.MirrorStub]
     protected void UpdateMemberValue(string propertyName, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

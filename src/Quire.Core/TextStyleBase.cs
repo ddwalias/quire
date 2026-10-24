@@ -11,6 +11,10 @@ namespace Quire;
 
 public partial class TextStyleBase
 {
+    public const char StyleUniqueKeySign = '~';
+
+    public const int FontSizeRoundingDecimal = 3;
+
     [MirrorVerified("Release IL")]
     protected global::System.Collections.Hashtable _htPropertyToIndex = new global::System.Collections.Hashtable();
 
