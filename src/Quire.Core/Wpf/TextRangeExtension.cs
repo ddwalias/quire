@@ -118,5 +118,14 @@ public static partial class TextRangeExtension
         bool IsNotEmptyElement() => (contentStartVsContentEnd = contentStartVsContentEnd ?? element.ContentStart.CompareTo(element.ContentEnd)).Value != 0;
     }
 
-    public static List<(int, int)> GetRangeItemsOffsets<TRun>(this global::System.Windows.Documents.TextRange range) where TRun : Run => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static List<(int, int)> GetRangeItemsOffsets<TRun>(this global::System.Windows.Documents.TextRange range) where TRun : Run
+    {
+        global::System.Windows.Documents.TextPointer documentStart = range.Start.DocumentStart;
+        return range.EnumerateRunsInRange().OfType<TRun>().Select((Run run) =>
+        {
+            int start = documentStart.GetOffsetToPosition(run.ElementStart);
+            int end = documentStart.GetOffsetToPosition(run.ElementEnd);
+            return (start, end);
+        }).ToList();
+    }
 }
