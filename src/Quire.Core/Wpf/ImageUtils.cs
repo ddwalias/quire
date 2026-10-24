@@ -5,6 +5,7 @@ using System.IO.Packaging;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
+using System.Text;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Interop;
@@ -434,5 +435,18 @@ public partial class ImageUtils
         byte[] imageHash = GetImageHash(array[0]);
         byte[] imageHash2 = GetImageHash(array[1]);
         return CompareHashes(imageHash, imageHash2);
+    }
+
+    public static string BitmapToB16String(BitmapSource bitmap)
+    {
+        using MemoryStream memoryStream = new MemoryStream();
+        EncodePngImage(bitmap, memoryStream);
+        StringBuilder stringBuilder = new StringBuilder((int)memoryStream.Length * 2);
+        byte[] buffer = memoryStream.GetBuffer();
+        foreach (byte b in buffer)
+        {
+            stringBuilder.AppendFormat("{0:x2}", b);
+        }
+        return stringBuilder.ToString();
     }
 }

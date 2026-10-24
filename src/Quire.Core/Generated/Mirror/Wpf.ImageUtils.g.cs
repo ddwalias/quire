@@ -30,8 +30,6 @@ public partial class ImageUtils
     [global::Quire.Mirror.MirrorStub]
     public static void EncodeImage(global::System.Windows.Media.Imaging.BitmapSource source, string imageType, global::System.IO.Stream target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static string BitmapToB16String(global::System.Windows.Media.Imaging.BitmapSource bitmap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static byte[] B16StringToBytes(string hexString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool SafeCopyImageFromPackage(global::System.Uri sourceUri, byte[] originalStreamHash, global::System.IO.Stream targetStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
