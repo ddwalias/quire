@@ -61,7 +61,21 @@ public static partial class TextRangeExtension
         return firstValue;
     }
 
-    public static void FixAndCleanImportedHyperlinksData(this global::System.Windows.Documents.TextRange range, bool fixHyperlinkEmptyRuns = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void FixAndCleanImportedHyperlinksData(this global::System.Windows.Documents.TextRange range, bool fixHyperlinkEmptyRuns = true)
+    {
+        if (!range.EnumerateHyperlinksInRange().IsNotEmpty(out var list))
+        {
+            return;
+        }
+        if (fixHyperlinkEmptyRuns)
+        {
+            list = list.Select((Hyperlink link) => link.RecursiveRemoveEmptyInlinesIncludingSelf()).OfType<Hyperlink>().ToList();
+        }
+        list.Each((Hyperlink link) =>
+        {
+            link.ResetLinkStyleProps();
+        });
+    }
 
     public static string SerializeRangeContentToXamlString(this global::System.Windows.Documents.TextRange range)
     {
