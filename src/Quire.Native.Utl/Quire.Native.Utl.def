@@ -1,0 +1,31 @@
+EXPORTS
+    ?RequestInterrupt@InterruptControl@utl@@QEAAX_N@Z
+    ?IsInterrupted@InterruptControl@utl@@SA_NXZ
+    ?ThreadInitialize@InterruptControl@utl@@SAXPEAV12@@Z
+    ?s_tls_index@InterruptControl@utl@@0KA DATA
+    ?GetNumberOfProcessors@utl@@YAHXZ
+    ?toBSTR@utl@@YAPEA_WIPEBD_K@Z
+    ?IsLoggingEnabled@utl@@YA_NXZ
+    ??0PerformanceTimer@utl@@QEAA@XZ
+    ?Start@PerformanceTimer@utl@@QEAAXXZ
+    ?Pause@PerformanceTimer@utl@@QEAAXXZ
+    ?Resume@PerformanceTimer@utl@@QEAAXXZ
+    ?Reset@PerformanceTimer@utl@@QEAAXXZ
+    ?GetCount@PerformanceTimer@utl@@QEBAJXZ
+    ?GetLast@PerformanceTimer@utl@@QEBANXZ
+    ?GetElapsed@PerformanceTimer@utl@@QEBANXZ
+    ?GetAverage@PerformanceTimer@utl@@QEBANXZ
+    ?BoostThreadPriority@utl@@YA_NXZ
+    ??4InterruptControl@utl@@QEAAAEAV01@AEBV01@@Z
+    ??4InterruptControl@utl@@QEAAAEAV01@$$QEAV01@@Z
+    ??0WordDatum@utl@@QEAA@PEBD@Z
+    ?Name@WordDatum@utl@@QEAAPEBDXZ
+    ??4WordDatum@utl@@QEAAAEAV01@AEBV01@@Z
+    ??4WordDatum@utl@@QEAAAEAV01@$$QEAV01@@Z
+    ??0WordChoice@utl@@QEAA@PEAVWordDatum@1@N@Z
+    ?Datum@WordChoice@utl@@QEAAPEAVWordDatum@2@XZ
+    ?Score@WordChoice@utl@@QEAANXZ
+    ?CompareScores@WordChoice@utl@@SA_NV12@0@Z
+    ??4WordChoice@utl@@QEAAAEAV01@AEBV01@@Z
+    ??4WordChoice@utl@@QEAAAEAV01@$$QEAV01@@Z
+    ??4with_purecall_handler@utl@@QEAAAEAV01@AEBV01@@Z

@@ -1,0 +1,26 @@
+{
+  "utl.dll": {
+    "sha256": "490ce48c81c3dc7bccdf545e88cbde8a9150ff750699fdbdcac308314414ff6c",
+    "targets": {
+      "??_C@_1BM@GDEAKNHC@?$AAE?$AAn?$AAg?$AAi?$AAn?$AAe?$AAL?$AAo?$AAg?$AAg?$AAi?$AAn?$AAg@": {
+        "rva": "0x190d0",
+        "size": 28
+      },
+      "??_C@_1FO@DDENMIPK@?$AAS?$AAo?$AAf?$AAt?$AAw?$AAa?$AAr?$AAe?$AA?2?$AAM?$AAa?$AAt?$AAh?$AAs?$AAo?$AAf@": {
+        "rva": "0x19210",
+        "size": 94
+      },
+      "??_C@_1GO@MNGDELFB@?$AAS?$AAo?$AAf?$AAt?$AAw?$AAa?$AAr?$AAe?$AA?2?$AAM?$AAa?$AAt?$AAh?$AAs?$AAo?$AAf@": {
+        "rva": "0x191a0",
+        "size": 110
+      },
+      "?ReadRegistryFlag@?A0x377d720e@utl@@YA_NPEB_W@Z": {
+        "rva": "0x88e0"
+      },
+      "__real@408f400000000000": {
+        "rva": "0x194a8",
+        "size": 8
+      }
+    }
+  }
+}
