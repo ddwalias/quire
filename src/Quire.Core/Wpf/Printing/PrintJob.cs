@@ -11,6 +11,32 @@ namespace Quire.Wpf.Printing;
 
 public partial class PrintJob
 {
+    public void Print(System.Printing.PrintQueue queue, System.Printing.PrintTicket ticket, bool async)
+    {
+        XpsDocumentWriter docWriter = System.Printing.PrintQueue.CreateXpsDocumentWriter(queue);
+        if (async)
+        {
+            WriteAsync(docWriter, ticket);
+        }
+        else
+        {
+            Write(docWriter, ticket);
+        }
+    }
+
+    public void PrintToFile(string filePath, bool async)
+    {
+        XpsDocumentWriter xpsDocumentWriter = GetXpsDocumentWriter(filePath);
+        if (async)
+        {
+            WriteAsync(xpsDocumentWriter, null);
+        }
+        else
+        {
+            Write(xpsDocumentWriter, null);
+        }
+    }
+
     [MirrorVerified("PtcWpfPrintingPrintJobMechanicalDifferentialTests")]
     public PrintJob() { }
 

@@ -15,8 +15,4 @@ public partial class PrintJob
     private global::System.Windows.Xps.Packaging.XpsDocument _activeXpsDocument;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Xps.XpsDocumentWriter _docWriter;
-    [global::Quire.Mirror.MirrorStub]
-    public void Print(global::System.Printing.PrintQueue queue, global::System.Printing.PrintTicket ticket, bool async) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void PrintToFile(string filePath, bool async) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

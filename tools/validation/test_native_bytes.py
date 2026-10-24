@@ -1,21 +1,30 @@
 """Checks for the native per-function byte harness: comparison rules, COFF reading, and the installed Mathcad DLL."""
+import contextlib
+import io
+import json
 import os
 import struct
 import tempfile
 import unittest
 from pathlib import Path
-from native_bytes import (Function, Reloc, PeImage, check_targets, compare_code, compare_object, functions_in_object, masked,
-                          read_coff)
+from unittest import mock
+from native_bytes import (Entry, Function, InternalTargets, ManifestError, Reloc, PeImage, check_targets,
+                          classify_targets, compare_code, compare_object, definitions_in_object, functions_in_object,
+                          load_targets, masked, read_coff, targets_from)
+from native_bytes import main as native_bytes_main
+from native_targets import record
 
 MATHCAD_DLL = Path(os.environ.get("MATHCAD_DIR", r"C:\Program Files\PTC\Mathcad Prime 12.0.1.0")) / "efistatsci_.dll"
+MSHEX_DLL = MATHCAD_DLL.with_name("mshex.dll")
 
 
-def coff(functions, externals=(), statics=()):
+def coff(functions, externals=(), statics=(), local=(), data=()):
     """A minimal x64 COFF object: one .text section per function, each an external function symbol with its relocations.
 
     `functions` is a list of (decorated name, code bytes, [(offset, reloc type, symbol index)]). Undefined external
     symbols named in `externals` follow the function symbols, then local (static) symbols named in `statics`, so
-    relocations can target either. Long names go through the string table.
+    relocations can target either. Defined symbols named in `local` are static, and those named in `data` are not
+    functions. Long names go through the string table.
     """
     code_start = 20 + 40 * len(functions)
     reloc_start = code_start + sum(len(code) for _, code, _ in functions)
@@ -41,7 +50,7 @@ def coff(functions, externals=(), statics=()):
         return struct.pack("<8sIhHBB", raw_name, 0, section, typ, storage, 0)
 
     for i, (name, _, _) in enumerate(functions):
-        symbols += symbol(name, i + 1, 0x20, 2)
+        symbols += symbol(name, i + 1, 0 if name in data else 0x20, 3 if name in local else 2)
     for name in externals:
         symbols += symbol(name, 0, 0, 2)
     for name in statics:
@@ -204,6 +213,363 @@ class CallTargetTests(unittest.TestCase):
         addr = Function("loadaddr", b"\x48\x8b\x05\0\0\0\0\xc3", [Reloc(0, 0x0001, 0)], {0: "data"})
         self.assertEqual(self.check({"data": 0x1300}, function=addr), ([], 0))
         self.assertEqual(len(self.check({"data": 0x1400}, function=addr)[0]), 1)
+
+
+class ManifestImage(FakeImage):
+    """FakeImage with what the manifest needs: a name and hash to bind to, .pdata function extents, and data reads."""
+
+    name = "fake.dll"
+    sha256 = "ab" * 32
+
+    def __init__(self, memory, functions, exports=None, imports=None):
+        super().__init__(exports or {}, memory, imports)
+        self.functions = functions
+
+    def read(self, rva, size):
+        return bytes(self.memory[rva:rva + size])
+
+    def contains(self, rva, size):
+        return 0 <= rva and rva + size <= len(self.memory)
+
+    def export_extent(self, name):
+        rva = self.exports.get(name)
+        return None if rva is None else (rva, self.functions[rva])
+
+    def export_code(self, name):
+        rva = self.exports[name]
+        return self.read(rva, self.functions[rva] - rva)
+
+
+class StrictRunTests(unittest.TestCase):
+    """native_bytes.main end to end, on synthetic objects and an image where export `caller` (RVA 0x1000) calls the
+    internal function at RVA 0x1100."""
+
+    def setUp(self):
+        memory = bytearray(0x2000)
+        memory[0x1000:0x1006] = b"\xe8\0\0\0\0\xc3"
+        struct.pack_into("<i", memory, 0x1001, 0x1100 - (0x1001 + 4))
+        memory[0x1100:0x1103] = b"\x33\xc0\xc3"
+        self.image = ManifestImage(memory, {0x1000: 0x1006, 0x1100: 0x1103}, {"caller": 0x1000})
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        self.tmp = Path(tmp.name)
+        self.caller = self.obj("caller.obj", [("caller", b"\xe8\0\0\0\0\xc3", [(1, 0x0004, 1)])], externals=["callee"])
+        self.callee = self.obj("callee.obj", [("callee", b"\x33\xc0\xc3", [])])
+        self.manifest = self.write("targets.json", {"fake.dll": {"sha256": ManifestImage.sha256,
+                                                                 "targets": {"callee": {"rva": "0x1100"}}}})
+
+    def obj(self, name, functions, **kw):
+        path = self.tmp / name
+        path.write_bytes(coff(functions, **kw))
+        return str(path)
+
+    def write(self, name, doc):
+        path = self.tmp / name
+        path.write_text(json.dumps(doc))
+        return str(path)
+
+    def run_main(self, *args):
+        out = io.StringIO()
+        with mock.patch("native_bytes.PeImage", lambda path: self.image), contextlib.redirect_stdout(out):
+            code = native_bytes_main(["--original", "fake.dll", "--strict", *args])
+        return code, out.getvalue()
+
+    def test_internal_call_verified_by_the_manifest_passes_strict(self):
+        code, out = self.run_main("--candidate", self.caller, "--candidate", self.callee, "--targets", self.manifest)
+        self.assertEqual(code, 0, out)
+        self.assertIn("1 verified by manifest", out)
+        self.assertIn("OK   callee (at manifest RVA)", out)
+
+    def test_without_the_manifest_the_internal_call_is_unverified(self):
+        code, out = self.run_main("--candidate", self.caller, "--candidate", self.callee, "--symbol", "caller",
+                                  "--targets", self.write("empty.json", {}))
+        self.assertEqual(code, 1)
+        self.assertIn("1 unverified targets", out)
+        code, out = self.run_main("--candidate", self.caller, "--targets", str(self.tmp / "missing.json"))
+        self.assertEqual(code, 1)
+
+    def test_callee_with_other_bytes_fails(self):
+        other = self.obj("other.obj", [("callee", b"\x31\xc0\xc3", [])])
+        code, out = self.run_main("--candidate", self.caller, "--candidate", other, "--targets", self.manifest)
+        self.assertEqual(code, 1)
+        self.assertIn("FAIL manifest entry callee: mismatch", out)
+
+    def test_two_objects_defining_a_name_differently_fail(self):
+        other = self.obj("other.obj", [("callee", b"\x31\xc0\xc3", [])])
+        code, out = self.run_main("--candidate", self.caller, "--candidate", self.callee, "--candidate", other,
+                                  "--targets", self.manifest)
+        self.assertEqual(code, 1)
+        self.assertIn("defined differently", out)
+
+    def test_an_entry_nothing_references_is_still_checked(self):
+        stale = self.obj("stale.obj", [("old", b"\x90\x90\xc3", [])], local=["old"])
+        manifest = self.write("stale.json", {"fake.dll": {"sha256": ManifestImage.sha256, "targets": {
+            "callee": {"rva": "0x1100"}, "old": {"rva": "0x1100"}}}})
+        code, out = self.run_main("--candidate", self.caller, "--candidate", self.callee, "--candidate", stale,
+                                  "--targets", manifest)
+        self.assertEqual(code, 1)
+        self.assertIn("FAIL old (manifest entry)", out)
+
+    def test_manifest_for_another_build_fails_the_run(self):
+        manifest = self.write("other.json", {"fake.dll": {"sha256": "cd" * 32, "targets": {}}})
+        code, out = self.run_main("--candidate", self.caller, "--targets", manifest)
+        self.assertEqual(code, 1)
+        self.assertIn("SHA-256", out)
+
+
+class LoadTargetsTests(unittest.TestCase):
+    def setUp(self):
+        self.image = ManifestImage(bytearray(0x2000), {0x1100: 0x1103})
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+
+    def load(self, doc):
+        path = Path(self.tmp.name) / "targets.json"
+        path.write_text(json.dumps(doc))
+        return load_targets(path, self.image)
+
+    def bound(self, targets, sha256=ManifestImage.sha256, dll="FAKE.dll"):
+        return {dll: {"sha256": sha256, "targets": targets}}
+
+    def test_entries_of_the_original_are_read_by_case_insensitive_dll_name(self):
+        entries = self.load(self.bound({"f": {"rva": "0x1100"}, "vt": {"rva": "0x1800", "size": 16}}))
+        self.assertEqual(entries, {"f": Entry(0x1100), "vt": Entry(0x1800, 16)})
+
+    def test_a_dll_the_manifest_does_not_list_has_no_entries(self):
+        self.assertEqual(self.load(self.bound({"f": {"rva": "0x1100"}}, dll="other.dll")), {})
+
+    def test_entries_for_another_build_fail(self):
+        with self.assertRaisesRegex(ManifestError, "SHA-256"):
+            self.load(self.bound({"f": {"rva": "0x1100"}}, sha256="cd" * 32))
+
+    def test_function_entry_must_start_a_pdata_function(self):
+        with self.assertRaisesRegex(ManifestError, ".pdata"):
+            self.load(self.bound({"f": {"rva": "0x1101"}}))
+
+    def test_data_entry_must_lie_in_a_section(self):
+        with self.assertRaisesRegex(ManifestError, "not in a section"):
+            self.load(self.bound({"vt": {"rva": "0x1ff8", "size": 16}}))
+        with self.assertRaisesRegex(ManifestError, "not in a section"):
+            self.load(self.bound({"vt": {"rva": "0x1800", "size": 0}}))
+
+    def test_malformed_entry_and_missing_file_fail(self):
+        with self.assertRaisesRegex(ManifestError, "malformed"):
+            self.load(self.bound({"f": {"offset": "0x1100"}}))
+        with self.assertRaises(ManifestError):
+            load_targets(Path(self.tmp.name) / "missing.json", self.image)
+
+
+class InternalTargetTests(unittest.TestCase):
+    """A caller at RVA 0x1000 calls (E8, displacement at +1) the internal function `callee`, at RVA 0x1100 (xor eax,
+    eax; ret), which the original does not export."""
+
+    CALLEE = b"\x33\xc0\xc3"
+
+    def setUp(self):
+        self.memory = bytearray(0x2000)
+        struct.pack_into("<i", self.memory, 0x1001, 0x1100 - (0x1001 + 4))
+        self.memory[0x1100:0x1103] = self.CALLEE
+        self.functions = {0x1100: 0x1103, 0x1200: 0x1206}
+        self.call = Function("caller", b"\xe8\0\0\0\0\xc3", [Reloc(1, 0x0004, 0)], {1: "callee"})
+        self.definitions = {"callee": Function("callee", self.CALLEE, [], {})}
+
+    def classify(self, entries, function=None, definitions=None):
+        image = ManifestImage(self.memory, self.functions)
+        internal = InternalTargets(image, entries, self.definitions if definitions is None else definitions)
+        return classify_targets(image, 0x1000, function or self.call, internal)
+
+    def test_call_to_an_entry_whose_bytes_match_verifies(self):
+        found = self.classify({"callee": Entry(0x1100)})
+        self.assertEqual((found.mismatches, found.unverified, found.verified, found.entries), ([], 0, 1, {}))
+
+    def test_static_target_is_looked_up_by_its_name(self):
+        static_call = Function("caller", self.call.code, self.call.relocs, {1: None}, {1: "callee"})
+        self.assertEqual(self.classify({"callee": Entry(0x1100)}, function=static_call).verified, 1)
+
+    def test_target_without_an_entry_stays_unverified(self):
+        found = self.classify({})
+        self.assertEqual((found.mismatches, found.unverified, found.verified), ([], 1, 0))
+        image = ManifestImage(self.memory, self.functions)
+        self.assertEqual(check_targets(image, 0x1000, self.call), ([], 1))
+
+    def test_entry_at_another_rva_than_the_call_site_is_a_mismatch(self):
+        found = self.classify({"callee": Entry(0x1200)})
+        self.assertEqual((len(found.mismatches), found.verified), (1, 0))
+        self.assertIn("manifest entry gives 0x1200", found.mismatches[0])
+        self.assertEqual(found.entries["callee"][0], "mismatch")
+
+    def test_callee_whose_bytes_differ_is_a_mismatch(self):
+        found = self.classify({"callee": Entry(0x1100)}, definitions={"callee": Function("callee", b"\x31\xc0\xc3", [], {})})
+        self.assertEqual(len(found.mismatches), 1)
+        self.assertIn("first byte difference", found.mismatches[0])
+        longer = self.classify({"callee": Entry(0x1100)}, definitions={"callee": Function("callee", b"\x90" * 4, [], {})})
+        self.assertIn("length", longer.mismatches[0])
+
+    def test_entry_the_candidates_do_not_define_is_unverified(self):
+        found = self.classify({"callee": Entry(0x1100)}, definitions={})
+        self.assertEqual((found.mismatches, found.unverified, found.verified), ([], 1, 0))
+        self.assertEqual(found.entries["callee"], ("unverified", "not defined by the candidate objects"))
+
+    def test_entry_that_references_an_unverified_target_is_unverified(self):
+        # callee at 0x1200: jmp to 0x1100, which has no entry.
+        struct.pack_into("<i", self.memory, 0x1201, 0x1100 - (0x1201 + 4))
+        callee = Function("callee", b"\xe9\0\0\0\0\xc3", [Reloc(1, 0x0004, 1)], {1: "helper"})
+        self.memory[0x1200] = 0xE9
+        self.memory[0x1205] = 0xC3
+        struct.pack_into("<i", self.memory, 0x1001, 0x1200 - (0x1001 + 4))
+        found = self.classify({"callee": Entry(0x1200)}, definitions={"callee": callee})
+        self.assertEqual((found.mismatches, found.unverified, found.verified), ([], 1, 0))
+        # With the helper recorded and defined, the chain verifies.
+        found = self.classify({"callee": Entry(0x1200), "helper": Entry(0x1100)},
+                              definitions={"callee": callee, "helper": Function("helper", self.CALLEE, [], {})})
+        self.assertEqual((found.mismatches, found.unverified, found.verified), ([], 0, 1))
+
+    def mutual(self, b_code):
+        """callee (0x1100) and peer (0x1200) each jump to the other; the original's peer is `jmp; ret`."""
+        self.memory[0x1100:0x1106] = b"\xe9\0\0\0\0\xc3"
+        struct.pack_into("<i", self.memory, 0x1101, 0x1200 - (0x1101 + 4))
+        self.memory[0x1200:0x1206] = b"\xe9\0\0\0\0\xc3"
+        struct.pack_into("<i", self.memory, 0x1201, 0x1100 - (0x1201 + 4))
+        self.functions[0x1100] = 0x1106
+        return self.classify({"callee": Entry(0x1100), "peer": Entry(0x1200)}, definitions={
+            "callee": Function("callee", b"\xe9\0\0\0\0\xc3", [Reloc(1, 0x0004, 0)], {1: "peer"}),
+            "peer": Function("peer", b_code, [Reloc(1, 0x0004, 0)], {1: "callee"})})
+
+    def test_entries_that_reference_each_other_verify_together(self):
+        found = self.mutual(b"\xe9\0\0\0\0\xc3")
+        self.assertEqual((found.mismatches, found.unverified, found.verified), ([], 0, 1))
+
+    def test_a_cycle_with_one_bad_entry_fails_through_the_good_one(self):
+        found = self.mutual(b"\xe9\0\0\0\0\xcc")
+        self.assertEqual(len(found.mismatches), 1)
+        self.assertIn("references peer", found.mismatches[0])
+
+    def vtable(self, slots_code=None, size=8, addend=0):
+        """caller loads the address of vtable `vt` (RVA 0x1800, one slot holding callee's address) into rax."""
+        struct.pack_into("<Q", self.memory, 0x1800, FakeImage.image_base + 0x1100)
+        code = bytearray(b"\x48\x8d\x05\0\0\0\0\xc3")
+        struct.pack_into("<i", code, 3, addend)
+        struct.pack_into("<i", self.memory, 0x1003, 0x1800 + addend - (0x1003 + 4))
+        caller = Function("caller", bytes(code), [Reloc(3, 0x0004, 0)], {3: "vt"})
+        vt = Function("vt", slots_code or bytes(8), [Reloc(0, 0x0001, 0)], {0: "callee"}, data=True)
+        return self.classify({"vt": Entry(0x1800, size), "callee": Entry(0x1100)}, function=caller,
+                             definitions={"vt": vt, "callee": self.definitions["callee"]})
+
+    def test_vtable_verifies_through_the_functions_its_slots_hold(self):
+        self.assertEqual(self.vtable().verified, 1)
+        self.assertEqual(self.vtable(addend=8).verified, 1)
+
+    def test_vtable_slot_to_a_function_whose_bytes_differ_is_a_mismatch(self):
+        self.definitions["callee"] = Function("callee", b"\x31\xc0\xc3", [], {})
+        found = self.vtable()
+        self.assertEqual(len(found.mismatches), 1)
+        self.assertIn("references callee", found.mismatches[0])
+
+    def test_data_size_must_match_the_entry(self):
+        self.assertIn("size 16 != manifest 8", self.vtable(slots_code=bytes(16)).mismatches[0])
+
+    def test_function_recorded_as_data_is_a_mismatch(self):
+        found = self.classify({"callee": Entry(0x1100, 3)})
+        self.assertIn("manifest entry is data", found.mismatches[0])
+
+    def test_constant_compares_byte_for_byte(self):
+        self.memory[0x1900:0x1904] = b"abcd"
+        caller = Function("caller", b"\x48\x8d\x05\0\0\0\0\xc3", [Reloc(3, 0x0004, 0)], {3: "k"})
+        struct.pack_into("<i", self.memory, 0x1003, 0x1900 - (0x1003 + 4))
+        for constant, verified in ((b"abcd", 1), (b"abce", 0)):
+            found = self.classify({"k": Entry(0x1900, 4)}, function=caller,
+                                  definitions={"k": Function("k", constant, [], {}, data=True)})
+            self.assertEqual((found.verified, len(found.mismatches)), (verified, 1 - verified))
+
+
+class RecordTests(unittest.TestCase):
+    """The export `caller` (RVA 0x1000) calls the internal `callee` (RVA 0x1100), which jumps to `helper` (0x1200)."""
+
+    def setUp(self):
+        self.memory = bytearray(0x2000)
+        self.memory[0x1000:0x1006] = b"\xe8\0\0\0\0\xc3"
+        struct.pack_into("<i", self.memory, 0x1001, 0x1100 - (0x1001 + 4))
+        self.memory[0x1100:0x1106] = b"\xe9\0\0\0\0\xc3"
+        struct.pack_into("<i", self.memory, 0x1101, 0x1200 - (0x1101 + 4))
+        self.memory[0x1200:0x1203] = b"\x33\xc0\xc3"
+        self.image = ManifestImage(self.memory, {0x1000: 0x1006, 0x1100: 0x1106, 0x1200: 0x1203}, {"caller": 0x1000})
+        self.definitions = {
+            "caller": Function("caller", b"\xe8\0\0\0\0\xc3", [Reloc(1, 0x0004, 0)], {1: "callee"}),
+            "callee": Function("callee", b"\xe9\0\0\0\0\xc3", [Reloc(1, 0x0004, 0)], {1: "helper"}),
+            "helper": Function("helper", b"\x33\xc0\xc3", [], {}),
+        }
+
+    def record(self, names, doc=None):
+        return record(self.image, self.definitions, names, {} if doc is None else doc)
+
+    def test_targets_are_recorded_from_matching_call_sites_and_bound_to_the_original(self):
+        doc = self.record(["callee", "helper"])
+        self.assertEqual(doc, {"fake.dll": {"sha256": ManifestImage.sha256, "targets": {
+            "callee": {"rva": "0x1100"}, "helper": {"rva": "0x1200"}}}})
+        self.assertEqual(targets_from(doc, self.image), {"callee": Entry(0x1100), "helper": Entry(0x1200)})
+
+    def test_an_existing_entry_is_searched_for_further_targets(self):
+        doc = self.record(["callee"])
+        self.record(["helper"], doc)
+        self.assertEqual(set(doc["fake.dll"]["targets"]), {"callee", "helper"})
+
+    def test_data_takes_the_candidates_size(self):
+        self.definitions["helper"] = Function("helper", b"\x33\xc0\xc3", [], {}, data=True)
+        self.image.functions.pop(0x1200)
+        self.assertEqual(self.record(["callee", "helper"])["fake.dll"]["targets"]["helper"], {"rva": "0x1200", "size": 3})
+
+    def test_a_name_no_matching_function_references_fails(self):
+        with self.assertRaisesRegex(ValueError, "not referenced"):
+            self.record(["elsewhere"])
+        self.definitions["caller"] = Function("caller", b"\xe8\0\0\0\0\xcc", [Reloc(1, 0x0004, 0)], {1: "callee"})
+        with self.assertRaisesRegex(ValueError, "not referenced"):
+            self.record(["callee"])
+
+    def test_sites_that_disagree_fail(self):
+        self.definitions["callee"] = Function("callee", b"\xe9\0\0\0\0\xc3", [Reloc(1, 0x0004, 0)], {1: "callee"})
+        with self.assertRaisesRegex(ValueError, "disagree"):
+            self.record(["callee"])
+
+    def test_data_outside_the_sections_is_not_recorded(self):
+        self.definitions["helper"] = Function("helper", b"\x33\xc0\xc3", [], {}, data=True)
+        struct.pack_into("<i", self.memory, 0x1101, 0x1ffe - (0x1101 + 4))
+        self.memory[0x1ffe:0x2000] = b"\x33\xc0"
+        with self.assertRaisesRegex(ValueError, "not in a section"):
+            self.record(["callee", "helper"])
+
+    def test_an_entry_is_not_silently_changed(self):
+        doc = {"fake.dll": {"sha256": ManifestImage.sha256, "targets": {"callee": {"rva": "0x1200"}}}}
+        with self.assertRaisesRegex(ValueError, "remove the entry"):
+            self.record(["callee"], doc)
+
+
+class DefinitionTests(unittest.TestCase):
+    def test_static_functions_and_data_are_defined_and_static_targets_named(self):
+        data = coff([("f", b"\xe8\0\0\0\0\xc3", [(1, 0x0004, 1)]), ("helper", b"\xc3", []), ("vt", bytes(8), [])],
+                    local=["helper"], data=["vt"])
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "t.obj"
+            path.write_bytes(data)
+            funcs = functions_in_object(path)
+            defs = definitions_in_object(path)
+        self.assertEqual([f.name for f in funcs], ["f"])
+        self.assertEqual(set(defs), {"f", "helper", "vt"})
+        self.assertEqual((defs["f"].targets, defs["f"].statics), ({1: None}, {1: "helper"}))
+        self.assertEqual((defs["helper"].data, defs["vt"].data), (False, True))
+
+
+@unittest.skipUnless(MSHEX_DLL.is_file(), "Mathcad Prime install not present")
+class InstalledManifestTests(unittest.TestCase):
+    def test_entries_are_checked_against_the_installed_mshex(self):
+        image = PeImage(MSHEX_DLL)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "targets.json"
+            start = min(image.functions)
+            path.write_text(json.dumps({"mshex.dll": {"sha256": image.sha256, "targets": {"f": {"rva": hex(start)}}}}))
+            self.assertEqual(load_targets(path, image), {"f": Entry(start)})
+            path.write_text(json.dumps({"mshex.dll": {"sha256": image.sha256, "targets": {"f": {"rva": hex(start + 1)}}}}))
+            with self.assertRaises(ManifestError):
+                load_targets(path, image)
 
 
 @unittest.skipUnless(MATHCAD_DLL.is_file(), "Mathcad Prime install not present")

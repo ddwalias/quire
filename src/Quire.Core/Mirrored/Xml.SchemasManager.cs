@@ -8,6 +8,16 @@ static partial class SchemasManager
 
     partial class SchemaData
     {
+        public static implicit operator string(SchemaData data)
+        {
+            if (data == null)
+            {
+                return null;
+            }
+
+            return data.SchemaName;
+        }
+
         public global::System.Xml.Schema.XmlSchema Schema
         {
             get
