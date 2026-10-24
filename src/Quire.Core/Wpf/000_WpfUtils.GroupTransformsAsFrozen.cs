@@ -3,6 +3,9 @@ namespace Quire.Wpf;
 
 public static partial class WpfUtils
 {
+    [global::Quire.Mirror.MirrorVerified("Release IL")]
+    public static global::System.Windows.Media.Color WpfColorFromName(string name) => (global::System.Windows.Media.Color)global::System.Windows.Media.ColorConverter.ConvertFromString(name);
+
     // Keep this partial first so the generated predicate retains Mathcad's b__17_0 ordinal.
     public static global::System.Windows.Media.GeneralTransform GroupTransformsAsFrozen(params global::System.Windows.Media.GeneralTransform[] children)
     {

@@ -42,7 +42,5 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IList<string> DumpLogicalTreeLines(object root) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IEnumerable<global::System.Windows.DependencyObject> GetVisualChildren(this global::System.Windows.DependencyObject dependencyObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<T> GetVisualDescendantsBreadthFirstOfType<T>(this global::System.Windows.DependencyObject dependencyObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

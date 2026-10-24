@@ -303,4 +303,5 @@ public static partial class WpfUtils
             global::System.Windows.Input.Mouse.OverrideCursor = null;
         }
     }
+
 }

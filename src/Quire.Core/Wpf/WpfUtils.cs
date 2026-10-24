@@ -276,9 +276,6 @@ public static partial class WpfUtils
     }
 
     [MirrorVerified("Release IL")]
-    public static Color WpfColorFromName(string name) => (Color)ColorConverter.ConvertFromString(name);
-
-    [MirrorVerified("Release IL")]
     public static void DoEvents() => DoEvents(Dispatcher.CurrentDispatcher, (DispatcherPriority)4);
 
 
@@ -294,6 +291,9 @@ public static partial class WpfUtils
     public static object GetDefaultValueFromAttribute(object component, string propertyName) => ((DefaultValueAttribute)TypeDescriptor.GetProperties(component)[propertyName].Attributes[typeof(DefaultValueAttribute)]).Value;
 
     [MirrorVerified("Release IL")]
+    private static MessageBoxResult DisplayQuestionMessage(string message) => AppServiceRegistry.GetService<IMessageBoxManager>().ShowCriticalQuestionMessage.Invoke(global::System.Windows.Application.Current.MainWindow, message, ApplicationFullName, (MessageBoxButton)4);
+
+    [MirrorVerified("Release IL")]
     public static bool EastAsianLanguagesInstalled
     {
         get
@@ -306,9 +306,6 @@ public static partial class WpfUtils
             return _eastAsianLanguagesInstalled.Value;
         }
     }
-
-    [MirrorVerified("Release IL")]
-    private static MessageBoxResult DisplayQuestionMessage(string message) => AppServiceRegistry.GetService<IMessageBoxManager>().ShowCriticalQuestionMessage.Invoke(global::System.Windows.Application.Current.MainWindow, message, ApplicationFullName, (MessageBoxButton)4);
 
     public static global::System.Collections.Generic.IList<global::System.Windows.Documents.Adorner> GetAdornersOfDescendants(UIElement element)
     {
@@ -347,6 +344,17 @@ public static partial class WpfUtils
         adornersOfElement.Each(adorners.Add);
     }
 
+    [MirrorVerified("Release IL")]
+    public static IEnumerable<DependencyObject> GetVisualChildren(this DependencyObject dependencyObject)
+    {
+        int childrenCount = VisualTreeHelper.GetChildrenCount(dependencyObject);
+        for (int index = 0; index < childrenCount; index++)
+        {
+            yield return VisualTreeHelper.GetChild(dependencyObject, index);
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     public static bool IsAncestorOf(DependencyObject possibleAncestor, DependencyObject element)
     {
         try
