@@ -1,16 +1,35 @@
 #nullable disable
+using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
-using Quire.Mirror;
+using Quire;
 using Quire.Mirror;
 
 namespace Quire.Services;
-
 public partial class ApplicationLogger
 {
     [MirrorVerified("PtcServicesApplicationLoggerMechanicalDifferentialTests")]
     protected string _applicationLogFilePath;
+
+    public string GetListOfLoadedModulesData()
+    {
+        StringBuilder loadedModulesData = new StringBuilder();
+        string value = string.Format("The following Modules were loaded by {0}:", FullProductName);
+        string loadedModuleListFormat = string.Join(Environment.NewLine, new string[3] { "Module Name: {0}", "{1}", "Module Memory Size: {2}" });
+        ProcessModuleCollection modules = Process.GetProcessById(Process.GetCurrentProcess().Id).Modules;
+        if (modules.Count > 0)
+        {
+            loadedModulesData.Append(value);
+            modules.Cast<ProcessModule>().Each((ProcessModule module) =>
+            {
+                loadedModulesData.AppendLine(string.Format(loadedModuleListFormat, module.ModuleName, ReplaceMultiSpaceWithSingleSpace(module.FileVersionInfo.ToString().Replace(Environment.NewLine, "; ")), module.ModuleMemorySize));
+            });
+        }
+        return loadedModulesData.ToString();
+    }
 
     [MirrorVerified("PtcServicesApplicationLoggerMechanicalDifferentialTests")]
     public string GetLastApplicationLogPath() => _applicationLogFilePath;
@@ -38,4 +57,5 @@ public partial class ApplicationLogger
         textWriter.WriteLine();
         textWriter.WriteLine();
     }
+
 }
