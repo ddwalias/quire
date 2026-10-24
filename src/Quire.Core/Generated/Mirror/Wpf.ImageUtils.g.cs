@@ -26,8 +26,6 @@ public partial class ImageUtils
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Windows.Media.Imaging.BitmapSource CreateBitmapFromVisual(double dpiX, double dpiY, global::System.Windows.Rect box, global::System.Windows.Media.Visual visual, bool coerceBoxPoints, global::System.Windows.Media.GeneralTransform transformToRoot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void CopyImageToTempBitmap(global::System.Windows.Controls.Image image) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void EncodeImage(global::System.Windows.Media.Imaging.BitmapSource source, string imageType, global::System.IO.Stream target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static byte[] B16StringToBytes(string hexString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

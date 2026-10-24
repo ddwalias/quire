@@ -449,4 +449,13 @@ public partial class ImageUtils
         }
         return stringBuilder.ToString();
     }
+
+    public static void CopyImageToTempBitmap(System.Windows.Controls.Image image)
+    {
+        if (!(image.Source is BitmapSource))
+        {
+            return;
+        }
+        image.Source = new BitmapImage(CopyImageToTempBitmap(image.Source));
+    }
 }
