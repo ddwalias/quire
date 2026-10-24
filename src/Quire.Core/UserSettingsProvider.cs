@@ -3,6 +3,8 @@ using System;
 using System.Configuration;
 using System.Configuration;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
 using Quire.IO;
@@ -18,9 +20,6 @@ public partial class UserSettingsProvider
 
     [MirrorVerified("PtcUserSettingsProviderMechanicalDifferentialTests")]
     public void Upgrade(SettingsContext context, SettingsPropertyCollection properties) { }
-
-    [MirrorVerified("PtcUserSettingsProviderMechanicalDifferentialTests")]
-    public UserSettingsProvider() { }
 
     [MirrorVerified("PtcUserSettingsProviderMechanicalDifferentialTests")]
     public static string ConfigFolderName { get; set; }
@@ -263,4 +262,55 @@ public partial class UserSettingsProvider
 
     [MirrorVerified("Release IL")]
     public static string CommonConfigFolderName => FileUtils.GetCommonConfigFolderPath(UseAssemblyVersionInConfigPath);
+
+    [MirrorVerified("Release IL")]
+    public static void CopyPrevUserConfig(Version version)
+    {
+        try
+        {
+            string pattern;
+            string path;
+            DirectoryInfo directory;
+            FileInfo fileInfo;
+            string destFileName;
+            pattern = $"^{version.Major}\\.\\d+\\.\\d+\\.\\d+$";
+            Regex versionFolderRegex = new Regex(pattern);
+            path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PTC");
+            Regex folderNameRegex = new Regex("MathcadPrime_Url_[a-zA-Z0-9]{32}");
+            if (!Directory.Exists(path))
+            {
+                return;
+            }
+            directory = new FileInfo(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath).Directory;
+            if (directory == null || directory.Exists)
+            {
+                return;
+            }
+            fileInfo = (from file in (from subDir in (from dir in new DirectoryInfo(path).EnumerateDirectories()
+                            where folderNameRegex.IsMatch(dir.Name)
+                            select dir).SelectMany((DirectoryInfo dir) => dir.EnumerateDirectories())
+                        where versionFolderRegex.IsMatch(subDir.Name)
+                        select subDir).SelectMany((DirectoryInfo subDir) => subDir.EnumerateFiles("user.config"))
+                    orderby file.LastWriteTime descending
+                    select file).FirstOrDefault();
+            if (fileInfo == null)
+            {
+                return;
+            }
+            destFileName = string.Concat(directory.FullName, "\\", "user.config");
+            if (!directory.Exists)
+            {
+                Directory.CreateDirectory(directory.FullName);
+            }
+            File.Copy(fileInfo.FullName, destFileName, overwrite: true);
+            IsConfigCopiedForMOR = true;
+        }
+        catch (Exception)
+        {
+            DebugTools.FailAssertion("An error occurred while trying to upgrade your user settings for the new version. The program will continue to run, however user preferences such as screen sizes, locations etc will need to be reset");
+        }
+    }
+
+    [MirrorVerified("PtcUserSettingsProviderMechanicalDifferentialTests")]
+    public UserSettingsProvider() { }
 }
