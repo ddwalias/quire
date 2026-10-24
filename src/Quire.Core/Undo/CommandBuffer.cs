@@ -195,6 +195,38 @@ public partial class CommandBuffer
     }
 
     [MirrorVerified("Release IL")]
+    public static bool Execute(IUndoableCommand command, CompoundCommand attachToCommand = null)
+    {
+        bool flag = false;
+        bool flag2 = attachToCommand != null;
+        CommandEventArgs args = new CommandEventArgs(command, CommandEventArgs.ActionTypeEnum.Do);
+        FireCommandEvent(_currentInstance.BeforeCommand, args);
+        ICollectableCommand collectableCommand = command as ICollectableCommand;
+        if (!flag2 && collectableCommand != null && GetTopCommand(NextUndoCommand) is ICollectableCommand collectableCommand2 && collectableCommand2.CollectNewCommand(collectableCommand))
+        {
+            flag = true;
+        }
+        if (!flag)
+        {
+            CompoundCommand compoundCommand = SafeDo(command);
+            flag = compoundCommand != null;
+            if (flag)
+            {
+                if (!flag2)
+                {
+                    CurrentInstance.PushCommand(compoundCommand);
+                }
+                else
+                {
+                    attachToCommand.Add(compoundCommand);
+                }
+            }
+        }
+        FireCommandEvent(_currentInstance.AfterCommand, args);
+        return flag;
+    }
+
+    [MirrorVerified("Release IL")]
     public static bool Execute(string name, DelegateFunction0<bool> doMethod, Delegate0 undoMethod) => Execute(new UndoableCommand(name, doMethod, undoMethod), null);
 
     [MirrorVerified("Release IL")]
