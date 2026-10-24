@@ -208,8 +208,23 @@ public static partial class WpfUtils
     [MirrorVerified("Release IL")]
     public static double DipsToPoints(double dips) => dips / 96.0 * 72.0;
 
-    [MirrorVerified("Release IL")]
-    public static Color WpfColorFromName(string name) => (Color)ColorConverter.ConvertFromString(name);
+    public static void ExecuteOnLoad(FrameworkElement element, Action action, bool condition = false)
+    {
+        RoutedEventHandler handler = null;
+        handler = delegate
+        {
+            action();
+            element.Loaded -= handler;
+        };
+        if (element.IsLoaded | condition)
+        {
+            action();
+        }
+        else
+        {
+            element.Loaded += handler;
+        }
+    }
 
     public static void ExecuteOnLayoutUpdated(UIElement element, Action action)
     {
@@ -261,10 +276,10 @@ public static partial class WpfUtils
     }
 
     [MirrorVerified("Release IL")]
-    public static void DoEvents() => DoEvents(Dispatcher.CurrentDispatcher, (DispatcherPriority)4);
+    public static Color WpfColorFromName(string name) => (Color)ColorConverter.ConvertFromString(name);
 
     [MirrorVerified("Release IL")]
-    public static bool WaitForIdle(Thread thread) => WaitForIdle(thread, TimeSpan.FromMilliseconds(-1L));
+    public static void DoEvents() => DoEvents(Dispatcher.CurrentDispatcher, (DispatcherPriority)4);
 
 
     [MirrorVerified("Release IL")]

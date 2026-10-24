@@ -15,6 +15,9 @@ public static partial class WpfUtils
         propertyChanged?.Invoke(propertyOwner, new global::System.ComponentModel.PropertyChangedEventArgs(propertyName));
     }
 
+    [global::Quire.Mirror.MirrorVerified("Release IL")]
+    public static bool WaitForIdle(global::System.Threading.Thread thread) => WaitForIdle(thread, global::System.TimeSpan.FromMilliseconds(-1L));
+
     public static void TextRangeCopy(global::System.Windows.Documents.TextRange source, global::System.Windows.Documents.TextRange destination, string dataFormat)
     {
         using global::System.IO.MemoryStream memoryStream = new global::System.IO.MemoryStream();
@@ -31,5 +34,4 @@ public static partial class WpfUtils
         return new global::System.Uri(uri.PathAndQuery, global::System.UriKind.Relative);
     }
 
-    public static void ExecuteOnLoad(global::System.Windows.FrameworkElement element, global::System.Action action, bool condition = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
