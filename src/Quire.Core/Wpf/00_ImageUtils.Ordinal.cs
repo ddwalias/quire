@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.IO;
 using Quire.Mirror;
+using Quire.Core;
 
 namespace Quire.Wpf;
 
@@ -97,8 +98,70 @@ public partial class ImageUtils
         return BitmapFrame.Create(chunkedMemoryStream);
     }
 
-    // Preserve Mathcad's later helper ordinals while their bodies remain unfinished.
-    private static BitmapSource CreateBitmapFromElement(FrameworkElement element, double dpiX, double dpiY, AdornerDecorator decoratorAncestor, Visual rootVisual, Rect? bounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    // Preserve Mathcad's bitmap-helper member ordinals.
+    [MirrorVerified("Release IL")]
+    private static BitmapSource CreateBitmapFromElement(FrameworkElement element, double dpiX, double dpiY, AdornerDecorator decoratorAncestor, Visual rootVisual, Rect? bounds)
+    {
+        UIElement uIElement;
+        Rect val3;
+        Rect val;
+        UIElement uIElement2;
+        Rect? nullableBounds;
+        Rect val2;
+        AdornerLayer adornerLayer;
+        Adorner[] adorners;
+        Adorner[] array;
+        int i;
+        Rect descendantBounds;
+
+        nullableBounds = bounds;
+        val = nullableBounds.HasValue ? nullableBounds.GetValueOrDefault() : VisualTreeHelper.GetDescendantBounds(element);
+        if (element.Clip != null)
+        {
+            val.Intersect(element.Clip.Bounds);
+        }
+        if (decoratorAncestor != null)
+        {
+            val2 = element.TransformToAncestor(decoratorAncestor).TransformBounds(val);
+            adornerLayer = AdornerLayer.GetAdornerLayer(element);
+            if (adornerLayer != null && adornerLayer.IsDescendantOf(decoratorAncestor))
+            {
+                adorners = adornerLayer.GetAdorners(element);
+                if (adorners != null)
+                {
+                    array = adorners;
+                    i = 0;
+                    while (i < array.Length)
+                    {
+                        Adorner obj = array[i];
+                        descendantBounds = VisualTreeHelper.GetDescendantBounds(obj);
+                        descendantBounds = obj.TransformToAncestor(decoratorAncestor).TransformBounds(descendantBounds);
+                        val2.Union(descendantBounds);
+                        i++;
+                    }
+                }
+            }
+            if (decoratorAncestor.Clip != null)
+            {
+                val2.Intersect(decoratorAncestor.Clip.Bounds);
+            }
+            uIElement = decoratorAncestor;
+            val3 = val2;
+        }
+        else
+        {
+            uIElement = element;
+            val3 = val;
+        }
+        uIElement2 = uIElement.TryFindVisualAncestor<UIElement>();
+        return CreateBitmapFromVisual(
+            dpiX,
+            dpiY,
+            uIElement2 == null ? val3 : uIElement.TransformToAncestor(uIElement2).TransformBounds(val3),
+            uIElement,
+            element is IMaybeHasPointThatSnapsToPixel && (element as IMaybeHasPointThatSnapsToPixel).HasPointThatSnapsToPixel(),
+            rootVisual == null ? null : uIElement2 == null ? uIElement.TransformToAncestor(rootVisual) : uIElement2.TransformToAncestor(rootVisual));
+    }
 
     [MirrorVerified("Release IL")]
     private static BitmapSource CreateBitmapFromVisual(double dpiX, double dpiY, Rect box, Visual visual, bool coerceBoxPoints, GeneralTransform transformToRoot)
