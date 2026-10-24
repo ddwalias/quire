@@ -85,4 +85,13 @@ public partial class plotType
         originpositioningField = false;
         showaxisexpressionsField = true;
     }
+
+    public static void GetOverrides(XmlAttributeOverrides overrides)
+    {
+        int order = 100;
+        OverridePropertySerializationToRawXmlNode(overrides, typeof(axes3Type), "xAxis", "xAxisRaw", "xAxis", order++);
+        OverridePropertySerializationToRawXmlNode(overrides, typeof(axes3Type), "yAxis", "yAxisRaw", "yAxis", order++);
+        OverridePropertySerializationToRawXmlNode(overrides, typeof(axes3Type), "zAxis", "zAxisRaw", "zAxis", order++);
+        OverridePropertySerializationToRawXmlNode(overrides, typeof(contourPlotType), "plotEquation", "plotEquationRaw", "plotEquation", order);
+    }
 }
