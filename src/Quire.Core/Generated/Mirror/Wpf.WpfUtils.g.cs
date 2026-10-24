@@ -40,23 +40,7 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public const string WaitToPrintoutReadyKey = "WaitToPrintoutReadyQuestionMessage";
     [global::Quire.Mirror.MirrorStub]
-    public static bool EastAsianLanguagesInstalled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static string ApplicationName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static string ProductName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static string ApplicationFullName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IList<string> DumpLogicalTreeLines(object root) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.GeneralTransform GroupTransformsAsFrozen(params global::System.Windows.Media.GeneralTransform[] children) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object TryFindFirstAncestorIncludingSelfLimited<T>(global::System.Windows.DependencyObject child, global::System.Collections.Generic.IList<global::System.Type> types, bool includeLogical = false) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ExecuteOnLayoutUpdated(global::System.Windows.UIElement element, global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static T GetNamedDescendant<T>(global::System.Windows.DependencyObject obj, string nameToFind, bool shouldAssert = true) where T : global::System.Windows.FrameworkElement => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<global::System.Windows.DependencyObject> GetVisualChildren(this global::System.Windows.DependencyObject dependencyObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

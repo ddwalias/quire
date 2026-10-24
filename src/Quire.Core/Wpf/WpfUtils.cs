@@ -18,36 +18,6 @@ namespace Quire.Wpf;
 
 public static partial class WpfUtils
 {
-    public static T TryFindAncestorIncludingSelf<T>(this DependencyObject child, bool includeLogical = false) where T : class
-    {
-        if (child == null)
-        {
-            return null;
-        }
-        if (child is T result)
-        {
-            return result;
-        }
-        return child.TryFindVisualAncestor<T>(includeLogical);
-    }
-
-    public static T1 TryFindAncestorIncludingSelfLimited<T1, T2>(this DependencyObject child, bool includeLogical = false) where T1 : class where T2 : class
-    {
-        if (child == null)
-        {
-            return null;
-        }
-        if (child is T1 result)
-        {
-            return result;
-        }
-        if (child is T2)
-        {
-            return null;
-        }
-        return child.TryFindVisualAncestorLimited<T1, T2>(includeLogical);
-    }
-
     public static bool? IsVisibleValid(DependencyObject depObj)
     {
         switch (depObj)
@@ -97,9 +67,6 @@ public static partial class WpfUtils
     }
 
     [MirrorVerified("PtcWpfWpfUtilsMechanicalDifferentialTests")]
-    public static void QueueBackgroundTask(MethodInvoker work) => ExecuteTask(work, true);
-
-    [MirrorVerified("PtcWpfWpfUtilsMechanicalDifferentialTests")]
     public static void Stall(int milliseconds) => Stall(milliseconds, (DispatcherPriority)9);
 
     public static void Stall(int milliseconds, DispatcherPriority priorityOfEventsToProcess)
@@ -123,73 +90,6 @@ public static partial class WpfUtils
 
     [MirrorVerified("Release IL")]
     public static T GetFocusedAncestorOfTypeElement<T>(UIElement subElement, bool includeLogical = false) where T : DependencyObject => TryFindVisualAncestor<T>(GetFocusedElementInSameScope(subElement) as DependencyObject, includeLogical);
-
-    [MirrorVerified("Release IL")]
-    public static T TryFindVisualAncestorUntilGivenAncestorIsReached<T>(this DependencyObject child, DependencyObject topParent, bool includeLogical = false) where T : class => TryFindAncestorIncludingSelfUntilGivenAncestorIsReached<T>(GetParentObject(child, includeLogical), topParent, includeLogical);
-
-    [MirrorVerified("Release IL")]
-    public static T1 TryFindVisualAncestorLimited<T1, T2>(this DependencyObject child, bool includeLogical = false) where T1 : class where T2 : class => TryFindAncestorIncludingSelfLimited<T1, T2>(GetParentObject(child, includeLogical), includeLogical);
-
-    [MirrorVerified("Release IL")]
-    public static T TryFindVisualAncestor<T>(this DependencyObject child, bool includeLogical = false) where T : class => TryFindAncestorIncludingSelf<T>(GetParentObject(child, includeLogical), includeLogical);
-
-    [MirrorVerified("Release IL")]
-    public static T FindLogicalAncestor<T>(DependencyObject child) where T : DependencyObject => FindLogicalAncestorIncludingSelf<T>(LogicalTreeHelper.GetParent(child));
-
-    [MirrorVerified("Release IL")]
-    public static T FindLogicalAncestorIncludingSelf<T>(DependencyObject currentObject) where T : DependencyObject
-    {
-        if (currentObject == null)
-        {
-            return default;
-        }
-        T val = currentObject as T;
-        if (val != null)
-        {
-            return val;
-        }
-        return FindLogicalAncestor<T>(currentObject);
-    }
-
-    [MirrorVerified("Release IL")]
-    public static T FindVisualDescendantIncludingSelf<T>(DependencyObject currentObject) where T : DependencyObject
-    {
-        if (currentObject == null)
-        {
-            return default;
-        }
-        T val = currentObject as T;
-        if (val != null)
-        {
-            return val;
-        }
-        return FindVisualDescendant<T>(currentObject);
-    }
-
-    [MirrorVerified("Release IL")]
-    public static T FindVisualDescendant<T>(DependencyObject parent) where T : DependencyObject
-    {
-        if (parent == null)
-        {
-            return default;
-        }
-        int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-        for (int i = 0; i < childrenCount; i++)
-        {
-            DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-            T val = child as T;
-            if (val != null)
-            {
-                return val;
-            }
-            T val2 = FindVisualDescendant<T>(child);
-            if (val2 != null)
-            {
-                return val2;
-            }
-        }
-        return default;
-    }
 
     [MirrorVerified("Release IL")]
     public static double InchesToDips(double inches) => inches * 96.0;
@@ -399,23 +299,6 @@ public static partial class WpfUtils
         }
     }
 
-    public static T TryFindAncestorIncludingSelfUntilGivenAncestorIsReached<T>(this DependencyObject child, DependencyObject topParent, bool includeLogical = false) where T : class
-    {
-        if (child == null)
-        {
-            return null;
-        }
-        if (child is T result)
-        {
-            return result;
-        }
-        if (topParent == child)
-        {
-            return null;
-        }
-        return child.TryFindVisualAncestorUntilGivenAncestorIsReached<T>(topParent, includeLogical);
-    }
-
     public static DependencyObject FindParentInGroup(DependencyObject element, global::System.Collections.Generic.IEnumerable<DependencyObject> group)
     {
         while (element != null)
@@ -445,40 +328,6 @@ public static partial class WpfUtils
             parentDependencyObject = GetParentDependencyObject(parentDependencyObject);
         }
         return parentDependencyObject as T;
-    }
-
-    public static DependencyObject GetParentObject(DependencyObject child, bool includeLogical = false)
-    {
-        if (child == null)
-        {
-            return null;
-        }
-        if (child is ContentElement contentElement)
-        {
-            DependencyObject parent = ContentOperations.GetParent(contentElement);
-            if (parent != null)
-            {
-                return parent;
-            }
-            if (!(contentElement is FrameworkContentElement frameworkContentElement))
-            {
-                return null;
-            }
-            return frameworkContentElement.Parent;
-        }
-        try
-        {
-            DependencyObject parent2 = VisualTreeHelper.GetParent(child);
-            if ((parent2 == null) & includeLogical)
-            {
-                parent2 = LogicalTreeHelper.GetParent(child);
-            }
-            return parent2;
-        }
-        catch
-        {
-            return null;
-        }
     }
 
     private static DependencyObject GetParentDependencyObject(DependencyObject d)
