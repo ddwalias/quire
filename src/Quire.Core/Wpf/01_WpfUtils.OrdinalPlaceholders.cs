@@ -30,7 +30,12 @@ public static partial class WpfUtils
         global::Quire.Serialization.TextRangeExtensionMethods.LoadWithCustomContext(destination, memoryStream, true);
     }
 
-    public static global::System.Uri CombineRelativeUris(global::System.Uri baseUri, global::System.Uri rel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static global::System.Uri CombineRelativeUris(global::System.Uri baseUri, global::System.Uri rel)
+    {
+        global::Quire.DebugTools.DevAssert(!baseUri.IsAbsoluteUri, null);
+        global::System.Uri uri = new global::System.Uri(new global::System.Uri(new global::System.Uri("http://invalid", global::System.UriKind.Absolute), baseUri), rel);
+        return new global::System.Uri(uri.PathAndQuery, global::System.UriKind.Relative);
+    }
 
     public static void ExecuteOnLoad(global::System.Windows.FrameworkElement element, global::System.Action action, bool condition = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
