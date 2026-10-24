@@ -5,6 +5,12 @@ EXPORTS
     ?s_tls_index@InterruptControl@utl@@0KA DATA
     ?GetNumberOfProcessors@utl@@YAHXZ
     ?toBSTR@utl@@YAPEA_WIPEBD_K@Z
+    ??0PerformanceTimer@utl@@QEAA@XZ
+    ?Start@PerformanceTimer@utl@@QEAAXXZ
+    ?Pause@PerformanceTimer@utl@@QEAAXXZ
+    ?Resume@PerformanceTimer@utl@@QEAAXXZ
+    ?Reset@PerformanceTimer@utl@@QEAAXXZ
+    ?GetCount@PerformanceTimer@utl@@QEBAJXZ
     ??4InterruptControl@utl@@QEAAAEAV01@AEBV01@@Z
     ??4InterruptControl@utl@@QEAAAEAV01@$$QEAV01@@Z
     ??0WordDatum@utl@@QEAA@PEBD@Z

@@ -50,6 +50,29 @@ private:
     double score;
 };
 
+// Layout inferred from the machine code: the names of the doubles and the two anchor words are not known.
+class PerformanceTimer {
+public:
+    PerformanceTimer();
+    void Start();
+    void Pause();
+    void Resume();
+    void Reset();
+    long GetCount() const;
+
+private:
+    long long anchor;
+    long long anchor_copy;
+    long long reserved;
+    double started;
+    double current;
+    double total;
+    double frequency;
+    int count;
+    CRITICAL_SECTION lock;
+    int depth;
+};
+
 class with_purecall_handler {
 public:
     with_purecall_handler &operator=(const with_purecall_handler &other);

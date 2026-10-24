@@ -56,6 +56,7 @@
     <ClCompile Include="utl_interrupt.cpp" />
     <ClCompile Include="utl_string.cpp" />
     <ClCompile Include="utl_system.cpp" />
+    <ClCompile Include="utl_timer.cpp" />
     <ClCompile Include="utl_word.cpp" />
   </ItemGroup>
   <ItemGroup>

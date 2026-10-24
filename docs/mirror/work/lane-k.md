@@ -1,6 +1,6 @@
 # Lane K: utl.dll → Quire.Native.Utl
 
-**Status: incomplete.** 17 of 100 functions pass strict byte validation, plus 1 data export (`s_tls_index`) present by name. `toBSTR` is byte-identical but fails strict on the ordinal-import check (see limitation 3), so it is not counted. Export parity: 81 missing, 0 extra.
+**Status: incomplete.** 21 of 100 functions pass strict byte validation, plus 1 data export (`s_tls_index`) present by name. Two `PerformanceTimer` functions (constructor, `Start`) are present but do not match in length (see below). `toBSTR` is byte-identical but fails strict on the ordinal-import check (limitation 3), so it is not counted. Export parity: 75 missing, 0 extra.
 
 - **Owner:** Lane K (native, `utl.dll`)
 - **Branch:** `mirror/k-utl-202610241230`
@@ -20,12 +20,14 @@
 | `InterruptControl::IsInterrupted`, `ThreadInitialize` (batch 2) | 2 | 2/2 OK, 0 unverified | `utl_interrupt.cpp`. Reads and writes `s_tls_index`, which the original exports, so the reference is verified. `Quire.Native.Mcaduser`'s only `utl.dll` import. |
 | `GetNumberOfProcessors` (batch 2) | 1 | 1/1 OK, 0 unverified | `utl_system.cpp`. `GetSystemInfo` on a local `SYSTEM_INFO`. |
 | `s_tls_index` (data, batch 2) | 0 | not byte-checked | Name present in export parity. The validator has no data-export check. Its TLS allocation is not yet ported. |
+| `PerformanceTimer`: `Pause`, `Resume`, `Reset`, `GetCount` (batch 4) | 4 | 4/4 OK, 0 unverified | `utl_timer.cpp`. Layout inferred from bodies; field names beyond `started`/`frequency`/`count`/`lock`/`depth` are guesses (`anchor`, `anchor_copy`, `current`, `total`). |
+| `PerformanceTimer` constructor, `Start` (batch 4) | 2 | **not matching**: lengths 85 vs 94 and 90 vs 98 | The original has a `mov [rsp+8],rcx` spill of `this` and `nop`s after the `CRITICAL_SECTION` calls. The source shape producing these is not identified. `/EHa` was built and tested and changes nothing (see below), so the project stays on `/EHsc`. |
 | `toBSTR` (batch 3, `utl_string.cpp`) | 1 | **not counted**: bytes identical, strict fails on the ordinal import `#4` (limitation 3) | Two-pass `MultiByteToWideChar` plus `SysAllocStringLen`. The reason text shows only the import-name mismatch, with no byte difference. |
 
-Totals: **17/17 functions OK, 0 unverified** under `--strict`. Command:
+Totals: **21 functions OK, 0 unverified** under `--strict`; 2 `PerformanceTimer` functions not matching. Command:
 `python tools/validation/native_bytes.py --original "<install>/utl.dll" --candidate .mirror-cache/obj/utl/<file>.obj --strict --symbol <name>...`.
 
-Export parity: `python tools/validation/native_bytes.py --original "<install>/utl.dll" --built-dll .mirror-cache/bin/Quire.Native.Utl.dll` gives **81 missing, 0 extra** (exit 1, expected until complete).
+Export parity: `python tools/validation/native_bytes.py --original "<install>/utl.dll" --built-dll .mirror-cache/bin/Quire.Native.Utl.dll` gives **75 missing, 0 extra** (exit 1, expected until complete).
 
 ## Build
 
@@ -33,6 +35,7 @@ MSBuild, Release|x64, toolset v145, MSVC 14.51.36231. `/O2 /Gy /GS /EHsc /MD /st
 
 ## Toolchain evidence
 
+- EH mode test: `/EHa` (ExceptionHandling `Async`) was built and every object revalidated. The 21 passing functions are unchanged, and the two `PerformanceTimer` mismatches are unchanged too. The project stays on `/EHsc`, as the brief specifies. The original does import `__C_specific_handler` and exports `se_trans_func`, so SEH translation is used somewhere in `utl.dll`.
 - Original's Rich header: C++ objects are product 265 at build 36246 (`cl` 19.51.36246, same as D19's `utl-mgd`).
 - This build's Rich header: product 261 at 36260 (`cl` 14.51.36231).
 - Batch 1 bytes match despite the difference. Recorded per the brief, as Lane H did.
@@ -52,8 +55,8 @@ MSBuild, Release|x64, toolset v145, MSVC 14.51.36231. `/O2 /Gy /GS /EHsc /MD /st
 
 ## Remaining work
 
-- 81 exports, of which 1 (`toBSTR`) is written but not counted.
-- **Next claim: the `PerformanceTimer` leaves** (`Start`, `Pause`, `Resume`, `Reset`, `GetCount`, the ctor). Their layout must be inferred from the bodies first: a struct with fields through `+0x68` and a `CRITICAL_SECTION` at `+0x40`. None of these is a consumer import.
+- 75 exports. Written but not counted: `toBSTR`, the `PerformanceTimer` constructor, and `Start`.
+- **Open:** the constructor and `Start`. Our build is 9 and 8 bytes shorter. The original has a `this` spill and `nop`s after `CRITICAL_SECTION` calls that our build lacks. `/EHa` (built and validated, all 21 functions unchanged) does not produce them, so the cause is a source shape not yet found. Not guessed.
 - Then the non-consumer groups: `TimeIt`, `WordData`, `WordChoice` (`BestGuess*`, `GetSuggestions`, `GetScore`), `with_purecall_handler` (ctor/dtor), `mcGetSetting`, timers, logging, paths, and the `std::` string/stream exports.
 - Static initialisers (`s_tls_init`, the TLS index allocation) are not yet implemented. The DLL will not set `s_tls_index` until they are.
 
@@ -67,4 +70,4 @@ Per the brief, these are reported and not worked around. Decisions needed from t
 
 ## Landing
 
-Not landed. Batch 1 is `c318361a`, batch 2 is `96321fac`, and batch 3 (`toBSTR`) is committed after it. Ask the maintainer to land the branch. Do not use `lane_merge.py` (D10: its Release IL gate does not cover native code).
+Not landed. Batch 1 is `c318361a`, batch 2 is `96321fac`, batch 3 (`toBSTR`) is committed after it, and batch 4 (`PerformanceTimer`) is the last. Ask the maintainer to land the branch. Do not use `lane_merge.py` (D10: its Release IL gate does not cover native code).
