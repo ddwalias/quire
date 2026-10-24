@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/Quire.Automation.Native/Quire.Automation.Native.csproj" />
+    <Project Path="src/Quire.AutomationPrivate/Quire.AutomationPrivate.csproj" />
     <Project Path="src/Quire.Automation/Quire.Automation.csproj" />
     <Project Path="src/Quire.Calculation.Core/Quire.Calculation.Core.csproj" />
     <Project Path="src/Quire.Calculation/Quire.Calculation.csproj" />

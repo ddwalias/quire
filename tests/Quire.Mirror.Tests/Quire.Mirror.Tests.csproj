@@ -17,6 +17,7 @@
     <ProjectReference Include="..\..\tools\Quire.Tools.MirrorGen\Quire.Tools.MirrorGen.csproj" />
     <ProjectReference Include="..\..\src\Quire\Quire.csproj" />
     <ProjectReference Include="..\..\src\Quire.Automation.Native\Quire.Automation.Native.csproj" />
+    <ProjectReference Include="..\..\src\Quire.AutomationPrivate\Quire.AutomationPrivate.csproj" />
     <ProjectReference Include="..\..\src\Quire.Automation\Quire.Automation.csproj" />
     <ProjectReference Include="..\..\src\Quire.Calculation.Core\Quire.Calculation.Core.csproj" />
     <ProjectReference Include="..\..\src\Quire.Calculation\Quire.Calculation.csproj" />
