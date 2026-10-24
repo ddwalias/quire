@@ -16,7 +16,9 @@ public partial class SparseMatrix<TItem>
     }
 
     [MirrorVerified("PtcMatricesSparseMatrix1MechanicalDifferentialTests")]
-    protected Dictionary<TableCoordinate, TItem> _itemMap;
+    protected Dictionary<TableCoordinate, TItem> _itemMap = new Dictionary<TableCoordinate, TItem>();
+
+    private EqualityComparer<TItem> _itemEqualityComparer = EqualityComparer<TItem>.Default;
 
     [MirrorVerified("PtcMatricesSparseMatrix1MechanicalDifferentialTests")]
     public int PopulatedCount => _itemMap.Count;
@@ -37,6 +39,8 @@ public partial class SparseMatrix<TItem>
             return size;
         }
     }
+
+    public SparseMatrix() { }
 
     public int Rows
     {

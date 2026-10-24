@@ -13,10 +13,6 @@ public partial class SparseMatrix<TItem> : global::Quire.Matrices.IMatrix<TItem>
 {
     [global::Quire.Mirror.MirrorStub]
     private TItem _emptyPosition;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.EqualityComparer<TItem> _itemEqualityComparer;
-    [global::Quire.Mirror.MirrorStub]
-    public SparseMatrix() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Matrices.SparseMatrix`1+SparseMatrixChangedEventHandler, Ptc.Core")]
     public delegate void SparseMatrixChangedEventHandler(object sender, global::Quire.Matrices.SparseMatrix<TItem>.SparseMatrixItemChangedEventArgs e);
