@@ -21,6 +21,4 @@ public partial class PreemptiveCommandBinding
     private readonly global::System.Windows.Input.CanExecuteRoutedEventHandler _canExecuteWrapper;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Windows.Input.ExecutedRoutedEventHandler _executedWrapper;
-    [global::Quire.Mirror.MirrorStub]
-    internal PreemptiveCommandBinding(global::System.Windows.UIElement element, global::System.Windows.Input.ICommand command, global::System.Windows.Input.ExecutedRoutedEventHandler previewExecuted, global::System.Windows.Input.CanExecuteRoutedEventHandler previewCanExecute, bool bindingMarksEventAsHandled) { }
 }
