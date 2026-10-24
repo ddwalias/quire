@@ -3,7 +3,7 @@
 namespace utl {
 
 PerformanceTimer::PerformanceTimer()
-    : anchor(0), anchor_copy(0), reserved(0), started(0), current(0), total(0), count(0), depth(0) {
+    : samples_begin(nullptr), samples_end(nullptr), samples_capacity(nullptr), started(0), current(0), total(0), count(0), depth(0) {
     LARGE_INTEGER ticks;
     QueryPerformanceFrequency(&ticks);
     frequency = (double)ticks.QuadPart;
@@ -42,13 +42,28 @@ void PerformanceTimer::Reset() {
     started = 0;
     current = 0;
     count = 0;
-    if (anchor != anchor_copy) {
-        anchor_copy = anchor;
+    if (samples_begin != samples_end) {
+        samples_end = samples_begin;
     }
 }
 
 long PerformanceTimer::GetCount() const {
     return count;
+}
+
+double PerformanceTimer::GetLast() const {
+    return current * 1000.0 / frequency;
+}
+
+double PerformanceTimer::GetElapsed() const {
+    return total * 1000.0 / frequency;
+}
+
+double PerformanceTimer::GetAverage() const {
+    if (count == 0) {
+        return 0;
+    }
+    return (1000.0 / frequency) * (total / count);
 }
 
 }  // namespace utl

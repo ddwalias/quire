@@ -16,6 +16,10 @@
       },
       "?ReadRegistryFlag@?A0x377d720e@utl@@YA_NPEB_W@Z": {
         "rva": "0x88e0"
+      },
+      "__real@408f400000000000": {
+        "rva": "0x194a8",
+        "size": 8
       }
     }
   }

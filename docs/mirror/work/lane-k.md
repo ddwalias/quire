@@ -1,6 +1,6 @@
 # Lane K: utl.dll → Quire.Native.Utl
 
-**Status: incomplete.** 21 of 100 functions pass strict byte validation, plus 1 data export (`s_tls_index`) present by name. Byte-identical but not strict-passing: `IsLoggingEnabled` (its two flags sit in zero-filled data, limitation 1) and `toBSTR` (ordinal import, limitation 3). Not matching: the `PerformanceTimer` constructor and `Start`. Export parity: 74 missing, 0 extra.
+**Status: incomplete.** 24 of 100 functions pass strict byte validation, plus 1 data export (`s_tls_index`) present by name. Byte-identical but not strict-passing: `IsLoggingEnabled` (its two flags sit in zero-filled data, limitation 1) and `toBSTR` (ordinal import, limitation 3). Not matching: the `PerformanceTimer` constructor and `Start`. Export parity: 70 missing, 0 extra.
 
 - **Owner:** Lane K (native, `utl.dll`)
 - **Branch:** `mirror/k-utl-202610241230`
@@ -22,6 +22,8 @@
 | `s_tls_index` (data, batch 2) | 0 | not byte-checked | Name present in export parity. The validator has no data-export check. Its TLS allocation is not yet ported. |
 | `PerformanceTimer`: `Pause`, `Resume`, `Reset`, `GetCount` (batch 4) | 4 | 4/4 OK, 0 unverified | `utl_timer.cpp`. Layout inferred from bodies; field names beyond `started`/`frequency`/`count`/`lock`/`depth` are guesses (`anchor`, `anchor_copy`, `current`, `total`). |
 | `PerformanceTimer` constructor, `Start` (batch 4) | 2 | **not matching**: lengths 85 vs 94 and 90 vs 98 | The original has a `mov [rsp+8],rcx` spill of `this` and `nop`s after the `CRITICAL_SECTION` calls. The source shape producing these is not identified. `/EHa` was built and tested and changes nothing (see below), so the project stays on `/EHsc`. |
+| `PerformanceTimer::GetLast`, `GetElapsed`, `GetAverage` (batch 6) | 3 | 3/3 OK, 0 unverified; the `1000.0` constant is verified through the manifest | `utl_timer.cpp`. Reads `current`, `total`, `count` and `frequency`. |
+| `BoostThreadPriority` (batch 6, `utl_system.cpp`) | 1 | **not matching**: 65 bytes, original 66 | The original keeps the second call as a branch with `mov al,1` on the success path. Our forms fold it into `sete`. Only the original's shape remains to find. The branch logic as written returns true only when both calls return zero. |
 | `IsLoggingEnabled` (batch 5, `utl_logging.cpp`) | 1 | **not counted**: bytes match, `--strict` fails on the two zero-filled flags (limitation 1) | Reads `HKCU`, then `HKLM` (`ReadRegistryFlag`, an anonymous-namespace helper kept out of line). The helper and its three strings are recorded in `docs/mirror/native/internal-targets.json` and verified through it. |
 | `toBSTR` (batch 3, `utl_string.cpp`) | 1 | **not counted**: bytes identical, strict fails on the ordinal import `#4` (limitation 3) | Two-pass `MultiByteToWideChar` plus `SysAllocStringLen`. The reason text shows only the import-name mismatch, with no byte difference. |
 
@@ -63,13 +65,13 @@ MSBuild, Release|x64, toolset v145, MSVC 14.51.36231. `/O2 /Gy /GS /EHsc /MD /st
 
 ## Harness limitations (report to the maintainer; not worked around)
 
-1. **Zero-filled data cannot be recorded.** `native_targets.py` rejects a data entry outside the original's raw section bytes (`PeImage.in_section` uses `min(vsize, raw_size)`). The `.data` section here has raw size `0x800` but virtual size `0xA20`, so the statics in its tail are not recordable. Affected: `IsLoggingEnabled` (`0x22862`, `0x22863`), `IsTimingEnabled` and `IsTimingInclusive` (`0x229D1`, `0x229D2`), and zero-filled references in `SafeTerminateProcess` and `SafeTerminateOnExit`. Request: accept zero-filled bytes as zeros, or record them from the section's virtual size.
+1. **Zero-filled data cannot be recorded.** `native_targets.py` rejects a data entry outside the original's raw section bytes (`PeImage.in_section` uses `min(vsize, raw_size)`). The `.data` section here has raw size `0x800` but virtual size `0xA20`, so the statics in its tail are not recordable. Affected: `IsLoggingEnabled` (`0x22862`, `0x22863`), `IsTimingEnabled` and `IsTimingInclusive` (`0x229D1`, `0x229D2`), and zero-filled references in `SafeTerminateProcess` and `SafeTerminateOnExit`. Request: accept zero-filled bytes as zeros, or record them from the section's virtual size. The latest `main` (`70c6f8e5`) reads uninitialised candidate `.bss` as zeros, but it still rejects original zero-filled data, so this remains open.
 2. **Data exports are not byte-checked.** `s_tls_index`, `s_tls_init` and the `??_7TimeIt` vtable are exports of the original, but the validator checks only functions. Their names pass export parity; their contents are not verified.
 3. **Ordinal imports cannot match.** `toBSTR` calls `SysAllocStringLen`, which the original imports from `OLEAUT32.dll` **by ordinal 4** (IAT slot `0x180016430`, shown as `#4`). The validator matches only `__imp_<name>` symbols, so a name-based candidate cannot match `#4`. Request: resolve ordinal imports through the imported system DLL's export table (`C:/Windows/System32/OLEAUT32.dll`, ordinal 4 = `SysAllocStringLen`), or allow a candidate to name the ordinal.
 
 ## Internal targets (manifest)
 
-Recorded in `docs/mirror/native/internal-targets.json` with `native_targets.py`, using the reviewed procedure: each entry is a name the candidate defines, recorded at an RVA that a function which already matches references.
+Recorded in `docs/mirror/native/internal-targets.json` with `native_targets.py`, using the reviewed procedure: each entry is a name the candidate defines, recorded at an RVA that a function which already matches references. Batch 6 adds `__real@408f400000000000` (`1000.0`, 8 bytes at `0x194a8`).
 
 - `?ReadRegistryFlag@?A0x…@utl@@YA_NPEB_W@Z`: RVA `0x88e0`. The helper's bytes match the original.
 - `??_C@_1BM@…` (`EngineLogging`): RVA `0x190d0`, 28 bytes.
@@ -78,10 +80,14 @@ Recorded in `docs/mirror/native/internal-targets.json` with `native_targets.py`,
 
 **D19 question for the maintainer:** these string constants are the registry key and value names the original reads. Matching their bytes needed their exact content, which I read from the original into `.mirror-cache` and typed into source. Please confirm that registry names count as interface constants, not original bytes copied into a build output. If they do not, `IsLoggingEnabled` and the other registry-reading exports cannot be matched.
 
+## Corrected field naming (batch 6)
+
+`GetStdDev` reads `[rcx]` and `[rcx+8]` as the begin and end of a vector of doubles, and `Reset` clears it (`end = begin`). So `PerformanceTimer`'s first three words are a sample vector (begin, end, capacity), not the placeholder names used before. `GetStdDev` (121 bytes) also tail-calls an internal CRT routine at `0x12E73` for a negative variance. It is not ported yet.
+
 ## Open shape question (not resolved)
 
-Several original functions have a `nop` after a call: the `CRITICAL_SECTION` calls in the `PerformanceTimer` constructor and `Start`, and the `std::wstring` builder call in `getInstanceDirW`. Our builds have no such `nop`s, and `/EHa` does not add them. Until the source shape is identified, these functions will not match.
+Several original functions have a `nop` after a call: the `CRITICAL_SECTION` calls in the `PerformanceTimer` constructor and `Start`, and the `std::wstring` builder call in `getInstanceDirW`. Our builds have no such `nop`s, and `/EHa` does not add them. `BoostThreadPriority` has a different branch shape with no `nop`. Until the source shapes are identified, these functions will not match.
 
 ## Landing
 
-Not landed. Batch 1 is `c318361a`, batch 2 is `96321fac`, batch 3 (`toBSTR`) is `1d6b254b`, batch 4 (`PerformanceTimer`) is `db9dcb57`, and batch 5 (`IsLoggingEnabled`, manifest) is committed after them. Ask the maintainer to land the branch. Do not use `lane_merge.py` (D10: its Release IL gate does not cover native code).
+Not landed. Batch 1 is `c318361a`, batch 2 is `96321fac`, batch 3 (`toBSTR`) is `1d6b254b`, batch 4 (`PerformanceTimer`) is `db9dcb57`, and batch 5 (`IsLoggingEnabled`, manifest) is `5a1d652d`, and batch 6 (timer getters, `BoostThreadPriority`) is committed after it. Ask the maintainer to land the branch. Do not use `lane_merge.py` (D10: its Release IL gate does not cover native code).

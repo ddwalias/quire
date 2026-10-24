@@ -10,6 +10,7 @@
 namespace utl {
 
 int GetNumberOfProcessors();
+bool BoostThreadPriority();
 wchar_t *toBSTR(unsigned int codePage, const char *source, size_t length);
 
 class InterruptControl {
@@ -50,7 +51,8 @@ private:
     double score;
 };
 
-// Layout inferred from the machine code: the names of the doubles and the two anchor words are not known.
+// Layout inferred from the machine code. The first three words are the begin, end and capacity of a vector of samples
+// (GetStdDev reads them as such); the doubles' roles are inferred from the getters.
 class PerformanceTimer {
 public:
     PerformanceTimer();
@@ -59,11 +61,14 @@ public:
     void Resume();
     void Reset();
     long GetCount() const;
+    double GetLast() const;
+    double GetElapsed() const;
+    double GetAverage() const;
 
 private:
-    long long anchor;
-    long long anchor_copy;
-    long long reserved;
+    double *samples_begin;
+    double *samples_end;
+    double *samples_capacity;
     double started;
     double current;
     double total;

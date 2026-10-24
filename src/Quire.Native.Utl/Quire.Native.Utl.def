@@ -12,6 +12,10 @@ EXPORTS
     ?Resume@PerformanceTimer@utl@@QEAAXXZ
     ?Reset@PerformanceTimer@utl@@QEAAXXZ
     ?GetCount@PerformanceTimer@utl@@QEBAJXZ
+    ?GetLast@PerformanceTimer@utl@@QEBANXZ
+    ?GetElapsed@PerformanceTimer@utl@@QEBANXZ
+    ?GetAverage@PerformanceTimer@utl@@QEBANXZ
+    ?BoostThreadPriority@utl@@YA_NXZ
     ??4InterruptControl@utl@@QEAAAEAV01@AEBV01@@Z
     ??4InterruptControl@utl@@QEAAAEAV01@$$QEAV01@@Z
     ??0WordDatum@utl@@QEAA@PEBD@Z
