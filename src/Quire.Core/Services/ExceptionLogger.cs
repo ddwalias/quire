@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
@@ -89,7 +90,41 @@ public partial class ExceptionLogger
         return;
     }
 
-    public string LogExceptions(IEnumerable<Exception> exceptions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public string LogExceptions(IEnumerable<Exception> exceptions)
+    {
+        string message = null;
+        bool condition = true;
+        try
+        {
+            if (exceptions.Any((Exception e) => e == null))
+            {
+                message = "Exception is passed as null";
+                condition = false;
+            }
+            TextWriter textWriter = CreateApplicationLog("Exception");
+            try
+            {
+                GetExceptionData(exceptions).Each((string data) =>
+                {
+                    WriteToLog(data, textWriter);
+                });
+            }
+            finally
+            {
+                if (textWriter != null)
+                {
+                    ((IDisposable)textWriter).Dispose();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            message = ex.Message;
+            condition = false;
+        }
+        DebugTools.DevAssert(condition, message);
+        return _applicationLogFilePath;
+    }
 
     [MirrorVerified("PtcServicesExceptionLoggerMechanicalDifferentialTests")]
     public ExceptionLogger() { }
