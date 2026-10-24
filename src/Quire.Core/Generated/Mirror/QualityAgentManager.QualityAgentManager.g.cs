@@ -32,7 +32,5 @@ public partial class QualityAgentManager : global::Quire.QualityAgentManager.IQu
     [global::Quire.Mirror.MirrorStub]
     public QualityAgentManager(string mathcadPrimeInstallationPath) { }
     [global::Quire.Mirror.MirrorStub]
-    private bool SendReportHelper() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private string GetCommandLine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

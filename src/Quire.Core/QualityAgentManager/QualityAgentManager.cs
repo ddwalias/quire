@@ -64,6 +64,39 @@ public partial class QualityAgentManager
     }
 
     [MirrorVerified("Release IL")]
+    private bool SendReportHelper()
+    {
+        try
+        {
+            string prodDcuPath = GetProdDcuPath(_mathcadPrimeInstallPath);
+            if (string.IsNullOrEmpty(prodDcuPath))
+            {
+                return false;
+            }
+            string commandLine = GetCommandLine();
+            if (string.IsNullOrEmpty(commandLine))
+            {
+                return false;
+            }
+            return new global::System.Diagnostics.Process
+            {
+                StartInfo =
+                {
+                    FileName = prodDcuPath,
+                    Arguments = commandLine,
+                    WindowStyle = global::System.Diagnostics.ProcessWindowStyle.Hidden,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            }.Start();
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     private void ComputeCheckSum()
     {
         if (!global::System.IO.Directory.Exists(_mathcadPrimeInstallPath))
