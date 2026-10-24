@@ -51,7 +51,7 @@ public static partial class User32
     [System.Runtime.InteropServices.DllImport("user32.dll")]
     public static extern bool DeleteMenu(nint hMenu, uint uPosition, uint uFlags);
 
-    partial struct HWND
+    public partial struct HWND
     {
         [MirrorVerified("PtcWin32User32MechanicalDifferentialTests")]
         private nint _value;
@@ -60,7 +60,7 @@ public static partial class User32
         public static implicit operator nint(User32.HWND hwnd) => hwnd._value;
     }
 
-    partial struct HWND
+    public partial struct HWND
     {
         [MirrorVerified("Release IL")]
         public static bool operator ==(User32.HWND lhs, User32.HWND rhs) => lhs._value == rhs._value;
@@ -70,5 +70,48 @@ public static partial class User32
 
         [MirrorVerified("Release IL")]
         public override int GetHashCode() => (int)_value;
+
+        public override bool Equals(object oCompare)
+        {
+            HWND hWND = Cast((nint)(HWND)oCompare);
+            return _value == hWND._value;
+        }
+    }
+
+    public partial struct INPUT
+    {
+        public int type;
+        public INPUTUNION union;
+    }
+
+    public partial struct INPUTUNION
+    {
+        public MOUSEINPUT mouseInput;
+        public KEYBDINPUT keyboardInput;
+    }
+
+    public partial struct MOUSEINPUT
+    {
+        public int dx;
+        public int dy;
+        public int mouseData;
+        public int dwFlags;
+        public int time;
+        public nint dwExtraInfo;
+    }
+
+    public partial struct POINT
+    {
+        public int x;
+        public int y;
+    }
+
+    public partial struct KEYBDINPUT
+    {
+        public short wVk;
+        public short wScan;
+        public int dwFlags;
+        public int time;
+        public nint dwExtraInfo;
     }
 }

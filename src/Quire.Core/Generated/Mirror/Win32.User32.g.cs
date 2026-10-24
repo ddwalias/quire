@@ -79,66 +79,30 @@ public static partial class User32
     [global::Quire.Mirror.MirrorOf("Ptc.Win32.User32+INPUT, Ptc.Core")]
     public partial struct INPUT
     {
-        [global::Quire.Mirror.MirrorStub]
-        public int type;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Win32.User32.INPUTUNION union;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Win32.User32+INPUTUNION, Ptc.Core")]
     public partial struct INPUTUNION
     {
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Win32.User32.MOUSEINPUT mouseInput;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Win32.User32.KEYBDINPUT keyboardInput;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Win32.User32+MOUSEINPUT, Ptc.Core")]
     public partial struct MOUSEINPUT
     {
-        [global::Quire.Mirror.MirrorStub]
-        public int dx;
-        [global::Quire.Mirror.MirrorStub]
-        public int dy;
-        [global::Quire.Mirror.MirrorStub]
-        public int mouseData;
-        [global::Quire.Mirror.MirrorStub]
-        public int dwFlags;
-        [global::Quire.Mirror.MirrorStub]
-        public int time;
-        [global::Quire.Mirror.MirrorStub]
-        public nint dwExtraInfo;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Win32.User32+POINT, Ptc.Core")]
     public partial struct POINT
     {
-        [global::Quire.Mirror.MirrorStub]
-        public int x;
-        [global::Quire.Mirror.MirrorStub]
-        public int y;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Win32.User32+KEYBDINPUT, Ptc.Core")]
     public partial struct KEYBDINPUT
     {
-        [global::Quire.Mirror.MirrorStub]
-        public short wVk;
-        [global::Quire.Mirror.MirrorStub]
-        public short wScan;
-        [global::Quire.Mirror.MirrorStub]
-        public int dwFlags;
-        [global::Quire.Mirror.MirrorStub]
-        public int time;
-        [global::Quire.Mirror.MirrorStub]
-        public nint dwExtraInfo;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Win32.User32+HWND, Ptc.Core")]
     public partial struct HWND
     {
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Equals(object oCompare) => base.Equals(oCompare);
     }
 }
