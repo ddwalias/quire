@@ -294,6 +294,20 @@ public static partial class WpfUtils
     public static object GetDefaultValueFromAttribute(object component, string propertyName) => ((DefaultValueAttribute)TypeDescriptor.GetProperties(component)[propertyName].Attributes[typeof(DefaultValueAttribute)]).Value;
 
     [MirrorVerified("Release IL")]
+    public static bool EastAsianLanguagesInstalled
+    {
+        get
+        {
+            if (!_eastAsianLanguagesInstalled.HasValue)
+            {
+                string[] eastAsianLanguages = new string[3] { "zh", "ja", "ko" };
+                _eastAsianLanguagesInstalled = InputLanguageManager.Current.AvailableInputLanguages.OfType<global::System.Globalization.CultureInfo>().Any((global::System.Globalization.CultureInfo ci) => eastAsianLanguages.Contains(ci.TwoLetterISOLanguageName));
+            }
+            return _eastAsianLanguagesInstalled.Value;
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     private static MessageBoxResult DisplayQuestionMessage(string message) => AppServiceRegistry.GetService<IMessageBoxManager>().ShowCriticalQuestionMessage.Invoke(global::System.Windows.Application.Current.MainWindow, message, ApplicationFullName, (MessageBoxButton)4);
 
     public static global::System.Collections.Generic.IList<global::System.Windows.Documents.Adorner> GetAdornersOfDescendants(UIElement element)
@@ -331,28 +345,6 @@ public static partial class WpfUtils
             return;
         }
         adornersOfElement.Each(adorners.Add);
-    }
-
-    public static bool ShouldSuspendInputMethod()
-    {
-        if (SystemInfo.OsBeforeXp())
-        {
-            return EastAsianLanguagesInstalled;
-        }
-        return false;
-    }
-
-    public static void DoWork(Action work)
-    {
-        Mouse.OverrideCursor = global::System.Windows.Input.Cursors.Wait;
-        try
-        {
-            work();
-        }
-        finally
-        {
-            Mouse.OverrideCursor = null;
-        }
     }
 
     public static bool IsAncestorOf(DependencyObject possibleAncestor, DependencyObject element)

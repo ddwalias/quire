@@ -208,7 +208,6 @@ public static partial class WpfUtils
         }
     }
 
-    public static bool EastAsianLanguagesInstalled => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public static string ApplicationName => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public static string ProductName => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public static string ApplicationFullName => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -281,5 +280,27 @@ public static partial class WpfUtils
             }
         }
         return flag ?? true;
+    }
+
+    public static bool ShouldSuspendInputMethod()
+    {
+        if (SystemInfo.OsBeforeXp())
+        {
+            return EastAsianLanguagesInstalled;
+        }
+        return false;
+    }
+
+    public static void DoWork(Action work)
+    {
+        global::System.Windows.Input.Mouse.OverrideCursor = global::System.Windows.Input.Cursors.Wait;
+        try
+        {
+            work();
+        }
+        finally
+        {
+            global::System.Windows.Input.Mouse.OverrideCursor = null;
+        }
     }
 }
