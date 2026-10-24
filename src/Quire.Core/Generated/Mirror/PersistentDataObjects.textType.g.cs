@@ -19,8 +19,4 @@ public partial class textType : global::Quire.PersistentData.RegionCollectionPre
     private global::Quire.Serialization.IDeS11NProvider _deS11NProvider;
     [global::Quire.Mirror.MirrorStub]
     private bool _saveInline;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Documents.FlowDocument LoadFlowDocumentFromInnerXml() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RemovePageGapContainers(global::System.Xml.XmlNode xmlNode, global::System.Xml.XmlNamespaceManager nsManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

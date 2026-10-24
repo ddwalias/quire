@@ -5,6 +5,7 @@ using System.Xml;
 using System.Xml;
 using Quire.Core;
 using Quire.Mirror;
+using Quire.Serialization;
 using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
@@ -88,6 +89,34 @@ public partial class textType
             xmlDocument.RemoveChild(documentElement);
         }
         return documentElement;
+    }
+
+    private FlowDocument LoadFlowDocumentFromInnerXml()
+    {
+        XmlNode any = Any;
+        XmlNamespaceManager nsManager = global::Quire.Serialization.TextRegionSerializationHelper.CreateNamespaceManagerForTextRegions(any);
+        RemovePageGapContainers(any, nsManager);
+        global::Quire.Serialization.TextRegionSerializationHelper.CopyImagesFromPackageIntoFlowDocument(any, _deS11NProvider, nsManager);
+        object obj;
+        using (XmlNodeReader reader = new XmlNodeReader(any))
+        {
+            obj = global::System.Windows.Markup.XamlReader.Load(reader);
+        }
+        return obj as FlowDocument;
+    }
+
+    private void RemovePageGapContainers(XmlNode xmlNode, XmlNamespaceManager nsManager)
+    {
+        if (_deS11NProvider.Helper.FormatVersion == null || _deS11NProvider.Helper.FormatVersion <= _lastVerToContainPageGaps)
+        {
+            string xPath = string.Format("//{0}:{1}", TextRegionSerializationHelper.PTC_CONTROLS_TEXT_NAMESPACE[0], TextRegionSerializationHelper.PAGE_GAP_CONTAINER_NODE_NAME);
+            foreach (XmlNode item in global::Quire.Serialization.TextRegionSerializationHelper.SelectNodes(xmlNode, xPath, nsManager))
+            {
+                XmlNode parentNode = item.ParentNode;
+                DebugTools.DevAssert(parentNode != null, null);
+                parentNode.RemoveChild(item);
+            }
+        }
     }
 
     [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
