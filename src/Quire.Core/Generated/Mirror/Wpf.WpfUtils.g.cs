@@ -65,6 +65,4 @@ public static partial class WpfUtils
     public static global::System.Collections.Generic.IEnumerable<T> GetVisualDescendantsBreadthFirstOfType<T>(this global::System.Windows.DependencyObject dependencyObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void CreateVisualTreeForPrinting(global::System.Windows.Controls.Primitives.Popup popup, long maxUpdateLayoutTimeMsec) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsWaitingForPrintoutReady(global::System.Diagnostics.Stopwatch stopwatch, ref long maxUpdateLayoutTimeMsec, ref bool isTreeLoaded, ref int attemptNumber, ref int nLoadingAttempts, ref int totalLoadingAttempts, string message) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
