@@ -31,6 +31,19 @@ Build: MSBuild `Quire.Native.Mshex.vcxproj`, Release|x64, toolset v145, `/O2 /Gy
 - The lane branch is rebased onto `main` at `b148bc06`. The manifest route is in place, but this batch needs no internal targets, so it is not used.
 - **Multi-object runs reject a weak default.** `_Avx2WmemEnabledWeakValue` is defined in `hex_node.obj` as `0x0a8664` and in `hex_interpreter.obj` as `0x0c8664`, because of the header set each object includes. `definitions_in_objects` raises on any name defined differently, even when no function references it. Each object is validated in its own run here. The maintainer should decide whether such weak data should be compared at all.
 
+## Harness work for operator<< (approved decision 1)
+
+- **SECREL (`4b9cbb03`).** `IMAGE_REL_AMD64_SECREL` is 4 bytes. The original resolves it as `.tls` base + field. The candidate's addend is read like `ADDR32NB`. Tests: 7 new cases.
+- **Reviewed linker and CRT targets (`2c7cd312`).** `_tls_index`, `_Init_thread_epoch`, `_Init_thread_header` and `_Init_thread_footer` are not defined by the candidates. The toolset defines them in `libcmt.lib`, and the original has them as internal code and data, not as DLL imports. A manifest entry can now carry `"reviewed": true`. `native_targets.py --reviewed NAME` records one, and `--size NAME=BYTES` gives a data target's size. A reviewed entry verifies when its sites resolve to its RVA. Its bytes are not compared, because no candidate defines them. A stronger check would compare them against the toolset library's members; that is a possible follow-up.
+- 70 harness tests pass.
+
+### operator<< analysis (not yet validated)
+
+- `0xa2d0` (`operator<<`) calls `0x99e0`, which calls `0xa7c0`.
+- `0xa7c0` is a thread-local initialization guard: it reads the DLL's TLS index (`[0x1fdd4]`), the thread's TLS block through `gs:[58h]`, and a 4-byte per-thread value at offset 4. It compares that with `_Init_thread_epoch` (`[0x1fe50]`), calls `_Init_thread_header` (`0xc9a0`) and `_Init_thread_footer` (`0xc930`), and calls an import-like slot at `[0xf140]`.
+- `0x99e0` is a function-local static: it calls `0xa7c0`, and if the result is zero it calls `[0xf030]`. It then fills a static block at `0x1fe00`/`0x1fe08` with vtable pointers, and calls `0xd786` and `0xcd90` (locale-facet lookup and static construction).
+- To validate `operator<<` the lane must write sources for these, which needs the exact shape of the thread-local object and its constructor. I have not identified that shape. Next step: compile a minimal `thread_local` object with a non-trivial constructor, and compare its guard with `0xa7c0`.
+
 ## Imports (D10)
 
 `mshex.dll` imports only `KERNEL32.dll`, `MSVCP140.dll`, `VCRUNTIME140.dll`, `VCRUNTIME140_1.dll` and the API CRT sets. None is a Mathcad-owned DLL, so no `.def` or `lib.exe` import library is needed for this project.
