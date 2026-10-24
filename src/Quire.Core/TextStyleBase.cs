@@ -11,6 +11,15 @@ namespace Quire;
 
 public partial class TextStyleBase
 {
+    [MirrorVerified("Release IL")]
+    protected global::System.Collections.Hashtable _htPropertyToIndex = new global::System.Collections.Hashtable();
+
+    [MirrorVerified("Release IL")]
+    protected global::System.Collections.Hashtable _htDeletedPropertyToIndex = new global::System.Collections.Hashtable();
+
+    [MirrorVerified("Release IL")]
+    protected global::System.Collections.Hashtable _htOldPropertyToIndex = new global::System.Collections.Hashtable();
+
     [MirrorVerified("PtcTextStyleBaseMechanicalDifferentialTests")]
     public double Weight { get; }
 
@@ -356,6 +365,13 @@ public partial class TextStyleBase
 
     [MirrorVerified("Release IL")]
     protected TextStyleBase(string name) : this(new TextStyleData(name, TextStyleUniqueKeyGenerator(name), new Style(), null), true) { }
+
+    [MirrorVerified("Release IL")]
+    protected TextStyleBase(Style style)
+    {
+        Style = CloneStyleAndSetters(style);
+        UpdateBasedOnMembersValue(Style.BasedOn);
+    }
 
     [MirrorVerified("Release IL")]
     protected TextStyleBase(string name, string key) : this(new TextStyleData(name, key, new Style(), null), true) { }

@@ -18,15 +18,7 @@ public abstract partial class TextStyleBase : global::Quire.ITextStyle, global::
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.FontStretch _fontStretch;
     [global::Quire.Mirror.MirrorStub]
-    protected global::System.Collections.Hashtable _htPropertyToIndex;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Collections.Hashtable _htDeletedPropertyToIndex;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Collections.Hashtable _htOldPropertyToIndex;
-    [global::Quire.Mirror.MirrorStub]
     protected TextStyleBase(global::Quire.TextStyleData textStyleData, bool basedOnValues = true) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected TextStyleBase(global::System.Windows.Style style) { }
     [global::Quire.Mirror.MirrorStub]
     protected TextStyleBase(global::Quire.Core.TextFormat textFormat, bool reset = false) { }
     [global::Quire.Mirror.MirrorStub]
