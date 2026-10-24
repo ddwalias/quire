@@ -15,6 +15,4 @@ public static partial class HyperlinkExtensions
     public static void SetTextFormatForLinkRemoval(this global::System.Windows.Documents.Hyperlink link, out global::System.Collections.Generic.List<global::System.Windows.Documents.Inline> inlines) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool ApplyNeighborFormattingValueIfUnset(global::System.Collections.Generic.List<global::System.Windows.Documents.Inline> inlines, global::System.Windows.Documents.TextPointer currentPosition, global::System.Windows.Documents.LogicalDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ClearLocalValuesRecursively(this global::System.Windows.Documents.Inline inline, params global::System.Windows.DependencyProperty[] properties) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

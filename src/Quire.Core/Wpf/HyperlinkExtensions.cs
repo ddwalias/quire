@@ -66,6 +66,18 @@ public static partial class HyperlinkExtensions
         }
     }
 
+    public static void ClearLocalValuesRecursively(this Inline inline, params DependencyProperty[] properties)
+    {
+        ((IEnumerable<DependencyProperty>)properties).Each((Action<DependencyProperty>)((DependencyObject)inline).ClearValue);
+        if (inline is Span span)
+        {
+            span.Inlines.ToList().Each((Inline inlineChild) =>
+            {
+                inlineChild.ClearLocalValuesRecursively(properties);
+            });
+        }
+    }
+
     public static Span RecursiveRemoveEmptyInlinesIncludingSelf(this Span parentElement)
     {
         foreach (Inline item in parentElement.Inlines.ToList())
