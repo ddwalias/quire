@@ -54,8 +54,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static object TryFindFirstAncestorIncludingSelfLimited<T>(global::System.Windows.DependencyObject child, global::System.Collections.Generic.IList<global::System.Type> types, bool includeLogical = false) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyObject TryFindVisualAncestorByString(string ObjectName, global::System.Windows.DependencyObject child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void ExecuteOnLayoutUpdated(global::System.Windows.UIElement element, global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static T GetNamedDescendant<T>(global::System.Windows.DependencyObject obj, string nameToFind, bool shouldAssert = true) where T : global::System.Windows.FrameworkElement => throw global::Quire.Mirror.MirrorStub.NotImplemented();

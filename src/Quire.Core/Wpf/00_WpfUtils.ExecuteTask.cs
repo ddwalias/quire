@@ -79,6 +79,20 @@ public static partial class WpfUtils
         return flag ?? true;
     }
 
+    public static System.Windows.DependencyObject TryFindVisualAncestorByString(string ObjectName, System.Windows.DependencyObject child)
+    {
+        System.Windows.DependencyObject current = child;
+        while (current != null)
+        {
+            current = System.Windows.Media.VisualTreeHelper.GetParent(current);
+            if (current?.GetType().Name == ObjectName)
+            {
+                return current;
+            }
+        }
+        return null;
+    }
+
     // Keep this file before WpfUtils.cs so ExecuteTask retains Mathcad's callback ordinal.
     public static void ExecuteTask(MethodInvoker work, bool async)
     {
@@ -94,4 +108,5 @@ public static partial class WpfUtils
             Dispatcher.PushFrame(nestedFrame);
         }
     }
+
 }
