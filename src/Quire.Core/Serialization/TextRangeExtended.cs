@@ -8,4 +8,16 @@ public partial class TextRangeExtended
 {
     [MirrorVerified("PtcSerializationTextRangeExtendedMechanicalDifferentialTests")]
     public TextRangeExtended(TextPointer tpStart, TextPointer tpEnd) : base(tpStart, tpEnd) { }
+
+    public void Save(System.IO.Stream st, string format, bool preserveTextElements, bool isConversion = false)
+    {
+        if (format != System.Windows.DataFormats.XamlPackage)
+        {
+            base.Save(st, format, preserveTextElements);
+        }
+        else
+        {
+            SaveInternal(st, preserveTextElements, isConversion);
+        }
+    }
 }
