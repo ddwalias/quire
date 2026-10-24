@@ -23,8 +23,6 @@ public partial class TextFormat : global::System.Windows.DependencyObject, globa
     public static readonly global::System.Windows.DependencyProperty TextFormatProperty;
     [global::Quire.Mirror.MirrorStub]
     private void Initialize(global::System.Windows.Documents.TextRange textRange, bool onlyFirstRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UpdateTextFormat(global::System.Windows.Style style) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Core.TextFormat+PropertyNames, Ptc.Core")]
     public static partial class PropertyNames
