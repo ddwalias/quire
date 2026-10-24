@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Packaging;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Documents;
 
@@ -25,9 +26,22 @@ public static partial class TextRangeExtensionMethods
         textRange.Select(textRange.End, textRange.End);
     }
 
-    public static void LoadElementFromFile(this global::System.Windows.Documents.TextRange textRange, object content) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void LoadElementFromFile(this global::System.Windows.Documents.TextRange textRange, object content)
+    {
+        Block firstInsertedBlock = null;
+        Block lastInsertedBlock = null;
+        if (content is Block block)
+        {
+            InsertBlock(textRange, block, ref firstInsertedBlock, ref lastInsertedBlock);
+        }
+        if (firstInsertedBlock != null && lastInsertedBlock != null)
+        {
+            textRange.Select(firstInsertedBlock.ElementStart, lastInsertedBlock.ElementEnd);
+        }
+    }
 
     public static void LoadElementToExport(this global::System.Windows.Documents.TextRange textRange, object content) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private static void InsertBlock(global::System.Windows.Documents.TextRange textRange, global::System.Windows.Documents.Block block, ref global::System.Windows.Documents.Block firstInsertedBlock, ref global::System.Windows.Documents.Block lastInsertedBlock) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void InsertBlock(global::System.Windows.Documents.TextRange textRange, Block block, ref Block firstInsertedBlock, ref Block lastInsertedBlock) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
 }
