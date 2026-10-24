@@ -34,3 +34,9 @@
 - 890 methods: 683 in classes (73 non-toolset classes, almost all `gen.*`) and 191 in `<Module>`.
 - Largest: `gen.IlAsm` 112, `gen.IlEmit` 74, `gen.MetaObj` 45, `gen.Closure` 31, `gen.Callable` 30, `gen.Ctxt` 26.
 - Five internal enums (`gen.Key`, `gen.Decoration`, `gen.CallConv`, `gen.DataTypeImplementationCategory`, `gen.ftype`). `gen.CallConv` has no enumerator fields in the original.
+
+## Maintainer update 2026-10-25
+
+- Decision 2 is superseded. MirrorGen now gives a split C++/CLI project its own copy of the shared-header duplicates (`Hex.*`), which removes the Engine.Native ↔ Msclr cycle. Regeneration moves the msclr types from `Quire.Engine.Native/Generated` to `Quire.Msclr/Generated`, and Engine.Native references `Quire.Msclr`. The full solution builds, and the release_il gate passes.
+- Blocker 3 is resolved: `Quire.slnx` lists `Quire.Msclr`.
+- Open for the lane: `MirrorShapeTests.Every_in_scope_Mathcad_type_has_a_Quire_type` checks the shipped mixed-mode `Quire.Msclr.dll`. It fails on 9 types that only the C# stand-in defines: `Mpl.Reader`, `Mpl.module_attribute`, `Mpl.Heavyweight`, `Mpl.Lightweight`, `Mpl.Loaded`, `Mpl.Region`, `Mpl.Table`, `Attachment` (global namespace) and `Hex.Module+State`. It passes once `MixedMode/MsclrPort.cpp` defines them.

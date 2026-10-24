@@ -6,6 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Quire.Mirror\Quire.Mirror.csproj" />
+    <ProjectReference Include="..\Quire.Interop.VSInterfacesLib\Quire.Interop.VSInterfacesLib.csproj" />
     <ProjectReference Include="..\Quire.Mpl\Quire.Mpl.csproj" />
     <ProjectReference Include="..\Quire.Utils\Quire.Utils.csproj" />
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />

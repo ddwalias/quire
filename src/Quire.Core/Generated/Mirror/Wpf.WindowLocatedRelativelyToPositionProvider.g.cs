@@ -11,6 +11,7 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.WindowLocatedRelativelyToPositionProvider, Ptc.Core")]
 public partial class WindowLocatedRelativelyToPositionProvider : global::System.Windows.Window
 {
+
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.WindowLocatedRelativelyToPositionProvider+DpiFactors, Ptc.Core")]
     private partial struct DpiFactors
     {

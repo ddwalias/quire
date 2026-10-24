@@ -24,6 +24,10 @@ public partial interface IOleObject
     [global::Quire.Mirror.MirrorStub]
     void GetMoniker(uint dwAssign, uint dwWhichMoniker, object ppmk) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    void InitFromData(global::Quire.VSINTERFACESLib.IDataObject pDataObject, bool fCreation, uint dwReserved) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    void GetClipboardData(uint dwReserved, ref global::Quire.VSINTERFACESLib.IDataObject ppDataObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     void DoVerb(uint iVerb, uint lpmsg, object pActiveSite, uint lindex, uint hwndParent, uint lprcPosRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void EnumVerbs(ref object ppEnumOleVerb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

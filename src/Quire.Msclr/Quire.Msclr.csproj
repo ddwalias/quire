@@ -35,4 +35,5 @@
     <!-- The mixed DLL cannot use the portable PDB emitted by the preceding C# reference build. -->
     <Delete Files="$(TargetDir)Quire.Msclr.pdb" />
   </Target>
+  <Import Project="Generated\Mirror.props" />
 </Project>

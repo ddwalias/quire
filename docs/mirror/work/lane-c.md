@@ -27,3 +27,12 @@
 None. Parity is exact for all managed bodies in `Quire.Automation`, `Quire.EngNotebook.Automation` and `Quire.EngNotebookPlus.Automation`. All three assemblies are complete.
 
 
+
+## Maintainer update 2026-10-25
+
+Moving the Automation COM types to hand-written files (7e956270) dropped Mathcad members. The release_il gate cannot see them, because constants and enum values have no IL. The manifest test and a regeneration both caught them. Restored in `src/Quire.Automation`:
+- `MathcadPrimeEvents` values 2–7, `ValueResultTypes.Matrix` and `WorksheetReadonlyOptionNames.CaseInsensitiveAliasComparisonEnabled`.
+- `HRESULT.E_INVALIDARG` is `public` again.
+- `ComClassesGuides`, `ComClassesProgIds`, `ComEnumerationsGuides` and `HRESULT` are now `partial`. MirrorGen supplies the constants they omit (`GetValueResult`, `ValueResultTypes`, `CLASS_E_NOAGGREGATION`, `E_CONNECTIONFAILED`, `E_NOTIMPL`, `CLASS_E_NOTLICENSED`). Declare them by hand if the file should be complete.
+
+Open for the lane: `HRESULT` declares `E_UNEXPECTED`, `RPC_E_SERVER_DIED` and `RPC_E_DISCONNECTED`, which the Mathcad type does not have. Keep a hand-written type `partial`, and run `dotnet test tests/Quire.Mirror.Tests` before landing a change to declarations only.

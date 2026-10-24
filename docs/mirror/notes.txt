@@ -1,31 +1,27 @@
 # Summary (count of notes by kind):
 #      503  renamed field: name clash (obfuscated names)
-#      251  accessor without property metadata declared as an explicit property
+#      253  accessor without property metadata declared as an explicit property
+#       78  no base member for override
 #       61  added explicit interface stubs
 #       50  dropped method: unlisted
-#       43  no base member for override
+#       47  not generated: hand-written Enum
 #       32  dropped method: pending
-#       19  dropped method: deferred:
+#       16  not generated: hand-written Delegate
 #       14  dropped method: deferred type
-#       14  dropped interface: deferred:
 #       13  skipped overload: differs only by modifiers C# can't express
 #        9  dropped field: unlisted
-#        6  not generated: hand-written Enum
 #        6  renamed method: name clash (obfuscated names)
 #        5  property not generated: inherited from the hand-written base
 #        5  dropped property: deferred type
 #        4  dropped field: deferred type
-#        4  dropped property: deferred:
 #        4  hand-written base differs
 #        4  constructor declared internal
+#        3  dropped interface: keeps copies of public types from
 #        3  skipped indexed property: C# allows one indexer name per type
 #        3  hand-written access differs from Mathcad's
 #        2  dropped method: no substitute for
 #        2  dropped interface: no substitute for
-#        2  dropped field: deferred:
-#        2  dropped method: implemented interface deferred:
 #        2  overload covered by a hand-written optional-parameter overload
-#        2  not generated: hand-written Delegate
 #        2  skipped method: name clash
 #        2  method UnLockP declared internal
 #        1  dropped field: no substitute for
@@ -41,7 +37,6 @@
 #        1  method SetOption declared internal
 #        1  method GetOption declared internal
 #        1  method FromUnmanaged declared internal
-#        1  method GetRegion declared internal
 #        1  method Format declared internal
 #        1  method FormatResult declared internal
 #        1  method loc declared internal
@@ -87,64 +82,36 @@
   dropped interface DevComponents.WpfDock.ITabManager: no substitute for DevComponents.WpfDock.ITabManager
   dropped interface DevComponents.WpfDock.ITabSelector: no substitute for DevComponents.WpfDock.ITabSelector
 
+[Quire.Automation] Quire.Automation.MathcadPrimeEvents  (Ptc.MathcadPrime.Automation.MathcadPrimeEvents, Ptc.MathcadPrime.Automation)
+  not generated: hand-written Enum
+
+[Quire.Automation] Quire.Automation.ProxyComClassManager`1+RefineConnectionsHandler  (Ptc.MathcadPrime.Automation.ProxyComClassManager`1+RefineConnectionsHandler, Ptc.MathcadPrime.Automation)
+  not generated: hand-written Delegate
+
+[Quire.Automation] Quire.Automation.SaveOption  (Ptc.MathcadPrime.Automation.SaveOption, Ptc.MathcadPrime.Automation)
+  not generated: hand-written Enum
+
+[Quire.Automation] Quire.Automation.ValueResultTypes  (Ptc.MathcadPrime.Automation.ValueResultTypes, Ptc.MathcadPrime.Automation)
+  not generated: hand-written Enum
+
+[Quire.Automation] Quire.Automation.WorksheetOperations  (Ptc.MathcadPrime.Automation.WorksheetOperations, Ptc.MathcadPrime.Automation)
+  not generated: hand-written Enum
+
+[Quire.Automation] Quire.Automation.WorksheetReadonlyOptionNames  (Ptc.MathcadPrime.Automation.WorksheetReadonlyOptionNames, Ptc.MathcadPrime.Automation)
+  not generated: hand-written Enum
+
 [Quire.Automation.Native] Quire.Automation.Wrappers.MatrixValue  (Automation.Wrappers.MatrixValue, automation)
-  dropped interface Mathcad.MatrixValue: deferred: COM interop (Mathcad.MatrixValue)
-  dropped interface Mathcad.IMatrixValue: deferred: COM interop (Mathcad.IMatrixValue)
-  dropped interface Mathcad.IValue: deferred: COM interop (Mathcad.IValue)
+  dropped interface Mathcad.MatrixValue: keeps copies of public types from Quire.Interop.Mathcad (D22): Mathcad.MatrixValue
 
 [Quire.Automation.Native] Quire.Automation.Wrappers.NumericValue  (Automation.Wrappers.NumericValue, automation)
-  dropped interface Mathcad.NumericValue: deferred: COM interop (Mathcad.NumericValue)
-  dropped interface Mathcad.INumericValue: deferred: COM interop (Mathcad.INumericValue)
-  dropped interface Mathcad.IValue: deferred: COM interop (Mathcad.IValue)
+  dropped interface Mathcad.NumericValue: keeps copies of public types from Quire.Interop.Mathcad (D22): Mathcad.NumericValue
 
 [Quire.Automation.Native] Quire.Automation.Wrappers.StringValue  (Automation.Wrappers.StringValue, automation)
-  dropped interface Mathcad.StringValue: deferred: COM interop (Mathcad.StringValue)
-  dropped interface Mathcad.IStringValue: deferred: COM interop (Mathcad.IStringValue)
-  dropped interface Mathcad.IValue: deferred: COM interop (Mathcad.IValue)
-
-[Quire.Automation.Native] Quire.Components.IOleObject  (Mathcad.Components.IOleObject, componentsmgd)
-  dropped method InitFromData: deferred: COM interop (VSINTERFACESLib.IDataObject)
-  dropped method GetClipboardData: deferred: COM interop (VSINTERFACESLib.IDataObject)
-
-[Quire.Automation.Native] Quire.Components.McxComponent  (Mathcad.Components.McxComponent, componentsmgd)
-  dropped interface VSINTERFACESLib.IVSItemContainerExec: deferred: COM interop (VSINTERFACESLib.IVSItemContainerExec)
-  dropped field executive: deferred: COM interop (VSINTERFACESLib.IVSObjectExec2)
-  dropped method Stepped: deferred: COM interop (VSINTERFACESLib.IVSObject)
-  dropped method GetAppState: deferred: COM interop (VSINTERFACESLib.IVSObject)
-  dropped method Error: deferred: COM interop (VSINTERFACESLib.IVSObject)
-  dropped method SetAppState: deferred: COM interop (VSINTERFACESLib.IVSObject)
-  dropped property Executive: deferred: COM interop (VSINTERFACESLib.IVSObjectExec2)
-  dropped method get_Executive: deferred: COM interop (VSINTERFACESLib.IVSObjectExec2)
-
-[Quire.Automation.Native] Quire.Components.McxIO  (Mathcad.Components.McxIO, componentsmgd)
-  dropped field data: deferred: COM interop (VSINTERFACESLib.IVSDataType)
-  dropped property Data: deferred: COM interop (VSINTERFACESLib.IVSDataType)
-  dropped method get_Data: deferred: COM interop (VSINTERFACESLib.IVSDataType)
-  dropped method set_Data: deferred: COM interop (VSINTERFACESLib.IVSDataType)
-
-[Quire.Automation.Native] Quire.Components.McxInput  (Mathcad.Components.McxInput, componentsmgd)
-  dropped interface VSINTERFACESLib.IVSQueueInput: deferred: COM interop (VSINTERFACESLib.IVSQueueInput)
-  dropped method Recv: deferred: COM interop (VSINTERFACESLib.IVSDataType)
-
-[Quire.Automation.Native] Quire.Components.McxOutput  (Mathcad.Components.McxOutput, componentsmgd)
-  dropped interface VSINTERFACESLib.IVSQueueOutput: deferred: COM interop (VSINTERFACESLib.IVSQueueOutput)
-  dropped method Send: deferred: COM interop (VSINTERFACESLib.IVSDataType)
+  dropped interface Mathcad.StringValue: keeps copies of public types from Quire.Interop.Mathcad (D22): Mathcad.StringValue
 
 [Quire.Automation.Native] Quire.Components.VSDataValue  (Mathcad.Components.VSDataValue, componentsmgd)
-  dropped interface VSINTERFACESLib.IVSDataType: deferred: COM interop (VSINTERFACESLib.IVSDataType)
-  dropped interface VSINTERFACESLib.IVSUnitData: deferred: COM interop (VSINTERFACESLib.IVSUnitData)
-  dropped method Clone: deferred: COM interop (VSINTERFACESLib.IVSDataType)
-  dropped method GetElement: deferred: COM interop (VSINTERFACESLib.IVSDataType)
-  dropped method SetElement: deferred: COM interop (VSINTERFACESLib.IVSDataType)
-  dropped method GetSubmatrix: deferred: COM interop (VSINTERFACESLib.IVSDataType)
-  dropped method SetSubmatrix: deferred: COM interop (VSINTERFACESLib.IVSDataType)
-  dropped method VSINTERFACESLib.IVSDataType.get_IsComplex: implemented interface deferred: COM interop (VSINTERFACESLib.IVSDataType)
-  dropped method VSINTERFACESLib.IVSDataType.set_IsComplex: implemented interface deferred: COM interop (VSINTERFACESLib.IVSDataType)
-  dropped property DataType: deferred: COM interop (VSINTERFACESLib.VSDATATYPE)
-  dropped method get_DataType: deferred: COM interop (VSINTERFACESLib.VSDATATYPE)
-  dropped property Bounds: deferred: COM interop (VSINTERFACESLib.VSDATABOUNDS)
-  dropped method get_Bounds: deferred: COM interop (VSINTERFACESLib.VSDATABOUNDS)
-  dropped method set_Bounds: deferred: COM interop (VSINTERFACESLib.VSDATABOUNDS)
+  interface accessor VSINTERFACESLib.IVSDataType.get_IsComplex has no property metadata; declared as an explicit property
+  interface accessor VSINTERFACESLib.IVSDataType.set_IsComplex has no property metadata; declared as an explicit property
 
 [Quire.Calculation] Quire.Calculation.CalculationController+DispatchedEngineCallbackHandler  (Ptc.Calculation.CalculationController+DispatchedEngineCallbackHandler, Ptc.Calculation)
   added 4 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.SynchronizationStatus, Quire.Calculation.Core.ICalculatable.RlChanged
@@ -648,6 +615,12 @@
 [Quire.Core] Quire.Encryptor  (Ptc.Encryptor, Ptc.Core)
   dropped method .ctor: deferred type Ptc.License.ILicenseManager
 
+[Quire.Core] Quire.FrameworkVersion+MajorVersions  (Ptc.FrameworkVersion+MajorVersions, Ptc.Core)
+  not generated: hand-written Enum
+
+[Quire.Core] Quire.FrameworkVersion+Versions  (Ptc.FrameworkVersion+Versions, Ptc.Core)
+  not generated: hand-written Enum
+
 [Quire.Core] Quire.FunctionalitiesLimitation.FunctionalityItem  (Ptc.FunctionalitiesLimitation.FunctionalityItem, Ptc.Core)
   dropped property UnsupportedLicenseTypes: deferred type Ptc.License.LicenseTypeBitFlags
   dropped method get_UnsupportedLicenseTypes: deferred type Ptc.License.LicenseTypeBitFlags
@@ -771,13 +744,6 @@
   dropped field s: unlisted Mathcad type std.basic_streambuf<char,std::char_traits<char> >
   dropped method .ctor: unlisted Mathcad type std.basic_streambuf<char,std::char_traits<char> >
 
-[Quire.Engine.Native] Quire.Mpl.IRegion  (Mpl.IRegion, msclr)
-  method GetRegion declared internal: its signature uses a non-public type
-
-[Quire.Engine.Native] Quire.Mpl.Region  (Mpl.Region, msclr)
-  dropped method .ctor: unlisted Mathcad type ms.Range<Hex::Signature const >
-  dropped method NewSymbols: unlisted Mathcad type ms.Range<Hex::Signature const >
-
 [Quire.Engine.Native] Quire.gen.BoxConstructor  (gen.BoxConstructor, msgen)
   dropped method Deconstruct: unlisted Mathcad type ms.Range<void * const>
 
@@ -870,6 +836,42 @@
 
 [Quire.Engine.Utl] Quire.utl_mgd.SafeWaitHandle  (utl_mgd.SafeWaitHandle, utl-mgd)
   no base member for override Dispose; declared none instead
+
+[Quire.EngNotebook.Automation] Quire.EngNotebook.Automation.MathcadPrimeEvents  (Ptc.MathcadPrime.EngNotebook.Automation.MathcadPrimeEvents, Ptc.EngNotebook.Automation)
+  not generated: hand-written Enum
+
+[Quire.EngNotebook.Automation] Quire.EngNotebook.Automation.ProxyComClassManager`1+RefineConnectionsHandler  (Ptc.MathcadPrime.EngNotebook.Automation.ProxyComClassManager`1+RefineConnectionsHandler, Ptc.EngNotebook.Automation)
+  not generated: hand-written Delegate
+
+[Quire.EngNotebook.Automation] Quire.EngNotebook.Automation.SaveOption  (Ptc.MathcadPrime.EngNotebook.Automation.SaveOption, Ptc.EngNotebook.Automation)
+  not generated: hand-written Enum
+
+[Quire.EngNotebook.Automation] Quire.EngNotebook.Automation.ValueResultTypes  (Ptc.MathcadPrime.EngNotebook.Automation.ValueResultTypes, Ptc.EngNotebook.Automation)
+  not generated: hand-written Enum
+
+[Quire.EngNotebook.Automation] Quire.EngNotebook.Automation.WorksheetOperations  (Ptc.MathcadPrime.EngNotebook.Automation.WorksheetOperations, Ptc.EngNotebook.Automation)
+  not generated: hand-written Enum
+
+[Quire.EngNotebook.Automation] Quire.EngNotebook.Automation.WorksheetReadonlyOptionNames  (Ptc.MathcadPrime.EngNotebook.Automation.WorksheetReadonlyOptionNames, Ptc.EngNotebook.Automation)
+  not generated: hand-written Enum
+
+[Quire.EngNotebookPlus.Automation] Quire.EngNotebookPlus.Automation.MathcadPrimeEvents  (Ptc.MathcadPrime.EngNotebookPlus.Automation.MathcadPrimeEvents, Ptc.EngNotebookPlus.Automation)
+  not generated: hand-written Enum
+
+[Quire.EngNotebookPlus.Automation] Quire.EngNotebookPlus.Automation.ProxyComClassManager`1+RefineConnectionsHandler  (Ptc.MathcadPrime.EngNotebookPlus.Automation.ProxyComClassManager`1+RefineConnectionsHandler, Ptc.EngNotebookPlus.Automation)
+  not generated: hand-written Delegate
+
+[Quire.EngNotebookPlus.Automation] Quire.EngNotebookPlus.Automation.SaveOption  (Ptc.MathcadPrime.EngNotebookPlus.Automation.SaveOption, Ptc.EngNotebookPlus.Automation)
+  not generated: hand-written Enum
+
+[Quire.EngNotebookPlus.Automation] Quire.EngNotebookPlus.Automation.ValueResultTypes  (Ptc.MathcadPrime.EngNotebookPlus.Automation.ValueResultTypes, Ptc.EngNotebookPlus.Automation)
+  not generated: hand-written Enum
+
+[Quire.EngNotebookPlus.Automation] Quire.EngNotebookPlus.Automation.WorksheetOperations  (Ptc.MathcadPrime.EngNotebookPlus.Automation.WorksheetOperations, Ptc.EngNotebookPlus.Automation)
+  not generated: hand-written Enum
+
+[Quire.EngNotebookPlus.Automation] Quire.EngNotebookPlus.Automation.WorksheetReadonlyOptionNames  (Ptc.MathcadPrime.EngNotebookPlus.Automation.WorksheetReadonlyOptionNames, Ptc.EngNotebookPlus.Automation)
+  not generated: hand-written Enum
 
 [Quire.EquationEditor] Quire.EquationEditor.Equation.EquationModel  (Ptc.EquationEditor.Equation.EquationModel, Ptc.EquationEditor)
   renamed field a to a__: name clash
@@ -1952,6 +1954,154 @@
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.z  (z, Ptc.EquationEditor)
   added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IResultNode.ValueType
 
+[Quire.Interop.Mathcad] Quire.MCAppOption  (Mathcad.MCAppOption, interop.mathcad)
+  not generated: hand-written Enum
+
+[Quire.Interop.Mathcad] Quire.MCCustomMetadataType  (Mathcad.MCCustomMetadataType, interop.mathcad)
+  not generated: hand-written Enum
+
+[Quire.Interop.Mathcad] Quire.MCFileFormat  (Mathcad.MCFileFormat, interop.mathcad)
+  not generated: hand-written Enum
+
+[Quire.Interop.Mathcad] Quire.MCRegionType  (Mathcad.MCRegionType, interop.mathcad)
+  not generated: hand-written Enum
+
+[Quire.Interop.Mathcad] Quire.MCSaveOption  (Mathcad.MCSaveOption, interop.mathcad)
+  not generated: hand-written Enum
+
+[Quire.Interop.Mathcad] Quire.MCWindowState  (Mathcad.MCWindowState, interop.mathcad)
+  not generated: hand-written Enum
+
+[Quire.Interop.Mathcad] Quire.MCWorksheetOption  (Mathcad.MCWorksheetOption, interop.mathcad)
+  not generated: hand-written Enum
+
+[Quire.Interop.Mathcad] Quire._IApplicationEvents_EventProvider  (Mathcad._IApplicationEvents_EventProvider, interop.mathcad)
+  no base member for override add_Quit; declared none instead
+  no base member for override remove_Quit; declared none instead
+  no base member for override add_WorksheetClosing; declared none instead
+  no base member for override remove_WorksheetClosing; declared none instead
+  no base member for override add_WorksheetOpened; declared none instead
+  no base member for override remove_WorksheetOpened; declared none instead
+  no base member for override add_WindowActivated; declared none instead
+  no base member for override remove_WindowActivated; declared none instead
+  no base member for override add_WindowDeactivated; declared none instead
+  no base member for override remove_WindowDeactivated; declared none instead
+  no base member for override add_WorksheetSaving; declared none instead
+  no base member for override remove_WorksheetSaving; declared none instead
+  no base member for override add_WorksheetSaved; declared none instead
+  no base member for override remove_WorksheetSaved; declared none instead
+  no base member for override add_WorksheetClosed; declared none instead
+  no base member for override remove_WorksheetClosed; declared none instead
+  no base member for override add_Idle; declared none instead
+  no base member for override remove_Idle; declared none instead
+  no base member for override Dispose; declared none instead
+
+[Quire.Interop.Mathcad] Quire._IApplicationEvents_IdleEventHandler  (Mathcad._IApplicationEvents_IdleEventHandler, interop.mathcad)
+  not generated: hand-written Delegate
+
+[Quire.Interop.Mathcad] Quire._IApplicationEvents_QuitEventHandler  (Mathcad._IApplicationEvents_QuitEventHandler, interop.mathcad)
+  not generated: hand-written Delegate
+
+[Quire.Interop.Mathcad] Quire._IApplicationEvents_SinkHelper  (Mathcad._IApplicationEvents_SinkHelper, interop.mathcad)
+  no base member for override Quit; declared none instead
+  no base member for override WorksheetClosing; declared none instead
+  no base member for override WorksheetOpened; declared none instead
+  no base member for override WindowActivated; declared none instead
+  no base member for override WindowDeactivated; declared none instead
+  no base member for override WorksheetSaving; declared none instead
+  no base member for override WorksheetSaved; declared none instead
+  no base member for override WorksheetClosed; declared none instead
+  no base member for override Idle; declared none instead
+
+[Quire.Interop.Mathcad] Quire._IApplicationEvents_WindowActivatedEventHandler  (Mathcad._IApplicationEvents_WindowActivatedEventHandler, interop.mathcad)
+  not generated: hand-written Delegate
+
+[Quire.Interop.Mathcad] Quire._IApplicationEvents_WindowDeactivatedEventHandler  (Mathcad._IApplicationEvents_WindowDeactivatedEventHandler, interop.mathcad)
+  not generated: hand-written Delegate
+
+[Quire.Interop.Mathcad] Quire._IApplicationEvents_WorksheetClosedEventHandler  (Mathcad._IApplicationEvents_WorksheetClosedEventHandler, interop.mathcad)
+  not generated: hand-written Delegate
+
+[Quire.Interop.Mathcad] Quire._IApplicationEvents_WorksheetClosingEventHandler  (Mathcad._IApplicationEvents_WorksheetClosingEventHandler, interop.mathcad)
+  not generated: hand-written Delegate
+
+[Quire.Interop.Mathcad] Quire._IApplicationEvents_WorksheetOpenedEventHandler  (Mathcad._IApplicationEvents_WorksheetOpenedEventHandler, interop.mathcad)
+  not generated: hand-written Delegate
+
+[Quire.Interop.Mathcad] Quire._IApplicationEvents_WorksheetSavedEventHandler  (Mathcad._IApplicationEvents_WorksheetSavedEventHandler, interop.mathcad)
+  not generated: hand-written Delegate
+
+[Quire.Interop.Mathcad] Quire._IApplicationEvents_WorksheetSavingEventHandler  (Mathcad._IApplicationEvents_WorksheetSavingEventHandler, interop.mathcad)
+  not generated: hand-written Delegate
+
+[Quire.Interop.Mathcad] Quire._IWorksheetEvents_ChangedEventHandler  (Mathcad._IWorksheetEvents_ChangedEventHandler, interop.mathcad)
+  not generated: hand-written Delegate
+
+[Quire.Interop.Mathcad] Quire._IWorksheetEvents_EventProvider  (Mathcad._IWorksheetEvents_EventProvider, interop.mathcad)
+  no base member for override add_Changed; declared none instead
+  no base member for override remove_Changed; declared none instead
+  no base member for override add_Recalculated; declared none instead
+  no base member for override remove_Recalculated; declared none instead
+  no base member for override Dispose; declared none instead
+
+[Quire.Interop.Mathcad] Quire._IWorksheetEvents_RecalculatedEventHandler  (Mathcad._IWorksheetEvents_RecalculatedEventHandler, interop.mathcad)
+  not generated: hand-written Delegate
+
+[Quire.Interop.Mathcad] Quire._IWorksheetEvents_SinkHelper  (Mathcad._IWorksheetEvents_SinkHelper, interop.mathcad)
+  no base member for override Changed; declared none instead
+  no base member for override Recalculated; declared none instead
+
+[Quire.Interop.Mathcad] Quire.__MIDL___MIDL_itf_automation_0001_0066_0001  (Mathcad.__MIDL___MIDL_itf_automation_0001_0066_0001, interop.mathcad)
+  not generated: hand-written Enum
+
+[Quire.Interop.Mathcad] Quire.__MIDL___MIDL_itf_automation_0001_0066_0002  (Mathcad.__MIDL___MIDL_itf_automation_0001_0066_0002, interop.mathcad)
+  not generated: hand-written Enum
+
+[Quire.Interop.Mathcad] Quire.__MIDL___MIDL_itf_automation_0001_0066_0003  (Mathcad.__MIDL___MIDL_itf_automation_0001_0066_0003, interop.mathcad)
+  not generated: hand-written Enum
+
+[Quire.Interop.Mathcad] Quire.__MIDL___MIDL_itf_automation_0001_0066_0004  (Mathcad.__MIDL___MIDL_itf_automation_0001_0066_0004, interop.mathcad)
+  not generated: hand-written Enum
+
+[Quire.Interop.Mathcad] Quire.__MIDL___MIDL_itf_automation_0001_0066_0005  (Mathcad.__MIDL___MIDL_itf_automation_0001_0066_0005, interop.mathcad)
+  not generated: hand-written Enum
+
+[Quire.Interop.Mathcad] Quire.__MIDL___MIDL_itf_automation_0001_0066_0006  (Mathcad.__MIDL___MIDL_itf_automation_0001_0066_0006, interop.mathcad)
+  not generated: hand-written Enum
+
+[Quire.Interop.Mathcad] Quire.__MIDL___MIDL_itf_automation_0001_0066_0007  (Mathcad.__MIDL___MIDL_itf_automation_0001_0066_0007, interop.mathcad)
+  not generated: hand-written Enum
+
+[Quire.Interop.MathcadOld] Quire.MathcadOld.ERegionType  (MathcadOld.ERegionType, interop.mathcadold)
+  not generated: hand-written Enum
+
+[Quire.Interop.MathcadOld] Quire.MathcadOld.__MIDL___MIDL_itf_imathcad_0000_0000_0001  (MathcadOld.__MIDL___MIDL_itf_imathcad_0000_0000_0001, interop.mathcadold)
+  not generated: hand-written Enum
+
+[Quire.Interop.VSInterfacesLib] Quire.VSINTERFACESLib.VSAPPLICENSE  (VSINTERFACESLib.VSAPPLICENSE, interop.vsinterfaceslib)
+  not generated: hand-written Enum
+
+[Quire.Interop.VSInterfacesLib] Quire.VSINTERFACESLib.VSAPPOPTS  (VSINTERFACESLib.VSAPPOPTS, interop.vsinterfaceslib)
+  not generated: hand-written Enum
+
+[Quire.Interop.VSInterfacesLib] Quire.VSINTERFACESLib.VSAPPSTATE  (VSINTERFACESLib.VSAPPSTATE, interop.vsinterfaceslib)
+  not generated: hand-written Enum
+
+[Quire.Interop.VSInterfacesLib] Quire.VSINTERFACESLib.VSDATATYPE  (VSINTERFACESLib.VSDATATYPE, interop.vsinterfaceslib)
+  not generated: hand-written Enum
+
+[Quire.Interop.VSInterfacesLib] Quire.VSINTERFACESLib.VSOBJMISC  (VSINTERFACESLib.VSOBJMISC, interop.vsinterfaceslib)
+  not generated: hand-written Enum
+
+[Quire.Interop.VSInterfacesLib] Quire.VSINTERFACESLib.VSOLEFLAGS  (VSINTERFACESLib.VSOLEFLAGS, interop.vsinterfaceslib)
+  not generated: hand-written Enum
+
+[Quire.Interop.VSInterfacesLib] Quire.VSINTERFACESLib.VSSUBOBJCHANGE  (VSINTERFACESLib.VSSUBOBJCHANGE, interop.vsinterfaceslib)
+  not generated: hand-written Enum
+
+[Quire.Interop.VSInterfacesLib] Quire.VSINTERFACESLib.VSSUBOBJFLAGS  (VSINTERFACESLib.VSSUBOBJFLAGS, interop.vsinterfaceslib)
+  not generated: hand-written Enum
+
 [Quire.Mcd] Quire.depman.ActionChainMgd  (depman.ActionChainMgd, mcdepman)
   no base member for override Dispose; declared none instead
 
@@ -1993,3 +2143,7 @@
 
 [Quire.Mcd] Quire.depman.UndefineAction  (depman.UndefineAction, mcdepman)
   no base member for override Dispose; declared none instead
+
+[Quire.Msclr] Quire.Mpl.Region  (Mpl.Region, msclr)
+  dropped method .ctor: unlisted Mathcad type ms.Range<Hex::Signature const >
+  dropped method NewSymbols: unlisted Mathcad type ms.Range<Hex::Signature const >

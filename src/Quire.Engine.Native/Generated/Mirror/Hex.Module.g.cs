@@ -11,9 +11,4 @@ namespace Quire.Hex;
 [global::Quire.Mirror.MirrorOf("Hex.Module, mccore12")]
 internal partial struct Module
 {
-
-    [global::Quire.Mirror.MirrorOf("Hex.Module+State, msclr")]
-    public partial struct State
-    {
-    }
 }

@@ -50,8 +50,12 @@ public sealed class Mapper
                     case Disposition.SharedSource:
                         sources.Add((asm, t, project));
                         break;
-                    case Disposition.Duplicate when !IsPublicEverywhere(t):
-                        sources.Add((asm, t, project)); // internal: each project keeps its own copy, as in Mathcad
+                    // Internal: each project keeps its own copy, as in Mathcad. A C++/CLI project compiles the shared
+                    // header into itself whatever its visibility; sharing another project's copy would make that
+                    // project a dependency, and a cycle when it references this one (msclr's Hex.Module).
+                    case Disposition.Duplicate when !IsPublicEverywhere(t)
+                        || _rules.IsSplit(e.Assembly) && Rules.LanguageOf(e.Assembly) == Language.CppCli:
+                        sources.Add((asm, t, project));
                         break;
                 }
             }
@@ -96,6 +100,16 @@ public sealed class Mapper
             ? p.Assembly : asm;
 
     private static bool IsPublicEverywhere(TypeModel t) => t.Access == Access.Public && t.DeclaringType == null;
+
+    private readonly Dictionary<(string, string), bool> _sharedPublic = [];
+
+    private bool SharesPublicTypes(string a, string b)
+    {
+        if (_sharedPublic.TryGetValue((a, b), out var shared)) return shared;
+        shared = _byProject.Any(kv => kv.Key.Project == a && IsPublicEverywhere(kv.Value)
+            && _byProject.TryGetValue((b, kv.Key.Name), out var other) && IsPublicEverywhere(other));
+        return _sharedPublic[(a, b)] = shared;
+    }
 
     // ------------------------------------------------------------------ names
 
@@ -207,6 +221,13 @@ public sealed class Mapper
                     string name = QuireName(n.Name, PrimaryAssembly(n.Assembly, n.Name));
                     var target = Resolve(name, fromProject);
                     if (target == null) { reason = $"no Quire type for {n.Name}"; return null; }
+                    // D22: a project keeping generated copies of another project's public types (embedded COM interop
+                    // types) must not reference it, or its dependents see those types twice.
+                    if (target.Project != fromProject && SharesPublicTypes(fromProject, target.Project!))
+                    {
+                        reason = $"keeps copies of public types from {target.Project} (D22): {n.Name}";
+                        return null;
+                    }
                     return new NamedSig(target.Project!, name);
                 }
                 case Disposition.Dependency:

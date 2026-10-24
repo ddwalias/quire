@@ -8,4 +8,5 @@ public enum WorksheetReadonlyOptionNames
     FileLocationHistoryDisabled = 0,
     OperationsWithEnabledStateGeneration = 1,
     RequestToUpdateInputsEnabled = 2,
+    CaseInsensitiveAliasComparisonEnabled = 3,
 }

@@ -13,6 +13,7 @@
     <ProjectReference Include="..\Quire.Mcd\Quire.Mcd.csproj" />
     <ProjectReference Include="..\Quire.Mpl\Quire.Mpl.csproj" />
     <ProjectReference Include="..\Quire.Mpl.Emit\Quire.Mpl.Emit.csproj" />
+    <ProjectReference Include="..\Quire.Msclr\Quire.Msclr.csproj" />
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />
     <InternalsVisibleTo Include="Quire.Mirror.Tests" />
     <InternalsVisibleTo Include="Quire.Differential.Tests" />

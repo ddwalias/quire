@@ -9,7 +9,7 @@
 namespace Quire.Automation.Wrappers;
 
 [global::Quire.Mirror.MirrorOf("Automation.Wrappers.NumericValue, automation")]
-public partial class NumericValue : global::System.Runtime.Serialization.ISerializable
+public partial class NumericValue : global::Quire.INumericValue, global::Quire.IValue, global::System.Runtime.Serialization.ISerializable
 {
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Automation.NumericValue _innerObject;

@@ -50,7 +50,8 @@ public sealed class CSharpWriter(Mapper mapper, Planner plan)
             // Hand-written code carries [MirrorOf]: emit a shell only for generated members, without the attribute.
             var shell = new StringBuilder();
             WriteType(shell, t, indent, bind: false);
-            if (shell.ToString().Split('\n').Count(l => l.Trim().Length > 0) > 3) sb.Append(shell);
+            // Only members need a shell; the declaration's attributes (StructLayout) are the hand-written file's.
+            if (shell.ToString().Split('\n').Count(l => l.Trim() is { Length: > 0 } s && !s.StartsWith('[')) > 3) sb.Append(shell);
             return;
         }
         WriteType(sb, t, indent, bind: true);

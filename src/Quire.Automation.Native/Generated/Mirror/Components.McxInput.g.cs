@@ -9,7 +9,7 @@
 namespace Quire.Components;
 
 [global::Quire.Mirror.MirrorOf("Mathcad.Components.McxInput, componentsmgd")]
-internal partial class McxInput : global::Quire.Components.McxIO
+internal partial class McxInput : global::Quire.Components.McxIO, global::Quire.VSINTERFACESLib.IVSQueueInput
 {
     [global::Quire.Mirror.MirrorStub]
     public McxInput(global::Quire.Automation.UnitAction action) : base(default(global::Quire.Automation.UnitAction)) { }
@@ -17,4 +17,6 @@ internal partial class McxInput : global::Quire.Components.McxIO
     protected void Set(global::Quire.Components.McxInput input) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void IsReady() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public global::Quire.VSINTERFACESLib.IVSDataType Recv() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

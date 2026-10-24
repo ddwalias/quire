@@ -422,14 +422,18 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
         bool ExplicitByHand(params MethodModel?[] accessors) =>
             accessors.OfType<MethodModel>().ToList() is { Count: > 0 } acc
             && acc.All(a => IsExplicitImpl(a) && a.Implements.All(i => handExplicit.Contains($"{i.Interface}::{i.Method}")));
+        // C# has no syntax for some COM members (an indexer named Item, a coclass event), so hand-written interop code
+        // declares their accessors as plain methods (get_Item, add_Quit).
+        bool AccessorsByHand(params MethodModel?[] accessors) =>
+            accessors.OfType<MethodModel>().ToList() is { Count: > 0 } acc && acc.All(a => keys.Contains(HandWritten.MethodKey(a)));
         foreach (var p in t.Properties)
         {
-            if (nonMethods.Contains(p.Name) || ExplicitByHand(p.Getter, p.Setter)) Skip.Add(p);
+            if (nonMethods.Contains(p.Name) || ExplicitByHand(p.Getter, p.Setter) || AccessorsByHand(p.Getter, p.Setter)) Skip.Add(p);
             else if (methodNames.Contains(p.Name)) { Skip.Add(p); Conflict($"property {p.Name}"); }
         }
         foreach (var e in t.Events)
         {
-            if (nonMethods.Contains(e.Name) || ExplicitByHand(e.Adder, e.Remover)) Skip.Add(e);
+            if (nonMethods.Contains(e.Name) || ExplicitByHand(e.Adder, e.Remover) || AccessorsByHand(e.Adder, e.Remover)) Skip.Add(e);
             else if (methodNames.Contains(e.Name)) { Skip.Add(e); Conflict($"event {e.Name}"); }
         }
         foreach (var f in t.Fields)
@@ -457,11 +461,7 @@ public sealed class HandWritten
         var hw = new HandWritten();
         foreach (var project in projects)
         {
-            var bin = Path.Combine(repo, "src", project, "bin", "Release");
-            if (!Directory.Exists(bin)) continue;
-            var dll = Directory.GetDirectories(bin).Select(d => Path.Combine(d, project + ".dll")).Where(File.Exists)
-                .OrderByDescending(File.GetLastWriteTimeUtc).FirstOrDefault();
-            if (dll == null) continue;
+            if (Shape.BuiltAssembly(repo, project) is not { } dll) continue;
             var model = MetadataLoader.Load(dll);
             if (model == null) continue;
             foreach (var t in model.Types) hw._types[(project, t.FullName)] = t;

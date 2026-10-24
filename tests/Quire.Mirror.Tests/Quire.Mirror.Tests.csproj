@@ -36,16 +36,21 @@
     <ProjectReference Include="..\..\src\Quire.Efi\Quire.Efi.csproj" />
     <ProjectReference Include="..\..\src\Quire.EngNotebook.Automation\Quire.EngNotebook.Automation.csproj" />
     <ProjectReference Include="..\..\src\Quire.EngNotebookPlus.Automation\Quire.EngNotebookPlus.Automation.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Engine.Misc\Quire.Engine.Misc.csproj" />
     <ProjectReference Include="..\..\src\Quire.Engine.Native\Quire.Engine.Native.csproj" />
     <ProjectReference Include="..\..\src\Quire.Engine.Utl\Quire.Engine.Utl.csproj" />
     <ProjectReference Include="..\..\src\Quire.Engine\Quire.Engine.csproj" />
     <ProjectReference Include="..\..\src\Quire.EquationEditor\Quire.EquationEditor.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Interop.Mathcad\Quire.Interop.Mathcad.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Interop.MathcadOld\Quire.Interop.MathcadOld.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Interop.VSInterfacesLib\Quire.Interop.VSInterfacesLib.csproj" />
     <ProjectReference Include="..\..\src\Quire.Mcd\Quire.Mcd.csproj" />
     <ProjectReference Include="..\..\src\Quire.Media3D\Quire.Media3D.csproj" />
     <ProjectReference Include="..\..\src\Quire.Mirror\Quire.Mirror.csproj" />
     <ProjectReference Include="..\..\src\Quire.Mpl.Emit\Quire.Mpl.Emit.csproj" />
     <ProjectReference Include="..\..\src\Quire.Mpl.Modules\Quire.Mpl.Modules.csproj" />
     <ProjectReference Include="..\..\src\Quire.Mpl\Quire.Mpl.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Msclr\Quire.Msclr.csproj" />
     <ProjectReference Include="..\..\src\Quire.Utils\Quire.Utils.csproj" />
   </ItemGroup>
 </Project>

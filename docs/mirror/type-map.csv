@@ -7312,7 +7312,7 @@ msclr.dll,Mpl.IRegion+Symbol,class,public,Quire.Mpl.IRegion+Symbol,missing,10,en
 msclr.dll,Mpl.Region,class,internal,Quire.Mpl.Region,missing,10,engine-native
 msclr.dll,Mpl.Table,class,internal,Quire.Mpl.Table,missing,10,engine-native
 msclr.dll,_EXCEPTION_POINTERS,class,internal,Quire.Native.Msclr._EXCEPTION_POINTERS,c++ artefact,10,engine-native
-msclr.dll,EHExceptionRecord,class,internal,Quire.Native.Msclr.EHExceptionRecord,missing,10,engine-native
+msclr.dll,EHExceptionRecord,class,internal,Quire.Native.Msclr.EHExceptionRecord,c++ artefact,10,engine-native
 msclr.dll,<CrtImplementationDetails>.ModuleLoadException,class,internal,Quire.<CrtImplementationDetails>.ModuleLoadException,c++ artefact,10,engine-native
 msclr.dll,<CrtImplementationDetails>.ModuleLoadExceptionHandlerException,class,internal,Quire.<CrtImplementationDetails>.ModuleLoadExceptionHandlerException,c++ artefact,10,engine-native
 msclr.dll,<CrtImplementationDetails>.ModuleUninitializer,class,internal,Quire.<CrtImplementationDetails>.ModuleUninitializer,c++ artefact,10,engine-native

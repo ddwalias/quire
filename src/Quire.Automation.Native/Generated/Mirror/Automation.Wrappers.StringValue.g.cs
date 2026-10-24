@@ -9,7 +9,7 @@
 namespace Quire.Automation.Wrappers;
 
 [global::Quire.Mirror.MirrorOf("Automation.Wrappers.StringValue, automation")]
-public partial class StringValue : global::System.Runtime.Serialization.ISerializable
+public partial class StringValue : global::Quire.IStringValue, global::Quire.IValue, global::System.Runtime.Serialization.ISerializable
 {
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Automation.StringValue _innerObject;

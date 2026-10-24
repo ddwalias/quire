@@ -8,4 +8,5 @@ public enum ValueResultTypes
     None = 0,
     Real = 1,
     String = 2,
+    Matrix = 3,
 }

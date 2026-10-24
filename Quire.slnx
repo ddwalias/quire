@@ -1,8 +1,8 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/Quire.Automation.Native/Quire.Automation.Native.csproj" />
-    <Project Path="src/Quire.AutomationPrivate/Quire.AutomationPrivate.csproj" />
     <Project Path="src/Quire.Automation/Quire.Automation.csproj" />
+    <Project Path="src/Quire.AutomationPrivate/Quire.AutomationPrivate.csproj" />
     <Project Path="src/Quire.Calculation.Core/Quire.Calculation.Core.csproj" />
     <Project Path="src/Quire.Calculation/Quire.Calculation.csproj" />
     <Project Path="src/Quire.Controls.CollapsibleArea/Quire.Controls.CollapsibleArea.csproj" />
@@ -27,15 +27,16 @@
     <Project Path="src/Quire.EquationEditor/Quire.EquationEditor.csproj" />
     <Project Path="src/Quire.Interop.Mathcad/Quire.Interop.Mathcad.csproj" />
     <Project Path="src/Quire.Interop.MathcadOld/Quire.Interop.MathcadOld.csproj" />
+    <Project Path="src/Quire.Interop.VSInterfacesLib/Quire.Interop.VSInterfacesLib.csproj" />
     <Project Path="src/Quire.Mcd/Quire.Mcd.csproj" />
     <Project Path="src/Quire.Media3D/Quire.Media3D.csproj" />
     <Project Path="src/Quire.Mirror/Quire.Mirror.csproj" />
     <Project Path="src/Quire.Mpl.Emit/Quire.Mpl.Emit.csproj" />
     <Project Path="src/Quire.Mpl.Modules/Quire.Mpl.Modules.csproj" />
-    <Project Path="src/Quire.Mpl/Quire.Mpl.csproj" />
     <Project Path="src/Quire.Mpl.Runtime/Quire.Mpl.Runtime.csproj" />
+    <Project Path="src/Quire.Mpl/Quire.Mpl.csproj" />
+    <Project Path="src/Quire.Msclr/Quire.Msclr.csproj" />
     <Project Path="src/Quire.Utils/Quire.Utils.csproj" />
-    <Project Path="src/Quire.Interop.VSInterfacesLib/Quire.Interop.VSInterfacesLib.csproj" />
     <Project Path="src/Quire/Quire.csproj" />
   </Folder>
   <Folder Name="/tests/">

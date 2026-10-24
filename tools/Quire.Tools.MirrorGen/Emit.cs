@@ -105,10 +105,15 @@ public static class Emit
         }
 
         // Hand-written code may need projects the generated signatures no longer mention (a stub implemented by hand
-        // can be the last generated use of another project's type): keep what the built assembly references.
+        // can be the last generated use of another project's type): keep what the built assembly references, the
+        // WPF and WinForms frameworks included.
         foreach (var (project, d) in deps)
             foreach (var reference in BuiltReferences(repo, project))
+            {
                 if (reference != project && deps.ContainsKey(reference)) d.Projects.Add(reference);
+                if (Externals.WpfAssemblies.Contains(reference)) d.Wpf = true;
+                if (Externals.WinFormsAssemblies.Contains(reference)) d.WinForms = true;
+            }
 
         // InternalsVisibleTo, as Mathcad declares it, mapped to the host projects.
         foreach (var asm in mathcad.Assemblies.Values)
@@ -231,11 +236,7 @@ public static class Emit
     /// <summary>Assembly names the project's latest Release build references.</summary>
     private static IEnumerable<string> BuiltReferences(string repo, string project)
     {
-        var bin = Path.Combine(repo, "src", project, "bin", "Release");
-        if (!Directory.Exists(bin)) return [];
-        var dll = Directory.GetDirectories(bin).Select(d => Path.Combine(d, project + ".dll")).Where(File.Exists)
-            .OrderByDescending(File.GetLastWriteTimeUtc).FirstOrDefault();
-        if (dll == null) return [];
+        if (Shape.BuiltAssembly(repo, project) is not { } dll) return [];
         using var pe = new System.Reflection.PortableExecutable.PEReader(File.OpenRead(dll));
         var md = System.Reflection.Metadata.PEReaderExtensions.GetMetadataReader(pe);
         return [.. md.AssemblyReferences.Select(h => md.GetString(md.GetAssemblyReference(h).Name))];

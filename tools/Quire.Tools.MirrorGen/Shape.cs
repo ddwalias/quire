@@ -37,7 +37,8 @@ public static class Shape
             yield break;
         }
 
-        foreach (var f in t.Fields.Where(f => Visible(f.Access, f.Name)))
+        // A field-like event's backing field shares its name; an event with written accessors has none.
+        foreach (var f in t.Fields.Where(f => Visible(f.Access, f.Name) && !t.Events.Any(e => e.Name == f.Name)))
             yield return ($"{prefix}F {Text(f.Access)}{(f.Static && !f.Const ? " static" : "")}{(f.Const ? " const" : "")}{(f.ReadOnly ? " readonly" : "")} {f.Type} {f.Name}", f);
         foreach (var p in t.Properties)
         {
@@ -132,16 +133,37 @@ public static class Shape
         return ok;
     }
 
-    /// <summary>Each src project's newest Release build output.</summary>
+    /// <summary>Each src project's newest Release build output: for a mixed-mode project (D19), the C++/CLI DLL it ships.</summary>
     public static IEnumerable<(string Project, string Dll)> BuiltProjects(string repo)
     {
         foreach (var dir in Directory.GetDirectories(Path.Combine(repo, "src")).OrderBy(d => d, StringComparer.Ordinal))
-        {
-            string project = Path.GetFileName(dir), bin = Path.Combine(dir, "bin", "Release");
-            if (!Directory.Exists(bin)) continue;
-            var dll = Directory.GetDirectories(bin).Select(d => Path.Combine(d, project + ".dll")).Where(File.Exists)
-                .OrderByDescending(File.GetLastWriteTimeUtc).FirstOrDefault();
-            if (dll != null) yield return (project, dll);
-        }
+            if (ReleaseOutput(repo, Path.GetFileName(dir)) is { } dll) yield return (Path.GetFileName(dir), dll);
+    }
+
+    private static string? ReleaseOutput(string repo, string project)
+    {
+        string bin = Path.Combine(repo, "src", project, "bin", "Release");
+        return Directory.Exists(bin)
+            ? Directory.GetDirectories(bin).Select(d => Path.Combine(d, project + ".dll")).Where(File.Exists)
+                .OrderByDescending(File.GetLastWriteTimeUtc).FirstOrDefault()
+            : null;
+    }
+
+    /// <summary>
+    /// A project's newest Release C# compilation: its generated stubs and hand-written C#. A mixed-mode Release build
+    /// (D19) replaces the DLL in bin with the C++/CLI one, whose members come from C++ source; the C# stand-in stays in obj.
+    /// </summary>
+    public static string? BuiltAssembly(string repo, string project)
+    {
+        var dll = ReleaseOutput(repo, project);
+        if (dll == null || IsILOnly(dll)) return dll;
+        string standIn = Path.Combine(repo, "src", project, "obj", "Release", Path.GetFileName(Path.GetDirectoryName(dll))!, project + ".dll");
+        return File.Exists(standIn) ? standIn : null;
+    }
+
+    private static bool IsILOnly(string dll)
+    {
+        using var pe = new System.Reflection.PortableExecutable.PEReader(File.OpenRead(dll));
+        return pe.PEHeaders.CorHeader is { } cor && (cor.Flags & System.Reflection.PortableExecutable.CorFlags.ILOnly) != 0;
     }
 }

@@ -3,7 +3,7 @@
 namespace Quire.Automation;
 
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.Automation.ComClassesGuides, Ptc.MathcadPrime.Automation")]
-internal static class ComClassesGuides
+internal static partial class ComClassesGuides
 {
     internal const string ApplicationObsolete = "A3E4E622-5CFF-4973-96EB-1E3EAB5151C8";
     internal const string Worksheet = "A2C7A48C-4B32-495e-AF0B-8357B115A48C";

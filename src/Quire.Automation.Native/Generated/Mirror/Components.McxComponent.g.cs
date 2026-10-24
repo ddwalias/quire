@@ -9,7 +9,7 @@
 namespace Quire.Components;
 
 [global::Quire.Mirror.MirrorOf("Mathcad.Components.McxComponent, componentsmgd")]
-public partial class McxComponent : global::Quire.Components.IMcxComponent
+public partial class McxComponent : global::Quire.Components.IMcxComponent, global::Quire.VSINTERFACESLib.IVSItemContainerExec
 {
     [global::Quire.Mirror.MirrorStub]
     private static readonly string[] PROGIDS;
@@ -17,6 +17,8 @@ public partial class McxComponent : global::Quire.Components.IMcxComponent
     private static readonly bool MultiThreaded;
     [global::Quire.Mirror.MirrorStub]
     private bool running;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.VSINTERFACESLib.IVSObjectExec2 executive;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Exception lastError;
     [global::Quire.Mirror.MirrorStub]
@@ -27,6 +29,8 @@ public partial class McxComponent : global::Quire.Components.IMcxComponent
     public object Origin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public object CWD { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    public global::Quire.VSINTERFACESLib.IVSObjectExec2 Executive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Exception LastError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -43,6 +47,14 @@ public partial class McxComponent : global::Quire.Components.IMcxComponent
     public void McError(bool bSet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object[] Eval(object[] inputs, object reserved) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public void Stepped(global::Quire.VSINTERFACESLib.IVSObject lpVSObject, ref int lpKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public void GetAppState(global::Quire.VSINTERFACESLib.IVSObject lpVSObject, ref global::Quire.VSINTERFACESLib.VSAPPSTATE pState) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public void Error(global::Quire.VSINTERFACESLib.IVSObject lpVSObject, string pcszError) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public void SetAppState(global::Quire.VSINTERFACESLib.IVSObject lpVSObject, global::Quire.VSINTERFACESLib.VSAPPSTATE vsState) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public McxComponent() { }
 }

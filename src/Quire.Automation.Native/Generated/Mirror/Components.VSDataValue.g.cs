@@ -9,7 +9,7 @@
 namespace Quire.Components;
 
 [global::Quire.Mirror.MirrorOf("Mathcad.Components.VSDataValue, componentsmgd")]
-public partial class VSDataValue : global::Quire.Automation.MatrixValue, global::Quire.Components.IPersistStream, global::Quire.Components.IPersist, global::Quire.Components.IVSPersistStream
+public partial class VSDataValue : global::Quire.Automation.MatrixValue, global::Quire.VSINTERFACESLib.IVSDataType, global::Quire.VSINTERFACESLib.IVSUnitData, global::Quire.Components.IPersistStream, global::Quire.Components.IPersist, global::Quire.Components.IVSPersistStream
 {
     [global::Quire.Mirror.MirrorStub]
     private static readonly byte[] MatrixMarker;
@@ -20,7 +20,11 @@ public partial class VSDataValue : global::Quire.Automation.MatrixValue, global:
     [global::Quire.Mirror.MirrorStub]
     public bool IsScalar { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    public global::Quire.VSINTERFACESLib.VSDATATYPE DataType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public uint Dimensions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    public global::Quire.VSINTERFACESLib.VSDATABOUNDS Bounds { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual bool IsDimensionless { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -40,6 +44,8 @@ public partial class VSDataValue : global::Quire.Automation.MatrixValue, global:
     [global::Quire.Mirror.MirrorStub]
     public void InitNew(uint rows, uint cols, bool bImag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    public global::Quire.VSINTERFACESLib.IVSDataType Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public int Lock(bool writeLock) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int LockI(bool writeLock) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -57,6 +63,14 @@ public partial class VSDataValue : global::Quire.Automation.MatrixValue, global:
     public string GetStringValue(uint row, uint col) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetStringValue(uint row, uint col, string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public global::Quire.VSINTERFACESLib.IVSDataType GetElement(uint row, uint col) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public void SetElement(uint row, uint col, global::Quire.VSINTERFACESLib.IVSDataType elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public global::Quire.VSINTERFACESLib.IVSDataType GetSubmatrix(uint srow, uint scol, global::Quire.VSINTERFACESLib.VSDATABOUNDS bounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public void SetSubmatrix(uint drow, uint dcol, global::Quire.VSINTERFACESLib.IVSDataType mat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetUnitSystem(int unit_sys) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

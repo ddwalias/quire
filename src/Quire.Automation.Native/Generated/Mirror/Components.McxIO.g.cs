@@ -12,7 +12,11 @@ namespace Quire.Components;
 internal partial class McxIO
 {
     [global::Quire.Mirror.MirrorStub]
+    protected global::Quire.VSINTERFACESLib.IVSDataType data;
+    [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Automation.UnitAction action;
+    [global::Quire.Mirror.MirrorStub]
+    public global::Quire.VSINTERFACESLib.IVSDataType Data { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsValid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
