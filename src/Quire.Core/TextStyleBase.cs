@@ -24,9 +24,6 @@ public partial class TextStyleBase
     public Style Style { get; private set; }
 
     [MirrorVerified("Release IL")]
-    public Nullable<Quire.Core.TextAlignmentExt> TextAlignmentExt => default;
-
-    [MirrorVerified("Release IL")]
     public static string TextStyleUniqueKeyGenerator(string key)
     {
         return string.Concat(TextStyleStripKeyGenerator(key), "~", DateTime.Now.Ticks.ToString());
@@ -40,20 +37,6 @@ public partial class TextStyleBase
             return key.Substring(0, key.LastIndexOf('~'));
         }
         return key;
-    }
-
-    [MirrorVerified("Release IL")]
-    public object GetSetterValue(string propertyName, bool isFixInHeritage = false)
-    {
-        if (_htPropertyToIndex[propertyName] != null)
-        {
-            return ((System.Windows.Setter)Style.Setters[(int)_htPropertyToIndex[propertyName]]).Value;
-        }
-        if (isFixInHeritage)
-        {
-            return GetBasedOnSetterValue(Style, propertyName);
-        }
-        return null;
     }
 
     public bool IsDeletedProperty(string propertyName, object value)
@@ -437,6 +420,25 @@ public partial class TextStyleBase
     public Nullable<TextAlignment> TextAlignment { get => _textAlignment; set => Update("TextAlignment", value); }
 
     [MirrorVerified("Release IL")]
+    protected Nullable<TextAlignment> _textAlignment;
+
+    [MirrorVerified("Release IL")]
+    public global::System.Reflection.FieldInfo GetDependencyProperties(Type type, string propertyName)
+    {
+        global::System.Collections.Generic.IEnumerable<global::System.Reflection.FieldInfo> source = from p in type.GetFields(global::System.Reflection.BindingFlags.Static | global::System.Reflection.BindingFlags.Public)
+            where p.Name == propertyName + "Property"
+            select p;
+        if (source.Count() <= 0)
+        {
+            return null;
+        }
+        return source.FirstOrDefault();
+    }
+
+    [MirrorVerified("Release IL")]
+    public Nullable<Quire.Core.TextAlignmentExt> TextAlignmentExt => default;
+
+    [MirrorVerified("Release IL")]
     public static object GetSetterValue(Style style, string propertyName)
     {
         if (style != null)
@@ -446,6 +448,20 @@ public partial class TextStyleBase
             {
                 return setter.Value;
             }
+        }
+        return null;
+    }
+
+    [MirrorVerified("Release IL")]
+    public object GetSetterValue(string propertyName, bool isFixInHeritage = false)
+    {
+        if (_htPropertyToIndex[propertyName] != null)
+        {
+            return ((System.Windows.Setter)Style.Setters[(int)_htPropertyToIndex[propertyName]]).Value;
+        }
+        if (isFixInHeritage)
+        {
+            return GetBasedOnSetterValue(Style, propertyName);
         }
         return null;
     }
