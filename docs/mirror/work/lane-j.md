@@ -1,6 +1,6 @@
 # Lane J: mshex.dll → Quire.Native.Mshex
 
-**Status: incomplete.** 36 of 380 exports pass strict byte validation. Export parity: 344 missing, 0 extra.
+**Status: incomplete.** 66 of 380 exports pass strict byte validation. Export parity: 314 missing, 0 extra.
 
 - **Owner:** Lane J (native, `mshex.dll`)
 - **Branch:** `mirror/j-mshex-202610241256`
@@ -19,6 +19,9 @@
 | `Hex::Module` flag, datum, state and loadable accessors | `GetFlags`, `GetDatum`, `GetState`, `IsPersistent`, `IsTransient`, `IsLoadable`, `HasFlags`, `SetLoadable`, `SetDatum`, `SetFlags`, `AddFlags`, `ClearFlags` | 12/12 OK, 0 unverified | `hex_module.{h,cpp}`. Layout from the accessors: vptr at 0, `persistent_` at 0x48, flags at 0x78, datum at 0x80, state at 0x88, loadable at 0x90. The flag mutators return the previous flags. Bytes 0x08..0x47 and 0x50..0x77 are not yet inferred, so they stay as padding. |
 | `Hex::Error` tag and code | `Error::GetTag`, `Error::GetCode` | 2/2 OK, 0 unverified | `hex_error.{h,cpp}`. Layout: tag at 0, code at 0x18. `Error`'s other members are not yet inferred. `Error::GetOffset`, `GetExtent` and `GetHandle` read the `Tag` getters, which are inline and exported from `hex_tag.h` (approved decision). |
 | `Hex::Tag` getters, inline | `GetOffset`, `GetExtent`, `GetHandle` | 3/3 OK, 0 unverified | `hex_tag.h`. Inline with `HEX_EXPORT`, so `Error`'s translation unit can inline them. The setters stay out of line. |
+| Assignments and stubs of `Value`, `Environment`, `Environment::Visitor`, `Module::State`, `Tag`, `Node`, `Token`, `Interpreter`, `Library`, `DefaultNames::hash` | copy and move assignments (`= default`), `Environment::AddValue`, `SetValue`, `Visitor::Visit`, `State::GetExports`, `GetImports`, `IsConsistent` | 20/20 OK, 0 unverified | `hex_value`, `hex_environment`, `hex_module`, `hex_tag`, `hex_node`, `hex_token`, `hex_interpreter`. Assignments copy nothing where the class has no members of its own (the 4-byte `mov rax,rcx; ret` group). `Tag`'s copy and move assignments copy 24 bytes. The `xor al,al` and `mov al,1` stubs return `false` or `true`. `State`'s layout is not inferred, so only its virtual and non-virtual members are declared. |
+| `Hex::imbue` constructor | `imbue(Interpreter const*)` | 1/1 OK, 0 unverified | `hex_imbue`. Stores the pointer and returns `this`. |
+| Comparison bases and `Library`/`DefaultNames::hash` assignments | copy and move assignments of `equality_comparable`, `less_than_comparable` and `totally_ordered` (instantiated for `Signature`), plus `Library` and `DefaultNames::hash` | 8/8 OK, 0 unverified | `hex_comparable`, `hex_library`, `hex_default_names`. Member-less classes. |
 | `Hex::Lexer` flags | `SetFlag`, `GetFlag` | 2/2 OK, 0 unverified | `hex_lexer.{h,cpp}`. Both return `false`. |
 | `Hex::Interpreter` options and environment | `SetOption`, `GetOption`, `SetEnvironment` | 3/3 OK, 0 unverified | `hex_interpreter.{h,cpp}`. All return `false`. |
 
@@ -52,9 +55,6 @@ Build: MSBuild `Quire.Native.Mshex.vcxproj`, Release|x64, toolset v145, `/O2 /Gy
 - **Compiler build (corrected).** The lane now builds with the BuildTools toolset (`C:\BuildTools\VS18.6-msvc`, `cl` 19.51.36246), which matches the original's Rich header. Build with `C:\BuildTools\VS18.6-msvc\MSBuild\Current\Bin\MSBuild.exe`. The Professional install's `cl` reports 19.51.36260 and is not used. The 36 functions still pass with 0 unverified targets under 36246.
 - **The `0xa7c0` register difference is not the compiler build.** With 36246 the accessor still uses `eax` where the original uses `edx`. I also tried `/O1 /Os /Ox /Oi- /Ob1`, `/GL` with `/LTCG`, a helper-call variant, a local-copy variant and `noexcept`. `/Os` gives the original's branch sense (`jle` over an inline slow path), but it does not tail-jump to `pword`, which the original does. None matches the original exactly.
 - **Remaining blocker: source of `0xa7c0`.** The original accessor differs from every local variant in one register and in block layout. Finding the source shape (or the flags that produce it) is the open problem.
-- **Earlier note (superseded):** the compiler build was suspected to explain the difference.
-- To validate `operator<<` the lane must write sources for the remaining helpers The original's Rich header shows build `36246` (MSVC 19.51.36246) for its C/C++ objects. The lane's compiler is `19.51.36260`, from the installed toolset. The only toolsets installed are 14.44.35207 and 14.51.36231. I tried 14.44, and `/O1 /Os /Ox /Oi- /Ob1 /Ot /GF /Zc:threadSafeInit-`, and none reproduces the original's `edx` register or block layout. The shape difference is therefore most likely the build difference. It cannot be confirmed here, because build 36246 is not installed.
-- To validate `operator<<` the lane must write sources for the remaining helpers, which needs the exact shape of the thread-local object and its constructor. I have not identified that shape. Next step: compile a minimal `thread_local` object with a non-trivial constructor, and compare its guard with `0xa7c0`.
 
 ## Imports (D10)
 
@@ -92,3 +92,12 @@ The brief keeps `tools/validation/native_bytes.py` under the maintainer. This is
   stay as they are.
 
 The next Lane J batches are the Module and Error leaves, which need no internal calls.
+
+## Parked (D25)
+
+The maintainer parked these after the Rich-header finding (D25): the original's `/GL` objects are optimized by the linker, so no COFF compile reproduces them.
+
+- **`operator<<(ostream&, Error const&)`** (`0xa2d0`). It calls `0x99e0`, which calls `0xa7c0`. `0xa7c0` is the stream-slot accessor `return stream.pword(index)`, with `index` from a function-local static `xalloc()`. A candidate with that source matches the instructions, the guard and the tail jump, except that the original reads the epoch into `edx` and the candidate into `eax`. No flag or build I tried reproduces it.
+- **`Error::GetDetails`** (`0x8780`, 399 bytes, returns `std::string`). It calls standard-library internals, which are linker-optimized in the original.
+
+**SECREL (deferred).** It is needed only by the parked TLS accessor. When it is added, its base is the TLS directory's `StartAddressOfRawData` (`0x12188`), not a `.tls` section: the original has no `.tls` section, because `.tls` is merged into `.rdata`.
