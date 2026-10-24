@@ -3,7 +3,7 @@
 
 namespace Quire.Wpf;
 
-partial class BooleanOperatorMultiConverter
+partial class BooleanOperatorMultiConverter : global::System.Windows.Data.IMultiValueConverter
 {
     public const string OperatorAnd = "and";
     public const string OperatorOr = "or";
