@@ -208,6 +208,12 @@ public partial class ImageUtils
         return false;
     }
 
+    public static byte[] B16StringToBytes(string hexString)
+    {
+        return (from ind in Enumerable.Range(0, hexString.Length / 2)
+                select Convert.ToByte(hexString.Substring(ind * 2, 2), 16)).ToArray();
+    }
+
     [MirrorVerified("Release IL")]
     public static BitmapImage CreateBitmapImageWithCacheOptions(Uri uri)
     {
