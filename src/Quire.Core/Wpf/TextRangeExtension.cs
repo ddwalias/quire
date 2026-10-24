@@ -25,7 +25,28 @@ public static partial class TextRangeExtension
 
     public static IEnumerable<Run> EnumerateRunsInRange(this global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public static IEnumerable<T> EnumerateInlinesInRange<T>(this global::System.Windows.Documents.TextRange range, bool allowEmpty = false) where T : Inline => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static IEnumerable<T> EnumerateInlinesInRange<T>(this global::System.Windows.Documents.TextRange range, bool allowEmpty = false) where T : Inline
+    {
+        if (global::Quire.DebugTools.AssertNotNull(range, null).Failed || global::Quire.DebugTools.DevAssert(typeof(T) != typeof(Span), null).Failed)
+        {
+            return Enumerable.Empty<T>();
+        }
+        if (range.IsEmpty)
+        {
+            if (!allowEmpty)
+            {
+                return Enumerable.Empty<T>();
+            }
+            return range.Start.GetTextElementFromTextPointer<T>().YieldOrEmpty();
+        }
+        FlowDocument document = range.GetDocument();
+        if (document != null)
+        {
+            return range.EnumerateInlinesInRange<T>(document.Blocks);
+        }
+        global::Quire.DebugTools.FailAssertion(null, global::System.Array.Empty<object>());
+        return Enumerable.Empty<T>();
+    }
 
     private static IEnumerable<T> EnumerateInlinesInRange<T>(this global::System.Windows.Documents.TextRange range, IEnumerable<Block> blocks) where T : Inline => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
