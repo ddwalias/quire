@@ -11,6 +11,4 @@ namespace Quire.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Serialization.TextRegionSerializationHelper, Ptc.Core")]
 public static partial class TextRegionSerializationHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void CopyImagesFromPackageIntoFlowDocument(global::System.Xml.XmlNode flowDocumentXaml, global::Quire.Serialization.IDeS11NProvider d11NProvider, global::System.Xml.XmlNamespaceManager nsManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

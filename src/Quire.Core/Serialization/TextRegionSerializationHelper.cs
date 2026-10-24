@@ -1,6 +1,7 @@
 #nullable disable
 using System.IO;
 using System.IO;
+using System.IO.Packaging;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows;
@@ -65,6 +66,27 @@ public static partial class TextRegionSerializationHelper
 
     [MirrorVerified("PtcSerializationTextRegionSerializationHelperMechanicalDifferentialTests")]
     public static void SaveTextRangeAsXamlPackage(TextRangeExtended src, Stream stream, bool isConversion = false) => src.Save(stream, DataFormats.XamlPackage, true, isConversion);
+
+    public static void CopyImagesFromPackageIntoFlowDocument(XmlNode flowDocumentXaml, IDeS11NProvider d11NProvider, XmlNamespaceManager nsManager)
+    {
+        if (d11NProvider.Helper.FormatVersion == null || d11NProvider.Helper.FormatVersion < _firstVerToNotPackFlowDocumentImages)
+        {
+            string xPath = string.Format("//{0}:{1}", "p", "Image");
+            foreach (XmlNode item in SelectNodes(flowDocumentXaml, xPath, nsManager))
+            {
+                string attributeValueAndRemoveIt = GetAttributeValueAndRemoveIt(item, "item-idref");
+                if (DebugTools.DevAssert(!string.IsNullOrEmpty(attributeValueAndRemoveIt), null).Passed)
+                {
+                    PackageRelationship relationship = d11NProvider.PackagePart.GetRelationship(attributeValueAndRemoveIt);
+                    string value = Quire.Wpf.ImageUtils.CopyImageToTempBitmap(PackUriHelper.Create(new Uri(Path.GetFullPath(d11NProvider.FilePath), UriKind.Absolute), relationship.TargetUri)).ToString();
+                    if (DebugTools.DevAssert(!string.IsNullOrEmpty(value), null).Passed)
+                    {
+                        ((XmlElement)item).SetAttribute("Source", value);
+                    }
+                }
+            }
+        }
+    }
 
     [MirrorVerified("PtcSerializationTextRegionSerializationHelperMechanicalDifferentialTests")]
     public static XmlNodeList SelectNodes(XmlNode parentNode, string xPath, XmlNamespaceManager namespaceManager) => parentNode.SelectNodes(xPath, namespaceManager);
