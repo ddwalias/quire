@@ -15,12 +15,6 @@ public partial class textType
     [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
     private bool istextblockField;
 
-    [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
-    public textType()
-    {
-        istextblockField = false;
-    }
-
     private void SetDocument(FlowDocument document)
     {
         DebugTools.DevAssert(_document == null && document != null, null);
@@ -126,22 +120,10 @@ public partial class textType
     private XmlElement anyField;
 
     [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
-    public XmlElement Any { get => anyField; set => anyField = value; }
-
-    [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
     private textEmbeddedRegionType[] regionsField;
 
     [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
-    public textEmbeddedRegionType[] regions { get => regionsField; set => regionsField = value; }
-
-    [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
-    public bool istextblock { get => istextblockField; set => istextblockField = value; }
-
-    [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
     private string itemidrefField;
-
-    [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
-    public string itemidref { get => itemidrefField; set => itemidrefField = value; }
 
     [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
     public int VisualNumberOfLines { get; set; }
@@ -157,9 +139,6 @@ public partial class textType
 
     [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
     private global::System.Windows.Documents.FlowDocument DocumentWithTextFormat { get; set; }
-
-    [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
-    public IEnumerable<string> MC14ConversionLossAnnotations => MC14ConversionLossAnnotationsLocal;
 
     [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
     public List<string> MC14ConversionLossAnnotationsLocal { get; set; }

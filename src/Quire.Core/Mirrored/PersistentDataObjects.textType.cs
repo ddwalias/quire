@@ -1,12 +1,47 @@
 #nullable disable
 #pragma warning disable
 using System.Linq;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
 partial class textType
 {
-    public global::Quire.Serialization.IS11NProvider S11NProvider { get => _s11NProvider; set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
+    public textType()
+    {
+        istextblockField = false;
+    }
+
+    [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
+    public global::System.Xml.XmlElement Any { get => anyField; set => anyField = value; }
+
+    [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
+    public textEmbeddedRegionType[] regions { get => regionsField; set => regionsField = value; }
+
+    [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
+    public bool istextblock { get => istextblockField; set => istextblockField = value; }
+
+    [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
+    public string itemidref { get => itemidrefField; set => itemidrefField = value; }
+
+    public global::System.Collections.Generic.IEnumerable<string> MC14ConversionLossAnnotations => MC14ConversionLossAnnotationsLocal;
+    public global::Quire.Serialization.IS11NProvider S11NProvider
+    {
+        get => _s11NProvider;
+        set
+        {
+            if (_s11NProvider != value)
+            {
+                _s11NProvider = value;
+                Regions.EmptyIfNull().Each((IRegionType region) =>
+                {
+                    region.S11NProvider = value;
+                });
+                SetXaml();
+            }
+        }
+    }
     public bool SaveInline
     {
         get => _saveInline;
