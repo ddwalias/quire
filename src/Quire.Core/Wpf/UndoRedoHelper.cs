@@ -1,5 +1,6 @@
 #nullable disable
 using System.Windows.Input;
+using System.Windows;
 using Quire.Mirror;
 using Quire.Undo;
 
@@ -7,6 +8,11 @@ namespace Quire.Wpf;
 
 public static partial class UndoRedoHelper
 {
+    private static ICanBlockUndoRedo TryFindICanBlockUndoRedoAncestorUntilAncestorIsReached(object topParent, RoutedEventArgs args)
+    {
+        return (args.OriginalSource as DependencyObject)?.TryFindAncestorIncludingSelfUntilGivenAncestorIsReached<ICanBlockUndoRedo>(topParent as DependencyObject);
+    }
+
     [MirrorVerified("Release IL")]
     public static void CanExecuteUndoCommand(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = CanUndo(sender, e);
 

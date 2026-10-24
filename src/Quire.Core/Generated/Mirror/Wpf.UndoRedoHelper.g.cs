@@ -12,8 +12,6 @@ namespace Quire.Wpf;
 public static partial class UndoRedoHelper
 {
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Wpf.ICanBlockUndoRedo TryFindICanBlockUndoRedoAncestorUntilAncestorIsReached(object topParent, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static bool CanUndo(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool CanRedo(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
