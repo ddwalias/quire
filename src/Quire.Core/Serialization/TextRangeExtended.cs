@@ -20,4 +20,16 @@ public partial class TextRangeExtended
             SaveInternal(st, preserveTextElements, isConversion);
         }
     }
+
+    public new void Load(System.IO.Stream st, string format)
+    {
+        if (format != System.Windows.DataFormats.XamlPackage)
+        {
+            base.Load(st, format);
+        }
+        else
+        {
+            LoadInternal(st);
+        }
+    }
 }
