@@ -17,7 +17,9 @@ or create agent threads. Each user-started agent creates its own worktree from c
 2. Read their original Mathcad IL (`python tools/reference/reference.py <type> --il`).
 3. Implement the same members using the project's name mappings.
 4. Build Release and compare IL (`python tools/validation/release_il.py --base main --project <project>`).
-5. Commit and land using `python tools/validation/lane_merge.py <branch>`.
+5. Commit and land using `python C:/Projects/Quire/tools/validation/lane_merge.py <branch>` (main's gate;
+   a lane's own copy re-runs main's). It validates outside the merge lock, so other lanes are not blocked.
+   Native projects (`src/Quire.Native.*`) are checked by `native_gate.py` in the same command.
 
 Release is the default for every IL operation. Never inspect or compare Debug IL.
 Changed methods must match; previously exact methods in affected projects must remain exact.

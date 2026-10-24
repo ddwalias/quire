@@ -15,10 +15,21 @@ sealed record RawMethod(string Owner, string Name, string Key, int Token, string
     string Modifiers = "", int? MaxStack = null, PInvoke? Import = null, bool NativeCode = false,
     MethodSignature<TypeSig> Signature = default, bool Static = false, MethodImplAttributes? RuntimeProvided = null);
 /// <summary>What metadata records of a P/Invoke beside its name and parameter types: the method and implementation
-/// flags, the signature calling convention, and the ImplMap module, entry point and import attributes.</summary>
+/// flags, the signature calling convention, the ImplMap module, entry point and import attributes, and
+/// <paramref name="Parameters"/>: the attributes (in, out, optional...) and marshalling descriptor of the return value
+/// (#0) and each parameter, which decide what the marshaller passes; names are left out.</summary>
 sealed record PInvoke(MethodAttributes Attributes, MethodImplAttributes ImplAttributes, SignatureHeader Header,
-    string Module, string EntryPoint, MethodImportAttributes ImportAttributes)
+    string Module, string EntryPoint, MethodImportAttributes ImportAttributes, string Parameters = "")
 {
+    /// <summary><see cref="Parameters"/> of a method: rows with neither attributes nor a descriptor say nothing, so a
+    /// compiler that writes such a row (for a name) and one that does not agree.</summary>
+    public static string Marshalling(MetadataReader md, MethodDefinition method) => string.Join(";", method.GetParameters()
+        .Select(md.GetParameter)
+        .Select(p => (p.SequenceNumber, Attributes: p.Attributes & ~ParameterAttributes.HasDefault,
+            Descriptor: p.GetMarshallingDescriptor() is { IsNil: false } blob ? Convert.ToHexString(md.GetBlobBytes(blob)) : ""))
+        .Where(p => p.Attributes != 0 || p.Descriptor.Length > 0)
+        .OrderBy(p => p.SequenceNumber).Select(p => $"#{p.SequenceNumber} {p.Attributes} {p.Descriptor}".TrimEnd()));
+
     public IEnumerable<string> Differences(PInvoke other)
     {
         if (Attributes != other.Attributes) yield return $"method flags {Attributes} vs {other.Attributes}";
@@ -27,6 +38,7 @@ sealed record PInvoke(MethodAttributes Attributes, MethodImplAttributes ImplAttr
         if (Module != other.Module) yield return $"module {Module} vs {other.Module}";
         if (EntryPoint != other.EntryPoint) yield return $"entry point {EntryPoint} vs {other.EntryPoint}";
         if (ImportAttributes != other.ImportAttributes) yield return $"import attributes {ImportAttributes} vs {other.ImportAttributes}";
+        if (Parameters != other.Parameters) yield return $"parameter marshalling {Parameters} vs {other.Parameters}";
     }
 }
 sealed class Artifact
@@ -169,7 +181,7 @@ sealed class Artifact
                 PInvoke? import = null;
                 if ((m.Attributes & MethodAttributes.PinvokeImpl) != 0 && m.GetImport() is { Module.IsNil: false } map)
                     import = new(m.Attributes, m.ImplAttributes, sig.Header, md.GetString(md.GetModuleReference(map.Module).Name),
-                        md.GetString(map.Name), map.Attributes);
+                        md.GetString(map.Name), map.Attributes, PInvoke.Marshalling(md, m));
                 bool native = m.RelativeVirtualAddress != 0 && ((m.ImplAttributes & MethodImplAttributes.CodeTypeMask) != MethodImplAttributes.IL
                     || (m.ImplAttributes & MethodImplAttributes.Unmanaged) != 0);
                 bool runtime = m.RelativeVirtualAddress == 0 && (m.Attributes & (MethodAttributes.Abstract | MethodAttributes.PinvokeImpl)) == 0

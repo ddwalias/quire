@@ -16,14 +16,18 @@ is native are reported but do not fail; every other method follows the usual rul
 see the Mathcad install, so no original IL can reach a candidate.
 """
 import argparse
+import contextlib
+import hashlib
 import json
 import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
 import uuid
+from xml.sax.saxutils import quoteattr
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_INSTALL = (r'C:\Program Files\PTC\Mathcad Prime 12.0.1.0' if os.name == 'nt'
@@ -35,7 +39,8 @@ def mathcad_install(environ=os.environ):
 
 
 def git(*args, cwd=ROOT):
-    return subprocess.run(['git', *map(str, args)], cwd=cwd, capture_output=True,
+    # Without renames, --name-only lists both sides of a move: a file moved out of a project changes that project too.
+    return subprocess.run(['git', '-c', 'diff.renames=false', *map(str, args)], cwd=cwd, capture_output=True,
                           text=True, check=True).stdout.strip()
 
 
@@ -43,17 +48,37 @@ def production_projects(root=ROOT):
     return {p.stem for p in (root / 'src').glob('*/*.csproj')}
 
 
+# MethodAudit pairs every production type through the type map, so a change to it can change any verdict.
+TYPE_MAP = 'docs/mirror/type-map.csv'
+
+
 def affected_projects(base, root=ROOT):
+    """Production projects whose Release IL or verdicts the diff from base can change: those with a changed file under
+    src/<P>/; every project whose ProjectReference closure (build_closure, through .csproj and imported .props) reaches
+    a changed src directory, since a const, enum or default value is compiled into its users; and all of them for root
+    build configuration or the type map. MethodAudit/MirrorGen changes select nothing: check builds the judge from the
+    base commit, so they cannot change a verdict of their own branch, and both scans of later runs use the new judge."""
     paths = git('diff', '--name-only', base, cwd=root).splitlines()
     paths += git('ls-files', '--others', '--exclude-standard', cwd=root).splitlines()
-    projects = production_projects(root)
-    projects |= {Path(p).stem for p in git('ls-tree', '-r', '--name-only', base, '--', 'src', cwd=root).splitlines()
-                 if p.endswith('.csproj')}
+    present = production_projects(root)
+    projects = present | {Path(p).stem for p in git('ls-tree', '-r', '--name-only', base, '--', 'src', cwd=root).splitlines()
+                          if p.endswith('.csproj')}
     # Shared compiler inputs can change every output, so they require the full IL scan.
-    if any('/' not in p and p.endswith(('.props', '.targets', '.json', '.slnx')) for p in paths):
+    if any('/' not in p and p.endswith(('.props', '.targets', '.json', '.slnx')) or p == TYPE_MAP for p in paths):
         return sorted(projects)
-    return sorted({parts[1] for p in paths if len(parts := p.split('/')) >= 3
-                   and parts[0] == 'src' and parts[1] in projects})
+    changed = {parts[1] for p in paths if len(parts := p.split('/')) >= 3 and parts[0] == 'src'}
+    references = {name: project_references(root, root / 'src' / name) for name in present}
+    return sorted((changed & projects) | {p for p in present if changed & closure_names(references, p)})
+
+
+def closure_names(references, project):
+    """project plus every src directory its references reach, transitively (cycles allowed)."""
+    seen, todo = set(), [project]
+    while todo:
+        if (name := todo.pop()) not in seen:
+            seen.add(name)
+            todo += references.get(name, [])
+    return seen
 
 
 def selected(row, types, methods):
@@ -139,6 +164,7 @@ def compare(before, after, types=(), methods=()):
                                          ('body_sha256', 'shape_matches', 'declaration_only'))
         # A generated stub is unfinished wherever it sits and however MirrorGen spells it (the file a
         # MirrorStub throw records, a constructor stub's chaining); replacing one stub with another is not a change.
+        # [MirrorStub] counts: MirrorGen re-spells a constructor stub's chaining, and only generated code carries it.
         if changed and previous is not None and stub(previous) and stub(row) \
                 and previous.get('shape_matches') == row.get('shape_matches'):
             changed = False
@@ -159,7 +185,9 @@ def compare(before, after, types=(), methods=()):
                       else '; '.join(row.get('structure_differences', [])[:2]) or 'native import record differs')
             failures.append({'method': key, 'reason': reason})
             continue
-        if row.get('engine_native') is True:
+        # D10 exempts an engine-native body, not a member that was exact, nor a new one without a counterpart.
+        if row.get('engine_native') is True and not (previous and previous.get('exact_match') is True) \
+                and not (previous is None and row.get('original') is None):
             continue
         # D21: an existing product-only member (no Mathcad counterpart before or after) may change; new ones still fail.
         # Not a compiler-generated helper of a mirrored type (a closure whose ordinal missed), nor a selected member.
@@ -168,7 +196,9 @@ def compare(before, after, types=(), methods=()):
                 and not selected(row, types, methods):
             continue
         if row.get('shape_matches') is not True or not (row.get('exact_match') is True or row.get('declaration_only') is True):
-            reason = ('no Mathcad counterpart' if row.get('original') is None else
+            # MethodAudit records why it could not pair or read a row (an ambiguous modifier tie) in structure_differences.
+            reason = (('; '.join(row.get('structure_differences', [])[:2]) or 'no Mathcad counterpart')
+                      if row.get('original') is None else
                       'declaration differs' if row.get('shape_matches') is not True else
                       '; '.join(row.get('structure_differences', [])[:2]) or 'Release IL differs')
             failures.append({'method': key, 'reason': reason})
@@ -277,7 +307,24 @@ BUILD_INPUTS = ('.csproj', '.vcxproj', '.props', '.targets', '.rsp', '.cpp', '.h
 
 def build_files(directory):
     """Files of a project directory that a build can read, outside bin and obj."""
-    return [p for p in directory.rglob('*') if p.is_file() and not {'bin', 'obj'} & set(p.relative_to(directory).parts)]
+    files = []
+    for path, dirs, names in os.walk(directory):
+        dirs[:] = [d for d in dirs if d not in ('bin', 'obj')]  # pruned, not listed: obj trees are large
+        files += [Path(path, name) for name in names]
+    return files
+
+
+def project_references(root, directory):
+    """Names of the src projects a project directory's .csproj and .props files reference (ProjectReference)."""
+    names = []
+    for p in build_files(directory):
+        if p.suffix.lower() in ('.csproj', '.props'):
+            for include in PROJECT_REFERENCE.findall(p.read_text(encoding='utf-8', errors='replace')):
+                # MSBuild resolves an imported .props' relative paths against the importing project.
+                target = (directory / include.replace('\\', os.sep)).resolve().parent
+                if target.parent == (root / 'src').resolve():
+                    names.append(target.name)
+    return names
 
 
 def build_closure(root, projects):
@@ -291,13 +338,7 @@ def build_closure(root, projects):
             continue
         resolved_seen.add(resolved)
         seen.append(directory)
-        for p in build_files(directory):
-            if p.suffix.lower() in ('.csproj', '.props'):
-                for include in PROJECT_REFERENCE.findall(p.read_text(encoding='utf-8', errors='replace')):
-                    # MSBuild resolves an imported .props' relative paths against the importing project.
-                    target = (directory / include.replace('\\', os.sep)).resolve().parent
-                    if target.parent == (root / 'src').resolve():
-                        todo.append(target.name)
+        todo += project_references(root, directory)
     return seen
 
 
@@ -332,7 +373,8 @@ def section_names(dll):
     return [data[table + 40 * i:table + 40 * i + 8].rstrip(b'\0').decode('ascii', 'replace') for i in range(count)]
 
 
-def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vcxproj=None):
+def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vcxproj=None, keep=None):
+    """Build the projects in Release and scan them with MethodAudit; keep is where a failed scan's inventory goes."""
     assemblies = work / 'assemblies'
     if found := reads_install(root, projects, vcxproj):
         raise RuntimeError(f'builds must not read the Mathcad install (D19): {", ".join(found)}')
@@ -345,11 +387,17 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
         run([msbuild(), vcxproj, '-t:Rebuild', '-p:Configuration=Release', '-p:Platform=x64', hidden,
              f'-p:OutDir={assemblies}{os.sep}', f'-p:IntDir={work / "obj"}{os.sep}', '-nologo', '-v:m'],
             root, log, timeout, env)
-    for project in [] if vcxproj else projects:
-        target = root / 'src' / project / f'{project}.csproj'
-        if not target.is_file():
-            raise RuntimeError(f'production project missing from comparison: {target}')
-        run([dotnet, 'build', target, '-c', 'Release', '--no-incremental', '-o', assemblies, hidden,
+    targets = [] if vcxproj else [root / 'src' / project / f'{project}.csproj' for project in projects]
+    if missing := [t for t in targets if not t.is_file()]:
+        raise RuntimeError(f'production project missing from comparison: {missing[0]}')
+    if targets:
+        # One clean (--no-incremental) build of every project and its references, into one directory: a separate
+        # build per project rebuilt the shared reference closure each time, with the same outputs.
+        solution = work / 'build.slnx'
+        solution.parent.mkdir(parents=True, exist_ok=True)
+        solution.write_text('<Solution>\n' + ''.join(f'  <Project Path={quoteattr(str(t.resolve()))} />\n' for t in targets)
+                            + '</Solution>\n', encoding='utf-8')
+        run([dotnet, 'build', solution, '-c', 'Release', '--no-incremental', '-o', assemblies, hidden,
              '-nologo', '-v:q', '-p:EnableSourceControlManagerQueries=false'], root, log, timeout, env)
     for project in projects:
         if '.ilnew' in section_names(assemblies / f'{project}.dll'):
@@ -357,18 +405,74 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
         if reason := msvc_mismatch(assemblies / f'{project}.dll'):
             raise RuntimeError(f'{project}.dll: {reason}')
     inventory = work / 'inventory.json'
-    run([dotnet, tool, '--repo', root, '--assemblies', assemblies, '--install', install,
-         '--output', inventory, '--release-il',
-         *(arg for p in projects for arg in ('--project', p))], root, log, timeout)
-    data = json.loads(inventory.read_text(encoding='utf-8'))
-    if data.get('errors'):
-        raise RuntimeError('; '.join(data['errors']))
+    try:
+        run([dotnet, tool, '--repo', root, '--assemblies', assemblies, '--install', install,
+             '--output', inventory, '--release-il',
+             *(arg for p in projects for arg in ('--project', p))], root, log, timeout)
+        failure = None
+    except RuntimeError as error:
+        failure = error
+    try:
+        data = json.loads(inventory.read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        data = {}
+    errors = data.get('errors') or []
+    if failure or errors or 'methods' not in data:
+        # The work directory is deleted with the run; keep what MethodAudit wrote for diagnosis.
+        if inventory.is_file() and keep:
+            shutil.copyfile(inventory, keep)
+        detail = '; '.join(errors[:20]) + (f'; {len(errors) - 20} more in {keep}' if len(errors) > 20 else '')
+        raise RuntimeError('MethodAudit failed: ' + '\n'.join(map(str, filter(None, (detail, failure))))
+                           if detail or failure else 'MethodAudit wrote no inventory')
     return data
 
 
+CACHE = ROOT / '.mirror-cache' / 'inventory-cache'
+CACHE_FORMAT = 1
+# The judge's sources: MethodAudit compiles MirrorGen's metadata model.
+TOOL_TREES = ('tools/Quire.Tools.MethodAudit', 'tools/Quire.Tools.MirrorGen')
+
+
+def inventory_key(root, commit, tool_commit, projects, install):
+    """Identity of a committed tree's inventory: its sources (the commit: type map, SDK pin and build files included),
+    the projects, the judge built from tool_commit's tool trees, and the install MethodAudit reads (path and every
+    DLL's size and mtime; hashing the DLLs would cost more than it saves)."""
+    tools = [git('rev-parse', f'{tool_commit}:{tree}', cwd=root) for tree in TOOL_TREES]
+    install = Path(install)
+    dlls = sorted((str(p.relative_to(install)), s.st_size, s.st_mtime_ns) for p in install.rglob('*.dll') for s in [p.stat()])
+    payload = json.dumps([CACHE_FORMAT, commit, sorted(projects), tools, str(install), dlls])
+    return hashlib.sha256(payload.encode('utf-8')).hexdigest()
+
+
+def cached_inventory(cache, key):
+    """A stored inventory, or None when it is missing or unreadable (the caller then builds)."""
+    try:
+        data = json.loads((cache / f'{key}.json').read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        return None
+    return data if isinstance(data, dict) and isinstance(data.get('methods'), list) and not data.get('errors') else None
+
+
+def store_inventory(cache, key, data):
+    """Only inventories of committed trees: never a working tree, which the key cannot identify. Best effort: another
+    lane reading or writing the same entry (Windows refuses to replace an open file) only costs a later rebuild."""
+    temp = cache / f'{key}.{uuid.uuid4().hex}.tmp'
+    try:
+        cache.mkdir(parents=True, exist_ok=True)
+        temp.write_text(json.dumps(data) + '\n', encoding='utf-8')
+        os.replace(temp, cache / f'{key}.json')
+    except OSError:
+        with contextlib.suppress(OSError):
+            temp.unlink(missing_ok=True)
+
+
 def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeout=1800,
-          root=ROOT, install=None, vcxproj=None):
+          root=ROOT, install=None, vcxproj=None, cache=None, store_candidate=False):
+    """Compare base and candidate (root's working tree). The judge, MethodAudit, is built from the base commit so a
+    candidate cannot change what judges it. Base inventories are cached by inventory_key; store_candidate also caches a
+    passing candidate under its HEAD commit, for a root whose tree is exactly that commit (il_merge's clean clone)."""
     install = Path(install or mathcad_install())
+    cache = cache or CACHE
     results.mkdir(parents=True, exist_ok=False)
     log = results / 'build.log'
     base = git('rev-parse', '--verify', f'{base}^{{commit}}', cwd=root)
@@ -387,17 +491,28 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
             original = work / 'base'
             run(['git', 'clone', '--quiet', '--shared', '--no-checkout', root, original], root, log, timeout)
             run(['git', '-c', 'core.hooksPath=', 'checkout', '--quiet', '--detach', base], original, log, timeout)
+            # Fail closed: a base without the judge cannot judge.
+            audit = original / 'tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj'
+            if not audit.is_file():
+                raise RuntimeError(f'base {base[:12]} has no MethodAudit to judge with ({audit.relative_to(original)})')
             tool_dir = work / 'tool'
-            run([dotnet, 'build', root / 'tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj',
-                 '-c', 'Release', '-o', tool_dir, '-nologo', '-v:q'], root, log, timeout)
+            run([dotnet, 'build', audit, '-c', 'Release', '-o', tool_dir, '-nologo', '-v:q'], original, log, timeout)
             tool = tool_dir / 'Quire.Tools.MethodAudit.dll'
-            print('Building base Release assemblies', flush=True)
             # A project the candidate adds has no base build; its members start as new (or moved) rows.
             existing = [p for p in projects if (original / 'src' / p / f'{p}.csproj').is_file()]
-            before = (build_and_scan(original, existing, tool, work / 'before', install, dotnet, log, timeout)
-                      if existing else {'methods': []})
+            key = inventory_key(root, base, base, existing, install) if existing else None
+            before = cached_inventory(cache, key) if key else {'methods': []}
+            report['base_cached'] = bool(key) and before is not None
+            if before is None:
+                print('Building base Release assemblies', flush=True)
+                before = build_and_scan(original, existing, tool, work / 'before', install, dotnet, log, timeout,
+                                        keep=results / 'base-inventory.json')
+                store_inventory(cache, key, before)
+            else:
+                print(f'Base inventory from cache ({key[:12]})', flush=True)
             print('Building candidate Release assemblies', flush=True)
-            after = build_and_scan(root, projects, tool, work / 'after', install, dotnet, log, timeout, vcxproj)
+            after = build_and_scan(root, projects, tool, work / 'after', install, dotnet, log, timeout, vcxproj,
+                                   keep=results / 'inventory.json')
             # The same reference artifact must have been read by both scans.
             identities = lambda data: {m['original']['assembly']: (m['original']['sha256'], m['original']['mvid'])
                                        for m in data['methods'] if m.get('original')}
@@ -407,6 +522,9 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
                 raise RuntimeError('Mathcad reference identity changed between scans')
             report.update(compare(before, after, types, methods))
             report['originals'] = new_id
+            if store_candidate and report['passed'] and not vcxproj and not report['working_tree']:
+                # Judged by the base's tool, so keyed by it: if the candidate changes the tool, its key never hits.
+                store_inventory(cache, inventory_key(root, report['tip'], base, projects, install), after)
             # Kept locally for exact signatures, tokens and artifact identities; no original IL.
             (results / 'base-inventory.json').write_text(json.dumps(before, indent=2) + '\n', encoding='utf-8')
             (results / 'inventory.json').write_text(json.dumps(after, indent=2) + '\n', encoding='utf-8')

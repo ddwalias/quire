@@ -8,7 +8,8 @@ the original's own code points; the targets of a recorded entry are searched in 
 matching site references, and existing entries that would change fail without writing.
 
 Each --toolchain is recorded the same way, as a toolchain entry: a symbol the toolset's static libraries supply (such as
-the C runtime's `??_7type_info@@6B@`), which the candidates reference but must not define. It records the RVA only.
+the C runtime's `??_7type_info@@6B@`), which the candidates reference but must not define: a name any --candidate
+object defines is refused. It records the RVA only.
 
 The manifest holds names, RVAs and sizes only, never bytes of the original (D19). Review the written diff before
 committing it: native_bytes.py compares every entry the candidate objects define on each run without --symbol.
@@ -18,17 +19,24 @@ import json
 import sys
 from pathlib import Path
 
-from native_bytes import (DEFAULT_TARGETS, PeImage, _addend, _resolve, compare_code, definitions_in_objects,
-                          targets_from)
+from native_bytes import (DEFAULT_TARGETS, PeImage, _addend, _resolve, anonymous, compare_code,
+                          definitions_in_objects, targets_from)
 
 
 def record(image, definitions, names, doc, toolchain=()):
     """Record `names`, and `toolchain` as toolchain entries, for the original `image` in the manifest document `doc`
     (changed in place, and returned).
 
-    `definitions` are the candidates' definitions by name. Raises ValueError when the names cannot be recorded.
+    `definitions` are the candidates' definitions by anonymous() name. Names match tag-insensitively (anonymous()): an
+    entry already stored under another anonymous-namespace tag keeps its stored name. Raises ValueError when the names
+    cannot be recorded.
     """
     entries = targets_from(doc, image)
+    given = {anonymous(n): n for n in [*names, *toolchain]}
+    names, toolchain = {anonymous(n) for n in names}, {anonymous(n) for n in toolchain}
+    defined = sorted(given[n] for n in toolchain & set(definitions))
+    if defined:
+        raise ValueError(f"{', '.join(defined)}: defined by the candidate objects, so not a toolchain entry")
 
     def placed(d, rva):
         if d.data:
@@ -40,18 +48,19 @@ def record(image, definitions, names, doc, toolchain=()):
     for d in definitions.values():
         if not d.data and d.name in image.exports:
             queue.append((d, image.exports[d.name], image.export_code(d.name)))
-        elif d.name in entries:
-            at = placed(d, entries[d.name].rva)
+        elif anonymous(d.name) in entries:
+            at = placed(d, entries[anonymous(d.name)].rva)
             if at:
                 queue.append((d, *at))
     wanted, found, searched = set(names) | set(toolchain), {}, set()
     while queue:
         d, begin, code = queue.pop()
-        if d.name in searched or not compare_code(d.name, code, d.relocs, d.code, d.relocs).ok:
+        if d.name in searched or not compare_code(d.name, code, d.code, d.relocs).ok:
             continue
         searched.add(d.name)
         for r in d.relocs:
             name = d.targets.get(r.offset) or d.statics.get(r.offset)
+            name = name and anonymous(name)
             if name not in wanted:
                 continue
             rva = _resolve(image, begin + r.offset, r.kind) - _addend(d.code, r)
@@ -62,7 +71,7 @@ def record(image, definitions, names, doc, toolchain=()):
             if at:
                 queue.append((callee, *at))
 
-    missing = sorted(wanted - set(found))
+    missing = sorted(given[n] for n in wanted - set(found))
     if missing:
         raise ValueError("not referenced by any candidate function that matches the original: " + ", ".join(missing))
     bound = next((doc[k] for k in doc if k.lower() == image.name.lower()), None)
@@ -72,8 +81,6 @@ def record(image, definitions, names, doc, toolchain=()):
         defn = definitions.get(name)
         entry = {"rva": f"{found[name]:#x}"}
         if name in toolchain:
-            if defn is not None:
-                raise ValueError(f"{name}: defined by the candidate objects, so it is not a toolchain entry")
             entry["toolchain"] = True
         elif defn is None:
             raise ValueError(f"{name}: not defined by the candidate objects, so its kind and size are unknown")
@@ -81,10 +88,11 @@ def record(image, definitions, names, doc, toolchain=()):
             entry["size"] = len(defn.code)
         elif found[name] not in image.functions:
             raise ValueError(f"{name}: RVA {found[name]:#x} does not start a .pdata function")
-        old = bound["targets"].get(name)
+        stored = next((k for k in bound["targets"] if anonymous(k) == name), given[name])
+        old = bound["targets"].get(stored)
         if old is not None and old != entry:
-            raise ValueError(f"{name}: manifest has {old}, original gives {entry}; remove the entry to re-record it")
-        bound["targets"][name] = entry
+            raise ValueError(f"{stored}: manifest has {old}, original gives {entry}; remove the entry to re-record it")
+        bound["targets"][stored] = entry
     bound["targets"] = dict(sorted(bound["targets"].items()))
     targets_from(doc, image)  # never write a manifest that native_bytes.py would reject
     return doc
@@ -113,7 +121,8 @@ def main(argv=None):
     args.targets.write_text(json.dumps(doc, indent=2) + "\n", encoding="utf-8")
     bound = next(doc[k] for k in doc if k.lower() == image.name.lower())
     for name in sorted(set(args.name) | set(args.toolchain)):
-        print(f"recorded {name}: {bound['targets'][name]}")
+        stored = next(k for k in bound["targets"] if anonymous(k) == anonymous(name))
+        print(f"recorded {stored}: {bound['targets'][stored]}")
     return 0
 
 

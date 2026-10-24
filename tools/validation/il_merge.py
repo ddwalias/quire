@@ -3,8 +3,12 @@
 Run from the main checkout: python tools/validation/merge_gate.py BRANCH [--apply]
 The candidate is built in a temporary clone. --apply holds the merge lock, checks
 the current base, validates that exact committed tip, then fast-forwards main.
+Native projects (src/<P>/ with a .vcxproj and no .csproj) the branch affects are
+checked by native_gate after the IL check; both must pass. Without --apply, --base
+may name a full ref (refs/remotes/origin/main).
 """
 import argparse
+import importlib
 import json
 from pathlib import Path
 import subprocess
@@ -18,14 +22,44 @@ import release_il
 ROOT = Path(__file__).resolve().parents[2]
 
 
+# Inputs of every native project's check (native_gate): a change to them selects all native projects.
+NATIVE_SHARED = ('docs/mirror/native/internal-targets.json', 'docs/mirror/assembly-map.json',
+                 'tools/validation/native_bytes.py', 'tools/validation/native_gate.py')
+
+
 def git(*args, cwd=None):
     return release_il.git(*args, cwd=cwd or ROOT)
+
+
+def native_projects(root):
+    """src/<P>/ with <P>.vcxproj and no <P>.csproj: native_gate's definition, for when it is missing."""
+    return {p.stem for p in (root / 'src').glob('*/*.vcxproj') if not p.with_suffix('.csproj').is_file()}
+
+
+def affected_native(changed, natives):
+    """Native projects with a changed file under src/<P>/, or all of them when a shared native input changed."""
+    if any(p in NATIVE_SHARED for p in changed):
+        return sorted(natives)
+    return sorted({parts[1] for p in changed if len(parts := p.split('/')) >= 3 and parts[0] == 'src'} & set(natives))
+
+
+def native_gate():
+    """The native check module, or None while it does not exist (imported lazily so the IL gate works without it)."""
+    try:
+        return importlib.import_module('native_gate')
+    except ModuleNotFoundError as error:
+        if error.name != 'native_gate':
+            raise
+        return None
 
 
 def gate(args):
     if git('status', '--porcelain'):
         raise RuntimeError('commit or stash changes in the main checkout first')
-    base = git('rev-parse', '--verify', f'refs/heads/{args.base}^{{commit}}')
+    ref = args.base if args.base.startswith('refs/') else f'refs/heads/{args.base}'
+    if args.apply and ref != f'refs/heads/{args.base}':
+        raise RuntimeError('--apply needs a branch name as --base')
+    base = git('rev-parse', '--verify', f'{ref}^{{commit}}')
     tip = git('rev-parse', '--verify', f'refs/heads/{args.branch}^{{commit}}')
     if git('merge-base', base, tip) != base:
         raise RuntimeError(f'rebase {args.branch} onto {args.base} first')
@@ -49,14 +83,24 @@ def gate(args):
             unknown = set(projects) - release_il.production_projects(tree)
             if unknown:
                 raise RuntimeError(f'unknown or removed production projects: {sorted(unknown)}')
+            module = native_gate()
+            natives = affected_native(changed, (module.native_projects if module else native_projects)(tree))
+            record['projects'], record['native_projects'] = projects, natives
             if projects:
                 report = release_il.check(base, projects, results / 'run', args.type, args.method,
-                                          args.dotnet, args.timeout, root=tree)
+                                          args.dotnet, args.timeout, root=tree, store_candidate=True)
             elif args.type or args.method:
                 raise RuntimeError('member selection requires --project')
             else:
                 report = {'passed': True, 'checked': [], 'reason': 'no production project changed'}
             record['validation'] = report
+            if report['passed'] and natives:
+                if module is None:  # fail closed: affected native code never lands unchecked
+                    report = {'passed': False, 'failures': [], 'error':
+                              f'native projects {natives} are affected but tools/validation/native_gate.py is missing'}
+                else:
+                    report = module.check(base, natives, results / 'native', tree, timeout=args.timeout)
+                record['native_validation'] = report
             record['passed'] = report['passed']
             if not report['passed']:
                 for failure in report.get('failures', [])[:20]:

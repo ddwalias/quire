@@ -22,14 +22,17 @@ MSPCONS_DLL = MATHCAD_DLL.with_name("mspcons.dll")
 OLEAUT32_DLL = Path(os.environ.get("SystemRoot", r"C:\Windows")) / "System32" / "oleaut32.dll"
 
 
-def coff(functions, externals=(), statics=(), local=(), data=()):
+def coff(functions, externals=(), statics=(), local=(), data=(), comdat=None, labels=()):
     """A minimal x64 COFF object: one .text section per function, each an external function symbol with its relocations.
 
     `functions` is a list of (decorated name, code bytes, [(offset, reloc type, symbol index)]). Undefined external
     symbols named in `externals` follow the function symbols, then local (static) symbols named in `statics`, so
     relocations can target either. Defined symbols named in `local` are static, and those named in `data` are not
-    functions. Long names go through the string table.
+    functions. `comdat` maps a function name to the COMDAT selection of its section, and `labels` adds code labels
+    ($LN5) as (name, function index, offset); both come after every symbol a relocation can name. Long names go through
+    the string table.
     """
+    comdat = comdat or {}
     code_start = 20 + 40 * len(functions)
     reloc_start = code_start + sum(len(code) for _, code, _ in functions)
     total_relocs = sum(len(rels) for _, _, rels in functions)
@@ -37,21 +40,22 @@ def coff(functions, externals=(), statics=(), local=(), data=()):
     body, reloc_count = code_start, 0
     for name, code, rels in functions:
         ptr = reloc_start + 10 * reloc_count
-        sections += struct.pack("<8sIIIIIIHHI", b".text", 0, 0, len(code), body, ptr, 0, len(rels), 0, 0x60500020)
+        flags = 0x60500020 | (0x1000 if name in comdat else 0)
+        sections += struct.pack("<8sIIIIIIHHI", b".text", 0, 0, len(code), body, ptr, 0, len(rels), 0, flags)
         body += len(code)
         reloc_count += len(rels)
         raw += code
         relocs += b"".join(struct.pack("<IIH", offset, sym, kind) for offset, kind, sym in rels)
     symtab = reloc_start + 10 * total_relocs
 
-    def symbol(name, section, typ, storage):
+    def symbol(name, section, typ, storage, value=0, aux=0):
         nonlocal strings
         if len(name) <= 8:
             raw_name = name.encode().ljust(8, b"\0")
         else:
             raw_name = struct.pack("<II", 0, 4 + len(strings))  # offset in the string table, which starts after its size
             strings += name.encode() + b"\0"
-        return struct.pack("<8sIhHBB", raw_name, 0, section, typ, storage, 0)
+        return struct.pack("<8sIhHBB", raw_name, value, section, typ, storage, aux)
 
     for i, (name, _, _) in enumerate(functions):
         symbols += symbol(name, i + 1, 0 if name in data else 0x20, 3 if name in local else 2)
@@ -60,6 +64,13 @@ def coff(functions, externals=(), statics=(), local=(), data=()):
     for name in statics:
         symbols += symbol(name, 0, 0, 3)
     count = len(functions) + len(externals) + len(statics)
+    for i, (name, code, _) in enumerate(functions):
+        if name in comdat:  # the section definition symbol and its auxiliary record, selection at offset 14
+            symbols += symbol(".text", i + 1, 0, 3, aux=1) + struct.pack("<IHHIHB3x", len(code), 0, 0, 0, 0, comdat[name])
+            count += 2
+    for name, index, offset in labels:
+        symbols += symbol(name, index + 1, 0, 6, value=offset)
+        count += 1
     table = struct.pack("<I", 4 + len(strings)) + strings
     head = struct.pack("<HHIIIHH", 0x8664, len(functions), 0, symtab, count, 0, 0)
     return head + sections + raw + relocs + symbols + table
@@ -105,15 +116,15 @@ class MaskingTests(unittest.TestCase):
 
 class CompareCodeTests(unittest.TestCase):
     def test_identical_bodies_match(self):
-        self.assertTrue(compare_code("f", b"\x90\xc3", [], b"\x90\xc3", []).ok)
+        self.assertTrue(compare_code("f", b"\x90\xc3", b"\x90\xc3", []).ok)
 
     def test_length_difference_fails(self):
-        result = compare_code("f", b"\x90\xc3", [], b"\x90\x90\xc3", [])
+        result = compare_code("f", b"\x90\xc3", b"\x90\x90\xc3", [])
         self.assertFalse(result.ok)
         self.assertIn("length", result.reason)
 
     def test_byte_difference_reports_its_offset(self):
-        result = compare_code("f", b"\x83\xc0\x03\xc3", [], b"\x83\xc0\x04\xc3", [])
+        result = compare_code("f", b"\x83\xc0\x03\xc3", b"\x83\xc0\x04\xc3", [])
         self.assertFalse(result.ok)
         self.assertIn("+0x2", result.reason)
 
@@ -121,11 +132,7 @@ class CompareCodeTests(unittest.TestCase):
         # The linked original has a different displacement where the object has a relocation.
         original = b"\x48\x8d\x05\x11\x22\x33\x44\xc3"
         candidate = b"\x48\x8d\x05\x00\x00\x00\x00\xc3"
-        self.assertTrue(compare_code("f", original, [Reloc(3, 0x0004)], candidate, [Reloc(3, 0x0004)]).ok)
-
-    def test_relocation_positions_must_agree(self):
-        code = b"\x90" * 8
-        self.assertFalse(compare_code("f", code, [Reloc(0, 0x0004)], code, [Reloc(4, 0x0004)]).ok)
+        self.assertTrue(compare_code("f", original, candidate, [Reloc(3, 0x0004)]).ok)
 
 
 class CoffTests(unittest.TestCase):
@@ -239,10 +246,51 @@ class CallTargetTests(unittest.TestCase):
         self.assertEqual(check_targets(FakeImage({}, self.memory), 0x1000, self.call), ([], 1))
 
     def test_absolute_address_resolves_against_the_image_base(self):
-        struct.pack_into("<Q", self.memory, 0x1000, FakeImage.image_base + 0x1300)
-        addr = Function("loadaddr", b"\x48\x8b\x05\0\0\0\0\xc3", [Reloc(0, 0x0001, 0)], {0: "data"})
+        # mov rax, imm64: the field holds the candidate's addend (0).
+        struct.pack_into("<Q", self.memory, 0x1002, FakeImage.image_base + 0x1300)
+        addr = Function("loadaddr", b"\x48\xb8" + bytes(8) + b"\xc3", [Reloc(2, 0x0001, 0)], {2: "data"})
         self.assertEqual(self.check({"data": 0x1300}, function=addr), ([], 0))
         self.assertEqual(len(self.check({"data": 0x1400}, function=addr)[0]), 1)
+
+    def load(self, addend, kind=0x0004, extra=b""):
+        """`mov rax, [rip+disp]` (field at +3) whose candidate field holds `addend`; `extra` follows the field."""
+        code = bytearray(b"\x48\x8b\x05\0\0\0\0" + extra + b"\xc3")
+        struct.pack_into("<i", code, 3, addend)
+        return Function("load", bytes(code), [Reloc(3, kind, 0)], {3: "s_data"})
+
+    def point(self, rva, n=0):
+        """The original's field at 0x1003 reaches `rva` (REL32_n: n immediate bytes follow the field)."""
+        struct.pack_into("<i", self.memory, 0x1003, rva - (0x1003 + 4 + n))
+
+    def test_export_target_includes_the_candidates_addend(self):
+        self.point(0x1100)
+        mismatches, _ = self.check({"s_data": 0x1100}, function=self.load(4))
+        self.assertEqual(len(mismatches), 1)
+        self.assertIn("s_data + 0x4", mismatches[0])
+        self.point(0x1104)
+        self.assertEqual(self.check({"s_data": 0x1100}, function=self.load(4)), ([], 0))
+        self.assertEqual(len(self.check({"s_data": 0x1100}, function=self.load(0))[0]), 1)
+
+    def test_rel32_n_target_includes_the_addend(self):
+        # cmp dword [rip+disp], imm32 is REL32_4: the field is followed by four immediate bytes.
+        self.point(0x1108, n=4)
+        self.assertEqual(self.check({"s_data": 0x1100}, function=self.load(8, 0x0008, b"\x05\0\0\0")), ([], 0))
+        self.assertEqual(len(self.check({"s_data": 0x1100}, function=self.load(0, 0x0008, b"\x05\0\0\0"))[0]), 1)
+
+    def test_import_slot_includes_the_addend(self):
+        self.point(0x1100)
+        load = self.load(8)
+        load.targets = {3: "__imp_alloc"}
+        mismatches, _ = check_targets(FakeImage({}, self.memory, imports={0x1100: "alloc"}), 0x1000, load)
+        self.assertIn("not an import slot + 0x8", mismatches[0])
+
+    def test_image_base_is_rva_zero(self):
+        self.point(0)
+        load = self.load(0)
+        load.targets = {3: "__ImageBase"}
+        self.assertEqual(self.check({}, function=load), ([], 0))
+        self.point(0x1100)
+        self.assertIn("image base is 0x0", self.check({}, function=load)[0][0])
 
 
 class ManifestImage(FakeImage):
@@ -292,11 +340,63 @@ class StrictRunTests(unittest.TestCase):
         path.write_text(json.dumps(doc))
         return str(path)
 
-    def run_main(self, *args):
+    def run_main(self, *args, flags=("--strict",)):
         out = io.StringIO()
         with mock.patch("native_bytes.PeImage", lambda path: self.image), contextlib.redirect_stdout(out):
-            code = native_bytes_main(["--original", "fake.dll", "--strict", *args])
+            code = native_bytes_main(["--original", "fake.dll", *flags, *args])
         return code, out.getvalue()
+
+    def test_unverified_targets_fail_by_default(self):
+        args = ("--candidate", self.caller, "--targets", self.write("empty.json", {}))
+        self.assertEqual(self.run_main(*args, flags=())[0], 1)
+        code, out = self.run_main(*args, flags=("--allow-unverified",))
+        self.assertEqual(code, 0, out)
+        self.assertIn("(unverified allowed)", out)
+
+    def test_an_unsupported_relocation_fails_only_its_function(self):
+        bad = self.obj("bad.obj", [("caller", b"\xe8\0\0\0\0\xc3", [(1, 0x0004, 2)]),
+                                   ("secrel", b"\x90\0\0\0\0\xc3", [(1, 0x000B, 2)])], externals=["callee"])
+        self.image.exports["secrel"] = 0x1100
+        code, out = self.run_main("--candidate", bad, "--candidate", self.callee, "--targets", self.manifest)
+        self.assertEqual(code, 1)
+        self.assertIn("OK   caller", out)
+        self.assertIn("FAIL secrel: unsupported relocation type 0xb at +0x1", out)
+
+    def test_an_unexported_inline_comdat_is_skipped_in_an_unfiltered_run(self):
+        inline = self.obj("inline.obj", [("caller", b"\xe8\0\0\0\0\xc3", [(1, 0x0004, 2)]), ("??_Gx", b"\x90\xc3", [])],
+                          externals=["callee"], comdat={"caller": 1, "??_Gx": 2})
+        code, out = self.run_main("--candidate", inline, "--candidate", self.callee, "--targets", self.manifest)
+        self.assertEqual(code, 0, out)
+        self.assertNotIn("??_Gx", out)
+        # Named explicitly, it is still compared; an ordinary (NODUPLICATES) definition is never skipped.
+        self.assertIn("FAIL ??_Gx: not an export", self.run_main("--candidate", inline, "--symbol", "??_Gx")[1])
+        plain = self.obj("plain.obj", [("helper", b"\x90\xc3", [])], comdat={"helper": 1})
+        self.assertIn("FAIL helper: not an export", self.run_main("--candidate", self.caller, "--candidate", plain,
+                                                                  "--candidate", self.callee,
+                                                                  "--targets", self.manifest)[1])
+
+    def test_an_exported_inline_comdat_is_compared(self):
+        inline = self.obj("inline.obj", [("caller", b"\xe8\0\0\0\0\xcc", [(1, 0x0004, 1)])], externals=["callee"],
+                          comdat={"caller": 2})
+        code, out = self.run_main("--candidate", inline, "--candidate", self.callee, "--targets", self.manifest)
+        self.assertEqual(code, 1)
+        self.assertIn("FAIL caller: first byte difference", out)
+
+    def test_exported_data_is_compared_for_the_candidates_size(self):
+        self.image.memory[0x1900:0x1904] = b"abcd"
+        self.image.exports["s_data"] = 0x1900
+        for constant, verdict in ((b"abcd", "OK  "), (b"abce", "FAIL")):
+            data = self.obj(f"data-{verdict.strip()}.obj", [("s_data", constant, [])], data=["s_data"])
+            code, out = self.run_main("--candidate", self.caller, "--candidate", self.callee, "--candidate", data,
+                                      "--targets", self.manifest)
+            self.assertIn(f"{verdict} s_data: ", out)
+            self.assertEqual(code, int(verdict == "FAIL"), out)
+
+    def test_code_labels_do_not_end_a_function(self):
+        labelled = self.obj("label.obj", [("caller", b"\xe8\0\0\0\0\xc3", [(1, 0x0004, 1)])], externals=["callee"],
+                            labels=[("$LN3", 0, 5)])
+        (func,) = functions_in_object(labelled)
+        self.assertEqual(func.code, b"\xe8\0\0\0\0\xc3")
 
     def test_internal_call_verified_by_the_manifest_passes_strict(self):
         code, out = self.run_main("--candidate", self.caller, "--candidate", self.callee, "--targets", self.manifest)
@@ -348,6 +448,25 @@ class StrictRunTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("FAIL old (manifest entry)", out)
 
+    def test_an_entry_recorded_under_another_anonymous_namespace_tag_verifies(self):
+        # The same helper built from another checkout path: MSVC tags its anonymous namespace differently.
+        here, there = "?h@?A0x4b90f393@u@@YAXXZ", "?h@?A0x377d720e@u@@YAXXZ"
+        caller = self.obj("anon-caller.obj", [("caller", b"\xe8\0\0\0\0\xc3", [(1, 0x0004, 1)])], statics=[here])
+        helper = self.obj("anon-helper.obj", [(here, b"\x33\xc0\xc3", [])], local=[here])
+        manifest = self.write("anon.json", {"fake.dll": {"sha256": ManifestImage.sha256,
+                                                         "targets": {there: {"rva": "0x1100"}}}})
+        code, out = self.run_main("--candidate", caller, "--candidate", helper, "--targets", manifest)
+        self.assertEqual(code, 0, out)
+        self.assertIn("OK   caller: 6 bytes, 1 relocation sites masked [1 verified by manifest]", out)
+
+    def test_helpers_that_differ_only_in_their_anonymous_namespace_tag_fail_closed(self):
+        a = self.obj("a.obj", [("?h@?A0x00000001@u@@YAXXZ", b"\xc3", [])], local=["?h@?A0x00000001@u@@YAXXZ"])
+        b = self.obj("b.obj", [("?h@?A0x00000002@u@@YAXXZ", b"\xc3", [])], local=["?h@?A0x00000002@u@@YAXXZ"])
+        code, out = self.run_main("--candidate", self.caller, "--candidate", a, "--candidate", b,
+                                  "--targets", self.manifest)
+        self.assertEqual(code, 1)
+        self.assertIn("differ only in their anonymous-namespace tag", out)
+
     def test_manifest_for_another_build_fails_the_run(self):
         manifest = self.write("other.json", {"fake.dll": {"sha256": "cd" * 32, "targets": {}}})
         code, out = self.run_main("--candidate", self.caller, "--targets", manifest)
@@ -395,6 +514,10 @@ class LoadTargetsTests(unittest.TestCase):
             self.load(self.bound({"f": {"offset": "0x1100"}}))
         with self.assertRaises(ManifestError):
             load_targets(Path(self.tmp.name) / "missing.json", self.image)
+
+    def test_entries_that_differ_only_in_their_anonymous_namespace_tag_fail(self):
+        with self.assertRaisesRegex(ManifestError, "anonymous-namespace tag"):
+            self.load(self.bound({"?f@?A0x1@u@@YAXXZ": {"rva": "0x1100"}, "?f@?A0x2@u@@YAXXZ": {"rva": "0x1100"}}))
 
     def test_toolchain_entry_takes_an_rva_in_a_section_and_no_size(self):
         self.assertEqual(self.load(self.bound({"t": {"rva": "0x1800", "toolchain": True}})), {"t": Entry(0x1800, None, True)})
@@ -610,6 +733,19 @@ class RecordTests(unittest.TestCase):
     def test_a_toolchain_name_the_candidates_define_is_not_recorded(self):
         with self.assertRaisesRegex(ValueError, "not a toolchain entry"):
             record(self.image, self.definitions, ["callee"], {}, toolchain=["helper"])
+        # Refused for any definition, even one no matching function references.
+        self.definitions["unused"] = Function("unused", b"\xc3", [], {})
+        with self.assertRaisesRegex(ValueError, "unused: defined by the candidate objects, so not a toolchain entry"):
+            record(self.image, self.definitions, [], {}, toolchain=["unused"])
+
+    def test_an_entry_stored_under_another_anonymous_namespace_tag_keeps_its_name(self):
+        here, there = "?callee@?A0x2@u@@YAXXZ", "?callee@?A0x1@u@@YAXXZ"
+        self.definitions["caller"].targets = {1: here}
+        callee = self.definitions.pop("callee")
+        self.definitions["?callee@?A0x@u@@YAXXZ"] = Function(here, callee.code, callee.relocs, callee.targets)
+        doc = {"fake.dll": {"sha256": ManifestImage.sha256, "targets": {there: {"rva": "0x1100"}}}}
+        self.record([here, "helper"], doc)
+        self.assertEqual(doc["fake.dll"]["targets"], {there: {"rva": "0x1100"}, "helper": {"rva": "0x1200"}})
 
     def test_an_entry_is_not_silently_changed(self):
         doc = {"fake.dll": {"sha256": ManifestImage.sha256, "targets": {"callee": {"rva": "0x1200"}}}}

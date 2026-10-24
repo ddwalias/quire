@@ -1,8 +1,12 @@
 """Acceptance checks for the Release IL gate, without executing production code."""
+import json
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
+import release_il
 from release_il import (LINKER_PRODUCT, MSVC_BUILD, builds_cppcli, compare, msvc_mismatch, ordinalless, reads_install,
                         section_names, without_install)
 
@@ -42,6 +46,14 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         result = compare(inventory(method(body='base()', exact=False, mirror_stub=True)),
                          inventory(method(body='this()', exact=False, mirror_stub=True)))
         self.assertTrue(result['passed'])
+
+    def test_engine_native_keeps_exact_obligations_and_new_unpaired_rows_fail(self):
+        native = method(exact=False, engine_native=True)
+        self.assertTrue(compare(inventory(dict(native, body_sha256='a')), inventory(dict(native, body_sha256='b')))['passed'])
+        self.assertTrue(compare(inventory(), inventory(native))['passed'])  # new, paired: D10 exemption
+        self.assertFalse(compare(inventory(method()), inventory(dict(native, body_sha256='b')))['passed'])
+        new_unpaired = compare(inventory(), inventory(dict(native, original=None)))
+        self.assertEqual(new_unpaired['failures'][0]['reason'], 'no Mathcad counterpart')
 
     def test_removing_a_never_exact_generated_stub_passes(self):
         self.assertTrue(compare(inventory(method(exact=False, mirror_stub=True)), inventory())['passed'])
@@ -296,6 +308,186 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         row = method(exact=None)
         row.update(body_sha256=None, declaration_only=True)
         self.assertTrue(compare(inventory(), inventory(row))['passed'])
+
+
+class Repo:
+    """A disposable Git repository with src projects and the judge's tool trees."""
+    def __init__(self, test):
+        temp = tempfile.TemporaryDirectory(prefix='quire-release-il-test-')
+        test.addCleanup(temp.cleanup)
+        self.root = Path(temp.name)
+        for args in (('init', '-q', '-b', 'main'), ('config', 'user.name', 'T'), ('config', 'user.email', 't@x.invalid'),
+                     ('config', 'core.hooksPath', '')):
+            self.git(*args)
+        self.write('tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj', '<Project />')
+        self.write('tools/Quire.Tools.MirrorGen/Model.cs', '')
+        self.write('docs/mirror/type-map.csv', 'a\n')
+        self.write('.gitignore', '.mirror-cache/\ninstall/\n')
+
+    def git(self, *args):
+        return subprocess.run(['git', *args], cwd=self.root, check=True, capture_output=True, text=True).stdout.strip()
+
+    def write(self, path, text):
+        (self.root / path).parent.mkdir(parents=True, exist_ok=True)
+        (self.root / path).write_text(text)
+
+    def project(self, name, *references, props=False):
+        refs = ''.join(f'<ProjectReference Include="..\\{r}\\{r}.csproj" />' for r in references)
+        if props:  # MirrorGen's Generated/Mirror.props, imported by the project
+            self.write(f'src/{name}/Generated/Mirror.props', f'<Project>{refs}</Project>')
+            refs = ''
+        self.write(f'src/{name}/{name}.csproj', f'<Project>{refs}</Project>')
+
+    def commit(self):
+        self.git('add', '-A')
+        self.git('commit', '-qm', 'c')
+        return self.git('rev-parse', 'HEAD')
+
+
+class ScopeTests(unittest.TestCase):
+    def setUp(self):
+        self.repo = Repo(self)
+        self.repo.project('Emit')
+        self.repo.project('Mpl', 'Emit', props=True)
+        self.repo.project('Top', 'Mpl')
+        self.repo.project('Other')
+        self.base = self.repo.commit()
+
+    def affected(self):
+        return release_il.affected_projects(self.base, self.repo.root)
+
+    def test_reverse_dependencies_through_props_are_affected(self):
+        self.repo.write('src/Emit/Consts.cs', 'const int X = 2;')
+        self.assertEqual(self.affected(), ['Emit', 'Mpl', 'Top'])
+        self.repo.commit()
+        self.assertEqual(self.affected(), ['Emit', 'Mpl', 'Top'])
+
+    def test_a_file_moved_out_of_a_project_affects_both_sides(self):
+        self.repo.write('src/Emit/Moved.cs', '')
+        self.base = self.repo.commit()
+        self.repo.git('mv', 'src/Emit/Moved.cs', 'src/Other/Moved.cs')
+        self.repo.commit()
+        self.assertEqual(self.affected(), ['Emit', 'Mpl', 'Other', 'Top'])
+
+    def test_a_leaf_change_selects_only_itself(self):
+        self.repo.write('src/Top/T.cs', '')
+        self.assertEqual(self.affected(), ['Top'])
+
+    def test_type_map_selects_every_project_but_the_judge_selects_none(self):
+        self.repo.write('docs/mirror/type-map.csv', 'b\n')
+        self.assertEqual(self.affected(), ['Emit', 'Mpl', 'Other', 'Top'])
+        self.repo.git('checkout', '--', 'docs')
+        self.repo.write('tools/Quire.Tools.MethodAudit/Program.cs', '')
+        self.repo.write('tools/Quire.Tools.MirrorGen/Model.cs', 'x')
+        self.assertEqual(self.affected(), [])
+
+
+class CheckTests(unittest.TestCase):
+    """check() with builds replaced: where the judge comes from, and the base inventory cache."""
+    def setUp(self):
+        self.repo = Repo(self)
+        self.repo.project('P')
+        self.base = self.repo.commit()
+        self.repo.write('src/P/T.cs', 'candidate')
+        self.tip = self.repo.commit()
+        self.install = self.repo.root / 'install'
+        (self.install / 'sub').mkdir(parents=True)
+        (self.install / 'sub' / 'Ptc.dll').write_bytes(b'x')
+        self.cache = self.repo.root / '.mirror-cache' / 'inventory-cache'
+        self.runs, self.dotnet, self.scans = 0, [], []
+        real_run = release_il.run
+        def run(command, cwd, log, timeout, env=None):
+            if command[0] == 'git':
+                return real_run(command, cwd, log, timeout, env)
+            self.dotnet.append((list(map(str, command)), Path(cwd)))
+        def scan(root, projects, tool, work, *args, **kwargs):
+            self.scans.append(Path(root))
+            return {'methods': [method(exact=False, original={'assembly': 'A', 'sha256': 's', 'mvid': 'm'})]}
+        for target, value in (('run', run), ('build_and_scan', scan)):
+            patcher = mock.patch.object(release_il, target, value)
+            patcher.start()
+            self.addCleanup(patcher.stop)
+
+    def check(self, base=None, **kwargs):
+        self.runs += 1
+        return release_il.check(base or self.base, ['P'], self.repo.root / '.mirror-cache' / f'r{self.runs}',
+                                root=self.repo.root, install=self.install, cache=self.cache, **kwargs)
+
+    def test_the_judge_is_built_from_the_base_commit(self):
+        report = self.check()
+        self.assertTrue(report['passed'], report)
+        command, cwd = self.dotnet[0]
+        self.assertTrue(command[2].endswith('Quire.Tools.MethodAudit.csproj'))
+        self.assertFalse(Path(command[2]).is_relative_to(self.repo.root))
+        self.assertNotEqual(cwd, self.repo.root)
+
+    def test_a_base_without_the_judge_fails_closed(self):
+        self.repo.git('rm', '-rq', 'tools/Quire.Tools.MethodAudit')
+        no_judge = self.repo.commit()
+        report = self.check(no_judge)
+        self.assertFalse(report['passed'])
+        self.assertIn('no MethodAudit', report['error'])
+        self.assertEqual(self.scans, [])
+
+    def test_base_inventories_are_cached_and_keyed_by_install_and_projects(self):
+        self.assertFalse(self.check()['base_cached'])
+        self.assertEqual(len(self.scans), 2)
+        self.assertTrue(self.check()['base_cached'])
+        self.assertEqual(len(self.scans), 3)  # the candidate only
+        (self.install / 'sub' / 'Ptc.dll').write_bytes(b'xy')  # another install: a miss
+        self.assertFalse(self.check()['base_cached'])
+        for entry in self.cache.glob('*.json'):  # corrupt entries fall back to building
+            entry.write_text('{')
+        self.assertFalse(self.check()['base_cached'])
+        key = release_il.inventory_key
+        self.assertNotEqual(key(self.repo.root, self.base, self.base, ['P'], self.install),
+                            key(self.repo.root, self.base, self.base, ['P', 'Q'], self.install))
+
+    def test_only_a_committed_passing_candidate_is_stored(self):
+        key = release_il.inventory_key(self.repo.root, self.tip, self.base, ['P'], self.install)
+        self.repo.write('src/P/Dirty.cs', '')
+        self.check(store_candidate=True)
+        self.assertIsNone(release_il.cached_inventory(self.cache, key))
+        (self.repo.root / 'src/P/Dirty.cs').unlink()
+        self.check()
+        self.assertIsNone(release_il.cached_inventory(self.cache, key))
+        self.check(store_candidate=True)
+        self.assertIsNotNone(release_il.cached_inventory(self.cache, key))
+        # The next run whose base is that tip starts from the stored inventory.
+        self.repo.write('src/P/U.cs', '')
+        self.repo.commit()
+        self.assertTrue(self.check(self.tip)['base_cached'])
+        # A candidate that changed the judge was judged by the old one: its entry never serves as a base.
+        self.repo.write('tools/Quire.Tools.MethodAudit/Program.cs', '')
+        judge_tip = self.repo.commit()
+        self.check(self.tip, store_candidate=True)
+        self.repo.write('src/P/V.cs', '')
+        self.repo.commit()
+        self.assertFalse(self.check(judge_tip)['base_cached'])
+
+    def test_a_failed_scan_keeps_its_inventory_and_reports_errors(self):
+        mock.patch.stopall()
+        work = self.repo.root / 'work'
+        keep = self.repo.root / 'kept.json'
+        def audit(command, cwd, log, timeout, env=None):
+            if '--output' in map(str, command):
+                Path(command[command.index('--output') + 1]).write_text(
+                    json.dumps({'methods': [], 'errors': [f'e{i}' for i in range(25)]}))
+                raise RuntimeError('command failed (1)')
+        with mock.patch.object(release_il, 'run', audit), \
+                mock.patch.object(release_il, 'reads_install', return_value=[]), \
+                mock.patch.object(release_il, 'section_names', return_value=[]), \
+                mock.patch.object(release_il, 'msvc_mismatch', return_value=None):
+            with self.assertRaises(RuntimeError) as raised:
+                release_il.build_and_scan(self.repo.root, ['P'], 'tool.dll', work, self.install, 'dotnet',
+                                          work / 'log', 20, keep=keep)
+        message = str(raised.exception)
+        self.assertIn('e0; e1', message)
+        self.assertIn('e19; 5 more', message)
+        self.assertIn('command failed (1)', message)
+        self.assertEqual(len(json.loads(keep.read_text())['errors']), 25)
+        # One build invocation names every project.
+        self.assertIn(str((self.repo.root / 'src/P/P.csproj').resolve()), (work / 'build.slnx').read_text())
 
 
 if __name__ == '__main__':

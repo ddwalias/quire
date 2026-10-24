@@ -7,13 +7,14 @@ object lists exactly which bytes depend on link-time addresses, and the same ins
 at the same offset in the linked original.
 
 Masking hides the displacement, so each call or address relocation is checked separately: when its target is an export
-of the original, the original's target address must equal that export's RVA. A target the original does not export
+of the original, the original's target address must equal that export's RVA plus the addend the candidate's field holds
+(`[s_data+4]` must read 4 bytes past the export). A target the original does not export
 (an internal function, a vtable, a constant) is checked through the reviewed manifest of internal targets
 (docs/mirror/native/internal-targets.json, written by native_targets.py): the original's address must equal the
 entry's RVA, and the candidate's definition of the target, from any --candidate object, must match the original's
 bytes there under the same masking, with its own relocations checked the same way. Targets without an entry, and
-entries whose definition the candidates lack or that reference unverified targets themselves, are reported as
-unverified; --strict treats them as failures.
+entries whose definition the candidates lack or that reference unverified targets themselves, are unverified, and
+fail the run unless --allow-unverified is given (--strict, the former opt-in, is accepted and changes nothing).
 
 A target the original does not export but reaches through an import thunk (`jmp [slot]`, FF 25) verifies when the slot
 imports the target's name, and is a mismatch when it imports another. A manifest entry marked "toolchain" names a
@@ -28,6 +29,11 @@ section's bytes past its raw size, up to its virtual size, read as zeros, as the
 An import by ordinal is named after the export with that ordinal in the system DLL of the same name (System32), so a
 candidate's `__imp_<name>` can match it; it keeps the name `#<ordinal>` when that DLL or ordinal is absent.
 
+A run without --symbol skips a duplicable COMDAT (inline function, template instance, deleting destructor) that the
+original neither exports nor lists in the manifest: it is reached, and verified, as a call target. Exported data is
+compared for the candidate's size, like a data manifest entry. A relocation type the harness does not model (SECREL,
+SECTION, ADDR32, ...) fails only the function that holds it.
+
 Export parity compares the export names of a built DLL with the original's.
 
 Reads the original DLL only. Keep the original and any decompiled output in the gitignored .mirror-cache, never in
@@ -38,6 +44,7 @@ import functools
 import hashlib
 import json
 import os
+import re
 import struct
 import sys
 from dataclasses import dataclass, field
@@ -49,9 +56,13 @@ IMAGE_REL_AMD64_ADDR32NB = 0x0003
 IMAGE_REL_AMD64_REL32 = 0x0004
 IMAGE_REL_AMD64_REL32_5 = 0x0009
 IMAGE_SCN_CNT_UNINITIALIZED_DATA = 0x00000080
+IMAGE_SCN_LNK_COMDAT = 0x00001000
+IMAGE_COMDAT_SELECT_NODUPLICATES = 1
+IMAGE_SYM_CLASS_LABEL = 6
 UNW_FLAG_CHAININFO = 0x4
 # AMD64 COFF relocation types whose field width is 8 bytes (ADDR64) or 4 bytes (everything else).
 RELOC_WIDTH = {IMAGE_REL_AMD64_ADDR64: 8, **{k: 4 for k in range(IMAGE_REL_AMD64_ADDR32NB, IMAGE_REL_AMD64_REL32_5 + 1)}}
+ANONYMOUS = re.compile(r"\?A0x[0-9a-fA-F]+@")
 DEFAULT_TARGETS = Path(__file__).resolve().parents[2] / "docs" / "mirror" / "native" / "internal-targets.json"
 
 
@@ -67,6 +78,7 @@ class Section:
     name: str
     data: bytes
     relocs: list = field(default_factory=list)
+    selection: int = 0  # COMDAT selection of the section (0 when it is not a COMDAT)
 
 
 @dataclass
@@ -86,6 +98,7 @@ class Function:
     targets: dict  # relocation offset (within the function) -> external symbol name, or None when not external
     statics: dict = field(default_factory=dict)  # relocation offset -> name of a static (non-section) target symbol
     data: bool = False  # the symbol is not a function: its span is data, such as a vtable or a constant
+    duplicable: bool = False  # a COMDAT that any object may define: an inline function, a template instance
 
 
 @dataclass
@@ -110,6 +123,12 @@ class Result:
     unverified: int = 0
     verified: int = 0  # targets verified through the manifest of internal targets
     entries: dict = field(default_factory=dict)  # manifest name -> (status, reason) for entries that did not verify
+
+
+def anonymous(name):
+    """`name` with MSVC's anonymous-namespace tag (`?A0x377d720e@`) blanked. The tag hashes the source path, so the same
+    source built from two checkouts tags its helpers differently; manifest entries match candidates by this form."""
+    return ANONYMOUS.sub("?A0x@", name)
 
 
 def _cstr(data, offset):
@@ -319,7 +338,7 @@ def read_coff(path):
             relocs.append(Reloc(vaddr, kind, sym))
         # Uninitialized data (.bss) has a size but no bytes in the file; it is zero when loaded.
         data = bytes(raw_size) if flags & IMAGE_SCN_CNT_UNINITIALIZED_DATA else d[raw_ptr:raw_ptr + raw_size]
-        sections.append(Section(name_of(raw_name), data, relocs))
+        sections.append(Section(name_of(raw_name), data, relocs, -1 if flags & IMAGE_SCN_LNK_COMDAT else 0))
 
     symbols = [None] * nsyms
     i = 0
@@ -327,6 +346,9 @@ def read_coff(path):
         raw = d[symptr + 18 * i:symptr + 18 * i + 18]
         value, sec, typ, storage, aux = struct.unpack_from("<IhHBB", raw, 8)
         symbols[i] = Symbol(name_of(raw[:8]), value, sec, storage, typ)
+        # A COMDAT section's definition (its static section symbol) carries the selection in its auxiliary record.
+        if aux and storage == 3 and sec > 0 and sections[sec - 1].selection == -1:
+            sections[sec - 1].selection = d[symptr + 18 * (i + 1) + 14]
         i += 1 + aux
     return sections, symbols
 
@@ -337,7 +359,8 @@ def _spans(path):
     sections, symbols = read_coff(path)
     by_section = {}
     for s in symbols:
-        if s is not None and s.section > 0:
+        # A code label ($LN5) marks a place inside a function, not the start of another symbol.
+        if s is not None and s.section > 0 and s.storage != IMAGE_SYM_CLASS_LABEL:
             by_section.setdefault(s.section, []).append(s)
     for s in symbols:
         if s is None or s.section <= 0 or s.storage not in (2, 3) or s.name.startswith("."):
@@ -353,7 +376,8 @@ def _spans(path):
             targets[r.offset] = target.name if external else None
             if target is not None and target.storage == 3 and not target.name.startswith("."):
                 statics[r.offset] = target.name
-        yield s, Function(s.name, sec.data[s.value:end], relocs, targets, statics, (s.type >> 4) != 2)
+        yield s, Function(s.name, sec.data[s.value:end], relocs, targets, statics, (s.type >> 4) != 2,
+                          sec.selection not in (0, IMAGE_COMDAT_SELECT_NODUPLICATES))
 
 
 def functions_in_object(path):
@@ -370,18 +394,24 @@ def definitions_in_object(path):
 
 
 def definitions_in_objects(paths):
-    """definitions_in_object over several objects. A name two objects define differently fails: targets are resolved
-    by name, so a static helper of one object must not stand in for another object's helper of the same name."""
+    """definitions_in_object over several objects, keyed by anonymous(name). A name two objects define differently
+    fails: targets are resolved by name, so a static helper of one object must not stand in for another object's helper
+    of the same name. Two names that differ only in their anonymous-namespace tag fail too: they are distinct helpers
+    that the manifest could not tell apart."""
     out, origin = {}, {}
     for path in paths:
         for name, d in definitions_in_object(path).items():
-            if name not in out:
-                out[name], origin[name] = d, path
+            key = anonymous(name)
+            if key not in out:
+                out[key], origin[key] = d, path
                 continue
-            o = out[name]
+            o = out[key]
+            if o.name != d.name:
+                raise ValueError(f"{o.name} ({origin[key]}) and {d.name} ({path}) differ only in their "
+                                 f"anonymous-namespace tag, so manifest names cannot tell them apart")
             if (o.code, [(r.offset, r.kind) for r in o.relocs], o.targets, o.statics, o.data) != \
                     (d.code, [(r.offset, r.kind) for r in d.relocs], d.targets, d.statics, d.data):
-                raise ValueError(f"{name} is defined differently by {origin[name]} and {path}")
+                raise ValueError(f"{name} is defined differently by {origin[key]} and {path}")
     return out
 
 
@@ -399,18 +429,28 @@ def masked(code, relocs):
     return bytes(buf), mask
 
 
-def compare_code(name, original, original_relocs, candidate, candidate_relocs):
-    """Pure comparison of two function bodies. Relocation sites of either side are excluded from the comparison."""
+def compare_code(name, original, candidate, relocs):
+    """Pure comparison of two function bodies, with the candidate's relocation sites masked on both sides.
+
+    The linked original has no relocation records; its displacements sit at the candidate's relocation offsets because
+    both sides encode the same instructions."""
     if len(original) != len(candidate):
         return Result(name, False, f"length {len(candidate)} != original {len(original)}")
-    o, om = masked(original, original_relocs)
-    c, cm = masked(candidate, candidate_relocs)
-    if om != cm:
-        return Result(name, False, "relocation sites differ in position or width")
+    o, mask = masked(original, relocs)
+    c, _ = masked(candidate, relocs)
     for i, (x, y) in enumerate(zip(o, c)):
-        if om[i] and x != y:
+        if mask[i] and x != y:
             return Result(name, False, f"first byte difference at +{i:#x}: original {x:02x}, candidate {y:02x}")
-    return Result(name, True, f"{len(original)} bytes, {len(candidate_relocs)} relocation sites masked")
+    return Result(name, True, f"{len(original)} bytes, {len(relocs)} relocation sites masked")
+
+
+def unsupported(function):
+    """Why `function` cannot be compared (a relocation type the harness does not model, such as SECREL), or None."""
+    bad = [r for r in function.relocs if r.kind not in RELOC_WIDTH]
+    if not bad:
+        return None
+    return f"unsupported relocation type {bad[0].kind:#x} at +{bad[0].offset:#x}" + (
+        f" and {len(bad) - 1} more" if bad[1:] else "")
 
 
 def _resolve(image, at, kind):
@@ -432,7 +472,7 @@ def _addend(code, r):
 
 
 def load_targets(path, image):
-    """The manifest's entries for the original, by decorated name, after checking each against the original.
+    """The manifest's entries for the original, by decorated name (anonymous() form), checked against the original.
 
     The manifest maps DLL file names to {"sha256": ..., "targets": {name: {"rva": "0x...", "size": n}}}; "size" is
     given for data only. A DLL the manifest does not list has no entries. Raises ManifestError when the original's
@@ -476,7 +516,9 @@ def targets_from(doc, image, path="manifest"):
                 raise ManifestError(f"{path}: {name}: RVA {entry.rva:#x} does not start a .pdata function")
         elif not (type(entry.size) is int and entry.size > 0 and image.contains(entry.rva, entry.size)):
             raise ManifestError(f"{path}: {name}: {entry.size!r} bytes at RVA {entry.rva:#x} are not in a section")
-        entries[name] = entry
+        if anonymous(name) in entries:
+            raise ManifestError(f"{path}: {name}: another entry differs only in its anonymous-namespace tag")
+        entries[anonymous(name)] = entry
     return entries
 
 
@@ -512,8 +554,10 @@ class InternalTargets:
                                        f"manifest entry is {'data' if entry.size is not None else 'a function'}")
             elif entry.size is not None and len(defn.code) != entry.size:
                 verdict = ("mismatch", f"size {len(defn.code)} != manifest {entry.size}")
+            elif reason := unsupported(defn):
+                verdict = ("mismatch", reason)
             else:
-                byte_result = compare_code(name, self.original_bytes(name), defn.relocs, defn.code, defn.relocs)
+                byte_result = compare_code(name, self.original_bytes(name), defn.code, defn.relocs)
                 if not byte_result.ok:
                     verdict = ("mismatch", byte_result.reason)
                 else:
@@ -573,39 +617,45 @@ class Targets:
 def classify_targets(image, begin, function, internal=None):
     """Check each relocation of `function`, placed at RVA `begin` in the original, against the original.
 
-    An export target must resolve to the export's RVA, and a call through `__imp_<name>` must reach the import slot the
-    original imports <name> through. A target the original reaches through an import thunk must be imported through
-    the thunk's slot under its name. A target listed in `internal` (InternalTargets) must resolve to its entry's RVA
-    plus the candidate's addend, and the entry must verify. Any other target is unverified.
+    Each relocation field holds its target's address plus the candidate's addend (the value the object stores in place),
+    so the original's field must resolve to the target plus that addend. An export target is the export's RVA, and
+    `__ImageBase` is RVA 0. A call through `__imp_<name>` must reach the import slot the original imports <name>
+    through. A target the original reaches through an import thunk must be imported through the thunk's slot under its
+    name. A target listed in `internal` (InternalTargets) must be its entry's RVA, and the entry must verify. Any other
+    target is unverified.
     """
     found = Targets([])
     mismatches = found.mismatches
     for r in function.relocs:
         target = function.targets.get(r.offset)
         resolved = _resolve(image, begin + r.offset, r.kind)
+        addend = _addend(function.code, r)
+        at = resolved - addend  # the target address the original's field implies
+        plus = f" + {addend:#x}" if addend else ""
         if target is not None and target.startswith("__imp_"):
             imported = target[len("__imp_"):]
-            if resolved not in image.imports:
-                mismatches.append(f"{imported} at +{r.offset:#x}: original resolves to RVA {resolved:#x}, "
-                                  f"which is not an import slot")
-            elif image.imports[resolved] != imported:
-                mismatches.append(f"{imported} at +{r.offset:#x}: original calls import "
-                                  f"{image.imports[resolved]}")
-        elif target is not None and target in image.exports:
-            if image.exports[target] != resolved:
-                mismatches.append(f"{target} at +{r.offset:#x}: original resolves to RVA {resolved:#x}, "
-                                  f"export is {image.exports[target]:#x}")
-        elif (target is not None and (internal is None or target not in internal.entries)
-              and (slot := _thunk_slot(image, resolved)) in image.imports):
+            if at not in image.imports:
+                mismatches.append(f"{imported}{plus} at +{r.offset:#x}: original resolves to RVA {resolved:#x}, "
+                                  f"which is not an import slot{plus}")
+            elif image.imports[at] != imported:
+                mismatches.append(f"{imported} at +{r.offset:#x}: original calls import {image.imports[at]}")
+        elif target is not None and (target in image.exports or target == "__ImageBase"):
+            expected = image.exports.get(target, 0)
+            if expected != at:
+                mismatches.append(f"{target}{plus} at +{r.offset:#x}: original resolves to RVA {resolved:#x}, "
+                                  f"{'export' if target in image.exports else 'image base'} is {expected:#x}")
+        elif (target is not None and (internal is None or anonymous(target) not in internal.entries)
+              and (slot := _thunk_slot(image, at)) in image.imports):
             if image.imports[slot] != target:
                 mismatches.append(f"{target} at +{r.offset:#x}: original calls the import thunk for "
                                   f"{image.imports[slot]}")
         else:
             name = target or function.statics.get(r.offset)
+            name = name and anonymous(name)
             if internal is None or name not in internal.entries:
                 found.unverified += 1
                 continue
-            expected = internal.entries[name].rva + _addend(function.code, r)
+            expected = internal.entries[name].rva + addend
             if resolved != expected:
                 mismatches.append(f"{name} at +{r.offset:#x}: original resolves to RVA {resolved:#x}, "
                                   f"manifest entry gives {expected:#x}")
@@ -642,8 +692,13 @@ def compare_object(original_dll, candidate_obj, symbols=None, targets=None):
 
     `candidate_obj` is one object or a list of them; all of them define internal targets. `targets` is the manifest of
     internal targets, if any. A candidate function the original does not export is compared at its RVA when the
-    manifest lists it as a function. Without `symbols`, every other manifest entry the candidates define is checked
-    too, so a stale entry fails even when nothing references it.
+    manifest lists it as a function. External data the original exports is compared at the export's RVA, for the
+    candidate's size. A function with an unsupported relocation type fails on its own.
+
+    Without `symbols`, every other manifest entry the candidates define is checked too, so a stale entry fails even when
+    nothing references it, and a duplicable COMDAT (an inline function, a template instance, a deleting destructor)
+    that the original neither exports nor lists is skipped: it is a dependency of the functions compared, verified when
+    one reaches it as a manifest entry, and unverified otherwise.
     """
     image = PeImage(original_dll)
     objects = [candidate_obj] if isinstance(candidate_obj, (str, Path)) else list(candidate_obj)
@@ -651,8 +706,8 @@ def compare_object(original_dll, candidate_obj, symbols=None, targets=None):
     definitions = definitions_in_objects(objects)
     funcs = []
     for obj in objects:
-        for f in functions_in_object(obj):
-            if all(f.name != g.name for g in funcs):
+        for s, f in _spans(obj):
+            if s.storage == 2 and (not f.data or f.name in image.exports) and all(f.name != g.name for g in funcs):
                 funcs.append(f)
     internal = InternalTargets(image, entries, definitions)
     if symbols:
@@ -664,22 +719,31 @@ def compare_object(original_dll, candidate_obj, symbols=None, targets=None):
     results = [Result(n, False, "named in --symbol but not defined by the candidate") for n in sorted(missing)]
     if not funcs and not missing:
         results.append(Result("(object)", False, "candidate defines no external functions"))
+    if not symbols:
+        funcs = [f for f in funcs if not f.duplicable or f.name in image.exports or anonymous(f.name) in entries]
     for f in funcs:
-        extent = image.export_extent(f.name)
-        if extent is not None:
+        if reason := unsupported(f):
+            results.append(Result(f.name, False, reason))
+            continue
+        if f.data:  # only exported data is compared (see above)
+            begin = image.exports[f.name]
+            if not image.contains(begin, len(f.code)):
+                results.append(Result(f.name, False, f"{len(f.code)} bytes at the export's RVA {begin:#x} are not in "
+                                                     f"a section"))
+                continue
+            code = image.read(begin, len(f.code))
+        elif (extent := image.export_extent(f.name)) is not None:
             begin, code = extent[0], image.export_code(f.name)
-        elif f.name in entries and entries[f.name].toolchain:
+        elif (key := anonymous(f.name)) in entries and entries[key].toolchain:
             results.append(Result(f.name, False, "the candidate objects define a toolchain entry"))
             continue
-        elif f.name in entries and entries[f.name].size is None:
-            begin, code = entries[f.name].rva, internal.original_bytes(f.name)
+        elif key in entries and entries[key].size is None:
+            begin, code = entries[key].rva, internal.original_bytes(key)
             f = Function(f.name + " (at manifest RVA)", f.code, f.relocs, f.targets, f.statics)
         else:
             results.append(Result(f.name, False, "not an export of the original"))
             continue
-        # The original is linked, so it has no relocation records. Its displacements sit at the candidate's relocation
-        # offsets because both sides encode the same instructions; the candidate's sites mask both.
-        byte_result = compare_code(f.name, code, f.relocs, f.code, f.relocs)
+        byte_result = compare_code(f.name, code, f.code, f.relocs)
         # Relocation offsets only line up when the lengths agree; otherwise the target check would read the wrong bytes.
         found = classify_targets(image, begin, f, internal) if len(code) == len(f.code) else Targets([])
         reasons = [] if byte_result.ok else [byte_result.reason]
@@ -689,7 +753,7 @@ def compare_object(original_dll, candidate_obj, symbols=None, targets=None):
         results.append(Result(f.name, ok, "; ".join(reasons) if reasons else byte_result.reason, found.unverified,
                               found.verified, found.entries))
     if not symbols:
-        compared = {f.name for f in funcs}
+        compared = {anonymous(f.name) for f in funcs}
         for name in sorted(set(entries) & set(definitions) - compared):
             status, reason = internal.reference(name)
             results.append(Result(f"{name} (manifest entry)", status != "mismatch", reason or "verified at manifest RVA",
@@ -715,11 +779,14 @@ def main(argv=None):
                              "internal targets)")
     parser.add_argument("--built-dll", type=Path, help="built Quire DLL: check its export names against the original")
     parser.add_argument("--symbol", action="append", help="limit to this decorated function name (repeatable)")
-    parser.add_argument("--strict", action="store_true", help="fail on call targets that cannot be verified")
+    parser.add_argument("--allow-unverified", action="store_true",
+                        help="report call/address targets that cannot be verified without failing (default: they fail)")
+    parser.add_argument("--strict", action="store_true", help="accepted for compatibility; strict is the default")
     parser.add_argument("--targets", type=Path,
                         help="manifest of internal targets (default: docs/mirror/native/internal-targets.json, "
                              "when it exists)")
     args = parser.parse_args(argv)
+    strict = not args.allow_unverified
     if not args.candidate and not args.built_dll:
         parser.error("give --candidate, --built-dll or both")
     failed = False
@@ -740,7 +807,7 @@ def main(argv=None):
             return 1
         unverified_total, verified_total, entries = 0, 0, {}
         for r in results:
-            bad = not r.ok or (args.strict and r.unverified)
+            bad = not r.ok or (strict and r.unverified)
             failed |= bad
             unverified_total += r.unverified
             verified_total += r.verified
@@ -749,11 +816,11 @@ def main(argv=None):
                   + (f" [{r.unverified} unverified call/address targets]" if r.unverified else "")
                   + (f" [{r.verified} verified by manifest]" if r.verified else ""))
         for name, (status, reason) in sorted(entries.items()):
-            print(f"{'FAIL' if status == 'mismatch' or args.strict else 'WARN'} manifest entry {name}: "
+            print(f"{'FAIL' if status == 'mismatch' or strict else 'WARN'} manifest entry {name}: "
                   f"{status}: {reason}")
         matched = sum(r.ok for r in results)
         print(f"{matched}/{len(results)} functions match bytes; {unverified_total} unverified targets; "
-              f"{verified_total} verified by manifest" + (" (strict)" if args.strict else ""))
+              f"{verified_total} verified by manifest" + ("" if strict else " (unverified allowed)"))
     return 1 if failed else 0
 
 

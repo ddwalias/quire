@@ -71,10 +71,18 @@ sealed record Structure(string[] Calls, string[] Fields, string[] Types, string[
 /// <paramref name="exact"/> keeps compiler-generated names (for <see cref="Body"/>, which names members as declared).
 /// <paramref name="root"/>: the checkout the assembly was built from; <see cref="Body"/> hashes string literals with
 /// it replaced by <c>&lt;repo&gt;</c>, since <c>[CallerFilePath]</c> (every <c>MirrorStub.NotImplemented()</c>)
-/// compiles the absolute source path into the IL and the gate builds in a new clone each time.</summary>
-sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecutable.PEReader pe, SigProvider decoder,
-    Func<string, string> typeName, Func<int, string?> methodName, bool exact = false, string? root = null)
+/// compiles the absolute source path into the IL and the gate builds in a new clone each time.
+/// <paramref name="bind"/> and <paramref name="products"/> qualify type names with their assembly for the strict
+/// comparison: <paramref name="bind"/> maps (the assembly a type resolves to, its name) to Mathcad's [name, assembly], null
+/// when unbound (<paramref name="typeName"/> is then unused); an unbound type keeps its own assembly when
+/// <paramref name="products"/> (lower-case Quire and Mathcad assembly names) lists it. Framework types stay unqualified:
+/// Mathcad and Quire name them in different reference assemblies (mscorlib, System.Runtime, System.Collections...).
+/// A <see cref="StrictSigProvider"/> decoder also renders what <see cref="SigProvider"/> erases.</summary>
+sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecutable.PEReader pe, ISignatureTypeProvider<TypeSig, object?> decoder,
+    Func<string, string> typeName, Func<int, string?> methodName, bool exact = false, string? root = null,
+    Func<string, string, string[]?>? bind = null, IReadOnlySet<string>? products = null)
 {
+    private readonly bool strict = decoder is StrictSigProvider;
     private readonly string? root = root is null ? null : Path.GetFullPath(root);
     private readonly string? self = md.IsAssembly ? md.GetString(md.GetAssemblyDefinition().Name) : null;
 
@@ -249,11 +257,11 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         var il = body.GetILReader();
         var text = new System.Text.StringBuilder($"{definition.Attributes} {definition.ImplAttributes} {body.LocalVariablesInitialized}\n");
         if (!body.LocalSignature.IsNil)
-            text.Append("locals ").AppendJoin(",", md.GetStandaloneSignature(body.LocalSignature)
-                .DecodeLocalSignature(decoder, null).Select(Render)).Append('\n');
+            text.Append("locals ").Append(Ordinalless(string.Join(",", md.GetStandaloneSignature(body.LocalSignature)
+                .DecodeLocalSignature(decoder, null).Select(Render)))).Append('\n');
         foreach (var r in body.ExceptionRegions)
             text.Append($"{r.Kind} {r.TryOffset} {r.TryLength} {r.HandlerOffset} {r.HandlerLength} {r.FilterOffset} "
-                + (r.Kind == ExceptionRegionKind.Catch ? Type(r.CatchType) : "") + "\n");
+                + (r.Kind == ExceptionRegionKind.Catch ? Ordinalless(Type(r.CatchType)) : "") + "\n");
         var calls = new SortedSet<int>();
         var slots = new SortedSet<string>(StringComparer.Ordinal);
         var reads = new SortedSet<string>(StringComparer.Ordinal);
@@ -288,13 +296,13 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                 case OperandType.InlineSig:
                     var signature = md.GetStandaloneSignature((StandaloneSignatureHandle)MetadataTokens.EntityHandle(il.ReadInt32()))
                         .DecodeMethodSignature(decoder, null);
-                    text.Append(Signature("calli", signature));
+                    text.Append(Ordinalless(Signature("calli", signature)));
                     break;
                 case OperandType.InlineMethod or OperandType.InlineField or OperandType.InlineType or OperandType.InlineTok:
                     var token = MetadataTokens.EntityHandle(il.ReadInt32());
                     if (IsField(token))
                     {
-                        text.Append(Field(token)).Append(' ').Append(Render(FieldType(token))).Append(InitialData(token));
+                        text.Append(Ordinalless($"{Field(token)} {Render(FieldType(token))}{InitialData(token)}"));
                         string id = FieldId(token);
                         if (code == OpCodes.Ldfld || code == OpCodes.Ldsfld || code == OpCodes.Ldflda || code == OpCodes.Ldsflda)
                         {
@@ -307,18 +315,19 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                     else if (token.Kind is HandleKind.MethodDefinition or HandleKind.MemberReference or HandleKind.MethodSpecification)
                     {
                         string callee = Method(token);
-                        text.Append(callee);
+                        text.Append(Ordinalless(callee));
                         if (code == OpCodes.Call) shape[^1] = "call " + callee;
                         Callees(token, calls);
                         if (code == OpCodes.Callvirt || code == OpCodes.Ldvirtftn) slots.Add(Slot(token));
                     }
-                    else text.Append(Type(token));
+                    else text.Append(Ordinalless(Type(token)));
                     break;
                 default: throw new BadImageFormatException($"Unknown operand type {code.OperandType}");
             }
             text.Append('\n');
         }
-        string hash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(Ordinalless(text.ToString()))));
+        // Ordinals are dropped from each name as it is appended, not from string literals: their text is the body's.
+        string hash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(text.ToString())));
         // Generated stubs throw MirrorStub.NotImplemented(file, member), the file from [CallerFilePath].
         bool stub = shape.Count == 4 && shape[0] == "ldstr" && shape[1] == "ldstr" && shape[3] == "throw"
             && shape[2].StartsWith("call ", StringComparison.Ordinal) && shape[2].Contains("Quire.Mirror.MirrorStub::NotImplemented", StringComparison.Ordinal);
@@ -421,6 +430,9 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         if ((field.Attributes & System.Reflection.FieldAttributes.HasFieldRVA) == 0) return "";
         var blob = md.GetBlobReader(field.Signature);
         blob.ReadSignatureHeader();
+        // A modified type (C++/CLI's const native data: vtables, ThrowInfo, string literals) stays unhashed: its bytes
+        // hold native addresses and RVAs, which differ with the native layout whatever the source.
+        // shortcut: const string literals go unchecked too; hash them once relocated words can be told apart.
         var code = blob.ReadSignatureTypeCode();
         int size = code switch
         {
@@ -497,7 +509,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                 var definition = md.GetMethodDefinition((MethodDefinitionHandle)handle);
                 var sig = definition.DecodeSignature(decoder, null);
                 string name = methodName(MetadataTokens.GetToken(handle)) ?? md.GetString(definition.Name);
-                return $"{Name(SigProvider.FullName(md, definition.GetDeclaringType()))}::{Signature(name, sig)}";
+                return $"{Type(definition.GetDeclaringType())}::{Signature(name, sig)}";
             case HandleKind.MemberReference:
                 var reference = md.GetMemberReference((MemberReferenceHandle)handle);
                 return $"{Owner(reference.Parent)}::{Signature(md.GetString(reference.Name), reference.DecodeMethodSignature(decoder, null))}";
@@ -515,7 +527,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         if (handle.Kind == HandleKind.FieldDefinition)
         {
             var field = md.GetFieldDefinition((FieldDefinitionHandle)handle);
-            return $"{Name(SigProvider.FullName(md, field.GetDeclaringType()))}::{Member(md.GetString(field.Name))}";
+            return $"{Type(field.GetDeclaringType())}::{Member(md.GetString(field.Name))}";
         }
         var reference = md.GetMemberReference((MemberReferenceHandle)handle);
         return $"{Owner(reference.Parent)}::{Member(md.GetString(reference.Name))}";
@@ -530,22 +542,43 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
 
     private string Type(EntityHandle handle) => handle.Kind switch
     {
-        HandleKind.TypeDefinition => Name(SigProvider.FullName(md, (TypeDefinitionHandle)handle)),
-        HandleKind.TypeReference => Name(SigProvider.FullName(md, (TypeReferenceHandle)handle)),
+        // The decoder names the assembly a definition or reference resolves to, which Name qualifies with.
+        HandleKind.TypeDefinition => Render(decoder.GetTypeFromDefinition(md, (TypeDefinitionHandle)handle, 0)),
+        HandleKind.TypeReference => Render(decoder.GetTypeFromReference(md, (TypeReferenceHandle)handle, 0)),
         HandleKind.TypeSpecification => Render(md.GetTypeSpecification((TypeSpecificationHandle)handle).DecodeSignature(decoder, null)),
         _ => throw new BadImageFormatException($"Unexpected type token kind {handle.Kind}"),
     };
 
+    /// <summary>Strict: with the calling convention and header flags (instance, explicit this) and the vararg sentinel.</summary>
     private string Signature(string name, MethodSignature<TypeSig> sig) =>
-        $"{Member(name)}`{sig.GenericParameterCount}({string.Join(",", sig.ParameterTypes.Select(Render))})->{Render(sig.ReturnType)}";
+        $"{(strict ? Header(sig.Header) : "")}{Member(name)}`{sig.GenericParameterCount}({Parameters(sig)})->{Render(sig.ReturnType)}";
+
+    private string Parameters(MethodSignature<TypeSig> sig) => string.Join(",", sig.ParameterTypes.Select(Render)
+        .Select((p, i) => strict && i == sig.RequiredParameterCount ? "...," + p : p));
+
+    private static string Header(SignatureHeader header) => (header.IsInstance ? "instance " : "")
+        + (header.HasExplicitThis ? "explicit " : "")
+        + (header.CallingConvention == SignatureCallingConvention.Default ? "" : header.CallingConvention.ToString().ToLowerInvariant() + " ");
 
     private string Render(TypeSig sig) => sig switch
     {
-        NamedSig n => Name(n.Name) + (n.Args.IsEmpty ? "" : "<" + string.Join(",", n.Args.Select(Render)) + ">"),
+        NamedSig n => Name(n.Name, n.Assembly) + (n.Args.IsEmpty ? "" : "<" + string.Join(",", n.Args.Select(Render)) + ">"),
         ArraySig a => Render(a.Element) + "[" + new string(',', Math.Max(0, a.Rank - 1)) + "]",
         ByRefSig b => Render(b.Element) + "&",
         PointerSig p => Render(p.Element) + "*",
         GenericParamSig g => (g.OfMethod ? "!!" : "!") + g.Index,
+        ModifiedSig m => $"{Render(m.Element)} {(m.Required ? "modreq" : "modopt")}({Render(m.Modifier)})",
+        PinnedSig p => Render(p.Element) + " pinned",
+        MethodPointerSig f => $"method {Header(f.Signature.Header)}{Render(f.Signature.ReturnType)}*({Parameters(f.Signature)})",
+        // ilasm's notation: lower...upper, lower..., or a size; an unspecified dimension is empty.
+        ShapedArraySig s => Render(s.Element) + "[" + string.Join(",", Enumerable.Range(0, s.Shape.Rank).Select(i =>
+            (i < s.Shape.LowerBounds.Length ? (int?)s.Shape.LowerBounds[i] : null, i < s.Shape.Sizes.Length ? (int?)s.Shape.Sizes[i] : null) switch
+            {
+                ({ } low, { } size) => $"{low}...{low + size - 1}",
+                ({ } low, null) => $"{low}...",
+                (null, { } size) => $"{size}",
+                _ => "",
+            })) + "]",
         _ => sig.ToString(),
     };
 
@@ -560,14 +593,57 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         return "<generated>";
     }
 
-    /// <summary>Mathcad's name for a type: mirrored types map whole, else their outermost mirrored declaring type.</summary>
-    private string Name(string type)
+    /// <summary>Mathcad's name for a type: mirrored types map whole, else their outermost mirrored declaring type;
+    /// with <c>bind</c>, prefixed by its lower-case assembly unless that is a framework one.</summary>
+    private string Name(string type, string assembly)
     {
-        string mapped = typeName(type);
         int nest = type.IndexOf('+');
-        if (mapped == type && nest > 0) mapped = typeName(type[..nest]) + type[nest..];
-        return string.Join("+", mapped.Split('+').Select(Member));
+        if (bind == null && products == null)
+        {
+            string mapped = typeName(type);
+            if (mapped == type && nest > 0) mapped = typeName(type[..nest]) + type[nest..];
+            return string.Join("+", mapped.Split('+').Select(Member));
+        }
+        // A module's own compiler types (<Module>, <PrivateImplementationDetails>...) are its own on either side.
+        if (type.StartsWith('<') && assembly == self) return "[<self>]" + string.Join("+", type.Split('+').Select(Member));
+        var bound = bind?.Invoke(assembly, type)
+            ?? (nest > 0 && bind?.Invoke(assembly, type[..nest]) is [var outer, var at] ? [outer + type[nest..], at] : null);
+        string name = bound?[0] ?? type, scope = (bound?[1] ?? assembly).ToLowerInvariant();
+        return (bound != null || products?.Contains(scope) == true ? $"[{scope}]" : "")
+            + string.Join("+", name.Split('+').Select(Member));
     }
+}
+
+/// <summary>What <see cref="SigProvider"/> (shared with MirrorGen, whose generated code must not change) erases, kept for
+/// the strict comparison: custom modifiers (C++/CLI's IsLong, IsConst, IsVolatile; C#'s <c>in</c>), pinned locals,
+/// function pointer signatures and array bounds.</summary>
+sealed record ModifiedSig(TypeSig Modifier, TypeSig Element, bool Required) : TypeSig;
+sealed record PinnedSig(TypeSig Element) : TypeSig;
+sealed record MethodPointerSig(MethodSignature<TypeSig> Signature) : TypeSig;
+sealed record ShapedArraySig(TypeSig Element, ArrayShape Shape) : TypeSig;
+
+/// <summary><see cref="SigProvider"/>'s names, with nothing erased (see <see cref="ModifiedSig"/>).</summary>
+sealed class StrictSigProvider(string assembly) : ISignatureTypeProvider<TypeSig, object?>
+{
+    private readonly SigProvider names = new(assembly);
+    public TypeSig GetPrimitiveType(PrimitiveTypeCode typeCode) => names.GetPrimitiveType(typeCode);
+    public TypeSig GetTypeFromDefinition(MetadataReader reader, TypeDefinitionHandle handle, byte rawTypeKind) =>
+        names.GetTypeFromDefinition(reader, handle, rawTypeKind);
+    public TypeSig GetTypeFromReference(MetadataReader reader, TypeReferenceHandle handle, byte rawTypeKind) =>
+        names.GetTypeFromReference(reader, handle, rawTypeKind);
+    public TypeSig GetTypeFromSpecification(MetadataReader reader, object? context, TypeSpecificationHandle handle, byte rawTypeKind) =>
+        reader.GetTypeSpecification(handle).DecodeSignature(this, context);
+    public TypeSig GetGenericInstantiation(TypeSig genericType, System.Collections.Immutable.ImmutableArray<TypeSig> typeArguments) =>
+        names.GetGenericInstantiation(genericType, typeArguments);
+    public TypeSig GetArrayType(TypeSig elementType, ArrayShape shape) => new ShapedArraySig(elementType, shape);
+    public TypeSig GetSZArrayType(TypeSig elementType) => names.GetSZArrayType(elementType);
+    public TypeSig GetPointerType(TypeSig elementType) => names.GetPointerType(elementType);
+    public TypeSig GetByReferenceType(TypeSig elementType) => names.GetByReferenceType(elementType);
+    public TypeSig GetGenericMethodParameter(object? context, int index) => names.GetGenericMethodParameter(context, index);
+    public TypeSig GetGenericTypeParameter(object? context, int index) => names.GetGenericTypeParameter(context, index);
+    public TypeSig GetPinnedType(TypeSig elementType) => new PinnedSig(elementType);
+    public TypeSig GetFunctionPointerType(MethodSignature<TypeSig> signature) => new MethodPointerSig(signature);
+    public TypeSig GetModifiedType(TypeSig modifier, TypeSig unmodifiedType, bool isRequired) => new ModifiedSig(modifier, unmodifiedType, isRequired);
 }
 
 static class CompilerGenerated

@@ -10,11 +10,24 @@ python tools/validation/release_il.py --base main --project Quire.Mpl
 python tools/validation/release_il.py --base main --project Quire.Mpl --type Quire.Mcd.Dim
 ```
 
-Production projects affected by the diff are included automatically. `--project` adds scope;
-it cannot remove an affected project. Root build configuration changes select all production
-projects. Each invocation builds the base and current working tree with `-c Release` and
-`--no-incremental` into separate temporary directories. It builds MethodAudit in Release and
-reads production assemblies directly, without a test host. It never runs tests.
+Production projects affected by the diff are included automatically, together with every project
+whose `ProjectReference` closure (its `.csproj` and imported `.props`, such as `Generated/Mirror.props`)
+reaches one: a changed `const`, enum value or default argument changes its dependents' IL. `--project`
+adds scope; it cannot remove an affected project. Root build configuration changes and
+`docs/mirror/type-map.csv` (MethodAudit's pairing input) select all production projects. Each
+invocation builds the base and current working tree with `-c Release` and `--no-incremental` into
+separate temporary directories, all selected projects in one build. It builds MethodAudit in Release
+**from the base commit**, and `lane_merge.py` always runs the main checkout's gate scripts (a lane's
+own copy re-runs main's), so a branch cannot change the tool or the rules that judge it; a change to
+MethodAudit, MirrorGen or `tools/validation` takes effect for the runs after it lands. It reads production assemblies directly, without a
+test host, and never runs tests.
+
+Base inventories are cached in `.mirror-cache/inventory-cache/`, keyed by the base commit, the
+project list, the judge's MethodAudit/MirrorGen trees and the install's DLL listing. The merge gate
+stores each committed candidate it passes (in the main checkout's cache, shared by every lane), so the
+next lane's base scan is usually a cache hit. Uncommitted candidates are never cached; a corrupt or
+locked entry is rebuilt. Delete the folder to force a rebuild. Scope diffs list both sides of a
+renamed file, so moving a file out of a project affects that project too.
 
 The check requires changed/new methods and every previously exact method in affected projects
 to match Mathcad. Removed methods fail. Unchanged unfinished methods are reported but do not
@@ -24,7 +37,10 @@ whose IL was already unchanged; selections must exist. Selecting a type includes
 
 The report is `.mirror-cache/release-il-<id>/release-il.json`, with base/candidate inventories
 and a build log alongside it. `--results <new directory>` selects another local location.
-Exit 0 means pass; exit 1 means mismatch or inspection/build failure. Reports contain artifact
+Exit 0 means pass; exit 1 means mismatch or inspection/build failure. When MethodAudit reports
+inspection errors they are printed (first 20) and its inventory is kept in the results folder. A
+method that cannot be paired or read (an ambiguous custom-modifier tie, an unreadable body) fails its
+own row with the reason in `structure_differences`; it no longer aborts the scan. Reports contain artifact
 identities, signatures and verdicts, not original IL. No committed validation baseline is used.
 
 ## C++/CLI candidate
@@ -114,6 +130,15 @@ because Quire has its own assembly identities and metadata layout. Framework ass
 is normalized through framework type names. Unresolved compiler-generated members fail when
 changed; the workflow does not claim they have been compared.
 
+Strict operands and locals keep what C# and C++/CLI can make differ: custom modifiers
+(`modopt(IsLong)`, `modopt(IsConst)`, `modreq(IsVolatile)`, `modreq(InAttribute)`), `pinned` locals,
+array shapes, signature headers (`instance`, `explicit`, unmanaged calling convention, `vararg`) and
+full function-pointer signatures. Non-framework types render with their mapped assembly, so two
+same-named types from different assemblies do not match; a module's own `<…>` types render as
+`[<self>]`. A P/Invoke additionally compares each parameter's and the return value's attributes
+(`In`/`Out`/`Optional`) and `[MarshalAs]` descriptor. RVA data typed by a modifier-qualified native
+type (vtables, `ThrowInfo`) holds layout-dependent addresses and is not hashed.
+
 Generated nested types inherit the reviewed enclosing type's mapping only when the exact
 nested name exists as a compiler-generated type in the same original artifact. Unmapped
 or differently numbered helpers still fail; no generated body is exempted.
@@ -145,11 +170,27 @@ python C:/Projects/Quire/tools/validation/lane_merge.py mirror/<lane>-<unit>
 python tools/validation/merge_gate.py mirror/<lane>-<unit>
 ```
 
-The lane wrapper refreshes and rebases under the merge lock, then validates an immutable
-committed candidate in a temporary clone and fast-forwards/pushes `main` after a pass. It
-rechecks the base and tip before applying. There are no stored validation refs, baseline
+The lane wrapper rebases onto a fresh `origin/main` and validates the committed candidate in a
+temporary clone **outside** the merge lock, so lanes validate in parallel. It then takes the lock,
+fetches and fast-forwards `main`, and lands one of three ways, recorded under `landing.path` in the
+receipt:
+
+- `validated`: `main` has not moved; the validated tip lands.
+- `rebased-unaffected`: `main` moved, the rebase is clean, the rebased branch affects no more
+  projects than were validated, and the new `main` commits touch none of the candidate's inputs
+  (compared projects and their forward reference closure, `src/` files outside project folders,
+  root files other than `*.md`, the type map, MethodAudit, MirrorGen, `tools/validation/`, and for
+  native projects their folders, `docs/mirror/native/` and the assembly map). It lands without building.
+- `revalidated`: anything else is validated again under the lock, as before.
+
+A rebase conflict is aborted and its files listed. There are no stored validation refs, baseline
 commits, protected-list approvals or two-stage validation records. Changes without production
 inputs skip compilation. The merge receipt is `.mirror-cache/gate-il-<id>/gate.json`.
+
+Native projects (`src/<P>/` with `<P>.vcxproj` and no `<P>.csproj`) the branch affects are checked by
+`native_gate.py` after the IL check; both must pass. A change to `docs/mirror/native/internal-targets.json`,
+the assembly map, `native_bytes.py` or `native_gate.py` selects every native project. Native work no
+longer lands unchecked.
 
 Pass the same `--project`, `--type` or `--method` selectors to `lane_merge.py` when needed.
 Keep the candidate fixed during validation. Never force-push `main`.
@@ -157,7 +198,12 @@ Keep the candidate fixed during validation. Never force-push `main`.
 ## Entry points
 
 `release_il.py` checks the batch, `il_diff.py` inspects a mismatch, and `lane_merge.py` lands
-it through `il_merge.py`. The old names `validate.py`, `quick_check.py` and `merge_gate.py`
+it through `il_merge.py`. For native projects, `native_gate.py --base main --project <P>` is the batch
+check and `native_bytes.py` the per-function harness. `native_bytes.py` is strict by default:
+unverified call/address targets fail unless `--allow-unverified` is given (`--strict` is accepted and
+does nothing). Export, import-slot and import-thunk targets include the relocation's addend; data
+exports are byte-compared; manifest names match regardless of the `?A0x<hash>` anonymous-namespace
+tag, which depends on the checkout path. The old names `validate.py`, `quick_check.py` and `merge_gate.py`
 are small compatibility aliases for these Release IL commands. They contain no runtime pipeline.
 
 The retired validators, mutation tools, acceptance lists and baselines have been removed.
