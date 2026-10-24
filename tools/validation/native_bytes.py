@@ -2,7 +2,7 @@
 
 A Quire candidate is a COFF object compiled with the same toolset and flags as the original. Each exported function
 of the original is located through its .pdata entry (or, for a leaf function without one, the next function start),
-and its code bytes are compared with the candidate's function section. Relocation sites are masked on both sides: the
+extended by the chained .pdata entries (UNW_FLAG_CHAININFO) that continue it without a gap, and its code bytes are compared with the candidate's function section. Relocation sites are masked on both sides: the
 object lists exactly which bytes depend on link-time addresses, and the same instruction stream has its displacement
 at the same offset in the linked original.
 
@@ -14,6 +14,12 @@ entry's RVA, and the candidate's definition of the target, from any --candidate 
 bytes there under the same masking, with its own relocations checked the same way. Targets without an entry, and
 entries whose definition the candidates lack or that reference unverified targets themselves, are reported as
 unverified; --strict treats them as failures.
+
+A target the original does not export but reaches through an import thunk (`jmp [slot]`, FF 25) verifies when the slot
+imports the target's name, and is a mismatch when it imports another. A manifest entry marked "toolchain" names a
+symbol that the toolset's static libraries supply (such as `??_7type_info@@6B@` from the C runtime), so no candidate
+can define it: every site must resolve to its RVA, and a candidate that defines it is a mismatch. A run without
+--symbol lists each toolchain entry, so the targets accepted without a byte comparison stay visible.
 
 The manifest binds to the original's file name and SHA-256. An entry for another build, a function entry that does not
 start a .pdata function, or a data entry outside the original's sections fails the run before any comparison. A
@@ -43,6 +49,7 @@ IMAGE_REL_AMD64_ADDR32NB = 0x0003
 IMAGE_REL_AMD64_REL32 = 0x0004
 IMAGE_REL_AMD64_REL32_5 = 0x0009
 IMAGE_SCN_CNT_UNINITIALIZED_DATA = 0x00000080
+UNW_FLAG_CHAININFO = 0x4
 # AMD64 COFF relocation types whose field width is 8 bytes (ADDR64) or 4 bytes (everything else).
 RELOC_WIDTH = {IMAGE_REL_AMD64_ADDR64: 8, **{k: 4 for k in range(IMAGE_REL_AMD64_ADDR32NB, IMAGE_REL_AMD64_REL32_5 + 1)}}
 DEFAULT_TARGETS = Path(__file__).resolve().parents[2] / "docs" / "mirror" / "native" / "internal-targets.json"
@@ -83,9 +90,12 @@ class Function:
 
 @dataclass
 class Entry:
-    """A reviewed internal target: its RVA in the original, and its size when it is data (a function's is .pdata's)."""
+    """A reviewed internal target: its RVA in the original, and its size when it is data (a function's is .pdata's).
+
+    A toolchain entry has no size: the toolset supplies its definition, so only its RVA is checked."""
     rva: int
     size: int = None
+    toolchain: bool = False
 
 
 class ManifestError(ValueError):
@@ -179,10 +189,37 @@ class PeImage:
         if not rva:
             return {}
         base = _rva_offset(self.sections, rva)
-        out = {}
+        rows = {}
         for i in range(size // 12):
-            begin, end, _ = struct.unpack_from("<III", d, base + 12 * i)
-            out[begin] = end
+            begin, end, unwind = struct.unpack_from("<III", d, base + 12 * i)
+            rows[begin] = (end, unwind)
+
+        def parent(unwind):
+            """The begin RVA of the entry that `unwind` chains to, or None for a primary entry."""
+            if unwind & 1:  # points straight at the parent RUNTIME_FUNCTION
+                return struct.unpack_from("<I", d, _rva_offset(self.sections, unwind & ~1))[0]
+            info = _rva_offset(self.sections, unwind)
+            if not d[info] >> 3 & UNW_FLAG_CHAININFO:
+                return None
+            return struct.unpack_from("<I", d, info + 4 + 2 * ((d[info + 2] + 1) & ~1))[0]
+
+        out, chained = {}, {}
+        for begin, (end, unwind) in rows.items():
+            up = parent(unwind)
+            if up is None:
+                out[begin] = end
+            else:
+                chained[begin] = up
+        # A chained entry belongs to its primary's function and is not a function start. Ranges that continue the
+        # primary without a gap extend it. A detached range (a split-off block) is left out, so a candidate holding the
+        # whole body fails on its length instead of being compared in part.
+        for begin in sorted(chained):
+            root, seen = chained[begin], {begin}
+            while root in chained and root not in seen:
+                seen.add(root)
+                root = chained[root]
+            if out.get(root) == begin:
+                out[root] = rows[begin][0]
         return out
 
     def _read_imports(self, dirs):
@@ -426,10 +463,15 @@ def targets_from(doc, image, path="manifest"):
     entries = {}
     for name, raw in bound.get("targets", {}).items():
         try:
-            entry = Entry(int(raw["rva"], 16), raw.get("size"))
+            entry = Entry(int(raw["rva"], 16), raw.get("size"), raw.get("toolchain", False))
+            if type(entry.toolchain) is not bool:
+                raise TypeError(entry.toolchain)
         except (KeyError, TypeError, ValueError) as e:
             raise ManifestError(f"{path}: {name}: malformed entry {raw!r}") from e
-        if entry.size is None:
+        if entry.toolchain:
+            if entry.size is not None or not image.contains(entry.rva, 1):
+                raise ManifestError(f"{path}: {name}: a toolchain entry takes an RVA in a section and no size")
+        elif entry.size is None:
             if entry.rva not in image.functions:
                 raise ManifestError(f"{path}: {name}: RVA {entry.rva:#x} does not start a .pdata function")
         elif not (type(entry.size) is int and entry.size > 0 and image.contains(entry.rva, entry.size)):
@@ -460,7 +502,10 @@ class InternalTargets:
         """The entry's own verdict, from its bytes and its targets other than manifest entries, which it lists."""
         if name not in self._local:
             entry, defn, edges = self.entries[name], self.definitions.get(name), set()
-            if defn is None:
+            if entry.toolchain:
+                verdict = (("mismatch", "the candidate objects define a toolchain entry") if defn is not None
+                           else ("ok", None))
+            elif defn is None:
                 verdict = ("unverified", "not defined by the candidate objects")
             elif defn.data != (entry.size is not None):
                 verdict = ("mismatch", f"candidate defines {'data' if defn.data else 'a function'}, "
@@ -529,7 +574,8 @@ def classify_targets(image, begin, function, internal=None):
     """Check each relocation of `function`, placed at RVA `begin` in the original, against the original.
 
     An export target must resolve to the export's RVA, and a call through `__imp_<name>` must reach the import slot the
-    original imports <name> through. A target listed in `internal` (InternalTargets) must resolve to its entry's RVA
+    original imports <name> through. A target the original reaches through an import thunk must be imported through
+    the thunk's slot under its name. A target listed in `internal` (InternalTargets) must resolve to its entry's RVA
     plus the candidate's addend, and the entry must verify. Any other target is unverified.
     """
     found = Targets([])
@@ -549,6 +595,11 @@ def classify_targets(image, begin, function, internal=None):
             if image.exports[target] != resolved:
                 mismatches.append(f"{target} at +{r.offset:#x}: original resolves to RVA {resolved:#x}, "
                                   f"export is {image.exports[target]:#x}")
+        elif (target is not None and (internal is None or target not in internal.entries)
+              and (slot := _thunk_slot(image, resolved)) in image.imports):
+            if image.imports[slot] != target:
+                mismatches.append(f"{target} at +{r.offset:#x}: original calls the import thunk for "
+                                  f"{image.imports[slot]}")
         else:
             name = target or function.statics.get(r.offset)
             if internal is None or name not in internal.entries:
@@ -570,6 +621,14 @@ def classify_targets(image, begin, function, internal=None):
             else:
                 found.unverified += 1
     return found
+
+
+def _thunk_slot(image, rva):
+    """The import slot that an import thunk (`jmp [rip+disp32]`, FF 25) at `rva` jumps through, or None."""
+    if not image.contains(rva, 6):
+        return None
+    code = image.read(rva, 6)
+    return rva + 6 + struct.unpack_from("<i", code, 2)[0] if code[:2] == b"\xff\x25" else None
 
 
 def check_targets(image, begin, function, internal=None):
@@ -609,6 +668,9 @@ def compare_object(original_dll, candidate_obj, symbols=None, targets=None):
         extent = image.export_extent(f.name)
         if extent is not None:
             begin, code = extent[0], image.export_code(f.name)
+        elif f.name in entries and entries[f.name].toolchain:
+            results.append(Result(f.name, False, "the candidate objects define a toolchain entry"))
+            continue
         elif f.name in entries and entries[f.name].size is None:
             begin, code = entries[f.name].rva, internal.original_bytes(f.name)
             f = Function(f.name + " (at manifest RVA)", f.code, f.relocs, f.targets, f.statics)
@@ -632,6 +694,9 @@ def compare_object(original_dll, candidate_obj, symbols=None, targets=None):
             status, reason = internal.reference(name)
             results.append(Result(f"{name} (manifest entry)", status != "mismatch", reason or "verified at manifest RVA",
                                   int(status == "unverified")))
+        for name in sorted(n for n in entries if entries[n].toolchain and n not in definitions):
+            results.append(Result(f"{name} (toolchain entry)", True, "RVA checked at each site; the toolset supplies "
+                                                                      "its bytes"))
     return results
 
 

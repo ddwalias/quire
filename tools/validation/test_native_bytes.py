@@ -11,13 +11,14 @@ from unittest import mock
 from native_bytes import (Entry, Function, InternalTargets, ManifestError, Reloc, PeImage, check_targets,
                           classify_targets, compare_code, compare_object, definitions_in_object,
                           definitions_in_objects, functions_in_object,
-                          load_targets, masked, read_coff, system_ordinal_names, targets_from)
+                          load_targets, masked, read_coff, system_ordinal_names, targets_from, _thunk_slot)
 from native_bytes import main as native_bytes_main
 from native_targets import record
 
 MATHCAD_DLL = Path(os.environ.get("MATHCAD_DIR", r"C:\Program Files\PTC\Mathcad Prime 12.0.1.0")) / "efistatsci_.dll"
 MSHEX_DLL = MATHCAD_DLL.with_name("mshex.dll")
 UTL_DLL = MATHCAD_DLL.with_name("utl.dll")
+MSPCONS_DLL = MATHCAD_DLL.with_name("mspcons.dll")
 OLEAUT32_DLL = Path(os.environ.get("SystemRoot", r"C:\Windows")) / "System32" / "oleaut32.dll"
 
 
@@ -73,6 +74,12 @@ class FakeImage:
         self.exports = exports
         self.memory = memory
         self.imports = imports or {}
+
+    def read(self, rva, size):
+        return bytes(self.memory[rva:rva + size])
+
+    def contains(self, rva, size):
+        return 0 <= rva and rva + size <= len(self.memory)
 
     def read_i32(self, rva):
         return struct.unpack_from("<i", self.memory, rva)[0]
@@ -211,6 +218,26 @@ class CallTargetTests(unittest.TestCase):
         self.assertEqual(len(mismatches), 1)
         self.assertIn("not an import slot", mismatches[0])
 
+    def thunk(self, slot):
+        """An import thunk at 0x1100 (the call's target) that jumps through `slot`."""
+        self.memory[0x1100:0x1102] = b"\xff\x25"
+        struct.pack_into("<i", self.memory, 0x1102, slot - (0x1100 + 6))
+
+    def test_call_through_an_import_thunk_for_the_name_verifies(self):
+        self.thunk(0x1800)
+        self.assertEqual(check_targets(FakeImage({}, self.memory, imports={0x1800: "callee"}), 0x1000, self.call),
+                         ([], 0))
+
+    def test_call_through_an_import_thunk_for_another_name_is_a_mismatch(self):
+        self.thunk(0x1800)
+        mismatches, _ = check_targets(FakeImage({}, self.memory, imports={0x1800: "strlen"}), 0x1000, self.call)
+        self.assertEqual(len(mismatches), 1)
+        self.assertIn("import thunk for strlen", mismatches[0])
+
+    def test_jump_through_a_slot_that_is_not_an_import_stays_unverified(self):
+        self.thunk(0x1800)
+        self.assertEqual(check_targets(FakeImage({}, self.memory), 0x1000, self.call), ([], 1))
+
     def test_absolute_address_resolves_against_the_image_base(self):
         struct.pack_into("<Q", self.memory, 0x1000, FakeImage.image_base + 0x1300)
         addr = Function("loadaddr", b"\x48\x8b\x05\0\0\0\0\xc3", [Reloc(0, 0x0001, 0)], {0: "data"})
@@ -227,12 +254,6 @@ class ManifestImage(FakeImage):
     def __init__(self, memory, functions, exports=None, imports=None):
         super().__init__(exports or {}, memory, imports)
         self.functions = functions
-
-    def read(self, rva, size):
-        return bytes(self.memory[rva:rva + size])
-
-    def contains(self, rva, size):
-        return 0 <= rva and rva + size <= len(self.memory)
 
     def export_extent(self, name):
         rva = self.exports.get(name)
@@ -282,6 +303,20 @@ class StrictRunTests(unittest.TestCase):
         self.assertEqual(code, 0, out)
         self.assertIn("1 verified by manifest", out)
         self.assertIn("OK   callee (at manifest RVA)", out)
+
+    def test_toolchain_entries_are_listed(self):
+        manifest = self.write("toolchain.json", {"fake.dll": {"sha256": ManifestImage.sha256,
+                                                              "targets": {"callee": {"rva": "0x1100", "toolchain": True}}}})
+        code, out = self.run_main("--candidate", self.caller, "--targets", manifest)
+        self.assertEqual(code, 0, out)
+        self.assertIn("OK   callee (toolchain entry)", out)
+
+    def test_a_candidate_function_defining_a_toolchain_entry_fails(self):
+        manifest = self.write("toolchain.json", {"fake.dll": {"sha256": ManifestImage.sha256,
+                                                              "targets": {"callee": {"rva": "0x1800", "toolchain": True}}}})
+        code, out = self.run_main("--candidate", self.callee, "--targets", manifest)
+        self.assertEqual(code, 1)
+        self.assertIn("FAIL callee: the candidate objects define a toolchain entry", out)
 
     def test_without_the_manifest_the_internal_call_is_unverified(self):
         code, out = self.run_main("--candidate", self.caller, "--candidate", self.callee, "--symbol", "caller",
@@ -361,6 +396,14 @@ class LoadTargetsTests(unittest.TestCase):
         with self.assertRaises(ManifestError):
             load_targets(Path(self.tmp.name) / "missing.json", self.image)
 
+    def test_toolchain_entry_takes_an_rva_in_a_section_and_no_size(self):
+        self.assertEqual(self.load(self.bound({"t": {"rva": "0x1800", "toolchain": True}})), {"t": Entry(0x1800, None, True)})
+        for bad in ({"rva": "0x1800", "size": 8, "toolchain": True}, {"rva": "0x3000", "toolchain": True}):
+            with self.assertRaisesRegex(ManifestError, "toolchain entry"):
+                self.load(self.bound({"t": bad}))
+        with self.assertRaisesRegex(ManifestError, "malformed"):
+            self.load(self.bound({"t": {"rva": "0x1800", "toolchain": "yes"}}))
+
 
 class InternalTargetTests(unittest.TestCase):
     """A caller at RVA 0x1000 calls (E8, displacement at +1) the internal function `callee`, at RVA 0x1100 (xor eax,
@@ -407,6 +450,24 @@ class InternalTargetTests(unittest.TestCase):
         self.assertIn("first byte difference", found.mismatches[0])
         longer = self.classify({"callee": Entry(0x1100)}, definitions={"callee": Function("callee", b"\x90" * 4, [], {})})
         self.assertIn("length", longer.mismatches[0])
+
+    def test_toolchain_entry_verifies_by_its_rva(self):
+        found = self.classify({"callee": Entry(0x1100, None, True)}, definitions={})
+        self.assertEqual((found.mismatches, found.unverified, found.verified), ([], 0, 1))
+        elsewhere = self.classify({"callee": Entry(0x1200, None, True)}, definitions={})
+        self.assertIn("manifest entry gives 0x1200", elsewhere.mismatches[0])
+
+    def test_manifest_entry_takes_precedence_over_an_import_thunk(self):
+        self.memory[0x1100:0x1102] = b"\xff\x25"
+        struct.pack_into("<i", self.memory, 0x1102, 0x1800 - (0x1100 + 6))
+        image = ManifestImage(self.memory, self.functions, imports={0x1800: "other"})
+        internal = InternalTargets(image, {"callee": Entry(0x1100, None, True)}, {})
+        found = classify_targets(image, 0x1000, self.call, internal)
+        self.assertEqual((found.mismatches, found.verified), ([], 1))
+
+    def test_toolchain_entry_the_candidates_define_is_a_mismatch(self):
+        found = self.classify({"callee": Entry(0x1100, None, True)})
+        self.assertEqual(found.entries["callee"], ("mismatch", "the candidate objects define a toolchain entry"))
 
     def test_entry_the_candidates_do_not_define_is_unverified(self):
         found = self.classify({"callee": Entry(0x1100)}, definitions={})
@@ -540,6 +601,16 @@ class RecordTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "not in a section"):
             self.record(["callee", "helper"])
 
+    def test_toolchain_names_are_recorded_by_rva_only(self):
+        del self.definitions["helper"]
+        doc = self.record(["callee"])
+        record(self.image, self.definitions, [], doc, toolchain=["helper"])
+        self.assertEqual(doc["fake.dll"]["targets"]["helper"], {"rva": "0x1200", "toolchain": True})
+
+    def test_a_toolchain_name_the_candidates_define_is_not_recorded(self):
+        with self.assertRaisesRegex(ValueError, "not a toolchain entry"):
+            record(self.image, self.definitions, ["callee"], {}, toolchain=["helper"])
+
     def test_an_entry_is_not_silently_changed(self):
         doc = {"fake.dll": {"sha256": ManifestImage.sha256, "targets": {"callee": {"rva": "0x1200"}}}}
         with self.assertRaisesRegex(ValueError, "remove the entry"):
@@ -603,6 +674,22 @@ class InstalledImageTests(unittest.TestCase):
     def test_every_export_has_code_bytes(self):
         image = PeImage(MATHCAD_DLL)
         self.assertTrue(all(image.export_code(name) for name in image.exports))
+
+
+@unittest.skipUnless(MSPCONS_DLL.is_file(), "Mathcad Prime install not present")
+class InstalledMspconsTests(unittest.TestCase):
+    """mspcons.dll: `?write@tagged` (0x1410) has three chained .pdata entries, and `anyval::equals(char const *)` calls
+    import thunks at 0x26A3 and 0x26A9."""
+
+    def test_chained_pdata_entries_extend_their_primary(self):
+        image = PeImage(MSPCONS_DLL)
+        self.assertEqual(image.functions[0x1410], 0x151D)
+        self.assertFalse({0x143D, 0x14EB, 0x14F6} & set(image.functions))
+
+    def test_import_thunks_lead_to_their_imports(self):
+        image = PeImage(MSPCONS_DLL)
+        self.assertEqual([image.imports.get(_thunk_slot(image, rva)) for rva in (0x26A3, 0x26A9)],
+                         ["__RTDynamicCast", "strcmp"])
 
 
 @unittest.skipUnless(OLEAUT32_DLL.is_file(), "System32 OLEAUT32.dll not present")

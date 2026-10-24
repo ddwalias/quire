@@ -7,6 +7,9 @@ the original's own code points; the targets of a recorded entry are searched in 
 .pdata function. A data entry takes the size of the candidate's definition. Sites that disagree, names that no
 matching site references, and existing entries that would change fail without writing.
 
+Each --toolchain is recorded the same way, as a toolchain entry: a symbol the toolset's static libraries supply (such as
+the C runtime's `??_7type_info@@6B@`), which the candidates reference but must not define. It records the RVA only.
+
 The manifest holds names, RVAs and sizes only, never bytes of the original (D19). Review the written diff before
 committing it: native_bytes.py compares every entry the candidate objects define on each run without --symbol.
 """
@@ -19,8 +22,9 @@ from native_bytes import (DEFAULT_TARGETS, PeImage, _addend, _resolve, compare_c
                           targets_from)
 
 
-def record(image, definitions, names, doc):
-    """Record `names` for the original `image` in the manifest document `doc` (changed in place, and returned).
+def record(image, definitions, names, doc, toolchain=()):
+    """Record `names`, and `toolchain` as toolchain entries, for the original `image` in the manifest document `doc`
+    (changed in place, and returned).
 
     `definitions` are the candidates' definitions by name. Raises ValueError when the names cannot be recorded.
     """
@@ -40,7 +44,7 @@ def record(image, definitions, names, doc):
             at = placed(d, entries[d.name].rva)
             if at:
                 queue.append((d, *at))
-    wanted, found, searched = set(names), {}, set()
+    wanted, found, searched = set(names) | set(toolchain), {}, set()
     while queue:
         d, begin, code = queue.pop()
         if d.name in searched or not compare_code(d.name, code, d.relocs, d.code, d.relocs).ok:
@@ -66,10 +70,14 @@ def record(image, definitions, names, doc):
         bound = doc[image.name] = {"sha256": image.sha256, "targets": {}}
     for name in sorted(found):
         defn = definitions.get(name)
-        if defn is None:
-            raise ValueError(f"{name}: not defined by the candidate objects, so its kind and size are unknown")
         entry = {"rva": f"{found[name]:#x}"}
-        if defn.data:
+        if name in toolchain:
+            if defn is not None:
+                raise ValueError(f"{name}: defined by the candidate objects, so it is not a toolchain entry")
+            entry["toolchain"] = True
+        elif defn is None:
+            raise ValueError(f"{name}: not defined by the candidate objects, so its kind and size are unknown")
+        elif defn.data:
             entry["size"] = len(defn.code)
         elif found[name] not in image.functions:
             raise ValueError(f"{name}: RVA {found[name]:#x} does not start a .pdata function")
@@ -87,20 +95,24 @@ def main(argv=None):
     parser.add_argument("--original", type=Path, required=True, help="original DLL (read only)")
     parser.add_argument("--candidate", type=Path, action="append", required=True,
                         help="COFF object compiled with the original's flags (repeatable)")
-    parser.add_argument("--name", action="append", required=True, help="reviewed decorated target name (repeatable)")
+    parser.add_argument("--name", action="append", default=[], help="reviewed decorated target name (repeatable)")
+    parser.add_argument("--toolchain", action="append", default=[],
+                        help="reviewed decorated name the toolset supplies, recorded as a toolchain entry (repeatable)")
     parser.add_argument("--targets", type=Path, default=DEFAULT_TARGETS, help="manifest to update")
     args = parser.parse_args(argv)
+    if not args.name and not args.toolchain:
+        parser.error("give --name, --toolchain or both")
     image = PeImage(args.original)
     try:
         definitions = definitions_in_objects(args.candidate)
         doc = json.loads(args.targets.read_text(encoding="utf-8")) if args.targets.is_file() else {}
-        record(image, definitions, args.name, doc)
+        record(image, definitions, args.name, doc, args.toolchain)
     except ValueError as e:  # includes ManifestError and malformed JSON
         print(f"FAIL {e}")
         return 1
     args.targets.write_text(json.dumps(doc, indent=2) + "\n", encoding="utf-8")
     bound = next(doc[k] for k in doc if k.lower() == image.name.lower())
-    for name in sorted(set(args.name)):
+    for name in sorted(set(args.name) | set(args.toolchain)):
         print(f"recorded {name}: {bound['targets'][name]}")
     return 0
 

@@ -143,6 +143,21 @@ parameter name `value` (the original's is `pIsModified`). The gate compares an a
 modifiers, and also a runtime-supplied constructor's implementation flags. A C++/CLI port (D19) might emit the exact
 flags, but that is untested.
 
+## D23: native harness rules for thunks, toolchain symbols and chained unwind (2026-10-24)
+
+Lane L (`mspcons.dll`) raised three targets that `native_bytes.py --strict` could not verify. The user chose these rules:
+
+- **Import thunks:** a call to a non-exported name that lands on `jmp [slot]` (FF 25) verifies when the slot imports
+  that name and is a mismatch when the slot imports another. No manifest entry is needed.
+- **Toolchain entries:** a symbol that the toolset's static libraries supply, such as the C runtime's
+  `??_7type_info@@6B@`, cannot be defined by a candidate. `native_targets.py --toolchain` records it as
+  `{"rva": ..., "toolchain": true}`. Every site must resolve to that RVA, a candidate that defines it is a mismatch,
+  and an unfiltered run lists each such entry. Only its RVA is checked, never its bytes.
+- **Chained unwind:** a function's extent is its primary `.pdata` range plus the chained ranges
+  (`UNW_FLAG_CHAININFO`) that continue it without a gap. Chained ranges are not function starts. In the installed
+  Mathcad DLLs, every chained range continues its primary function. A detached one would be left out, so a candidate
+  with the whole body fails on its length instead of matching in part.
+
 ## Mapping and scope
 
 - **D1:** `Mcd` maps to `Quire.Mcd`.
