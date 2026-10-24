@@ -4,6 +4,16 @@ namespace Quire.Wpf;
 
 public static partial class TextPointerExtensions
 {
+    public static T GetTextElementFromTextPointer<T>(this TextPointer textPtr) where T : TextElement
+    {
+        if (textPtr?.Parent is TextElement element)
+        {
+            return element.GetTextElementParentOrSelf<T>();
+        }
+        global::Quire.DebugTools.DevAssert(textPtr?.Parent is FlowDocument, textPtr?.Parent?.GetType().Name);
+        return default(T);
+    }
+
     public static Hyperlink GetAdjacentHyperlink(this TextPointer startPointer, LogicalDirection searchDirection)
     {
         if (startPointer == null)

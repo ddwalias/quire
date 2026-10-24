@@ -11,6 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.TextPointerExtensions, Ptc.Core")]
 public static partial class TextPointerExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static T GetTextElementFromTextPointer<T>(this global::System.Windows.Documents.TextPointer textPtr) where T : global::System.Windows.Documents.TextElement => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
