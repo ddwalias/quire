@@ -458,4 +458,31 @@ public partial class ImageUtils
         }
         image.Source = new BitmapImage(CopyImageToTempBitmap(image.Source));
     }
+
+    private static bool SafeCopyImageFromPackage(Uri sourceUri, byte[] originalStreamHash, Stream targetStream)
+    {
+        if (sourceUri == null)
+        {
+            throw new NullReferenceException("sourceUri can not be null");
+        }
+        if (targetStream == null)
+        {
+            throw new NullReferenceException("targetStream can not be null");
+        }
+        DebugTools.DevAssert(string.Compare(sourceUri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0, null);
+        Uri packageUri = PackUriHelper.GetPackageUri(sourceUri);
+        Uri partUri = PackUriHelper.GetPartUri(sourceUri);
+        bool flag;
+        using (FileStream stream = global::Quire.IO.PackageOperationsProvider.OpenFileStreamForReadWithFullShare(packageUri.LocalPath))
+        using (Package package = Package.Open(stream))
+        {
+            Stream stream2 = package.GetPart(partUri).GetStream();
+            flag = originalStreamHash == null || CompareHashes(originalStreamHash, global::Quire.IO.StreamUtils.GetStreamHash(stream2));
+            if (flag)
+            {
+                global::Quire.IO.StreamUtils.CopyStream(stream2, targetStream);
+            }
+        }
+        return flag;
+    }
 }
