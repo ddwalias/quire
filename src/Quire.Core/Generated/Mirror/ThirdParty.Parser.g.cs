@@ -23,8 +23,6 @@ public sealed partial class Parser
     private global::System.Collections.Hashtable argumentMap;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.ThirdParty.ErrorReporter reporter;
-    [global::Quire.Mirror.MirrorStub]
-    public static bool ParseHelp(string[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.ThirdParty.Parser+HelpArgument, Ptc.Core")]
     private partial class HelpArgument

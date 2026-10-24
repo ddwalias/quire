@@ -5,6 +5,14 @@ namespace Quire.ThirdParty;
 
 public sealed partial class Parser
 {
+    public static bool ParseHelp(string[] args)
+    {
+        Parser parser = new Parser(typeof(HelpArgument), new ErrorReporter(NullErrorReporter));
+        HelpArgument helpArgument = new HelpArgument();
+        parser.Parse(args, helpArgument);
+        return helpArgument.help;
+    }
+
     [MirrorVerified("Release IL")]
     private static string HelpText(ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo)
     {
