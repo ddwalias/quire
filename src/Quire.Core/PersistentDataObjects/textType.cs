@@ -51,6 +51,18 @@ public partial class textType
         }
     }
 
+    private void SetXaml()
+    {
+        if (Document != null && S11NProvider != null)
+        {
+            SerializeFlowDocument(S11NProvider, null);
+        }
+        else
+        {
+            Any = null;
+        }
+    }
+
     [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
     public void AddAnnotation(MC14ConversionAnnotationType annotation) => IMC14AnnotationProviderExtensions.AddMC14ConversionLossAnnotations(this, annotation);
 
