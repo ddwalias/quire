@@ -81,6 +81,31 @@ public partial class ImageUtils
         return CopyImage(sourceUri, originalStreamHash, stream);
     }
 
+    public static bool CopyImage(Uri sourceUri, byte[] originalStreamHash, Stream targetStream)
+    {
+        if (sourceUri == null || targetStream == null)
+        {
+            throw new NullReferenceException("uri and targetStream must not be null");
+        }
+        if (string.Compare(sourceUri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0)
+        {
+            return SafeCopyImageFromPackage(sourceUri, originalStreamHash, targetStream);
+        }
+        if (sourceUri.IsFile)
+        {
+            using (FileStream fileStream = File.Open(sourceUri.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                bool flag = originalStreamHash == null || CompareHashes(originalStreamHash, global::Quire.IO.StreamUtils.GetStreamHash(fileStream));
+                if (flag)
+                {
+                    global::Quire.IO.StreamUtils.CopyStream(fileStream, targetStream);
+                }
+                return flag;
+            }
+        }
+        throw new ArgumentOutOfRangeException("sourceUri", "The sourceUri uses not supported format, the currently supported formats are pack:// and file://");
+    }
+
     [MirrorVerified("Release IL")]
     public static int BytesNeeded(int bits) => (bits + 7) / 8;
 

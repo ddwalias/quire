@@ -38,8 +38,6 @@ public partial class ImageUtils
     [global::Quire.Mirror.MirrorStub]
     private static bool SafeCopyImageFromPackage(global::System.Uri sourceUri, byte[] originalStreamHash, global::System.IO.Stream targetStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static bool CopyImage(global::System.Uri sourceUri, byte[] originalStreamHash, global::System.IO.Stream targetStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void CopyPixelsToStream(global::System.Windows.Media.Imaging.BitmapSource source, global::System.IO.Stream target, global::System.Nullable<int> maxBufferSize = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ImageUtils+BitmapFormats, Ptc.Core")]
