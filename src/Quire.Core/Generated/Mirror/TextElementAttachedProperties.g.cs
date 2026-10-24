@@ -19,6 +19,4 @@ public static partial class TextElementAttachedProperties
     private const double FONT_SIZE_TOLERANCE = 0.0001d;
     [global::Quire.Mirror.MirrorStub]
     public static void SetTextStyleOnElement(global::System.Windows.FrameworkContentElement element, global::Quire.ITextStyle textStyle, bool isApply, bool isSelected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void SetTextStyleMarker(global::System.Windows.FrameworkContentElement element, global::Quire.ITextStyle textStyle, bool isApply, bool isSelected, global::System.Windows.Documents.Block block, global::System.Windows.Controls.RichTextBox rtb = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

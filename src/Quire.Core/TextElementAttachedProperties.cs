@@ -11,6 +11,42 @@ namespace Quire;
 
 public static partial class TextElementAttachedProperties
 {
+    private static void SetTextStyleMarker(FrameworkContentElement element, ITextStyle textStyle, bool isApply, bool isSelected, Block block, System.Windows.Controls.RichTextBox rtb = null)
+    {
+        if ((textStyle.MarkerStyle == TextMarkerStyle.None && block is List discList && discList.MarkerStyle == TextMarkerStyle.Disc)
+            || (textStyle.MarkerStyle == TextMarkerStyle.Disc && (block is Paragraph || block is List nonDiscList && nonDiscList.MarkerStyle != TextMarkerStyle.Disc)))
+        {
+            List list = block as List;
+            if (isApply || !textStyle.IsModifyProperty(List.MarkerStyleProperty.Name, list?.MarkerStyle ?? TextMarkerStyle.None))
+            {
+                if (list != null)
+                {
+                    list.MarkerStyle = textStyle.MarkerStyle.Value;
+                }
+                else
+                {
+                    EditingCommands.ToggleBullets.Execute(null, rtb);
+                }
+            }
+        }
+        else if ((textStyle.MarkerStyle == TextMarkerStyle.None && block is List decimalList && decimalList.MarkerStyle == TextMarkerStyle.Decimal)
+            || (textStyle.MarkerStyle == TextMarkerStyle.Decimal && (block is Paragraph || block is List nonDecimalList && nonDecimalList.MarkerStyle != TextMarkerStyle.Decimal)))
+        {
+            List list = block as List;
+            if (isApply || !textStyle.IsModifyProperty(List.MarkerStyleProperty.Name, list?.MarkerStyle ?? TextMarkerStyle.None))
+            {
+                if (list != null)
+                {
+                    list.MarkerStyle = textStyle.MarkerStyle.Value;
+                }
+                else
+                {
+                    EditingCommands.ToggleNumbering.Execute(null, block);
+                }
+            }
+        }
+    }
+
     private static void HandleTextStyleDataChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         FrameworkContentElement frameworkContentElement = d as FrameworkContentElement;
