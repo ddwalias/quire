@@ -530,10 +530,66 @@ public partial class TextStyleBase
     protected Nullable<FontVariants> _fontVariants;
 
     [MirrorVerified("Release IL")]
-    public Nullable<FontVariants> FontVariants { get => _fontVariants; set => Update("Variants", value); }
+    protected BaselineAlignment _baselineAlignment;
 
     [MirrorVerified("Release IL")]
-    protected BaselineAlignment _baselineAlignment;
+    public void UpdateBasedOn(ITextStyle basedOn, global::System.Collections.Generic.ICollection<TextStyleData> stylesCollection, bool isFixInHeritage = true)
+    {
+        Style basedOn2 = null;
+        _baseOnKey = null;
+        ClearHeritageProperties();
+        if (basedOn != null)
+        {
+            if ((basedOn.BasedOnKey != null) & isFixInHeritage)
+            {
+                TextStyle basedOn3 = new TextStyle(stylesCollection.FirstOrDefault((TextStyleData styleData) => styleData.StyleKey == basedOn.BasedOnKey));
+                basedOn.UpdateBasedOn(basedOn3, stylesCollection);
+            }
+            _baseOnKey = basedOn.StyleKey;
+            basedOn2 = basedOn.Style;
+        }
+        Style style = new Style(Style.TargetType, basedOn2);
+        _htPropertyToIndex.Clear();
+        if (basedOn != null)
+        {
+            foreach (Setter item in Style.Setters.OfType<Setter>())
+            {
+                object setterValue = basedOn.GetSetterValue(item.Property.Name, isFixInHeritage);
+                bool flag;
+                if (setterValue is Brush brush)
+                {
+                    flag = ((object)brush).ToString() != item.Value.ToString();
+                }
+                else if (setterValue is double value)
+                {
+                    flag = !Math.Round(value, 3).Equals(Math.Round((double)item.Value, 3));
+                }
+                else
+                {
+                    if (setterValue is TextDecorationCollection textDecorationCollection)
+                    {
+                        flag = textDecorationCollection.Count != ((TextDecorationCollection)item.Value).Count;
+                        goto TextDecorationComparisonComplete;
+                    }
+                    flag = setterValue != null && !setterValue.Equals(item.Value);
+                TextDecorationComparisonComplete:
+                    ;
+                }
+                if (((setterValue == null) | flag) || !isFixInHeritage)
+                {
+                    style.Setters.Add(new Setter(item.Property, item.Value));
+                    _htPropertyToIndex[item.Property.Name] = style.Setters.Count - 1;
+                    UpdateMemberValue(item.Property.Name, item.Value);
+                }
+            }
+        }
+        UpdateBasedOnMembersValue(style.BasedOn);
+        Style = style;
+    }
+
+
+    [MirrorVerified("Release IL")]
+    public Nullable<FontVariants> FontVariants { get => _fontVariants; set => Update("Variants", value); }
 
     [MirrorVerified("Release IL")]
     public Nullable<BaselineAlignment> BaselineAlignment { get => new BaselineAlignment?(_baselineAlignment); set => Update("BaselineAlignment", value); }
