@@ -26,8 +26,6 @@ public static partial class DependencyPropertyChangeManager
         [global::Quire.Mirror.MirrorStub]
         private static readonly global::System.Type _typeOfPropertyChangeNotifier;
         [global::Quire.Mirror.MirrorStub]
-        private static void HandleValueChanged(global::System.Windows.DependencyObject dObj, global::System.Windows.DependencyPropertyChangedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         private void FireSourcePropertyChanged(object oldValue, object newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

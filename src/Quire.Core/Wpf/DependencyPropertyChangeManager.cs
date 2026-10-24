@@ -38,6 +38,15 @@ public static partial class DependencyPropertyChangeManager
         private readonly DependencyObject _sourceObject;
         private readonly DependencyProperty _sourceProperty;
 
+        private static void HandleValueChanged(DependencyObject dObj, DependencyPropertyChangedEventArgs eArgs)
+        {
+            DependencyPropertyChangeNotifier dependencyPropertyChangeNotifier = dObj as DependencyPropertyChangeNotifier;
+            if (DebugTools.AssertNotNull(dependencyPropertyChangeNotifier, null).Passed)
+            {
+                dependencyPropertyChangeNotifier.FireSourcePropertyChanged(eArgs.OldValue, eArgs.NewValue);
+            }
+        }
+
         public DependencyPropertyChangeNotifier(DependencyProperty property, DependencyObject sourceObject)
         {
             if (property == null || sourceObject == null)
