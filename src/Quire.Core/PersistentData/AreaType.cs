@@ -51,7 +51,7 @@ public partial class AreaType
         }
         set
         {
-            ProtectionData = value?.GetProtectionPersistentData();
+            ProtectionData = value == null ? null : value.GetProtectionPersistentData();
         }
     }
 

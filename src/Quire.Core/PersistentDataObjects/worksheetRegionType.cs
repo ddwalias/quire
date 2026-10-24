@@ -82,13 +82,15 @@ public partial class worksheetRegionType
     [MirrorVerified("PtcPersistentDataObjectsWorksheetRegionTypeSerializerMechanicalDifferentialTests")]
     public static XmlSerializer CreateDefaultSerializer(Type typeOfRoot, string rootNodeName)
     {
+        XmlSerializer serializer;
         using (new XmlSerializerCreationWrapper())
         {
-            return new XmlSerializer(typeOfRoot, new XmlRootAttribute(rootNodeName)
+            serializer = new XmlSerializer(typeOfRoot, new XmlRootAttribute(rootNodeName)
             {
                 Namespace = "http://schemas.mathsoft.com/worksheet50"
             });
         }
+        return serializer;
     }
 
     [MirrorVerified("PtcPersistentDataObjectsworksheetRegionTypeMechanicalDifferentialTests")]
