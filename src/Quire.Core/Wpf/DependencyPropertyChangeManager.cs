@@ -10,6 +10,28 @@ namespace Quire.Wpf;
 
 public static partial class DependencyPropertyChangeManager
 {
+    public static void AddPropertyChangedHandler(DependencyProperty property, DependencyObject obj, DependencyPropertyChangedEventHandler handler)
+    {
+        if (DebugTools.AssertNotNull(obj, null).Failed)
+        {
+            goto Complete;
+        }
+        if (!DebugTools.AssertNotNull(property, null).Failed)
+        {
+            goto AddHandler;
+        }
+    Complete:
+        return;
+    AddHandler:
+        IDictionary<DependencyProperty, DependencyPropertyChangeNotifier> propertyChangeNotifiers = GetPropertyChangeNotifiers(obj, create: true);
+        if (!propertyChangeNotifiers.TryGetValue(property, out DependencyPropertyChangeNotifier value))
+        {
+            value = new DependencyPropertyChangeNotifier(property, obj);
+            propertyChangeNotifiers[property] = value;
+        }
+        value.SourcePropertyChanged += handler;
+    }
+
     private static IDictionary<DependencyProperty, DependencyPropertyChangeNotifier> GetPropertyChangeNotifiers(DependencyObject dObj, bool create)
     {
         if (DebugTools.AssertNotNull(dObj, null).Failed)
