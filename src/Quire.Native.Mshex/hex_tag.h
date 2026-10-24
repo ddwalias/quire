@@ -12,9 +12,9 @@ public:
     HEX_EXPORT Tag(std::uint64_t offset, std::uint64_t extent, std::uint32_t handle)
         : offset_(offset), extent_(extent), handle_(handle) {}
 
-    HEX_EXPORT std::uint64_t GetOffset() const;
-    HEX_EXPORT std::uint64_t GetExtent() const;
-    HEX_EXPORT std::uint32_t GetHandle() const;
+    HEX_EXPORT std::uint64_t GetOffset() const { return offset_; }
+    HEX_EXPORT std::uint64_t GetExtent() const { return extent_; }
+    HEX_EXPORT std::uint32_t GetHandle() const { return handle_; }
 
     HEX_EXPORT void SetOffset(std::uint64_t offset);
     HEX_EXPORT void SetExtent(std::uint64_t extent);

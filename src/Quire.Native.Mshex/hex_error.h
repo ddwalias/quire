@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #include "hex_tag.h"
 #include "mshex_export.h"
 
@@ -11,6 +13,9 @@ class Error {
 public:
     HEX_EXPORT Tag GetTag() const;
     HEX_EXPORT unsigned int GetCode() const;
+    HEX_EXPORT std::uint64_t GetOffset() const;
+    HEX_EXPORT std::uint64_t GetExtent() const;
+    HEX_EXPORT std::uint32_t GetHandle() const;
 
 private:
     Tag tag_;

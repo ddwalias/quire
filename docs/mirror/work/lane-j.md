@@ -1,6 +1,6 @@
 # Lane J: mshex.dll → Quire.Native.Mshex
 
-**Status: incomplete.** 33 of 380 exports pass strict byte validation. Export parity: 347 missing, 0 extra.
+**Status: incomplete.** 36 of 380 exports pass strict byte validation. Export parity: 344 missing, 0 extra.
 
 - **Owner:** Lane J (native, `mshex.dll`)
 - **Branch:** `mirror/j-mshex-202610241256`
@@ -17,7 +17,8 @@
 | `Hex::Node::GetTag` | `GetTag` (const, by value) | 1/1 OK, 0 unverified | `hex_node.{h,cpp}`. Returns the null tag (`-1`, `-1`, `0`). Imported by `msmpl.dll`. |
 | `Formatter::Insert` dispatch to `Node` and `Component` | `Formatter::Insert(ostream&, Node const&)`, `Formatter::Insert(ostream&, Component const&)` | 2/2 OK, 0 unverified | `hex_formatter.{h,cpp}`. Each is a tail jump through the argument's vtable (`Node::Insert` at slot 3, `Component::Insert` at slot 0). `Node` and `Component` declare only the methods needed to reach those slots, in the order the slots imply (`Node`: dtor, `GetError`, `GetTag`, `Insert`; `Component`: `Insert`, `OnError`, dtor). The other `Insert` overloads need slots of classes not yet inferred. |
 | `Hex::Module` flag, datum, state and loadable accessors | `GetFlags`, `GetDatum`, `GetState`, `IsPersistent`, `IsTransient`, `IsLoadable`, `HasFlags`, `SetLoadable`, `SetDatum`, `SetFlags`, `AddFlags`, `ClearFlags` | 12/12 OK, 0 unverified | `hex_module.{h,cpp}`. Layout from the accessors: vptr at 0, `persistent_` at 0x48, flags at 0x78, datum at 0x80, state at 0x88, loadable at 0x90. The flag mutators return the previous flags. Bytes 0x08..0x47 and 0x50..0x77 are not yet inferred, so they stay as padding. |
-| `Hex::Error` tag and code | `Error::GetTag`, `Error::GetCode` | 2/2 OK, 0 unverified | `hex_error.{h,cpp}`. Layout: tag at 0, code at 0x18. `Error`'s other members are not yet inferred. `GetOffset`, `GetExtent` and `GetHandle` on `Error` are not included: they must read `Tag` fields inline, so they wait on a decision about inlining `Tag` accessors. |
+| `Hex::Error` tag and code | `Error::GetTag`, `Error::GetCode` | 2/2 OK, 0 unverified | `hex_error.{h,cpp}`. Layout: tag at 0, code at 0x18. `Error`'s other members are not yet inferred. `Error::GetOffset`, `GetExtent` and `GetHandle` read the `Tag` getters, which are inline and exported from `hex_tag.h` (approved decision). |
+| `Hex::Tag` getters, inline | `GetOffset`, `GetExtent`, `GetHandle` | 3/3 OK, 0 unverified | `hex_tag.h`. Inline with `HEX_EXPORT`, so `Error`'s translation unit can inline them. The setters stay out of line. |
 | `Hex::Lexer` flags | `SetFlag`, `GetFlag` | 2/2 OK, 0 unverified | `hex_lexer.{h,cpp}`. Both return `false`. |
 | `Hex::Interpreter` options and environment | `SetOption`, `GetOption`, `SetEnvironment` | 3/3 OK, 0 unverified | `hex_interpreter.{h,cpp}`. All return `false`. |
 
