@@ -20,6 +20,18 @@ public partial class textType
         istextblockField = false;
     }
 
+    public void AddFontName(string name)
+    {
+        if (FontNames == null)
+        {
+            FontNames = new List<string> { name };
+        }
+        else if (!FontNames.Contains(name))
+        {
+            FontNames.Add(name);
+        }
+    }
+
     [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
     public void AddAnnotation(MC14ConversionAnnotationType annotation) => IMC14AnnotationProviderExtensions.AddMC14ConversionLossAnnotations(this, annotation);
 

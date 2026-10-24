@@ -28,8 +28,6 @@ public partial class textType : global::Quire.PersistentData.RegionCollectionPre
     [global::Quire.Mirror.MirrorStub]
     private void SetXaml() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void AddFontName(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Documents.FlowDocument LoadFlowDocumentFromInnerXml() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void RemovePageGapContainers(global::System.Xml.XmlNode xmlNode, global::System.Xml.XmlNamespaceManager nsManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
