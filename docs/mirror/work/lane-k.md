@@ -6,7 +6,7 @@
 - **Branch:** `mirror/k-utl-202610241230`
 - **Worktree:** `C:/Projects/Quire-wt/lane-k-utl`
 - **Base commit:** `c11fb045` (current `main`)
-- **Harness:** `tools/validation/native_bytes.py` on `main`, unchanged. Not `utl-mgd` (Lane D). `src/Quire.Engine.Utl` not touched.
+- **Harness:** `tools/validation/native_bytes.py` on `main` (changed since `c11fb045`; see the maintainer response below). Not `utl-mgd` (Lane D). `src/Quire.Engine.Utl` not touched.
 - **Original:** `C:/Program Files/PTC/Mathcad Prime 12.0.1.0/utl.dll`, 100 exports, 191 imports.
 
 ## Completed groups
@@ -68,6 +68,19 @@ MSBuild, Release|x64, toolset v145, MSVC 14.51.36231. `/O2 /Gy /GS /EHsc /MD /st
 1. **Zero-filled data cannot be recorded.** `native_targets.py` rejects a data entry outside the original's raw section bytes (`PeImage.in_section` uses `min(vsize, raw_size)`). The `.data` section here has raw size `0x800` but virtual size `0xA20`, so the statics in its tail are not recordable. Affected: `IsLoggingEnabled` (`0x22862`, `0x22863`), `IsTimingEnabled` and `IsTimingInclusive` (`0x229D1`, `0x229D2`), and zero-filled references in `SafeTerminateProcess` and `SafeTerminateOnExit`. Request: accept zero-filled bytes as zeros, or record them from the section's virtual size. The latest `main` (`70c6f8e5`) reads uninitialised candidate `.bss` as zeros, but it still rejects original zero-filled data, so this remains open.
 2. **Data exports are not byte-checked.** `s_tls_index`, `s_tls_init` and the `??_7TimeIt` vtable are exports of the original, but the validator checks only functions. Their names pass export parity; their contents are not verified.
 3. **Ordinal imports cannot match.** `toBSTR` calls `SysAllocStringLen`, which the original imports from `OLEAUT32.dll` **by ordinal 4** (IAT slot `0x180016430`, shown as `#4`). The validator matches only `__imp_<name>` symbols, so a name-based candidate cannot match `#4`. Request: resolve ordinal imports through the imported system DLL's export table (`C:/Windows/System32/OLEAUT32.dll`, ordinal 4 = `SysAllocStringLen`), or allow a candidate to name the ordinal.
+
+**Maintainer response ([D24](../decisions.md)):**
+
+1. Fixed: section tails past the raw size read as zeros on both sides, so the zero-filled statics are recordable.
+   Record `IsLoggingEnabled`'s `initialized`/`enabled` statics with `native_targets.py`; they are its last 4
+   unverified targets.
+2. Fixed: data exports the original exports are byte-compared at the export's RVA for the candidate's size.
+3. Fixed: an ordinal import is named after the system DLL's export with that ordinal; retry `toBSTR`.
+
+Also changed: strict is the default (`--allow-unverified` for exploration; `--strict` is accepted and does
+nothing), export/import targets check the relocation addend, manifest names match regardless of the
+`?A0x<hash>` tag (the `ReadRegistryFlag` entry now resolves from any checkout), and `lane_merge.py` runs
+`native_gate.py` for changed native projects, so batches land through the normal merge.
 
 ## Internal targets (manifest)
 

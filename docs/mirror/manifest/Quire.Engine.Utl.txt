@@ -462,7 +462,6 @@ T Quire.Engine.Misc.Pair`2 class public :  |
 T Quire.Engine.Misc.StringUtils class public :  | 
 T Quire.Engine.Misc.Triple`3 class public :  | 
 T Quire.Engine.Misc.XmlUtils class public :  | 
-T Quire.Native.UtlMgd.EHExceptionRecord struct internal :  | 
 T Quire.utl_mgd.Function interface public abstract :  | 
 T Quire.utl_mgd.FunctionBase class public abstract :  | Quire.utl_mgd.Function
 T Quire.utl_mgd.InterruptControl class public :  | 

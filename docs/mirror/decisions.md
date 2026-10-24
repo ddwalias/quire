@@ -158,6 +158,25 @@ Lane L (`mspcons.dll`) raised three targets that `native_bytes.py --strict` coul
   Mathcad DLLs, every chained range continues its primary function. A detached one would be left out, so a candidate
   with the whole body fails on its length instead of matching in part.
 
+## D24: gate scope, judge integrity and native merging (2026-10-25)
+
+The maintainer tightened the gate where it could pass non-identical code, and moved validation out of the merge
+lock. Details are in [validation](validation.md).
+
+- **Scope:** a changed project also selects every project whose reference closure reaches it; the type map selects
+  all projects; scope diffs list both sides of a rename.
+- **Judge:** MethodAudit is built from the base commit and `lane_merge.py` runs main's gate scripts. Tool changes
+  apply from the run after they land.
+- **Strict IL:** custom modifiers, `pinned`, signature headers, function pointers, P/Invoke parameter marshaling and
+  assembly-qualified non-framework types are compared. Unpairable or unreadable methods fail their own row.
+- **Native:** `native_bytes.py` is strict by default, checks relocation addends on export/import targets, compares data
+  exports and matches manifest names without the `?A0x` tag. Changed native projects are gated by `native_gate.py`:
+  a function that passed must still pass; new or changed functions must pass.
+- **Merging:** lanes validate outside the lock; under it, `main` unchanged or moved without touching the candidate's
+  inputs lands without rebuilding, otherwise it is revalidated. Base inventories are cached in the main checkout.
+- **Mapping:** `utl-mgd.dll,EHExceptionRecord` is a `c++ artefact`, like the other CRT exception types; the
+  mixed-mode build emits it under its C++ name.
+
 ## Mapping and scope
 
 - **D1:** `Mcd` maps to `Quire.Mcd`.
