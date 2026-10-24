@@ -18,54 +18,6 @@ namespace Quire.Wpf;
 
 public static partial class WpfUtils
 {
-    public static bool? IsVisibleValid(DependencyObject depObj)
-    {
-        switch (depObj)
-        {
-            case FrameworkElement frameworkElement:
-                return !frameworkElement.IsVisible || (frameworkElement.IsMeasureValid && frameworkElement.IsArrangeValid);
-            case FrameworkContentElement:
-                return true;
-            case IFrameworkInputElement frameworkInputElement:
-                DebugTools.FailAssertion(frameworkInputElement.GetType().Name);
-                break;
-        }
-        return null;
-    }
-
-    public static bool IsVisualTreeFullyUpdated(UIElement root, out bool isTreeFullyLoaded)
-    {
-        global::System.Collections.Generic.Queue<DependencyObject> queue = new global::System.Collections.Generic.Queue<DependencyObject>();
-        queue.Enqueue(root);
-        bool fullyVisible = true;
-        while (queue.IsNotEmpty() && IsLoaded(queue.Peek()) != false)
-        {
-            DependencyObject current = queue.Dequeue();
-            fullyVisible = fullyVisible && IsVisibleValid(current) != false;
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(current); i++)
-            {
-                queue.Enqueue(VisualTreeHelper.GetChild(current, i));
-            }
-        }
-        isTreeFullyLoaded = queue.IsNullOrEmpty();
-        return isTreeFullyLoaded & fullyVisible;
-    }
-
-    public static bool? IsLoaded(DependencyObject depObj)
-    {
-        switch (depObj)
-        {
-            case FrameworkElement frameworkElement:
-                return frameworkElement.IsLoaded;
-            case FrameworkContentElement frameworkContentElement:
-                return frameworkContentElement.IsLoaded;
-            case IFrameworkInputElement frameworkInputElement:
-                Quire.DebugTools.FailAssertion(frameworkInputElement.GetType().Name);
-                break;
-        }
-        return null;
-    }
-
     [MirrorVerified("PtcWpfWpfUtilsMechanicalDifferentialTests")]
     public static void Stall(int milliseconds) => Stall(milliseconds, (DispatcherPriority)9);
 
@@ -114,6 +66,73 @@ public static partial class WpfUtils
     public static System.Drawing.Color WpfToGdi(System.Windows.Media.Color color)
     {
         return System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
+    }
+
+    public static bool WaitForIdle(Thread thread, TimeSpan timeout)
+    {
+        DebugTools.LogData("WpfUtils.WaitForIdle: Enter");
+        Dispatcher dispatcher = Dispatcher.FromThread(thread);
+        DelegateFunction0<bool> delegateFunction = () => true;
+        bool flag = DebugTools.AssertNotNull(dispatcher, null).Passed;
+        if (flag)
+        {
+            if (dispatcher.CheckAccess() || timeout.TotalMilliseconds < 0.0)
+            {
+                dispatcher.Invoke((DispatcherPriority)2, delegateFunction);
+            }
+            else
+            {
+                flag = (int)dispatcher.BeginInvoke((DispatcherPriority)2, delegateFunction).Wait(timeout) == 2;
+            }
+        }
+        return flag;
+    }
+    public static bool? IsVisibleValid(DependencyObject depObj)
+    {
+        switch (depObj)
+        {
+            case FrameworkElement frameworkElement:
+                return !frameworkElement.IsVisible || (frameworkElement.IsMeasureValid && frameworkElement.IsArrangeValid);
+            case FrameworkContentElement:
+                return true;
+            case IFrameworkInputElement frameworkInputElement:
+                DebugTools.FailAssertion(frameworkInputElement.GetType().Name);
+                break;
+        }
+        return null;
+    }
+
+    public static bool IsVisualTreeFullyUpdated(UIElement root, out bool isTreeFullyLoaded)
+    {
+        global::System.Collections.Generic.Queue<DependencyObject> queue = new global::System.Collections.Generic.Queue<DependencyObject>();
+        queue.Enqueue(root);
+        bool fullyVisible = true;
+        while (queue.IsNotEmpty() && IsLoaded(queue.Peek()) != false)
+        {
+            DependencyObject current = queue.Dequeue();
+            fullyVisible = fullyVisible && IsVisibleValid(current) != false;
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(current); i++)
+            {
+                queue.Enqueue(VisualTreeHelper.GetChild(current, i));
+            }
+        }
+        isTreeFullyLoaded = queue.IsNullOrEmpty();
+        return isTreeFullyLoaded & fullyVisible;
+    }
+
+    public static bool? IsLoaded(DependencyObject depObj)
+    {
+        switch (depObj)
+        {
+            case FrameworkElement frameworkElement:
+                return frameworkElement.IsLoaded;
+            case FrameworkContentElement frameworkContentElement:
+                return frameworkContentElement.IsLoaded;
+            case IFrameworkInputElement frameworkInputElement:
+                Quire.DebugTools.FailAssertion(frameworkInputElement.GetType().Name);
+                break;
+        }
+        return null;
     }
 
     [MirrorVerified("Release IL")]
@@ -206,6 +225,7 @@ public static partial class WpfUtils
 
     [MirrorVerified("Release IL")]
     public static bool WaitForIdle(Thread thread) => WaitForIdle(thread, TimeSpan.FromMilliseconds(-1L));
+
 
     [MirrorVerified("Release IL")]
     public static void ForceRendering(UIElement pageVisual, Size sz)
