@@ -29,8 +29,4 @@ public partial class QualityAgentManager : global::Quire.QualityAgentManager.IQu
     private string _mathcadPrimeChecksum;
     [global::Quire.Mirror.MirrorStub]
     private const string Dummy = "1234567890123456789012345678901234567890123456789012345678901234";
-    [global::Quire.Mirror.MirrorStub]
-    public QualityAgentManager(string mathcadPrimeInstallationPath) { }
-    [global::Quire.Mirror.MirrorStub]
-    private string GetCommandLine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

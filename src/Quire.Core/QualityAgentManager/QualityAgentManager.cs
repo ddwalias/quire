@@ -7,6 +7,22 @@ namespace Quire.QualityAgentManager;
 
 public partial class QualityAgentManager
 {
+    [MirrorVerified("Release IL")]
+    public QualityAgentManager(string mathcadPrimeInstallationPath)
+    {
+        _mathcadPrimeInstallPath = mathcadPrimeInstallationPath ?? string.Empty;
+        _startupTime = DateTime.Now;
+        _mathcadPrimeVersion = GetMathcadPrimeVersion();
+        IsReportSendingEnabled = global::Quire.Services.ApplicationVariant.IsEngNbPlus != true && global::Quire.Services.ApplicationVariant.IsEngNb != true;
+        _checkSumDelegate = ComputeCheckSum;
+        _computeCheckSumOperationState = global::System.Threading.Tasks.Task.Run(() =>
+        {
+            _checkSumDelegate();
+        });
+    }
+
+    private string GetCommandLine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     private static string GetMathcadPrimeBitness()
     {
         string text = BuildArchitectureToBitnessConverter.Instance.Convert(global::Quire.Xml.XmlWorksheetData.Architecture, typeof(string), null, null).ToString();
