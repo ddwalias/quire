@@ -68,7 +68,26 @@ public partial class ExceptionLogger
         return exceptionData.ToString();
     }
 
-    private static void GetElementData(XmlNode xmlNode, StringBuilder exceptionData, string elementType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void GetElementData(XmlNode xmlNode, StringBuilder exceptionData, string elementType)
+    {
+        if (xmlNode != null)
+        {
+            goto HasNode;
+        }
+        return;
+
+    HasNode:
+        exceptionData.AppendLine(string.Format("{0} Name: {1}", elementType, xmlNode.Name));
+        string outerXml = xmlNode.OuterXml;
+        if (string.IsNullOrEmpty(outerXml))
+        {
+            goto Done;
+        }
+        exceptionData.AppendLine(string.Format("{0} {1} OuterXml: {2}", elementType, xmlNode.Name, outerXml));
+
+    Done:
+        return;
+    }
 
     public string LogExceptions(IEnumerable<Exception> exceptions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
