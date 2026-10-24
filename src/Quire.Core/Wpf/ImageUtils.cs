@@ -208,6 +208,16 @@ public partial class ImageUtils
         return false;
     }
 
+    public static void SavePngFromElementUsingScreenDpi(FrameworkElement element, Stream outStream, Visual rootVisual = null)
+    {
+        BitmapSource bitmapSource = CreateBitmapFromElementUsingScreenDpi(element, rootVisual, default(Rect?));
+        if (bitmapSource == null)
+        {
+            return;
+        }
+        EncodePngImage(bitmapSource, outStream);
+    }
+
     public static BitmapSource CreateBitmapFromElementUsingScreenDpi(FrameworkElement element, Visual rootVisual = null, Rect? bounds = null)
     {
         if (element == null)

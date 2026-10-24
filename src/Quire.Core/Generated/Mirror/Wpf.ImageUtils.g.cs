@@ -14,8 +14,6 @@ public partial class ImageUtils
     [global::Quire.Mirror.MirrorStub]
     public string ImageExtension;
     [global::Quire.Mirror.MirrorStub]
-    public static void SavePngFromElementUsingScreenDpi(global::System.Windows.FrameworkElement element, global::System.IO.Stream outStream, global::System.Windows.Media.Visual rootVisual = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.Imaging.BitmapSource CreatePngFromElement(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void DumpBounds(global::System.Windows.UIElement element, global::System.Windows.UIElement ancestor = default, string prefix = "") => throw global::Quire.Mirror.MirrorStub.NotImplemented();
