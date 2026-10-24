@@ -1,6 +1,6 @@
 # Lane J: mshex.dll → Quire.Native.Mshex
 
-**Status: incomplete.** 74 of 380 exports pass strict byte validation. Export parity: 306 missing, 0 extra. The remaining work is listed under "Remaining work".
+**Status: incomplete.** 77 of 380 exports pass strict byte validation. Export parity: 303 missing, 0 extra. The remaining work is listed under "Remaining work".
 
 - **Owner:** Lane J (native, `mshex.dll`)
 - **Branch:** `mirror/j-mshex-202610241256`
@@ -22,6 +22,8 @@
 | Assignments and stubs of `Value`, `Environment`, `Environment::Visitor`, `Module::State`, `Tag`, `Node`, `Token`, `Interpreter`, `Library`, `DefaultNames::hash` | copy and move assignments (`= default`), `Environment::AddValue`, `SetValue`, `Visitor::Visit`, `State::GetExports`, `GetImports`, `IsConsistent` | 20/20 OK, 0 unverified | `hex_value`, `hex_environment`, `hex_module`, `hex_tag`, `hex_node`, `hex_token`, `hex_interpreter`. Assignments copy nothing where the class has no members of its own (the 4-byte `mov rax,rcx; ret` group). `Tag`'s copy and move assignments copy 24 bytes. The `xor al,al` and `mov al,1` stubs return `false` or `true`. `State`'s layout is not inferred, so only its virtual and non-virtual members are declared. |
 | `Module` status and slot accessors | `IsCompiled`, `IsExecuted`, `HasErrors`, `GetImports`, `GetExports` | 5/5 OK, 0 unverified | `hex_module`. They call `Module::State` through vtable slots 2 (`GetStatus`, unsigned), 4 (`GetImports`) and 5 (`GetExports`). Slots 1 and 3 of `State` are not identified. They are declared only to fix those slot numbers, labelled `UnidentifiedSlot1`/`UnidentifiedSlot3`, never defined and never exported. Replace them when the original's `State` vtable is known. |
 | `TokenOf<void>` assignments and `Value::Insert` | copy and move assignment of `TokenOf`, empty `Value::Insert` | 3/3 OK, 0 unverified | `hex_token`, `hex_value`. `TokenOf` copies its `token` at `+8` and its `Tag` at `+10h`. The empty virtual compiles to `ret 0`, as the original does. |
+| `Tag::operator+=`, `Visitor::Alter`, `DefaultEnvironment::GetSignatures` | `+=` sets this span's end to the other span's end; `Alter` forwards to `Visit` (slot 0); `GetSignatures` reads the count at `+20h` | 3/3 OK, 0 unverified | `hex_tag`, `hex_environment`, `hex_default_environment`. `Visit` is now the first virtual of `Visitor`, as `Alter`'s tail jump requires. The `Environment` layout is the vptr, then an unidentified span to `+20h`. |
+| Parked: `Tag` `operator+` | `Hex::operator+(Tag const&, Tag const&)`, 26 bytes | not exported | The original loads the handle as a qword and stores three qwords. Neither the field-wise construction (24 bytes, 32-bit load) nor the copy-then-assign form (28 bytes) reproduces it. Parked until the copy pattern is understood. |
 | `Hex::imbue` constructor | `imbue(Interpreter const*)` | 1/1 OK, 0 unverified | `hex_imbue`. Stores the pointer and returns `this`. |
 | Comparison bases and `Library`/`DefaultNames::hash` assignments | copy and move assignments of `equality_comparable`, `less_than_comparable` and `totally_ordered` (instantiated for `Signature`), plus `Library` and `DefaultNames::hash` | 8/8 OK, 0 unverified | `hex_comparable`, `hex_library`, `hex_default_names`. Member-less classes. |
 | `Hex::Lexer` flags | `SetFlag`, `GetFlag` | 2/2 OK, 0 unverified | `hex_lexer.{h,cpp}`. Both return `false`. |
