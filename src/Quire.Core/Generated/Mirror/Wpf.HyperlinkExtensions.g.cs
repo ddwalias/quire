@@ -12,10 +12,6 @@ namespace Quire.Wpf;
 public static partial class HyperlinkExtensions
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Documents.Hyperlink CreateLink(global::System.Uri uri, global::System.Windows.Documents.TextPointer startPos, global::System.Windows.Documents.TextPointer endPos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Documents.Hyperlink CreateLink(global::System.Uri uri, global::System.Windows.Documents.Inline childInline, global::System.Windows.Documents.TextPointer insertionPosition = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void SetTextFormatForLinkRemoval(this global::System.Windows.Documents.Hyperlink link, out global::System.Collections.Generic.List<global::System.Windows.Documents.Inline> inlines) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool ApplyNeighborFormattingValueIfUnset(global::System.Collections.Generic.List<global::System.Windows.Documents.Inline> inlines, global::System.Windows.Documents.TextPointer currentPosition, global::System.Windows.Documents.LogicalDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

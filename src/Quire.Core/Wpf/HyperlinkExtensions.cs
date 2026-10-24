@@ -8,6 +8,24 @@ namespace Quire.Wpf;
 
 public static partial class HyperlinkExtensions
 {
+    public static Hyperlink CreateLink(Uri uri, TextPointer startPos, TextPointer endPos)
+    {
+        Hyperlink hyperlink = new Hyperlink(startPos, endPos)
+        {
+            NavigateUri = uri
+        };
+        hyperlink.RecursiveRemoveEmptyInlinesIncludingSelf();
+        return hyperlink;
+    }
+
+    public static Hyperlink CreateLink(Uri uri, Inline childInline, TextPointer insertionPosition = default)
+    {
+        Hyperlink hyperlink = insertionPosition == null ? new Hyperlink(childInline) : new Hyperlink(childInline, insertionPosition);
+        hyperlink.NavigateUri = uri;
+        hyperlink.RecursiveRemoveEmptyInlinesIncludingSelf();
+        return hyperlink;
+    }
+
     [MirrorVerified("Release IL")]
     public static void ClearForegroundInDepth(this Hyperlink link)
     {
