@@ -43,6 +43,11 @@ The C++/CLI build uses the compiler that built `utl-mgd.dll`. Its Rich header sh
 (Visual Studio 2026 18.6.2). The gate builds with that exact instance and rejects other linker builds
 ([validation](validation.md#ccli-candidate)).
 
+On 2026-10-24 the user confirmed that interface constants are source: the literals a function uses, such as the
+registry key and value names `utl.dll` reads, are typed into Quire source as a managed method's `ldstr` operands are.
+Reading them from an original during analysis is allowed. The prohibition covers original bytes copied into a build
+output.
+
 ## D20: one Quire project per Mathcad assembly, in its original language (2026-10-23)
 
 The user replaced D2's consolidation with a strict 1:1 layout. Every in-scope Mathcad assembly gets its own Quire
