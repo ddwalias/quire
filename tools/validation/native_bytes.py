@@ -16,7 +16,11 @@ entries whose definition the candidates lack or that reference unverified target
 unverified; --strict treats them as failures.
 
 The manifest binds to the original's file name and SHA-256. An entry for another build, a function entry that does not
-start a .pdata function, or a data entry outside the original's sections fails the run before any comparison.
+start a .pdata function, or a data entry outside the original's sections fails the run before any comparison. A
+section's bytes past its raw size, up to its virtual size, read as zeros, as the loader fills them.
+
+An import by ordinal is named after the export with that ordinal in the system DLL of the same name (System32), so a
+candidate's `__imp_<name>` can match it; it keeps the name `#<ordinal>` when that DLL or ordinal is absent.
 
 Export parity compares the export names of a built DLL with the original's.
 
@@ -24,8 +28,10 @@ Reads the original DLL only. Keep the original and any decompiled output in the 
 build inputs (D19).
 """
 import argparse
+import functools
 import hashlib
 import json
+import os
 import struct
 import sys
 from dataclasses import dataclass, field
@@ -102,15 +108,25 @@ def _cstr(data, offset):
 
 def _rva_offset(sections, rva):
     for va, size, raw, raw_size in sections:
-        if va <= rva < va + max(size, raw_size):
+        if va <= rva < va + raw_size:
             return raw + (rva - va)
-    raise ValueError(f"RVA {rva:#x} is not in any section")
+    raise ValueError(f"RVA {rva:#x} is not in any section's file bytes")
+
+
+@functools.lru_cache(maxsize=None)
+def system_ordinal_names(dll):
+    """Ordinal -> export name of the x64 system DLL `dll`, read from System32; empty when it cannot be read."""
+    path = Path(os.environ.get("SystemRoot", r"C:\Windows")) / "System32" / dll
+    try:
+        return PeImage(path, ordinal_names=False).ordinals
+    except (OSError, ValueError, struct.error):
+        return {}
 
 
 class PeImage:
     """Exports, function extents and load base of a PE32+ image, read from the file alone."""
 
-    def __init__(self, path):
+    def __init__(self, path, ordinal_names=True):
         self.name = Path(path).name
         self.data = Path(path).read_bytes()
         self.sha256 = hashlib.sha256(self.data).hexdigest()
@@ -133,9 +149,10 @@ class PeImage:
         for i in range(nsec):
             _, vsize, va, raw_size, raw, *_ = struct.unpack_from("<8sIIIIIIHHI", d, sh + 40 * i)
             self.sections.append((va, vsize, raw, raw_size))
+        self.ordinals = {}  # export ordinal -> name, for named exports
         self.exports = self._read_exports(dirs)
         self.functions = self._read_pdata(dirs)
-        self.imports = self._read_imports(dirs)
+        self.imports = self._read_imports(dirs) if ordinal_names else {}
 
     def _read_exports(self, dirs):
         d = self.data
@@ -143,7 +160,7 @@ class PeImage:
         if not exp_rva:
             return {}
         base = _rva_offset(self.sections, exp_rva)
-        _, _, _, _, _, _, _, nnames, aof, aon, aoo = struct.unpack_from("<IIHHIIIIIII", d, base)
+        _, _, _, _, _, ordinal_base, _, nnames, aof, aon, aoo = struct.unpack_from("<IIHHIIIIIII", d, base)
         funcs = _rva_offset(self.sections, aof)
         names = _rva_offset(self.sections, aon)
         ords = _rva_offset(self.sections, aoo)
@@ -153,6 +170,7 @@ class PeImage:
             index = struct.unpack_from("<H", d, ords + 2 * i)[0]
             rva = struct.unpack_from("<I", d, funcs + 4 * index)[0]
             table[name] = rva
+            self.ordinals[ordinal_base + index] = name
         return table
 
     def _read_pdata(self, dirs):
@@ -168,7 +186,7 @@ class PeImage:
         return out
 
     def _read_imports(self, dirs):
-        """Import address table slot RVA -> imported function name (ordinal imports are named by their number)."""
+        """Import address table slot RVA -> imported function name (see the module docstring for ordinal imports)."""
         d = self.data
         rva, _ = struct.unpack_from("<II", d, dirs + 8)
         if not rva:
@@ -176,14 +194,15 @@ class PeImage:
         table = {}
         desc = _rva_offset(self.sections, rva)
         while struct.unpack_from("<I", d, desc + 16)[0]:  # FirstThunk is non-zero for every real descriptor
-            lookup, _, _, _, first = struct.unpack_from("<IIIII", d, desc)
+            lookup, _, _, dll, first = struct.unpack_from("<IIIII", d, desc)
+            dll = _cstr(d, _rva_offset(self.sections, dll))
             thunks = _rva_offset(self.sections, lookup or first)
             for i in range(1 << 20):
                 entry = struct.unpack_from("<Q", d, thunks + 8 * i)[0]
                 if not entry:
                     break
                 if entry >> 63:
-                    name = f"#{entry & 0xFFFF}"
+                    name = system_ordinal_names(dll.lower()).get(entry & 0xFFFF, f"#{entry & 0xFFFF}")
                 else:
                     name = _cstr(d, _rva_offset(self.sections, entry & 0x7FFFFFFF) + 2)
                 table[first + 8 * i] = name
@@ -217,12 +236,17 @@ class PeImage:
         return self.data[off:off + (end - begin)]
 
     def read(self, rva, size):
-        off = _rva_offset(self.sections, rva)
-        return self.data[off:off + size]
+        """`size` bytes at `rva` as loaded: a section's bytes past its raw size are zeros."""
+        for va, vsize, raw, raw_size in self.sections:
+            if va <= rva < va + max(vsize, raw_size):
+                backed = max(0, min(size, raw_size - (rva - va)))
+                off = raw + (rva - va)
+                return self.data[off:off + backed] + bytes(size - backed)
+        raise ValueError(f"RVA {rva:#x} is not in any section")
 
     def contains(self, rva, size):
-        """Whether [rva, rva + size) lies within the file-backed data of one section."""
-        return any(va <= rva and rva + size <= va + min(vsize or raw_size, raw_size)
+        """Whether [rva, rva + size) lies within one section as loaded (its virtual size, or raw size if that is 0)."""
+        return any(va <= rva and rva + size <= va + (vsize or raw_size)
                    for va, vsize, _, raw_size in self.sections)
 
     def read_u32(self, rva):

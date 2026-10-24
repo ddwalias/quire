@@ -11,12 +11,14 @@ from unittest import mock
 from native_bytes import (Entry, Function, InternalTargets, ManifestError, Reloc, PeImage, check_targets,
                           classify_targets, compare_code, compare_object, definitions_in_object,
                           definitions_in_objects, functions_in_object,
-                          load_targets, masked, read_coff, targets_from)
+                          load_targets, masked, read_coff, system_ordinal_names, targets_from)
 from native_bytes import main as native_bytes_main
 from native_targets import record
 
 MATHCAD_DLL = Path(os.environ.get("MATHCAD_DIR", r"C:\Program Files\PTC\Mathcad Prime 12.0.1.0")) / "efistatsci_.dll"
 MSHEX_DLL = MATHCAD_DLL.with_name("mshex.dll")
+UTL_DLL = MATHCAD_DLL.with_name("utl.dll")
+OLEAUT32_DLL = Path(os.environ.get("SystemRoot", r"C:\Windows")) / "System32" / "oleaut32.dll"
 
 
 def coff(functions, externals=(), statics=(), local=(), data=()):
@@ -601,6 +603,36 @@ class InstalledImageTests(unittest.TestCase):
     def test_every_export_has_code_bytes(self):
         image = PeImage(MATHCAD_DLL)
         self.assertTrue(all(image.export_code(name) for name in image.exports))
+
+
+@unittest.skipUnless(OLEAUT32_DLL.is_file(), "System32 OLEAUT32.dll not present")
+class SystemOrdinalTests(unittest.TestCase):
+    def test_ordinal_names_come_from_the_system_dll(self):
+        self.assertEqual(system_ordinal_names("oleaut32.dll")[4], "SysAllocStringLen")
+
+    def test_a_missing_system_dll_has_no_names(self):
+        self.assertEqual(system_ordinal_names("no-such-quire-test.dll"), {})
+
+
+@unittest.skipUnless(UTL_DLL.is_file(), "Mathcad Prime install not present")
+class LoadedSectionTests(unittest.TestCase):
+    """utl.dll's .data has raw size 0x800 and virtual size 0xA20; its flags at 0x22862 lie in the zero-filled tail."""
+
+    def test_bytes_past_the_raw_size_read_as_zeros(self):
+        image = PeImage(UTL_DLL)
+        self.assertTrue(image.contains(0x22862, 2))
+        self.assertEqual(image.read(0x22862, 2), bytes(2))
+
+    def test_a_read_across_the_raw_size_keeps_the_file_bytes(self):
+        image = PeImage(UTL_DLL)
+        va, vsize, raw, raw_size = next(s for s in image.sections if s[0] <= 0x22862 < s[0] + s[1])
+        self.assertGreater(vsize, raw_size)
+        end = va + raw_size
+        self.assertEqual(image.read(end - 4, 8), image.data[raw + raw_size - 4:raw + raw_size] + bytes(4))
+        self.assertFalse(image.contains(va + vsize - 1, 2))
+
+    def test_ordinal_import_is_named_after_the_system_export(self):
+        self.assertEqual(PeImage(UTL_DLL).imports[0x16430], "SysAllocStringLen")
 
 
 if __name__ == "__main__":
