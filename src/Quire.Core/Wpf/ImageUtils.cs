@@ -48,6 +48,27 @@ public partial class ImageUtils
     [MirrorVerified("Release IL")]
     public static int BytesNeeded(int bits) => (bits + 7) / 8;
 
+    public static byte[] GetImageHash(BitmapSource source)
+    {
+        byte[] result;
+        using (global::Quire.MindTouch.IO.ChunkedMemoryStream chunkedMemoryStream = new global::Quire.MindTouch.IO.ChunkedMemoryStream())
+        {
+            try
+            {
+                CopyPixelsToStream(source, chunkedMemoryStream, null);
+                chunkedMemoryStream.Flush();
+                chunkedMemoryStream.Seek(0L, SeekOrigin.Begin);
+                result = global::Quire.IO.StreamUtils.GetStreamHash(chunkedMemoryStream);
+            }
+            catch (Exception ex)
+            {
+                result = null;
+                DebugTools.FailAssertion(ex.Message);
+            }
+        }
+        return result;
+    }
+
     [MirrorVerified("Release IL")]
     public static bool CompareHashes(byte[] hash1, byte[] hash2)
     {
