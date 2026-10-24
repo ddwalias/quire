@@ -11,8 +11,6 @@ namespace Quire.Wpf.Printing;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.Printing.XpsPrintInterop, Ptc.Core")]
 public static partial class XpsPrintInterop
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void XpsFileToPrinterFile(string printerName, string inputXpsFile, string outputPrinterFile, out int jobId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.Printing.XpsPrintInterop+XPS_JOB_STATUS, Ptc.Core")]
     private partial struct XPS_JOB_STATUS
