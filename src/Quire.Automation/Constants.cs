@@ -2,6 +2,7 @@
 
 namespace Quire.ProductInfo;
 
+[global::Quire.Mirror.MirrorOf("ProductInfo.Constants, Ptc.MathcadPrime.Automation")]
 internal partial class Constants
 {
     public const string ConverterProductName = "WorksheetConverter";

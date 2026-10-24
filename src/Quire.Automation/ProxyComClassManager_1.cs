@@ -5,6 +5,7 @@ using System.Threading;
 
 namespace Quire.Automation;
 
+[global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.Automation.ProxyComClassManager`1, Ptc.MathcadPrime.Automation")]
 internal partial class ProxyComClassManager<T> where T : class
 {
     private static readonly object _syncRoot = new object();
@@ -33,6 +34,9 @@ internal partial class ProxyComClassManager<T> where T : class
     public bool HasConnections => _lockCount > 0;
 
     internal event RefineConnectionsHandler RefineConnections;
+
+    [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.Automation.ProxyComClassManager`1+RefineConnectionsHandler, Ptc.MathcadPrime.Automation")]
+    internal delegate void RefineConnectionsHandler();
 
     private ProxyComClassManager()
     {

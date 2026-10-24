@@ -1,15 +1,19 @@
 # Lane C checkpoint: Automation assemblies complete
 
 - Owner: Lane C (D18: `Quire.Automation`, `Quire.EngNotebook.Automation`, `Quire.EngNotebookPlus.Automation`).
-- Branch: `mirror/c-automation-20261024124956`. Worktree: `C:/Projects/Quire-wt/lane-c-wave1`, from main `a81b7fbae94b11414b7ee8de054cda023908a25c`.
+- Branch: `mirror/c-automation-interop-cs`. Worktree: `C:/Projects/Quire-wt/lane-c-wave1`.
 
 ## Members
 
 - `Quire.Automation`, `Quire.EngNotebook.Automation`, `Quire.EngNotebookPlus.Automation`:
-  `ApplicationCreatorClass..ctor`. Declared hand-written `[ComImport]` coclass in each project's
-  `ApplicationCreatorClass.cs` matching `Quire.AutomationPrivate`'s `SymbolicValueClass` source form
-  without explicit constructor declarations. Removed generated stub `.g.cs` files. Under D22, the
-  runtime-supplied parameterless constructor matches on implementation flags (`runtime managed internalcall`).
+  Declared hand-written `[ComImport]` coclass in each project's `ApplicationCreatorClass.cs` matching
+  `Quire.AutomationPrivate`'s `SymbolicValueClass` source form without explicit constructor declarations.
+  Under D22, also moved all COM guides (`ComClassesGuides`, `ComClassesProgIds`, `ComEnumerationsGuides`,
+  `ComInterfacesGuides`, `ComTlbGuid`, `HRESULT`), enums (`MathcadPrimeEvents`, `SaveOption`, `ValueResultTypes`,
+  `WorksheetOperations`, `WorksheetReadonlyOptionNames`), delegates (`RefineConnectionsHandler`), and coclass
+  interfaces (`ApplicationCreator`) from `.g.cs` into standalone hand-written `.cs` files with `[MirrorOf]`.
+  Removed generated `.g.cs` files. Under D22, the runtime-supplied parameterless constructor matches on
+  implementation flags (`runtime managed internalcall`).
 
 ## Release IL report
 
@@ -21,4 +25,5 @@
 ## Remaining mismatches
 
 None. Parity is exact for all managed bodies in `Quire.Automation`, `Quire.EngNotebook.Automation` and `Quire.EngNotebookPlus.Automation`. All three assemblies are complete.
+
 

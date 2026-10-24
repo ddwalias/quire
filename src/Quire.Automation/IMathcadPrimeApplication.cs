@@ -2,6 +2,7 @@
 
 namespace Quire.Automation;
 
+[global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.Automation.IMathcadPrimeApplication, Ptc.MathcadPrime.Automation")]
 public partial interface IMathcadPrimeApplication
 {
     bool Visible { get; set; }
