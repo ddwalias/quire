@@ -374,6 +374,23 @@ public partial class TextStyleBase
     }
 
     [MirrorVerified("Release IL")]
+    protected TextStyleBase(TextStyleData textStyleData, bool basedOnValues = true)
+    {
+        if (textStyleData != null)
+        {
+            UpdateDeletedProperties(textStyleData.OldStyle);
+            Style = CloneStyleAndSetters(textStyleData.Style);
+            StyleKey = textStyleData.StyleKey;
+            Name = textStyleData.StyleName;
+            _baseOnKey = textStyleData.BaseOnKey;
+            if (basedOnValues)
+            {
+                UpdateBasedOnMembersValue(Style.BasedOn);
+            }
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     protected TextStyleBase(string name, string key) : this(new TextStyleData(name, key, new Style(), null), true) { }
 
     [MirrorVerified("Release IL")]

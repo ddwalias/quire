@@ -18,8 +18,6 @@ public abstract partial class TextStyleBase : global::Quire.ITextStyle, global::
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.FontStretch _fontStretch;
     [global::Quire.Mirror.MirrorStub]
-    protected TextStyleBase(global::Quire.TextStyleData textStyleData, bool basedOnValues = true) { }
-    [global::Quire.Mirror.MirrorStub]
     protected TextStyleBase(global::Quire.Core.TextFormat textFormat, bool reset = false) { }
     [global::Quire.Mirror.MirrorStub]
     public void UpdateBasedOn(global::Quire.ITextStyle basedOn, global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> stylesCollection, bool isFixInHeritage = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
