@@ -226,11 +226,61 @@ public partial class CommandBuffer
         return flag;
     }
 
+    private static CompoundCommand SafeDo(IUndoableCommand command)
+    {
+        bool flag;
+        MasterCommand masterCommand = new MasterCommand(command);
+        using (new CommandScope(masterCommand))
+        {
+            flag = command.Do();
+        }
+        if (!flag)
+        {
+            masterCommand.UndoSideEffects();
+        }
+        if (!flag)
+        {
+            return null;
+        }
+        return masterCommand;
+    }
+
     [MirrorVerified("Release IL")]
     public static bool Execute(string name, DelegateFunction0<bool> doMethod, Delegate0 undoMethod) => Execute(new UndoableCommand(name, doMethod, undoMethod), null);
 
     [MirrorVerified("Release IL")]
     public static bool Execute(string name, DelegateFunction0<bool> doMethod, Delegate0 undoMethod, Delegate0 redoMethod) => Execute(new UndoableCommand(name, doMethod, undoMethod, redoMethod), null);
+
+    public static void Redo()
+    {
+        if (!CanRedo)
+        {
+            return;
+        }
+        IUndoableCommand undoableCommand = _currentInstance._redoStack.Pop();
+        CommandEventArgs args = new CommandEventArgs(undoableCommand, CommandEventArgs.ActionTypeEnum.Redo);
+        FireCommandEvent(_currentInstance.BeforeCommand, args);
+        CompoundCommand compoundCommand = new MasterCommand(undoableCommand);
+        using (new CommandScope(compoundCommand))
+        {
+            undoableCommand.Redo();
+        }
+        _currentInstance._undoStack.Push(compoundCommand);
+        FireCommandEvent(_currentInstance.AfterCommand, args);
+    }
+
+    public static void RemoveTopUndo()
+    {
+        if (_currentInstance != null && _currentInstance._undoStack.Count != 0)
+        {
+            goto PopTopUndo;
+        }
+        return;
+
+    PopTopUndo:
+        _currentInstance._undoStack.Pop();
+        return;
+    }
 
     [MirrorVerified("Release IL")]
     public void PushCommand(IUndoableCommand command)
