@@ -75,9 +75,14 @@ public sealed class Rules
         return rules;
     }
 
-    /// <summary>Mathcad assemblies that are deferred wholesale and so not listed type by type in the type map.</summary>
+    /// <summary>
+    /// Mathcad assemblies that are deferred wholesale and so not listed type by type in the type map. COM interop
+    /// assemblies stay deferred except interop.mathcadautomationprivate, which is mirrored (D22).
+    /// </summary>
     public static bool IsDeferredAssembly(string asm) =>
-        asm is "LicenseWizard" or "Ptc.License.Plpf" or "Ptc.OleInterop" || asm.StartsWith("interop.", StringComparison.OrdinalIgnoreCase);
+        asm is "LicenseWizard" or "Ptc.License.Plpf" or "Ptc.OleInterop"
+        || asm.StartsWith("interop.", StringComparison.OrdinalIgnoreCase)
+            && !asm.Equals("interop.mathcadautomationprivate", StringComparison.OrdinalIgnoreCase);
 
     // ---------------------------------------------------------------- names
 
@@ -141,7 +146,7 @@ public sealed class Rules
     /// </summary>
     private static readonly Dictionary<string, (Language Language, string Name)> Assemblies = Table(
         (Language.CSharp, ["automation", "automationmgd", "componentsmgd", "efiio-csharp", "efiplot_", "efisixsigma_",
-            "mcmisc", "mplasb", "mplrun", "utilsmgd"]),
+            "interop.mathcadautomationprivate", "mcmisc", "mplasb", "mplrun", "utilsmgd"]),
         (Language.CppCli, ["efibessel_", "eficalculus_", "eficore_", "efidata_", "efidebug_", "efidiffeq_",
             "efifinance_", "efifitting_", "efifourier_", "efigraphics_", "efiimage_", "efiio_", "efimatrix_",
             "efisignal_", "efisolver_", "efispecial_", "efistatistics_", "efisymbolics_", "efiutl", "efiwavelets_",
@@ -192,6 +197,7 @@ public sealed class Rules
         // The plain name is taken: Quire.Automation is Ptc.MathcadPrime.Automation and Quire.Mpl is mplrun.
         "automation" => "Quire.Automation.Native",
         "mpl" => "Quire.MplModule",
+        "interop.mathcadautomationprivate" => "Quire.AutomationPrivate",
         _ when Assemblies.TryGetValue(asm, out var a) =>
             (a.Language == Language.Native ? "Quire.Native." : "Quire.") + NativeAssemblyName(a.Name),
         _ => throw new ArgumentException($"no project rule for {asm}"),
@@ -244,7 +250,7 @@ public sealed class Rules
     /// </summary>
     private static string D2Host(string asm) => asm.ToLowerInvariant() switch
     {
-        var a when a.StartsWith("ptc.") || a == "mathcadprime" => ProjectFor(asm),
+        var a when a.StartsWith("ptc.") || a is "mathcadprime" or "interop.mathcadautomationprivate" => ProjectFor(asm),
         "mplasb" => "Quire.Mpl.Emit",
         "mplrun" => "Quire.Mpl",
         var a when a.StartsWith("mpl") || a is "hashtable" or "mcdrun" || a.StartsWith("mcdstaticunitsystem") => "Quire.Mpl.Modules",

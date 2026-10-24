@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-23T18:26:10+00:00",
-  "revision": "9f2cb15c67485655e11d772c466f3a29289535ff",
+  "generated_at": "2026-10-24T04:17:48+00:00",
+  "revision": "cdc8c8a4a3646329735849e6d8fd6c6d1f290bf5",
   "units": [
     {
       "name": "Quire.Automation.Native",
@@ -6814,6 +6814,40 @@
       ]
     },
     {
+      "name": "Quire.AutomationPrivate",
+      "original": {
+        "name": "interop.mathcadautomationprivate",
+        "file": "interop.mathcadautomationprivate.dll",
+        "mvid": "9a830ac8-1a16-4f23-935c-eede8e2d2032",
+        "references": [
+          "mscorlib"
+        ],
+        "native_imports": []
+      },
+      "language": "CSharp",
+      "host": "Quire.AutomationPrivate",
+      "split": false,
+      "project_references": [],
+      "dependencies": [],
+      "tiers": {},
+      "scope": "deferred / out of scope",
+      "stub_bodies": 0,
+      "status": "unconfirmed",
+      "audit": {
+        "exact": 0,
+        "declarations": 51,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 0,
+        "report": ".mirror-cache/release-il-lane-g-scratch2/release-il.json",
+        "missing_original_methods": 0,
+        "current_revision": false
+      },
+      "dependents": [
+        "Quire.Mcfront12"
+      ]
+    },
+    {
       "name": "Quire",
       "original": {
         "name": "MathcadPrime",
@@ -8676,6 +8710,7 @@
       "split": false,
       "project_references": [],
       "dependencies": [
+        "Quire.AutomationPrivate",
         "Quire.Automationmgd",
         "Quire.Engine",
         "Quire.Engine.Misc",
@@ -8748,12 +8783,12 @@
       "stub_bodies": 0,
       "status": "unconfirmed",
       "audit": {
-        "exact": 127,
+        "exact": 129,
         "declarations": 0,
         "native_pairs": 0,
         "toolset_support": 0,
-        "remaining": 2,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "remaining": 0,
+        "report": ".mirror-cache/gate-il-4ec09f18be98/run/release-il.json",
         "missing_original_methods": 2,
         "current_revision": false
       },
@@ -9193,12 +9228,12 @@
       "stub_bodies": 0,
       "status": "unconfirmed",
       "audit": {
-        "exact": 1865,
+        "exact": 1867,
         "declarations": 165,
         "native_pairs": 0,
         "toolset_support": 0,
-        "remaining": 2,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "remaining": 0,
+        "report": ".mirror-cache/gate-il-bfd1863b04db/run/release-il.json",
         "missing_original_methods": 0,
         "current_revision": false
       },
@@ -9573,9 +9608,11 @@
         ]
       },
       "language": "CppCli",
-      "host": "Quire.Engine.Native",
-      "split": false,
-      "project_references": [],
+      "host": "Quire.Msclr",
+      "split": true,
+      "project_references": [
+        "Quire.Mpl"
+      ],
       "dependencies": [
         "Quire.Mpl",
         "Quire.Mpl.Emit",
@@ -9590,16 +9627,16 @@
         "abstract": 3
       },
       "scope": "deferred / out of scope",
-      "stub_bodies": 1053,
-      "status": "incomplete",
+      "stub_bodies": 0,
+      "status": "unconfirmed",
       "audit": {
-        "exact": 0,
+        "exact": 80,
         "declarations": 3,
-        "native_pairs": 0,
+        "native_pairs": 6,
         "toolset_support": 0,
-        "remaining": 6,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
-        "missing_original_methods": 9,
+        "remaining": 0,
+        "report": ".mirror-cache/gate-il-24dc3bcde65b/run/release-il.json",
+        "missing_original_methods": 8,
         "current_revision": false
       },
       "dependents": [
@@ -11459,17 +11496,17 @@
         "abstract": 595
       },
       "scope": "active / mixed",
-      "stub_bodies": 255,
+      "stub_bodies": 121,
       "status": "incomplete",
       "audit": {
-        "exact": 3194,
+        "exact": 3456,
         "declarations": 747,
         "native_pairs": 0,
         "toolset_support": 0,
-        "remaining": 388,
-        "report": ".mirror-cache/gate-il-03588d4d7c3c/run/release-il.json",
-        "missing_original_methods": 347,
-        "current_revision": false
+        "remaining": 243,
+        "report": ".mirror-cache/gate-il-8a292065e961/run/release-il.json",
+        "missing_original_methods": 200,
+        "current_revision": true
       },
       "dependents": [
         "Quire",
@@ -11788,7 +11825,7 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 0,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/gate-il-4ec09f18be98/run/release-il.json",
         "missing_original_methods": 0,
         "current_revision": false
       },
@@ -12506,7 +12543,6 @@
         "mccore12",
         "mceng",
         "mcfront12",
-        "msclr",
         "msgen",
         "mslisp",
         "mspcons-mgd"
@@ -12579,6 +12615,7 @@
   ],
   "ready_now": [
     "Quire.Automation",
+    "Quire.AutomationPrivate",
     "Quire.Core",
     "Quire.EngNotebook.Automation",
     "Quire.EngNotebookPlus.Automation",
@@ -12589,6 +12626,7 @@
   ],
   "initial_unlocks": {
     "Quire.Automation": [],
+    "Quire.AutomationPrivate": [],
     "Quire.Core": [
       "Quire.Calculation.Core",
       "Quire.Media3D"
@@ -12605,6 +12643,7 @@
   "waves": [
     [
       "Quire.Automation",
+      "Quire.AutomationPrivate",
       "Quire.Core",
       "Quire.EngNotebook.Automation",
       "Quire.EngNotebookPlus.Automation",
@@ -12777,6 +12816,7 @@
   "assume_complete": [],
   "scenario_ready": [
     "Quire.Automation",
+    "Quire.AutomationPrivate",
     "Quire.Core",
     "Quire.EngNotebook.Automation",
     "Quire.EngNotebookPlus.Automation",

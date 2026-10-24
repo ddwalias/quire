@@ -4,7 +4,7 @@
 This workflow replaces the former behavior, differential, coverage, mutation and phase
 gates for all managed mirroring batches, including Tiers A, A2 and B (decision D17).
 Existing scope and name mappings remain in [scope.md](scope.md), [tiers/](tiers/)
-and [mapping.md](mapping.md). The four assembly assignments in [WORK](WORK.md) supersede
+and [mapping.md](mapping.md). The assembly assignments in [WORK](WORK.md) supersede
 historical tier deferrals (D18). Native work does not acquire a managed IL counterpart.
 
 ## Five steps

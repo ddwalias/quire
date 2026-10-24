@@ -13,7 +13,8 @@ if (args is ["members", var assemblyPath, var typeName])
     var members = artifact.Methods.Where(m => m.Owner == typeName || m.Owner.StartsWith(typeName + "+")).ToList();
     foreach (var m in members)
         Console.WriteLine($"0x{m.Token:x8}\t{m.Owner}\t{m.Key}\t{m.Access}{(m.BodyRva == 0 ? "\tno body" : "")}");
-    return members.Count > 0 ? 0 : 1;
+    // A type without methods (a struct, a field-only class, an interface that only inherits) is still a type.
+    return members.Count > 0 || artifact.Model.Types.Any(t => t.FullName == typeName) ? 0 : 1;
 }
 var options = new Dictionary<string, List<string>>();
 for (int i = 0; i < args.Length; i += 2)
@@ -356,7 +357,9 @@ foreach (var (artifact, raw, type, method, original, counterpart) in matched)
             && (counterpart == null || original?.Name.Equals("utl-mgd", StringComparison.OrdinalIgnoreCase) == true
                 && original.Methods.Single(m => m.Token == counterpart.Token).MaxStack is >= 0 and <= 7),
         declaration_only = counterpart is { BodyRva: 0 } && raw.BodyRva == 0
-            && (raw.Abstract && counterpart.Abstract || type?.Kind == TypeKind.Delegate),
+            && (raw.Abstract && counterpart.Abstract || type?.Kind == TypeKind.Delegate
+                // A COM coclass constructor: the runtime supplies the body, so its implementation flags are the member.
+                || raw.RuntimeProvided != null && raw.RuntimeProvided == counterpart.RuntimeProvided),
         shape_matches = counterpart != null && (method?.Access.ToString() ?? raw.Access) == counterpart.Access && raw.Modifiers == counterpart.Modifiers,
         structure_matches = differences == null ? (bool?)null : differences.Count == 0,
         structure_differences = differences ?? [],

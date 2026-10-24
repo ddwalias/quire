@@ -34,9 +34,10 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
     public Dictionary<TypeModel, string> TypeSkip { get; } = [];
     public HashSet<TypeModel> DropBase { get; } = [];
     /// <summary>
-    /// Nested types whose hand-written declaration carries [MirrorOf]. Roslyn numbers closures by member ordinal,
-    /// nested types included, and the generated file compiles first; leaving their shells out lets hand-written
-    /// code place them where Mathcad declared them.
+    /// Types whose hand-written declaration carries [MirrorOf]. Roslyn numbers closures by member ordinal, nested
+    /// types included, and the generated file compiles first; leaving their shells out lets hand-written code place
+    /// nested types where Mathcad declared them. A hand-bound top-level type (a COM interop declaration whose
+    /// attributes the hand-written file orders) needs no shell either.
     /// </summary>
     public HashSet<TypeModel> HandBound { get; } = [];
     /// <summary>Mathcad methods hand-written code declares (a subset of <see cref="Skip"/>).</summary>
@@ -366,7 +367,7 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
             t.Notes.Add("not generated: " + TypeSkip[t]);
             return;
         }
-        if (t.DeclaringType != null && handWritten.BindsInSource(t)) HandBound.Add(t);
+        if (handWritten.BindsInSource(t)) HandBound.Add(t);
         if (hw.Access != t.Access)
         {
             t.Notes.Add($"hand-written code declares it {hw.Access.ToString().ToLowerInvariant()}; Mathcad's is {t.Access.ToString().ToLowerInvariant()}");

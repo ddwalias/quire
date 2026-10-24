@@ -9,10 +9,11 @@ using Quire.Tools.MirrorGen;
 /// out (see ModifierProvider). <paramref name="Import"/>: the P/Invoke metadata of a pinvokeimpl method, which has no
 /// IL body to compare. <paramref name="NativeCode"/>: the RVA holds machine code (C++/CLI), not an IL body.
 /// <paramref name="Signature"/>: the decoded signature, from which a global (<c>&lt;Module&gt;</c>) function, which has
-/// no type model, is keyed with its types mapped.</summary>
+/// no type model, is keyed with its types mapped. <paramref name="RuntimeProvided"/>: the implementation flags of a
+/// concrete method without a body that the runtime supplies (a COM coclass constructor), else null.</summary>
 sealed record RawMethod(string Owner, string Name, string Key, int Token, string Access, bool Abstract, int BodyRva,
     string Modifiers = "", int? MaxStack = null, PInvoke? Import = null, bool NativeCode = false,
-    MethodSignature<TypeSig> Signature = default, bool Static = false);
+    MethodSignature<TypeSig> Signature = default, bool Static = false, MethodImplAttributes? RuntimeProvided = null);
 /// <summary>What metadata records of a P/Invoke beside its name and parameter types: the method and implementation
 /// flags, the signature calling convention, and the ImplMap module, entry point and import attributes.</summary>
 sealed record PInvoke(MethodAttributes Attributes, MethodImplAttributes ImplAttributes, SignatureHeader Header,
@@ -171,8 +172,12 @@ sealed class Artifact
                         md.GetString(map.Name), map.Attributes);
                 bool native = m.RelativeVirtualAddress != 0 && ((m.ImplAttributes & MethodImplAttributes.CodeTypeMask) != MethodImplAttributes.IL
                     || (m.ImplAttributes & MethodImplAttributes.Unmanaged) != 0);
+                bool runtime = m.RelativeVirtualAddress == 0 && (m.Attributes & (MethodAttributes.Abstract | MethodAttributes.PinvokeImpl)) == 0
+                    && ((m.ImplAttributes & MethodImplAttributes.CodeTypeMask) == MethodImplAttributes.Runtime
+                        || (m.ImplAttributes & MethodImplAttributes.InternalCall) != 0);
                 Methods.Add(new(owner, name, key, MetadataTokens.GetToken(mh), access,
-                    (m.Attributes & MethodAttributes.Abstract) != 0, m.RelativeVirtualAddress, modifiers, maxStack, import, native, sig, isStatic));
+                    (m.Attributes & MethodAttributes.Abstract) != 0, m.RelativeVirtualAddress, modifiers, maxStack, import, native, sig, isStatic,
+                    runtime ? m.ImplAttributes : null));
             }
         }
     }

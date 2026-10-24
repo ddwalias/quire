@@ -7784,6 +7784,24 @@ efiwavelets_.dll,__scrt_native_startup_state,enum,internal,,c++ artefact,,engine
 engutils-mgd.dll,__std_exception_data,struct,internal,,c++ artefact,,engine-native
 engutils-mgd.dll,__scrt_native_startup_state,enum,internal,,c++ artefact,,engine-native
 iengine.dll,__scrt_native_startup_state,enum,internal,,c++ artefact,,engine-net
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate.ISymbolicValue,interface,public,Quire.AutomationPrivate.ISymbolicValue,missing,8,managed
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate.SymbolicValue,interface,public,Quire.AutomationPrivate.SymbolicValue,missing,8,managed
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate.SymbolicValueClass,class,public,Quire.AutomationPrivate.SymbolicValueClass,missing,8,managed
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate.IValuePrivate,interface,public,Quire.AutomationPrivate.IValuePrivate,missing,8,managed
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate.ISequentialStream,interface,public,Quire.AutomationPrivate.ISequentialStream,missing,8,managed
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate.IStream,interface,public,Quire.AutomationPrivate.IStream,missing,8,managed
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate._LARGE_INTEGER,struct,public,Quire.AutomationPrivate._LARGE_INTEGER,missing,8,managed
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate._ULARGE_INTEGER,struct,public,Quire.AutomationPrivate._ULARGE_INTEGER,missing,8,managed
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate.tagSTATSTG,struct,public,Quire.AutomationPrivate.tagSTATSTG,missing,8,managed
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate._FILETIME,struct,public,Quire.AutomationPrivate._FILETIME,missing,8,managed
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate.IMatrixValuePrivate,interface,public,Quire.AutomationPrivate.IMatrixValuePrivate,missing,8,managed
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate.INumericValuePrivate,interface,public,Quire.AutomationPrivate.INumericValuePrivate,missing,8,managed
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate.IFunctionValue,interface,public,Quire.AutomationPrivate.IFunctionValue,missing,8,managed
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate.IValueFactory,interface,public,Quire.AutomationPrivate.IValueFactory,missing,8,managed
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate.IWorksheetPrivate,interface,public,Quire.AutomationPrivate.IWorksheetPrivate,missing,8,managed
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate.IMASImageCache,interface,public,Quire.AutomationPrivate.IMASImageCache,missing,8,managed
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate.IWindowPrivate,interface,public,Quire.AutomationPrivate.IWindowPrivate,missing,8,managed
+interop.mathcadautomationprivate.dll,MathcadAutomationPrivate.IApplicationPrivate,interface,public,Quire.AutomationPrivate.IApplicationPrivate,missing,8,managed
 mccore12.dll,__std_exception_data,struct,internal,,c++ artefact,,engine-native
 mccore12.dll,__scrt_native_startup_state,enum,internal,,c++ artefact,,engine-native
 mcdepman.dll,__std_exception_data,struct,internal,,c++ artefact,,engine-native

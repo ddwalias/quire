@@ -4,8 +4,7 @@ The goal is exact **Release IL** parity with Mathcad Prime 12.0.1.0. Read
 [the plan](docs/mirror/PLAN.md) and use [WORK](docs/mirror/WORK.md) for ownership.
 The [assembly map](docs/mirror/assembly-map.md) shows dependency order and what each completed assembly unlocks.
 
-Only four lane assignments exist: A owns `Quire.Core`, B `Quire.Mpl.Emit`, C `Quire.Utils`,
-and D `Quire.Engine.Utl`. All former lane reservations are released. These assignments
+Only the lane assignments listed in [WORK](docs/mirror/WORK.md) exist. All former lane reservations are released. These assignments
 authorize every managed member in those assemblies regardless of historical tier (D18).
 Use the assigned worktrees and edit only your own assembly and checkpoint; the maintainer
 handles shared tools and integration. Continue through passing batches autonomously.

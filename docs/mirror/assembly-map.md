@@ -1,7 +1,7 @@
 # Assembly dependency map
 
 Generated from installed Mathcad assembly metadata, PE imports and evaluated Release project references.
-Snapshot: 2026-10-23T18:26:10+00:00; revision `9f2cb15c6748`.
+Snapshot: 2026-10-24T04:17:48+00:00; revision `cdc8c8a4a364`.
 
 This is a planning aid for step 1 of the [five-step workflow](PLAN.md). It adds no validation step.
 
@@ -18,6 +18,7 @@ libraries make them available, so they never block a wave. Mpl modules also depe
 | Complete next | Language | Newly eligible assemblies |
 |---|---|---|
 | `Quire.Automation` | CSharp | None yet; other prerequisites remain |
+| `Quire.AutomationPrivate` | CSharp | None yet; other prerequisites remain |
 | `Quire.Core` | CSharp | `Quire.Calculation.Core`, `Quire.Media3D` |
 | `Quire.EngNotebook.Automation` | CSharp | None yet; other prerequisites remain |
 | `Quire.EngNotebookPlus.Automation` | CSharp | None yet; other prerequisites remain |
@@ -33,7 +34,7 @@ The rows are dependency order, not a claim that any assembly is already complete
 
 | Wave | Assemblies |
 |---|---|
-| 1 | `Quire.Automation`, `Quire.Core`, `Quire.EngNotebook.Automation`, `Quire.EngNotebookPlus.Automation`, `Quire.Engine.Misc`, `Quire.Engine.Utl`, `Quire.Mpl.Emit`, `Quire.Utils` |
+| 1 | `Quire.Automation`, `Quire.AutomationPrivate`, `Quire.Core`, `Quire.EngNotebook.Automation`, `Quire.EngNotebookPlus.Automation`, `Quire.Engine.Misc`, `Quire.Engine.Utl`, `Quire.Mpl.Emit`, `Quire.Utils` |
 | 2 | `Quire.Calculation.Core`, `Quire.Media3D`, `Quire.Mpl` |
 | 3 | `Quire.Controls.Core`, `Quire.Msclr`, `Quire.Msgen` |
 | 4 | `Quire.EfiAffine`, `Quire.EfiBessel`, `Quire.EfiData`, `Quire.EfiDebug`, `Quire.EfiFinance`, `Quire.EfiFourier`, `Quire.EfiIO`, `Quire.EfiImage`, `Quire.EfiSignal`, `Quire.EfiSixsigma`, `Quire.EfiSpecial`, `Quire.EfiStatistics`, `Quire.EfiWavelets`, `Quire.EquationEditor`, `Quire.McdEfi`, `Quire.MplConstants`, `Quire.MplModule`, `Quire.MplPrelude`, `Quire.MplPrimitives`, `Quire.MplSexpr` |
@@ -63,7 +64,7 @@ Splitting one out means creating its target and moving its members in the same c
 | `Quire.Automation.Native` | target and D2 host | `automationmgd`, `componentsmgd` |
 | `Quire.Efi` | D2 host | `EfiAffine`, `EfiBessel`, `EfiCalculus`, `EfiCore`, `EfiData`, `EfiDebug`, `EfiDiffEQ`, `EfiFinance`, `EfiFitting`, `EfiFourier`, `EfiGraphics`, `EfiIO`, `EfiImage`, `EfiMatrix`, `EfiPlot`, `EfiSignal`, `EfiSixsigma`, `EfiSolver`, `EfiSpecial`, `EfiStatistics`, `EfiSymbolics`, `EfiSymbolicsEmitter`, `EfiSymbolicsLabels`, `EfiSymbolicsLexer`, `EfiSymbolicsMacros`, `EfiSymbolicsMap`, `EfiSymbolicsParser`, `EfiWavelets`, `efibessel_`, `eficalculus_`, `eficore_`, `efidata_`, `efidebug_`, `efidiffeq_`, `efifinance_`, `efifitting_`, `efifourier_`, `efigraphics_`, `efiimage_`, `efiio-csharp`, `efiio_`, `efimatrix_`, `efiplot_`, `efisignal_`, `efisixsigma_`, `efisolver_`, `efispecial_`, `efistatistics_`, `efisymbolics_`, `efiutl`, `efiwavelets_` |
 | `Quire.Engine` | target and D2 host | `engutils-mgd` |
-| `Quire.Engine.Native` | D2 host | `mccore12`, `mceng`, `mcfront12`, `msclr`, `msgen`, `mslisp`, `mspcons-mgd` |
+| `Quire.Engine.Native` | D2 host | `mccore12`, `mceng`, `mcfront12`, `msgen`, `mslisp`, `mspcons-mgd` |
 | `Quire.Mcd` | D2 host | `McdDynamicEfi`, `McdEfi`, `McdTranslator`, `McdUnitSystemCGS`, `McdUnitSystemMKS`, `McdUnitSystemNone`, `McdUnitSystemSI`, `McdUnitSystemUS`, `mcdepman` |
 | `Quire.Mpl.Modules` | D2 host | `Hashtable`, `McdRun`, `McdStaticUnitSystem`, `McdStaticUnitSystemCGS`, `McdStaticUnitSystemMKS`, `McdStaticUnitSystemNone`, `McdStaticUnitSystemSI`, `McdStaticUnitSystemUS`, `Mpl`, `MplConstants`, `MplMacro`, `MplPrelude`, `MplPrimitives`, `MplSexpr`, `MplUnitSystemSI` |
 | `Quire.Mirror` | support (no Mathcad counterpart) | None |
@@ -159,110 +160,111 @@ flowchart TD
     a54["Quire.EngutilsMgd (CppCli)"]
     a55["Quire.Hashtable (Mpl)"]
     a56["Quire.Engine (CppCli)"]
-    a57["Quire (CSharp)"]
-    a58["Quire.Mccore12 (CppCli)"]
-    a59["Quire.McdDynamicEfi (Mpl)"]
-    a60["Quire.McdEfi (Mpl)"]
-    a61["Quire.Mcdepman (CppCli)"]
-    a62["Quire.McdRun (Mpl)"]
-    a63["Quire.McdStaticUnitSystem (Mpl)"]
-    a64["Quire.McdStaticUnitSystemCGS (Mpl)"]
-    a65["Quire.McdStaticUnitSystemMKS (Mpl)"]
-    a66["Quire.McdStaticUnitSystemNone (Mpl)"]
-    a67["Quire.McdStaticUnitSystemSI (Mpl)"]
-    a68["Quire.McdStaticUnitSystemUS (Mpl)"]
-    a69["Quire.McdTranslator (Mpl)"]
-    a70["Quire.McdUnitSystemCGS (Mpl)"]
-    a71["Quire.McdUnitSystemMKS (Mpl)"]
-    a72["Quire.McdUnitSystemNone (Mpl)"]
-    a73["Quire.McdUnitSystemSI (Mpl)"]
-    a74["Quire.McdUnitSystemUS (Mpl)"]
-    a75["Quire.Mceng (CppCli)"]
-    a76["Quire.Mcfront12 (CppCli)"]
-    a77["Quire.Engine.Misc (CSharp)"]
-    a78["Quire.MplModule (Mpl)"]
-    a79["Quire.Mpl.Emit (CSharp)"]
-    a80["Quire.MplConstants (Mpl)"]
-    a81["Quire.MplMacro (Mpl)"]
-    a82["Quire.MplPrelude (Mpl)"]
-    a83["Quire.MplPrimitives (Mpl)"]
-    a84["Quire.Mpl (CSharp)"]
-    a85["Quire.MplSexpr (Mpl)"]
-    a86["Quire.MplUnitSystemSI (Mpl)"]
-    a87["Quire.Msclr (CppCli)"]
-    a88["Quire.Msgen (CppCli)"]
-    a89["Quire.Mslisp (CppCli)"]
-    a90["Quire.MspconsMgd (CppCli)"]
-    a91["Quire.Calculation (CSharp)"]
-    a92["Quire.Calculation.Core (CSharp)"]
-    a93["Quire.Controls (CSharp)"]
-    a94["Quire.Controls.CollapsibleArea (CSharp)"]
-    a95["Quire.Controls.Core (CSharp)"]
-    a96["Quire.Controls.EquationControl (CSharp)"]
-    a97["Quire.Controls.ExcelComponent (CSharp)"]
-    a98["Quire.Controls.Include (CSharp)"]
-    a99["Quire.Controls.Plots (CSharp)"]
-    a100["Quire.Controls.SolveBlock (CSharp)"]
-    a101["Quire.Controls.Text (CSharp)"]
-    a102["Quire.Controls.Whiteboard (CSharp)"]
-    a103["Quire.Controls.Worksheet (CSharp)"]
-    a104["Quire.Core (CSharp)"]
-    a105["Quire.EngNotebook.Automation (CSharp)"]
-    a106["Quire.EngNotebookPlus.Automation (CSharp)"]
-    a107["Quire.EquationEditor (CSharp)"]
-    a108["Quire.Automation (CSharp)"]
-    a109["Quire.Media3D (CSharp)"]
-    a110["Quire.Utils (CSharp)"]
-    a111["Quire.Engine.Utl (CppCli)"]
-    a112["Quire.Native.EfistatsciImpl (Native)"]
-    a113["Quire.Native.EfisymbolicsUmgd (Native)"]
-    a114["Quire.Native.Engutils (Native)"]
-    a115["Quire.Native.Mcaduser (Native)"]
-    a116["Quire.Native.Mctranslator (Native)"]
-    a117["Quire.Native.Mshex (Native)"]
-    a118["Quire.Native.Msmpl (Native)"]
-    a119["Quire.Native.Mspcons (Native)"]
-    a120["Quire.Native.Msprolog (Native)"]
-    a121["Quire.Native.Utl (Native)"]
+    a57["Quire.AutomationPrivate (CSharp)"]
+    a58["Quire (CSharp)"]
+    a59["Quire.Mccore12 (CppCli)"]
+    a60["Quire.McdDynamicEfi (Mpl)"]
+    a61["Quire.McdEfi (Mpl)"]
+    a62["Quire.Mcdepman (CppCli)"]
+    a63["Quire.McdRun (Mpl)"]
+    a64["Quire.McdStaticUnitSystem (Mpl)"]
+    a65["Quire.McdStaticUnitSystemCGS (Mpl)"]
+    a66["Quire.McdStaticUnitSystemMKS (Mpl)"]
+    a67["Quire.McdStaticUnitSystemNone (Mpl)"]
+    a68["Quire.McdStaticUnitSystemSI (Mpl)"]
+    a69["Quire.McdStaticUnitSystemUS (Mpl)"]
+    a70["Quire.McdTranslator (Mpl)"]
+    a71["Quire.McdUnitSystemCGS (Mpl)"]
+    a72["Quire.McdUnitSystemMKS (Mpl)"]
+    a73["Quire.McdUnitSystemNone (Mpl)"]
+    a74["Quire.McdUnitSystemSI (Mpl)"]
+    a75["Quire.McdUnitSystemUS (Mpl)"]
+    a76["Quire.Mceng (CppCli)"]
+    a77["Quire.Mcfront12 (CppCli)"]
+    a78["Quire.Engine.Misc (CSharp)"]
+    a79["Quire.MplModule (Mpl)"]
+    a80["Quire.Mpl.Emit (CSharp)"]
+    a81["Quire.MplConstants (Mpl)"]
+    a82["Quire.MplMacro (Mpl)"]
+    a83["Quire.MplPrelude (Mpl)"]
+    a84["Quire.MplPrimitives (Mpl)"]
+    a85["Quire.Mpl (CSharp)"]
+    a86["Quire.MplSexpr (Mpl)"]
+    a87["Quire.MplUnitSystemSI (Mpl)"]
+    a88["Quire.Msclr (CppCli)"]
+    a89["Quire.Msgen (CppCli)"]
+    a90["Quire.Mslisp (CppCli)"]
+    a91["Quire.MspconsMgd (CppCli)"]
+    a92["Quire.Calculation (CSharp)"]
+    a93["Quire.Calculation.Core (CSharp)"]
+    a94["Quire.Controls (CSharp)"]
+    a95["Quire.Controls.CollapsibleArea (CSharp)"]
+    a96["Quire.Controls.Core (CSharp)"]
+    a97["Quire.Controls.EquationControl (CSharp)"]
+    a98["Quire.Controls.ExcelComponent (CSharp)"]
+    a99["Quire.Controls.Include (CSharp)"]
+    a100["Quire.Controls.Plots (CSharp)"]
+    a101["Quire.Controls.SolveBlock (CSharp)"]
+    a102["Quire.Controls.Text (CSharp)"]
+    a103["Quire.Controls.Whiteboard (CSharp)"]
+    a104["Quire.Controls.Worksheet (CSharp)"]
+    a105["Quire.Core (CSharp)"]
+    a106["Quire.EngNotebook.Automation (CSharp)"]
+    a107["Quire.EngNotebookPlus.Automation (CSharp)"]
+    a108["Quire.EquationEditor (CSharp)"]
+    a109["Quire.Automation (CSharp)"]
+    a110["Quire.Media3D (CSharp)"]
+    a111["Quire.Utils (CSharp)"]
+    a112["Quire.Engine.Utl (CppCli)"]
+    a113["Quire.Native.EfistatsciImpl (Native)"]
+    a114["Quire.Native.EfisymbolicsUmgd (Native)"]
+    a115["Quire.Native.Engutils (Native)"]
+    a116["Quire.Native.Mcaduser (Native)"]
+    a117["Quire.Native.Mctranslator (Native)"]
+    a118["Quire.Native.Mshex (Native)"]
+    a119["Quire.Native.Msmpl (Native)"]
+    a120["Quire.Native.Mspcons (Native)"]
+    a121["Quire.Native.Msprolog (Native)"]
+    a122["Quire.Native.Utl (Native)"]
     a1 -.-> a0
     a45 -.-> a1
-    a110 -.-> a1
+    a111 -.-> a1
     a1 -.-> a2
-    a118 -.-> a3
-    a118 -.-> a4
+    a119 -.-> a3
+    a119 -.-> a4
     a51 -.-> a5
     a7 -.-> a6
     a30 -.-> a7
     a9 -.-> a8
     a55 -.-> a8
-    a62 -.-> a8
+    a63 -.-> a8
     a51 -.-> a9
-    a118 -.-> a10
+    a119 -.-> a10
     a7 -.-> a11
     a19 -.-> a11
     a42 -.-> a11
-    a77 -.-> a11
-    a118 -.-> a12
+    a78 -.-> a11
+    a119 -.-> a12
     a51 -.-> a13
     a15 -.-> a14
-    a62 -.-> a14
+    a63 -.-> a14
     a30 -.-> a15
-    a118 -.-> a16
+    a119 -.-> a16
     a19 -.-> a17
     a19 -.-> a18
     a25 -.-> a19
-    a118 -.-> a20
+    a119 -.-> a20
     a30 -.-> a21
     a23 -.-> a22
-    a62 -.-> a22
+    a63 -.-> a22
     a51 -.-> a23
-    a118 -.-> a24
+    a119 -.-> a24
     a21 -.-> a25
-    a112 -.-> a25
-    a118 -.-> a26
+    a113 -.-> a25
+    a119 -.-> a26
     a28 -.-> a27
     a30 -.-> a27
-    a112 -.-> a27
+    a113 -.-> a27
     a9 -.-> a28
     a8 -.-> a29
     a30 -.-> a29
@@ -271,139 +273,140 @@ flowchart TD
     a29 -.-> a32
     a7 -.-> a32
     a23 -.-> a32
-    a118 -.-> a33
+    a119 -.-> a33
     a21 -.-> a34
-    a112 -.-> a34
-    a118 -.-> a35
+    a113 -.-> a34
+    a119 -.-> a35
     a11 -.-> a36
     a38 -.-> a37
-    a62 -.-> a37
+    a63 -.-> a37
     a7 -.-> a38
     a19 -.-> a38
-    a118 -.-> a39
+    a119 -.-> a39
     a51 -.-> a40
-    a118 -.-> a41
+    a119 -.-> a41
     a21 -.-> a42
-    a112 -.-> a42
+    a113 -.-> a42
     a45 -.-> a43
     a51 -.-> a44
-    a111 -.-> a44
+    a112 -.-> a44
     a50 -.-> a45
     a44 -.-> a46
-    a62 -.-> a46
+    a63 -.-> a46
     a48 -.-> a47
     a49 -.-> a47
     a44 -.-> a48
-    a62 -.-> a48
-    a81 -.-> a48
+    a63 -.-> a48
+    a82 -.-> a48
     a46 -.-> a49
     a55 -.-> a49
     a47 -.-> a50
     a30 -.-> a50
-    a78 -.-> a51
-    a118 -.-> a52
+    a79 -.-> a51
+    a119 -.-> a52
     a21 -.-> a53
     a1 -.-> a54
-    a114 -.-> a54
-    a82 -.-> a55
+    a115 -.-> a54
+    a83 -.-> a55
     a54 -.-> a56
-    a108 --> a57
-    a93 --> a57
-    a105 --> a57
-    a106 --> a57
-    a61 -.-> a58
-    a115 -.-> a58
-    a116 -.-> a58
-    a12 -.-> a59
-    a14 -.-> a59
-    a22 -.-> a59
-    a5 -.-> a59
-    a13 -.-> a59
-    a17 -.-> a59
-    a27 -.-> a59
-    a32 -.-> a59
-    a34 -.-> a59
-    a36 -.-> a59
-    a40 -.-> a59
-    a53 -.-> a59
-    a118 -.-> a60
-    a56 -.-> a61
-    a82 -.-> a62
-    a82 -.-> a63
-    a62 -.-> a64
-    a63 -.-> a64
-    a67 -.-> a65
-    a62 -.-> a66
-    a62 -.-> a67
+    a109 --> a58
+    a94 --> a58
+    a106 --> a58
+    a107 --> a58
+    a62 -.-> a59
+    a116 -.-> a59
+    a117 -.-> a59
+    a12 -.-> a60
+    a14 -.-> a60
+    a22 -.-> a60
+    a5 -.-> a60
+    a13 -.-> a60
+    a17 -.-> a60
+    a27 -.-> a60
+    a32 -.-> a60
+    a34 -.-> a60
+    a36 -.-> a60
+    a40 -.-> a60
+    a53 -.-> a60
+    a119 -.-> a61
+    a56 -.-> a62
+    a83 -.-> a63
+    a83 -.-> a64
+    a63 -.-> a65
+    a64 -.-> a65
+    a68 -.-> a66
     a63 -.-> a67
-    a67 -.-> a68
-    a2 -.-> a69
-    a43 -.-> a69
-    a32 -.-> a69
-    a64 -.-> a70
+    a63 -.-> a68
+    a64 -.-> a68
+    a68 -.-> a69
+    a2 -.-> a70
+    a43 -.-> a70
+    a32 -.-> a70
     a65 -.-> a71
-    a73 -.-> a71
     a66 -.-> a72
-    a30 -.-> a73
+    a74 -.-> a72
     a67 -.-> a73
+    a30 -.-> a74
     a68 -.-> a74
-    a73 -.-> a74
-    a76 -.-> a75
+    a69 -.-> a75
+    a74 -.-> a75
     a77 -.-> a76
-    a58 -.-> a76
-    a89 -.-> a76
-    a118 -.-> a78
-    a118 -.-> a80
-    a82 -.-> a81
-    a118 -.-> a82
-    a118 -.-> a83
-    a79 --> a84
-    a118 -.-> a85
-    a80 -.-> a86
-    a82 -.-> a86
-    a84 -.-> a87
-    a117 -.-> a87
-    a84 -.-> a88
-    a117 -.-> a88
-    a90 -.-> a89
-    a54 -.-> a90
-    a0 --> a91
-    a92 --> a91
-    a56 --> a91
-    a104 --> a92
-    a103 --> a93
-    a102 --> a94
-    a92 --> a95
-    a107 --> a96
-    a91 --> a97
-    a102 --> a97
-    a96 --> a98
-    a101 --> a99
-    a109 --> a99
+    a57 -.-> a77
+    a78 -.-> a77
+    a59 -.-> a77
+    a90 -.-> a77
+    a119 -.-> a79
+    a119 -.-> a81
+    a83 -.-> a82
+    a119 -.-> a83
+    a119 -.-> a84
+    a80 --> a85
+    a119 -.-> a86
+    a81 -.-> a87
+    a83 -.-> a87
+    a85 --> a88
+    a118 -.-> a88
+    a85 -.-> a89
+    a118 -.-> a89
+    a91 -.-> a90
+    a54 -.-> a91
+    a0 --> a92
+    a93 --> a92
+    a56 --> a92
+    a105 --> a93
+    a104 --> a94
+    a103 --> a95
+    a93 --> a96
+    a108 --> a97
+    a92 --> a98
+    a103 --> a98
+    a97 --> a99
     a102 --> a100
-    a96 -.-> a101
-    a98 -.-> a102
-    a101 -.-> a102
-    a94 -.-> a103
-    a97 --> a103
-    a99 --> a103
-    a100 --> a103
-    a95 --> a107
-    a84 --> a107
-    a104 --> a109
-    a121 -.-> a111
-    a51 -.-> a112
-    a121 -.-> a113
-    a117 -.-> a114
-    a121 -.-> a115
-    a51 -.-> a116
-    a114 -.-> a116
-    a120 -.-> a116
-    a87 -.-> a118
-    a88 -.-> a118
-    a121 -.-> a118
-    a119 -.-> a120
-    a121 -.-> a120
+    a110 --> a100
+    a103 --> a101
+    a97 -.-> a102
+    a99 -.-> a103
+    a102 -.-> a103
+    a95 -.-> a104
+    a98 --> a104
+    a100 --> a104
+    a101 --> a104
+    a96 --> a108
+    a85 --> a108
+    a105 --> a110
+    a122 -.-> a112
+    a51 -.-> a113
+    a122 -.-> a114
+    a118 -.-> a115
+    a122 -.-> a116
+    a51 -.-> a117
+    a115 -.-> a117
+    a121 -.-> a117
+    a88 -.-> a119
+    a89 -.-> a119
+    a122 -.-> a119
+    a120 -.-> a121
+    a122 -.-> a121
 ```
 
 ## Status
@@ -470,6 +473,7 @@ IL counts are the last recorded Release audit of that original’s rows.
 | `Quire.EngutilsMgd` | `engutils-mgd.dll` | CppCli | `Quire.Engine` | `Quire.Automationmgd`, `Quire.Mpl`, `Quire.Native.Engutils`, `Quire.Native.Msmpl`, `Quire.Native.Utl` | 137 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 77 unresolved |
 | `Quire.Hashtable` | `hashtable.dll` | Mpl | `Quire.Mpl.Modules` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.MplPrelude`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 381 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 20 unresolved |
 | `Quire.Engine` | `iengine.dll` | CppCli | `Quire.Engine` | `Quire.Automationmgd`, `Quire.Engine.Utl`, `Quire.EngutilsMgd`, `Quire.Mpl`, `Quire.Native.Utl` | 137 (host) | active / mixed | incomplete | 0 exact; 28 declarations; 0 native pairs; 101 unresolved |
+| `Quire.AutomationPrivate` | `interop.mathcadautomationprivate.dll` | CSharp | `Quire.AutomationPrivate` | None | 0 (host) | deferred / out of scope | unconfirmed | 0 exact; 51 declarations; 0 native pairs; 0 unresolved |
 | `Quire` | `MathcadPrime.dll` | CSharp | split | `Quire.Automation`, `Quire.Calculation`, `Quire.Calculation.Core`, `Quire.Controls`, `Quire.Controls.Core`, `Quire.Controls.EquationControl`, `Quire.Controls.ExcelComponent`, `Quire.Controls.Include`, `Quire.Controls.Plots`, `Quire.Controls.Text`, `Quire.Controls.Worksheet`, `Quire.Core`, `Quire.EngNotebook.Automation`, `Quire.EngNotebookPlus.Automation`, `Quire.Engine`, `Quire.EquationEditor`, `Quire.Mpl` | 2407 | deferred / out of scope | incomplete | 167 exact; 67 declarations; 0 native pairs; 2810 unresolved |
 | `Quire.Mccore12` | `mccore12.dll` | CppCli | `Quire.Engine.Native` | `Quire.EfisymbolicsImpl`, `Quire.Engine`, `Quire.Engine.Utl`, `Quire.EngutilsMgd`, `Quire.Mcdepman`, `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Native.Engutils`, `Quire.Native.Mcaduser`, `Quire.Native.Mctranslator`, `Quire.Native.Mshex`, `Quire.Native.Msmpl`, `Quire.Native.Utl` | 1053 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 101 unresolved |
 | `Quire.McdDynamicEfi` | `mcddynamicefi.dll` | Mpl | `Quire.Mcd` | `Quire.EfiCore`, `Quire.EfiDebug`, `Quire.EfiDiffEQ`, `Quire.EfiGraphics`, `Quire.EfiMatrix`, `Quire.EfibesselImpl`, `Quire.EficoreImpl`, `Quire.EfidataImpl`, `Quire.EfidebugImpl`, `Quire.EfidiffeqImpl`, `Quire.EfifinanceImpl`, `Quire.EfifittingImpl`, `Quire.EfifourierImpl`, `Quire.EfigraphicsImpl`, `Quire.EfiimageImpl`, `Quire.EfiioImpl`, `Quire.EfimatrixImpl`, `Quire.EfiplotImpl`, `Quire.EfisignalImpl`, `Quire.EfisixsigmaImpl`, `Quire.EfispecialImpl`, `Quire.EfistatisticsImpl`, `Quire.EfiwaveletsImpl`, `Quire.McdRun`, `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 562 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 107 unresolved |
@@ -489,18 +493,18 @@ IL counts are the last recorded Release audit of that original’s rows.
 | `Quire.McdUnitSystemSI` | `mcdunitsystemsi.dll` | Mpl | `Quire.Mcd` | `Quire.EficoreImpl`, `Quire.EfimatrixImpl`, `Quire.McdRun`, `Quire.McdStaticUnitSystemSI`, `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.MplPrelude`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 562 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 11 unresolved |
 | `Quire.McdUnitSystemUS` | `mcdunitsystemus.dll` | Mpl | `Quire.Mcd` | `Quire.McdRun`, `Quire.McdStaticUnitSystemUS`, `Quire.McdUnitSystemSI`, `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 562 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 4 unresolved |
 | `Quire.Mceng` | `mceng.dll` | CppCli | `Quire.Engine.Native` | `Quire.Engine`, `Quire.Engine.Utl`, `Quire.EngutilsMgd`, `Quire.Mccore12`, `Quire.Mcfront12`, `Quire.Mpl`, `Quire.Mslisp`, `Quire.Native.Utl` | 1053 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 12 unresolved |
-| `Quire.Mcfront12` | `mcfront12.dll` | CppCli | `Quire.Engine.Native` | `Quire.Automationmgd`, `Quire.Engine`, `Quire.Engine.Misc`, `Quire.Engine.Utl`, `Quire.EngutilsMgd`, `Quire.Mccore12`, `Quire.Mcdepman`, `Quire.Mpl`, `Quire.Mslisp`, `Quire.MspconsMgd`, `Quire.Native.Mspcons`, `Quire.Native.Msprolog`, `Quire.Native.Utl` | 1053 (host) | deferred / out of scope | incomplete | 0 exact; 44 declarations; 0 native pairs; 388 unresolved |
-| `Quire.Engine.Misc` | `mcmisc.dll` | CSharp | split | None | 0 | deferred / out of scope | unconfirmed | 127 exact; 0 declarations; 0 native pairs; 2 unresolved |
+| `Quire.Mcfront12` | `mcfront12.dll` | CppCli | `Quire.Engine.Native` | `Quire.AutomationPrivate`, `Quire.Automationmgd`, `Quire.Engine`, `Quire.Engine.Misc`, `Quire.Engine.Utl`, `Quire.EngutilsMgd`, `Quire.Mccore12`, `Quire.Mcdepman`, `Quire.Mpl`, `Quire.Mslisp`, `Quire.MspconsMgd`, `Quire.Native.Mspcons`, `Quire.Native.Msprolog`, `Quire.Native.Utl` | 1053 (host) | deferred / out of scope | incomplete | 0 exact; 44 declarations; 0 native pairs; 388 unresolved |
+| `Quire.Engine.Misc` | `mcmisc.dll` | CSharp | split | None | 0 | deferred / out of scope | unconfirmed | 129 exact; 0 declarations; 0 native pairs; 0 unresolved |
 | `Quire.MplModule` | `mpl.dll` | Mpl | `Quire.Mpl.Modules` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 381 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 10 unresolved |
 | `Quire.Mpl.Emit` | `mplasb.dll` | CSharp | split | None | 0 | deferred / out of scope | unconfirmed | 686 exact; 0 declarations; 0 native pairs; 0 unresolved |
 | `Quire.MplConstants` | `mplconstants.dll` | Mpl | `Quire.Mpl.Modules` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 381 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 2 unresolved |
 | `Quire.MplMacro` | `mplmacro.dll` | Mpl | `Quire.Mpl.Modules` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.MplPrelude`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 381 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 28 unresolved |
 | `Quire.MplPrelude` | `mplprelude.dll` | Mpl | `Quire.Mpl.Modules` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 381 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 109 unresolved |
 | `Quire.MplPrimitives` | `mplprimitives.dll` | Mpl | `Quire.Mpl.Modules` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 381 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 8 unresolved |
-| `Quire.Mpl` | `mplrun.dll` | CSharp | split | `Quire.Mpl.Emit` | 0 | active / mixed | unconfirmed | 1865 exact; 165 declarations; 0 native pairs; 2 unresolved |
+| `Quire.Mpl` | `mplrun.dll` | CSharp | split | `Quire.Mpl.Emit` | 0 | active / mixed | unconfirmed | 1867 exact; 165 declarations; 0 native pairs; 0 unresolved |
 | `Quire.MplSexpr` | `mplsexpr.dll` | Mpl | `Quire.Mpl.Modules` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 381 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 32 unresolved |
 | `Quire.MplUnitSystemSI` | `mplunitsystemsi.dll` | Mpl | `Quire.Mpl.Modules` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.MplConstants`, `Quire.MplPrelude`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 381 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 2 unresolved |
-| `Quire.Msclr` | `msclr.dll` | CppCli | `Quire.Engine.Native` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Native.Mshex` | 1053 (host) | deferred / out of scope | incomplete | 0 exact; 3 declarations; 0 native pairs; 6 unresolved |
+| `Quire.Msclr` | `msclr.dll` | CppCli | split | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Native.Mshex` | 0 | deferred / out of scope | unconfirmed | 80 exact; 3 declarations; 6 native pairs; 0 unresolved |
 | `Quire.Msgen` | `msgen.dll` | CppCli | `Quire.Engine.Native` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Native.Mshex` | 1053 (host) | deferred / out of scope | incomplete | 0 exact; 7 declarations; 0 native pairs; 617 unresolved |
 | `Quire.Mslisp` | `mslisp.dll` | CppCli | `Quire.Engine.Native` | `Quire.Engine.Utl`, `Quire.EngutilsMgd`, `Quire.MspconsMgd`, `Quire.Native.Utl` | 1053 (host) | deferred / out of scope | incomplete | 0 exact; 33 declarations; 0 native pairs; 316 unresolved |
 | `Quire.MspconsMgd` | `mspcons-mgd.dll` | CppCli | `Quire.Engine.Native` | `Quire.EngutilsMgd` | 1053 (host) | deferred / out of scope | incomplete | 0 exact; 16 declarations; 0 native pairs; 27 unresolved |
@@ -517,7 +521,7 @@ IL counts are the last recorded Release audit of that original’s rows.
 | `Quire.Controls.Text` | `Ptc.Controls.Text.dll` | CSharp | split | `Quire.Calculation.Core`, `Quire.Controls.Core`, `Quire.Controls.EquationControl`, `Quire.Core` | 564 | active / mixed | incomplete | 36 exact; 0 declarations; 0 native pairs; 677 unresolved |
 | `Quire.Controls.Whiteboard` | `Ptc.Controls.Whiteboard.dll` | CSharp | split | `Quire.Calculation.Core`, `Quire.Controls.Core`, `Quire.Controls.EquationControl`, `Quire.Controls.Include`, `Quire.Controls.Text`, `Quire.Core` | 808 | deferred / out of scope | incomplete | 79 exact; 28 declarations; 0 native pairs; 929 unresolved |
 | `Quire.Controls.Worksheet` | `Ptc.Controls.Worksheet.dll` | CSharp | split | `Quire.Calculation`, `Quire.Calculation.Core`, `Quire.Controls.CollapsibleArea`, `Quire.Controls.Core`, `Quire.Controls.EquationControl`, `Quire.Controls.ExcelComponent`, `Quire.Controls.Include`, `Quire.Controls.Plots`, `Quire.Controls.SolveBlock`, `Quire.Controls.Text`, `Quire.Controls.Whiteboard`, `Quire.Core`, `Quire.Engine`, `Quire.EquationEditor` | 2757 | active / mixed | incomplete | 143 exact; 16 declarations; 0 native pairs; 3275 unresolved |
-| `Quire.Core` | `Ptc.Core.dll` | CSharp | split | None | 255 | active / mixed | incomplete | 3194 exact; 747 declarations; 0 native pairs; 388 unresolved |
+| `Quire.Core` | `Ptc.Core.dll` | CSharp | split | None | 121 | active / mixed | incomplete | 3456 exact; 747 declarations; 0 native pairs; 243 unresolved |
 | `Quire.EngNotebook.Automation` | `Ptc.EngNotebook.Automation.dll` | CSharp | split | None | 0 | deferred / out of scope | unconfirmed | 216 exact; 198 declarations; 0 native pairs; 1 unresolved |
 | `Quire.EngNotebookPlus.Automation` | `Ptc.EngNotebookPlus.Automation.dll` | CSharp | split | None | 0 | deferred / out of scope | unconfirmed | 215 exact; 197 declarations; 0 native pairs; 1 unresolved |
 | `Quire.EquationEditor` | `Ptc.EquationEditor.dll` | CSharp | split | `Quire.Calculation.Core`, `Quire.Controls.Core`, `Quire.Core`, `Quire.Mpl` | 3878 | active / mixed | incomplete | 167 exact; 56 declarations; 0 native pairs; 5284 unresolved |

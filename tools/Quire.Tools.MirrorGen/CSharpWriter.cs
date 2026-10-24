@@ -35,8 +35,10 @@ public sealed class CSharpWriter(Mapper mapper, Planner plan)
         sb.AppendLine();
         sb.AppendLine($"namespace {t.Namespace};");
         sb.AppendLine();
+        int header = sb.Length;
         WriteType(sb, t, 0);
-        return sb.ToString();
+        // A hand-bound type whose members are all hand-written needs no shell.
+        return sb.Length > header ? sb.ToString() : null;
     }
 
     // ------------------------------------------------------------------ types
