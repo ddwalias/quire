@@ -64,6 +64,7 @@
     <ClInclude Include="hex_library.h" />
     <ClInclude Include="hex_default_names.h" />
     <ClInclude Include="hex_comparable.h" />
+    <ClInclude Include="hex_default_environment.h" />
     <ClInclude Include="hex_lexer.h" />
     <ClInclude Include="hex_interpreter.h" />
     <ClCompile Include="hex_tag.cpp" />
@@ -78,6 +79,7 @@
     <ClCompile Include="hex_library.cpp" />
     <ClCompile Include="hex_default_names.cpp" />
     <ClCompile Include="hex_comparable.cpp" />
+    <ClCompile Include="hex_default_environment.cpp" />
     <ClCompile Include="hex_lexer.cpp" />
     <ClCompile Include="hex_interpreter.cpp" />
   </ItemGroup>

@@ -10,13 +10,15 @@ class Value;
 // Virtual members of the original that take a signature and a value. Only the members the lane has inferred are here.
 class Environment {
 public:
+    // Visit is slot 0: Alter forwards to it through the vtable.
     struct Visitor {
+        HEX_EXPORT virtual bool Visit(const Signature &signature, const Value *value);
         virtual ~Visitor() = default;
 
         HEX_EXPORT Visitor &operator=(const Visitor &) = default;
         HEX_EXPORT Visitor &operator=(Visitor &&) = default;
 
-        HEX_EXPORT virtual bool Visit(const Signature &signature, const Value *value);
+        HEX_EXPORT virtual bool Alter(const Signature &signature, const Value *&value);
     };
 
     virtual ~Environment() = default;

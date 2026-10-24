@@ -2,6 +2,11 @@
 
 namespace Hex {
 
+Tag &Tag::operator+=(const Tag &other) {
+    extent_ = other.extent_;
+    return *this;
+}
+
 void Tag::SetOffset(std::uint64_t offset) {
     offset_ = offset;
 }

@@ -20,6 +20,9 @@ public:
     HEX_EXPORT void SetExtent(std::uint64_t extent);
     HEX_EXPORT void SetHandle(std::uint32_t handle);
 
+    // The extent is an end position: += takes the other span's end, and + spans from the first's start to the second's end.
+    HEX_EXPORT Tag &operator+=(const Tag &other);
+
     Tag(const Tag &) = default;
     Tag(Tag &&) = default;
     HEX_EXPORT Tag &operator=(const Tag &) = default;
