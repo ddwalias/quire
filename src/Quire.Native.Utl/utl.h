@@ -1,18 +1,25 @@
 #pragma once
 
+#include <Windows.h>
+
 // Class layouts for utl.dll's exports. Each member is declared at the offset its machine code uses; the
 // layouts of members that no exported function touches yet are not inferred.
 
 namespace utl {
+
+int GetNumberOfProcessors();
 
 class InterruptControl {
 public:
     InterruptControl &operator=(const InterruptControl &other);
     InterruptControl &operator=(InterruptControl &&other);
     void RequestInterrupt(bool requested);
+    static bool IsInterrupted();
+    static void ThreadInitialize(InterruptControl *control);
 
 private:
     bool interrupted;
+    static DWORD s_tls_index;
 };
 
 class WordDatum {
