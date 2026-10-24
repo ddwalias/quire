@@ -62,6 +62,95 @@ public partial class ObservableRangeCollection<T>
     [MirrorVerified("Release IL")]
     public bool IsEmpty() => base.Count == 0;
 
+    public void AddRange(IEnumerable<T> itemsToAdd)
+    {
+        if (global::Quire.DebugTools.AssertNotNull(itemsToAdd, null).Failed)
+        {
+            return;
+        }
+        List<T> list = itemsToAdd.ToList();
+        int count = Count;
+        if (list.Count > 0)
+        {
+            FireRangeChanging(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, list, count));
+        }
+        using (new RangeChangeLock(this))
+        {
+            list.Each(Add);
+        }
+        if (list.Count > 0)
+        {
+            FireRangeChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, list, count));
+        }
+    }
+
+    public int RemoveRange(IEnumerable<T> itemsToRemove)
+    {
+        if (global::Quire.DebugTools.AssertNotNull(itemsToRemove, null).Failed)
+        {
+            return 0;
+        }
+        if (!itemsToRemove.Any())
+        {
+            return 0;
+        }
+        List<T> remainingItems = Items.ToList();
+        itemsToRemove.Each((T item) =>
+        {
+            remainingItems.Remove(item);
+        });
+        int removedCount = Count - remainingItems.Count;
+        if (removedCount != 0)
+        {
+            List<T> removedItems = new List<T>();
+            List<T> currentRemovedItems;
+            int itemIndex = 0;
+            int remainingIndex = 0;
+            for (; itemIndex < Items.Count && remainingIndex <= remainingItems.Count; itemIndex++)
+            {
+                if (remainingIndex < remainingItems.Count && object.Equals(Items[itemIndex], remainingItems[remainingIndex]))
+                {
+                    remainingIndex++;
+                }
+                else
+                {
+                    removedItems.Add(Items[itemIndex]);
+                }
+            }
+            currentRemovedItems = new List<T>();
+            int currentIndex = 0;
+            int removedIndex = 0;
+            for (; currentIndex <= Items.Count && removedIndex <= removedItems.Count; currentIndex++)
+            {
+                if (removedIndex < removedItems.Count && object.Equals(Items[currentIndex], removedItems[removedIndex]))
+                {
+                    currentRemovedItems.Add(Items[currentIndex]);
+                    removedIndex++;
+                }
+                else
+                {
+                    if (currentRemovedItems.Count <= 0)
+                    {
+                        continue;
+                    }
+                    currentIndex -= currentRemovedItems.Count;
+                    FireRangeChanging(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, currentRemovedItems, currentIndex));
+                    using (new RangeChangeLock(this))
+                    {
+                        for (int removeCount = currentRemovedItems.Count; removeCount > 0; removeCount--)
+                        {
+                            RemoveAt(currentIndex);
+                        }
+                    }
+                    FireRangeChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, currentRemovedItems, currentIndex));
+                    currentRemovedItems = new List<T>();
+                }
+            }
+            global::Quire.DebugTools.DevAssert(Count == remainingItems.Count, null);
+        }
+        return removedCount;
+    }
+
     [MirrorVerified("Release IL")]
     protected override void InsertItem(int index, T item)
     {
@@ -111,28 +200,6 @@ public partial class ObservableRangeCollection<T>
         if (list.Count > 0)
         {
             FireRangeChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, list, 0));
-        }
-    }
-
-    public void AddRange(IEnumerable<T> itemsToAdd)
-    {
-        if (global::Quire.DebugTools.AssertNotNull(itemsToAdd, null).Failed)
-        {
-            return;
-        }
-        List<T> list = itemsToAdd.ToList();
-        int count = Count;
-        if (list.Count > 0)
-        {
-            FireRangeChanging(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, list, count));
-        }
-        using (new RangeChangeLock(this))
-        {
-            list.Each(Add);
-        }
-        if (list.Count > 0)
-        {
-            FireRangeChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, list, count));
         }
     }
 

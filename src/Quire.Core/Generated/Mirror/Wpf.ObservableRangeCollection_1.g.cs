@@ -11,8 +11,6 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ObservableRangeCollection`1, Ptc.Core")]
 public partial class ObservableRangeCollection<T> : global::System.Collections.ObjectModel.ObservableCollection<T>, global::Quire.Wpf.IObservableRangeCollection<T>, global::System.Collections.Generic.ICollection<T>, global::System.Collections.Generic.IEnumerable<T>, global::System.Collections.IEnumerable, global::Quire.Wpf.INotifyCollectionRangeChanged<T>, global::Quire.Wpf.INotifyCollectionRangeChanged, global::System.Collections.Specialized.INotifyCollectionChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int RemoveRange(global::System.Collections.Generic.IEnumerable<T> itemsToRemove) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ObservableRangeCollection`1+RangeChangeLock, Ptc.Core")]
     private partial class RangeChangeLock : global::System.IDisposable
