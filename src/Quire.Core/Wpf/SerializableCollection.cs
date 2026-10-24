@@ -1,4 +1,6 @@
 #nullable disable
+using System;
+using System.Runtime.Serialization;
 using Quire.Mirror;
 
 namespace Quire.Wpf;
@@ -18,6 +20,15 @@ public partial class SerializableCollection<T>
         for (int i = 0; i < Count; i++)
         {
             info.AddValue(i.ToString(), base[i]);
+        }
+    }
+
+    protected SerializableCollection(SerializationInfo info, StreamingContext context)
+    {
+        int num = (int)info.GetValue("count", typeof(int));
+        for (int i = 0; i < num; i++)
+        {
+            Add(info.GetValue(i.ToString(), info.GetType()) as T);
         }
     }
 }
