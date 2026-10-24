@@ -80,7 +80,39 @@ public static partial class TextRangeExtensionMethods
         }
     }
 
-    public static void LoadElementToExport(this global::System.Windows.Documents.TextRange textRange, object content) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void LoadElementToExport(this global::System.Windows.Documents.TextRange textRange, object content)
+    {
+        Section section = content as Section;
+        if (section != null)
+        {
+            textRange.Text = string.Empty;
+            FlowDocument flowDocument = textRange.Start.Parent as FlowDocument;
+            if (flowDocument != null)
+            {
+                List<Block> blocks = section.Blocks.ToList();
+                flowDocument.Blocks.Clear();
+                foreach (Block block in blocks)
+                {
+                    section.Blocks.Remove(block);
+                    flowDocument.Blocks.Add(block);
+                }
+            }
+        }
+        else
+        {
+            Paragraph paragraph = content as Paragraph;
+            if (paragraph != null)
+            {
+                textRange.Text = string.Empty;
+                FlowDocument flowDocument2 = textRange.Start.Parent as FlowDocument;
+                if (flowDocument2 != null)
+                {
+                    flowDocument2.Blocks.Clear();
+                    flowDocument2.Blocks.Add(paragraph);
+                }
+            }
+        }
+    }
 
     private static void InsertBlock(global::System.Windows.Documents.TextRange textRange, Block block, ref Block firstInsertedBlock, ref Block lastInsertedBlock)
     {
