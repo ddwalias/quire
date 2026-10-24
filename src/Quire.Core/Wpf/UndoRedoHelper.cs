@@ -46,4 +46,8 @@ public static partial class UndoRedoHelper
         CommandBuffer.Redo();
         e.Handled = true;
     }
+
+    private static bool CanUndo(object sender, RoutedEventArgs e) => CommandBuffer.CanUndo && TryFindICanBlockUndoRedoAncestorUntilAncestorIsReached(sender, e)?.BlockUndoRedo != true;
+
+    private static bool CanRedo(object sender, RoutedEventArgs e) => CommandBuffer.CanRedo && TryFindICanBlockUndoRedoAncestorUntilAncestorIsReached(sender, e)?.BlockUndoRedo != true;
 }
