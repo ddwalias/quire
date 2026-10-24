@@ -31,6 +31,12 @@ Build: MSBuild `Quire.Native.Mshex.vcxproj`, Release|x64, toolset v145, `/O2 /Gy
 - The lane branch is rebased onto `main` at `b148bc06`. The manifest route is in place, but this batch needs no internal targets, so it is not used.
 - **Multi-object runs reject a weak default.** `_Avx2WmemEnabledWeakValue` is defined in `hex_node.obj` as `0x0a8664` and in `hex_interpreter.obj` as `0x0c8664`, because of the header set each object includes. `definitions_in_objects` raises on any name defined differently, even when no function references it. Each object is validated in its own run here. The maintainer should decide whether such weak data should be compared at all.
 
+## Rebase onto main (8cfa4f8f)
+
+- The lane is rebased onto main. Main's native harness replaced the earlier SECREL and reviewed-target commits, so the lane carries no harness changes of its own.
+- Main pins MSVC build 36246 for native builds (`release_il.py`), which matches the BuildTools toolset the lane builds with. The 36 functions pass under main's harness: 36 OK, 0 unverified.
+- **Still open for operator<<:** main's harness does not model SECREL (`native_bytes.py` reports it as unsupported). The TLS accessor needs it, so SECREL must be added on top of main as a harness commit. That commit is not made yet, because the accessor itself still differs from the original in one register (see below).
+
 ## Harness work for operator<< (approved decision 1)
 
 - **SECREL (`4b9cbb03`).** `IMAGE_REL_AMD64_SECREL` is 4 bytes. The original resolves it as `.tls` base + field. The candidate's addend is read like `ADDR32NB`. Tests: 7 new cases.
