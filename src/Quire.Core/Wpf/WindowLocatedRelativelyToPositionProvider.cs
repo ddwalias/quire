@@ -5,6 +5,15 @@ namespace Quire.Wpf;
 
 public partial class WindowLocatedRelativelyToPositionProvider
 {
+    protected override void OnRenderSizeChanged(global::System.Windows.SizeChangedInfo sizeInfo)
+    {
+        if (sizeInfo.PreviousSize == default(global::System.Windows.Size))
+        {
+            SetWindowLocation();
+        }
+        base.OnRenderSizeChanged(sizeInfo);
+    }
+
     private void SetWindowLocation()
     {
         try
@@ -99,6 +108,33 @@ public partial class WindowLocatedRelativelyToPositionProvider
             return ItemQuarterLocationInOwnerWindow.TopRight;
         }
         return ItemQuarterLocationInOwnerWindow.TopLeft;
+    }
+
+    private global::System.Windows.Point GetPopupLocation()
+    {
+        global::System.Windows.Point popupLocationPoint;
+        global::System.Windows.Rect positionProviderScreenBounds = GetPositionProviderScreenBounds();
+        global::System.Windows.Point positionProviderRelativePointFromOwner = PositionProvider.TranslatePoint(new global::System.Windows.Point(0.0, 0.0), Owner);
+        ItemQuarterLocationInOwnerWindow positionProviderQuarterPosition = GetPositionProviderQuarterPosition(positionProviderRelativePointFromOwner);
+        bool popupLocationAndVisibility = GetPopupLocationAndVisibility(positionProviderScreenBounds, positionProviderQuarterPosition, out popupLocationPoint);
+        if (!popupLocationAndVisibility)
+        {
+            global::System.Windows.Point val = new global::System.Windows.Point(popupLocationPoint.X, popupLocationPoint.Y);
+            int length = global::System.Enum.GetValues(typeof(ItemQuarterLocationInOwnerWindow)).Length;
+            int num = (int)positionProviderQuarterPosition;
+            int num2 = (num + 1) % length;
+            while (!popupLocationAndVisibility && num2 != num)
+            {
+                global::Quire.EnumHelper.TryParse<ItemQuarterLocationInOwnerWindow>(num2, out ItemQuarterLocationInOwnerWindow enumValue);
+                popupLocationAndVisibility = GetPopupLocationAndVisibility(positionProviderScreenBounds, enumValue, out popupLocationPoint);
+                num2 = (num2 + 1) % length;
+            }
+            if (!popupLocationAndVisibility)
+            {
+                popupLocationPoint = val;
+            }
+        }
+        return popupLocationPoint;
     }
 
     [MirrorVerified("PtcWpfWindowLocatedRelativelyToPositionProviderMechanicalDifferentialTests")]

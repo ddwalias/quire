@@ -36,6 +36,7 @@ IMAGE_REL_AMD64_ADDR64 = 0x0001
 IMAGE_REL_AMD64_ADDR32NB = 0x0003
 IMAGE_REL_AMD64_REL32 = 0x0004
 IMAGE_REL_AMD64_REL32_5 = 0x0009
+IMAGE_SCN_CNT_UNINITIALIZED_DATA = 0x00000080
 # AMD64 COFF relocation types whose field width is 8 bytes (ADDR64) or 4 bytes (everything else).
 RELOC_WIDTH = {IMAGE_REL_AMD64_ADDR64: 8, **{k: 4 for k in range(IMAGE_REL_AMD64_ADDR32NB, IMAGE_REL_AMD64_REL32_5 + 1)}}
 DEFAULT_TARGETS = Path(__file__).resolve().parents[2] / "docs" / "mirror" / "native" / "internal-targets.json"
@@ -250,12 +251,14 @@ def read_coff(path):
     sections = []
     for i in range(nsec):
         base = 20 + opt_size + 40 * i
-        raw_name, _, _, raw_size, raw_ptr, reloc_ptr, _, nrel, _, _ = struct.unpack_from("<8sIIIIIIHHI", d, base)
+        raw_name, _, _, raw_size, raw_ptr, reloc_ptr, _, nrel, _, flags = struct.unpack_from("<8sIIIIIIHHI", d, base)
         relocs = []
         for j in range(nrel):
             vaddr, sym, kind = struct.unpack_from("<IIH", d, reloc_ptr + 10 * j)
             relocs.append(Reloc(vaddr, kind, sym))
-        sections.append(Section(name_of(raw_name), d[raw_ptr:raw_ptr + raw_size], relocs))
+        # Uninitialized data (.bss) has a size but no bytes in the file; it is zero when loaded.
+        data = bytes(raw_size) if flags & IMAGE_SCN_CNT_UNINITIALIZED_DATA else d[raw_ptr:raw_ptr + raw_size]
+        sections.append(Section(name_of(raw_name), data, relocs))
 
     symbols = [None] * nsyms
     i = 0

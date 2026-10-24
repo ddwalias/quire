@@ -9,7 +9,8 @@ import unittest
 from pathlib import Path
 from unittest import mock
 from native_bytes import (Entry, Function, InternalTargets, ManifestError, Reloc, PeImage, check_targets,
-                          classify_targets, compare_code, compare_object, definitions_in_object, functions_in_object,
+                          classify_targets, compare_code, compare_object, definitions_in_object,
+                          definitions_in_objects, functions_in_object,
                           load_targets, masked, read_coff, targets_from)
 from native_bytes import main as native_bytes_main
 from native_targets import record
@@ -543,7 +544,26 @@ class RecordTests(unittest.TestCase):
             self.record(["callee"], doc)
 
 
+def bss(functions, **kw):
+    """coff() whose first section holds uninitialized data: no file bytes (PointerToRawData 0), as MSVC emits .bss."""
+    data = bytearray(coff(functions, **kw))
+    struct.pack_into("<I", data, 20 + 20, 0)
+    struct.pack_into("<I", data, 20 + 36, 0xC0300080)
+    return bytes(data)
+
+
 class DefinitionTests(unittest.TestCase):
+    def test_uninitialized_data_reads_as_zeros_not_the_file_header(self):
+        # The same .bss symbol in objects with different section counts, which a read from offset 0 would see.
+        with tempfile.TemporaryDirectory() as tmp:
+            paths = []
+            for i, extra in enumerate(([], [("f", b"\xc3", [])])):
+                path = Path(tmp) / f"{i}.obj"
+                path.write_bytes(bss([("_WeakValue", bytes(4), [])] + extra, data=["_WeakValue"]))
+                paths.append(path)
+            defs = definitions_in_objects(paths)
+        self.assertEqual(defs["_WeakValue"].code, bytes(4))
+
     def test_static_functions_and_data_are_defined_and_static_targets_named(self):
         data = coff([("f", b"\xe8\0\0\0\0\xc3", [(1, 0x0004, 1)]), ("helper", b"\xc3", []), ("vt", bytes(8), [])],
                     local=["helper"], data=["vt"])

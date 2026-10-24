@@ -5,7 +5,7 @@ using Quire.Services;
 
 namespace Quire.FunctionalitiesLimitation;
 
-public partial class UIFunctionalityCommandWrapper
+public partial class UIFunctionalityCommandWrapper : BaseFunctionalityCommandWrapper
 {
     [MirrorVerified("Release IL")]
     public UIFunctionalityCommandWrapper(global::System.Windows.Input.RoutedUICommand nestedCommand, FrameworkElement lockedUIItem)
@@ -33,11 +33,21 @@ public partial class UIFunctionalityCommandWrapper
         Initialize(lockedUIItem);
     }
 
+    public override event EventHandler CanExecuteChanged;
+
     [MirrorVerified("Release IL")]
     private void Initialize(FrameworkElement lockedUIItem)
     {
         LockedUIItem = lockedUIItem;
         base.CanExecuteChanged += OnBaseCanExecuteChanged;
+    }
+
+    private void OnBaseCanExecuteChanged(object sender, EventArgs eventArgs)
+    {
+        if (LockedUIItem?.IsVisible ?? true)
+        {
+            CanExecuteChanged?.Invoke(sender, eventArgs);
+        }
     }
 
     [MirrorVerified("Release IL")]

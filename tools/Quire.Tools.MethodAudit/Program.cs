@@ -204,11 +204,21 @@ TypeSig Map(TypeSig sig) => sig switch
 string Key(MethodModel m, bool map) => Signatures.Method(m.Name, m.GenericParams.Length, m.Params.Select(p => map ? Map(p.Type) : p.Type), map ? Map(m.Return) : m.Return, m.Static);
 string ComparisonKey(MethodModel m, bool map) => Signatures.Method(Canonical.MethodName(m, map ? Map : null),
     m.GenericParams.Length, m.Params.Select(p => map ? Map(p.Type) : p.Type), map ? Map(m.Return) : m.Return, m.Static);
+// A .NET Framework original (the TlbImp interop assemblies) names BCL types in mscorlib, where the Quire build's
+// reference assemblies name System.Runtime. Only that spelling is unified; a type .NET moved elsewhere still differs.
+TypeSig Corlib(TypeSig sig) => sig switch
+{
+    NamedSig n => n with { Assembly = n.Assembly == "mscorlib" ? "System.Runtime" : n.Assembly, Args = [.. n.Args.Select(Corlib)] },
+    ArraySig a => a with { Element = Corlib(a.Element) },
+    ByRefSig b => b with { Element = Corlib(b.Element) },
+    PointerSig p => p with { Element = Corlib(p.Element) },
+    _ => sig
+};
 var originalKeys = new Dictionary<(Artifact Artifact, int Token), string>();
 string OriginalKey(Artifact artifact, RawMethod raw)
 {
     if (originalKeys.TryGetValue((artifact, raw.Token), out var key)) return key;
-    return originalKeys[(artifact, raw.Token)] = artifact.ComparisonKey(raw);
+    return originalKeys[(artifact, raw.Token)] = artifact.ComparisonKey(raw, Corlib);
 }
 // The global functions of a mixed-mode Quire assembly pair with those of the one mixed-mode Mathcad assembly its types
 // bind: <Module> carries no [MirrorOf], and that original is its only C++/CLI counterpart. Null otherwise.
@@ -358,8 +368,10 @@ foreach (var (artifact, raw, type, method, original, counterpart) in matched)
                 && original.Methods.Single(m => m.Token == counterpart.Token).MaxStack is >= 0 and <= 7),
         declaration_only = counterpart is { BodyRva: 0 } && raw.BodyRva == 0
             && (raw.Abstract && counterpart.Abstract || type?.Kind == TypeKind.Delegate
-                // A COM coclass constructor: the runtime supplies the body, so its implementation flags are the member.
-                || raw.RuntimeProvided != null && raw.RuntimeProvided == counterpart.RuntimeProvided),
+                // A COM coclass member: the runtime supplies the body, so its implementation flags are the member. TlbImp
+                // marks it runtime, which C# cannot write (CS0591); Roslyn emits managed, so the code type is left out (D22).
+                || raw.RuntimeProvided is { } quireFlags && counterpart.RuntimeProvided is { } mathcadFlags
+                    && (quireFlags & ~System.Reflection.MethodImplAttributes.CodeTypeMask) == (mathcadFlags & ~System.Reflection.MethodImplAttributes.CodeTypeMask)),
         shape_matches = counterpart != null && (method?.Access.ToString() ?? raw.Access) == counterpart.Access && raw.Modifiers == counterpart.Modifiers,
         structure_matches = differences == null ? (bool?)null : differences.Count == 0,
         structure_differences = differences ?? [],
