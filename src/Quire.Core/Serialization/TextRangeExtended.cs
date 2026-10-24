@@ -16,6 +16,18 @@ public partial class TextRangeExtended
     [MirrorVerified("PtcSerializationTextRangeExtendedMechanicalDifferentialTests")]
     public TextRangeExtended(TextPointer tpStart, TextPointer tpEnd) : base(tpStart, tpEnd) { }
 
+    public void Save(System.IO.Stream st, string format, bool preserveTextElements, bool isConversion = false)
+    {
+        if (format != System.Windows.DataFormats.XamlPackage)
+        {
+            base.Save(st, format, preserveTextElements);
+        }
+        else
+        {
+            SaveInternal(st, preserveTextElements, isConversion);
+        }
+    }
+
     public void LoadInternal(Stream st)
     {
         MemoryStream memoryStream = new MemoryStream();
@@ -78,16 +90,52 @@ public partial class TextRangeExtended
         }
     }
 
-    public void Save(System.IO.Stream st, string format, bool preserveTextElements, bool isConversion = false)
+    public void SaveInternal(Stream st, bool preserveTextElements, bool isConversion)
     {
-        if (format != System.Windows.DataFormats.XamlPackage)
+        MemoryStream memoryStream = new MemoryStream();
+        base.Save((Stream)memoryStream, System.Windows.DataFormats.XamlPackage, preserveTextElements);
+        using (Package package = Package.Open(memoryStream, FileMode.Open, FileAccess.ReadWrite))
         {
-            base.Save(st, format, preserveTextElements);
+            Uri partUri = new Uri("/Xaml/Document.xaml", UriKind.Relative);
+            PackagePart part = package.GetPart(partUri);
+            string xamlText;
+            using (StreamReader streamReader = new StreamReader(part.GetStream()))
+            {
+                xamlText = streamReader.ReadToEnd();
+            }
+            global::System.Text.StringBuilder sb = new global::System.Text.StringBuilder(xamlText);
+            int j = 0;
+            int jOffset = 0;
+            this.EnumerateRunsInRange().Each((Run run) =>
+            {
+                string text = TextElementAttachedProperties.GetStyleKey(run) ?? (string)run.Tag;
+                string text2 = (run is ICustomFontSizeOwner)
+                    ? (run.GetType().Namespace + ":" + run.GetType().Name)
+                    : run.GetType().Name;
+                string text3 = "<" + text2;
+                j = xamlText.IndexOf(text3, j + 1, StringComparison.Ordinal);
+                while (xamlText.Substring(j, "<Run> </Run>".Length) == "<Run> </Run>" && run.Text != " ")
+                {
+                    j = xamlText.IndexOf(text3, j + 1, StringComparison.Ordinal);
+                }
+                if (!text.IsNullOrEmpty() && DebugTools.DevAssert(j > -1, null).Passed)
+                {
+                    string text4 = " style=\"" + text + "\"";
+                    sb.Insert(j + jOffset + text3.Length, text4);
+                    jOffset += text4.Length;
+                }
+                if (isConversion && DebugTools.DevAssert(j > -1, null).Passed)
+                {
+                    WriteExplicitFontAttributes(sb, xamlText, run, text3, j, ref jOffset);
+                }
+            });
+            using (StreamWriter streamWriter = new StreamWriter(part.GetStream(FileMode.Create, FileAccess.Write)))
+            {
+                streamWriter.Write(sb.ToString());
+                streamWriter.Flush();
+            }
         }
-        else
-        {
-            SaveInternal(st, preserveTextElements, isConversion);
-        }
+        memoryStream.WriteTo(st);
     }
 
     public new void Load(System.IO.Stream st, string format)

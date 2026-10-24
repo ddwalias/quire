@@ -13,6 +13,4 @@ public partial class TextRangeExtended : global::System.Windows.Documents.TextRa
 {
     [global::Quire.Mirror.MirrorStub]
     private const string StylePattern = " style=\"(?<style>[^.\"]+)\"";
-    [global::Quire.Mirror.MirrorStub]
-    public void SaveInternal(global::System.IO.Stream st, bool preserveTextElements, bool isConversion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
