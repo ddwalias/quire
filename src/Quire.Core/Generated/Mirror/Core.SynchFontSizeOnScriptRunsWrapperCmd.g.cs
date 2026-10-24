@@ -11,24 +11,4 @@ namespace Quire.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Core.SynchFontSizeOnScriptRunsWrapperCmd, Ptc.Core")]
 public partial class SynchFontSizeOnScriptRunsWrapperCmd : global::Quire.Undo.IUndoableCommandWithSideEffects, global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly double _newFntSize;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.ValueTuple<int, global::System.Windows.Documents.LogicalDirection> _rangeStart;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.ValueTuple<int, global::System.Windows.Documents.LogicalDirection> _rangeEnd;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Documents.FlowDocument _document;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Undo.CompoundCommand _nestedCommand;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Delegate0 _internalCmdDelegate;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.Dictionary<int, double> _dicScriptElementsSzs;
-    [global::Quire.Mirror.MirrorStub]
-    private SynchFontSizeOnScriptRunsWrapperCmd(global::System.Windows.Documents.TextRange range, double newFontSize, global::System.Windows.Documents.FlowDocument ownerDocument, global::Quire.Delegate0 internalCmdDelegate, string name) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

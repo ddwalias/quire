@@ -5,6 +5,14 @@ namespace Quire.Core;
 
 public partial class SynchFontSizeOnScriptRunsWrapperCmd
 {
+    private readonly double _newFntSize;
+    private readonly global::System.ValueTuple<int, global::System.Windows.Documents.LogicalDirection> _rangeStart;
+    private readonly global::System.ValueTuple<int, global::System.Windows.Documents.LogicalDirection> _rangeEnd;
+    private readonly global::System.Windows.Documents.FlowDocument _document;
+    private readonly global::Quire.Undo.CompoundCommand _nestedCommand;
+    private readonly global::Quire.Delegate0 _internalCmdDelegate;
+    private global::System.Collections.Generic.Dictionary<int, double> _dicScriptElementsSzs;
+
     [MirrorVerified("Release IL")]
     public static SynchFontSizeOnScriptRunsWrapperCmd CreateSynchFontSizeOnScriptRunsWrapperCmd(global::System.Windows.Documents.TextRange range, double newFontSize, global::Quire.Delegate0 internalCmdDelegate, string name)
     {
@@ -18,6 +26,21 @@ public partial class SynchFontSizeOnScriptRunsWrapperCmd
             DebugTools.FailAssertion(null, global::System.Array.Empty<object>());
         }
         return synchFontSizeOnScriptRunsWrapperCmd;
+    }
+
+    private SynchFontSizeOnScriptRunsWrapperCmd(global::System.Windows.Documents.TextRange range, double newFontSize, global::System.Windows.Documents.FlowDocument ownerDocument, global::Quire.Delegate0 internalCmdDelegate, string name)
+    {
+        _newFntSize = newFontSize;
+        _dicScriptElementsSzs = global::System.Linq.Enumerable.ToDictionary(
+            global::System.Linq.Enumerable.OfType<global::Quire.Wpf.ICustomFontSizeOwner>(global::Quire.Wpf.TextRangeExtension.EnumerateInlinesInRange<global::System.Windows.Documents.Run>(range)),
+            (global::Quire.Wpf.ICustomFontSizeOwner run) => run.GetHashCode(),
+            (global::Quire.Wpf.ICustomFontSizeOwner run) => run.FontSizeForReport);
+        _document = ownerDocument;
+        _rangeStart = (_document.ContentStart.GetOffsetToPosition(range.Start), range.Start.LogicalDirection);
+        _rangeEnd = (_document.ContentEnd.GetOffsetToPosition(range.End), range.End.LogicalDirection);
+        _nestedCommand = new global::Quire.Undo.CompoundCommand();
+        _internalCmdDelegate = internalCmdDelegate;
+        Name = name;
     }
 
     [MirrorVerified("Release IL")]
@@ -50,6 +73,37 @@ public partial class SynchFontSizeOnScriptRunsWrapperCmd
             _internalCmdDelegate();
         }
         return _nestedCommand.Count >= 1;
+    }
+
+    public void Undo()
+    {
+        global::System.Collections.Generic.List<global::Quire.Wpf.ICustomFontSizeOwner> items = global::Quire.Wpf.TextRangeExtension.EnumerateInlinesInRange<global::System.Windows.Documents.Run>(GetExtendedRange()).OfType<global::Quire.Wpf.ICustomFontSizeOwner>().ToList();
+        global::Quire.EnumerableExtensions.Each(items, (global::Quire.Wpf.ICustomFontSizeOwner scriptElement) =>
+        {
+            if (_dicScriptElementsSzs.TryGetValue(scriptElement.GetHashCode(), out double value))
+            {
+                scriptElement.FontSizeToRestore = value;
+            }
+        });
+        _nestedCommand.Undo();
+        global::Quire.EnumerableExtensions.Each(items, (global::Quire.Wpf.ICustomFontSizeOwner scriptElement) =>
+        {
+            scriptElement.FontSizeToRestore = null;
+        });
+    }
+
+    public void Redo()
+    {
+        global::System.Collections.Generic.List<global::Quire.Wpf.ICustomFontSizeOwner> items = global::Quire.Wpf.TextRangeExtension.EnumerateInlinesInRange<global::System.Windows.Documents.Run>(GetRange()).OfType<global::Quire.Wpf.ICustomFontSizeOwner>().ToList();
+        global::Quire.EnumerableExtensions.Each(items, (global::Quire.Wpf.ICustomFontSizeOwner scriptElement) =>
+        {
+            scriptElement.FontSizeToRestore = _newFntSize;
+        });
+        _nestedCommand.Redo();
+        global::Quire.EnumerableExtensions.Each(items, (global::Quire.Wpf.ICustomFontSizeOwner scriptElement) =>
+        {
+            scriptElement.FontSizeToRestore = null;
+        });
     }
 
     [MirrorVerified("PtcCoreSynchFontSizeOnScriptRunsWrapperCmdMechanicalDifferentialTests")]
