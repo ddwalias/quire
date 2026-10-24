@@ -11,28 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.FrameworkVersion, Ptc.Core")]
 public static partial class FrameworkVersion
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static void IdentifyFrameworkVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsGreaterThan(global::Quire.FrameworkVersion.Versions frameworkVersion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsLesserThan(global::Quire.FrameworkVersion.Versions frameworkVersion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsSameAs(global::Quire.FrameworkVersion.Versions frameworkVersion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
-    [global::Quire.Mirror.MirrorOf("Ptc.FrameworkVersion+Versions, Ptc.Core")]
-    public enum Versions
-    {
-        v45 = 0,
-        v451 = 1,
-        v452 = 2,
-        v452_patched = 3,
-    }
-
-    [global::Quire.Mirror.MirrorOf("Ptc.FrameworkVersion+MajorVersions, Ptc.Core")]
-    public enum MajorVersions
-    {
-        Major4 = 0,
-        Undefined = 1,
-    }
 }
