@@ -15,12 +15,9 @@ public partial class CommandBuffer
     private static global::Quire.Undo.CommandBuffer _defaultBuffer;
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.Dictionary<object, global::Quire.Undo.CommandBuffer> _instances;
+
     [global::Quire.Mirror.MirrorOf("Ptc.Undo.CommandBuffer+MasterCommand, Ptc.Core")]
     private partial class MasterCommand : global::Quire.Undo.CompoundCommand
     {
-        [global::Quire.Mirror.MirrorStub]
-        public override void UndoSideEffects() => base.UndoSideEffects();
-        [global::Quire.Mirror.MirrorStub]
-        public override void RedoSideEffects() => base.RedoSideEffects();
     }
 }

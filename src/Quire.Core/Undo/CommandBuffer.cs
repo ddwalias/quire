@@ -117,6 +117,32 @@ public partial class CommandBuffer
         [MirrorVerified("PtcUndoCommandBufferMechanicalDifferentialTests")]
         public override bool Do() => throw new InvalidOperationException("Do method should never be called on a MasterCommand.");
 
+        public override void UndoSideEffects()
+        {
+            base.UndoSideEffects();
+            if (Top is IUndoableCommandWithSideEffects)
+            {
+                Top.Undo();
+            }
+            else if (Top is CompoundCommand)
+            {
+                (Top as CompoundCommand).UndoSideEffects();
+            }
+        }
+
+        public override void RedoSideEffects()
+        {
+            base.RedoSideEffects();
+            if (Top is IUndoableCommandWithSideEffects)
+            {
+                Top.Redo();
+            }
+            else if (Top is CompoundCommand)
+            {
+                (Top as CompoundCommand).RedoSideEffects();
+            }
+        }
+
         [MirrorVerified("PtcUndoCommandBufferMechanicalDifferentialTests")]
         private readonly IUndoableCommand _top;
 
