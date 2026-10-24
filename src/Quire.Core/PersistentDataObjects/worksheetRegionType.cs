@@ -19,6 +19,29 @@ public partial class worksheetRegionType
         return _xmlSerializerDefault ?? (_xmlSerializerDefault = CreateDefaultSerializer(_typeOfThis, "region"));
     }
 
+    public static XmlSerializer CreateSerializerWithOverrides(Type typeOfRoot, string rootNodeName)
+    {
+        XmlAttributeOverrides overrides = new XmlAttributeOverrides();
+        Type[] typesOf = new Type[4]
+        {
+            typeof(pictureType),
+            typeof(xyPlotType),
+            typeof(polarPlotType),
+            typeof(plotBaseType)
+        };
+        regionBase.GetOverrides(overrides, typesOf);
+        plotType.GetOverrides(overrides);
+        XmlSerializer serializer;
+        using (new XmlSerializerCreationWrapper())
+        {
+            serializer = new XmlSerializer(typeOfRoot, overrides, new Type[0], new XmlRootAttribute(rootNodeName)
+            {
+                Namespace = "http://schemas.mathsoft.com/worksheet50"
+            }, "http://schemas.mathsoft.com/worksheet50");
+        }
+        return serializer;
+    }
+
     private bool Serialize(System.Xml.XmlNode regionXmlNode)
     {
         using (XmlNodeWriter xmlWriter = new XmlNodeWriter(regionXmlNode))
