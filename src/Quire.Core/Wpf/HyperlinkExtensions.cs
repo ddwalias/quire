@@ -74,8 +74,34 @@ public static partial class HyperlinkExtensions
         }
     }
 
-    // Preserve Mathcad's preceding helper position for the callback closure ordinal.
-    private static bool ApplyNeighborFormattingValueIfUnset(List<Inline> inlines, TextPointer currentPosition, LogicalDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static bool ApplyNeighborFormattingValueIfUnset(List<Inline> inlines, TextPointer currentPosition, LogicalDirection direction)
+    {
+        global::Quire.DebugTools.DevAssert(!currentPosition.IsAtInsertionPosition, null);
+        bool result = false;
+        TextPointer nextInsertionPosition = currentPosition.GetNextInsertionPosition(direction);
+        if (nextInsertionPosition != null
+            && new System.Windows.Documents.TextRange(currentPosition, nextInsertionPosition).Text.IsNullOrEmpty()
+            && nextInsertionPosition.Parent is Run run
+            && run.ContentStart.CompareTo(run.ContentEnd) != 0
+            && run.GetTextElementParentOrSelf<Hyperlink>() == null)
+        {
+            result = true;
+            DependencyProperty[] array = new DependencyProperty[2]
+            {
+                Inline.TextDecorationsProperty,
+                TextElement.ForegroundProperty
+            };
+            foreach (DependencyProperty dependencyProp in array)
+            {
+                object propValue = ((DependencyObject)run).GetValue(dependencyProp);
+                inlines.Where((Inline inline) => DependencyPropertyHelper.GetValueSource(inline, dependencyProp).BaseValueSource != BaseValueSource.Local).Each((Inline inline) =>
+                {
+                    inline.SetValue(dependencyProp, propValue);
+                });
+            }
+        }
+        return result;
+    }
 
     [MirrorVerified("Release IL")]
     public static string GetText(this Hyperlink link)
