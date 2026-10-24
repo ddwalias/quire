@@ -208,7 +208,6 @@ public static partial class WpfUtils
         }
     }
 
-    public static void ExecuteOnLayoutUpdated(UIElement element, Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public static bool EastAsianLanguagesInstalled => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public static string ApplicationName => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public static string ProductName => throw global::Quire.Mirror.MirrorStub.NotImplemented();

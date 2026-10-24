@@ -152,6 +152,35 @@ public static partial class WpfUtils
     [MirrorVerified("Release IL")]
     public static Color WpfColorFromName(string name) => (Color)ColorConverter.ConvertFromString(name);
 
+    public static void ExecuteOnLayoutUpdated(UIElement element, Action action)
+    {
+        EventHandler handler = null;
+        handler = delegate
+        {
+            if (element.IsMeasureValid)
+            {
+                if (element.IsArrangeValid)
+                {
+                    goto InvokeAction;
+                }
+            }
+            return;
+
+        InvokeAction:
+            action();
+            element.LayoutUpdated -= handler;
+            return;
+        };
+        if (element.IsMeasureValid && element.IsArrangeValid)
+        {
+            action();
+        }
+        else
+        {
+            element.LayoutUpdated += handler;
+        }
+    }
+
     [MirrorVerified("Release IL")]
     public static Brush CreateSolidWpfBrush(global::System.Drawing.Color color) => new SolidColorBrush(GdiToWpf(color));
 
