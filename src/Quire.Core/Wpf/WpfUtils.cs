@@ -158,6 +158,20 @@ public static partial class WpfUtils
     [MirrorVerified("Release IL")]
     public static void Blink(UIElement element, int period) => Blink(EnumerableExtensions.Yield<UIElement>(element), period);
 
+    public static T GetNamedDescendant<T>(DependencyObject obj, string nameToFind, bool shouldAssert = true) where T : FrameworkElement
+    {
+        if (DebugTools.DevAssert(obj != null && nameToFind.IsNotEmpty(), null).Failed)
+        {
+            return null;
+        }
+        bool flag = AtLeastOneChildSatisfyPassedCondition(obj, (T element) => element?.Name == nameToFind, out T satisfiesCondition);
+        if (shouldAssert && !flag)
+        {
+            DebugTools.FailAssertion(null, Array.Empty<object>());
+        }
+        return satisfiesCondition;
+    }
+
     [MirrorVerified("Release IL")]
     public static void DoEvents() => DoEvents(Dispatcher.CurrentDispatcher, (DispatcherPriority)4);
 
