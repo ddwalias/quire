@@ -61,9 +61,8 @@ the build. The gate finds the instance through `vswhere` by compiler build, not 
 that instance's MSBuild, gives builds of projects that contain a `.vcxproj` or reference a project
 that does its path as the `QuireMsvcInstallDir` environment property, and fails a DLL whose Rich
 header shows another linker build or a newer tool build. Gates for Utl's dependents (Engine, Mcd,
-Efi, Engine.Native) therefore need the pinned instance too. MethodAudit reads the Mathcad install; builds never do: every build
-runs without `MATHCAD_DIR` and with `MathcadInstallDir` pointing at an empty path
-([D19](decisions.md)). A missing prerequisite fails the run. The path must be inside the
+Efi, Engine.Native) therefore need the pinned instance too. MethodAudit reads the Mathcad install, and builds
+may read it too ([D27](decisions.md)). A missing prerequisite fails the run. The path must be inside the
 repository. Release is selected by configuration name; the DebuggableAttribute Debug check is not
 verified for MSVC output, so exact IL matching is what rules out a Debug-shaped candidate.
 
@@ -99,12 +98,8 @@ mixed-mode Quire assembly it pairs what the C++/CLI compiler emits as follows:
 - the D10 `engine_native` exemption applies only to IL-only Quire assemblies; a mixed candidate
   can emit those bodies, so it must match them.
 
-The gate fails closed before building when a compared project's build inputs (`.csproj`,
-`.vcxproj`, `.props`, `.targets`, `.rsp`, C++ sources, and the `Directory.Build.*` files above them)
-name the install (`MathcadInstallDir`, `MATHCAD_DIR`, `Mathcad Prime`, `\PTC\`). That scan is best
-effort; the backstop is after building, when an output DLL with an `.ilnew` section (the mark of
-IL-patching post-build steps) fails. Quire-authored types under `std` or `vc::cppcli` also receive
-the toolset allowance; that is an accepted risk.
+Quire-authored types under `std` or `vc::cppcli` also receive the toolset allowance; that is an
+accepted risk.
 
 Names the compiler derives from the source path (`?A0x<hash>` anonymous namespaces, such as
 `vc.cppcli.attributes.?A0x….CppInlineNamespaceAttribute` and `__clr_placement_new_t`) differ between

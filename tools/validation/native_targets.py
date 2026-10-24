@@ -11,7 +11,7 @@ Each --toolchain is recorded the same way, as a toolchain entry: a symbol the to
 the C runtime's `??_7type_info@@6B@`), which the candidates reference but must not define: a name any --candidate
 object defines is refused. It records the RVA only.
 
-The manifest holds names, RVAs and sizes only, never bytes of the original (D19). Review the written diff before
+The manifest holds names, RVAs and sizes only, never bytes of the original (D15). Review the written diff before
 committing it: native_bytes.py compares every entry the candidate objects define on each run without --symbol.
 """
 import argparse

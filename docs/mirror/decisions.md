@@ -28,10 +28,8 @@ Use D17's five steps, preserve previously exact methods, land passing batches an
 ## D19: utl-mgd is an honest C++/CLI port (2026-10-23)
 
 `utl-mgd.dll` was compiled by MSVC as C++/CLI; Roslyn cannot emit its IL. The user chose to port
-it to C++/CLI so that MSVC emits Mathcad's IL from Quire's own source. Every body must come from
-source in this repository and the compiler run on it: copying, transplanting or patching original
-IL, signatures, metadata or bytes into a build output is forbidden, and builds must not read the
-Mathcad install (the gate hides it). Only reference and validation tools read originals.
+it to C++/CLI so that MSVC emits Mathcad's IL from Quire's own source. (The build restrictions this
+decision first set were lifted by D27.)
 
 For a mixed-mode candidate the gate reports, without failing, methods that MSVC emits for its own
 support and Mathcad's build lacked (`std`, CRT, exception/startup helpers, `vc.cppcli` types) and
@@ -45,8 +43,7 @@ The C++/CLI build uses the compiler that built `utl-mgd.dll`. Its Rich header sh
 
 On 2026-10-24 the user confirmed that interface constants are source: the literals a function uses, such as the
 registry key and value names `utl.dll` reads, are typed into Quire source as a managed method's `ldstr` operands are.
-Reading them from an original during analysis is allowed. The prohibition covers original bytes copied into a build
-output.
+Reading them from an original during analysis is allowed.
 
 ## D20: one Quire project per Mathcad assembly, in its original language (2026-10-23)
 
@@ -73,9 +70,8 @@ install has a recorded reason in `Rules.NotMirrored`, and the [assembly map](ass
   Quire headers declare the exports with `UTL_API`-style `__declspec(dllexport/dllimport)` macros (`extern "C"`
   for `mcaduser`'s documented C API), and the import library is a by-product of linking the native project.
   As a stopgap, until a native DLL is ported, its import library may be generated with `lib.exe` from a `.def`
-  in the repository, and the mirrors load Mathcad's DLL at run time. This is a narrow amendment to D19: the
-  stopgap import library is the only build output allowed to carry original export names, and each one is
-  replaced when its DLL is ported. The stopgap only lets a build link: every native DLL is still mirrored, and its
+  in the repository, and the mirrors load Mathcad's DLL at run time. Each stopgap import library is replaced
+  when its DLL is ported. The stopgap only lets a build link: every native DLL is still mirrored, and its
   port precedes its dependents in the [completion order](assembly-map.md). Third-party imports link against their
   vendors' libraries (MKL); Knitro stays with D6.
 - **Shared-header types** follow each original's metadata: where an original defines a type, its project defines
@@ -221,6 +217,17 @@ Lane L (`mspcons.dll`) raised two blockers. The maintainer decided both:
   `tagged::write`, which calls it, stays parked.
 - `pstring::before` calls an out-of-line `type_info::before` where the original inlines it. That is the same
   pattern, so `before` is probably parked too. `notag` and its vftable verify only when all seven slots do.
+
+## D27: builds may read the Mathcad install (2026-10-25)
+
+The user lifted D19's build restrictions. Builds may read the Mathcad install, and build outputs may carry original
+IL, metadata or bytes. The gates no longer hide the install (`MATHCAD_DIR`, `MathcadInstallDir`), no longer scan
+build inputs for references to it, and no longer reject an `.ilnew` section. What stays from D19: the C++/CLI port,
+the `toolset_support` reporting and the MSVC 19.51.36246 pin.
+
+D15 is unchanged. This repository is public, so original binaries, decompiled source and IL stay out of commits, and
+the native manifest still holds names, RVAs and sizes only. Without D19, an exact match shows only that the build
+output equals the original. It no longer shows that Quire's source alone reproduces it.
 
 ## Mapping and scope
 

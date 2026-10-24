@@ -5,7 +5,7 @@
 The native analog of release_il.py. A native project is a directory src/<P>/ holding <P>.vcxproj and no <P>.csproj; its
 original DLL is the one docs/mirror/assembly-map.json maps <P> to, and a project the map does not list fails closed.
 The base is built from a temporary checkout and the candidate is the current working tree, each with the pinned MSVC
-(Release|x64, outputs in a temporary directory, the Mathcad install hidden, D19). native_bytes.py compares every object
+(Release|x64, outputs in a temporary directory). native_bytes.py compares every object
 of each build with the original under the candidate tree's manifest of internal targets, strictly: a function passes
 only when its bytes and every call/address target verify.
 
@@ -25,7 +25,7 @@ import uuid
 
 import native_bytes
 from native_bytes import anonymous
-from release_il import (ROOT, git, mathcad_install, msbuild, msvc_mismatch, reads_install, run, without_install)
+from release_il import ROOT, git, mathcad_install, msbuild, msvc_mismatch, run
 
 ASSEMBLY_MAP = Path('docs') / 'mirror' / 'assembly-map.json'
 MANIFEST = Path('docs') / 'mirror' / 'native' / 'internal-targets.json'
@@ -48,13 +48,10 @@ def original_dll(root, project):
 
 def build(root, project, work, log, timeout):
     """The .obj files of `project` built from `root` with the pinned MSVC, Release|x64, outputs under `work`."""
-    if found := reads_install(root, [project]):
-        raise RuntimeError(f'builds must not read the Mathcad install (D19): {", ".join(found)}')
-    env, hidden = without_install(work)
     out, obj = work / 'bin', work / 'obj'
     run([msbuild(), root / 'src' / project / f'{project}.vcxproj', '-t:Rebuild', '-p:Configuration=Release',
-         '-p:Platform=x64', hidden, f'-p:OutDir={out}{os.sep}', f'-p:IntDir={obj}{os.sep}', '-nologo', '-v:m'],
-        root, log, timeout, env)
+         '-p:Platform=x64', f'-p:OutDir={out}{os.sep}', f'-p:IntDir={obj}{os.sep}', '-nologo', '-v:m'],
+        root, log, timeout)
     for dll in out.glob('*.dll'):
         if reason := msvc_mismatch(dll):
             raise RuntimeError(f'{dll.name}: {reason}')

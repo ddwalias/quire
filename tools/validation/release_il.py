@@ -12,8 +12,7 @@ Type::signature keys; --type selects all methods declared on a type (including s
 builds the candidate from a Windows C++/CLI .vcxproj (MSBuild, Release|x64) instead of
 src/<project>/<project>.csproj; the base is still the C# Release build. In a mixed-mode candidate
 (D19), compiler-support methods without a Mathcad counterpart and native bodies whose counterpart
-is native are reported but do not fail; every other method follows the usual rules. Builds never
-see the Mathcad install, so no original IL can reach a candidate.
+is native are reported but do not fail; every other method follows the usual rules.
 """
 import argparse
 import contextlib
@@ -298,18 +297,6 @@ def msvc_mismatch(dll):
     return None
 
 
-def without_install(work, environ=os.environ):
-    """D19: builds see no Mathcad install, so original IL cannot be copied into a candidate."""
-    env = {k: v for k, v in environ.items() if k.upper() != 'MATHCAD_DIR'}
-    return env, f'-p:MathcadInstallDir={work / "no-mathcad-install"}{os.sep}'
-
-
-INSTALL_REFERENCE = re.compile(r'MathcadInstallDir|MATHCAD_DIR|Mathcad Prime|\\PTC\\', re.IGNORECASE)
-
-
-BUILD_INPUTS = ('.csproj', '.vcxproj', '.props', '.targets', '.rsp', '.cpp', '.h', '.hpp')
-
-
 def build_files(directory):
     """Files of a project directory that a build can read, outside bin and obj."""
     files = []
@@ -347,19 +334,6 @@ def build_closure(root, projects):
     return seen
 
 
-def reads_install(root, projects, vcxproj=None):
-    """D19: build inputs of every project the compared projects build (build_closure), and of the vcxproj's folder,
-    that name the Mathcad install, plus the Directory.Build files MSBuild imports for them. Best effort; the .ilnew
-    check after the build is the backstop."""
-    dirs = build_closure(root, projects) + ([vcxproj.parent] if vcxproj else [])
-    files = {p for d in dirs if d.is_dir() for p in build_files(d) if p.suffix.lower() in BUILD_INPUTS}
-    for d in dirs:
-        for parent in [d, *d.relative_to(root).parents]:
-            files |= {f for f in (root / parent).glob('Directory.Build.*') if f.is_file()}
-    return sorted(str(p.relative_to(root)) for p in files
-                  if INSTALL_REFERENCE.search(p.read_text(encoding='utf-8', errors='replace')))
-
-
 PROJECT_REFERENCE = re.compile(r"""<ProjectReference\b[^>]*\bInclude=["']([^"']+)["']""", re.IGNORECASE)
 
 
@@ -369,27 +343,16 @@ def builds_cppcli(root, projects):
     return any(p.suffix.lower() == '.vcxproj' for d in build_closure(root, projects) for p in build_files(d))
 
 
-def section_names(dll):
-    """PE section names; an IL-patching post-build step leaves its own section (D19)."""
-    data = Path(dll).read_bytes()
-    pe = int.from_bytes(data[0x3c:0x40], 'little')
-    count = int.from_bytes(data[pe + 6:pe + 8], 'little')
-    table = pe + 24 + int.from_bytes(data[pe + 20:pe + 22], 'little')
-    return [data[table + 40 * i:table + 40 * i + 8].rstrip(b'\0').decode('ascii', 'replace') for i in range(count)]
-
-
 def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vcxproj=None, keep=None):
     """Build the projects in Release and scan them with MethodAudit; keep is where a failed scan's inventory goes."""
     assemblies = work / 'assemblies'
-    if found := reads_install(root, projects, vcxproj):
-        raise RuntimeError(f'builds must not read the Mathcad install (D19): {", ".join(found)}')
-    env, hidden = without_install(work)
+    env = dict(os.environ)
     # C++/CLI builds use the pinned MSVC; the production .csproj receives it as QuireMsvcInstallDir.
     if vcxproj or builds_cppcli(root, projects):
         env['QuireMsvcInstallDir'] = f'{msvc_instance()}{os.sep}'
     if vcxproj:
         # OutDir/IntDir keep outputs out of the tree; MethodAudit then requires <project>.dll there (the TargetName).
-        run([msbuild(), vcxproj, '-t:Rebuild', '-p:Configuration=Release', '-p:Platform=x64', hidden,
+        run([msbuild(), vcxproj, '-t:Rebuild', '-p:Configuration=Release', '-p:Platform=x64',
              f'-p:OutDir={assemblies}{os.sep}', f'-p:IntDir={work / "obj"}{os.sep}', '-nologo', '-v:m'],
             root, log, timeout, env)
     targets = [] if vcxproj else [root / 'src' / project / f'{project}.csproj' for project in projects]
@@ -402,11 +365,9 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
         solution.parent.mkdir(parents=True, exist_ok=True)
         solution.write_text('<Solution>\n' + ''.join(f'  <Project Path={quoteattr(str(t.resolve()))} />\n' for t in targets)
                             + '</Solution>\n', encoding='utf-8')
-        run([dotnet, 'build', solution, '-c', 'Release', '--no-incremental', '-o', assemblies, hidden,
+        run([dotnet, 'build', solution, '-c', 'Release', '--no-incremental', '-o', assemblies,
              '-nologo', '-v:q', '-p:EnableSourceControlManagerQueries=false'], root, log, timeout, env)
     for project in projects:
-        if '.ilnew' in section_names(assemblies / f'{project}.dll'):
-            raise RuntimeError(f'{project}.dll has an IL-patching .ilnew section (D19)')
         if reason := msvc_mismatch(assemblies / f'{project}.dll'):
             raise RuntimeError(f'{project}.dll: {reason}')
     inventory = work / 'inventory.json'

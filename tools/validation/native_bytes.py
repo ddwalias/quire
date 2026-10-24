@@ -41,8 +41,8 @@ SECTION, ADDR32, ...) fails only the function that holds it.
 
 Export parity compares the export names of a built DLL with the original's.
 
-Reads the original DLL only. Keep the original and any decompiled output in the gitignored .mirror-cache, never in
-build inputs (D19).
+Reads the original DLL only. Keep the original and any decompiled output in the gitignored .mirror-cache, out of
+commits (D15).
 """
 import argparse
 import functools

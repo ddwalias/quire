@@ -2,13 +2,11 @@
 import json
 from pathlib import Path
 import subprocess
-import sys
 import tempfile
 import unittest
 from unittest import mock
 import release_il
-from release_il import (LINKER_PRODUCT, MSVC_BUILD, builds_cppcli, compare, msvc_mismatch, ordinalless, reads_install,
-                        section_names, without_install)
+from release_il import (LINKER_PRODUCT, MSVC_BUILD, builds_cppcli, compare, msvc_mismatch, ordinalless)
 
 
 def method(name='M', body='same', exact=True, **extra):
@@ -221,38 +219,6 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         record = dict(closure('a', 'R'), id='P::R::<Clone>$', signature='<Clone>$')
         self.assertTrue(compare(inventory(mirrored, record), inventory(mirrored, dict(record, body_sha256='b')))['passed'])
 
-    def test_builds_never_see_the_mathcad_install(self):
-        env, hidden = without_install(Path('work'), {'MATHCAD_DIR': r'C:\PTC', 'PATH': 'p'})
-        self.assertEqual(env, {'PATH': 'p'})
-        self.assertTrue(hidden.startswith('-p:MathcadInstallDir=') and 'no-mathcad-install' in hidden)
-        with tempfile.TemporaryDirectory() as temp:
-            root = Path(temp)
-            (root / 'src' / 'P' / 'obj').mkdir(parents=True)
-            (root / 'src' / 'P' / 'P.csproj').write_text('<Project />')
-            (root / 'src' / 'P' / 'obj' / 'x.props').write_text('MATHCAD_DIR')
-            self.assertEqual(reads_install(root, ['P']), [])
-            (root / 'src' / 'P' / 'P.vcxproj').write_text(r'<D>C:\Program Files\PTC\Mathcad Prime 12</D>')
-            self.assertEqual(reads_install(root, ['P']), [str(Path('src/P/P.vcxproj'))])
-            (root / 'src' / 'P' / 'P.vcxproj').write_text('<Project />')
-            (root / 'src' / 'P' / 'X.Targets').write_text('$(MATHCAD_DIR)')
-            (root / 'Directory.Build.props').write_text('$(MathcadInstallDir)')
-            self.assertEqual(reads_install(root, ['P']), [str(Path('Directory.Build.props')), str(Path('src/P/X.Targets'))])
-
-    def test_reads_install_scans_every_project_the_build_references(self):
-        with tempfile.TemporaryDirectory() as temp:
-            root = Path(temp)
-            (root / 'src' / 'Utl' / 'MixedMode').mkdir(parents=True)
-            (root / 'src' / 'Utl' / 'Utl.csproj').write_text('<Project />')
-            (root / 'src' / 'Utl' / 'MixedMode' / 'Utl.vcxproj').write_text('<Project />')
-            (root / 'src' / 'Engine' / 'Generated').mkdir(parents=True)
-            (root / 'src' / 'Engine' / 'Engine.csproj').write_text('<Project />')
-            (root / 'src' / 'Engine' / 'Generated' / 'Mirror.props').write_text(
-                r'<ProjectReference Include="..\Mirror\Mirror.csproj" />')
-            (root / 'src' / 'Mirror').mkdir()
-            (root / 'src' / 'Mirror' / 'Mirror.csproj').write_text(r'<Project>C:\Program Files\PTC\Mathcad Prime 12</Project>')
-            self.assertEqual(reads_install(root, ['Engine']), [str(Path('src/Mirror/Mirror.csproj'))])
-            self.assertEqual(reads_install(root, ['Utl']), [])
-
     def test_dependents_of_a_cppcli_project_build_with_the_pinned_msvc(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
@@ -293,9 +259,6 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
             no_rich[0x3c:0x40] = (0x80).to_bytes(4, 'little')
             dll.write_bytes(bytes(no_rich) + b'PE\0\0')
             self.assertIsNone(msvc_mismatch(dll))
-
-    def test_section_names_reads_the_pe_section_table(self):
-        self.assertIn('.text', section_names(sys.executable))
 
     def test_member_moved_to_another_project_keeps_its_obligations(self):
         def row(project, exact=True, **extra):
@@ -481,8 +444,6 @@ class CheckTests(unittest.TestCase):
                     json.dumps({'methods': [], 'errors': [f'e{i}' for i in range(25)]}))
                 raise RuntimeError('command failed (1)')
         with mock.patch.object(release_il, 'run', audit), \
-                mock.patch.object(release_il, 'reads_install', return_value=[]), \
-                mock.patch.object(release_il, 'section_names', return_value=[]), \
                 mock.patch.object(release_il, 'msvc_mismatch', return_value=None):
             with self.assertRaises(RuntimeError) as raised:
                 release_il.build_and_scan(self.repo.root, ['P'], 'tool.dll', work, self.install, 'dotnet',
