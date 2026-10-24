@@ -5,8 +5,6 @@ namespace Quire.Wpf;
 public static partial class WpfUtils
 {
     // Keep these unfinished declarations after ExecuteTask to preserve Mathcad's callback ordinal.
-    public static void Blink(global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> elements, int period) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     public static void SetPropertyAndNotify<T>(ref T property, T value, global::System.ComponentModel.INotifyPropertyChanged propertyOwner, global::System.ComponentModel.PropertyChangedEventHandler propertyChanged, string propertyName)
     {
         if (object.Equals(property, value))

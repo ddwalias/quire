@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using System.Windows;
 using System.Windows.Forms;
@@ -33,6 +34,30 @@ public static partial class WpfUtils
 
     [MirrorVerified("PtcWpfWpfUtilsMechanicalDifferentialTests")]
     public static DependencyObject GetVisualParent(this Visual visual) => VisualTreeHelper.GetParent(visual);
+
+    public static void Blink(IEnumerable<UIElement> elements, int period)
+    {
+        DoubleAnimation opacityAnimation = null;
+        if (period != 0)
+        {
+            opacityAnimation = new DoubleAnimation
+            {
+                From = 1.0,
+                To = 0.0,
+                AccelerationRatio = 1.0,
+                AutoReverse = true,
+                RepeatBehavior = RepeatBehavior.Forever,
+                Duration = new Duration(new TimeSpan(0, 0, 0, 0, period / 2))
+            };
+        }
+        if (DebugTools.DevAssert(elements.IsNotEmpty(), null).Passed)
+        {
+            elements.Each((UIElement element) =>
+            {
+                element.BeginAnimation(UIElement.OpacityProperty, opacityAnimation);
+            });
+        }
+    }
 
     [MirrorVerified("Release IL")]
     public static string DumpLogicalTree(object root) => string.Join(Environment.NewLine, DumpLogicalTreeLines(root));
