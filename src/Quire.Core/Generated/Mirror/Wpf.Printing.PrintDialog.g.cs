@@ -11,8 +11,6 @@ namespace Quire.Wpf.Printing;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.Printing.PrintDialog, Ptc.Core")]
 public partial class PrintDialog : global::System.Windows.Controls.PrintDialog, global::Quire.Wpf.Printing.IPrintDialogOptions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public PrintDialog(global::Quire.Wpf.Printing.PrintDialog.RangeSelectionOptions rangeSelectionOptions) { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.Printing.PrintDialog+RangeSelectionOptions, Ptc.Core")]
     [global::System.Flags]
