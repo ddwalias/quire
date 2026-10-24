@@ -1,46 +1,24 @@
-# Lane C checkpoint: wave 1
+# Lane C checkpoint: Automation assemblies complete
 
-- Owner: Lane C (D18: `Quire.Utils`). Also this batch: `Quire.Automation`, `Quire.EngNotebook.Automation`,
-  `Quire.EngNotebookPlus.Automation`, `Quire.Engine.Misc`.
-- Branch: `mirror/c-wave1-20261023165040`. Worktree: `C:/Projects/Quire-wt/lane-c-wave1`, from main `f909e58e`.
-- Earlier Calc.Core and Media3D records are in Git history (before this commit).
+- Owner: Lane C (D18: `Quire.Automation`, `Quire.EngNotebook.Automation`, `Quire.EngNotebookPlus.Automation`).
+- Branch: `mirror/c-automation-20261024124956`. Worktree: `C:/Projects/Quire-wt/lane-c-wave1`, from main `a81b7fbae94b11414b7ee8de054cda023908a25c`.
 
 ## Members
 
-- `Quire.Utils`: `BMPFormatter..ctor`, `PNGFormatter..ctor`. Generated `[MirrorStub]` ctors replaced by
-  hand-written `public ...() { }` in the type's own file; stubs removed from the `.g.cs`.
-- `Quire.Engine.Misc`: `FileUtils.ReadExpanded` throw uses `string.Format("End of file within comment.")`
-  instead of the explicit `default(ReadOnlySpan<object>)` argument. Release IL is unchanged.
 - `Quire.Automation`, `Quire.EngNotebook.Automation`, `Quire.EngNotebookPlus.Automation`:
-  `ApplicationCreatorClass..ctor` not changed (blocked, see below). Stubs remain.
+  `ApplicationCreatorClass..ctor`. Declared hand-written `[ComImport]` coclass in each project's
+  `ApplicationCreatorClass.cs` matching `Quire.AutomationPrivate`'s `SymbolicValueClass` source form
+  without explicit constructor declarations. Removed generated stub `.g.cs` files. Under D22, the
+  runtime-supplied parameterless constructor matches on implementation flags (`runtime managed internalcall`).
 
 ## Release IL report
 
-- `Quire.Utils`: PASS; 37 checked, 37 exact, 0 failures. Inventory: 42 methods, 0 stubs, 0 unresolved
-  (5 interface declarations).
-- `Quire.Engine.Misc`: PASS; 129 checked, 129 exact, 0 failures. Inventory: 129 methods, 0 stubs, 0 unresolved.
-- `Quire.Automation` / `Quire.EngNotebook.Automation` / `Quire.EngNotebookPlus.Automation`: unchanged from
-  main (232 / 216 / 215 exact; 1 unfinished `ApplicationCreatorClass..ctor` each).
+- `Quire.Automation`: PASS; 233 checked, 232 exact, 1 declaration-only (`ApplicationCreatorClass..ctor`), 0 failures. Inventory: 233 methods, 0 stubs, 0 unresolved (COMPLETE).
+- `Quire.EngNotebook.Automation`: PASS; 217 checked, 216 exact, 1 declaration-only (`ApplicationCreatorClass..ctor`), 0 failures. Inventory: 217 methods, 0 stubs, 0 unresolved (COMPLETE).
+- `Quire.EngNotebookPlus.Automation`: PASS; 216 checked, 215 exact, 1 declaration-only (`ApplicationCreatorClass..ctor`), 0 failures. Inventory: 216 methods, 0 stubs, 0 unresolved (COMPLETE).
+- Overall Release IL: PASS; 666 checked, 663 exact, 3 declaration-only, 0 failures, 0 unfinished.
 
-## Remaining mismatches and blockers (maintainer)
+## Remaining mismatches
 
-1. `ApplicationCreatorClass..ctor` (three Automation projects). The original is a ComImport coclass
-   (`import` type flag) whose ctor has no body, impl flags `runtime managed internalcall` (0x1003).
-   - C# cannot express it: CS0669 rejects any user-declared ctor in a `[ComImport]` class, `extern` included.
-     Without `[ComImport]` the ctor would compile, but the Import flag is lost.
-   - The gate cannot pass it either: MethodAudit compares only members with IL bodies. A non-abstract,
-     non-delegate, non-P/Invoke member with no body reports "not compared: no IL body", so it is never exact
-     or declaration-only.
-   - Needs a decision on the ComImport-class source form and on how the gate matches no-body runtime members.
-   - Origin: the coclass wrapper was most likely produced by the type-library importer (reflection emit), not
-     compiled from C# source. Evidence: `interop.mathcadautomationprivate.dll` (`ImportedFromTypeLibAttribute`)
-     has a coclass with the same `import` flag and no-body `.ctor() runtime managed internalcall`; the Automation
-     DLL's coclass has the same shape but no importer marker. Not yet checked against the `.tlb` GUID.
-   - Candidate route: Quire-authored type library for the coclass, imported at build time. Needs a maintainer
-     decision and a toolchain check; a build must not read the Mathcad install (D19).
-2. `tools/reference/reference.py` cannot read ilspycmd output containing non-UTF-8 bytes (`run()` returns
-   None on Windows; `TypeError` in `write_text`). Reproduced for `Engine.Misc.FileUtils` (mcmisc). Workaround
-   used: run `ilspycmd -il` into the ignored cache and extract the type block.
-3. Not a blocker: the `InlineArrayAsReadOnlySpan`/`InlineArrayElementRef` helpers in `Quire.Engine.Misc` have
-   Mathcad counterparts. The original mcmisc `<PrivateImplementationDetails>` defines the same two methods, and
-   `LispUtils.badSyntax` / `XmlUtils.TestCheck` call them the same way. No call-site change is needed.
+None. Parity is exact for all managed bodies in `Quire.Automation`, `Quire.EngNotebook.Automation` and `Quire.EngNotebookPlus.Automation`. All three assemblies are complete.
+
