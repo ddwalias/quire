@@ -104,9 +104,10 @@ The maintainer parked these after the Rich-header finding (D25): the original's 
 
 ## Remaining work (after this batch)
 
+- **Standard-library blocker (investigated):** a candidate `std::string` default construction stores one more byte than the original's (`mov byte [...], al`, after the 16-byte zeroing). The byte survives `/GL` with `/LTCG` in a separate test, so it is not explained by link-time optimization as D25 assumed. The `Error` constructors and every `std::string`-holding type (`Signature`, `Error`) hit it. `std::map<Hex::Signature, ...>` needs `Signature` complete, so the `_Tree` helpers wait on this difference, which is not understood yet.
 - **Standard-library internals (166 exports):** `std::map` (`_Tree`) helpers, `_Tmap_traits`, `std::string`/`basic_*` templates, and the `DefaultNames::hash` operator. Matching them needs the same STL instantiations, and their internal calls must be recorded.
 - **Vtable chains (about 57 constructors and destructors, plus virtual calls):** the `??0X` and `??1X` bodies reference vtables. Verifying a vtable verifies each slot's function, so every virtual method of `Node`, `Token`, `Value`, `Environment`, `State`, `Interpreter` and the rest must be implemented or recorded first. The `State` slots used by `Module` (slot 2 returns status, slot 4 `GetImports`, slot 5 `GetExports`) are known, but slots 1 and 3 are not identified.
 - **Formatter overloads** (`Insert` for `Token`, `Value` and `Interpreter`): these dispatch through vtable slots of classes whose order is not yet inferred.
-- **Parked (D25):** `operator<<`, `Error::GetDetails`, the `Error` constructors above, and any function that depends on link-time optimization.
+- **Parked (D25):** `operator<<`, `Error::GetDetails` and the `Error` constructors above. Parking them does not explain the `std::string` byte difference, which is still open.
 
 **SECREL (deferred).** It is needed only by the parked TLS accessor. When it is added, its base is the TLS directory's `StartAddressOfRawData` (`0x12188`), not a `.tls` section: the original has no `.tls` section, because `.tls` is merged into `.rdata`.
