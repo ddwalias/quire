@@ -63,7 +63,20 @@ public static partial class TextRangeExtension
 
     public static void FixAndCleanImportedHyperlinksData(this global::System.Windows.Documents.TextRange range, bool fixHyperlinkEmptyRuns = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public static string SerializeRangeContentToXamlString(this global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static string SerializeRangeContentToXamlString(this global::System.Windows.Documents.TextRange range)
+    {
+        string result;
+        using (global::Quire.MindTouch.IO.ChunkedMemoryStream chunkedMemoryStream = new global::Quire.MindTouch.IO.ChunkedMemoryStream())
+        {
+            range.Save(chunkedMemoryStream, global::System.Windows.DataFormats.Xaml);
+            chunkedMemoryStream.Position = 0L;
+            using (global::System.IO.StreamReader streamReader = new global::System.IO.StreamReader(chunkedMemoryStream))
+            {
+                result = streamReader.ReadToEnd();
+            }
+        }
+        return result;
+    }
 
     private static bool IntersectsWith(this global::System.Windows.Documents.TextRange range, TextElement element)
     {
