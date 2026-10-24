@@ -41,6 +41,4 @@ public partial class QualityAgentManager : global::Quire.QualityAgentManager.IQu
     private string GetCommandLine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ComputeCheckSum() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AddHashesForFileExt(global::System.Collections.Generic.List<byte> hashesList, global::System.Security.Cryptography.HashAlgorithm hashAlgorithm, string filesFilter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

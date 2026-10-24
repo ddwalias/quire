@@ -45,6 +45,18 @@ public partial class QualityAgentManager
         return _mathcadPrimeChecksum;
     }
 
+    [MirrorVerified("Release IL")]
+    private void AddHashesForFileExt(global::System.Collections.Generic.List<byte> hashesList, global::System.Security.Cryptography.HashAlgorithm hashAlgorithm, string filesFilter)
+    {
+        string[] files = global::System.IO.Directory.GetFiles(_mathcadPrimeInstallPath, filesFilter);
+        foreach (string path in files)
+        {
+            hashAlgorithm.Initialize();
+            using global::System.IO.FileStream inputStream = global::System.IO.File.OpenRead(path);
+            hashesList.AddRange(hashAlgorithm.ComputeHash(inputStream));
+        }
+    }
+
     [MirrorVerified("PtcQualityAgentManagerQualityAgentManagerMechanicalDifferentialTests")]
     private static string GetMathcadPrimeInstallationDate() => MsiHelper.GetProductInfo(MsiHelper.MathcadCurrentReleaseProductCode, MsiHelper.InstallProperty.InstallDate);
 
