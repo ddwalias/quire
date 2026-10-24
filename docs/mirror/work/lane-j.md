@@ -1,6 +1,6 @@
 # Lane J: mshex.dll → Quire.Native.Mshex
 
-**Status: incomplete.** 19 of 380 exports pass strict byte validation. Export parity: 361 missing, 0 extra.
+**Status: incomplete.** 33 of 380 exports pass strict byte validation. Export parity: 347 missing, 0 extra.
 
 - **Owner:** Lane J (native, `mshex.dll`)
 - **Branch:** `mirror/j-mshex-202610241256`
@@ -16,6 +16,8 @@
 | `Hex::Token` / `TokenOf<void>` tag and token access | `Token::GetTag`, `TokenOf<void>::GetToken`, `GetTag` (const, by value), `GetTag` (non-const, reference) | 4/4 OK, 0 unverified | `hex_token.{h,cpp}`. `TokenOf<void>` layout: vptr @0, `uint16` token @8, `Tag` @0x10. Explicit instantiation of `TokenOf<void>`. |
 | `Hex::Node::GetTag` | `GetTag` (const, by value) | 1/1 OK, 0 unverified | `hex_node.{h,cpp}`. Returns the null tag (`-1`, `-1`, `0`). Imported by `msmpl.dll`. |
 | `Formatter::Insert` dispatch to `Node` and `Component` | `Formatter::Insert(ostream&, Node const&)`, `Formatter::Insert(ostream&, Component const&)` | 2/2 OK, 0 unverified | `hex_formatter.{h,cpp}`. Each is a tail jump through the argument's vtable (`Node::Insert` at slot 3, `Component::Insert` at slot 0). `Node` and `Component` declare only the methods needed to reach those slots, in the order the slots imply (`Node`: dtor, `GetError`, `GetTag`, `Insert`; `Component`: `Insert`, `OnError`, dtor). The other `Insert` overloads need slots of classes not yet inferred. |
+| `Hex::Module` flag, datum, state and loadable accessors | `GetFlags`, `GetDatum`, `GetState`, `IsPersistent`, `IsTransient`, `IsLoadable`, `HasFlags`, `SetLoadable`, `SetDatum`, `SetFlags`, `AddFlags`, `ClearFlags` | 12/12 OK, 0 unverified | `hex_module.{h,cpp}`. Layout from the accessors: vptr at 0, `persistent_` at 0x48, flags at 0x78, datum at 0x80, state at 0x88, loadable at 0x90. The flag mutators return the previous flags. Bytes 0x08..0x47 and 0x50..0x77 are not yet inferred, so they stay as padding. |
+| `Hex::Error` tag and code | `Error::GetTag`, `Error::GetCode` | 2/2 OK, 0 unverified | `hex_error.{h,cpp}`. Layout: tag at 0, code at 0x18. `Error`'s other members are not yet inferred. `GetOffset`, `GetExtent` and `GetHandle` on `Error` are not included: they must read `Tag` fields inline, so they wait on a decision about inlining `Tag` accessors. |
 | `Hex::Lexer` flags | `SetFlag`, `GetFlag` | 2/2 OK, 0 unverified | `hex_lexer.{h,cpp}`. Both return `false`. |
 | `Hex::Interpreter` options and environment | `SetOption`, `GetOption`, `SetEnvironment` | 3/3 OK, 0 unverified | `hex_interpreter.{h,cpp}`. All return `false`. |
 
@@ -37,7 +39,7 @@ Build: MSBuild `Quire.Native.Mshex.vcxproj`, Release|x64, toolset v145, `/O2 /Gy
 - 363 exports remain, from 4-byte accessors up to large STL-using bodies such as `Error::GetDetails` (399 bytes).
 - Engutils imports two functions. `operator<<(ostream&, Error const&)` (`0xa2d0`, 61 bytes) reads the `ostream` vbase offset, calls internal `0x99e0` (a `use_facet`-style helper that reads a thread-local through `gs:[58h]` and a static guard in `0xa7c0`), and dispatches through `[vtbl+38h]`. Its internal callees must be compiled, recorded with `native_targets.py`, and passed with every object. That is the next step for this function. `GetDetails` is in the same position.
 - Earlier note, still accurate: `Error::GetDetails` (returns `std::string`, `Substring`) and `operator<<(ostream&, Error const&)`. Neither is a leaf: both call non-exported code, so neither passes strict yet.
-- Next leaves that need only known layouts: `Module` accessors (`GetState` reads `[rcx+88h]`; `GetFlags`, `GetDatum`, `Is*` need the flag and datum offsets), `Error` accessors (`GetCode` reads `[rcx+18h]`; the rest of `Error` is not yet inferred), `State`, `Visitor`. The `Error` getters that read `Tag` fields need to be defined in `Error`'s own translation unit, because a call to `Tag::Get*` from another translation unit is unverified under strict.
+- Next leaves that need only known layouts (the Module and Error leaves above are done): `Module` accessors (`GetState` reads `[rcx+88h]`; `GetFlags`, `GetDatum`, `Is*` need the flag and datum offsets), `Error` accessors (`GetCode` reads `[rcx+18h]`; the rest of `Error` is not yet inferred), `State`, `Visitor`. The `Error` getters that read `Tag` fields need to be defined in `Error`'s own translation unit, because a call to `Tag::Get*` from another translation unit is unverified under strict.
 - The `Insert(Formatter, Node|Token|Value|...)` family (10 bytes each) dispatches through vtable slots. Those slot indices depend on the full virtual method order of each class, which is not yet inferred.
 
 ## Harness limitations (reported, not worked around)

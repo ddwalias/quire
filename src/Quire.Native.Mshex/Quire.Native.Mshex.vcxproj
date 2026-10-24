@@ -56,12 +56,16 @@
     <ClInclude Include="hex_node.h" />
     <ClInclude Include="hex_component.h" />
     <ClInclude Include="hex_formatter.h" />
+    <ClInclude Include="hex_module.h" />
+    <ClInclude Include="hex_error.h" />
     <ClInclude Include="hex_lexer.h" />
     <ClInclude Include="hex_interpreter.h" />
     <ClCompile Include="hex_tag.cpp" />
     <ClCompile Include="hex_token.cpp" />
     <ClCompile Include="hex_node.cpp" />
     <ClCompile Include="hex_formatter.cpp" />
+    <ClCompile Include="hex_module.cpp" />
+    <ClCompile Include="hex_error.cpp" />
     <ClCompile Include="hex_lexer.cpp" />
     <ClCompile Include="hex_interpreter.cpp" />
   </ItemGroup>
