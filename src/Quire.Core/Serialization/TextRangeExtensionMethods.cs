@@ -12,7 +12,47 @@ namespace Quire.Serialization;
 
 public static partial class TextRangeExtensionMethods
 {
-    public static void LoadWithCustomContext(this global::System.Windows.Documents.TextRange range, Stream packageStream, bool export = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void LoadWithCustomContext(this global::System.Windows.Documents.TextRange range, Stream packageStream, bool export = false)
+    {
+        // Keep the interpolated-string handler in the source slot used by Mathcad Release IL.
+        Uri uri;
+        global::System.Runtime.CompilerServices.DefaultInterpolatedStringHandler handler = new global::System.Runtime.CompilerServices.DefaultInterpolatedStringHandler(16, 1);
+        handler.AppendLiteral("pack://temp_");
+        handler.AppendFormatted(Guid.NewGuid(), "N");
+        handler.AppendLiteral(".pkg");
+        uri = new Uri(handler.ToStringAndClear());
+        using Package package = Package.Open(packageStream, FileMode.Open, FileAccess.Read);
+        PackageStore.AddPackage(uri, package);
+        try
+        {
+            PackagePart xamlPart = GetXamlPart(package);
+            switch (xamlPart)
+            {
+                case null:
+                    return;
+                default:
+                    global::System.Windows.Markup.ParserContext parserContext = global::Quire.Core.ParserContextFactory.Create(uri, xamlPart.Uri);
+                    object content;
+                    using (Stream stream = xamlPart.GetStream())
+                    {
+                        content = global::System.Windows.Markup.XamlReader.Load(stream, parserContext);
+                    }
+                    if (export)
+                    {
+                        range.LoadElementToExport(content);
+                    }
+                    else
+                    {
+                        range.LoadElementFromFile(content);
+                    }
+                    break;
+            }
+        }
+        finally
+        {
+            PackageStore.RemovePackage(uri);
+        }
+    }
 
     private static PackagePart GetXamlPart(Package package)
     {
