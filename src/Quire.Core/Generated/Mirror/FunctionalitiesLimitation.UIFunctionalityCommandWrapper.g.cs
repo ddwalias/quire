@@ -11,8 +11,4 @@ namespace Quire.FunctionalitiesLimitation;
 [global::Quire.Mirror.MirrorOf("Ptc.FunctionalitiesLimitation.UIFunctionalityCommandWrapper, Ptc.Core")]
 public partial class UIFunctionalityCommandWrapper : global::Quire.FunctionalitiesLimitation.BaseFunctionalityCommandWrapper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override event global::System.EventHandler CanExecuteChanged { add => base.CanExecuteChanged += value; remove => base.CanExecuteChanged -= value; }
-    [global::Quire.Mirror.MirrorStub]
-    private void OnBaseCanExecuteChanged(object sender, global::System.EventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
