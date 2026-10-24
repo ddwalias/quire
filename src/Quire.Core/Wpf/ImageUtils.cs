@@ -1,5 +1,7 @@
 #nullable disable
+using System;
 using System.IO;
+using System.IO.Packaging;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
@@ -68,6 +70,15 @@ public partial class ImageUtils
         CopyImageToStream(extension, uri, memoryStream, bitmapSource, null);
         memoryStream.Flush();
         return CopyImageToTempBitmap(memoryStream);
+    }
+
+    public static bool CopyImageToStream(Uri sourceUri, Stream stream, byte[] originalStreamHash)
+    {
+        if (string.Compare(sourceUri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0)
+        {
+            return SafeCopyImageFromPackage(sourceUri, originalStreamHash, stream);
+        }
+        return CopyImage(sourceUri, originalStreamHash, stream);
     }
 
     [MirrorVerified("Release IL")]

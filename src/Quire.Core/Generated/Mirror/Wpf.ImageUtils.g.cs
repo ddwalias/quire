@@ -28,8 +28,6 @@ public partial class ImageUtils
     [global::Quire.Mirror.MirrorStub]
     public static void CopyImageToTempBitmap(global::System.Windows.Controls.Image image) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static bool CopyImageToStream(global::System.Uri sourceUri, global::System.IO.Stream stream, byte[] originalStreamHash) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void EncodeImage(global::System.Windows.Media.Imaging.BitmapSource source, string imageType, global::System.IO.Stream target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string BitmapToB16String(global::System.Windows.Media.Imaging.BitmapSource bitmap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
