@@ -28,4 +28,26 @@ public static partial class HyperlinkExtensions
         System.Windows.Documents.TextRange textRange = new System.Windows.Documents.TextRange(link.ContentStart, link.ContentEnd);
         return textRange.Text;
     }
+
+    public static BlockCollection GetParentBlocks(this Block block)
+    {
+        DependencyObject parent = block.Parent;
+        if (parent == null)
+        {
+            return null;
+        }
+        switch (parent)
+        {
+            case FlowDocument flowDocument:
+                return flowDocument.Blocks;
+            case ListItem listItem:
+                return listItem.Blocks;
+            case Section section:
+                return section.Blocks;
+            case TableCell tableCell:
+                return tableCell.Blocks;
+            default:
+                return null;
+        }
+    }
 }

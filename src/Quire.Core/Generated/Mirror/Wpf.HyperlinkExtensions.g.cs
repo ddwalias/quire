@@ -25,6 +25,4 @@ public static partial class HyperlinkExtensions
     public static void ClearLocalValuesRecursively(this global::System.Windows.Documents.Inline inline, params global::System.Windows.DependencyProperty[] properties) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Documents.Span RecursiveRemoveEmptyInlinesIncludingSelf(this global::System.Windows.Documents.Span parentElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Documents.BlockCollection GetParentBlocks(this global::System.Windows.Documents.Block block) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
