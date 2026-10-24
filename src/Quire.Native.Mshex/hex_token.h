@@ -20,6 +20,9 @@ public:
 template <typename T>
 class TokenOf : public Token {
 public:
+    HEX_EXPORT TokenOf &operator=(const TokenOf &) = default;
+    HEX_EXPORT TokenOf &operator=(TokenOf &&) = default;
+
     HEX_EXPORT virtual std::uint16_t GetToken() const { return token_; }
     HEX_EXPORT Tag &GetTag() { return tag_; }
     HEX_EXPORT virtual Tag GetTag() const { return tag_; }

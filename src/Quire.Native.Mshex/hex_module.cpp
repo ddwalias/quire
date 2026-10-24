@@ -2,6 +2,26 @@
 
 namespace Hex {
 
+bool Module::IsCompiled() const {
+    return state_->GetStatus() >= 1;
+}
+
+bool Module::IsExecuted() const {
+    return state_->GetStatus() >= 2;
+}
+
+bool Module::HasErrors() const {
+    return state_->GetStatus() == 0;
+}
+
+Environment *Module::GetImports() const {
+    return state_->GetImports();
+}
+
+Environment *Module::GetExports() const {
+    return state_->GetExports();
+}
+
 Environment *Module::State::GetExports() const {
     return nullptr;
 }
