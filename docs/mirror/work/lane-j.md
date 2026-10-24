@@ -42,3 +42,18 @@ Build: MSBuild `Quire.Native.Mshex.vcxproj`, Release|x64, toolset v145, `/O2 /Gy
 ## Landing
 
 Not landed. Commit only owned files on this branch. Ask the maintainer to land it. Do not use `lane_merge.py`, since its Release IL gate does not cover native code (D10).
+
+## Harness proposal for the maintainer (not applied)
+
+The brief keeps `tools/validation/native_bytes.py` under the maintainer. This is the change Lane J needs, with `--strict` unchanged:
+
+- **Internal calls:** a relocation to a non-exported symbol is verified when the original's call site resolves to a function
+  whose bytes equal the candidate callee's bytes. The harness needs a reviewed manifest, for example
+  `docs/mirror/native/internal-targets.json`, mapping each decorated internal name to its original RVA. The harness checks
+  the manifest entries against the original's bytes and still reports anything missing as unverified.
+- **Data references:** a relocation to vtables or `.rdata` is verified by comparing the referenced data slot by slot (vtable
+  entries compared through the function bytes above) and by comparing constants byte for byte.
+- **Scope:** the change affects only how unverified targets are classified. Byte comparison, the export check and `--strict`
+  stay as they are.
+
+Until the maintainer lands this, the next Lane J batches are the Module and Error leaves. Those need no internal calls.
