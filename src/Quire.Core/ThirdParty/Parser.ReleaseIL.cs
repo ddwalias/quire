@@ -224,6 +224,80 @@ public sealed partial class Parser
     }
 
     [MirrorVerified("Release IL")]
+    private bool ParseArgumentList(string[] args, object destination)
+    {
+        bool flag = false;
+        if (args != null)
+        {
+            foreach (string text in args)
+            {
+                int num;
+                string text2;
+                string value;
+                Argument argument;
+                string[] args2;
+                char ch;
+                if (text.Length <= 0)
+                {
+                    continue;
+                }
+                ch = text[0];
+                switch (ch)
+                {
+                    case '-':
+                    case '/':
+                    {
+                        num = text.IndexOfAny(new char[3] { ':', '+', '-' }, 1);
+                        text2 = text.Substring(1, (num == -1) ? (text.Length - 1) : (num - 1));
+                        if (text2.Length + 1 == text.Length)
+                        {
+                            value = null;
+                        }
+                        else
+                        {
+                            if (text.Length <= 1 + text2.Length || text[1 + text2.Length] != ':')
+                                goto ValueWithoutColon;
+                            value = text.Substring(text2.Length + 2);
+                            goto ValueAssigned;
+                        ValueWithoutColon:
+                            value = text.Substring(text2.Length + 1);
+                        ValueAssigned:
+                            ;
+                        }
+                        argument = (Argument)argumentMap[text2];
+                        if (argument == null)
+                        {
+                            ReportUnrecognizedArgument(text);
+                            flag = true;
+                        }
+                        else
+                        {
+                            flag |= !argument.SetValue(value, destination);
+                        }
+                        break;
+                    }
+                    case '@':
+                    {
+                        flag |= LexFileArguments(text.Substring(1), out args2);
+                        flag |= ParseArgumentList(args2, destination);
+                        break;
+                    }
+                    default:
+                        if (defaultArgument != null)
+                        {
+                            flag |= !defaultArgument.SetValue(text, destination);
+                            break;
+                        }
+                        ReportUnrecognizedArgument(text);
+                        flag = true;
+                        break;
+                }
+            }
+        }
+        return flag;
+    }
+
+    [MirrorVerified("Release IL")]
     private bool LexFileArguments(string fileName, out string[] arguments)
     {
         string text = null;
