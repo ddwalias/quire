@@ -26,7 +26,5 @@ public static partial class TextRangeExtension
     [global::Quire.Mirror.MirrorStub]
     public static string SerializeRangeContentToXamlString(this global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static bool IntersectsWith(this global::System.Windows.Documents.TextRange range, global::System.Windows.Documents.TextElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.List<global::System.ValueTuple<int, int>> GetRangeItemsOffsets<TRun>(this global::System.Windows.Documents.TextRange range) where TRun : global::System.Windows.Documents.Run => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
