@@ -29,4 +29,7 @@ public partial class ProtectedItemType
         }
         set => dataidrefField = value;
     }
+
+    [MirrorVerified("PtcPersistentDataProtectedItemTypeMechanicalDifferentialTests")]
+    public ProtectedItemType() { }
 }
