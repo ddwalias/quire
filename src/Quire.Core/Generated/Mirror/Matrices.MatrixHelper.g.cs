@@ -11,6 +11,4 @@ namespace Quire.Matrices;
 [global::Quire.Mirror.MirrorOf("Ptc.Matrices.MatrixHelper, Ptc.Core")]
 public partial class MatrixHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IEnumerable<int> SubMatrixIndices(int corner1, int corner2, int columnCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

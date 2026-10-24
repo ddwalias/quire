@@ -53,9 +53,6 @@ public partial class MatrixHelper
         return array;
     }
 
-    [MirrorVerified("PtcMatricesMatrixHelperMechanicalDifferentialTests")]
-    public MatrixHelper() { }
-
     [MirrorVerified("Release IL")]
     public static int RowOf(int index, int columns) => index / columns;
 
@@ -172,6 +169,32 @@ public partial class MatrixHelper
     }
 
     [MirrorVerified("Release IL")]
+    public static DiscreteRect RectFromCornerIndices(int corner1, int corner2, int columns) => new DiscreteRect(RowOf(corner1, columns), ColumnOf(corner1, columns), RowOf(corner2, columns), ColumnOf(corner2, columns));
+
+    public static global::System.Collections.Generic.IEnumerable<int> SubMatrixIndices(int corner1, int corner2, int columnCount)
+    {
+        int first = RowOf(corner1, columnCount);
+        int finalRow = RowOf(corner2, columnCount);
+        if (first > finalRow)
+        {
+            Swap(ref first, ref finalRow);
+        }
+        int initalCol = ColumnOf(corner1, columnCount);
+        int finalCol = ColumnOf(corner2, columnCount);
+        if (initalCol > finalCol)
+        {
+            Swap(ref initalCol, ref finalCol);
+        }
+        for (int row = first; row <= finalRow; row++)
+        {
+            for (int col = initalCol; col <= finalCol; col++)
+            {
+                yield return IndexOf(row, col, columnCount);
+            }
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     private static void Swap<T>(ref T first, ref T second)
     {
         T val = second;
@@ -179,6 +202,6 @@ public partial class MatrixHelper
         first = val;
     }
 
-    [MirrorVerified("Release IL")]
-    public static DiscreteRect RectFromCornerIndices(int corner1, int corner2, int columns) => new DiscreteRect(RowOf(corner1, columns), ColumnOf(corner1, columns), RowOf(corner2, columns), ColumnOf(corner2, columns));
+    [MirrorVerified("PtcMatricesMatrixHelperMechanicalDifferentialTests")]
+    public MatrixHelper() { }
 }
