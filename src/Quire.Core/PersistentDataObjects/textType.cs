@@ -20,6 +20,25 @@ public partial class textType
         istextblockField = false;
     }
 
+    private void SetDocument(FlowDocument document)
+    {
+        DebugTools.DevAssert(_document == null && document != null, null);
+        _document = document;
+        if (_saveInline)
+        {
+            DocumentWithTextFormat = document;
+        }
+        else
+        {
+            DocumentWithTextFormat = new FlowDocument
+            {
+                Language = Document.Language
+            };
+            TextFormat.CopyTextFormat(Document, DocumentWithTextFormat);
+        }
+        SetXaml();
+    }
+
     public void AddFontName(string name)
     {
         if (FontNames == null)

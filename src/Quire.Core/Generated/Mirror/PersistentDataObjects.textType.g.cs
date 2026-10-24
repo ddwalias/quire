@@ -20,8 +20,6 @@ public partial class textType : global::Quire.PersistentData.RegionCollectionPre
     [global::Quire.Mirror.MirrorStub]
     private bool _saveInline;
     [global::Quire.Mirror.MirrorStub]
-    private void SetDocument(global::System.Windows.Documents.FlowDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void SerializeFlowDocument(global::Quire.Serialization.IS11NProvider s11NProvider, string regionId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Xml.XmlElement CreateXamlFromFlowDocument(global::System.Windows.Documents.FlowDocument flowDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
