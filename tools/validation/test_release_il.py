@@ -41,6 +41,12 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         self.assertFalse(compare(inventory(method(body='a.g.cs', stub_body=True)),
                                  inventory(method(body='b.cs', exact=False, stub_body=True)))['passed'])
 
+    def test_new_generated_stub_is_unfinished_unless_unpaired_or_misdeclared(self):
+        self.assertTrue(compare(inventory(), inventory(method(exact=False, stub_body=True)))['passed'])
+        self.assertFalse(compare(inventory(), inventory(method(exact=False, stub_body=True, original=None)))['passed'])
+        self.assertFalse(compare(inventory(), inventory(method(exact=False, mirror_stub=True, shape_matches=False)))['passed'])
+        self.assertFalse(compare(inventory(), inventory(method(exact=False)))['passed'])
+
     def test_regenerated_attribute_stub_is_unchanged(self):
         # A constructor stub whose chaining MirrorGen changed is still a stub.
         result = compare(inventory(method(body='base()', exact=False, mirror_stub=True)),

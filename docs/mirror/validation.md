@@ -149,7 +149,9 @@ first), so generated stubs precede hand-written members. Placeholder stubs decla
 the hand-written file keep Mathcad's order while members are unfinished.
 
 A body that is only a `MirrorStub` throw before and after is unchanged even when the
-source file it records moved; it stays unfinished and is checked once implemented.
+source file it records moved; it stays unfinished and is checked once implemented. A new
+generated stub (regeneration mapped another member) is unfinished too when its declaration
+matches its Mathcad counterpart; one without a counterpart still fails.
 
 Explicit implementation names come from their MethodImpl interface identities. Inventory
 IDs/signatures use that canonical identity, while `declared_signature` retains the compiled

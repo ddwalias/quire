@@ -132,8 +132,9 @@ def compare(before, after, types=(), methods=()):
     Unmapped changed methods are blockers, including generated helpers. Unchanged
     unfinished methods stay out of the batch. D10 engine-native methods are identified
     by MethodAudit from their original artifact and do not require a managed IL match.
-    A generated stub replaced by another generated stub is unchanged, and removing a
-    never-exact generated stub (hand-written code now provides the member) does not fail;
+    A generated stub replaced by another generated stub is unchanged, as is a new generated
+    stub declared as its Mathcad counterpart, and removing a never-exact generated stub
+    (hand-written code now provides the member) does not fail;
     implemented members and previously exact methods are judged as before.
     Removing a compiler-generated member with no Mathcad counterpart (a renumbered
     closure or state machine) does not fail the gate. Nor does changing or removing an
@@ -167,6 +168,10 @@ def compare(before, after, types=(), methods=()):
         # [MirrorStub] counts: MirrorGen re-spells a constructor stub's chaining, and only generated code carries it.
         if changed and previous is not None and stub(previous) and stub(row) \
                 and previous.get('shape_matches') == row.get('shape_matches'):
+            changed = False
+        # A stub regeneration adds (a member that became mappable) is unfinished too, once declared as Mathcad's.
+        if changed and previous is None and stub(row) and row.get('original') is not None \
+                and row.get('shape_matches') is True:
             changed = False
         if not (changed or row.get('unsupported') or selected(row, types, methods)
                 or previous and previous.get('exact_match') is True):

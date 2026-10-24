@@ -64,9 +64,9 @@ python tools/validation/release_il.py --base main
 ```
 
 Emit drops stubs for members hand-written code now provides (on the type, or a hand-written
-base for methods); the gate does not count removing a never-exact stub, or replacing one stub
-with another, as a change. Keep original binaries and decompiled code in the ignored cache;
-never commit them.
+base for methods); the gate does not count removing a never-exact stub, replacing one stub
+with another, or adding a stub declared as its Mathcad counterpart, as a change. Keep
+original binaries and decompiled code in the ignored cache; never commit them.
 
 The retired runtime validators, mutation/coverage tooling and stored baselines are removed.
 Only the Release IL tools participate in batch acceptance and merging.
