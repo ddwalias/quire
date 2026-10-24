@@ -234,12 +234,6 @@ public partial class ImageUtils
         return CreateBitmapFromElement(element, screenDpiForApplication.Width, screenDpiForApplication.Height, adornerDecoratorAncestor, rootVisual, bounds);
     }
 
-    public static byte[] B16StringToBytes(string hexString)
-    {
-        return (from ind in Enumerable.Range(0, hexString.Length / 2)
-                select Convert.ToByte(hexString.Substring(ind * 2, 2), 16)).ToArray();
-    }
-
     [MirrorVerified("Release IL")]
     public static BitmapImage CreateBitmapImageWithCacheOptions(Uri uri)
     {
@@ -250,6 +244,12 @@ public partial class ImageUtils
         bitmapImage.UriSource = uri;
         bitmapImage.EndInit();
         return bitmapImage;
+    }
+
+    public static byte[] B16StringToBytes(string hexString)
+    {
+        return (from ind in Enumerable.Range(0, hexString.Length / 2)
+                select Convert.ToByte(hexString.Substring(ind * 2, 2), 16)).ToArray();
     }
 
     [MirrorVerified("Release IL")]
@@ -268,6 +268,13 @@ public partial class ImageUtils
     {
         Size val = DpiScaleForApplication();
         return new Size(val.Width * 96.0, val.Height * 96.0);
+    }
+
+    public static BitmapSource CreatePngFromElement(FrameworkElement element)
+    {
+        global::Quire.MindTouch.IO.ChunkedMemoryStream chunkedMemoryStream = new global::Quire.MindTouch.IO.ChunkedMemoryStream();
+        SavePngFromElementUsingScreenDpi(element, chunkedMemoryStream);
+        return BitmapFrame.Create(chunkedMemoryStream);
     }
 
     [MirrorVerified("Release IL")]
