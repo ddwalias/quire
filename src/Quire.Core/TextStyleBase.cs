@@ -434,8 +434,19 @@ public partial class TextStyleBase
     public Nullable<BaselineAlignment> BaselineAlignment { get => new BaselineAlignment?(_baselineAlignment); set => Update("BaselineAlignment", value); }
 
     [MirrorVerified("Release IL")]
-    protected Nullable<TextAlignment> _textAlignment;
+    public Nullable<TextAlignment> TextAlignment { get => _textAlignment; set => Update("TextAlignment", value); }
 
     [MirrorVerified("Release IL")]
-    public Nullable<TextAlignment> TextAlignment { get => _textAlignment; set => Update("TextAlignment", value); }
+    public static object GetSetterValue(Style style, string propertyName)
+    {
+        if (style != null)
+        {
+            System.Windows.Setter setter = (System.Windows.Setter)style.Setters.FirstOrDefault((System.Windows.SetterBase prop) => ((System.Windows.Setter)prop).Property.Name == propertyName);
+            if (setter != null)
+            {
+                return setter.Value;
+            }
+        }
+        return null;
+    }
 }
