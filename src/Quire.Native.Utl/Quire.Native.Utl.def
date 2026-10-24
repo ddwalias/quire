@@ -4,6 +4,7 @@ EXPORTS
     ?ThreadInitialize@InterruptControl@utl@@SAXPEAV12@@Z
     ?s_tls_index@InterruptControl@utl@@0KA DATA
     ?GetNumberOfProcessors@utl@@YAHXZ
+    ?toBSTR@utl@@YAPEA_WIPEBD_K@Z
     ??4InterruptControl@utl@@QEAAAEAV01@AEBV01@@Z
     ??4InterruptControl@utl@@QEAAAEAV01@$$QEAV01@@Z
     ??0WordDatum@utl@@QEAA@PEBD@Z

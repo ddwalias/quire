@@ -2,12 +2,15 @@
 
 #include <Windows.h>
 
+#include <cstddef>
+
 // Class layouts for utl.dll's exports. Each member is declared at the offset its machine code uses; the
 // layouts of members that no exported function touches yet are not inferred.
 
 namespace utl {
 
 int GetNumberOfProcessors();
+wchar_t *toBSTR(unsigned int codePage, const char *source, size_t length);
 
 class InterruptControl {
 public:

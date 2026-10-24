@@ -1,6 +1,6 @@
 # Lane K: utl.dll → Quire.Native.Utl
 
-**Status: incomplete.** 17 of 100 functions pass strict byte validation, plus 1 data export (`s_tls_index`) present by name. Export parity: 82 missing, 0 extra.
+**Status: incomplete.** 17 of 100 functions pass strict byte validation, plus 1 data export (`s_tls_index`) present by name. `toBSTR` is byte-identical but fails strict on the ordinal-import check (see limitation 3), so it is not counted. Export parity: 81 missing, 0 extra.
 
 - **Owner:** Lane K (native, `utl.dll`)
 - **Branch:** `mirror/k-utl-202610241230`
@@ -20,11 +20,12 @@
 | `InterruptControl::IsInterrupted`, `ThreadInitialize` (batch 2) | 2 | 2/2 OK, 0 unverified | `utl_interrupt.cpp`. Reads and writes `s_tls_index`, which the original exports, so the reference is verified. `Quire.Native.Mcaduser`'s only `utl.dll` import. |
 | `GetNumberOfProcessors` (batch 2) | 1 | 1/1 OK, 0 unverified | `utl_system.cpp`. `GetSystemInfo` on a local `SYSTEM_INFO`. |
 | `s_tls_index` (data, batch 2) | 0 | not byte-checked | Name present in export parity. The validator has no data-export check. Its TLS allocation is not yet ported. |
+| `toBSTR` (batch 3, `utl_string.cpp`) | 1 | **not counted**: bytes identical, strict fails on the ordinal import `#4` (limitation 3) | Two-pass `MultiByteToWideChar` plus `SysAllocStringLen`. The reason text shows only the import-name mismatch, with no byte difference. |
 
 Totals: **17/17 functions OK, 0 unverified** under `--strict`. Command:
 `python tools/validation/native_bytes.py --original "<install>/utl.dll" --candidate .mirror-cache/obj/utl/<file>.obj --strict --symbol <name>...`.
 
-Export parity: `python tools/validation/native_bytes.py --original "<install>/utl.dll" --built-dll .mirror-cache/bin/Quire.Native.Utl.dll` gives **82 missing, 0 extra** (exit 1, expected until complete).
+Export parity: `python tools/validation/native_bytes.py --original "<install>/utl.dll" --built-dll .mirror-cache/bin/Quire.Native.Utl.dll` gives **81 missing, 0 extra** (exit 1, expected until complete).
 
 ## Build
 
@@ -40,15 +41,25 @@ MSBuild, Release|x64, toolset v145, MSVC 14.51.36231. `/O2 /Gy /GS /EHsc /MD /st
 
 `utl.dll` imports no Quire-owned DLL. Its 191 imports are all system or runtime DLLs (`KERNEL32`, `USER32`, `ADVAPI32`, `SHELL32`, `OLEAUT32`, `MSVCP140`, `VCRUNTIME140`, UCRT API sets). I interpret D10's `.def` pinning as applying to Quire-owned DLLs (as with `efiutl.def` for Lane H), so these bind to the SDK and toolset import libraries. Please confirm this is the intended reading. If you want per-DLL `.def` pins for system DLLs too, that is a follow-up.
 
+## Consumer status
+
+| Consumer | `utl.dll` imports | Status |
+|---|---|---|
+| `Quire.Native.Mcaduser` | `IsInterrupted` | **Done** (batch 2, strict OK). Its only `utl` import is present. |
+| `Quire.Native.EfisymbolicsUmgd` | 10 exports (see below) | **Blocked.** 1 byte-identical but import-blocked (`toBSTR`); 9 not implemented. Most reference utl-internal data or helpers (limitation 1) or use large STL code (`GetAppRelativeFS`, `GetDirectoryName`, `Win32ErrorText`). |
+
+`EfisymbolicsUmgd` imports: `getInstanceDirW`, `SafeTerminateProcess`, `mcGetEnvironmentVariable` (wide), `SafeTerminateOnExit`, `Log` (char), `IsLoggingEnabled`, `GetDirectoryName`, `GetAppRelativeFS` (wide), `Win32ErrorText`, `toBSTR`.
+
 ## Remaining work
 
-- 82 exports, in groups: `PerformanceTimer`, `TimeIt`, `WordData`, `WordChoice` (`BestGuess*`, `GetSuggestions`, `GetScore`), `with_purecall_handler` (ctor/dtor), `InterruptControl` (`IsInterrupted`, `ThreadInitialize`, `s_tls_index`, `s_tls_init`), `mcGetSetting`, timers, logging, paths, and the `std::` string/stream exports.
-- Consumers (per the brief's priority):
-  - `Quire.Native.Mcaduser` imports `?IsInterrupted@InterruptControl@utl@@SA_NXZ`. Done (batch 2).
-  - `Quire.Native.EfisymbolicsUmgd` imports 10 exports. Among them, `?toBSTR@utl@@YAPEA_WIPEBD_K@Z` is strict-feasible (see below). The rest reference utl-internal data or helpers.
+- 81 exports, of which 1 (`toBSTR`) is written but not counted.
+- **Next claim: the `PerformanceTimer` leaves** (`Start`, `Pause`, `Resume`, `Reset`, `GetCount`, the ctor). Their layout must be inferred from the bodies first: a struct with fields through `+0x68` and a `CRITICAL_SECTION` at `+0x40`. None of these is a consumer import.
+- Then the non-consumer groups: `TimeIt`, `WordData`, `WordChoice` (`BestGuess*`, `GetSuggestions`, `GetScore`), `with_purecall_handler` (ctor/dtor), `mcGetSetting`, timers, logging, paths, and the `std::` string/stream exports.
 - Static initialisers (`s_tls_init`, the TLS index allocation) are not yet implemented. The DLL will not set `s_tls_index` until they are.
 
 ## Harness limitations (report to the maintainer; not worked around)
+
+Per the brief, these are reported and not worked around. Decisions needed from the maintainer before the remaining consumer exports can pass strict:
 
 1. **Internal references block `--strict`.** Any function that references a utl-internal (non-exported) data item or a call to an internal helper is reported as unverified. Strict fails it, and the original's symbols are not available. Examples: `IsLoggingEnabled` (flag at `0x180022862`, helper `0x1800088E0`), `IsTimingEnabled`, `SafeTerminateProcess`, `getInstanceDirW`. Their byte content is not in question, but they cannot pass strict as the harness stands.
 2. **Data exports are not byte-checked.** `s_tls_index`, `s_tls_init` and the `??_7TimeIt` vtable are exports of the original, but the validator checks only functions. Their names pass export parity; their contents are not verified.
@@ -56,4 +67,4 @@ MSBuild, Release|x64, toolset v145, MSVC 14.51.36231. `/O2 /Gy /GS /EHsc /MD /st
 
 ## Landing
 
-Not landed. Commit only owned files on this branch. Ask the maintainer to land it. Do not use `lane_merge.py` (D10: its Release IL gate does not cover native code).
+Not landed. Batch 1 is `c318361a`, batch 2 is `96321fac`, and batch 3 (`toBSTR`) is committed after it. Ask the maintainer to land the branch. Do not use `lane_merge.py` (D10: its Release IL gate does not cover native code).
