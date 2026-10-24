@@ -391,6 +391,95 @@ public partial class TextStyleBase
     }
 
     [MirrorVerified("Release IL")]
+    protected TextStyleBase(global::Quire.Core.TextFormat textFormat, bool reset = false)
+    {
+        Style = new Style(typeof(IFrameworkInputElement), null);
+        BasedOnKey = (textFormat.BasedOnKey.IsNullOrEmpty() ? null : textFormat.BasedOnKey);
+        StyleKey = textFormat.StyleKey ?? TextStyleUniqueKeyGenerator(StyleActionTypeEnum.New.ToString());
+        if (Name == null || Name == "areaLayoutStyle" || Name == "headerLayoutStyle" || Name == "footerLayoutStyle")
+        {
+            Name = TextStyleStripKeyGenerator(StyleKey);
+        }
+        if (textFormat.FontFamily.Source.IsNotEmpty() | reset)
+        {
+            FontFamily = textFormat.FontFamily;
+        }
+        else
+        {
+            FontFamily = new FontFamily("Tahoma");
+        }
+        if (!textFormat.MixedFontWeight | reset)
+        {
+            FontWeight = textFormat.FontWeight;
+        }
+        else
+        {
+            FontWeight = FontWeights.Normal;
+        }
+        if (!textFormat.MixedFontSize | reset)
+        {
+            FontSize = textFormat.FontSize;
+        }
+        else
+        {
+            FontSize = global::Quire.Wpf.WpfUtils.PointsToDips(11.0);
+        }
+        if (!textFormat.MixedFontStyle | reset)
+        {
+            FontStyle = textFormat.FontStyle;
+        }
+        else
+        {
+            FontStyle = FontStyles.Normal;
+        }
+        if (!textFormat.MixedBackground | reset)
+        {
+            Update("Background", textFormat.Background ?? new SolidColorBrush(Colors.Transparent));
+        }
+        else if (textFormat.MixedBackground)
+        {
+            Update("Background", new SolidColorBrush(Colors.Transparent));
+        }
+        if (!textFormat.MixedForeground | reset)
+        {
+            Update("Foreground", textFormat.Foreground);
+        }
+        else
+        {
+            Update("Foreground", new SolidColorBrush(Colors.Black));
+        }
+        if (!textFormat.Margin.Equals(default(Thickness)) | reset)
+        {
+            Margin = textFormat.Margin;
+        }
+        if (!textFormat.MixedMarkerStyle | reset)
+        {
+            MarkerStyle = textFormat.MarkerStyle;
+        }
+        else if (textFormat.MixedMarkerStyle)
+        {
+            MarkerStyle = TextMarkerStyle.None;
+        }
+        Update("TextIndent", textFormat.TextIndent);
+        if (!textFormat.MixedTextAlignment | reset)
+        {
+            TextAlignment = textFormat.TextAlignment;
+        }
+        else
+        {
+            TextAlignment = System.Windows.TextAlignment.Left;
+        }
+        if ((textFormat.TextDecorations?.Count >= 0) | reset)
+        {
+            Update("TextDecorations", textFormat.TextDecorations);
+        }
+        if ((textFormat.Variants != System.Windows.FontVariants.Normal) | reset)
+        {
+            FontVariants = textFormat.Variants;
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     protected TextStyleBase(string name, string key) : this(new TextStyleData(name, key, new Style(), null), true) { }
 
     [MirrorVerified("Release IL")]
