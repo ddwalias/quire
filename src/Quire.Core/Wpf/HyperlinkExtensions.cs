@@ -29,6 +29,24 @@ public static partial class HyperlinkExtensions
         return textRange.Text;
     }
 
+    public static InlineCollection GetParentInlines(this Inline inline)
+    {
+        DependencyObject parent = inline.Parent;
+        if (parent == null)
+        {
+            return null;
+        }
+        switch (parent)
+        {
+            case Span span:
+                return span.Inlines;
+            case Paragraph paragraph:
+                return paragraph.Inlines;
+            default:
+                return null;
+        }
+    }
+
     public static BlockCollection GetParentBlocks(this Block block)
     {
         DependencyObject parent = block.Parent;
