@@ -75,14 +75,53 @@ public sealed class Rules
         return rules;
     }
 
+    /// <summary>Mathcad assemblies that are deferred wholesale and so not listed type by type in the type map (D5).</summary>
+    public static bool IsDeferredAssembly(string asm) => asm is "LicenseWizard" or "Ptc.License.Plpf" or "Ptc.OleInterop";
+
     /// <summary>
-    /// Mathcad assemblies that are deferred wholesale and so not listed type by type in the type map. COM interop
-    /// assemblies stay deferred except interop.mathcadautomationprivate, which is mirrored (D22).
+    /// Why an installed binary has no Quire project, for every DLL and EXE in the install that is neither in the type
+    /// map nor a native D20 target (docs/mirror/scope.md). <paramref name="path"/> is relative to the install
+    /// directory with '/' separators. Null means unclassified: the assembly map refuses to omit it.
     /// </summary>
-    public static bool IsDeferredAssembly(string asm) =>
-        asm is "LicenseWizard" or "Ptc.License.Plpf" or "Ptc.OleInterop"
-        || asm.StartsWith("interop.", StringComparison.OrdinalIgnoreCase)
-            && !asm.Equals("interop.mathcadautomationprivate", StringComparison.OrdinalIgnoreCase);
+    public static string? NotMirrored(string path)
+    {
+        string stem = Path.GetFileNameWithoutExtension(path).ToLowerInvariant();
+        if (path.StartsWith("chartappole_sh/", StringComparison.OrdinalIgnoreCase) || stem == "prod_dcu" || CreoPlatform.Contains(stem))
+            return "deferred: PTC Creo platform (D5)";
+        if (stem.StartsWith("mkl_") || stem is "libimalloc" or "libiomp5md") return "substitute: MathNet.Numerics for Intel oneMKL (D6)";
+        if (stem.StartsWith("clearscript.")) return "dependency: Microsoft.ClearScript";
+        if (stem.StartsWith("devcomponents.")) return "substitute: Fluent.Ribbon / Dirkster.AvalonDock for DevComponents (D6)";
+        if (stem.StartsWith("system.servicemodel.")) return "dependency: System.ServiceModel (dotnet/wcf)";
+        return stem switch
+        {
+            "licensewizard" or "ptc.license.plpf" => "deferred: licensing (D5)",
+            "ptc.oleinterop" => "deferred (D5)",
+            "creo3dfit" => "deferred (D5)",
+            "mathcadprime" when path.EndsWith(".exe", StringComparison.OrdinalIgnoreCase) => "app host: built with the Quire project",
+            "ijwhost" => "toolchain: .NET host shim the C++/CLI build ships",
+            "documentformat.openxml" => "dependency: DocumentFormat.OpenXml",
+            "microsoft.extensions.objectpool" => "dependency: Microsoft.Extensions.ObjectPool",
+            "system.management" => "dependency: System.Management",
+            "python.runtime" => "dependency: pythonnet",
+            "nrtftree-library" => "dependency: NRtfTree (licence D7)",
+            "system.windows.interactivity" => "substitute: Microsoft.Xaml.Behaviors.Wpf",
+            "knitro1510" => "substitute: IPOPT or NLopt for Knitro (D6)",
+            "axiomsys" => "dependency: FriCAS for Axiom",
+            "cryptomt" => "not needed: .NET cryptography replaces OpenSSL",
+            "xercescmt" => "not needed: System.Xml replaces Xerces-C++",
+            "ucore68" or "udata68" => "not needed: .NET globalisation replaces ICU",
+            "concrt140" or "mfc140u" or "msvcp140" or "vcomp140" or "vcruntime140" or "vcruntime140_1" =>
+                "not needed: MSVC runtime redistributable",
+            _ => null,
+        };
+    }
+
+    /// <summary>PTC Creo platform libraries shipped beside Mathcad (scope.md §1.4).</summary>
+    private static readonly HashSet<string> CreoPlatform =
+    [
+        "asyncoremt", "baselibmt", "coretools_sh", "coreutils_sh", "dlmmgrmt", "exitlogger_app_sh", "i18nmt",
+        "liappcoremt", "licommonmt", "limanifestmt", "lutilsmt", "rtlcoremt", "srvcmgrmt", "telecon_utils", "utfstrmt",
+    ];
 
     // ---------------------------------------------------------------- names
 
@@ -146,7 +185,7 @@ public sealed class Rules
     /// </summary>
     private static readonly Dictionary<string, (Language Language, string Name)> Assemblies = Table(
         (Language.CSharp, ["automation", "automationmgd", "componentsmgd", "efiio-csharp", "efiplot_", "efisixsigma_",
-            "interop.mathcadautomationprivate", "mcmisc", "mplasb", "mplrun", "utilsmgd"]),
+            "interop.mathcad", "interop.mathcadautomationprivate", "interop.mathcadold", "interop.vsinterfaceslib", "mcmisc", "mplasb", "mplrun", "utilsmgd"]),
         (Language.CppCli, ["efibessel_", "eficalculus_", "eficore_", "efidata_", "efidebug_", "efidiffeq_",
             "efifinance_", "efifitting_", "efifourier_", "efigraphics_", "efiimage_", "efiio_", "efimatrix_",
             "efisignal_", "efisolver_", "efispecial_", "efistatistics_", "efisymbolics_", "efiutl", "efiwavelets_",
@@ -198,6 +237,9 @@ public sealed class Rules
         "automation" => "Quire.Automation.Native",
         "mpl" => "Quire.MplModule",
         "interop.mathcadautomationprivate" => "Quire.AutomationPrivate",
+        "interop.mathcad" => "Quire.Interop.Mathcad",
+        "interop.mathcadold" => "Quire.Interop.MathcadOld",
+        "interop.vsinterfaceslib" => "Quire.Interop.VSInterfacesLib",
         _ when Assemblies.TryGetValue(asm, out var a) =>
             (a.Language == Language.Native ? "Quire.Native." : "Quire.") + NativeAssemblyName(a.Name),
         _ => throw new ArgumentException($"no project rule for {asm}"),
@@ -250,7 +292,7 @@ public sealed class Rules
     /// </summary>
     private static string D2Host(string asm) => asm.ToLowerInvariant() switch
     {
-        var a when a.StartsWith("ptc.") || a is "mathcadprime" or "interop.mathcadautomationprivate" => ProjectFor(asm),
+        var a when a.StartsWith("ptc.") || a.StartsWith("interop.") || a == "mathcadprime" => ProjectFor(asm),
         "mplasb" => "Quire.Mpl.Emit",
         "mplrun" => "Quire.Mpl",
         var a when a.StartsWith("mpl") || a is "hashtable" or "mcdrun" || a.StartsWith("mcdstaticunitsystem") => "Quire.Mpl.Modules",

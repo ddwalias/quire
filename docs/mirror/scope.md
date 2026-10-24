@@ -109,3 +109,6 @@ licensing agents, service management, crash and telemetry logging, i18n, string 
 even Ansys CUDA hooks. They're PTC code, but not Mathcad's, so whether they count as "from Mathcad" is **decision
 D5**, decided 2026-10-16: they are deferred with licensing, because nothing in the calculation or worksheet path
 depends on them.
+
+The `chartappole_sh/` folder is Creo's chart OLE application (`chartappole_sh.dll`, ChartDirector `chartdir70`,
+image and ICU libraries, and `proe/uitools` resources). It is Creo platform code and is deferred with it (D5).

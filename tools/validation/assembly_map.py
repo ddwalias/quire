@@ -140,15 +140,15 @@ def render(data):
     by_name = {u['name']: u for u in units}
     graph = {u['name']: u['dependencies'] for u in units}
     ids = {name: f'a{i}' for i, name in enumerate(graph)}
-    managed = [u for u in units if u['language'] != 'Native']
     lines = ['# Assembly dependency map', '',
              'Generated from installed Mathcad assembly metadata, PE imports and evaluated Release project references.',
              f"Snapshot: {data['generated_at']}; revision `{data['revision'][:12]}`.", '',
              'This is a planning aid for step 1 of the [five-step workflow](PLAN.md). It adds no validation step.', '',
              'Each Mathcad assembly has one Quire target project in its original language ([D20](decisions.md)).',
              'An arrow **A → B** means B depends on A: complete A before starting B. Frameworks and packages are',
-             'treated as available. Native projects are link inputs outside the IL gate (D10): their stopgap import',
-             'libraries make them available, so they never block a wave. Mpl modules also depend on the Mpl compiler',
+             'treated as available. Native DLLs are mirrored as native projects and share the completion order: a',
+             'stopgap import library does not make one available. They are outside the IL gate (D10). Mpl modules',
+             'also depend on the Mpl compiler',
              '(`mplasb`, `mplrun`, `msgen`, `msclr`, and native ports of `msmpl` and `mshex`).', '',
              '“Ready” concerns dependencies, not ownership. Check [WORK](WORK.md) before claiming files.', '',
              '## Ready now', '',
@@ -162,7 +162,8 @@ def render(data):
               'The rows are dependency order, not a claim that any assembly is already complete.', '',
               '| Wave | Assemblies |', '|---|---|']
     for i, layer in enumerate(data['waves'], 1):
-        lines.append(f"| {i} | " + ', '.join(f'`{p}`' for p in layer) + ' |')
+        lines.append(f"| {i} | " + ', '.join(f'`{p}`' + (' (native)' if by_name[p]['language'] == 'Native' else '')
+                                             for p in layer) + ' |')
     if data['blocked']:
         lines += ['', '**Cycles or unresolved dependencies (an error under D20):** ' + ', '.join(data['blocked'])]
     if data['assume_complete']:
@@ -183,16 +184,6 @@ def render(data):
             lines.append(f"| `{u['name']}` | `{u['original']['file']}` | " +
                          (', '.join(f'`{d}`' for d in u['dependencies']) or 'None') + ' | ' +
                          (', '.join(f'`{d}`' for d in u['dependents']) or 'None') + ' |')
-    lines += ['', '## Native completion order', '',
-              'Native ports ordered among themselves. A port’s managed prerequisites must also be complete first;',
-              'they are scheduled in the completion order above.', '',
-              '| Wave | Native projects | Managed prerequisites |', '|---|---|---|']
-    for i, layer in enumerate(data['native_waves'], 1):
-        prerequisites = [(p, [d for d in by_name[p]['dependencies'] if by_name[d]['language'] != 'Native']) for p in layer]
-        lines.append(f"| {i} | " + ', '.join(f'`{p}`' for p in layer) + ' | ' +
-                     ('; '.join(f'`{p}`: ' + ', '.join(f'`{d}`' for d in m) for p, m in prerequisites if m) or 'None') + ' |')
-    if data['native_blocked']:
-        lines += ['', '**Native cycles:** ' + ', '.join(data['native_blocked'])]
     lines += ['', '## Dependency graph', '',
               'Solid arrows are references of split projects. Dashed arrows come from the original Mathcad references',
               'and native imports. Transitive references are omitted.', '',
@@ -207,15 +198,29 @@ def render(data):
               'IL counts are the last recorded Release audit of that original’s rows.', '',
               '| Target | Original | Language | Host | Required | Stub bodies | Scope | Status | Last recorded exact IL |',
               '|---|---|---|---|---|---:|---|---|---|']
-    for u in managed:
+    for u in units:
         audit = u['audit']
         count = (f"{audit['exact']} exact; {audit['declarations']} declarations; {audit['native_pairs']} native pairs; "
                  f"{audit['remaining']} unresolved") if audit else 'Not recorded'
-        host = 'split' if u['split'] else f"`{u['host']}`"
-        stubs = u['stub_bodies'] if u['split'] else f"{u['stub_bodies']} (host)"
+        host = 'native project' if u['language'] == 'Native' else 'split' if u['split'] else f"`{u['host']}`"
+        stubs = u['stub_bodies'] if u['split'] or u['language'] == 'Native' else f"{u['stub_bodies']} (host)"
         lines.append(f"| `{u['name']}` | `{u['original']['file']}` | {u['language']} | {host} | " +
                      (', '.join(f'`{d}`' for d in u['dependencies']) or 'None') +
                      f" | {stubs} | {u['scope']} | {u['status']} | {count} |")
+    lines += ['', '## Not mirrored', '',
+              'Every other DLL and EXE in the install, with the reason it has no Quire project ([scope](scope.md),',
+              '[decisions](decisions.md)). “Used by” lists the units whose original references or imports it.', '',
+              '| File | Kind | Treatment | Used by |', '|---|---|---|---|']
+    for o in data['not_mirrored']:
+        lines.append(f"| `{o['file']}` | {o['kind']} | {o['treatment']} | " +
+                     (', '.join(f'`{u}`' for u in o['used_by']) or 'None') + ' |')
+    lines += ['', '## Satellite resource assemblies', '',
+              'Localised resources ship beside their assembly in one folder per culture. Quire builds its own from',
+              'Quire-authored resources ([D21](decisions.md)).', '',
+              '| Assembly | Cultures |', '|---|---|']
+    for u in sorted(units + data['not_mirrored'], key=lambda u: u.get('name') or u['file']):
+        if u['satellites']:
+            lines.append(f"| `{u.get('name') or u['file']}` | " + ', '.join(u['satellites']) + ' |')
     lines += ['', '## Regenerate / explore the next unlocks', '', '```powershell',
               'python tools/validation/assembly_map.py',
               'python tools/validation/assembly_map.py --assume-complete Quire.Core', '```', '',
@@ -244,6 +249,12 @@ def main(argv=None):
     errors = [f"{a['file']}: {a['error']}" for a in originals if a.get('error')]
     if errors:
         raise ValueError('Original metadata unavailable; refusing an incomplete dependency map: ' + '; '.join(errors))
+    # Every installed binary is accounted for: a planning unit, a satellite of one, or a reason it is not mirrored.
+    satellites = defaultdict(list)
+    for a in originals:
+        if a.get('satellite_of'):
+            satellites[a['satellite_of'].lower()].append(a['culture'])
+    not_mirrored = [a for a in originals if a.get('not_mirrored')]
     # Deferred originals (D5) have no D20 target in scope; they are not planning units.
     originals = [a for a in originals if a.get('project') and a.get('language') and not a.get('deferred')]
     lookup = {a['name'].lower(): a for a in originals}
@@ -297,7 +308,8 @@ def main(argv=None):
                          else 'active / mixed' if counts.get('A', 0) + counts.get('B', 0)
                          else 'A2 stretch' if counts.get('A2') else 'deferred / out of scope')
         if a['language'] == 'Native':
-            unit['stub_bodies'], unit['status'], unit['audit'] = 0, 'link input', None
+            # No IL to audit (D10): a native port is unconfirmed once its project exists.
+            unit['stub_bodies'], unit['status'], unit['audit'] = 0, 'unconfirmed' if a['target_exists'] else 'not started', None
         else:
             source = name if split else a['host']
             unit['stub_bodies'] = source_stubs(source)
@@ -306,30 +318,43 @@ def main(argv=None):
         units.append(unit)
     for unit in units:
         unit['dependents'] = sorted(u['name'] for u in units if unit['name'] in u['dependencies'])
+        unit['satellites'] = sorted(satellites.pop(unit['original']['name'].lower(), []))
+    others = []
+    for a in not_mirrored:
+        # References and imports resolve from the install directory, as do satellites; a copy in a subfolder
+        # (chartappole_sh/) belongs to whatever loads it there.
+        top = '/' not in a['file']
+        used_by = sorted(u['name'] for u in units if top and a['name'].lower() in
+                         {r.lower() for r in (u['original'].get('references') or []) + (u['original'].get('native_imports') or [])})
+        others.append({'file': a['file'], 'kind': 'managed' if a['managed'] else 'native', 'treatment': a['not_mirrored'],
+                       'used_by': used_by, 'satellites': sorted(satellites.pop(a['name'].lower(), []) if top else [])})
+    if satellites:
+        raise ValueError('Satellite assemblies without a listed parent: ' + ', '.join(sorted(satellites)))
 
     graph = {u['name']: u['dependencies'] for u in units}
     names = graph.keys() | set(support)
     unknown = set(args.assume_complete) - names
     if unknown:
         parser.error('unknown assemblies: ' + ', '.join(sorted(unknown)))
-    available = set(support) | {u['name'] for u in units if u['status'] in ('complete', 'link input')}
-    layers, blocked = waves(graph, available)
-    scenarios, _ = waves(graph, available | set(args.assume_complete))
-    native = {u['name'] for u in units if u['language'] == 'Native'}
-    native_layers, native_blocked = waves({n: [d for d in graph[n] if d in native] for n in native}, set())
+    # One order for every unit, native ports included: each is mirrored, and a stopgap import library does not
+    # make it available.
+    order = graph
+    available = set(support) | {u['name'] for u in units if u['status'] == 'complete'}
+    layers, blocked = waves(order, available)
+    scenarios, _ = waves(order, available | set(args.assume_complete))
     ready_now = layers[0] if layers else []
     initial_unlocks = {}
     for unit in ready_now:
-        next_layers, _ = waves(graph, available | {unit})
+        next_layers, _ = waves(order, available | {unit})
         initial_unlocks[unit] = sorted(set(next_layers[0] if next_layers else []) - set(ready_now))
     hosts = [{'name': p, 'role': 'D2 host' if p not in targets else 'target and D2 host',
               'hosts': sorted(a['name'] for a in hosted[p] if a['project'] != p)}
              for p in sorted(hosted) if any(a['project'] != p for a in hosted[p])]
     hosts += [{'name': p, 'role': 'support (no Mathcad counterpart)', 'hosts': []} for p in support]
     data = {'generated_at': datetime.now(timezone.utc).isoformat(timespec='seconds'), 'revision': revision,
-            'units': units, 'hosts': hosts, 'support': support,
+            'units': units, 'not_mirrored': others, 'hosts': hosts, 'support': support,
             'available': sorted(available), 'ready_now': ready_now, 'initial_unlocks': initial_unlocks,
-            'waves': layers, 'blocked': blocked, 'native_waves': native_layers, 'native_blocked': native_blocked,
+            'waves': layers, 'blocked': blocked,
             'assume_complete': args.assume_complete,
             'scenario_ready': scenarios[0] if scenarios else [],
             'scenario_unlocked': sorted(set(scenarios[0] if scenarios else []) - set(layers[0] if layers else []))}
@@ -337,6 +362,7 @@ def main(argv=None):
     args.output.write_text(render(data), encoding='utf-8')
     args.output.with_suffix('.json').write_text(json.dumps(data, indent=2) + '\n', encoding='utf-8')
     print(f"Map: {args.output}; {len(units)} units ({sum(u['split'] for u in units)} split), {len(support)} support; "
+          f"{len(others)} not mirrored; {sum(len(u['satellites']) for u in units + others)} satellites; "
           f"{len(layers)} waves; {len(blocked)} blocked")
     print('Ready now: ' + ', '.join(data['ready_now']))
     if args.assume_complete:

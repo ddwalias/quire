@@ -52,13 +52,13 @@ not from file names: the `-mgd` suffix does not mean C++/CLI.
 
 | Language | Count | Build | Assemblies |
 |---|---:|---|---|
-| C# | 31 | Roslyn `.csproj` | `Ptc.*`, `MathcadPrime`, `automation`, `automationmgd`, `componentsmgd`, `efiio-csharp`, `efiplot_`, `efisixsigma_`, `interop.mathcadautomationprivate` (D22), `mcmisc`, `mplasb`, `mplrun`, `utilsmgd` |
+| C# | 34 | Roslyn `.csproj` | `Ptc.*`, `MathcadPrime`, `automation`, `automationmgd`, `componentsmgd`, `efiio-csharp`, `efiplot_`, `efisixsigma_`, `interop.*` (D22), `mcmisc`, `mplasb`, `mplrun`, `utilsmgd` |
 | C++/CLI | 31 | `.vcxproj`, MSVC 19.51.36246 (D19) | `efi*_` except `efiplot_`/`efisixsigma_`, `efiutl`, `engutils-mgd`, `iengine`, `mccore12`, `mcdepman`, `mceng`, `mcfront12`, `msclr`, `msgen`, `mslisp`, `mspcons-mgd`, `utl-mgd` |
 | Mpl | 51 | Quire's own Mpl toolchain | `efi*` without `_` except `efiio-csharp`, `efiutl`, `efisymbolics-umgd`; `mpl*` except `mplasb`/`mplrun`, `mcd*` except `mcdepman`, `hashtable` |
 | Native | 10 | native `.vcxproj`, outside the IL gate (D10) | `efistatsci_`, `efisymbolics-umgd`, `engutils`, `mcaduser`, `mctranslator`, `mshex`, `msmpl`, `mspcons`, `msprolog`, `utl` |
 
-`Ptc.License.Plpf` and `Ptc.OleInterop` (C++/CLI) and `creo3dfit` (native) stay deferred (D5), as do the `interop.*`
-COM interop assemblies other than `interop.mathcadautomationprivate` (D22).
+`Ptc.License.Plpf` and `Ptc.OleInterop` (C++/CLI) and `creo3dfit` (native) stay deferred (D5). Every other binary in the
+install has a recorded reason in `Rules.NotMirrored`, and the [assembly map](assembly-map.md) lists all of them.
 
 - **Mpl modules** are emitted by Mathcad's Mpl compiler: every method has `.maxstack 48` and many calls carry
   `tail.`, which Roslyn never emits. They are written as Quire-owned Mpl source and compiled at build time by the
@@ -70,8 +70,9 @@ COM interop assemblies other than `interop.mathcadautomationprivate` (D22).
   As a stopgap, until a native DLL is ported, its import library may be generated with `lib.exe` from a `.def`
   in the repository, and the mirrors load Mathcad's DLL at run time. This is a narrow amendment to D19: the
   stopgap import library is the only build output allowed to carry original export names, and each one is
-  replaced when its DLL is ported. Third-party imports link against their vendors' libraries (MKL); Knitro stays
-  with D6.
+  replaced when its DLL is ported. The stopgap only lets a build link: every native DLL is still mirrored, and its
+  port precedes its dependents in the [completion order](assembly-map.md). Third-party imports link against their
+  vendors' libraries (MKL); Knitro stays with D6.
 - **Shared-header types** follow each original's metadata: where an original defines a type, its project defines
   it; where it only references one, the project references the owner. C++/CLI projects include one shared header,
   so each DLL compiles its own copy, as Mathcad's build did. The C# public duplicates (`Mathcad.IValue`,
@@ -105,22 +106,32 @@ affect parity, and callers must be able to move onto mirrored APIs. A new member
 a member that loses its counterpart, a compiler-generated helper of a mirrored type, and an explicitly
 selected member still fail when changed.
 
-## D22: interop.mathcadautomationprivate is a standalone project (2026-10-24)
+## D22: the COM interop assemblies are standalone projects (2026-10-24)
 
-The user chose to mirror `interop.mathcadautomationprivate.dll` (TypeLib `MathcadAutomationPrivate` 1.2) as its own
-C# project, `Quire.AutomationPrivate`, owned by lane G. It amends D20 for this assembly only: the other `interop.*`
-assemblies stay deferred. Its 18 types bind in the type map like any other assembly, and `Rules.ProjectFor` routes
-it. Hand-written declarations carry their own `[MirrorOf]` so that their interop attributes keep the original's order;
+The user chose to mirror the four PTC type-library interop assemblies as C# projects owned by lane G, amending D20:
+
+| Original | TypeLib | Types | Project |
+|---|---|---:|---|
+| `interop.mathcadautomationprivate` | `MathcadAutomationPrivate` 1.2 | 18 | `Quire.AutomationPrivate` |
+| `interop.mathcad` | `Mathcad` 1.0 | 91 | `Quire.Interop.Mathcad` |
+| `interop.mathcadold` | `MathcadOld` 1.0 | 7 | `Quire.Interop.MathcadOld` |
+| `interop.vsinterfaceslib` | `VSINTERFACESLib` 1.0 | 90 | `Quire.Interop.VSInterfacesLib` |
+
+`automation`, `componentsmgd`, `iengine` and `mcfront12` reference them, so their signatures need these types.
+Their types bind in the type map like any other assembly, and `Rules.ProjectFor` routes them. `Mathcad.*` maps to
+the `Quire` namespace (`Mathcad.IValue` is `Quire.IValue`). Hand-written declarations carry their own `[MirrorOf]` so that their interop attributes keep the original's order;
 MirrorGen writes no shell for a top-level type bound that way when hand-written code declares all its members.
 
-`automationmgd.dll` defines 8 of these interfaces as NoPIA copies (`[TypeIdentifier]`, `[CompilerGenerated]`, only
-the members it uses), so they are compiler output, not source. The end state builds them as Mathcad did:
+`automationmgd.dll` defines 8 `MathcadAutomationPrivate` interfaces as NoPIA copies (`[TypeIdentifier]`,
+`[CompilerGenerated]`, only the members it uses), so they are compiler output, not source. `automationmgd`,
+`Ptc.Calculation` and `Ptc.Controls.ExcelComponent` embed `Mathcad.IValue` and its relatives the same way. The end state builds them as Mathcad did:
 `Quire.Automation.Native` references `Quire.AutomationPrivate` with `EmbedInteropTypes`, which needs the original's
 assembly attributes (`ImportedFromTypeLib`, `Guid`, `TypeLibVersion`) in `Quire.AutomationPrivate`, and MirrorGen
-stops generating the 8 copies. Until that lands, `Quire.Automation.Native` keeps its generated copies, and no project
-may reference both assemblies, or the duplicate types fail to compile.
+stops generating the 8 copies; the same applies to the embedded `Mathcad.*` types. Until that lands, the consumers
+keep their generated copies, and no project may reference two assemblies that define the same type, or the build
+fails with an ambiguous type.
 
-Roslyn cannot express the remaining differences, so they are accepted: `runtime managed internalcall` on the 50
+For `interop.mathcadautomationprivate`, Roslyn cannot express the remaining differences, so they are accepted: `runtime managed internalcall` on the 50
 interface members (Roslyn emits `cil managed`), `hidebysig` on the coclass constructor, the `instance` bit on 4
 property signatures, `beforefieldinit` on 14 types, attribute order on 8 types, and the `IsModified` setter
 parameter name `value` (the original's is `pIsModified`). The gate compares an abstract member's access and custom
@@ -136,9 +147,9 @@ flags, but that is untested.
 - **D8:** `System.Reflection.Emit.PTC.Mathcad.Mpl` maps to `System.Reflection.Emit.Quire.Mpl`.
 - **D4:** Unimplemented features stay hidden in the shipping UI.
 - **D5:** Creo platform and licensing libraries remain deferred ([scope](scope.md)).
-- **D10:** Native engine internals have no managed IL counterpart and remain outside this
-  workflow. Their integration behavior is a separate engineering concern. Under D20 each native DLL is a native
-  project that the C++/CLI mirrors link against.
+- **D10:** Native engine internals have no managed IL counterpart, so the Release IL gate does not cover them.
+  Under D20 each native DLL is still mirrored as a native project that the C++/CLI mirrors link against, and it
+  takes its place in the [completion order](assembly-map.md) like any other assembly.
 - **D11:** [Tier lists](tiers/) select work: A covers runtime/calculation/I/O, A2 covers the
   equation tree, and B covers mechanical members. All three use the same exact Release IL
   acceptance rule. C is deferred and D is out of scope. Matching abstract/delegate declarations

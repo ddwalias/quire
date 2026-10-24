@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-24T04:17:48+00:00",
-  "revision": "cdc8c8a4a3646329735849e6d8fd6c6d1f290bf5",
+  "generated_at": "2026-10-24T05:34:32+00:00",
+  "revision": "ae89caeee9b65226db4d412cfe08cc2280e01218",
   "units": [
     {
       "name": "Quire.Automation.Native",
@@ -23,6 +23,7 @@
       "project_references": [],
       "dependencies": [
         "Quire.Automationmgd",
+        "Quire.Interop.Mathcad",
         "Quire.Mpl"
       ],
       "tiers": {
@@ -42,14 +43,15 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 33,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 33,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.Calculation",
         "Quire.Controls.ExcelComponent"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Automationmgd",
@@ -98,9 +100,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 318,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 320,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.Automation.Native",
@@ -111,7 +113,8 @@
         "Quire.EngutilsMgd",
         "Quire.McdTranslator",
         "Quire.Mcfront12"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Componentsmgd",
@@ -140,6 +143,8 @@
       "project_references": [],
       "dependencies": [
         "Quire.Automationmgd",
+        "Quire.Interop.Mathcad",
+        "Quire.Interop.VSInterfacesLib",
         "Quire.Mpl"
       ],
       "tiers": {
@@ -159,13 +164,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 115,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 140,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdTranslator"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiAffine",
@@ -208,11 +214,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 2,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 3,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.EfiBessel",
@@ -255,11 +262,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 2,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 3,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.EfibesselImpl",
@@ -440,7 +448,9 @@
           "WindowsBase"
         ],
         "native_imports": [
-          "efiutl"
+          "efiutl",
+          "vcruntime140",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -469,13 +479,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 40,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 40,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiCalculus",
@@ -520,11 +531,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 19,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 20,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.EficalculusImpl",
@@ -707,7 +719,9 @@
           "WindowsBase"
         ],
         "native_imports": [
-          "efiutl"
+          "vcruntime140",
+          "efiutl",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -738,16 +752,17 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 20,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 20,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiCalculus",
         "Quire.EfidataImpl",
         "Quire.EfiplotImpl",
         "Quire.EfisolverImpl"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiCore",
@@ -799,14 +814,15 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 30,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 32,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiMatrix",
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EficoreImpl",
@@ -986,7 +1002,9 @@
           "WindowsBase"
         ],
         "native_imports": [
-          "efiutl"
+          "vcruntime140",
+          "efiutl",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -1015,9 +1033,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 89,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 92,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiCore",
@@ -1035,7 +1053,8 @@
         "Quire.McdDynamicEfi",
         "Quire.McdTranslator",
         "Quire.McdUnitSystemSI"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiData",
@@ -1078,11 +1097,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 2,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 3,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.EfidataImpl",
@@ -1267,9 +1287,13 @@
           "WindowsBase"
         ],
         "native_imports": [
+          "msvcp140",
           "efiutl",
           "efifitting_",
-          "efistatistics_"
+          "efistatistics_",
+          "vcruntime140",
+          "vcruntime140_1",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -1302,14 +1326,15 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 48,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 48,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfisixsigmaImpl",
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiDebug",
@@ -1352,13 +1377,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 6,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 7,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfidebugImpl",
@@ -1538,7 +1564,10 @@
           "System.Xml.XPath.XDocument",
           "WindowsBase"
         ],
-        "native_imports": []
+        "native_imports": [
+          "vcruntime140",
+          "Ijwhost"
+        ]
       },
       "language": "CppCli",
       "host": "Quire.Efi",
@@ -1566,13 +1595,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 4,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 4,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiDiffEQ",
@@ -1621,13 +1651,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 4,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 15,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfidiffeqImpl",
@@ -1810,7 +1841,12 @@
           "WindowsBase"
         ],
         "native_imports": [
-          "efiutl"
+          "mkl_intel_thread.2",
+          "msvcp140",
+          "efiutl",
+          "vcruntime140_1",
+          "vcruntime140",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -1841,14 +1877,15 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 93,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 129,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiDiffEQ",
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiFinance",
@@ -1891,11 +1928,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 2,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 3,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.EfifinanceImpl",
@@ -2077,7 +2115,9 @@
           "WindowsBase"
         ],
         "native_imports": [
-          "efiutl"
+          "efiutl",
+          "vcruntime140",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -2107,13 +2147,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 22,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 25,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiFitting",
@@ -2158,11 +2199,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 3,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 4,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.EfifittingImpl",
@@ -2347,7 +2389,10 @@
         ],
         "native_imports": [
           "efiutl",
-          "efimatrix_"
+          "efimatrix_",
+          "vcruntime140_1",
+          "vcruntime140",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -2379,9 +2424,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 81,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 85,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiFitting",
@@ -2390,7 +2435,8 @@
         "Quire.EfisixsigmaImpl",
         "Quire.EfisolverImpl",
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiFourier",
@@ -2433,11 +2479,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 2,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 3,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.EfifourierImpl",
@@ -2619,7 +2666,11 @@
           "WindowsBase"
         ],
         "native_imports": [
-          "efiutl"
+          "mkl_intel_thread.2",
+          "efiutl",
+          "vcruntime140_1",
+          "vcruntime140",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -2649,9 +2700,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 26,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 26,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiimageImpl",
@@ -2659,7 +2710,8 @@
         "Quire.EfistatisticsImpl",
         "Quire.EfiwaveletsImpl",
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiGraphics",
@@ -2708,13 +2760,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 11,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 18,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfigraphicsImpl",
@@ -2894,7 +2947,12 @@
           "System.Xml.XPath.XDocument",
           "WindowsBase"
         ],
-        "native_imports": []
+        "native_imports": [
+          "msvcp140",
+          "vcruntime140",
+          "creo3dfit",
+          "Ijwhost"
+        ]
       },
       "language": "CppCli",
       "host": "Quire.Efi",
@@ -2922,16 +2980,17 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 10,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 11,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiGraphics",
         "Quire.EfiplotImpl",
         "Quire.McdDynamicEfi",
         "Quire.McdTranslator"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiImage",
@@ -2974,11 +3033,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 2,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 3,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.EfiimageImpl",
@@ -3161,8 +3221,12 @@
         ],
         "native_imports": [
           "efistatsci_",
+          "msvcp140",
           "efiutl",
-          "efifourier_"
+          "efifourier_",
+          "vcruntime140_1",
+          "vcruntime140",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -3193,14 +3257,15 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 137,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 138,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfifittingImpl",
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiIO",
@@ -3243,11 +3308,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 2,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 3,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.EfiioImpl",
@@ -3433,7 +3499,12 @@
         ],
         "native_imports": [
           "efistatsci_",
-          "efiutl"
+          "msvcp140",
+          "efiutl",
+          "mfc140u",
+          "vcruntime140",
+          "vcruntime140_1",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -3465,13 +3536,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 87,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 90,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiioCsharp",
@@ -3518,13 +3590,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 99,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 101,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiioImpl"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiMatrix",
@@ -3575,15 +3648,16 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 12,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 18,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiPlot",
         "Quire.EfiplotImpl",
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfimatrixImpl",
@@ -3766,7 +3840,11 @@
         ],
         "native_imports": [
           "efiutl",
-          "utl"
+          "vcruntime140_1",
+          "vcruntime140",
+          "mkl_intel_thread.2",
+          "utl",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -3797,9 +3875,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 130,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 131,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiDiffEQ",
@@ -3817,7 +3895,8 @@
         "Quire.McdDynamicEfi",
         "Quire.McdTranslator",
         "Quire.McdUnitSystemSI"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiPlot",
@@ -3866,11 +3945,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 7,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 9,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.EfiplotImpl",
@@ -3926,15 +4006,16 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 311,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 318,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiPlot",
         "Quire.McdDynamicEfi",
         "Quire.McdTranslator"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiSignal",
@@ -3977,11 +4058,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 2,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 3,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.EfisignalImpl",
@@ -4166,8 +4248,12 @@
         ],
         "native_imports": [
           "efistatsci_",
+          "msvcp140",
           "efiutl",
-          "efifourier_"
+          "efifourier_",
+          "vcruntime140_1",
+          "vcruntime140",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -4200,13 +4286,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 76,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 76,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiSixsigma",
@@ -4249,11 +4336,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 2,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 3,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.EfisixsigmaImpl",
@@ -4304,13 +4392,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 214,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 215,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiSolver",
@@ -4361,11 +4450,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 25,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 28,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.EfisolverImpl",
@@ -4550,7 +4640,10 @@
           "WindowsBase"
         ],
         "native_imports": [
-          "efiutl"
+          "efiutl",
+          "vcruntime140",
+          "knitro1510",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -4583,13 +4676,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 60,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 62,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiSolver"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiSpecial",
@@ -4632,11 +4726,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 2,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 3,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.EfispecialImpl",
@@ -4817,7 +4912,10 @@
           "WindowsBase"
         ],
         "native_imports": [
-          "efiutl"
+          "efiutl",
+          "vcruntime140",
+          "vcruntime140_1",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -4846,13 +4944,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 16,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 16,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiStatistics",
@@ -4895,11 +4994,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 2,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 3,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.EfistatisticsImpl",
@@ -5083,7 +5183,10 @@
         "native_imports": [
           "efistatsci_",
           "efiutl",
-          "efifourier_"
+          "efifourier_",
+          "vcruntime140_1",
+          "vcruntime140",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -5114,15 +5217,16 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 98,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 98,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfidataImpl",
         "Quire.EfisixsigmaImpl",
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiSymbolics",
@@ -5185,13 +5289,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 63,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 88,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdTranslator"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfisymbolicsImpl",
@@ -5373,8 +5478,12 @@
           "WindowsBase"
         ],
         "native_imports": [
+          "msvcp140",
+          "vcruntime140",
+          "vcruntime140_1",
           "utl",
-          "efiutl"
+          "efiutl",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -5405,9 +5514,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 56,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 59,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiSymbolics",
@@ -5418,7 +5527,8 @@
         "Quire.EfiSymbolicsMap",
         "Quire.Mccore12",
         "Quire.Mcdepman"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiSymbolicsEmitter",
@@ -5484,14 +5594,15 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 262,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 416,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.Automationmgd",
         "Quire.EfiSymbolics"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiSymbolicsLabels",
@@ -5542,9 +5653,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 24,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 30,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiSymbolics",
@@ -5552,7 +5663,8 @@
         "Quire.EfiSymbolicsLexer",
         "Quire.EfiSymbolicsMap",
         "Quire.EfiSymbolicsParser"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiSymbolicsLexer",
@@ -5609,15 +5721,16 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 728,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 1150,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiSymbolics",
         "Quire.EfiSymbolicsEmitter",
         "Quire.EfiSymbolicsParser"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiSymbolicsMacros",
@@ -5668,15 +5781,16 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 9,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 23,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiSymbolicsEmitter",
         "Quire.EfiSymbolicsLexer",
         "Quire.EfiSymbolicsParser"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiSymbolicsMap",
@@ -5729,15 +5843,16 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 19,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 27,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiSymbolics",
         "Quire.EfiSymbolicsEmitter",
         "Quire.EfiSymbolicsLexer"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiSymbolicsParser",
@@ -5793,15 +5908,16 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 167,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 229,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiSymbolics",
         "Quire.EfiSymbolicsEmitter",
         "Quire.McdTranslator"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Efiutl",
@@ -5981,7 +6097,11 @@
           "WindowsBase"
         ],
         "native_imports": [
-          "utl"
+          "msvcp140",
+          "utl",
+          "vcruntime140",
+          "vcruntime140_1",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -6010,9 +6130,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 223,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 233,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfibesselImpl",
@@ -6038,7 +6158,8 @@
         "Quire.EfiwaveletsImpl",
         "Quire.Native.EfistatsciImpl",
         "Quire.Native.Mctranslator"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EfiWavelets",
@@ -6081,11 +6202,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 2,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 3,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.EfiwaveletsImpl",
@@ -6267,8 +6389,12 @@
           "WindowsBase"
         ],
         "native_imports": [
+          "msvcp140",
           "efiutl",
-          "efifourier_"
+          "efifourier_",
+          "vcruntime140_1",
+          "vcruntime140",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -6298,13 +6424,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 118,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 119,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdDynamicEfi"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EngutilsMgd",
@@ -6484,9 +6611,12 @@
           "WindowsBase"
         ],
         "native_imports": [
+          "msvcp140",
           "utl",
+          "vcruntime140",
           "engutils",
-          "msmpl"
+          "msmpl",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -6517,9 +6647,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 77,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 83,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.Engine",
@@ -6529,7 +6659,8 @@
         "Quire.Mcfront12",
         "Quire.Mslisp",
         "Quire.MspconsMgd"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Hashtable",
@@ -6575,9 +6706,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 20,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 23,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiCore",
@@ -6585,7 +6716,8 @@
         "Quire.EfiSymbolicsEmitter",
         "Quire.EfiSymbolicsLexer",
         "Quire.EfiSymbolicsMap"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Engine",
@@ -6768,7 +6900,9 @@
           "WindowsBase"
         ],
         "native_imports": [
-          "utl"
+          "vcruntime140",
+          "utl",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -6779,6 +6913,7 @@
         "Quire.Automationmgd",
         "Quire.Engine.Utl",
         "Quire.EngutilsMgd",
+        "Quire.Interop.Mathcad",
         "Quire.Mpl",
         "Quire.Native.Utl"
       ],
@@ -6799,9 +6934,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 101,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 108,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire",
@@ -6811,7 +6946,37 @@
         "Quire.Mcdepman",
         "Quire.Mceng",
         "Quire.Mcfront12"
-      ]
+      ],
+      "satellites": []
+    },
+    {
+      "name": "Quire.Interop.Mathcad",
+      "original": {
+        "name": "interop.mathcad",
+        "file": "interop.mathcad.dll",
+        "mvid": "1577d0a7-ddd8-492e-a29c-463bfa2a3709",
+        "references": [
+          "mscorlib"
+        ],
+        "native_imports": []
+      },
+      "language": "CSharp",
+      "host": "Quire.Interop.Mathcad",
+      "split": false,
+      "project_references": [],
+      "dependencies": [],
+      "tiers": {},
+      "scope": "deferred / out of scope",
+      "stub_bodies": 0,
+      "status": "unconfirmed",
+      "audit": null,
+      "dependents": [
+        "Quire.Automation.Native",
+        "Quire.Componentsmgd",
+        "Quire.Engine",
+        "Quire.Mcfront12"
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.AutomationPrivate",
@@ -6826,6 +6991,41 @@
       },
       "language": "CSharp",
       "host": "Quire.AutomationPrivate",
+      "split": true,
+      "project_references": [],
+      "dependencies": [],
+      "tiers": {},
+      "scope": "deferred / out of scope",
+      "stub_bodies": 0,
+      "status": "complete",
+      "audit": {
+        "exact": 0,
+        "declarations": 51,
+        "native_pairs": 0,
+        "toolset_support": 0,
+        "remaining": 0,
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
+        "missing_original_methods": 0,
+        "current_revision": true
+      },
+      "dependents": [
+        "Quire.Mcfront12"
+      ],
+      "satellites": []
+    },
+    {
+      "name": "Quire.Interop.MathcadOld",
+      "original": {
+        "name": "interop.mathcadold",
+        "file": "interop.mathcadold.dll",
+        "mvid": "0e1ddd00-717a-400b-b92f-16f3e6302f96",
+        "references": [
+          "mscorlib"
+        ],
+        "native_imports": []
+      },
+      "language": "CSharp",
+      "host": "Quire.Interop.MathcadOld",
       "split": false,
       "project_references": [],
       "dependencies": [],
@@ -6833,19 +7033,35 @@
       "scope": "deferred / out of scope",
       "stub_bodies": 0,
       "status": "unconfirmed",
-      "audit": {
-        "exact": 0,
-        "declarations": 51,
-        "native_pairs": 0,
-        "toolset_support": 0,
-        "remaining": 0,
-        "report": ".mirror-cache/release-il-lane-g-scratch2/release-il.json",
-        "missing_original_methods": 0,
-        "current_revision": false
+      "audit": null,
+      "dependents": [],
+      "satellites": []
+    },
+    {
+      "name": "Quire.Interop.VSInterfacesLib",
+      "original": {
+        "name": "interop.vsinterfaceslib",
+        "file": "interop.vsinterfaceslib.dll",
+        "mvid": "99ac774d-c8b6-42fc-8ef5-919eed4e6ac7",
+        "references": [
+          "mscorlib"
+        ],
+        "native_imports": []
       },
+      "language": "CSharp",
+      "host": "Quire.Interop.VSInterfacesLib",
+      "split": false,
+      "project_references": [],
+      "dependencies": [],
+      "tiers": {},
+      "scope": "deferred / out of scope",
+      "stub_bodies": 0,
+      "status": "unconfirmed",
+      "audit": null,
       "dependents": [
-        "Quire.Mcfront12"
-      ]
+        "Quire.Componentsmgd"
+      ],
+      "satellites": []
     },
     {
       "name": "Quire",
@@ -6952,11 +7168,23 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 2810,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 2785,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": [
+        "de",
+        "en-US",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "zh-CN",
+        "zh-TW"
+      ]
     },
     {
       "name": "Quire.Mccore12",
@@ -7143,11 +7371,15 @@
         ],
         "native_imports": [
           "mctranslator",
+          "msvcp140",
           "mshex",
+          "vcruntime140",
+          "vcruntime140_1",
           "engutils",
           "utl",
           "msmpl",
-          "mcaduser"
+          "mcaduser",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -7187,14 +7419,15 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 101,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 119,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.Mceng",
         "Quire.Mcfront12"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.McdDynamicEfi",
@@ -7285,11 +7518,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 107,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 120,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.McdEfi",
@@ -7332,11 +7566,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 2,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 3,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.Mcdepman",
@@ -7519,7 +7754,10 @@
           "WindowsBase"
         ],
         "native_imports": [
-          "utl"
+          "msvcp140",
+          "vcruntime140",
+          "utl",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -7551,14 +7789,15 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 362,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 372,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.Mccore12",
         "Quire.Mcfront12"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.McdRun",
@@ -7604,9 +7843,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 217,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 265,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiCore",
@@ -7631,7 +7870,8 @@
         "Quire.McdUnitSystemNone",
         "Quire.McdUnitSystemSI",
         "Quire.McdUnitSystemUS"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.McdStaticUnitSystem",
@@ -7676,14 +7916,15 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 24,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 27,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdStaticUnitSystemCGS",
         "Quire.McdStaticUnitSystemSI"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.McdStaticUnitSystemCGS",
@@ -7732,13 +7973,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 12,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 13,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdUnitSystemCGS"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.McdStaticUnitSystemMKS",
@@ -7785,13 +8027,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 11,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 12,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdUnitSystemMKS"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.McdStaticUnitSystemNone",
@@ -7836,13 +8079,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 3,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 4,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdUnitSystemNone"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.McdStaticUnitSystemSI",
@@ -7891,15 +8135,16 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 4,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 5,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdStaticUnitSystemMKS",
         "Quire.McdStaticUnitSystemUS",
         "Quire.McdUnitSystemSI"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.McdStaticUnitSystemUS",
@@ -7946,13 +8191,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 11,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 12,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdUnitSystemUS"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.McdTranslator",
@@ -8015,11 +8261,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 110,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 116,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.McdUnitSystemCGS",
@@ -8066,11 +8313,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 11,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 12,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.McdUnitSystemMKS",
@@ -8119,11 +8367,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 3,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 4,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.McdUnitSystemNone",
@@ -8170,11 +8419,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 11,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 12,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.McdUnitSystemSI",
@@ -8227,14 +8477,15 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 11,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 16,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.McdUnitSystemMKS",
         "Quire.McdUnitSystemUS"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.McdUnitSystemUS",
@@ -8283,11 +8534,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 4,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 5,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.Mceng",
@@ -8472,7 +8724,10 @@
           "WindowsBase"
         ],
         "native_imports": [
-          "utl"
+          "msvcp140",
+          "vcruntime140",
+          "utl",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -8506,11 +8761,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 12,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 13,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.Mcfront12",
@@ -8700,9 +8956,13 @@
           "WindowsBase"
         ],
         "native_imports": [
+          "msvcp140",
           "utl",
           "mspcons",
-          "msprolog"
+          "msprolog",
+          "vcruntime140_1",
+          "vcruntime140",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -8716,6 +8976,7 @@
         "Quire.Engine.Misc",
         "Quire.Engine.Utl",
         "Quire.EngutilsMgd",
+        "Quire.Interop.Mathcad",
         "Quire.Mccore12",
         "Quire.Mcdepman",
         "Quire.Mpl",
@@ -8742,13 +9003,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 388,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 399,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.Mceng"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Engine.Misc",
@@ -8795,7 +9057,8 @@
       "dependents": [
         "Quire.EfidataImpl",
         "Quire.Mcfront12"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.MplModule",
@@ -8838,9 +9101,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 10,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 12,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfibesselImpl",
@@ -8863,7 +9126,8 @@
         "Quire.EfisymbolicsImpl",
         "Quire.Efiutl",
         "Quire.EfiwaveletsImpl"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Mpl.Emit",
@@ -8904,16 +9168,16 @@
       },
       "scope": "deferred / out of scope",
       "stub_bodies": 0,
-      "status": "unconfirmed",
+      "status": "complete",
       "audit": {
         "exact": 686,
         "declarations": 0,
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 0,
-        "report": ".mirror-cache/gate-il-aa78ee8d903a/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 0,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiAffine",
@@ -8971,7 +9235,8 @@
         "Quire.MplUnitSystemSI",
         "Quire.Msclr",
         "Quire.Msgen"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.MplConstants",
@@ -9014,13 +9279,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 2,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 3,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.MplUnitSystemSI"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.MplMacro",
@@ -9065,13 +9331,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 28,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 37,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiSymbolicsMacros"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.MplPrelude",
@@ -9115,9 +9382,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 109,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 152,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiCore",
@@ -9140,7 +9407,8 @@
         "Quire.McdUnitSystemSI",
         "Quire.MplMacro",
         "Quire.MplUnitSystemSI"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.MplPrimitives",
@@ -9183,11 +9451,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 8,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 10,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.Mpl",
@@ -9228,14 +9497,14 @@
       "stub_bodies": 0,
       "status": "unconfirmed",
       "audit": {
-        "exact": 1867,
+        "exact": 1865,
         "declarations": 165,
         "native_pairs": 0,
         "toolset_support": 0,
-        "remaining": 0,
-        "report": ".mirror-cache/gate-il-bfd1863b04db/run/release-il.json",
+        "remaining": 2,
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 0,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire",
@@ -9326,7 +9595,8 @@
         "Quire.MplUnitSystemSI",
         "Quire.Msclr",
         "Quire.Msgen"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.MplSexpr",
@@ -9369,11 +9639,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 32,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 34,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.MplUnitSystemSI",
@@ -9420,11 +9691,12 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 2,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 3,
-        "current_revision": false
+        "current_revision": true
       },
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.Msclr",
@@ -9604,7 +9876,10 @@
           "WindowsBase"
         ],
         "native_imports": [
-          "mshex"
+          "mshex",
+          "msvcp140",
+          "vcruntime140",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -9693,7 +9968,8 @@
         "Quire.MplSexpr",
         "Quire.MplUnitSystemSI",
         "Quire.Native.Msmpl"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Msgen",
@@ -9873,7 +10149,10 @@
           "WindowsBase"
         ],
         "native_imports": [
-          "mshex"
+          "mshex",
+          "msvcp140",
+          "vcruntime140",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -9902,9 +10181,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 617,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 676,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiAffine",
@@ -9959,7 +10238,8 @@
         "Quire.MplSexpr",
         "Quire.MplUnitSystemSI",
         "Quire.Native.Msmpl"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Mslisp",
@@ -10140,7 +10420,10 @@
           "WindowsBase"
         ],
         "native_imports": [
-          "utl"
+          "msvcp140",
+          "vcruntime140",
+          "utl",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -10170,14 +10453,15 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 316,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 320,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.Mceng",
         "Quire.Mcfront12"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.MspconsMgd",
@@ -10355,7 +10639,10 @@
           "System.Xml.XPath.XDocument",
           "WindowsBase"
         ],
-        "native_imports": []
+        "native_imports": [
+          "vcruntime140",
+          "Ijwhost"
+        ]
       },
       "language": "CppCli",
       "host": "Quire.Engine.Native",
@@ -10381,14 +10668,15 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 27,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 28,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.Mcfront12",
         "Quire.Mslisp"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Calculation",
@@ -10453,15 +10741,16 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 240,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 182,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire",
         "Quire.Controls.ExcelComponent",
         "Quire.Controls.Worksheet"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Calculation.Core",
@@ -10517,9 +10806,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 274,
-        "report": ".mirror-cache/gate-il-222d55b68783/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 62,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire",
@@ -10536,6 +10825,18 @@
         "Quire.Controls.Whiteboard",
         "Quire.Controls.Worksheet",
         "Quire.EquationEditor"
+      ],
+      "satellites": [
+        "de",
+        "en-US",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "zh-CN",
+        "zh-TW"
       ]
     },
     {
@@ -10621,12 +10922,24 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 605,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 620,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire"
+      ],
+      "satellites": [
+        "de",
+        "en-US",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "zh-CN",
+        "zh-TW"
       ]
     },
     {
@@ -10687,12 +11000,24 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 209,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 220,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.Controls.Worksheet"
+      ],
+      "satellites": [
+        "de",
+        "en-US",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "zh-CN",
+        "zh-TW"
       ]
     },
     {
@@ -10763,9 +11088,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 3020,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 3100,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire",
@@ -10780,6 +11105,18 @@
         "Quire.Controls.Whiteboard",
         "Quire.Controls.Worksheet",
         "Quire.EquationEditor"
+      ],
+      "satellites": [
+        "de",
+        "en-US",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "zh-CN",
+        "zh-TW"
       ]
     },
     {
@@ -10858,9 +11195,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 4510,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 4583,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire",
@@ -10872,6 +11209,18 @@
         "Quire.Controls.Text",
         "Quire.Controls.Whiteboard",
         "Quire.Controls.Worksheet"
+      ],
+      "satellites": [
+        "de",
+        "en-US",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "zh-CN",
+        "zh-TW"
       ]
     },
     {
@@ -10948,14 +11297,26 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 1171,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 1200,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire",
         "Quire.Controls",
         "Quire.Controls.Worksheet"
+      ],
+      "satellites": [
+        "de",
+        "en-US",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "zh-CN",
+        "zh-TW"
       ]
     },
     {
@@ -11017,15 +11378,27 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 494,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 504,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire",
         "Quire.Controls",
         "Quire.Controls.Whiteboard",
         "Quire.Controls.Worksheet"
+      ],
+      "satellites": [
+        "de",
+        "en-US",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "zh-CN",
+        "zh-TW"
       ]
     },
     {
@@ -11099,14 +11472,26 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 4889,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 4940,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire",
         "Quire.Controls",
         "Quire.Controls.Worksheet"
+      ],
+      "satellites": [
+        "de",
+        "en-US",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "zh-CN",
+        "zh-TW"
       ]
     },
     {
@@ -11172,12 +11557,24 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 422,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 273,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.Controls.Worksheet"
+      ],
+      "satellites": [
+        "de",
+        "en-US",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "zh-CN",
+        "zh-TW"
       ]
     },
     {
@@ -11239,15 +11636,27 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 677,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 700,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire",
         "Quire.Controls.Plots",
         "Quire.Controls.Whiteboard",
         "Quire.Controls.Worksheet"
+      ],
+      "satellites": [
+        "de",
+        "en-US",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "zh-CN",
+        "zh-TW"
       ]
     },
     {
@@ -11312,15 +11721,27 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 929,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 1003,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.Controls.CollapsibleArea",
         "Quire.Controls.ExcelComponent",
         "Quire.Controls.SolveBlock",
         "Quire.Controls.Worksheet"
+      ],
+      "satellites": [
+        "de",
+        "en-US",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "zh-CN",
+        "zh-TW"
       ]
     },
     {
@@ -11418,13 +11839,25 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 3275,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 3364,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire",
         "Quire.Controls"
+      ],
+      "satellites": [
+        "de",
+        "en-US",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "zh-CN",
+        "zh-TW"
       ]
     },
     {
@@ -11496,16 +11929,16 @@
         "abstract": 595
       },
       "scope": "active / mixed",
-      "stub_bodies": 121,
+      "stub_bodies": 109,
       "status": "incomplete",
       "audit": {
-        "exact": 3456,
+        "exact": 3478,
         "declarations": 747,
         "native_pairs": 0,
         "toolset_support": 0,
-        "remaining": 243,
-        "report": ".mirror-cache/gate-il-8a292065e961/run/release-il.json",
-        "missing_original_methods": 200,
+        "remaining": 229,
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
+        "missing_original_methods": 186,
         "current_revision": true
       },
       "dependents": [
@@ -11525,7 +11958,8 @@
         "Quire.Controls.Worksheet",
         "Quire.EquationEditor",
         "Quire.Media3D"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EngNotebook.Automation",
@@ -11563,13 +11997,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 1,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 1,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EngNotebookPlus.Automation",
@@ -11607,13 +12042,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 1,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 1,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.EquationEditor",
@@ -11678,9 +12114,9 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 5284,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 4689,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire",
@@ -11689,7 +12125,8 @@
         "Quire.Controls.Plots",
         "Quire.Controls.SolveBlock",
         "Quire.Controls.Worksheet"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Automation",
@@ -11727,13 +12164,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 1,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 1,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Media3D",
@@ -11781,13 +12219,14 @@
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 5,
-        "report": ".mirror-cache/gate-il-3ae099942b5d/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 6,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.Controls.Plots"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Utils",
@@ -11818,20 +12257,21 @@
       },
       "scope": "deferred / out of scope",
       "stub_bodies": 0,
-      "status": "unconfirmed",
+      "status": "complete",
       "audit": {
         "exact": 37,
         "declarations": 5,
         "native_pairs": 0,
         "toolset_support": 0,
         "remaining": 0,
-        "report": ".mirror-cache/gate-il-4ec09f18be98/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 0,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.Automationmgd"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Engine.Utl",
@@ -12009,7 +12449,10 @@
           "WindowsBase"
         ],
         "native_imports": [
-          "utl"
+          "vcruntime140",
+          "msvcp140",
+          "utl",
+          "Ijwhost"
         ]
       },
       "language": "CppCli",
@@ -12029,16 +12472,16 @@
       },
       "scope": "deferred / out of scope",
       "stub_bodies": 0,
-      "status": "unconfirmed",
+      "status": "complete",
       "audit": {
         "exact": 346,
         "declarations": 18,
         "native_pairs": 55,
         "toolset_support": 0,
         "remaining": 0,
-        "report": ".mirror-cache/gate-il-685cc6bb78a3/run/release-il.json",
+        "report": ".mirror-cache/release-il-interop-all2/release-il.json",
         "missing_original_methods": 0,
-        "current_revision": false
+        "current_revision": true
       },
       "dependents": [
         "Quire.EfiSymbolicsEmitter",
@@ -12052,7 +12495,8 @@
         "Quire.Mceng",
         "Quire.Mcfront12",
         "Quire.Mslisp"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Native.EfistatsciImpl",
@@ -12062,7 +12506,9 @@
         "mvid": null,
         "references": [],
         "native_imports": [
-          "efiutl"
+          "efiutl",
+          "vcruntime140_1",
+          "vcruntime140"
         ]
       },
       "language": "Native",
@@ -12075,14 +12521,15 @@
       "tiers": {},
       "scope": "outside the IL gate (D10)",
       "stub_bodies": 0,
-      "status": "link input",
+      "status": "unconfirmed",
       "audit": null,
       "dependents": [
         "Quire.EfiimageImpl",
         "Quire.EfiioImpl",
         "Quire.EfisignalImpl",
         "Quire.EfistatisticsImpl"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Native.EfisymbolicsUmgd",
@@ -12092,7 +12539,10 @@
         "mvid": null,
         "references": [],
         "native_imports": [
-          "utl"
+          "msvcp140",
+          "utl",
+          "vcruntime140_1",
+          "vcruntime140"
         ]
       },
       "language": "Native",
@@ -12105,9 +12555,10 @@
       "tiers": {},
       "scope": "outside the IL gate (D10)",
       "stub_bodies": 0,
-      "status": "link input",
+      "status": "not started",
       "audit": null,
-      "dependents": []
+      "dependents": [],
+      "satellites": []
     },
     {
       "name": "Quire.Native.Engutils",
@@ -12117,7 +12568,10 @@
         "mvid": null,
         "references": [],
         "native_imports": [
-          "mshex"
+          "msvcp140",
+          "mshex",
+          "vcruntime140_1",
+          "vcruntime140"
         ]
       },
       "language": "Native",
@@ -12130,13 +12584,14 @@
       "tiers": {},
       "scope": "outside the IL gate (D10)",
       "stub_bodies": 0,
-      "status": "link input",
+      "status": "not started",
       "audit": null,
       "dependents": [
         "Quire.EngutilsMgd",
         "Quire.Mccore12",
         "Quire.Native.Mctranslator"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Native.Mcaduser",
@@ -12146,7 +12601,10 @@
         "mvid": null,
         "references": [],
         "native_imports": [
-          "utl"
+          "msvcp140",
+          "utl",
+          "vcruntime140_1",
+          "vcruntime140"
         ]
       },
       "language": "Native",
@@ -12159,11 +12617,12 @@
       "tiers": {},
       "scope": "outside the IL gate (D10)",
       "stub_bodies": 0,
-      "status": "link input",
+      "status": "not started",
       "audit": null,
       "dependents": [
         "Quire.Mccore12"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Native.Mctranslator",
@@ -12176,10 +12635,13 @@
           "engutils",
           "mspcons",
           "msprolog",
+          "msvcp140",
           "utl",
           "mshex",
           "msmpl",
-          "efiutl"
+          "efiutl",
+          "vcruntime140_1",
+          "vcruntime140"
         ]
       },
       "language": "Native",
@@ -12198,11 +12660,12 @@
       "tiers": {},
       "scope": "outside the IL gate (D10)",
       "stub_bodies": 0,
-      "status": "link input",
+      "status": "not started",
       "audit": null,
       "dependents": [
         "Quire.Mccore12"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Native.Mshex",
@@ -12211,7 +12674,11 @@
         "file": "mshex.dll",
         "mvid": null,
         "references": [],
-        "native_imports": []
+        "native_imports": [
+          "msvcp140",
+          "vcruntime140_1",
+          "vcruntime140"
+        ]
       },
       "language": "Native",
       "host": null,
@@ -12221,7 +12688,7 @@
       "tiers": {},
       "scope": "outside the IL gate (D10)",
       "stub_bodies": 0,
-      "status": "link input",
+      "status": "not started",
       "audit": null,
       "dependents": [
         "Quire.EfiAffine",
@@ -12281,7 +12748,8 @@
         "Quire.Native.Engutils",
         "Quire.Native.Mctranslator",
         "Quire.Native.Msmpl"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Native.Msmpl",
@@ -12292,9 +12760,12 @@
         "references": [],
         "native_imports": [
           "mshex",
+          "msvcp140",
           "msclr",
           "msgen",
-          "utl"
+          "utl",
+          "vcruntime140_1",
+          "vcruntime140"
         ]
       },
       "language": "Native",
@@ -12310,7 +12781,7 @@
       "tiers": {},
       "scope": "outside the IL gate (D10)",
       "stub_bodies": 0,
-      "status": "link input",
+      "status": "not started",
       "audit": null,
       "dependents": [
         "Quire.EfiAffine",
@@ -12367,7 +12838,8 @@
         "Quire.MplSexpr",
         "Quire.MplUnitSystemSI",
         "Quire.Native.Mctranslator"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Native.Mspcons",
@@ -12376,7 +12848,11 @@
         "file": "mspcons.dll",
         "mvid": null,
         "references": [],
-        "native_imports": []
+        "native_imports": [
+          "msvcp140",
+          "vcruntime140_1",
+          "vcruntime140"
+        ]
       },
       "language": "Native",
       "host": null,
@@ -12386,13 +12862,14 @@
       "tiers": {},
       "scope": "outside the IL gate (D10)",
       "stub_bodies": 0,
-      "status": "link input",
+      "status": "not started",
       "audit": null,
       "dependents": [
         "Quire.Mcfront12",
         "Quire.Native.Mctranslator",
         "Quire.Native.Msprolog"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Native.Msprolog",
@@ -12403,7 +12880,10 @@
         "references": [],
         "native_imports": [
           "mspcons",
-          "utl"
+          "msvcp140",
+          "utl",
+          "vcruntime140_1",
+          "vcruntime140"
         ]
       },
       "language": "Native",
@@ -12417,12 +12897,13 @@
       "tiers": {},
       "scope": "outside the IL gate (D10)",
       "stub_bodies": 0,
-      "status": "link input",
+      "status": "not started",
       "audit": null,
       "dependents": [
         "Quire.Mcfront12",
         "Quire.Native.Mctranslator"
-      ]
+      ],
+      "satellites": []
     },
     {
       "name": "Quire.Native.Utl",
@@ -12431,7 +12912,11 @@
         "file": "utl.dll",
         "mvid": null,
         "references": [],
-        "native_imports": []
+        "native_imports": [
+          "msvcp140",
+          "vcruntime140_1",
+          "vcruntime140"
+        ]
       },
       "language": "Native",
       "host": null,
@@ -12441,7 +12926,7 @@
       "tiers": {},
       "scope": "outside the IL gate (D10)",
       "stub_bodies": 0,
-      "status": "link input",
+      "status": "not started",
       "audit": null,
       "dependents": [
         "Quire.EfimatrixImpl",
@@ -12460,7 +12945,1003 @@
         "Quire.Native.Mctranslator",
         "Quire.Native.Msmpl",
         "Quire.Native.Msprolog"
+      ],
+      "satellites": []
+    }
+  ],
+  "not_mirrored": [
+    {
+      "file": "asyncoremt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "axiom/win_nt/x86e_win64/AXIOMSys.exe",
+      "kind": "native",
+      "treatment": "dependency: FriCAS for Axiom",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "baselibmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/asyncoremt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/baselibmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/chartappole_sh.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/chartdir70.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/coretools_sh.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/coreutils_sh.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/dlmmgrmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/i18nmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/i18nxmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/ic_sh.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/libgifmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/libjpegmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/libpngmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/libtiffmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/libui_sh.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_chinese_cn_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_chinese_tw_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_french_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_german_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_italian_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_japanese_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_korean_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_portuguese_br_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_russian_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_spanish_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_chinese_cn_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_chinese_tw_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_french_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_german_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_italian_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_japanese_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_korean_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_portuguese_br_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_russian_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_spanish_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_chinese_cn_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_chinese_tw_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_french_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_german_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_italian_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_japanese_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_korean_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_portuguese_br_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_russian_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_spanish_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/resources/text/compiled_resource/pro_default_resources.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/rtlcoremt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/ucore68.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/udata68.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/ui18n68.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/unifilesmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/utfstrmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "chartappole_sh/zlib-ngmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "ClearScript.Core.dll",
+      "kind": "managed",
+      "treatment": "dependency: Microsoft.ClearScript",
+      "used_by": [
+        "Quire.Controls.EquationControl"
+      ],
+      "satellites": []
+    },
+    {
+      "file": "ClearScript.Windows.Core.dll",
+      "kind": "managed",
+      "treatment": "dependency: Microsoft.ClearScript",
+      "used_by": [
+        "Quire.Controls.EquationControl"
+      ],
+      "satellites": []
+    },
+    {
+      "file": "ClearScript.Windows.dll",
+      "kind": "managed",
+      "treatment": "dependency: Microsoft.ClearScript",
+      "used_by": [
+        "Quire.Controls.EquationControl"
+      ],
+      "satellites": []
+    },
+    {
+      "file": "concrt140.dll",
+      "kind": "native",
+      "treatment": "not needed: MSVC runtime redistributable",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "coretools_sh.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "coreutils_sh.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "creo3dfit.dll",
+      "kind": "native",
+      "treatment": "deferred (D5)",
+      "used_by": [
+        "Quire.EfigraphicsImpl"
+      ],
+      "satellites": []
+    },
+    {
+      "file": "cryptomt.dll",
+      "kind": "native",
+      "treatment": "not needed: .NET cryptography replaces OpenSSL",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "DevComponents.WpfDock.dll",
+      "kind": "managed",
+      "treatment": "substitute: Fluent.Ribbon / Dirkster.AvalonDock for DevComponents (D6)",
+      "used_by": [
+        "Quire"
+      ],
+      "satellites": [
+        "de",
+        "en-US",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "zh-CN",
+        "zh-TW"
       ]
+    },
+    {
+      "file": "DevComponents.WpfRibbon.dll",
+      "kind": "managed",
+      "treatment": "substitute: Fluent.Ribbon / Dirkster.AvalonDock for DevComponents (D6)",
+      "used_by": [
+        "Quire",
+        "Quire.Controls",
+        "Quire.Controls.EquationControl",
+        "Quire.Controls.Plots",
+        "Quire.Controls.Worksheet"
+      ],
+      "satellites": [
+        "de",
+        "en-US",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "zh-CN",
+        "zh-TW"
+      ]
+    },
+    {
+      "file": "dlmmgrmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "DocumentFormat.OpenXml.dll",
+      "kind": "managed",
+      "treatment": "dependency: DocumentFormat.OpenXml",
+      "used_by": [
+        "Quire.Controls.Core"
+      ],
+      "satellites": []
+    },
+    {
+      "file": "exitlogger_app_sh.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "i18nmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "Ijwhost.dll",
+      "kind": "native",
+      "treatment": "toolchain: .NET host shim the C++/CLI build ships",
+      "used_by": [
+        "Quire.EfibesselImpl",
+        "Quire.EficalculusImpl",
+        "Quire.EficoreImpl",
+        "Quire.EfidataImpl",
+        "Quire.EfidebugImpl",
+        "Quire.EfidiffeqImpl",
+        "Quire.EfifinanceImpl",
+        "Quire.EfifittingImpl",
+        "Quire.EfifourierImpl",
+        "Quire.EfigraphicsImpl",
+        "Quire.EfiimageImpl",
+        "Quire.EfiioImpl",
+        "Quire.EfimatrixImpl",
+        "Quire.EfisignalImpl",
+        "Quire.EfisolverImpl",
+        "Quire.EfispecialImpl",
+        "Quire.EfistatisticsImpl",
+        "Quire.EfisymbolicsImpl",
+        "Quire.Efiutl",
+        "Quire.EfiwaveletsImpl",
+        "Quire.Engine",
+        "Quire.Engine.Utl",
+        "Quire.EngutilsMgd",
+        "Quire.Mccore12",
+        "Quire.Mcdepman",
+        "Quire.Mceng",
+        "Quire.Mcfront12",
+        "Quire.Msclr",
+        "Quire.Msgen",
+        "Quire.Mslisp",
+        "Quire.MspconsMgd"
+      ],
+      "satellites": []
+    },
+    {
+      "file": "knitro1510.dll",
+      "kind": "native",
+      "treatment": "substitute: IPOPT or NLopt for Knitro (D6)",
+      "used_by": [
+        "Quire.EfisolverImpl"
+      ],
+      "satellites": []
+    },
+    {
+      "file": "liappcoremt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "libimalloc.dll",
+      "kind": "native",
+      "treatment": "substitute: MathNet.Numerics for Intel oneMKL (D6)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "libiomp5md.dll",
+      "kind": "native",
+      "treatment": "substitute: MathNet.Numerics for Intel oneMKL (D6)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "LicenseWizard.dll",
+      "kind": "managed",
+      "treatment": "deferred: licensing (D5)",
+      "used_by": [],
+      "satellites": [
+        "de",
+        "en-US",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "zh-CN",
+        "zh-TW"
+      ]
+    },
+    {
+      "file": "LicenseWizard.exe",
+      "kind": "native",
+      "treatment": "deferred: licensing (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "licommonmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "limanifestmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "lutilsmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "MathcadPrime.exe",
+      "kind": "native",
+      "treatment": "app host: built with the Quire project",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "mfc140u.dll",
+      "kind": "native",
+      "treatment": "not needed: MSVC runtime redistributable",
+      "used_by": [
+        "Quire.EfiioImpl"
+      ],
+      "satellites": []
+    },
+    {
+      "file": "Microsoft.Extensions.ObjectPool.dll",
+      "kind": "managed",
+      "treatment": "dependency: Microsoft.Extensions.ObjectPool",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "mkl_core.2.dll",
+      "kind": "native",
+      "treatment": "substitute: MathNet.Numerics for Intel oneMKL (D6)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "mkl_def.2.dll",
+      "kind": "native",
+      "treatment": "substitute: MathNet.Numerics for Intel oneMKL (D6)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "mkl_intel_thread.2.dll",
+      "kind": "native",
+      "treatment": "substitute: MathNet.Numerics for Intel oneMKL (D6)",
+      "used_by": [
+        "Quire.EfidiffeqImpl",
+        "Quire.EfifourierImpl",
+        "Quire.EfimatrixImpl"
+      ],
+      "satellites": []
+    },
+    {
+      "file": "mkl_vml_cmpt.2.dll",
+      "kind": "native",
+      "treatment": "substitute: MathNet.Numerics for Intel oneMKL (D6)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "mkl_vml_def.2.dll",
+      "kind": "native",
+      "treatment": "substitute: MathNet.Numerics for Intel oneMKL (D6)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "msvcp140.dll",
+      "kind": "native",
+      "treatment": "not needed: MSVC runtime redistributable",
+      "used_by": [
+        "Quire.EfidataImpl",
+        "Quire.EfidiffeqImpl",
+        "Quire.EfigraphicsImpl",
+        "Quire.EfiimageImpl",
+        "Quire.EfiioImpl",
+        "Quire.EfisignalImpl",
+        "Quire.EfisymbolicsImpl",
+        "Quire.Efiutl",
+        "Quire.EfiwaveletsImpl",
+        "Quire.Engine.Utl",
+        "Quire.EngutilsMgd",
+        "Quire.Mccore12",
+        "Quire.Mcdepman",
+        "Quire.Mceng",
+        "Quire.Mcfront12",
+        "Quire.Msclr",
+        "Quire.Msgen",
+        "Quire.Mslisp",
+        "Quire.Native.EfisymbolicsUmgd",
+        "Quire.Native.Engutils",
+        "Quire.Native.Mcaduser",
+        "Quire.Native.Mctranslator",
+        "Quire.Native.Mshex",
+        "Quire.Native.Msmpl",
+        "Quire.Native.Mspcons",
+        "Quire.Native.Msprolog",
+        "Quire.Native.Utl"
+      ],
+      "satellites": []
+    },
+    {
+      "file": "nrtftree-library.dll",
+      "kind": "managed",
+      "treatment": "dependency: NRtfTree (licence D7)",
+      "used_by": [
+        "Quire.Controls.Core",
+        "Quire.Controls.Worksheet"
+      ],
+      "satellites": []
+    },
+    {
+      "file": "prod_dcu.exe",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "Ptc.License.Plpf.dll",
+      "kind": "managed",
+      "treatment": "deferred: licensing (D5)",
+      "used_by": [
+        "Quire"
+      ],
+      "satellites": []
+    },
+    {
+      "file": "Ptc.OleInterop.dll",
+      "kind": "managed",
+      "treatment": "deferred (D5)",
+      "used_by": [
+        "Quire.Controls.ExcelComponent"
+      ],
+      "satellites": []
+    },
+    {
+      "file": "Python.Runtime.dll",
+      "kind": "managed",
+      "treatment": "dependency: pythonnet",
+      "used_by": [
+        "Quire.Controls.EquationControl"
+      ],
+      "satellites": []
+    },
+    {
+      "file": "rtlcoremt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "runtimes/win/lib/net10.0/System.Management.dll",
+      "kind": "managed",
+      "treatment": "dependency: System.Management",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "srvcmgrmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "System.ServiceModel.Duplex.dll",
+      "kind": "managed",
+      "treatment": "dependency: System.ServiceModel (dotnet/wcf)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "System.ServiceModel.Http.dll",
+      "kind": "managed",
+      "treatment": "dependency: System.ServiceModel (dotnet/wcf)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "System.ServiceModel.Primitives.dll",
+      "kind": "managed",
+      "treatment": "dependency: System.ServiceModel (dotnet/wcf)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "System.ServiceModel.Security.dll",
+      "kind": "managed",
+      "treatment": "dependency: System.ServiceModel (dotnet/wcf)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "System.Windows.Interactivity.dll",
+      "kind": "managed",
+      "treatment": "substitute: Microsoft.Xaml.Behaviors.Wpf",
+      "used_by": [
+        "Quire"
+      ],
+      "satellites": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "ru",
+        "zh-Hans",
+        "zh-Hant"
+      ]
+    },
+    {
+      "file": "telecon_utils.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "ucore68.dll",
+      "kind": "native",
+      "treatment": "not needed: .NET globalisation replaces ICU",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "udata68.dll",
+      "kind": "native",
+      "treatment": "not needed: .NET globalisation replaces ICU",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "utfstrmt.dll",
+      "kind": "native",
+      "treatment": "deferred: PTC Creo platform (D5)",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "vcomp140.dll",
+      "kind": "native",
+      "treatment": "not needed: MSVC runtime redistributable",
+      "used_by": [],
+      "satellites": []
+    },
+    {
+      "file": "vcruntime140.dll",
+      "kind": "native",
+      "treatment": "not needed: MSVC runtime redistributable",
+      "used_by": [
+        "Quire.EfibesselImpl",
+        "Quire.EficalculusImpl",
+        "Quire.EficoreImpl",
+        "Quire.EfidataImpl",
+        "Quire.EfidebugImpl",
+        "Quire.EfidiffeqImpl",
+        "Quire.EfifinanceImpl",
+        "Quire.EfifittingImpl",
+        "Quire.EfifourierImpl",
+        "Quire.EfigraphicsImpl",
+        "Quire.EfiimageImpl",
+        "Quire.EfiioImpl",
+        "Quire.EfimatrixImpl",
+        "Quire.EfisignalImpl",
+        "Quire.EfisolverImpl",
+        "Quire.EfispecialImpl",
+        "Quire.EfistatisticsImpl",
+        "Quire.EfisymbolicsImpl",
+        "Quire.Efiutl",
+        "Quire.EfiwaveletsImpl",
+        "Quire.Engine",
+        "Quire.Engine.Utl",
+        "Quire.EngutilsMgd",
+        "Quire.Mccore12",
+        "Quire.Mcdepman",
+        "Quire.Mceng",
+        "Quire.Mcfront12",
+        "Quire.Msclr",
+        "Quire.Msgen",
+        "Quire.Mslisp",
+        "Quire.MspconsMgd",
+        "Quire.Native.EfistatsciImpl",
+        "Quire.Native.EfisymbolicsUmgd",
+        "Quire.Native.Engutils",
+        "Quire.Native.Mcaduser",
+        "Quire.Native.Mctranslator",
+        "Quire.Native.Mshex",
+        "Quire.Native.Msmpl",
+        "Quire.Native.Mspcons",
+        "Quire.Native.Msprolog",
+        "Quire.Native.Utl"
+      ],
+      "satellites": []
+    },
+    {
+      "file": "vcruntime140_1.dll",
+      "kind": "native",
+      "treatment": "not needed: MSVC runtime redistributable",
+      "used_by": [
+        "Quire.EfidataImpl",
+        "Quire.EfidiffeqImpl",
+        "Quire.EfifittingImpl",
+        "Quire.EfifourierImpl",
+        "Quire.EfiimageImpl",
+        "Quire.EfiioImpl",
+        "Quire.EfimatrixImpl",
+        "Quire.EfisignalImpl",
+        "Quire.EfispecialImpl",
+        "Quire.EfistatisticsImpl",
+        "Quire.EfisymbolicsImpl",
+        "Quire.Efiutl",
+        "Quire.EfiwaveletsImpl",
+        "Quire.Mccore12",
+        "Quire.Mcfront12",
+        "Quire.Native.EfistatsciImpl",
+        "Quire.Native.EfisymbolicsUmgd",
+        "Quire.Native.Engutils",
+        "Quire.Native.Mcaduser",
+        "Quire.Native.Mctranslator",
+        "Quire.Native.Mshex",
+        "Quire.Native.Msmpl",
+        "Quire.Native.Mspcons",
+        "Quire.Native.Msprolog",
+        "Quire.Native.Utl"
+      ],
+      "satellites": []
+    },
+    {
+      "file": "xercescmt.dll",
+      "kind": "native",
+      "treatment": "not needed: System.Xml replaces Xerces-C++",
+      "used_by": [],
+      "satellites": []
     }
   ],
   "hosts": [
@@ -12600,33 +14081,29 @@
     "Quire.Mpl.Runtime"
   ],
   "available": [
+    "Quire.AutomationPrivate",
+    "Quire.Engine.Utl",
     "Quire.Mirror",
+    "Quire.Mpl.Emit",
     "Quire.Mpl.Runtime",
-    "Quire.Native.EfistatsciImpl",
-    "Quire.Native.EfisymbolicsUmgd",
-    "Quire.Native.Engutils",
-    "Quire.Native.Mcaduser",
-    "Quire.Native.Mctranslator",
-    "Quire.Native.Mshex",
-    "Quire.Native.Msmpl",
-    "Quire.Native.Mspcons",
-    "Quire.Native.Msprolog",
-    "Quire.Native.Utl"
+    "Quire.Utils"
   ],
   "ready_now": [
     "Quire.Automation",
-    "Quire.AutomationPrivate",
     "Quire.Core",
     "Quire.EngNotebook.Automation",
     "Quire.EngNotebookPlus.Automation",
     "Quire.Engine.Misc",
-    "Quire.Engine.Utl",
-    "Quire.Mpl.Emit",
-    "Quire.Utils"
+    "Quire.Interop.Mathcad",
+    "Quire.Interop.MathcadOld",
+    "Quire.Interop.VSInterfacesLib",
+    "Quire.Mpl",
+    "Quire.Native.Mshex",
+    "Quire.Native.Mspcons",
+    "Quire.Native.Utl"
   ],
   "initial_unlocks": {
     "Quire.Automation": [],
-    "Quire.AutomationPrivate": [],
     "Quire.Core": [
       "Quire.Calculation.Core",
       "Quire.Media3D"
@@ -12634,33 +14111,47 @@
     "Quire.EngNotebook.Automation": [],
     "Quire.EngNotebookPlus.Automation": [],
     "Quire.Engine.Misc": [],
-    "Quire.Engine.Utl": [],
-    "Quire.Mpl.Emit": [
-      "Quire.Mpl"
+    "Quire.Interop.Mathcad": [],
+    "Quire.Interop.MathcadOld": [],
+    "Quire.Interop.VSInterfacesLib": [],
+    "Quire.Mpl": [],
+    "Quire.Native.Mshex": [
+      "Quire.Native.Engutils"
     ],
-    "Quire.Utils": []
+    "Quire.Native.Mspcons": [],
+    "Quire.Native.Utl": [
+      "Quire.Native.EfisymbolicsUmgd",
+      "Quire.Native.Mcaduser"
+    ]
   },
   "waves": [
     [
       "Quire.Automation",
-      "Quire.AutomationPrivate",
       "Quire.Core",
       "Quire.EngNotebook.Automation",
       "Quire.EngNotebookPlus.Automation",
       "Quire.Engine.Misc",
-      "Quire.Engine.Utl",
-      "Quire.Mpl.Emit",
-      "Quire.Utils"
+      "Quire.Interop.Mathcad",
+      "Quire.Interop.MathcadOld",
+      "Quire.Interop.VSInterfacesLib",
+      "Quire.Mpl",
+      "Quire.Native.Mshex",
+      "Quire.Native.Mspcons",
+      "Quire.Native.Utl"
     ],
     [
       "Quire.Calculation.Core",
       "Quire.Media3D",
-      "Quire.Mpl"
+      "Quire.Msclr",
+      "Quire.Msgen",
+      "Quire.Native.EfisymbolicsUmgd",
+      "Quire.Native.Engutils",
+      "Quire.Native.Mcaduser",
+      "Quire.Native.Msprolog"
     ],
     [
       "Quire.Controls.Core",
-      "Quire.Msclr",
-      "Quire.Msgen"
+      "Quire.Native.Msmpl"
     ],
     [
       "Quire.EfiAffine",
@@ -12704,7 +14195,9 @@
       "Quire.EfisymbolicsImpl",
       "Quire.McdStaticUnitSystemCGS",
       "Quire.McdStaticUnitSystemNone",
-      "Quire.McdStaticUnitSystemSI"
+      "Quire.McdStaticUnitSystemSI",
+      "Quire.Native.EfistatsciImpl",
+      "Quire.Native.Mctranslator"
     ],
     [
       "Quire.Controls.Plots",
@@ -12794,36 +14287,20 @@
     ]
   ],
   "blocked": [],
-  "native_waves": [
-    [
-      "Quire.Native.EfistatsciImpl",
-      "Quire.Native.Mshex",
-      "Quire.Native.Mspcons",
-      "Quire.Native.Utl"
-    ],
-    [
-      "Quire.Native.EfisymbolicsUmgd",
-      "Quire.Native.Engutils",
-      "Quire.Native.Mcaduser",
-      "Quire.Native.Msmpl",
-      "Quire.Native.Msprolog"
-    ],
-    [
-      "Quire.Native.Mctranslator"
-    ]
-  ],
-  "native_blocked": [],
   "assume_complete": [],
   "scenario_ready": [
     "Quire.Automation",
-    "Quire.AutomationPrivate",
     "Quire.Core",
     "Quire.EngNotebook.Automation",
     "Quire.EngNotebookPlus.Automation",
     "Quire.Engine.Misc",
-    "Quire.Engine.Utl",
-    "Quire.Mpl.Emit",
-    "Quire.Utils"
+    "Quire.Interop.Mathcad",
+    "Quire.Interop.MathcadOld",
+    "Quire.Interop.VSInterfacesLib",
+    "Quire.Mpl",
+    "Quire.Native.Mshex",
+    "Quire.Native.Mspcons",
+    "Quire.Native.Utl"
   ],
   "scenario_unlocked": []
 }

@@ -218,7 +218,6 @@ public sealed class Mapper
                     return null;
             }
         }
-        if (Rules.IsDeferredAssembly(n.Assembly) && n.Assembly.StartsWith("interop.", StringComparison.OrdinalIgnoreCase)) { reason = $"deferred: COM interop ({n.Name})"; return null; }
         if (n.Assembly == "nrtftree-library") { reason = $"pending D7: NRtfTree ({n.Name})"; return null; }
         if (n.Assembly.StartsWith("DevComponents."))
         {

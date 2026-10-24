@@ -12,8 +12,10 @@ public static class AssemblyMap
     public static void Write(string repo, string install, Rules rules)
     {
         var native = Rules.AssembliesIn(Language.Native).ToDictionary(n => n, StringComparer.OrdinalIgnoreCase);
-        // Native import edges between Mathcad's own DLLs, in either direction (msmpl imports msclr and msgen).
+        // Native import edges to any DLL in the install directory, in either direction (msmpl imports msclr and msgen;
+        // the efi DLLs import MKL). Planning follows only the edges between units.
         var known = rules.Scope.Values.Select(s => s.Assembly).Concat(native.Values)
+            .Concat(Directory.EnumerateFiles(install, "*.dll").Select(f => Path.GetFileNameWithoutExtension(f)))
             .DistinctBy(n => n, StringComparer.OrdinalIgnoreCase).ToDictionary(n => n, StringComparer.OrdinalIgnoreCase);
         var assemblies = new List<object>();
         foreach (var group in rules.Scope.Values.GroupBy(s => s.Assembly, StringComparer.OrdinalIgnoreCase).OrderBy(g => g.Key))
@@ -63,6 +65,38 @@ public static class AssemblyMap
                 assemblies.Add(new { name, file = Path.GetFileName(path), project, host = (string?)null, language,
                     target_exists = exists, error = error.Message });
             }
+        }
+        // Every other binary in the install, so the map accounts for all of them: satellite resource assemblies belong
+        // to the assembly they localise; the rest carry the reason they have no Quire project.
+        var listed = rules.Scope.Values.Select(s => s.Assembly).Concat(native.Values).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        foreach (var file in Directory.EnumerateFiles(install, "*", SearchOption.AllDirectories)
+            .Where(f => f.EndsWith(".dll", StringComparison.OrdinalIgnoreCase) || f.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
+            .Select(f => Path.GetRelativePath(install, f).Replace('\\', '/')).Order(StringComparer.OrdinalIgnoreCase))
+        {
+            string stem = Path.GetFileNameWithoutExtension(file);
+            if (!file.Contains('/') && file.EndsWith(".dll", StringComparison.OrdinalIgnoreCase) && listed.Contains(stem)) continue;
+            if (stem.EndsWith(".resources", StringComparison.OrdinalIgnoreCase) && file.Count(c => c == '/') == 1)
+            {
+                assemblies.Add(new { file, satellite_of = stem[..^".resources".Length], culture = file[..file.IndexOf('/')] });
+                continue;
+            }
+            string? reason = Rules.NotMirrored(file);
+            string[] references = [], imports = [];
+            bool managed = false;
+            try
+            {
+                using var pe = new PEReader(File.OpenRead(Path.Combine(install, file)));
+                imports = [.. Imports(pe).Where(known.ContainsKey).Select(n => known[n])];
+                if (pe.HasMetadata && pe.GetMetadataReader() is { IsAssembly: true } md)
+                {
+                    managed = true;
+                    references = [.. md.AssemblyReferences.Select(h => md.GetString(md.GetAssemblyReference(h).Name)).Order()];
+                }
+            }
+            // Unreadable as PE: listed with its reason and no edges.
+            catch (Exception error) when (error is IOException or BadImageFormatException or ArgumentOutOfRangeException) { }
+            assemblies.Add(new { name = stem, file, managed, not_mirrored = reason, references, native_imports = imports,
+                error = reason == null ? $"unclassified: add {file} to Rules.NotMirrored" : null });
         }
         Console.WriteLine(JsonSerializer.Serialize(assemblies, new JsonSerializerOptions { WriteIndented = true }));
     }

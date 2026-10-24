@@ -1,14 +1,15 @@
 # Assembly dependency map
 
 Generated from installed Mathcad assembly metadata, PE imports and evaluated Release project references.
-Snapshot: 2026-10-24T04:17:48+00:00; revision `cdc8c8a4a364`.
+Snapshot: 2026-10-24T05:34:32+00:00; revision `ae89caeee9b6`.
 
 This is a planning aid for step 1 of the [five-step workflow](PLAN.md). It adds no validation step.
 
 Each Mathcad assembly has one Quire target project in its original language ([D20](decisions.md)).
 An arrow **A → B** means B depends on A: complete A before starting B. Frameworks and packages are
-treated as available. Native projects are link inputs outside the IL gate (D10): their stopgap import
-libraries make them available, so they never block a wave. Mpl modules also depend on the Mpl compiler
+treated as available. Native DLLs are mirrored as native projects and share the completion order: a
+stopgap import library does not make one available. They are outside the IL gate (D10). Mpl modules
+also depend on the Mpl compiler
 (`mplasb`, `mplrun`, `msgen`, `msclr`, and native ports of `msmpl` and `mshex`).
 
 “Ready” concerns dependencies, not ownership. Check [WORK](WORK.md) before claiming files.
@@ -18,14 +19,17 @@ libraries make them available, so they never block a wave. Mpl modules also depe
 | Complete next | Language | Newly eligible assemblies |
 |---|---|---|
 | `Quire.Automation` | CSharp | None yet; other prerequisites remain |
-| `Quire.AutomationPrivate` | CSharp | None yet; other prerequisites remain |
 | `Quire.Core` | CSharp | `Quire.Calculation.Core`, `Quire.Media3D` |
 | `Quire.EngNotebook.Automation` | CSharp | None yet; other prerequisites remain |
 | `Quire.EngNotebookPlus.Automation` | CSharp | None yet; other prerequisites remain |
 | `Quire.Engine.Misc` | CSharp | None yet; other prerequisites remain |
-| `Quire.Engine.Utl` | CppCli | None yet; other prerequisites remain |
-| `Quire.Mpl.Emit` | CSharp | `Quire.Mpl` |
-| `Quire.Utils` | CSharp | None yet; other prerequisites remain |
+| `Quire.Interop.Mathcad` | CSharp | None yet; other prerequisites remain |
+| `Quire.Interop.MathcadOld` | CSharp | None yet; other prerequisites remain |
+| `Quire.Interop.VSInterfacesLib` | CSharp | None yet; other prerequisites remain |
+| `Quire.Mpl` | CSharp | None yet; other prerequisites remain |
+| `Quire.Native.Mshex` | Native | `Quire.Native.Engutils` |
+| `Quire.Native.Mspcons` | Native | None yet; other prerequisites remain |
+| `Quire.Native.Utl` | Native | `Quire.Native.EfisymbolicsUmgd`, `Quire.Native.Mcaduser` |
 
 ## Completion order
 
@@ -34,12 +38,12 @@ The rows are dependency order, not a claim that any assembly is already complete
 
 | Wave | Assemblies |
 |---|---|
-| 1 | `Quire.Automation`, `Quire.AutomationPrivate`, `Quire.Core`, `Quire.EngNotebook.Automation`, `Quire.EngNotebookPlus.Automation`, `Quire.Engine.Misc`, `Quire.Engine.Utl`, `Quire.Mpl.Emit`, `Quire.Utils` |
-| 2 | `Quire.Calculation.Core`, `Quire.Media3D`, `Quire.Mpl` |
-| 3 | `Quire.Controls.Core`, `Quire.Msclr`, `Quire.Msgen` |
+| 1 | `Quire.Automation`, `Quire.Core`, `Quire.EngNotebook.Automation`, `Quire.EngNotebookPlus.Automation`, `Quire.Engine.Misc`, `Quire.Interop.Mathcad`, `Quire.Interop.MathcadOld`, `Quire.Interop.VSInterfacesLib`, `Quire.Mpl`, `Quire.Native.Mshex` (native), `Quire.Native.Mspcons` (native), `Quire.Native.Utl` (native) |
+| 2 | `Quire.Calculation.Core`, `Quire.Media3D`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.EfisymbolicsUmgd` (native), `Quire.Native.Engutils` (native), `Quire.Native.Mcaduser` (native), `Quire.Native.Msprolog` (native) |
+| 3 | `Quire.Controls.Core`, `Quire.Native.Msmpl` (native) |
 | 4 | `Quire.EfiAffine`, `Quire.EfiBessel`, `Quire.EfiData`, `Quire.EfiDebug`, `Quire.EfiFinance`, `Quire.EfiFourier`, `Quire.EfiIO`, `Quire.EfiImage`, `Quire.EfiSignal`, `Quire.EfiSixsigma`, `Quire.EfiSpecial`, `Quire.EfiStatistics`, `Quire.EfiWavelets`, `Quire.EquationEditor`, `Quire.McdEfi`, `Quire.MplConstants`, `Quire.MplModule`, `Quire.MplPrelude`, `Quire.MplPrimitives`, `Quire.MplSexpr` |
 | 5 | `Quire.Controls.EquationControl`, `Quire.Efiutl`, `Quire.Hashtable`, `Quire.McdRun`, `Quire.McdStaticUnitSystem`, `Quire.MplMacro`, `Quire.MplUnitSystemSI` |
-| 6 | `Quire.Controls.Include`, `Quire.Controls.Text`, `Quire.EfibesselImpl`, `Quire.EficoreImpl`, `Quire.EfidebugImpl`, `Quire.EfigraphicsImpl`, `Quire.EfispecialImpl`, `Quire.EfisymbolicsImpl`, `Quire.McdStaticUnitSystemCGS`, `Quire.McdStaticUnitSystemNone`, `Quire.McdStaticUnitSystemSI` |
+| 6 | `Quire.Controls.Include`, `Quire.Controls.Text`, `Quire.EfibesselImpl`, `Quire.EficoreImpl`, `Quire.EfidebugImpl`, `Quire.EfigraphicsImpl`, `Quire.EfispecialImpl`, `Quire.EfisymbolicsImpl`, `Quire.McdStaticUnitSystemCGS`, `Quire.McdStaticUnitSystemNone`, `Quire.McdStaticUnitSystemSI`, `Quire.Native.EfistatsciImpl` (native), `Quire.Native.Mctranslator` (native) |
 | 7 | `Quire.Controls.Plots`, `Quire.Controls.Whiteboard`, `Quire.EfiCore`, `Quire.EfiGraphics`, `Quire.EfiSymbolicsLabels`, `Quire.EfiSymbolicsMacros`, `Quire.EfiioCsharp`, `Quire.EfimatrixImpl`, `Quire.McdStaticUnitSystemMKS`, `Quire.McdStaticUnitSystemUS`, `Quire.McdUnitSystemCGS`, `Quire.McdUnitSystemNone` |
 | 8 | `Quire.Controls.CollapsibleArea`, `Quire.Controls.SolveBlock`, `Quire.EfiMatrix`, `Quire.EfiSymbolicsMap`, `Quire.EficalculusImpl`, `Quire.EfidiffeqImpl`, `Quire.EfifourierImpl`, `Quire.EfiioImpl`, `Quire.McdUnitSystemSI` |
 | 9 | `Quire.EfiCalculus`, `Quire.EfiDiffEQ`, `Quire.EfiSymbolicsLexer`, `Quire.EfiimageImpl`, `Quire.EfiplotImpl`, `Quire.EfisignalImpl`, `Quire.EfistatisticsImpl`, `Quire.EfiwaveletsImpl`, `Quire.McdUnitSystemMKS`, `Quire.McdUnitSystemUS` |
@@ -84,17 +88,6 @@ Splitting one out means creating its target and moving its members in the same c
 | `Quire.Native.Mspcons` | `mspcons.dll` | None | `Quire.Mcfront12`, `Quire.Native.Mctranslator`, `Quire.Native.Msprolog` |
 | `Quire.Native.Msprolog` | `msprolog.dll` | `Quire.Native.Mspcons`, `Quire.Native.Utl` | `Quire.Mcfront12`, `Quire.Native.Mctranslator` |
 | `Quire.Native.Utl` | `utl.dll` | None | `Quire.EfimatrixImpl`, `Quire.EfisymbolicsImpl`, `Quire.Efiutl`, `Quire.Engine`, `Quire.Engine.Utl`, `Quire.EngutilsMgd`, `Quire.Mccore12`, `Quire.Mcdepman`, `Quire.Mceng`, `Quire.Mcfront12`, `Quire.Mslisp`, `Quire.Native.EfisymbolicsUmgd`, `Quire.Native.Mcaduser`, `Quire.Native.Mctranslator`, `Quire.Native.Msmpl`, `Quire.Native.Msprolog` |
-
-## Native completion order
-
-Native ports ordered among themselves. A port’s managed prerequisites must also be complete first;
-they are scheduled in the completion order above.
-
-| Wave | Native projects | Managed prerequisites |
-|---|---|---|
-| 1 | `Quire.Native.EfistatsciImpl`, `Quire.Native.Mshex`, `Quire.Native.Mspcons`, `Quire.Native.Utl` | `Quire.Native.EfistatsciImpl`: `Quire.Efiutl` |
-| 2 | `Quire.Native.EfisymbolicsUmgd`, `Quire.Native.Engutils`, `Quire.Native.Mcaduser`, `Quire.Native.Msmpl`, `Quire.Native.Msprolog` | `Quire.Native.Msmpl`: `Quire.Msclr`, `Quire.Msgen` |
-| 3 | `Quire.Native.Mctranslator` | `Quire.Native.Mctranslator`: `Quire.Efiutl` |
 
 ## Dependency graph
 
@@ -160,111 +153,117 @@ flowchart TD
     a54["Quire.EngutilsMgd (CppCli)"]
     a55["Quire.Hashtable (Mpl)"]
     a56["Quire.Engine (CppCli)"]
-    a57["Quire.AutomationPrivate (CSharp)"]
-    a58["Quire (CSharp)"]
-    a59["Quire.Mccore12 (CppCli)"]
-    a60["Quire.McdDynamicEfi (Mpl)"]
-    a61["Quire.McdEfi (Mpl)"]
-    a62["Quire.Mcdepman (CppCli)"]
-    a63["Quire.McdRun (Mpl)"]
-    a64["Quire.McdStaticUnitSystem (Mpl)"]
-    a65["Quire.McdStaticUnitSystemCGS (Mpl)"]
-    a66["Quire.McdStaticUnitSystemMKS (Mpl)"]
-    a67["Quire.McdStaticUnitSystemNone (Mpl)"]
-    a68["Quire.McdStaticUnitSystemSI (Mpl)"]
-    a69["Quire.McdStaticUnitSystemUS (Mpl)"]
-    a70["Quire.McdTranslator (Mpl)"]
-    a71["Quire.McdUnitSystemCGS (Mpl)"]
-    a72["Quire.McdUnitSystemMKS (Mpl)"]
-    a73["Quire.McdUnitSystemNone (Mpl)"]
-    a74["Quire.McdUnitSystemSI (Mpl)"]
-    a75["Quire.McdUnitSystemUS (Mpl)"]
-    a76["Quire.Mceng (CppCli)"]
-    a77["Quire.Mcfront12 (CppCli)"]
-    a78["Quire.Engine.Misc (CSharp)"]
-    a79["Quire.MplModule (Mpl)"]
-    a80["Quire.Mpl.Emit (CSharp)"]
-    a81["Quire.MplConstants (Mpl)"]
-    a82["Quire.MplMacro (Mpl)"]
-    a83["Quire.MplPrelude (Mpl)"]
-    a84["Quire.MplPrimitives (Mpl)"]
-    a85["Quire.Mpl (CSharp)"]
-    a86["Quire.MplSexpr (Mpl)"]
-    a87["Quire.MplUnitSystemSI (Mpl)"]
-    a88["Quire.Msclr (CppCli)"]
-    a89["Quire.Msgen (CppCli)"]
-    a90["Quire.Mslisp (CppCli)"]
-    a91["Quire.MspconsMgd (CppCli)"]
-    a92["Quire.Calculation (CSharp)"]
-    a93["Quire.Calculation.Core (CSharp)"]
-    a94["Quire.Controls (CSharp)"]
-    a95["Quire.Controls.CollapsibleArea (CSharp)"]
-    a96["Quire.Controls.Core (CSharp)"]
-    a97["Quire.Controls.EquationControl (CSharp)"]
-    a98["Quire.Controls.ExcelComponent (CSharp)"]
-    a99["Quire.Controls.Include (CSharp)"]
-    a100["Quire.Controls.Plots (CSharp)"]
-    a101["Quire.Controls.SolveBlock (CSharp)"]
-    a102["Quire.Controls.Text (CSharp)"]
-    a103["Quire.Controls.Whiteboard (CSharp)"]
-    a104["Quire.Controls.Worksheet (CSharp)"]
-    a105["Quire.Core (CSharp)"]
-    a106["Quire.EngNotebook.Automation (CSharp)"]
-    a107["Quire.EngNotebookPlus.Automation (CSharp)"]
-    a108["Quire.EquationEditor (CSharp)"]
-    a109["Quire.Automation (CSharp)"]
-    a110["Quire.Media3D (CSharp)"]
-    a111["Quire.Utils (CSharp)"]
-    a112["Quire.Engine.Utl (CppCli)"]
-    a113["Quire.Native.EfistatsciImpl (Native)"]
-    a114["Quire.Native.EfisymbolicsUmgd (Native)"]
-    a115["Quire.Native.Engutils (Native)"]
-    a116["Quire.Native.Mcaduser (Native)"]
-    a117["Quire.Native.Mctranslator (Native)"]
-    a118["Quire.Native.Mshex (Native)"]
-    a119["Quire.Native.Msmpl (Native)"]
-    a120["Quire.Native.Mspcons (Native)"]
-    a121["Quire.Native.Msprolog (Native)"]
-    a122["Quire.Native.Utl (Native)"]
+    a57["Quire.Interop.Mathcad (CSharp)"]
+    a58["Quire.AutomationPrivate (CSharp)"]
+    a59["Quire.Interop.MathcadOld (CSharp)"]
+    a60["Quire.Interop.VSInterfacesLib (CSharp)"]
+    a61["Quire (CSharp)"]
+    a62["Quire.Mccore12 (CppCli)"]
+    a63["Quire.McdDynamicEfi (Mpl)"]
+    a64["Quire.McdEfi (Mpl)"]
+    a65["Quire.Mcdepman (CppCli)"]
+    a66["Quire.McdRun (Mpl)"]
+    a67["Quire.McdStaticUnitSystem (Mpl)"]
+    a68["Quire.McdStaticUnitSystemCGS (Mpl)"]
+    a69["Quire.McdStaticUnitSystemMKS (Mpl)"]
+    a70["Quire.McdStaticUnitSystemNone (Mpl)"]
+    a71["Quire.McdStaticUnitSystemSI (Mpl)"]
+    a72["Quire.McdStaticUnitSystemUS (Mpl)"]
+    a73["Quire.McdTranslator (Mpl)"]
+    a74["Quire.McdUnitSystemCGS (Mpl)"]
+    a75["Quire.McdUnitSystemMKS (Mpl)"]
+    a76["Quire.McdUnitSystemNone (Mpl)"]
+    a77["Quire.McdUnitSystemSI (Mpl)"]
+    a78["Quire.McdUnitSystemUS (Mpl)"]
+    a79["Quire.Mceng (CppCli)"]
+    a80["Quire.Mcfront12 (CppCli)"]
+    a81["Quire.Engine.Misc (CSharp)"]
+    a82["Quire.MplModule (Mpl)"]
+    a83["Quire.Mpl.Emit (CSharp)"]
+    a84["Quire.MplConstants (Mpl)"]
+    a85["Quire.MplMacro (Mpl)"]
+    a86["Quire.MplPrelude (Mpl)"]
+    a87["Quire.MplPrimitives (Mpl)"]
+    a88["Quire.Mpl (CSharp)"]
+    a89["Quire.MplSexpr (Mpl)"]
+    a90["Quire.MplUnitSystemSI (Mpl)"]
+    a91["Quire.Msclr (CppCli)"]
+    a92["Quire.Msgen (CppCli)"]
+    a93["Quire.Mslisp (CppCli)"]
+    a94["Quire.MspconsMgd (CppCli)"]
+    a95["Quire.Calculation (CSharp)"]
+    a96["Quire.Calculation.Core (CSharp)"]
+    a97["Quire.Controls (CSharp)"]
+    a98["Quire.Controls.CollapsibleArea (CSharp)"]
+    a99["Quire.Controls.Core (CSharp)"]
+    a100["Quire.Controls.EquationControl (CSharp)"]
+    a101["Quire.Controls.ExcelComponent (CSharp)"]
+    a102["Quire.Controls.Include (CSharp)"]
+    a103["Quire.Controls.Plots (CSharp)"]
+    a104["Quire.Controls.SolveBlock (CSharp)"]
+    a105["Quire.Controls.Text (CSharp)"]
+    a106["Quire.Controls.Whiteboard (CSharp)"]
+    a107["Quire.Controls.Worksheet (CSharp)"]
+    a108["Quire.Core (CSharp)"]
+    a109["Quire.EngNotebook.Automation (CSharp)"]
+    a110["Quire.EngNotebookPlus.Automation (CSharp)"]
+    a111["Quire.EquationEditor (CSharp)"]
+    a112["Quire.Automation (CSharp)"]
+    a113["Quire.Media3D (CSharp)"]
+    a114["Quire.Utils (CSharp)"]
+    a115["Quire.Engine.Utl (CppCli)"]
+    a116["Quire.Native.EfistatsciImpl (Native)"]
+    a117["Quire.Native.EfisymbolicsUmgd (Native)"]
+    a118["Quire.Native.Engutils (Native)"]
+    a119["Quire.Native.Mcaduser (Native)"]
+    a120["Quire.Native.Mctranslator (Native)"]
+    a121["Quire.Native.Mshex (Native)"]
+    a122["Quire.Native.Msmpl (Native)"]
+    a123["Quire.Native.Mspcons (Native)"]
+    a124["Quire.Native.Msprolog (Native)"]
+    a125["Quire.Native.Utl (Native)"]
     a1 -.-> a0
+    a57 -.-> a0
     a45 -.-> a1
-    a111 -.-> a1
+    a114 -.-> a1
     a1 -.-> a2
-    a119 -.-> a3
-    a119 -.-> a4
+    a57 -.-> a2
+    a60 -.-> a2
+    a122 -.-> a3
+    a122 -.-> a4
     a51 -.-> a5
     a7 -.-> a6
     a30 -.-> a7
     a9 -.-> a8
     a55 -.-> a8
-    a63 -.-> a8
+    a66 -.-> a8
     a51 -.-> a9
-    a119 -.-> a10
+    a122 -.-> a10
     a7 -.-> a11
     a19 -.-> a11
     a42 -.-> a11
-    a78 -.-> a11
-    a119 -.-> a12
+    a81 -.-> a11
+    a122 -.-> a12
     a51 -.-> a13
     a15 -.-> a14
-    a63 -.-> a14
+    a66 -.-> a14
     a30 -.-> a15
-    a119 -.-> a16
+    a122 -.-> a16
     a19 -.-> a17
     a19 -.-> a18
     a25 -.-> a19
-    a119 -.-> a20
+    a122 -.-> a20
     a30 -.-> a21
     a23 -.-> a22
-    a63 -.-> a22
+    a66 -.-> a22
     a51 -.-> a23
-    a119 -.-> a24
+    a122 -.-> a24
     a21 -.-> a25
-    a113 -.-> a25
-    a119 -.-> a26
+    a116 -.-> a25
+    a122 -.-> a26
     a28 -.-> a27
     a30 -.-> a27
-    a113 -.-> a27
+    a116 -.-> a27
     a9 -.-> a28
     a8 -.-> a29
     a30 -.-> a29
@@ -273,140 +272,141 @@ flowchart TD
     a29 -.-> a32
     a7 -.-> a32
     a23 -.-> a32
-    a119 -.-> a33
+    a122 -.-> a33
     a21 -.-> a34
-    a113 -.-> a34
-    a119 -.-> a35
+    a116 -.-> a34
+    a122 -.-> a35
     a11 -.-> a36
     a38 -.-> a37
-    a63 -.-> a37
+    a66 -.-> a37
     a7 -.-> a38
     a19 -.-> a38
-    a119 -.-> a39
+    a122 -.-> a39
     a51 -.-> a40
-    a119 -.-> a41
+    a122 -.-> a41
     a21 -.-> a42
-    a113 -.-> a42
+    a116 -.-> a42
     a45 -.-> a43
     a51 -.-> a44
-    a112 -.-> a44
+    a115 -.-> a44
     a50 -.-> a45
     a44 -.-> a46
-    a63 -.-> a46
+    a66 -.-> a46
     a48 -.-> a47
     a49 -.-> a47
     a44 -.-> a48
-    a63 -.-> a48
-    a82 -.-> a48
+    a66 -.-> a48
+    a85 -.-> a48
     a46 -.-> a49
     a55 -.-> a49
     a47 -.-> a50
     a30 -.-> a50
-    a79 -.-> a51
-    a119 -.-> a52
+    a82 -.-> a51
+    a122 -.-> a52
     a21 -.-> a53
     a1 -.-> a54
-    a115 -.-> a54
-    a83 -.-> a55
+    a118 -.-> a54
+    a86 -.-> a55
     a54 -.-> a56
-    a109 --> a58
-    a94 --> a58
-    a106 --> a58
-    a107 --> a58
-    a62 -.-> a59
-    a116 -.-> a59
-    a117 -.-> a59
-    a12 -.-> a60
-    a14 -.-> a60
-    a22 -.-> a60
-    a5 -.-> a60
-    a13 -.-> a60
-    a17 -.-> a60
-    a27 -.-> a60
-    a32 -.-> a60
-    a34 -.-> a60
-    a36 -.-> a60
-    a40 -.-> a60
-    a53 -.-> a60
-    a119 -.-> a61
-    a56 -.-> a62
-    a83 -.-> a63
-    a83 -.-> a64
-    a63 -.-> a65
-    a64 -.-> a65
-    a68 -.-> a66
-    a63 -.-> a67
-    a63 -.-> a68
-    a64 -.-> a68
-    a68 -.-> a69
-    a2 -.-> a70
-    a43 -.-> a70
-    a32 -.-> a70
-    a65 -.-> a71
-    a66 -.-> a72
-    a74 -.-> a72
-    a67 -.-> a73
-    a30 -.-> a74
+    a57 -.-> a56
+    a112 --> a61
+    a97 --> a61
+    a109 --> a61
+    a110 --> a61
+    a65 -.-> a62
+    a119 -.-> a62
+    a120 -.-> a62
+    a12 -.-> a63
+    a14 -.-> a63
+    a22 -.-> a63
+    a5 -.-> a63
+    a13 -.-> a63
+    a17 -.-> a63
+    a27 -.-> a63
+    a32 -.-> a63
+    a34 -.-> a63
+    a36 -.-> a63
+    a40 -.-> a63
+    a53 -.-> a63
+    a122 -.-> a64
+    a56 -.-> a65
+    a86 -.-> a66
+    a86 -.-> a67
+    a66 -.-> a68
+    a67 -.-> a68
+    a71 -.-> a69
+    a66 -.-> a70
+    a66 -.-> a71
+    a67 -.-> a71
+    a71 -.-> a72
+    a2 -.-> a73
+    a43 -.-> a73
+    a32 -.-> a73
     a68 -.-> a74
     a69 -.-> a75
-    a74 -.-> a75
-    a77 -.-> a76
-    a57 -.-> a77
-    a78 -.-> a77
-    a59 -.-> a77
-    a90 -.-> a77
-    a119 -.-> a79
-    a119 -.-> a81
-    a83 -.-> a82
-    a119 -.-> a83
-    a119 -.-> a84
-    a80 --> a85
-    a119 -.-> a86
-    a81 -.-> a87
-    a83 -.-> a87
-    a85 --> a88
-    a118 -.-> a88
-    a85 -.-> a89
-    a118 -.-> a89
-    a91 -.-> a90
-    a54 -.-> a91
-    a0 --> a92
-    a93 --> a92
-    a56 --> a92
-    a105 --> a93
-    a104 --> a94
-    a103 --> a95
-    a93 --> a96
-    a108 --> a97
-    a92 --> a98
-    a103 --> a98
-    a97 --> a99
-    a102 --> a100
-    a110 --> a100
-    a103 --> a101
-    a97 -.-> a102
-    a99 -.-> a103
-    a102 -.-> a103
-    a95 -.-> a104
-    a98 --> a104
-    a100 --> a104
-    a101 --> a104
-    a96 --> a108
-    a85 --> a108
-    a105 --> a110
-    a122 -.-> a112
-    a51 -.-> a113
-    a122 -.-> a114
-    a118 -.-> a115
-    a122 -.-> a116
-    a51 -.-> a117
-    a115 -.-> a117
-    a121 -.-> a117
-    a88 -.-> a119
-    a89 -.-> a119
-    a122 -.-> a119
-    a120 -.-> a121
-    a122 -.-> a121
+    a77 -.-> a75
+    a70 -.-> a76
+    a30 -.-> a77
+    a71 -.-> a77
+    a72 -.-> a78
+    a77 -.-> a78
+    a80 -.-> a79
+    a58 -.-> a80
+    a81 -.-> a80
+    a62 -.-> a80
+    a93 -.-> a80
+    a122 -.-> a82
+    a122 -.-> a84
+    a86 -.-> a85
+    a122 -.-> a86
+    a122 -.-> a87
+    a83 --> a88
+    a122 -.-> a89
+    a84 -.-> a90
+    a86 -.-> a90
+    a88 --> a91
+    a121 -.-> a91
+    a88 -.-> a92
+    a121 -.-> a92
+    a94 -.-> a93
+    a54 -.-> a94
+    a0 --> a95
+    a96 --> a95
+    a56 --> a95
+    a108 --> a96
+    a107 --> a97
+    a106 --> a98
+    a96 --> a99
+    a111 --> a100
+    a95 --> a101
+    a106 --> a101
+    a100 --> a102
+    a105 --> a103
+    a113 --> a103
+    a106 --> a104
+    a100 -.-> a105
+    a102 -.-> a106
+    a105 -.-> a106
+    a98 -.-> a107
+    a101 --> a107
+    a103 --> a107
+    a104 --> a107
+    a99 --> a111
+    a88 --> a111
+    a108 --> a113
+    a125 -.-> a115
+    a51 -.-> a116
+    a125 -.-> a117
+    a121 -.-> a118
+    a125 -.-> a119
+    a51 -.-> a120
+    a118 -.-> a120
+    a124 -.-> a120
+    a91 -.-> a122
+    a92 -.-> a122
+    a125 -.-> a122
+    a123 -.-> a124
+    a125 -.-> a124
 ```
 
 ## Status
@@ -416,9 +416,9 @@ IL counts are the last recorded Release audit of that original’s rows.
 
 | Target | Original | Language | Host | Required | Stub bodies | Scope | Status | Last recorded exact IL |
 |---|---|---|---|---|---:|---|---|---|
-| `Quire.Automation.Native` | `automation.dll` | CSharp | `Quire.Automation.Native` | `Quire.Automationmgd`, `Quire.Mpl` | 401 (host) | deferred / out of scope | incomplete | 1 exact; 0 declarations; 0 native pairs; 33 unresolved |
+| `Quire.Automation.Native` | `automation.dll` | CSharp | `Quire.Automation.Native` | `Quire.Automationmgd`, `Quire.Interop.Mathcad`, `Quire.Mpl` | 401 (host) | deferred / out of scope | incomplete | 1 exact; 0 declarations; 0 native pairs; 33 unresolved |
 | `Quire.Automationmgd` | `automationmgd.dll` | CSharp | `Quire.Automation.Native` | `Quire.EfiSymbolicsEmitter`, `Quire.Mpl`, `Quire.Utils` | 401 (host) | active / mixed | incomplete | 3 exact; 5 declarations; 0 native pairs; 318 unresolved |
-| `Quire.Componentsmgd` | `componentsmgd.dll` | CSharp | `Quire.Automation.Native` | `Quire.Automationmgd`, `Quire.Mpl` | 401 (host) | deferred / out of scope | incomplete | 5 exact; 0 declarations; 0 native pairs; 115 unresolved |
+| `Quire.Componentsmgd` | `componentsmgd.dll` | CSharp | `Quire.Automation.Native` | `Quire.Automationmgd`, `Quire.Interop.Mathcad`, `Quire.Interop.VSInterfacesLib`, `Quire.Mpl` | 401 (host) | deferred / out of scope | incomplete | 5 exact; 0 declarations; 0 native pairs; 115 unresolved |
 | `Quire.EfiAffine` | `efiaffine.dll` | Mpl | `Quire.Efi` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 2592 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 2 unresolved |
 | `Quire.EfiBessel` | `efibessel.dll` | Mpl | `Quire.Efi` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 2592 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 2 unresolved |
 | `Quire.EfibesselImpl` | `efibessel_.dll` | CppCli | `Quire.Efi` | `Quire.Efiutl`, `Quire.Mpl`, `Quire.MplModule` | 2592 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 40 unresolved |
@@ -472,8 +472,11 @@ IL counts are the last recorded Release audit of that original’s rows.
 | `Quire.EfiwaveletsImpl` | `efiwavelets_.dll` | CppCli | `Quire.Efi` | `Quire.EfifourierImpl`, `Quire.Efiutl`, `Quire.Mpl`, `Quire.MplModule` | 2592 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 118 unresolved |
 | `Quire.EngutilsMgd` | `engutils-mgd.dll` | CppCli | `Quire.Engine` | `Quire.Automationmgd`, `Quire.Mpl`, `Quire.Native.Engutils`, `Quire.Native.Msmpl`, `Quire.Native.Utl` | 137 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 77 unresolved |
 | `Quire.Hashtable` | `hashtable.dll` | Mpl | `Quire.Mpl.Modules` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.MplPrelude`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 381 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 20 unresolved |
-| `Quire.Engine` | `iengine.dll` | CppCli | `Quire.Engine` | `Quire.Automationmgd`, `Quire.Engine.Utl`, `Quire.EngutilsMgd`, `Quire.Mpl`, `Quire.Native.Utl` | 137 (host) | active / mixed | incomplete | 0 exact; 28 declarations; 0 native pairs; 101 unresolved |
-| `Quire.AutomationPrivate` | `interop.mathcadautomationprivate.dll` | CSharp | `Quire.AutomationPrivate` | None | 0 (host) | deferred / out of scope | unconfirmed | 0 exact; 51 declarations; 0 native pairs; 0 unresolved |
+| `Quire.Engine` | `iengine.dll` | CppCli | `Quire.Engine` | `Quire.Automationmgd`, `Quire.Engine.Utl`, `Quire.EngutilsMgd`, `Quire.Interop.Mathcad`, `Quire.Mpl`, `Quire.Native.Utl` | 137 (host) | active / mixed | incomplete | 0 exact; 28 declarations; 0 native pairs; 101 unresolved |
+| `Quire.Interop.Mathcad` | `interop.mathcad.dll` | CSharp | `Quire.Interop.Mathcad` | None | 0 (host) | deferred / out of scope | unconfirmed | Not recorded |
+| `Quire.AutomationPrivate` | `interop.mathcadautomationprivate.dll` | CSharp | split | None | 0 | deferred / out of scope | complete | 0 exact; 51 declarations; 0 native pairs; 0 unresolved |
+| `Quire.Interop.MathcadOld` | `interop.mathcadold.dll` | CSharp | `Quire.Interop.MathcadOld` | None | 0 (host) | deferred / out of scope | unconfirmed | Not recorded |
+| `Quire.Interop.VSInterfacesLib` | `interop.vsinterfaceslib.dll` | CSharp | `Quire.Interop.VSInterfacesLib` | None | 0 (host) | deferred / out of scope | unconfirmed | Not recorded |
 | `Quire` | `MathcadPrime.dll` | CSharp | split | `Quire.Automation`, `Quire.Calculation`, `Quire.Calculation.Core`, `Quire.Controls`, `Quire.Controls.Core`, `Quire.Controls.EquationControl`, `Quire.Controls.ExcelComponent`, `Quire.Controls.Include`, `Quire.Controls.Plots`, `Quire.Controls.Text`, `Quire.Controls.Worksheet`, `Quire.Core`, `Quire.EngNotebook.Automation`, `Quire.EngNotebookPlus.Automation`, `Quire.Engine`, `Quire.EquationEditor`, `Quire.Mpl` | 2407 | deferred / out of scope | incomplete | 167 exact; 67 declarations; 0 native pairs; 2810 unresolved |
 | `Quire.Mccore12` | `mccore12.dll` | CppCli | `Quire.Engine.Native` | `Quire.EfisymbolicsImpl`, `Quire.Engine`, `Quire.Engine.Utl`, `Quire.EngutilsMgd`, `Quire.Mcdepman`, `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Native.Engutils`, `Quire.Native.Mcaduser`, `Quire.Native.Mctranslator`, `Quire.Native.Mshex`, `Quire.Native.Msmpl`, `Quire.Native.Utl` | 1053 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 101 unresolved |
 | `Quire.McdDynamicEfi` | `mcddynamicefi.dll` | Mpl | `Quire.Mcd` | `Quire.EfiCore`, `Quire.EfiDebug`, `Quire.EfiDiffEQ`, `Quire.EfiGraphics`, `Quire.EfiMatrix`, `Quire.EfibesselImpl`, `Quire.EficoreImpl`, `Quire.EfidataImpl`, `Quire.EfidebugImpl`, `Quire.EfidiffeqImpl`, `Quire.EfifinanceImpl`, `Quire.EfifittingImpl`, `Quire.EfifourierImpl`, `Quire.EfigraphicsImpl`, `Quire.EfiimageImpl`, `Quire.EfiioImpl`, `Quire.EfimatrixImpl`, `Quire.EfiplotImpl`, `Quire.EfisignalImpl`, `Quire.EfisixsigmaImpl`, `Quire.EfispecialImpl`, `Quire.EfistatisticsImpl`, `Quire.EfiwaveletsImpl`, `Quire.McdRun`, `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 562 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 107 unresolved |
@@ -493,15 +496,15 @@ IL counts are the last recorded Release audit of that original’s rows.
 | `Quire.McdUnitSystemSI` | `mcdunitsystemsi.dll` | Mpl | `Quire.Mcd` | `Quire.EficoreImpl`, `Quire.EfimatrixImpl`, `Quire.McdRun`, `Quire.McdStaticUnitSystemSI`, `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.MplPrelude`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 562 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 11 unresolved |
 | `Quire.McdUnitSystemUS` | `mcdunitsystemus.dll` | Mpl | `Quire.Mcd` | `Quire.McdRun`, `Quire.McdStaticUnitSystemUS`, `Quire.McdUnitSystemSI`, `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 562 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 4 unresolved |
 | `Quire.Mceng` | `mceng.dll` | CppCli | `Quire.Engine.Native` | `Quire.Engine`, `Quire.Engine.Utl`, `Quire.EngutilsMgd`, `Quire.Mccore12`, `Quire.Mcfront12`, `Quire.Mpl`, `Quire.Mslisp`, `Quire.Native.Utl` | 1053 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 12 unresolved |
-| `Quire.Mcfront12` | `mcfront12.dll` | CppCli | `Quire.Engine.Native` | `Quire.AutomationPrivate`, `Quire.Automationmgd`, `Quire.Engine`, `Quire.Engine.Misc`, `Quire.Engine.Utl`, `Quire.EngutilsMgd`, `Quire.Mccore12`, `Quire.Mcdepman`, `Quire.Mpl`, `Quire.Mslisp`, `Quire.MspconsMgd`, `Quire.Native.Mspcons`, `Quire.Native.Msprolog`, `Quire.Native.Utl` | 1053 (host) | deferred / out of scope | incomplete | 0 exact; 44 declarations; 0 native pairs; 388 unresolved |
+| `Quire.Mcfront12` | `mcfront12.dll` | CppCli | `Quire.Engine.Native` | `Quire.AutomationPrivate`, `Quire.Automationmgd`, `Quire.Engine`, `Quire.Engine.Misc`, `Quire.Engine.Utl`, `Quire.EngutilsMgd`, `Quire.Interop.Mathcad`, `Quire.Mccore12`, `Quire.Mcdepman`, `Quire.Mpl`, `Quire.Mslisp`, `Quire.MspconsMgd`, `Quire.Native.Mspcons`, `Quire.Native.Msprolog`, `Quire.Native.Utl` | 1053 (host) | deferred / out of scope | incomplete | 0 exact; 44 declarations; 0 native pairs; 388 unresolved |
 | `Quire.Engine.Misc` | `mcmisc.dll` | CSharp | split | None | 0 | deferred / out of scope | unconfirmed | 129 exact; 0 declarations; 0 native pairs; 0 unresolved |
 | `Quire.MplModule` | `mpl.dll` | Mpl | `Quire.Mpl.Modules` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 381 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 10 unresolved |
-| `Quire.Mpl.Emit` | `mplasb.dll` | CSharp | split | None | 0 | deferred / out of scope | unconfirmed | 686 exact; 0 declarations; 0 native pairs; 0 unresolved |
+| `Quire.Mpl.Emit` | `mplasb.dll` | CSharp | split | None | 0 | deferred / out of scope | complete | 686 exact; 0 declarations; 0 native pairs; 0 unresolved |
 | `Quire.MplConstants` | `mplconstants.dll` | Mpl | `Quire.Mpl.Modules` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 381 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 2 unresolved |
 | `Quire.MplMacro` | `mplmacro.dll` | Mpl | `Quire.Mpl.Modules` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.MplPrelude`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 381 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 28 unresolved |
 | `Quire.MplPrelude` | `mplprelude.dll` | Mpl | `Quire.Mpl.Modules` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 381 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 109 unresolved |
 | `Quire.MplPrimitives` | `mplprimitives.dll` | Mpl | `Quire.Mpl.Modules` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 381 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 8 unresolved |
-| `Quire.Mpl` | `mplrun.dll` | CSharp | split | `Quire.Mpl.Emit` | 0 | active / mixed | unconfirmed | 1867 exact; 165 declarations; 0 native pairs; 0 unresolved |
+| `Quire.Mpl` | `mplrun.dll` | CSharp | split | `Quire.Mpl.Emit` | 0 | active / mixed | unconfirmed | 1865 exact; 165 declarations; 0 native pairs; 2 unresolved |
 | `Quire.MplSexpr` | `mplsexpr.dll` | Mpl | `Quire.Mpl.Modules` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 381 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 32 unresolved |
 | `Quire.MplUnitSystemSI` | `mplunitsystemsi.dll` | Mpl | `Quire.Mpl.Modules` | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.MplConstants`, `Quire.MplPrelude`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Msmpl` | 381 (host) | deferred / out of scope | incomplete | 0 exact; 0 declarations; 0 native pairs; 2 unresolved |
 | `Quire.Msclr` | `msclr.dll` | CppCli | split | `Quire.Mpl`, `Quire.Mpl.Emit`, `Quire.Native.Mshex` | 0 | deferred / out of scope | unconfirmed | 80 exact; 3 declarations; 6 native pairs; 0 unresolved |
@@ -521,14 +524,169 @@ IL counts are the last recorded Release audit of that original’s rows.
 | `Quire.Controls.Text` | `Ptc.Controls.Text.dll` | CSharp | split | `Quire.Calculation.Core`, `Quire.Controls.Core`, `Quire.Controls.EquationControl`, `Quire.Core` | 564 | active / mixed | incomplete | 36 exact; 0 declarations; 0 native pairs; 677 unresolved |
 | `Quire.Controls.Whiteboard` | `Ptc.Controls.Whiteboard.dll` | CSharp | split | `Quire.Calculation.Core`, `Quire.Controls.Core`, `Quire.Controls.EquationControl`, `Quire.Controls.Include`, `Quire.Controls.Text`, `Quire.Core` | 808 | deferred / out of scope | incomplete | 79 exact; 28 declarations; 0 native pairs; 929 unresolved |
 | `Quire.Controls.Worksheet` | `Ptc.Controls.Worksheet.dll` | CSharp | split | `Quire.Calculation`, `Quire.Calculation.Core`, `Quire.Controls.CollapsibleArea`, `Quire.Controls.Core`, `Quire.Controls.EquationControl`, `Quire.Controls.ExcelComponent`, `Quire.Controls.Include`, `Quire.Controls.Plots`, `Quire.Controls.SolveBlock`, `Quire.Controls.Text`, `Quire.Controls.Whiteboard`, `Quire.Core`, `Quire.Engine`, `Quire.EquationEditor` | 2757 | active / mixed | incomplete | 143 exact; 16 declarations; 0 native pairs; 3275 unresolved |
-| `Quire.Core` | `Ptc.Core.dll` | CSharp | split | None | 121 | active / mixed | incomplete | 3456 exact; 747 declarations; 0 native pairs; 243 unresolved |
+| `Quire.Core` | `Ptc.Core.dll` | CSharp | split | None | 109 | active / mixed | incomplete | 3478 exact; 747 declarations; 0 native pairs; 229 unresolved |
 | `Quire.EngNotebook.Automation` | `Ptc.EngNotebook.Automation.dll` | CSharp | split | None | 0 | deferred / out of scope | unconfirmed | 216 exact; 198 declarations; 0 native pairs; 1 unresolved |
 | `Quire.EngNotebookPlus.Automation` | `Ptc.EngNotebookPlus.Automation.dll` | CSharp | split | None | 0 | deferred / out of scope | unconfirmed | 215 exact; 197 declarations; 0 native pairs; 1 unresolved |
 | `Quire.EquationEditor` | `Ptc.EquationEditor.dll` | CSharp | split | `Quire.Calculation.Core`, `Quire.Controls.Core`, `Quire.Core`, `Quire.Mpl` | 3878 | active / mixed | incomplete | 167 exact; 56 declarations; 0 native pairs; 5284 unresolved |
 | `Quire.Automation` | `Ptc.MathcadPrime.Automation.dll` | CSharp | split | None | 0 | deferred / out of scope | unconfirmed | 232 exact; 194 declarations; 0 native pairs; 1 unresolved |
 | `Quire.Media3D` | `Ptc.Media3D.dll` | CSharp | split | `Quire.Core` | 3 | deferred / out of scope | incomplete | 629 exact; 7 declarations; 0 native pairs; 5 unresolved |
-| `Quire.Utils` | `utilsmgd.dll` | CSharp | split | None | 0 | deferred / out of scope | unconfirmed | 37 exact; 5 declarations; 0 native pairs; 0 unresolved |
-| `Quire.Engine.Utl` | `utl-mgd.dll` | CppCli | split | `Quire.Native.Utl` | 0 | deferred / out of scope | unconfirmed | 346 exact; 18 declarations; 55 native pairs; 0 unresolved |
+| `Quire.Utils` | `utilsmgd.dll` | CSharp | split | None | 0 | deferred / out of scope | complete | 37 exact; 5 declarations; 0 native pairs; 0 unresolved |
+| `Quire.Engine.Utl` | `utl-mgd.dll` | CppCli | split | `Quire.Native.Utl` | 0 | deferred / out of scope | complete | 346 exact; 18 declarations; 55 native pairs; 0 unresolved |
+| `Quire.Native.EfistatsciImpl` | `efistatsci_.dll` | Native | native project | `Quire.Efiutl` | 0 | outside the IL gate (D10) | unconfirmed | Not recorded |
+| `Quire.Native.EfisymbolicsUmgd` | `efisymbolics-umgd.dll` | Native | native project | `Quire.Native.Utl` | 0 | outside the IL gate (D10) | not started | Not recorded |
+| `Quire.Native.Engutils` | `engutils.dll` | Native | native project | `Quire.Native.Mshex` | 0 | outside the IL gate (D10) | not started | Not recorded |
+| `Quire.Native.Mcaduser` | `mcaduser.dll` | Native | native project | `Quire.Native.Utl` | 0 | outside the IL gate (D10) | not started | Not recorded |
+| `Quire.Native.Mctranslator` | `mctranslator.dll` | Native | native project | `Quire.Efiutl`, `Quire.Native.Engutils`, `Quire.Native.Mshex`, `Quire.Native.Msmpl`, `Quire.Native.Mspcons`, `Quire.Native.Msprolog`, `Quire.Native.Utl` | 0 | outside the IL gate (D10) | not started | Not recorded |
+| `Quire.Native.Mshex` | `mshex.dll` | Native | native project | None | 0 | outside the IL gate (D10) | not started | Not recorded |
+| `Quire.Native.Msmpl` | `msmpl.dll` | Native | native project | `Quire.Msclr`, `Quire.Msgen`, `Quire.Native.Mshex`, `Quire.Native.Utl` | 0 | outside the IL gate (D10) | not started | Not recorded |
+| `Quire.Native.Mspcons` | `mspcons.dll` | Native | native project | None | 0 | outside the IL gate (D10) | not started | Not recorded |
+| `Quire.Native.Msprolog` | `msprolog.dll` | Native | native project | `Quire.Native.Mspcons`, `Quire.Native.Utl` | 0 | outside the IL gate (D10) | not started | Not recorded |
+| `Quire.Native.Utl` | `utl.dll` | Native | native project | None | 0 | outside the IL gate (D10) | not started | Not recorded |
+
+## Not mirrored
+
+Every other DLL and EXE in the install, with the reason it has no Quire project ([scope](scope.md),
+[decisions](decisions.md)). “Used by” lists the units whose original references or imports it.
+
+| File | Kind | Treatment | Used by |
+|---|---|---|---|
+| `asyncoremt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `axiom/win_nt/x86e_win64/AXIOMSys.exe` | native | dependency: FriCAS for Axiom | None |
+| `baselibmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/asyncoremt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/baselibmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/chartappole_sh.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/chartdir70.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/coretools_sh.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/coreutils_sh.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/dlmmgrmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/i18nmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/i18nxmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/ic_sh.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/libgifmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/libjpegmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/libpngmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/libtiffmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/libui_sh.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_chinese_cn_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_chinese_tw_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_french_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_german_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_italian_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_japanese_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_korean_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_portuguese_br_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_russian_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/chartl10n/text/compiled_resource/chartl10n_spanish_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_chinese_cn_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_chinese_tw_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_french_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_german_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_italian_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_japanese_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_korean_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_portuguese_br_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_russian_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/apps/chartapp/text/compiled_resource/chartapp_spanish_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_chinese_cn_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_chinese_tw_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_french_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_german_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_italian_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_japanese_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_korean_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_portuguese_br_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_russian_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/proe/uitools/text/compiled_resource/uitools_spanish_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/resources/text/compiled_resource/pro_default_resources.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/rtlcoremt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/ucore68.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/udata68.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/ui18n68.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/unifilesmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/utfstrmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `chartappole_sh/zlib-ngmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `ClearScript.Core.dll` | managed | dependency: Microsoft.ClearScript | `Quire.Controls.EquationControl` |
+| `ClearScript.Windows.Core.dll` | managed | dependency: Microsoft.ClearScript | `Quire.Controls.EquationControl` |
+| `ClearScript.Windows.dll` | managed | dependency: Microsoft.ClearScript | `Quire.Controls.EquationControl` |
+| `concrt140.dll` | native | not needed: MSVC runtime redistributable | None |
+| `coretools_sh.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `coreutils_sh.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `creo3dfit.dll` | native | deferred (D5) | `Quire.EfigraphicsImpl` |
+| `cryptomt.dll` | native | not needed: .NET cryptography replaces OpenSSL | None |
+| `DevComponents.WpfDock.dll` | managed | substitute: Fluent.Ribbon / Dirkster.AvalonDock for DevComponents (D6) | `Quire` |
+| `DevComponents.WpfRibbon.dll` | managed | substitute: Fluent.Ribbon / Dirkster.AvalonDock for DevComponents (D6) | `Quire`, `Quire.Controls`, `Quire.Controls.EquationControl`, `Quire.Controls.Plots`, `Quire.Controls.Worksheet` |
+| `dlmmgrmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `DocumentFormat.OpenXml.dll` | managed | dependency: DocumentFormat.OpenXml | `Quire.Controls.Core` |
+| `exitlogger_app_sh.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `i18nmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `Ijwhost.dll` | native | toolchain: .NET host shim the C++/CLI build ships | `Quire.EfibesselImpl`, `Quire.EficalculusImpl`, `Quire.EficoreImpl`, `Quire.EfidataImpl`, `Quire.EfidebugImpl`, `Quire.EfidiffeqImpl`, `Quire.EfifinanceImpl`, `Quire.EfifittingImpl`, `Quire.EfifourierImpl`, `Quire.EfigraphicsImpl`, `Quire.EfiimageImpl`, `Quire.EfiioImpl`, `Quire.EfimatrixImpl`, `Quire.EfisignalImpl`, `Quire.EfisolverImpl`, `Quire.EfispecialImpl`, `Quire.EfistatisticsImpl`, `Quire.EfisymbolicsImpl`, `Quire.Efiutl`, `Quire.EfiwaveletsImpl`, `Quire.Engine`, `Quire.Engine.Utl`, `Quire.EngutilsMgd`, `Quire.Mccore12`, `Quire.Mcdepman`, `Quire.Mceng`, `Quire.Mcfront12`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Mslisp`, `Quire.MspconsMgd` |
+| `knitro1510.dll` | native | substitute: IPOPT or NLopt for Knitro (D6) | `Quire.EfisolverImpl` |
+| `liappcoremt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `libimalloc.dll` | native | substitute: MathNet.Numerics for Intel oneMKL (D6) | None |
+| `libiomp5md.dll` | native | substitute: MathNet.Numerics for Intel oneMKL (D6) | None |
+| `LicenseWizard.dll` | managed | deferred: licensing (D5) | None |
+| `LicenseWizard.exe` | native | deferred: licensing (D5) | None |
+| `licommonmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `limanifestmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `lutilsmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `MathcadPrime.exe` | native | app host: built with the Quire project | None |
+| `mfc140u.dll` | native | not needed: MSVC runtime redistributable | `Quire.EfiioImpl` |
+| `Microsoft.Extensions.ObjectPool.dll` | managed | dependency: Microsoft.Extensions.ObjectPool | None |
+| `mkl_core.2.dll` | native | substitute: MathNet.Numerics for Intel oneMKL (D6) | None |
+| `mkl_def.2.dll` | native | substitute: MathNet.Numerics for Intel oneMKL (D6) | None |
+| `mkl_intel_thread.2.dll` | native | substitute: MathNet.Numerics for Intel oneMKL (D6) | `Quire.EfidiffeqImpl`, `Quire.EfifourierImpl`, `Quire.EfimatrixImpl` |
+| `mkl_vml_cmpt.2.dll` | native | substitute: MathNet.Numerics for Intel oneMKL (D6) | None |
+| `mkl_vml_def.2.dll` | native | substitute: MathNet.Numerics for Intel oneMKL (D6) | None |
+| `msvcp140.dll` | native | not needed: MSVC runtime redistributable | `Quire.EfidataImpl`, `Quire.EfidiffeqImpl`, `Quire.EfigraphicsImpl`, `Quire.EfiimageImpl`, `Quire.EfiioImpl`, `Quire.EfisignalImpl`, `Quire.EfisymbolicsImpl`, `Quire.Efiutl`, `Quire.EfiwaveletsImpl`, `Quire.Engine.Utl`, `Quire.EngutilsMgd`, `Quire.Mccore12`, `Quire.Mcdepman`, `Quire.Mceng`, `Quire.Mcfront12`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Mslisp`, `Quire.Native.EfisymbolicsUmgd`, `Quire.Native.Engutils`, `Quire.Native.Mcaduser`, `Quire.Native.Mctranslator`, `Quire.Native.Mshex`, `Quire.Native.Msmpl`, `Quire.Native.Mspcons`, `Quire.Native.Msprolog`, `Quire.Native.Utl` |
+| `nrtftree-library.dll` | managed | dependency: NRtfTree (licence D7) | `Quire.Controls.Core`, `Quire.Controls.Worksheet` |
+| `prod_dcu.exe` | native | deferred: PTC Creo platform (D5) | None |
+| `Ptc.License.Plpf.dll` | managed | deferred: licensing (D5) | `Quire` |
+| `Ptc.OleInterop.dll` | managed | deferred (D5) | `Quire.Controls.ExcelComponent` |
+| `Python.Runtime.dll` | managed | dependency: pythonnet | `Quire.Controls.EquationControl` |
+| `rtlcoremt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `runtimes/win/lib/net10.0/System.Management.dll` | managed | dependency: System.Management | None |
+| `srvcmgrmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `System.ServiceModel.Duplex.dll` | managed | dependency: System.ServiceModel (dotnet/wcf) | None |
+| `System.ServiceModel.Http.dll` | managed | dependency: System.ServiceModel (dotnet/wcf) | None |
+| `System.ServiceModel.Primitives.dll` | managed | dependency: System.ServiceModel (dotnet/wcf) | None |
+| `System.ServiceModel.Security.dll` | managed | dependency: System.ServiceModel (dotnet/wcf) | None |
+| `System.Windows.Interactivity.dll` | managed | substitute: Microsoft.Xaml.Behaviors.Wpf | `Quire` |
+| `telecon_utils.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `ucore68.dll` | native | not needed: .NET globalisation replaces ICU | None |
+| `udata68.dll` | native | not needed: .NET globalisation replaces ICU | None |
+| `utfstrmt.dll` | native | deferred: PTC Creo platform (D5) | None |
+| `vcomp140.dll` | native | not needed: MSVC runtime redistributable | None |
+| `vcruntime140.dll` | native | not needed: MSVC runtime redistributable | `Quire.EfibesselImpl`, `Quire.EficalculusImpl`, `Quire.EficoreImpl`, `Quire.EfidataImpl`, `Quire.EfidebugImpl`, `Quire.EfidiffeqImpl`, `Quire.EfifinanceImpl`, `Quire.EfifittingImpl`, `Quire.EfifourierImpl`, `Quire.EfigraphicsImpl`, `Quire.EfiimageImpl`, `Quire.EfiioImpl`, `Quire.EfimatrixImpl`, `Quire.EfisignalImpl`, `Quire.EfisolverImpl`, `Quire.EfispecialImpl`, `Quire.EfistatisticsImpl`, `Quire.EfisymbolicsImpl`, `Quire.Efiutl`, `Quire.EfiwaveletsImpl`, `Quire.Engine`, `Quire.Engine.Utl`, `Quire.EngutilsMgd`, `Quire.Mccore12`, `Quire.Mcdepman`, `Quire.Mceng`, `Quire.Mcfront12`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Mslisp`, `Quire.MspconsMgd`, `Quire.Native.EfistatsciImpl`, `Quire.Native.EfisymbolicsUmgd`, `Quire.Native.Engutils`, `Quire.Native.Mcaduser`, `Quire.Native.Mctranslator`, `Quire.Native.Mshex`, `Quire.Native.Msmpl`, `Quire.Native.Mspcons`, `Quire.Native.Msprolog`, `Quire.Native.Utl` |
+| `vcruntime140_1.dll` | native | not needed: MSVC runtime redistributable | `Quire.EfidataImpl`, `Quire.EfidiffeqImpl`, `Quire.EfifittingImpl`, `Quire.EfifourierImpl`, `Quire.EfiimageImpl`, `Quire.EfiioImpl`, `Quire.EfimatrixImpl`, `Quire.EfisignalImpl`, `Quire.EfispecialImpl`, `Quire.EfistatisticsImpl`, `Quire.EfisymbolicsImpl`, `Quire.Efiutl`, `Quire.EfiwaveletsImpl`, `Quire.Mccore12`, `Quire.Mcfront12`, `Quire.Native.EfistatsciImpl`, `Quire.Native.EfisymbolicsUmgd`, `Quire.Native.Engutils`, `Quire.Native.Mcaduser`, `Quire.Native.Mctranslator`, `Quire.Native.Mshex`, `Quire.Native.Msmpl`, `Quire.Native.Mspcons`, `Quire.Native.Msprolog`, `Quire.Native.Utl` |
+| `xercescmt.dll` | native | not needed: System.Xml replaces Xerces-C++ | None |
+
+## Satellite resource assemblies
+
+Localised resources ship beside their assembly in one folder per culture. Quire builds its own from
+Quire-authored resources ([D21](decisions.md)).
+
+| Assembly | Cultures |
+|---|---|
+| `DevComponents.WpfDock.dll` | de, en-US, es, fr, it, ja, ko, ru, zh-CN, zh-TW |
+| `DevComponents.WpfRibbon.dll` | de, en-US, es, fr, it, ja, ko, ru, zh-CN, zh-TW |
+| `LicenseWizard.dll` | de, en-US, es, fr, it, ja, ko, ru, zh-CN, zh-TW |
+| `Quire` | de, en-US, es, fr, it, ja, ko, ru, zh-CN, zh-TW |
+| `Quire.Calculation.Core` | de, en-US, es, fr, it, ja, ko, ru, zh-CN, zh-TW |
+| `Quire.Controls` | de, en-US, es, fr, it, ja, ko, ru, zh-CN, zh-TW |
+| `Quire.Controls.CollapsibleArea` | de, en-US, es, fr, it, ja, ko, ru, zh-CN, zh-TW |
+| `Quire.Controls.Core` | de, en-US, es, fr, it, ja, ko, ru, zh-CN, zh-TW |
+| `Quire.Controls.EquationControl` | de, en-US, es, fr, it, ja, ko, ru, zh-CN, zh-TW |
+| `Quire.Controls.ExcelComponent` | de, en-US, es, fr, it, ja, ko, ru, zh-CN, zh-TW |
+| `Quire.Controls.Include` | de, en-US, es, fr, it, ja, ko, ru, zh-CN, zh-TW |
+| `Quire.Controls.Plots` | de, en-US, es, fr, it, ja, ko, ru, zh-CN, zh-TW |
+| `Quire.Controls.SolveBlock` | de, en-US, es, fr, it, ja, ko, ru, zh-CN, zh-TW |
+| `Quire.Controls.Text` | de, en-US, es, fr, it, ja, ko, ru, zh-CN, zh-TW |
+| `Quire.Controls.Whiteboard` | de, en-US, es, fr, it, ja, ko, ru, zh-CN, zh-TW |
+| `Quire.Controls.Worksheet` | de, en-US, es, fr, it, ja, ko, ru, zh-CN, zh-TW |
+| `System.Windows.Interactivity.dll` | de, en, es, fr, it, ja, ko, ru, zh-Hans, zh-Hant |
 
 ## Regenerate / explore the next unlocks
 
