@@ -69,6 +69,27 @@ public partial class textType
         Any = CreateXamlFromFlowDocument(DocumentWithTextFormat);
     }
 
+    private static XmlElement CreateXamlFromFlowDocument(FlowDocument flowDocument)
+    {
+        XmlDocument xmlDocument = new XmlDocument();
+        using (global::Quire.MindTouch.IO.ChunkedMemoryStream chunkedMemoryStream = new global::Quire.MindTouch.IO.ChunkedMemoryStream())
+        {
+            using (global::System.IO.StreamWriter streamWriter = global::Quire.Xml.XmlHelper.CreateStreamWriterForXamlCopy(chunkedMemoryStream, leaveOpen: true))
+            {
+                global::System.Windows.Markup.XamlWriter.Save(flowDocument, streamWriter);
+                streamWriter.Flush();
+            }
+            chunkedMemoryStream.Position = 0L;
+            xmlDocument.Load(chunkedMemoryStream);
+        }
+        XmlElement documentElement = xmlDocument.DocumentElement;
+        if (documentElement != null)
+        {
+            xmlDocument.RemoveChild(documentElement);
+        }
+        return documentElement;
+    }
+
     [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
     public void AddAnnotation(MC14ConversionAnnotationType annotation) => IMC14AnnotationProviderExtensions.AddMC14ConversionLossAnnotations(this, annotation);
 
