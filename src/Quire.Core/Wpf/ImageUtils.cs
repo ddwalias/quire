@@ -208,6 +208,22 @@ public partial class ImageUtils
         return false;
     }
 
+    public static BitmapSource CreateBitmapFromElementUsingScreenDpi(FrameworkElement element, Visual rootVisual = null, Rect? bounds = null)
+    {
+        if (element == null)
+        {
+            return null;
+        }
+        if (element.ActualWidth <= 0.0 || element.ActualHeight <= 0.0)
+        {
+            return null;
+        }
+        AdornerDecorator adornerDecoratorAncestor = GetAdornerDecoratorAncestor(element);
+        DebugTools.AssertNotNull(adornerDecoratorAncestor, null);
+        Size screenDpiForApplication = GetScreenDpiForApplication();
+        return CreateBitmapFromElement(element, screenDpiForApplication.Width, screenDpiForApplication.Height, adornerDecoratorAncestor, rootVisual, bounds);
+    }
+
     public static byte[] B16StringToBytes(string hexString)
     {
         return (from ind in Enumerable.Range(0, hexString.Length / 2)
