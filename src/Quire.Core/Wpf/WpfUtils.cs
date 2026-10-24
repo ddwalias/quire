@@ -62,6 +62,21 @@ public static partial class WpfUtils
         return descendant;
     }
 
+    public static void DoEvents(Dispatcher dispatcher, DispatcherPriority priority)
+    {
+        DebugTools.LogData(string.Format("WpfUtils.DoEvents({0}): Enter", priority));
+        if (dispatcher.Thread != Thread.CurrentThread)
+        {
+            global::Quire.Delegate0 @delegate = () => DoEvents(dispatcher, priority);
+            dispatcher.Invoke((DispatcherPriority)10, @delegate);
+        }
+        else if (dispatcher.CheckAccess())
+        {
+            Func<bool> func = () => true;
+            dispatcher.BeginInvoke(priority, func).Wait();
+        }
+    }
+
     [MirrorVerified("Release IL")]
     public static System.Drawing.Color WpfToGdi(System.Windows.Media.Color color)
     {

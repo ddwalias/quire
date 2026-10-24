@@ -17,8 +17,6 @@ public static partial class WpfUtils
         propertyChanged?.Invoke(propertyOwner, new global::System.ComponentModel.PropertyChangedEventArgs(propertyName));
     }
 
-    public static void DoEvents(global::System.Windows.Threading.Dispatcher dispatcher, global::System.Windows.Threading.DispatcherPriority priority) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     public static void TextRangeCopy(global::System.Windows.Documents.TextRange source, global::System.Windows.Documents.TextRange destination, string dataFormat)
     {
         using global::System.IO.MemoryStream memoryStream = new global::System.IO.MemoryStream();
