@@ -25,6 +25,14 @@ public static partial class DependencyPropertyChangeManager
         return dictionary;
     }
 
+    private static void ClearPropertyChangeNotifiers(DependencyObject dObj)
+    {
+        if (DebugTools.AssertNotNull(dObj, null).Passed)
+        {
+            dObj.ClearValue(_propertyChangeNotifiersKey);
+        }
+    }
+
     partial class DependencyPropertyChangeNotifier
     {
         [MirrorVerified("PtcWpfDependencyPropertyChangeManagerMechanicalDifferentialTests")]

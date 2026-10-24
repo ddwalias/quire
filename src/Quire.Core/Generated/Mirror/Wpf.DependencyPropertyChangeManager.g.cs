@@ -16,8 +16,6 @@ public static partial class DependencyPropertyChangeManager
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Windows.DependencyPropertyKey _propertyChangeNotifiersKey;
     [global::Quire.Mirror.MirrorStub]
-    private static void ClearPropertyChangeNotifiers(global::System.Windows.DependencyObject dObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void AddPropertyChangedHandler(global::System.Windows.DependencyProperty property, global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventHandler handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void RemovePropertyChangedHandler(global::System.Windows.DependencyProperty property, global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventHandler handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
