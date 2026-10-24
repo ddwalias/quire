@@ -15,12 +15,6 @@ public partial class ImageUtils
     public string ImageExtension;
     [global::Quire.Mirror.MirrorStub]
     private static void DumpBounds(global::System.Windows.UIElement element, global::System.Windows.UIElement ancestor = default, string prefix = "") => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.Media.Imaging.BitmapSource CreateBitmapFromElement(global::System.Windows.FrameworkElement element, double dpiX, double dpiY, global::System.Windows.Documents.AdornerDecorator decoratorAncestor, global::System.Windows.Media.Visual rootVisual, global::System.Nullable<global::System.Windows.Rect> bounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.Media.Imaging.BitmapSource CreateBitmapFromVisual(double dpiX, double dpiY, global::System.Windows.Rect box, global::System.Windows.Media.Visual visual, bool coerceBoxPoints, global::System.Windows.Media.GeneralTransform transformToRoot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void EncodeImage(global::System.Windows.Media.Imaging.BitmapSource source, string imageType, global::System.IO.Stream target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ImageUtils+BitmapFormats, Ptc.Core")]
     public static partial class BitmapFormats
