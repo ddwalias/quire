@@ -14,6 +14,8 @@ class Node {
 public:
     virtual ~Node() = default;
 
+    HEX_EXPORT Node &operator=(const Node &) = default;
+
     virtual Error GetError(unsigned int code) const;
 
     // A node without a source location reports the null tag.

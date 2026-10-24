@@ -58,6 +58,12 @@
     <ClInclude Include="hex_formatter.h" />
     <ClInclude Include="hex_module.h" />
     <ClInclude Include="hex_error.h" />
+    <ClInclude Include="hex_value.h" />
+    <ClInclude Include="hex_environment.h" />
+    <ClInclude Include="hex_imbue.h" />
+    <ClInclude Include="hex_library.h" />
+    <ClInclude Include="hex_default_names.h" />
+    <ClInclude Include="hex_comparable.h" />
     <ClInclude Include="hex_lexer.h" />
     <ClInclude Include="hex_interpreter.h" />
     <ClCompile Include="hex_tag.cpp" />
@@ -66,6 +72,12 @@
     <ClCompile Include="hex_formatter.cpp" />
     <ClCompile Include="hex_module.cpp" />
     <ClCompile Include="hex_error.cpp" />
+    <ClCompile Include="hex_value.cpp" />
+    <ClCompile Include="hex_environment.cpp" />
+    <ClCompile Include="hex_imbue.cpp" />
+    <ClCompile Include="hex_library.cpp" />
+    <ClCompile Include="hex_default_names.cpp" />
+    <ClCompile Include="hex_comparable.cpp" />
     <ClCompile Include="hex_lexer.cpp" />
     <ClCompile Include="hex_interpreter.cpp" />
   </ItemGroup>

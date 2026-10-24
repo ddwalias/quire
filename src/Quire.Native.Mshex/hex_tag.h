@@ -20,6 +20,11 @@ public:
     HEX_EXPORT void SetExtent(std::uint64_t extent);
     HEX_EXPORT void SetHandle(std::uint32_t handle);
 
+    Tag(const Tag &) = default;
+    Tag(Tag &&) = default;
+    HEX_EXPORT Tag &operator=(const Tag &) = default;
+    HEX_EXPORT Tag &operator=(Tag &&) = default;
+
 private:
     std::uint64_t offset_;
     std::uint64_t extent_;

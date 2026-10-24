@@ -2,6 +2,18 @@
 
 namespace Hex {
 
+Environment *Module::State::GetExports() const {
+    return nullptr;
+}
+
+Environment *Module::State::GetImports() const {
+    return nullptr;
+}
+
+bool Module::State::IsConsistent() const {
+    return true;
+}
+
 unsigned int Module::GetFlags() const {
     return flags_;
 }

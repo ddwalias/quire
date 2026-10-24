@@ -11,6 +11,8 @@ class Environment;
 
 class Interpreter {
 public:
+    HEX_EXPORT Interpreter &operator=(const Interpreter &) = default;
+
     // The base interpreter accepts no options and no environment.
     HEX_EXPORT virtual bool SetOption(std::size_t option, std::istream &in);
     HEX_EXPORT virtual bool GetOption(std::size_t option, std::ostream &out) const;

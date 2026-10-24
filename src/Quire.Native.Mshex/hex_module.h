@@ -4,10 +4,21 @@
 
 namespace Hex {
 
+class Environment;
+
 // Layout from the original's accessors. Bytes 0x08..0x47 and 0x50..0x77 are not yet inferred and stay as padding.
 class Module {
 public:
-    struct State;
+    struct State {
+        virtual ~State() = default;
+
+        HEX_EXPORT State &operator=(const State &) = default;
+        HEX_EXPORT State &operator=(State &&) = default;
+
+        HEX_EXPORT virtual Environment *GetExports() const;
+        HEX_EXPORT virtual Environment *GetImports() const;
+        HEX_EXPORT bool IsConsistent() const;
+    };
 
     virtual ~Module() = default;
 

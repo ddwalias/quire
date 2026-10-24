@@ -11,6 +11,8 @@ class Token {
 public:
     virtual ~Token() = default;
 
+    HEX_EXPORT Token &operator=(const Token &) = default;
+
     HEX_EXPORT virtual Tag GetTag() const;
 };
 
