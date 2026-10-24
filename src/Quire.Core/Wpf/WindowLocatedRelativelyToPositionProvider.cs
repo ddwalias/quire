@@ -5,6 +5,15 @@ namespace Quire.Wpf;
 
 public partial class WindowLocatedRelativelyToPositionProvider
 {
+    protected override void OnRenderSizeChanged(global::System.Windows.SizeChangedInfo sizeInfo)
+    {
+        if (sizeInfo.PreviousSize == default(global::System.Windows.Size))
+        {
+            SetWindowLocation();
+        }
+        base.OnRenderSizeChanged(sizeInfo);
+    }
+
     private void SetWindowLocation()
     {
         try

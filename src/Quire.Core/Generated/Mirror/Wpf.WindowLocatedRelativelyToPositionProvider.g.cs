@@ -11,8 +11,6 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.WindowLocatedRelativelyToPositionProvider, Ptc.Core")]
 public partial class WindowLocatedRelativelyToPositionProvider : global::System.Windows.Window
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnRenderSizeChanged(global::System.Windows.SizeChangedInfo sizeInfo) => base.OnRenderSizeChanged(sizeInfo);
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.WindowLocatedRelativelyToPositionProvider+DpiFactors, Ptc.Core")]
     private partial struct DpiFactors
     {
