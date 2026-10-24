@@ -1,5 +1,6 @@
 #nullable disable
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Forms;
@@ -10,7 +11,28 @@ namespace Quire.Wpf;
 
 public static partial class WpfUtils
 {
-    public static object TryFindFirstAncestorIncludingSelfLimited<T>(DependencyObject child, global::System.Collections.Generic.IList<Type> types, bool includeLogical = false) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static object TryFindFirstAncestorIncludingSelfLimited<T>(DependencyObject child, global::System.Collections.Generic.IList<Type> types, bool includeLogical = false) where T : class
+    {
+        if (child == null)
+        {
+            return null;
+        }
+        Type type = ((object)child).GetType();
+        Type[] interfaces = type.GetInterfaces();
+        foreach (Type type3 in types)
+        {
+            Type type1 = type3;
+            if (interfaces.Any((Type @interface) => @interface == type1) || type == type1)
+            {
+                return child;
+            }
+        }
+        if (child is T)
+        {
+            return null;
+        }
+        return TryFindFirstAncestorIncludingSelfLimited<T>(GetParentObject(child, includeLogical), types, includeLogical);
+    }
 
     public static T TryFindAncestorIncludingSelfUntilGivenAncestorIsReached<T>(this DependencyObject child, DependencyObject topParent, bool includeLogical = false) where T : class
     {
