@@ -45,6 +45,21 @@ public partial class ImageUtils
         return CopyImageToTempBitmap(memoryStream);
     }
 
+    public static Uri CopyImageToTempBitmap(ImageSource imageSource)
+    {
+        if (!(imageSource is BitmapSource bitmapSource))
+        {
+            return null;
+        }
+        Uri uri = new Uri(((object)bitmapSource).ToString());
+        string extension = Path.GetExtension(uri.LocalPath);
+        extension = string.IsNullOrEmpty(extension) ? global::Quire.Xml.xmlWorksheetNodeNames.defaultImageExtention : extension.Substring(1).ToLower();
+        MemoryStream memoryStream = new MemoryStream();
+        CopyImageToStream(extension, uri, memoryStream, bitmapSource, null);
+        memoryStream.Flush();
+        return CopyImageToTempBitmap(memoryStream);
+    }
+
     [MirrorVerified("Release IL")]
     public static int BytesNeeded(int bits) => (bits + 7) / 8;
 
