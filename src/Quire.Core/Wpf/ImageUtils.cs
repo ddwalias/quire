@@ -37,6 +37,14 @@ public partial class ImageUtils
         return CopyStreamToTempFile(sourceStream);
     }
 
+    public static Uri CopyImageToTempBitmap(Uri sourceUri)
+    {
+        MemoryStream memoryStream = new MemoryStream();
+        CopyImageToStream(sourceUri, memoryStream, null);
+        memoryStream.Flush();
+        return CopyImageToTempBitmap(memoryStream);
+    }
+
     [MirrorVerified("Release IL")]
     public static int BytesNeeded(int bits) => (bits + 7) / 8;
 
