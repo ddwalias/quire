@@ -11,10 +11,4 @@ namespace Quire.Services;
 [global::Quire.Mirror.MirrorOf("Ptc.Services.ExceptionLogger, Ptc.Core")]
 public partial class ExceptionLogger : global::Quire.Services.ApplicationLogger, global::Quire.Services.IExceptionLogger, global::Quire.Services.IApplicationLogger, global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string GetExceptionInfo(global::System.Collections.Generic.IEnumerable<global::System.Exception> exceptions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void GetElementData(global::System.Xml.XmlNode xmlNode, global::System.Text.StringBuilder exceptionData, string elementType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string LogExceptions(global::System.Collections.Generic.IEnumerable<global::System.Exception> exceptions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
