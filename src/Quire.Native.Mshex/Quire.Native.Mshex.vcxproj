@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <ProjectGuid>{197942C9-3D94-48B2-B2F1-2C63D2E52EA2}</ProjectGuid>
+    <RootNamespace>Quire.Native.Mshex</RootNamespace>
+    <ProjectName>Quire.Native.Mshex</ProjectName>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <!-- Build output stays in the gitignored cache: DLLs, PDBs and objects are never committed. -->
+    <OutDir>$(MSBuildThisFileDirectory)..\..\.mirror-cache\bin\</OutDir>
+    <IntDir>$(MSBuildThisFileDirectory)..\..\.mirror-cache\obj\mshex\</IntDir>
+    <TargetName>Quire.Native.Mshex</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="mshex_export.h" />
+    <ClInclude Include="hex_tag.h" />
+    <ClInclude Include="hex_token.h" />
+    <ClInclude Include="hex_node.h" />
+    <ClInclude Include="hex_lexer.h" />
+    <ClInclude Include="hex_interpreter.h" />
+    <ClCompile Include="hex_tag.cpp" />
+    <ClCompile Include="hex_token.cpp" />
+    <ClCompile Include="hex_node.cpp" />
+    <ClCompile Include="hex_lexer.cpp" />
+    <ClCompile Include="hex_interpreter.cpp" />
+  </ItemGroup>
+  <!-- mshex.dll imports only KERNEL32, the MSVC runtime and the API CRT (no Mathcad-owned DLL), so it needs no .def (D10). -->
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>
