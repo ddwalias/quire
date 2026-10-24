@@ -28,18 +28,54 @@ public static partial class HyperlinkExtensions
     }
 
     [MirrorVerified("Release IL")]
-    public static void ClearForegroundInDepth(this Hyperlink link)
-    {
-        link.ClearLocalValuesRecursively(TextElement.ForegroundProperty);
-    }
-
-    [MirrorVerified("Release IL")]
     public static void ResetLinkStyleProps(this Hyperlink link)
     {
         link.ClearValue(TextElement.ForegroundProperty);
         link.ClearValue(TextBlock.TextDecorationsProperty);
         link.ClearValue(FrameworkContentElement.ToolTipProperty);
     }
+
+    public static void SetTextFormatForLinkRemoval(this Hyperlink link, out List<Inline> inlines)
+    {
+        inlines = link.Inlines.ToList();
+        if (global::Quire.DebugTools.DevAssert(inlines.IsNotEmpty(), null).Failed)
+        {
+            return;
+        }
+        DependencyProperty[] array = new DependencyProperty[8]
+        {
+            TextElement.FontFamilyProperty,
+            TextElement.FontSizeProperty,
+            TextElement.FontWeightProperty,
+            TextElement.FontStyleProperty,
+            Inline.TextDecorationsProperty,
+            Typography.VariantsProperty,
+            TextElement.ForegroundProperty,
+            TextElement.BackgroundProperty
+        };
+        foreach (DependencyProperty prop in array)
+        {
+            if (DependencyPropertyHelper.GetValueSource(link, prop).BaseValueSource != BaseValueSource.Local)
+            {
+                continue;
+            }
+            object value = link.GetValue(prop);
+            inlines.Each((Inline inline) =>
+            {
+                if (DependencyPropertyHelper.GetValueSource(inline, prop).BaseValueSource != BaseValueSource.Local)
+                {
+                    inline.SetValue(prop, value);
+                }
+            });
+        }
+        if (!ApplyNeighborFormattingValueIfUnset(inlines, link.ContentStart, LogicalDirection.Backward))
+        {
+            ApplyNeighborFormattingValueIfUnset(inlines, link.ContentEnd, LogicalDirection.Forward);
+        }
+    }
+
+    // Preserve Mathcad's preceding helper position for the callback closure ordinal.
+    private static bool ApplyNeighborFormattingValueIfUnset(List<Inline> inlines, TextPointer currentPosition, LogicalDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [MirrorVerified("Release IL")]
     public static string GetText(this Hyperlink link)
@@ -64,6 +100,12 @@ public static partial class HyperlinkExtensions
             default:
                 return null;
         }
+    }
+
+    [MirrorVerified("Release IL")]
+    public static void ClearForegroundInDepth(this Hyperlink link)
+    {
+        link.ClearLocalValuesRecursively(TextElement.ForegroundProperty);
     }
 
     public static void ClearLocalValuesRecursively(this Inline inline, params DependencyProperty[] properties)
