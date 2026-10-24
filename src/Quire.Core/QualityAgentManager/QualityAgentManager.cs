@@ -46,6 +46,24 @@ public partial class QualityAgentManager
     }
 
     [MirrorVerified("Release IL")]
+    public bool SendReport()
+    {
+        if (!IsReportSendingEnabled)
+        {
+            return false;
+        }
+        return SendReportHelper();
+    }
+
+    [MirrorVerified("Release IL")]
+    public bool SendReport(out IQualityAgentReportData reportedData)
+    {
+        bool result = SendReportHelper();
+        reportedData = _reportData;
+        return result;
+    }
+
+    [MirrorVerified("Release IL")]
     private void ComputeCheckSum()
     {
         if (!global::System.IO.Directory.Exists(_mathcadPrimeInstallPath))
