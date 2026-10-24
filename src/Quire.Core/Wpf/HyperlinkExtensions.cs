@@ -1,4 +1,5 @@
 #nullable disable
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -63,6 +64,29 @@ public static partial class HyperlinkExtensions
             default:
                 return null;
         }
+    }
+
+    public static Span RecursiveRemoveEmptyInlinesIncludingSelf(this Span parentElement)
+    {
+        foreach (Inline item in parentElement.Inlines.ToList())
+        {
+            switch (item)
+            {
+                case Span childSpan:
+                    childSpan.RecursiveRemoveEmptyInlinesIncludingSelf();
+                    break;
+                case Run run when run.Text.IsNullOrEmpty():
+                    parentElement.Inlines.Remove(run);
+                    break;
+            }
+        }
+        Span result = parentElement;
+        if (result.Inlines.IsNullOrEmpty())
+        {
+            result.GetParentInlines().Remove(result);
+            result = null;
+        }
+        return result;
     }
 
     public static BlockCollection GetParentBlocks(this Block block)
