@@ -63,6 +63,12 @@ public partial class textType
         }
     }
 
+    private void SerializeFlowDocument(global::Quire.Serialization.IS11NProvider s11NProvider, string regionId)
+    {
+        itemidref = _saveInline ? null : s11NProvider.PackFlowDocument(Document, regionId);
+        Any = CreateXamlFromFlowDocument(DocumentWithTextFormat);
+    }
+
     [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
     public void AddAnnotation(MC14ConversionAnnotationType annotation) => IMC14AnnotationProviderExtensions.AddMC14ConversionLossAnnotations(this, annotation);
 
