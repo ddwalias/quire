@@ -1,0 +1,8 @@
+#nullable disable
+using System.Runtime.InteropServices;
+
+namespace Quire;
+
+[global::Quire.Mirror.MirrorOf("Mathcad._IApplicationEvents_QuitEventHandler, interop.mathcad")]
+[ComVisible(false)]
+public delegate void _IApplicationEvents_QuitEventHandler();

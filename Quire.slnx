@@ -25,6 +25,7 @@
     <Project Path="src/Quire.Engine.Utl/Quire.Engine.Utl.csproj" />
     <Project Path="src/Quire.Engine/Quire.Engine.csproj" />
     <Project Path="src/Quire.EquationEditor/Quire.EquationEditor.csproj" />
+    <Project Path="src/Quire.Interop.Mathcad/Quire.Interop.Mathcad.csproj" />
     <Project Path="src/Quire.Interop.MathcadOld/Quire.Interop.MathcadOld.csproj" />
     <Project Path="src/Quire.Mcd/Quire.Mcd.csproj" />
     <Project Path="src/Quire.Media3D/Quire.Media3D.csproj" />
