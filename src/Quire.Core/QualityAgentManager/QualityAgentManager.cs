@@ -46,6 +46,38 @@ public partial class QualityAgentManager
     }
 
     [MirrorVerified("Release IL")]
+    private void ComputeCheckSum()
+    {
+        if (!global::System.IO.Directory.Exists(_mathcadPrimeInstallPath))
+        {
+            _mathcadPrimeChecksum = "1234567890123456789012345678901234567890123456789012345678901234";
+            return;
+        }
+        try
+        {
+            byte[] array;
+            using (global::System.Security.Cryptography.HashAlgorithm hashAlgorithm = global::Quire.Services.AppServiceRegistry.GetService<global::Quire.IHashAlgorithmProvider>().GetDisposableHash())
+            {
+                global::System.Collections.Generic.List<byte> list = new global::System.Collections.Generic.List<byte>();
+                AddHashesForFileExt(list, hashAlgorithm, "*.exe");
+                AddHashesForFileExt(list, hashAlgorithm, "*.dll");
+                hashAlgorithm.Initialize();
+                array = hashAlgorithm.ComputeHash(list.ToArray());
+            }
+            global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder(array.Length * 2);
+            foreach (byte b in array)
+            {
+                stringBuilder.Append(b.ToString("X2"));
+            }
+            _mathcadPrimeChecksum = stringBuilder.ToString();
+        }
+        catch
+        {
+            _mathcadPrimeChecksum = "1234567890123456789012345678901234567890123456789012345678901234";
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     private void AddHashesForFileExt(global::System.Collections.Generic.List<byte> hashesList, global::System.Security.Cryptography.HashAlgorithm hashAlgorithm, string filesFilter)
     {
         string[] files = global::System.IO.Directory.GetFiles(_mathcadPrimeInstallPath, filesFilter);
