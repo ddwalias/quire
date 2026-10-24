@@ -209,6 +209,13 @@ public sealed partial class Parser
     }
 
     [MirrorVerified("Release IL")]
+    public static bool ParseArguments(string[] arguments, object destination, ErrorReporter reporter)
+    {
+        Parser parser = new Parser(destination.GetType(), reporter);
+        return parser.Parse(arguments, destination);
+    }
+
+    [MirrorVerified("Release IL")]
     public bool Parse(string[] args, object destination)
     {
         bool flag = ParseArgumentList(args, destination);
