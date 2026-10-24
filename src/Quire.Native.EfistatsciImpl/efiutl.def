@@ -1,0 +1,3 @@
+LIBRARY efiutl.dll
+EXPORTS
+    ?allocate_array@ImcAllocator@Efi@@QEAAPEAX_K@Z
