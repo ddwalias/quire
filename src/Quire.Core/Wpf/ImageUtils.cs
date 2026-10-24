@@ -45,6 +45,16 @@ public partial class ImageUtils
         return CopyImageToTempBitmap(memoryStream);
     }
 
+    private static Uri CopyStreamToTempFile(Stream source)
+    {
+        string tempFileName = Path.GetTempFileName();
+        using (FileStream target = File.Open(tempFileName, FileMode.Create))
+        {
+            global::Quire.IO.StreamUtils.CopyStream(source, target);
+        }
+        return new Uri(tempFileName, UriKind.Absolute);
+    }
+
     public static Uri CopyImageToTempBitmap(ImageSource imageSource)
     {
         if (!(imageSource is BitmapSource bitmapSource))
