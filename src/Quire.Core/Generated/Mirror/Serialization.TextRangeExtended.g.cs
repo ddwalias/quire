@@ -17,6 +17,4 @@ public partial class TextRangeExtended : global::System.Windows.Documents.TextRa
     public void LoadInternal(global::System.IO.Stream st) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SaveInternal(global::System.IO.Stream st, bool preserveTextElements, bool isConversion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void WriteExplicitFontAttributes(global::System.Text.StringBuilder sb, string xamlText, global::System.Windows.Documents.Run run, string runString, int j, ref int jOffset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -32,4 +32,22 @@ public partial class TextRangeExtended
             LoadInternal(st);
         }
     }
+
+    private void WriteExplicitFontAttributes(global::System.Text.StringBuilder sb, string xamlText, Run run, string runString, int j, ref int jOffset)
+    {
+        int num = xamlText.IndexOf('>', j);
+        string text = xamlText.Substring(j, num - j + 1);
+        if (!text.Contains("FontFamily="))
+        {
+            string text2 = " FontFamily=\"" + run.FontFamily.Source + "\"";
+            sb.Insert(j + jOffset + runString.Length, text2);
+            jOffset += text2.Length;
+        }
+        if (!text.Contains("FontSize="))
+        {
+            string text3 = $" FontSize=\"{run.FontSize}\"";
+            sb.Insert(j + jOffset + runString.Length, text3);
+            jOffset += text3.Length;
+        }
+    }
 }
