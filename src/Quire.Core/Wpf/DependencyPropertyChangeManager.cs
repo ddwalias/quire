@@ -32,6 +32,47 @@ public static partial class DependencyPropertyChangeManager
         value.SourcePropertyChanged += handler;
     }
 
+    public static void RemovePropertyChangedHandler(DependencyProperty property, DependencyObject obj, DependencyPropertyChangedEventHandler handler)
+    {
+        if (DebugTools.AssertNotNull(obj, null).Failed)
+        {
+            goto InvalidArguments;
+        }
+        if (!DebugTools.AssertNotNull(property, null).Failed)
+        {
+            goto GetNotifiers;
+        }
+    InvalidArguments:
+        return;
+    GetNotifiers:
+        IDictionary<DependencyProperty, DependencyPropertyChangeNotifier> propertyChangeNotifiers = GetPropertyChangeNotifiers(obj, create: false);
+        if (propertyChangeNotifiers != null)
+        {
+            goto FindNotifier;
+        }
+        return;
+    FindNotifier:
+        if (propertyChangeNotifiers.TryGetValue(property, out DependencyPropertyChangeNotifier value))
+        {
+            goto RemoveHandler;
+        }
+        return;
+    RemoveHandler:
+        value.SourcePropertyChanged -= handler;
+        if (value.HasSourcePropertyChangedHandlers())
+        {
+            goto Complete;
+        }
+        value.Dispose();
+        propertyChangeNotifiers.Remove(property);
+        if (propertyChangeNotifiers.IsNullOrEmpty())
+        {
+            ClearPropertyChangeNotifiers(obj);
+        }
+    Complete:
+        return;
+    }
+
     private static IDictionary<DependencyProperty, DependencyPropertyChangeNotifier> GetPropertyChangeNotifiers(DependencyObject dObj, bool create)
     {
         if (DebugTools.AssertNotNull(dObj, null).Failed)

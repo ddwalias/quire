@@ -15,8 +15,6 @@ public static partial class DependencyPropertyChangeManager
     private static readonly global::System.Type _typeOfPropertyChangeManager;
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Windows.DependencyPropertyKey _propertyChangeNotifiersKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static void RemovePropertyChangedHandler(global::System.Windows.DependencyProperty property, global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventHandler handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.DependencyPropertyChangeManager+DependencyPropertyChangeNotifier, Ptc.Core")]
     private partial class DependencyPropertyChangeNotifier : global::System.Windows.DependencyObject, global::System.IDisposable
