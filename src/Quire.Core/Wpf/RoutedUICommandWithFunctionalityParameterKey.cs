@@ -22,7 +22,22 @@ public partial class RoutedUICommandWithFunctionalityParameterKey
     }
 
     [MirrorVerified("Release IL")]
+    public RoutedUICommandWithFunctionalityParameterKey(string text, string name, Type ownerType, IEqualityComparer<object> comparer = null) : base(text, name, ownerType, EnumFunctionalityKey.GlobalCategory)
+    {
+        PrimaryParameterToFunctionalityKeyDictionary = comparer == null ? new Dictionary<object, EnumFunctionalityKey>() : new Dictionary<object, EnumFunctionalityKey>(comparer);
+    }
+
+    [MirrorVerified("Release IL")]
     public void SetFunctionalityKeyAccordingParameter(object parameter) => FunctionalityKey = GetFunctionalityKeyAccordingParameter(parameter, true);
+
+    [MirrorVerified("Release IL")]
+    public virtual IEnumerable<Dictionary<object, EnumFunctionalityKey>> ParameterToFunctionalityKeyDictionaryList
+    {
+        get
+        {
+            yield return PrimaryParameterToFunctionalityKeyDictionary;
+        }
+    }
 
     public bool ContainsParameter(object parameter) => ParameterToFunctionalityKeyDictionaryList.Any((Dictionary<object, EnumFunctionalityKey> dict) => dict.ContainsKey(parameter));
 
