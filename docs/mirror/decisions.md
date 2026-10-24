@@ -204,6 +204,24 @@ the cause in the Rich headers, and the user chose to park such functions:
   and the image has no `.tls` section, so the base is the TLS directory's `StartAddressOfRawData`, not a section
   start. A SECREL whose target lies outside the TLS data stays unsupported.
 
+## D26: leaf internal targets; mspcons' iostream instance is parked (2026-10-25)
+
+Lane L (`mspcons.dll`) raised two blockers. The maintainer decided both:
+
+- **Leaf functions as internal targets.** A manifest function entry may name a leaf function (no `.pdata`) when its
+  RVA lies in an executable section and outside every `.pdata` range, primary or chained. Its extent is inferred as
+  for a leaf export: up to the next export, `.pdata` range or manifest function entry, without trailing `int3`
+  padding. `native_targets.py` records such entries from matching call and address sites, as before. An extent that
+  runs on into an unrecorded neighbour fails on its length, never passes in part. This covers `pstring`'s
+  `type` (`0x1260`), `write_raw` (`0x13A0`) and `tagged::get_tag` (`0x1190`).
+- **`operator<<(ostream&, char)` at `0x16E0` is parked under D25, not a toolchain entry.** It is a header template
+  instantiated in Mathcad's own `/GL` objects. The toolset's static libraries do not supply it, so D23 does not apply.
+  A per-object `/O2` compile calls `fill`, `flags`, `rdbuf`, `tie` and `width` through import thunks (433 bytes).
+  A small `/GL /LTCG` link inlines them (454 bytes) like the original (458 bytes, which also inlines `good`).
+  `tagged::write`, which calls it, stays parked.
+- `pstring::before` calls an out-of-line `type_info::before` where the original inlines it. That is the same
+  pattern, so `before` is probably parked too. `notag` and its vftable verify only when all seven slots do.
+
 ## Mapping and scope
 
 - **D1:** `Mcd` maps to `Quire.Mcd`.

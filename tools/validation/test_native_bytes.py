@@ -299,9 +299,14 @@ class ManifestImage(FakeImage):
     name = "fake.dll"
     sha256 = "ab" * 32
 
-    def __init__(self, memory, functions, exports=None, imports=None):
+    def __init__(self, memory, functions, exports=None, imports=None, leaves=None):
         super().__init__(exports or {}, memory, imports)
         self.functions = functions
+        self.leaves = leaves or {}
+
+    def function_extent(self, rva, starts=()):
+        end = self.functions.get(rva, self.leaves.get(rva))
+        return None if end is None else (rva, end)
 
     def export_extent(self, name):
         rva = self.exports.get(name)
@@ -503,6 +508,10 @@ class LoadTargetsTests(unittest.TestCase):
         with self.assertRaisesRegex(ManifestError, ".pdata"):
             self.load(self.bound({"f": {"rva": "0x1101"}}))
 
+    def test_function_entry_may_name_a_leaf_function(self):
+        self.image.leaves = {0x1200: 0x1203}
+        self.assertEqual(self.load(self.bound({"leaf": {"rva": "0x1200"}})), {"leaf": Entry(0x1200)})
+
     def test_data_entry_must_lie_in_a_section(self):
         with self.assertRaisesRegex(ManifestError, "not in a section"):
             self.load(self.bound({"vt": {"rva": "0x1ff8", "size": 16}}))
@@ -591,6 +600,12 @@ class InternalTargetTests(unittest.TestCase):
     def test_toolchain_entry_the_candidates_define_is_a_mismatch(self):
         found = self.classify({"callee": Entry(0x1100, None, True)})
         self.assertEqual(found.entries["callee"], ("mismatch", "the candidate objects define a toolchain entry"))
+
+    def test_leaf_entry_is_compared_over_its_inferred_extent(self):
+        image = ManifestImage(self.memory, {0x1200: 0x1206}, leaves={0x1100: 0x1103})
+        internal = InternalTargets(image, {"callee": Entry(0x1100)}, self.definitions)
+        found = classify_targets(image, 0x1000, self.call, internal)
+        self.assertEqual((found.mismatches, found.unverified, found.verified), ([], 0, 1))
 
     def test_entry_the_candidates_do_not_define_is_unverified(self):
         found = self.classify({"callee": Entry(0x1100)}, definitions={})
@@ -694,6 +709,12 @@ class RecordTests(unittest.TestCase):
         self.assertEqual(doc, {"fake.dll": {"sha256": ManifestImage.sha256, "targets": {
             "callee": {"rva": "0x1100"}, "helper": {"rva": "0x1200"}}}})
         self.assertEqual(targets_from(doc, self.image), {"callee": Entry(0x1100), "helper": Entry(0x1200)})
+
+    def test_a_leaf_target_is_recorded(self):
+        self.image = ManifestImage(self.memory, {0x1000: 0x1006, 0x1100: 0x1106}, {"caller": 0x1000},
+                                   leaves={0x1200: 0x1203})
+        self.assertEqual(self.record(["callee", "helper"])["fake.dll"]["targets"],
+                         {"callee": {"rva": "0x1100"}, "helper": {"rva": "0x1200"}})
 
     def test_an_existing_entry_is_searched_for_further_targets(self):
         doc = self.record(["callee"])
@@ -860,3 +881,25 @@ class LoadedSectionTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+@unittest.skipUnless(MSPCONS_DLL.exists(), "Mathcad install not found")
+class LeafExtentTests(unittest.TestCase):
+    """Leaf functions of the installed mspcons.dll: pstring's vtable slots type (0x1260) and tagged::get_tag (0x1190)."""
+
+    def setUp(self):
+        self.image = PeImage(MSPCONS_DLL)
+
+    def test_a_leaf_ends_before_its_int3_padding(self):
+        self.assertEqual(self.image.function_extent(0x1260), (0x1260, 0x1268))
+        self.assertEqual(self.image.function_extent(0x1190), (0x1190, 0x1195))
+
+    def test_a_pdata_function_keeps_its_pdata_extent(self):
+        self.assertEqual(self.image.function_extent(0x11D0), (0x11D0, self.image.functions[0x11D0]))
+
+    def test_an_rva_inside_a_pdata_function_or_outside_code_is_not_a_function(self):
+        self.assertIsNone(self.image.function_extent(0x11D2))
+        self.assertIsNone(self.image.function_extent(0x3250))  # pstring's vftable, in .rdata
+
+    def test_a_known_start_ends_a_leaf(self):
+        self.assertEqual(self.image.function_extent(0x1260, [0x1264]), (0x1260, 0x1264))

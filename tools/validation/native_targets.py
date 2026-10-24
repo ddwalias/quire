@@ -4,7 +4,7 @@ Each --name is a decorated symbol that the candidate objects reference and the o
 the same function or data as the original's. Its RVA is read from the original at a relocation site of a candidate
 function whose bytes already match the original (an export, or an entry already recorded), so an entry records where
 the original's own code points; the targets of a recorded entry are searched in turn. A function entry must start a
-.pdata function. A data entry takes the size of the candidate's definition. Sites that disagree, names that no
+.pdata function, or be a leaf function in an executable section outside every .pdata range (native_bytes.py). A data entry takes the size of the candidate's definition. Sites that disagree, names that no
 matching site references, and existing entries that would change fail without writing.
 
 Each --toolchain is recorded the same way, as a toolchain entry: a symbol the toolset's static libraries supply (such as
@@ -41,8 +41,8 @@ def record(image, definitions, names, doc, toolchain=()):
     def placed(d, rva):
         if d.data:
             return rva, image.read(rva, len(d.code))
-        end = image.functions.get(rva)
-        return (rva, image.read(rva, end - rva)) if end is not None else None
+        extent = image.function_extent(rva, [e.rva for e in entries.values() if e.size is None])
+        return (rva, image.read(rva, extent[1] - rva)) if extent is not None else None
 
     queue = []
     for d in definitions.values():
@@ -86,8 +86,8 @@ def record(image, definitions, names, doc, toolchain=()):
             raise ValueError(f"{name}: not defined by the candidate objects, so its kind and size are unknown")
         elif defn.data:
             entry["size"] = len(defn.code)
-        elif found[name] not in image.functions:
-            raise ValueError(f"{name}: RVA {found[name]:#x} does not start a .pdata function")
+        elif image.function_extent(found[name]) is None:
+            raise ValueError(f"{name}: RVA {found[name]:#x} does not start a .pdata function or a leaf function")
         stored = next((k for k in bound["targets"] if anonymous(k) == name), given[name])
         old = bound["targets"].get(stored)
         if old is not None and old != entry:

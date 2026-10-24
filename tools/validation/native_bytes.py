@@ -22,8 +22,13 @@ symbol that the toolset's static libraries supply (such as `??_7type_info@@6B@` 
 can define it: every site must resolve to its RVA, and a candidate that defines it is a mismatch. A run without
 --symbol lists each toolchain entry, so the targets accepted without a byte comparison stay visible.
 
-The manifest binds to the original's file name and SHA-256. An entry for another build, a function entry that does not
-start a .pdata function, or a data entry outside the original's sections fails the run before any comparison. A
+A function entry may name a leaf function (one without .pdata, such as a vtable slot returning a constant) when its
+RVA lies in an executable section outside every .pdata range. Its extent is inferred as for a leaf export, also ending
+at the next manifest function entry.
+
+The manifest binds to the original's file name and SHA-256. An entry for another build, a function entry that neither
+starts a .pdata function nor is a leaf, or a data entry outside the original's sections fails the run before any
+comparison. A
 section's bytes past its raw size, up to its virtual size, read as zeros, as the loader fills them.
 
 An import by ordinal is named after the export with that ordinal in the system DLL of the same name (System32), so a
@@ -57,6 +62,7 @@ IMAGE_REL_AMD64_REL32 = 0x0004
 IMAGE_REL_AMD64_REL32_5 = 0x0009
 IMAGE_SCN_CNT_UNINITIALIZED_DATA = 0x00000080
 IMAGE_SCN_LNK_COMDAT = 0x00001000
+IMAGE_SCN_MEM_EXECUTE = 0x20000000
 IMAGE_COMDAT_SELECT_NODUPLICATES = 1
 IMAGE_SYM_CLASS_LABEL = 6
 UNW_FLAG_CHAININFO = 0x4
@@ -173,11 +179,13 @@ class PeImage:
             raise ValueError(f"{path}: not PE32+")
         self.image_base = struct.unpack_from("<Q", d, opt + 24)[0]
         dirs = opt + 112
-        self.sections = []
+        self.sections, self.code_sections = [], []
         sh = opt + opt_size
         for i in range(nsec):
-            _, vsize, va, raw_size, raw, *_ = struct.unpack_from("<8sIIIIIIHHI", d, sh + 40 * i)
+            _, vsize, va, raw_size, raw, *_, flags = struct.unpack_from("<8sIIIIIIHHI", d, sh + 40 * i)
             self.sections.append((va, vsize, raw, raw_size))
+            if flags & IMAGE_SCN_MEM_EXECUTE:
+                self.code_sections.append((va, va + (vsize or raw_size)))
         self.ordinals = {}  # export ordinal -> name, for named exports
         self.exports = self._read_exports(dirs)
         self.functions = self._read_pdata(dirs)
@@ -205,6 +213,7 @@ class PeImage:
     def _read_pdata(self, dirs):
         d = self.data
         rva, size = struct.unpack_from("<II", d, dirs + 3 * 8)
+        self.pdata_ranges = []
         if not rva:
             return {}
         base = _rva_offset(self.sections, rva)
@@ -212,6 +221,7 @@ class PeImage:
         for i in range(size // 12):
             begin, end, unwind = struct.unpack_from("<III", d, base + 12 * i)
             rows[begin] = (end, unwind)
+        self.pdata_ranges = sorted((begin, end) for begin, (end, _) in rows.items())
 
         def parent(unwind):
             """The begin RVA of the entry that `unwind` chains to, or None for a primary entry."""
@@ -269,11 +279,25 @@ class PeImage:
         """(begin RVA, end RVA) of an exported function, or None if the export is missing."""
         if name not in self.exports:
             return None
-        begin = self.exports[name]
+        return self._extent(self.exports[name])
+
+    def function_extent(self, rva, starts=()):
+        """(begin RVA, end RVA) of the function at `rva`: a .pdata function, or a leaf function (one without .pdata)
+        that starts in an executable section outside every .pdata range, as an internal target may. None otherwise.
+        `starts` are further known function starts (the manifest's), which can end a leaf's inferred extent."""
+        if rva in self.functions:
+            return rva, self.functions[rva]
+        if (not any(b <= rva < e for b, e in self.code_sections)
+                or any(b <= rva < e for b, e in self.pdata_ranges)):
+            return None
+        return self._extent(rva, starts)
+
+    def _extent(self, begin, starts=()):
         end = self.functions.get(begin)
         if end is not None:
             return begin, end
-        starts = sorted({r for r in list(self.exports.values()) + list(self.functions) if r > begin})
+        starts = sorted({r for r in [*self.exports.values(), *(b for b, _ in self.pdata_ranges), *starts]
+                         if r > begin})
         # VirtualSize, not the file-aligned raw size: the tail of a raw block is zero padding, not code.
         section_end = next(va + (size or raw_size) for va, size, _, raw_size in self.sections
                            if va <= begin < va + (size or raw_size))
@@ -512,8 +536,9 @@ def targets_from(doc, image, path="manifest"):
             if entry.size is not None or not image.contains(entry.rva, 1):
                 raise ManifestError(f"{path}: {name}: a toolchain entry takes an RVA in a section and no size")
         elif entry.size is None:
-            if entry.rva not in image.functions:
-                raise ManifestError(f"{path}: {name}: RVA {entry.rva:#x} does not start a .pdata function")
+            if image.function_extent(entry.rva) is None:
+                raise ManifestError(f"{path}: {name}: RVA {entry.rva:#x} does not start a .pdata function or a leaf "
+                                    "function outside every .pdata range")
         elif not (type(entry.size) is int and entry.size > 0 and image.contains(entry.rva, entry.size)):
             raise ManifestError(f"{path}: {name}: {entry.size!r} bytes at RVA {entry.rva:#x} are not in a section")
         if anonymous(name) in entries:
@@ -537,7 +562,11 @@ class InternalTargets:
 
     def original_bytes(self, name):
         entry = self.entries[name]
-        end = self.image.functions[entry.rva] if entry.size is None else entry.rva + entry.size
+        if entry.size is None:
+            starts = [e.rva for e in self.entries.values() if e.size is None]
+            _, end = self.image.function_extent(entry.rva, starts)
+        else:
+            end = entry.rva + entry.size
         return self.image.read(entry.rva, end - entry.rva)
 
     def local(self, name):
