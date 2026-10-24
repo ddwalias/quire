@@ -94,4 +94,23 @@ public partial class plotType
         OverridePropertySerializationToRawXmlNode(overrides, typeof(axes3Type), "zAxis", "zAxisRaw", "zAxis", order++);
         OverridePropertySerializationToRawXmlNode(overrides, typeof(contourPlotType), "plotEquation", "plotEquationRaw", "plotEquation", order);
     }
+
+    private static void OverridePropertySerializationToRawXmlNode(XmlAttributeOverrides overiddes, Type propertyOwnerType, string oldPropertyName, string newPropertyName, string elementName, string namespaceUri, int order)
+    {
+        XmlAttributes attributes = new XmlAttributes
+        {
+            XmlIgnore = true
+        };
+        overiddes.Add(propertyOwnerType, oldPropertyName, attributes);
+        XmlAttributes xmlAttributes = new XmlAttributes
+        {
+            XmlIgnore = false
+        };
+        XmlAnyElementAttribute attribute = new XmlAnyElementAttribute(elementName, namespaceUri)
+        {
+            Order = order
+        };
+        xmlAttributes.XmlAnyElements.Add(attribute);
+        overiddes.Add(propertyOwnerType, newPropertyName, xmlAttributes);
+    }
 }

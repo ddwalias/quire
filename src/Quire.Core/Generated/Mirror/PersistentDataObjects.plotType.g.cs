@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.plotType, Ptc.Core")]
 public partial class plotType : global::Quire.PersistentDataObjects.IMC14AnnotationProvider, global::Quire.PersistentDataObjects.ICalculationHideable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static void OverridePropertySerializationToRawXmlNode(global::System.Xml.Serialization.XmlAttributeOverrides overiddes, global::System.Type propertyOwnerType, string oldPropertyName, string newPropertyName, string elementName, string namespaceUri, int order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
