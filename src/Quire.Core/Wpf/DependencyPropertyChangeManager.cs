@@ -35,6 +35,25 @@ public static partial class DependencyPropertyChangeManager
 
     partial class DependencyPropertyChangeNotifier
     {
+        private readonly DependencyObject _sourceObject;
+        private readonly DependencyProperty _sourceProperty;
+
+        public DependencyPropertyChangeNotifier(DependencyProperty property, DependencyObject sourceObject)
+        {
+            if (property == null || sourceObject == null)
+            {
+                throw new ArgumentNullException((property == null) ? "property" : "sourceObject");
+            }
+            _sourceProperty = property;
+            _sourceObject = sourceObject;
+            BindingOperations.SetBinding(this, ValueProperty, new Binding
+            {
+                Path = new PropertyPath(property),
+                Mode = BindingMode.OneWay,
+                Source = sourceObject
+            });
+        }
+
         [MirrorVerified("PtcWpfDependencyPropertyChangeManagerMechanicalDifferentialTests")]
         public event DependencyPropertyChangedEventHandler SourcePropertyChanged;
     }
