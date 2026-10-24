@@ -106,6 +106,47 @@ public partial class ImageUtils
         throw new ArgumentOutOfRangeException("sourceUri", "The sourceUri uses not supported format, the currently supported formats are pack:// and file://");
     }
 
+    public static void CopyImageToStream(string imageExtension, Uri imageSourceUri, Stream stream, BitmapSource image, byte[] originalStreamHash)
+    {
+        bool flag;
+        BitmapImage bitmapImage = image as BitmapImage;
+        if (imageSourceUri == null && bitmapImage != null)
+        {
+            imageSourceUri = bitmapImage.UriSource;
+        }
+        if (imageSourceUri != null)
+        {
+            try
+            {
+                flag = CopyImage(imageSourceUri, originalStreamHash, stream);
+            }
+            catch
+            {
+                flag = false;
+            }
+        }
+        else if (bitmapImage != null && bitmapImage.StreamSource != null)
+        {
+            try
+            {
+                global::Quire.IO.StreamUtils.CopyStream(bitmapImage.StreamSource, stream);
+                flag = true;
+            }
+            catch
+            {
+                flag = false;
+            }
+        }
+        else
+        {
+            flag = false;
+        }
+        if (!flag)
+        {
+            EncodeImage(image, imageExtension, stream);
+        }
+    }
+
     [MirrorVerified("Release IL")]
     public static int BytesNeeded(int bits) => (bits + 7) / 8;
 

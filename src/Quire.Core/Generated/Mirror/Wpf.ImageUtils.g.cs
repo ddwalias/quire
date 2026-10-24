@@ -34,8 +34,6 @@ public partial class ImageUtils
     [global::Quire.Mirror.MirrorStub]
     public static byte[] B16StringToBytes(string hexString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void CopyImageToStream(string imageExtension, global::System.Uri imageSourceUri, global::System.IO.Stream stream, global::System.Windows.Media.Imaging.BitmapSource image, byte[] originalStreamHash) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static bool SafeCopyImageFromPackage(global::System.Uri sourceUri, byte[] originalStreamHash, global::System.IO.Stream targetStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void CopyPixelsToStream(global::System.Windows.Media.Imaging.BitmapSource source, global::System.IO.Stream target, global::System.Nullable<int> maxBufferSize = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
