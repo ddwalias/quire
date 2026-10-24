@@ -114,6 +114,28 @@ public partial class ObservableRangeCollection<T>
         }
     }
 
+    public void AddRange(IEnumerable<T> itemsToAdd)
+    {
+        if (global::Quire.DebugTools.AssertNotNull(itemsToAdd, null).Failed)
+        {
+            return;
+        }
+        List<T> list = itemsToAdd.ToList();
+        int count = Count;
+        if (list.Count > 0)
+        {
+            FireRangeChanging(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, list, count));
+        }
+        using (new RangeChangeLock(this))
+        {
+            list.Each(Add);
+        }
+        if (list.Count > 0)
+        {
+            FireRangeChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, list, count));
+        }
+    }
+
     partial class RangeChangeLock
     {
         [MirrorVerified("Release IL")]
