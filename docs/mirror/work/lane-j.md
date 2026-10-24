@@ -1,6 +1,6 @@
 # Lane J: mshex.dll → Quire.Native.Mshex
 
-**Status: incomplete.** 66 of 380 exports pass strict byte validation. Export parity: 314 missing, 0 extra.
+**Status: incomplete.** 66 of 380 exports pass strict byte validation. Export parity: 314 missing, 0 extra. The remaining work is listed under "Remaining work".
 
 - **Owner:** Lane J (native, `mshex.dll`)
 - **Branch:** `mirror/j-mshex-202610241256`
@@ -99,5 +99,14 @@ The maintainer parked these after the Rich-header finding (D25): the original's 
 
 - **`operator<<(ostream&, Error const&)`** (`0xa2d0`). It calls `0x99e0`, which calls `0xa7c0`. `0xa7c0` is the stream-slot accessor `return stream.pword(index)`, with `index` from a function-local static `xalloc()`. A candidate with that source matches the instructions, the guard and the tail jump, except that the original reads the epoch into `edx` and the candidate into `eax`. No flag or build I tried reproduces it.
 - **`Error::GetDetails`** (`0x8780`, 399 bytes, returns `std::string`). It calls standard-library internals, which are linker-optimized in the original.
+
+- **`Error` constructors** (`0x8700`, `0x86c0`, `0x8740`). The layout is now inferred: tag at 0, code at 0x18, `std::string details_` at 0x20 (buffer 16 bytes, size at 0x30, capacity 15 at 0x38). Each constructor differs from our build by one redundant byte store, `mov byte [rcx+20h], al`, which the original's optimizer removes after the 16-byte zeroing. The constructors are not exported until that is resolved, so they are parked with this D25 evidence.
+
+## Remaining work (after this batch)
+
+- **Standard-library internals (166 exports):** `std::map` (`_Tree`) helpers, `_Tmap_traits`, `std::string`/`basic_*` templates, and the `DefaultNames::hash` operator. Matching them needs the same STL instantiations, and their internal calls must be recorded.
+- **Vtable chains (about 57 constructors and destructors, plus virtual calls):** the `??0X` and `??1X` bodies reference vtables. Verifying a vtable verifies each slot's function, so every virtual method of `Node`, `Token`, `Value`, `Environment`, `State`, `Interpreter` and the rest must be implemented or recorded first. The `State` slots used by `Module` (slot 2 returns status, slot 4 `GetImports`, slot 5 `GetExports`) are known, but slots 1 and 3 are not identified.
+- **Formatter overloads** (`Insert` for `Token`, `Value` and `Interpreter`): these dispatch through vtable slots of classes whose order is not yet inferred.
+- **Parked (D25):** `operator<<`, `Error::GetDetails`, the `Error` constructors above, and any function that depends on link-time optimization.
 
 **SECREL (deferred).** It is needed only by the parked TLS accessor. When it is added, its base is the TLS directory's `StartAddressOfRawData` (`0x12188`), not a `.tls` section: the original has no `.tls` section, because `.tls` is merged into `.rdata`.

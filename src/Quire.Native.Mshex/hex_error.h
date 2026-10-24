@@ -1,14 +1,15 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
 
 #include "hex_tag.h"
 #include "mshex_export.h"
 
 namespace Hex {
 
-// Layout from the original's accessors: the source tag at 0, the error code at 0x18. The remaining members are not yet
-// inferred.
+// Layout from the original's accessors and constructors: the source tag at 0, the error code at 0x18, and the details
+// string at 0x20.
 class Error {
 public:
     HEX_EXPORT Tag GetTag() const;
@@ -20,6 +21,7 @@ public:
 private:
     Tag tag_;
     unsigned int code_;
+    std::string details_;
 };
 
 }  // namespace Hex
