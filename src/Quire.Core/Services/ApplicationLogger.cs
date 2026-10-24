@@ -14,6 +14,34 @@ public partial class ApplicationLogger
     [MirrorVerified("PtcServicesApplicationLoggerMechanicalDifferentialTests")]
     protected string _applicationLogFilePath;
 
+    public string GetSystemInfoIfAvailable()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        string value;
+        string items;
+        Process process = Process.Start(new ProcessStartInfo("systeminfo.exe")
+        {
+            UseShellExecute = false,
+            CreateNoWindow = true,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true
+        });
+        using (StreamReader streamReader = process.StandardOutput)
+        {
+            value = streamReader.ReadToEnd();
+        }
+        using (StreamReader streamReader2 = process.StandardError)
+        {
+            items = streamReader2.ReadToEnd();
+        }
+        if (global::Quire.EnumerableExtensions.IsNullOrEmpty<char>(items))
+        {
+            stringBuilder.AppendLine("Output of systeminfo.exe utility: ");
+            stringBuilder.Append(value);
+        }
+        return stringBuilder.ToString();
+    }
+
     public string GetListOfLoadedModulesData()
     {
         StringBuilder loadedModulesData = new StringBuilder();
