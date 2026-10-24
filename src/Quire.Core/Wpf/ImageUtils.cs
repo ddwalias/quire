@@ -150,6 +150,32 @@ public partial class ImageUtils
     [MirrorVerified("Release IL")]
     public static int BytesNeeded(int bits) => (bits + 7) / 8;
 
+    public static void CopyPixelsToStream(BitmapSource source, Stream target, int? maxBufferSize = null)
+    {
+        if (!maxBufferSize.HasValue || maxBufferSize.Value <= 0)
+        {
+            maxBufferSize = global::Quire.MindTouch.IO.ChunkedMemoryStream.ChunkSize;
+        }
+        int bitsPerPixel = source.Format.BitsPerPixel;
+        int pixelHeight = source.PixelHeight;
+        int pixelWidth = source.PixelWidth;
+        int val = maxBufferSize.Value * 8 / bitsPerPixel;
+        int num = Math.Min(pixelWidth, val);
+        byte[] array = new byte[BytesNeeded(num * bitsPerPixel)];
+        for (int i = 0; i < pixelHeight; i++)
+        {
+            for (int j = 0; j < pixelWidth; j += num)
+            {
+                int num2 = Math.Min(num, pixelWidth - j);
+                Int32Rect sourceRect = new Int32Rect(j, i, num2, 1);
+                int num3 = BytesNeeded(num2 * bitsPerPixel);
+                source.CopyPixels(sourceRect, array, num3, 0);
+                target.Write(array, 0, num3);
+            }
+        }
+        target.Flush();
+    }
+
     public static byte[] GetImageHash(BitmapSource source)
     {
         byte[] result;
