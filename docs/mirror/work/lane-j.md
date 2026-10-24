@@ -106,7 +106,19 @@ The maintainer parked these after the Rich-header finding (D25): the original's 
 
 - **`Error` constructors** (`0x8700`, `0x86c0`, `0x8740`). The layout is now inferred: tag at 0, code at 0x18, `std::string details_` at 0x20 (buffer 16 bytes, size at 0x30, capacity 15 at 0x38). Each constructor differs from our build by one redundant byte store, `mov byte [rcx+20h], al`, which the original's optimizer removes after the 16-byte zeroing. The constructors are not exported until that is resolved, so they are parked with this D25 evidence.
 
-## Remaining work (after this batch)
+## Remaining work (77 of 380 passing, 303 missing)
+
+Breakdown of the 303 missing exports, from the disassembly:
+
+- **Standard-library and data (125):** `_Tree`/`_Tmap` helpers, `basic_*` templates, `DefaultNames::hash` operators, and the static constants `bucket_size` and `alignment`. Blocked on the `std::string` byte difference and on building `Signature`.
+- **Vtable helpers (41):** the `??_7` vtables and the `??_E`/`??_F`/`??_D` deleting destructors. A vtable verifies only when each slot's function verifies, so every virtual method of its class must match first.
+- **Constructors, destructors and assignments that reference vtables or internal code (93):** 24 store a vtable pointer, and the rest call base constructors or internal helpers. Blocked on the same vtable chains.
+- **Reloc-free but blocked (23):** the `Error` constructors (parked: byte store), `Signature` constructors (`std::string`), `Environment::GetValue`, `AddValue(sig)` and `Accept` (virtual slots 4, 10 and 14 of `Environment`, not identified), `Module::GetErrors` and `State::GetErrors` (return `ms::Range`), `Node::GetError` (109 bytes with internal calls), and seven empty destructors that compile to `ret 0`, which the lane's classes do not reproduce.
+- **Parked:** `operator<<`, `Error::GetDetails`, the `Error` constructors, and `Tag`'s `operator+`.
+
+Each group needs either the vtable chains of its classes, or the `std::string` difference resolved first.
+
+## Remaining work (after the earlier batch)
 
 - **Standard-library blocker (investigated):** a candidate `std::string` default construction stores one more byte than the original's (`mov byte [...], al`, after the 16-byte zeroing). The byte survives `/GL` with `/LTCG` in a separate test, so it is not explained by link-time optimization as D25 assumed. The `Error` constructors and every `std::string`-holding type (`Signature`, `Error`) hit it. `std::map<Hex::Signature, ...>` needs `Signature` complete, so the `_Tree` helpers wait on this difference, which is not understood yet.
 - **Standard-library internals (166 exports):** `std::map` (`_Tree`) helpers, `_Tmap_traits`, `std::string`/`basic_*` templates, and the `DefaultNames::hash` operator. Matching them needs the same STL instantiations, and their internal calls must be recorded.
