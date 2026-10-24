@@ -47,6 +47,14 @@ public static partial class DependencyPropertyChangeManager
             }
         }
 
+        private void FireSourcePropertyChanged(object oldValue, object newValue)
+        {
+            if (SourcePropertyChanged != null)
+            {
+                SourcePropertyChanged.Invoke(_sourceObject, new DependencyPropertyChangedEventArgs(_sourceProperty, oldValue, newValue));
+            }
+        }
+
         public DependencyPropertyChangeNotifier(DependencyProperty property, DependencyObject sourceObject)
         {
             if (property == null || sourceObject == null)
