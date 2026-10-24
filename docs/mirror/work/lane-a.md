@@ -1,6 +1,6 @@
 # Lane A — Quire.Core
 
 - Owner: Lane A; branch `mirror/a-core-20261021-quirecore`; worktree `C:/Projects/Quire-wt/lane-a-core`.
-- Members: `ApplicationLogger.WriteToLog(TextWriter)`; `ApplicationLogger.GetListOfLoadedModulesData`; `ApplicationLogger.GetSystemInfoIfAvailable`; previously claimed exact members remain as recorded in git history.
-- Release IL report: `.mirror-cache/release-il-234f4f56c585/release-il.json` — PASS, 3,385 exact, 280 unfinished.
+- Members: `ApplicationLogger.WriteToLog(TextWriter)`; `ApplicationLogger.GetListOfLoadedModulesData`; `ApplicationLogger.GetSystemInfoIfAvailable`; `ApplicationLogger.WriteToLog(string,string)`; `ApplicationLogger.GetEnvironmentVariablesAndCommandLineArgumentsData`; previously claimed exact members remain as recorded in git history.
+- Release IL report: `.mirror-cache/release-il-58c041cd00b3/release-il.json` — PASS, 3,392 exact, 278 unfinished.
 - Remaining mismatches: callback ordinals/IL shape in `headersContainerRegionCollectionSerializer.Serialize`, `DebugTools.NotCalledFromApplicationLogger`, `WeakMultiCastDelegate.Remove`, `UIFunctionalityCommandWrapper`, and `TextElementPropertiesBlocker`; `DataObjectExtensions.GetTextWithEmbeddedItemsInfo`; IL-shape mismatches in `WpfUtils.GroupTransformsAsFrozen`, `BooleanOperatorMultiConverter.Convert`, `BuildArchitectureToBitnessConverter.ConvertBack`, `TextElementAttachedProperties.SetTextStyleMarker`, `TextRegionSerializationHelper.CopyImagesFromPackageIntoFlowDocument`, `worksheetRegionType.CreateSerializerWithOverrides`, and `Encryptor.Encrypt`/`Decrypt`; missing `LicenseManager` mapping; unfinished dependency property add/remove handlers and `UndoRedoHelper.CanUndo`/`CanRedo`.

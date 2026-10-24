@@ -23,8 +23,4 @@ public partial class ApplicationLogger : global::Quire.Services.IApplicationLogg
     private const string UnknownBuildId = "Unknown";
     [global::Quire.Mirror.MirrorStub]
     private string _subProduct;
-    [global::Quire.Mirror.MirrorStub]
-    public string WriteToLog(string logType, string logContents) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetEnvironmentVariablesAndCommandLineArgumentsData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
