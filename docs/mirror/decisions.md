@@ -297,10 +297,14 @@ mode, which supersedes D25's parking for functions that a `/GL` build reproduces
   names, manifest entries by the candidate's map name (toolchain and parked entries by name alone), other functions
   recursively, and other data by the content of the candidate's map symbol, with pointers in data followed through
   both images' base relocations. Anything else is unverified and fails strictly.
-- **Gate:** a new or changed export must pass, and removing a passing one fails. Link-time code generation sees the
-  whole program, so adding code can move an export nobody touched. An unchanged export that stops passing is reported
-  under `regressions` and does not block (user decision). When a project first switches to `/GL`, the base's
-  per-object rows are limited to the original's exports.
+- **Gate:** a new or changed export must pass, and removing a passing one fails. An export counts as changed when
+  anything it reaches changed: its instructions, or an internal function or datum it calls or reads, with addresses
+  and pointers taken by what they name so that a layout shift alone changes nothing (user decision, after review).
+  Link-time code generation sees the whole program, so an export whose reach is unchanged can still move; one that
+  stops passing is reported under `regressions` and does not block (user decision). When a project first switches to
+  `/GL`, the base's per-object rows are limited to the original's exports.
+- **Known limits:** 32-bit image-relative fields in data (RTTI locators, exception tables) are compared as numbers,
+  not followed; unwind data is not compared, as in per-object mode.
 - **Running it:** `python tools/validation/native_linked.py --original <dll> --candidate-dll <built dll> --map <map>`,
   with the map from `_LINK_=/MAP:<path>` set for the build. Nothing of the original is written out (D15).
 
