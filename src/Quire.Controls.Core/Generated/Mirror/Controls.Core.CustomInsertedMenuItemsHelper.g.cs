@@ -11,12 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.CustomInsertedMenuItemsHelper, Ptc.Controls.Core")]
 public static partial class CustomInsertedMenuItemsHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Controls.ContextMenu ContextMenuOpened(object sender, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int TryInsertMenuItemByKey(global::System.Windows.Controls.ContextMenu ctxMenu, global::System.Windows.ResourceDictionary dict, object itemKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Controls.MenuItem GetMenuItemWithCommand(global::System.Windows.Controls.ItemCollection ctxMenuItems, global::System.Windows.Input.RoutedUICommand itemCommand) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static int IndexOfCommandMenuItem(global::System.Windows.Controls.ItemCollection ctxMenuItems, global::System.Windows.Input.RoutedUICommand itemCommand, int fallbackInsertIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

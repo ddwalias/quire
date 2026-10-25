@@ -333,3 +333,10 @@
   - `PresentationSettings` (`pageModelName`, `textStyleName`, `document`, `localName`, `_namespaceName`, `_resultsNS`, `pageModel`, `mathRendering`, `PageModelName`, `MathRenderingName`, `ShouldValidateOnWrite`, `ShouldValidateOnRead`, `GetXName`, `ReadXml(XmlReader)`, `WriteXml(XmlWriter)`, `CreateXElement`, `OnSchemaValidation`, `ReadXml(XElement)`, `WriteXml(XElement)`, `WriteXml(XDocument)`, `RepairXDocument`, `.ctor(IEngineeringDocument, string, string)`, `.cctor`)
 - Report: `.mirror-cache/release-il-36fa8860970a/release-il.json` — PASS, 1,206 checked, 1,206 exact, 0 failures, 2,700 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 34 — CustomInsertedMenuItemsHelper
+
+- Scope:
+  - `CustomInsertedMenuItemsHelper` (`ContextMenuOpened`, `TryInsertMenuItemByKey`, `GetMenuItemWithCommand`, `IndexOfCommandMenuItem`)
+- Report: `.mirror-cache/release-il-15b2dd9f990e/release-il.json` — PASS, 1,212 checked, 1,212 exact, 0 failures, 2,696 unfinished.
+- Remaining mismatches: none in claimed batch.
