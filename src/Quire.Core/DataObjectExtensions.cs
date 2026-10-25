@@ -14,4 +14,37 @@ public static partial class DataObjectExtensions
     {
         dataObject.SetData(WpfClipboard._richTextEmbeddedItemsInfo, (int)data);
     }
+
+    public static global::System.Nullable<RichTextEmbeddedItemsInfo> GetTextWithEmbeddedItemsInfo(this IDataObject dataObject)
+    {
+        if (!dataObject.HasTextWithEmbeddedItemsInfo())
+        {
+            return null;
+        }
+
+        object data;
+        try
+        {
+            data = dataObject.GetData(WpfClipboard._richTextEmbeddedItemsInfo);
+        }
+        catch (global::System.NotSupportedException)
+        {
+            return null;
+        }
+
+        if (data is global::System.Exception)
+        {
+            return null;
+        }
+
+        object value = data;
+        return value switch
+        {
+            RichTextEmbeddedItemsInfo embeddedItemsInfo => embeddedItemsInfo,
+            int integerValue => (RichTextEmbeddedItemsInfo)integerValue,
+            string text when global::System.Int32.TryParse(text, out int parsedValue) =>
+                (RichTextEmbeddedItemsInfo)parsedValue,
+            _ => null
+        };
+    }
 }
