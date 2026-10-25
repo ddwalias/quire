@@ -92,8 +92,6 @@ public sealed partial class LicenseManager : global::System.ComponentModel.INoti
     [global::Quire.Mirror.MirrorStub]
     private LicenseManager(global::Quire.License.ILicenseProvider provider, global::System.Windows.ResourceDictionary licenseMessageDictionary) { }
     [global::Quire.Mirror.MirrorStub]
-    private bool HasBorrows() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void UpdateIssueDate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateExpirationDate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -171,8 +169,6 @@ public sealed partial class LicenseManager : global::System.ComponentModel.INoti
     private void OnDisplayLicenseMessage(global::Quire.License.LicenseCbArgs cbArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static string GetLicensePathSettingFromHostAndPort(string licenseHost, global::System.Nullable<uint> licensePort) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ApplyLicenseRefreshInterval() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnLicenseTypeChanged(global::System.EventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

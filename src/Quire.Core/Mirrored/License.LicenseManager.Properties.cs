@@ -105,4 +105,14 @@ public sealed partial class LicenseManager
     }
 
     public bool IsUsingReleaseFeature() => _isUsingReleaseFeature;
+
+    private bool HasBorrows() => _provider.HasBorrows();
+
+    private void ApplyLicenseRefreshInterval()
+    {
+        if (_refreshTimer != null)
+        {
+            _refreshTimer.Change(LicenseRefreshInterval, LicenseRefreshInterval);
+        }
+    }
 }
