@@ -11,12 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.MaxMatrixWidth, Ptc.Controls.Core")]
 public partial struct MaxMatrixWidth
 {
-    [global::Quire.Mirror.MirrorStub]
-    public double MaxIntegral;
-    [global::Quire.Mirror.MirrorStub]
-    public double MaxFractional;
-    [global::Quire.Mirror.MirrorStub]
-    public double MaxVisualNode;
-    [global::Quire.Mirror.MirrorStub]
-    public MaxMatrixWidth(double maxIntegral, double maxFractional, double maxVisualNode) { }
 }

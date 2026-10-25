@@ -11,12 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.MatrixFormatCommonConstants, Ptc.Controls.Core")]
 public static partial class MatrixFormatCommonConstants
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const int DefaultHeight = 12;
-    [global::Quire.Mirror.MirrorStub]
-    public const int DefaultWidth = 12;
-    [global::Quire.Mirror.MirrorStub]
-    public const int DefaultTopRow = 0;
-    [global::Quire.Mirror.MirrorStub]
-    public const int DefaultTopCol = 0;
 }

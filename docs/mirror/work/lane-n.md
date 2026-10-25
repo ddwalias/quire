@@ -169,3 +169,14 @@
   - `PrimeContextMenuSeparator` (`PrimeContextMenuSeparatorStyleProperty`, `PrimeContextMenuSeparatorStyle`, `HandlePrimeContextMenuSeparatorStyleChanged`, `.ctor`, `.cctor`)
 - Report: `.mirror-cache/release-il-458dc5421a42/release-il.json` — PASS, 1,079 checked, 1,079 exact, 0 failures, 2,803 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 13 — MatrixFormatCommonConstants, MaxMatrixWidth, OleContainerMessageKeysDict, MathFormatForPaste, CopyWidgetBase
+
+- Scope:
+  - `MatrixFormatCommonConstants` (`DefaultHeight`, `DefaultWidth`, `DefaultTopRow`, `DefaultTopCol`)
+  - `MaxMatrixWidth` (`MaxIntegral`, `MaxFractional`, `MaxVisualNode`, `.ctor(double, double, double)`)
+  - `OleContainerMessageKeysDict` (`UpdateMessageKeys`, `ActivateMessageKeys`, `ResizeMessageKeys`, `ValidateMessageKeysDict`, `.cctor`)
+  - `MathFormatForPaste` (`_instance`, `Instance`, `DocumentMathFormat`, `DocumentLabeledIdFormat`, `Generate(IMathFormatDeserializationProvider)`, `Generate(IMathFormat, IDictionary)`, `SetDefault`, `Dispose`, `.ctor`)
+  - `CopyWidgetBase` (`ParentWidth`, `IncludeWidth`, `ChildBorder`, `Dispose`, `.ctor`)
+- Report: `.mirror-cache/release-il-b3aea6d8fdde/release-il.json` — PASS, 1,087 checked, 1,087 exact, 0 failures, 2,796 unfinished.
+- Remaining mismatches: none in claimed batch.

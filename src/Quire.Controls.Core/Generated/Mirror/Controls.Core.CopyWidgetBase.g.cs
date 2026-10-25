@@ -11,12 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.CopyWidgetBase, Ptc.Controls.Core")]
 public abstract partial class CopyWidgetBase : global::System.Windows.Controls.Primitives.Popup, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract double ParentWidth { get; set; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract double IncludeWidth { get; set; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::System.Windows.Controls.Border ChildBorder { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public void Dispose() { }
 }

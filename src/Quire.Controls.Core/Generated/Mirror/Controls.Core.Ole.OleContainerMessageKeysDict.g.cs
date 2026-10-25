@@ -11,12 +11,4 @@ namespace Quire.Controls.Core.Ole;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Ole.OleContainerMessageKeysDict, Ptc.Controls.Core")]
 public static partial class OleContainerMessageKeysDict
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Collections.Generic.Dictionary<global::Quire.OLE.OleResult, string> UpdateMessageKeys;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Collections.Generic.Dictionary<global::Quire.OLE.OleResult, string> ActivateMessageKeys;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Collections.Generic.Dictionary<global::Quire.OLE.OleResult, string> ResizeMessageKeys;
-    [global::Quire.Mirror.MirrorStub]
-    private static void ValidateMessageKeysDict(global::System.Collections.Generic.Dictionary<global::Quire.OLE.OleResult, string> dict) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

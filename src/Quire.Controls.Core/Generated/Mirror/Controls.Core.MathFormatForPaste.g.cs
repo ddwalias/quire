@@ -11,12 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.MathFormatForPaste, Ptc.Controls.Core")]
 public partial class MathFormatForPaste : global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.MathFormatForPaste Generate(global::Quire.Controls.Core.IMathFormatDeserializationProvider propertiesSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.MathFormatForPaste Generate(global::Quire.Controls.Core.IMathFormat targetMathFormat, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> targetLabeledIdFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.MathFormatForPaste SetDefault() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Dispose() { }
 }
