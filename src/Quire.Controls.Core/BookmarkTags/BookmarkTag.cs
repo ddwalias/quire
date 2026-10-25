@@ -1,17 +1,39 @@
 #nullable disable
 using System.Windows;
-using Quire.Mirror;
+using Quire;
 
 namespace Quire.Controls.Core.BookmarkTags;
 
 public static partial class BookmarkTag
 {
-    [MirrorVerified("PtcControlsCoreBookmarkTagsBookmarkTagMechanicalDifferentialTests")]
-    public static readonly DependencyProperty BookmarkTagProperty;
+    public static readonly DependencyProperty BookmarkTagProperty = DependencyProperty.RegisterAttached("BookmarkTag", typeof(string), typeof(BookmarkTag), new PropertyMetadata(string.Empty));
 
-    [MirrorVerified("PtcControlsCoreBookmarkTagsBookmarkTagMechanicalDifferentialTests")]
-    public static void SetBookmarkTag(DependencyObject element, string tag) => element.SetValue(BookmarkTagProperty, tag);
+    public static void SetBookmarkTag(DependencyObject element, string tag)
+    {
+        element.SetValue(BookmarkTagProperty, tag);
+    }
 
-    [MirrorVerified("PtcControlsCoreBookmarkTagsBookmarkTagMechanicalDifferentialTests")]
-    public static void ClearBookmarkTag(DependencyObject element) => element.ClearValue(BookmarkTagProperty);
+    public static void ClearBookmarkTag(DependencyObject element)
+    {
+        element.ClearValue(BookmarkTagProperty);
+    }
+
+    public static string GetBookmarkTag(DependencyObject element)
+    {
+        return (string)element.GetValue(BookmarkTagProperty);
+    }
+
+    public static bool HasBookmarkTag(DependencyObject element, string tagValue)
+    {
+        if (tagValue.IsNotEmpty())
+        {
+            return tagValue == GetBookmarkTag(element);
+        }
+        return false;
+    }
+
+    public static bool HasBookmarkTag(DependencyObject element)
+    {
+        return GetBookmarkTag(element).IsNotEmpty();
+    }
 }

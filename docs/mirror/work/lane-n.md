@@ -151,3 +151,11 @@
   - `StaticMathFormat` (`FontFamilyName`, `FontSize`, `IsBold`, `IsItalic`, `IsUnderline`, `FontColor`, `HighlightColor`, `.ctor()`, `.ctor(IMathFormat)`, `.ctor(...)`)
 - Report: `.mirror-cache/release-il-6101506a230f/release-il.json` — PASS, 1,059 checked, 1,059 exact, 0 failures, 2,819 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 11 — BookmarkTags (Tag & TagViewModel)
+
+- Scope:
+  - `BookmarkTag` (`BookmarkTagProperty`, `SetBookmarkTag`, `ClearBookmarkTag`, `GetBookmarkTag`, `HasBookmarkTag(DependencyObject, string)`, `HasBookmarkTag(DependencyObject)`, `.cctor`)
+  - `BookmarkTagViewModel` (`_tag`, `Tag`, `.ctor(string)`)
+- Report: `.mirror-cache/release-il-222f5f71d7d6/release-il.json` — PASS, 1,066 checked, 1,066 exact, 0 failures, 2,813 unfinished.
+- Remaining mismatches: none in claimed batch.

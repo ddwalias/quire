@@ -11,10 +11,4 @@ namespace Quire.Controls.Core.BookmarkTags;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.BookmarkTags.BookmarkTag, Ptc.Controls.Core")]
 public static partial class BookmarkTag
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetBookmarkTag(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool HasBookmarkTag(global::System.Windows.DependencyObject element, string tagValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool HasBookmarkTag(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
