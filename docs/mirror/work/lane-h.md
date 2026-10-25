@@ -1,6 +1,6 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 43 of 781 exports pass strict byte validation (0 unverified targets; every exported function in the build matches). Export parity: 738 missing, 0 extra. The 738 missing include 19 parked exports, left out of the DLL (below).
+**Status: incomplete.** 44 of 781 exports pass strict byte validation (0 unverified targets; every exported function in the build matches). Export parity: 737 missing, 0 extra. The 737 missing include 31 parked exports, left out of the DLL (below).
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261025h1` (from `main` at `31b4238b`)
@@ -17,7 +17,7 @@
 | `validate` | `mat{dbl,flt,s32,s16,u32,u16,u8,cpx}_validate` | 8/8 OK | One body (linker-folded in the original, `0x86460`). Reads `rows`/`cols` into locals first; the direct form picked another register. |
 | `wrap_data` | 7 typed exports (no `cpx`) | 7/7 OK | Same body for all seven (`0x859e0`). |
 | `malloc` | 8 typed exports | 8/8 OK | `allocate_mat<T>`; the allocator is `EfiCallContext`'s pointer at +80h. |
-| `mat_set` | `matset_free`, `matset_free_matrices`, `matset_validate` | 3/3 OK | `mutils_set.{h,cpp}`. `matset_free_matrices` is `validate` alone. |
+| `mat_set` | `matset_malloc`, `matset_free`, `matset_free_matrices`, `matset_validate` | 4/4 OK | `mutils_set.{h,cpp}`. `matset_free_matrices` is `validate` alone. |
 | `pgn_chain_free` | `pgn_chain_free` | 1/1 OK | Early return for a null or empty chain. |
 | `mutil_interrupt` | `mutil_interrupt` | 1/1 OK | Over the shared inline in `efi_common.h`. |
 | Trivial (`ret 0` / `xor eax,eax; ret`) | `mutil_abort`, `mutil_msg_print`, `mutil_msg_print_line`, `mutil_msg_print_time`, `mutil_msg_set_level`, `mutil_rand_end` | 6/6 OK | `mutils_msg.{h,cpp}`. `_mutil_msg_level` values not inferred yet. |
@@ -50,11 +50,15 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 - **`matcpx_assign_scalar`** (`0x493c0`, 219 bytes): candidate 206 bytes with the plain loop. Shapes tried, all differ: plain loop 206; pointer loop 217; `std::fill` 217; `std::fill_n` 218; store element 0 then copy forward 218; `_dcomplex` as `double v[2]` 206. The original stores the value as one 16-byte `movups` and fills the rest with `rep movs` over overlapping element pairs. Flags not searched (D25).
 - **`sum` family** (7: `matdbl_sum` `0x7c650`, `matflt_sum` `0x7c780`, `mats{32,16}_sum`, `matu{32,16,8}_sum`): the body matches except for the epilogue. The candidate is 2 bytes longer for the integer forms (219 vs 217) and for `dbl` (299 vs 297), because the two `const char *` returns merge into one register (`lea rcx` + `mov rax, rcx`; `xor ecx` + `mov eax, ecx`). The original returns `lea rax` / `xor eax` directly. Five declaration orders of the locals were tried, all 219. `flt` is 302 vs 287 (the original unrolls by four).
 - **`range` family** (5: `mats{32,16}_range`, `matu{32,16,8}_range`): the same return-merge (`lea rcx`, `mov rax, rcx`, +3 bytes per return), plus the original places its null-pointer return block inline, so its jumps are short (rel8); the candidate puts that block at the end, with rel32 jumps. Both forms tried; no reordering of the checks is allowed.
+- **`matu8_bit_and/or/xor`, `matu16_*`, `matu32_*`** (9): same length as the original (662/664/661) and the vectorized loop matches; the candidate differs in one register choice (`b`'s `rows * cols` operand order in `validate`) and carries an unverified `3.0` constant (`__real@4008000000000000`). That constant can only be recorded through a matching function that uses it, and none does yet. Parked; the helpers stay in `mutils_mat_ops.h`.
+- **`matset_verify_allsame`** (`0x70fb0`, 302 bytes): 276 bytes with the `-1` guards written as default-then-override. The original keeps the guards and its loop layout differs; not resolved.
 - **`matu8_cast_to_*`** (6: `dbl`, `flt`, `s16`, `u16`, `s32`, `u32`): forced inlining gives the same loop as a template, but the candidate unrolls the loop four times (437 bytes against the original's 285). The original keeps the loop un-unrolled, because it reloads `src->size` each iteration. Binding the loop to `src->size` directly still unrolled, so the compiler proved the bound invariant where the original did not. Not solved by source shape yet.
+
+- Helper pattern for functions that return a message (added after the parked `sum`/`range` work): the exports call `validate` themselves, return the message literal themselves, and put only void/bool shared logic in `__forceinline` helpers (`same_shape`, `binary_elementwise`, `running_sum`). A message returned from an inlined template comes back in `rcx` and is copied to `rax`; the original returns it in `rax`. The helper pattern removes that copy.
 
 ## Remaining work
 
-- 719 exports not yet implemented, plus the 19 parked above.
+- 700 exports not yet implemented, plus the 31 parked above.
 - The `siguniv_window_*` dispatchers (11) call typed `sigdbl_window_*` exports, so they cannot link until those exist; they wait for their typed exports.
 - `matuniv_wrap_data` and `matuniv_wrap_matrix` dispatch through a jump table over a nine-case type enum, with different field copies per case.
 - The `add`/`subtract`/`multiply_elem` families (about 680 bytes each for `int` types) are auto-vectorized with runtime alias checks, so the source shape has to reproduce the vectorizer's output.
