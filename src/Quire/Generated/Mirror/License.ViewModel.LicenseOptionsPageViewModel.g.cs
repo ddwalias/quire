@@ -15,15 +15,6 @@ internal partial class LicenseOptionsPageViewModel : global::Quire.Controls.Core
     private static global::Quire.License.ILicenseManager _licenseManager;
     [global::Quire.Mirror.MirrorStub]
     private static bool _isLicenseDataModified;
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsLicenseDataModified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public LicenseOptionsPageViewModel(global::Quire.License.ILicenseManager licenseManager) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void LaunchLicenseWizard() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     [global::Quire.Mirror.MirrorOf("Spirit.License.ViewModel.LicenseOptionsPageViewModel+PropertyNames, MathcadPrime")]
     public static partial class PropertyNames
     {

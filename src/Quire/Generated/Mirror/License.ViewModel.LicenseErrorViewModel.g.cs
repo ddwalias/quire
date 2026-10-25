@@ -15,23 +15,6 @@ public partial class LicenseErrorViewModel : global::Quire.Controls.Core.ViewMod
     private readonly global::Quire.License.ILicenseManager _licenseManager;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Input.ICommand _activateLicenseCommand;
-    [global::Quire.Mirror.MirrorStub]
-    public static string UpgradeLicenseSiteUrl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasValidLicense { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<int> DaysLeft { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.License.LicenseType LicenseType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Input.ICommand ActivateLicenseCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public LicenseErrorViewModel() { }
-    [global::Quire.Mirror.MirrorStub]
-    private void LicensePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ActivateLicense(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     [global::Quire.Mirror.MirrorOf("Spirit.License.ViewModel.LicenseErrorViewModel+PropertyNames, MathcadPrime")]
     public static partial class PropertyNames
     {
