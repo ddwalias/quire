@@ -296,3 +296,11 @@
   - `ToggleRegionsDesignationCommand` (`_commandsToUndo`, `_commands`, `_name`, `Name`, `Execute`, `Do`, `Undo`, `Redo`, `.ctor(List<UndoableCommand>, string)`)
 - Report: `.mirror-cache/release-il-18c90a708eba/release-il.json` — PASS, 1,182 checked, 1,182 exact, 0 failures, 2,721 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 29 — IORegionCommands, ProtectionCommonBase
+
+- Scope:
+  - `IORegionCommands` (`_typeOfThis`, `ToggleInputRegion`, `ToggleOutputRegion`, `UpdateInputs`, `ToggleAnInputRegion`, `ToggleAnOutputRegion`, `.ctor`, `.cctor`)
+  - `ProtectionCommonBase` (`_model`, `_protectionData`, `_showWarningDialog`, `Unprotect`, `Protect`, `.ctor(IProtectableModel, Action<string>)`)
+- Report: `.mirror-cache/release-il-418b50720921/release-il.json` — PASS, 1,186 checked, 1,186 exact, 0 failures, 2,718 unfinished.
+- Remaining mismatches: none in claimed batch.

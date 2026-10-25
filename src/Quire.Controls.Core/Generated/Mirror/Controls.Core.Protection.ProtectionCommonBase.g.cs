@@ -11,16 +11,4 @@ namespace Quire.Controls.Core.Protection;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Protection.ProtectionCommonBase, Ptc.Controls.Core")]
 public abstract partial class ProtectionCommonBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.Controls.Core.Protection.IProtectableModel _model;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.ProtectionData _protectionData;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Action<string> _showWarningDialog;
-    [global::Quire.Mirror.MirrorStub]
-    protected ProtectionCommonBase(global::Quire.Controls.Core.Protection.IProtectableModel model, global::System.Action<string> showWarningDialog) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected void Unprotect() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void Protect() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
