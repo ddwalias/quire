@@ -15,9 +15,6 @@ public sealed partial class ApplicationVariant
     private static global::System.Nullable<bool> _isEngNbPlus;
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Nullable<bool> _isEngNb;
-    [global::Quire.Mirror.MirrorStub]
-    public static void ApplyIsEngNbVariants() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     [global::Quire.Mirror.MirrorOf("Ptc.Services.ApplicationVariant+ApplicationType, Ptc.Core")]
     public enum ApplicationType
     {

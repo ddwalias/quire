@@ -21,4 +21,15 @@ public partial class ApplicationVariant
         Instance = new ApplicationVariant();
         ApplyIsEngNbVariants();
     }
+
+    public static void ApplyIsEngNbVariants()
+    {
+        IsEngNbPlus = global::Quire.License.LicenseManager.Instance != null
+            && global::Quire.License.LicenseManager.Instance.IsEngNbPlus;
+        IsEngNb = global::Quire.License.LicenseManager.Instance != null
+            && global::Quire.License.LicenseManager.Instance.IsEngNb;
+        CurrentApplicationType = IsEngNbPlus == true
+            ? ApplicationType.EngNBPlus
+            : IsEngNb == true ? ApplicationType.EngNB : ApplicationType.MathcadOnPrem;
+    }
 }
