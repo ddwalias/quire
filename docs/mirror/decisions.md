@@ -281,6 +281,29 @@ about 40 `Attachment`-derived constructors. The user chose to let parked functio
 - **Scope:** only a function D25 parks may be marked. Exported functions need no entry, because a reference to an
   export already verifies by RVA. Their own rows stay failing or absent until a linked-DLL comparison exists.
 
+## D30: /GL native projects are compared as linked DLLs (2026-10-26)
+
+Lane H built `efistatsci_` with `/GL` and `/LTCG`, as Mathcad did (D25). The linked DLL reproduces register choices that
+no per-object flag does: the maintainer measured 50 of its 51 exports matching linked, against 44 per object. But a
+`/GL` object holds intermediate code, not machine code, so `native_bytes.py` cannot read it. The user adopted a linked
+mode, which supersedes D25's parking for functions that a `/GL` build reproduces:
+
+- **Mode:** a native project whose vcxproj sets `WholeProgramOptimization` is compared as a linked DLL by
+  `native_linked.py`. `native_gate.py` links it with `_LINK_=/MAP:…` and compares each export with the original's.
+  Other projects stay per object.
+- **Comparison:** the pinned toolset's `dumpbin /disasm` decodes both images. Instructions pair one to one: the same
+  lengths, mnemonics and operand text once image addresses are set aside, and the same bytes where no image address is
+  held. Each address is checked by what it refers to, with the per-object rules: local offsets, import names, export
+  names, manifest entries by the candidate's map name (toolchain and parked entries by name alone), other functions
+  recursively, and other data by the content of the candidate's map symbol, with pointers in data followed through
+  both images' base relocations. Anything else is unverified and fails strictly.
+- **Gate:** a new or changed export must pass, and removing a passing one fails. Link-time code generation sees the
+  whole program, so adding code can move an export nobody touched. An unchanged export that stops passing is reported
+  under `regressions` and does not block (user decision). When a project first switches to `/GL`, the base's
+  per-object rows are limited to the original's exports.
+- **Running it:** `python tools/validation/native_linked.py --original <dll> --candidate-dll <built dll> --map <map>`,
+  with the map from `_LINK_=/MAP:<path>` set for the build. Nothing of the original is written out (D15).
+
 ## Mapping and scope
 
 - **D1:** `Mcd` maps to `Quire.Mcd`.

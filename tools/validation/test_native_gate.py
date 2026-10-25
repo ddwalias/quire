@@ -7,7 +7,7 @@ import unittest
 from unittest import mock
 
 from native_bytes import Function, Reloc
-from native_gate import anonymous, compare, fingerprint, native_projects, original_dll, scan
+from native_gate import anonymous, compare, fingerprint, linked, native_projects, original_dll, scan
 from test_native_bytes import ManifestImage, coff
 
 
@@ -34,6 +34,14 @@ class CompareTests(unittest.TestCase):
         self.assertEqual(compare({'f': row()}, {})['failures'], [{'method': 'f', 'reason': 'function removed'}])
         self.assertTrue(compare({'f': row(ok=False)}, {})['passed'])
 
+    def test_linked_mode_reports_an_unchanged_regression_without_failing(self):
+        result = compare({'f': row(), 'g': row()}, {'f': row(ok=False), 'g': row()}, linked_mode=True)
+        self.assertTrue(result['passed'])
+        self.assertEqual([r['method'] for r in result['regressions']], ['f'])
+        # A changed export must still pass, and removing a passing one still fails.
+        self.assertFalse(compare({'f': row()}, {'f': row(ok=False, sha='b')}, linked_mode=True)['passed'])
+        self.assertFalse(compare({'f': row()}, {}, linked_mode=True)['passed'])
+
 
 class ProjectTests(unittest.TestCase):
     def setUp(self):
@@ -50,6 +58,15 @@ class ProjectTests(unittest.TestCase):
         (self.root / 'docs' / 'mirror' / 'assembly-map.json').write_text(json.dumps({'units': [
             {'name': 'Quire.Native.A', 'original': {'name': 'a', 'file': 'a.dll'}},
             {'name': 'Quire.Native.B', 'original': None}]}))
+
+    def test_a_project_building_with_whole_program_optimization_is_linked(self):
+        for flag, expected in (('true', True), ('false', False)):
+            project = self.root / 'src' / 'Quire.Native.Linked'
+            project.mkdir(parents=True, exist_ok=True)
+            (project / 'Quire.Native.Linked.vcxproj').write_text(
+                f'<Project><PropertyGroup><WholeProgramOptimization>{flag}</WholeProgramOptimization></PropertyGroup>'
+                '</Project>', encoding='utf-8')
+            self.assertEqual(linked(self.root, 'Quire.Native.Linked'), expected)
 
     def test_native_projects_have_a_vcxproj_and_no_csproj(self):
         self.assertEqual(native_projects(self.root), {'Quire.Native.A'})
