@@ -235,3 +235,10 @@
   - `ProtectCommand` (`_toggleDisplayState`, `_undoCommand`, `Name`, `Do`, `Undo`, `Redo`, `.ctor(IProtectableModel, ProtectionDialogState, Action, Action<string>)`)
 - Report: `.mirror-cache/release-il-047348fc6230/release-il.json` — PASS, 1,127 checked, 1,127 exact, 0 failures, 2,767 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 21 — MetadataSerializer
+
+- Scope:
+  - `MetadataSerializer` (`Serialize`, `Deserialize`, `CreateSchemas`, `FillInMetadataModel`, `FillInXmlMetadata`, `.ctor`)
+- Report: `.mirror-cache/release-il-52bcaf3b0a3d/release-il.json` — PASS, 1,129 checked, 1,129 exact, 0 failures, 2,765 unfinished.
+- Remaining mismatches: none in claimed batch.

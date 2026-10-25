@@ -11,14 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.MetadataSerializer, Ptc.Controls.Core")]
 public abstract partial class MetadataSerializer : global::Quire.Controls.Core.Serialization.IMetadataSerializer
 {
-    [global::Quire.Mirror.MirrorStub]
-    public void Serialize(global::Quire.Controls.Core.Serialization.IMetadataModel metadataModel, global::System.IO.TextWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Deserialize(global::System.IO.TextReader reader, global::Quire.Controls.Core.Serialization.IMetadataModel metadataModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract void CreateSchemas(global::System.Xml.XmlDocument xmlMetadata);
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract void FillInMetadataModel(global::System.Xml.XmlDocument xmlMetadata, global::Quire.Controls.Core.Serialization.IMetadataModel metadataModel);
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract void FillInXmlMetadata(global::System.Xml.XmlDocument xmlMetadata, global::Quire.Controls.Core.Serialization.IMetadataModel metadataModel);
 }
