@@ -32,6 +32,15 @@ struct _uint32_mat : typed_mat<unsigned int> {};
 struct _uint16_mat : typed_mat<unsigned short> {};
 struct _uint8_mat : typed_mat<unsigned char> {};
 
+// A matrix of any element type: the header of typed_mat, then the element type tag at +18h (7 = double).
+struct _univ_mat {
+    int rows;
+    int cols;
+    int size;
+    void *data;
+    int type;
+};
+
 struct _dcomplex {
     double re;
     double im;

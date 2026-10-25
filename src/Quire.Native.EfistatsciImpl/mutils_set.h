@@ -39,6 +39,7 @@ struct _pgn_chain {
     void *tail_;
 };
 
+EFI_EXPORT void matset_malloc(Efi::EfiCallContext *ctx, _mat_set *s, long count, const long *dims);
 EFI_EXPORT void matset_free(Efi::EfiCallContext *ctx, _mat_set *s);
 EFI_EXPORT void matset_free_matrices(Efi::EfiCallContext *ctx, _mat_set *s);
 EFI_EXPORT void matset_validate(const _mat_set *s);
