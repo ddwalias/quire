@@ -110,4 +110,184 @@ EFI_EXPORT void matu8_cast_to_u32(const _uint8_mat *src, void *context, _uint32_
     if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
 }
 
+EFI_EXPORT void matu16_cast_to_dbl(const _uint16_mat *src, void *context, _double_mat *dst) {
+    chk_s(src);
+    chk_d(dst);
+    if (src->rows != dst->rows || src->cols != dst->cols) Efi::Throw("array size mismatch", ~0ull);
+    int i = 0;
+    if (0 < src->size) {
+        do {
+            dst->data[i] = static_cast<double>(src->data[i]);
+            ++i;
+        } while (i < src->size);
+    }
+    double work = (double)src->size + (double)src->size;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+}
+
+EFI_EXPORT void matu16_cast_to_flt(const _uint16_mat *src, void *context, _float_mat *dst) {
+    chk_s(src);
+    chk_d(dst);
+    if (src->rows != dst->rows || src->cols != dst->cols) Efi::Throw("array size mismatch", ~0ull);
+    int i = 0;
+    if (0 < src->size) {
+        do {
+            dst->data[i] = static_cast<float>(src->data[i]);
+            ++i;
+        } while (i < src->size);
+    }
+    double work = (double)src->size + (double)src->size;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+}
+
+EFI_EXPORT void matu16_cast_to_s32(const _uint16_mat *src, void *context, _sint32_mat *dst) {
+    chk_s(src);
+    chk_d(dst);
+    if (src->rows != dst->rows || src->cols != dst->cols) Efi::Throw("array size mismatch", ~0ull);
+    int i = 0;
+    if (0 < src->size) {
+        do {
+            dst->data[i] = static_cast<long>(src->data[i]);
+            ++i;
+        } while (i < src->size);
+    }
+    double work = (double)src->size + (double)src->size;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+}
+
+EFI_EXPORT void matu16_cast_to_u32(const _uint16_mat *src, void *context, _uint32_mat *dst) {
+    chk_s(src);
+    chk_d(dst);
+    if (src->rows != dst->rows || src->cols != dst->cols) Efi::Throw("array size mismatch", ~0ull);
+    int i = 0;
+    if (0 < src->size) {
+        do {
+            dst->data[i] = static_cast<unsigned int>(src->data[i]);
+            ++i;
+        } while (i < src->size);
+    }
+    double work = (double)src->size + (double)src->size;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+}
+
+EFI_EXPORT void mats16_cast_to_dbl(const _sint16_mat *src, void *context, _double_mat *dst) {
+    chk_s(src);
+    chk_d(dst);
+    if (src->rows != dst->rows || src->cols != dst->cols) Efi::Throw("array size mismatch", ~0ull);
+    int i = 0;
+    if (0 < src->size) {
+        do {
+            dst->data[i] = static_cast<double>(src->data[i]);
+            ++i;
+        } while (i < src->size);
+    }
+    double work = (double)src->size + (double)src->size;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+}
+
+EFI_EXPORT void mats16_cast_to_flt(const _sint16_mat *src, void *context, _float_mat *dst) {
+    chk_s(src);
+    chk_d(dst);
+    if (src->rows != dst->rows || src->cols != dst->cols) Efi::Throw("array size mismatch", ~0ull);
+    int i = 0;
+    if (0 < src->size) {
+        do {
+            dst->data[i] = static_cast<float>(src->data[i]);
+            ++i;
+        } while (i < src->size);
+    }
+    double work = (double)src->size + (double)src->size;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+}
+
+EFI_EXPORT void mats16_cast_to_s32(const _sint16_mat *src, void *context, _sint32_mat *dst) {
+    chk_s(src);
+    chk_d(dst);
+    if (src->rows != dst->rows || src->cols != dst->cols) Efi::Throw("array size mismatch", ~0ull);
+    int i = 0;
+    if (0 < src->size) {
+        do {
+            dst->data[i] = static_cast<long>(src->data[i]);
+            ++i;
+        } while (i < src->size);
+    }
+    double work = (double)src->size + (double)src->size;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+}
+
+EFI_EXPORT void matflt_cast_to_dbl(const _float_mat *src, void *context, _double_mat *dst) {
+    chk_s(src);
+    chk_d(dst);
+    if (src->rows != dst->rows || src->cols != dst->cols) Efi::Throw("array size mismatch", ~0ull);
+    int i = 0;
+    if (0 < src->size) {
+        do {
+            dst->data[i] = static_cast<double>(src->data[i]);
+            ++i;
+        } while (i < src->size);
+    }
+    double work = (double)src->size + (double)src->size;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+}
+
+EFI_EXPORT void matu32_cast_to_dbl(const _uint32_mat *src, void *context, _double_mat *dst) {
+    chk_s(src);
+    chk_d(dst);
+    if (src->rows != dst->rows || src->cols != dst->cols) Efi::Throw("array size mismatch", ~0ull);
+    int i = 0;
+    if (0 < src->size) {
+        do {
+            dst->data[i] = static_cast<double>(src->data[i]);
+            ++i;
+        } while (i < src->size);
+    }
+    double work = (double)src->size + (double)src->size;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+}
+
+EFI_EXPORT void matu32_cast_to_flt(const _uint32_mat *src, void *context, _float_mat *dst) {
+    chk_s(src);
+    chk_d(dst);
+    if (src->rows != dst->rows || src->cols != dst->cols) Efi::Throw("array size mismatch", ~0ull);
+    int i = 0;
+    if (0 < src->size) {
+        do {
+            dst->data[i] = static_cast<float>(src->data[i]);
+            ++i;
+        } while (i < src->size);
+    }
+    double work = (double)src->size + (double)src->size;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+}
+
+EFI_EXPORT void mats32_cast_to_dbl(const _sint32_mat *src, void *context, _double_mat *dst) {
+    chk_s(src);
+    chk_d(dst);
+    if (src->rows != dst->rows || src->cols != dst->cols) Efi::Throw("array size mismatch", ~0ull);
+    int i = 0;
+    if (0 < src->size) {
+        do {
+            dst->data[i] = static_cast<double>(src->data[i]);
+            ++i;
+        } while (i < src->size);
+    }
+    double work = (double)src->size + (double)src->size;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+}
+
+EFI_EXPORT void mats32_cast_to_flt(const _sint32_mat *src, void *context, _float_mat *dst) {
+    chk_s(src);
+    chk_d(dst);
+    if (src->rows != dst->rows || src->cols != dst->cols) Efi::Throw("array size mismatch", ~0ull);
+    int i = 0;
+    if (0 < src->size) {
+        do {
+            dst->data[i] = static_cast<float>(src->data[i]);
+            ++i;
+        } while (i < src->size);
+    }
+    double work = (double)src->size + (double)src->size;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+}
+
 }  // namespace mutils
