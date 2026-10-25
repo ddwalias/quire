@@ -42,4 +42,40 @@ public sealed partial class LicenseManager
 
         return isValidFileName;
     }
+
+    [global::System.Runtime.ExceptionServices.HandleProcessCorruptedStateExceptions]
+    private bool IsValidLicense()
+    {
+        try
+        {
+            return _provider.HasLicense(_licenseSource);
+        }
+        catch (global::System.Exception exception)
+        {
+            global::Quire.DebugTools.DevAssert(
+                exception is global::System.AccessViolationException,
+                "Exception of unknown type occured in license validation.");
+            OnDisplayLicenseMessage(new LicenseCbArgs(LicenseMessageName.LicenseRequestFailedE, null, null));
+            return false;
+        }
+    }
+
+    public bool SetLicenseSourceList(string licenseSourceList)
+    {
+        if (!global::System.String.IsNullOrWhiteSpace(licenseSourceList))
+        {
+            licenseSourceList = licenseSourceList.Trim();
+            if (licenseSourceList.Split(semicolon, global::System.StringSplitOptions.RemoveEmptyEntries)
+                .All(source => validServerPortRegex.IsMatch(source) || global::System.IO.File.Exists(source)))
+            {
+                ClearLicenseProperties();
+                _licenseSource.SourceList = licenseSourceList;
+                UpdateLicenseStatus();
+                return true;
+            }
+        }
+
+        OnDisplayLicenseMessage(new LicenseCbArgs(LicenseMessageName.ApplyInvalidInputE, null, null));
+        return false;
+    }
 }
