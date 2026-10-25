@@ -12,35 +12,9 @@ namespace Quire.Wpf;
 public static partial class WpfUtils
 {
     [global::Quire.Mirror.MirrorStub]
-    public const int NumOfMeaningfulDigitsInDip = 5;
-    [global::Quire.Mirror.MirrorStub]
-    public const double LayoutEpsilon = 1E-05d;
-    [global::Quire.Mirror.MirrorStub]
-    public const double DipsPerInch = 96d;
-    [global::Quire.Mirror.MirrorStub]
-    public const double DipsPerCm = 37.79527559055118d;
-    [global::Quire.Mirror.MirrorStub]
-    public const double PointsPerInch = 72d;
-    [global::Quire.Mirror.MirrorStub]
-    public const double HimetricPerCm = 1000d;
-    [global::Quire.Mirror.MirrorStub]
-    public const double OneScrollLineSize = 16d;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly int MouseWheelScrollDelta;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly int MouseScrollDeltaForTouchPad;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Size SizeInfinity;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Nullable<bool> _eastAsianLanguagesInstalled;
-    [global::Quire.Mirror.MirrorStub]
-    public const string ApplicationAcademicNameResourceKey = "Application.AcademicNameAndVersion";
-    [global::Quire.Mirror.MirrorStub]
     public const string ApplicationExpressNameResourceKey = "Application.ExpressVersionName";
     [global::Quire.Mirror.MirrorStub]
     public const string WaitToPrintoutReadyKey = "WaitToPrintoutReadyQuestionMessage";
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IList<string> DumpLogicalTreeLines(object root) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<T> GetVisualDescendantsBreadthFirstOfType<T>(this global::System.Windows.DependencyObject dependencyObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
