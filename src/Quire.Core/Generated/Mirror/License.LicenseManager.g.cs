@@ -80,13 +80,9 @@ public sealed partial class LicenseManager : global::System.ComponentModel.INoti
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IList<string> GetLicenseHashCodesFromText(string licenseText) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IList<string> GetLicenseHashCodesFromFile(string filePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.License.LicenseType DetermineLicenseType(bool hasValidLicense) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void LaunchExternalLicenseProcess(string relativePath, string args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnDisplayLicenseMessage(global::Quire.License.LicenseCbArgs cbArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.License.LicenseManager+PropertyNames, Ptc.Core")]
     public static partial class PropertyNames
