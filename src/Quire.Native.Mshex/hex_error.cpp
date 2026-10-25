@@ -2,6 +2,12 @@
 
 namespace Hex {
 
+Error::Error() {}
+
+Error::Error(unsigned int code) : code_(code) {}
+
+Error::Error(unsigned int code, Tag const &tag) : tag_(tag), code_(code) {}
+
 Tag Error::GetTag() const {
     return tag_;
 }
@@ -20,6 +26,11 @@ std::uint64_t Error::GetExtent() const {
 
 std::uint32_t Error::GetHandle() const {
     return tag_.GetHandle();
+}
+
+Substring<char const> Error::GetDetails() const {
+    char const *begin = details_.data();
+    return Substring<char const>(begin, begin + details_.size());
 }
 
 }  // namespace Hex

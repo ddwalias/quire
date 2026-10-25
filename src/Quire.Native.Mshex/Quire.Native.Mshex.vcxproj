@@ -37,7 +37,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <PreprocessorDefinitions>_CRTIMP2=__declspec(dllimport);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -67,6 +68,7 @@
     <ClInclude Include="hex_default_environment.h" />
     <ClInclude Include="hex_lexer.h" />
     <ClInclude Include="hex_interpreter.h" />
+    <ClInclude Include="hex_substring.h" />
     <ClCompile Include="hex_tag.cpp" />
     <ClCompile Include="hex_token.cpp" />
     <ClCompile Include="hex_node.cpp" />
