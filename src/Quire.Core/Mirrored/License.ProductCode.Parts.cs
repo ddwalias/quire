@@ -58,8 +58,6 @@ public partial class ProductCode
         set => _part3 = value.ToUpperInvariant();
     }
 
-    public override string ToString() => string.Join("-", _part1, _part2, _part3);
-
     private static string SubstringHelper(string value, int start, int length)
     {
         start = global::System.Math.Min(value.Length, start);
