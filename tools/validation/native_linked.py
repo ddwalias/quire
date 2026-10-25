@@ -20,8 +20,13 @@ relocations:
   entry is compared as below, and a data entry over its size;
 - any other function of the original: the candidate's target must be a function whose instructions compare equal,
   recursively (a cycle verifies);
-- any other data: the candidate's target must start a map symbol, and the original's bytes over that symbol's extent
-  must equal the candidate's. A pointer inside data (a base relocation on both sides) is checked as a target in turn.
+- any other data: the candidate's target must start a map symbol. The bytes are compared over the longer of that
+  symbol's extent and the original object's, which ends at the next address the original's code or pointers refer
+  to. A pointer inside data (a base relocation on both sides) is checked as a target in turn.
+
+An instruction that holds an image address is compared byte for byte with only that address's field masked; a field
+that cannot be located fails. A function whose start the whole-image decode does not reach as an instruction boundary
+(data in .text before it) is decoded again on its own with `dumpbin /range`.
 
 A target that none of these rules settles is unverified, and fails the export unless --allow-unverified is given.
 Comparisons read bytes in memory; nothing of the original is written out (D15).
@@ -52,12 +57,15 @@ def dumpbin():
     return found[-1]
 
 
-def disassemble(dll, tool=None):
-    """RVA -> (mnemonic, operand text) for every instruction dumpbin decodes in `dll`."""
-    image = PeImage(dll)
-    text = subprocess.run([str(tool or dumpbin()), "/nologo", "/disasm:nobytes", str(dll)], capture_output=True,
-                          text=True, check=True).stdout
-    return parse_disassembly(text, image.image_base)
+def disassemble(dll, tool=None, span=None, image_base=None):
+    """RVA -> (mnemonic, operand text) for every instruction dumpbin decodes in `dll`, or in the RVA `span`."""
+    base = image_base if image_base is not None else PeImage(dll).image_base
+    command = [str(tool or dumpbin()), "/nologo", "/disasm:nobytes"]
+    if span:
+        command.append(f"/range:{base + span[0]:#x},{base + span[1]:#x}")
+    text = subprocess.run([*command, str(dll)], capture_output=True, text=True, check=True).stdout
+    out = parse_disassembly(text, base)
+    return {rva: ins for rva, ins in out.items() if span[0] <= rva < span[1]} if span else out
 
 
 def parse_disassembly(text, image_base):
@@ -113,6 +121,7 @@ class Linked:
     instructions: dict  # RVA -> (mnemonic, operands)
     names: dict = field(default_factory=dict)  # RVA -> {anonymous decorated names} (exports and map symbols)
     relocations: set = field(default_factory=set)
+    decoder: object = None  # (begin, end) -> instructions decoded from `begin`; None fails closed
 
     def __post_init__(self):
         self.addresses = sorted(self.instructions)
@@ -126,17 +135,64 @@ class Linked:
     def load(cls, dll, map_text=None, tool=None):
         image = PeImage(dll)
         by_rva = parse_map(map_text)[1] if map_text else {}
-        return cls(image, disassemble(dll, tool), by_rva, base_relocations(image))
+        tool = tool or dumpbin()
+        decoder = lambda begin, end: disassemble(dll, tool, (begin, end), image.image_base)
+        return cls(image, disassemble(dll, tool, None, image.image_base), by_rva, base_relocations(image), decoder)
 
     def body(self, begin, end):
-        """[(rva, length, mnemonic, operands)] of the instructions in [begin, end)."""
-        i, j = bisect.bisect_left(self.addresses, begin), bisect.bisect_left(self.addresses, end)
+        """[(rva, length, mnemonic, operands)] of the instructions in [begin, end), decoded from `begin`, or None when
+        `begin` is not an instruction boundary and no decoder can decode from it."""
+        if begin in self.instructions:
+            instructions, addresses = self.instructions, self.addresses
+        elif self.decoder is not None:
+            instructions = self.decoder(begin, end)
+            addresses = sorted(instructions)
+            if not addresses or addresses[0] != begin:
+                return None
+        else:
+            return None
+        i, j = bisect.bisect_left(addresses, begin), bisect.bisect_left(addresses, end)
         rows = []
         for k in range(i, j):
-            rva = self.addresses[k]
-            nxt = self.addresses[k + 1] if k + 1 < len(self.addresses) else end
-            rows.append((rva, min(nxt, end) - rva, *self.instructions[rva]))
+            rva = addresses[k]
+            nxt = addresses[k + 1] if k + 1 < len(addresses) else end
+            rows.append((rva, min(nxt, end) - rva, *instructions[rva]))
         return rows
+
+    def boundaries(self):
+        """Sorted RVAs that something in the image refers to: instruction operands, pointers, exports, symbols."""
+        if not hasattr(self, "_boundaries"):
+            found = set(self.image.exports.values()) | set(self.names)
+            for _, operands in self.instructions.values():
+                found.update(a for a in map(self.address, ADDRESS.findall(operands)) if a is not None)
+            for at in self.relocations:
+                if self.image.contains(at, 8):
+                    target = struct.unpack("<Q", self.image.read(at, 8))[0] - self.image.image_base
+                    if 0 <= target < self.size:
+                        found.add(target)
+            self._boundaries = sorted(found)
+        return self._boundaries
+
+    def object_end(self, rva):
+        """Where the object at `rva` ends: the next referenced address, within its section."""
+        bounds = self.boundaries()
+        k = bisect.bisect_right(bounds, rva)
+        end = bounds[k] if k < len(bounds) else self.size
+        for va, vsize, _, raw in self.image.sections:
+            if va <= rva < va + max(vsize, raw):
+                end = min(end, va + max(vsize, raw))
+        return end
+
+    def label(self, rva):
+        """A name for `rva`: an import, an export or map symbol, or the nearest preceding symbol plus an offset."""
+        name = Comparison.imported(self, rva) or sorted(self.exports_at.get(rva) or self.names.get(rva) or {""})[0]
+        if name:
+            return name
+        k = bisect.bisect_right(self.starts, rva) - 1
+        if k >= 0:
+            start = self.starts[k]
+            return f"{sorted(self.names[start])[0]}+{rva - start:#x}"
+        return f"{rva:#x}"
 
     def address(self, token):
         """The RVA an operand's 16-digit hex token names when it lies in the image, else None."""
@@ -170,6 +226,7 @@ class Comparison:
         if name not in self.o.image.exports:
             return Result(name, False, "not an export of the original")
         ao, ac = self.o.image.exports[name], self.c.image.exports[name]
+        self.memo = {}  # a result assumed while a cycle was open must not reach another export
         if not self.o.executable(ao):
             status, reason, unverified = self.data(ao, ac, self.c.symbol_extent(ac))
         else:
@@ -192,9 +249,11 @@ class Comparison:
         return result
 
     def instructions(self, eo, ec):
-        bo, bc = self.o.body(*eo), self.c.body(*ec)
         if eo[1] - eo[0] != ec[1] - ec[0]:
             return "mismatch", f"length {ec[1] - ec[0]} != original {eo[1] - eo[0]}", 0
+        bo, bc = self.o.body(*eo), self.c.body(*ec)
+        if bo is None or bc is None:
+            return "mismatch", "cannot decode from the function's start", 0
         if len(bo) != len(bc):
             return "mismatch", f"{len(bc)} instructions != original {len(bo)}", 0
         unverified = 0
@@ -206,7 +265,14 @@ class Comparison:
             tc = [a for a in map(self.c.address, ADDRESS.findall(pc)) if a is not None]
             if len(to) != len(tc):
                 return "mismatch", f"{at}: image addresses differ in number", 0
-            if not to and self.o.image.read(ro, lo) != self.c.image.read(rc, lc):
+            xo, xc = self.o.image.read(ro, lo), self.c.image.read(rc, lc)
+            if to:
+                mo, mc = address_fields(xo, ro, to, self.o.image.image_base), \
+                    address_fields(xc, rc, tc, self.c.image.image_base)
+                if mo is None or mc is None:
+                    return "mismatch", f"{at}: cannot locate the address field of {mc_text(mo, pc, po)}", 0
+                xo, xc = masked_bytes(xo, mo | mc), masked_bytes(xc, mo | mc)
+            if xo != xc:
                 return "mismatch", f"{at}: bytes differ", 0
             for ao, ac in zip(to, tc):
                 status, reason, n = self.target(ao, ac, eo, ec)
@@ -241,7 +307,8 @@ class Comparison:
                 return self.function(ao, ac)
             return "unverified", None, 1
         if not o.executable(ao) and not c.executable(ac) and ac in c.names:
-            return self.data(ao, ac, c.symbol_extent(ac))
+            begin, end = c.symbol_extent(ac)
+            return self.data(ao, ac, (begin, max(end, begin + o.object_end(ao) - ao)))
         return "unverified", None, 1
 
     @staticmethod
@@ -260,6 +327,8 @@ class Comparison:
         size = extent[1] - extent[0]
         if size <= 0 or not self.o.image.contains(ao, size):
             result = ("mismatch", f"{size} bytes at original RVA {ao:#x} are not in a section", 0)
+        elif not self.c.image.contains(ac, size):
+            result = ("mismatch", f"the candidate's data at RVA {ac:#x} is shorter than the original's {size} bytes", 0)
         else:
             result = self.data_bytes(ao, ac, size)
         self.memo[key] = result
@@ -287,6 +356,38 @@ class Comparison:
         return verdict(unverified)
 
 
+def address_fields(code, rva, targets, image_base):
+    """Byte offsets of the fields in the instruction `code` at `rva` that hold `targets`: a rel32 displacement relative
+    to the instruction's end, an absolute 64-bit address, or a short branch's rel8 (its last byte). None when a
+    target's field cannot be located."""
+    end, out = rva + len(code), set()
+    for target in targets:
+        found = None
+        for k in range(len(code) - 4, -1, -1):
+            if struct.unpack_from("<i", code, k)[0] == target - end:
+                found = range(k, k + 4)
+                break
+        if found is None:
+            for k in range(len(code) - 8, -1, -1):
+                if struct.unpack_from("<Q", code, k)[0] == image_base + target:
+                    found = range(k, k + 8)
+                    break
+        if found is None and len(code) >= 2 and struct.unpack_from("<b", code, len(code) - 1)[0] == target - end:
+            found = range(len(code) - 1, len(code))  # a short branch's rel8, always its last byte
+        if found is None:
+            return None
+        out.update(found)
+    return out
+
+
+def masked_bytes(code, positions):
+    return bytes(0 if k in positions else b for k, b in enumerate(code))
+
+
+def mc_text(found, candidate, original):
+    return f"original {original}" if found is None else f"candidate {candidate}"
+
+
 def verdict(unverified):
     """(status, reason, unverified count) once every instruction or pointer matched."""
     return ("unverified", f"{unverified} unverified targets", unverified) if unverified else ("ok", None, 0)
@@ -308,19 +409,22 @@ def compare_linked(original_dll, candidate_dll, map_text, targets=None, symbols=
 
 
 def fingerprint_text(candidate, name):
-    """The candidate export's instructions with image addresses replaced by what they name, for change detection."""
-    begin, end = candidate.image.function_extent(candidate.image.exports[name]) or (0, 0)
+    """The candidate export's instructions with image addresses replaced by what they name, for change detection. A
+    data export, or one without a function extent, is its bytes over its symbol's extent."""
+    rva = candidate.image.exports[name]
+    extent = candidate.image.function_extent(rva) if candidate.executable(rva) else None
+    rows = candidate.body(*extent) if extent else None
+    if rows is None:
+        begin, end = candidate.symbol_extent(rva)
+        return f"bytes {candidate.image.read(begin, end - begin).hex()}"
+    begin, end = extent
     out = []
-    for rva, length, mnemonic, operands in candidate.body(begin, end):
+    for at, length, mnemonic, operands in rows:
         def named(m):
             a = candidate.address(m.group(1))
             if a is None:
                 return m.group(0)
-            if begin <= a < end:
-                return f"+{a - begin:#x}"
-            label = Comparison.imported(candidate, a) or sorted(candidate.exports_at.get(a) or candidate.names.get(a)
-                                                                 or {"?"})[0]
-            return label
+            return f"+{a - begin:#x}" if begin <= a < end else candidate.label(a)
         out.append(f"{mnemonic} {ADDRESS.sub(named, operands)}")
     return anonymous("\n".join(out))
 

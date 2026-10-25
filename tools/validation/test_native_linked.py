@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 
 from native_bytes import Entry
-from native_linked import Comparison, Linked, parse_disassembly, parse_map
+from native_linked import ADDRESS, Comparison, Linked, parse_disassembly, parse_map
 
 BASE = 0x180000000
 
@@ -42,13 +42,33 @@ def caller(target, mnemonic="call"):
     return {0x1000: (mnemonic, at(target)), 0x1005: ("ret", "")}
 
 
-class LinkedTests(unittest.TestCase):
+def encode(memory, ins):
+    """Write each address-holding instruction's field as a linker would: rel32 in its last 4 bytes, or a short
+    branch's rel8 in its last byte. Other bytes keep what the test put there."""
+    addresses = sorted(ins)
+    for k, rva in enumerate(addresses):
+        end = addresses[k + 1] if k + 1 < len(addresses) else rva + 1
+        for token in ADDRESS.findall(ins[rva][1]):
+            target = int(token, 16) - BASE
+            if end - rva >= 5:
+                struct.pack_into("<i", memory, end - 4, target - end)
+            else:
+                struct.pack_into("<b", memory, end - 1, target - end)
+    return memory
+
+
+class Pairing:
     def pair(self, o_ins, c_ins, o_functions, c_functions, o_names=None, c_names=None, entries=None, **kw):
-        o = Linked(Image(o_functions, kw.get("o_exports", {"f": 0x1000}), kw.get("o_imports"), kw.get("o_memory")),
+        mo = encode(kw.get("o_memory") if kw.get("o_memory") is not None else bytearray(0x3000), o_ins)
+        mc = encode(kw.get("c_memory") if kw.get("c_memory") is not None else bytearray(0x3000), c_ins)
+        o = Linked(Image(o_functions, kw.get("o_exports", {"f": 0x1000}), kw.get("o_imports"), mo),
                    o_ins, o_names or {}, kw.get("o_relocs", set()))
-        c = Linked(Image(c_functions, kw.get("c_exports", {"f": 0x1000}), kw.get("c_imports"), kw.get("c_memory")),
+        c = Linked(Image(c_functions, kw.get("c_exports", {"f": 0x1000}), kw.get("c_imports"), mc),
                    c_ins, c_names or {}, kw.get("c_relocs", set()))
         return Comparison(o, c, entries or {}).export("f")
+
+
+class LinkedTests(Pairing, unittest.TestCase):
 
     def test_same_instructions_and_a_call_to_the_same_export_match(self):
         ins = {**caller(0x1100), 0x1100: ("ret", "")}
@@ -107,11 +127,23 @@ class LinkedTests(unittest.TestCase):
         mo[0x2100:0x2105] = mc[0x2200:0x2205] = b"null\0"
         names = {0x2200: {"??_C@_05null@"}, 0x2205: {"next"}}
         functions = {0x1000: 0x1008}
-        ok = self.pair(o, c, functions, functions, c_names=names, o_memory=mo, c_memory=mc)
+        bound = {0x2105: {"next"}}  # the original's object ends where its next referenced address starts
+        ok = self.pair(o, c, functions, functions, o_names=bound, c_names=names, o_memory=mo, c_memory=mc)
         self.assertTrue(ok.ok, ok.reason)
         mc[0x2201] = ord("x")
-        self.assertIn("bytes differ", self.pair(o, c, functions, functions, c_names=names, o_memory=mo,
-                                                c_memory=mc).reason)
+        self.assertIn("bytes differ", self.pair(o, c, functions, functions, o_names=bound, c_names=names,
+                                                o_memory=mo, c_memory=mc).reason)
+
+    def test_data_shorter_than_the_original_object_is_a_mismatch(self):
+        # The original's table runs 16 bytes; the candidate's symbol holds the first 8, then another object.
+        o = {0x1000: ("lea", f"rcx,[{at(0x2100)}h]"), 0x1007: ("ret", "")}
+        c = {0x1000: ("lea", f"rcx,[{at(0x2200)}h]"), 0x1007: ("ret", "")}
+        mo, mc = bytearray(0x3000), bytearray(0x3000)
+        mo[0x2100:0x2110] = bytes(range(1, 17))
+        mc[0x2200:0x2208] = bytes(range(1, 9))
+        r = self.pair(o, c, {0x1000: 0x1008}, {0x1000: 0x1008}, o_names={0x2110: {"next"}},
+                      c_names={0x2200: {"table"}, 0x2208: {"other"}}, o_memory=mo, c_memory=mc)
+        self.assertIn("data +0x8: bytes differ", r.reason)
 
     def test_a_pointer_in_data_is_checked_as_a_target(self):
         o = {0x1000: ("lea", f"rcx,[{at(0x2100)}h]"), 0x1007: ("ret", ""), 0x1100: ("ret", "")}
@@ -140,6 +172,65 @@ class LinkedTests(unittest.TestCase):
         functions = {0x1000: 0x1005}
         self.assertTrue(self.pair(o, o, functions, functions).ok)
         self.assertIn("local target differs", self.pair(o, c, functions, functions).reason)
+
+
+class ReviewRegressionTests(Pairing, unittest.TestCase):
+    """Holes the D30 review found; each must stay closed."""
+
+    def test_a_cycle_assumption_does_not_reach_another_export(self):
+        # e1 calls F, e2 calls G; F and G call each other; F's last instruction differs. Both exports must fail,
+        # whichever is compared first.
+        def image(last):
+            return {0x1000: ("call", at(0x1100)), 0x1005: ("ret", ""),
+                    0x1010: ("call", at(0x1200)), 0x1015: ("ret", ""),
+                    0x1100: ("call", at(0x1200)), 0x1105: ("ret", last),
+                    0x1200: ("call", at(0x1100)), 0x1205: ("ret", "")}
+        functions = {0x1000: 0x1006, 0x1010: 0x1016, 0x1100: 0x1106, 0x1200: 0x1206}
+        exports = {"e1": 0x1000, "e2": 0x1010}
+        o_ins, c_ins = image(""), image("8")
+        mo, mc = encode(bytearray(0x3000), o_ins), encode(bytearray(0x3000), c_ins)
+        for order in (["e1", "e2"], ["e2", "e1"]):
+            comparison = Comparison(Linked(Image(functions, exports, None, mo), o_ins),
+                                    Linked(Image(functions, exports, None, mc), c_ins), {})
+            results = {n: comparison.export(n) for n in order}
+            self.assertEqual([results[n].ok for n in order], [False, False], order)
+
+    def test_a_start_the_decode_does_not_reach_fails_without_a_decoder(self):
+        # The whole-image decode swallowed 0x1000 into a preceding instruction; it resumes at 0x1001.
+        o = {0x1000: ("ret", "")}
+        c = {0x0FFF: ("add", "byte ptr [rax],al"), 0x1001: ("ret", "")}
+        functions = {0x1000: 0x1002}
+        r = self.pair(o, c, functions, functions)
+        self.assertIn("cannot decode from the function's start", r.reason)
+
+    def test_a_start_the_decode_does_not_reach_is_decoded_again_on_its_own(self):
+        o_ins = {0x1000: ("ret", "")}
+        c_ins = {0x0FFF: ("add", "byte ptr [rax],al"), 0x1001: ("ret", "")}
+        functions = {0x1000: 0x1001}
+        mo, mc = bytearray(0x3000), bytearray(0x3000)
+        mo[0x1000] = mc[0x1000] = 0xC3
+        candidate = Linked(Image(functions, {"f": 0x1000}, None, mc), c_ins,
+                           decoder=lambda begin, end: {0x1000: ("ret", "")})
+        r = Comparison(Linked(Image(functions, {"f": 0x1000}, None, mo), o_ins), candidate, {}).export("f")
+        self.assertTrue(r.ok, r.reason)
+
+    def test_an_encoding_difference_beside_an_address_field_is_a_mismatch(self):
+        ins = {**caller(0x1100), 0x1100: ("ret", "")}
+        exports = {"f": 0x1000, "g": 0x1100}
+        functions = {0x1000: 0x1006, 0x1100: 0x1101}
+        mo, mc = bytearray(0x3000), bytearray(0x3000)
+        mo[0x1000], mc[0x1000] = 0xE8, 0x2E  # same text, a different opcode byte before the rel32
+        r = self.pair(ins, ins, functions, functions, o_exports=exports, c_exports=exports, o_memory=mo, c_memory=mc)
+        self.assertIn("bytes differ", r.reason)
+
+    def test_fingerprints_name_unnamed_addresses_by_symbol_and_offset(self):
+        from native_linked import fingerprint_text
+        def fingerprint(offset):
+            ins = {0x1000: ("lea", f"rcx,[{at(0x2100 + offset)}h]"), 0x1007: ("ret", "")}
+            linked = Linked(Image({0x1000: 0x1008}, {"f": 0x1000}), ins, {0x2100: {"arr"}})
+            return fingerprint_text(linked, "f")
+        self.assertIn("arr+0x4", fingerprint(4))
+        self.assertNotEqual(fingerprint(4), fingerprint(8))
 
 
 class ParseTests(unittest.TestCase):
