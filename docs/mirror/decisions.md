@@ -229,6 +229,31 @@ D15 is unchanged. This repository is public, so original binaries, decompiled so
 the native manifest still holds names, RVAs and sizes only. Without D19, an exact match shows only that the build
 output equals the original. It no longer shows that Quire's source alone reproduces it.
 
+## D28: native builds use /EHa and dllimport for msvcp140 (2026-10-25)
+
+The maintainer investigated the shapes Lanes J and K could not reproduce, and the user adopted the rule below. Two build
+settings explain most of them:
+
+- **`/EHa`.** All four native originals spill `this` to `[rsp+8]` (`mshex` 73 sites, `utl` 89, `efistatsci_` 56,
+  `mspcons` 4), which `/EHa` produces and `/EHsc` does not. With `/EHa`, `mshex`'s three `Error` constructors match
+  without other changes. Lane J's "extra `std::string` byte store" was a misreading: the original has that store too.
+  Lane K already builds with `/EHa`.
+- **`_CRTIMP2=__declspec(dllimport)`.** The original calls msvcp140 functions such as `std::uncaught_exception`
+  through `call [__imp_...]`. The pinned headers declare them without `dllimport`, so the candidate calls a thunk
+  (`E8`, one byte shorter). With `/EHa` and `/D_CRTIMP2=__declspec(dllimport)`, `mspcons`'s `operator<<` instances
+  at `0x1520` (446 bytes) and `0x16E0` (458 bytes) match. D26 parked both, and through them `pstring::write`,
+  `write_raw`, `tagged::write` and `notag`.
+- **No regressions.** With both settings, all exports that already match still match: `mshex` 77, `mspcons` 28,
+  `utl` 34, `efistatsci_` 8, and the `efistatsci_` `assign_scalar` trial 5/5.
+- **Source shapes, not flags**, for the remaining Lane K parks: `BoostThreadPriority` and `RestoreThreadPriority`
+  match as `return !SetPriorityClass(...) && !SetThreadPriority(...);`. `RestoreThreadPriority`'s two globals are
+  zero in the original, so declare them without initializers. `GetStdDev` matches when the mean comes from
+  `GetAverage()` before the scale is computed, with `samples` a `std::vector<double>`. `mcGetSetting` stays parked:
+  eight further forms gave 251–284 bytes against 297.
+
+Rule: every native project builds with `/EHa` and `_CRTIMP2=__declspec(dllimport)`. Re-test functions parked under
+D25/D26 with these settings before treating them as linker-generated.
+
 ## Mapping and scope
 
 - **D1:** `Mcd` maps to `Quire.Mcd`.
