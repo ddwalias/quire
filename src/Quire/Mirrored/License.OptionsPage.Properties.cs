@@ -51,4 +51,76 @@ public partial class LicenseOptionsPage
         InitConfiguration();
         base.EndInit();
     }
+
+    private void SetIsLicenseDataModified(bool value)
+    {
+        ViewModel.IsLicenseDataModified = value;
+    }
+
+    private void InitConfiguration()
+    {
+        SetIsLicenseDataModified(false);
+        UpdateDataFromLicenseManager();
+    }
+
+    private void UpdateDataFromLicenseManager()
+    {
+        if (LicenseManager != null)
+        {
+            LicenseServerAddress = LicenseManager.LicenseSourceInfo.Host;
+            LicenseServerPort = LicenseManager.LicenseSourceInfo.Port.ToString();
+            LicenseFilePath = LicenseManager.LicenseSourceInfo.FilePath;
+            LicenseURIType = LicenseManager.LicenseSourceInfo.Type;
+            LicenseSourceList = LicenseManager.LicenseSourceInfo.SourceList;
+        }
+    }
+
+    private void ConnectViewModel()
+    {
+        ViewModel = new global::Quire.License.ViewModel.LicenseOptionsPageViewModel(LicenseManager);
+    }
+
+    public void InitializeComponent()
+    {
+        if (_contentLoaded)
+        {
+            return;
+        }
+
+        _contentLoaded = true;
+        global::System.Uri resourceLocator = new(
+            "/Quire;component/license/licenseoptionspage.xaml",
+            global::System.UriKind.Relative);
+        global::System.Windows.Application.LoadComponent(this, resourceLocator);
+    }
+
+    private void server_Checked(object sender, global::System.Windows.RoutedEventArgs e) => SetIsLicenseDataModified(true);
+
+    private void file_Checked(object sender, global::System.Windows.RoutedEventArgs e) => SetIsLicenseDataModified(true);
+
+    private void sourceListLicensePath_Checked(object sender, global::System.Windows.RoutedEventArgs e) => SetIsLicenseDataModified(true);
+
+    private void filePathTextBox_TextChanged(object sender, global::System.Windows.Controls.TextChangedEventArgs e) => SetIsLicenseDataModified(true);
+
+    private void serverPortTextBox_TextChanged(object sender, global::System.Windows.Controls.TextChangedEventArgs e) => SetIsLicenseDataModified(true);
+
+    private void serverAddressTextBox_TextChanged(object sender, global::System.Windows.Controls.TextChangedEventArgs e) => SetIsLicenseDataModified(true);
+
+    private void extendedLicensePathTextBox_TextChanged(object sender, global::System.Windows.Controls.TextChangedEventArgs e) => SetIsLicenseDataModified(true);
+
+    private void GetLicense_Clicked(object sender, global::System.Windows.RoutedEventArgs e)
+    {
+        ViewModel.LaunchLicenseWizard();
+        InitConfiguration();
+    }
+
+    private void CopyAll_Clicked(object sender, global::System.Windows.RoutedEventArgs e)
+    {
+        CopyToClipboard();
+    }
+
+    private void ShowLicenseErrorInfo(object sender, global::System.Windows.RoutedEventArgs e)
+    {
+        LicenseErrorInfoPopup.IsOpen = true;
+    }
 }
