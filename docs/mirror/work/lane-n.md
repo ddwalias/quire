@@ -319,3 +319,10 @@
   - `Urls` (`MathcadExpressUpgrade`, `MathcadCommunity`, `MathcadEngineeringResources`, `MathcadSupportCenter`, `MathcadWebsiteAddress`, `MathcadLearningConnector`, `MathcadNewUsers`, `MathcadStartPageAddress`)
 - Report: `.mirror-cache/release-il-d4d28c2c189c/release-il.json` — PASS, 1,196 checked, 1,196 exact, 0 failures, 2,709 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 32 — SingleRichTextCopyVisitor
+
+- Scope:
+  - `SingleRichTextCopyVisitor` (`Visit(IRichTextWithEmbeddedItem)`, `Visit(ICollapsibleAreaControl)`)
+- Report: `.mirror-cache/release-il-d17565e84274/release-il.json` — PASS, 1,198 checked, 1,198 exact, 0 failures, 2,707 unfinished.
+- Remaining mismatches: none in claimed batch.
