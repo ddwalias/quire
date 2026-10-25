@@ -233,13 +233,13 @@ MathcadPrime.dll,Spirit.MessageBoxes.MessageDialogWithOptions,class,public,Quire
 MathcadPrime.dll,Spirit.MessageBoxes.MessageDialogWithProgressBar,class,public,Quire.MessageBoxes.MessageDialogWithProgressBar,missing,8,managed
 MathcadPrime.dll,Spirit.MessageBoxes.ErrorWarningTabData,class,public,Quire.MessageBoxes.ErrorWarningTabData,missing,8,managed
 MathcadPrime.dll,Spirit.MessageBoxes.SaveAndSyncErrorWarningDialog,class,public,Quire.MessageBoxes.SaveAndSyncErrorWarningDialog,missing,8,managed
-MathcadPrime.dll,Spirit.License.LicenseError,class,public,Quire.License.LicenseError,deferred: licensing,8,managed
-MathcadPrime.dll,Spirit.License.LicenseMessageDictionary,class,public,Quire.License.LicenseMessageDictionary,deferred: licensing,8,managed
-MathcadPrime.dll,Spirit.License.UriHelper,class,public,Quire.License.UriHelper,deferred: licensing,8,managed
-MathcadPrime.dll,Spirit.License.LicenseOptionsPage,class,public,Quire.License.LicenseOptionsPage,deferred: licensing,8,managed
-MathcadPrime.dll,Spirit.License.ViewModel.LicenseErrorViewModel,class,public,Quire.License.ViewModel.LicenseErrorViewModel,deferred: licensing,8,managed
-MathcadPrime.dll,Spirit.License.ViewModel.ILicenseOptionsPageViewModel,interface,public,Quire.License.ViewModel.ILicenseOptionsPageViewModel,deferred: licensing,8,managed
-MathcadPrime.dll,Spirit.License.ViewModel.LicenseOptionsPageViewModel,class,internal,Quire.License.ViewModel.LicenseOptionsPageViewModel,deferred: licensing,8,managed
+MathcadPrime.dll,Spirit.License.LicenseError,class,public,Quire.License.LicenseError,missing,8,managed
+MathcadPrime.dll,Spirit.License.LicenseMessageDictionary,class,public,Quire.License.LicenseMessageDictionary,missing,8,managed
+MathcadPrime.dll,Spirit.License.UriHelper,class,public,Quire.License.UriHelper,missing,8,managed
+MathcadPrime.dll,Spirit.License.LicenseOptionsPage,class,public,Quire.License.LicenseOptionsPage,missing,8,managed
+MathcadPrime.dll,Spirit.License.ViewModel.LicenseErrorViewModel,class,public,Quire.License.ViewModel.LicenseErrorViewModel,missing,8,managed
+MathcadPrime.dll,Spirit.License.ViewModel.ILicenseOptionsPageViewModel,interface,public,Quire.License.ViewModel.ILicenseOptionsPageViewModel,missing,8,managed
+MathcadPrime.dll,Spirit.License.ViewModel.LicenseOptionsPageViewModel,class,internal,Quire.License.ViewModel.LicenseOptionsPageViewModel,missing,8,managed
 MathcadPrime.dll,Spirit.Freemium.FreemiumAboutBox,class,public,Quire.Freemium.FreemiumAboutBox,missing,8,managed
 MathcadPrime.dll,Spirit.Freemium.VCardDisplay,class,public,Quire.Freemium.VCardDisplay,missing,8,managed
 MathcadPrime.dll,Spirit.Freemium.HideIfNullConverter,class,internal,Quire.Freemium.HideIfNullConverter,missing,8,managed
@@ -360,8 +360,8 @@ MathcadPrime.dll,Spirit.SpiritMainWindow+SaveStatus,class,internal,Quire.SpiritM
 MathcadPrime.dll,Spirit.Zoom+ZoomType,class,public,Quire.Zoom+ZoomType,missing,8,managed
 MathcadPrime.dll,Spirit.TabManager+MoveDirection,class,internal,Quire.TabManager+MoveDirection,missing,8,managed
 MathcadPrime.dll,Spirit.TabManagerItem+TabManagerItemClickedHandler,class,public,Quire.TabManagerItem+TabManagerItemClickedHandler,missing,8,managed
-MathcadPrime.dll,Spirit.License.ViewModel.LicenseErrorViewModel+PropertyNames,class,public,Quire.License.ViewModel.LicenseErrorViewModel+PropertyNames,deferred: licensing,8,managed
-MathcadPrime.dll,Spirit.License.ViewModel.LicenseOptionsPageViewModel+PropertyNames,class,public,Quire.License.ViewModel.LicenseOptionsPageViewModel+PropertyNames,deferred: licensing,8,managed
+MathcadPrime.dll,Spirit.License.ViewModel.LicenseErrorViewModel+PropertyNames,class,public,Quire.License.ViewModel.LicenseErrorViewModel+PropertyNames,missing,8,managed
+MathcadPrime.dll,Spirit.License.ViewModel.LicenseOptionsPageViewModel+PropertyNames,class,public,Quire.License.ViewModel.LicenseOptionsPageViewModel+PropertyNames,missing,8,managed
 MathcadPrime.dll,Spirit.Behaviors.BaseUIFunctionalityAttachedBehavior+StackPanelToolTipEnum,class,internal,Quire.Behaviors.BaseUIFunctionalityAttachedBehavior+StackPanelToolTipEnum,missing,8,managed
 MathcadPrime.dll,Spirit.AutomationServiceEngNote.CMathcadPrimeWorksheet+WorksheetData,class,internal,Quire.AutomationServiceEngNote.CMathcadPrimeWorksheet+WorksheetData,missing,8,managed
 MathcadPrime.dll,Spirit.AutomationServiceEngNotePlus.CMathcadPrimeWorksheet+WorksheetData,class,internal,Quire.AutomationServiceEngNotePlus.CMathcadPrimeWorksheet+WorksheetData,missing,8,managed
