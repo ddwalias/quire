@@ -107,7 +107,39 @@ public static partial class TextRangeExtension
 
     private static IEnumerable<T> EnumerateInlinesInRange<T>(this global::System.Windows.Documents.TextRange range, IEnumerable<Block> blocks) where T : Inline => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private static IEnumerable<T> EnumerateInlinesInRange<T>(this global::System.Windows.Documents.TextRange range, InlineCollection inlines) where T : Inline => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static IEnumerable<T> EnumerateInlinesInRange<T>(this global::System.Windows.Documents.TextRange range, InlineCollection inlines) where T : Inline
+    {
+        List<Inline> intersectingInlines = inlines.Where(range.IntersectsWith).ToList();
+        foreach (Inline inline in intersectingInlines)
+        {
+            // Keep both yield sites in Mathcad's Release state-machine order.
+            if (!(inline is T matchingInline))
+            {
+                goto CheckSpan;
+            }
+            goto YieldMatchingInline;
+
+        CheckSpan:
+            if (!(inline is Span span))
+            {
+                goto NextInline;
+            }
+            goto EnumerateSpan;
+
+        YieldMatchingInline:
+            yield return matchingInline;
+            goto NextInline;
+
+        EnumerateSpan:
+            foreach (T nestedInline in range.EnumerateInlinesInRange<T>(span.Inlines))
+            {
+                yield return nestedInline;
+            }
+
+        NextInline:
+            ;
+        }
+    }
 
     [MirrorVerified("Release IL")]
     private static FlowDocument GetDocument(this global::System.Windows.Documents.TextRange range) => WpfUtils.TryFindAncestorIncludingSelf<FlowDocument>(range.Start.Parent, false);
