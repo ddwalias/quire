@@ -275,6 +275,37 @@ public sealed partial class LicenseManager
 
     private void UpdateIsEducationalLicense() => IsEducationalLicense = _provider.IsAcademicLicense();
 
+    private void UpdateLicenseBorrowStatus()
+    {
+        LicenseBorrowStatus status = LicenseBorrowStatus.CannotBorrow;
+        if (HasBorrows())
+        {
+            status = LicenseBorrowStatus.Borrowed;
+        }
+        else if (_licenseSource.Type == LicenseUriType.ServerAndPort
+            || _licenseSource.Type == LicenseUriType.SourceList)
+        {
+            status = LicenseBorrowStatus.CanBorrow;
+        }
+
+        LicenseBorrowStatus = status;
+    }
+
+    private void UpdateLicenseStatus()
+    {
+        UpdateLicenseStatusAndRefreshTimer(IsValidLicense());
+        _licenseSource.Save(LicenseType);
+    }
+
+    private void FirePropertyChanged(string propertyName)
+    {
+        if (_propertyChanged != null)
+        {
+            _propertyChanged.Invoke(
+                [this, new global::System.ComponentModel.PropertyChangedEventArgs(propertyName)]);
+        }
+    }
+
     private void UpdateProductCodeAndDerivedValues()
     {
         ProductCode productCode;

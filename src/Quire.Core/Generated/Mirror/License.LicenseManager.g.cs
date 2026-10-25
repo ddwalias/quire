@@ -116,15 +116,9 @@ public sealed partial class LicenseManager : global::System.ComponentModel.INoti
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.License.LicenseType DetermineLicenseType(bool hasValidLicense) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void UpdateLicenseBorrowStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public bool BorrowLicense(global::System.DateTime returnDate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool ReturnLicense() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateLicenseStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateLicenseStatusAndRefreshTimer(bool hasValidLicense) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
