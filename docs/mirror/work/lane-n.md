@@ -361,3 +361,10 @@
   - `Properties.Settings` (`HandleFocusForIme`, `EnableFontCaching`, `MaxNumberOf2dPoints`, `MaxNumberOf3dPoints`, `MinPointsForDensity`, `MinPointsForForceDensity`, `DensityPointsPrintDPI`, `.cctor`)
 - Report: `.mirror-cache/release-il-a71c3647f7a9/release-il.json` — PASS, 1,244 checked, 1,244 exact, 0 failures, 2,670 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 38 — Properties.Resources
+
+- Scope:
+  - `Properties.Resources` (`resourceMan`, `ResourceManager`)
+- Report: `.mirror-cache/release-il-f42615804a36/release-il.json` — PASS, 1,245 checked, 1,245 exact, 0 failures, 2,669 unfinished.
+- Remaining mismatches: none in claimed batch.

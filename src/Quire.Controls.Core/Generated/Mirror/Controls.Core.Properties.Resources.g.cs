@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.Properties;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Properties.Resources, Ptc.Controls.Core")]
 internal partial class Resources
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Resources.ResourceManager resourceMan;
-    [global::Quire.Mirror.MirrorStub]
-    internal static global::System.Resources.ResourceManager ResourceManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
