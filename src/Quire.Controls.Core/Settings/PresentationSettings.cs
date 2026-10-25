@@ -1,33 +1,100 @@
 #nullable disable
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
-using Quire.Mirror;
+using System.Xml.Serialization;
+using Quire.Controls.Core.Serialization;
+using Quire.Serialization;
 
 namespace Quire.Controls.Core.Settings;
 
-public partial class PresentationSettings
+public abstract partial class PresentationSettings : IXmlAndXElementSerializable, IXmlSerializable, IXElementSerializable, IXDocumentRepairer, IShouldValidate
 {
-    [MirrorVerified("PtcControlsCoreSettingsPresentationSettingsMechanicalDifferentialTests")]
+    public const string pageModelName = "pageModel";
+
+    public const string textStyleName = "textStyle";
+
+    protected internal readonly IEngineeringDocument document;
+
+    public static string localName = "presentation";
+
     protected readonly string _namespaceName;
 
-    [MirrorVerified("PtcControlsCoreSettingsPresentationSettingsMechanicalDifferentialTests")]
-    private XName GetXName(string name) => XName.Get(name, _namespaceName);
+    private readonly string _resultsNS;
 
-    [MirrorVerified("PtcControlsCoreSettingsPresentationSettingsMechanicalDifferentialTests")]
-    protected static void OnSchemaValidation(object sender, ValidationEventArgs e) { }
+    protected internal XElementSerializable pageModel;
 
-    [MirrorVerified("PtcControlsCoreSettingsPresentationSettingsMechanicalDifferentialTests")]
-    public void RepairXDocument(XDocument xDocument) => Presentation10Repairer.RepairXDocument(xDocument);
+    private readonly MathRendering mathRendering;
 
-    [MirrorVerified("PtcControlsCoreSettingsPresentationSettingsMechanicalDifferentialTests")]
     protected internal XName PageModelName => GetXName("pageModel");
 
-    [MirrorVerified("PtcControlsCoreSettingsPresentationSettingsMechanicalDifferentialTests")]
     private XName MathRenderingName => GetXName("mathRendering");
 
-    [MirrorVerified("PtcControlsCoreSettingsPresentationSettingsMechanicalDifferentialTests")]
     public bool ShouldValidateOnWrite => true;
 
-    [MirrorVerified("PtcControlsCoreSettingsPresentationSettingsMechanicalDifferentialTests")]
     public bool ShouldValidateOnRead => true;
+
+    protected internal PresentationSettings(IEngineeringDocument document, string namespaceName, string resultsNS)
+    {
+        this.document = document;
+        _namespaceName = namespaceName;
+        _resultsNS = resultsNS;
+        mathRendering = new MathRendering(document, MathRenderingName, resultsNS);
+        pageModel = document.GetMcdxPageModel(PageModelName);
+    }
+
+    public abstract XmlSchema GetSchema();
+
+    private XName GetXName(string name)
+    {
+        return XName.Get(name, _namespaceName);
+    }
+
+    public void ReadXml(XmlReader reader)
+    {
+        XElement xElement = XElement.Load(reader);
+        ReadXml(xElement);
+    }
+
+    public void WriteXml(XmlWriter writer)
+    {
+        CreateXElement().Save(writer);
+    }
+
+    private XElement CreateXElement()
+    {
+        XElement xElement = new XElement(GetXName(localName));
+        if (!_namespaceName.Equals(_resultsNS))
+        {
+            xElement.Add(new XAttribute(XName.Get("ws", "http://www.w3.org/2000/xmlns/"), _resultsNS));
+        }
+        WriteXml(xElement);
+        return xElement;
+    }
+
+    protected static void OnSchemaValidation(object sender, ValidationEventArgs e)
+    {
+    }
+
+    public virtual void ReadXml(XElement xElement)
+    {
+        pageModel.ReadXml(xElement);
+        mathRendering.ReadXml(xElement);
+    }
+
+    public virtual void WriteXml(XElement xElement)
+    {
+        pageModel.WriteXml(xElement);
+        mathRendering.WriteXml(xElement);
+    }
+
+    public void WriteXml(XDocument xDocument)
+    {
+        xDocument.Add(CreateXElement());
+    }
+
+    public void RepairXDocument(XDocument xDocument)
+    {
+        Presentation10Repairer.RepairXDocument(xDocument);
+    }
 }

@@ -11,34 +11,4 @@ namespace Quire.Controls.Core.Settings;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.PresentationSettings, Ptc.Controls.Core")]
 public abstract partial class PresentationSettings : global::Quire.Controls.Core.Serialization.IXmlAndXElementSerializable, global::System.Xml.Serialization.IXmlSerializable, global::Quire.Controls.Core.Serialization.IXElementSerializable, global::Quire.Controls.Core.Serialization.IXDocumentRepairer, global::Quire.Serialization.IShouldValidate
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string pageModelName = "pageModel";
-    [global::Quire.Mirror.MirrorStub]
-    public const string textStyleName = "textStyle";
-    [global::Quire.Mirror.MirrorStub]
-    protected internal readonly global::Quire.Controls.Core.IEngineeringDocument document;
-    [global::Quire.Mirror.MirrorStub]
-    public static string localName;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string _resultsNS;
-    [global::Quire.Mirror.MirrorStub]
-    protected internal global::Quire.Controls.Core.Serialization.XElementSerializable pageModel;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.Settings.MathRendering mathRendering;
-    [global::Quire.Mirror.MirrorStub]
-    protected internal PresentationSettings(global::Quire.Controls.Core.IEngineeringDocument document, string namespaceName, string resultsNS) { }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::System.Xml.Schema.XmlSchema GetSchema();
-    [global::Quire.Mirror.MirrorStub]
-    public void ReadXml(global::System.Xml.XmlReader reader) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteXml(global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Xml.Linq.XElement CreateXElement() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void ReadXml(global::System.Xml.Linq.XElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void WriteXml(global::System.Xml.Linq.XElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteXml(global::System.Xml.Linq.XDocument xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

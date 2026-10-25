@@ -326,3 +326,10 @@
   - `SingleRichTextCopyVisitor` (`Visit(IRichTextWithEmbeddedItem)`, `Visit(ICollapsibleAreaControl)`)
 - Report: `.mirror-cache/release-il-d17565e84274/release-il.json` — PASS, 1,198 checked, 1,198 exact, 0 failures, 2,707 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 33 — PresentationSettings
+
+- Scope:
+  - `PresentationSettings` (`pageModelName`, `textStyleName`, `document`, `localName`, `_namespaceName`, `_resultsNS`, `pageModel`, `mathRendering`, `PageModelName`, `MathRenderingName`, `ShouldValidateOnWrite`, `ShouldValidateOnRead`, `GetXName`, `ReadXml(XmlReader)`, `WriteXml(XmlWriter)`, `CreateXElement`, `OnSchemaValidation`, `ReadXml(XElement)`, `WriteXml(XElement)`, `WriteXml(XDocument)`, `RepairXDocument`, `.ctor(IEngineeringDocument, string, string)`, `.cctor`)
+- Report: `.mirror-cache/release-il-36fa8860970a/release-il.json` — PASS, 1,206 checked, 1,206 exact, 0 failures, 2,700 unfinished.
+- Remaining mismatches: none in claimed batch.
