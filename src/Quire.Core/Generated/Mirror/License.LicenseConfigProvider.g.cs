@@ -12,8 +12,6 @@ namespace Quire.License;
 public partial class LicenseConfigProvider
 {
     [global::Quire.Mirror.MirrorStub]
-    public static string LicenseConfigFilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public static void SetProductCode(string hashCode, string productCode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetProductCode(string hashCode, string productCode, ref global::System.Xml.Linq.XDocument configDoc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
