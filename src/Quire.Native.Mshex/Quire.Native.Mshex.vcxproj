@@ -48,6 +48,8 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <OptimizeReferences>true</OptimizeReferences>
+      <!-- Vtables that the original exports as data (dllexport on the class would also export members it does not). -->
+      <AdditionalOptions>/EXPORT:??_7Value@Hex@@6B@,DATA /EXPORT:??_7Visitor@Environment@Hex@@6B@,DATA %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -69,6 +71,7 @@
     <ClInclude Include="hex_lexer.h" />
     <ClInclude Include="hex_interpreter.h" />
     <ClInclude Include="hex_substring.h" />
+    <ClInclude Include="hex_attachment.h" />
     <ClCompile Include="hex_tag.cpp" />
     <ClCompile Include="hex_token.cpp" />
     <ClCompile Include="hex_node.cpp" />
@@ -84,6 +87,9 @@
     <ClCompile Include="hex_default_environment.cpp" />
     <ClCompile Include="hex_lexer.cpp" />
     <ClCompile Include="hex_interpreter.cpp" />
+    <ClCompile Include="hex_attachment.cpp">
+      <ExceptionHandling>Sync</ExceptionHandling>
+    </ClCompile>
   </ItemGroup>
   <!-- mshex.dll imports only KERNEL32, the MSVC runtime and the API CRT (no Mathcad-owned DLL), so it needs no .def (D10). -->
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,6 +1,6 @@
 # Lane J: mshex.dll → Quire.Native.Mshex
 
-**Status: in progress.** 87 candidate functions match strictly (0 unverified targets); 86 of 380 exports are present. Export parity: 294 missing, 0 extra.
+**Status: in progress.** 102 candidate functions match strictly (0 unverified targets); 92 of 380 exports are present. Export parity: 288 missing, 0 extra.
 
 - **Owner:** Lane J (native, `mshex.dll`)
 - **Branch:** `mirror/j-mshex-202610241256`, rebased onto `main` (354255ea)
@@ -35,30 +35,28 @@ Each entry lists the source shapes tried under D28's settings. Parked functions 
 - **`Error::GetDetails(Substring<char const>) const → std::string`** (`0x8780`, the 399-byte overload). Not yet re-tested under D28. It calls `std::string` internals, which are not exported, so it needs reviewed internal targets first.
 - **`operator<<(ostream&, Error const&)`** (`0xa2d0`). Not yet re-tested under D28. It calls `0x99e0` and `0xa7c0`, which need reviewed internal targets. The D25 evidence (the `pword` accessor `0xa7c0` differs in one register, `eax` vs `edx`) predates D28, so the re-test is open.
 
-## Attachment (D28 amendment) and the vtable-slot blocker
+## Attachment (D28 amendment) and the Value group
 
-`Attachment` is the virtual base of `Component`, `Value`, `Environment` and the rest. The source matches the original's
-constructor (`0xC490`, 102 bytes), non-deleting destructor (`0xC500`, 58 bytes) and `Destroy` (`0xC5F0`) when its file is
-compiled with `/EHsc` (D28 amendment). The toolset's `operator new` and sized `operator delete` are recorded as toolchain
-entries (`0xC780`, `0xC8B0`). `Value` derives from it at offset 0. Its constructor (38 bytes, `/EHa`) and destructor
-(18 bytes, implicit body, `/EHa`) match with one unverified target each, the `Attachment` vtable.
+`Attachment` is the virtual base of `Component`, `Value`, `Environment` and the rest. Its file `hex_attachment.cpp` is
+compiled with `/EHsc` (D28 amendment). Its constructor, non-deleting destructor and `Destroy` match, as do the toolset's
+`operator new` and sized `operator delete` (toolchain entries). `Value` derives from it at offset 0 and matches: constructors
+(`/EHa`), the implicit destructor, its vector deleting destructor and its vtable. The vtable slot that was unverified
+resolves through the weak external `??_EValue` (the maintainer's harness fix on main, bf4b54f9).
 
-**Blocker (harness, for the maintainer):** the `Attachment` vtable (`0xF388`, 16 bytes) has two slots. Slot 1 (`Destroy`,
-`0xC5F0`) verifies when it is recorded. Slot 0 (the scalar deleting destructor `??_G`, `0xC540`) is a relocation to the
-COMDAT's section symbol, so `native_bytes.py` sees no name for it and `native_targets.py` cannot record it (it reports "not
-referenced by any candidate function that matches the original"). The same happens for every vtable whose slot is an
-implicit COMDAT, so `Value`'s vtable and everything derived from `Attachment` stay unverified. Not edited (D10/brief): the
-work-in-progress is in the ignored cache, `.mirror-cache/wip/attachment/`. Landing it now would add manifest entries that
-fail the gate, so it is not committed.
+The vtables of `Value` and `Visitor` are exported as data through `/EXPORT:…,DATA` in the project's link options. A
+class-level `dllexport` would also export members the original does not export, such as `??_E`.
 
 ## Next batches
 
 Ordered per D28 and the brief:
 
-1. Re-test `operator<<` and `GetDetails(Substring)` with reviewed internal targets (native_targets.py, which records `0x99e0`, `0xa7c0` and the `std::string` internals from matching call sites).
-2. `Signature` constructors and the `std::string`-holding types they unblock.
-3. Vtable chains: each class's virtuals, then constructors, destructors and `??_7`/`??_E`/`??_G`.
-4. `_Tree`/`_Tmap`/`basic_*` instantiations.
+1. `Component`: its virtual `Insert` and `OnError` must be implemented first. `OnError` reaches the parked
+   `operator<<(ostream&, Error const&)`, so this waits on that function.
+2. Re-test `operator<<` and `GetDetails(Substring) → std::string` (`0x8780`) with reviewed internal targets.
+3. `Signature` and the `std::string`-holding types it unblocks.
+4. The other `Attachment`-derived classes (`Environment`, `Formatter`, `Lexer`, `Parser`, `Phase`, `Heap`, `Names`,
+   `DefaultX`), once `Component`'s vbase layout is in place; their vtables export through `/EXPORT,DATA` the same way.
+5. `_Tree`/`_Tmap`/`basic_*` instantiations.
 
 ## Remaining mismatches
 

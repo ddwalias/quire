@@ -47,5 +47,49 @@
         "size": 8
       }
     }
+  },
+  "mshex.dll": {
+    "sha256": "b4e698b1cea39130dbc8f8e8072e00520f186b865be416d69d2463186fb56d98",
+    "targets": {
+      "??0Attachment@@QEAA@XZ": {
+        "rva": "0xc490"
+      },
+      "??1Attachment@@UEAA@XZ": {
+        "rva": "0xc500"
+      },
+      "??2@YAPEAX_K@Z": {
+        "rva": "0xc780",
+        "toolchain": true
+      },
+      "??3@YAXPEAX_K@Z": {
+        "rva": "0xc8b0",
+        "toolchain": true
+      },
+      "??_7Attachment@@6B@": {
+        "rva": "0xf388",
+        "size": 16
+      },
+      "??_7Value@Hex@@6B@": {
+        "rva": "0xf780",
+        "size": 24
+      },
+      "??_EValue@Hex@@UEAAPEAXI@Z": {
+        "rva": "0x14d0"
+      },
+      "??_GAttachment@@UEAAPEAXI@Z": {
+        "rva": "0xc540"
+      },
+      "??_M@YAXPEAX_K1P6AX0@Z@Z": {
+        "rva": "0xc7d0",
+        "toolchain": true
+      },
+      "??_V@YAXPEAX_K@Z": {
+        "rva": "0xc770",
+        "toolchain": true
+      },
+      "?Destroy@Attachment@@UEAAXXZ": {
+        "rva": "0xc5f0"
+      }
+    }
   }
 }
