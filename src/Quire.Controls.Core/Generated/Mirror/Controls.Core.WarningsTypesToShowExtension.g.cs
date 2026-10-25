@@ -11,8 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.WarningsTypesToShowExtension, Ptc.Controls.Core")]
 public static partial class WarningsTypesToShowExtension
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool ShouldDisplayAllWarnings(this global::Quire.Controls.Core.WarningsTypesToShow warningsToShow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsAnyWarningActive(this global::Quire.Controls.Core.WarningsTypesToShow warningsToShow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

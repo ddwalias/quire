@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.Whiteboard;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Whiteboard.WhiteboardControlExtensions, Ptc.Controls.Core")]
 public static partial class WhiteboardControlExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Rect GetInsertionPointRect(this global::Quire.Controls.Core.Whiteboard.IWhiteboardControl whiteboard) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
