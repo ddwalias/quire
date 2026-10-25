@@ -159,3 +159,13 @@
   - `BookmarkTagViewModel` (`_tag`, `Tag`, `.ctor(string)`)
 - Report: `.mirror-cache/release-il-222f5f71d7d6/release-il.json` — PASS, 1,066 checked, 1,066 exact, 0 failures, 2,813 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 12 — LayoutMetrics, PrimeContextMenu, MenuItem, and Separator
+
+- Scope:
+  - `LayoutMetrics` (`OverallSize`, `Baseline`, `ItegralTextWidth`, `.ctor(Size, double)`)
+  - `PrimeContextMenu` (`PrimeContextMenuStyleProperty`, `PrimeContextMenuStyle`, `HandlePrimeContextMenuStyleChanged`, `.ctor`, `.cctor`)
+  - `PrimeContextMenuItem` (`PrimeContextMenuItemStyleProperty`, `PrimeContextMenuItemStyle`, `HandlePrimeContextMenuItemStyleChanged`, `.ctor`, `.cctor`)
+  - `PrimeContextMenuSeparator` (`PrimeContextMenuSeparatorStyleProperty`, `PrimeContextMenuSeparatorStyle`, `HandlePrimeContextMenuSeparatorStyleChanged`, `.ctor`, `.cctor`)
+- Report: `.mirror-cache/release-il-458dc5421a42/release-il.json` — PASS, 1,079 checked, 1,079 exact, 0 failures, 2,803 unfinished.
+- Remaining mismatches: none in claimed batch.

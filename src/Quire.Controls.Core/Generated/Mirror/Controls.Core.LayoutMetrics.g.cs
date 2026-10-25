@@ -11,12 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.LayoutMetrics, Ptc.Controls.Core")]
 public partial struct LayoutMetrics
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size OverallSize;
-    [global::Quire.Mirror.MirrorStub]
-    public double Baseline;
-    [global::Quire.Mirror.MirrorStub]
-    public double ItegralTextWidth;
-    [global::Quire.Mirror.MirrorStub]
-    public LayoutMetrics(global::System.Windows.Size overallSize, double baseline) { }
 }
