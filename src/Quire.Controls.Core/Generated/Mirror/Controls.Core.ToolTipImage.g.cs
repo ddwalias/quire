@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.ToolTipImage, Ptc.Controls.Core")]
 public partial class ToolTipImage : global::System.Windows.Controls.Image, global::Quire.Core.IMaybeHasPointThatSnapsToPixel
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ToolTipImage() { }
 }

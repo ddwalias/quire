@@ -11,16 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.AnnotatedAdornerDefinitions, Ptc.Controls.Core")]
 internal static partial class AnnotatedAdornerDefinitions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Media.Geometry MarginLine;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Media.Geometry ArrowBase;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Media.Geometry ArrowHeadTop;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Media.Geometry ArrowHeadBottom;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Media.Brush AdornerBrush;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Media.Pen AdornerPen;
 }

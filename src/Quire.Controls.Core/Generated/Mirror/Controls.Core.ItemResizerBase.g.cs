@@ -11,20 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.ItemResizerBase, Ptc.Controls.Core")]
 public abstract partial class ItemResizerBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::System.Windows.FrameworkElement ElementToResize;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly double OriginalWidth;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly double OriginalHeight;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly bool WidthIsAuto;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly bool HeightIsAuto;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool _preserveAspectRatio;
-    [global::Quire.Mirror.MirrorStub]
-    protected ItemResizerBase(global::System.Windows.FrameworkElement elementToResize, bool preserveAspectRatio) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected void ResizeElementBasedOnOffset(global::System.Windows.FrameworkElement element, global::System.Windows.Vector offset, bool changeWidth, bool changeHeight, bool resizeInProgress = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

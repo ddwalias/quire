@@ -112,3 +112,18 @@
   - `Serialization.MetadataModel` (`_version = 1`, `.ctor()`)
 - Report: `.mirror-cache/release-il-e6041691254a/release-il.json` — PASS, 974 checked, 974 exact, 0 failures, 2,887 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 8 — Adorners, ToolTips, and Resizers
+
+- Scope:
+  - `AnnotatedAdornerDefinitions` (`MarginLine`, `ArrowBase`, `ArrowHeadTop`, `ArrowHeadBottom`, `AdornerBrush`, `AdornerPen`, `.cctor`)
+  - `VisibilityAwareAdorner` (`.ctor`)
+  - `AnnotationArrowAdorner` (`.ctor`, `OnRender`, `DrawAnnotationArrow`)
+  - `ToolTipImage` (`.ctor`, `SnappingHelper`)
+  - `VisualAdorner` (`.ctor`, `Hookup`, `AddVisualChild`, `Remove`)
+  - `IWhiteboardItemExtension` (`GetRegionsOfType(IEnumerable)`, `GetRegionsOfType(IWhiteboardItem)`, `GetCanSelect`, `IsSupportingRegionBorder`)
+  - `MarginLineAdorner` (`_typeOfThis`, `IsDisplayed`, `.cctor`, `OnVisibilityChanged`, `Create`, `.ctor`, `AddToAdornerLayer`, `GetDesiredTransform`, `OnRender`)
+  - `SnappableItemHelper` (`_onLayoutUpdated`, `Create`, `.ctor`, `Dispose`, `RecalculateOffset`)
+  - `ItemResizerBase` (`ElementToResize`, `OriginalWidth`, `OriginalHeight`, `WidthIsAuto`, `HeightIsAuto`, `_preserveAspectRatio`, `.ctor`, `ResizeElementBasedOnOffset`)
+- Report: `.mirror-cache/release-il-3f333569131a/release-il.json` — PASS, 1,011 checked, 1,011 exact, 0 failures, 2,864 unfinished.
+- Remaining mismatches: none in claimed batch.

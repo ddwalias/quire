@@ -11,12 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.SnappableItemHelper, Ptc.Controls.Core")]
 public partial class SnappableItemHelper : global::Quire.Controls.Core.SnappableItemBaseHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.EventHandler _onLayoutUpdated;
-    [global::Quire.Mirror.MirrorStub]
-    private SnappableItemHelper(global::System.Windows.UIElement itemElement, bool isPageDescendant) : base(default(global::System.Windows.UIElement), default(bool)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void Dispose() => base.Dispose();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Nullable<global::System.Windows.Point> RecalculateOffset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -22,4 +22,34 @@ public partial class VisualAdorner
 
     [MirrorVerified("PtcControlsCoreVisualAdornerMechanicalDifferentialTests")]
     protected override int VisualChildrenCount => _visualChildren.Count;
+
+    protected VisualAdorner(UIElement adornedElement, bool trackVisibility = false)
+        : base(adornedElement, trackVisibility)
+    {
+        _visualChildren = new UIElementCollection(this, this);
+        Hookup();
+    }
+
+    protected void Hookup()
+    {
+        Add();
+        Focusable = false;
+        IsHitTestVisible = false;
+        AdornedElement.LostFocus += OnLostFocus;
+        if (AdornedFrameworkElement != null)
+        {
+            AdornedFrameworkElement.FocusVisualStyle = null;
+        }
+    }
+
+    protected new void AddVisualChild(Visual child)
+    {
+        _visualChildren.Add((UIElement)child);
+    }
+
+    public override void Remove()
+    {
+        base.Remove();
+        AdornedElement.LostFocus -= OnLostFocus;
+    }
 }

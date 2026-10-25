@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.VisibilityAwareAdorner, Ptc.Controls.Core")]
 public abstract partial class VisibilityAwareAdorner : global::System.Windows.Documents.Adorner
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected VisibilityAwareAdorner(global::System.Windows.UIElement adornedElement, bool trackVisibility) : base(default(global::System.Windows.UIElement)) { }
 }

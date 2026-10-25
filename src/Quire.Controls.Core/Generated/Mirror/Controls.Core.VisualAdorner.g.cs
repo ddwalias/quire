@@ -11,12 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.VisualAdorner, Ptc.Controls.Core")]
 public abstract partial class VisualAdorner : global::Quire.Controls.Core.VisualAdornerBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected VisualAdorner(global::System.Windows.UIElement adornedElement, bool trackVisibility = false) : base(default(global::System.Windows.UIElement), default(bool)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected void Hookup() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void AddVisualChild(global::System.Windows.Media.Visual child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Remove() => base.Remove();
 }
