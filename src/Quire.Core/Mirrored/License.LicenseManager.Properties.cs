@@ -265,6 +265,16 @@ public sealed partial class LicenseManager
         }
     }
 
+    private void UpdateIssueDate() => IssueDate = _provider.GetIssueDate();
+
+    private void UpdateExpirationDate() => ExpirationDate = _provider.GetExpirationDate();
+
+    private void UpdateHostId() => HostId = _provider?.GetHostId();
+
+    private void UpdateCustomerNumber() => CustomerNumber = _provider.GetCustomerNumber();
+
+    private void UpdateIsEducationalLicense() => IsEducationalLicense = _provider.IsAcademicLicense();
+
     private static string GetLicensePathSettingFromHostAndPort(string licenseHost, uint? licensePort)
     {
         if (!licensePort.HasValue || string.IsNullOrEmpty(licenseHost))
