@@ -264,4 +264,15 @@ public sealed partial class LicenseManager
             _refreshTimer.Change(LicenseRefreshInterval, LicenseRefreshInterval);
         }
     }
+
+    private static string GetLicensePathSettingFromHostAndPort(string licenseHost, uint? licensePort)
+    {
+        if (!licensePort.HasValue || string.IsNullOrEmpty(licenseHost))
+        {
+            return string.Empty;
+        }
+
+        uint? port = licensePort;
+        return string.Concat(port.ToString(), "@", licenseHost);
+    }
 }

@@ -166,8 +166,6 @@ public sealed partial class LicenseManager : global::System.ComponentModel.INoti
     [global::Quire.Mirror.MirrorStub]
     private void OnDisplayLicenseMessage(global::Quire.License.LicenseCbArgs cbArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static string GetLicensePathSettingFromHostAndPort(string licenseHost, global::System.Nullable<uint> licensePort) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OnLicenseTypeChanged(global::System.EventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.License.LicenseManager+PropertyNames, Ptc.Core")]
