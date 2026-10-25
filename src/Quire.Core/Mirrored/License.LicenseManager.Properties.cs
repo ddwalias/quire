@@ -335,6 +335,10 @@ public sealed partial class LicenseManager
         }
     }
 
+    private void FireLicenseStatusChanged() => LicenseStatusChanged?.Invoke();
+
+    public void FireEngNotebookConnectionStatusChanged() => EngNotebookConnectionStatusChanged?.Invoke();
+
     private void UpdateProductCodeAndDerivedValues()
     {
         ProductCode productCode;
