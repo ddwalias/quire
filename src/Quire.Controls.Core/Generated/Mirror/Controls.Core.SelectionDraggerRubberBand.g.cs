@@ -11,12 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.SelectionDraggerRubberBand, Ptc.Controls.Core")]
 public partial class SelectionDraggerRubberBand : global::System.Windows.Documents.Adorner
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect Bounds { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public SelectionDraggerRubberBand(global::System.Windows.UIElement adornedElement) : base(default(global::System.Windows.UIElement)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public SelectionDraggerRubberBand(global::System.Windows.UIElement adornedElement, global::System.Windows.Media.Brush brush) : base(default(global::System.Windows.UIElement)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Remove() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

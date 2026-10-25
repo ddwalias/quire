@@ -203,3 +203,10 @@
   - `WhiteboardItemContainerExtensions` (`_itemManager`, `ItemManager`, `HasRegionsWithConverterAnnotations`, `RegionsWithConverterAnnotations`)
 - Report: `.mirror-cache/release-il-e5725093ee4c/release-il.json` — PASS, 1,101 checked, 1,101 exact, 0 failures, 2,787 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 17 — SelectionDraggerRubberBand
+
+- Scope:
+  - `SelectionDraggerRubberBand` (`_bounds`, `_pen`, `Bounds`, `Remove`, `OnRender`, `.ctor(UIElement)`, `.ctor(UIElement, Brush)`)
+- Report: `.mirror-cache/release-il-665b3128c99d/release-il.json` — PASS, 1,105 checked, 1,105 exact, 0 failures, 2,783 unfinished.
+- Remaining mismatches: none in claimed batch.

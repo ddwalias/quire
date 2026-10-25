@@ -1,18 +1,56 @@
 #nullable disable
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Media;
-using Quire.Mirror;
 
 namespace Quire.Controls.Core;
 
-public partial class SelectionDraggerRubberBand
+public partial class SelectionDraggerRubberBand : Adorner
 {
-    [MirrorVerified("PtcControlsCoreSelectionDraggerRubberBandMechanicalDifferentialTests")]
     private Rect _bounds;
 
-    [MirrorVerified("PtcControlsCoreSelectionDraggerRubberBandMechanicalDifferentialTests")]
     private readonly Pen _pen;
 
-    [MirrorVerified("PtcControlsCoreSelectionDraggerRubberBandMechanicalDifferentialTests")]
-    protected override void OnRender(DrawingContext dc) => dc.DrawRectangle(null, _pen, _bounds);
+    public Rect Bounds
+    {
+        set
+        {
+            _bounds = value;
+            InvalidateVisual();
+        }
+    }
+
+    public SelectionDraggerRubberBand(UIElement adornedElement)
+        : this(adornedElement, Brushes.LightGray)
+    {
+    }
+
+    public SelectionDraggerRubberBand(UIElement adornedElement, Brush brush)
+        : base(adornedElement)
+    {
+        IsHitTestVisible = false;
+        AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(AdornedElement);
+        if (adornerLayer != null)
+        {
+            adornerLayer.Add(this);
+        }
+        _pen = new Pen(brush, 1.0)
+        {
+            DashStyle = DashStyles.Dash
+        };
+    }
+
+    public void Remove()
+    {
+        AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(AdornedElement);
+        if (adornerLayer != null)
+        {
+            adornerLayer.Remove(this);
+        }
+    }
+
+    protected override void OnRender(DrawingContext dc)
+    {
+        dc.DrawRectangle(null, _pen, _bounds);
+    }
 }
