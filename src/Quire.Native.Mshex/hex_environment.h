@@ -12,8 +12,11 @@ class Environment {
 public:
     // Visit is slot 0: Alter forwards to it through the vtable.
     struct Visitor {
+        HEX_EXPORT Visitor() = default;
+        HEX_EXPORT Visitor(const Visitor &) = default;
+        HEX_EXPORT Visitor(Visitor &&) = default;
+
         HEX_EXPORT virtual bool Visit(const Signature &signature, const Value *value);
-        virtual ~Visitor() = default;
 
         HEX_EXPORT Visitor &operator=(const Visitor &) = default;
         HEX_EXPORT Visitor &operator=(Visitor &&) = default;

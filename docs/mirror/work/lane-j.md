@@ -1,6 +1,6 @@
 # Lane J: mshex.dll → Quire.Native.Mshex
 
-**Status: in progress.** 81 of 380 exports pass strict byte validation (0 unverified targets). Export parity: 299 missing, 0 extra.
+**Status: in progress.** 87 of 380 exports pass strict byte validation (0 unverified targets). Export parity: 294 missing, 0 extra.
 
 - **Owner:** Lane J (native, `mshex.dll`)
 - **Branch:** `mirror/j-mshex-202610241256`, rebased onto `main` (354255ea)
@@ -19,6 +19,8 @@
 | `Hex::Module` flags, datum, state, loadable, status and slot accessors | `hex_module`. Bytes 0x08..0x47 and 0x50..0x77 are not inferred and stay as padding. `State` slots 1 and 3 are unidentified and stay undefined. |
 | `Hex::Error` constructors | `hex_error`. `Error()`, `Error(unsigned)`, `Error(unsigned, Tag const&)`, as plain source under `/EHa`. The byte store after the 16-byte zeroing is in the original too. |
 | `Hex::Error` tag and code accessors, `GetDetails() → Substring<char const>` | `hex_error`, `hex_substring.h` (new, minimal `Substring<Char>` with begin and end pointers). `GetDetails` computes `data()` before `size()`, the order the original uses. |
+| `Environment::Visitor` constructors (default, copy, move) and vtable `??_7Visitor` | Two slots only: `Visit` (returns false) then `Alter` (forwards to slot 0). No virtual destructor. |
+| `DefaultNames::hash::bucket_size` (4) and `min_buckets` (1024) | Exported `static const` data. |
 | Value, Environment, Visitor, State, Interpreter, Library, DefaultNames assignments and stubs | Member-less classes and `= default` assignments. |
 | `TokenOf<void>` assignments, `Value::Insert` | `hex_token`, `hex_value`. |
 | `Visitor::Alter`, `DefaultEnvironment::GetSignatures`, `Tag::operator+=` | |
@@ -32,6 +34,17 @@ Each entry lists the source shapes tried under D28's settings. Parked functions 
 - **`Hex::operator+(Tag const&, Tag const&)`** (`??HHex@@YA?AVTag@0@AEBV10@0@Z`, RVA 0x2620, 26 bytes). The original copies the first tag's offset and handle as qword loads and stores, and takes the second's extent. Shapes tried: copy then `+=` (28 bytes, the copy uses `movups`/`movsd`); field-wise `Tag(first.GetOffset(), second.GetExtent(), first.GetHandle())` (24 bytes, 32-bit handle load). Neither copies the handle's padding as a qword. Parked under D25.
 - **`Error::GetDetails(Substring<char const>) const → std::string`** (`0x8780`, the 399-byte overload). Not yet re-tested under D28. It calls `std::string` internals, which are not exported, so it needs reviewed internal targets first.
 - **`operator<<(ostream&, Error const&)`** (`0xa2d0`). Not yet re-tested under D28. It calls `0x99e0` and `0xa7c0`, which need reviewed internal targets. The D25 evidence (the `pword` accessor `0xa7c0` differs in one register, `eax` vs `edx`) predates D28, so the re-test is open.
+
+## Blocker: the virtual `Attachment` base
+
+`Component`, `Value`, `Environment`, `Formatter`, `Lexer`, `Parser`, `Phase`, `Heap`, `Names` and the `DefaultX` classes inherit
+virtually from an `Attachment` base. Its constructor at RVA `0xC490` sets a vptr (`0xF388`), a reference count of 1, and a 0x28-byte
+heap object at `+0x10`. Its destructor at `0xC500` frees that object. The constructors store vbtable pointers (`0xF484`, `0xF4D8`) and two
+vptrs for multiple bases (`0xF780` then `0xF4F0` in `Environment`). The `Attachment` definition is not in the repository. Its virtuals
+(`0xC540`, `0xC5F0` in its vtable) and the `0xC780`/`0xC8B0` allocation helpers are internal. Until the base is reconstructed, the
+constructors, destructors and virtual dispatchers of these classes stay unmatched. The `Environment` virtuals (`Accept`, `GetValue`,
+`GetSignatures`) forward through vtable slots 2–10, so they need this base first. This needs maintainer input on whether `Attachment`'s
+layout and its helpers should be reviewed as internal targets.
 
 ## Next batches
 
