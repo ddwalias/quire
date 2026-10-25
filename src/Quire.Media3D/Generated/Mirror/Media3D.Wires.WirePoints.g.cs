@@ -11,6 +11,4 @@ namespace Quire.Media3D.Wires;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.Wires.WirePoints, Ptc.Media3D")]
 public partial class WirePoints : global::Quire.Media3D.Wires.WirePointBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected override void Recalculate() => base.Recalculate();
 }

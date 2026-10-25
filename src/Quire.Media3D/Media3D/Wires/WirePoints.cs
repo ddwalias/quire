@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
@@ -21,6 +22,15 @@ public partial class WirePoints : WirePointBase
         set => SetValue(PositionsProperty, value);
     }
 
+    private static void PositionsPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
+    {
+        WirePoints wirePoints = sender as WirePoints;
+        if (DebugTools.AssertNotNull(wirePoints, null).Passed)
+        {
+            wirePoints.CreateSpheres();
+        }
+    }
+
     protected override void UpdateColor()
     {
         Material material = Tools3D.MaterialForColor(Color);
@@ -31,15 +41,6 @@ public partial class WirePoints : WirePointBase
             {
                 model.Material = material;
             });
-        }
-    }
-
-    private static void PositionsPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
-    {
-        WirePoints wirePoints = sender as WirePoints;
-        if (DebugTools.AssertNotNull(wirePoints, null).Passed)
-        {
-            wirePoints.CreateSpheres();
         }
     }
 
@@ -79,6 +80,17 @@ public partial class WirePoints : WirePointBase
         {
             Mouse.OverrideCursor = overrideCursor;
         }
+    }
+
+    protected override void Recalculate()
+    {
+        NeedRecalculation = false;
+        if (Positions.IsNullOrEmpty())
+        {
+            return;
+        }
+
+        _sphereScaleTransform.ScaleX = _sphereScaleTransform.ScaleY = _sphereScaleTransform.ScaleZ = GetRadiusScale(Positions[0]);
     }
 
     protected override void Generate(DependencyPropertyChangedEventArgs args, Point3DCollection lines)
