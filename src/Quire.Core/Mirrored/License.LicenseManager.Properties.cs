@@ -49,13 +49,40 @@ public sealed partial class LicenseManager
     public global::System.DateTime? IssueDate
     {
         get => _issueDate;
-        private set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        private set
+        {
+            global::System.DateTime? currentValue = _issueDate;
+            global::System.DateTime? newValue = value;
+            if (currentValue.HasValue == newValue.HasValue
+                    ? (currentValue.HasValue
+                        ? currentValue.GetValueOrDefault() != newValue.GetValueOrDefault()
+                        : false)
+                    : true)
+            {
+                _issueDate = value;
+                FirePropertyChanged("IssueDate");
+            }
+        }
     }
 
     public global::System.DateTime? ExpirationDate
     {
         get => _expirationDate;
-        private set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        private set
+        {
+            global::System.DateTime? currentValue = _expirationDate;
+            global::System.DateTime? newValue = value;
+            if (currentValue.HasValue == newValue.HasValue
+                    ? (currentValue.HasValue
+                        ? currentValue.GetValueOrDefault() != newValue.GetValueOrDefault()
+                        : false)
+                    : true)
+            {
+                _expirationDate = value;
+                FirePropertyChanged("ExpirationDate");
+                FirePropertyChanged("DaysLeft");
+            }
+        }
     }
 
     public string HostId
@@ -154,25 +181,61 @@ public sealed partial class LicenseManager
     public string LicenseMessageText
     {
         get => _licenseMessageText;
-        private set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        private set
+        {
+            if (value != _licenseMessageText)
+            {
+                _licenseMessageText = value;
+                FirePropertyChanged("LicenseMessageText");
+            }
+        }
     }
 
     public LicenseBorrowStatus LicenseBorrowStatus
     {
         get => _licenseBorrowStatus;
-        private set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        private set
+        {
+            if (_licenseBorrowStatus != value)
+            {
+                _licenseBorrowStatus = value;
+                FirePropertyChanged("LicenseBorrowStatus");
+            }
+
+            UpdateBorrowedUntil(value);
+        }
     }
 
     public global::System.DateTime? BorrowedUntil
     {
         get => _borrowedUntil;
-        private set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        private set
+        {
+            global::System.DateTime? currentValue = _borrowedUntil;
+            global::System.DateTime? newValue = value;
+            if (currentValue.HasValue == newValue.HasValue
+                    ? (currentValue.HasValue
+                        ? currentValue.GetValueOrDefault() != newValue.GetValueOrDefault()
+                        : false)
+                    : true)
+            {
+                _borrowedUntil = value;
+                FirePropertyChanged("BorrowedUntil");
+            }
+        }
     }
 
     public bool IsEducationalLicense
     {
         get => _isEducationalLicense;
-        private set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        private set
+        {
+            if (_isEducationalLicense != value)
+            {
+                _isEducationalLicense = value;
+                FirePropertyChanged("IsEducationalLicense");
+            }
+        }
     }
 
     public bool IsUsingReleaseFeature() => _isUsingReleaseFeature;
