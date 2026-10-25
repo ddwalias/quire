@@ -1,11 +1,31 @@
 #nullable disable
+using System.Xml.Linq;
 using Quire.Controls.Core.Serialization;
-using Quire.Mirror;
 
 namespace Quire.Controls.Core.Settings;
 
-public partial class SerializableAsElementContents
+public partial class SerializableAsElementContents : IXElementSerializable
 {
-    [MirrorVerified("PtcControlsCoreSettingsSerializableAsElementContentsMechanicalDifferentialTests")]
     private XElementSerializable Serializable { get; set; }
+
+    public SerializableAsElementContents(XElementSerializable serializable)
+    {
+        Serializable = serializable;
+    }
+
+    public void ReadXml(XElement xElement)
+    {
+        if (Serializable != null)
+        {
+            Serializable.ReadElementContents(xElement);
+        }
+    }
+
+    public void WriteXml(XElement xElement)
+    {
+        if (Serializable != null)
+        {
+            Serializable.WriteElementContents(xElement);
+        }
+    }
 }

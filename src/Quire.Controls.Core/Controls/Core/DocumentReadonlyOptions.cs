@@ -1,19 +1,25 @@
 #nullable disable
-using Quire.Mirror;
-
 namespace Quire.Controls.Core;
 
 public partial class DocumentReadonlyOptions
 {
-    [MirrorVerified("PtcControlsCoreDocumentReadonlyOptionsMechanicalDifferentialTests")]
+    private static DocumentReadonlyOptions _default;
+
     public bool RequestToUpdateInputsEnabled { get; private set; }
 
-    [MirrorVerified("PtcControlsCoreDocumentReadonlyOptionsMechanicalDifferentialTests")]
     public bool FileLocationHistoryEnabled { get; private set; }
 
-    [MirrorVerified("PtcControlsCoreDocumentReadonlyOptionsMechanicalDifferentialTests")]
     public bool GenerateInputsOutputsStatesOnSave { get; private set; }
 
-    [MirrorVerified("PtcControlsCoreDocumentReadonlyOptionsMechanicalDifferentialTests")]
     public bool CaseInsensitiveAliasComparisonEnabled { get; private set; }
+
+    public static DocumentReadonlyOptions Default => _default ?? (_default = new DocumentReadonlyOptions(generateInputsOutputsStatesOnSave: false, fileLocationHistoryEnabled: true, requestToUpdateInputsEnabled: false, caseInsensitiveAliasComparisonEnabled: false));
+
+    public DocumentReadonlyOptions(bool generateInputsOutputsStatesOnSave, bool fileLocationHistoryEnabled, bool requestToUpdateInputsEnabled, bool caseInsensitiveAliasComparisonEnabled)
+    {
+        GenerateInputsOutputsStatesOnSave = generateInputsOutputsStatesOnSave;
+        FileLocationHistoryEnabled = fileLocationHistoryEnabled;
+        RequestToUpdateInputsEnabled = requestToUpdateInputsEnabled;
+        CaseInsensitiveAliasComparisonEnabled = caseInsensitiveAliasComparisonEnabled;
+    }
 }

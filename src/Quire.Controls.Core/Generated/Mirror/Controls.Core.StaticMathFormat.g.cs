@@ -11,10 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.StaticMathFormat, Ptc.Controls.Core")]
 public partial class StaticMathFormat : global::Quire.Controls.Core.IMathFormat
 {
-    [global::Quire.Mirror.MirrorStub]
-    public StaticMathFormat() { }
-    [global::Quire.Mirror.MirrorStub]
-    public StaticMathFormat(global::Quire.Controls.Core.IMathFormat other) { }
-    [global::Quire.Mirror.MirrorStub]
-    public StaticMathFormat(string fontFamilyName, global::System.Nullable<double> fontSize, global::System.Nullable<bool> isItalic, global::System.Nullable<bool> isBold, global::System.Nullable<bool> isUnderline, global::System.Nullable<global::System.Windows.Media.Color> fontColor, global::System.Nullable<global::System.Windows.Media.Color> highlightColor) { }
 }

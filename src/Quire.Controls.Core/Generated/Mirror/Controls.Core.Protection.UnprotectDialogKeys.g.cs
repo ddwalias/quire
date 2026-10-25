@@ -11,10 +11,4 @@ namespace Quire.Controls.Core.Protection;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Protection.UnprotectDialogKeys, Ptc.Controls.Core")]
 public static partial class UnprotectDialogKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string UnprotectDialogTitle = "UnprotectDialogTitle";
-    [global::Quire.Mirror.MirrorStub]
-    public const string UnprotectButtonTitle = "UnprotectButtonTitle";
-    [global::Quire.Mirror.MirrorStub]
-    public const string UnprotectQuestion = "UnprotectQuestion";
 }

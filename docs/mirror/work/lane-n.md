@@ -134,3 +134,20 @@
   - `DocumentAttachedProperties` (`ZoomProperty`, `LocationProperty`, `SnapToGridProperty`, `DefaultUnitSystemProperty`, `CustomBaseUnitSystemProperty`, `PreRecalculateAllProperty`, `defaultVerticalPageGutter`, `VerticalPageGutterProperty`, `DocumentIsActiveProperty`, `CacheWorksheetProperty`, `ShowInputOutputDesignationProperty`, `CoerceZoom`, `SetZoom`, `GetZoom`, `GetLocation`, `SetLocation`, `GetSnapToGrid`, `SetSnapToGrid`, `GetDocCalculationOptions`, `GetDocCalculationVariables`, `GetPreRecalculateAll`, `SetPreRecalculateAll`, `GetVerticalPageGutter`, `SetVerticalPageGutter`, `GetDocumentIsActive`, `SetDocumentIsActive`, `GetCacheWorksheet`, `SetCacheWorksheet`, `GetShowInputOutputDesignation`, `SetShowInputOutputDesignation`, `GetInputOutputRegionManager`, `GetBookmarksManager`, `GetLabel`, `CoerceFilePath`, `GetFilePath`, `GetIsInPrinting`, `SetIsInPrinting`, `GetIsInCopyNonSerializable`, `SetIsInCopy`, `GetIsInPasting`, `SetIsInPasting`, `GetCopyAsImageSettings`, `SetCopyAsImageSettings`, `.cctor`)
 - Report: `.mirror-cache/release-il-93ff90339b20/release-il.json` — PASS, 1,044 checked, 1,044 exact, 0 failures, 2,832 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 10 — RegionCollection, Settings, Ole, and Helpers
+
+- Scope:
+  - `RegionCollection` (`GetObjectData`, `.ctor(SerializationInfo, StreamingContext)`)
+  - `ColorPickerHelper` (`FindClosestMatchingColorInPalette`, `ColorDifference`)
+  - `DocumentReadonlyOptions` (`RequestToUpdateInputsEnabled`, `FileLocationHistoryEnabled`, `GenerateInputsOutputsStatesOnSave`, `CaseInsensitiveAliasComparisonEnabled`, `Default`, `.ctor(bool, bool, bool, bool)`)
+  - `OleConstants` (`OleEventPriority`, `DefaultProgram`, `ChartContainerModel`)
+  - `OleSizeConstants` (`MinLongestEdge`, `MinShortestEdge`, `IgnoreDiffSizePercentageRatio`)
+  - `UnprotectDialogKeys` (`UnprotectDialogTitle`, `UnprotectButtonTitle`, `UnprotectQuestion`)
+  - `ProductInfo.Constants` (`ConverterProductName`, `ConverterExe`, `.ctor`)
+  - `CalculationBehavior` (`LocalName`, `BoolConverter`, `.ctor(object, string)`, `.cctor`)
+  - `SerializableAsElementContents` (`Serializable`, `.ctor(XElementSerializable)`, `ReadXml(XElement)`, `WriteXml(XElement)`)
+  - `OleContainerViewModelBase` (`_typeOfThis`, `ToggleActiveState`, `.ctor`, `.cctor`)
+  - `StaticMathFormat` (`FontFamilyName`, `FontSize`, `IsBold`, `IsItalic`, `IsUnderline`, `FontColor`, `HighlightColor`, `.ctor()`, `.ctor(IMathFormat)`, `.ctor(...)`)
+- Report: `.mirror-cache/release-il-6101506a230f/release-il.json` — PASS, 1,059 checked, 1,059 exact, 0 failures, 2,819 unfinished.
+- Remaining mismatches: none in claimed batch.

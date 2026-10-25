@@ -11,10 +11,4 @@ namespace Quire.Controls.Core.Ole;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Ole.OleConstants, Ptc.Controls.Core")]
 public static partial class OleConstants
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const global::System.Windows.Threading.DispatcherPriority OleEventPriority = (global::System.Windows.Threading.DispatcherPriority)(10);
-    [global::Quire.Mirror.MirrorStub]
-    public const string DefaultProgram = "Package";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ChartContainerModel = "ChartContainerModel";
 }

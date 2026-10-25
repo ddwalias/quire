@@ -11,10 +11,4 @@ namespace Quire.Controls.Core.Settings;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.CalculationBehavior, Ptc.Controls.Core")]
 internal partial class CalculationBehavior : global::Quire.Controls.Core.Serialization.XElementSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string LocalName = "calculationBehavior";
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::Quire.Controls.Core.XmlBooleanConverter BoolConverter;
-    [global::Quire.Mirror.MirrorStub]
-    public CalculationBehavior(object o, string nameSpaceUri) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
 }

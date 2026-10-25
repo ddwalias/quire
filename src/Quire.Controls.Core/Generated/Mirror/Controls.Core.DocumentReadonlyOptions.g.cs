@@ -11,10 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.DocumentReadonlyOptions, Ptc.Controls.Core")]
 public partial class DocumentReadonlyOptions
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Core.DocumentReadonlyOptions _default;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.DocumentReadonlyOptions Default { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public DocumentReadonlyOptions(bool generateInputsOutputsStatesOnSave, bool fileLocationHistoryEnabled, bool requestToUpdateInputsEnabled, bool caseInsensitiveAliasComparisonEnabled) { }
 }

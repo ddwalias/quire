@@ -11,10 +11,4 @@ namespace Quire.Controls.Core.Ole;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Ole.OleSizeConstants, Ptc.Controls.Core")]
 public static partial class OleSizeConstants
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const double MinLongestEdge = 9.600000000000001d;
-    [global::Quire.Mirror.MirrorStub]
-    public const double MinShortestEdge = 4.800000000000001d;
-    [global::Quire.Mirror.MirrorStub]
-    public const double IgnoreDiffSizePercentageRatio = 0.02d;
 }
