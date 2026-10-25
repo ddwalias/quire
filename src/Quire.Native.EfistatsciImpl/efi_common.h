@@ -1,10 +1,17 @@
 #pragma once
 
+#include "efi_alloc.h"
 #include "efi_export.h"
 
 namespace Efi {
 
 [[noreturn]] __declspec(dllimport) void Throw(const char *message, unsigned __int64 code);
+
+struct EfiCallContext {
+    // Only the allocator at +80h is read by this DLL; the fields before it are not inferred yet.
+    unsigned char unknown_[0x80];
+    ImcAllocator *allocator;
+};
 
 }  // namespace Efi
 

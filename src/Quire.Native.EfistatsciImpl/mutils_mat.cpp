@@ -34,4 +34,58 @@ const char *matcpx_assign_scalar(_dcomplex value, void *context, _dcomplex_mat *
     return assign_scalar(value, context, m);
 }
 
+const char *matdbl_sum(Efi::EfiCallContext *ctx, const _double_mat *m, void *context, double *out) {
+    return sum(ctx, m, context, out);
+}
+
+const char *matflt_sum(Efi::EfiCallContext *ctx, const _float_mat *m, void *context, float *out) {
+    return sum(ctx, m, context, out);
+}
+
+const char *mats32_sum(Efi::EfiCallContext *ctx, const _sint32_mat *m, void *context, long *out) {
+    return sum(ctx, m, context, out);
+}
+
+const char *mats16_sum(Efi::EfiCallContext *ctx, const _sint16_mat *m, void *context, short *out) {
+    return sum(ctx, m, context, out);
+}
+
+const char *matu32_sum(Efi::EfiCallContext *ctx, const _uint32_mat *m, void *context, unsigned int *out) {
+    return sum(ctx, m, context, out);
+}
+
+const char *matu16_sum(Efi::EfiCallContext *ctx, const _uint16_mat *m, void *context, unsigned short *out) {
+    return sum(ctx, m, context, out);
+}
+
+const char *matu8_sum(Efi::EfiCallContext *ctx, const _uint8_mat *m, void *context, unsigned char *out) {
+    return sum(ctx, m, context, out);
+}
+
+void matdbl_validate(const _double_mat *m) { validate(m); }
+void matflt_validate(const _float_mat *m) { validate(m); }
+void mats32_validate(const _sint32_mat *m) { validate(m); }
+void mats16_validate(const _sint16_mat *m) { validate(m); }
+void matu32_validate(const _uint32_mat *m) { validate(m); }
+void matu16_validate(const _uint16_mat *m) { validate(m); }
+void matu8_validate(const _uint8_mat *m) { validate(m); }
+void matcpx_validate(const _dcomplex_mat *m) { validate(m); }
+
+void matdbl_wrap_data(_double_mat *m, double *data, long rows, long cols) { wrap_data(m, data, rows, cols); }
+void matflt_wrap_data(_float_mat *m, float *data, long rows, long cols) { wrap_data(m, data, rows, cols); }
+void mats32_wrap_data(_sint32_mat *m, long *data, long rows, long cols) { wrap_data(m, data, rows, cols); }
+void mats16_wrap_data(_sint16_mat *m, short *data, long rows, long cols) { wrap_data(m, data, rows, cols); }
+void matu32_wrap_data(_uint32_mat *m, unsigned int *data, long rows, long cols) { wrap_data(m, data, rows, cols); }
+void matu16_wrap_data(_uint16_mat *m, unsigned short *data, long rows, long cols) { wrap_data(m, data, rows, cols); }
+void matu8_wrap_data(_uint8_mat *m, unsigned char *data, long rows, long cols) { wrap_data(m, data, rows, cols); }
+
+void matdbl_malloc(Efi::EfiCallContext *ctx, _double_mat *m, long rows, long cols) { allocate_mat(ctx, m, rows, cols); }
+void matflt_malloc(Efi::EfiCallContext *ctx, _float_mat *m, long rows, long cols) { allocate_mat(ctx, m, rows, cols); }
+void mats32_malloc(Efi::EfiCallContext *ctx, _sint32_mat *m, long rows, long cols) { allocate_mat(ctx, m, rows, cols); }
+void mats16_malloc(Efi::EfiCallContext *ctx, _sint16_mat *m, long rows, long cols) { allocate_mat(ctx, m, rows, cols); }
+void matu32_malloc(Efi::EfiCallContext *ctx, _uint32_mat *m, long rows, long cols) { allocate_mat(ctx, m, rows, cols); }
+void matu16_malloc(Efi::EfiCallContext *ctx, _uint16_mat *m, long rows, long cols) { allocate_mat(ctx, m, rows, cols); }
+void matu8_malloc(Efi::EfiCallContext *ctx, _uint8_mat *m, long rows, long cols) { allocate_mat(ctx, m, rows, cols); }
+void matcpx_malloc(Efi::EfiCallContext *ctx, _dcomplex_mat *m, long rows, long cols) { allocate_mat(ctx, m, rows, cols); }
+
 }  // namespace mutils

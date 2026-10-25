@@ -1,6 +1,6 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 16 of 781 exports pass strict byte validation (0 unverified targets). Export parity: 764 missing, 0 extra.
+**Status: incomplete.** 43 of 781 exports pass strict byte validation (0 unverified targets). Export parity: 730 missing, 0 extra. Present but not matching: 8 exports (7 `sum`, 1 `cpx assign_scalar`), parked below.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261025h1` (from `main` at `31b4238b`)
@@ -13,50 +13,52 @@
 
 | Family | Exports | Strict result | Notes |
 |---|---|---|---|
-| `assign_scalar` | `matdbl`, `matflt`, `mats32`, `mats16`, `matu32`, `matu16`, `matu8` | 7/7 OK, 0 unverified | One template `assign_scalar<T>` in `mutils_mat.h`; one-line exports in `mutils_mat.cpp`. |
-| `mutil_interrupt` | `mutil_interrupt` | 1/1 OK | `mutils_interrupt.cpp`, over the shared inline in `efi_common.h`. |
+| `assign_scalar` | `matdbl`, `matflt`, `mats32`, `mats16`, `matu32`, `matu16`, `matu8` | 7/7 OK | `assign_scalar<T>` in `mutils_mat.h`. |
+| `validate` | `mat{dbl,flt,s32,s16,u32,u16,u8,cpx}_validate` | 8/8 OK | One body (linker-folded in the original, `0x86460`). Reads `rows`/`cols` into locals first; the direct form picked another register. |
+| `wrap_data` | 7 typed exports (no `cpx`) | 7/7 OK | Same body for all seven (`0x859e0`). |
+| `malloc` | 8 typed exports | 8/8 OK | `allocate_mat<T>`; the allocator is `EfiCallContext`'s pointer at +80h. |
+| `mat_set` | `matset_free`, `matset_free_matrices`, `matset_validate` | 3/3 OK | `mutils_set.{h,cpp}`. `matset_free_matrices` is `validate` alone. |
+| `pgn_chain_free` | `pgn_chain_free` | 1/1 OK | Early return for a null or empty chain. |
+| `mutil_interrupt` | `mutil_interrupt` | 1/1 OK | Over the shared inline in `efi_common.h`. |
 | Trivial (`ret 0` / `xor eax,eax; ret`) | `mutil_abort`, `mutil_msg_print`, `mutil_msg_print_line`, `mutil_msg_print_time`, `mutil_msg_set_level`, `mutil_rand_end` | 6/6 OK | `mutils_msg.{h,cpp}`. `_mutil_msg_level` values not inferred yet. |
 | Allocator wrappers | `mutil_malloc`, `mutil_calloc` | 2/2 OK | `mutils_alloc.{h,cpp}`. |
 
 Shared foundation (`src/Quire.Native.EfistatsciImpl/efi_common.h`):
 - `Efi::Throw`: `[[noreturn]] __declspec(dllimport)`, import `?Throw@Efi@@YAXPEBD_K@Z` (IAT `0xac220`), pinned in `efiutl.def`.
 - `typed_mat<T>`: `rows` @0, `cols` @4, `size` @8, `data` @10h. Each element type derives from it (`_double_mat`, ...).
+- `Efi::EfiCallContext`: only the allocator pointer at +80h is inferred.
 - `mutil_interrupt_step` (inline `double`, 1e6 in the image) and `mutil_interrupt_inline` (returns `unsigned char`).
 
-Manifest entries recorded with `native_targets.py` (`docs/mirror/native/internal-targets.json`, `efistatsci_.dll`): the literals `"array size mismatch"` (`0xac368`) and `"null pointer"` (`0xac3d8`), the step static (`0xcc0c0`) and the `1e7` constant (`0xac908`).
+Manifest entries recorded with `native_targets.py` (`docs/mirror/native/internal-targets.json`, `efistatsci_.dll`): the literals `"array size mismatch"` (`0xac368`), `"null pointer"` (`0xac3d8`), `"Illegal data value"` (`0xac398`), the step static (`0xcc0c0`) and the `1e7` constant (`0xac908`), and the `3.0` constant `__real@4008000000000000` (`0xac7a0`) once it is recorded.
 
 ## Facts from machine code
 
 - `mutil_interrupt` returns `unsigned char` (mangled `E`), not `bool`.
 - The step static's file image holds **1000000.0** (`00 00 00 00 80 84 2E 41`), not zero. The `1e7` fallback runs only when the step reads zero. The maintainer note says it is "lazily set to 10000000.0"; the image says otherwise, so the initializer is 1e6.
 - `_univ_mat`'s type tag is a 32-bit `int` at `+18h` (`movsxd rax, dword [r8+18h]` in `matuniv_assign_scalar`).
-- Matrix layout checks are identical across all eight element types: null, `rows <= 0 || cols <= 0`, data null, and `size != rows * cols` each reach `Efi::Throw`.
+- `_mat_set`: `count` (int) @0, dims pointer @8, `total` (int) @10h, a pointer at @18h (non-null-checked).
+- `pgn_chain` (in `mutils`): count (int) @8, pointers at @10h and @18h.
+- Matrix checks reach `Efi::Throw` in this order: null matrix, `rows <= 0 || cols <= 0`, null data, `size != rows * cols`.
 
 ## Parked (D25)
 
-- **`matcpx_assign_scalar`** (`0x493c0`, 219 bytes): the candidate is 206 bytes with the plain loop, and every shape tried differs.
-  - `for (int i) data[i] = value` → 206 bytes.
-  - Pointer loop → 217.
-  - `std::fill` → 217.
-  - `std::fill_n` → 218.
-  - Store element 0, then copy it forward → 218.
-  - `_dcomplex` declared as `double v[2]`, with the loop → 206.
-  - The original stores the value as one 16-byte `movups`, then fills the rest with `rep movs` over overlapping element pairs. No flags searched (D25).
-  - The export stays in the DLL for name parity; its bytes are unverified.
+- **`matcpx_assign_scalar`** (`0x493c0`, 219 bytes): candidate 206 bytes with the plain loop. Shapes tried, all differ: plain loop 206; pointer loop 217; `std::fill` 217; `std::fill_n` 218; store element 0 then copy forward 218; `_dcomplex` as `double v[2]` 206. The original stores the value as one 16-byte `movups` and fills the rest with `rep movs` over overlapping element pairs. Flags not searched (D25).
+- **`sum` family** (`matdbl_sum` `0x7c650`, `matflt_sum` `0x7c780`, `mats{32,16}_sum`, `matu{32,16,8}_sum`): the body matches except for the epilogue. The candidate is 2 bytes longer for the integer forms (219 vs 217) and 2 bytes for `dbl` (299 vs 297), because the two `const char *` returns merge into one register (`lea rcx` + `mov rax, rcx`, `xor ecx` + `mov eax, ecx`); the original returns `lea rax`/`xor eax` directly. Five declaration orders of the locals were tried; all gave 219. `flt` is 302 vs 287 (the original unrolls by four). Parked; the exports stay in the DLL for name parity.
 
 ## Remaining work
 
-- 764 exports unimplemented. Next families in maintainer order: `siguniv_window_*` (11 exports, 56–62 bytes each), then `range`, `min`/`max`, `entropy`, then the `*univ_*` dispatchers and the internal-helper bodies.
+- 730 exports unimplemented. The `siguniv_window_*` dispatchers (11) call typed `sigdbl_window_*` exports, so they cannot link until those exist; the DLL build would fail on the unresolved symbol. They wait for their typed exports.
+- Families with only import calls (classifier, `classify.py`): `*_add`, `*_subtract`, `*_multiply*`, `*_abs`, `*_rescale`, `*_assign_submat`, `*_extract`, `*_transpose`, `*_cast_to_*`, `*_min`/`*_max`, `*_number_equal*`, `*_bit_*`, `*_permute`, `*_sum_rows`/`*_sum_cols`, `*_range`, `matuniv_wrap_*`, `mutil_rand_uniform`. Most are 300–800 bytes and need the element-type layout work above.
 - `mutil_realloc`: its `.pdata` extent conflicts with the code address (18-byte extent for a 71-byte body). Not implemented; parked for the maintainer.
 
 ## Harness notes
 
-- Strict default and manifest route work as documented in `native_bytes.py` (D23–D26). No harness changes made.
+- Strict default and the manifest route work as documented in `native_bytes.py` (D23–D26). No harness changes made.
 - Product ID (Rich header) not compared; every matching function here matched without it.
 
 ## Landing
 
-`lane_merge.py` runs `native_gate.py` for native projects (D24). See the checkpoint commit for the result.
+`lane_merge.py` refuses to run while the main checkout has uncommitted changes (`BLOCKED: commit or stash changes in both worktrees first`). Main currently holds an uncommitted `docs/mirror/work/lane-h.md` (the maintainer update below, not in any commit), so the batch is committed on the lane branch and not landed. The maintainer must commit or stash that file in `C:/Projects/Quire` before the batch can land.
 
 ## Maintainer update 2026-10-25
 

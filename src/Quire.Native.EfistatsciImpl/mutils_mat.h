@@ -19,6 +19,88 @@ const char *assign_scalar(T value, void *context, typed_mat<T> *m) {
     return nullptr;
 }
 
+template <typename T>
+void validate(const typed_mat<T> *m) {
+    if (m == nullptr) Efi::Throw("null pointer", ~0ull);
+    int rows = m->rows;
+    int cols = m->cols;
+    if (rows <= 0 || cols <= 0) Efi::Throw("array size mismatch", ~0ull);
+    if (m->data == nullptr) Efi::Throw("null pointer", ~0ull);
+    if (m->size != rows * cols) Efi::Throw("array size mismatch", ~0ull);
+}
+
+template <typename T>
+void wrap_data(typed_mat<T> *m, T *data, int rows, int cols) {
+    if (m == nullptr) Efi::Throw("null pointer", ~0ull);
+    m->rows = rows;
+    m->cols = cols;
+    m->data = data;
+    m->size = rows * cols;
+    if (rows <= 0 || cols <= 0) Efi::Throw("array size mismatch", ~0ull);
+    if (data == nullptr) Efi::Throw("null pointer", ~0ull);
+}
+
+template <typename T>
+void allocate_mat(Efi::EfiCallContext *ctx, typed_mat<T> *m, int rows, int cols) {
+    if (m == nullptr) Efi::Throw("null pointer", ~0ull);
+    if (rows <= 0 || cols <= 0) Efi::Throw("array size mismatch", ~0ull);
+    m->rows = rows;
+    m->cols = cols;
+    m->size = rows * cols;
+    m->data = static_cast<T *>(ctx->allocator->allocate_array(m->size * sizeof(T)));
+}
+
+template <typename T>
+const char *sum(Efi::EfiCallContext *, const typed_mat<T> *m, void *context, T *out) {
+    validate(m);
+    T *data = m->data;
+    int size = m->size;
+    if (out == nullptr) return "null pointer";
+    *out = 0;
+    T total = 0;
+    for (int i = 0; i < size; ++i) {
+        total += data[i];
+        *out = total;
+    }
+    double work = (double)size * 3.0;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+    return nullptr;
+}
+
+EFI_EXPORT const char *matdbl_sum(Efi::EfiCallContext *ctx, const _double_mat *m, void *context, double *out);
+EFI_EXPORT const char *matflt_sum(Efi::EfiCallContext *ctx, const _float_mat *m, void *context, float *out);
+EFI_EXPORT const char *mats32_sum(Efi::EfiCallContext *ctx, const _sint32_mat *m, void *context, long *out);
+EFI_EXPORT const char *mats16_sum(Efi::EfiCallContext *ctx, const _sint16_mat *m, void *context, short *out);
+EFI_EXPORT const char *matu32_sum(Efi::EfiCallContext *ctx, const _uint32_mat *m, void *context, unsigned int *out);
+EFI_EXPORT const char *matu16_sum(Efi::EfiCallContext *ctx, const _uint16_mat *m, void *context, unsigned short *out);
+EFI_EXPORT const char *matu8_sum(Efi::EfiCallContext *ctx, const _uint8_mat *m, void *context, unsigned char *out);
+
+EFI_EXPORT void matdbl_validate(const _double_mat *m);
+EFI_EXPORT void matflt_validate(const _float_mat *m);
+EFI_EXPORT void mats32_validate(const _sint32_mat *m);
+EFI_EXPORT void mats16_validate(const _sint16_mat *m);
+EFI_EXPORT void matu32_validate(const _uint32_mat *m);
+EFI_EXPORT void matu16_validate(const _uint16_mat *m);
+EFI_EXPORT void matu8_validate(const _uint8_mat *m);
+EFI_EXPORT void matcpx_validate(const _dcomplex_mat *m);
+
+EFI_EXPORT void matdbl_wrap_data(_double_mat *m, double *data, long rows, long cols);
+EFI_EXPORT void matflt_wrap_data(_float_mat *m, float *data, long rows, long cols);
+EFI_EXPORT void mats32_wrap_data(_sint32_mat *m, long *data, long rows, long cols);
+EFI_EXPORT void mats16_wrap_data(_sint16_mat *m, short *data, long rows, long cols);
+EFI_EXPORT void matu32_wrap_data(_uint32_mat *m, unsigned int *data, long rows, long cols);
+EFI_EXPORT void matu16_wrap_data(_uint16_mat *m, unsigned short *data, long rows, long cols);
+EFI_EXPORT void matu8_wrap_data(_uint8_mat *m, unsigned char *data, long rows, long cols);
+
+EFI_EXPORT void matdbl_malloc(Efi::EfiCallContext *ctx, _double_mat *m, long rows, long cols);
+EFI_EXPORT void matflt_malloc(Efi::EfiCallContext *ctx, _float_mat *m, long rows, long cols);
+EFI_EXPORT void mats32_malloc(Efi::EfiCallContext *ctx, _sint32_mat *m, long rows, long cols);
+EFI_EXPORT void mats16_malloc(Efi::EfiCallContext *ctx, _sint16_mat *m, long rows, long cols);
+EFI_EXPORT void matu32_malloc(Efi::EfiCallContext *ctx, _uint32_mat *m, long rows, long cols);
+EFI_EXPORT void matu16_malloc(Efi::EfiCallContext *ctx, _uint16_mat *m, long rows, long cols);
+EFI_EXPORT void matu8_malloc(Efi::EfiCallContext *ctx, _uint8_mat *m, long rows, long cols);
+EFI_EXPORT void matcpx_malloc(Efi::EfiCallContext *ctx, _dcomplex_mat *m, long rows, long cols);
+
 EFI_EXPORT const char *matdbl_assign_scalar(double value, void *context, _double_mat *m);
 EFI_EXPORT const char *matflt_assign_scalar(float value, void *context, _float_mat *m);
 EFI_EXPORT const char *mats32_assign_scalar(long value, void *context, _sint32_mat *m);
