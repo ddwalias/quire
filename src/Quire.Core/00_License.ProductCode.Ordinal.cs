@@ -5,9 +5,9 @@ namespace Quire.License;
 public partial class ProductCode
 {
     // Keep these members before the lambda so it emits Mathcad's <get_IsValid>b__18_0 ordinal.
-    private string _part1;
-    private string _part2;
-    private string _part3;
+    private string _part1 = "";
+    private string _part2 = "";
+    private string _part3 = "";
 
     public override string ToString() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -78,5 +78,9 @@ public partial class ProductCode
         start = global::System.Math.Min(value.Length, start);
         length = global::System.Math.Min(value.Length - start, length);
         return value.Substring(start, length).ToUpperInvariant();
+    }
+
+    public ProductCode()
+    {
     }
 }

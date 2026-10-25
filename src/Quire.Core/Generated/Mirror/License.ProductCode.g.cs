@@ -11,6 +11,4 @@ namespace Quire.License;
 [global::Quire.Mirror.MirrorOf("Ptc.License.ProductCode, Ptc.Core")]
 public partial class ProductCode
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ProductCode() { }
 }
