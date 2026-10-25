@@ -13,9 +13,6 @@ public partial class ImageUtils
 {
     [global::Quire.Mirror.MirrorStub]
     public string ImageExtension;
-    [global::Quire.Mirror.MirrorStub]
-    private static void DumpBounds(global::System.Windows.UIElement element, global::System.Windows.UIElement ancestor = default, string prefix = "") => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ImageUtils+BitmapFormats, Ptc.Core")]
     public static partial class BitmapFormats
     {
