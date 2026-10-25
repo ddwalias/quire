@@ -1,6 +1,6 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 70 of 781 exports match the original in the `/GL` + LTCG linked DLL (modulo layout-dependent displacements, which were checked by content). The 44 earlier exports were verified per object, before the `/GL` build; the eight `assign_submat` exports (all element types) were verified only in the linked DLL. `native_bytes.py` cannot verify `/GL` objects (they have no machine code), so the native gate needs a linked-DLL mode from the maintainer.
+**Status: incomplete.** 69 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): all 44 earlier exports and 25 new ones. `matdbl_assign_submat` is parked (below). No regressions in the linked run.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261025h1` (from `main` at `31b4238b`)
@@ -31,6 +31,10 @@ Shared foundation (`src/Quire.Native.EfistatsciImpl/efi_common.h`):
 - `mutil_interrupt_step` (inline `double`, 1e6 in the image) and `mutil_interrupt_inline` (returns `unsigned char`).
 
 Manifest entries recorded with `native_targets.py` (`docs/mirror/native/internal-targets.json`, `efistatsci_.dll`): the literals `"array size mismatch"` (`0xac368`), `"null pointer"` (`0xac3d8`), `"Illegal data value"` (`0xac398`), the step static (`0xcc0c0`) and the `1e7` constant (`0xac908`).
+
+## Parked in this batch (linked mode)
+
+- **`matdbl_assign_submat`** (`0x49cd0`, 436 bytes): in a two-object scratch link the body matches (`MATCH modulo displacements`), but in the full linked DLL the candidate is 124 instructions against 123 (an extra `push rbx`). The difference comes from whole-program codegen with the other exports, not from this function's source. Left out of the DLL. The other seven `assign_submat` exports pass.
 
 ## Facts from machine code
 

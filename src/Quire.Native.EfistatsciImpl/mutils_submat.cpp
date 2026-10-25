@@ -20,27 +20,6 @@ __forceinline void check_dst_f(const typed_mat<T> *m) {
     if (m->size != rows * cols) Efi::Throw("array size mismatch", ~0ull);
 }
 
-EFI_EXPORT const char *matdbl_assign_submat(const _double_mat *src, long row, long col, void *context, _double_mat *dst) {
-    check_src_f(src);
-    check_dst_f(dst);
-    if (row < 0 || dst->rows < src->rows + row || col < 0 || dst->cols < src->cols + col) return "array size mismatch";
-    if (src->data == dst->data) return "Illegal memory address";
-    double total = 0.0;
-    double progress = 0.0;
-    for (int i = 0; i < src->rows; ++i) {
-        for (int j = 0; j < src->cols; ++j) {
-            dst->data[(i + row) * dst->cols + j + col] = src->data[i * src->cols + j];
-        }
-        total += (double)(src->cols * 8);
-        if (progress < total) {
-            if (mutil_interrupt_step == 0.0) mutil_interrupt_step = 10000000.0;
-            progress += mutil_interrupt_step;
-        }
-    }
-    (void)context;
-    return nullptr;
-}
-
 EFI_EXPORT const char *matflt_assign_submat(const _float_mat *src, long row, long col, void *context, _float_mat *dst) {
     check_src_f(src);
     check_dst_f(dst);
