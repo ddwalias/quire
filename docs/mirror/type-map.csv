@@ -2924,20 +2924,20 @@ Ptc.Core.dll,Ptc.OLE.OleResult,class,public,Quire.OLE.OleResult,missing,3,manage
 Ptc.Core.dll,Ptc.Matrices.IMatrix`1,interface,public,Quire.Matrices.IMatrix`1,missing,3,managed
 Ptc.Core.dll,Ptc.Matrices.MatrixHelper,class,public,Quire.Matrices.MatrixHelper,missing,3,managed
 Ptc.Core.dll,Ptc.Matrices.SparseMatrix`1,class,public,Quire.Matrices.SparseMatrix`1,missing,3,managed
-Ptc.Core.dll,Ptc.License.ILicenseManager,interface,public,Quire.License.ILicenseManager,deferred: licensing,3,managed
-Ptc.Core.dll,Ptc.License.EncryptorVersion,class,public,Quire.License.EncryptorVersion,deferred: licensing,3,managed
-Ptc.Core.dll,Ptc.License.ILicenseProvider,interface,public,Quire.License.ILicenseProvider,deferred: licensing,3,managed
-Ptc.Core.dll,Ptc.License.LicenseAcquisitionResult,class,public,Quire.License.LicenseAcquisitionResult,deferred: licensing,3,managed
-Ptc.Core.dll,Ptc.License.LicenseConfigProvider,class,public,Quire.License.LicenseConfigProvider,deferred: licensing,3,managed
-Ptc.Core.dll,Ptc.License.LicenseMessageName,class,public,Quire.License.LicenseMessageName,deferred: licensing,3,managed
-Ptc.Core.dll,Ptc.License.LicenseCbArgs,class,public,Quire.License.LicenseCbArgs,deferred: licensing,3,managed
-Ptc.Core.dll,Ptc.License.LicenseType,class,public,Quire.License.LicenseType,deferred: licensing,3,managed
-Ptc.Core.dll,Ptc.License.LicenseTypeBitFlags,class,public,Quire.License.LicenseTypeBitFlags,deferred: licensing,3,managed
-Ptc.Core.dll,Ptc.License.LicenseBorrowStatus,class,public,Quire.License.LicenseBorrowStatus,deferred: licensing,3,managed
-Ptc.Core.dll,Ptc.License.LicenseManager,class,public,Quire.License.LicenseManager,deferred: licensing,3,managed
-Ptc.Core.dll,Ptc.License.LicenseSource,class,public,Quire.License.LicenseSource,deferred: licensing,3,managed
-Ptc.Core.dll,Ptc.License.LicenseUriType,class,public,Quire.License.LicenseUriType,deferred: licensing,3,managed
-Ptc.Core.dll,Ptc.License.ProductCode,class,public,Quire.License.ProductCode,deferred: licensing,3,managed
+Ptc.Core.dll,Ptc.License.ILicenseManager,interface,public,Quire.License.ILicenseManager,missing,3,managed
+Ptc.Core.dll,Ptc.License.EncryptorVersion,class,public,Quire.License.EncryptorVersion,missing,3,managed
+Ptc.Core.dll,Ptc.License.ILicenseProvider,interface,public,Quire.License.ILicenseProvider,missing,3,managed
+Ptc.Core.dll,Ptc.License.LicenseAcquisitionResult,class,public,Quire.License.LicenseAcquisitionResult,missing,3,managed
+Ptc.Core.dll,Ptc.License.LicenseConfigProvider,class,public,Quire.License.LicenseConfigProvider,missing,3,managed
+Ptc.Core.dll,Ptc.License.LicenseMessageName,class,public,Quire.License.LicenseMessageName,missing,3,managed
+Ptc.Core.dll,Ptc.License.LicenseCbArgs,class,public,Quire.License.LicenseCbArgs,missing,3,managed
+Ptc.Core.dll,Ptc.License.LicenseType,class,public,Quire.License.LicenseType,missing,3,managed
+Ptc.Core.dll,Ptc.License.LicenseTypeBitFlags,class,public,Quire.License.LicenseTypeBitFlags,missing,3,managed
+Ptc.Core.dll,Ptc.License.LicenseBorrowStatus,class,public,Quire.License.LicenseBorrowStatus,missing,3,managed
+Ptc.Core.dll,Ptc.License.LicenseManager,class,public,Quire.License.LicenseManager,missing,3,managed
+Ptc.Core.dll,Ptc.License.LicenseSource,class,public,Quire.License.LicenseSource,missing,3,managed
+Ptc.Core.dll,Ptc.License.LicenseUriType,class,public,Quire.License.LicenseUriType,missing,3,managed
+Ptc.Core.dll,Ptc.License.ProductCode,class,public,Quire.License.ProductCode,missing,3,managed
 Ptc.Core.dll,Ptc.IO.EmbeddedResourceCopier,class,public,Quire.IO.EmbeddedResourceCopier,missing,3,managed
 Ptc.Core.dll,Ptc.IO.FileOperationsProvider,class,public,Quire.IO.FileOperationsProvider,missing,3,managed
 Ptc.Core.dll,Ptc.IO.FileUtils,class,public,Quire.IO.FileUtils,missing,3,managed
@@ -3109,9 +3109,9 @@ Ptc.Core.dll,Ptc.PersistentData.cachedWorksheetRegionType+headersContainer,class
 Ptc.Core.dll,Ptc.PersistentData.cachedWorksheetRegionType+footersContainer,class,public,Quire.PersistentData.cachedWorksheetRegionType+footersContainer,missing,3,managed
 Ptc.Core.dll,Ptc.Matrices.SparseMatrix`1+SparseMatrixChangedEventHandler,class,public,Quire.Matrices.SparseMatrix`1+SparseMatrixChangedEventHandler,missing,3,managed
 Ptc.Core.dll,Ptc.Matrices.SparseMatrix`1+SparseMatrixItemChangedEventArgs,class,public,Quire.Matrices.SparseMatrix`1+SparseMatrixItemChangedEventArgs,missing,3,managed
-Ptc.Core.dll,Ptc.License.ILicenseProvider+LiAgentSuiteT,class,public,Quire.License.ILicenseProvider+LiAgentSuiteT,deferred: licensing,3,managed
-Ptc.Core.dll,Ptc.License.LicenseConfigProvider+XmlNodeNames,class,internal,Quire.License.LicenseConfigProvider+XmlNodeNames,deferred: licensing,3,managed
-Ptc.Core.dll,Ptc.License.LicenseManager+PropertyNames,class,public,Quire.License.LicenseManager+PropertyNames,deferred: licensing,3,managed
+Ptc.Core.dll,Ptc.License.ILicenseProvider+LiAgentSuiteT,class,public,Quire.License.ILicenseProvider+LiAgentSuiteT,missing,3,managed
+Ptc.Core.dll,Ptc.License.LicenseConfigProvider+XmlNodeNames,class,internal,Quire.License.LicenseConfigProvider+XmlNodeNames,missing,3,managed
+Ptc.Core.dll,Ptc.License.LicenseManager+PropertyNames,class,public,Quire.License.LicenseManager+PropertyNames,missing,3,managed
 Ptc.Core.dll,Ptc.IO.UrlUtils+RegConstants,class,internal,Quire.IO.UrlUtils+RegConstants,missing,3,managed
 Ptc.Core.dll,Ptc.IO.UrlUtils+UriProtocols,class,internal,Quire.IO.UrlUtils+UriProtocols,missing,3,managed
 Ptc.Core.dll,Ptc.IO.UrlUtils+UriProtocolCreationData,class,internal,Quire.IO.UrlUtils+UriProtocolCreationData,missing,3,managed
