@@ -1,4 +1,7 @@
 #nullable disable
+using Quire.Mirror;
+using Quire.Properties;
+
 
 namespace Quire.License;
 
@@ -395,4 +398,52 @@ public sealed partial class LicenseManager
     }
 
     private static bool IsValidFileName(string fileName) => !string.IsNullOrEmpty(fileName);
+
+    [MirrorVerified("Release IL")]
+    public void SetNoLicense()
+    {
+        ClearLicenseProperties(false);
+        UpdateLicenseStatus();
+    }
+
+    [MirrorVerified("Release IL")]
+    private readonly LicenseSource _licenseSource;
+
+    [MirrorVerified("Release IL")]
+    public void InitLicense()
+    {
+        ClearLicenseProperties(false);
+        UpdateApplicationVariant();
+        _licenseSource.Load();
+        UpdateLicenseStatus();
+    }
+
+    [MirrorVerified("Release IL")]
+    public void ReapplyLicense()
+    {
+        ClearLicenseProperties(true);
+        UpdateLicenseStatus();
+    }
+
+    [MirrorVerified("Release IL")]
+    public void ResetLicenseSettings()
+    {
+        Settings.Default.Reset();
+        InitLicense();
+    }
+
+    [MirrorVerified("Release IL")]
+    private ILicenseProvider _provider;
+
+    [MirrorVerified("Release IL")]
+    public byte[] GetEncryptionKey(EncryptorVersion ver) => _provider.GetEncryptionKey(ver);
+
+    [MirrorVerified("Release IL")]
+    public byte[] GetEncryptionInitVector(EncryptorVersion ver) => _provider.GetEncryptionInitVector(ver);
+
+    [MirrorVerified("Release IL")]
+    public event Action LicenseStatusChanged;
+
+    [MirrorVerified("Release IL")]
+    public event Action EngNotebookConnectionStatusChanged;
 }
