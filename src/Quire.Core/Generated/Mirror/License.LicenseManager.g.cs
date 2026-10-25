@@ -86,8 +86,6 @@ public sealed partial class LicenseManager : global::System.ComponentModel.INoti
     [global::Quire.Mirror.MirrorStub]
     public event global::System.EventHandler LicenseTypeChanged;
     [global::Quire.Mirror.MirrorStub]
-    public static void CreateInstance(global::Quire.License.ILicenseProvider provider, global::System.Windows.ResourceDictionary licenseMessageDictionary) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private LicenseManager(global::Quire.License.ILicenseProvider provider, global::System.Windows.ResourceDictionary licenseMessageDictionary) { }
     [global::Quire.Mirror.MirrorStub]
     public void UpdateApplicationVariant() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -101,8 +99,6 @@ public sealed partial class LicenseManager : global::System.ComponentModel.INoti
     public void FireEngNotebookConnectionStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool IsValidLicense() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsValidFileName(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ClearLicenseProperties(bool keepLicenseLocation = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

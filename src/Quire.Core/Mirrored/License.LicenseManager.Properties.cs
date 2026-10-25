@@ -4,6 +4,11 @@ namespace Quire.License;
 
 public sealed partial class LicenseManager
 {
+    public static void CreateInstance(ILicenseProvider provider, global::System.Windows.ResourceDictionary licenseMessageDictionary)
+    {
+        _instance = new LicenseManager(provider, licenseMessageDictionary);
+    }
+
     public static ILicenseManager Instance => _instance;
 
     public bool HasValidLicense
@@ -388,4 +393,6 @@ public sealed partial class LicenseManager
             ? _provider.BorrowExpirationDate()
             : null;
     }
+
+    private static bool IsValidFileName(string fileName) => !string.IsNullOrEmpty(fileName);
 }
