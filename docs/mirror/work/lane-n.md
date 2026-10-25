@@ -354,3 +354,10 @@
   - `PrimeExceptionLogger` (`OpenFilesListGetter`, `GetExceptionData`, `GetOpenFilesData`, `GetUndoStackData`, `GetLicenseTypeData`, `GetApplicationVersionData`, `GetMiscInfo`)
 - Report: `.mirror-cache/release-il-efe0c13161e6/release-il.json` — PASS, 1,229 checked, 1,229 exact, 0 failures, 2,684 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 37 — Properties.Settings
+
+- Scope:
+  - `Properties.Settings` (`HandleFocusForIme`, `EnableFontCaching`, `MaxNumberOf2dPoints`, `MaxNumberOf3dPoints`, `MinPointsForDensity`, `MinPointsForForceDensity`, `DensityPointsPrintDPI`, `.cctor`)
+- Report: `.mirror-cache/release-il-a71c3647f7a9/release-il.json` — PASS, 1,244 checked, 1,244 exact, 0 failures, 2,670 unfinished.
+- Remaining mismatches: none in claimed batch.
