@@ -19,7 +19,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />
@@ -62,6 +62,7 @@
     <ClCompile Include="mutils_mat.cpp" />
     <ClCompile Include="mutils_msg.cpp" />
     <ClCompile Include="mutils_set.cpp" />
+    <ClCompile Include="mutils_submat.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="efiutl.def" />

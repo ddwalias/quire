@@ -1,12 +1,12 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 44 of 781 exports pass strict byte validation (0 unverified targets; every exported function in the build matches). Export parity: 737 missing, 0 extra. The 737 missing include 33 parked exports, left out of the DLL (below).
+**Status: incomplete.** 51 of 781 exports match the original in the `/GL` + LTCG linked DLL (modulo layout-dependent displacements, which were checked by content). The 44 earlier exports were verified per object, before the `/GL` build; the seven `assign_submat` exports were verified only in the linked DLL. `native_bytes.py` cannot verify `/GL` objects (they have no machine code), so the native gate needs a linked-DLL mode from the maintainer.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261025h1` (from `main` at `31b4238b`)
 - **Worktree:** `C:/Projects/Quire-wt/lane-h-efistatsci-2`
 - **Harness:** `tools/validation/native_bytes.py` and `native_targets.py` on `main`, unmodified.
-- **Build:** MSBuild `Quire.Native.EfistatsciImpl.vcxproj`, Release|x64, toolset v145, `cl` 19.51.36246 from `C:\BuildTools\VS18.6-msvc`, `/O2 /Gy /GS /EHa /MD /std:c++17 /W4 /WX` with `_CRTIMP2=__declspec(dllimport)` (D28). Output in `.mirror-cache/bin/`.
+- **Build:** MSBuild `Quire.Native.EfistatsciImpl.vcxproj`, Release|x64, toolset v145, `cl` 19.51.36246 from `C:\BuildTools\VS18.6-msvc`, `/O2 /Gy /GS /EHa /MD /std:c++17 /W4 /WX` with `_CRTIMP2=__declspec(dllimport)` (D28), and `WholeProgramOptimization` true (`/GL` + LTCG). The original objects are `/GL` (D25); this build reproduces its entry code (`mov r10, rcx`), where the per-object build gives `mov r9, rcx`. Output in `.mirror-cache/bin/`.
 - **Original disassembly:** `.mirror-cache/orig/efistatsci.asm` (dumpbin, ignored, D15).
 
 ## Completed groups
@@ -32,6 +32,9 @@ Shared foundation (`src/Quire.Native.EfistatsciImpl/efi_common.h`):
 Manifest entries recorded with `native_targets.py` (`docs/mirror/native/internal-targets.json`, `efistatsci_.dll`): the literals `"array size mismatch"` (`0xac368`), `"null pointer"` (`0xac3d8`), `"Illegal data value"` (`0xac398`), the step static (`0xcc0c0`) and the `1e7` constant (`0xac908`).
 
 ## Facts from machine code
+
+- **Build mode decides register choice.** The `assign_submat` entry copy is `mov r10, rcx` in the original and in the `/GL` + LTCG build; `/O1`, `/Os`, `/Ot`, `/GS-`, `/Gy-`, `/EHsc`, `/Oi-` and compiler build 36260 all give `mov r9, rcx` per object.
+- **Source shapes still matter under `/GL`:** the bounds error test is `dst->rows < src->rows + row`; the source validate uses fresh field reads (`m->rows * m->cols`) and the destination reads `cols` first. The interrupt work is `cols * 8` for every element type.
 
 - `mutil_interrupt` returns `unsigned char` (mangled `E`), not `bool`.
 - The step static's file image holds **1000000.0** (`00 00 00 00 80 84 2E 41`), not zero. The `1e7` fallback runs only when the step reads zero. The maintainer note says it is "lazily set to 10000000.0"; the image says otherwise, so the initializer is 1e6.
