@@ -56,7 +56,6 @@
     <ClInclude Include="efi_common.h" />
     <ClInclude Include="mutils_mat.h" />
     <ClInclude Include="mutils_msg.h" />
-    <ClInclude Include="mutils_mat_ops.h" />
     <ClInclude Include="mutils_set.h" />
     <ClCompile Include="mutils_alloc.cpp" />
     <ClCompile Include="mutils_interrupt.cpp" />
