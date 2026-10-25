@@ -11,47 +11,6 @@ namespace Quire.License;
 [global::Quire.Mirror.MirrorOf("Ptc.License.ILicenseProvider, Ptc.Core")]
 public partial interface ILicenseProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Delegate1<global::Quire.License.LicenseCbArgs> DisplayLicenseMessage { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void SetFastRefresh(bool fast) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool HasBorrows() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<global::System.DateTime> GetIssueDate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<global::System.DateTime> GetExpirationDate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetHostId() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetCustomerNumber() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool HasLicense(global::Quire.License.LicenseSource licenseSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool BorrowLicense(global::System.DateTime borrowUntil, global::Quire.License.LicenseSource licenseSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool ReturnLicense() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<global::System.DateTime> BorrowExpirationDate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool ReleaseLicense() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool RefreshLicense() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsAcademicLicense() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsHomeUseLicense() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsSubscriptionLicense() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsUsingReleaseFeature() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    byte[] GetEncryptionKey(global::Quire.License.EncryptorVersion encryptorVersion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    byte[] GetEncryptionInitVector(global::Quire.License.EncryptorVersion encryptorVersion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int UpdateApplicationVariant() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     [global::Quire.Mirror.MirrorOf("Ptc.License.ILicenseProvider+LiAgentSuiteT, Ptc.Core")]
     public enum LiAgentSuiteT
     {
