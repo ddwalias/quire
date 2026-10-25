@@ -65,6 +65,7 @@ IMAGE_SCN_LNK_COMDAT = 0x00001000
 IMAGE_SCN_MEM_EXECUTE = 0x20000000
 IMAGE_COMDAT_SELECT_NODUPLICATES = 1
 IMAGE_SYM_CLASS_LABEL = 6
+IMAGE_SYM_CLASS_WEAK_EXTERNAL = 105
 UNW_FLAG_CHAININFO = 0x4
 # AMD64 COFF relocation types whose field width is 8 bytes (ADDR64) or 4 bytes (everything else).
 RELOC_WIDTH = {IMAGE_REL_AMD64_ADDR64: 8, **{k: 4 for k in range(IMAGE_REL_AMD64_ADDR32NB, IMAGE_REL_AMD64_REL32_5 + 1)}}
@@ -94,6 +95,7 @@ class Symbol:
     section: int
     storage: int
     type: int
+    default: int = -1  # a weak external's default definition (symbol index), from its auxiliary record
 
 
 @dataclass
@@ -370,6 +372,8 @@ def read_coff(path):
         raw = d[symptr + 18 * i:symptr + 18 * i + 18]
         value, sec, typ, storage, aux = struct.unpack_from("<IhHBB", raw, 8)
         symbols[i] = Symbol(name_of(raw[:8]), value, sec, storage, typ)
+        if aux and storage == IMAGE_SYM_CLASS_WEAK_EXTERNAL:
+            symbols[i].default = struct.unpack_from("<I", d, symptr + 18 * (i + 1))[0]
         # A COMDAT section's definition (its static section symbol) carries the selection in its auxiliary record.
         if aux and storage == 3 and sec > 0 and sections[sec - 1].selection == -1:
             sections[sec - 1].selection = d[symptr + 18 * (i + 1) + 14]
@@ -396,6 +400,11 @@ def _spans(path):
         targets, statics = {}, {}
         for r in relocs:
             target = symbols[r.symbol] if 0 <= r.symbol < len(symbols) else None
+            weak = target is not None and target.storage == IMAGE_SYM_CLASS_WEAK_EXTERNAL
+            if weak and 0 <= target.default < len(symbols):
+                # An undefined weak external binds to its default unless another object defines it. MSVC's vtables
+                # name the vector deleting destructor (??_E) this way, defaulting to the scalar one (??_G).
+                target = symbols[target.default]
             external = target is not None and target.storage == 2
             targets[r.offset] = target.name if external else None
             if target is not None and target.storage == 3 and not target.name.startswith("."):

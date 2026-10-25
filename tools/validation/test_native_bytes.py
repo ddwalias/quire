@@ -22,12 +22,13 @@ MSPCONS_DLL = MATHCAD_DLL.with_name("mspcons.dll")
 OLEAUT32_DLL = Path(os.environ.get("SystemRoot", r"C:\Windows")) / "System32" / "oleaut32.dll"
 
 
-def coff(functions, externals=(), statics=(), local=(), data=(), comdat=None, labels=()):
+def coff(functions, externals=(), statics=(), local=(), data=(), comdat=None, labels=(), weak=()):
     """A minimal x64 COFF object: one .text section per function, each an external function symbol with its relocations.
 
     `functions` is a list of (decorated name, code bytes, [(offset, reloc type, symbol index)]). Undefined external
     symbols named in `externals` follow the function symbols, then local (static) symbols named in `statics`, so
-    relocations can target either. Defined symbols named in `local` are static, and those named in `data` are not
+    relocations can target either. Weak externals in `weak`, as (name, index of the default symbol), follow those, each
+    with its auxiliary record. Defined symbols named in `local` are static, and those named in `data` are not
     functions. `comdat` maps a function name to the COMDAT selection of its section, and `labels` adds code labels
     ($LN5) as (name, function index, offset); both come after every symbol a relocation can name. Long names go through
     the string table.
@@ -63,7 +64,9 @@ def coff(functions, externals=(), statics=(), local=(), data=(), comdat=None, la
         symbols += symbol(name, 0, 0, 2)
     for name in statics:
         symbols += symbol(name, 0, 0, 3)
-    count = len(functions) + len(externals) + len(statics)
+    for name, default in weak:  # IMAGE_WEAK_EXTERN_SEARCH_ALIAS (3) in the auxiliary record
+        symbols += symbol(name, 0, 0, 105, aux=1) + struct.pack("<II10x", default, 3)
+    count = len(functions) + len(externals) + len(statics) + 2 * len(weak)
     for i, (name, code, _) in enumerate(functions):
         if name in comdat:  # the section definition symbol and its auxiliary record, selection at offset 14
             symbols += symbol(".text", i + 1, 0, 3, aux=1) + struct.pack("<IHHIHB3x", len(code), 0, 0, 0, 0, comdat[name])
@@ -806,6 +809,17 @@ class DefinitionTests(unittest.TestCase):
         self.assertEqual(set(defs), {"f", "helper", "vt"})
         self.assertEqual((defs["f"].targets, defs["f"].statics), ({1: None}, {1: "helper"}))
         self.assertEqual((defs["helper"].data, defs["vt"].data), (False, True))
+
+    def test_relocation_to_a_weak_external_names_its_default(self):
+        # MSVC's vtable slot names the vector deleting destructor ??_E, an undefined weak external whose default is
+        # the scalar deleting destructor ??_G (symbol 0). The slot refers to ??_G.
+        data = coff([("??_G", b"\xc3", []), ("vt", bytes(8), [(0, 0x0001, 2)])],
+                    data=["vt"], weak=[("??_E", 0)])
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "t.obj"
+            path.write_bytes(data)
+            defs = definitions_in_object(path)
+        self.assertEqual(defs["vt"].targets, {0: "??_G"})
 
 
 @unittest.skipUnless(MSHEX_DLL.is_file(), "Mathcad Prime install not present")
