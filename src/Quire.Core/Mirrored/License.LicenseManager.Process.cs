@@ -37,4 +37,12 @@ public sealed partial class LicenseManager
         provider.ReleaseLicense();
         _provider = provider;
     }
+
+    private void DispatchedRefreshCallback(object state)
+    {
+        _uiThreadDispatcher.BeginInvoke(
+            new global::Quire.DelegateFunction0<bool>(RefreshLicense),
+            (global::System.Windows.Threading.DispatcherPriority)4,
+            global::System.Array.Empty<object>());
+    }
 }
