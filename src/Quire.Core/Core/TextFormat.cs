@@ -23,27 +23,52 @@ public partial class TextFormat
     [MirrorVerified("Release IL")]
     public const string DefaultTextFormatFontFamiliy = "Tahoma";
 
+    // Keep these dependency property fields in Mathcad order before Initialize.
     [MirrorVerified("Release IL")]
-    private static TextMarkerStyle GetMarkerStyleForRange(System.Windows.Documents.TextRange textRange, out bool mixed)
-    {
-        mixed = false;
-        List list = global::Quire.Wpf.WpfUtils.FindLogicalAncestor<List>(textRange.Start.Parent);
-        List list2 = global::Quire.Wpf.WpfUtils.FindLogicalAncestor<List>(textRange.End.Parent);
-        if (textRange.End.Parent is FlowDocument flowDocument)
-        {
-            list2 = flowDocument.Blocks.LastBlock as List;
-        }
-        if (list?.MarkerStyle != list2?.MarkerStyle)
-        {
-            mixed = true;
-            return TextMarkerStyle.None;
-        }
-        if (list == null)
-        {
-            return TextMarkerStyle.None;
-        }
-        return list.MarkerStyle;
-    }
+    public static readonly DependencyProperty FontFamilyProperty;
+
+    [MirrorVerified("Release IL")]
+    public static readonly DependencyProperty FontSizeProperty;
+
+    [MirrorVerified("Release IL")]
+    public static readonly DependencyProperty FontWeightProperty;
+
+    [MirrorVerified("Release IL")]
+    public static readonly DependencyProperty FontStyleProperty;
+
+    [MirrorVerified("Release IL")]
+    public static readonly DependencyProperty TextDecorationsProperty;
+
+    [MirrorVerified("Release IL")]
+    public static readonly DependencyProperty VariantsProperty;
+
+    [MirrorVerified("Release IL")]
+    public static readonly DependencyProperty BackgroundProperty;
+
+    [MirrorVerified("Release IL")]
+    public static readonly DependencyProperty ForegroundProperty;
+
+    [MirrorVerified("Release IL")]
+    public static readonly DependencyProperty MarginProperty;
+
+    [MirrorVerified("Release IL")]
+    public static readonly DependencyProperty TextAlignmentProperty;
+
+    [MirrorVerified("Release IL")]
+    public static readonly DependencyProperty TextAlignmentExtProperty;
+
+    [MirrorVerified("Release IL")]
+    public static readonly DependencyProperty NameProperty;
+
+    [MirrorVerified("Release IL")]
+    public static readonly DependencyProperty MarkerStyleProperty;
+
+    [MirrorVerified("Release IL")]
+    public static readonly DependencyProperty TextIndentProperty;
+
+    // Keep these members before Initialize to preserve Mathcad's generated closure ordinal.
+    [MirrorVerified("PtcCoreTextFormatMechanicalDifferentialTests")]
+    public TextStyleData TextStyleData { get; private set; }
 
     [MirrorVerified("Release IL")]
     public static void SetTextFormat(DependencyProperty property, object value, TextBox control)
@@ -84,6 +109,307 @@ public partial class TextFormat
         {
             control.Margin = (Thickness)value;
         }
+    }
+
+    [MirrorVerified("Release IL")]
+    public TextFormat()
+    {
+        SetDefaults();
+    }
+
+    [MirrorVerified("Release IL")]
+    public TextFormat(FlowDocument document) : this()
+    {
+        FontFamily = document.FontFamily;
+        FontSize = document.FontSize;
+        FontWeight = document.FontWeight;
+        FontStyle = document.FontStyle;
+        Background = document.Background ?? Background;
+        Foreground = document.Foreground;
+        TextAlignment = document.TextAlignment;
+        Variants = (FontVariants)((DependencyObject)document).GetValue(VariantsProperty);
+    }
+
+    [MirrorVerified("Release IL")]
+    public TextFormat(TextBox control) : this()
+    {
+        FontFamily = control.FontFamily;
+        FontSize = control.FontSize;
+        FontWeight = control.FontWeight;
+        FontStyle = control.FontStyle;
+        TextDecorations = control.TextDecorations;
+        Background = control.Background ?? Background;
+        Foreground = control.Foreground;
+        TextAlignment = control.TextAlignment;
+        TextAlignmentExt = TextAlignmentExt.None;
+        MixedFontFamily = false;
+        MixedFontSize = false;
+        MixedFontWeight = false;
+        MixedFontStyle = false;
+        MixedTextDecorations = false;
+        MixedForeground = false;
+        MixedBackground = false;
+        MixedMarkerStyle = false;
+        MixedTextAlignment = false;
+    }
+
+    [MirrorVerified("Release IL")]
+    public void SetDefaults()
+    {
+        FontFamily = new FontFamily("Tahoma");
+        FontSizeInPoints = 11.0;
+        FontWeight = FontWeights.Normal;
+        FontStyle = FontStyles.Normal;
+        TextDecorations = new TextDecorationCollection();
+        Variants = (FontVariants)0;
+        Background = Brushes.Transparent;
+        Foreground = Brushes.Black;
+        TextAlignment = (TextAlignment)0;
+        TextAlignmentExt = TextAlignmentExt.None;
+        MarkerStyle = (TextMarkerStyle)0;
+        TextIndent = 0.0;
+    }
+
+    [MirrorVerified("Release IL")]
+    public TextFormat(string styleKey) : this()
+    {
+        StyleKey = styleKey;
+    }
+
+    [MirrorVerified("Release IL")]
+    public TextFormat(TextStyleData textStyleData) : this()
+    {
+        UpdateTextStyleData(textStyleData);
+    }
+
+    [MirrorVerified("Release IL")]
+    public TextFormat(TextFormat tf) : this()
+    {
+        UpdateTextFormat(tf);
+    }
+
+    [MirrorVerified("Release IL")]
+    public TextFormat(TextFormat tf, TextFormat agreesWith) : this(tf)
+    {
+        if (agreesWith != null)
+        {
+            SetTextFormatValuesAccordingTo(agreesWith, useDefaultValues: true);
+            if (MixedFontFamily || agreesWith.MixedFontFamily || !FontFamily.Equals(agreesWith.FontFamily))
+            {
+                MixedFontFamily = true;
+            }
+            if (MixedFontSize || agreesWith.MixedFontSize || Math.Abs(agreesWith.FontSize - FontSize) > 1E-09)
+            {
+                MixedFontSize = true;
+            }
+            if (MixedFontWeight || agreesWith.MixedFontWeight || !FontWeight.Equals(agreesWith.FontWeight))
+            {
+                MixedFontWeight = true;
+            }
+            if (MixedFontStyle || agreesWith.MixedFontStyle || !FontStyle.Equals(agreesWith.FontStyle))
+            {
+                MixedFontStyle = true;
+            }
+            if (MixedTextDecorations || agreesWith.MixedTextDecorations || !((object)TextDecorations).Equals(agreesWith.TextDecorations))
+            {
+                MixedTextDecorations = true;
+            }
+            if (MixedForeground || agreesWith.MixedForeground || !AreColorsEqual(Foreground, agreesWith.Foreground))
+            {
+                MixedForeground = true;
+            }
+            if (MixedBackground || agreesWith.MixedBackground || !AreColorsEqual(Background, agreesWith.Background, assertOnNull: false))
+            {
+                MixedBackground = true;
+            }
+            if (MixedMarkerStyle || agreesWith.MixedMarkerStyle || !MarkerStyle.Equals(agreesWith.MarkerStyle))
+            {
+                MixedMarkerStyle = true;
+            }
+            if (MixedTextAlignment || agreesWith.MixedTextAlignment || !TextAlignment.Equals(agreesWith.TextAlignment))
+            {
+                MixedTextAlignment = true;
+            }
+            if (MixedStyle || agreesWith.MixedStyle || !StyleKey.Equals(agreesWith.StyleKey))
+            {
+                MixedStyle = true;
+            }
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public TextFormat(TextFormat parenTextFormat, global::System.Windows.Documents.TextRange textRange, bool onlyFirstRun = false) : this(parenTextFormat)
+    {
+        Initialize(textRange, onlyFirstRun);
+    }
+
+    [MirrorVerified("Release IL")]
+    public TextFormat(global::System.Windows.Documents.TextRange textRange, bool onlyFirstRun = false) : this()
+    {
+        Initialize(textRange, onlyFirstRun);
+    }
+
+    private void Initialize(global::System.Windows.Documents.TextRange textRange, bool onlyFirstRun)
+    {
+        MarkerStyle = GetMarkerStyleForRange(textRange, out var mixed);
+        MixedMarkerStyle = mixed;
+        Margin = (textRange.GetPropertyValue(Block.MarginProperty) as Thickness?).GetValueOrDefault();
+        if (Margin.Value.Left.IsValid() && !Margin.Value.Left.Equals(0.0) && TextIndent.Equals(0.0))
+        {
+            TextIndent = Margin.Value.Left;
+        }
+
+        IEnumerable<Run> enumerable = global::Quire.Wpf.TextRangeExtension.EnumerateRunsInRange(textRange);
+        if (enumerable.IsNullOrEmpty())
+        {
+            FontFamily = (textRange.GetPropertyValue(TextElement.FontFamilyProperty) as FontFamily) ?? FontFamily;
+            FontSize = (textRange.GetPropertyValue(TextElement.FontSizeProperty) as double?) ?? FontSize;
+            FontWeight = (textRange.GetPropertyValue(TextElement.FontWeightProperty) as FontWeight?) ?? FontWeight;
+            FontStyle = (textRange.GetPropertyValue(TextElement.FontStyleProperty) as FontStyle?) ?? FontStyle;
+            Background = (textRange.GetPropertyValue(TextElement.BackgroundProperty) as Brush) ?? Background;
+            Foreground = (textRange.GetPropertyValue(TextElement.ForegroundProperty) as Brush) ?? Foreground;
+            TextDecorations = (textRange.GetPropertyValue(Inline.TextDecorationsProperty) as TextDecorationCollection) ?? TextDecorations;
+            TextAlignment = (textRange.GetPropertyValue(Block.TextAlignmentProperty) as TextAlignment?) ?? TextAlignment;
+            Variants = (textRange.GetPropertyValue(Typography.VariantsProperty) as FontVariants?) ?? Variants;
+            return;
+        }
+
+        List<Run> list = onlyFirstRun ? enumerable.First().Yield().ToList() : enumerable.ToList();
+        TextIndent = (textRange.GetPropertyValue(Paragraph.TextIndentProperty) as double?).GetValueOrDefault();
+        if (global::Quire.Wpf.TextRangeExtension.GetFormattingPropertyFromRuns(list, TextElement.FontFamilyProperty) is FontFamily fontFamily)
+        {
+            FontFamily = fontFamily;
+            MixedFontFamily = false;
+        }
+        else
+        {
+            FontFamily = new FontFamily(string.Empty);
+            MixedFontFamily = true;
+        }
+
+        if (global::Quire.Wpf.TextRangeExtension.GetFormattingPropertyFromRuns(list, TextElement.FontSizeProperty) is double fontSize)
+        {
+            FontSize = fontSize;
+            MixedFontSize = false;
+        }
+        else
+        {
+            MixedFontSize = true;
+        }
+
+        if (global::Quire.Wpf.TextRangeExtension.GetFormattingPropertyFromRuns(list, TextElement.FontWeightProperty) is FontWeight fontWeight)
+        {
+            FontWeight = fontWeight;
+            MixedFontWeight = false;
+        }
+        else
+        {
+            MixedFontWeight = true;
+        }
+
+        if (global::Quire.Wpf.TextRangeExtension.GetFormattingPropertyFromRuns(list, TextElement.FontStyleProperty) is FontStyle fontStyle)
+        {
+            FontStyle = fontStyle;
+            MixedFontStyle = false;
+        }
+        else
+        {
+            MixedFontStyle = true;
+        }
+
+        if (global::Quire.Wpf.TextRangeExtension.GetFormattingPropertyFromRuns(list, Inline.TextDecorationsProperty, TextDecorationsEquals) is TextDecorationCollection textDecorations)
+        {
+            TextDecorations = textDecorations;
+            MixedTextDecorations = false;
+        }
+        else
+        {
+            MixedTextDecorations = true;
+        }
+
+        if (global::Quire.Wpf.TextRangeExtension.GetFormattingPropertyFromRuns(list, Typography.VariantsProperty) is FontVariants variants)
+        {
+            Variants = variants;
+        }
+
+        if (global::Quire.Wpf.TextRangeExtension.GetFormattingPropertyFromRuns(list, TextElement.BackgroundProperty, (object first, object second) => AreColorsEqual(first as Brush, second as Brush, assertOnNull: false)) is Brush background)
+        {
+            Background = background;
+            MixedBackground = false;
+        }
+        else if (list.Count <= 1 || list.Select((Run run) => ((DependencyObject)run).GetValue(TextElement.BackgroundProperty)).All((object val) => val == null))
+        {
+            Background = null;
+            MixedBackground = false;
+        }
+        else
+        {
+            MixedBackground = true;
+        }
+
+        if (global::Quire.Wpf.TextRangeExtension.GetFormattingPropertyFromRuns(list, TextElement.ForegroundProperty, (object first, object second) => AreColorsEqual(first as Brush, second as Brush)) is Brush foreground)
+        {
+            Foreground = foreground;
+            MixedForeground = false;
+        }
+        else
+        {
+            MixedForeground = true;
+        }
+
+        if (global::Quire.Wpf.TextRangeExtension.GetFormattingPropertyFromRuns(list, Block.TextAlignmentProperty) is TextAlignment textAlignment)
+        {
+            TextAlignmentExt enumValue;
+            if (TextAlignment != textAlignment)
+            {
+                TextAlignment = textAlignment;
+            }
+            else if (EnumHelper.TryParse<TextAlignmentExt>(textAlignment, out enumValue))
+            {
+                if (TextAlignmentExt != enumValue)
+                {
+                    TextAlignmentExt = enumValue;
+                }
+            }
+            else
+            {
+                DebugTools.DevAssert(false, null);
+            }
+
+            MixedTextAlignment = false;
+        }
+        else
+        {
+            MixedTextAlignment = true;
+        }
+
+        string styleKey = TextElementAttachedProperties.GetStyleKey((DependencyObject)list[0]);
+        if (styleKey != null)
+        {
+            StyleKey = list.FirstOrDefault((Run run) => TextElementAttachedProperties.GetStyleKey((DependencyObject)run) != styleKey) == null ? styleKey : null;
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    private static TextMarkerStyle GetMarkerStyleForRange(System.Windows.Documents.TextRange textRange, out bool mixed)
+    {
+        mixed = false;
+        List list = global::Quire.Wpf.WpfUtils.FindLogicalAncestor<List>(textRange.Start.Parent);
+        List list2 = global::Quire.Wpf.WpfUtils.FindLogicalAncestor<List>(textRange.End.Parent);
+        if (textRange.End.Parent is FlowDocument flowDocument)
+        {
+            list2 = flowDocument.Blocks.LastBlock as List;
+        }
+        if (list?.MarkerStyle != list2?.MarkerStyle)
+        {
+            mixed = true;
+            return TextMarkerStyle.None;
+        }
+        if (list == null)
+        {
+            return TextMarkerStyle.None;
+        }
+        return list.MarkerStyle;
     }
 
     [MirrorVerified("Release IL")]
@@ -271,9 +597,6 @@ public partial class TextFormat
     public TextFormat Clone() => new TextFormat(this);
 
     [MirrorVerified("PtcCoreTextFormatMechanicalDifferentialTests")]
-    public TextStyleData TextStyleData { get; private set; }
-
-    [MirrorVerified("PtcCoreTextFormatMechanicalDifferentialTests")]
     public string BasedOnKey { get; set; }
 
     [MirrorVerified("PtcCoreTextFormatMechanicalDifferentialTests")]
@@ -308,144 +631,6 @@ public partial class TextFormat
 
     [MirrorVerified("PtcCoreTextFormatMechanicalDifferentialTests")]
     public event PropertyChangedEventHandler PropertyChanged;
-
-    [MirrorVerified("Release IL")]
-    public TextFormat()
-    {
-        SetDefaults();
-    }
-
-    [MirrorVerified("Release IL")]
-    public TextFormat(FlowDocument document) : this()
-    {
-        FontFamily = document.FontFamily;
-        FontSize = document.FontSize;
-        FontWeight = document.FontWeight;
-        FontStyle = document.FontStyle;
-        Background = document.Background ?? Background;
-        Foreground = document.Foreground;
-        TextAlignment = document.TextAlignment;
-        Variants = (FontVariants)((DependencyObject)document).GetValue(VariantsProperty);
-    }
-
-    [MirrorVerified("Release IL")]
-    public TextFormat(TextBox control) : this()
-    {
-        FontFamily = control.FontFamily;
-        FontSize = control.FontSize;
-        FontWeight = control.FontWeight;
-        FontStyle = control.FontStyle;
-        TextDecorations = control.TextDecorations;
-        Background = control.Background ?? Background;
-        Foreground = control.Foreground;
-        TextAlignment = control.TextAlignment;
-        TextAlignmentExt = TextAlignmentExt.None;
-        MixedFontFamily = false;
-        MixedFontSize = false;
-        MixedFontWeight = false;
-        MixedFontStyle = false;
-        MixedTextDecorations = false;
-        MixedForeground = false;
-        MixedBackground = false;
-        MixedMarkerStyle = false;
-        MixedTextAlignment = false;
-    }
-
-    [MirrorVerified("Release IL")]
-    public void SetDefaults()
-    {
-        FontFamily = new FontFamily("Tahoma");
-        FontSizeInPoints = 11.0;
-        FontWeight = FontWeights.Normal;
-        FontStyle = FontStyles.Normal;
-        TextDecorations = new TextDecorationCollection();
-        Variants = (FontVariants)0;
-        Background = Brushes.Transparent;
-        Foreground = Brushes.Black;
-        TextAlignment = (TextAlignment)0;
-        TextAlignmentExt = TextAlignmentExt.None;
-        MarkerStyle = (TextMarkerStyle)0;
-        TextIndent = 0.0;
-    }
-
-    [MirrorVerified("Release IL")]
-    public TextFormat(string styleKey) : this()
-    {
-        StyleKey = styleKey;
-    }
-
-    [MirrorVerified("Release IL")]
-    public TextFormat(TextStyleData textStyleData) : this()
-    {
-        UpdateTextStyleData(textStyleData);
-    }
-
-    [MirrorVerified("Release IL")]
-    public TextFormat(TextFormat tf) : this()
-    {
-        UpdateTextFormat(tf);
-    }
-
-    [MirrorVerified("Release IL")]
-    public TextFormat(TextFormat tf, TextFormat agreesWith) : this(tf)
-    {
-        if (agreesWith != null)
-        {
-            SetTextFormatValuesAccordingTo(agreesWith, useDefaultValues: true);
-            if (MixedFontFamily || agreesWith.MixedFontFamily || !FontFamily.Equals(agreesWith.FontFamily))
-            {
-                MixedFontFamily = true;
-            }
-            if (MixedFontSize || agreesWith.MixedFontSize || Math.Abs(agreesWith.FontSize - FontSize) > 1E-09)
-            {
-                MixedFontSize = true;
-            }
-            if (MixedFontWeight || agreesWith.MixedFontWeight || !FontWeight.Equals(agreesWith.FontWeight))
-            {
-                MixedFontWeight = true;
-            }
-            if (MixedFontStyle || agreesWith.MixedFontStyle || !FontStyle.Equals(agreesWith.FontStyle))
-            {
-                MixedFontStyle = true;
-            }
-            if (MixedTextDecorations || agreesWith.MixedTextDecorations || !((object)TextDecorations).Equals(agreesWith.TextDecorations))
-            {
-                MixedTextDecorations = true;
-            }
-            if (MixedForeground || agreesWith.MixedForeground || !AreColorsEqual(Foreground, agreesWith.Foreground))
-            {
-                MixedForeground = true;
-            }
-            if (MixedBackground || agreesWith.MixedBackground || !AreColorsEqual(Background, agreesWith.Background, assertOnNull: false))
-            {
-                MixedBackground = true;
-            }
-            if (MixedMarkerStyle || agreesWith.MixedMarkerStyle || !MarkerStyle.Equals(agreesWith.MarkerStyle))
-            {
-                MixedMarkerStyle = true;
-            }
-            if (MixedTextAlignment || agreesWith.MixedTextAlignment || !TextAlignment.Equals(agreesWith.TextAlignment))
-            {
-                MixedTextAlignment = true;
-            }
-            if (MixedStyle || agreesWith.MixedStyle || !StyleKey.Equals(agreesWith.StyleKey))
-            {
-                MixedStyle = true;
-            }
-        }
-    }
-
-    [MirrorVerified("Release IL")]
-    public TextFormat(TextFormat parenTextFormat, global::System.Windows.Documents.TextRange textRange, bool onlyFirstRun = false) : this(parenTextFormat)
-    {
-        Initialize(textRange, onlyFirstRun);
-    }
-
-    [MirrorVerified("Release IL")]
-    public TextFormat(global::System.Windows.Documents.TextRange textRange, bool onlyFirstRun = false) : this()
-    {
-        Initialize(textRange, onlyFirstRun);
-    }
 
     [MirrorVerified("Release IL")]
     public void UpdateTextStyleData(TextStyleData textStyleData)
@@ -560,9 +745,6 @@ public partial class TextFormat
     }
 
     [MirrorVerified("Release IL")]
-    public static readonly DependencyProperty VariantsProperty;
-
-    [MirrorVerified("Release IL")]
     public static void CopyTextFormat(FlowDocument from, FlowDocument to)
     {
         to.FontFamily = from.FontFamily;
@@ -577,36 +759,6 @@ public partial class TextFormat
 
     [MirrorVerified("Release IL")]
     public static global::System.Windows.Documents.TextRange TextRange(RichTextBox text) => new global::System.Windows.Documents.TextRange(text.Document.ContentStart, text.Document.ContentEnd);
-
-    [MirrorVerified("Release IL")]
-    public static readonly DependencyProperty FontFamilyProperty;
-
-    [MirrorVerified("Release IL")]
-    public static readonly DependencyProperty FontSizeProperty;
-
-    [MirrorVerified("Release IL")]
-    public static readonly DependencyProperty FontWeightProperty;
-
-    [MirrorVerified("Release IL")]
-    public static readonly DependencyProperty FontStyleProperty;
-
-    [MirrorVerified("Release IL")]
-    public static readonly DependencyProperty TextDecorationsProperty;
-
-    [MirrorVerified("Release IL")]
-    public static readonly DependencyProperty BackgroundProperty;
-
-    [MirrorVerified("Release IL")]
-    public static readonly DependencyProperty ForegroundProperty;
-
-    [MirrorVerified("Release IL")]
-    public static readonly DependencyProperty MarginProperty;
-
-    [MirrorVerified("Release IL")]
-    public static readonly DependencyProperty TextAlignmentProperty;
-
-    [MirrorVerified("Release IL")]
-    public static readonly DependencyProperty MarkerStyleProperty;
 
     [MirrorVerified("Release IL")]
     public void ApplyTextFormat(global::System.Windows.Documents.TextRange textRange)
@@ -629,9 +781,6 @@ public partial class TextFormat
 
     [MirrorVerified("Release IL")]
     public TextAlignment TextAlignment { get => (TextAlignment)base.GetValue(TextAlignmentProperty); set => SetValueSafely(TextAlignmentProperty, value); }
-
-    [MirrorVerified("Release IL")]
-    public static readonly DependencyProperty TextAlignmentExtProperty;
 
     [MirrorVerified("Release IL")]
     public TextAlignmentExt TextAlignmentExt { get => (TextAlignmentExt)base.GetValue(TextAlignmentExtProperty); set => SetValueSafely(TextAlignmentExtProperty, value); }
@@ -698,9 +847,6 @@ public partial class TextFormat
     public FontWeight FontWeight { get => (FontWeight)base.GetValue(FontWeightProperty); set => SetValueSafely(FontWeightProperty, value); }
 
     [MirrorVerified("Release IL")]
-    public static readonly DependencyProperty NameProperty;
-
-    [MirrorVerified("Release IL")]
     public string Name { get => (string)base.GetValue(NameProperty); set => SetValueSafely(NameProperty, value); }
 
     [MirrorVerified("Release IL")]
@@ -711,9 +857,6 @@ public partial class TextFormat
 
     [MirrorVerified("Release IL")]
     public FontVariants Variants { get => (FontVariants)base.GetValue(VariantsProperty); set => SetValueSafely(VariantsProperty, value); }
-
-    [MirrorVerified("Release IL")]
-    public static readonly DependencyProperty TextIndentProperty;
 
     [MirrorVerified("Release IL")]
     public double TextIndent { get => (double)base.GetValue(TextIndentProperty); set => SetValueSafely(TextIndentProperty, value); }
