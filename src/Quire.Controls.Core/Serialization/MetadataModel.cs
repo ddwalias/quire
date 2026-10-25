@@ -1,29 +1,30 @@
 #nullable disable
+using System.Security.Principal;
 using System.Xml;
 using Quire.Mirror;
 
 namespace Quire.Controls.Core.Serialization;
 
-public partial class MetadataModel
+public partial class MetadataModel : IMetadataModel
 {
-    [MirrorVerified("PtcControlsCoreSerializationMetadataModelMechanicalDifferentialTests")]
-    public MetadataModel(XmlDocument xmlMetadata) : this() { }
-
-    [MirrorVerified("PtcControlsCoreSerializationMetadataModelMechanicalDifferentialTests")]
     private string _creator;
 
-    [MirrorVerified("PtcControlsCoreSerializationMetadataModelMechanicalDifferentialTests")]
-    public string Creator { get => _creator; set => _creator = value; }
-
-    [MirrorVerified("PtcControlsCoreSerializationMetadataModelMechanicalDifferentialTests")]
     private string _lastModified;
 
-    [MirrorVerified("PtcControlsCoreSerializationMetadataModelMechanicalDifferentialTests")]
+    private int _version = 1;
+
+    public string Creator { get => _creator; set => _creator = value; }
+
     public string LastModified { get => _lastModified; set => _lastModified = value; }
 
-    [MirrorVerified("PtcControlsCoreSerializationMetadataModelMechanicalDifferentialTests")]
-    private int _version;
+    public int Version { get => _version; set => _version = value; }
+
+    public MetadataModel()
+    {
+        _creator = WindowsIdentity.GetCurrent().Name;
+        _lastModified = _creator;
+    }
 
     [MirrorVerified("PtcControlsCoreSerializationMetadataModelMechanicalDifferentialTests")]
-    public int Version { get => _version; set => _version = value; }
+    public MetadataModel(XmlDocument xmlMetadata) : this() { }
 }

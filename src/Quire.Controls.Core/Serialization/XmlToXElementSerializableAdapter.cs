@@ -7,7 +7,7 @@ using Quire.Mirror;
 
 namespace Quire.Controls.Core.Serialization;
 
-public partial class XmlToXElementSerializableAdapter
+public partial class XmlToXElementSerializableAdapter : IXmlAndXElementSerializable, IXmlSerializable, IXElementSerializable
 {
     [MirrorVerified("PtcControlsCoreSerializationXmlToXElementSerializableAdapterMechanicalDifferentialTests")]
     private readonly IXmlSerializable _xmlSerializable;
@@ -27,9 +27,21 @@ public partial class XmlToXElementSerializableAdapter
     [MirrorVerified("PtcControlsCoreSerializationXmlToXElementSerializableAdapterMechanicalDifferentialTests")]
     public void WriteXml(XmlWriter writer) => _xmlSerializable.WriteXml(writer);
 
+    public void ReadXml(XElement xElement)
+    {
+        using XmlReader reader = xElement.CreateReader();
+        ReadXml(reader);
+    }
+
     [MirrorVerified("PtcControlsCoreSerializationXmlToXElementSerializableAdapterMechanicalDifferentialTests")]
     public void WriteXml(XElement xElement) => WriteXmlToXContainer(xElement);
 
     [MirrorVerified("PtcControlsCoreSerializationXmlToXElementSerializableAdapterMechanicalDifferentialTests")]
     public void WriteXml(XDocument xDocument) => WriteXmlToXContainer(xDocument);
+
+    private void WriteXmlToXContainer(XContainer xContainer)
+    {
+        using XmlWriter writer = xContainer.CreateWriter();
+        WriteXml(writer);
+    }
 }

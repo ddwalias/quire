@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.MetadataModel, Ptc.Controls.Core")]
 public partial class MetadataModel : global::Quire.Controls.Core.Serialization.IMetadataModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    public MetadataModel() { }
 }

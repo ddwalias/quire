@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.DeserializationStrategyWithMathFormat, Ptc.Controls.Core")]
 public abstract partial class DeserializationStrategyWithMathFormat : global::Quire.Controls.Core.Serialization.DeserializationStrategy
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override void DeserializeRegionProlog(global::System.Windows.UIElement region) => base.DeserializeRegionProlog(region);
 }

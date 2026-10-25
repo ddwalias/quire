@@ -98,3 +98,17 @@
   - `ToolTipContentExtractor` (`Convert`, `ConvertBack`, `.ctor`)
 - Report: `.mirror-cache/release-il-62ad6c00227b/release-il.json` — PASS, 962 checked, 962 exact, 0 failures, 2,899 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 7 — Warnings display, whiteboard extensions, and serialization helpers
+
+- Scope:
+  - `WarningsTypesToShowExtension` (`ShouldDisplayAllWarnings`, `IsAnyWarningActive`)
+  - `Whiteboard.WhiteboardControlExtensions` (`GetInsertionPointRect`)
+  - `Serialization.MC14ConversionLossException` (`Messages`, `.ctor(string, Exception)`, `.ctor(string[])`)
+  - `Serialization.XmlToXElementSerializableAdapter` (`ReadXml(XElement)`, `WriteXmlToXContainer(XContainer)`)
+  - `PropertiesChangeInfo<TSource>` (`.ctor`, `IsValid`)
+  - `Settings.UnitSerializer` (`localName`, `.ctor`)
+  - `Serialization.DeserializationStrategyWithMathFormat` (`DeserializeRegionProlog`)
+  - `Serialization.MetadataModel` (`_version = 1`, `.ctor()`)
+- Report: `.mirror-cache/release-il-e6041691254a/release-il.json` — PASS, 974 checked, 974 exact, 0 failures, 2,887 unfinished.
+- Remaining mismatches: none in claimed batch.

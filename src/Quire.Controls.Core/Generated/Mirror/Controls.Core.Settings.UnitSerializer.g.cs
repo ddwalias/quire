@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.Settings;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.UnitSerializer, Ptc.Controls.Core")]
 public partial class UnitSerializer : global::Quire.Controls.Core.Serialization.XElementSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string localName = "unit";
-    [global::Quire.Mirror.MirrorStub]
-    public UnitSerializer(global::Quire.Controls.Core.IEngineeringDocument component, string nameSpaceUri) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
 }

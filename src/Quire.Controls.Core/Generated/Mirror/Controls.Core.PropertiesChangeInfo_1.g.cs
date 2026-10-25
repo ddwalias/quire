@@ -11,8 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.PropertiesChangeInfo`1, Ptc.Controls.Core")]
 internal partial class PropertiesChangeInfo<TSource> where TSource : class
 {
-    [global::Quire.Mirror.MirrorStub]
-    public PropertiesChangeInfo(string[] propertyNames, TSource propertySource) { }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual bool IsValid() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

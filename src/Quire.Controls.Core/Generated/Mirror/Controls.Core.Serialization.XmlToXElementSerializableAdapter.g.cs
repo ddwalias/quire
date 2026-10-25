@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.XmlToXElementSerializableAdapter, Ptc.Controls.Core")]
 public partial class XmlToXElementSerializableAdapter : global::Quire.Controls.Core.Serialization.IXmlAndXElementSerializable, global::System.Xml.Serialization.IXmlSerializable, global::Quire.Controls.Core.Serialization.IXElementSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public void ReadXml(global::System.Xml.Linq.XElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void WriteXmlToXContainer(global::System.Xml.Linq.XContainer xContainer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
