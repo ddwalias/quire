@@ -6,7 +6,7 @@
 - **Branch:** `mirror/h-efistatsci-20261025h1` (from `main` at `31b4238b`)
 - **Worktree:** `C:/Projects/Quire-wt/lane-h-efistatsci-2`
 - **Harness:** `tools/validation/native_bytes.py` and `native_targets.py` on `main`, unmodified.
-- **Build:** MSBuild `Quire.Native.EfistatsciImpl.vcxproj`, Release|x64, toolset v145, `cl` 19.51.36246 from `C:\BuildTools\VS18.6-msvc`, `/O2 /Gy /GS /EHsc /MD /std:c++17 /W4 /WX`. Output in `.mirror-cache/bin/`.
+- **Build:** MSBuild `Quire.Native.EfistatsciImpl.vcxproj`, Release|x64, toolset v145, `cl` 19.51.36246 from `C:\BuildTools\VS18.6-msvc`, `/O2 /Gy /GS /EHa /MD /std:c++17 /W4 /WX` with `_CRTIMP2=__declspec(dllimport)` (D28). Output in `.mirror-cache/bin/`.
 - **Original disassembly:** `.mirror-cache/orig/efistatsci.asm` (dumpbin, ignored, D15).
 
 ## Completed groups
@@ -44,6 +44,8 @@ Manifest entries recorded with `native_targets.py` (`docs/mirror/native/internal
 ## Parked (D25): present in the source's history, not exported
 
 Parked exports are removed from the DLL, because a committed new function that fails would block `native_gate.py` (new functions must pass). They return when they match.
+
+Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size and mismatch (`cpx` 206 vs 219; `sum` 219/217 for the integer forms, 299/297 `dbl`, 302/287 `flt`; `range` 274/257 and 285/277 and 279/273; `cast_to` diverges at +0x73). D28 does not resolve them.
 
 - **`matcpx_assign_scalar`** (`0x493c0`, 219 bytes): candidate 206 bytes with the plain loop. Shapes tried, all differ: plain loop 206; pointer loop 217; `std::fill` 217; `std::fill_n` 218; store element 0 then copy forward 218; `_dcomplex` as `double v[2]` 206. The original stores the value as one 16-byte `movups` and fills the rest with `rep movs` over overlapping element pairs. Flags not searched (D25).
 - **`sum` family** (7: `matdbl_sum` `0x7c650`, `matflt_sum` `0x7c780`, `mats{32,16}_sum`, `matu{32,16,8}_sum`): the body matches except for the epilogue. The candidate is 2 bytes longer for the integer forms (219 vs 217) and for `dbl` (299 vs 297), because the two `const char *` returns merge into one register (`lea rcx` + `mov rax, rcx`; `xor ecx` + `mov eax, ecx`). The original returns `lea rax` / `xor eax` directly. Five declaration orders of the locals were tried, all 219. `flt` is 302 vs 287 (the original unrolls by four).
