@@ -180,3 +180,12 @@
   - `CopyWidgetBase` (`ParentWidth`, `IncludeWidth`, `ChildBorder`, `Dispose`, `.ctor`)
 - Report: `.mirror-cache/release-il-b3aea6d8fdde/release-il.json` — PASS, 1,087 checked, 1,087 exact, 0 failures, 2,796 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 14 — ProtectDialogKeys, CustomScriptsSettings, RelayCommand
+
+- Scope:
+  - `ProtectDialogKeys` (`ProtectDialogTitle`, `ProtectButtonTitle`, `LockDisplayStateLabel`, `ShowAreaBorderTitle`)
+  - `CustomScriptsSettings` (`FontRatio`, `SubscriptAlignment`, `SuperscriptAlignment`, `.cctor`)
+  - `RelayCommand` (`_execute`, `_canExecute`, `CanExecuteChanged`, `CanExecute`, `Execute`, `.ctor(Action)`, `.ctor(Action, Predicate)`)
+- Report: `.mirror-cache/release-il-7ffb0a347c8d/release-il.json` — PASS, 1,092 checked, 1,092 exact, 0 failures, 2,792 unfinished.
+- Remaining mismatches: none in claimed batch.

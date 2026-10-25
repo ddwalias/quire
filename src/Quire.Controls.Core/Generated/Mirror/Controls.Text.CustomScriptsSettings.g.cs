@@ -11,10 +11,4 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.CustomScriptsSettings, Ptc.Controls.Core")]
 public static partial class CustomScriptsSettings
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static double FontRatio;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.BaselineAlignment SubscriptAlignment;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.BaselineAlignment SuperscriptAlignment;
 }

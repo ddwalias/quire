@@ -11,12 +11,4 @@ namespace Quire.Controls.Core.Protection;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Protection.ProtectDialogKeys, Ptc.Controls.Core")]
 public static partial class ProtectDialogKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string ProtectDialogTitle = "ProtectDialogTitle";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ProtectButtonTitle = "ProtectButtonTitle";
-    [global::Quire.Mirror.MirrorStub]
-    public const string LockDisplayStateLabel = "LockDisplayStateLabel";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ShowAreaBorderTitle = "ShowAreaBorderTitle";
 }

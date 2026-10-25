@@ -11,12 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RelayCommand, Ptc.Controls.Core")]
 public partial class RelayCommand : global::System.Windows.Input.ICommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Predicate<object> _canExecute;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler CanExecuteChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public RelayCommand(global::System.Action<object> execute, global::System.Predicate<object> canExecute) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool CanExecute(object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

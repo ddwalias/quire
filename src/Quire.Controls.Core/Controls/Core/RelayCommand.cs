@@ -1,16 +1,55 @@
 #nullable disable
-using Quire.Mirror;
+using System;
+using System.Diagnostics;
+using System.Windows.Input;
 
 namespace Quire.Controls.Core;
 
-public partial class RelayCommand
+public partial class RelayCommand : ICommand
 {
-    [MirrorVerified("PtcControlsCoreRelayCommandMechanicalDifferentialTests")]
-    public RelayCommand(Action<object> execute) : this(execute, null) { }
-
-    [MirrorVerified("PtcControlsCoreRelayCommandMechanicalDifferentialTests")]
     private readonly Action<object> _execute;
 
-    [MirrorVerified("PtcControlsCoreRelayCommandMechanicalDifferentialTests")]
-    public void Execute(object parameter) => _execute.Invoke(parameter);
+    private readonly Predicate<object> _canExecute;
+
+    public event EventHandler CanExecuteChanged
+    {
+        add
+        {
+            CommandManager.RequerySuggested += value;
+        }
+        remove
+        {
+            CommandManager.RequerySuggested -= value;
+        }
+    }
+
+    public RelayCommand(Action<object> execute)
+        : this(execute, null)
+    {
+    }
+
+    public RelayCommand(Action<object> execute, Predicate<object> canExecute)
+    {
+        if (execute == null)
+        {
+            throw new ArgumentNullException("execute");
+        }
+        _execute = execute;
+        _canExecute = canExecute;
+    }
+
+    [DebuggerStepThrough]
+    public bool CanExecute(object parameter)
+    {
+        if (_canExecute != null)
+        {
+            return _canExecute(parameter);
+        }
+        return true;
+    }
+
+    public void Execute(object parameter)
+    {
+        _execute(parameter);
+    }
 }
