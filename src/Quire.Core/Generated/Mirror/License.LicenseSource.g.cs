@@ -12,13 +12,5 @@ namespace Quire.License;
 public partial class LicenseSource
 {
     [global::Quire.Mirror.MirrorStub]
-    public void Save(global::Quire.License.LicenseType licenseType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Load() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool GetHostAndPortFromLicensePathSetting(string licensePathSetting, out string licenseHost, out uint licensePort) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public LicenseSource() { }
 }

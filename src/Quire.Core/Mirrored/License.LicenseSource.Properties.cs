@@ -67,4 +67,60 @@ public partial class LicenseSource
         Properties.Settings.Default.LicensePath = licensePath;
         Properties.Settings.Default.Save();
     }
+
+    public void Save(LicenseType licenseType)
+    {
+        if (Properties.Settings.Default.LicenseType == licenseType
+            && Properties.Settings.Default.LicensePathForm == Type
+            && Properties.Settings.Default.LicensePath == ToString())
+        {
+            return;
+        }
+
+        Save(licenseType, Type, ToString());
+    }
+
+    public override string ToString()
+    {
+        string value = "";
+        LicenseUriType type = Type;
+        switch (type)
+        {
+            case LicenseUriType.FilePath:
+                value = FilePath;
+                break;
+            case LicenseUriType.ServerAndPort:
+                value = string.Format("{0}@{1}", Port, Host);
+                break;
+            case LicenseUriType.SourceList:
+                value = _sourceList;
+                break;
+        }
+
+        return value;
+    }
+
+    private static bool GetHostAndPortFromLicensePathSetting(string licensePathSetting, out string licenseHost, out uint licensePort)
+    {
+        bool parsed = false;
+        licenseHost = string.Empty;
+        licensePort = 0;
+        string[] parts = licensePathSetting.Split('@', global::System.StringSplitOptions.None);
+        if (parts.Length == 2)
+        {
+            if (uint.TryParse(parts[0], out uint port))
+            {
+                parsed = true;
+                licensePort = port;
+            }
+
+            licenseHost = parts[1];
+        }
+
+        return parsed;
+    }
+
+    public LicenseSource()
+    {
+    }
 }
