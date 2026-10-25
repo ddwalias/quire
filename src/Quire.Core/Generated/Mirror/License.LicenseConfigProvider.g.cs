@@ -11,21 +11,6 @@ namespace Quire.License;
 [global::Quire.Mirror.MirrorOf("Ptc.License.LicenseConfigProvider, Ptc.Core")]
 public partial class LicenseConfigProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetProductCode(string hashCode, string productCode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetProductCode(string hashCode, string productCode, ref global::System.Xml.Linq.XDocument configDoc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetProductCode(global::System.Collections.Generic.IList<string> hashCodes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetProductCode(global::System.Collections.Generic.IList<string> hashCodes, global::System.Xml.Linq.XDocument configDoc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Xml.Linq.XElement GetProductCodeElement(string hashCode, global::System.Xml.Linq.XDocument configDoc, out global::System.Xml.Linq.XElement matchingCodesElem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool HashCodesEqual(string first, string second) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public LicenseConfigProvider() { }
-
     [global::Quire.Mirror.MirrorOf("Ptc.License.LicenseConfigProvider+XmlNodeNames, Ptc.Core")]
     private static partial class XmlNodeNames
     {
