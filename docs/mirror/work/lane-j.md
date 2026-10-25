@@ -1,6 +1,6 @@
 # Lane J: mshex.dll → Quire.Native.Mshex
 
-**Status: in progress.** 102 candidate functions match strictly (0 unverified targets); 92 of 380 exports are present. Export parity: 288 missing, 0 extra.
+**Status: in progress.** 105 candidate functions match strictly (0 unverified targets); 94 of 380 exports are present. Export parity: 286 missing, 0 extra.
 
 - **Owner:** Lane J (native, `mshex.dll`)
 - **Branch:** `mirror/j-mshex-202610241256`, rebased onto `main` (354255ea)
@@ -57,6 +57,26 @@ Ordered per D28 and the brief:
 4. The other `Attachment`-derived classes (`Environment`, `Formatter`, `Lexer`, `Parser`, `Phase`, `Heap`, `Names`,
    `DefaultX`), once `Component`'s vbase layout is in place; their vtables export through `/EXPORT,DATA` the same way.
 5. `_Tree`/`_Tmap`/`basic_*` instantiations.
+
+## Parked with evidence (this round)
+
+- **`Node::GetError(unsigned) const`** (`0xaf10`, 109 bytes). Its body is `Error(code, GetTag())` with the constructor inlined,
+  which matches. It is parked because the destructor it pulls in, `Error::~Error` (`??1Error`, 107 bytes, exported), does
+  not. The original keeps the `std::string` reset stores (`size = 0`, capacity 15, first byte 0). Shapes tried: implicit
+  destructor (22 bytes, the stores are eliminated), out-of-line empty body (22 bytes), explicit `details_ = std::string()`
+  (matches the shape, but two objects then define `??1basic_string` differently, which the harness refuses).
+- **`Signature` accessors** (`GetName`, `GetType`, `GetModule`, const and non-const, `0x2430`, `0x2460`, `0x2490`). Layout
+  from the code: `uint16` type start at `+0`, `uint16` module start at `+2`, `std::string` text at `+8` (size at `+18h`,
+  capacity at `+20h`). Each part ends one character before the next starts. The original keeps the data pointer in `rax`
+  and decrements the pointer; the candidate keeps it in `r8` and decrements the length. Shapes tried: integer decrement,
+  pointer decrement, reordered `GetModule`. They differ by 1 to 20 bytes, so they are not exported.
+- **`Hex::operator+(Tag, Tag)`**: still parked (see the Tag section above).
+
+## Remaining work
+
+Export parity: 286 missing. The largest groups are the `_Tree`/`map` instantiations (about 120), the `Attachment`-derived
+constructors and vtables (about 40, waiting on `Component`'s virtual base and its `Insert`/`OnError`), `Formatter::Fetch` and
+the locale-based helpers (which need `Component`), and the `std::string`-based `Signature` and `Error` members.
 
 ## Remaining mismatches
 
