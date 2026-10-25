@@ -210,3 +210,10 @@
   - `SelectionDraggerRubberBand` (`_bounds`, `_pen`, `Bounds`, `Remove`, `OnRender`, `.ctor(UIElement)`, `.ctor(UIElement, Brush)`)
 - Report: `.mirror-cache/release-il-665b3128c99d/release-il.json` — PASS, 1,105 checked, 1,105 exact, 0 failures, 2,783 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 18 — IOTag
+
+- Scope:
+  - `IOTag` (`IOTagProperty`, `IOTagSet`, `IOTagUnSet`, `HandleIOTagPropertyChanged`, `SetIOTag`, `ClearIOTag`, `GetIOTag`, `IsIOTagged`, `IsRegionOfType`, `HasInputTag`, `HasOutputTag`, `.cctor`)
+- Report: `.mirror-cache/release-il-32e24bf55e48/release-il.json` — PASS, 1,111 checked, 1,111 exact, 0 failures, 2,778 unfinished.
+- Remaining mismatches: none in claimed batch.

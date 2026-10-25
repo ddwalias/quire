@@ -11,14 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IOTag, Ptc.Controls.Core")]
 public static partial class IOTag
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static void HandleIOTagPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetIOTag(global::System.Windows.DependencyObject element, global::Quire.Controls.Core.IORegions.IOTagType tagType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.IORegions.IOTagType GetIOTag(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsIOTagged(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsRegionOfType(global::System.Windows.DependencyObject element, global::Quire.Controls.Core.IORegions.IOTagType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
