@@ -12,24 +12,6 @@ namespace Quire.License;
 public partial class LicenseSource
 {
     [global::Quire.Mirror.MirrorStub]
-    private string _filePath;
-    [global::Quire.Mirror.MirrorStub]
-    private string _host;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<uint> _port;
-    [global::Quire.Mirror.MirrorStub]
-    private string _sourceList;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.License.LicenseUriType Type { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string FilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Host { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<uint> Port { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string SourceList { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public void Clear() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Save(global::Quire.License.LicenseType licenseType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
