@@ -11,20 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.ControlSettings, Ptc.Controls.Core")]
 public partial class ControlSettings
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Controls.Core.ControlSettings Instance;
-    [global::Quire.Mirror.MirrorStub]
-    public bool HandleFocusForIme { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool EnableFontCaching { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int MaxNumberOf2dPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int MaxNumberOf3dPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int MinPointsForDensity { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int MinPointsForForceDensity { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int DensityPointsPrintDPI { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

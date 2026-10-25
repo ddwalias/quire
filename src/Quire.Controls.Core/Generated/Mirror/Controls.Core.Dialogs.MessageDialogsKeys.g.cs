@@ -11,20 +11,4 @@ namespace Quire.Controls.Core.Dialogs;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Dialogs.MessageDialogsKeys, Ptc.Controls.Core")]
 public partial class MessageDialogsKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string SaveButtonKey = "Save";
-    [global::Quire.Mirror.MirrorStub]
-    public const string CancelButtonKey = "Cancel";
-    [global::Quire.Mirror.MirrorStub]
-    public const string YesButtonKey = "Yes";
-    [global::Quire.Mirror.MirrorStub]
-    public const string NoButtonKey = "No";
-    [global::Quire.Mirror.MirrorStub]
-    public const string DoNotSaveButtonKey = "DoNotSave";
-    [global::Quire.Mirror.MirrorStub]
-    public const string SaveWithoutSyncButtonKey = "SaveWithoutSync";
-    [global::Quire.Mirror.MirrorStub]
-    public const string SaveAndSyncButtonKey = "SaveAndSync";
-    [global::Quire.Mirror.MirrorStub]
-    public const string OkButtonKey = "Ok";
 }

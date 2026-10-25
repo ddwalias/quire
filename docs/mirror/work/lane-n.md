@@ -304,3 +304,11 @@
   - `ProtectionCommonBase` (`_model`, `_protectionData`, `_showWarningDialog`, `Unprotect`, `Protect`, `.ctor(IProtectableModel, Action<string>)`)
 - Report: `.mirror-cache/release-il-418b50720921/release-il.json` — PASS, 1,186 checked, 1,186 exact, 0 failures, 2,718 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 30 — MessageDialogsKeys, ControlSettings
+
+- Scope:
+  - `MessageDialogsKeys` (`SaveButtonKey`, `CancelButtonKey`, `YesButtonKey`, `NoButtonKey`, `DoNotSaveButtonKey`, `SaveWithoutSyncButtonKey`, `SaveAndSyncButtonKey`, `OkButtonKey`, `.ctor`)
+  - `ControlSettings` (`Instance`, `HandleFocusForIme`, `EnableFontCaching`, `MaxNumberOf2dPoints`, `MaxNumberOf3dPoints`, `MinPointsForDensity`, `MinPointsForForceDensity`, `DensityPointsPrintDPI`, `.ctor`, `.cctor`)
+- Report: `.mirror-cache/release-il-07c4254a6803/release-il.json` — PASS, 1,196 checked, 1,196 exact, 0 failures, 2,709 unfinished.
+- Remaining mismatches: none in claimed batch.

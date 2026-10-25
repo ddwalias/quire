@@ -11,22 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.NumberFormatPropertyNames, Ptc.Controls.Core")]
 public static partial class NumberFormatPropertyNames
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string DecimalPlaces = "DecimalPlaces";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ZeroThreshold = "ZeroThreshold";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ExponentialThreshold = "ExponentialThreshold";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ComplexThreshold = "ComplexThreshold";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ShowTrailingDecimalZeros = "ShowTrailingDecimalZeros";
-    [global::Quire.Mirror.MirrorStub]
-    public const string NumberStyle = "NumberStyle";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ExponentStyle = "ExponentStyle";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ComplexStyle = "ComplexStyle";
-    [global::Quire.Mirror.MirrorStub]
-    public const string RadixStyle = "RadixStyle";
 }
