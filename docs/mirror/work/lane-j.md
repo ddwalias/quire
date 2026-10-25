@@ -1,6 +1,6 @@
 # Lane J: mshex.dll → Quire.Native.Mshex
 
-**Status: in progress.** 87 of 380 exports pass strict byte validation (0 unverified targets). Export parity: 294 missing, 0 extra.
+**Status: in progress.** 87 of 380 exports pass strict byte validation (0 unverified targets). Export parity: 293 missing, 0 extra.
 
 - **Owner:** Lane J (native, `mshex.dll`)
 - **Branch:** `mirror/j-mshex-202610241256`, rebased onto `main` (354255ea)
@@ -35,16 +35,21 @@ Each entry lists the source shapes tried under D28's settings. Parked functions 
 - **`Error::GetDetails(Substring<char const>) const → std::string`** (`0x8780`, the 399-byte overload). Not yet re-tested under D28. It calls `std::string` internals, which are not exported, so it needs reviewed internal targets first.
 - **`operator<<(ostream&, Error const&)`** (`0xa2d0`). Not yet re-tested under D28. It calls `0x99e0` and `0xa7c0`, which need reviewed internal targets. The D25 evidence (the `pword` accessor `0xa7c0` differs in one register, `eax` vs `edx`) predates D28, so the re-test is open.
 
-## Blocker: the virtual `Attachment` base
+## Attachment (D28 amendment) and the vtable-slot blocker
 
-`Component`, `Value`, `Environment`, `Formatter`, `Lexer`, `Parser`, `Phase`, `Heap`, `Names` and the `DefaultX` classes inherit
-virtually from an `Attachment` base. Its constructor at RVA `0xC490` sets a vptr (`0xF388`), a reference count of 1, and a 0x28-byte
-heap object at `+0x10`. Its destructor at `0xC500` frees that object. The constructors store vbtable pointers (`0xF484`, `0xF4D8`) and two
-vptrs for multiple bases (`0xF780` then `0xF4F0` in `Environment`). The `Attachment` definition is not in the repository. Its virtuals
-(`0xC540`, `0xC5F0` in its vtable) and the `0xC780`/`0xC8B0` allocation helpers are internal. Until the base is reconstructed, the
-constructors, destructors and virtual dispatchers of these classes stay unmatched. The `Environment` virtuals (`Accept`, `GetValue`,
-`GetSignatures`) forward through vtable slots 2–10, so they need this base first. This needs maintainer input on whether `Attachment`'s
-layout and its helpers should be reviewed as internal targets.
+`Attachment` is the virtual base of `Component`, `Value`, `Environment` and the rest. The source matches the original's
+constructor (`0xC490`, 102 bytes), non-deleting destructor (`0xC500`, 58 bytes) and `Destroy` (`0xC5F0`) when its file is
+compiled with `/EHsc` (D28 amendment). The toolset's `operator new` and sized `operator delete` are recorded as toolchain
+entries (`0xC780`, `0xC8B0`). `Value` derives from it at offset 0. Its constructor (38 bytes, `/EHa`) and destructor
+(18 bytes, implicit body, `/EHa`) match with one unverified target each, the `Attachment` vtable.
+
+**Blocker (harness, for the maintainer):** the `Attachment` vtable (`0xF388`, 16 bytes) has two slots. Slot 1 (`Destroy`,
+`0xC5F0`) verifies when it is recorded. Slot 0 (the scalar deleting destructor `??_G`, `0xC540`) is a relocation to the
+COMDAT's section symbol, so `native_bytes.py` sees no name for it and `native_targets.py` cannot record it (it reports "not
+referenced by any candidate function that matches the original"). The same happens for every vtable whose slot is an
+implicit COMDAT, so `Value`'s vtable and everything derived from `Attachment` stay unverified. Not edited (D10/brief): the
+work-in-progress is in the ignored cache, `.mirror-cache/wip/attachment/`. Landing it now would add manifest entries that
+fail the gate, so it is not committed.
 
 ## Next batches
 
