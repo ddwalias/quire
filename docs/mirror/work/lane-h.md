@@ -1,6 +1,6 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 51 of 781 exports match the original in the `/GL` + LTCG linked DLL (modulo layout-dependent displacements, which were checked by content). The 44 earlier exports were verified per object, before the `/GL` build; the seven `assign_submat` exports were verified only in the linked DLL. `native_bytes.py` cannot verify `/GL` objects (they have no machine code), so the native gate needs a linked-DLL mode from the maintainer.
+**Status: incomplete.** 52 of 781 exports match the original in the `/GL` + LTCG linked DLL (modulo layout-dependent displacements, which were checked by content). The 44 earlier exports were verified per object, before the `/GL` build; the eight `assign_submat` exports (all element types) were verified only in the linked DLL. `native_bytes.py` cannot verify `/GL` objects (they have no machine code), so the native gate needs a linked-DLL mode from the maintainer.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261025h1` (from `main` at `31b4238b`)

@@ -167,4 +167,25 @@ EFI_EXPORT const char *matu8_assign_submat(const _uint8_mat *src, long row, long
     return nullptr;
 }
 
+EFI_EXPORT const char *matcpx_assign_submat(const _dcomplex_mat *src, long row, long col, void *context, _dcomplex_mat *dst) {
+    check_src_f(src);
+    check_dst_f(dst);
+    if (row < 0 || dst->rows < src->rows + row || col < 0 || dst->cols < src->cols + col) return "array size mismatch";
+    if (src->data == dst->data) return "Illegal memory address";
+    double total = 0.0;
+    double progress = 0.0;
+    for (int i = 0; i < src->rows; ++i) {
+        for (int j = 0; j < src->cols; ++j) {
+            dst->data[(i + row) * dst->cols + j + col] = src->data[i * src->cols + j];
+        }
+        total += (double)(src->cols * 8);
+        if (progress < total) {
+            if (mutil_interrupt_step == 0.0) mutil_interrupt_step = 10000000.0;
+            progress += mutil_interrupt_step;
+        }
+    }
+    (void)context;
+    return nullptr;
+}
+
 }  // namespace mutils
