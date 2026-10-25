@@ -14,5 +14,7 @@ public partial interface IUnitedValueResultNode : global::Quire.Calculation.Core
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Calculation.Core.IResultNode Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     void AddUnit(string canonicalName, int powerNumerator, int powerDenominator) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

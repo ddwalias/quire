@@ -66,7 +66,7 @@ public class WorksheetControlTests
         await Settle(ws);
 
         Assert.Equal(6, Value(eval));
-        Assert.Equal("m", Assert.Single(((IUnitedValueResultNode)((CalculatableRegionControl)eval).Result!.Value).Units).Name);
+        Assert.Equal("m", Assert.Single(((UnitedValueResultNode)((CalculatableRegionControl)eval).Result!.Value).Units).Name);
         Assert.Equal(2, ws.RegionCount);
     });
 

@@ -103,9 +103,6 @@ public partial interface IEmptyResultNode : IResultNode;
 public partial interface IUnitedValueResultNode : IResultNode
 {
     double DisplayValue { get; }
-
-    /// <summary>Units to show after the number. Empty when unitless or when the user supplied a unit override.</summary>
-    IReadOnlyList<UnitPower> Units { get; }
 }
 
 public partial interface IStringResultNode : IResultNode
@@ -150,6 +147,8 @@ public sealed record EmptyResultNode : IEmptyResultNode
     public void Accept(IResultNodeVisitor visitor) => visitor.Visit(this);
 }
 
+/// <summary>A display-ready number. <see cref="Units"/> is the units to show after it, empty when unitless or when
+/// the user supplied a unit override; it is not Mathcad's <see cref="IUnitedValueResultNode.Units"/>.</summary>
 public sealed record UnitedValueResultNode(double DisplayValue, IReadOnlyList<UnitPower> Units) : IUnitedValueResultNode
 {
     public ResultValueType ValueType => ResultValueType.UnitedValue;

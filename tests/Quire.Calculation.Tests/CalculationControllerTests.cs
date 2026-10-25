@@ -116,7 +116,7 @@ public class CalculationControllerTests
 
         Assert.Equal(SynchronizationStatus.Synchronized, e.SynchronizationStatus);
         Assert.Equal(2000, e.Value);
-        Assert.Equal("m", Assert.Single(((IUnitedValueResultNode)e.Result!.Value).Units).Name);
+        Assert.Equal("m", Assert.Single(((UnitedValueResultNode)e.Result!.Value).Units).Name);
     }
 
     [Fact]
@@ -171,7 +171,7 @@ public class CalculationControllerTests
         ctx.SetUnitSystem("uscs");
         await ctl.WhenIdle();
         Assert.Equal(1 / 0.3048, e.Value, 9);
-        Assert.Equal("ft", Assert.Single(((IUnitedValueResultNode)e.Result!.Value).Units).Name);
+        Assert.Equal("ft", Assert.Single(((UnitedValueResultNode)e.Result!.Value).Units).Name);
     }
 
     [Fact]

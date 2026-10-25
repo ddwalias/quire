@@ -19,7 +19,7 @@ public sealed class ResultFormatter : IResultTreeFormatter
 
     public MathExpr? Format(IResultNode result, ResultFormatOptions format) => result switch
     {
-        IUnitedValueResultNode u => WithUnits(Number(u.DisplayValue, format), u.Units),
+        UnitedValueResultNode u => WithUnits(Number(u.DisplayValue, format), u.Units),
         IMatrixResultNode m => WithUnits(Matrix(m, format), m.Units),
         IStringResultNode s => new StringNode(s.Value),
         IFunctionResultNode f => new IdNode(f.Signature),
