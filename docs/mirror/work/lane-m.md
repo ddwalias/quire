@@ -5,7 +5,7 @@
   - `Quire.Media3D`: All 635 managed methods with bodies are exact (7 declaration-only). Assembly is COMPLETE.
     - `Media3D.Wires.WireDashes`: implemented `PitchProperty`, `get_Pitch`, `set_Pitch`, `AddDashedLine`, `Generate`, `.ctor`.
     - `Media3D.Wires.WirePoints`: implemented `Recalculate`; adjusted declaration order so `PositionsPropertyChanged` precedes `UpdateColor` to match Mathcad closure ordinal `DisplayClass7_0`.
-  - `Quire.Calculation.Core`: 545 exact methods.
+  - `Quire.Calculation.Core`: 554 exact methods.
     - `LazyMatrixSimpleResultNode`: implemented explicit `IMatrixResultNode.this[int r, int c]` (exact).
     - `DisplayMatrixSimpleResultNode`: implemented explicit `IMatrixResultNode.this[int r, int c]` (exact).
     - `UnitedValueSimpleResultNode`: implemented explicit `IUnitedValueResultNode.Value` get and set (exact).
@@ -13,10 +13,12 @@
     - `IUnitedValueResultNode`: declared interface members `Value`, `Units`, and `AddUnit` in mirrored partial.
     - `Trace2DResultConverter`: implemented `DissectUnits` and `ConvertToVectorsForm` (both exact).
     - `ResultConverter`: implemented `Convert` (including closures `DisplayClass2_0` and `DisplayClass2_1`) and `ConvertFromIResultNode` (both exact).
+    - `SimpleResultNodeFactory`: declared `Default` field in source, clearing stub.
+    - `ResultNodeToXmcdTransform`: implemented all members to exact parity (`.ctor`, `Transform` overloads, `Visit` overloads, `WriteAxisInfoNode`, `WritePlotDataPoints`, `WriteVectorsAsJson`, `ConvertAndGetNullableValue`).
 - Release IL report:
   - `Quire.Media3D`: PASS; 635 checked, 635 exact, 0 failures, 0 unfinished (`.mirror-cache/release-il-c7d7c7d0e54b/release-il.json`). Full Release inventory confirms exact parity for every managed body (642 declarations, 635 exact bodies, 7 declaration-only, 0 stubs, 0 unresolved).
-  - `Quire.Calculation.Core`: PASS; 545 checked, 545 exact, 0 failures (`.mirror-cache/release-il-b95297f67b5e\release-il.json`).
+  - `Quire.Calculation.Core`: PASS; 554 checked, 554 exact, 0 failures (`.mirror-cache/release-il-2e2d41a2a6cb\release-il.json`).
 - Remaining:
   - `Quire.Media3D`: 0 mismatches. COMPLETE.
-  - `Quire.Calculation.Core`: 545 exact. Continuing through remaining managed members.
+  - `Quire.Calculation.Core`: 554 exact. Continuing through remaining managed members.
 - Blockers: None currently active. Previous blocker on `IUnitedValueResultNode` resolved on `main` (commit 750f656c).

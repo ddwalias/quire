@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.SimpleResultNodeFactory, Ptc.Calculation.Core")]
 public partial class SimpleResultNodeFactory : global::Quire.Calculation.Core.IResultNodeFactory
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Calculation.Core.IResultNodeFactory Default;
 }
