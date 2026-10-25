@@ -11,16 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.RichTextBoxExtensions, Ptc.Core")]
 public static partial class RichTextBoxExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void ClearTextFormatPropsRecursively(this global::System.Windows.Documents.Block block, global::Quire.DelegateFunction1<bool, global::System.Windows.Documents.TextElement> condition, params global::System.Windows.DependencyProperty[] props) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ClearTextFormatPropsRecursively(this global::System.Windows.Documents.TextElement textElement, global::Quire.DelegateFunction1<bool, global::System.Windows.Documents.TextElement> condition, params global::System.Windows.DependencyProperty[] props) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ClearTextFormatPropsRecursively(this global::System.Windows.Documents.Inline inline, global::Quire.DelegateFunction1<bool, global::System.Windows.Documents.TextElement> condition, params global::System.Windows.DependencyProperty[] props) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool Satisfy(this global::System.Windows.Documents.TextElement textElement, global::Quire.DelegateFunction1<bool, global::System.Windows.Documents.TextElement> condition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool Satisfy(this global::System.Windows.Documents.Block block, global::Quire.DelegateFunction1<bool, global::System.Windows.Documents.TextElement> condition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool Satisfy(this global::System.Windows.Documents.Inline inline, global::Quire.DelegateFunction1<bool, global::System.Windows.Documents.TextElement> condition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
