@@ -62,6 +62,7 @@
     <ClCompile Include="mutils_mat.cpp" />
     <ClCompile Include="mutils_msg.cpp" />
     <ClCompile Include="mutils_set.cpp" />
+    <ClCompile Include="mutils_cast.cpp" />
     <ClCompile Include="mutils_submat.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,12 +1,13 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 52 of 781 exports match the original in the `/GL` + LTCG linked DLL (modulo layout-dependent displacements, which were checked by content). The 44 earlier exports were verified per object, before the `/GL` build; the eight `assign_submat` exports (all element types) were verified only in the linked DLL. `native_bytes.py` cannot verify `/GL` objects (they have no machine code), so the native gate needs a linked-DLL mode from the maintainer.
+**Status: incomplete.** 58 of 781 exports match the original in the `/GL` + LTCG linked DLL (modulo layout-dependent displacements, which were checked by content). The 44 earlier exports were verified per object, before the `/GL` build; the eight `assign_submat` exports (all element types) were verified only in the linked DLL. `native_bytes.py` cannot verify `/GL` objects (they have no machine code), so the native gate needs a linked-DLL mode from the maintainer.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261025h1` (from `main` at `31b4238b`)
 - **Worktree:** `C:/Projects/Quire-wt/lane-h-efistatsci-2`
 - **Harness:** `tools/validation/native_bytes.py` and `native_targets.py` on `main`, unmodified.
 - **Build:** MSBuild `Quire.Native.EfistatsciImpl.vcxproj`, Release|x64, toolset v145, `cl` 19.51.36246 from `C:\BuildTools\VS18.6-msvc`, `/O2 /Gy /GS /EHa /MD /std:c++17 /W4 /WX` with `_CRTIMP2=__declspec(dllimport)` (D28), and `WholeProgramOptimization` true (`/GL` + LTCG). The original objects are `/GL` (D25); this build reproduces its entry code (`mov r10, rcx`), where the per-object build gives `mov r9, rcx`. Output in `.mirror-cache/bin/`.
+- **Cast family:** the six `matu8_cast_to_*` exports (`mutils_cast.cpp`) match in the linked `/GL` DLL. They use the validate forms that fixed `assign_submat` (`src` fresh-field, `dst` cols-first).
 - **Original disassembly:** `.mirror-cache/orig/efistatsci.asm` (dumpbin, ignored, D15).
 
 ## Completed groups
