@@ -108,8 +108,6 @@ public sealed partial class LicenseManager : global::System.ComponentModel.INoti
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IList<string> GetLicenseHashCodesFromFile(string filePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void UpdateBorrowedUntil(global::Quire.License.LicenseBorrowStatus borrowStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void FireLicenseStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void FireEngNotebookConnectionStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

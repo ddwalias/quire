@@ -275,4 +275,11 @@ public sealed partial class LicenseManager
         uint? port = licensePort;
         return string.Concat(port.ToString(), "@", licenseHost);
     }
+
+    private void UpdateBorrowedUntil(LicenseBorrowStatus borrowStatus)
+    {
+        BorrowedUntil = borrowStatus == LicenseBorrowStatus.Borrowed
+            ? _provider.BorrowExpirationDate()
+            : null;
+    }
 }
