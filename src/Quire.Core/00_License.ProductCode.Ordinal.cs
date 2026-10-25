@@ -4,41 +4,12 @@ namespace Quire.License;
 
 public partial class ProductCode
 {
+    // Keep these members before the lambda so it emits Mathcad's <get_IsValid>b__18_0 ordinal.
     private string _part1;
     private string _part2;
     private string _part3;
 
-    public string Code
-    {
-        get => string.Concat(_part1, _part2, _part3);
-        set
-        {
-            char[] separator = ['-'];
-            string[] parts = value.Split(separator, 3);
-            int partCount = parts.Length;
-            if (partCount != 2)
-            {
-                if (partCount == 3)
-                {
-                    _part1 = SubstringHelper(parts[0], 0, 14);
-                    _part2 = SubstringHelper(parts[1], 0, 4);
-                    _part3 = SubstringHelper(parts[2], 0, 4);
-                    return;
-                }
-            }
-            else
-            {
-                _part1 = SubstringHelper(parts[0], 0, 14);
-                _part2 = SubstringHelper(parts[1], 0, 4);
-                _part3 = SubstringHelper(parts[1], 4, 4);
-                return;
-            }
-
-            _part1 = SubstringHelper(value, 0, 14);
-            _part2 = SubstringHelper(value, 14, 4);
-            _part3 = SubstringHelper(value, 18, 4);
-        }
-    }
+    public override string ToString() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public string Part1
     {
@@ -83,6 +54,20 @@ public partial class ProductCode
 
             long number = long.Parse(string.Concat(Part2, Part3));
             return string.Format("{0}", number);
+        }
+    }
+
+    public bool IsValid
+    {
+        get
+        {
+            bool hasExpectedLength = Code.Length == 22;
+            if (!hasExpectedLength)
+            {
+                return false;
+            }
+
+            return Code.ToCharArray().All(character => "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".Contains(character));
         }
     }
 

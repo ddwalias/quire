@@ -12,9 +12,5 @@ namespace Quire.License;
 public partial class ProductCode
 {
     [global::Quire.Mirror.MirrorStub]
-    public bool IsValid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
     public ProductCode() { }
 }
