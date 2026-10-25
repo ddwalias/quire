@@ -176,6 +176,21 @@ public sealed partial class LicenseManager
         }
     }
 
+    public bool IsNeededDisableLicenseTab
+    {
+        get
+        {
+            bool? isEngineeringNotebook = global::Quire.Services.ApplicationVariant.IsEngNb;
+            if (!isEngineeringNotebook.GetValueOrDefault())
+            {
+                isEngineeringNotebook = global::Quire.Services.ApplicationVariant.IsEngNbPlus;
+                return isEngineeringNotebook.GetValueOrDefault();
+            }
+
+            return true;
+        }
+    }
+
     public LicenseSource LicenseSourceInfo => _licenseSource;
 
     public string LicenseMessageText

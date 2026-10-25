@@ -12,6 +12,8 @@ namespace Quire.License;
 public sealed partial class LicenseManager : global::System.ComponentModel.INotifyPropertyChanged, global::Quire.License.ILicenseManager
 {
     [global::Quire.Mirror.MirrorStub]
+    public global::System.Nullable<int> DaysLeft { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     private const string ENG_NB_VARIANT_ENV = "ENG_NB_VARIANT";
     [global::Quire.Mirror.MirrorStub]
     private const int MaxNumMessages = 30;
@@ -75,10 +77,6 @@ public sealed partial class LicenseManager : global::System.ComponentModel.INoti
     private readonly global::Quire.Wpf.WeakMultiCastDelegate<global::System.ComponentModel.PropertyChangedEventHandler> _propertyChanged;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Wpf.WeakMultiCastDelegate<global::System.EventHandler> _licenseTypeChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<int> DaysLeft { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsNeededDisableLicenseTab { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action LicenseStatusChanged;
     [global::Quire.Mirror.MirrorStub]
