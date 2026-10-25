@@ -275,6 +275,50 @@ public sealed partial class LicenseManager
 
     private void UpdateIsEducationalLicense() => IsEducationalLicense = _provider.IsAcademicLicense();
 
+    private void UpdateProductCodeAndDerivedValues()
+    {
+        ProductCode productCode;
+        string productCodeValue;
+        string customerNumber;
+        string salesOrderNumber;
+        if (LicenseSourceInfo.Type == LicenseUriType.FilePath)
+        {
+            try
+            {
+                string filePath = LicenseSourceInfo.FilePath;
+                string fileProductCode = global::System.IO.File.Exists(filePath)
+                    ? LicenseConfigProvider.GetProductCode(GetLicenseHashCodesFromFile(filePath))
+                    : null;
+                productCode = global::Quire.EnumerableExtensions.IsNullOrEmpty<char>(fileProductCode)
+                    ? null
+                    : new ProductCode { Code = fileProductCode };
+            }
+            catch (global::System.Exception exception)
+            {
+                productCode = null;
+                DebugTools.FailAssertion(exception.Message);
+            }
+        }
+        else
+        {
+            productCode = null;
+        }
+
+        productCodeValue = null;
+        customerNumber = null;
+        salesOrderNumber = null;
+        if (productCode != null && DebugTools.DevAssert(productCode.IsValid).Passed)
+        {
+            productCodeValue = productCode.ToString();
+            salesOrderNumber = productCode.SON;
+            customerNumber = productCode.CustomerNumber;
+        }
+
+        ProductCode = productCodeValue;
+        SalesOrderNumber = salesOrderNumber;
+        CustomerNumber = customerNumber;
+    }
+
     private static string GetLicensePathSettingFromHostAndPort(string licenseHost, uint? licensePort)
     {
         if (!licensePort.HasValue || string.IsNullOrEmpty(licenseHost))

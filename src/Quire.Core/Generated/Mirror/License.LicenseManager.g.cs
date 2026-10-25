@@ -90,8 +90,6 @@ public sealed partial class LicenseManager : global::System.ComponentModel.INoti
     [global::Quire.Mirror.MirrorStub]
     private LicenseManager(global::Quire.License.ILicenseProvider provider, global::System.Windows.ResourceDictionary licenseMessageDictionary) { }
     [global::Quire.Mirror.MirrorStub]
-    private void UpdateProductCodeAndDerivedValues() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void UpdateApplicationVariant() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IList<string> GetLicenseHashCodesFromText(string licenseText) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
