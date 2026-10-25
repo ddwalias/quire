@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.Protection;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Protection.ProtectionDialogsCommon, Ptc.Controls.Core")]
 public static partial class ProtectionDialogsCommon
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const int MaxPasswordLength = 31;
 }

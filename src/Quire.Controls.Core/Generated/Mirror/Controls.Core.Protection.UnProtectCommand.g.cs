@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.Protection;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Protection.UnProtectCommand, Ptc.Controls.Core")]
 public partial class UnProtectCommand : global::Quire.Controls.Core.Protection.ProtectionCommonBase, global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

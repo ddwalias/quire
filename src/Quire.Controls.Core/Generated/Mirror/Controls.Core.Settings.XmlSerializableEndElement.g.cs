@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.Settings;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.XmlSerializableEndElement, Ptc.Controls.Core")]
 internal partial class XmlSerializableEndElement : global::System.Xml.Serialization.IXmlSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public void ReadXml(global::System.Xml.XmlReader reader) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

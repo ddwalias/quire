@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.NonClippingTextBlock, Ptc.Controls.Core")]
 public partial class NonClippingTextBlock : global::System.Windows.Controls.TextBlock
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.Geometry GetLayoutClip(global::System.Windows.Size layoutSlotSize) => base.GetLayoutClip(layoutSlotSize);
 }

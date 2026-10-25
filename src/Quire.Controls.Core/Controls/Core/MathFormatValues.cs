@@ -1,4 +1,5 @@
 #nullable disable
+using System;
 using System.Windows.Media;
 using Quire.Mirror;
 
@@ -13,20 +14,31 @@ public partial class MathFormatValues
     public string FontFamilyName { get; set; }
 
     [MirrorVerified("PtcControlsCoreMathFormatValuesMechanicalDifferentialTests")]
-    public Nullable<double> FontSize { get; set; }
+    public double? FontSize { get; set; }
 
     [MirrorVerified("PtcControlsCoreMathFormatValuesMechanicalDifferentialTests")]
-    public Nullable<bool> IsBold { get; set; }
+    public bool? IsBold { get; set; }
 
     [MirrorVerified("PtcControlsCoreMathFormatValuesMechanicalDifferentialTests")]
-    public Nullable<bool> IsItalic { get; set; }
+    public bool? IsItalic { get; set; }
 
     [MirrorVerified("PtcControlsCoreMathFormatValuesMechanicalDifferentialTests")]
-    public Nullable<bool> IsUnderline { get; set; }
+    public bool? IsUnderline { get; set; }
 
     [MirrorVerified("PtcControlsCoreMathFormatValuesMechanicalDifferentialTests")]
-    public Nullable<Color> FontColor { get; set; }
+    public Color? FontColor { get; set; }
 
     [MirrorVerified("PtcControlsCoreMathFormatValuesMechanicalDifferentialTests")]
-    public Nullable<Color> HighlightColor { get; set; }
+    public Color? HighlightColor { get; set; }
+
+    public void SetPropertiesFrom(IMathFormat mathFormat)
+    {
+        FontFamilyName = mathFormat.FontFamilyName;
+        FontSize = mathFormat.FontSize;
+        IsItalic = mathFormat.IsItalic;
+        IsBold = mathFormat.IsBold;
+        IsUnderline = mathFormat.IsUnderline;
+        FontColor = mathFormat.FontColor;
+        HighlightColor = mathFormat.HighlightColor;
+    }
 }

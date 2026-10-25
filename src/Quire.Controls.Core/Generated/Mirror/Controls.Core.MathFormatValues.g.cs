@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.MathFormatValues, Ptc.Controls.Core")]
 public partial class MathFormatValues : global::Quire.Controls.Core.IMathFormat
 {
-    [global::Quire.Mirror.MirrorStub]
-    public void SetPropertiesFrom(global::Quire.Controls.Core.IMathFormat mathFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

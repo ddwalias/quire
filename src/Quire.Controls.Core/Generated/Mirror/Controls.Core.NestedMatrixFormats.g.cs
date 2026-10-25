@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.NestedMatrixFormats, Ptc.Controls.Core")]
 public partial class NestedMatrixFormats : global::Quire.Matrices.SparseMatrix<global::Quire.Controls.Core.MatrixFormat>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.MatrixFormatDictionary ItemMap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

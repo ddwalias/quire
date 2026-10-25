@@ -1,18 +1,30 @@
 #nullable disable
+using System;
 using System.Xml;
 using System.Xml.Schema;
-using Quire.Mirror;
+using System.Xml.Serialization;
 
 namespace Quire.Controls.Core.Settings;
 
-internal partial class XmlSerializableEndElement
+internal partial class XmlSerializableEndElement : IXmlSerializable
 {
-    [MirrorVerified("PtcControlsCoreSettingsXmlSerializableEndElementMechanicalDifferentialTests")]
-    public XmlSchema GetSchema() => throw new NotImplementedException();
+    public XmlSchema GetSchema()
+    {
+        throw new NotImplementedException();
+    }
 
-    [MirrorVerified("PtcControlsCoreSettingsXmlSerializableEndElementMechanicalDifferentialTests")]
-    public void WriteXml(XmlWriter writer) => writer.WriteEndElement();
+    public void ReadXml(XmlReader reader)
+    {
+        if (reader.NodeType == XmlNodeType.EndElement)
+        {
+            reader.ReadEndElement();
+        }
+    }
 
-    [MirrorVerified("PtcControlsCoreSettingsXmlSerializableEndElementMechanicalDifferentialTests")]
+    public void WriteXml(XmlWriter writer)
+    {
+        writer.WriteEndElement();
+    }
+
     public XmlSerializableEndElement() { }
 }

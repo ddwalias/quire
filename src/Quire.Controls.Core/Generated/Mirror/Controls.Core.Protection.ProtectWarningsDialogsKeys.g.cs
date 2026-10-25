@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.Protection;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Protection.ProtectWarningsDialogsKeys, Ptc.Controls.Core")]
 public static partial class ProtectWarningsDialogsKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string ActiveOleWarningMessageKey = "ActiveOleWarningMessage";
 }

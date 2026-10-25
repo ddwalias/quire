@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.Protection;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Protection.RoutedProtectionCommands, Ptc.Controls.Core")]
 public static partial class RoutedProtectionCommands
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand ToggleProtectState;
 }

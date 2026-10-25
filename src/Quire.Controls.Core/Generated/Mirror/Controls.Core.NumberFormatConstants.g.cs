@@ -11,8 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.NumberFormatConstants, Ptc.Controls.Core")]
 public static partial class NumberFormatConstants
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string Increase = "increase";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Decrease = "decrease";
 }

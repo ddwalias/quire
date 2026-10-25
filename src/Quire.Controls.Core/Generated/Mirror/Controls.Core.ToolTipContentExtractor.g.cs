@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.ToolTipContentExtractor, Ptc.Controls.Core")]
 public partial class ToolTipContentExtractor : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

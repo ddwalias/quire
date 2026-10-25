@@ -80,3 +80,21 @@
   - `AttachedBehavior.ChildPropertyValueFinders` (`OnLoaded`, `InitializeValues`, `.ctor`)
 - Report: `.mirror-cache/release-il-75c20ea7cb36/release-il.json` — PASS, 951 checked, 951 exact, 0 failures, 2,909 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 6 — Protection commands, settings XML elements, and leaf helpers
+
+- Scope:
+  - `Protection.ProtectWarningsDialogsKeys` (`ActiveOleWarningMessageKey`)
+  - `Protection.ProtectionDialogsCommon` (`MaxPasswordLength`)
+  - `Protection.RoutedProtectionCommands` (`ToggleProtectState`, `.cctor`)
+  - `Protection.UnProtectCommand` (`Name`, `Do`, `Undo`, `Redo`, `.ctor`)
+  - `NumberFormatConstants` (`Increase`, `Decrease`)
+  - `Settings.BuiltInVariables` (`.ctor(object, string)`)
+  - `Settings.XmlSerializableEndElement` (`GetSchema`, `ReadXml`, `WriteXml`, `.ctor`)
+  - `Settings.XmlSerializableStartElement` (`prefix`, `localName`, `ns`, `.ctor(string, string, string)`, `.ctor(string)`, `GetSchema`, `ReadXml`, `WriteXml`)
+  - `MathFormatValues` (`SetPropertiesFrom`)
+  - `NestedMatrixFormats` (`ItemMap`)
+  - `NonClippingTextBlock` (`GetLayoutClip`)
+  - `ToolTipContentExtractor` (`Convert`, `ConvertBack`, `.ctor`)
+- Report: `.mirror-cache/release-il-62ad6c00227b/release-il.json` — PASS, 962 checked, 962 exact, 0 failures, 2,899 unfinished.
+- Remaining mismatches: none in claimed batch.
