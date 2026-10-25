@@ -123,4 +123,40 @@ public partial class LicenseSource
     public LicenseSource()
     {
     }
+
+    public void Load()
+    {
+        Properties.Settings.Default.Reload();
+        Clear();
+        LicenseUriType pathForm = Properties.Settings.Default.LicensePathForm;
+        string path = Properties.Settings.Default.LicensePath;
+        switch (pathForm)
+        {
+            case LicenseUriType.ServerAndPort:
+                bool parsed = GetHostAndPortFromLicensePathSetting(path, out string host, out uint port);
+                if (parsed)
+                {
+                    Host = host;
+                    Port = port;
+                }
+
+                DebugTools.DevAssert(parsed, "Failed to parse license path settings {0}.", path);
+                return;
+            case LicenseUriType.FilePath:
+                FilePath = !global::System.IO.Path.IsPathRooted(path)
+                    ? global::System.IO.Path.Combine(global::System.Windows.Forms.Application.StartupPath, path)
+                    : path;
+                return;
+            case LicenseUriType.SourceList:
+                SourceList = path;
+                return;
+            case LicenseUriType.Unset:
+            case LicenseUriType.None:
+                Type = pathForm;
+                return;
+            default:
+                DebugTools.FailAssertion("Unknown license type: {0}", pathForm);
+                return;
+        }
+    }
 }

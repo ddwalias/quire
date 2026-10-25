@@ -11,6 +11,4 @@ namespace Quire.License;
 [global::Quire.Mirror.MirrorOf("Ptc.License.LicenseSource, Ptc.Core")]
 public partial class LicenseSource
 {
-    [global::Quire.Mirror.MirrorStub]
-    public void Load() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
