@@ -45,4 +45,26 @@ public sealed partial class LicenseManager
             (global::System.Windows.Threading.DispatcherPriority)4,
             global::System.Array.Empty<object>());
     }
+
+    private void LaunchExternalLicenseProcess(string relativePath, string args)
+    {
+        string filePath = null;
+        try
+        {
+            filePath = global::System.IO.Path.Combine(
+                global::Quire.IO.FileUtils.GetAssemblyFolder(typeof(LicenseManager).Assembly),
+                relativePath);
+            global::System.Diagnostics.Process process = new();
+            process.EnableRaisingEvents = true;
+            process.StartInfo.FileName = filePath;
+            process.StartInfo.Arguments = args;
+            process.Start();
+            process.WaitForExit();
+            InitLicense();
+        }
+        catch (global::System.Exception exception)
+        {
+            global::Quire.DebugTools.FailAssertion("Error running \"{0}\" :\n{1}", filePath, exception.Message);
+        }
+    }
 }
