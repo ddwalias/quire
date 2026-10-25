@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.UnitedValueSimpleResultNode, Ptc.Calculation.Core")]
 public partial class UnitedValueSimpleResultNode : global::Quire.Calculation.Core.SimpleResultNode, global::Quire.Calculation.Core.IUnitedValueResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
-    [global::Quire.Mirror.MirrorStub]
-    double global::Quire.Calculation.Core.IUnitedValueResultNode.DisplayValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

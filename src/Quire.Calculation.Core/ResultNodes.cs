@@ -100,11 +100,6 @@ public partial interface IResultNode
 
 public partial interface IEmptyResultNode : IResultNode;
 
-public partial interface IUnitedValueResultNode : IResultNode
-{
-    double DisplayValue { get; }
-}
-
 public partial interface IStringResultNode : IResultNode
 {
     string Value { get; }
@@ -148,11 +143,12 @@ public sealed record EmptyResultNode : IEmptyResultNode
 }
 
 /// <summary>A display-ready number. <see cref="Units"/> is the units to show after it, empty when unitless or when
-/// the user supplied a unit override; it is not Mathcad's <see cref="IUnitedValueResultNode.Units"/>.</summary>
-public sealed record UnitedValueResultNode(double DisplayValue, IReadOnlyList<UnitPower> Units) : IUnitedValueResultNode
+/// the user supplied a unit override. Product-only: it does not implement Mathcad's <see cref="IUnitedValueResultNode"/>
+/// (D21), and no visitor overload takes it.</summary>
+public sealed record UnitedValueResultNode(double DisplayValue, IReadOnlyList<UnitPower> Units) : IResultNode
 {
     public ResultValueType ValueType => ResultValueType.UnitedValue;
-    public void Accept(IResultNodeVisitor visitor) => visitor.Visit(this);
+    public void Accept(IResultNodeVisitor visitor) { }
 }
 
 public sealed record StringResultNode(string Value) : IStringResultNode

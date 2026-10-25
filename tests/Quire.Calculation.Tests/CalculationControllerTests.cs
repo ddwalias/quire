@@ -16,7 +16,7 @@ internal sealed class FakeCalculatable(string rl) : ICalculatable
     public CalculationResult? Result { get; private set; }
     public void SetSynchronizationStatus(SynchronizationStatus status) => SynchronizationStatus = status;
     public void SetResult(CalculationResult result) => Result = result;
-    public double Value => ((IUnitedValueResultNode)Result!.Value).DisplayValue;
+    public double Value => ((UnitedValueResultNode)Result!.Value).DisplayValue;
 
     // Mathcad's ICalculatable members; the controller under test does not use them.
     event Action<ICalculatable> ICalculatable.RequestEvaluation { add { } remove { } }

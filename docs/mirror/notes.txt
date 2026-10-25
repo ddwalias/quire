@@ -2,7 +2,7 @@
 #      503  renamed field: name clash (obfuscated names)
 #      253  accessor without property metadata declared as an explicit property
 #       78  no base member for override
-#       61  added explicit interface stubs
+#       60  added explicit interface stubs
 #       50  dropped method: unlisted
 #       47  not generated: hand-written Enum
 #       32  dropped method: pending
@@ -148,9 +148,6 @@
 
 [Quire.Calculation.Core] Quire.Calculation.Core.Trace2DResults.Trace2DResultNode  (Ptc.Calculation.Core.Trace2DResults.Trace2DResultNode, Ptc.Calculation.Core)
   added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ITrace2DResultNode.Traces
-
-[Quire.Calculation.Core] Quire.Calculation.Core.UnitedValueSimpleResultNode  (Ptc.Calculation.Core.UnitedValueSimpleResultNode, Ptc.Calculation.Core)
-  added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IUnitedValueResultNode.DisplayValue
 
 [Quire.Controls] Quire.Controls.DimensionSelectorButton  (Ptc.Controls.DimensionSelectorButton, Ptc.Controls)
   interface accessor Ptc.Controls.IDimensionSelectorView.set_CommandParameter has no property metadata; declared as an explicit property
@@ -1937,7 +1934,7 @@
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.v  (v, Ptc.EquationEditor)
   interface accessor b has no property metadata; declared as an explicit property
   interface accessor a has no property metadata; declared as an explicit property
-  added 4 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IUnitedValueResultNode.Value, Quire.Calculation.Core.IUnitedValueResultNode.DisplayValue, Quire.Calculation.Core.IResultNode.ValueType
+  added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IUnitedValueResultNode.Value, Quire.Calculation.Core.IResultNode.ValueType
   renamed field a to a_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.w  (w, Ptc.EquationEditor)

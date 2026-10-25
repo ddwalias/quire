@@ -55,7 +55,7 @@ public class WorksheetControlTests
     }
 
     private static double Value(CalculatableRegionControl r) =>
-        Assert.IsAssignableFrom<IUnitedValueResultNode>(r.Result!.Value).DisplayValue;
+        Assert.IsType<UnitedValueResultNode>(r.Result!.Value).DisplayValue;
 
     [Fact]
     public void Typed_regions_calculate_in_position_order() => Sta.Run(async () =>
