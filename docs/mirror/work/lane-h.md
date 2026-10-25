@@ -1,6 +1,6 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 43 of 781 exports pass strict byte validation (0 unverified targets). Export parity: 730 missing, 0 extra. Present but not matching: 8 exports (7 `sum`, 1 `cpx assign_scalar`), parked below.
+**Status: incomplete.** 43 of 781 exports pass strict byte validation (0 unverified targets; every exported function in the build matches). Export parity: 738 missing, 0 extra. The 738 missing include 19 parked exports, left out of the DLL (below).
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261025h1` (from `main` at `31b4238b`)
@@ -29,7 +29,7 @@ Shared foundation (`src/Quire.Native.EfistatsciImpl/efi_common.h`):
 - `Efi::EfiCallContext`: only the allocator pointer at +80h is inferred.
 - `mutil_interrupt_step` (inline `double`, 1e6 in the image) and `mutil_interrupt_inline` (returns `unsigned char`).
 
-Manifest entries recorded with `native_targets.py` (`docs/mirror/native/internal-targets.json`, `efistatsci_.dll`): the literals `"array size mismatch"` (`0xac368`), `"null pointer"` (`0xac3d8`), `"Illegal data value"` (`0xac398`), the step static (`0xcc0c0`) and the `1e7` constant (`0xac908`), and the `3.0` constant `__real@4008000000000000` (`0xac7a0`) once it is recorded.
+Manifest entries recorded with `native_targets.py` (`docs/mirror/native/internal-targets.json`, `efistatsci_.dll`): the literals `"array size mismatch"` (`0xac368`), `"null pointer"` (`0xac3d8`), `"Illegal data value"` (`0xac398`), the step static (`0xcc0c0`) and the `1e7` constant (`0xac908`).
 
 ## Facts from machine code
 
@@ -39,16 +39,23 @@ Manifest entries recorded with `native_targets.py` (`docs/mirror/native/internal
 - `_mat_set`: `count` (int) @0, dims pointer @8, `total` (int) @10h, a pointer at @18h (non-null-checked).
 - `pgn_chain` (in `mutils`): count (int) @8, pointers at @10h and @18h.
 - Matrix checks reach `Efi::Throw` in this order: null matrix, `rows <= 0 || cols <= 0`, null data, `size != rows * cols`.
+- Work constants differ per operation: `assign_scalar` uses `size + size`, `sum` `size * 3.0`, `range` `size * 5.0`, `cast_to` `size + size`.
 
-## Parked (D25)
+## Parked (D25): present in the source's history, not exported
+
+Parked exports are removed from the DLL, because a committed new function that fails would block `native_gate.py` (new functions must pass). They return when they match.
 
 - **`matcpx_assign_scalar`** (`0x493c0`, 219 bytes): candidate 206 bytes with the plain loop. Shapes tried, all differ: plain loop 206; pointer loop 217; `std::fill` 217; `std::fill_n` 218; store element 0 then copy forward 218; `_dcomplex` as `double v[2]` 206. The original stores the value as one 16-byte `movups` and fills the rest with `rep movs` over overlapping element pairs. Flags not searched (D25).
-- **`sum` family** (`matdbl_sum` `0x7c650`, `matflt_sum` `0x7c780`, `mats{32,16}_sum`, `matu{32,16,8}_sum`): the body matches except for the epilogue. The candidate is 2 bytes longer for the integer forms (219 vs 217) and 2 bytes for `dbl` (299 vs 297), because the two `const char *` returns merge into one register (`lea rcx` + `mov rax, rcx`, `xor ecx` + `mov eax, ecx`); the original returns `lea rax`/`xor eax` directly. Five declaration orders of the locals were tried; all gave 219. `flt` is 302 vs 287 (the original unrolls by four). Parked; the exports stay in the DLL for name parity.
+- **`sum` family** (7: `matdbl_sum` `0x7c650`, `matflt_sum` `0x7c780`, `mats{32,16}_sum`, `matu{32,16,8}_sum`): the body matches except for the epilogue. The candidate is 2 bytes longer for the integer forms (219 vs 217) and for `dbl` (299 vs 297), because the two `const char *` returns merge into one register (`lea rcx` + `mov rax, rcx`; `xor ecx` + `mov eax, ecx`). The original returns `lea rax` / `xor eax` directly. Five declaration orders of the locals were tried, all 219. `flt` is 302 vs 287 (the original unrolls by four).
+- **`range` family** (5: `mats{32,16}_range`, `matu{32,16,8}_range`): the same return-merge (`lea rcx`, `mov rax, rcx`, +3 bytes per return), plus the original places its null-pointer return block inline, so its jumps are short (rel8); the candidate puts that block at the end, with rel32 jumps. Both forms tried; no reordering of the checks is allowed.
+- **`matu8_cast_to_*`** (6: `dbl`, `flt`, `s16`, `u16`, `s32`, `u32`): forced inlining gives the same loop as a template, but the candidate unrolls the loop four times (437 bytes against the original's 285). The original keeps the loop un-unrolled, because it reloads `src->size` each iteration. Binding the loop to `src->size` directly still unrolled, so the compiler proved the bound invariant where the original did not. Not solved by source shape yet.
 
 ## Remaining work
 
-- 730 exports unimplemented. The `siguniv_window_*` dispatchers (11) call typed `sigdbl_window_*` exports, so they cannot link until those exist; the DLL build would fail on the unresolved symbol. They wait for their typed exports.
-- Families with only import calls (classifier, `classify.py`): `*_add`, `*_subtract`, `*_multiply*`, `*_abs`, `*_rescale`, `*_assign_submat`, `*_extract`, `*_transpose`, `*_cast_to_*`, `*_min`/`*_max`, `*_number_equal*`, `*_bit_*`, `*_permute`, `*_sum_rows`/`*_sum_cols`, `*_range`, `matuniv_wrap_*`, `mutil_rand_uniform`. Most are 300–800 bytes and need the element-type layout work above.
+- 719 exports not yet implemented, plus the 19 parked above.
+- The `siguniv_window_*` dispatchers (11) call typed `sigdbl_window_*` exports, so they cannot link until those exist; they wait for their typed exports.
+- `matuniv_wrap_data` and `matuniv_wrap_matrix` dispatch through a jump table over a nine-case type enum, with different field copies per case.
+- The `add`/`subtract`/`multiply_elem` families (about 680 bytes each for `int` types) are auto-vectorized with runtime alias checks, so the source shape has to reproduce the vectorizer's output.
 - `mutil_realloc`: its `.pdata` extent conflicts with the code address (18-byte extent for a 71-byte body). Not implemented; parked for the maintainer.
 
 ## Harness notes

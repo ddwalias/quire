@@ -30,38 +30,6 @@ const char *matu8_assign_scalar(unsigned char value, void *context, _uint8_mat *
     return assign_scalar(value, context, m);
 }
 
-const char *matcpx_assign_scalar(_dcomplex value, void *context, _dcomplex_mat *m) {
-    return assign_scalar(value, context, m);
-}
-
-const char *matdbl_sum(Efi::EfiCallContext *ctx, const _double_mat *m, void *context, double *out) {
-    return sum(ctx, m, context, out);
-}
-
-const char *matflt_sum(Efi::EfiCallContext *ctx, const _float_mat *m, void *context, float *out) {
-    return sum(ctx, m, context, out);
-}
-
-const char *mats32_sum(Efi::EfiCallContext *ctx, const _sint32_mat *m, void *context, long *out) {
-    return sum(ctx, m, context, out);
-}
-
-const char *mats16_sum(Efi::EfiCallContext *ctx, const _sint16_mat *m, void *context, short *out) {
-    return sum(ctx, m, context, out);
-}
-
-const char *matu32_sum(Efi::EfiCallContext *ctx, const _uint32_mat *m, void *context, unsigned int *out) {
-    return sum(ctx, m, context, out);
-}
-
-const char *matu16_sum(Efi::EfiCallContext *ctx, const _uint16_mat *m, void *context, unsigned short *out) {
-    return sum(ctx, m, context, out);
-}
-
-const char *matu8_sum(Efi::EfiCallContext *ctx, const _uint8_mat *m, void *context, unsigned char *out) {
-    return sum(ctx, m, context, out);
-}
-
 void matdbl_validate(const _double_mat *m) { validate(m); }
 void matflt_validate(const _float_mat *m) { validate(m); }
 void mats32_validate(const _sint32_mat *m) { validate(m); }

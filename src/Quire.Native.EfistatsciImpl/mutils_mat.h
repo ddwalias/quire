@@ -50,31 +50,6 @@ void allocate_mat(Efi::EfiCallContext *ctx, typed_mat<T> *m, int rows, int cols)
     m->data = static_cast<T *>(ctx->allocator->allocate_array(m->size * sizeof(T)));
 }
 
-template <typename T>
-const char *sum(Efi::EfiCallContext *, const typed_mat<T> *m, void *context, T *out) {
-    validate(m);
-    T *data = m->data;
-    int size = m->size;
-    if (out == nullptr) return "null pointer";
-    *out = 0;
-    T total = 0;
-    for (int i = 0; i < size; ++i) {
-        total += data[i];
-        *out = total;
-    }
-    double work = (double)size * 3.0;
-    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
-    return nullptr;
-}
-
-EFI_EXPORT const char *matdbl_sum(Efi::EfiCallContext *ctx, const _double_mat *m, void *context, double *out);
-EFI_EXPORT const char *matflt_sum(Efi::EfiCallContext *ctx, const _float_mat *m, void *context, float *out);
-EFI_EXPORT const char *mats32_sum(Efi::EfiCallContext *ctx, const _sint32_mat *m, void *context, long *out);
-EFI_EXPORT const char *mats16_sum(Efi::EfiCallContext *ctx, const _sint16_mat *m, void *context, short *out);
-EFI_EXPORT const char *matu32_sum(Efi::EfiCallContext *ctx, const _uint32_mat *m, void *context, unsigned int *out);
-EFI_EXPORT const char *matu16_sum(Efi::EfiCallContext *ctx, const _uint16_mat *m, void *context, unsigned short *out);
-EFI_EXPORT const char *matu8_sum(Efi::EfiCallContext *ctx, const _uint8_mat *m, void *context, unsigned char *out);
-
 EFI_EXPORT void matdbl_validate(const _double_mat *m);
 EFI_EXPORT void matflt_validate(const _float_mat *m);
 EFI_EXPORT void mats32_validate(const _sint32_mat *m);
@@ -108,6 +83,5 @@ EFI_EXPORT const char *mats16_assign_scalar(short value, void *context, _sint16_
 EFI_EXPORT const char *matu32_assign_scalar(unsigned int value, void *context, _uint32_mat *m);
 EFI_EXPORT const char *matu16_assign_scalar(unsigned short value, void *context, _uint16_mat *m);
 EFI_EXPORT const char *matu8_assign_scalar(unsigned char value, void *context, _uint8_mat *m);
-EFI_EXPORT const char *matcpx_assign_scalar(_dcomplex value, void *context, _dcomplex_mat *m);
 
 }  // namespace mutils
