@@ -13,4 +13,28 @@ public sealed partial class LicenseManager
             LicenseType == LicenseType.Trial ? " /t-" : " /l:trial");
         LaunchExternalLicenseProcess("LicenseWizard.exe", args);
     }
+
+    public bool RefreshLicense()
+    {
+        bool refreshed = _provider.RefreshLicense();
+        if (global::Quire.Services.ApplicationVariant.IsEngNbPlus == true && !refreshed)
+        {
+            IsEngNotebookLostConnection = true;
+        }
+
+        return refreshed;
+    }
+
+    public void ReleaseLicense(bool isClosingWindow)
+    {
+        ILicenseProvider provider = _provider;
+        if (isClosingWindow)
+        {
+            _provider = null;
+        }
+
+        UpdateLicenseStatusAndRefreshTimer(false);
+        provider.ReleaseLicense();
+        _provider = provider;
+    }
 }
