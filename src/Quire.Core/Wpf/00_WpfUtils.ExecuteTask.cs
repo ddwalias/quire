@@ -209,7 +209,28 @@ public static partial class WpfUtils
     }
 
     public static string ApplicationName => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public static string ProductName => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public static string ProductName
+    {
+        get
+        {
+            if (global::Quire.License.LicenseManager.Instance != null)
+            {
+                if (global::Quire.Services.ApplicationVariant.IsEngNbPlus.GetValueOrDefault())
+                {
+                    return "Creo+ Engineering Notebook";
+                }
+
+                if (global::Quire.Services.ApplicationVariant.IsEngNb.GetValueOrDefault())
+                {
+                    return "Creo Engineering Notebook";
+                }
+            }
+
+            return "PTC Mathcad";
+        }
+    }
+
     public static string ApplicationFullName => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     // Keep the tree checks at the loop head to preserve Mathcad's Release branch order.
