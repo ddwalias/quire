@@ -58,6 +58,36 @@ public partial class ProductCode
         set => _part3 = value.ToUpperInvariant();
     }
 
+    public string SON
+    {
+        get
+        {
+            if (!StartsWithX)
+            {
+                return null;
+            }
+
+            long number = long.Parse(SubstringHelper(Part1, 1, 14));
+            return string.Format("{0}", number);
+        }
+    }
+
+    public string CustomerNumber
+    {
+        get
+        {
+            if (!StartsWithX)
+            {
+                return null;
+            }
+
+            long number = long.Parse(string.Concat(Part2, Part3));
+            return string.Format("{0}", number);
+        }
+    }
+
+    public bool StartsWithX => Code.StartsWith("X");
+
     private static string SubstringHelper(string value, int start, int length)
     {
         start = global::System.Math.Min(value.Length, start);
