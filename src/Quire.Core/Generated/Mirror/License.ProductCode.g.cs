@@ -12,8 +12,6 @@ namespace Quire.License;
 public partial class ProductCode
 {
     [global::Quire.Mirror.MirrorStub]
-    public string Code { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public string SON { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string CustomerNumber { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -21,10 +19,6 @@ public partial class ProductCode
     public bool IsValid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool StartsWithX { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    private static string SubstringHelper(string value, int start, int length) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public ProductCode() { }
 }
