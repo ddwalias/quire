@@ -92,7 +92,9 @@ export, so they verify once the typed exports match.
   `mutil_interrupt` (compared by eye, not yet byte-checked).
 
 **Trial (scratch, not committed).** This source matches 5/5 `assign_scalar` variants (`dbl` 168, `flt` 168, `s32` 170,
-`s16` 172, `u8` 173 bytes) under `/O2 /Gy /GS /EHsc /MD /std:c++17`, with the BuildTools 36246 toolset:
+`s16` 172, `u8` 173 bytes) under `/O2 /Gy /GS /EHsc /MD /std:c++17`, with the BuildTools 36246 toolset. It also
+matches under D28's `/EHa` and `_CRTIMP2=__declspec(dllimport)`, which the project must adopt first; the 8 existing
+exports still match under them:
 
 ```cpp
 template <typename T, typename M> inline const char *assign_scalar(T value, void *context, M *m)
