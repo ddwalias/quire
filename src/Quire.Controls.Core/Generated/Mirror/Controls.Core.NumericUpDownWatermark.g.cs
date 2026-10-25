@@ -11,16 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.NumericUpDownWatermark, Ptc.Controls.Core")]
 public partial class NumericUpDownWatermark : global::Quire.Controls.Core.NumericUpDown
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty WatermarkValueProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public override int NumberValue { get => base.NumberValue; set => base.NumberValue = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public string WatermarkValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public NumericUpDownWatermark() { }
-    [global::Quire.Mirror.MirrorStub]
-    private void OnLoaded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void WatermarkVisibilityToggle(object sender, global::System.Windows.Controls.TextChangedEventArgs textChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

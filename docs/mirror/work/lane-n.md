@@ -340,3 +340,10 @@
   - `CustomInsertedMenuItemsHelper` (`ContextMenuOpened`, `TryInsertMenuItemByKey`, `GetMenuItemWithCommand`, `IndexOfCommandMenuItem`)
 - Report: `.mirror-cache/release-il-15b2dd9f990e/release-il.json` — PASS, 1,212 checked, 1,212 exact, 0 failures, 2,696 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 35 — NumericUpDownWatermark
+
+- Scope:
+  - `NumericUpDownWatermark` (`WatermarkValueProperty`, `NumberValue`, `WatermarkValue`, `OnLoaded`, `WatermarkVisibilityToggle`, `.ctor`, `.cctor`)
+- Report: `.mirror-cache/release-il-328de43f6fcd/release-il.json` — PASS, 1,219 checked, 1,219 exact, 0 failures, 2,690 unfinished.
+- Remaining mismatches: none in claimed batch.
