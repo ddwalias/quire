@@ -261,6 +261,19 @@ public sealed partial class LicenseManager
         }
     }
 
+    public int? DaysLeft
+    {
+        get
+        {
+            if (!ExpirationDate.HasValue)
+            {
+                return null;
+            }
+
+            return (ExpirationDate.Value - global::System.DateTime.Now).Days;
+        }
+    }
+
     public bool IsUsingReleaseFeature() => _isUsingReleaseFeature;
 
     private bool HasBorrows() => _provider.HasBorrows();

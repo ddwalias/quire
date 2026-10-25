@@ -12,8 +12,6 @@ namespace Quire.License;
 public sealed partial class LicenseManager : global::System.ComponentModel.INotifyPropertyChanged, global::Quire.License.ILicenseManager
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<int> DaysLeft { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private const string ENG_NB_VARIANT_ENV = "ENG_NB_VARIANT";
     [global::Quire.Mirror.MirrorStub]
     private const int MaxNumMessages = 30;
@@ -80,15 +78,11 @@ public sealed partial class LicenseManager : global::System.ComponentModel.INoti
     [global::Quire.Mirror.MirrorStub]
     private LicenseManager(global::Quire.License.ILicenseProvider provider, global::System.Windows.ResourceDictionary licenseMessageDictionary) { }
     [global::Quire.Mirror.MirrorStub]
-    public void UpdateApplicationVariant() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IList<string> GetLicenseHashCodesFromText(string licenseText) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IList<string> GetLicenseHashCodesFromFile(string filePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool IsValidLicense() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ClearLicenseProperties(bool keepLicenseLocation = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool SetLicenseFile(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -110,13 +104,7 @@ public sealed partial class LicenseManager : global::System.ComponentModel.INoti
     [global::Quire.Mirror.MirrorStub]
     private void LaunchExternalLicenseProcess(string relativePath, string args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void LaunchLicenseWizard() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void LaunchLicenseWizardAtStartupIfNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OnDisplayLicenseMessage(global::Quire.License.LicenseCbArgs cbArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnLicenseTypeChanged(global::System.EventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.License.LicenseManager+PropertyNames, Ptc.Core")]
     public static partial class PropertyNames
