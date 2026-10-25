@@ -20,15 +20,9 @@ public sealed partial class LicenseManager : global::System.ComponentModel.INoti
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.License.LicenseManager _instance;
     [global::Quire.Mirror.MirrorStub]
-    private int _licenseRefreshInterval;
-    [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Windows.Threading.Dispatcher _uiThreadDispatcher;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Threading.Timer _refreshTimer;
-    [global::Quire.Mirror.MirrorStub]
-    private string _licenseMessageText;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.List<string> _licenseMessages;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Windows.ResourceDictionary _licenseMessageDictionary;
     [global::Quire.Mirror.MirrorStub]
@@ -67,16 +61,6 @@ public sealed partial class LicenseManager : global::System.ComponentModel.INoti
     private static readonly global::System.Text.RegularExpressions.Regex validServerPortRegex;
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.TimeSpan _oneMonth;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Wpf.WeakMultiCastDelegate<global::System.ComponentModel.PropertyChangedEventHandler> _propertyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Wpf.WeakMultiCastDelegate<global::System.EventHandler> _licenseTypeChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler LicenseTypeChanged;
-    [global::Quire.Mirror.MirrorStub]
-    private LicenseManager(global::Quire.License.ILicenseProvider provider, global::System.Windows.ResourceDictionary licenseMessageDictionary) { }
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.License.LicenseType DetermineLicenseType(bool hasValidLicense) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

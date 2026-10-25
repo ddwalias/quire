@@ -9,7 +9,28 @@ public sealed partial class LicenseManager
     public bool HasValidLicense
     {
         get => _hasValidLicense.GetValueOrDefault();
-        private set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        private set
+        {
+            if (!(_hasValidLicense.HasValue && _hasValidLicense == value))
+            {
+                _hasValidLicense = value;
+                FirePropertyChanged("HasValidLicense");
+                FireLicenseStatusChanged();
+            }
+
+            if (HasValidLicense && DebugTools.AssertNotNull(_provider).Passed)
+            {
+                UpdateLicenseBorrowStatus();
+                UpdateIssueDate();
+                UpdateExpirationDate();
+                UpdateIsEducationalLicense();
+                UpdateProductCodeAndDerivedValues();
+                UpdateCustomerNumber();
+            }
+
+            UpdateHostId();
+            LicenseType = DetermineLicenseType(HasValidLicense);
+        }
     }
 
 
