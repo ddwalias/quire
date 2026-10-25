@@ -8,8 +8,21 @@ public partial class LicenseConfigProvider
     public static string LicenseConfigFilePath =>
         global::System.IO.Path.Combine(UserSettingsProvider.CommonConfigFolderName, "License.config");
 
-    public static void SetProductCode(string hashCode, string productCode) =>
-        throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void SetProductCode(string hashCode, string productCode)
+    {
+        try
+        {
+            global::System.Xml.Linq.XDocument configDocument = global::System.IO.File.Exists(LicenseConfigFilePath)
+                ? global::System.Xml.Linq.XDocument.Load(LicenseConfigFilePath, global::System.Xml.Linq.LoadOptions.None)
+                : null;
+            SetProductCode(hashCode, productCode, ref configDocument);
+            configDocument.Save(LicenseConfigFilePath);
+        }
+        catch (global::System.Exception exception)
+        {
+            DebugTools.FailAssertion(exception.Message);
+        }
+    }
 
     public static void SetProductCode(string hashCode, string productCode, ref global::System.Xml.Linq.XDocument configDoc) =>
         throw global::Quire.Mirror.MirrorStub.NotImplemented();
