@@ -11,16 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.PrimeExceptionLogger, Ptc.Controls.Core")]
 public partial class PrimeExceptionLogger : global::Quire.Services.ExceptionLogger, global::Quire.Controls.Core.IPrimeExceptionLogger, global::Quire.Services.IExceptionLogger, global::Quire.Services.IApplicationLogger, global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override string[] GetExceptionData(global::System.Collections.Generic.IEnumerable<global::System.Exception> exceptions) => base.GetExceptionData(exceptions);
-    [global::Quire.Mirror.MirrorStub]
-    public string GetOpenFilesData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetUndoStackData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string GetLicenseTypeData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string GetApplicationVersionData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string GetMiscInfo() => base.GetMiscInfo();
 }

@@ -347,3 +347,10 @@
   - `NumericUpDownWatermark` (`WatermarkValueProperty`, `NumberValue`, `WatermarkValue`, `OnLoaded`, `WatermarkVisibilityToggle`, `.ctor`, `.cctor`)
 - Report: `.mirror-cache/release-il-328de43f6fcd/release-il.json` — PASS, 1,219 checked, 1,219 exact, 0 failures, 2,690 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 36 — PrimeExceptionLogger
+
+- Scope:
+  - `PrimeExceptionLogger` (`OpenFilesListGetter`, `GetExceptionData`, `GetOpenFilesData`, `GetUndoStackData`, `GetLicenseTypeData`, `GetApplicationVersionData`, `GetMiscInfo`)
+- Report: `.mirror-cache/release-il-efe0c13161e6/release-il.json` — PASS, 1,229 checked, 1,229 exact, 0 failures, 2,684 unfinished.
+- Remaining mismatches: none in claimed batch.
