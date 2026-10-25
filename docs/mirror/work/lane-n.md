@@ -196,3 +196,10 @@
   - `UnitSystemSerializer` (`localName`, `_unitDescriptor`, `CreateChildren`, `.ctor(UnitDescriptor, string)`)
 - Report: `.mirror-cache/release-il-38e3c73970d9/release-il.json` — PASS, 1,094 checked, 1,094 exact, 0 failures, 2,790 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 16 — WhiteboardItemContainerExtensions
+
+- Scope:
+  - `WhiteboardItemContainerExtensions` (`_itemManager`, `ItemManager`, `HasRegionsWithConverterAnnotations`, `RegionsWithConverterAnnotations`)
+- Report: `.mirror-cache/release-il-e5725093ee4c/release-il.json` — PASS, 1,101 checked, 1,101 exact, 0 failures, 2,787 unfinished.
+- Remaining mismatches: none in claimed batch.
