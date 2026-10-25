@@ -31,6 +31,7 @@ public static partial class RichTextBoxExtensions
 
     public static void ClearTextFormatPropsRecursively(this Inline inline, global::Quire.DelegateFunction1<bool, TextElement> condition, params DependencyProperty[] props) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
+    // Release IL comparison requires these labels to preserve Mathcad's recursive branch order.
     public static bool Satisfy(this TextElement textElement, global::Quire.DelegateFunction1<bool, TextElement> condition)
     {
         if (!condition(textElement))
