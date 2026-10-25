@@ -67,7 +67,7 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 
 ## Landing
 
-`lane_merge.py` refuses to run while the main checkout has uncommitted changes (`BLOCKED: commit or stash changes in both worktrees first`). Main currently holds an uncommitted `docs/mirror/work/lane-h.md` (the maintainer update below, not in any commit), so the batch is committed on the lane branch and not landed. The maintainer must commit or stash that file in `C:/Projects/Quire` before the batch can land.
+Landed on `main` through `lane_merge.py` (Release IL gate PASS; native gate PASS). The branch was rebased onto `f61c3dc0` first; the checkpoint text was kept over main's copy of this file, and the maintainer section was restored from main.
 
 ## Maintainer update 2026-10-25
 
