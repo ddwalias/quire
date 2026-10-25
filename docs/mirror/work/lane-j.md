@@ -1,6 +1,6 @@
 # Lane J: mshex.dll → Quire.Native.Mshex
 
-**Status: in progress.** 87 of 380 exports pass strict byte validation (0 unverified targets). Export parity: 293 missing, 0 extra.
+**Status: in progress.** 87 candidate functions match strictly (0 unverified targets); 86 of 380 exports are present. Export parity: 294 missing, 0 extra.
 
 - **Owner:** Lane J (native, `mshex.dll`)
 - **Branch:** `mirror/j-mshex-202610241256`, rebased onto `main` (354255ea)
