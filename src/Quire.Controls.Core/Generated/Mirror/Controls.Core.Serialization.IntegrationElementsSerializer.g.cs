@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.IntegrationElementsSerializer, Ptc.Controls.Core")]
 internal partial class IntegrationElementsSerializer : global::Quire.Controls.Core.Serialization.XElementSerializable, global::Quire.Serialization.IShouldValidate, global::Quire.Controls.Core.Serialization.IXDocumentRepairer
 {
-    [global::Quire.Mirror.MirrorStub]
-    public IntegrationElementsSerializer(global::Quire.Controls.Core.IORegions.IIORegionContainer area, global::Quire.Serialization.ISerializationHelper helper) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Xml.Schema.XmlSchema GetSchema() => base.GetSchema();
 }

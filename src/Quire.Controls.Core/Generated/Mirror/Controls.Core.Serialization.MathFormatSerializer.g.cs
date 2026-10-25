@@ -11,12 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.MathFormatSerializer, Ptc.Controls.Core")]
 public partial class MathFormatSerializer : global::Quire.Controls.Core.Serialization.XElementSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::Quire.Controls.Core.XmlBooleanConverter converter;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _ignoreUnsetProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public MathFormatSerializer(string localName, string nameSpace, global::Quire.Controls.Core.MathFormat mathFormat, bool ignoreUnsetProperty = true) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void CreateChildren(global::System.Xml.Linq.XElement thisElement = default) => base.CreateChildren(thisElement);
 }

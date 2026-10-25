@@ -11,10 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.ResultElementsSerializer, Ptc.Controls.Core")]
 internal partial class ResultElementsSerializer : global::Quire.Controls.Core.Serialization.XElementSerializable, global::Quire.Serialization.IShouldValidate, global::Quire.Controls.Core.Serialization.IXDocumentRepairer
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string ResultsElemName = "resultsList";
-    [global::Quire.Mirror.MirrorStub]
-    public ResultElementsSerializer() : base(default(global::System.Xml.Linq.XName), default(object[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Xml.Schema.XmlSchema GetSchema() => base.GetSchema();
 }

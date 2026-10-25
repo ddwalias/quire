@@ -217,3 +217,13 @@
   - `IOTag` (`IOTagProperty`, `IOTagSet`, `IOTagUnSet`, `HandleIOTagPropertyChanged`, `SetIOTag`, `ClearIOTag`, `GetIOTag`, `IsIOTagged`, `IsRegionOfType`, `HasInputTag`, `HasOutputTag`, `.cctor`)
 - Report: `.mirror-cache/release-il-32e24bf55e48/release-il.json` — PASS, 1,111 checked, 1,111 exact, 0 failures, 2,778 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 19 — Serialization elements (Integration, Result, SpiritMetadata, MathFormat)
+
+- Scope:
+  - `IntegrationElementsSerializer` (`ShouldValidateOnWrite`, `ShouldValidateOnRead`, `GetSchema`, `RepairXDocument`, `.ctor(IIORegionContainer, ISerializationHelper)`)
+  - `ResultElementsSerializer` (`ResultsElemName`, `ShouldValidateOnWrite`, `ShouldValidateOnRead`, `GetSchema`, `RepairXDocument`, `.ctor`)
+  - `SpiritMetadataSerializer` (`schemaNamespaceURI`, `CreateSchemas`, `FillInMetadataModel`, `FillInXmlMetadata`, `.ctor`)
+  - `MathFormatSerializer` (`converter`, `_ignoreUnsetProperty`, `MathFormat`, `CreateChildren`, `.ctor(string, string, MathFormat, bool)`)
+- Report: `.mirror-cache/release-il-97646de9b89b/release-il.json` — PASS, 1,123 checked, 1,123 exact, 0 failures, 2,770 unfinished.
+- Remaining mismatches: none in claimed batch.

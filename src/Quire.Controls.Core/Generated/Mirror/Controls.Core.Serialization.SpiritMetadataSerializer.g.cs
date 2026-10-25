@@ -11,10 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.SpiritMetadataSerializer, Ptc.Controls.Core")]
 public partial class SpiritMetadataSerializer : global::Quire.Controls.Core.Serialization.MetadataSerializer
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string schemaNamespaceURI = "http://schemas.openxmlformats.org/package/2006/metadata/core-properties";
-    [global::Quire.Mirror.MirrorStub]
-    protected override void FillInMetadataModel(global::System.Xml.XmlDocument xmlMetadata, global::Quire.Controls.Core.Serialization.IMetadataModel metadataModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void FillInXmlMetadata(global::System.Xml.XmlDocument xmlMetadata, global::Quire.Controls.Core.Serialization.IMetadataModel metadataModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
