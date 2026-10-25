@@ -289,3 +289,10 @@
   - `MathRendering` (`LocalName`, `_document`, `_namespace`, `_resultsNS`, `CreateChildren`, `.ctor(IEngineeringDocument, XName, string)`)
 - Report: `.mirror-cache/release-il-bc488513c97b/release-il.json` — PASS, 1,173 checked, 1,173 exact, 0 failures, 2,725 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 28 — ToggleRegionsDesignationCommand
+
+- Scope:
+  - `ToggleRegionsDesignationCommand` (`_commandsToUndo`, `_commands`, `_name`, `Name`, `Execute`, `Do`, `Undo`, `Redo`, `.ctor(List<UndoableCommand>, string)`)
+- Report: `.mirror-cache/release-il-18c90a708eba/release-il.json` — PASS, 1,182 checked, 1,182 exact, 0 failures, 2,721 unfinished.
+- Remaining mismatches: none in claimed batch.
