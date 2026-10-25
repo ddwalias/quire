@@ -12,9 +12,8 @@ namespace Quire.Calculation.Core;
 public partial class ResultConverter : global::Quire.Calculation.Core.IResultConverter
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IResultNode Convert(global::Quire.Calculation.Core.IResultNode resultNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Calculation.Core.SimpleResultNode ConvertToIResultNode(object value, bool isFlatMatrix = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object ConvertFromIResultNode(global::Quire.Calculation.Core.SimpleResultNode value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static global::Quire.Calculation.Core.SimpleResultNode ConvertToIResultNode(object value, bool isFlatMatrix = false)
+    {
+        throw global::Quire.Mirror.MirrorStub.NotImplemented("C:\\Projects\\Quire\\src\\Quire.Calculation.Core\\Generated\\Mirror\\Calculation.Core.ResultConverter.g.cs", "ConvertToIResultNode");
+    }
 }

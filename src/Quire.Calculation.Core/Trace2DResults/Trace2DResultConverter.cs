@@ -32,6 +32,62 @@ public partial class Trace2DResultConverter
         _helper = helper;
     }
 
+    private static IList<Unit> DissectUnits(IResultNode node, out IMatrixResultNode resultNode)
+    {
+        IList<Unit> result;
+        if (node is IUnitedValueResultNode)
+        {
+            IUnitedValueResultNode unitedValueResultNode = node as IUnitedValueResultNode;
+            result = unitedValueResultNode.Units;
+            resultNode = unitedValueResultNode.Value as IMatrixResultNode;
+        }
+        else
+        {
+            result = new List<Unit>();
+            resultNode = node as IMatrixResultNode;
+        }
+        return result;
+    }
+
+    public ITrace2DResultNode ConvertToVectorsForm(IMatrixResultNode matrix, out string errorMessageCode)
+    {
+        IMatrixResultNode xResult;
+        IMatrixResultNode yResult;
+        Trace2DResultType type;
+        IList<Unit> rangeUnits;
+        IList<Unit> resultUnits;
+        bool isDiscrete;
+        bool isDiscrete2;
+        IMatrixToVectorsConverter matrixToVectorsConverter;
+        IMatrixToVectorsConverter matrixToVectorsConverter2;
+        errorMessageCode = TryParseResult(matrix, out xResult, out yResult, out rangeUnits, out resultUnits, out type);
+        if (errorMessageCode.IsNotEmpty())
+        {
+            return null;
+        }
+        TraceType traceTypePreset = GetTraceTypePreset(xResult.Columns, yResult.Columns);
+        int numberOfPointsInResult = Math.Max(xResult.Count, yResult.Count);
+        errorMessageCode = _helper.ValidateColumnsAndUnits(numberOfPointsInResult, yResult.Columns, rangeUnits, traceTypePreset);
+        if (errorMessageCode.IsNotEmpty())
+        {
+            return null;
+        }
+        if ((matrixToVectorsConverter = GetMatrixToVectorsConverter(out isDiscrete, xResult)) == null || (matrixToVectorsConverter2 = GetMatrixToVectorsConverter(out isDiscrete2, yResult, ReadAsColumns)) == null)
+        {
+            errorMessageCode = "PlotControl.Error.QuickPlotElementsOutOfRange";
+            return null;
+        }
+        errorMessageCode = _helper.AssertValuesTypeMatchTraceType(isDiscrete, isDiscrete2, traceTypePreset);
+        if (errorMessageCode.IsNotEmpty())
+        {
+            return null;
+        }
+        TraceDataPoints dataDataPoints = BuildTraceData(xResult, yResult, traceTypePreset, matrixToVectorsConverter, matrixToVectorsConverter2);
+        TraceAxisInfo rangeAxisInfo = new TraceAxisInfo(ResultNodeUtils.ParsePlottableValue(matrix[2, 0]), ResultNodeUtils.ParsePlottableValue(matrix[3, 0]), rangeUnits);
+        TraceAxisInfo resultAxisInfo = new TraceAxisInfo(ResultNodeUtils.ParsePlottableValue(matrix[4, 0]), ResultNodeUtils.ParsePlottableValue(matrix[5, 0]), resultUnits);
+        return new Trace2DResultNode(rangeAxisInfo, resultAxisInfo, dataDataPoints, type);
+    }
+
     [MirrorVerified("Release IL")]
     private static bool GetDataSourceType(IMatrixResultNode matrix, out Trace2DResultType type)
     {

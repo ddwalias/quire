@@ -11,8 +11,4 @@ namespace Quire.Calculation.Core.Trace2DResults;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.Trace2DResultConverter, Ptc.Calculation.Core")]
 public partial class Trace2DResultConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> DissectUnits(global::Quire.Calculation.Core.IResultNode node, out global::Quire.Calculation.Core.IMatrixResultNode resultNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.ITrace2DResultNode ConvertToVectorsForm(global::Quire.Calculation.Core.IMatrixResultNode matrix, out string errorMessageCode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
