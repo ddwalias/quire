@@ -21,7 +21,58 @@ public partial class QualityAgentManager
         });
     }
 
-    private string GetCommandLine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private global::Quire.License.ILicenseManager LicenseManagerInstance => global::Quire.License.LicenseManager.Instance;
+
+    private string GetCommandLine()
+    {
+        string commandLine = string.Empty;
+        global::Quire.License.ILicenseManager licenseManagerInstance = LicenseManagerInstance;
+        if (licenseManagerInstance != null)
+        {
+            string domainName = global::System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName;
+            _reportData = new QualityAgentReportData(
+                licenseManagerInstance.HostId,
+                domainName,
+                GetMathcadPrimeInstallationDate(),
+                licenseManagerInstance.IssueDate,
+                licenseManagerInstance.LicenseType,
+                licenseManagerInstance.CustomerNumber,
+                _startupTime,
+                global::System.DateTime.Now,
+                global::System.TimeZoneInfo.Local,
+                GetMathcadPrimeChecksum(),
+                _mathcadPrimeVersion,
+                global::Quire.Xml.XmlWorksheetData.CurrentAppVersion,
+                global::System.Globalization.CultureInfo.CurrentCulture,
+                global::System.Globalization.CultureInfo.CurrentUICulture,
+                global::Quire.VCard.VCardFactory.GetInstance().Url,
+                GetMathcadPrimeBitness());
+            commandLine = " ";
+            commandLine += "Mathcad_Prime";
+            AddArgument(ref commandLine, "AlwaysSend");
+            AddArgument(ref commandLine, "NoUserFilters");
+            AddArgument(ref commandLine, "HideUserInfo");
+            AddArgument(ref commandLine, "XML_NAME", "Mathcad_Prime");
+            AddArgument(ref commandLine, "HostID", _reportData.HostID);
+            AddArgument(ref commandLine, "Domain_Name", _reportData.DomainName);
+            AddArgument(ref commandLine, "InstallationDate", _reportData.InstallationDate);
+            AddArgument(ref commandLine, "LicenseDate", _reportData.LicenseDate);
+            AddArgument(ref commandLine, "LicenseType", _reportData.LicenseType);
+            AddArgument(ref commandLine, "SCN", _reportData.Scn);
+            AddArgument(ref commandLine, "StartTime", _reportData.StartTime);
+            AddArgument(ref commandLine, "EndTime", _reportData.EndTime);
+            AddArgument(ref commandLine, "TimeZone", _reportData.TimeZone);
+            AddArgument(ref commandLine, "Checksum", _reportData.Checksum);
+            AddArgument(ref commandLine, "MathcadVersion", _reportData.MathcadVersion);
+            AddArgument(ref commandLine, "Release", _reportData.MathcadReleaseVersion);
+            AddArgument(ref commandLine, "CurrentCulture", _reportData.CurrentCulture);
+            AddArgument(ref commandLine, "CurrentUICulture", _reportData.CurrentUICulture);
+            AddArgument(ref commandLine, "InstallSource", _reportData.InstallSource);
+            AddArgument(ref commandLine, "Bitness", _reportData.Bitness);
+        }
+
+        return commandLine;
+    }
 
     private static string GetMathcadPrimeBitness()
     {

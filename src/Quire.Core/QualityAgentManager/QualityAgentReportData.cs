@@ -7,6 +7,43 @@ public partial struct QualityAgentReportData
 {
     private readonly global::Quire.License.LicenseType _licenseType;
 
+    public QualityAgentReportData(
+        string hostId,
+        string domainName,
+        string installationDate,
+        global::System.DateTime? licenseIssueDate,
+        global::Quire.License.LicenseType licenseType,
+        string scn,
+        global::System.DateTime startTime,
+        global::System.DateTime endTime,
+        global::System.TimeZoneInfo timeZone,
+        string md5Checksum,
+        string mathcadVersion,
+        global::System.Version mathcadReleaseVersion,
+        global::System.Globalization.CultureInfo currentCulture,
+        global::System.Globalization.CultureInfo currentUiCulture,
+        string installSource,
+        string bitness)
+    {
+        this = default;
+        HostID = hostId;
+        DomainName = domainName;
+        InstallationDate = installationDate;
+        _licenseIssueDate = licenseIssueDate;
+        _licenseType = licenseType;
+        Scn = scn;
+        _startTime = startTime;
+        _endTime = endTime;
+        _timeZone = timeZone;
+        Checksum = md5Checksum;
+        MathcadVersion = mathcadVersion;
+        _mathcadReleaseVersion = mathcadReleaseVersion;
+        _currentCulture = currentCulture;
+        _currentUiCulture = currentUiCulture;
+        InstallSource = installSource;
+        Bitness = bitness;
+    }
+
     [MirrorVerified("PtcQualityAgentManagerQualityAgentReportDataMechanicalDifferentialTests")]
     public string HostID { get; private set; }
 
