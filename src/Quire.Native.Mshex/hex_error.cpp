@@ -6,8 +6,6 @@ Error::Error() {}
 
 Error::Error(unsigned int code) : code_(code) {}
 
-Error::Error(unsigned int code, Tag const &tag) : tag_(tag), code_(code) {}
-
 Tag Error::GetTag() const {
     return tag_;
 }

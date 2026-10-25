@@ -15,7 +15,8 @@ class Error {
 public:
     HEX_EXPORT Error();
     HEX_EXPORT explicit Error(unsigned int code);
-    HEX_EXPORT Error(unsigned int code, Tag const &tag);
+    // Inline, as the original inlines it into Node::GetError.
+    HEX_EXPORT Error(unsigned int code, Tag const &tag) : tag_(tag), code_(code) {}
 
     HEX_EXPORT Tag GetTag() const;
     HEX_EXPORT unsigned int GetCode() const;

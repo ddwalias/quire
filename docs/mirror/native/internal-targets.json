@@ -89,6 +89,10 @@
       },
       "?Destroy@Attachment@@UEAAXXZ": {
         "rva": "0xc5f0"
+      },
+      "?interface_id_@Library@Hex@@0U_GUID@@B": {
+        "rva": "0xfd00",
+        "size": 16
       }
     }
   }

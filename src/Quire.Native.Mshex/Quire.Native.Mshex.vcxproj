@@ -72,6 +72,7 @@
     <ClInclude Include="hex_interpreter.h" />
     <ClInclude Include="hex_substring.h" />
     <ClInclude Include="hex_attachment.h" />
+    <ClInclude Include="hex_default_heap.h" />
     <ClCompile Include="hex_tag.cpp" />
     <ClCompile Include="hex_token.cpp" />
     <ClCompile Include="hex_node.cpp" />
@@ -87,6 +88,7 @@
     <ClCompile Include="hex_default_environment.cpp" />
     <ClCompile Include="hex_lexer.cpp" />
     <ClCompile Include="hex_interpreter.cpp" />
+    <ClCompile Include="hex_default_heap.cpp" />
     <ClCompile Include="hex_attachment.cpp">
       <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
