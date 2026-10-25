@@ -27,7 +27,38 @@ public static partial class RichTextBoxExtensions
 
     public static void ClearTextFormatPropsRecursively(this Block block, global::Quire.DelegateFunction1<bool, TextElement> condition, params DependencyProperty[] props) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public static void ClearTextFormatPropsRecursively(this TextElement textElement, global::Quire.DelegateFunction1<bool, TextElement> condition, params DependencyProperty[] props) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void ClearTextFormatPropsRecursively(this TextElement textElement, global::Quire.DelegateFunction1<bool, TextElement> condition, params DependencyProperty[] props)
+    {
+        if (condition(textElement))
+        {
+            ((IEnumerable<DependencyProperty>)props).Each((Action<DependencyProperty>)((DependencyObject)textElement).ClearValue);
+        }
+
+        switch (textElement)
+        {
+            case Block block:
+                block.ClearTextFormatPropsRecursively(condition, props);
+                return;
+            case Inline inline:
+                inline.ClearTextFormatPropsRecursively(condition, props);
+                return;
+            case ListItem listItem:
+                listItem.Blocks.Each((Block childBlock) => childBlock.ClearTextFormatPropsRecursively(condition, props));
+                return;
+            case TableCell tableCell:
+                tableCell.Blocks.Each((Block childBlock) => childBlock.ClearTextFormatPropsRecursively(condition, props));
+                return;
+            case TableRow tableRow:
+                tableRow.Cells.Each((TableCell cell) => cell.ClearTextFormatPropsRecursively(condition, props));
+                return;
+            case TableRowGroup tableRowGroup:
+                tableRowGroup.Rows.Each((TableRow row) => row.ClearTextFormatPropsRecursively(condition, props));
+                return;
+            default:
+                DebugTools.FailAssertion(textElement?.GetType().Name);
+                return;
+        }
+    }
 
     public static void ClearTextFormatPropsRecursively(this Inline inline, global::Quire.DelegateFunction1<bool, TextElement> condition, params DependencyProperty[] props) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
