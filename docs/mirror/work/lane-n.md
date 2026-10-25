@@ -282,3 +282,10 @@
   - `PropertyChangedNotificationHandler` (`_propertyChangedNotificationHandlers`, `AddPropertyChangedNotificationHandler`, `AttachPropertyChangedHandler`, `DetachPropertyChangedHandler`, `PropertyChanged`, `UpdateProperty`, `UpdateAllProperties`, `.ctor`)
 - Report: `.mirror-cache/release-il-8c8df934a2cb/release-il.json` — PASS, 1,171 checked, 1,171 exact, 0 failures, 2,727 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 27 — MathRendering
+
+- Scope:
+  - `MathRendering` (`LocalName`, `_document`, `_namespace`, `_resultsNS`, `CreateChildren`, `.ctor(IEngineeringDocument, XName, string)`)
+- Report: `.mirror-cache/release-il-bc488513c97b/release-il.json` — PASS, 1,173 checked, 1,173 exact, 0 failures, 2,725 unfinished.
+- Remaining mismatches: none in claimed batch.
