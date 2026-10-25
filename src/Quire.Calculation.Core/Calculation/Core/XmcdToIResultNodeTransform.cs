@@ -44,10 +44,11 @@ public partial class XmcdToIResultNodeTransform
     [MirrorVerified("PtcCalculationCoreXmcdToIResultNodeTransformIntegerAttribute_MechanicalDifferentialTests")]
     private static int GetIntegerFromAttribute(XmlNode node, string attributeName, int defaultValue)
     {
+        int result;
         XmlAttribute xmlAttribute = node.Attributes[attributeName];
-        if (xmlAttribute == null || !int.TryParse(xmlAttribute.Value, NumberStyles.Integer, NumberFormatInfo.InvariantInfo, out int result))
+        if (xmlAttribute == null || !int.TryParse(xmlAttribute.Value, NumberStyles.Integer, NumberFormatInfo.InvariantInfo, out result))
         {
-            return defaultValue;
+            result = defaultValue;
         }
 
         return result;

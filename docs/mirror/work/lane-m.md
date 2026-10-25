@@ -5,8 +5,16 @@
   - `Quire.Media3D`: All 635 managed methods with bodies are exact (7 declaration-only). Assembly is COMPLETE.
     - `Media3D.Wires.WireDashes`: implemented `PitchProperty`, `get_Pitch`, `set_Pitch`, `AddDashedLine`, `Generate`, `.ctor`.
     - `Media3D.Wires.WirePoints`: implemented `Recalculate`; adjusted declaration order so `PositionsPropertyChanged` precedes `UpdateColor` to match Mathcad closure ordinal `DisplayClass7_0`.
+  - `Quire.Calculation.Core`: 533 exact methods.
+    - `LazyMatrixSimpleResultNode`: implemented explicit `IMatrixResultNode.this[int r, int c]` (exact).
+    - `DisplayMatrixSimpleResultNode`: implemented explicit `IMatrixResultNode.this[int r, int c]` (exact).
+    - `UnitedValueSimpleResultNode`: implemented explicit `IUnitedValueResultNode.Value` get and set (exact).
+    - `XmcdToIResultNodeTransform`: matched `GetIntegerFromAttribute` local slots and single-return branch lowering (exact).
 - Release IL report:
   - `Quire.Media3D`: PASS; 635 checked, 635 exact, 0 failures, 0 unfinished (`.mirror-cache/release-il-c7d7c7d0e54b/release-il.json`). Full Release inventory confirms exact parity for every managed body (642 declarations, 635 exact bodies, 7 declaration-only, 0 stubs, 0 unresolved).
+  - `Quire.Calculation.Core`: PASS; 533 checked, 533 exact, 0 failures (`.mirror-cache/release-il-585c7a79e13f/release-il.json`).
 - Remaining:
   - `Quire.Media3D`: 0 mismatches. COMPLETE.
-  - `Quire.Calculation.Core`: 528 exact, 228 declaration-only, 274 unresolved and 72 stub bodies.
+  - `Quire.Calculation.Core`: 533 exact, 228 declaration-only, 269 unresolved and 68 stub bodies.
+- Reported blockers:
+  - `IUnitedValueResultNode.Units` interface signature mismatch: Mathcad declares `IList<Unit> Units { get; }`, but product-side `ResultNodes.cs` declares `IReadOnlyList<UnitPower> Units { get; }`, which is consumed by downstream project `Quire.EquationEditor` (`ResultFormatter.cs`). Updating `IUnitedValueResultNode.Units` in `Quire.Calculation.Core` is blocked until `Quire.EquationEditor` is adjusted or the interface contract is reconciled by the maintainer. This blocks parity for `ResultConverter.Convert`, `Trace2DResultConverter.DissectUnits`, and related unit conversion methods.

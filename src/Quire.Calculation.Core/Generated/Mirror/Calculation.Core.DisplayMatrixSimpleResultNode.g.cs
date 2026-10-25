@@ -12,8 +12,6 @@ namespace Quire.Calculation.Core;
 public partial class DisplayMatrixSimpleResultNode : global::Quire.Calculation.Core.SimpleResultNode, global::Quire.Calculation.Core.IDisplayMatrixResultNode, global::Quire.Calculation.Core.IMatrixResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
     [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.IResultNode global::Quire.Calculation.Core.IMatrixResultNode.this[int r, int c] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     int global::Quire.Calculation.Core.IMatrixResultNode.Cols { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     global::System.Collections.Generic.IReadOnlyList<double> global::Quire.Calculation.Core.IMatrixResultNode.DisplayValues { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -48,6 +48,8 @@ public partial class DisplayMatrixSimpleResultNode
         }
     }
 
+    IResultNode IMatrixResultNode.this[int r, int c] => this[r, c];
+
     [MirrorVerified("PtcCalculationCoreDisplayMatrixSimpleResultNodeMechanicalDifferentialTests")]
     public DisplayMatrixSimpleResultNode(int rowCount, int colCount, TableCoordinate viewportOffset, TableSize viewportSize)
     {

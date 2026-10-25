@@ -51,6 +51,8 @@ public partial class LazyMatrixSimpleResultNode
         }
     }
 
+    IResultNode IMatrixResultNode.this[int r, int c] => this[r, c];
+
     [MirrorVerified("PtcCalculationCoreLazyMatrixSimpleResultNodeMechanicalDifferentialTests")]
     public TableSize Size => new TableSize
     {

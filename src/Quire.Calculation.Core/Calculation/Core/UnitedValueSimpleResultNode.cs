@@ -12,6 +12,12 @@ public partial class UnitedValueSimpleResultNode
     [MirrorVerified("PtcCalculationCoreUnitedValueSimpleResultNodeMechanicalDifferentialTests")]
     public SimpleResultNode Value { get; set; }
 
+    IResultNode IUnitedValueResultNode.Value
+    {
+        get => Value;
+        set => Value = (SimpleResultNode)value;
+    }
+
     [MirrorVerified("PtcCalculationCoreUnitedValueSimpleResultNodeMechanicalDifferentialTests")]
     public IList<Unit> Units { get; private set; }
 
