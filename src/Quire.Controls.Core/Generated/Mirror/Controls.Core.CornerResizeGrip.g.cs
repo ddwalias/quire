@@ -11,12 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.CornerResizeGrip, Ptc.Controls.Core")]
 public partial class CornerResizeGrip : global::Quire.Controls.Core.ResizeGrip
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.Geometry DefiningGeometry { get => base.DefiningGeometry; }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void DockSideChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => base.DockSideChanged(args);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Rect GetBoundingRect() => base.GetBoundingRect();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Point GetLocation(global::System.Windows.Rect regionBorderBoundingRect, double gripThickness) => base.GetLocation(regionBorderBoundingRect, gripThickness);
 }

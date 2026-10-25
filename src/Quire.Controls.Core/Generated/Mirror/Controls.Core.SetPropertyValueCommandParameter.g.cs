@@ -11,16 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.SetPropertyValueCommandParameter, Ptc.Controls.Core")]
 public partial class SetPropertyValueCommandParameter : global::System.Windows.Freezable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty TargetObjectProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty PropertyNameProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IPropertyAggregate TargetObject { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string PropertyName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public SetPropertyValueCommandParameter(global::Quire.Controls.Core.IPropertyAggregate obj, string propertyName, object val, string userData = default) : this() { }
-    [global::Quire.Mirror.MirrorStub]
-    private static object CoercePropertyName(global::System.Windows.DependencyObject d, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
