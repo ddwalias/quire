@@ -66,3 +66,17 @@
   - `CornerResizeGrip` (`DefiningGeometry`, `DockSideChanged`, `GetBoundingRect`, `GetLocation`, `.ctor`)
 - Report: `.mirror-cache/release-il-fbca75c3daf4/release-il.json` — PASS, 924 checked, 924 exact, 0 failures, 2,930 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 5 — AttachedBehavior property value subsystem, IO region extensions, and Excel book
+
+- Scope:
+  - `IORegions.IORegionExtensions` (`IsSuitableForTagging`)
+  - `IORegions.InputRegionExtensions` (`IsSuitableForInputTagging`)
+  - `IORegions.OutputRegionExtensions` (`IsSuitableForOutputTagging`)
+  - `Excel.ExcelBook` (`Sheets`)
+  - `AttachedBehavior.PropertyValueCollection` (`Attach`, `Detach`, `OnLoaded(object, RoutedEventArgs)`, `OnUnloaded(object, RoutedEventArgs)`, `OnLoaded(FrameworkElement)`, `OnUnloaded(FrameworkElement)`, `AddValuesToResources`, `RemoveValuesFromResources`, `ForEachDictionary`, `.ctor`)
+  - `AttachedBehavior.PropertyValueFinder` (`_propertyName`, `_propertyProviderKey`, `_propertyOwnerType`, `PropertyName`, `PropertyProviderKey`, `PropertyOwnerType`, `InitializeValue`, `.ctor`)
+  - `AttachedBehavior.ParentPropertyValueKeepers` (`OnLoaded`, `OnUnloaded`, `.ctor`)
+  - `AttachedBehavior.ChildPropertyValueFinders` (`OnLoaded`, `InitializeValues`, `.ctor`)
+- Report: `.mirror-cache/release-il-75c20ea7cb36/release-il.json` — PASS, 951 checked, 951 exact, 0 failures, 2,909 unfinished.
+- Remaining mismatches: none in claimed batch.

@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.InputRegionExtensions, Ptc.Controls.Core")]
 public static partial class InputRegionExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsSuitableForInputTagging(this global::Quire.Controls.Core.IORegions.IInputRegion region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

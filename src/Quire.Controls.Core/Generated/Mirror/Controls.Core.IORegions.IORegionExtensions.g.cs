@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IORegionExtensions, Ptc.Controls.Core")]
 public static partial class IORegionExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsSuitableForTagging(this global::Quire.Controls.Core.IORegions.IIORegion region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

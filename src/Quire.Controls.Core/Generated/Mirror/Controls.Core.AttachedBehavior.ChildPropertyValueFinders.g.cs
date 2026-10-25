@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.AttachedBehavior;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.AttachedBehavior.ChildPropertyValueFinders, Ptc.Controls.Core")]
 public partial class ChildPropertyValueFinders : global::Quire.Controls.Core.AttachedBehavior.PropertyValueCollection
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnLoaded(global::System.Windows.FrameworkElement element) => base.OnLoaded(element);
-    [global::Quire.Mirror.MirrorStub]
-    private static void InitializeValues(global::System.Windows.FrameworkElement element, global::System.Windows.ResourceDictionary dictionary) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

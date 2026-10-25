@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.OutputRegionExtensions, Ptc.Controls.Core")]
 public static partial class OutputRegionExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsSuitableForOutputTagging(this global::Quire.Controls.Core.IORegions.IOutputRegion region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
