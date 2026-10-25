@@ -16,4 +16,6 @@ public partial class FunctionalityItem
 
     [MirrorVerified("Release IL")]
     public EnumFunctionalityRelationType FunctionalityRelationType { get; set; }
+
+    public global::Quire.License.LicenseTypeBitFlags UnsupportedLicenseTypes { get; set; }
 }
