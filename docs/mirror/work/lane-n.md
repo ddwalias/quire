@@ -275,3 +275,10 @@
   - `OleSizeDataForXamlSerialization` (`AutoResize`, `OleViewportSize`, `HasFakeOleViewportSize`, `CopyFrom`, `.ctor()`, `.ctor(IOleSizeData)`)
 - Report: `.mirror-cache/release-il-5b6f5183dbef/release-il.json` — PASS, 1,165 checked, 1,165 exact, 0 failures, 2,733 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 26 — PropertyChangedNotificationHandler
+
+- Scope:
+  - `PropertyChangedNotificationHandler` (`_propertyChangedNotificationHandlers`, `AddPropertyChangedNotificationHandler`, `AttachPropertyChangedHandler`, `DetachPropertyChangedHandler`, `PropertyChanged`, `UpdateProperty`, `UpdateAllProperties`, `.ctor`)
+- Report: `.mirror-cache/release-il-8c8df934a2cb/release-il.json` — PASS, 1,171 checked, 1,171 exact, 0 failures, 2,727 unfinished.
+- Remaining mismatches: none in claimed batch.

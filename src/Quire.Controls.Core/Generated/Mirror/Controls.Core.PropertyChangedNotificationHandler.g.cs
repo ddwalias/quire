@@ -11,16 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.PropertyChangedNotificationHandler, Ptc.Controls.Core")]
 public partial class PropertyChangedNotificationHandler
 {
-    [global::Quire.Mirror.MirrorStub]
-    public void AttachPropertyChangedHandler(global::System.ComponentModel.INotifyPropertyChanged notifyPropertyChanged) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void DetachPropertyChangedHandler(global::System.ComponentModel.INotifyPropertyChanged notifyPropertyChanged) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void PropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateProperty(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UpdateAllProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PropertyChangedNotificationHandler() { }
 }
