@@ -312,3 +312,10 @@
   - `ControlSettings` (`Instance`, `HandleFocusForIme`, `EnableFontCaching`, `MaxNumberOf2dPoints`, `MaxNumberOf3dPoints`, `MinPointsForDensity`, `MinPointsForForceDensity`, `DensityPointsPrintDPI`, `.ctor`, `.cctor`)
 - Report: `.mirror-cache/release-il-07c4254a6803/release-il.json` — PASS, 1,196 checked, 1,196 exact, 0 failures, 2,709 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 31 — Urls (constants)
+
+- Scope:
+  - `Urls` (`MathcadExpressUpgrade`, `MathcadCommunity`, `MathcadEngineeringResources`, `MathcadSupportCenter`, `MathcadWebsiteAddress`, `MathcadLearningConnector`, `MathcadNewUsers`, `MathcadStartPageAddress`)
+- Report: `.mirror-cache/release-il-d4d28c2c189c/release-il.json` — PASS, 1,196 checked, 1,196 exact, 0 failures, 2,709 unfinished.
+- Remaining mismatches: none in claimed batch.

@@ -11,20 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Urls, Ptc.Controls.Core")]
 public static partial class Urls
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string MathcadExpressUpgrade = "https://www.ptc.com/go/mathcadexpressupgrade";
-    [global::Quire.Mirror.MirrorStub]
-    public const string MathcadCommunity = "https://community.ptc.com/mathcad-6";
-    [global::Quire.Mirror.MirrorStub]
-    public const string MathcadEngineeringResources = "https://community.ptc.com/mathcad-7/ptc-mathcad-prime-worksheets-directory-173941";
-    [global::Quire.Mirror.MirrorStub]
-    public const string MathcadSupportCenter = "https://support.ptc.com/support/mathcad_supportCenter.htm";
-    [global::Quire.Mirror.MirrorStub]
-    public const string MathcadWebsiteAddress = "www.ptc.com/products/Quire";
-    [global::Quire.Mirror.MirrorStub]
-    public const string MathcadLearningConnector = "https://learningconnector.ptc.com/search/all?product=Quire%20Prime";
-    [global::Quire.Mirror.MirrorStub]
-    public const string MathcadNewUsers = "https://learningconnector.ptc.com/playlist/PL1638953274949/get-started-with-mathcad";
-    [global::Quire.Mirror.MirrorStub]
-    public const string MathcadStartPageAddress = "www.ptc.com/{0}/mathcad/start-page";
 }
