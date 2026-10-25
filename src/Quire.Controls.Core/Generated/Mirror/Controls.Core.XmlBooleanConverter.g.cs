@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.XmlBooleanConverter, Ptc.Controls.Core")]
 public partial class XmlBooleanConverter : global::System.ComponentModel.BooleanConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override object ConvertTo(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value, global::System.Type destinationType) => base.ConvertTo(context, culture, value, destinationType);
 }

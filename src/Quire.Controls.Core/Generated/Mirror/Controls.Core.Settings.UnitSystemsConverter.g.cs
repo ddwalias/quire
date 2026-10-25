@@ -11,10 +11,4 @@ namespace Quire.Controls.Core.Settings;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.UnitSystemsConverter, Ptc.Controls.Core")]
 internal partial class UnitSystemsConverter : global::System.ComponentModel.EnumConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public UnitSystemsConverter() : base(default(global::System.Type)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override object ConvertTo(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value, global::System.Type destinationType) => base.ConvertTo(context, culture, value, destinationType);
-    [global::Quire.Mirror.MirrorStub]
-    public override object ConvertFrom(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value) => base.ConvertFrom(context, culture, value);
 }

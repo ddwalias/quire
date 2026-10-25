@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.Settings;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.XmlLanguageConverterWithDefaultValue, Ptc.Controls.Core")]
 internal partial class XmlLanguageConverterWithDefaultValue : global::System.Windows.Markup.XmlLanguageConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public XmlLanguageConverterWithDefaultValue(string attributeName, object attributeDefaultValue) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override object ConvertTo(global::System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, global::System.Globalization.CultureInfo cultureInfo, object value, global::System.Type destinationType) => base.ConvertTo(typeDescriptorContext, cultureInfo, value, destinationType);
 }

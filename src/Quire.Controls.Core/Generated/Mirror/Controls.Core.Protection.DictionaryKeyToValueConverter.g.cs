@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.Protection;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Protection.DictionaryKeyToValueConverter, Ptc.Controls.Core")]
 public partial class DictionaryKeyToValueConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Controls.Core.Protection.DictionaryKeyToValueConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
-    public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

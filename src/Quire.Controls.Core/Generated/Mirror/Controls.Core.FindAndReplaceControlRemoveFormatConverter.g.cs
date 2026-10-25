@@ -11,10 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.FindAndReplaceControlRemoveFormatConverter, Ptc.Controls.Core")]
 public partial class FindAndReplaceControlRemoveFormatConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Text.RegularExpressions.Regex _variableRegex;
-    [global::Quire.Mirror.MirrorStub]
-    public object ConvertBack(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public FindAndReplaceControlRemoveFormatConverter() { }
 }

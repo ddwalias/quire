@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.AttachedBehavior;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.AttachedBehavior.MessageListToMessagesDecoratorConverter, Ptc.Controls.Core")]
 public partial class MessageListToMessagesDecoratorConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Controls.Core.AttachedBehavior.MessageListToMessagesDecoratorConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
-    public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

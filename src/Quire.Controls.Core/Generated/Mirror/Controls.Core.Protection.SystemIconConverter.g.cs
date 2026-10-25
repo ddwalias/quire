@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.Protection;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Protection.SystemIconConverter, Ptc.Controls.Core")]
 public partial class SystemIconConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.Protection.SystemIconConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
-    public object Convert(object value, global::System.Type type, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
