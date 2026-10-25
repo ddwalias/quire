@@ -1,6 +1,6 @@
 # Lane J: mshex.dll → Quire.Native.Mshex
 
-**Status: in progress.** 105 candidate functions match strictly (0 unverified targets); 94 of 380 exports are present. Export parity: 286 missing, 0 extra.
+**Status: in progress.** 106 candidate functions match strictly (0 unverified targets); 95 of 380 exports are present. Export parity: 285 missing, 0 extra.
 
 - **Owner:** Lane J (native, `mshex.dll`)
 - **Branch:** `mirror/j-mshex-202610241256`, rebased onto `main` (354255ea)
@@ -65,11 +65,24 @@ Ordered per D28 and the brief:
   not. The original keeps the `std::string` reset stores (`size = 0`, capacity 15, first byte 0). Shapes tried: implicit
   destructor (22 bytes, the stores are eliminated), out-of-line empty body (22 bytes), explicit `details_ = std::string()`
   (matches the shape, but two objects then define `??1basic_string` differently, which the harness refuses).
-- **`Signature` accessors** (`GetName`, `GetType`, `GetModule`, const and non-const, `0x2430`, `0x2460`, `0x2490`). Layout
-  from the code: `uint16` type start at `+0`, `uint16` module start at `+2`, `std::string` text at `+8` (size at `+18h`,
-  capacity at `+20h`). Each part ends one character before the next starts. The original keeps the data pointer in `rax`
-  and decrements the pointer; the candidate keeps it in `r8` and decrements the length. Shapes tried: integer decrement,
-  pointer decrement, reordered `GetModule`. They differ by 1 to 20 bytes, so they are not exported.
+- **`Signature` accessors** (`GetName`, `GetType`, `GetModule`, const and non-const; `0x2430`, `0x2460`, `0x2490`).
+  The layout is `uint16` name end at `+0`, `uint16` module start at `+2` and `std::string` text at `+8` (size at `+18h`,
+  capacity at `+20h`). The default constructor (`0xB400`) matches. The accessors do not: `GetName` is 34 bytes against 35,
+  `GetType` 41 against 46 and `GetModule` 39 against 41. The original keeps the data pointer in `rax` and decrements it
+  (`dec rax` on the pointer), loads the header as a qword before splitting it, and loads `module_start` before the cap
+  check. Shapes tried: integer decrement, pointer decrement with a named `text`, the length loaded into a local first,
+  the expression without locals (58 bytes), and `/EHsc` for the file (breaks the constructor, 43 against 48, and leaves the
+  accessors unchanged). Parked under D25; they are not exported, so their rows stay absent.
+- **`Signature` destructor** (`??1Signature`, `0x1C20`, 107 bytes). The same `std::string` reset stores as `~Error`. The
+  implicit destructor is not defined, for the same reason.
+- **D29 static layout** (`Formatter::Fetch` `0x99E0`, the stream-slot accessor `0xA7C0`). Retested under D28: with
+  `_CRTIMP2=dllimport`, `0xA7C0` tail-jumps to `pword` through the import, so that difference is gone. What remains is the
+  function-local static: the original keeps its first-time initialization inline after a `jle`. Per-object compilation
+  puts it out of line under `/EHsc`, `/EHa`, `/O1`, `/Os`, `/Ox`, `/Og /Ot`, `/Oi-`, `/Ob1` and three source shapes. `Fetch`
+  and `operator<<(ostream&, Error const&)` (`0xA2D0`, an export, no manifest entry needed) reach it.
+  Component's `Insert` (`0x2E50`) and `OnError` (`0x2F20`, through `0x89A0`) contain no such static. They reach
+  `operator<<` through the exported `0xA2D0`, so they are not parked themselves. The per-object tooling cannot define the
+  export `operator<<` as matching, so the candidate cannot link `OnError` until a D29 decision covers that export.
 - **`Hex::operator+(Tag, Tag)`**: still parked (see the Tag section above).
 
 ## Remaining work
