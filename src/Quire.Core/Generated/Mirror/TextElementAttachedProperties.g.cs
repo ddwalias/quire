@@ -17,6 +17,4 @@ public static partial class TextElementAttachedProperties
     public const string DefaultTextStyle = "Normal";
     [global::Quire.Mirror.MirrorStub]
     private const double FONT_SIZE_TOLERANCE = 0.0001d;
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetTextStyleOnElement(global::System.Windows.FrameworkContentElement element, global::Quire.ITextStyle textStyle, bool isApply, bool isSelected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

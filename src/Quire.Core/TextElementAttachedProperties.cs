@@ -96,6 +96,101 @@ public static partial class TextElementAttachedProperties
         frameworkContentElement.ClearValue(FrameworkElement.StyleProperty);
     }
 
+    public static void SetTextStyleOnElement(FrameworkContentElement element, ITextStyle textStyle, bool isApply, bool isSelected)
+    {
+        List list = global::Quire.Wpf.WpfUtils.FindLogicalAncestor<List>(element);
+        if (element is Run run && run.Parent is Paragraph && list != null)
+        {
+            list = null;
+        }
+        if (textStyle.FontFamily != null && (isApply || !textStyle.IsModifyProperty(TextElement.FontFamilyProperty.Name, element.GetValue(TextElement.FontFamilyProperty))))
+        {
+            element.SetValue(TextElement.FontFamilyProperty, textStyle.FontFamily);
+            list?.Parent.SetValue(TextElement.FontFamilyProperty, textStyle.FontFamily);
+        }
+        if (textStyle.FontSize.HasValue)
+        {
+            double value = ((element is global::Quire.Wpf.ICustomFontSizeOwner customFontSizeOwner) ? customFontSizeOwner.FontSizeForReport : (double)element.GetValue(TextElement.FontSizeProperty));
+            if (isApply || !textStyle.IsModifyProperty(TextElement.FontSizeProperty.Name, value, 0.0001))
+            {
+                element.SetValue(TextElement.FontSizeProperty, textStyle.FontSize);
+                list?.Parent.SetValue(TextElement.FontSizeProperty, textStyle.FontSize);
+            }
+        }
+        else if (textStyle.IsDeletedProperty(TextElement.FontSizeProperty.Name, (double)element.GetValue(TextElement.FontSizeProperty)))
+        {
+            element.SetValue(TextElement.FontSizeProperty, global::Quire.Wpf.WpfUtils.PointsToDips(11.0));
+            list?.Parent.SetValue(TextElement.FontSizeProperty, global::Quire.Wpf.WpfUtils.PointsToDips(11.0));
+        }
+        if (textStyle.FontWeight.HasValue)
+        {
+            if (isApply || !textStyle.IsModifyProperty(TextElement.FontWeightProperty.Name, element.GetValue(TextElement.FontWeightProperty)))
+            {
+                element.SetValue(TextElement.FontWeightProperty, textStyle.FontWeight);
+                list?.Parent.SetValue(TextElement.FontWeightProperty, textStyle.FontWeight);
+            }
+        }
+        else if (textStyle.IsDeletedProperty(TextElement.FontWeightProperty.Name, element.GetValue(TextElement.FontWeightProperty)))
+        {
+            element.SetValue(TextElement.FontWeightProperty, FontWeights.Normal);
+            list?.Parent.SetValue(TextElement.FontWeightProperty, FontWeights.Normal);
+        }
+        if (textStyle.FontStyle.HasValue)
+        {
+            if (isApply || !textStyle.IsModifyProperty(TextElement.FontStyleProperty.Name, element.GetValue(TextElement.FontStyleProperty)))
+            {
+                element.SetValue(TextElement.FontStyleProperty, textStyle.FontStyle);
+                list?.Parent.SetValue(TextElement.FontStyleProperty, textStyle.FontStyle);
+            }
+        }
+        else if (textStyle.IsDeletedProperty(TextElement.FontStyleProperty.Name, element.GetValue(TextElement.FontStyleProperty)))
+        {
+            element.SetValue(TextElement.FontStyleProperty, FontStyles.Normal);
+            list?.Parent.SetValue(TextElement.FontStyleProperty, FontStyles.Normal);
+        }
+        if (textStyle.Background != null)
+        {
+            if (isApply || !textStyle.IsModifyPropertyString(TextElement.BackgroundProperty.Name, element.GetValue(TextElement.BackgroundProperty)))
+            {
+                element.SetValue(TextElement.BackgroundProperty, textStyle.Background);
+                list?.Parent.SetValue(TextElement.BackgroundProperty, textStyle.Background);
+            }
+        }
+        else if (textStyle.IsDeletedProperty(TextElement.BackgroundProperty.Name, element.GetValue(TextElement.BackgroundProperty)))
+        {
+            element.SetValue(TextElement.BackgroundProperty, null);
+            list?.Parent.SetValue(TextElement.BackgroundProperty, null);
+        }
+        if (textStyle.Foreground != null && !(element.Parent is Hyperlink))
+        {
+            if (isApply || !textStyle.IsModifyPropertyString(TextElement.ForegroundProperty.Name, element.GetValue(TextElement.ForegroundProperty)))
+            {
+                element.SetValue(TextElement.ForegroundProperty, textStyle.Foreground);
+                list?.Parent.SetValue(TextElement.ForegroundProperty, textStyle.Foreground);
+            }
+        }
+        else if (textStyle.IsDeletedProperty(TextElement.ForegroundProperty.Name, element.GetValue(TextElement.ForegroundProperty)) && !isApply && !(element.Parent is Hyperlink))
+        {
+            element.SetValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Black));
+            list?.Parent.SetValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Black));
+        }
+        if (textStyle.FontVariants.HasValue)
+        {
+            element.SetValue(Typography.VariantsProperty, textStyle.FontVariants);
+        }
+        if (textStyle.TextDecorations != null && ((textStyle.TextDecorations.Count >= 0) | isApply))
+        {
+            if (isApply || !textStyle.IsModifyPropertyCollection(Inline.TextDecorationsProperty.Name, (TextDecorationCollection)element.GetValue(Inline.TextDecorationsProperty)))
+            {
+                element.SetValue(Inline.TextDecorationsProperty, textStyle.TextDecorations);
+            }
+        }
+        else if (textStyle.IsDeletedProperty(Inline.TextDecorationsProperty.Name, element.GetValue(Inline.TextDecorationsProperty)))
+        {
+            element.SetValue(Inline.TextDecorationsProperty, null);
+            list?.Parent.SetValue(Inline.TextDecorationsProperty, null);
+        }
+    }
     private static void SetTextStyleOnParagraph(FrameworkContentElement element, ITextStyle textStyle, bool isApply, bool isSelected)
     {
         FrameworkContentElement frameworkContentElement;
