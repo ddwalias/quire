@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.FileDialogFilterPair, Ptc.Controls.Core")]
 public partial struct FileDialogFilterPair
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string Extension;
 }

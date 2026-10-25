@@ -11,8 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.BackgroundTypeColors, Ptc.Controls.Core")]
 public static partial class BackgroundTypeColors
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Color Paper;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Color Gray;
 }

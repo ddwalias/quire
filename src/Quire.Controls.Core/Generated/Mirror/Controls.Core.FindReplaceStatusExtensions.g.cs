@@ -11,10 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.FindReplaceStatusExtensions, Ptc.Controls.Core")]
 public static partial class FindReplaceStatusExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsEmpty(this global::System.Nullable<global::Quire.Controls.Core.FindReplaceStatus> findReplaceStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsEmpty(this global::Quire.Controls.Core.FindReplaceStatus findReplaceStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsAtDocumentBoundary(this global::Quire.Controls.Core.FindReplaceStatus findReplaceStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

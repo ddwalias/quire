@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.DragEventArgs, Ptc.Controls.Core")]
 public partial class DragEventArgs : global::System.Windows.RoutedEventArgs
 {
-    [global::Quire.Mirror.MirrorStub]
-    public DragEventArgs(global::System.Windows.RoutedEvent routedEvent, global::System.Windows.Vector vector) { }
 }

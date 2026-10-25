@@ -11,12 +11,4 @@ namespace Quire.Controls.Core.Whiteboard;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventArgs, Ptc.Controls.Core")]
 public partial class WhiteboardItemSizeChangedEventArgs : global::System.EventArgs
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size PreviousSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size NewSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public WhiteboardItemSizeChangedEventArgs(global::System.Windows.SizeChangedEventArgs origArgs) { }
-    [global::Quire.Mirror.MirrorStub]
-    public WhiteboardItemSizeChangedEventArgs(global::System.Windows.Size prevSize, global::System.Windows.Size newSize) { }
 }

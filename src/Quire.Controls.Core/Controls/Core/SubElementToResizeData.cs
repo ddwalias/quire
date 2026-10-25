@@ -6,12 +6,16 @@ namespace Quire.Controls.Core;
 
 public partial class SubElementToResizeData
 {
-    [MirrorVerified("PtcControlsCoreSubElementToResizeDataMechanicalDifferentialTests")]
     public FrameworkElement Element { get; private set; }
 
-    [MirrorVerified("PtcControlsCoreSubElementToResizeDataMechanicalDifferentialTests")]
     public bool SerializeDimensions { get; private set; }
 
-    [MirrorVerified("PtcControlsCoreSubElementToResizeDataMechanicalDifferentialTests")]
     public bool IsFullSize { get; private set; }
+
+    public SubElementToResizeData(FrameworkElement element, bool serializeDimensions, bool isFullSize)
+    {
+        Element = element;
+        SerializeDimensions = serializeDimensions;
+        IsFullSize = isFullSize;
+    }
 }

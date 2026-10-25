@@ -5,9 +5,9 @@ namespace Quire.Controls.Core;
 
 public partial struct FileDialogFilterPair
 {
-    [MirrorVerified("PtcControlsCoreFileDialogFilterPairMechanicalDifferentialTests")]
     public string FilterString;
 
-    [MirrorVerified("PtcControlsCoreFileDialogFilterPairMechanicalDifferentialTests")]
+    public string Extension;
+
     public override string ToString() => FilterString;
 }

@@ -11,16 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.ResizeEventMouseArgs, Ptc.Controls.Core")]
 public partial class ResizeEventMouseArgs : global::System.Windows.RoutedEventArgs
 {
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.Controls.Core.DragMode DragMode;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::System.Windows.FrameworkElement SourceElement;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::System.Windows.Point StartPoint;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::System.Windows.DependencyObject OriginalEventSource;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly bool Automation;
-    [global::Quire.Mirror.MirrorStub]
-    internal ResizeEventMouseArgs(global::System.Windows.RoutedEvent routedEvent, global::Quire.Controls.Core.DragMode mode, global::System.Windows.FrameworkElement element, global::System.Windows.Point startPosition, global::System.Windows.DependencyObject originalEventSource, bool automation) { }
 }

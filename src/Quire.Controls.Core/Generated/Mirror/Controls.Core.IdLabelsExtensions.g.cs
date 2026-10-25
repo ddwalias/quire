@@ -11,10 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IdLabelsExtensions, Ptc.Controls.Core")]
 public static partial class IdLabelsExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly string EmptyLabelRl;
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsNullOrNone(this global::System.Nullable<global::Quire.Controls.Core.IdLabels> label) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetRl(this global::System.Nullable<global::Quire.Controls.Core.IdLabels> label, string labelForNoLabel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

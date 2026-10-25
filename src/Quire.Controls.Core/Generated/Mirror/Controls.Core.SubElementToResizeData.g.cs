@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.SubElementToResizeData, Ptc.Controls.Core")]
 public partial class SubElementToResizeData
 {
-    [global::Quire.Mirror.MirrorStub]
-    public SubElementToResizeData(global::System.Windows.FrameworkElement element, bool serializeDimensions, bool isFullSize) { }
 }

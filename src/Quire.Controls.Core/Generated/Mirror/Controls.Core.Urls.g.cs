@@ -12,12 +12,6 @@ namespace Quire.Controls.Core;
 public static partial class Urls
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly string DefaultMathcadPrimeWebServerHelpPathDir;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly string DefaultEngNbWebServerHelpPathDir;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly string DefaultUrlParam;
-    [global::Quire.Mirror.MirrorStub]
     public const string MathcadExpressUpgrade = "https://www.ptc.com/go/mathcadexpressupgrade";
     [global::Quire.Mirror.MirrorStub]
     public const string MathcadCommunity = "https://community.ptc.com/mathcad-6";
