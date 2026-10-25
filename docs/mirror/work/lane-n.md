@@ -250,3 +250,13 @@
   - `CalculationSettings` (`_nameSpaceUri`, `LocalName`, `ShouldValidateOnWrite`, `ShouldValidateOnRead`, `GetSchema`, `OnSchemaValidation`, `RepairXDocument`, `.ctor(IEngineeringDocument, string)`, `.ctor(CalculationVariables, CalculationOptions, string)`)
 - Report: `.mirror-cache/release-il-4f9d5d530a6e/release-il.json` — PASS, 1,134 checked, 1,134 exact, 0 failures, 2,760 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 23 — SharedPropertyNames, RowColumnHelper, SubscriptRun, SuperscriptRun
+
+- Scope:
+  - `SharedPropertyNames` (`CurrentMatrixFormat`, `CurrentNumberFormat`, `CurrentTextFormat`, `CurrentMathFormat`, `HideFromCalculationButtonEnabled`, `HideFromCalculationButtonChecked`)
+  - `RowColumnHelper` (`_columnCount`, `ColumnCount`, `RowIndexFromCellIndex`, `ColIndexFromCellIndex`, `IndexFromRowColumn`, `GetRowIndices`, `GetColumnsIndices`, `GetMinMaxRowColIndices`, `.ctor(int)`)
+  - `SubscriptRun` (`TypeOfThis`, `DefaultAlignment`, `FontVariantsForCopy`, `CoerceBaselineAlignmentCallback`, `InitBaseline`, `.ctor()`, `.ctor(string)`, `.ctor(string, TextPointer)`, `.cctor`)
+  - `SuperscriptRun` (`TypeOfThis`, `DefaultAlignment`, `FontVariantsForCopy`, `CoerceBaselineAlignmentCallback`, `InitBaseline`, `.ctor()`, `.ctor(string)`, `.ctor(string, TextPointer)`, `.cctor`)
+- Report: `.mirror-cache/release-il-ac3c4a8af580/release-il.json` — PASS, 1,150 checked, 1,150 exact, 0 failures, 2,746 unfinished.
+- Remaining mismatches: none in claimed batch.

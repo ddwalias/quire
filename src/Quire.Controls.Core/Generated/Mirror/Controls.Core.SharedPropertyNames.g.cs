@@ -11,16 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.SharedPropertyNames, Ptc.Controls.Core")]
 public static partial class SharedPropertyNames
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string CurrentMatrixFormat = "CurrentMatrixFormat";
-    [global::Quire.Mirror.MirrorStub]
-    public const string CurrentNumberFormat = "CurrentNumberFormat";
-    [global::Quire.Mirror.MirrorStub]
-    public const string CurrentTextFormat = "CurrentTextFormat";
-    [global::Quire.Mirror.MirrorStub]
-    public const string CurrentMathFormat = "CurrentMathFormat";
-    [global::Quire.Mirror.MirrorStub]
-    public const string HideFromCalculationButtonEnabled = "HideFromCalculationButtonEnabled";
-    [global::Quire.Mirror.MirrorStub]
-    public const string HideFromCalculationButtonChecked = "HideFromCalculationButtonChecked";
 }

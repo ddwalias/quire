@@ -11,16 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RowColumnHelper, Ptc.Controls.Core")]
 public partial class RowColumnHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int RowIndexFromCellIndex(int cellIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int ColIndexFromCellIndex(int cellIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int IndexFromRowColumn(int rowIndex, int columnIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void GetRowIndices(int cellIndexA, int cellIndexB, out int minRowIndex, out int maxRowIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void GetColumnsIndices(int cellIndexA, int cellIndexB, out int minColumnIndex, out int maxColumnIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void GetMinMaxRowColIndices(int corner1, int corner2, out int left, out int right, out int top, out int bottom) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

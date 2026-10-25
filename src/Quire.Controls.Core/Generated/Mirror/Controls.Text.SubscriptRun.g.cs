@@ -11,14 +11,4 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.SubscriptRun, Ptc.Controls.Core")]
 public partial class SubscriptRun : global::Quire.Controls.Text.CustomScriptRunBase, global::Quire.Wpf.ISubscript, global::Quire.Wpf.ICustomFontSizeOwner
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type TypeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    private static object CoerceBaselineAlignmentCallback(global::System.Windows.DependencyObject depObj, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public SubscriptRun() { }
-    [global::Quire.Mirror.MirrorStub]
-    public SubscriptRun(string text) { }
-    [global::Quire.Mirror.MirrorStub]
-    public SubscriptRun(string text, global::System.Windows.Documents.TextPointer insertionPosition) { }
 }
