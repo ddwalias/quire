@@ -9,10 +9,12 @@ acceptance rule. Never inspect Debug IL.
 |---|---|---|---|
 | [A](work/lane-a.md) | `Quire.Core` | `mirror/a-core-<unique>` | `C:/Projects/Quire-wt/lane-a-core` |
 | [B](work/lane-b.md) | `Quire.Mpl.Emit` | `mirror/b-mpl-emit-<unique>` | `C:/Projects/Quire-wt/lane-b-mpl-emit` |
-| [C](work/lane-c.md) | `Quire.Automation`, `Quire.EngNotebook.Automation`, `Quire.EngNotebookPlus.Automation`, `Quire.Calculation.Core`, `Quire.Media3D` | `mirror/c-calc-core-20261021-c17` | `C:/Projects/Quire-wt/lane-c-automation` |
+| [C](work/lane-c.md) | `Quire.Automation`, `Quire.EngNotebook.Automation`, `Quire.EngNotebookPlus.Automation` | `mirror/c-calc-core-20261021-c17` | `C:/Projects/Quire-wt/lane-c-automation` |
 | [D](work/lane-d.md) | `Quire.Engine.Utl` | `mirror/d-engine-utl-<unique>` | `C:/Projects/Quire-wt/lane-d-engine-utl` |
 | [F](work/lane-f.md) | `Quire.Mpl` | `mirror/f-mpl-<unique>` | `C:/Projects/Quire-wt/lane-f-mpl` |
 | [G](work/lane-g.md) | `Quire.AutomationPrivate`, `Quire.Interop.Mathcad`, `Quire.Interop.MathcadOld`, `Quire.Interop.VSInterfacesLib` ([D22](decisions.md)) | `mirror/g-interop-20261024-0238` | `C:/Projects/Quire-wt/lane-g-interop` |
+| [M](work/lane-m.md) | `Quire.Calculation.Core`, `Quire.Media3D` (moved from C) | `mirror/m-calc-core-<unique>` | `C:/Projects/Quire-wt/lane-m-calc-core` |
+| [N](work/lane-n.md) | `Quire.Controls.Core` | `mirror/n-controls-core-<unique>` | `C:/Projects/Quire-wt/lane-n-controls-core` |
 
 The user launches these agents in separate Codex/AGY/Claude threads using the
 [copyable prompts](work/agent-prompts.md). No worker is currently running. Worktree paths
