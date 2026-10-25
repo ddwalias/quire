@@ -189,3 +189,10 @@
   - `RelayCommand` (`_execute`, `_canExecute`, `CanExecuteChanged`, `CanExecute`, `Execute`, `.ctor(Action)`, `.ctor(Action, Predicate)`)
 - Report: `.mirror-cache/release-il-7ffb0a347c8d/release-il.json` — PASS, 1,092 checked, 1,092 exact, 0 failures, 2,792 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 15 — UnitSystemSerializer
+
+- Scope:
+  - `UnitSystemSerializer` (`localName`, `_unitDescriptor`, `CreateChildren`, `.ctor(UnitDescriptor, string)`)
+- Report: `.mirror-cache/release-il-38e3c73970d9/release-il.json` — PASS, 1,094 checked, 1,094 exact, 0 failures, 2,790 unfinished.
+- Remaining mismatches: none in claimed batch.
