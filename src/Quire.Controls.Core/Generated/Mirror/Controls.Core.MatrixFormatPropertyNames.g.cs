@@ -11,16 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.MatrixFormatPropertyNames, Ptc.Controls.Core")]
 public static partial class MatrixFormatPropertyNames
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string Size = "Size";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Offset = "Offset";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Origin = "Origin";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ShowIndices = "ShowIndices";
-    [global::Quire.Mirror.MirrorStub]
-    public const string CollapseNestedMatrices = "CollapseNestedMatrices";
-    [global::Quire.Mirror.MirrorStub]
-    public const string NestedMatrixFormats = "NestedMatrixFormats";
 }

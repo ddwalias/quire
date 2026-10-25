@@ -11,16 +11,4 @@ namespace Quire.Controls.Core.Ole;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Ole.OleSizeDataForXamlSerialization, Ptc.Controls.Core")]
 public partial class OleSizeDataForXamlSerialization : global::Quire.PersistentData.IOleSizeData
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool AutoResize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size OleViewportSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasFakeOleViewportSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public OleSizeDataForXamlSerialization() { }
-    [global::Quire.Mirror.MirrorStub]
-    public OleSizeDataForXamlSerialization(global::Quire.PersistentData.IOleSizeData sizeData) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void CopyFrom(global::Quire.PersistentData.IOleSizeData data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

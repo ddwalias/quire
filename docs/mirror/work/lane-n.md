@@ -267,3 +267,11 @@
   - `TemporaryStorageHelper` (`StorageFileName`, `SaveIfFileNameNullOrEmpty(Func)`, `SaveBitmap`, `LoadBitmap`, `CleanStorage`, `SaveIfFileNameNullOrEmpty(Action)`, `.ctor`)
 - Report: `.mirror-cache/release-il-22416b405483/release-il.json` — PASS, 1,157 checked, 1,157 exact, 0 failures, 2,741 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 25 — MatrixFormatPropertyNames, OleSizeDataForXamlSerialization
+
+- Scope:
+  - `MatrixFormatPropertyNames` (`Size`, `Offset`, `Origin`, `ShowIndices`, `CollapseNestedMatrices`, `NestedMatrixFormats`)
+  - `OleSizeDataForXamlSerialization` (`AutoResize`, `OleViewportSize`, `HasFakeOleViewportSize`, `CopyFrom`, `.ctor()`, `.ctor(IOleSizeData)`)
+- Report: `.mirror-cache/release-il-5b6f5183dbef/release-il.json` — PASS, 1,165 checked, 1,165 exact, 0 failures, 2,733 unfinished.
+- Remaining mismatches: none in claimed batch.
