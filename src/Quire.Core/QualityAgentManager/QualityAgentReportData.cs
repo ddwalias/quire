@@ -5,6 +5,8 @@ namespace Quire.QualityAgentManager;
 
 public partial struct QualityAgentReportData
 {
+    private readonly global::Quire.License.LicenseType _licenseType;
+
     [MirrorVerified("PtcQualityAgentManagerQualityAgentReportDataMechanicalDifferentialTests")]
     public string HostID { get; private set; }
 
@@ -79,6 +81,9 @@ public partial struct QualityAgentReportData
             return _currentUiCulture.ToString();
         }
     }
+
+    [MirrorVerified("Release IL")]
+    public string LicenseType => _licenseType.ToString();
 
     [MirrorVerified("Release IL")]
     public string LicenseDate
