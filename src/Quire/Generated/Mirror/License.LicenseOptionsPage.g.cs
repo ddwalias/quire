@@ -105,6 +105,4 @@ public partial class LicenseOptionsPage : global::System.Windows.Controls.UserCo
     internal global::System.Windows.Controls.Button getLicenseButton;
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

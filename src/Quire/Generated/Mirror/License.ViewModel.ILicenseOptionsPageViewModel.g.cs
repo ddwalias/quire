@@ -11,8 +11,6 @@ namespace Quire.License.ViewModel;
 [global::Quire.Mirror.MirrorOf("Spirit.License.ViewModel.ILicenseOptionsPageViewModel, MathcadPrime")]
 public partial interface ILicenseOptionsPageViewModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsLicenseDataModified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void LaunchLicenseWizard() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    bool IsLicenseDataModified { get; set; }
+    void LaunchLicenseWizard();
 }
