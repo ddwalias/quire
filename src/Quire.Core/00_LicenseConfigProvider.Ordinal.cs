@@ -24,8 +24,40 @@ public partial class LicenseConfigProvider
         }
     }
 
-    public static void SetProductCode(string hashCode, string productCode, ref global::System.Xml.Linq.XDocument configDoc) =>
-        throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void SetProductCode(string hashCode, string productCode, ref global::System.Xml.Linq.XDocument configDoc)
+    {
+        if (configDoc == null)
+        {
+            configDoc = new global::System.Xml.Linq.XDocument(new global::System.Xml.Linq.XElement("LicenseConfig"));
+        }
+
+        global::System.Xml.Linq.XElement matchingCodesElement;
+        global::System.Xml.Linq.XElement productCodeElement =
+            GetProductCodeElement(hashCode, configDoc, out matchingCodesElement);
+        if (productCodeElement != null)
+        {
+            string previousProductCode = productCodeElement.Value;
+            productCodeElement.Value = productCode;
+            DebugTools.DevAssert(previousProductCode == productCode,
+                "ProductCode doesn't match: was {0}, now {1}", previousProductCode, productCode);
+            return;
+        }
+
+        if (matchingCodesElement != null)
+        {
+            matchingCodesElement.SetElementValue("ProductCode", productCode);
+            DebugTools.FailAssertion("No ProductCode element");
+            return;
+        }
+
+        if (DebugTools.AssertNotNull(configDoc.Root).Passed)
+        {
+            matchingCodesElement = new global::System.Xml.Linq.XElement("LicenseCodes");
+            matchingCodesElement.SetElementValue("HashCode", hashCode);
+            matchingCodesElement.SetElementValue("ProductCode", productCode);
+            configDoc.Root.Add(matchingCodesElement);
+        }
+    }
 
     public static string GetProductCode(global::System.Collections.Generic.IList<string> hashCodes) =>
         throw global::Quire.Mirror.MirrorStub.NotImplemented();
