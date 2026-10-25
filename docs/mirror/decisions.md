@@ -254,6 +254,16 @@ settings explain most of them:
 Rule: every native project builds with `/EHa` and `_CRTIMP2=__declspec(dllimport)`. Re-test functions parked under
 D25/D26 with these settings before treating them as linker-generated.
 
+**Amendment (2026-10-25): the exception model is per source file.** `mshex`'s `Attachment` (the virtual base of
+`Component`, `Value`, `Environment` and the rest) matches only under `/EHsc`: constructor `0xC490` (102 bytes), destructor
+`0xC500`, deleting destructor `0xC540` and slot 1 `0xC5F0` (`delete this`). Under `/EHa` the constructor is 84 bytes and
+both destructors store the vptr before loading the lock. Its `Error` constructors in the same DLL match only under
+`/EHa`. So Mathcad compiled some files of one DLL with `/EHsc` and others with `/EHa`. `/EHa` stays the project default.
+A file whose functions differ only in the `this` spill, the order of the vptr store, or the cleanup path of a
+`new`-expression is set to `/EHsc` per file (`<ExceptionHandling>Sync</ExceptionHandling>` on its `ClCompile`
+item), and its source files are grouped as the original's objects were. Try both models for such a function before
+parking it. `mcGetSetting` stays parked under both models.
+
 ## Mapping and scope
 
 - **D1:** `Mcd` maps to `Quire.Mcd`.
