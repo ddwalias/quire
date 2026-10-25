@@ -260,3 +260,10 @@
   - `SuperscriptRun` (`TypeOfThis`, `DefaultAlignment`, `FontVariantsForCopy`, `CoerceBaselineAlignmentCallback`, `InitBaseline`, `.ctor()`, `.ctor(string)`, `.ctor(string, TextPointer)`, `.cctor`)
 - Report: `.mirror-cache/release-il-ac3c4a8af580/release-il.json` — PASS, 1,150 checked, 1,150 exact, 0 failures, 2,746 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 24 — TemporaryStorageHelper
+
+- Scope:
+  - `TemporaryStorageHelper` (`StorageFileName`, `SaveIfFileNameNullOrEmpty(Func)`, `SaveBitmap`, `LoadBitmap`, `CleanStorage`, `SaveIfFileNameNullOrEmpty(Action)`, `.ctor`)
+- Report: `.mirror-cache/release-il-22416b405483/release-il.json` — PASS, 1,157 checked, 1,157 exact, 0 failures, 2,741 unfinished.
+- Remaining mismatches: none in claimed batch.
