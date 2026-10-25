@@ -25,7 +25,65 @@ public static partial class RichTextBoxExtensions
         _textDecorations = textFormat.TextDecorations.Clone();
     }
 
-    public static void ClearTextFormatPropsRecursively(this Block block, global::Quire.DelegateFunction1<bool, TextElement> condition, params DependencyProperty[] props) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    // Release IL requires these ordered type branches to target their bodies and shared return directly.
+    public static void ClearTextFormatPropsRecursively(this Block block, global::Quire.DelegateFunction1<bool, TextElement> condition, params DependencyProperty[] props)
+    {
+        if (condition(block))
+        {
+            ((IEnumerable<DependencyProperty>)props).Each((Action<DependencyProperty>)((DependencyObject)block).ClearValue);
+        }
+
+        Paragraph paragraph = block as Paragraph;
+        Table table;
+        Section section;
+        List list;
+        if (paragraph != null)
+        {
+            goto ParagraphBody;
+        }
+        table = block as Table;
+        if (table != null)
+        {
+            goto TableBody;
+        }
+        section = block as Section;
+        if (section != null)
+        {
+            goto SectionBody;
+        }
+        list = block as List;
+        if (list != null)
+        {
+            goto ListBody;
+        }
+        if (!(block is BlockUIContainer))
+        {
+            goto Failure;
+        }
+        goto Return;
+
+    ParagraphBody:
+        paragraph.Inlines.Each((Inline inline) => inline.ClearTextFormatPropsRecursively(condition, props));
+        return;
+
+    TableBody:
+        table.RowGroups.Each((TableRowGroup rowGroup) => rowGroup.ClearTextFormatPropsRecursively(condition, props));
+        return;
+
+    SectionBody:
+        section.Blocks.Each((Block sectionBlock) => sectionBlock.ClearTextFormatPropsRecursively(condition, props));
+        return;
+
+    ListBody:
+        list.ListItems.Each((ListItem listItem) => listItem.ClearTextFormatPropsRecursively(condition, props));
+        return;
+
+    Failure:
+        DebugTools.FailAssertion(block?.GetType().Name);
+
+    Return:
+        return;
+    }
 
     public static void ClearTextFormatPropsRecursively(this TextElement textElement, global::Quire.DelegateFunction1<bool, TextElement> condition, params DependencyProperty[] props)
     {
@@ -60,7 +118,65 @@ public static partial class RichTextBoxExtensions
         }
     }
 
-    public static void ClearTextFormatPropsRecursively(this Inline inline, global::Quire.DelegateFunction1<bool, TextElement> condition, params DependencyProperty[] props) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    // Release IL requires these ordered type branches to target their bodies and shared return directly.
+    public static void ClearTextFormatPropsRecursively(this Inline inline, global::Quire.DelegateFunction1<bool, TextElement> condition, params DependencyProperty[] props)
+    {
+        if (condition(inline))
+        {
+            ((IEnumerable<DependencyProperty>)props).Each((Action<DependencyProperty>)((DependencyObject)inline).ClearValue);
+        }
+
+        AnchoredBlock anchoredBlock = inline as AnchoredBlock;
+        Span span;
+        Run run;
+        if (anchoredBlock != null)
+        {
+            goto AnchoredBlockBody;
+        }
+        span = inline as Span;
+        if (span != null)
+        {
+            goto SpanBody;
+        }
+        if (inline is InlineUIContainer)
+        {
+            goto Return;
+        }
+        if (inline is LineBreak)
+        {
+            goto Return;
+        }
+        run = inline as Run;
+        if (run == null)
+        {
+            goto Failure;
+        }
+        goto RunBody;
+
+    AnchoredBlockBody:
+        anchoredBlock.Blocks.Each((Block block) => block.ClearTextFormatPropsRecursively(condition, props));
+        return;
+
+    SpanBody:
+        span.Inlines.Each((Inline spanInline) => spanInline.ClearTextFormatPropsRecursively(condition, props));
+        return;
+
+    RunBody:
+        if (!condition(run))
+        {
+            goto Return;
+        }
+        ((IEnumerable<DependencyProperty>)props).Each((Action<DependencyProperty>)((DependencyObject)inline).ClearValue);
+        inline.TextDecorations = _textDecorations;
+        TextElementAttachedProperties.SetStyleKey((DependencyObject)run, "Normal");
+        return;
+
+    Failure:
+        DebugTools.FailAssertion(inline?.GetType().Name);
+
+    Return:
+        return;
+    }
 
     // Release IL comparison requires these labels to preserve Mathcad's recursive branch order.
     public static bool Satisfy(this TextElement textElement, global::Quire.DelegateFunction1<bool, TextElement> condition)
