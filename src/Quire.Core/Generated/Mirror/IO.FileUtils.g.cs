@@ -19,6 +19,4 @@ public partial class FileUtils
     public const string AppDataMathcadPrimeOldFolderName = "Quire";
     [global::Quire.Mirror.MirrorStub]
     public const string AppDataEngNbFolderName = "Engineering Notebook";
-    [global::Quire.Mirror.MirrorStub]
-    private static string GetProductNamePerVariant() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
