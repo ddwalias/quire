@@ -264,6 +264,23 @@ A file whose functions differ only in the `this` spill, the order of the vptr st
 item), and its source files are grouped as the original's objects were. Try both models for such a function before
 parking it. `mcGetSetting` stays parked under both models.
 
+## D29: parked functions verify their callers by RVA (2026-10-26)
+
+`mshex`'s function-local statics lay out their first-time initialization inline after a `jle`. Per-object compilation
+puts it out of line, under every exception model, optimization flag and source shape tried, and D25 showed that a
+small `/LTCG` link does too. The stream-slot accessor (`0xA7C0`, `pword(xalloc())`) and `Formatter::Fetch` (`0x99E0`) are
+such functions. Everything that reaches them stayed unverified: Component's `Insert` and `OnError`, their vtables, and
+about 40 `Attachment`-derived constructors. The user chose to let parked functions verify their callers:
+
+- **Manifest:** an entry may be marked `"parked": true`. It is a function entry (no size, not a toolchain entry) and
+  is recorded with `native_targets.py --parked NAME` from a matching site, like any other entry.
+- **Checking:** every site must resolve to the entry's RVA. Its bytes are not compared and its own targets are not
+  followed. A candidate may define its attempt, and the attempt is not reported as a match.
+- **Visibility:** a run without `--symbol` lists each parked entry, as it lists toolchain entries. Record the source
+  shape and flags tried for each one in the lane's checkpoint, as D25 requires before parking.
+- **Scope:** only a function D25 parks may be marked. Exported functions need no entry, because a reference to an
+  export already verifies by RVA. Their own rows stay failing or absent until a linked-DLL comparison exists.
+
 ## Mapping and scope
 
 - **D1:** `Mcd` maps to `Quire.Mcd`.

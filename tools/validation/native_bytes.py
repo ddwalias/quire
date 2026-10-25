@@ -20,7 +20,10 @@ A target the original does not export but reaches through an import thunk (`jmp 
 imports the target's name, and is a mismatch when it imports another. A manifest entry marked "toolchain" names a
 symbol that the toolset's static libraries supply (such as `??_7type_info@@6B@` from the C runtime), so no candidate
 can define it: every site must resolve to its RVA, and a candidate that defines it is a mismatch. A run without
---symbol lists each toolchain entry, so the targets accepted without a byte comparison stay visible.
+--symbol lists each toolchain entry, so the targets accepted without a byte comparison stay visible. An entry marked
+"parked" (D29) names an internal function that per-object compilation cannot reproduce (D25): every site must resolve
+to its RVA, its bytes are not compared and its own targets are not followed, and a candidate may define its attempt.
+A run without --symbol lists each parked entry too.
 
 A function entry may name a leaf function (one without .pdata, such as a vtable slot returning a constant) when its
 RVA lies in an executable section outside every .pdata range. Its extent is inferred as for a leaf export, also ending
@@ -113,10 +116,12 @@ class Function:
 class Entry:
     """A reviewed internal target: its RVA in the original, and its size when it is data (a function's is .pdata's).
 
-    A toolchain entry has no size: the toolset supplies its definition, so only its RVA is checked."""
+    A toolchain entry has no size: the toolset supplies its definition, so only its RVA is checked. A parked entry (D29)
+    is a function whose bytes per-object compilation cannot reproduce; only its RVA is checked as well."""
     rva: int
     size: int = None
     toolchain: bool = False
+    parked: bool = False
 
 
 class ManifestError(ValueError):
@@ -536,11 +541,13 @@ def targets_from(doc, image, path="manifest"):
     entries = {}
     for name, raw in bound.get("targets", {}).items():
         try:
-            entry = Entry(int(raw["rva"], 16), raw.get("size"), raw.get("toolchain", False))
-            if type(entry.toolchain) is not bool:
-                raise TypeError(entry.toolchain)
+            entry = Entry(int(raw["rva"], 16), raw.get("size"), raw.get("toolchain", False), raw.get("parked", False))
+            if type(entry.toolchain) is not bool or type(entry.parked) is not bool:
+                raise TypeError(entry.toolchain, entry.parked)
         except (KeyError, TypeError, ValueError) as e:
             raise ManifestError(f"{path}: {name}: malformed entry {raw!r}") from e
+        if entry.parked and (entry.toolchain or entry.size is not None):
+            raise ManifestError(f"{path}: {name}: a parked entry is a function: no size, and not a toolchain entry")
         if entry.toolchain:
             if entry.size is not None or not image.contains(entry.rva, 1):
                 raise ManifestError(f"{path}: {name}: a toolchain entry takes an RVA in a section and no size")
@@ -585,6 +592,8 @@ class InternalTargets:
             if entry.toolchain:
                 verdict = (("mismatch", "the candidate objects define a toolchain entry") if defn is not None
                            else ("ok", None))
+            elif entry.parked:
+                verdict = ("ok", None)  # D29: the RVA is checked at each site; the bytes are not compared
             elif defn is None:
                 verdict = ("unverified", "not defined by the candidate objects")
             elif defn.data != (entry.size is not None):
@@ -775,6 +784,8 @@ def compare_object(original_dll, candidate_obj, symbols=None, targets=None):
         elif (key := anonymous(f.name)) in entries and entries[key].toolchain:
             results.append(Result(f.name, False, "the candidate objects define a toolchain entry"))
             continue
+        elif key in entries and entries[key].parked:
+            continue  # listed below with every parked entry; its bytes are not compared (D29)
         elif key in entries and entries[key].size is None:
             begin, code = entries[key].rva, internal.original_bytes(key)
             f = Function(f.name + " (at manifest RVA)", f.code, f.relocs, f.targets, f.statics)
@@ -799,6 +810,8 @@ def compare_object(original_dll, candidate_obj, symbols=None, targets=None):
         for name in sorted(n for n in entries if entries[n].toolchain and n not in definitions):
             results.append(Result(f"{name} (toolchain entry)", True, "RVA checked at each site; the toolset supplies "
                                                                       "its bytes"))
+        for name in sorted(n for n in entries if entries[n].parked):
+            results.append(Result(f"{name} (parked entry)", True, "RVA checked at each site; bytes not compared (D29)"))
     return results
 
 

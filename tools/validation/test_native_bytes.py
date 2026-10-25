@@ -426,6 +426,14 @@ class StrictRunTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("FAIL callee: the candidate objects define a toolchain entry", out)
 
+    def test_parked_entries_are_listed_and_their_bytes_not_compared(self):
+        manifest = self.write("parked.json", {"fake.dll": {"sha256": ManifestImage.sha256,
+                                                           "targets": {"callee": {"rva": "0x1100", "parked": True}}}})
+        code, out = self.run_main("--candidate", self.caller, "--candidate", self.callee, "--targets", manifest)
+        self.assertEqual(code, 0, out)
+        self.assertIn("OK   callee (parked entry)", out)
+        self.assertNotIn("callee (at manifest RVA)", out)
+
     def test_without_the_manifest_the_internal_call_is_unverified(self):
         code, out = self.run_main("--candidate", self.caller, "--candidate", self.callee, "--symbol", "caller",
                                   "--targets", self.write("empty.json", {}))
@@ -539,6 +547,15 @@ class LoadTargetsTests(unittest.TestCase):
         with self.assertRaisesRegex(ManifestError, "malformed"):
             self.load(self.bound({"t": {"rva": "0x1800", "toolchain": "yes"}}))
 
+    def test_parked_entry_is_a_function_without_size(self):
+        self.assertEqual(self.load(self.bound({"t": {"rva": "0x1100", "parked": True}})),
+                         {"t": Entry(0x1100, None, False, True)})
+        for bad in ({"rva": "0x1800", "size": 8, "parked": True}, {"rva": "0x1100", "toolchain": True, "parked": True}):
+            with self.assertRaisesRegex(ManifestError, "parked entry"):
+                self.load(self.bound({"t": bad}))
+        with self.assertRaisesRegex(ManifestError, "malformed"):
+            self.load(self.bound({"t": {"rva": "0x1100", "parked": "yes"}}))
+
 
 class InternalTargetTests(unittest.TestCase):
     """A caller at RVA 0x1000 calls (E8, displacement at +1) the internal function `callee`, at RVA 0x1100 (xor eax,
@@ -603,6 +620,14 @@ class InternalTargetTests(unittest.TestCase):
     def test_toolchain_entry_the_candidates_define_is_a_mismatch(self):
         found = self.classify({"callee": Entry(0x1100, None, True)})
         self.assertEqual(found.entries["callee"], ("mismatch", "the candidate objects define a toolchain entry"))
+
+    def test_parked_entry_verifies_by_its_rva_whatever_the_candidate_defines(self):
+        attempt = {"callee": Function("callee", b"\x31\xc0\xc3", [], {})}  # differs from the original's bytes
+        for definitions in (attempt, {}):
+            found = self.classify({"callee": Entry(0x1100, None, False, True)}, definitions=definitions)
+            self.assertEqual((found.mismatches, found.unverified, found.verified), ([], 0, 1))
+        elsewhere = self.classify({"callee": Entry(0x1200, None, False, True)}, definitions=attempt)
+        self.assertIn("manifest entry gives 0x1200", elsewhere.mismatches[0])
 
     def test_leaf_entry_is_compared_over_its_inferred_extent(self):
         image = ManifestImage(self.memory, {0x1200: 0x1206}, leaves={0x1100: 0x1103})
@@ -761,6 +786,12 @@ class RecordTests(unittest.TestCase):
         self.definitions["unused"] = Function("unused", b"\xc3", [], {})
         with self.assertRaisesRegex(ValueError, "unused: defined by the candidate objects, so not a toolchain entry"):
             record(self.image, self.definitions, [], {}, toolchain=["unused"])
+
+    def test_parked_names_are_recorded_by_rva_and_their_targets_not_followed(self):
+        # The candidate's attempt at callee differs from the original and still names helper; neither matters.
+        self.definitions["callee"] = Function("callee", b"\xe9\0\0\0\0\x90", [Reloc(1, 0x0004, 0)], {1: "helper"})
+        doc = record(self.image, self.definitions, [], {}, parked=["callee"])
+        self.assertEqual(doc["fake.dll"]["targets"], {"callee": {"rva": "0x1100", "parked": True}})
 
     def test_an_entry_stored_under_another_anonymous_namespace_tag_keeps_its_name(self):
         here, there = "?callee@?A0x2@u@@YAXXZ", "?callee@?A0x1@u@@YAXXZ"

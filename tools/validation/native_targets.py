@@ -11,6 +11,9 @@ Each --toolchain is recorded the same way, as a toolchain entry: a symbol the to
 the C runtime's `??_7type_info@@6B@`), which the candidates reference but must not define: a name any --candidate
 object defines is refused. It records the RVA only.
 
+Each --parked is recorded the same way, as a parked entry (D29): an internal function that per-object compilation
+cannot reproduce (D25), whose sites then verify by RVA. The candidates may define it; its bytes are never compared.
+
 The manifest holds names, RVAs and sizes only, never bytes of the original (D15). Review the written diff before
 committing it: native_bytes.py compares every entry the candidate objects define on each run without --symbol.
 """
@@ -23,7 +26,7 @@ from native_bytes import (DEFAULT_TARGETS, PeImage, _addend, _resolve, anonymous
                           definitions_in_objects, targets_from)
 
 
-def record(image, definitions, names, doc, toolchain=()):
+def record(image, definitions, names, doc, toolchain=(), parked=()):
     """Record `names`, and `toolchain` as toolchain entries, for the original `image` in the manifest document `doc`
     (changed in place, and returned).
 
@@ -32,8 +35,9 @@ def record(image, definitions, names, doc, toolchain=()):
     cannot be recorded.
     """
     entries = targets_from(doc, image)
-    given = {anonymous(n): n for n in [*names, *toolchain]}
-    names, toolchain = {anonymous(n) for n in names}, {anonymous(n) for n in toolchain}
+    given = {anonymous(n): n for n in [*names, *toolchain, *parked]}
+    names, toolchain, parked = ({anonymous(n) for n in names}, {anonymous(n) for n in toolchain},
+                                {anonymous(n) for n in parked})
     defined = sorted(given[n] for n in toolchain & set(definitions))
     if defined:
         raise ValueError(f"{', '.join(defined)}: defined by the candidate objects, so not a toolchain entry")
@@ -52,7 +56,7 @@ def record(image, definitions, names, doc, toolchain=()):
             at = placed(d, entries[anonymous(d.name)].rva)
             if at:
                 queue.append((d, *at))
-    wanted, found, searched = set(names) | set(toolchain), {}, set()
+    wanted, found, searched = set(names) | set(toolchain) | set(parked), {}, set()
     while queue:
         d, begin, code = queue.pop()
         if d.name in searched or not compare_code(d.name, code, d.code, d.relocs).ok:
@@ -66,7 +70,7 @@ def record(image, definitions, names, doc, toolchain=()):
             rva = _resolve(image, begin + r.offset, r.kind) - _addend(d.code, r)
             if found.setdefault(name, rva) != rva:
                 raise ValueError(f"{name}: sites disagree, RVA {found[name]:#x} and {rva:#x} (from {d.name})")
-            callee = definitions.get(name)
+            callee = definitions.get(name) if name not in parked else None  # a parked entry's targets are not followed
             at = placed(callee, rva) if callee is not None else None
             if at:
                 queue.append((callee, *at))
@@ -82,6 +86,10 @@ def record(image, definitions, names, doc, toolchain=()):
         entry = {"rva": f"{found[name]:#x}"}
         if name in toolchain:
             entry["toolchain"] = True
+        elif name in parked:
+            if image.function_extent(found[name]) is None:
+                raise ValueError(f"{name}: RVA {found[name]:#x} does not start a .pdata function or a leaf function")
+            entry["parked"] = True
         elif defn is None:
             raise ValueError(f"{name}: not defined by the candidate objects, so its kind and size are unknown")
         elif defn.data:
