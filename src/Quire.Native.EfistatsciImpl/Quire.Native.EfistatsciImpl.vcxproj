@@ -52,8 +52,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="efi_alloc.h" />
+    <ClInclude Include="efi_common.h" />
+    <ClInclude Include="mutils_mat.h" />
     <ClInclude Include="mutils_msg.h" />
     <ClCompile Include="mutils_alloc.cpp" />
+    <ClCompile Include="mutils_interrupt.cpp" />
+    <ClCompile Include="mutils_mat.cpp" />
     <ClCompile Include="mutils_msg.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -22,5 +22,26 @@
         "size": 8
       }
     }
+  },
+  "efistatsci_.dll": {
+    "sha256": "4df94756f57c5268d348ccd0ac30a273f3d537529cec770e360472063b4b6e31",
+    "targets": {
+      "??_C@_0BE@BHAHAIJH@array?5size?5mismatch@": {
+        "rva": "0xac368",
+        "size": 20
+      },
+      "??_C@_0N@MEIMOEID@null?5pointer@": {
+        "rva": "0xac3d8",
+        "size": 13
+      },
+      "?mutil_interrupt_step@mutils@@3NA": {
+        "rva": "0xcc0c0",
+        "size": 8
+      },
+      "__real@416312d000000000": {
+        "rva": "0xac908",
+        "size": 8
+      }
+    }
   }
 }

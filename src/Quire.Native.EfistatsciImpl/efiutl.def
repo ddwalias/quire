@@ -1,3 +1,4 @@
 LIBRARY efiutl.dll
 EXPORTS
     ?allocate_array@ImcAllocator@Efi@@QEAAPEAX_K@Z
+    ?Throw@Efi@@YAXPEBD_K@Z
