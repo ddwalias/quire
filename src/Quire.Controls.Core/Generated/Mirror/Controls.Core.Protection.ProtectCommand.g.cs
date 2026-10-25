@@ -11,14 +11,4 @@ namespace Quire.Controls.Core.Protection;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Protection.ProtectCommand, Ptc.Controls.Core")]
 public partial class ProtectCommand : global::Quire.Controls.Core.Protection.ProtectionCommonBase, global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Action _toggleDisplayState;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Undo.CompoundCommand _undoCommand;
-    [global::Quire.Mirror.MirrorStub]
-    public ProtectCommand(global::Quire.Controls.Core.Protection.IProtectableModel model, global::Quire.Controls.Core.Protection.ProtectionDialogState state, global::System.Action toggleDisplayState, global::System.Action<string> ShowWarningDialogRequest) : base(default(global::Quire.Controls.Core.Protection.IProtectableModel), default(global::System.Action<string>)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

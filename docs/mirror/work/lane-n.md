@@ -227,3 +227,11 @@
   - `MathFormatSerializer` (`converter`, `_ignoreUnsetProperty`, `MathFormat`, `CreateChildren`, `.ctor(string, string, MathFormat, bool)`)
 - Report: `.mirror-cache/release-il-97646de9b89b/release-il.json` — PASS, 1,123 checked, 1,123 exact, 0 failures, 2,770 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 20 — RegionImageSettings, ProtectCommand
+
+- Scope:
+  - `RegionImageSettings` (`ApplyZoom`, `ApplyTransparency`, `ShrinkToFrame`, `DefaultForRtfCopy`, `DefaultForImageCopy`, `.cctor`)
+  - `ProtectCommand` (`_toggleDisplayState`, `_undoCommand`, `Name`, `Do`, `Undo`, `Redo`, `.ctor(IProtectableModel, ProtectionDialogState, Action, Action<string>)`)
+- Report: `.mirror-cache/release-il-047348fc6230/release-il.json` — PASS, 1,127 checked, 1,127 exact, 0 failures, 2,767 unfinished.
+- Remaining mismatches: none in claimed batch.

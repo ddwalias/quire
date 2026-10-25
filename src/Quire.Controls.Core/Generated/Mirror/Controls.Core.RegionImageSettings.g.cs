@@ -11,14 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RegionImageSettings, Ptc.Controls.Core")]
 public partial struct RegionImageSettings
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool ApplyZoom;
-    [global::Quire.Mirror.MirrorStub]
-    public bool ApplyTransparency;
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShrinkToFrame;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.RegionImageSettings DefaultForRtfCopy;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.RegionImageSettings DefaultForImageCopy;
 }
