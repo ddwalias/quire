@@ -297,6 +297,27 @@ public sealed partial class LicenseManager
         _licenseSource.Save(LicenseType);
     }
 
+    private void UpdateLicenseStatusAndRefreshTimer(bool hasValidLicense)
+    {
+        HasValidLicense = hasValidLicense;
+        if (HasValidLicense && DebugTools.AssertNotNull(_provider).Passed)
+        {
+            if (_refreshTimer == null)
+            {
+                _refreshTimer = new global::System.Threading.Timer(DispatchedRefreshCallback);
+            }
+
+            ApplyLicenseRefreshInterval();
+            return;
+        }
+
+        if (_refreshTimer != null)
+        {
+            _refreshTimer.Dispose();
+            _refreshTimer = null;
+        }
+    }
+
     private void FirePropertyChanged(string propertyName)
     {
         if (_propertyChanged != null)

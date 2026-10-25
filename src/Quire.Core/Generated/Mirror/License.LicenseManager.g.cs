@@ -120,8 +120,6 @@ public sealed partial class LicenseManager : global::System.ComponentModel.INoti
     [global::Quire.Mirror.MirrorStub]
     public bool ReturnLicense() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void UpdateLicenseStatusAndRefreshTimer(bool hasValidLicense) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void InitLicense() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ReapplyLicense() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
