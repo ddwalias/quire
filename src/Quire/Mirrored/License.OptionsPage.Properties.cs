@@ -123,4 +123,185 @@ public partial class LicenseOptionsPage
     {
         LicenseErrorInfoPopup.IsOpen = true;
     }
+
+    private void UpdateLicenseManager()
+    {
+        bool licenseUpdated = false;
+        switch (LicenseURIType)
+        {
+            case global::Quire.License.LicenseUriType.ServerAndPort:
+                if (!global::System.UInt32.TryParse(LicenseServerPort, out uint port))
+                {
+                    port = 0;
+                    LicenseServerPort = "0";
+                }
+
+                licenseUpdated = global::Quire.License.LicenseManager.Instance
+                    .SetEnterpriseLicenseServer(LicenseServerAddress, port);
+                break;
+            case global::Quire.License.LicenseUriType.FilePath:
+                licenseUpdated = global::Quire.License.LicenseManager.Instance.SetLicenseFile(LicenseFilePath);
+                break;
+            case global::Quire.License.LicenseUriType.SourceList:
+                licenseUpdated = global::Quire.License.LicenseManager.Instance.SetLicenseSourceList(LicenseSourceList);
+                break;
+        }
+
+        if (licenseUpdated)
+        {
+            SetIsLicenseDataModified(!global::Quire.License.LicenseManager.Instance.HasValidLicense);
+        }
+    }
+
+    private void Apply_Clicked(object sender, global::System.Windows.RoutedEventArgs args)
+    {
+        if (global::System.Windows.Input.Keyboard.FocusedElement != _applyButton)
+        {
+            _applyButton.Focus();
+        }
+
+        global::System.Windows.Input.Cursor cursor = Cursor;
+        Cursor = global::System.Windows.Input.Cursors.Wait;
+        try
+        {
+            UpdateLicenseManager();
+        }
+        finally
+        {
+            Cursor = cursor;
+        }
+    }
+
+    private void Borrow_Click(object sender, global::System.Windows.RoutedEventArgs e)
+    {
+        global::System.Windows.Input.Cursor cursor = Cursor;
+        Cursor = global::System.Windows.Input.Cursors.Wait;
+        try
+        {
+            if (global::Quire.License.LicenseManager.Instance.LicenseBorrowStatus == global::Quire.License.LicenseBorrowStatus.CanBorrow)
+            {
+                global::Quire.License.LicenseManager.Instance.BorrowLicense(
+                    global::System.DateTime.Now + global::System.TimeSpan.FromDays(7));
+            }
+        }
+        finally
+        {
+            Cursor = cursor;
+        }
+    }
+
+    private void Return_Clicked(object sender, global::System.Windows.RoutedEventArgs e)
+    {
+        global::System.Windows.Input.Cursor cursor = Cursor;
+        Cursor = global::System.Windows.Input.Cursors.Wait;
+        try
+        {
+            if (global::Quire.License.LicenseManager.Instance.LicenseBorrowStatus == global::Quire.License.LicenseBorrowStatus.Borrowed)
+            {
+                global::Quire.License.LicenseManager.Instance.ReturnLicense();
+            }
+        }
+        finally
+        {
+            Cursor = cursor;
+        }
+    }
+
+    private void Browse_Clicked(object sender, global::System.Windows.RoutedEventArgs e)
+    {
+        global::Microsoft.Win32.OpenFileDialog openFileDialog = new()
+        {
+            Title = (string)Resources["BrowseForLicense"],
+            Filter = (string)Resources["LicenseFilesFilter"] + " (*.*)|*.*",
+            InitialDirectory = LicenseFilePath
+        };
+        if (global::Quire.Services.AppServiceRegistry.GetService<global::Quire.Wpf.IDialogManager>()
+            .ShowDialog(openFileDialog) == true)
+        {
+            LicenseFilePath = openFileDialog.FileName;
+            LicenseURIType = global::Quire.License.LicenseUriType.FilePath;
+            SetIsLicenseDataModified(true);
+        }
+    }
+
+    private void HyperlinkNavigate(object sender, global::System.Windows.Navigation.RequestNavigateEventArgs e)
+    {
+        global::Quire.DebugTools.AssertNotNull(ParentOwner, null);
+        try
+        {
+            global::Quire.AppCommands.DisplayHyperlink.Execute(e.Uri.OriginalString, ParentOwner);
+        }
+        catch (global::System.Exception exception)
+        {
+            global::Quire.DebugTools.FailAssertion(exception);
+        }
+    }
+
+    public void CopyToClipboard()
+    {
+        global::System.Text.StringBuilder stringBuilder = new();
+        bool appended = false;
+        AppendLine(licenseStatusLabel, licenseStatusTextBox, stringBuilder, ref appended);
+        AppendLine(licenseTypeLabel, licenseTypeTextBox, stringBuilder, ref appended);
+        AppendLine(licenseIssueDateLabel, licenseIssueDateTextBox, stringBuilder, ref appended);
+        AppendLine(licenseExpirationDateLabel, licenseExpirationDateTextBox, stringBuilder, ref appended);
+        AppendLine(licenseHostIdLabel, licenseHostIdTextBox, stringBuilder, ref appended);
+        if (appended)
+        {
+            stringBuilder.AppendLine();
+        }
+
+        appended = false;
+        AppendLine(serviceContractLabel, serviceContractBox, stringBuilder, ref appended);
+        AppendLine(customerNumberLabel, customerNumberBox, stringBuilder, ref appended);
+        AppendLine(saledOrderLabel, salesOrderBox, stringBuilder, ref appended);
+        AppendLine(productCodeLabel, productCodeBox, stringBuilder, ref appended);
+        if (appended)
+        {
+            stringBuilder.AppendLine();
+        }
+
+        if (licenseBorrowedUntilDateLabel.Visibility == global::System.Windows.Visibility.Visible
+            && licenseBorrowedUntilDateLabel.Text != null)
+        {
+            stringBuilder.AppendLine(licenseBorrowedUntilDateLabel.Text);
+        }
+
+        // Mathcad emits String.Format calls here; interpolation handlers change the Release IL.
+        if (serverRadioButton.IsChecked == true)
+        {
+            stringBuilder.AppendLine(global::System.String.Format(
+                "{0} {1}:{2}",
+                serverRadioButton.Content,
+                serverAddressTextBox.Text,
+                serverPortTextBox.Text));
+        }
+        else if (filePathRadioButton.IsChecked == true)
+        {
+            stringBuilder.AppendLine(global::System.String.Format(
+                "{0} {1}",
+                filePathRadioButton.Content,
+                filePathTextBox.Text));
+        }
+
+        stringBuilder.AppendLine();
+        stringBuilder.AppendLine(global::System.String.Format("{0}", licenseStatusMessageTextBox.Text));
+        global::Quire.WpfClipboard.Default.SetText(stringBuilder.ToString());
+    }
+
+    private static void AppendLine(
+        global::System.Windows.Controls.TextBlock label,
+        global::System.Windows.Controls.TextBox text,
+        global::System.Text.StringBuilder sb,
+        ref bool appended)
+    {
+        if (label.Visibility != global::System.Windows.Visibility.Visible)
+        {
+            return;
+        }
+
+        // Mathcad emits String.Format calls here; interpolation handlers change the Release IL.
+        sb.AppendLine(global::System.String.Format("{0} {1}", label.Text, text.Text));
+        appended = true;
+    }
 }
