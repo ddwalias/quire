@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.FindRestrictorExtension, Ptc.Controls.Core")]
 public static partial class FindRestrictorExtension
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool FindOnce(this global::Quire.Controls.Core.IFindRestrictor findRestrictor, string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

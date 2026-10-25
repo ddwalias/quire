@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.AttachedBehavior;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.AttachedBehavior.IActivator, Ptc.Controls.Core")]
 public partial interface IActivator
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.EventHandler<global::System.EventArgs> Activated { add { } remove { } }
 }

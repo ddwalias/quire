@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.AttachedBehavior;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.AttachedBehavior.PropertyBindersCollection, Ptc.Controls.Core")]
 public partial class PropertyBindersCollection : global::System.Collections.Generic.List<global::Quire.Controls.Core.AttachedBehavior.PropertiesBinder>, global::Quire.Controls.Core.AttachedBehavior.IAttachedBehavior
 {
-    [global::Quire.Mirror.MirrorStub]
-    public void Attach(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Detach(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.AttachedBehavior;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.AttachedBehavior.IAttachedBehavior`1, Ptc.Controls.Core")]
 public partial interface IAttachedBehavior<T> : global::Quire.Controls.Core.AttachedBehavior.IAttachedBehavior
 {
-    [global::Quire.Mirror.MirrorStub]
-    T OriginalValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

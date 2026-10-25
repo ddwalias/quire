@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.AttachedBehavior;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.AttachedBehavior.PropertyValueBase, Ptc.Controls.Core")]
 public partial class PropertyValueBase : global::System.Windows.DependencyObject
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
 }

@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.AttachedBehavior;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.AttachedBehavior.OneTimePropertyOwnerExtensionMethods, Ptc.Controls.Core")]
 public static partial class OneTimePropertyOwnerExtensionMethods
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void OneTimeSetExt<TProperty>(this global::Quire.Controls.Core.AttachedBehavior.IOneTimePropertyOwner owner, ref TProperty field, TProperty value, string propertyName) where TProperty : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

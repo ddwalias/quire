@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.ImageControlConstants, Ptc.Controls.Core")]
 public static partial class ImageControlConstants
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string ImageHelpContext = "ImageControl";
 }

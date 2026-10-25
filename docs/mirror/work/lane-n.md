@@ -35,3 +35,22 @@
   - `IdLabelsExtensions` (`EmptyLabelRl`, `.cctor`, `IsNullOrNone`, `GetRl`)
 - Report: `.mirror-cache/release-il-b333b8e0eba9/release-il.json` — PASS, 879 checked, 879 exact, 0 failures, 2,978 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 3 — AttachedBehavior core, interfaces, and decorators
+
+- Scope:
+  - `DocumentDynamicResourceKeys` (`IsDocumentSectionClickableKey`)
+  - `ImageControlConstants` (`ImageHelpContext`)
+  - `FindRestrictorExtension` (`FindOnce`)
+  - `Dialogs.FullWidthDecorator` (`MeasureOverride`)
+  - `AttachedBehavior.IAttachedBehavior` (`Attach`, `Detach`)
+  - `AttachedBehavior.IAttachedBehavior_1` (`OriginalValue`)
+  - `AttachedBehavior.IActivator` (`IsActive`, `Activated`)
+  - `AttachedBehavior.OneTimePropertyOwnerExtensionMethods` (`OneTimeSetExt`)
+  - `AttachedBehavior.PropertyValueBase` (`_typeOfThis`, `PropertyValueProperty`, `.cctor`)
+  - `AttachedBehavior.RoutedEventBinding` (`.ctor`)
+  - `AttachedBehavior.RoutedEventHandlersBinder` (`Attach`, `Detach`)
+  - `AttachedBehavior.PropertyBindersCollection` (`Attach`, `Detach`)
+  - `AttachedBehavior.PropertyValueKeeper` (`_propertyPath`, `PropertyPath`, `SetBinding`)
+- Report: `.mirror-cache/release-il-c6893ba03532/release-il.json` — PASS, 899 checked, 891 exact, 0 failures, 2,959 unfinished.
+- Remaining mismatches: none in claimed batch.

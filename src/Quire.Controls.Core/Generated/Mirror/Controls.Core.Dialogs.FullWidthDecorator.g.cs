@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.Dialogs;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Dialogs.FullWidthDecorator, Ptc.Controls.Core")]
 public partial class FullWidthDecorator : global::System.Windows.Controls.Decorator
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
 }

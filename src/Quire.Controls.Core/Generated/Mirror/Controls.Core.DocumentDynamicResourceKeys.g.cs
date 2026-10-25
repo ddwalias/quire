@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.DocumentDynamicResourceKeys, Ptc.Controls.Core")]
 public static partial class DocumentDynamicResourceKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string IsDocumentSectionClickableKey = "IsDocumentSectionClickableKey";
 }
