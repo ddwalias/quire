@@ -23,7 +23,64 @@ public static partial class TextRangeExtension
     [MirrorVerified("PtcWpfTextRangeExtensionMechanicalDifferentialTests")]
     public static IEnumerable<Hyperlink> EnumerateHyperlinksInRange(this global::System.Windows.Documents.TextRange range, bool allowEmpty = false) => EnumerateInlinesInRange<Hyperlink>(range, allowEmpty);
 
-    public static IEnumerable<Run> EnumerateRunsInRange(this global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static IEnumerable<Run> EnumerateRunsInRange(this global::System.Windows.Documents.TextRange range)
+    {
+        // Match Mathcad's Release IL local slots and Run/Span branch layout.
+        IEnumerable<Run> runs;
+        Hyperlink hyperlink;
+        LogicalDirection direction;
+        bool isForward;
+        Stack<Inline> pendingInlines;
+        Run run;
+        Span span;
+        Inline inline;
+        IEnumerable<Inline> inlines;
+
+        runs = range.EnumerateInlinesInRange<Run>(allowEmpty: true);
+        if (runs.IsNullOrEmpty() && range.IsEmpty)
+        {
+            global::Quire.DebugTools.DevAssert(range.Start.LogicalDirection == range.End.LogicalDirection, null);
+            hyperlink = range.Start.GetHyperlinkAdjacentToTextPointer(out direction);
+            if (hyperlink != null)
+            {
+                isForward = direction == LogicalDirection.Forward;
+                Inline firstInline = isForward ? hyperlink.Inlines.FirstInline : hyperlink.Inlines.LastInline;
+                pendingInlines = new Stack<Inline>(firstInline.YieldOrEmpty());
+                while (pendingInlines.IsNotEmpty())
+                {
+                    inline = pendingInlines.Pop();
+                    run = inline as Run;
+                    if (run != null)
+                    {
+                        goto FoundRun;
+                    }
+
+                    span = inline as Span;
+                    if (span == null)
+                    {
+                        goto NonRunOrSpan;
+                    }
+                    goto FoundSpan;
+
+                FoundRun:
+                    runs = run.Yield();
+                    pendingInlines = null;
+                    goto ContinueTraversal;
+
+                FoundSpan:
+                    (isForward ? (inlines = span.Inlines) : span.Inlines.Reverse()).Each(pendingInlines.Push);
+                    goto ContinueTraversal;
+
+                NonRunOrSpan:
+                    pendingInlines = null;
+
+                ContinueTraversal:
+                    ;
+                }
+            }
+        }
+        return runs;
+    }
 
     public static IEnumerable<T> EnumerateInlinesInRange<T>(this global::System.Windows.Documents.TextRange range, bool allowEmpty = false) where T : Inline
     {
