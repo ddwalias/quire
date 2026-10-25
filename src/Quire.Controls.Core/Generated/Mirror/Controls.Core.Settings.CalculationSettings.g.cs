@@ -11,14 +11,4 @@ namespace Quire.Controls.Core.Settings;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.CalculationSettings, Ptc.Controls.Core")]
 public partial class CalculationSettings : global::Quire.Controls.Core.Serialization.XElementSerializable, global::Quire.Controls.Core.Serialization.IXDocumentRepairer, global::Quire.Serialization.IShouldValidate
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly string _nameSpaceUri;
-    [global::Quire.Mirror.MirrorStub]
-    private const string LocalName = "calculation";
-    [global::Quire.Mirror.MirrorStub]
-    public CalculationSettings(global::Quire.Controls.Core.IEngineeringDocument document, string nameSpaceUri) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    public CalculationSettings(global::Quire.Controls.CalculationVariables calcVars, global::Quire.Controls.CalculationOptions calcOptions, string nameSpaceUri) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Xml.Schema.XmlSchema GetSchema() => base.GetSchema();
 }

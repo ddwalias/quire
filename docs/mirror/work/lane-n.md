@@ -242,3 +242,11 @@
   - `MetadataSerializer` (`Serialize`, `Deserialize`, `CreateSchemas`, `FillInMetadataModel`, `FillInXmlMetadata`, `.ctor`)
 - Report: `.mirror-cache/release-il-52bcaf3b0a3d/release-il.json` — PASS, 1,129 checked, 1,129 exact, 0 failures, 2,765 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 22 — DependencyObjectSerializer, CalculationSettings
+
+- Scope:
+  - `DependencyObjectSerializer` (`property`, `dependencyObject`, `localName`, `GetSchema`, `ReadXml`, `WriteXml`, `.ctor(Dictionary, DependencyObject, string)`)
+  - `CalculationSettings` (`_nameSpaceUri`, `LocalName`, `ShouldValidateOnWrite`, `ShouldValidateOnRead`, `GetSchema`, `OnSchemaValidation`, `RepairXDocument`, `.ctor(IEngineeringDocument, string)`, `.ctor(CalculationVariables, CalculationOptions, string)`)
+- Report: `.mirror-cache/release-il-4f9d5d530a6e/release-il.json` — PASS, 1,134 checked, 1,134 exact, 0 failures, 2,760 unfinished.
+- Remaining mismatches: none in claimed batch.

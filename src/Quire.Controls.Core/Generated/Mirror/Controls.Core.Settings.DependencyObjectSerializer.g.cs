@@ -11,14 +11,4 @@ namespace Quire.Controls.Core.Settings;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.DependencyObjectSerializer, Ptc.Controls.Core")]
 internal partial class DependencyObjectSerializer : global::System.Xml.Serialization.IXmlSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<string, global::System.Windows.DependencyProperty> property;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.DependencyObject dependencyObject;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string localName;
-    [global::Quire.Mirror.MirrorStub]
-    public DependencyObjectSerializer(global::System.Collections.Generic.Dictionary<string, global::System.Windows.DependencyProperty> property, global::System.Windows.DependencyObject dependencyObject, string localName) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteXml(global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
