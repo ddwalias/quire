@@ -12,11 +12,7 @@ namespace Quire.License;
 public partial class LicenseSource
 {
     [global::Quire.Mirror.MirrorStub]
-    public void Clear() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Save(global::Quire.License.LicenseType licenseType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void Save(global::Quire.License.LicenseType licenseType, global::Quire.License.LicenseUriType licensePathForm, string licensePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Load() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

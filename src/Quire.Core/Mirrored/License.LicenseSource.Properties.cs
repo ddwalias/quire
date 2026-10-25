@@ -50,4 +50,21 @@ public partial class LicenseSource
             Type = LicenseUriType.SourceList;
         }
     }
+
+    public void Clear()
+    {
+        Host = null;
+        FilePath = null;
+        SourceList = null;
+        Port = null;
+        Type = LicenseUriType.None;
+    }
+
+    public static void Save(LicenseType licenseType, LicenseUriType licensePathForm, string licensePath)
+    {
+        Properties.Settings.Default.LicenseType = licenseType;
+        Properties.Settings.Default.LicensePathForm = licensePathForm;
+        Properties.Settings.Default.LicensePath = licensePath;
+        Properties.Settings.Default.Save();
+    }
 }

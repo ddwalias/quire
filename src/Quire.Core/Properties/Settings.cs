@@ -19,4 +19,18 @@ internal partial class Settings
 
     [MirrorVerified("Release IL")]
     public string LicensePath { get => (string)this["LicensePath"]; set => this["LicensePath"] = value; }
+
+    [MirrorVerified("Release IL")]
+    public global::Quire.License.LicenseType LicenseType
+    {
+        get => (global::Quire.License.LicenseType)this["LicenseType"];
+        set => this["LicenseType"] = value;
+    }
+
+    [MirrorVerified("Release IL")]
+    public global::Quire.License.LicenseUriType LicensePathForm
+    {
+        get => (global::Quire.License.LicenseUriType)this["LicensePathForm"];
+        set => this["LicensePathForm"] = value;
+    }
 }
