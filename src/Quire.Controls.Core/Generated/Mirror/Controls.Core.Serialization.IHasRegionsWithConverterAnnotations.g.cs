@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.IHasRegionsWithConverterAnnotations, Ptc.Controls.Core")]
 public partial interface IHasRegionsWithConverterAnnotations
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool HasRegionsWithConverterAnnotations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> RegionsWithConverterAnnotations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

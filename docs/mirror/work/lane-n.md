@@ -624,6 +624,16 @@
 - Report: `.mirror-cache/release-il-42c984cbe118/release-il.json` — PASS, 1,511 checked, 1,511 exact, 0 failures, 2,449 unfinished.
 - Remaining mismatches: none in claimed batch.
 
+## Batch 83 — Controls.Core.VisualAdornerBase, Settings.XmlLanguageConverterWithDefaultValue, and Serialization interfaces
+
+- Scope:
+  - `VisualAdornerBase` (`_typeOfThis`, `AdornerAddedEvent`, `_removed`, `_renderTransformGroup`, `AdornedElementAdornerLayer`, `ParentAdornerLayer`, `AdornedFrameworkElement`, `AddToAdornerLayer(AdornerDecorator, Adorner)`, `.cctor`, `CoerceRenderTransformPropertyValue`, `.ctor`, `UpdateRenderTransformGroup`, `FireAdornerAdded`, `Remove`, `Add`, `AddToAdornerLayer()`, `AdornedElementLoadedHandler`, `OnLayoutUpdated`)
+  - `Settings.XmlLanguageConverterWithDefaultValue` (`.ctor`, `ConvertTo`)
+  - `Serialization.IXDocumentRepairer` (`RepairXDocument`)
+  - `Serialization.IXmlAndXElementSerializable` (`WriteXml(XDocument)`)
+- Report: `.mirror-cache/release-il-30727802bf1d/release-il.json` — PASS, 1,513 checked, 1,513 exact, 0 failures.
+- Remaining mismatches: none in claimed batch.
+
 
 
 

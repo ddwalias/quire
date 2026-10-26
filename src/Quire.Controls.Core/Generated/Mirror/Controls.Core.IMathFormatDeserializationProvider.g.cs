@@ -11,8 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IMathFormatDeserializationProvider, Ptc.Controls.Core")]
 public partial interface IMathFormatDeserializationProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.StaticMathFormat TargetMathFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> TargetLabeledIdFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

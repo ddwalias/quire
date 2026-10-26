@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.IXDocumentRepairer, Ptc.Controls.Core")]
 public partial interface IXDocumentRepairer
 {
-    [global::Quire.Mirror.MirrorStub]
-    void RepairXDocument(global::System.Xml.Linq.XDocument xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
