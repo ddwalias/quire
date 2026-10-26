@@ -602,6 +602,14 @@
 - Report: `.mirror-cache/release-il-5e3dcf20e205/release-il.json` — PASS, 1,427 checked, 1,427 exact, 0 failures, 2,526 unfinished.
 - Remaining mismatches: none in claimed batch.
 
+## Batch 72 — Controls.Core.Crosshair
+
+- Scope:
+  - `Crosshair` (`.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`)
+- Report: `.mirror-cache/release-il-dc00752552d8/release-il.json` — PASS, 1,430 checked, 1,430 exact, 0 failures, 2,523 unfinished.
+- Remaining mismatches: none in claimed batch.
+
+
 
 
 
