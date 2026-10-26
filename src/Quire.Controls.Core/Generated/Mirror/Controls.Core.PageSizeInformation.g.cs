@@ -11,24 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.PageSizeInformation, Ptc.Controls.Core")]
 public partial struct PageSizeInformation
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size Size;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.PageMarginType, global::System.Windows.Thickness> PageMargins;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Thickness HeaderMargin;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Thickness FooterMargin;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size GridCellSize;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size FineGridCellSize;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size HeaderFooterGridCellSize;
-    [global::Quire.Mirror.MirrorStub]
-    public double MajorGridLines;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point InitialInsertionPoint;
-    [global::Quire.Mirror.MirrorStub]
-    public PageSizeInformation(global::System.Windows.Size size, global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.PageMarginType, global::System.Windows.Thickness> pageMargins, global::System.Windows.Thickness headerMargin, global::System.Windows.Thickness footerMargin, global::System.Windows.Size gridCellSize, global::System.Windows.Size fineGridCellSize, global::System.Windows.Size headerFooterGridCellSize, double majorGridLines, global::System.Windows.Point initialInsertionPoint) { }
 }

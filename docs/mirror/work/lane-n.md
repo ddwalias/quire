@@ -411,3 +411,10 @@
   - `WorksheetSectionPersistentData` (`.ctor`)
 - Report: `.mirror-cache/release-il-986490236260/release-il.json` — PASS, 1,292 checked, 1,292 exact, 0 failures, 2,632 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 45 — PageSizeInformation
+
+- Scope:
+  - `PageSizeInformation` (fields + `.ctor`)
+- Report: `.mirror-cache/release-il-68f2f1cf9c3e/release-il.json` — PASS, 1,293 checked, 1,293 exact, 0 failures, 2,631 unfinished.
+- Remaining mismatches: none in claimed batch.
