@@ -50,6 +50,21 @@ struct _dcomplex {
 };
 struct _dcomplex_mat : typed_mat<_dcomplex> {};
 
+// A scalar of any element type: the value, then its efi_type tag at +10h.
+struct _univ_scalar {
+    union {
+        unsigned char u8;
+        unsigned short u16;
+        short s16;
+        unsigned int u32;
+        long s32;
+        float flt;
+        double dbl;
+        _dcomplex cpx;
+    };
+    int type;
+};
+
 namespace mutils {
 
 // One definition serves every object, as the original's single static does. The image starts at 1e6, and only a zeroed
