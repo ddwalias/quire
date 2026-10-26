@@ -1,9 +1,9 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 78 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 70 earlier exports, the seven `sum` exports (`mutils_sum.cpp`, shape from the maintainer brief) and `matcpx_assign_scalar`. No regressions in the linked run.
+**Status: incomplete.** 108 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 30 from the consumer path (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7). No regressions in the linked run.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
-- **Branch:** `mirror/h-efistatsci-20261027` (from `main` at `adee6ba0`)
+- **Branch:** `mirror/h-efistatsci-20261027` (from `main` at `adee6ba0`; first batch landed as `75ba2925`)
 - **Worktree:** `C:/Projects/Quire-wt/lane-h-efistatsci-2`
 - **Harness:** `tools/validation/native_bytes.py` and `native_targets.py` on `main`, unmodified.
 - **Build:** MSBuild `Quire.Native.EfistatsciImpl.vcxproj`, Release|x64, toolset v145, `cl` 19.51.36246 from `C:\BuildTools\VS18.6-msvc`, `/O2 /Gy /GS /EHa /MD /std:c++17 /W4 /WX` with `_CRTIMP2=__declspec(dllimport)` (D28), and `WholeProgramOptimization` true (`/GL` + LTCG). The original objects are `/GL` (D25); this build reproduces its entry code (`mov r10, rcx`), where the per-object build gives `mov r9, rcx`. Output in `.mirror-cache/bin/`.
@@ -15,6 +15,9 @@
 | Family | Exports | Strict result | Notes |
 |---|---|---|---|
 | `assign_scalar` | `matdbl`, `matflt`, `mats32`, `mats16`, `matu32`, `matu16`, `matu8`, `matcpx` | 8/8 OK | `assign_scalar<T>` in `mutils_mat.h`. `matcpx` has its own body with the same plain loop: through the template the value splits into two doubles (206 bytes), in the export it stays one 16-byte copy and the fill becomes the original's `rep movs` (219). |
+| `transpose` | 8 typed (`dbl` … `u8`, `cpx`) | 8/8 OK | `mutils_transpose.cpp`. Dst's `rows`/`cols` in locals before the in-place test; the in-place case swaps a vector's dimensions or returns the mismatch message. |
+| `flip_left_right`, `flip_up_down` | 8 + 7 typed | 15/15 OK | `mutils_flip.cpp`. Both inputs use the fresh-field check (`check_src_f`); per-row offset locals (`left`/`right`, `top`/`bottom`); `ceil(n * 0.5)` stays in the loop condition (hoisting it by hand changes the code). |
+| `assign` | 7 typed (no `cpx` in the original) | 7/7 OK | `mutils_assign.cpp`. `memmove` into `int bytes`; `matu8` alone checks `dst` cols-first; `matdbl` needs `void *` casts, or the compiler emits `memcpy`. |
 | `validate` | `mat{dbl,flt,s32,s16,u32,u16,u8,cpx}_validate` | 8/8 OK | One body (linker-folded in the original, `0x86460`). Reads `rows`/`cols` into locals first; the direct form picked another register. |
 | `wrap_data` | 7 typed exports (no `cpx`) | 7/7 OK | Same body for all seven (`0x859e0`). |
 | `malloc` | 8 typed exports | 8/8 OK | `allocate_mat<T>`; the allocator is `EfiCallContext`'s pointer at +80h. |
@@ -59,11 +62,13 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 - **`matu8_cast_to_dbl`** (sweep over loop-bound and local-size forms, 4 combinations): still unrolls or differs; no match.
 - **`matu8_cast_to_*`** (6: `dbl`, `flt`, `s16`, `u16`, `s32`, `u32`): forced inlining gives the same loop as a template, but the candidate unrolls the loop four times (437 bytes against the original's 285). The original keeps the loop un-unrolled, because it reloads `src->size` each iteration. Binding the loop to `src->size` directly still unrolled, so the compiler proved the bound invariant where the original did not. Not solved by source shape yet.
 
+- **`matcpx_flip_up_down`** (500 bytes, same length): only register assignment differs: the original keeps `ceil`'s result in `xmm9` and the `1e7` constant in `xmm5`, while the candidate swaps them. `native_permute.py` stopped at 0.984 after 579 attempts. By hand: `half` local before or after the progress locals (476 bytes), swap through `bottom` first (0.895), `progress` declared first (0.911). The other 15 flips match with the same source.
+
 - Helper pattern for functions that return a message (added after the parked `sum`/`range` work): the exports call `validate` themselves, return the message literal themselves, and put only void/bool shared logic in `__forceinline` helpers (`same_shape`, `binary_elementwise`, `running_sum`). A message returned from an inlined template comes back in `rcx` and is copied to `rax`; the original returns it in `rax`. The helper pattern removes that copy.
 
 ## Remaining work
 
-- 700 exports not yet implemented, plus the 32 parked above.
+- 670 exports not yet implemented, plus the 33 parked above.
 - The `siguniv_window_*` dispatchers (11) call typed `sigdbl_window_*` exports, so they cannot link until those exist; they wait for their typed exports.
 - `matuniv_wrap_data` and `matuniv_wrap_matrix` dispatch through a jump table over a nine-case type enum, with different field copies per case.
 - The `add`/`subtract`/`multiply_elem` families (about 680 bytes each for `int` types) are auto-vectorized with runtime alias checks, so the source shape has to reproduce the vectorizer's output.

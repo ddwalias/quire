@@ -65,6 +65,9 @@
     <ClCompile Include="mutils_cast.cpp" />
     <ClCompile Include="mutils_submat.cpp" />
     <ClCompile Include="mutils_sum.cpp" />
+    <ClCompile Include="mutils_transpose.cpp" />
+    <ClCompile Include="mutils_flip.cpp" />
+    <ClCompile Include="mutils_assign.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="efiutl.def" />

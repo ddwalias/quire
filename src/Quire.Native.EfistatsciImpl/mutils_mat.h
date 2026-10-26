@@ -19,6 +19,25 @@ const char *assign_scalar(T value, void *context, typed_mat<T> *m) {
     return nullptr;
 }
 
+// The input and output checks of the two-matrix operations (assign_submat, transpose, flip).
+template <typename T>
+__forceinline void check_src_f(const typed_mat<T> *m) {
+    if (m == nullptr) Efi::Throw("null pointer", ~0ull);
+    if (m->rows <= 0 || m->cols <= 0) Efi::Throw("array size mismatch", ~0ull);
+    if (m->data == nullptr) Efi::Throw("null pointer", ~0ull);
+    if (m->size != m->rows * m->cols) Efi::Throw("array size mismatch", ~0ull);
+}
+
+template <typename T>
+__forceinline void check_dst_f(const typed_mat<T> *m) {
+    if (m == nullptr) Efi::Throw("null pointer", ~0ull);
+    int cols = m->cols;
+    int rows = m->rows;
+    if (rows <= 0 || cols <= 0) Efi::Throw("array size mismatch", ~0ull);
+    if (m->data == nullptr) Efi::Throw("null pointer", ~0ull);
+    if (m->size != rows * cols) Efi::Throw("array size mismatch", ~0ull);
+}
+
 template <typename T>
 void validate(const typed_mat<T> *m) {
     if (m == nullptr) Efi::Throw("null pointer", ~0ull);

@@ -2,24 +2,6 @@
 
 namespace mutils {
 
-template <typename T>
-__forceinline void check_src_f(const typed_mat<T> *m) {
-    if (m == nullptr) Efi::Throw("null pointer", ~0ull);
-    if (m->rows <= 0 || m->cols <= 0) Efi::Throw("array size mismatch", ~0ull);
-    if (m->data == nullptr) Efi::Throw("null pointer", ~0ull);
-    if (m->size != m->rows * m->cols) Efi::Throw("array size mismatch", ~0ull);
-}
-
-template <typename T>
-__forceinline void check_dst_f(const typed_mat<T> *m) {
-    if (m == nullptr) Efi::Throw("null pointer", ~0ull);
-    int cols = m->cols;
-    int rows = m->rows;
-    if (rows <= 0 || cols <= 0) Efi::Throw("array size mismatch", ~0ull);
-    if (m->data == nullptr) Efi::Throw("null pointer", ~0ull);
-    if (m->size != rows * cols) Efi::Throw("array size mismatch", ~0ull);
-}
-
 EFI_EXPORT const char *matdbl_assign_submat(const _double_mat *src, long row, long col, void *context, _double_mat *dst) {
     check_src_f(src);
     check_dst_f(dst);
