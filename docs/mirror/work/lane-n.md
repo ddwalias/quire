@@ -560,5 +560,13 @@
 - Report: `.mirror-cache/release-il-9cfc4b5f7e8b/release-il.json` — PASS, 1,386 checked, 1,386 exact, 0 failures, 2,557 unfinished.
 - Remaining mismatches: none in claimed batch.
 
+## Batch 66 — Settings.McdxPresentationSettings
+
+- Scope:
+  - `McdxPresentationSettings` (`.ctor`, `GetSchema`, `ReadXml`, `WriteXml`, `_textRendering`)
+- Report: `.mirror-cache/release-il-26a6dc117a68/release-il.json` — PASS, 1,390 checked, 1,390 exact, 0 failures, 2,553 unfinished.
+- Remaining mismatches: none in claimed batch.
+
+
 
 

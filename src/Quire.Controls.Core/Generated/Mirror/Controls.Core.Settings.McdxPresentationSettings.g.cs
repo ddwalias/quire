@@ -11,14 +11,4 @@ namespace Quire.Controls.Core.Settings;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.McdxPresentationSettings, Ptc.Controls.Core")]
 public partial class McdxPresentationSettings : global::Quire.Controls.Core.Settings.PresentationSettings
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.Settings.TextRenderingSerializer _textRendering;
-    [global::Quire.Mirror.MirrorStub]
-    public McdxPresentationSettings(global::Quire.Controls.Core.IEngineeringDocument document) : base(default(global::Quire.Controls.Core.IEngineeringDocument), default(string), default(string)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Xml.Schema.XmlSchema GetSchema() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void ReadXml(global::System.Xml.Linq.XElement xElement) => base.ReadXml(xElement);
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteXml(global::System.Xml.Linq.XElement xElement) => base.WriteXml(xElement);
 }
