@@ -11,20 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.SerializableXmlPackagePart, Ptc.Controls.Core")]
 public partial class SerializableXmlPackagePart : global::Quire.Controls.Core.Serialization.IPackagePartSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.Serialization.IXmlAndXElementSerializable _xmlSerializable;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Action<global::System.Xml.Schema.XmlSchemaException> OnWriteValidationFailed;
-    [global::Quire.Mirror.MirrorStub]
-    public static void OnWriteValidationFailedDevAssert(global::System.Xml.Schema.XmlSchemaException ex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public SerializableXmlPackagePart(global::Quire.Controls.Core.Serialization.IXmlAndXElementSerializable xmlSerializable, global::System.Action<global::System.Xml.Schema.XmlSchemaException> onWriteValidationFailed) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Write(global::System.IO.Packaging.PackagePart part, bool useTempFile) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnWriteValidationFailedHandler(object sender, global::System.Xml.Schema.ValidationEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Read(global::System.IO.Packaging.PackagePart part) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void Validate(global::System.Xml.Linq.XDocument xDocument, global::System.Xml.Schema.ValidationEventHandler validationFailedHandler, bool addSchemaInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -588,6 +588,14 @@
 - Report: `.mirror-cache/release-il-0b437db38abe/release-il.json` — PASS, 1,413 checked, 1,413 exact, 0 failures, 2,536 unfinished.
 - Remaining mismatches: none in claimed batch.
 
+## Batch 70 — Serialization.SerializableXmlPackagePart
+
+- Scope:
+  - `SerializableXmlPackagePart` (`.ctor(1)`, `.ctor(2)`, `Write`, `Read`, `Validate`, `OnWriteValidationFailedDevAssert`, `OnWriteValidationFailedHandler`, `_xmlSerializable`, `OnWriteValidationFailed`, closures `<>c__DisplayClass5_0`, `<>c__DisplayClass8_0`)
+- Report: `.mirror-cache/release-il-762762adda4f/release-il.json` — PASS, 1,423 checked, 1,423 exact, 0 failures, 2,530 unfinished.
+- Remaining mismatches: none in claimed batch.
+
+
 
 
 
