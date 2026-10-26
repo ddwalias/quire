@@ -30,12 +30,6 @@ public partial class ProtectDialog : global::Quire.Controls.Core.Protection.Pass
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.Protection.DisplayStateEnum DisplayState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.Protection.AreaBorderStateEnum AreaBorderState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool DoPasswordsMatch { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public static bool ShowProtectionDialog(global::Quire.Controls.Core.Protection.ProtectionDialogState protectionState, global::System.Windows.ResourceDictionary customControlStringsDictionary, global::System.Windows.Window owner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private ProtectDialog(global::Quire.Controls.Core.Protection.ProtectionDialogState protectionState, global::System.Windows.ResourceDictionary customControlStringsDictionary) { }
@@ -51,7 +45,5 @@ public partial class ProtectDialog : global::Quire.Controls.Core.Protection.Pass
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Protection.ProtectDialog+ProtectProperties, Ptc.Controls.Core")]
     public partial class ProtectProperties : global::Quire.Controls.Core.Protection.PasswordDialog.Properties
     {
-        [global::Quire.Mirror.MirrorStub]
-        public const string DisplayState = "DisplayState";
     }
 }

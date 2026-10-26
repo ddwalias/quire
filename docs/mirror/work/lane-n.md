@@ -496,3 +496,10 @@
   - `ImeHandler` (`SetIsInputMethodSuspended`)
 - Report: `.mirror-cache/release-il-ad9d2e5d7e9b/release-il.json` — PASS, 1,347 checked, 1,347 exact, 0 failures, 2,587 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 57 — Protection.ProtectDialog properties and DisplayState
+
+- Scope:
+  - `ProtectDialog` (`DisplayState`, `AreaBorderState`, `DoPasswordsMatch`, `ProtectProperties.DisplayState`)
+- Report: `.mirror-cache/release-il-d48b1a3c68a2/release-il.json` — PASS, 1,352 checked, 1,352 exact, 0 failures, 2,582 unfinished.
+- Remaining mismatches: none in claimed batch.
