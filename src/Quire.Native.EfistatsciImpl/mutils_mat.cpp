@@ -18,7 +18,8 @@ const char *mats16_assign_scalar(short value, void *context, _sint16_mat *m) {
     return assign_scalar(value, context, m);
 }
 
-const char *matu32_assign_scalar(unsigned int value, void *context, _uint32_mat *m) {
+// noinline: the original calls it from matu32 histogram and the other users; LTCG would otherwise inline it there.
+__declspec(noinline) const char *matu32_assign_scalar(unsigned int value, void *context, _uint32_mat *m) {
     return assign_scalar(value, context, m);
 }
 

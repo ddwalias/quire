@@ -85,6 +85,8 @@
     <ClCompile Include="mutils_entropy.cpp" />
     <ClCompile Include="mutils_rescale.cpp" />
     <ClCompile Include="mutils_translate.cpp" />
+    <ClCompile Include="mutils_threshold.cpp" />
+    <ClCompile Include="mutils_histogram.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="efiutl.def" />
