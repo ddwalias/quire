@@ -113,4 +113,12 @@ EFI_EXPORT const char *matu16_assign_submat(const _uint16_mat *src, long row, lo
 EFI_EXPORT const char *matu8_assign_submat(const _uint8_mat *src, long row, long col, void *context, _uint8_mat *dst);
 EFI_EXPORT const char *matcpx_assign_submat(const _dcomplex_mat *src, long row, long col, void *context, _dcomplex_mat *dst);
 
+EFI_EXPORT const char *matdbl_assign(const _double_mat *src, void *context, _double_mat *dst);
+EFI_EXPORT const char *matflt_assign(const _float_mat *src, void *context, _float_mat *dst);
+EFI_EXPORT const char *mats32_assign(const _sint32_mat *src, void *context, _sint32_mat *dst);
+EFI_EXPORT const char *mats16_assign(const _sint16_mat *src, void *context, _sint16_mat *dst);
+EFI_EXPORT const char *matu32_assign(const _uint32_mat *src, void *context, _uint32_mat *dst);
+EFI_EXPORT const char *matu16_assign(const _uint16_mat *src, void *context, _uint16_mat *dst);
+EFI_EXPORT const char *matu8_assign(const _uint8_mat *src, void *context, _uint8_mat *dst);
+
 }  // namespace mutils

@@ -1,6 +1,6 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 157 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
+**Status: incomplete.** 188 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path, `cumulative_sum` 7, and 24 unsigned bit operations (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261027` (from `main` at `adee6ba0`; first batch landed as `75ba2925`)
@@ -24,6 +24,8 @@
 | `permute` | 7 typed (index is `_sint32_mat`) | 7/7 OK | `mutils_permute.cpp`. Checks `src`, `dst`, `index` in that order (`dst`/`index` cols-first); an index outside `src->size` returns "Illegal data value". |
 | Clamped `cast_to_*` | 17 of the 23 narrowing pairs with a `clamp` flag | 17/17 OK | `mutils_cast_clamp.cpp`. Float sources round with `floor(x + 0.5)`; low and high checks only where the source range exceeds the destination's; signed minimum is symmetric (-32767, -2147483647). Out of range: throw "overflow" unless `clamp`, then saturate. Work `size * 5.0`. |
 | `cast_to_cpx`, `matcpx_cast_to_dbl` | 3 | 3/3 OK | `mutils_cast_cpx.cpp`. Work `size * 4.0`; `matcpx_cast_to_dbl` loops separately for `clamp` (real part) and not (nonzero imaginary throws "overflow"). |
+| `cumulative_sum` | 7 typed | 7/7 OK | `mutils_cumsum.cpp`. Calls the typed `assign` export, then `d[i] = d[i - 1] + d[i]` over `dst`; work `0.0 + size`. `src` uses `check_src_f`; `dst` uses `validate` for dbl/flt/s32/u32 and `check_src_f` for s16/u16/u8. |
+| Bit operations | `bit_shift_left/right`, `bit_and/or/xor_scalar`, `bit_and/or/xor` for u8/u16/u32 | 24/24 OK | `mutils_bits.cpp`. Data and `dst->size` in locals before the shape test; the scalar has the element type; work `size * 3.0`. The binary forms check `a` with `check_src_f` and `b`/`dst` cols-first. This resolves the binary forms parked earlier. |
 | `validate` | `mat{dbl,flt,s32,s16,u32,u16,u8,cpx}_validate` | 8/8 OK | One body (linker-folded in the original, `0x86460`). Reads `rows`/`cols` into locals first; the direct form picked another register. |
 | `wrap_data` | 7 typed exports (no `cpx`) | 7/7 OK | Same body for all seven (`0x859e0`). |
 | `malloc` | 8 typed exports | 8/8 OK | `allocate_mat<T>`; the allocator is `EfiCallContext`'s pointer at +80h. |
@@ -62,7 +64,7 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 
 - **`sum` family** (7: `matdbl_sum` `0x7c650`, `matflt_sum` `0x7c780`, `mats{32,16}_sum`, `matu{32,16,8}_sum`): the body matches except for the epilogue. The candidate is 2 bytes longer for the integer forms (219 vs 217) and for `dbl` (299 vs 297), because the two `const char *` returns merge into one register (`lea rcx` + `mov rax, rcx`; `xor ecx` + `mov eax, ecx`). The original returns `lea rax` / `xor eax` directly. Five declaration orders of the locals were tried, all 219. `flt` is 302 vs 287 (the original unrolls by four).
 - **`range` family** (5: `mats{32,16}_range`, `matu{32,16,8}_range`): the same return-merge (`lea rcx`, `mov rax, rcx`, +3 bytes per return), plus the original places its null-pointer return block inline, so its jumps are short (rel8); the candidate puts that block at the end, with rel32 jumps. Both forms tried; no reordering of the checks is allowed.
-- **`matu8_bit_and/or/xor`, `matu16_*`, `matu32_*`** (9): same length as the original (662/664/661) and the vectorized loop matches; the candidate differs in one register choice (`b`'s `rows * cols` operand order in `validate`) and carries an unverified `3.0` constant (`__real@4008000000000000`). That constant can only be recorded through a matching function that uses it, and none does yet. Parked; the helpers stay in `mutils_mat_ops.h`.
+- **`matu8/16/32_bit_not`** (3): instructions match; fails only on the data of its all-ones vector constant, which is compared together with its neighbour in the pool (Harness notes).
 - **`matset_verify_allsame`** (`0x70fb0`, 302 bytes): 276 bytes with the `-1` guards written as default-then-override. The original keeps the guards and its loop layout differs; not resolved.
 - **`range`, `mats32`/`mats16`/`matu32`/`matu16`/`matu8`** (5): with the message return moved into the export, the candidate is 264-280 bytes against 257-277. The original keeps `size` in `rbx` (`push rbx`) and `max` in `eax`; the candidate uses different registers from the first instruction. A sweep over the validate form, null-check form, loop form, value locals and load order (48 combinations) found no match.
 - **`matu8_cast_to_dbl`** (sweep over loop-bound and local-size forms, 4 combinations): still unrolls or differs; no match.
@@ -76,7 +78,7 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 
 ## Remaining work
 
-- 615 exports not yet implemented, plus the 36 parked above.
+- 587 exports not yet implemented, plus the 30 parked above.
 - The `siguniv_window_*` dispatchers (11) call typed `sigdbl_window_*` exports, so they cannot link until those exist; they wait for their typed exports.
 - `matuniv_wrap_data` and `matuniv_wrap_matrix` dispatch through a jump table over a nine-case type enum, with different field copies per case.
 - The `add`/`subtract`/`multiply_elem` families (about 680 bytes each for `int` types) are auto-vectorized with runtime alias checks, so the source shape has to reproduce the vectorizer's output.
