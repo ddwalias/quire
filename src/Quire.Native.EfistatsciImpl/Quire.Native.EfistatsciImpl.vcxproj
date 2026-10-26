@@ -91,6 +91,7 @@
     <ClCompile Include="img_map.cpp" />
     <ClCompile Include="img_generate.cpp" />
     <ClCompile Include="img_morph.cpp" />
+    <ClCompile Include="mutils_io.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="efiutl.def" />

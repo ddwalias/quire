@@ -1,6 +1,6 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 330 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path, `cumulative_sum` 7, 24 unsigned bit operations, `realloc` 8, `abs` 4, `range` 7, 35 binary arithmetic exports, 14 scalar ones, `number_equal_scalar` 7 `sum_cols`/`sum_rows` 14, `entropy` 7, `rescale` 7, `translate` 6, `threshold` 4, `histogram` 4 12 signal windows `map_invert` 4, `matuniv_histogram` all `generate_rectangle`, `matdbl_translate` and two `binary_dilate` (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
+**Status: incomplete.** 331 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path, `cumulative_sum` 7, 24 unsigned bit operations, `realloc` 8, `abs` 4, `range` 7, 35 binary arithmetic exports, 14 scalar ones, `number_equal_scalar` 7 `sum_cols`/`sum_rows` 14, `entropy` 7, `rescale` 7, `translate` 6, `threshold` 4, `histogram` 4 12 signal windows `map_invert` 4, `matuniv_histogram` all `generate_rectangle`, `matdbl_translate` two `binary_dilate` and `matu8_write_raw` (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261027` (from `main` at `adee6ba0`; first batch landed as `75ba2925`)
@@ -43,6 +43,7 @@
 | `img*_generate_rectangle` | dbl, s32, u16, u8, univ | 5/5 OK | `img_generate.cpp`. `height`/`width < 1` returns "Illegal data type", `fg == bg` "Illegal data value", a rectangle fully outside returns the mismatch message; the progress locals come before the typed `assign_scalar(bg)` call; the clip is `row_end > rows ? rows : row_end`; work `height * 3.0 * width`. |
 | `matuniv_histogram` | univ | 1/1 OK | Compare chain over dbl/s32/u16/u8; `hist` must be `EFI_UINT32`. |
 | `img*_binary_dilate` | s32, u16 | 2/2 OK | `img_morph.cpp`. `src`/`se`/`dst` checks, shape and alias tests, `fg == bg` returns "Illegal data value"; `src->data` taken before the `assign_scalar(bg)` call; stamps `se` around each `fg` pixel; work `((se_cols * 3 + 3.0) * se_rows + 2.0) * cols`. |
+| `matu8_write_raw` | u8 | 1/1 OK | `mutils_io.cpp`. Null `fp` returns "null pointer"; `fwrite` straight from `m->data` in chunks of at most `0xFFFFFFFF`; a short write returns "Input-output error"; work `size * 1000`. |
 | `validate` | `mat{dbl,flt,s32,s16,u32,u16,u8,cpx}_validate` | 8/8 OK | One body (linker-folded in the original, `0x86460`). Reads `rows`/`cols` into locals first; the direct form picked another register. |
 | `wrap_data` | 7 typed exports (no `cpx`) | 7/7 OK | Same body for all seven (`0x859e0`). |
 | `malloc` | 8 typed exports | 8/8 OK | `allocate_mat<T>`; the allocator is `EfiCallContext`'s pointer at +80h. |
@@ -95,11 +96,13 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 
 - **`matdbl_assign_scalar` is `__forceinline`**: the original never calls it (0 call sites); its link inlines it into every user (`matdbl_translate`, `imgdbl_generate_rectangle`, ...). With the attribute those callers match and the export still matches. **`img*_generate_disk`** (s32, u16, u8): reconstructed (`ceil(radius)`, clipped rows, `floor(sqrt(r^2 - dy^2))` half-width, `painted` flag, work `radius * 5.0 + 3.0`); the original re-reads `dst->cols` where the candidate keeps it in a register. **`imgdbl`/`imgu8_binary_dilate`**: register assignment only. **`mat*_multiply`** (7): the plain triple loop with `dst`/`a`/`b` checks, the alias test and work `dst->cols * a->cols * 8.0` gets 0.76-0.96; the remaining difference is register assignment around the unrolled inner loop (permuter: no improvement on `mats16`).
 
+- **`mat*_write_raw` (dbl, flt, s32, s16, u32, u16), `mat*_read_raw`, `mat*_binary_erode`, `matdbl_to_complex`**: reconstructed in `.mirror-cache/lane-h-tools/parked_*.cpp` (local). write_raw reaches 0.985-0.993 (with `*(in + i + k)` for the byte swap); only the order of `i = 0` against the bound computation differs. read_raw differs in which register the final work addition lands in.
+
 - Helper pattern for functions that return a message (added after the parked `sum`/`range` work): the exports call `validate` themselves, return the message literal themselves, and put only void/bool shared logic in `__forceinline` helpers (`same_shape`, `binary_elementwise`, `running_sum`). A message returned from an inlined template comes back in `rcx` and is copied to `rax`; the original returns it in `rax`. The helper pattern removes that copy.
 
 ## Remaining work
 
-- 434 exports not yet implemented, plus the 50 parked above.
+- 433 exports not yet implemented, plus the 50 parked above.
 - The `siguniv_window_*` dispatchers (11) call typed `sigdbl_window_*` exports, so they cannot link until those exist; they wait for their typed exports.
 - `matuniv_wrap_data` and `matuniv_wrap_matrix` dispatch through a jump table over a nine-case type enum, with different field copies per case.
 - `mutil_realloc`: its `.pdata` extent conflicts with the code address (18-byte extent for a 71-byte body). Not implemented; parked for the maintainer.
