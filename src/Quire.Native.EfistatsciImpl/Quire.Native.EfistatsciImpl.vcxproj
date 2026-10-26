@@ -93,6 +93,7 @@
     <ClCompile Include="img_morph.cpp" />
     <ClCompile Include="mutils_io.cpp" />
     <ClCompile Include="pgn_polar.cpp" />
+    <ClCompile Include="pgn_point.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="efiutl.def" />
