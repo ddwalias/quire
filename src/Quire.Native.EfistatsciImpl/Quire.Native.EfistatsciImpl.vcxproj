@@ -70,6 +70,8 @@
     <ClCompile Include="mutils_assign.cpp" />
     <ClCompile Include="mutils_extract.cpp" />
     <ClCompile Include="mutils_number_equal.cpp" />
+    <ClCompile Include="mutils_zeropad.cpp" />
+    <ClCompile Include="mutils_permute.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="efiutl.def" />

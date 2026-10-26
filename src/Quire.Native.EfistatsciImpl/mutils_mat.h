@@ -104,4 +104,13 @@ EFI_EXPORT const char *matu16_assign_scalar(unsigned short value, void *context,
 EFI_EXPORT const char *matu8_assign_scalar(unsigned char value, void *context, _uint8_mat *m);
 EFI_EXPORT const char *matcpx_assign_scalar(_dcomplex value, void *context, _dcomplex_mat *m);
 
+EFI_EXPORT const char *matdbl_assign_submat(const _double_mat *src, long row, long col, void *context, _double_mat *dst);
+EFI_EXPORT const char *matflt_assign_submat(const _float_mat *src, long row, long col, void *context, _float_mat *dst);
+EFI_EXPORT const char *mats32_assign_submat(const _sint32_mat *src, long row, long col, void *context, _sint32_mat *dst);
+EFI_EXPORT const char *mats16_assign_submat(const _sint16_mat *src, long row, long col, void *context, _sint16_mat *dst);
+EFI_EXPORT const char *matu32_assign_submat(const _uint32_mat *src, long row, long col, void *context, _uint32_mat *dst);
+EFI_EXPORT const char *matu16_assign_submat(const _uint16_mat *src, long row, long col, void *context, _uint16_mat *dst);
+EFI_EXPORT const char *matu8_assign_submat(const _uint8_mat *src, long row, long col, void *context, _uint8_mat *dst);
+EFI_EXPORT const char *matcpx_assign_submat(const _dcomplex_mat *src, long row, long col, void *context, _dcomplex_mat *dst);
+
 }  // namespace mutils
