@@ -5,20 +5,73 @@ using Quire.Mirror;
 
 namespace Quire.Controls.Core.Protection;
 
-public partial class PasswordDialog
+public abstract partial class PasswordDialog : Window, INotifyPropertyChanged
 {
-    [MirrorVerified("PtcControlsCoreProtectionPasswordDialogMechanicalDifferentialTests")]
-    protected void OnPasswordChanged(object sender, RoutedEventArgs e) => ShowError = false;
+    public partial class Properties
+    {
+        public const string ShowError = "ShowError";
 
-    [MirrorVerified("PtcControlsCoreProtectionPasswordDialogMechanicalDifferentialTests")]
-    protected PasswordDialog() { }
+        public const string AreaBorder = "AreaBorder";
+
+        [MirrorVerified("PtcControlsCoreProtectionPasswordDialogMechanicalDifferentialTests")]
+        public Properties()
+        {
+        }
+    }
+
+    private bool _showError;
+
+    public bool ShowError
+    {
+        get
+        {
+            return _showError;
+        }
+        protected set
+        {
+            if (_showError == value)
+            {
+                return;
+            }
+            _showError = value;
+            FirePropertyChanged("ShowError");
+        }
+    }
+
+    protected abstract bool DoPasswordsMatch { get; }
 
     [MirrorVerified("PtcControlsCoreProtectionPasswordDialogMechanicalDifferentialTests")]
     public event PropertyChangedEventHandler PropertyChanged;
 
-    partial class Properties
+    protected void FirePropertyChanged(string propName)
     {
-        [MirrorVerified("PtcControlsCoreProtectionPasswordDialogMechanicalDifferentialTests")]
-        public Properties() { }
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propName));
+        }
+    }
+
+    protected void OnCancelButtonClick(object sender, RoutedEventArgs e)
+    {
+        DialogResult = false;
+        Close();
+    }
+
+    [MirrorVerified("PtcControlsCoreProtectionPasswordDialogMechanicalDifferentialTests")]
+    protected void OnPasswordChanged(object sender, RoutedEventArgs e) => ShowError = false;
+
+    protected virtual void OnAcceptPasswordButtonClick(object sender, RoutedEventArgs e)
+    {
+        ShowError = !DoPasswordsMatch;
+        if (!ShowError)
+        {
+            DialogResult = true;
+            Close();
+        }
+    }
+
+    [MirrorVerified("PtcControlsCoreProtectionPasswordDialogMechanicalDifferentialTests")]
+    protected PasswordDialog()
+    {
     }
 }
