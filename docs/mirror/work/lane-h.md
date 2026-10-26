@@ -1,6 +1,6 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 70 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30), including all 44 earlier exports and 26 new ones. No regressions in the linked run.
+**Status: incomplete.** 77 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 70 earlier exports and the seven `sum` exports (`mutils_sum.cpp`, shape from the maintainer brief). No regressions in the linked run.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261025h1` (from `main` at `31b4238b`)
