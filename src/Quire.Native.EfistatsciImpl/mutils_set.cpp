@@ -31,8 +31,8 @@ void matset_validate(const _mat_set *s) { validate(s); }
 
 const char *pgn_chain_free(Efi::EfiCallContext *, _pgn_chain *chain) {
     if (chain == nullptr || chain->count == 0) return nullptr;
-    chain->head_ = nullptr;
-    chain->tail_ = nullptr;
+    chain->points = nullptr;
+    chain->codes = nullptr;
     chain->count = 0;
     return nullptr;
 }

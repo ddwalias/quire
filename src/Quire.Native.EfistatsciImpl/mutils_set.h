@@ -31,12 +31,12 @@ __forceinline void validate(const _mat_set *s) {
 namespace mutils {
 
 struct _pgn_chain {
-    // Fields other than the count at +8 are not inferred yet.
+    // The first 8 bytes are not inferred yet; then the link count, one int and one direction code per link.
     unsigned char unknown_[8];
     int count;
     unsigned char unknown2_[4];
-    void *head_;
-    void *tail_;
+    int *points;
+    unsigned char *codes;
 };
 
 EFI_EXPORT void matset_malloc(Efi::EfiCallContext *ctx, _mat_set *s, long count, const long *dims);

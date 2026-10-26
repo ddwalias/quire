@@ -1,6 +1,6 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 345 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path, `cumulative_sum` 7, 24 unsigned bit operations, `realloc` 8, `abs` 4, `range` 7, 35 binary arithmetic exports, 14 scalar ones, `number_equal_scalar` 7 `sum_cols`/`sum_rows` 14, `entropy` 7, `rescale` 7, `translate` 6, `threshold` 4, `histogram` 4 12 signal windows `map_invert` 4, `matuniv_histogram` all `generate_rectangle`, `matdbl_translate` two `binary_dilate` `matu8_write_raw` the `rectangular_to_polar` and `point_test` pairs, `range_robust` 7, `pgndbl_shape_features`, `mutil_rand_set_seed` and `mutil_rand_begin` (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
+**Status: incomplete.** 346 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path, `cumulative_sum` 7, 24 unsigned bit operations, `realloc` 8, `abs` 4, `range` 7, 35 binary arithmetic exports, 14 scalar ones, `number_equal_scalar` 7 `sum_cols`/`sum_rows` 14, `entropy` 7, `rescale` 7, `translate` 6, `threshold` 4, `histogram` 4 12 signal windows `map_invert` 4, `matuniv_histogram` all `generate_rectangle`, `matdbl_translate` two `binary_dilate` `matu8_write_raw` the `rectangular_to_polar` and `point_test` pairs, `range_robust` 7, `pgndbl_shape_features`, `mutil_rand_set_seed` `mutil_rand_begin` and `matcpx_to_double` (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261027` (from `main` at `adee6ba0`; first batch landed as `75ba2925`)
@@ -24,6 +24,7 @@
 | `permute` | 7 typed (index is `_sint32_mat`) | 7/7 OK | `mutils_permute.cpp`. Checks `src`, `dst`, `index` in that order (`dst`/`index` cols-first); an index outside `src->size` returns "Illegal data value". |
 | Clamped `cast_to_*` | 17 of the 23 narrowing pairs with a `clamp` flag | 17/17 OK | `mutils_cast_clamp.cpp`. Float sources round with `floor(x + 0.5)`; low and high checks only where the source range exceeds the destination's; signed minimum is symmetric (-32767, -2147483647). Out of range: throw "overflow" unless `clamp`, then saturate. Work `size * 5.0`. |
 | `cast_to_cpx`, `matcpx_cast_to_dbl` | 3 | 3/3 OK | `mutils_cast_cpx.cpp`. Work `size * 4.0`; `matcpx_cast_to_dbl` loops separately for `clamp` (real part) and not (nonzero imaginary throws "overflow"). |
+| `matcpx_to_double` | cpx | 1/1 OK | In `mutils_cast_cpx.cpp`. Either output may be null (both null throws "null pointer"); two submat-style progress steps whose work `size + size` is recomputed, not accumulated. |
 | `cumulative_sum` | 7 typed | 7/7 OK | `mutils_cumsum.cpp`. Calls the typed `assign` export, then `d[i] = d[i - 1] + d[i]` over `dst`; work `0.0 + size`. `src` uses `check_src_f`; `dst` uses `validate` for dbl/flt/s32/u32 and `check_src_f` for s16/u16/u8. |
 | Bit operations | `bit_shift_left/right`, `bit_and/or/xor_scalar`, `bit_and/or/xor` for u8/u16/u32 | 24/24 OK | `mutils_bits.cpp`. Data and `dst->size` in locals before the shape test; the scalar has the element type; work `size * 3.0`. The binary forms check `a` with `check_src_f` and `b`/`dst` cols-first. This resolves the binary forms parked earlier. |
 | `realloc` | 8 typed | 8/8 OK | `mutils_realloc.cpp`. `check_src_f`; new dims stored before the byte comparison; grows by `allocate_array` + `memcpy` of the new size. |
@@ -111,7 +112,7 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 
 ## Remaining work
 
-- 417 exports not yet implemented, plus the 55 parked above.
+- 416 exports not yet implemented, plus the 58 parked above.
 - The `siguniv_window_*` dispatchers (11) call typed `sigdbl_window_*` exports, so they cannot link until those exist; they wait for their typed exports.
 - `matuniv_wrap_data` and `matuniv_wrap_matrix` dispatch through a jump table over a nine-case type enum, with different field copies per case.
 - `mutil_realloc`: its `.pdata` extent conflicts with the code address (18-byte extent for a 71-byte body). Not implemented; parked for the maintainer.
