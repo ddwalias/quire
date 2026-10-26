@@ -481,3 +481,10 @@
   - `RegionBorderConstants` (`.cctor`, all fields/constants)
 - Report: `.mirror-cache/release-il-28205641c23c/release-il.json` — PASS, 1,327 checked, 1,327 exact, 0 failures, 2,597 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 55 — WhiteboardDependencyProperties
+
+- Scope:
+  - `WhiteboardDependencyProperties` (`.cctor`, `HandleIsSelectedPropertyChanged`, `GetIsSelected`, `SetIsSelected`, `HandleIsActivePropertyChanged`, `GetIsActive`, `SetIsActive`, `GetUserResizable`, `SetUserResizable`, `GetShowResizeIndicator`, `SetShowResizeIndicator`, `GetIsRegionBorderVisible`, `SetIsRegionBorderVisible`, `ToggleRegionBorderVisibility`, properties)
+- Report: `.mirror-cache/release-il-b97dd206f7e1/release-il.json` — PASS, 1,341 checked, 1,341 exact, 0 failures, 2,583 unfinished.
+- Remaining mismatches: none in claimed batch.
