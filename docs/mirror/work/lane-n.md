@@ -403,3 +403,11 @@
   - `SelectionDragger` (`.ctor`, `MouseMove(object, MouseEventArgs)`, `MouseUp(object, MouseButtonEventArgs)`, `MouseMove(Point)`, `MouseUp(Point)`)
 - Report: `.mirror-cache/release-il-44d650c384d6/release-il.json` — PASS, 1,290 checked, 1,290 exact, 0 failures, 2,634 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 44 — WorksheetPersistentData and WorksheetSectionPersistentData
+
+- Scope:
+  - `WorksheetPersistentData` (`.ctor`)
+  - `WorksheetSectionPersistentData` (`.ctor`)
+- Report: `.mirror-cache/release-il-986490236260/release-il.json` — PASS, 1,292 checked, 1,292 exact, 0 failures, 2,632 unfinished.
+- Remaining mismatches: none in claimed batch.

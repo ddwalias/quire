@@ -11,6 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.WorksheetSectionPersistentData, Ptc.Controls.Core")]
 public partial class WorksheetSectionPersistentData : global::Quire.PersistentData.IWorksheetSectionPersistentData
 {
-    [global::Quire.Mirror.MirrorStub]
-    public WorksheetSectionPersistentData() { }
 }

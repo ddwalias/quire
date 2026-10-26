@@ -1,4 +1,5 @@
 #nullable disable
+using System.Collections.Generic;
 using System.Windows;
 using Quire.Mirror;
 using Quire.PersistentDataObjects;
@@ -19,4 +20,10 @@ public partial class WorksheetSectionPersistentData
 
     [MirrorVerified("PtcPersistentDataWorksheetSectionPersistentDataMechanicalDifferentialTests")]
     public worksheetMessageIdType MsgId { get; set; }
+
+    public WorksheetSectionPersistentData()
+    {
+        SerializedRegions = new List<IRegionPersistentData>();
+        RegionsToSerialize = new Dictionary<UIElement, Point>();
+    }
 }

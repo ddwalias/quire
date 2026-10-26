@@ -1,4 +1,6 @@
 #nullable disable
+using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -92,4 +94,13 @@ public partial class WorksheetPersistentData
 
     [MirrorVerified("PtcPersistentDataWorksheetPersistentDataMechanicalDifferentialTests")]
     public XmlLanguage ProofingLanguage { get; set; }
+
+    public WorksheetPersistentData()
+    {
+        WorksheetContent = new WorksheetSectionPersistentData();
+        Header = new WorksheetSectionPersistentData();
+        Footer = new WorksheetSectionPersistentData();
+        FirstPageHeader = new WorksheetSectionPersistentData();
+        FirstPageFooter = new WorksheetSectionPersistentData();
+    }
 }
