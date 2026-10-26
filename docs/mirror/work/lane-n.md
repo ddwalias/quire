@@ -488,3 +488,11 @@
   - `WhiteboardDependencyProperties` (`.cctor`, `HandleIsSelectedPropertyChanged`, `GetIsSelected`, `SetIsSelected`, `HandleIsActivePropertyChanged`, `GetIsActive`, `SetIsActive`, `GetUserResizable`, `SetUserResizable`, `GetShowResizeIndicator`, `SetShowResizeIndicator`, `GetIsRegionBorderVisible`, `SetIsRegionBorderVisible`, `ToggleRegionBorderVisibility`, properties)
 - Report: `.mirror-cache/release-il-b97dd206f7e1/release-il.json` — PASS, 1,341 checked, 1,341 exact, 0 failures, 2,583 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 56 — MC14Conversion.SolveBlockXmlElements and ImeHandler
+
+- Scope:
+  - `MC14Conversion.SolveBlockXmlElements` (`.cctor`, `ContainNode`, `ContainNodes`, `ContainsSolverFunctionWithFilter`, `ContainsMCDXMinMaxSolverFunction`, `SolverFunctions`)
+  - `ImeHandler` (`SetIsInputMethodSuspended`)
+- Report: `.mirror-cache/release-il-ad9d2e5d7e9b/release-il.json` — PASS, 1,347 checked, 1,347 exact, 0 failures, 2,587 unfinished.
+- Remaining mismatches: none in claimed batch.

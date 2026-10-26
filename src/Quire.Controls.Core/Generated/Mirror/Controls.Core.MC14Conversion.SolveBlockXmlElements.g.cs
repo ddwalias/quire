@@ -13,12 +13,4 @@ public partial class SolveBlockXmlElements : global::System.Collections.IEnumera
 {
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.IEnumerator GetEnumerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool ContainNode(global::System.Xml.XmlNode xmlElement, string xPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool ContainNodes(global::System.Xml.XmlNode xmlElement, global::System.Collections.Generic.IEnumerable<string> xPaths) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool ContainsSolverFunctionWithFilter(global::System.Xml.XmlNode xmlNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool ContainsMCDXMinMaxSolverFunction(global::System.Xml.XmlNode xmlNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
