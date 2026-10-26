@@ -11,36 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.WorksheetPropertyNames, Ptc.Controls.Core")]
 public static partial class WorksheetPropertyNames
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public const string PageSizeValue = "PageSizeValue";
-    [global::Quire.Mirror.MirrorStub]
-    public const string PageMargin = "PageMargin";
-    [global::Quire.Mirror.MirrorStub]
-    public const string WorksheetPageLayoutMode = "WorksheetPageLayoutMode";
-    [global::Quire.Mirror.MirrorStub]
-    public const string GridCellSize = "GridCellSize";
-    [global::Quire.Mirror.MirrorStub]
-    public const string FilePath = "FilePath";
-    [global::Quire.Mirror.MirrorStub]
-    public const string CacheWorksheet = "CacheWorksheet";
-    [global::Quire.Mirror.MirrorStub]
-    public const string DocCalculationOptions = "DocCalculationOptions";
-    [global::Quire.Mirror.MirrorStub]
-    public const string DocCalculationVariables = "DocCalculationVariables";
-    [global::Quire.Mirror.MirrorStub]
-    public const string WorksheetName = "WorksheetName";
-    [global::Quire.Mirror.MirrorStub]
-    public const string DisplayFilePath = "DisplayFilePath";
-    [global::Quire.Mirror.MirrorStub]
-    public const string SpellCheckEnabled = "SpellCheckEnabled";
-    [global::Quire.Mirror.MirrorStub]
-    public const string DefaultUnitSystem = "DefaultUnitSystem";
-    [global::Quire.Mirror.MirrorStub]
-    public const string SimplifyUnitSystem = "SimplifyUnitSystem";
-    [global::Quire.Mirror.MirrorStub]
-    public const string HelpServerPath = "HelpServerPath";
-    [global::Quire.Mirror.MirrorStub]
-    public static bool Contains(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

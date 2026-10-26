@@ -524,3 +524,10 @@
   - `FontConstants` (`.cctor`, `GetDefaultFontForMath`, `GetDefaultIdLabelFormat`, constants/fields)
 - Report: `.mirror-cache/release-il-1879929a045e/release-il.json` — PASS, 1,363 checked, 1,363 exact, 0 failures, 2,573 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 61 — WorksheetPropertyNames
+
+- Scope:
+  - `WorksheetPropertyNames` (`.cctor`, `Contains`, constants/fields)
+- Report: `.mirror-cache/release-il-301aef15d99e/release-il.json` — PASS, 1,365 checked, 1,365 exact, 0 failures, 2,572 unfinished.
+- Remaining mismatches: none in claimed batch.
