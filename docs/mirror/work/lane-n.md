@@ -396,3 +396,10 @@
   - `PasswordDialog` (`ShowError`, `FirePropertyChanged`, `OnCancelButtonClick`, `OnAcceptPasswordButtonClick`, `Properties.ShowError`, `Properties.AreaBorder`)
 - Report: `.mirror-cache/release-il-b7cb64f262ca/release-il.json` — PASS, 1,282 checked, 1,282 exact, 0 failures, 2,642 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 43 — SelectionDragger
+
+- Scope:
+  - `SelectionDragger` (`.ctor`, `MouseMove(object, MouseEventArgs)`, `MouseUp(object, MouseButtonEventArgs)`, `MouseMove(Point)`, `MouseUp(Point)`)
+- Report: `.mirror-cache/release-il-44d650c384d6/release-il.json` — PASS, 1,290 checked, 1,290 exact, 0 failures, 2,634 unfinished.
+- Remaining mismatches: none in claimed batch.
