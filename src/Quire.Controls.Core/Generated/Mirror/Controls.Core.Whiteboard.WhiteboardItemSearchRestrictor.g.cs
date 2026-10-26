@@ -11,20 +11,4 @@ namespace Quire.Controls.Core.Whiteboard;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Whiteboard.WhiteboardItemSearchRestrictor, Ptc.Controls.Core")]
 public partial class WhiteboardItemSearchRestrictor : global::Quire.Controls.Core.IFindRestrictor
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.IWhiteboardItem _whiteboardItem;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.ISearchableRegion _searchableRegion;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.Whiteboard.IContainerItemManager _itemManager;
-    [global::Quire.Mirror.MirrorStub]
-    public bool CanSearch { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.ISearchableRegion SearchableRegion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.Whiteboard.WhiteboardItemSearchRestrictor TryCreateFindRestrictor(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.Whiteboard.WhiteboardItemSearchRestrictor CreateFindRestrictor(global::Quire.Controls.Core.ISearchableRegion searchableRegion, global::Quire.Controls.Core.IWhiteboardItem whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private WhiteboardItemSearchRestrictor(global::Quire.Controls.Core.ISearchableRegion searchableRegion, global::Quire.Controls.Core.IWhiteboardItem whiteboardItem) { }
 }

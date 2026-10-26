@@ -581,6 +581,14 @@
 - Report: `.mirror-cache/release-il-27adc4f998ee/release-il.json` — PASS, 1,408 checked, 1,408 exact, 0 failures, 2,541 unfinished.
 - Remaining mismatches: none in claimed batch.
 
+## Batch 69 — Whiteboard.WhiteboardItemSearchRestrictor
+
+- Scope:
+  - `WhiteboardItemSearchRestrictor` (`.ctor`, `TryCreateFindRestrictor`, `CreateFindRestrictor`, `get_CanSearch`, `get_SearchableRegion`, `_whiteboardItem`, `_searchableRegion`, `_itemManager`)
+- Report: `.mirror-cache/release-il-0b437db38abe/release-il.json` — PASS, 1,413 checked, 1,413 exact, 0 failures, 2,536 unfinished.
+- Remaining mismatches: none in claimed batch.
+
+
 
 
 
