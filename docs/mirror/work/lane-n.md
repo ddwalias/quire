@@ -439,3 +439,10 @@
   - `MathStyle` (`.ctor()`, `.ctor(ExtendedFont, XNamespace)`, `.ctor(IdLabels, ExtendedFont)`, `.ctor(ExtendedFont)`, `.ctor(XNamespace)`, `.ctor(IdLabels, ExtendedFont, XNamespace)`, `Font`, `CreateChildren`, `ReadXml`)
 - Report: `.mirror-cache/release-il-feed5924d75d/release-il.json` — PASS, 1,317 checked, 1,317 exact, 0 failures, 2,607 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 49 — OleContainerMessageKeys
+
+- Scope:
+  - `OleContainerMessageKeys` (all constants)
+- Report: `.mirror-cache/release-il-d466b82179ce/release-il.json` — PASS, 1,317 checked, 1,317 exact, 0 failures, 2,607 unfinished.
+- Remaining mismatches: none in claimed batch.

@@ -11,36 +11,4 @@ namespace Quire.Controls.Core.Ole;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Ole.OleContainerMessageKeys, Ptc.Controls.Core")]
 public static partial class OleContainerMessageKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string ServerBusyResizeWarning = "server_busy_resize_warning";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ServerBusyActivateWarning = "server_busy_activate_warning";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ServerBusyCreateError = "server_busy_create_error";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ServerBusySaveError = "server_busy_save_error";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ServerBusyCopyError = "server_busy_copy_error";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ServerIncompleteCreateError = "server_not_found_error";
-    [global::Quire.Mirror.MirrorStub]
-    public const string OutOfMemoryRenderError = "out_of_memory_error";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ServerBusyCreateErrorFromFile = "server_busy_create_error_from_file";
-    [global::Quire.Mirror.MirrorStub]
-    public const string UpdateOleUpdateFailedWarning = "update_ole_update_failed_warning";
-    [global::Quire.Mirror.MirrorStub]
-    public const string UpdateOleBrokenLinkWarning = "update_ole_broken_link_warning";
-    [global::Quire.Mirror.MirrorStub]
-    public const string UpdateOleAppNotRegisteredWarning = "update_ole_app_not_registered_warning";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ActivateOleBrokenLinkWarning = "activate_ole_broken_link_warning";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ActivateOleAppNotRegisteredWarning = "activate_ole_app_not_registered_warning";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ActivateOleMissingData = "activate_ole_missing_data";
-    [global::Quire.Mirror.MirrorStub]
-    public const string EngineeringNotebookPlusWarning = "engineering_notebook_plus_warning";
-    [global::Quire.Mirror.MirrorStub]
-    public const string EngineeringNotebookWarning = "engineering_notebook_warning";
 }
