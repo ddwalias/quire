@@ -474,3 +474,10 @@
   - `RtfConstants` (all string constants)
 - Report: `.mirror-cache/release-il-c037587d5ab0/release-il.json` — PASS, 1,326 checked, 1,326 exact, 0 failures, 2,598 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 54 — RegionBorderConstants
+
+- Scope:
+  - `RegionBorderConstants` (`.cctor`, all fields/constants)
+- Report: `.mirror-cache/release-il-28205641c23c/release-il.json` — PASS, 1,327 checked, 1,327 exact, 0 failures, 2,597 unfinished.
+- Remaining mismatches: none in claimed batch.
