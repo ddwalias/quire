@@ -11,26 +11,4 @@ namespace Quire.Controls.Core.Settings;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.MathStyle, Ptc.Controls.Core")]
 public partial class MathStyle : global::Quire.Controls.Core.Serialization.XElementSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.ExtendedFont _font;
-    [global::Quire.Mirror.MirrorStub]
-    public const string localName = "mathStyle";
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.ExtendedFont Font { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public MathStyle() : base(default(global::System.Xml.Linq.XName), default(object[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    public MathStyle(global::Quire.Controls.Core.ExtendedFont font, global::System.Xml.Linq.XNamespace nameSpace) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    public MathStyle(global::Quire.Controls.Core.IdLabels label, global::Quire.Controls.Core.ExtendedFont font) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    public MathStyle(global::Quire.Controls.Core.ExtendedFont font) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    public MathStyle(global::System.Xml.Linq.XNamespace nameSpace) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    public MathStyle(global::Quire.Controls.Core.IdLabels label, global::Quire.Controls.Core.ExtendedFont font, global::System.Xml.Linq.XNamespace nameSpace) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void CreateChildren(global::System.Xml.Linq.XElement thisElement = default) => base.CreateChildren(thisElement);
-    [global::Quire.Mirror.MirrorStub]
-    public override void ReadXml(global::System.Xml.Linq.XElement xElement) => base.ReadXml(xElement);
 }

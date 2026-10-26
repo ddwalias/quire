@@ -432,3 +432,10 @@
   - `MathStyles` (`.ctor`, `ReadXml(XmlReader)`, `WriteXml(XmlWriter)`, `ReadXml(XElement)`, `WriteXml(XElement)`)
 - Report: `.mirror-cache/release-il-573267255930/release-il.json` — PASS, 1,307 checked, 1,307 exact, 0 failures, 2,617 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 48 — MathStyle
+
+- Scope:
+  - `MathStyle` (`.ctor()`, `.ctor(ExtendedFont, XNamespace)`, `.ctor(IdLabels, ExtendedFont)`, `.ctor(ExtendedFont)`, `.ctor(XNamespace)`, `.ctor(IdLabels, ExtendedFont, XNamespace)`, `Font`, `CreateChildren`, `ReadXml`)
+- Report: `.mirror-cache/release-il-feed5924d75d/release-il.json` — PASS, 1,317 checked, 1,317 exact, 0 failures, 2,607 unfinished.
+- Remaining mismatches: none in claimed batch.
