@@ -11,20 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.ViewModelBaseWithDataErrors, Ptc.Controls.Core")]
 public abstract partial class ViewModelBaseWithDataErrors : global::Quire.Controls.Core.ViewModelBase, global::System.ComponentModel.INotifyDataErrorInfo
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::System.Windows.ResourceDictionary _errorsDictionary;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<string, global::System.Collections.Generic.List<string>> _errors;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _hasErrors;
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasErrors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected ViewModelBaseWithDataErrors(global::System.Windows.ResourceDictionary errorsDictionary) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.IEnumerable GetErrors(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void SetError(string propertyName, object errorKey, params object[] formatMessageArguments) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void RemoveAllErrorsForProperty(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
