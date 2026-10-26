@@ -11,22 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.ResultFormat, Ptc.Controls.Core")]
 public partial class ResultFormat : global::System.Windows.DependencyObject, global::System.Xml.Serialization.IXmlSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string ns;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyProperty NumberFormatProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyProperty MatrixFormatProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.NumberFormat NumberFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.MatrixFormat MatrixFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ResultFormat(string ns) { }
-    [global::Quire.Mirror.MirrorStub]
-    public ResultFormat(global::Quire.Controls.Core.NumberFormat numberFormat, global::Quire.Controls.Core.MatrixFormat matrixFormat, string ns) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void ReadXml(global::System.Xml.XmlReader reader) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteXml(global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

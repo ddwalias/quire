@@ -418,3 +418,10 @@
   - `PageSizeInformation` (fields + `.ctor`)
 - Report: `.mirror-cache/release-il-68f2f1cf9c3e/release-il.json` — PASS, 1,293 checked, 1,293 exact, 0 failures, 2,631 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 46 — ResultFormat
+
+- Scope:
+  - `ResultFormat` (`.cctor`, `.ctor(string)`, `.ctor(NumberFormat, MatrixFormat, string)`, `NumberFormat`, `MatrixFormat`, `ReadXml`, `WriteXml`)
+- Report: `.mirror-cache/release-il-db937cc3bf96/release-il.json` — PASS, 1,302 checked, 1,302 exact, 0 failures, 2,622 unfinished.
+- Remaining mismatches: none in claimed batch.
