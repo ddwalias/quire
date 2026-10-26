@@ -32,7 +32,10 @@ struct _uint32_mat : typed_mat<unsigned int> {};
 struct _uint16_mat : typed_mat<unsigned short> {};
 struct _uint8_mat : typed_mat<unsigned char> {};
 
-// A matrix of any element type: the header of typed_mat, then the element type tag at +18h (7 = double).
+// The element type tags of _univ_mat (and the other univ containers). EFI_SINT8 has no typed operations.
+enum efi_type { EFI_UINT8, EFI_SINT8, EFI_UINT16, EFI_SINT16, EFI_UINT32, EFI_SINT32, EFI_FLOAT, EFI_DOUBLE, EFI_DCOMPLEX };
+
+// A matrix of any element type: the header of typed_mat, then the element type tag (efi_type) at +18h.
 struct _univ_mat {
     int rows;
     int cols;

@@ -1,6 +1,6 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 137 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 59 from the consumer path (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7). No regressions in the linked run.
+**Status: incomplete.** 157 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261027` (from `main` at `adee6ba0`; first batch landed as `75ba2925`)
@@ -22,6 +22,8 @@
 | `number_equal` | 7 typed (no `cpx` in the original) | 7/7 OK | `mutils_number_equal.cpp`. `b` uses the cols-first check (`check_dst_f`); data and `size` in locals before the `count` null test, as in `sum`. Work `size * 3.0`. |
 | `assign_zeropad` | 7 typed (no `cpx`) | 7/7 OK | `mutils_zeropad.cpp`. Calls the typed `assign_submat` export and ignores its result; `total`/`progress` declared before that call (they live in callee-saved registers); two separate row loops, the second starting at `src->rows`. Work `cols * 4`. |
 | `permute` | 7 typed (index is `_sint32_mat`) | 7/7 OK | `mutils_permute.cpp`. Checks `src`, `dst`, `index` in that order (`dst`/`index` cols-first); an index outside `src->size` returns "Illegal data value". |
+| Clamped `cast_to_*` | 17 of the 23 narrowing pairs with a `clamp` flag | 17/17 OK | `mutils_cast_clamp.cpp`. Float sources round with `floor(x + 0.5)`; low and high checks only where the source range exceeds the destination's; signed minimum is symmetric (-32767, -2147483647). Out of range: throw "overflow" unless `clamp`, then saturate. Work `size * 5.0`. |
+| `cast_to_cpx`, `matcpx_cast_to_dbl` | 3 | 3/3 OK | `mutils_cast_cpx.cpp`. Work `size * 4.0`; `matcpx_cast_to_dbl` loops separately for `clamp` (real part) and not (nonzero imaginary throws "overflow"). |
 | `validate` | `mat{dbl,flt,s32,s16,u32,u16,u8,cpx}_validate` | 8/8 OK | One body (linker-folded in the original, `0x86460`). Reads `rows`/`cols` into locals first; the direct form picked another register. |
 | `wrap_data` | 7 typed exports (no `cpx`) | 7/7 OK | Same body for all seven (`0x859e0`). |
 | `malloc` | 8 typed exports | 8/8 OK | `allocate_mat<T>`; the allocator is `EfiCallContext`'s pointer at +80h. |
@@ -68,11 +70,13 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 
 - **`matcpx_flip_up_down`** (500 bytes, same length): only register assignment differs: the original keeps `ceil`'s result in `xmm9` and the `1e7` constant in `xmm5`, while the candidate swaps them. `native_permute.py` stopped at 0.984 after 579 attempts. By hand: `half` local before or after the progress locals (476 bytes), swap through `bottom` first (0.895), `progress` declared first (0.911). The other 15 flips match with the same source.
 
+- **`matdbl_cast_to_flt`**: instructions match (bounds ±1e37 as doubles, saturating to ±1e37f). It fails only on data: in the original the float constants `__real@fcf0bdc2`/`__real@7cf0bdc2` follow the two double bounds, and the comparison reads into them. Only code after `matuniv_range_robust` (`0x7FB40`) references those floats, so this export should match unchanged once that function exists. `matdbl`/`matflt_cast_to_s32`, `_s16` and `_u32` (the clamped shape; bounds ±2147483647.0, ±32767.0, 0/4294967295.0) are parked with it. All six match while `matdbl_cast_to_flt` is in the DLL and fail without it, one after another: each bound constant is followed in the original's sorted pool by the next one, ending at `-1e37`/`1e37` (see Harness notes). Retry them together once `matuniv_range_robust` (a dispatcher) can land, or once the harness compares constants over their own size. Source: the clamped-cast shape with `double v = src->data[i]`, bounds `v < -1e37` / `v > 1e37`, work `size * 4.0`.
+
 - Helper pattern for functions that return a message (added after the parked `sum`/`range` work): the exports call `validate` themselves, return the message literal themselves, and put only void/bool shared logic in `__forceinline` helpers (`same_shape`, `binary_elementwise`, `running_sum`). A message returned from an inlined template comes back in `rcx` and is copied to `rax`; the original returns it in `rax`. The helper pattern removes that copy.
 
 ## Remaining work
 
-- 641 exports not yet implemented, plus the 33 parked above.
+- 615 exports not yet implemented, plus the 36 parked above.
 - The `siguniv_window_*` dispatchers (11) call typed `sigdbl_window_*` exports, so they cannot link until those exist; they wait for their typed exports.
 - `matuniv_wrap_data` and `matuniv_wrap_matrix` dispatch through a jump table over a nine-case type enum, with different field copies per case.
 - The `add`/`subtract`/`multiply_elem` families (about 680 bytes each for `int` types) are auto-vectorized with runtime alias checks, so the source shape has to reproduce the vectorizer's output.
@@ -80,6 +84,8 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 
 ## Harness notes
 
+- **Data extents of pooled constants (2026-10-27).** For data, `native_linked.py` compares `max(candidate map-symbol extent, original object_end)`, and the original's `object_end` is the next referenced address. For 8-byte `__real@` constants, which the linker pools sorted by name, that span takes in the following constant. An export then passes or fails depending on whether an unrelated function brings the same neighbour constant into the candidate. Example: `matdbl_cast_to_s32` reads `__real@c1dfffffffc00000` (`-2147483647.0`, `0xAC9A8`). It matches while `matdbl_cast_to_flt` (which brings in `-1e37` at the next slot) is present and fails with `data +0x8: bytes differ` without it. Comparing a `__real@`/`__xmm@` constant over its own size would remove the dependence.
+- **Blocker for the `*univ_*` dispatchers (2026-10-27): jump tables.** A dispatcher such as `matuniv_transpose` switches on the type tag (`EFI_UINT8` 0, `EFI_SINT8` 1, `EFI_UINT16` 2, `EFI_SINT16` 3, `EFI_UINT32` 4, `EFI_SINT32` 5, `EFI_FLOAT` 6, `EFI_DOUBLE` 7, `EFI_DCOMPLEX` 8; read from `matuniv_cast`'s tables) through `lea r10,[__ImageBase]` and `mov ecx,[r10+rax*4+<table RVA>]`, with the table of case-label RVAs placed right after the function. `native_linked.py` matches the `ADDRESS` pattern only for absolute image addresses, so it compares that `disp32` as raw bytes (`+0x37: bytes differ`). It also decodes the inline table as instructions, and the case RVAs differ in any relinked DLL. A fix would read a `disp32` used with the `__ImageBase` register as an RVA (local when inside the function), and compare the table entries as local offsets. Until then no switch-based dispatcher can pass. The source shape is found: `matuniv_transpose` agrees up to that instruction with a null check of both, a tag-equality check returning "Illegal data type", then `case EFI_DOUBLE: { if (const char *e = matdbl_transpose(...)) return e; } break;` per case in the order dbl, flt, u8, u16, u32, s16, s32, cpx, `default: return "Illegal data type";`, and `return nullptr;` after the switch. Similarity 0.85; the rest is the table. The dispatchers stay out of the DLL until the harness handles the table.
 - Strict default and the manifest route work as documented in `native_bytes.py` (D23–D26). No harness changes made.
 - Product ID (Rich header) not compared; every matching function here matched without it.
 
