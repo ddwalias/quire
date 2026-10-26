@@ -11,36 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.IntegrationDataSerializer, Ptc.Controls.Core")]
 public partial class IntegrationDataSerializer : global::Quire.Controls.Core.Serialization.IPackageSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.IORegions.IIORegionContainer _documentArea;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.IEngineeringDocument _document;
-    [global::Quire.Mirror.MirrorStub]
-    private const string IntegrationUri = "/mathcad/integration.xml";
-    [global::Quire.Mirror.MirrorStub]
-    private const string IntegrationType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.integration+xml";
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.Serialization.SerializableXmlPackagePart _partSerializer;
-    [global::Quire.Mirror.MirrorStub]
-    public const string Integration10 = "http://schemas.ptc.com/integration10";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Regions = "regions";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Region = "region";
-    [global::Quire.Mirror.MirrorStub]
-    public const string RegionId = "region-id";
-    [global::Quire.Mirror.MirrorStub]
-    public const string IOTagType = "ioTagType";
-    [global::Quire.Mirror.MirrorStub]
-    public const string InputAliases = "inputAliases";
-    [global::Quire.Mirror.MirrorStub]
-    public const string OutputAliases = "outputAliases";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Alias = "alias";
-    [global::Quire.Mirror.MirrorStub]
-    public IntegrationDataSerializer(global::Quire.Controls.Core.IEngineeringDocument document, global::Quire.Controls.Core.IORegions.IIORegionContainer area) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Write(global::System.IO.Packaging.Package package, bool useTempFile = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Read(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -609,12 +609,13 @@
 - Report: `.mirror-cache/release-il-dc00752552d8/release-il.json` — PASS, 1,430 checked, 1,430 exact, 0 failures, 2,523 unfinished.
 - Remaining mismatches: none in claimed batch.
 
-## Batch 77 — Controls.Core.RegionCommands
+## Batch 78 — Serialization.IntegrationDataSerializer
 
 - Scope:
-  - `RegionCommands` (`ExecuteCommandWithAssertion`, `ValueForToggleOrSetPerspectiveCameraCommand`, `.cctor`, static fields `_typeOfThis`, `Replace`, `DeleteRegion`, `ToggleOrSetPerspectiveCameraCommand`, `ChangePlotBackgroundCommand`, `ChangePlotBackgroundGrayCommand`, `ShowAxisExpressionsCommand`, `TagCommand`, `RemoveTagCommand`, `VisibleRegionBorderCommand`)
-- Report: `.mirror-cache/release-il-a5039458a18b/release-il.json` — PASS, 1,466 checked, 1,466 exact, 0 failures, 2,493 unfinished.
+  - `IntegrationDataSerializer` (`.ctor`, `Write`, `Read`, `GetXNameWithIntegrationNameSpace`, static constants `Integration10`, `Regions`, `Region`, `RegionId`, `IOTagType`, `InputAliases`, `OutputAliases`, `Alias`, `IntegrationUri`, `IntegrationType`, fields `_documentArea`, `_document`, `_partSerializer`, method group helper `<>O.<0>__OnWriteValidationFailedDevAssert`)
+- Report: `.mirror-cache/release-il-f1d62a12c1e9/release-il.json` — PASS, 1,469 checked, 1,469 exact, 0 failures, 2,490 unfinished.
 - Remaining mismatches: none in claimed batch.
+
 
 
 
