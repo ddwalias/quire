@@ -538,3 +538,11 @@
   - `MessageDialogBase<T>` (`.ctor`, `SetMessageImageAndButtons`, `SetDialogResultAndClose`, `OnButtonClick`, `AddButton`, `OnClosed`, `SetButtonValue`, `GetButtonValue`, `_buttonsDict`)
 - Report: `.mirror-cache/release-il-faab846a4d70/release-il.json` — PASS, 1,373 checked, 1,373 exact, 0 failures, 2,564 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 63 — Settings.UnitSystemCustomized
+
+- Scope:
+  - `UnitSystemCustomized` (`.ctor`, `CreateChildren`, fields `_engineeringDocument`, `_localName`, `_nameSpaceUri`, lambda methods `<CreateChildren>b__4_0`, `<CreateChildren>b__4_1`)
+- Report: `.mirror-cache/release-il-0d6f0910fbb7/release-il.json` — PASS, 1,377 checked, 1,377 exact, 0 failures, 2,562 unfinished.
+- Remaining mismatches: none in claimed batch.
+

@@ -11,14 +11,4 @@ namespace Quire.Controls.Core.Settings;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.UnitSystemCustomized, Ptc.Controls.Core")]
 internal partial class UnitSystemCustomized : global::Quire.Controls.Core.Serialization.XElementSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.IEngineeringDocument _engineeringDocument;
-    [global::Quire.Mirror.MirrorStub]
-    private string _localName;
-    [global::Quire.Mirror.MirrorStub]
-    private string _nameSpaceUri;
-    [global::Quire.Mirror.MirrorStub]
-    public UnitSystemCustomized(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument, string localName, string nameSpaceUri) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void CreateChildren(global::System.Xml.Linq.XElement thisElement = default) => base.CreateChildren(thisElement);
 }
