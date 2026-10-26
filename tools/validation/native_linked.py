@@ -33,6 +33,7 @@ Comparisons read bytes in memory; nothing of the original is written out (D15).
 """
 import argparse
 import bisect
+import difflib
 import re
 import struct
 import subprocess
@@ -233,6 +234,19 @@ class Comparison:
             status, reason, unverified = self.function(ao, ac)
         return Result(name, status != "mismatch", reason or "instructions and targets match", unverified)
 
+    def similarity(self, name):
+        """How closely the candidate export's own instructions follow the original's, from 0 to 1: the difflib ratio of
+        mnemonic and operand text with image addresses set aside. Callees and bytes are not compared, so 1.0 does not
+        mean a match; export() decides that. Search tools (native_permute.py) use it to rank near misses."""
+        rows = []
+        for side in (self.o, self.c):
+            extent = side.image.function_extent(side.image.exports[name])
+            body = side.body(*extent) if extent else None
+            if not body:
+                return 0.0
+            rows.append([f"{m} {ADDRESS.sub('X', p)}" for _, _, m, p in body])
+        return difflib.SequenceMatcher(None, *rows, autojunk=False).ratio()
+
     def function(self, ao, ac):
         """(status, reason, unverified) for the original's function at `ao` against the candidate's at `ac`."""
         key = ("f", ao, ac)
@@ -393,17 +407,20 @@ def verdict(unverified):
     return ("unverified", f"{unverified} unverified targets", unverified) if unverified else ("ok", None, 0)
 
 
-def compare_linked(original_dll, candidate_dll, map_text, targets=None, symbols=None, tool=None):
-    """Results for the candidate's exports (or the named ones) against the original."""
+def load_comparison(original_dll, candidate_dll, map_text, targets=None, tool=None):
+    """The Comparison of a candidate DLL (with its linker map) against the original under the manifest `targets`."""
     original = Linked.load(original_dll, None, tool)
     candidate = Linked.load(candidate_dll, map_text, tool)
-    entries = load_targets(targets, original.image) if targets else {}
-    comparison = Comparison(original, candidate, entries)
-    names = symbols or sorted(candidate.image.exports)
-    results = [comparison.export(n) if n in candidate.image.exports else Result(n, False, "not exported by the candidate")
-               for n in names]
+    return Comparison(original, candidate, load_targets(targets, original.image) if targets else {})
+
+
+def results_of(comparison, symbols=None):
+    """Results for the candidate's exports (or the named ones) against the original."""
+    names = symbols or sorted(comparison.c.image.exports)
+    results = [comparison.export(n) if n in comparison.c.image.exports
+               else Result(n, False, "not exported by the candidate") for n in names]
     if not symbols:
-        for name in sorted(n for n, e in entries.items() if e.parked):
+        for name in sorted(n for n, e in comparison.entries.items() if e.parked):
             results.append(Result(f"{name} (parked entry)", True, "RVA checked at each site; bytes not compared (D29)"))
     return results
 
@@ -437,15 +454,19 @@ def main(argv=None):
     parser.add_argument("--symbol", action="append", help="compare only these exports (repeatable)")
     parser.add_argument("--targets", type=Path, help="manifest of internal targets (default: the repository's)")
     parser.add_argument("--allow-unverified", action="store_true", help="report unverified targets without failing")
+    parser.add_argument("--score", action="store_true", help="add each failing export's similarity (0-1)")
     args = parser.parse_args(argv)
     targets = args.targets or (DEFAULT_TARGETS if DEFAULT_TARGETS.is_file() else None)
-    results = compare_linked(args.original, args.candidate_dll, args.map.read_text(encoding="utf-8", errors="replace"),
-                             targets, args.symbol)
+    comparison = load_comparison(args.original, args.candidate_dll,
+                                 args.map.read_text(encoding="utf-8", errors="replace"), targets)
+    results = results_of(comparison, args.symbol)
     failed = 0
     for r in results:
         ok = r.ok and (args.allow_unverified or not r.unverified)
         failed += not ok
         note = f" [{r.unverified} unverified targets]" if r.unverified else ""
+        if args.score and not r.ok and r.name in comparison.c.image.exports and r.name in comparison.o.image.exports:
+            note += f" [similarity {comparison.similarity(r.name):.3f}]"
         print(f"{'OK  ' if ok else 'FAIL'} {r.name}: {r.reason}{note}")
     print(f"{len(results) - failed}/{len(results)} exports match")
     return 1 if failed else 0

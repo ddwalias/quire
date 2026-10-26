@@ -200,7 +200,27 @@ check and `native_bytes.py` the per-function harness. `native_bytes.py` is stric
 unverified call/address targets fail unless `--allow-unverified` is given (`--strict` is accepted and
 does nothing). Export, import-slot and import-thunk targets include the relocation's addend; data
 exports are byte-compared; manifest names match regardless of the `?A0x<hash>` anonymous-namespace
-tag, which depends on the checkout path. The old names `validate.py`, `quick_check.py` and `merge_gate.py`
+tag, which depends on the checkout path.
+
+For `/GL` projects (D30), `native_linked.py --score` adds each failing export's similarity to the original (0–1),
+and `native_permute.py` searches source shapes for a near miss, in the manner of decomp-permuter:
+
+```
+python tools/validation/native_permute.py --project Quire.Native.EfistatsciImpl --source mutils_mat.cpp \
+    --function matdbl_sum --inline validate --symbol matdbl_sum --minutes 20
+```
+
+Write the export first, in the shape you would land, so the project builds. `--function` names the bodies to rewrite
+(`name` or `file:name`, repeatable). `--symbol` names the exports to match. `--inline` expands calls to a shared
+helper inside those bodies, so the search can vary a private copy without breaking the helper's other users. An
+attempt that breaks an export that already matched is never kept. On a match, the change is reduced to what the match
+needs, then checked strictly against every export. The tool writes `match.patch` (apply it with `git apply` from the
+repository root, then run `native_gate.py` as usual) and `report.txt` under `.mirror-cache/permute/`. The working
+tree is never written. When a search stalls, the improvement diffs and `native_linked.py --score` show where the
+remaining difference lies. A structural difference, such as a loop shape or a helper boundary, may need a hand-written
+shape, which `--minutes 0` scores without searching.
+
+The old names `validate.py`, `quick_check.py` and `merge_gate.py`
 are small compatibility aliases for these Release IL commands. They contain no runtime pipeline.
 
 The retired validators, mutation tools, acceptance lists and baselines have been removed.

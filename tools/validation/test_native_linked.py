@@ -233,6 +233,23 @@ class ReviewRegressionTests(Pairing, unittest.TestCase):
         self.assertNotEqual(fingerprint(4), fingerprint(8))
 
 
+class SimilarityTests(unittest.TestCase):
+    """The near-miss score native_permute.py ranks candidates by."""
+
+    def similarity(self, o_ins, c_ins):
+        o = Linked(Image({0x1000: max(o_ins) + 1}, {"f": 0x1000}), o_ins)
+        c = Linked(Image({0x1000: max(c_ins) + 1}, {"f": 0x1000}), c_ins)
+        return Comparison(o, c, {}).similarity("f")
+
+    def test_equal_text_scores_one_and_one_register_of_two_instructions_scores_half(self):
+        o = {0x1000: ("mov", "r10,rcx"), 0x1003: ("ret", "")}
+        self.assertEqual(self.similarity(o, o), 1.0)
+        self.assertEqual(self.similarity(o, {0x1000: ("mov", "r9,rcx"), 0x1003: ("ret", "")}), 0.5)
+
+    def test_image_addresses_are_set_aside(self):
+        self.assertEqual(self.similarity(caller(0x1100), caller(0x1200)), 1.0)
+
+
 class ParseTests(unittest.TestCase):
     def test_dumpbin_lines_become_instructions_by_rva(self):
         text = ("Dump of file x.dll\n\n  0000000180001000: mov         qword ptr [rsp+8],rbx\n"
