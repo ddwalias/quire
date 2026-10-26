@@ -11,35 +11,8 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.FileManager, Ptc.Controls.Core")]
 public partial class FileManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void EnsureStreamRelease(global::System.IO.FileStream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsPackage(string path, string extension, bool mcdxOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsWorksheet(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void WaitFor(int seconds, global::System.Threading.WaitHandle handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsPrimeExtension(string extension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.FileManager+Extension, Ptc.Controls.Core")]
     public partial class Extension
     {
-        [global::Quire.Mirror.MirrorStub]
-        public const string Xmcd = ".xmcd";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Mcdx = ".mcdx";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Mctx = ".mctx";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Rtf = ".rtf";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Xps = ".xps";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Dita = ".dita";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Pdf = ".pdf";
-        [global::Quire.Mirror.MirrorStub]
-        public const string All = ".*";
     }
 }

@@ -609,12 +609,14 @@
 - Report: `.mirror-cache/release-il-dc00752552d8/release-il.json` — PASS, 1,430 checked, 1,430 exact, 0 failures, 2,523 unfinished.
 - Remaining mismatches: none in claimed batch.
 
-## Batch 80 — Serialization.PackageSerializable
+## Batch 81 — Controls.Core.FileManager
 
 - Scope:
-  - `PackageSerializable` (`.ctor`, `Write`, `Read`, `GetApplicationPropertiesSerializer`, `GetCalculationSettingsSerializable`, `GetPresentationSettingsSerializable`, static constants `ApplicationPropertiesUri`, `ApplicationPropertiesType`, `PresentationUri`, `PresentationType`, `CalculationUri`, `CalculationType`, fields `_uri`, `_type`, `_packagePartSerializable`, `_provider`, method group helper `<>O.<0>__OnWriteValidationFailedDevAssert`)
-- Report: `.mirror-cache/release-il-aa6e1ad2a2ab/release-il.json` — PASS, 1,486 checked, 1,486 exact, 0 failures, 2,473 unfinished.
+  - `FileManager` (`EnsureStreamRelease`, `IsPackage(string, string)`, `IsPackage(string, string, bool)`, `IsWorksheet`, `WaitFor`, `IsPrimeExtension`, `.ctor`)
+  - `FileManager.Extension` (`.ctor`, constants `Xmcd`, `Mcdx`, `Mctx`, `Rtf`, `Xps`, `Dita`, `Pdf`, `All`)
+- Report: `.mirror-cache/release-il-b3f1f86b9de7/release-il.json` — PASS, 1,505 checked, 1,505 exact, 0 failures, 2,455 unfinished.
 - Remaining mismatches: none in claimed batch.
+
 
 
 
