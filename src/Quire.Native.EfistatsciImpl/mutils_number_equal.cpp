@@ -128,4 +128,109 @@ EFI_EXPORT const char *matu8_number_equal(Efi::EfiCallContext *, const _uint8_ma
     return nullptr;
 }
 
+EFI_EXPORT const char *matdbl_number_equal_scalar(Efi::EfiCallContext *, const _double_mat *m, double value, void *context, unsigned int *count) {
+    check_src_f(m);
+    double *data = m->data;
+    int size = m->size;
+    if (count == nullptr) return "null pointer";
+    unsigned int equal = 0;
+    for (int i = 0; i < size; ++i) {
+        if (data[i] == value) ++equal;
+    }
+    *count = equal;
+    double work = (double)size * 3.0;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+    return nullptr;
+}
+
+EFI_EXPORT const char *matflt_number_equal_scalar(Efi::EfiCallContext *, const _float_mat *m, float value, void *context, unsigned int *count) {
+    check_src_f(m);
+    float *data = m->data;
+    int size = m->size;
+    if (count == nullptr) return "null pointer";
+    unsigned int equal = 0;
+    for (int i = 0; i < size; ++i) {
+        if (data[i] == value) ++equal;
+    }
+    *count = equal;
+    double work = (double)size * 3.0;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+    return nullptr;
+}
+
+EFI_EXPORT const char *mats32_number_equal_scalar(Efi::EfiCallContext *, const _sint32_mat *m, long value, void *context, unsigned int *count) {
+    check_src_f(m);
+    long *data = m->data;
+    int size = m->size;
+    if (count == nullptr) return "null pointer";
+    unsigned int equal = 0;
+    for (int i = 0; i < size; ++i) {
+        if (data[i] == value) ++equal;
+    }
+    *count = equal;
+    double work = (double)size * 3.0;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+    return nullptr;
+}
+
+EFI_EXPORT const char *mats16_number_equal_scalar(Efi::EfiCallContext *, const _sint16_mat *m, short value, void *context, unsigned int *count) {
+    check_src_f(m);
+    short *data = m->data;
+    int size = m->size;
+    if (count == nullptr) return "null pointer";
+    unsigned int equal = 0;
+    for (int i = 0; i < size; ++i) {
+        if (data[i] == value) ++equal;
+    }
+    *count = equal;
+    double work = (double)size * 3.0;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+    return nullptr;
+}
+
+EFI_EXPORT const char *matu32_number_equal_scalar(Efi::EfiCallContext *, const _uint32_mat *m, unsigned int value, void *context, unsigned int *count) {
+    check_src_f(m);
+    unsigned int *data = m->data;
+    int size = m->size;
+    if (count == nullptr) return "null pointer";
+    unsigned int equal = 0;
+    for (int i = 0; i < size; ++i) {
+        if (data[i] == value) ++equal;
+    }
+    *count = equal;
+    double work = (double)size * 3.0;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+    return nullptr;
+}
+
+EFI_EXPORT const char *matu16_number_equal_scalar(Efi::EfiCallContext *, const _uint16_mat *m, unsigned short value, void *context, unsigned int *count) {
+    check_src_f(m);
+    unsigned short *data = m->data;
+    int size = m->size;
+    if (count == nullptr) return "null pointer";
+    unsigned int equal = 0;
+    for (int i = 0; i < size; ++i) {
+        if (data[i] == value) ++equal;
+    }
+    *count = equal;
+    double work = (double)size * 3.0;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+    return nullptr;
+}
+
+EFI_EXPORT const char *matu8_number_equal_scalar(Efi::EfiCallContext *, const _uint8_mat *m, unsigned char value, void *context, unsigned int *count) {
+    check_src_f(m);
+    unsigned char *data = m->data;
+    int size = m->size;
+    if (count == nullptr) return "null pointer";
+    unsigned int equal = 0;
+    for (int i = 0; i < size; ++i) {
+        if (data[i] == value) ++equal;
+    }
+    *count = equal;
+    double work = (double)size * 3.0;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+    return nullptr;
+}
+
 }  // namespace mutils

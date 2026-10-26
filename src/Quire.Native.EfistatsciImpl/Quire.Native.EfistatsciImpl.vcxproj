@@ -81,6 +81,7 @@
     <ClCompile Include="mutils_range.cpp" />
     <ClCompile Include="mutils_binary.cpp" />
     <ClCompile Include="mutils_scalar.cpp" />
+    <ClCompile Include="mutils_sum_dims.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="efiutl.def" />
