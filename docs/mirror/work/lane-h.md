@@ -132,3 +132,75 @@ entries. (2) Whole type families per batch, small operations first (`assign_scal
 `range`, `min`/`max`, `entropy`). (3) The `*univ_*` dispatchers after their typed exports. (4) The 102 bodies with
 internal helpers last; `0x267a0` and `0x26750` (69 bytes each) are shared by 35 exports. Park per D25 any function
 that still differs after the source shapes and flags tried are recorded.
+
+## Maintainer update 2026-10-26
+
+Answers to the scope questions, a solved family, and a search tool for near misses.
+
+**Scope.** All 781 exports stay in scope, because `scope.md` mirrors the whole exported surface. Work on the consumer path first:
+- Four Mathcad DLLs import from `efistatsci_`: `efiimage_` (68 imports), `efisignal_` (14), `efiio_` (10) and `efistatistics_` (4). Together that is 78 exports.
+- Those 78 reach 317 exports by direct call or jump, listed in
+  [`efistatsci-consumer-path.txt`](../native/efistatsci-consumer-path.txt). 43 of the 70 landed exports are on it, so 274 remain.
+- The list follows direct references only, so treat it as a lower bound.
+
+**Order on the consumer path.** Work bottom-up, because a dispatcher only verifies once its typed exports match:
+1. typed `mat*` operations (`extract`, `transpose`, `assign`, `permute`, `flip_*`, `read_raw`/`write_raw`/`read_ascii`, `sort_index_partial`, `assign_zeropad`, `number_equal`, `table_lookup`, `cast_to_*`, `histogram`);
+2. the `matuniv_*` dispatchers;
+3. `sigdbl`/`sigcpx`, then `siguniv`;
+4. the typed `img*` exports, then `imguniv` and `imgset`.
+
+The other 464 exports follow in the order of the 2026-10-25 note.
+
+**Parked families.** Keep them parked with their evidence (D25/D29), and don't drop them. Retry them with `native_permute.py` (below) before any more hand rounds. `range` (dbl, flt), `transpose`, `assign_zeropad` and `matdbl_assign` are on the consumer path; the integer `range` forms are not.
+
+**The `sum` family is solved.** All seven exports match in the linked run, 77/77 with the 70 landed. Two shapes made the difference:
+- In the input check, read `cols` into a local and read `rows` from the matrix.
+- Accumulate into `*out`; a separate `total` local gives different code.
+
+```cpp
+template <typename M>
+__forceinline void check_sum_input(const M *m) {
+    if (m == nullptr) Efi::Throw("null pointer", ~0ull);
+    int cols = m->cols;
+    if (m->rows <= 0 || cols <= 0) Efi::Throw("array size mismatch", ~0ull);
+    if (m->data == nullptr) Efi::Throw("null pointer", ~0ull);
+    if (m->size != m->rows * cols) Efi::Throw("array size mismatch", ~0ull);
+}
+
+template <typename T>
+__forceinline void running_sum(const T *data, int size, T *out) {
+    *out = 0;
+    for (int i = 0; i < size; ++i) *out += data[i];
+}
+
+const char *matdbl_sum(Efi::EfiCallContext *, const _double_mat *m, void *context, double *out) {
+    check_sum_input(m);
+    double *data = m->data;
+    int size = m->size;
+    if (out == nullptr) return "null pointer";
+    running_sum(data, size, out);
+    double work = (double)size * 3.0;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+    return nullptr;
+}
+```
+
+The other six sum exports use the same body with their own types (`float`, `long`, `short`, `unsigned int`, `unsigned short`, `unsigned char`). `matflt_sum` no longer needs the four-way unroll the parked note expected. The shared `validate` template stays unchanged, because the 8 `validate` exports match with its current form.
+
+**Near misses: `tools/validation/native_permute.py`.** See [validation.md](../validation.md) for the full contract.
+1. Write the export in the shape you would land, so the project builds.
+2. Run:
+
+   ```
+   python tools/validation/native_permute.py --project Quire.Native.EfistatsciImpl --source mutils_mat.cpp \
+       --function matdbl_sum --inline validate --symbol matdbl_sum --minutes 20
+   ```
+
+   - `--function` and `--symbol` repeat; a family can be searched together.
+   - `--inline` gives the searched bodies their own copy of a shared helper. The helper's other users are left alone.
+   - No attempt that breaks a landed export is kept.
+3. On `MATCH`, apply `.mirror-cache/permute/<name>-<time>/match.patch` with `git apply` from the repository root, then land as usual. The patch is already reduced to the lines the match needs.
+
+From the helper-pattern source, it found `matdbl_sum` and `mats16_sum` in 250–350 attempts, about 6 minutes on 14 workers. Its patch passed `native_gate.py`.
+
+When it stalls, read its improvement diffs and `native_linked.py --score`. A structural difference still needs a hand-written shape, which `--minutes 0` scores without searching. Examples are a loop form, a helper boundary, or a message returned from inside a template (the helper pattern exists for that case). Its `report.txt` quotes original instructions, so keep it out of commits and PRs (D15).
