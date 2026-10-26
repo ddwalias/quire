@@ -11,18 +11,4 @@ namespace Quire.Controls.Core.Settings;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.TextStyleCollectionSerializable, Ptc.Controls.Core")]
 public partial class TextStyleCollectionSerializable : global::Quire.Controls.Core.Serialization.XElementSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal const string LocalName = "textStyles";
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.Controls.Core.Settings.TextFormatSerializer> _styles;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.ITextStyleObject this[string styleName] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public TextStyleCollectionSerializable(global::System.Xml.Linq.XNamespace Ns) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.Dictionary<string, global::Quire.ITextStyleObject> ToTextFormats() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Add(string key, global::Quire.ITextStyleObject value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void CreateChildren(global::System.Xml.Linq.XElement thisElement) => base.CreateChildren(thisElement);
 }

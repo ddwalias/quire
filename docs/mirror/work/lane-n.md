@@ -567,6 +567,14 @@
 - Report: `.mirror-cache/release-il-26a6dc117a68/release-il.json` — PASS, 1,390 checked, 1,390 exact, 0 failures, 2,553 unfinished.
 - Remaining mismatches: none in claimed batch.
 
+## Batch 67 — Settings.TextStyleCollectionSerializable
+
+- Scope:
+  - `TextStyleCollectionSerializable` (`.ctor`, `ToTextFormats`, `get_Item`, `set_Item`, `Add`, `CreateChildren`, `LocalName`, `_styles`, compiler-generated closure `<>c`, `b__3_0`, `b__3_1`)
+- Report: `.mirror-cache/release-il-7f118b0865b3/release-il.json` — PASS, 1,400 checked, 1,400 exact, 0 failures, 2,547 unfinished.
+- Remaining mismatches: none in claimed batch.
+
+
 
 
 
