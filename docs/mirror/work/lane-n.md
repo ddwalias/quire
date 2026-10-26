@@ -609,12 +609,13 @@
 - Report: `.mirror-cache/release-il-dc00752552d8/release-il.json` — PASS, 1,430 checked, 1,430 exact, 0 failures, 2,523 unfinished.
 - Remaining mismatches: none in claimed batch.
 
-## Batch 75 — Serialization.ResultDataSerializer
+## Batch 76 — Serialization.IntegrationRegionSerializer
 
 - Scope:
-  - `ResultDataSerializer` (`.ctor`, `Write`, `Read`, `ClearResults`, `GetXNameWithResultNameSpace`, `_packageOpsProvider`, `_partSerializer`, `ResultUri`, `ResultType`, `Result10`, method group helper `<>O.<0>__OnWriteValidationFailedDevAssert`)
-- Report: `.mirror-cache/release-il-dba102110e3e/release-il.json` — PASS, 1,457 checked, 1,457 exact, 0 failures, 2,501 unfinished.
+  - `IntegrationRegionSerializer` (`.ctor`, `ReadXml`, `ReadIOAliases`, `WriteXml`, `WriteIORegionsFromContainer`, `WriteRegion`, `WriteIOAliases`, `_documentArea`, `_serializationHelper`)
+- Report: `.mirror-cache/release-il-7b45eacfec3b/release-il.json` — PASS, 1,463 checked, 1,463 exact, 0 failures, 2,495 unfinished.
 - Remaining mismatches: none in claimed batch.
+
 
 
 
