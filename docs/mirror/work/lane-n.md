@@ -510,3 +510,10 @@
   - `UnprotectDialog` (`DoPasswordsMatch`)
 - Report: `.mirror-cache/release-il-10ae5b32d464/release-il.json` — PASS, 1,353 checked, 1,353 exact, 0 failures, 2,581 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 59 — Excel.ExcelReader helper methods
+
+- Scope:
+  - `ExcelReader` (`.cctor`, `GetRow`, `GetColumn`, `GetNextColumn`, `CompareColumn`, `MinColumn`, `CreateColumns`, `addressRegex`)
+- Report: `.mirror-cache/release-il-3bdeb2433632/release-il.json` — PASS, 1,360 checked, 1,360 exact, 0 failures, 2,575 unfinished.
+- Remaining mismatches: none in claimed batch.

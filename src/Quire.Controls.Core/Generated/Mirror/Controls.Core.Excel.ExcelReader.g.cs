@@ -12,31 +12,17 @@ namespace Quire.Controls.Core.Excel;
 public partial class ExcelReader
 {
     [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Text.RegularExpressions.Regex addressRegex;
-    [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Xml.XmlNamespaceManager _nsManager;
     [global::Quire.Mirror.MirrorStub]
     private global::DocumentFormat.OpenXml.Packaging.SpreadsheetDocument _doc;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Xml.XmlDocument _sharedStringDoc;
     [global::Quire.Mirror.MirrorStub]
-    private static int GetRow(string address) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string GetColumn(string address) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetNextColumn(string column) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private string GetSharedString(string sharedStringId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.Excel.ExcelCell CreateExcelCel(global::System.Xml.XmlElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.Excel.ExcelRow CreateExcelRow(global::System.Xml.XmlElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int CompareColumn(string first, string second) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string MinColumn(string column1, string column2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IEnumerable<string> CreateColumns(string startColumn, string endColumn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.Excel.ExcelSheet CreateExcelSheet(global::System.Xml.XmlNode element, string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
