@@ -11,14 +11,4 @@ namespace Quire.Controls.Core.Settings;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.TextRenderingSerializer, Ptc.Controls.Core")]
 public partial class TextRenderingSerializer : global::Quire.Controls.Core.Serialization.XElementSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal const string LocalName = "textRendering";
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Xml.Linq.XNamespace Ns;
-    [global::Quire.Mirror.MirrorStub]
-    public TextRenderingSerializer(global::Quire.PersistentData.IWorksheetPersistentData worksheetData) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void CreateChildren(global::System.Xml.Linq.XElement thisElement) => base.CreateChildren(thisElement);
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.Serialization.PropertySerializableToXmlAttribute GetProofingLanguageSerializableAttribute(global::Quire.PersistentData.IWorksheetPersistentData worksheetData, string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

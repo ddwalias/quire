@@ -546,3 +546,11 @@
 - Report: `.mirror-cache/release-il-0d6f0910fbb7/release-il.json` — PASS, 1,377 checked, 1,377 exact, 0 failures, 2,562 unfinished.
 - Remaining mismatches: none in claimed batch.
 
+## Batch 64 — Settings.TextRenderingSerializer
+
+- Scope:
+  - `TextRenderingSerializer` (`.ctor`, `.cctor`, `CreateChildren`, `GetProofingLanguageSerializableAttribute`, `LocalName`, `Ns`, `_textStyles`, `TextStyles`, `WorksheetData`, `XmlProofingLanguageConverter`)
+- Report: `.mirror-cache/release-il-0e8bcbc7ba7c/release-il.json` — PASS, 1,381 checked, 1,381 exact, 0 failures, 2,559 unfinished.
+- Remaining mismatches: none in claimed batch.
+
+
