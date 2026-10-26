@@ -25,6 +25,7 @@ DLL is written (D15). Ctrl+C stops after the builds in progress and still writes
 """
 import argparse
 import difflib
+import json
 import os
 import random
 import re
@@ -37,7 +38,7 @@ import time
 from pathlib import Path
 
 import native_linked
-from native_bytes import DEFAULT_TARGETS, load_targets
+from native_bytes import DEFAULT_TARGETS, PeImage, load_targets
 from native_gate import original_dll
 from release_il import ROOT, mathcad_install, msbuild, msvc_mismatch
 
@@ -460,8 +461,48 @@ def git_prefix(project_dir):
     return result.stdout.strip().rstrip("/") if result.returncode == 0 else project_dir.name
 
 
+def toolchain(vcxproj):
+    """(cl.exe, link.exe, environment) as MSBuild's C++ targets give them to the compiler and linker of `vcxproj`:
+    the tools from its ExecutablePath, and INCLUDE, EXTERNAL_INCLUDE, LIB and PATH from its evaluated properties."""
+    names = ["IncludePath", "ExternalIncludePath", "LibraryPath", "ExecutablePath"]
+    result = subprocess.run([str(msbuild()), str(vcxproj), "-p:Configuration=Release", "-p:Platform=x64", "-nologo",
+                             *(f"-getProperty:{n}" for n in names)], capture_output=True, text=True, check=True)
+    properties = json.loads(result.stdout)["Properties"]
+    path = properties["ExecutablePath"]
+    cl, link = shutil.which("cl.exe", path=path), shutil.which("link.exe", path=path)
+    if not cl or not link or Path(cl).parent != Path(link).parent:
+        raise RuntimeError(f"cl.exe and link.exe not found together on {vcxproj.name}'s ExecutablePath")
+    env = {**os.environ, "INCLUDE": properties["IncludePath"], "EXTERNAL_INCLUDE": properties["ExternalIncludePath"],
+           "LIB": properties["LibraryPath"], "PATH": path}
+    return cl, link, env
+
+
+def logged_commands(obj):
+    """({source path (upper case): cl arguments}, link arguments) from the command logs MSBuild left in `obj`."""
+    def read(name):
+        found = list(obj.glob(f"*.tlog/{name}"))
+        if len(found) != 1:
+            raise RuntimeError(f"{obj}: expected one {name}, found {len(found)}")
+        raw = found[0].read_bytes()
+        return raw.decode("utf-16" if raw[:2] in (b"\xff\xfe", b"\xfe\xff") else "utf-8")
+
+    compile_lines, current = {}, None
+    for line in read("CL.command.1.tlog").splitlines():
+        if line.startswith("^"):
+            current = line[1:].strip().upper()
+        elif current and line.strip():
+            compile_lines[current] = line.strip()
+    link_lines = read("link.command.1.tlog").split("\n", 1)
+    if len(link_lines) < 2 or not compile_lines:
+        raise RuntimeError(f"{obj}: the command logs hold no compile or link command")
+    link = " ".join(line.strip() for line in link_lines[1].splitlines() if line.strip())
+    return compile_lines, link
+
+
 class Worker:
-    """One scratch copy of the project and its build outputs."""
+    """One scratch copy of the project and its build outputs. The first build goes through MSBuild; after
+    enable_fast(), a build recompiles only the changed sources with MSBuild's own logged cl command and relinks with
+    its logged link command, which skips the 2-3 s MSBuild spends evaluating the project on every run (more under load)."""
 
     def __init__(self, k, project_dir, work):
         self.root = work / f"w{k}"
@@ -469,28 +510,77 @@ class Worker:
         shutil.copytree(project_dir, self.project, ignore=shutil.ignore_patterns(".vs", "x64", "*.user"))
         self.out, self.obj = self.root / "bin", self.root / "obj"
         self.vcxproj = next(self.project.glob("*.vcxproj"))
+        self.fast, self.written = None, {}
 
-    def build(self, texts, timeout=600):
-        """(DLL, map text) of the project with each file of `texts` (relative to the project) set to its text; None
-        when the build fails."""
-        for file, text in texts.items():
-            (self.project / file).write_bytes(text.encode("utf-8"))
-        env = {**os.environ, "_LINK_": f"/MAP:{self.out / 'candidate.map'}", "MSBUILDDISABLENODEREUSE": "1"}
-        process = subprocess.Popen([str(msbuild()), str(self.vcxproj), "-t:Build", "-p:Configuration=Release",
-                                    "-p:Platform=x64", f"-p:OutDir={self.out}{os.sep}", f"-p:IntDir={self.obj}{os.sep}",
-                                    "-nologo", "-v:q", "-nr:false", "-m:1"],
-                                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, env=env)
+    def write(self, texts):
+        """The files of `texts` whose text differs from what is on disk now, after writing them."""
+        changed = [file for file, text in texts.items() if self.written.get(file) != text]
+        for file in changed:
+            (self.project / file).write_bytes(texts[file].encode("utf-8"))
+            self.written[file] = texts[file]
+        return changed
+
+    def result(self):
+        dlls = list(self.out.glob("*.dll"))
+        if len(dlls) != 1:
+            return None
+        return dlls[0], (self.out / "candidate.map").read_text(encoding="utf-8", errors="replace")
+
+    def run(self, command, env, timeout):
+        """The exit code of `command` (a list, or a command-line string as logged); a timeout ends the whole process
+        tree, since killing MSBuild or cl alone leaves children holding this worker's files."""
+        process = subprocess.Popen(command, cwd=self.project, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                                   env=env)
         try:
-            returncode = process.wait(timeout=timeout)
+            return process.wait(timeout=timeout)
         except subprocess.TimeoutExpired:
-            # Killing MSBuild alone leaves cl.exe and link.exe holding this worker's files: end the whole tree.
             subprocess.run(["taskkill", "/T", "/F", "/PID", str(process.pid)], capture_output=True)
             process.wait()
             raise
-        dlls = list(self.out.glob("*.dll"))
-        if returncode or len(dlls) != 1:
+
+    def build(self, texts, timeout=600, rebuild=False):
+        """(DLL, map text) of the project with each file of `texts` (relative to the project) set to its text; None
+        when the build fails. `rebuild` forces a full MSBuild rebuild, as native_gate.py builds."""
+        try:
+            changed = self.write(texts)
+            if self.fast and not rebuild:
+                return self.fast_build(changed, timeout)
+            env = {**os.environ, "_LINK_": f"/MAP:{self.out / 'candidate.map'}", "MSBUILDDISABLENODEREUSE": "1"}
+            code = self.run([str(msbuild()), str(self.vcxproj), f"-t:{'Rebuild' if rebuild else 'Build'}",
+                             "-p:Configuration=Release", "-p:Platform=x64", f"-p:OutDir={self.out}{os.sep}",
+                             f"-p:IntDir={self.obj}{os.sep}", "-nologo", "-v:q", "-nr:false", "-m:1"], env, timeout)
+            return None if code else self.result()
+        except BaseException:
+            self.written = {}  # a build cut short may leave objects older than their sources: redo them next time
+            raise
+
+    def enable_fast(self, tools):
+        """Build from now on with `tools` (toolchain()) and the commands MSBuild logged in this worker."""
+        cl, link, env = tools
+        compile_lines, link_line = logged_commands(self.obj)
+        self.fast = {"cl": cl, "link": link, "env": {**env, "_LINK_": f"/MAP:{self.out / 'candidate.map'}"},
+                     "compile": compile_lines, "link_line": link_line}
+
+    def fast_build(self, changed, timeout):
+        fast = self.fast
+        sources = [str((self.project / file).resolve()).upper() for file in changed]
+        if any(s not in fast["compile"] for s in sources):
+            sources = list(fast["compile"])  # a header changed: every source may include it
+        for source in sources:
+            if self.run(f'"{fast["cl"]}" {fast["compile"][source]}', fast["env"], timeout):
+                self.written = {}  # a failed compile leaves its object stale: rewrite and recompile next time
+                return None
+        if self.run(f'"{fast["link"]}" {fast["link_line"]}', fast["env"], timeout):
             return None
-        return dlls[0], (self.out / "candidate.map").read_text(encoding="utf-8", errors="replace")
+        return self.result()
+
+
+def same_code(a, b):
+    """Whether two DLLs have the same exports and the same bytes in their code sections."""
+    ia, ib = PeImage(a), PeImage(b)
+    if ia.exports != ib.exports or ia.code_sections != ib.code_sections:
+        return False
+    return all(ia.read(begin, end - begin) == ib.read(begin, end - begin) for begin, end in ia.code_sections)
 
 
 def resolve(names, original):
@@ -581,6 +671,30 @@ def search(args):
             shutil.rmtree(work, ignore_errors=True)
 
 
+def fast_tools(worker, source, built):
+    """toolchain() for the workers when a direct cl/link build of the source as given has the same code as
+    MSBuild's `built`; None otherwise, and the search builds every attempt with MSBuild."""
+    expected = built[0].read_bytes()
+    try:
+        tools = toolchain(worker.vcxproj)
+        worker.enable_fast(tools)
+        worker.written = {}  # recompile the searched files, not only relink
+        fast = worker.build(source.texts(source.initial))
+    except (OSError, RuntimeError, ValueError, KeyError, IndexError, subprocess.SubprocessError) as e:
+        print(f"direct builds unavailable ({e}); every attempt builds with MSBuild", flush=True)
+        worker.fast = None
+        worker.build(source.texts(source.initial), rebuild=True)
+        return None
+    scratch = worker.root / "msbuild-baseline.dll"
+    scratch.write_bytes(expected)
+    if fast is None or not same_code(fast[0], scratch):
+        print("a direct cl/link build differs from MSBuild's; every attempt builds with MSBuild", flush=True)
+        worker.fast = None
+        worker.build(source.texts(source.initial), rebuild=True)  # MSBuild would keep the directly built objects
+        return None
+    return tools
+
+
 def search_in(args, source, scorer, out_dir, work, project_dir):
     symbols, original = scorer.symbols, scorer.original
     workers = [Worker(k, project_dir, work) for k in range(args.workers)]
@@ -595,16 +709,19 @@ def search_in(args, source, scorer, out_dir, work, project_dir):
     if missing:
         raise RuntimeError(f"the build does not export {missing}: write the exports before searching their shape")
     scorer.baseline(built)
+    searching = args.minutes > 0
+    tools = fast_tools(workers[0], source, built) if searching and not args.msbuild_only else None
     if source.start != source.initial:
         built = workers[0].build(source.texts(source.start))
         if built is None:
             raise RuntimeError(f"the project does not build after --inline {args.inline}; see {workers[0].project}")
-    state = {"score": scorer(built), "bodies": dict(source.start), "tries": 0, "failed": 0, "improved": 0}
+    state = {"score": scorer(built), "bodies": dict(source.start), "tries": 0, "failed": 0, "improved": 0,
+             "improved_at": 0}
     print(f"baseline: {state['score'][1]}/{len(symbols)} matching, similarity {state['score'][2]:.4f}; "
           f"{len(scorer.guard)} other exports match and are guarded, {len(scorer.watched)} more are watched",
           flush=True)
     seen = {tuple(sorted(state["bodies"].items()))}
-    lock, stop = threading.Lock(), threading.Event()
+    lock, stop, patience = threading.Lock(), threading.Event(), threading.Event()
     deadline = time.monotonic() + args.minutes * 60
     start_score = state["score"]
 
@@ -614,7 +731,17 @@ def search_in(args, source, scorer, out_dir, work, project_dir):
         rng = random.Random(args.seed * 1000 + k)
         current, current_score = dict(source.start), start_score
         misses = stale = 0
-        while not stop.is_set() and time.monotonic() < deadline and not scorer.matched(state["score"]):
+        if tools and workers[k].fast is None:
+            # MSBuild once in this worker's own copy, so its logged commands name its own files.
+            try:
+                if workers[k].build(source.texts(source.start)) is None:
+                    raise RuntimeError("the starting source does not build here")
+                workers[k].enable_fast(tools)
+            except Exception as e:
+                print(f"worker {k}: {type(e).__name__}: {e}; the worker stops", file=sys.stderr, flush=True)
+                return
+        while (not stop.is_set() and not patience.is_set() and time.monotonic() < deadline
+               and not scorer.matched(state["score"])):
             if stale >= args.restart:
                 with lock:
                     best = (dict(state["bodies"]), state["score"])
@@ -653,19 +780,33 @@ def search_in(args, source, scorer, out_dir, work, project_dir):
                     write_patch(out_dir / name, source.patch(bodies, prefix))
                     print(f"[{state['tries']}] {value[1]}/{len(symbols)} matching, similarity {value[2]:.4f} -> {name}",
                           flush=True)
-                    state["score"], state["bodies"] = value, bodies
+                    state["score"], state["bodies"], state["improved_at"] = value, bodies, state["tries"]
+                elif (args.patience and state["tries"] - state["improved_at"] >= args.patience
+                      and not scorer.matched(state["score"]) and not patience.is_set()):
+                    print(f"no improvement in {args.patience} attempts: stopping (--patience)", flush=True)
+                    patience.set()
             if value > current_score:
                 current, current_score, stale = bodies, value, 0
             elif value == current_score and rng.random() < args.drift:
                 current = bodies
 
-    threads = [threading.Thread(target=run, args=(k,)) for k in range(args.workers)]
+    threads = [threading.Thread(target=run, args=(k,)) for k in range(args.workers if searching else 0)]
     for t in threads:
         t.start()
+    began, beat = time.monotonic(), time.monotonic()
     try:
         while any(t.is_alive() for t in threads):
             for t in threads:
                 t.join(0.5)  # a timed join lets Ctrl+C reach this thread
+            if time.monotonic() - beat >= 60:
+                beat = time.monotonic()
+                with lock:
+                    tries, failed, score, since = (state["tries"], state["failed"], state["score"],
+                                                   state["tries"] - state["improved_at"])
+                minutes = (beat - began) / 60
+                print(f"[{minutes:.0f} min] {tries} attempts ({failed} did not build), {tries / minutes:.0f}/min; "
+                      f"best {score[1]}/{len(symbols)} matching, similarity {score[2]:.4f}; "
+                      f"{since} attempts since the last improvement", flush=True)
     except KeyboardInterrupt:
         print("stopping after the builds in progress ...", flush=True)
         stop.set()
@@ -694,7 +835,8 @@ def search_in(args, source, scorer, out_dir, work, project_dir):
         except KeyboardInterrupt:
             print("reduction stopped; keeping the match as found", flush=True)
         write_patch(out_dir / "best.patch", source.patch(bodies, prefix))
-    status, report = final_report(scorer, workers[0].build(source.texts(bodies)))
+    # The verdict comes from a full MSBuild rebuild, as native_gate.py builds, whatever built the attempts.
+    status, report = final_report(scorer, workers[0].build(source.texts(bodies), rebuild=True))
     if status != "NO MATCH":
         shutil.copyfile(out_dir / "best.patch", out_dir / "match.patch")
     (out_dir / "report.txt").write_text(report, encoding="utf-8")
@@ -839,7 +981,14 @@ def main(argv=None):
     parser.add_argument("--keep", action="store_true", help="keep the build copies")
     parser.add_argument("--no-reduce", action="store_true", help="keep the match as found, without reducing it")
     parser.add_argument("--reduce-minutes", type=float, default=20, help="time limit for reducing a match")
-    return search(parser.parse_args(argv))
+    parser.add_argument("--patience", type=int, default=500,
+                        help="stop after this many attempts without improvement (0: use the whole --minutes)")
+    parser.add_argument("--msbuild-only", action="store_true",
+                        help="build every attempt with MSBuild instead of the logged cl/link commands")
+    args = parser.parse_args(argv)
+    if args.patience < 0 or args.minutes < 0 or args.workers < 1:
+        parser.error("--patience and --minutes must not be negative, and --workers must be at least 1")
+    return search(args)
 
 
 if __name__ == "__main__":

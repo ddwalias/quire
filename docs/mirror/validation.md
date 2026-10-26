@@ -216,9 +216,16 @@ helper inside those bodies, so the search can vary a private copy without breaki
 attempt that breaks an export that already matched is never kept. On a match, the change is reduced to what the match
 needs, then checked strictly against every export. The tool writes `match.patch` (apply it with `git apply` from the
 repository root, then run `native_gate.py` as usual) and `report.txt` under `.mirror-cache/permute/`. The working
-tree is never written. When a search stalls, the improvement diffs and `native_linked.py --score` show where the
-remaining difference lies. A structural difference, such as a loop shape or a helper boundary, may need a hand-written
-shape, which `--minutes 0` scores without searching.
+tree is never written.
+
+Each worker builds once with MSBuild. After that it recompiles only the changed sources, with the `cl` and `link`
+commands MSBuild logged. The direct build must produce the same code as MSBuild, or the search falls back to MSBuild.
+The verdict comes from a full MSBuild rebuild, as `native_gate.py` builds. A progress line prints every minute.
+
+The search stops at the first match, after `--minutes`, or after `--patience` attempts (default 500) without
+improvement. A search that stops without any improvement points to a structural difference, such as a loop shape or a
+helper boundary. Read the improvement diffs and `native_linked.py --score` to see where the difference remains, then
+write the shape by hand. `--minutes 0` scores a hand-written shape without searching.
 
 The old names `validate.py`, `quick_check.py` and `merge_gate.py`
 are small compatibility aliases for these Release IL commands. They contain no runtime pipeline.

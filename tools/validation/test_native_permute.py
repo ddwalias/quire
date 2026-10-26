@@ -1,5 +1,6 @@
 """Checks for native_permute.py: body location, source rewrites, helper expansion, patches, reduction and the score."""
 import random
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -11,7 +12,7 @@ from native_permute import (MUTATIONS, Scorer, Source, body_span, compound_assig
                             flip_comparison, hoist_member, index_form, inline_calls, inline_local, loop_form,
                             merge_into_store, move_declaration, mutate, reduce, retype_local, split_arguments,
                             split_condition, strip_parentheses, swap_operands, swap_statements, toggle_const,
-                            write_patch)
+                            Worker, logged_commands, write_patch)
 
 SOURCE = """template <typename T>
 const char *sum(Efi::EfiCallContext *, const typed_mat<T> *m, void *context, T *out);
@@ -336,6 +337,70 @@ class ScoreTests(unittest.TestCase):
         self.assertEqual(status, "NO MATCH")
         self.assertIn("BROKE g", text)
         self.assertEqual(final_report(self.scorer({}), None)[0], "NO MATCH")
+
+
+class FastBuildTests(unittest.TestCase):
+    """The direct cl/link path: MSBuild's logged commands, and which sources an attempt recompiles."""
+
+    def worker(self, files):
+        root = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        project = root / "src" / "P"
+        project.mkdir(parents=True)
+        (project / "P.vcxproj").write_text("<Project/>")
+        for name, text in files.items():
+            (project / name).write_text(text)
+        worker = Worker(0, project, root / "work")
+        (worker.obj / "P.tlog").mkdir(parents=True)
+        a, b = str(worker.project / "a.cpp").upper(), str(worker.project / "b.cpp").upper()
+        (worker.obj / "P.tlog" / "CL.command.1.tlog").write_bytes(
+            f"^{a}\r\n/c /O2 /GL {a}\r\n^{b}\r\n/c /O2 /GL {b}\r\n".encode("utf-16"))
+        (worker.obj / "P.tlog" / "link.command.1.tlog").write_bytes(
+            '^A.OBJ|B.OBJ\r\n/OUT:"X.DLL" /LTCG "A.OBJ"\r\n"B.OBJ"\r\n'.encode("utf-16"))
+        worker.enable_fast(("cl.exe", "link.exe", {}))
+        worker.ran = []
+        worker.run = lambda command, env, timeout: worker.ran.append(command) or 0
+        worker.result = lambda: ("dll", "map")
+        return worker, a, b
+
+    def test_the_logged_commands_are_read_per_source_and_the_link_line_is_joined(self):
+        worker, a, b = self.worker({"a.cpp": "", "b.cpp": "", "h.h": ""})
+        compile_lines, link = logged_commands(worker.obj)
+        self.assertEqual(compile_lines, {a: f"/c /O2 /GL {a}", b: f"/c /O2 /GL {b}"})
+        self.assertEqual(link, '/OUT:"X.DLL" /LTCG "A.OBJ" "B.OBJ"')
+
+    def test_only_a_changed_source_recompiles_and_a_changed_header_recompiles_all(self):
+        worker, a, b = self.worker({"a.cpp": "", "b.cpp": "", "h.h": ""})
+        worker.build({"a.cpp": "int x;"})
+        self.assertEqual([c.split()[-1] for c in worker.ran], [a, '"B.OBJ"'])
+        worker.ran.clear()
+        worker.build({"a.cpp": "int x;"})  # unchanged: relink only
+        self.assertEqual(len(worker.ran), 1)
+        worker.ran.clear()
+        worker.build({"h.h": "#define N 1"})
+        self.assertEqual(sorted(c.split()[-1] for c in worker.ran[:-1]), sorted([a, b]))
+
+    def test_a_build_cut_short_by_an_error_recompiles_next_time(self):
+        worker, a, _ = self.worker({"a.cpp": "", "b.cpp": ""})
+
+        def timeout(command, env, timeout):
+            raise subprocess.TimeoutExpired(command, timeout)
+
+        worker.run = timeout
+        with self.assertRaises(subprocess.TimeoutExpired):
+            worker.build({"a.cpp": "int x;"})
+        worker.run = lambda command, env, timeout: worker.ran.append(command) or 0
+        worker.build({"a.cpp": "int x;"})  # same text as the build that never compiled
+        self.assertIn(a, worker.ran[0])
+
+    def test_a_failed_compile_is_retried_on_the_next_build(self):
+        worker, a, _ = self.worker({"a.cpp": "", "b.cpp": ""})
+        worker.run = lambda command, env, timeout: worker.ran.append(command) or (1 if "/c" in command else 0)
+        self.assertIsNone(worker.build({"a.cpp": "bad"}))
+        worker.ran.clear()
+        worker.run = lambda command, env, timeout: worker.ran.append(command) or 0
+        worker.build({"a.cpp": "bad"})
+        self.assertIn(a, worker.ran[0])
 
 
 class MutateTests(unittest.TestCase):
