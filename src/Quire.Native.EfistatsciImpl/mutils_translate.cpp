@@ -2,6 +2,51 @@
 
 namespace mutils {
 
+EFI_EXPORT const char *matdbl_translate(const _double_mat *src, long row, long col, double value, void *context, _double_mat *dst) {
+    check_src_f(src);
+    check_src_f(dst);
+    if (src->data == dst->data || src->rows != dst->rows || src->cols != dst->cols) return "array size mismatch";
+    if (row == 0 && col == 0) {
+        matdbl_assign(src, context, dst);
+        return nullptr;
+    }
+    matdbl_assign_scalar(value, context, dst);
+    int rows = src->rows;
+    int cols = src->cols;
+    if (row >= rows || col >= cols || -row >= rows || -col >= cols) return nullptr;
+    double total = 0.0;
+    double progress = 0.0;
+    int first_row, last_row, out_row, first_col, last_col, out_col;
+    if (row >= 0) {
+        first_row = 0;
+        last_row = rows - row;
+        out_row = row;
+    } else {
+        first_row = -row;
+        last_row = rows;
+        out_row = 0;
+    }
+    if (col >= 0) {
+        first_col = 0;
+        last_col = cols - col;
+        out_col = col;
+    } else {
+        first_col = -col;
+        last_col = cols;
+        out_col = 0;
+    }
+    for (int i = first_row; i < last_row; ++i) {
+        for (int k = out_col, j = first_col; j < last_col; ++j, ++k) dst->data[out_row * dst->cols + k] = src->data[i * src->cols + j];
+        total += (double)((last_col - first_col + 1) * 8);
+        ++out_row;
+        if (progress < total) {
+            if (mutil_interrupt_step == 0.0) mutil_interrupt_step = 10000000.0;
+            progress += mutil_interrupt_step;
+        }
+    }
+    return nullptr;
+}
+
 EFI_EXPORT const char *matflt_translate(const _float_mat *src, long row, long col, float value, void *context, _float_mat *dst) {
     check_src_f(src);
     check_dst_f(dst);

@@ -90,6 +90,7 @@
     <ClCompile Include="sig_window.cpp" />
     <ClCompile Include="img_map.cpp" />
     <ClCompile Include="img_generate.cpp" />
+    <ClCompile Include="img_morph.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="efiutl.def" />

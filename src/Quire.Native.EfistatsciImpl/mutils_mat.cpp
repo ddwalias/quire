@@ -2,7 +2,8 @@
 
 namespace mutils {
 
-const char *matdbl_assign_scalar(double value, void *context, _double_mat *m) {
+// forceinline: the original never calls it; its link inlines it into every user.
+__forceinline const char *matdbl_assign_scalar(double value, void *context, _double_mat *m) {
     return assign_scalar(value, context, m);
 }
 
