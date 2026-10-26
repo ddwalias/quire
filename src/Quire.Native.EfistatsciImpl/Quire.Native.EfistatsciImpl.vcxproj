@@ -68,6 +68,8 @@
     <ClCompile Include="mutils_transpose.cpp" />
     <ClCompile Include="mutils_flip.cpp" />
     <ClCompile Include="mutils_assign.cpp" />
+    <ClCompile Include="mutils_extract.cpp" />
+    <ClCompile Include="mutils_number_equal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="efiutl.def" />

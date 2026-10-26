@@ -1,6 +1,6 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 108 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 30 from the consumer path (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7). No regressions in the linked run.
+**Status: incomplete.** 123 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 45 from the consumer path (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7). No regressions in the linked run.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261027` (from `main` at `adee6ba0`; first batch landed as `75ba2925`)
@@ -18,6 +18,8 @@
 | `transpose` | 8 typed (`dbl` … `u8`, `cpx`) | 8/8 OK | `mutils_transpose.cpp`. Dst's `rows`/`cols` in locals before the in-place test; the in-place case swaps a vector's dimensions or returns the mismatch message. |
 | `flip_left_right`, `flip_up_down` | 8 + 7 typed | 15/15 OK | `mutils_flip.cpp`. Both inputs use the fresh-field check (`check_src_f`); per-row offset locals (`left`/`right`, `top`/`bottom`); `ceil(n * 0.5)` stays in the loop condition (hoisting it by hand changes the code). |
 | `assign` | 7 typed (no `cpx` in the original) | 7/7 OK | `mutils_assign.cpp`. `memmove` into `int bytes`; `matu8` alone checks `dst` cols-first; `matdbl` needs `void *` casts, or the compiler emits `memcpy`. |
+| `extract` | 8 typed | 8/8 OK | `mutils_extract.cpp`. Inclusive `last_row`/`last_col` bounds; the outer loop runs over columns with paired source and destination indices. |
+| `number_equal` | 7 typed (no `cpx` in the original) | 7/7 OK | `mutils_number_equal.cpp`. `b` uses the cols-first check (`check_dst_f`); data and `size` in locals before the `count` null test, as in `sum`. Work `size * 3.0`. |
 | `validate` | `mat{dbl,flt,s32,s16,u32,u16,u8,cpx}_validate` | 8/8 OK | One body (linker-folded in the original, `0x86460`). Reads `rows`/`cols` into locals first; the direct form picked another register. |
 | `wrap_data` | 7 typed exports (no `cpx`) | 7/7 OK | Same body for all seven (`0x859e0`). |
 | `malloc` | 8 typed exports | 8/8 OK | `allocate_mat<T>`; the allocator is `EfiCallContext`'s pointer at +80h. |
@@ -68,7 +70,7 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 
 ## Remaining work
 
-- 670 exports not yet implemented, plus the 33 parked above.
+- 655 exports not yet implemented, plus the 33 parked above.
 - The `siguniv_window_*` dispatchers (11) call typed `sigdbl_window_*` exports, so they cannot link until those exist; they wait for their typed exports.
 - `matuniv_wrap_data` and `matuniv_wrap_matrix` dispatch through a jump table over a nine-case type enum, with different field copies per case.
 - The `add`/`subtract`/`multiply_elem` families (about 680 bytes each for `int` types) are auto-vectorized with runtime alias checks, so the source shape has to reproduce the vectorizer's output.
