@@ -89,6 +89,7 @@
     <ClCompile Include="mutils_histogram.cpp" />
     <ClCompile Include="sig_window.cpp" />
     <ClCompile Include="img_map.cpp" />
+    <ClCompile Include="img_generate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="efiutl.def" />
