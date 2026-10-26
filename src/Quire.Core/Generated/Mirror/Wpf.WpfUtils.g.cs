@@ -16,5 +16,5 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public const string WaitToPrintoutReadyKey = "WaitToPrintoutReadyQuestionMessage";
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IEnumerable<T> GetVisualDescendantsBreadthFirstOfType<T>(this global::System.Windows.DependencyObject dependencyObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static string GetApplicationFullName(global::Quire.License.LicenseType licenseType, global::System.Windows.FrameworkElement resourcesElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

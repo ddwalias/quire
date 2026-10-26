@@ -231,7 +231,18 @@ public static partial class WpfUtils
         }
     }
 
-    public static string ApplicationFullName => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static string ApplicationFullName
+    {
+        get
+        {
+            if (global::Quire.License.LicenseManager.Instance == null)
+            {
+                return ApplicationName;
+            }
+
+            return GetApplicationFullName(global::Quire.License.LicenseManager.Instance.LicenseType, global::System.Windows.Application.Current.MainWindow);
+        }
+    }
 
     // Keep the tree checks at the loop head to preserve Mathcad's Release branch order.
     public static void CreateVisualTreeForPrinting(global::System.Windows.Controls.Primitives.Popup popup, long maxUpdateLayoutTimeMsec)

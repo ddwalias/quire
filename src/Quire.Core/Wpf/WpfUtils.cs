@@ -354,6 +354,20 @@ public static partial class WpfUtils
         }
     }
 
+    public static IEnumerable<T> GetVisualDescendantsBreadthFirstOfType<T>(this DependencyObject dependencyObject)
+    {
+        Queue<DependencyObject> descendants = new Queue<DependencyObject>(dependencyObject.GetVisualChildren());
+        while (descendants.IsNotEmpty())
+        {
+            DependencyObject descendant = descendants.Dequeue();
+            if (descendant is T matchingDescendant)
+            {
+                yield return matchingDescendant;
+            }
+            descendant.GetVisualChildren().Each(descendants.Enqueue);
+        }
+    }
+
     [MirrorVerified("Release IL")]
     public static bool IsAncestorOf(DependencyObject possibleAncestor, DependencyObject element)
     {
