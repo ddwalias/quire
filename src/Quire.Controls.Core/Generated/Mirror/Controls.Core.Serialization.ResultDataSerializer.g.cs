@@ -11,22 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.ResultDataSerializer, Ptc.Controls.Core")]
 public partial class ResultDataSerializer : global::Quire.Controls.Core.Serialization.IPackageSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.IO.IPackageOperationsProvider _packageOpsProvider;
-    [global::Quire.Mirror.MirrorStub]
-    private const string ResultUri = "/mathcad/result.xml";
-    [global::Quire.Mirror.MirrorStub]
-    private const string ResultType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.result+xml";
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.Serialization.SerializableXmlPackagePart _partSerializer;
-    [global::Quire.Mirror.MirrorStub]
-    public const string Result10 = "http://schemas.mathsoft.com/result10";
-    [global::Quire.Mirror.MirrorStub]
-    public ResultDataSerializer(global::Quire.IO.IPackageOperationsProvider packageOpsProvider) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Write(global::System.IO.Packaging.Package package, bool useTempFile = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Read(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ClearResults() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -609,15 +609,13 @@
 - Report: `.mirror-cache/release-il-dc00752552d8/release-il.json` — PASS, 1,430 checked, 1,430 exact, 0 failures, 2,523 unfinished.
 - Remaining mismatches: none in claimed batch.
 
-## Batch 74 — CommonRoutedEvents and PrimeToolTip
+## Batch 75 — Serialization.ResultDataSerializer
 
 - Scope:
-  - `CommonRoutedEvents` (`.ctor`, `.cctor`, `ContentChangedEvent`, `TraversedFocusEvent`, `CopyWhiteboardItemsEvent`, `CopySingleItemNoImageEvent`, `CaretLeavesTextAreaEvent`, `RequestRestoreInsertionPointEvent`, `BlockedPreviewMouseDownEvent`, `WasMeasuredEvent`, `_typeOfThis`)
-  - `CommonRoutedEvents.CaretLeavesTextRegionEventHandler` (`.ctor`, `Invoke`, `BeginInvoke`, `EndInvoke`)
-  - `CommonRoutedEvents.CaretLeavesTextRegionEventArgs` (`.ctor`, `LeavingDirection`, `TextAreaLeavingDirection`)
-  - `PrimeToolTip` (`.ctor`, `InitializeComponent`, `Connect`, `Header`, `ContentBody`, `_this`, `_contentLoaded`)
-- Report: `.mirror-cache/release-il-9375f3dee822/release-il.json` — PASS, 1,453 checked, 1,453 exact, 0 failures, 2,505 unfinished.
+  - `ResultDataSerializer` (`.ctor`, `Write`, `Read`, `ClearResults`, `GetXNameWithResultNameSpace`, `_packageOpsProvider`, `_partSerializer`, `ResultUri`, `ResultType`, `Result10`, method group helper `<>O.<0>__OnWriteValidationFailedDevAssert`)
+- Report: `.mirror-cache/release-il-dba102110e3e/release-il.json` — PASS, 1,457 checked, 1,457 exact, 0 failures, 2,501 unfinished.
 - Remaining mismatches: none in claimed batch.
+
 
 
 
