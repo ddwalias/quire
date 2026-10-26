@@ -1,6 +1,6 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 342 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path, `cumulative_sum` 7, 24 unsigned bit operations, `realloc` 8, `abs` 4, `range` 7, 35 binary arithmetic exports, 14 scalar ones, `number_equal_scalar` 7 `sum_cols`/`sum_rows` 14, `entropy` 7, `rescale` 7, `translate` 6, `threshold` 4, `histogram` 4 12 signal windows `map_invert` 4, `matuniv_histogram` all `generate_rectangle`, `matdbl_translate` two `binary_dilate` `matu8_write_raw` the `rectangular_to_polar` and `point_test` pairs, and `range_robust` 7 (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
+**Status: incomplete.** 345 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path, `cumulative_sum` 7, 24 unsigned bit operations, `realloc` 8, `abs` 4, `range` 7, 35 binary arithmetic exports, 14 scalar ones, `number_equal_scalar` 7 `sum_cols`/`sum_rows` 14, `entropy` 7, `rescale` 7, `translate` 6, `threshold` 4, `histogram` 4 12 signal windows `map_invert` 4, `matuniv_histogram` all `generate_rectangle`, `matdbl_translate` two `binary_dilate` `matu8_write_raw` the `rectangular_to_polar` and `point_test` pairs, `range_robust` 7, `pgndbl_shape_features`, `mutil_rand_set_seed` and `mutil_rand_begin` (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261027` (from `main` at `adee6ba0`; first batch landed as `75ba2925`)
@@ -47,6 +47,8 @@
 | `matu8_write_raw` | u8 | 1/1 OK | `mutils_io.cpp`. Null `fp` returns "null pointer"; `fwrite` straight from `m->data` in chunks of at most `0xFFFFFFFF`; a short write returns "Input-output error"; work `size * 1000`. |
 | `pgn*_rectangular_to_polar` | dbl, univ | 2/2 OK | `pgn_polar.cpp`. n×2 points to `(r, θ)`; `θ = atan(dy/dx)`, `+π` when `dx < 0`, then `+2π` when negative; `dx == 0` gives `π/2` or `3π/2`; work `rows * 20.0`. |
 | `pgn*_point_test` | dbl, univ | 2/2 OK | `pgn_point.cpp`. Winding-number test with the boundary cases (crossing edge through the point, horizontal edge on the line); the last vertex is read as `data[(n - 1) * poly->cols]`; the final classification is an `if`/`else` on `*winding & 1` (the bit forms compile to `not`/`and`). |
+| `pgndbl_shape_features` | dbl | 1/1 OK | In `pgn_point.cpp`. Shoelace sums started from the closing edge, running bounding box and perimeter; the loop updates are ordered `sy`, `sum`, `sx`, perimeter; the first perimeter term is written `dx² + dy²`, the loop's `dy² + dx²`. Work `rows * 50.0`. |
+| `mutil_rand_set_seed`, `mutil_rand_begin` | | 2/2 OK | `mutils_rand.cpp`. The state is Numerical Recipes' `ran1` (seed, 32-entry shuffle table, last value) plus a saved normal deviate (0x98 bytes). `set_seed` takes `*seed` or `time(nullptr)`, writing `st->seed` directly (a local gives another register); `begin` allocates the state and seeds it with 1. |
 | `validate` | `mat{dbl,flt,s32,s16,u32,u16,u8,cpx}_validate` | 8/8 OK | One body (linker-folded in the original, `0x86460`). Reads `rows`/`cols` into locals first; the direct form picked another register. |
 | `wrap_data` | 7 typed exports (no `cpx`) | 7/7 OK | Same body for all seven (`0x859e0`). |
 | `malloc` | 8 typed exports | 8/8 OK | `allocate_mat<T>`; the allocator is `EfiCallContext`'s pointer at +80h. |
@@ -103,11 +105,13 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 
 - **`pgndbl_rectangular_from_polar`**: instructions match. The original converts `dst` in place (it only checks `src`). It fails on the pooled-constant neighbour of its `999999999.9999999` bound (Harness notes).
 
+- **`mutil_rand_uniform`, `mutil_rand_normal`**: both match while `normal` is in the DLL, but `normal` fails on the pooled-constant neighbour of `-2.0`: in the original `-π` (only from `cls*_scalar_quantize_angle`) follows it. `uniform` alone, as a leaf placed before CRT code, takes the alignment `nop` padding into its extent (the harness trims only `int3`). Land both with `cls*_scalar_quantize_angle`. **`mat*_tile`**: the original computes `k / tcols` and `k % tcols` with two separate unsigned `div`s, which the candidate fuses.
+
 - Helper pattern for functions that return a message (added after the parked `sum`/`range` work): the exports call `validate` themselves, return the message literal themselves, and put only void/bool shared logic in `__forceinline` helpers (`same_shape`, `binary_elementwise`, `running_sum`). A message returned from an inlined template comes back in `rcx` and is copied to `rax`; the original returns it in `rax`. The helper pattern removes that copy.
 
 ## Remaining work
 
-- 422 exports not yet implemented, plus the 52 parked above.
+- 417 exports not yet implemented, plus the 55 parked above.
 - The `siguniv_window_*` dispatchers (11) call typed `sigdbl_window_*` exports, so they cannot link until those exist; they wait for their typed exports.
 - `matuniv_wrap_data` and `matuniv_wrap_matrix` dispatch through a jump table over a nine-case type enum, with different field copies per case.
 - `mutil_realloc`: its `.pdata` extent conflicts with the code address (18-byte extent for a 71-byte body). Not implemented; parked for the maintainer.

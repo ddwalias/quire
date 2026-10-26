@@ -1,5 +1,7 @@
 #include "mutils_mat.h"
 
+#include <math.h>
+
 namespace mutils {
 
 // Where a point lies against a polygon: 0 inside, 1 outside, 2 on the boundary.
@@ -55,6 +57,50 @@ EFI_EXPORT const char *pgnuniv_point_test(Efi::EfiCallContext *ctx, const _univ_
     if (poly == nullptr) return "null pointer";
     if (poly->type != EFI_DOUBLE) return "Illegal data type";
     if (const char *error = pgndbl_point_test(ctx, (const _double_mat *)poly, x, y, context, contain, winding)) return error;
+    return nullptr;
+}
+
+EFI_EXPORT const char *pgndbl_shape_features(Efi::EfiCallContext *, const _double_mat *poly, void *context, double *cx, double *cy, double *area, double *perimeter, double *xmin, double *xmax, double *ymin, double *ymax) {
+    check_src_f(poly);
+    int n = poly->rows;
+    if (poly->cols != 2 || n < 3) return "array size mismatch";
+    if (cx == nullptr || cy == nullptr || area == nullptr || perimeter == nullptr || xmin == nullptr || xmax == nullptr || ymin == nullptr || ymax == nullptr) return "null pointer";
+    double x = poly->data[0];
+    double y = poly->data[1];
+    double px = poly->data[(n - 1) * poly->cols];
+    double py = poly->data[(n - 1) * poly->cols + 1];
+    *xmin = x;
+    *xmax = x;
+    *ymin = y;
+    *ymax = y;
+    double c = px * y - py * x;
+    double sum = c;
+    double sx = (px + x) * c;
+    double sy = (py + y) * c;
+    *perimeter = sqrt((x - px) * (x - px) + (y - py) * (y - py));
+    for (int i = 1; i < poly->rows; ++i) {
+        px = x;
+        py = y;
+        x = poly->data[i * poly->cols];
+        y = poly->data[i * poly->cols + 1];
+        if (x > *xmax) *xmax = x;
+        if (y > *ymax) *ymax = y;
+        if (*xmin > x) *xmin = x;
+        if (*ymin > y) *ymin = y;
+        c = px * y - py * x;
+        sy += (py + y) * c;
+        sum += c;
+        sx += (px + x) * c;
+        *perimeter += sqrt((y - py) * (y - py) + (x - px) * (x - px));
+    }
+    double work = poly->rows * 50.0;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+    *area = sum * 0.5;
+    if (*area != 0.0) {
+        sum *= 3.0;
+        *cx = sx / sum;
+        *cy = sy / sum;
+    }
     return nullptr;
 }
 
