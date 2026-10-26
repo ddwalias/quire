@@ -11,22 +11,4 @@ namespace Quire.Controls.Core.Settings;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.MathStyles, Ptc.Controls.Core")]
 internal partial class MathStyles : global::System.Xml.Serialization.IXmlSerializable, global::Quire.Controls.Core.Serialization.IXElementSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string localName = "mathStyles";
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.IEngineeringDocument document;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Xml.Linq.XNamespace nameSpace;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Xml.Linq.XName MathStyleName;
-    [global::Quire.Mirror.MirrorStub]
-    public MathStyles(global::Quire.Controls.Core.IEngineeringDocument document, global::System.Xml.Linq.XNamespace nameSpace) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void ReadXml(global::System.Xml.XmlReader reader) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteXml(global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ReadXml(global::System.Xml.Linq.XElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteXml(global::System.Xml.Linq.XElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

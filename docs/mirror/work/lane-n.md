@@ -425,3 +425,10 @@
   - `ResultFormat` (`.cctor`, `.ctor(string)`, `.ctor(NumberFormat, MatrixFormat, string)`, `NumberFormat`, `MatrixFormat`, `ReadXml`, `WriteXml`)
 - Report: `.mirror-cache/release-il-db937cc3bf96/release-il.json` — PASS, 1,302 checked, 1,302 exact, 0 failures, 2,622 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 47 — MathStyles
+
+- Scope:
+  - `MathStyles` (`.ctor`, `ReadXml(XmlReader)`, `WriteXml(XmlWriter)`, `ReadXml(XElement)`, `WriteXml(XElement)`)
+- Report: `.mirror-cache/release-il-573267255930/release-il.json` — PASS, 1,307 checked, 1,307 exact, 0 failures, 2,617 unfinished.
+- Remaining mismatches: none in claimed batch.
