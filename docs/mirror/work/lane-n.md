@@ -531,3 +531,10 @@
   - `WorksheetPropertyNames` (`.cctor`, `Contains`, constants/fields)
 - Report: `.mirror-cache/release-il-301aef15d99e/release-il.json` — PASS, 1,365 checked, 1,365 exact, 0 failures, 2,572 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 62 — Dialogs.MessageDialogBase<T>
+
+- Scope:
+  - `MessageDialogBase<T>` (`.ctor`, `SetMessageImageAndButtons`, `SetDialogResultAndClose`, `OnButtonClick`, `AddButton`, `OnClosed`, `SetButtonValue`, `GetButtonValue`, `_buttonsDict`)
+- Report: `.mirror-cache/release-il-faab846a4d70/release-il.json` — PASS, 1,373 checked, 1,373 exact, 0 failures, 2,564 unfinished.
+- Remaining mismatches: none in claimed batch.

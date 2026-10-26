@@ -12,27 +12,9 @@ namespace Quire.Controls.Core.Dialogs;
 public abstract partial class MessageDialogBase<T> : global::System.Windows.Window where T : struct
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<string, global::System.Windows.Controls.Button> _buttonsDict;
-    [global::Quire.Mirror.MirrorStub]
     protected abstract global::System.Windows.Controls.TextBlock Message { get; }
     [global::Quire.Mirror.MirrorStub]
     protected abstract global::System.Windows.Controls.Image Image { get; }
     [global::Quire.Mirror.MirrorStub]
     protected abstract global::System.Windows.Controls.ItemsControl Buttons { get; }
-    [global::Quire.Mirror.MirrorStub]
-    protected MessageDialogBase(global::System.Windows.Window ownerWindow, string caption) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected void SetMessageImageAndButtons(string messageText, global::System.Windows.MessageBoxImage imageName, string defaultButtonKey, string cancelButtonKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void SetDialogResultAndClose(T result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void OnButtonClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Controls.Button AddButton(string key, T result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnClosed(global::System.EventArgs e) => base.OnClosed(e);
-    [global::Quire.Mirror.MirrorStub]
-    private static void SetButtonValue(global::System.Windows.Controls.Button button, T result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static T GetButtonValue(global::System.Windows.Controls.Button button) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
