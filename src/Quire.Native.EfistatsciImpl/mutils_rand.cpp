@@ -1,5 +1,7 @@
 #include "mutils_mat.h"
 
+#include <math.h>
+
 #include <time.h>
 
 namespace mutils {
@@ -41,6 +43,18 @@ EFI_EXPORT const char *mutil_rand_begin(Efi::EfiCallContext *ctx, void **state) 
     st->has_spare = 0;
     if (const char *error = mutil_rand_set_seed(&seed, st)) return error;
     *state = st;
+    return nullptr;
+}
+
+EFI_EXPORT const char *mutil_rand_uniform(void *state, double *out) {
+    if (state == nullptr || out == nullptr) return "null pointer";
+    mutil_rand_state *st = static_cast<mutil_rand_state *>(state);
+    mutil_rand_step(st);
+    int j = st->last / 67108864;
+    st->last = st->table[j];
+    st->table[j] = st->seed;
+    *out = st->last * 4.656612875245797e-10;
+    if (*out > 0.999999999) *out = 0.999999999;
     return nullptr;
 }
 

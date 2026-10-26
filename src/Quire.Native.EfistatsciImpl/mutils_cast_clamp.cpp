@@ -317,4 +317,44 @@ EFI_EXPORT void matu32_cast_to_s32(const _uint32_mat *src, unsigned char clamp, 
     if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
 }
 
+EFI_EXPORT void matdbl_cast_to_u32(const _double_mat *src, unsigned char clamp, void *context, _uint32_mat *dst) {
+    check_src_f(src);
+    check_dst_f(dst);
+    if (src->rows != dst->rows || src->cols != dst->cols) Efi::Throw("array size mismatch", ~0ull);
+    for (int i = 0; i < src->size; ++i) {
+        double v = floor(src->data[i] + 0.5);
+        if (v < 0.0) {
+            if (!clamp) Efi::Throw("overflow", ~0ull);
+            dst->data[i] = 0;
+        } else if (v > 4294967295.0) {
+            if (!clamp) Efi::Throw("overflow", ~0ull);
+            dst->data[i] = 4294967295u;
+        } else {
+            dst->data[i] = (unsigned int)v;
+        }
+    }
+    double work = (double)src->size * 5.0;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+}
+
+EFI_EXPORT void matflt_cast_to_u32(const _float_mat *src, unsigned char clamp, void *context, _uint32_mat *dst) {
+    check_src_f(src);
+    check_dst_f(dst);
+    if (src->rows != dst->rows || src->cols != dst->cols) Efi::Throw("array size mismatch", ~0ull);
+    for (int i = 0; i < src->size; ++i) {
+        double v = floor(src->data[i] + 0.5);
+        if (v < 0.0) {
+            if (!clamp) Efi::Throw("overflow", ~0ull);
+            dst->data[i] = 0;
+        } else if (v > 4294967295.0) {
+            if (!clamp) Efi::Throw("overflow", ~0ull);
+            dst->data[i] = 4294967295u;
+        } else {
+            dst->data[i] = (unsigned int)v;
+        }
+    }
+    double work = (double)src->size * 5.0;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+}
+
 }  // namespace mutils
