@@ -1,6 +1,6 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 207 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path, `cumulative_sum` 7, 24 unsigned bit operations, `realloc` 8, `abs` 4 and `range` 7 (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
+**Status: incomplete.** 256 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path, `cumulative_sum` 7, 24 unsigned bit operations, `realloc` 8, `abs` 4, `range` 7, 35 binary arithmetic exports and 14 scalar ones (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261027` (from `main` at `adee6ba0`; first batch landed as `75ba2925`)
@@ -29,6 +29,8 @@
 | `realloc` | 8 typed | 8/8 OK | `mutils_realloc.cpp`. `check_src_f`; new dims stored before the byte comparison; grows by `allocate_array` + `memcpy` of the new size. |
 | `abs` | dbl, flt, s32, s16 | 4/4 OK | `mutils_abs.cpp`. Bit-operation shape, `x >= 0 ? x : -x`. |
 | `range` | 7 typed | 7/7 OK | `mutils_range.cpp`. `check_src_f`; data/size locals; `max` tested for null before `min`; `*max = *min = data[0]`; updates through the pointers; work `size * 5.0`. Resolves the parked `range` family. |
+| `max`, `min`, `add`, `subtract`, `multiply_elem` | 7 typed each | 35/35 OK | `mutils_binary.cpp`. The binary bit-operation shape with the context first; `min` is `a > b ? b : a`. The s16/u16/u8 `subtract` check `b` with `check_src_f`, the rest cols-first. The vectorizer reproduces its alias-checked loops from this plain source. |
+| `add_scalar`, `multiply_scalar` | 7 typed each | 14/14 OK | `mutils_scalar.cpp`. The scalar bit-operation shape with the context first; scalar of the element type. |
 | `validate` | `mat{dbl,flt,s32,s16,u32,u16,u8,cpx}_validate` | 8/8 OK | One body (linker-folded in the original, `0x86460`). Reads `rows`/`cols` into locals first; the direct form picked another register. |
 | `wrap_data` | 7 typed exports (no `cpx`) | 7/7 OK | Same body for all seven (`0x859e0`). |
 | `malloc` | 8 typed exports | 8/8 OK | `allocate_mat<T>`; the allocator is `EfiCallContext`'s pointer at +80h. |
@@ -79,10 +81,9 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 
 ## Remaining work
 
-- 575 exports not yet implemented, plus the 23 parked above.
+- 526 exports not yet implemented, plus the 23 parked above.
 - The `siguniv_window_*` dispatchers (11) call typed `sigdbl_window_*` exports, so they cannot link until those exist; they wait for their typed exports.
 - `matuniv_wrap_data` and `matuniv_wrap_matrix` dispatch through a jump table over a nine-case type enum, with different field copies per case.
-- The `add`/`subtract`/`multiply_elem` families (about 680 bytes each for `int` types) are auto-vectorized with runtime alias checks, so the source shape has to reproduce the vectorizer's output.
 - `mutil_realloc`: its `.pdata` extent conflicts with the code address (18-byte extent for a 71-byte body). Not implemented; parked for the maintainer.
 
 ## Harness notes
