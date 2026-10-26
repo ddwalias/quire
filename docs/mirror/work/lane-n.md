@@ -460,3 +460,10 @@
   - `PlotCommonConstants` (`.cctor`, `GetPlotLineThickness(PlotLineTicknessType)`, all fields/constants)
 - Report: `.mirror-cache/release-il-799990f28004/release-il.json` — PASS, 1,324 checked, 1,324 exact, 0 failures, 2,600 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 52 — PageLayoutConstants
+
+- Scope:
+  - `PageLayoutConstants` (`.cctor`, `GetPageSizeUnitsByPageSize`, all constants)
+- Report: `.mirror-cache/release-il-3f452f66933a/release-il.json` — PASS, 1,326 checked, 1,326 exact, 0 failures, 2,598 unfinished.
+- Remaining mismatches: none in claimed batch.
