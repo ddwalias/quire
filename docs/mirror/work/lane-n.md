@@ -467,3 +467,10 @@
   - `PageLayoutConstants` (`.cctor`, `GetPageSizeUnitsByPageSize`, all constants)
 - Report: `.mirror-cache/release-il-3f452f66933a/release-il.json` — PASS, 1,326 checked, 1,326 exact, 0 failures, 2,598 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 53 — RtfConstants
+
+- Scope:
+  - `RtfConstants` (all string constants)
+- Report: `.mirror-cache/release-il-c037587d5ab0/release-il.json` — PASS, 1,326 checked, 1,326 exact, 0 failures, 2,598 unfinished.
+- Remaining mismatches: none in claimed batch.
