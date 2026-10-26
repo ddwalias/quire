@@ -553,4 +553,12 @@
 - Report: `.mirror-cache/release-il-0e8bcbc7ba7c/release-il.json` — PASS, 1,381 checked, 1,381 exact, 0 failures, 2,559 unfinished.
 - Remaining mismatches: none in claimed batch.
 
+## Batch 65 — FrameworkElementXamlHelper
+
+- Scope:
+  - `FrameworkElementXamlHelper` (`GetPrintView`, `ClearBitmapEffects`, `.ctor`, closure `b__0_0`)
+- Report: `.mirror-cache/release-il-9cfc4b5f7e8b/release-il.json` — PASS, 1,386 checked, 1,386 exact, 0 failures, 2,557 unfinished.
+- Remaining mismatches: none in claimed batch.
+
+
 
