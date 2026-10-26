@@ -11,28 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RegionCommands, Ptc.Controls.Core")]
 public static partial class RegionCommands
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand Replace;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand DeleteRegion;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedCommand ToggleOrSetPerspectiveCameraCommand;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedCommand ChangePlotBackgroundCommand;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand ChangePlotBackgroundGrayCommand;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedCommand ShowAxisExpressionsCommand;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand TagCommand;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand RemoveTagCommand;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand VisibleRegionBorderCommand;
-    [global::Quire.Mirror.MirrorStub]
-    public static void ExecuteCommandWithAssertion(global::System.Windows.Input.RoutedCommand command, object param, global::System.Windows.IInputElement elem, bool assert) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.CameraType3D ValueForToggleOrSetPerspectiveCameraCommand(object parameter, global::Quire.Controls.Core.CameraType3D currentValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
