@@ -446,3 +446,10 @@
   - `OleContainerMessageKeys` (all constants)
 - Report: `.mirror-cache/release-il-d466b82179ce/release-il.json` — PASS, 1,317 checked, 1,317 exact, 0 failures, 2,607 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 50 — PlotCommonProperties
+
+- Scope:
+  - `PlotCommonProperties` (`.cctor`, `CreateShowTicksMetadata()`, `CreateShowTicksMetadata(PropertyChangedCallback)`, `CreateShowNumbersMetadata()`, `CreateShowNumbersMetadata(PropertyChangedCallback)`, `PropertyNames`)
+- Report: `.mirror-cache/release-il-ddc4f62d3da5/release-il.json` — PASS, 1,322 checked, 1,322 exact, 0 failures, 2,602 unfinished.
+- Remaining mismatches: none in claimed batch.

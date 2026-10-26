@@ -11,35 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.PlotCommonProperties, Ptc.Controls.Core")]
 public partial class PlotCommonProperties : global::System.Windows.DependencyObject
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ShowAxisExpressionsProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ShowTicksProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ShowNumbersProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public const bool ShowTicksDefaultValue = true;
-    [global::Quire.Mirror.MirrorStub]
-    public const bool ShowNumbersDefaultValue = true;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.FrameworkPropertyMetadata CreateShowTicksMetadata(global::System.Windows.PropertyChangedCallback propertyChangedCallback) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.FrameworkPropertyMetadata CreateShowTicksMetadata() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.FrameworkPropertyMetadata CreateShowNumbersMetadata(global::System.Windows.PropertyChangedCallback propertyChangedCallback) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.FrameworkPropertyMetadata CreateShowNumbersMetadata() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.PlotCommonProperties+PropertyNames, Ptc.Controls.Core")]
-    public static partial class PropertyNames
-    {
-        [global::Quire.Mirror.MirrorStub]
-        public const string ShowTicks = "ShowTicks";
-        [global::Quire.Mirror.MirrorStub]
-        public const string ShowNumbers = "ShowNumbers";
-        [global::Quire.Mirror.MirrorStub]
-        public const string ShowAxisExpressions = "ShowAxisExpressions";
-    }
 }
