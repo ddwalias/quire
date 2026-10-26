@@ -11,20 +11,4 @@ namespace Quire.Controls.Core.AttachedBehavior;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.AttachedBehavior.MessagesDecorator, Ptc.Controls.Core")]
 public partial class MessagesDecorator : global::Quire.Controls.Core.AttachedBehavior.IAttachedBehavior
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.FrameworkElement _elem;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.AttachedBehavior.MessageList _messageList;
-    [global::Quire.Mirror.MirrorStub]
-    public MessagesDecorator(global::Quire.Controls.Core.AttachedBehavior.MessageList list) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Attach(global::System.Windows.FrameworkElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Detach(global::System.Windows.FrameworkElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleMessageListChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CreateMessages() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ClearMessages() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -375,3 +375,10 @@
   - `Property` (`component`, `_propertyName`, `PropertyValue`, `StringPropertyValue`, `.ctor(object, string, TypeConverter)`, `.ctor(object, string)`, `AttemptToGetDefaultValue`, `ResetValue`)
 - Report: `.mirror-cache/release-il-e3be1fe26cdd/release-il.json` — PASS, 1,253 checked, 1,253 exact, 0 failures, 2,661 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 40 — MessagesDecorator
+
+- Scope:
+  - `MessagesDecorator` (`_elem`, `_adornerList`, `_messageList`, `AdornerList`, `Attach`, `Detach`, `HandleMessageListChanged`, `CreateMessages`, `ClearMessages`, `.ctor`)
+- Report: `.mirror-cache/release-il-1ee7eac46ae6/release-il.json` — PASS, 1,259 checked, 1,259 exact, 0 failures, 2,655 unfinished.
+- Remaining mismatches: none in claimed batch.
