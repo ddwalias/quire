@@ -11,51 +11,6 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.PlotCommonConstants, Ptc.Controls.Core")]
 public static partial class PlotCommonConstants
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const int NumberOfPointsDefaultFor2DPlots = 500;
-    [global::Quire.Mirror.MirrorStub]
-    public const int NumberOfPointsDefaultFor3DPlots = 41;
-    [global::Quire.Mirror.MirrorStub]
-    public const int NumberOfPointsDefaultInvalidValue = -1;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly double PlotsGraphMinHeight;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly double PlotsGraphMinWidth;
-    [global::Quire.Mirror.MirrorStub]
-    public const double Plot3DMinScale = 0.5d;
-    [global::Quire.Mirror.MirrorStub]
-    public const double Plot3DMaxScale = 10d;
-    [global::Quire.Mirror.MirrorStub]
-    public const int Plot3DCameraTransformMatrixRows = 4;
-    [global::Quire.Mirror.MirrorStub]
-    public const int Plot3DCameraTransformMatrixColumns = 4;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Media.Media3D.Point3D Plot3DCameraPosition;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Media.Media3D.Vector3D Plot3DCameraLookDirection;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Media.Media3D.Vector3D Plot3DCameraUpDirection;
-    [global::Quire.Mirror.MirrorStub]
-    public const double Plot3DPerspectiveCameraFOV = 11.5d;
-    [global::Quire.Mirror.MirrorStub]
-    public const double Plot3DOrthographicCameraWidth = 1.65d;
-    [global::Quire.Mirror.MirrorStub]
-    public const double OrthographicCameraNearPlaneDistance = 0d;
-    [global::Quire.Mirror.MirrorStub]
-    public const double OrthographicCameraFarPlaneDistance = 10000000000d;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Media.Media3D.Rect3D Plot3DBoundingBox;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Media.Media3D.MatrixTransform3D Plot3DLogicalToVisualTransform;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Media.Media3D.MatrixTransform3D Plot3DVisualToLogicalTransform;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly string GridlinesDefaultColorHex;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Media.Color DefaultGridLineColor;
-    [global::Quire.Mirror.MirrorStub]
-    public static double GetPlotLineThickness(global::Quire.Controls.Core.PlotCommonConstants.PlotLineTicknessType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.PlotCommonConstants+PlotLineTicknessType, Ptc.Controls.Core")]
     public enum PlotLineTicknessType
     {

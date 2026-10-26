@@ -453,3 +453,10 @@
   - `PlotCommonProperties` (`.cctor`, `CreateShowTicksMetadata()`, `CreateShowTicksMetadata(PropertyChangedCallback)`, `CreateShowNumbersMetadata()`, `CreateShowNumbersMetadata(PropertyChangedCallback)`, `PropertyNames`)
 - Report: `.mirror-cache/release-il-ddc4f62d3da5/release-il.json` — PASS, 1,322 checked, 1,322 exact, 0 failures, 2,602 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 51 — PlotCommonConstants
+
+- Scope:
+  - `PlotCommonConstants` (`.cctor`, `GetPlotLineThickness(PlotLineTicknessType)`, all fields/constants)
+- Report: `.mirror-cache/release-il-799990f28004/release-il.json` — PASS, 1,324 checked, 1,324 exact, 0 failures, 2,600 unfinished.
+- Remaining mismatches: none in claimed batch.
