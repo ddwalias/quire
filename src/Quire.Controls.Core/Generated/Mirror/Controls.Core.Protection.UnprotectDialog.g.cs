@@ -18,8 +18,6 @@ public partial class UnprotectDialog : global::Quire.Controls.Core.Protection.Pa
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    protected override bool DoPasswordsMatch { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public static bool ShowUnProtectDialog(global::System.Func<string, bool> doesPasswordMatch, global::System.Windows.ResourceDictionary customControlStringsDictionary, global::System.Windows.Window owner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private UnprotectDialog(global::System.Func<string, bool> doesPasswordsMatch, global::System.Windows.ResourceDictionary customControlStringsDictionary) { }

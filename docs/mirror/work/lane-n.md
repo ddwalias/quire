@@ -503,3 +503,10 @@
   - `ProtectDialog` (`DisplayState`, `AreaBorderState`, `DoPasswordsMatch`, `ProtectProperties.DisplayState`)
 - Report: `.mirror-cache/release-il-d48b1a3c68a2/release-il.json` — PASS, 1,352 checked, 1,352 exact, 0 failures, 2,582 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 58 — Protection.UnprotectDialog DoPasswordsMatch
+
+- Scope:
+  - `UnprotectDialog` (`DoPasswordsMatch`)
+- Report: `.mirror-cache/release-il-10ae5b32d464/release-il.json` — PASS, 1,353 checked, 1,353 exact, 0 failures, 2,581 unfinished.
+- Remaining mismatches: none in claimed batch.

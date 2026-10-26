@@ -1,4 +1,5 @@
 #nullable disable
+using System;
 using Quire.Mirror;
 
 namespace Quire.Controls.Core.Protection;
@@ -13,4 +14,16 @@ public partial class UnprotectDialog
 
     [MirrorVerified("PtcControlsCoreProtectionUnprotectDialogMechanicalDifferentialTests")]
     public bool HasPassword => _hasPassword;
+
+    protected override bool DoPasswordsMatch
+    {
+        get
+        {
+            if (HasPassword)
+            {
+                return _doesPasswordsMatch(_PasswordBox.Password);
+            }
+            return true;
+        }
+    }
 }
