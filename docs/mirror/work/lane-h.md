@@ -1,6 +1,6 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 370 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path, `cumulative_sum` 7, 24 unsigned bit operations, `realloc` 8, `abs` 4, `range` 7, 35 binary arithmetic exports, 14 scalar ones, `number_equal_scalar` 7 `sum_cols`/`sum_rows` 14, `entropy` 7, `rescale` 7, `translate` 6, `threshold` 4, `histogram` 4 12 signal windows `map_invert` 4, `matuniv_histogram` all `generate_rectangle`, `matdbl_translate` two `binary_dilate` `matu8_write_raw` the `rectangular_to_polar` and `point_test` pairs, `range_robust` 7, `pgndbl_shape_features`, `mutil_rand_set_seed` `mutil_rand_begin` `matcpx_to_double` the `moment` pair, `pgnuniv_shape_features` `tile`/`untile` 16, `matdbl`/`matflt_cast_to_u32`, the `rectangular_from_polar` pair and `mutil_rand_uniform` (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
+**Status: incomplete.** 371 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path, `cumulative_sum` 7, 24 unsigned bit operations, `realloc` 8, `abs` 4, `range` 7, 35 binary arithmetic exports, 14 scalar ones, `number_equal_scalar` 7 `sum_cols`/`sum_rows` 14, `entropy` 7, `rescale` 7, `translate` 6, `threshold` 4, `histogram` 4 12 signal windows `map_invert` 4, `matuniv_histogram` all `generate_rectangle`, `matdbl_translate` two `binary_dilate` `matu8_write_raw` the `rectangular_to_polar` and `point_test` pairs, `range_robust` 7, `pgndbl_shape_features`, `mutil_rand_set_seed` `mutil_rand_begin` `matcpx_to_double` the `moment` pair, `pgnuniv_shape_features` `tile`/`untile` 16, `matdbl`/`matflt_cast_to_u32`, the `rectangular_from_polar` pair `mutil_rand_uniform` and `matset_resize` (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261027` (from `main` at `adee6ba0`; first batch landed as `75ba2925`)
@@ -57,6 +57,7 @@
 | `wrap_data` | 7 typed exports (no `cpx`) | 7/7 OK | Same body for all seven (`0x859e0`). |
 | `malloc` | 8 typed exports | 8/8 OK | `allocate_mat<T>`; the allocator is `EfiCallContext`'s pointer at +80h. |
 | `mat_set` | `matset_malloc`, `matset_free`, `matset_free_matrices`, `matset_validate` | 4/4 OK | `mutils_set.{h,cpp}`. `matset_free_matrices` is `validate` alone. |
+| `matset_resize` | | 1/1 OK | `mutils_set.cpp`. Uses `check_set_f`, the set check with every field read where it is used (the `validate` form keeps `count`/`total` in locals and gives other registers); `count < 1` throws "Illegal data value"; the new dims' product must equal `total`. |
 | `pgn_chain_free` | `pgn_chain_free` | 1/1 OK | Early return for a null or empty chain. |
 | `mutil_interrupt` | `mutil_interrupt` | 1/1 OK | Over the shared inline in `efi_common.h`. |
 | Trivial (`ret 0` / `xor eax,eax; ret`) | `mutil_abort`, `mutil_msg_print`, `mutil_msg_print_line`, `mutil_msg_print_time`, `mutil_msg_set_level`, `mutil_rand_end` | 6/6 OK | `mutils_msg.{h,cpp}`. `_mutil_msg_level` values not inferred yet. |
@@ -109,13 +110,13 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 
 - **`mutil_rand_uniform`, `mutil_rand_normal`**: both match while `normal` is in the DLL, but `normal` fails on the pooled-constant neighbour of `-2.0`: in the original `-π` (only from `cls*_scalar_quantize_angle`) follows it. `uniform` alone, as a leaf placed before CRT code, takes the alignment `nop` padding into its extent (the harness trims only `int3`). Land both with `cls*_scalar_quantize_angle`. 
 
-- **Pooled-constant parks move as the pool fills (2026-10-27).** Re-adding the parked data-only failures after more exports landed: `matdbl`/`matflt_cast_to_u32`, `rectangular_from_polar` and `mutil_rand_uniform` now pass. `dbl`/`flt` to s16/s32, `dbl_to_flt` and `mutil_rand_normal` pass only while `mat*_bit_not` is present. `bit_not` itself still fails: its all-ones vector constant (`0xACA80`, shared only with `binary_erode`) is compared over about 0x110 bytes. Retry these whenever the pool changes. `pgndbl_rectangular_from_polar` converts `dst` in place, as the original does (it only checks `src`).
+- **Pooled-constant parks move as the pool fills (2026-10-27).** Re-adding the parked data-only failures after more exports landed: `matdbl`/`matflt_cast_to_u32`, `rectangular_from_polar` `mutil_rand_uniform` and `matset_resize` now pass. `dbl`/`flt` to s16/s32, `dbl_to_flt` and `mutil_rand_normal` pass only while `mat*_bit_not` is present. `bit_not` itself still fails: its all-ones vector constant (`0xACA80`, shared only with `binary_erode`) is compared over about 0x110 bytes. Retry these whenever the pool changes. `pgndbl_rectangular_from_polar` converts `dst` in place, as the original does (it only checks `src`).
 
 - Helper pattern for functions that return a message (added after the parked `sum`/`range` work): the exports call `validate` themselves, return the message literal themselves, and put only void/bool shared logic in `__forceinline` helpers (`same_shape`, `binary_elementwise`, `running_sum`). A message returned from an inlined template comes back in `rcx` and is copied to `rax`; the original returns it in `rax`. The helper pattern removes that copy.
 
 ## Remaining work
 
-- 397 exports not yet implemented, plus the 56 parked above.
+- 396 exports not yet implemented, plus the 56 parked above.
 - The `siguniv_window_*` dispatchers (11) call typed `sigdbl_window_*` exports, so they cannot link until those exist; they wait for their typed exports.
 - `matuniv_wrap_data` and `matuniv_wrap_matrix` dispatch through a jump table over a nine-case type enum, with different field copies per case.
 - `mutil_realloc`: its `.pdata` extent conflicts with the code address (18-byte extent for a 71-byte body). Not implemented; parked for the maintainer.

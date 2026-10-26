@@ -28,6 +28,21 @@ __forceinline void validate(const _mat_set *s) {
     if (product != total) Efi::Throw("Illegal data value", ~0ull);
 }
 
+// The same checks with every field read where it is used (matset_resize, matset_verify_aresame).
+__forceinline void check_set_f(const _mat_set *s) {
+    if (s == nullptr) Efi::Throw("null pointer", ~0ull);
+    if (s->dims == nullptr) Efi::Throw("null pointer", ~0ull);
+    if (s->matrices == nullptr) Efi::Throw("null pointer", ~0ull);
+    if (s->count <= 0) Efi::Throw("array size mismatch", ~0ull);
+    if (s->total <= 0) Efi::Throw("array size mismatch", ~0ull);
+    int total = 1;
+    for (int i = 0; i < s->count; ++i) {
+        if (s->dims[i] <= 0) Efi::Throw("array size mismatch", ~0ull);
+        total *= s->dims[i];
+    }
+    if (total != s->total) Efi::Throw("Illegal data value", ~0ull);
+}
+
 namespace mutils {
 
 struct _pgn_chain {
@@ -43,6 +58,7 @@ EFI_EXPORT void matset_malloc(Efi::EfiCallContext *ctx, _mat_set *s, long count,
 EFI_EXPORT void matset_free(Efi::EfiCallContext *ctx, _mat_set *s);
 EFI_EXPORT void matset_free_matrices(Efi::EfiCallContext *ctx, _mat_set *s);
 EFI_EXPORT void matset_validate(const _mat_set *s);
+EFI_EXPORT void matset_resize(Efi::EfiCallContext *ctx, long count, long *dims, _mat_set *s);
 EFI_EXPORT const char *pgn_chain_free(Efi::EfiCallContext *ctx, _pgn_chain *chain);
 
 }  // namespace mutils

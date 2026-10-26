@@ -37,4 +37,17 @@ const char *pgn_chain_free(Efi::EfiCallContext *, _pgn_chain *chain) {
     return nullptr;
 }
 
+void matset_resize(Efi::EfiCallContext *ctx, long count, long *dims, _mat_set *s) {
+    check_set_f(s);
+    if (dims == nullptr) Efi::Throw("null pointer", ~0ull);
+    if (count < 1) Efi::Throw("Illegal data value", ~0ull);
+    int product = 1;
+    for (int i = 0; i < count; ++i) product *= dims[i];
+    if (product != s->total) Efi::Throw("array size mismatch", ~0ull);
+    int *d = static_cast<int *>(ctx->allocator->allocate_array((int)(count * sizeof(int))));
+    for (int i = 0; i < count; ++i) d[i] = dims[i];
+    s->dims = d;
+    s->count = count;
+}
+
 }  // namespace mutils
