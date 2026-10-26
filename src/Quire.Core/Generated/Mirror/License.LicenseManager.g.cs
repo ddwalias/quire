@@ -61,8 +61,6 @@ public sealed partial class LicenseManager : global::System.ComponentModel.INoti
     private static readonly global::System.Text.RegularExpressions.Regex validServerPortRegex;
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.TimeSpan _oneMonth;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.License.LicenseType DetermineLicenseType(bool hasValidLicense) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.License.LicenseManager+PropertyNames, Ptc.Core")]
     public static partial class PropertyNames
