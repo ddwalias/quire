@@ -4,7 +4,7 @@ using Quire.Mirror;
 
 namespace Quire.Controls.Core.Settings;
 
-public partial class TextDecorationsToAttributesSerializer
+public sealed partial class TextDecorationsToAttributesSerializer
 {
     [MirrorVerified("PtcControlsCoreSettingsTextDecorationsToAttributesSerializerMechanicalDifferentialTests")]
     public TextDecorationCollection TextDecorationsCollection { get; set; }
