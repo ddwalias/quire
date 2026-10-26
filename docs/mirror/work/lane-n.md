@@ -382,3 +382,10 @@
   - `MessagesDecorator` (`_elem`, `_adornerList`, `_messageList`, `AdornerList`, `Attach`, `Detach`, `HandleMessageListChanged`, `CreateMessages`, `ClearMessages`, `.ctor`)
 - Report: `.mirror-cache/release-il-1ee7eac46ae6/release-il.json` — PASS, 1,259 checked, 1,259 exact, 0 failures, 2,655 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 41 — ViewModelBase
+
+- Scope:
+  - `ViewModelBase` (`OnPropertyChanged`, `ModelPropertyChangedInner`, `Dispose`, `CreateCommandBinding(ICommand, Action<object>, Predicate<object>)`, `CreateCommandBinding(ICommand, Action<RoutedCommand, object>, Predicate<object>)`, `CreatePreviewCommandBinding`, `GetNewValue`, `.ctor`)
+- Report: `.mirror-cache/release-il-66f04ad181d9/release-il.json` — PASS, 1,277 checked, 1,277 exact, 0 failures, 2,647 unfinished.
+- Remaining mismatches: none in claimed batch.
