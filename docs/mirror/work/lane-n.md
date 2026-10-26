@@ -595,6 +595,14 @@
 - Report: `.mirror-cache/release-il-762762adda4f/release-il.json` — PASS, 1,423 checked, 1,423 exact, 0 failures, 2,530 unfinished.
 - Remaining mismatches: none in claimed batch.
 
+## Batch 71 — Protection.UnprotectDialog
+
+- Scope:
+  - `UnprotectDialog` (`ShowUnProtectDialog`, `.ctor`, `InitializeComponent`, `_CreateDelegate`, `Connect`, `_doesPasswordsMatch`, `_hasPassword`, `_PasswordBox`, `_contentLoaded`)
+- Report: `.mirror-cache/release-il-5e3dcf20e205/release-il.json` — PASS, 1,427 checked, 1,427 exact, 0 failures, 2,526 unfinished.
+- Remaining mismatches: none in claimed batch.
+
+
 
 
 
