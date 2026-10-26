@@ -609,16 +609,16 @@
 - Report: `.mirror-cache/release-il-dc00752552d8/release-il.json` — PASS, 1,430 checked, 1,430 exact, 0 failures, 2,523 unfinished.
 - Remaining mismatches: none in claimed batch.
 
-## Batch 73 — ResourceDictionaries (ColorPickerCommonResources, MessageDialogsDictionary, CopyDictionary, ImageControlDictionary, TextStylesDictionary)
+## Batch 74 — CommonRoutedEvents and PrimeToolTip
 
 - Scope:
-  - `ColorPickerCommonResources` (`InitializeComponent`, `Connect`, `_contentLoaded`, `ColorPickerPaletteCollectionKey`)
-  - `MessageDialogsDictionary` (`.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`)
-  - `CopyDictionary` (`.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`, `Instance`)
-  - `ImageControlDictionary` (`.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`, `Instance`)
-  - `TextStylesDictionary` (`.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`, `Instance`)
-- Report: `.mirror-cache/release-il-8c80e32d0795/release-il.json` — PASS, 1,447 checked, 1,447 exact, 0 failures, 2,509 unfinished.
+  - `CommonRoutedEvents` (`.ctor`, `.cctor`, `ContentChangedEvent`, `TraversedFocusEvent`, `CopyWhiteboardItemsEvent`, `CopySingleItemNoImageEvent`, `CaretLeavesTextAreaEvent`, `RequestRestoreInsertionPointEvent`, `BlockedPreviewMouseDownEvent`, `WasMeasuredEvent`, `_typeOfThis`)
+  - `CommonRoutedEvents.CaretLeavesTextRegionEventHandler` (`.ctor`, `Invoke`, `BeginInvoke`, `EndInvoke`)
+  - `CommonRoutedEvents.CaretLeavesTextRegionEventArgs` (`.ctor`, `LeavingDirection`, `TextAreaLeavingDirection`)
+  - `PrimeToolTip` (`.ctor`, `InitializeComponent`, `Connect`, `Header`, `ContentBody`, `_this`, `_contentLoaded`)
+- Report: `.mirror-cache/release-il-9375f3dee822/release-il.json` — PASS, 1,453 checked, 1,453 exact, 0 failures, 2,505 unfinished.
 - Remaining mismatches: none in claimed batch.
+
 
 
 

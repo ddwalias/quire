@@ -11,41 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.CommonRoutedEvents, Ptc.Controls.Core")]
 public partial class CommonRoutedEvents
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.RoutedEvent ContentChangedEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.RoutedEvent TraversedFocusEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.RoutedEvent CopyWhiteboardItemsEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.RoutedEvent CopySingleItemNoImageEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.RoutedEvent CaretLeavesTextAreaEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.RoutedEvent RequestRestoreInsertionPointEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.RoutedEvent BlockedPreviewMouseDownEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.RoutedEvent WasMeasuredEvent;
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.CommonRoutedEvents+CaretLeavesTextRegionEventHandler, Ptc.Controls.Core")]
-    public delegate void CaretLeavesTextRegionEventHandler(object sender, global::Quire.Controls.Core.CommonRoutedEvents.CaretLeavesTextRegionEventArgs args);
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.CommonRoutedEvents+CaretLeavesTextRegionEventArgs, Ptc.Controls.Core")]
-    public partial class CaretLeavesTextRegionEventArgs : global::System.Windows.RoutedEventArgs
-    {
-        [global::Quire.Mirror.MirrorStub]
-        public CaretLeavesTextRegionEventArgs(global::System.Windows.RoutedEvent routedEvent) { }
-
-        [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.CommonRoutedEvents+CaretLeavesTextRegionEventArgs+TextAreaLeavingDirection, Ptc.Controls.Core")]
-        public enum TextAreaLeavingDirection
-        {
-            Up = -1,
-            Down = 1,
-            Left = 2,
-            Right = 3,
-        }
-    }
 }
