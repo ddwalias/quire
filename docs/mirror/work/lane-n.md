@@ -609,12 +609,13 @@
 - Report: `.mirror-cache/release-il-dc00752552d8/release-il.json` — PASS, 1,430 checked, 1,430 exact, 0 failures, 2,523 unfinished.
 - Remaining mismatches: none in claimed batch.
 
-## Batch 79 — Serialization.PropertySerializableToXmlAttribute
+## Batch 80 — Serialization.PackageSerializable
 
 - Scope:
-  - `PropertySerializableToXmlAttribute` (`.ctor(object, string, string)`, `.ctor(object, string, string, SerializationInfo)`, `.ctor(object, string, string, TypeConverter)`, `.ctor(object, string, string, TypeConverter, SerializationInfo)`, `ShouldSerializeDefaultValue`, `DefaultValue`, `CanWriteXML`, `GetSchema`, `ReadXml(XmlReader)`, `WriteXml(XmlWriter)`, `ReadXml(XElement)`, `WriteXml(XElement)`, `ReadXml(XmlElement)`, `WriteXml(XmlElement)`, `_serializationInfo`)
-- Report: `.mirror-cache/release-il-fe84cee19848/release-il.json` — PASS, 1,480 checked, 1,480 exact, 0 failures, 2,479 unfinished.
+  - `PackageSerializable` (`.ctor`, `Write`, `Read`, `GetApplicationPropertiesSerializer`, `GetCalculationSettingsSerializable`, `GetPresentationSettingsSerializable`, static constants `ApplicationPropertiesUri`, `ApplicationPropertiesType`, `PresentationUri`, `PresentationType`, `CalculationUri`, `CalculationType`, fields `_uri`, `_type`, `_packagePartSerializable`, `_provider`, method group helper `<>O.<0>__OnWriteValidationFailedDevAssert`)
+- Report: `.mirror-cache/release-il-aa6e1ad2a2ab/release-il.json` — PASS, 1,486 checked, 1,486 exact, 0 failures, 2,473 unfinished.
 - Remaining mismatches: none in claimed batch.
+
 
 
 
