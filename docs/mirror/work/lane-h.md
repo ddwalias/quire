@@ -1,6 +1,6 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 331 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path, `cumulative_sum` 7, 24 unsigned bit operations, `realloc` 8, `abs` 4, `range` 7, 35 binary arithmetic exports, 14 scalar ones, `number_equal_scalar` 7 `sum_cols`/`sum_rows` 14, `entropy` 7, `rescale` 7, `translate` 6, `threshold` 4, `histogram` 4 12 signal windows `map_invert` 4, `matuniv_histogram` all `generate_rectangle`, `matdbl_translate` two `binary_dilate` and `matu8_write_raw` (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
+**Status: incomplete.** 333 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path, `cumulative_sum` 7, 24 unsigned bit operations, `realloc` 8, `abs` 4, `range` 7, 35 binary arithmetic exports, 14 scalar ones, `number_equal_scalar` 7 `sum_cols`/`sum_rows` 14, `entropy` 7, `rescale` 7, `translate` 6, `threshold` 4, `histogram` 4 12 signal windows `map_invert` 4, `matuniv_histogram` all `generate_rectangle`, `matdbl_translate` two `binary_dilate` `matu8_write_raw` and the `rectangular_to_polar` pair (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261027` (from `main` at `adee6ba0`; first batch landed as `75ba2925`)
@@ -44,6 +44,7 @@
 | `matuniv_histogram` | univ | 1/1 OK | Compare chain over dbl/s32/u16/u8; `hist` must be `EFI_UINT32`. |
 | `img*_binary_dilate` | s32, u16 | 2/2 OK | `img_morph.cpp`. `src`/`se`/`dst` checks, shape and alias tests, `fg == bg` returns "Illegal data value"; `src->data` taken before the `assign_scalar(bg)` call; stamps `se` around each `fg` pixel; work `((se_cols * 3 + 3.0) * se_rows + 2.0) * cols`. |
 | `matu8_write_raw` | u8 | 1/1 OK | `mutils_io.cpp`. Null `fp` returns "null pointer"; `fwrite` straight from `m->data` in chunks of at most `0xFFFFFFFF`; a short write returns "Input-output error"; work `size * 1000`. |
+| `pgn*_rectangular_to_polar` | dbl, univ | 2/2 OK | `pgn_polar.cpp`. n×2 points to `(r, θ)`; `θ = atan(dy/dx)`, `+π` when `dx < 0`, then `+2π` when negative; `dx == 0` gives `π/2` or `3π/2`; work `rows * 20.0`. |
 | `validate` | `mat{dbl,flt,s32,s16,u32,u16,u8,cpx}_validate` | 8/8 OK | One body (linker-folded in the original, `0x86460`). Reads `rows`/`cols` into locals first; the direct form picked another register. |
 | `wrap_data` | 7 typed exports (no `cpx`) | 7/7 OK | Same body for all seven (`0x859e0`). |
 | `malloc` | 8 typed exports | 8/8 OK | `allocate_mat<T>`; the allocator is `EfiCallContext`'s pointer at +80h. |
@@ -98,11 +99,13 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 
 - **`mat*_write_raw` (dbl, flt, s32, s16, u32, u16), `mat*_read_raw`, `mat*_binary_erode`, `matdbl_to_complex`**: reconstructed in `.mirror-cache/lane-h-tools/parked_*.cpp` (local). write_raw reaches 0.985-0.993 (with `*(in + i + k)` for the byte swap); only the order of `i = 0` against the bound computation differs. read_raw differs in which register the final work addition lands in.
 
+- **`pgndbl_rectangular_from_polar`**: instructions match. The original converts `dst` in place (it only checks `src`). It fails on the pooled-constant neighbour of its `999999999.9999999` bound (Harness notes).
+
 - Helper pattern for functions that return a message (added after the parked `sum`/`range` work): the exports call `validate` themselves, return the message literal themselves, and put only void/bool shared logic in `__forceinline` helpers (`same_shape`, `binary_elementwise`, `running_sum`). A message returned from an inlined template comes back in `rcx` and is copied to `rax`; the original returns it in `rax`. The helper pattern removes that copy.
 
 ## Remaining work
 
-- 433 exports not yet implemented, plus the 50 parked above.
+- 431 exports not yet implemented, plus the 51 parked above.
 - The `siguniv_window_*` dispatchers (11) call typed `sigdbl_window_*` exports, so they cannot link until those exist; they wait for their typed exports.
 - `matuniv_wrap_data` and `matuniv_wrap_matrix` dispatch through a jump table over a nine-case type enum, with different field copies per case.
 - `mutil_realloc`: its `.pdata` extent conflicts with the code address (18-byte extent for a 71-byte body). Not implemented; parked for the maintainer.
