@@ -83,5 +83,6 @@ EFI_EXPORT const char *mats16_assign_scalar(short value, void *context, _sint16_
 EFI_EXPORT const char *matu32_assign_scalar(unsigned int value, void *context, _uint32_mat *m);
 EFI_EXPORT const char *matu16_assign_scalar(unsigned short value, void *context, _uint16_mat *m);
 EFI_EXPORT const char *matu8_assign_scalar(unsigned char value, void *context, _uint8_mat *m);
+EFI_EXPORT const char *matcpx_assign_scalar(_dcomplex value, void *context, _dcomplex_mat *m);
 
 }  // namespace mutils

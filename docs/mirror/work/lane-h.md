@@ -1,9 +1,9 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 77 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 70 earlier exports and the seven `sum` exports (`mutils_sum.cpp`, shape from the maintainer brief). No regressions in the linked run.
+**Status: incomplete.** 78 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 70 earlier exports, the seven `sum` exports (`mutils_sum.cpp`, shape from the maintainer brief) and `matcpx_assign_scalar`. No regressions in the linked run.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
-- **Branch:** `mirror/h-efistatsci-20261025h1` (from `main` at `31b4238b`)
+- **Branch:** `mirror/h-efistatsci-20261027` (from `main` at `adee6ba0`)
 - **Worktree:** `C:/Projects/Quire-wt/lane-h-efistatsci-2`
 - **Harness:** `tools/validation/native_bytes.py` and `native_targets.py` on `main`, unmodified.
 - **Build:** MSBuild `Quire.Native.EfistatsciImpl.vcxproj`, Release|x64, toolset v145, `cl` 19.51.36246 from `C:\BuildTools\VS18.6-msvc`, `/O2 /Gy /GS /EHa /MD /std:c++17 /W4 /WX` with `_CRTIMP2=__declspec(dllimport)` (D28), and `WholeProgramOptimization` true (`/GL` + LTCG). The original objects are `/GL` (D25); this build reproduces its entry code (`mov r10, rcx`), where the per-object build gives `mov r9, rcx`. Output in `.mirror-cache/bin/`.
@@ -14,7 +14,7 @@
 
 | Family | Exports | Strict result | Notes |
 |---|---|---|---|
-| `assign_scalar` | `matdbl`, `matflt`, `mats32`, `mats16`, `matu32`, `matu16`, `matu8` | 7/7 OK | `assign_scalar<T>` in `mutils_mat.h`. |
+| `assign_scalar` | `matdbl`, `matflt`, `mats32`, `mats16`, `matu32`, `matu16`, `matu8`, `matcpx` | 8/8 OK | `assign_scalar<T>` in `mutils_mat.h`. `matcpx` has its own body with the same plain loop: through the template the value splits into two doubles (206 bytes), in the export it stays one 16-byte copy and the fill becomes the original's `rep movs` (219). |
 | `validate` | `mat{dbl,flt,s32,s16,u32,u16,u8,cpx}_validate` | 8/8 OK | One body (linker-folded in the original, `0x86460`). Reads `rows`/`cols` into locals first; the direct form picked another register. |
 | `wrap_data` | 7 typed exports (no `cpx`) | 7/7 OK | Same body for all seven (`0x859e0`). |
 | `malloc` | 8 typed exports | 8/8 OK | `allocate_mat<T>`; the allocator is `EfiCallContext`'s pointer at +80h. |
@@ -51,7 +51,6 @@ Parked exports are removed from the DLL, because a committed new function that f
 
 Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size and mismatch (`cpx` 206 vs 219; `sum` 219/217 for the integer forms, 299/297 `dbl`, 302/287 `flt`; `range` 274/257 and 285/277 and 279/273; `cast_to` diverges at +0x73). D28 does not resolve them.
 
-- **`matcpx_assign_scalar`** (`0x493c0`, 219 bytes): candidate 206 bytes with the plain loop. Shapes tried, all differ: plain loop 206; pointer loop 217; `std::fill` 217; `std::fill_n` 218; store element 0 then copy forward 218; `_dcomplex` as `double v[2]` 206. The original stores the value as one 16-byte `movups` and fills the rest with `rep movs` over overlapping element pairs. Flags not searched (D25).
 - **`sum` family** (7: `matdbl_sum` `0x7c650`, `matflt_sum` `0x7c780`, `mats{32,16}_sum`, `matu{32,16,8}_sum`): the body matches except for the epilogue. The candidate is 2 bytes longer for the integer forms (219 vs 217) and for `dbl` (299 vs 297), because the two `const char *` returns merge into one register (`lea rcx` + `mov rax, rcx`; `xor ecx` + `mov eax, ecx`). The original returns `lea rax` / `xor eax` directly. Five declaration orders of the locals were tried, all 219. `flt` is 302 vs 287 (the original unrolls by four).
 - **`range` family** (5: `mats{32,16}_range`, `matu{32,16,8}_range`): the same return-merge (`lea rcx`, `mov rax, rcx`, +3 bytes per return), plus the original places its null-pointer return block inline, so its jumps are short (rel8); the candidate puts that block at the end, with rel32 jumps. Both forms tried; no reordering of the checks is allowed.
 - **`matu8_bit_and/or/xor`, `matu16_*`, `matu32_*`** (9): same length as the original (662/664/661) and the vectorized loop matches; the candidate differs in one register choice (`b`'s `rows * cols` operand order in `validate`) and carries an unverified `3.0` constant (`__real@4008000000000000`). That constant can only be recorded through a matching function that uses it, and none does yet. Parked; the helpers stay in `mutils_mat_ops.h`.
@@ -64,7 +63,7 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 
 ## Remaining work
 
-- 700 exports not yet implemented, plus the 33 parked above.
+- 700 exports not yet implemented, plus the 32 parked above.
 - The `siguniv_window_*` dispatchers (11) call typed `sigdbl_window_*` exports, so they cannot link until those exist; they wait for their typed exports.
 - `matuniv_wrap_data` and `matuniv_wrap_matrix` dispatch through a jump table over a nine-case type enum, with different field copies per case.
 - The `add`/`subtract`/`multiply_elem` families (about 680 bytes each for `int` types) are auto-vectorized with runtime alias checks, so the source shape has to reproduce the vectorizer's output.

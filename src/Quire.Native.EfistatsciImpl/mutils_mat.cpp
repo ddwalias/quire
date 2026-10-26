@@ -30,6 +30,20 @@ const char *matu8_assign_scalar(unsigned char value, void *context, _uint8_mat *
     return assign_scalar(value, context, m);
 }
 
+// Not the template: through it the value splits into two doubles and the fill loses the original's rep movs.
+const char *matcpx_assign_scalar(_dcomplex value, void *context, _dcomplex_mat *m) {
+    if (m == nullptr) Efi::Throw("null pointer", ~0ull);
+    if (m->rows <= 0 || m->cols <= 0) Efi::Throw("array size mismatch", ~0ull);
+    _dcomplex *data = m->data;
+    if (data == nullptr) Efi::Throw("null pointer", ~0ull);
+    int size = m->size;
+    if (size != m->rows * m->cols) Efi::Throw("array size mismatch", ~0ull);
+    for (int i = 0; i < size; ++i) data[i] = value;
+    double work = (double)size + (double)size;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+    return nullptr;
+}
+
 void matdbl_validate(const _double_mat *m) { validate(m); }
 void matflt_validate(const _float_mat *m) { validate(m); }
 void mats32_validate(const _sint32_mat *m) { validate(m); }
