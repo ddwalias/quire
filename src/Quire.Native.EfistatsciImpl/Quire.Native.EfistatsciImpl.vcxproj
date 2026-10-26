@@ -82,6 +82,9 @@
     <ClCompile Include="mutils_binary.cpp" />
     <ClCompile Include="mutils_scalar.cpp" />
     <ClCompile Include="mutils_sum_dims.cpp" />
+    <ClCompile Include="mutils_entropy.cpp" />
+    <ClCompile Include="mutils_rescale.cpp" />
+    <ClCompile Include="mutils_translate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="efiutl.def" />

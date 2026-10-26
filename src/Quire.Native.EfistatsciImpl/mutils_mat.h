@@ -121,4 +121,12 @@ EFI_EXPORT const char *matu32_assign(const _uint32_mat *src, void *context, _uin
 EFI_EXPORT const char *matu16_assign(const _uint16_mat *src, void *context, _uint16_mat *dst);
 EFI_EXPORT const char *matu8_assign(const _uint8_mat *src, void *context, _uint8_mat *dst);
 
+EFI_EXPORT const char *matdbl_range(Efi::EfiCallContext *ctx, const _double_mat *m, void *context, double *min, double *max);
+EFI_EXPORT const char *matflt_range(Efi::EfiCallContext *ctx, const _float_mat *m, void *context, float *min, float *max);
+EFI_EXPORT const char *mats32_range(Efi::EfiCallContext *ctx, const _sint32_mat *m, void *context, long *min, long *max);
+EFI_EXPORT const char *mats16_range(Efi::EfiCallContext *ctx, const _sint16_mat *m, void *context, short *min, short *max);
+EFI_EXPORT const char *matu32_range(Efi::EfiCallContext *ctx, const _uint32_mat *m, void *context, unsigned int *min, unsigned int *max);
+EFI_EXPORT const char *matu16_range(Efi::EfiCallContext *ctx, const _uint16_mat *m, void *context, unsigned short *min, unsigned short *max);
+EFI_EXPORT const char *matu8_range(Efi::EfiCallContext *ctx, const _uint8_mat *m, void *context, unsigned char *min, unsigned char *max);
+
 }  // namespace mutils

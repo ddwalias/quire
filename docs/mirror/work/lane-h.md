@@ -1,6 +1,6 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 277 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path, `cumulative_sum` 7, 24 unsigned bit operations, `realloc` 8, `abs` 4, `range` 7, 35 binary arithmetic exports, 14 scalar ones, `number_equal_scalar` 7 and `sum_cols`/`sum_rows` 14 (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
+**Status: incomplete.** 297 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path, `cumulative_sum` 7, 24 unsigned bit operations, `realloc` 8, `abs` 4, `range` 7, 35 binary arithmetic exports, 14 scalar ones, `number_equal_scalar` 7 `sum_cols`/`sum_rows` 14, `entropy` 7, `rescale` 7 and `translate` 6 (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261027` (from `main` at `adee6ba0`; first batch landed as `75ba2925`)
@@ -33,6 +33,9 @@
 | `add_scalar`, `multiply_scalar` | 7 typed each | 14/14 OK | `mutils_scalar.cpp`. The scalar bit-operation shape with the context first; scalar of the element type. |
 | `number_equal_scalar` | 7 typed | 7/7 OK | In `mutils_number_equal.cpp`; the one-matrix form of `number_equal`. |
 | `sum_cols`, `sum_rows` | 7 typed each | 14/14 OK | `mutils_sum_dims.cpp`. `src` dims in locals; per-line sums with the submat-style progress; work `cols * 4.0` per line in both. s16/u16/u8 check `dst` with `check_src_f`. |
+| `entropy` | 7 typed | 7/7 OK | `mutils_entropy.cpp`. Two submat-style progress steps of `size`. dbl/flt: probabilities, a negative value or `!(fabs(sum - 1.0) <= (fabs(sum) + 1.0) * 1e-05)` returns "Illegal data value"; `matflt` uses `logf`. Integer types: counts summed as `int`, with the `< 0` test kept even for unsigned types (it prevents vectorization), `*out -= v * log(v / (double)sum)`, then `/ sum` and `/ log(2.0)`. |
+| `rescale` | 7 typed | 7/7 OK | `mutils_rescale.cpp`. Checks `dst`, then calls the typed `range` export (LTCG inlines it; its check is the `src` check), shape test, `lo > hi` returns "Illegal data value", `double scale = min == max ? 0.0 : (hi - lo) / (max - min)` in doubles. `matdbl` checks `dst` with `validate`. |
+| `translate` | 6 typed (not `matdbl`) | 6/6 OK | `mutils_translate.cpp`. `(0, 0)` calls the typed `assign`; otherwise `assign_scalar(value)` fills `dst`, then the overlapping block is copied with per-row work `(cols + 1) * 8`. The progress locals are declared before the range branches; the inner loop starts `k` before `j`, and `out_row` is incremented after the work update. |
 | `validate` | `mat{dbl,flt,s32,s16,u32,u16,u8,cpx}_validate` | 8/8 OK | One body (linker-folded in the original, `0x86460`). Reads `rows`/`cols` into locals first; the direct form picked another register. |
 | `wrap_data` | 7 typed exports (no `cpx`) | 7/7 OK | Same body for all seven (`0x859e0`). |
 | `malloc` | 8 typed exports | 8/8 OK | `allocate_mat<T>`; the allocator is `EfiCallContext`'s pointer at +80h. |
@@ -79,11 +82,13 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 
 - **`matdbl_cast_to_flt`**: instructions match (bounds ±1e37 as doubles, saturating to ±1e37f). It fails only on data: in the original the float constants `__real@fcf0bdc2`/`__real@7cf0bdc2` follow the two double bounds, and the comparison reads into them. Only code after `matuniv_range_robust` (`0x7FB40`) references those floats, so this export should match unchanged once that function exists. `matdbl`/`matflt_cast_to_s32`, `_s16` and `_u32` (the clamped shape; bounds ±2147483647.0, ±32767.0, 0/4294967295.0) are parked with it. All six match while `matdbl_cast_to_flt` is in the DLL and fail without it, one after another: each bound constant is followed in the original's sorted pool by the next one, ending at `-1e37`/`1e37` (see Harness notes). Retry them together once `matuniv_range_robust` (a dispatcher) can land, or once the harness compares constants over their own size. Source: the clamped-cast shape with `double v = src->data[i]`, bounds `v < -1e37` / `v > 1e37`, work `size * 4.0`.
 
+- **`matdbl_translate`**: the original's link inlines `matdbl_assign_scalar` here (`rep stos`); the other types call it. With the fill written inline the candidate is 871 bytes against 867, and only register allocation differs. Check forms tried: all six combinations of `check_src_f`/`check_dst_f`/`validate`.
+
 - Helper pattern for functions that return a message (added after the parked `sum`/`range` work): the exports call `validate` themselves, return the message literal themselves, and put only void/bool shared logic in `__forceinline` helpers (`same_shape`, `binary_elementwise`, `running_sum`). A message returned from an inlined template comes back in `rcx` and is copied to `rax`; the original returns it in `rax`. The helper pattern removes that copy.
 
 ## Remaining work
 
-- 505 exports not yet implemented, plus the 23 parked above.
+- 485 exports not yet implemented, plus the 24 parked above.
 - The `siguniv_window_*` dispatchers (11) call typed `sigdbl_window_*` exports, so they cannot link until those exist; they wait for their typed exports.
 - `matuniv_wrap_data` and `matuniv_wrap_matrix` dispatch through a jump table over a nine-case type enum, with different field copies per case.
 - `mutil_realloc`: its `.pdata` extent conflicts with the code address (18-byte extent for a 71-byte body). Not implemented; parked for the maintainer.
