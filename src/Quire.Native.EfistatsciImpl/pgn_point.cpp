@@ -104,4 +104,11 @@ EFI_EXPORT const char *pgndbl_shape_features(Efi::EfiCallContext *, const _doubl
     return nullptr;
 }
 
+EFI_EXPORT const char *pgnuniv_shape_features(Efi::EfiCallContext *ctx, const _univ_mat *poly, void *context, double *cx, double *cy, double *area, double *perimeter, double *xmin, double *xmax, double *ymin, double *ymax) {
+    if (poly == nullptr) return "null pointer";
+    if (poly->type != EFI_DOUBLE) return "Illegal data type";
+    if (const char *error = pgndbl_shape_features(ctx, (const _double_mat *)poly, context, cx, cy, area, perimeter, xmin, xmax, ymin, ymax)) return error;
+    return nullptr;
+}
+
 }  // namespace mutils

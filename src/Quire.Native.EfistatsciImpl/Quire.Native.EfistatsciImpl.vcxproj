@@ -96,6 +96,8 @@
     <ClCompile Include="pgn_point.cpp" />
     <ClCompile Include="mutils_rand.cpp" />
     <ClCompile Include="img_moment.cpp" />
+    <ClCompile Include="mutils_untile.cpp" />
+    <ClCompile Include="mutils_tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="efiutl.def" />
