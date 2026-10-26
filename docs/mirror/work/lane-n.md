@@ -609,6 +609,18 @@
 - Report: `.mirror-cache/release-il-dc00752552d8/release-il.json` — PASS, 1,430 checked, 1,430 exact, 0 failures, 2,523 unfinished.
 - Remaining mismatches: none in claimed batch.
 
+## Batch 73 — ResourceDictionaries (ColorPickerCommonResources, MessageDialogsDictionary, CopyDictionary, ImageControlDictionary, TextStylesDictionary)
+
+- Scope:
+  - `ColorPickerCommonResources` (`InitializeComponent`, `Connect`, `_contentLoaded`, `ColorPickerPaletteCollectionKey`)
+  - `MessageDialogsDictionary` (`.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`)
+  - `CopyDictionary` (`.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`, `Instance`)
+  - `ImageControlDictionary` (`.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`, `Instance`)
+  - `TextStylesDictionary` (`.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`, `Instance`)
+- Report: `.mirror-cache/release-il-8c80e32d0795/release-il.json` — PASS, 1,447 checked, 1,447 exact, 0 failures, 2,509 unfinished.
+- Remaining mismatches: none in claimed batch.
+
+
 
 
 
