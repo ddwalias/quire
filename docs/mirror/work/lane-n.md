@@ -609,12 +609,13 @@
 - Report: `.mirror-cache/release-il-dc00752552d8/release-il.json` — PASS, 1,430 checked, 1,430 exact, 0 failures, 2,523 unfinished.
 - Remaining mismatches: none in claimed batch.
 
-## Batch 78 — Serialization.IntegrationDataSerializer
+## Batch 79 — Serialization.PropertySerializableToXmlAttribute
 
 - Scope:
-  - `IntegrationDataSerializer` (`.ctor`, `Write`, `Read`, `GetXNameWithIntegrationNameSpace`, static constants `Integration10`, `Regions`, `Region`, `RegionId`, `IOTagType`, `InputAliases`, `OutputAliases`, `Alias`, `IntegrationUri`, `IntegrationType`, fields `_documentArea`, `_document`, `_partSerializer`, method group helper `<>O.<0>__OnWriteValidationFailedDevAssert`)
-- Report: `.mirror-cache/release-il-f1d62a12c1e9/release-il.json` — PASS, 1,469 checked, 1,469 exact, 0 failures, 2,490 unfinished.
+  - `PropertySerializableToXmlAttribute` (`.ctor(object, string, string)`, `.ctor(object, string, string, SerializationInfo)`, `.ctor(object, string, string, TypeConverter)`, `.ctor(object, string, string, TypeConverter, SerializationInfo)`, `ShouldSerializeDefaultValue`, `DefaultValue`, `CanWriteXML`, `GetSchema`, `ReadXml(XmlReader)`, `WriteXml(XmlWriter)`, `ReadXml(XElement)`, `WriteXml(XElement)`, `ReadXml(XmlElement)`, `WriteXml(XmlElement)`, `_serializationInfo`)
+- Report: `.mirror-cache/release-il-fe84cee19848/release-il.json` — PASS, 1,480 checked, 1,480 exact, 0 failures, 2,479 unfinished.
 - Remaining mismatches: none in claimed batch.
+
 
 
 
