@@ -368,3 +368,10 @@
   - `Properties.Resources` (`resourceMan`, `ResourceManager`)
 - Report: `.mirror-cache/release-il-f42615804a36/release-il.json` — PASS, 1,245 checked, 1,245 exact, 0 failures, 2,669 unfinished.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 39 — Property (Serialization)
+
+- Scope:
+  - `Property` (`component`, `_propertyName`, `PropertyValue`, `StringPropertyValue`, `.ctor(object, string, TypeConverter)`, `.ctor(object, string)`, `AttemptToGetDefaultValue`, `ResetValue`)
+- Report: `.mirror-cache/release-il-e3be1fe26cdd/release-il.json` — PASS, 1,253 checked, 1,253 exact, 0 failures, 2,661 unfinished.
+- Remaining mismatches: none in claimed batch.

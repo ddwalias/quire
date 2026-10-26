@@ -11,20 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.Property, Ptc.Controls.Core")]
 public partial class Property
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected internal object component;
-    [global::Quire.Mirror.MirrorStub]
-    protected internal string _propertyName;
-    [global::Quire.Mirror.MirrorStub]
-    protected internal object PropertyValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected internal string StringPropertyValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected internal Property(object o, string propertyName, global::System.ComponentModel.TypeConverter converter) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected internal Property(object o, string propertyName) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected internal bool AttemptToGetDefaultValue(out object defVal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void ResetValue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
