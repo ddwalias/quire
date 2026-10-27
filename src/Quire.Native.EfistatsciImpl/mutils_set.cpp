@@ -1,5 +1,7 @@
 #include "mutils_set.h"
 
+#include <string.h>
+
 namespace mutils {
 
 void matset_malloc(Efi::EfiCallContext *ctx, _mat_set *s, long count, const long *dims) {
@@ -28,6 +30,41 @@ void matset_free(Efi::EfiCallContext *, _mat_set *s) {
 void matset_free_matrices(Efi::EfiCallContext *, _mat_set *s) { validate(s); }
 
 void matset_validate(const _mat_set *s) { validate(s); }
+
+EFI_EXPORT const char *pgn_chain_malloc(Efi::EfiCallContext *ctx, _pgn_chain *chain, long n) {
+    if (chain == nullptr) return "null pointer";
+    if (n == 0) {
+        chain->points = nullptr;
+        chain->count = 0;
+        chain->codes = nullptr;
+    } else {
+        if (n < 0) return "Illegal data value";
+        chain->points = static_cast<int *>(ctx->allocator->allocate_array(n * sizeof(int)));
+        chain->codes = static_cast<unsigned char *>(ctx->allocator->allocate_array(n));
+        chain->count = n;
+    }
+    return nullptr;
+}
+
+EFI_EXPORT const char *pgn_chain_realloc(Efi::EfiCallContext *ctx, _pgn_chain *chain, long n) {
+    if (chain == nullptr) return "null pointer";
+    if (n != 0) {
+        if (chain->count == 0) return pgn_chain_malloc(ctx, chain, n);
+        if (n < 0) return "Illegal data value";
+        if (n * sizeof(int) >= chain->count * sizeof(int)) {
+            int *points = static_cast<int *>(ctx->allocator->allocate_array(n * sizeof(int)));
+            memcpy(points, chain->points, n * sizeof(int));
+            chain->points = points;
+        }
+        if ((size_t)n >= (size_t)chain->count) {
+            unsigned char *codes = static_cast<unsigned char *>(ctx->allocator->allocate_array(n));
+            memcpy(codes, chain->codes, n);
+            chain->codes = codes;
+        }
+        chain->count = n;
+    }
+    return nullptr;
+}
 
 const char *pgn_chain_free(Efi::EfiCallContext *, _pgn_chain *chain) {
     if (chain == nullptr || chain->count == 0) return nullptr;
