@@ -1,10 +1,10 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 375 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30): the 78 below and 79 from the consumer path, `cumulative_sum` 7, 24 unsigned bit operations, `realloc` 8, `abs` 4, `range` 7, 35 binary arithmetic exports, 14 scalar ones, `number_equal_scalar` 7 `sum_cols`/`sum_rows` 14, `entropy` 7, `rescale` 7, `translate` 6, `threshold` 4, `histogram` 4 12 signal windows `map_invert` 4, `matuniv_histogram` all `generate_rectangle`, `matdbl_translate` two `binary_dilate`, the four typed `grayscale_erode` `matu8_write_raw` the `rectangular_to_polar` and `point_test` pairs, `range_robust` 7, `pgndbl_shape_features`, `mutil_rand_set_seed` `mutil_rand_begin` `matcpx_to_double` the `moment` pair, `pgnuniv_shape_features` `tile`/`untile` 16, `matdbl`/`matflt_cast_to_u32`, the `rectangular_from_polar` pair `mutil_rand_uniform` and `matset_resize` (`transpose` 8, `flip_left_right` 8, `flip_up_down` 7, `assign` 7, `extract` 8, `number_equal` 7, `assign_zeropad` 7, `permute` 7, clamped `cast_to_*` 17, `cast_to_cpx` 2, `matcpx_cast_to_dbl`). No regressions in the linked run.
+**Status: incomplete.** 381 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30). The six typed `mat*_write_raw` exports were added in this batch; `matu8_write_raw` already passed. No regressions in the clean linked run.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
-- **Branch:** `mirror/h-efistatsci-20261027` (from `main` at `adee6ba0`; first batch landed as `75ba2925`)
-- **Worktree:** `C:/Projects/Quire-wt/lane-h-efistatsci-2`
+- **Branch:** `mirror/h-efistatsci-20261027b` (from `main` at `b0fb294b`; first batch landed as `75ba2925`)
+- **Worktree:** `C:/Projects/Quire-wt/lane-h-efistatsci-3`
 - **Harness:** `tools/validation/native_bytes.py` and `native_targets.py` on `main`, unmodified.
 - **Build:** MSBuild `Quire.Native.EfistatsciImpl.vcxproj`, Release|x64, toolset v145, `cl` 19.51.36246 from `C:\BuildTools\VS18.6-msvc`, `/O2 /Gy /GS /EHa /MD /std:c++17 /W4 /WX` with `_CRTIMP2=__declspec(dllimport)` (D28), and `WholeProgramOptimization` true (`/GL` + LTCG). The original objects are `/GL` (D25); this build reproduces its entry code (`mov r10, rcx`), where the per-object build gives `mov r9, rcx`. Output in `.mirror-cache/bin/`.
 - **Cast family:** the six `matu8_cast_to_*` exports and twelve widening casts from `u16`, `s16`, `u32`, `s32` and `float` (`mutils_cast.cpp`) match in the linked `/GL` DLL. They use the validate forms that fixed `assign_submat` (`src` fresh-field, `dst` cols-first).
@@ -49,7 +49,7 @@
 | `matuniv_histogram` | univ | 1/1 OK | Compare chain over dbl/s32/u16/u8; `hist` must be `EFI_UINT32`. |
 | `img*_binary_dilate` | s32, u16 | 2/2 OK | `img_morph.cpp`. `src`/`se`/`dst` checks, shape and alias tests, `fg == bg` returns "Illegal data value"; `src->data` taken before the `assign_scalar(bg)` call; stamps `se` around each `fg` pixel; work `((se_cols * 3 + 3.0) * se_rows + 2.0) * cols`. |
 | `img*_grayscale_erode` | dbl, s32, u8, u16 | 4/4 OK | `img_grayscale.cpp`, after `img_generate.cpp` as in the original. `check_src_f` on `src`, `se`, `dst`; size and alias tests; `switch (boundary)` with zero (0, out-of-image pixels read 0) and replicate (3, clamped), others "Illegal data value", written inline at both fetches (a helper function does not match); minimum of pixel(`r + k - se_row`, `c + l - se_col`) - `se`, the `(0, 0)` element taken first; work `se_rows * 8.0 * se_cols * cols + 8.0` per row. |
-| `matu8_write_raw` | u8 | 1/1 OK | `mutils_io.cpp`. Null `fp` returns "null pointer"; `fwrite` straight from `m->data` in chunks of at most `0xFFFFFFFF`; a short write returns "Input-output error"; work `size * 1000`. |
+| `mat*_write_raw` | dbl, flt, s32, s16, u32, u16, u8 | 7/7 OK | `mutils_io.cpp`. Null `fp` returns "null pointer"; typed forms allocate a byte buffer and reverse each element when `swap` is set, with the swap-loop index initialized before the positive-size branch; writes use chunks of at most `0xFFFFFFFF`; a short write returns "Input-output error". Work is `size * 1000` for u8, and type-specific byte and element counts for the other forms. |
 | `pgn*_rectangular_to_polar`, `pgn*_rectangular_from_polar` | dbl, univ | 4/4 OK | `pgn_polar.cpp`. n×2 points to `(r, θ)`; `θ = atan(dy/dx)`, `+π` when `dx < 0`, then `+2π` when negative; `dx == 0` gives `π/2` or `3π/2`; work `rows * 20.0`. |
 | `pgn*_point_test` | dbl, univ | 2/2 OK | `pgn_point.cpp`. Winding-number test with the boundary cases (crossing edge through the point, horizontal edge on the line); the last vertex is read as `data[(n - 1) * poly->cols]`; the final classification is an `if`/`else` on `*winding & 1` (the bit forms compile to `not`/`and`). |
 | `pgndbl_shape_features` | dbl | 1/1 OK | In `pgn_point.cpp`. Shoelace sums started from the closing edge, running bounding box and perimeter; the loop updates are ordered `sy`, `sum`, `sx`, perimeter; the first perimeter term is written `dx² + dy²`, the loop's `dy² + dx²`. Work `rows * 50.0`. |
@@ -107,7 +107,7 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 
 - **`matdbl_assign_scalar` is `__forceinline`**: the original never calls it (0 call sites); its link inlines it into every user (`matdbl_translate`, `imgdbl_generate_rectangle`, ...). With the attribute those callers match and the export still matches. **`img*_generate_disk`** (s32, u16, u8): reconstructed (`ceil(radius)`, clipped rows, `floor(sqrt(r^2 - dy^2))` half-width, `painted` flag, work `radius * 5.0 + 3.0`); the original re-reads `dst->cols` where the candidate keeps it in a register. **`imgdbl`/`imgu8_binary_dilate`**: register assignment only. **`mat*_multiply`** (7): the plain triple loop with `dst`/`a`/`b` checks, the alias test and work `dst->cols * a->cols * 8.0` gets 0.76-0.96; the remaining difference is register assignment around the unrolled inner loop (permuter: no improvement on `mats16`).
 
-- **`mat*_write_raw` (dbl, flt, s32, s16, u32, u16), `mat*_read_raw`, `mat*_binary_erode`, `matdbl_to_complex`**: reconstructed in `.mirror-cache/lane-h-tools/parked_*.cpp` (local). write_raw reaches 0.985-0.993 (with `*(in + i + k)` for the byte swap); only the order of `i = 0` against the bound computation differs. read_raw differs in which register the final work addition lands in.
+- **`mat*_read_raw`, `mat*_binary_erode`, `matdbl_to_complex`**: reconstructed in `.mirror-cache/lane-h-tools/parked_*.cpp` (local). `read_raw` differs in which register the final work addition lands in.
 
 - **`mutil_rand_uniform`, `mutil_rand_normal`**: both match while `normal` is in the DLL, but `normal` fails on the pooled-constant neighbour of `-2.0`: in the original `-π` (only from `cls*_scalar_quantize_angle`) follows it. `uniform` alone, as a leaf placed before CRT code, takes the alignment `nop` padding into its extent (the harness trims only `int3`). Land both with `cls*_scalar_quantize_angle`. 
 
@@ -128,7 +128,7 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 
 ## Remaining work
 
-- 360 exports not yet implemented, plus the 88 parked above.
+- 360 exports not yet implemented, plus the 82 parked above.
 - The `siguniv_window_*` dispatchers (11) call typed `sigdbl_window_*` exports, so they cannot link until those exist; they wait for their typed exports.
 - `matuniv_wrap_data` and `matuniv_wrap_matrix` dispatch through a jump table over a nine-case type enum, with different field copies per case.
 - `mutil_realloc`: its `.pdata` extent conflicts with the code address (18-byte extent for a 71-byte body). Not implemented; parked for the maintainer.
