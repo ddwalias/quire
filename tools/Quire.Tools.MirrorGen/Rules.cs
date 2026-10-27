@@ -96,7 +96,6 @@ public sealed class Rules
         {
             "licensewizard" or "ptc.license.plpf" => "deferred: licensing (D5)",
             "ptc.oleinterop" => "deferred (D5)",
-            "creo3dfit" => "deferred (D5)",
             "mathcadprime" when path.EndsWith(".exe", StringComparison.OrdinalIgnoreCase) => "app host: built with the Quire project",
             "ijwhost" => "toolchain: .NET host shim the C++/CLI build ships",
             "documentformat.openxml" => "dependency: DocumentFormat.OpenXml",
@@ -200,7 +199,7 @@ public sealed class Rules
             "McdStaticUnitSystemUS", "McdTranslator", "McdUnitSystemCGS", "McdUnitSystemMKS", "McdUnitSystemNone",
             "McdUnitSystemSI", "McdUnitSystemUS", "Mpl", "MplConstants", "MplMacro", "MplPrelude", "MplPrimitives",
             "MplSexpr", "MplUnitSystemSI"]),
-        (Language.Native, ["efistatsci_", "efisymbolics-umgd", "engutils", "mcaduser", "mctranslator", "mshex", "msmpl",
+        (Language.Native, ["creo3dfit", "efistatsci_", "efisymbolics-umgd", "engutils", "mcaduser", "mctranslator", "mshex", "msmpl",
             "mspcons", "msprolog", "utl"]));
 
     private static Dictionary<string, (Language, string)> Table(params (Language Language, string[] Names)[] groups) =>

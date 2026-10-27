@@ -16,9 +16,8 @@ public static class NativeInventory
     static readonly string[] MathcadDlls =
     [
         "efistatsci_.dll", "efisymbolics-umgd.dll", "engutils.dll", "mcaduser.dll", "mctranslator.dll",
-        "mshex.dll", "msmpl.dll", "mspcons.dll", "msprolog.dll", "utl.dll",
+        "mshex.dll", "msmpl.dll", "mspcons.dll", "msprolog.dll", "utl.dll", "creo3dfit.dll",
     ];
-    const string CreoDll = "creo3dfit.dll";
     const uint UndnameComplete = 0x0000, UndnameNameOnly = 0x1000;
 
     sealed record Export(int Ordinal, string? Name, string? Forwarder, string? Undecorated, string? QualifiedName);
@@ -29,16 +28,12 @@ public static class NativeInventory
     {
         Directory.CreateDirectory(outDir);
         var dlls = new List<DllExports>();
-        foreach (var dll in MathcadDlls.Append(CreoDll))
+        foreach (var dll in MathcadDlls)
         {
             string path = Path.Combine(installDir, dll);
             if (!File.Exists(path)) { dlls.Add(new(dll, [], 0, "file not found")); continue; }
             var all = ReadExports(path);
-            if (dll == CreoDll)
-                dlls.Add(new(dll, all.Where(e => e.Name?.Contains("mathcad", StringComparison.OrdinalIgnoreCase) == true).ToList(), all.Count,
-                    "only names containing \"mathcad\" are listed; the rest are PTC Creo internals, out of scope"));
-            else
-                dlls.Add(new(dll, all, all.Count, null));
+            dlls.Add(new(dll, all, all.Count, null));
         }
 
         var summary = new List<string>();
@@ -135,7 +130,6 @@ public static class NativeInventory
         {
             sb.AppendLine();
             string count = d.Note == null ? $"{d.Exports.Count} exports"
-                : d.Dll == CreoDll ? $"{d.Exports.Count} of {d.TotalInImage} exports ({d.Note})"
                 : $"0 exports ({d.Note})";
             sb.AppendLine($"== {d.Dll}: {count}");
             foreach (var e in SortedByName(d.Exports))

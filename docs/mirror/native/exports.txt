@@ -2791,5 +2791,12 @@
   @100   ?toBSTR@utl@@YAPEA_WIPEBD_K@Z
          => wchar_t * __ptr64 __cdecl utl::toBSTR(unsigned int,char const * __ptr64,unsigned __int64)
 
-== creo3dfit.dll: 1 of 5 exports (only names containing "mathcad" are listed; the rest are PTC Creo internals, out of scope)
+== creo3dfit.dll: 5 exports
+  @1     ?CurrentKind@btkEvent@@1HA
+         => protected: static int btkEvent::CurrentKind
+  @2     ?StdStream@btkProcess@@2VDefaultStream@1@A
+         => public: static class btkProcess::DefaultStream btkProcess::StdStream
+  @3     ?mbsMode@btkMBStrFunc@@0PEAVbtkOBSFunc@@EA
+         => private: static class btkOBSFunc * __ptr64 __ptr64 btkMBStrFunc::mbsMode
   @4     mathcad_fitsurface_
+  @5     storageclient_debug_bind_hack

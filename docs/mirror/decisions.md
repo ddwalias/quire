@@ -1,5 +1,11 @@
 # Current project decisions
 
+## D31: include creo3dfit (2026-10-27)
+
+`creo3dfit.dll` is in scope as `Quire.Native.Creo3dfit`, superseding its D5 deferral.
+Mirror its native exports and supported behavior under the native validation rules. Its independent
+Creo platform dependencies remain deferred. No lane is assigned by this decision.
+
 ## D17: five-step Release IL workflow (2026-10-20)
 
 Claim unowned members, read original Mathcad IL, implement, compare Release IL, commit and
@@ -57,9 +63,9 @@ not from file names: the `-mgd` suffix does not mean C++/CLI.
 | C# | 34 | Roslyn `.csproj` | `Ptc.*`, `MathcadPrime`, `automation`, `automationmgd`, `componentsmgd`, `efiio-csharp`, `efiplot_`, `efisixsigma_`, `interop.*` (D22), `mcmisc`, `mplasb`, `mplrun`, `utilsmgd` |
 | C++/CLI | 31 | `.vcxproj`, MSVC 19.51.36246 (D19) | `efi*_` except `efiplot_`/`efisixsigma_`, `efiutl`, `engutils-mgd`, `iengine`, `mccore12`, `mcdepman`, `mceng`, `mcfront12`, `msclr`, `msgen`, `mslisp`, `mspcons-mgd`, `utl-mgd` |
 | Mpl | 51 | Quire's own Mpl toolchain | `efi*` without `_` except `efiio-csharp`, `efiutl`, `efisymbolics-umgd`; `mpl*` except `mplasb`/`mplrun`, `mcd*` except `mcdepman`, `hashtable` |
-| Native | 10 | native `.vcxproj`, outside the IL gate (D10) | `efistatsci_`, `efisymbolics-umgd`, `engutils`, `mcaduser`, `mctranslator`, `mshex`, `msmpl`, `mspcons`, `msprolog`, `utl` |
+| Native | 11 | native `.vcxproj`, outside the IL gate (D10) | `creo3dfit`, `efistatsci_`, `efisymbolics-umgd`, `engutils`, `mcaduser`, `mctranslator`, `mshex`, `msmpl`, `mspcons`, `msprolog`, `utl` |
 
-`Ptc.License.Plpf` and `Ptc.OleInterop` (C++/CLI) and `creo3dfit` (native) stay deferred (D5). Every other binary in the
+`Ptc.License.Plpf` and `Ptc.OleInterop` (C++/CLI) stay deferred (D5); `creo3dfit` is in scope (D31). Every other binary in the
 install has a recorded reason in `Rules.NotMirrored`, and the [assembly map](assembly-map.md) lists all of them.
 
 - **Mpl modules** are emitted by Mathcad's Mpl compiler: every method has `.maxstack 48` and many calls carry

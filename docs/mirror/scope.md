@@ -98,7 +98,7 @@ The table records what each component is and how it would be mirrored if the sco
 | `axiom/mathcad.input`, `constants.input` | Axiom setup scripts | 2 | Mirror, independently written |
 | `lisp/*.lisp` (3), `prolog/*.prolog` (11) | **Readable PTC source code** | 14 files | Mirror the module, function and predicate structure. The source text is never copied; implementations are written independently, as everywhere else |
 | `Custom Functions/MCADINCL.H` and `mcaduser.lib` | The public C SDK for user-written functions | 1 header | Mirror the C API, so user DLLs written for Mathcad can be loaded (an interoperability API) |
-| `creo3dfit.dll` | `mathcad_fitsurface_`, a Mathcad surface-fitting entry point | 5 exports | Mirror the Mathcad function. The Creo internals it uses are not mirrored |
+| `creo3dfit.dll` | Native exports including the Mathcad surface-fitting entry point `mathcad_fitsurface_` | 5 exports | In scope as `Quire.Native.Creo3dfit` (D31); mirror its exports and supported behavior. Separate Creo platform libraries remain deferred. |
 
 ### 1.4 PTC Creo platform libraries (PTC, but shared across Creo products, not Mathcad-specific)
 

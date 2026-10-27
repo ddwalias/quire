@@ -1461,4 +1461,10 @@ namespace utl  (46 exports)
     wchar_t * __ptr64 __cdecl utl::toBSTR(unsigned int,char const * __ptr64,unsigned __int64)
     wchar_t const * __ptr64 __cdecl utl::GetLogDir(void)
 
-== creo3dfit.dll: 0 classes, 0 member exports, 0 namespace-scope, 0 global C++, 1 undecorated (C) exports (only names containing "mathcad" are listed; the rest are PTC Creo internals, out of scope)
+== creo3dfit.dll: 3 classes, 3 member exports, 0 namespace-scope, 0 global C++, 2 undecorated (C) exports
+class btkEvent  (1 members)
+    protected: static int btkEvent::CurrentKind
+class btkMBStrFunc  (1 members)
+    private: static class btkOBSFunc * __ptr64 __ptr64 btkMBStrFunc::mbsMode
+class btkProcess  (1 members)
+    public: static class btkProcess::DefaultStream btkProcess::StdStream
