@@ -1,6 +1,6 @@
 # Lane H: efistatsci_.dll → Quire.Native.EfistatsciImpl
 
-**Status: incomplete.** 381 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30). The six typed `mat*_write_raw` exports were added in this batch; `matu8_write_raw` already passed. No regressions in the clean linked run.
+**Status: incomplete.** 385 of 781 exports pass the linked `/GL` gate (`native_linked.py`, D30). The six typed `mat*_write_raw` exports were added in this batch; `matu8_write_raw` already passed. No regressions in the clean linked run.
 
 - **Owner:** Lane H (native, `efistatsci_.dll`)
 - **Branch:** `mirror/h-efistatsci-20261027b` (from `main` at `b0fb294b`; first batch landed as `75ba2925`)
@@ -101,7 +101,7 @@ Re-tested under D28 (`/EHa`, `_CRTIMP2`): every parked function keeps its size a
 
 - **`matdbl_cast_to_flt`**: instructions match (bounds ±1e37 as doubles, saturating to ±1e37f). It fails only on data: in the original the float constants `__real@fcf0bdc2`/`__real@7cf0bdc2` follow the two double bounds, and the comparison reads into them. Only code after `matuniv_range_robust` (`0x7FB40`) references those floats, so this export should match unchanged once that function exists. `matdbl`/`matflt_cast_to_s32`, `_s16` and `_u32` (the clamped shape; bounds ±2147483647.0, ±32767.0, 0/4294967295.0) are parked with it. All six match while `matdbl_cast_to_flt` is in the DLL and fail without it, one after another: each bound constant is followed in the original's sorted pool by the next one, ending at `-1e37`/`1e37` (see Harness notes). Retry them together once `matuniv_range_robust` (a dispatcher) can land, or once the harness compares constants over their own size. Source: the clamped-cast shape with `double v = src->data[i]`, bounds `v < -1e37` / `v > 1e37`, work `size * 4.0`.
 
-- **`sig*_window_blackman`, `_nuttall`, `_raised_cosine`** (6 with their dispatchers): formulas reconstructed. blackman differs only in which register holds `(i + 1)` around its second `cos` (permuter: no improvement in 500 attempts). nuttall's three `cos` calls are scheduled in another order than written; its dispatcher returns `nullptr` for other element types. raised_cosine differs only in epilogue placement.
+- **`sig*_window_blackman`, `_nuttall` landed (2026-10-27)**: a temporary for `i + 1` (`cos(t * step)`, `cos(step * 2 * t)`) fixes blackman; nuttall needs `size` as `__int64` and the doubled and tripled angles as locals (`t2 = t + t`, `t3 = t2 + t`) evaluated before the first `cos`. **`_raised_cosine`** (`parked_rc/`): 0.93; the original returns inline at the end and jumps to a shared epilogue from the early error returns, where the candidate does the opposite; seven reorderings of the checks and the final return did not change it.
 
 - **`matuniv_bit_*`** (8 compare-chain dispatchers over u8/u16/u32): the original keeps one shared `test rax,rax; jne` after the calls. The candidate duplicates the tail per case with `cmov` (`if (error) return error;` after the switch, per-case `if (const char *e = ...)`, or a null-initialized `error`), or drops the test (`return error;`, 70 bytes against 96).
 

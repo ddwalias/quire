@@ -126,4 +126,56 @@ EFI_EXPORT const char *siguniv_window_born_jordan(void *context, _univ_mat *w) {
     return nullptr;
 }
 
+EFI_EXPORT const char *sigdbl_window_blackman(void *context, _double_mat *w) {
+    validate(w);
+    if (w->cols != 1 && w->rows != 1) return "array size mismatch";
+    double step = 6.283185307179586 / (w->size + 1);
+    for (int i = 0; i < w->size; ++i) {
+        double t = (i + 1);
+        w->data[i] = 0.42 - 0.5 * cos(t * step) + 0.08 * cos(step * 2 * t);
+    }
+    double work = 0.0;
+    work += w->size * 100;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+    return nullptr;
+}
+
+EFI_EXPORT const char *siguniv_window_blackman(void *context, _univ_mat *w) {
+    if (w == nullptr) return "null pointer";
+    if (w->type != EFI_DOUBLE) return "Illegal data type";
+    if (const char *error = sigdbl_window_blackman(context, (_double_mat *)w)) return error;
+    return nullptr;
+}
+
+EFI_EXPORT const char *sigdbl_window_nuttall(void *context, _double_mat *w) {
+    validate(w);
+    if (w->cols != 1 && w->rows != 1) return "array size mismatch";
+    __int64 size = w->size;
+    w->data[0] = 0.0;
+    w->data[size - 1] = 0.0;
+    int last = (int)size - 1;
+    for (int i = 1; i < last; ++i) {
+        double t = i * 6.283185307179586 / last;
+        double t2 = t + t;
+        double t3 = t2 + t;
+        double v = 0.3635819 - 0.4891775 * cos(t);
+        v += 0.1365995 * cos(t2);
+        v -= 0.0106411 * cos(t3);
+        w->data[i] = v;
+    }
+    double work = 0.0;
+    work += w->size * 200;
+    if (work > 0.0) mutil_interrupt_inline(work, nullptr, context);
+    return nullptr;
+}
+
+EFI_EXPORT const char *siguniv_window_nuttall(void *context, _univ_mat *w) {
+    if (w == nullptr) return "null pointer";
+    // Unlike the other windows, another element type returns success without a message.
+    if (w->type == EFI_DOUBLE) {
+        if (const char *error = sigdbl_window_nuttall(context, (_double_mat *)w)) return error;
+    }
+    return nullptr;
+}
+
 }  // namespace mutils
