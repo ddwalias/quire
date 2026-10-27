@@ -35,7 +35,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <ExceptionHandling>Async</ExceptionHandling>
       <PreprocessorDefinitions>_CRTIMP2=__declspec(dllimport);%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -90,6 +90,7 @@
     <ClCompile Include="sig_window.cpp" />
     <ClCompile Include="img_map.cpp" />
     <ClCompile Include="img_generate.cpp" />
+    <ClCompile Include="img_grayscale.cpp" />
     <ClCompile Include="img_morph.cpp" />
     <ClCompile Include="mutils_io.cpp" />
     <ClCompile Include="pgn_polar.cpp" />
