@@ -1,25 +1,6 @@
 #include "mutils_mat.h"
 
-// Boundary handling for neighbourhood filters. Only the zero (0) and replicate (3) rules are handled by the
-// grayscale morphology; any other value is rejected.
-enum _mutil_boundary_type { MUTIL_BOUNDARY_ZERO = 0, MUTIL_BOUNDARY_REPLICATE = 3 };
-
 namespace mutils {
-
-// The pixel at (i, j) of `in` (rows x cols, row stride m->cols) under `boundary`; false for an unknown rule.
-template <typename T>
-__forceinline bool boundary_pixel(const typed_mat<T> *m, const T *in, int rows, int cols, int i, int j, _mutil_boundary_type boundary, T *value) {
-    if (boundary == MUTIL_BOUNDARY_ZERO) {
-        if (i >= 0 && j >= 0 && i < rows && j < cols) *value = in[i * m->cols + j];
-        else *value = 0;
-        return true;
-    }
-    if (boundary != MUTIL_BOUNDARY_REPLICATE) return false;
-    i = i < 0 ? 0 : (i > rows - 1 ? rows - 1 : i);
-    j = j < 0 ? 0 : (j > cols - 1 ? cols - 1 : j);
-    *value = in[i * m->cols + j];
-    return true;
-}
 
 
 EFI_EXPORT const char *imgdbl_grayscale_erode(Efi::EfiCallContext *, const _double_mat *src, const _double_mat *se, long se_row, long se_col, _mutil_boundary_type boundary, void *context, _double_mat *dst) {
