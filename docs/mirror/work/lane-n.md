@@ -756,4 +756,13 @@
   - `RestrictedAreaAlignmentGrid` (`AreasToSkip`, `.ctor()`, `.ctor(Size?)`, `GetNearestIntersectionInDirection`, `GetNextIntersection`, `GetNearestIntersectionPointDisregardingBounds`, `GetNearestInsertionPointIgnoringRestrictedAreas`, `IsWithinRestrictedArea`, `Dispose`, and closures `<>c__DisplayClass10_0`, `<>c__DisplayClass11_0`, `<>c__DisplayClass12_0`, `<>c__DisplayClass16_0`)
 - Report: `.mirror-cache/release-il-21ed139c7207/release-il.json` — PASS, 1,767 checked, 1,767 exact, 0 failures, 1,419 unfinished (was 1,435).
 - Remaining mismatches: none in claimed batch.
-- Still open: 1,419 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.
+
+## Batch 99 — AttachedBehavior subsystem (PropertiesBinder, FocusActivator, and AttachedBehavior)
+
+- Claimed:
+  - `AttachedBehavior.PropertiesBinder` (`_typeOfThis`, `SourceValueConnectorProperty`, `TargetValueConnectorProperty`, `OnValueChanged`, `_pathToSource`, `_pathToTarget`, `SourceValueConnector`, `TargetValueConnector`, `PathToSource`, `PathToTarget`, `BlockUndoWhenBindingToTarget`, `.ctor()`, `Attach`, `CreateTargetBinding`, `Detach`, `.cctor()`, closures `<.cctor>b__26_0`, `<OnValueChanged>b__0`)
+  - `AttachedBehavior.FocusActivator` (`_element`, `_activator`, `Attach`, `Detach`, `OnDataContextChanged`, `ElementGotFocus`, `ElementLostFocus`, `HookupToElementEvents`, `HookupToActivatorEvents`, `UnhookFromElementEvents`, `UnhookFromActivatorEvents`, `HandleMoveFocus`, `ActivateElement`, `.ctor()`)
+  - `AttachedBehavior.AttachedBehavior` (`_typeOfThis`, `CanBeActivatedProperty`, `ParentPropertyValueKeepersProperty`, `ChildPropertyValueFindersProperty`, `PropertyBindersProperty`, `RoutedEventBindingsProperty`, `MessagesDecoratorProperty`, `GetCanBeActivated`, `SetCanBeActivated`, `GetParentPropertyValueKeepers`, `SetParentPropertyValueKeepers`, `GetChildPropertyValueFinders`, `SetChildPropertyValueFinders`, `GetPropertyBinders`, `SetPropertyBinders`, `SetRoutedEventBindings`, `GetRoutedEventBindings`, `GetMessagesDecorator`, `SetMessagesDecorator`, `CoerceAttachedBehavior<T1, T2>`, `CoerceBooleanToAttachedBehavior<T>`, `CoerceItemToCollection<T1, T2>`, `OnAttachedBehaviorValueChanged`, `.cctor()`)
+- Report: `.mirror-cache/release-il-29aa36331ad4/release-il.json` — PASS, 1,804 checked, 1,804 exact, 0 failures, 1,389 unfinished (was 1,419).
+- Remaining mismatches: none in claimed batch.
+- Still open: 1,389 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.

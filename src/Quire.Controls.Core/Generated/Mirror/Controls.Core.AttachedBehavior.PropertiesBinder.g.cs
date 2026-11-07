@@ -11,24 +11,4 @@ namespace Quire.Controls.Core.AttachedBehavior;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.AttachedBehavior.PropertiesBinder, Ptc.Controls.Core")]
 public partial class PropertiesBinder : global::System.Windows.DependencyObject, global::Quire.Controls.Core.AttachedBehavior.IAttachedBehavior, global::Quire.Controls.Core.AttachedBehavior.IOneTimePropertyOwner
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    private string _pathToSource;
-    [global::Quire.Mirror.MirrorStub]
-    private string _pathToTarget;
-    [global::Quire.Mirror.MirrorStub]
-    public string PathToSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string PathToTarget { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnValueChanged(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PropertiesBinder() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Attach(global::System.Windows.FrameworkElement sourceElem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CreateTargetBinding(global::System.Windows.FrameworkElement sourceElem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Detach(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

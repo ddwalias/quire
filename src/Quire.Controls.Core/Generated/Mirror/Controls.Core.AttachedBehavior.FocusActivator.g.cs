@@ -11,26 +11,4 @@ namespace Quire.Controls.Core.AttachedBehavior;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.AttachedBehavior.FocusActivator, Ptc.Controls.Core")]
 internal partial class FocusActivator : global::Quire.Controls.Core.AttachedBehavior.IAttachedBehavior
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.FrameworkElement _element;
-    [global::Quire.Mirror.MirrorStub]
-    public void Attach(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Detach(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnDataContextChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ElementLostFocus(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HookupToElementEvents(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HookupToActivatorEvents(global::Quire.Controls.Core.AttachedBehavior.IActivator activator) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UnhookFromElementEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UnhookFromActivatorEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleMoveFocus(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ActivateElement() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
