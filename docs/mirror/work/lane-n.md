@@ -653,3 +653,10 @@
 - Claimed: `IAlignmentGrid`, `IUIElementFacade`, `IOleContainer`, `IMathFormat`, `IRichTextBase`, `IRichTextWithEmbeddedItem`, `ITextStylesManager`, `IWhiteboardItemManager`, `IFrameworkElementFacade`, `IWorksheetProperties` (abstract declarations in hand-written partials; generated stubs removed).
 - Report: `.mirror-cache/release-il-5256ffb7bfb0/release-il.json` — PASS, 1,660 checked, 0 failures, 2,000 unfinished (was 2,149).
 - Remaining mismatches: none in claimed batch.
+
+## Batch 87 — Interface members (6 large interfaces)
+
+- Claimed: `IIORegionManager`, `IContainerItemManager`, `IWorksheetPersistentData`, `IWhiteboardControl`, `IEquationControl` (except `Changed`), `IEngineeringDocument` (abstract declarations in hand-written partials; generated stubs removed).
+- Report: `.mirror-cache/release-il-e16d7ce73eee/release-il.json` — PASS, 1,910 checked, 0 failures, 1,601 unfinished (was 2,000).
+- Remaining mismatches: `IEquationControl.Changed` stays a stub. Declared as `RoutedEventHandler` in Mathcad, but Quire's `RegionControl.Changed` is `EventHandler?` (hand-written), so the abstract declaration breaks `Quire.Controls.EquationControl` (CS0738, another lane's project, found by the merge gate, not by the local check).
+- Tooling note: `release_il.py --project Quire.Controls.Core` built only `Quire.Controls.Core`; the merge gate built 12 dependents (`Quire`, `Quire.Controls*`, `Quire.EquationEditor`). Interface changes need the dependents built locally before landing.
