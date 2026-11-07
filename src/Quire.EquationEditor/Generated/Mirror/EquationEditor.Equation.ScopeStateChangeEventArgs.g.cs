@@ -11,10 +11,6 @@ namespace Quire.EquationEditor.Equation;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Equation.ScopeStateChangeEventArgs, Ptc.EquationEditor")]
 public partial class ScopeStateChangeEventArgs
 {
-    [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.Direction CaretSide;
-    [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.EquationEditor.Tree.Scoping.ScopedNodes ScopedNodes;
-    [global::Quire.Mirror.MirrorStub]
-    public ScopeStateChangeEventArgs(global::Quire.Direction caretSide, global::Quire.EquationEditor.Tree.Scoping.ScopedNodes scopedNodes) { }
 }

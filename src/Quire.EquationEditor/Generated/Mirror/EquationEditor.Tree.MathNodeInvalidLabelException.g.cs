@@ -11,14 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.MathNodeInvalidLabelException, Ptc.EquationEditor")]
 public partial class MathNodeInvalidLabelException : global::System.ArgumentException
 {
-    [global::Quire.Mirror.MirrorStub]
-    public MathNodeInvalidLabelException(string message, string paramName) { }
-    [global::Quire.Mirror.MirrorStub]
-    public MathNodeInvalidLabelException(string message) { }
-    [global::Quire.Mirror.MirrorStub]
-    public MathNodeInvalidLabelException() { }
-    [global::Quire.Mirror.MirrorStub]
-    public MathNodeInvalidLabelException(string message, global::System.Exception innerException) { }
-    [global::Quire.Mirror.MirrorStub]
-    public MathNodeInvalidLabelException(string message, string paramName, global::System.Exception innerException) { }
 }

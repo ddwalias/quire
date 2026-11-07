@@ -11,8 +11,4 @@ namespace Quire.EquationEditor.Tree.Transform;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Transform.InvalidSExpression, Ptc.EquationEditor")]
 public partial class InvalidSExpression : global::System.Exception
 {
-    [global::Quire.Mirror.MirrorStub]
-    public InvalidSExpression(string expression) { }
-    [global::Quire.Mirror.MirrorStub]
-    public InvalidSExpression(string expression, global::System.Exception inner) { }
 }

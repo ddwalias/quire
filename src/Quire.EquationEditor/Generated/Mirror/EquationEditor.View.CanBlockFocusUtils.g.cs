@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.View;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.View.CanBlockFocusUtils, Ptc.EquationEditor")]
 public static partial class CanBlockFocusUtils
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.EquationEditor.View.ICanBlockFocus TryFindICanBlockFocusAncestorUntilGivenAncestorIsReached(global::System.Windows.RoutedEventArgs args, global::System.Windows.DependencyObject topParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,8 +11,4 @@ namespace Quire.EquationEditor;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.InvalidEditorCommandException, Ptc.EquationEditor")]
 public partial class InvalidEditorCommandException : global::System.ApplicationException
 {
-    [global::Quire.Mirror.MirrorStub]
-    public InvalidEditorCommandException() { }
-    [global::Quire.Mirror.MirrorStub]
-    public InvalidEditorCommandException(string s) { }
 }
