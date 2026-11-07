@@ -667,3 +667,9 @@
 - Report: `.mirror-cache/release-il-41edbbc225a7/release-il.json` — PASS, 1,913 checked, 0 failures, 1,598 unfinished, 3 more exact.
 - Remaining mismatches (not in this batch's claim): `FindReplaceQuery.IsFullySubscript` stays a stub. The Release IL calls `List<T>.get_Count` with `call`; the C# form emits `callvirt`, and no idiomatic C# shape changes that.
 - Batch 84–87 are committed on this branch and not yet landed (merge gate blocked by the main-checkout untracked folder; maintainer hold).
+
+## Batch 89 — Settings and serialization repairers
+
+- Claimed: `Serialization.Integration10Repairer` (`RepairXDocument`, `UpdateNameSpace`), `Settings.Calculation10Repairer` (`RepairXDocument`, `UpdateNodeValue`, consts `_sourceNamespaceURI`, `_targetNamespaceURI`).
+- Report: `.mirror-cache/release-il-833cbf816992/release-il.json` — PASS, 1,917 checked, 0 failures, 1,594 unfinished, 1,518 exact.
+- Remaining mismatches: none in claimed batch. Guard shape `if (Failed == DevAssert(...)) return;` is kept because Release IL branches on the inverted test.
