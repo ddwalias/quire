@@ -55,3 +55,10 @@
   - Constructor shape tried: sequential field assignments with one `TextPointer` local reused for start/end and `_insertionPoint = textRegion.Selection.IsNotEmpty() ? -1 : textRegion.SelectionStart`. The ternary matched; the `TextPointer` local did not. Mathcad keeps `this` on the stack across the `stloc` of each `GetInsertionPointAtPointer(ref ...)` argument, which this shape does not reproduce.
   - `CreateToggleScriptUndoCommand` uses a `dup`/`brtrue` null check followed by `FailAssertion` with no local; not yet tried.
 - Release IL (project-wide, no `--type`): PASS — 106 checked, 105 exact, 0 failures, 610 unfinished.
+
+## Batch 8 — RichText serialization and deserialization strategies
+
+- `RichTextSerializationStrategy`: all members (`.ctor`, `SerializeRegionsEpilog`, `GetRegions`, `ConvertToRegionPersistantData`). Shapes: the region list is declared `IList<IRegionType>` (Mathcad's `ICollection<T>` calls); the return is `regions.Count <= 0 ? null : regions` (`ble` to the null arm).
+- `RichTextDeserializationStrategy`: `.ctor`, `Regions`, `RegionFactory`, both `AddRegion` overloads, `DeleteRegion`, `IsRegionNotAffectingCalculation`. Shapes: the nested `if (eq != null) { if (type == 2) return true; return type == 0; } return true;` form and the `if (eq == null) return true;` form both failed ("Release IL differs"); the single conditional `eq == null || type == Evaluation ? true : type == Expression` matched.
+- Added `ProjectReference` to `Quire.Controls.EquationControl` in the hand-written `Quire.Controls.Text.csproj` (the assembly map lists it as a dependency; no cycle). The generated `Mirror.props` is unchanged.
+- Release IL (project-wide, no `--type`): PASS — 116 checked, 116 exact, 0 failures, 599 unfinished.

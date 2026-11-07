@@ -5,6 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Quire.Controls.Core\Quire.Controls.Core.csproj" />
+    <ProjectReference Include="..\Quire.Controls.EquationControl\Quire.Controls.EquationControl.csproj" />
   </ItemGroup>
   <Import Project="Generated\Mirror.props" />
 </Project>

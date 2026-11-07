@@ -11,16 +11,4 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.RichTextSerializationStrategy, Ptc.Controls.Text")]
 internal partial class RichTextSerializationStrategy : global::Quire.Controls.Core.Serialization.ISerializationStrategy
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.IRichTextWithEmbeddedItem _richText;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> _regionCreator;
-    [global::Quire.Mirror.MirrorStub]
-    public RichTextSerializationStrategy(global::Quire.Controls.Core.IRichTextWithEmbeddedItem richText, global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> regionCreator) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void SerializeRegionsEpilog(global::System.Xml.XmlDocument xmlDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.PersistentDataObjects.IRegionType> GetRegions(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.PersistentDataObjects.IRegionType ConvertToRegionPersistantData(global::Quire.Serialization.IS11NProvider s11NProvider, global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
