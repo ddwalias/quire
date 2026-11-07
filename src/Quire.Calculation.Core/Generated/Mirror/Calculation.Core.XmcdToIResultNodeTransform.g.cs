@@ -24,27 +24,11 @@ public partial class XmcdToIResultNodeTransform : global::Quire.Calculation.Core
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.ITrace2DResultNode BuildPlotTraceResult(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static bool TryParseUsingIntermediate<TIntermediate, TFinal>(string stringValue, out TFinal finalType) where TIntermediate : struct where TFinal : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Calculation.Core.ITraceAxisInfo BuildAxisInfo(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.IResultNode BuildComplex(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.IResultNode BuildMatrix(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Calculation.Core.IVectorListResultNode BuildDataVectors(global::System.Xml.XmlNode dataNode, string vectorsName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Calculation.Core.IVectorListResultNode BuildDataVectors(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IList<global::Quire.Calculation.Core.IListResultNode> ReadJsonVectorsAsStream(global::System.Xml.XmlNode node, global::Quire.Calculation.Core.ResultValueType resultType, int singleVectorLength) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IList<global::Quire.Calculation.Core.IListResultNode> ReadJson(global::System.IO.Stream jStream, global::Quire.Calculation.Core.ResultValueType resultType, int singleVectorLength) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.IResultNode BuildDisplayMatrix(global::System.Xml.XmlNode node, int rows, int cols, global::Quire.TableSize viewportSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void AddElementsToMatrix(global::System.Collections.Generic.IEnumerable<global::System.Xml.XmlNode> elements, global::Quire.Calculation.Core.IEagerMatrixResultNode matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.IUnitedValueResultNode BuildUnitedValue(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void ReadUnitMonomial(global::Quire.Calculation.Core.IUnitedValueResultNode uvResult, global::System.Xml.XmlNode unitMonomial) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

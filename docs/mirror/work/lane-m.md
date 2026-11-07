@@ -1,24 +1,8 @@
-# Lane M — Quire.Calculation.Core and Quire.Media3D
+# Lane M — Quire.Calculation.Core
 
-- Owner: Lane M; branch `mirror/m-calc-core-20261025-m01`; worktree `C:/Projects/Quire-wt/lane-m-calc-core`.
-- Exact members:
-  - `Quire.Media3D`: All 635 managed methods with bodies are exact (7 declaration-only). Assembly is COMPLETE.
-    - `Media3D.Wires.WireDashes`: implemented `PitchProperty`, `get_Pitch`, `set_Pitch`, `AddDashedLine`, `Generate`, `.ctor`.
-    - `Media3D.Wires.WirePoints`: implemented `Recalculate`; adjusted declaration order so `PositionsPropertyChanged` precedes `UpdateColor` to match Mathcad closure ordinal `DisplayClass7_0`.
-  - `Quire.Calculation.Core`: 554 exact methods.
-    - `LazyMatrixSimpleResultNode`: implemented explicit `IMatrixResultNode.this[int r, int c]` (exact).
-    - `DisplayMatrixSimpleResultNode`: implemented explicit `IMatrixResultNode.this[int r, int c]` (exact).
-    - `UnitedValueSimpleResultNode`: implemented explicit `IUnitedValueResultNode.Value` get and set (exact).
-    - `XmcdToIResultNodeTransform`: matched `GetIntegerFromAttribute` local slots and single-return branch lowering (exact).
-    - `IUnitedValueResultNode`: declared interface members `Value`, `Units`, and `AddUnit` in mirrored partial.
-    - `Trace2DResultConverter`: implemented `DissectUnits` and `ConvertToVectorsForm` (both exact).
-    - `ResultConverter`: implemented `Convert` (including closures `DisplayClass2_0` and `DisplayClass2_1`) and `ConvertFromIResultNode` (both exact).
-    - `SimpleResultNodeFactory`: declared `Default` field in source, clearing stub.
-    - `ResultNodeToXmcdTransform`: implemented all members to exact parity (`.ctor`, `Transform` overloads, `Visit` overloads, `WriteAxisInfoNode`, `WritePlotDataPoints`, `WriteVectorsAsJson`, `ConvertAndGetNullableValue`).
-- Release IL report:
-  - `Quire.Media3D`: PASS; 635 checked, 635 exact, 0 failures, 0 unfinished (`.mirror-cache/release-il-c7d7c7d0e54b/release-il.json`). Full Release inventory confirms exact parity for every managed body (642 declarations, 635 exact bodies, 7 declaration-only, 0 stubs, 0 unresolved).
-  - `Quire.Calculation.Core`: PASS; 554 checked, 554 exact, 0 failures (`.mirror-cache/release-il-2e2d41a2a6cb\release-il.json`).
-- Remaining:
-  - `Quire.Media3D`: 0 mismatches. COMPLETE.
-  - `Quire.Calculation.Core`: 554 exact. Continuing through remaining managed members.
-- Blockers: None currently active. Previous blocker on `IUnitedValueResultNode` resolved on `main` (commit 750f656c).
+- Owner: Lane M (dispatch task_d21362b43816). Branch `mirror/m-calc-core-20261107-b` from `main`. Worktree `C:/Users/DuyDang/orca/workspaces/Quire/lane-m-calc-core-20261107`.
+- Batch 1 (exact, 8 members) in `XmcdToIResultNodeTransform`: `TryParseUsingIntermediate`, `ReadUnitMonomial`, `AddElementsToMatrix`, `ReadJsonVectorsAsStream`, `ReadJson`, `BuildComplex`, `BuildDataVectors` (both overloads).
+- Release IL: `python tools/validation/release_il.py --base main --project Quire.Calculation.Core` PASS, 562 checked, 562 exact, 0 failures. Report `.mirror-cache/release-il-998e4f6740c3/release-il.json`.
+- Remaining Mathcad-paired members, not yet exact: `XmcdToIResultNodeTransform`: `Transform` x2, `MakeResultNode`, `BuildPlotTraceResult`, `BuildAxisInfo`, `BuildMatrix`, `BuildDisplayMatrix`, `BuildUnitedValue`. `ResultConverter.ConvertToIResultNode` (stub still in place; draft mismatches on the flat-matrix `EagerMatrixSimpleResultNode(1, length)` argument shape). `ResultNodeToXmcdTransform.WriteDisplayMatrixXml`. Interface members whose stubs are default bodies where Mathcad declares abstract members: `IFunctionResultNode.Description`, `IMatrixResultNode.Item/Count/Size/Columns`, `ITrace2DResultNode.RangeAxisInfo/ResultAxisInfo/DataPoints/TraceResultType`.
+- Blocker (mapping decision for the maintainer): 218 non-exact bodies have no Mathcad counterpart. They are Quire-only shapes (records `UnitPower`, `TraceData`, `MatrixResultNode`, `StringResultNode`, `FunctionResultNode`, `Trace2DResultNode`, `EmptyResultNode`, `UnitedValueResultNode`; `CalculationResult`, `CalculatableEventArgs`, `ICalculatableContext` extra members, and others). Mathcad's `Ptc.Calculation.Core` has no such types, so they cannot match. They are unchanged, so they do not block the gate.
+- Environment note: `MirrorGen emit` in this checkout rewrites about 4,900 files in other projects with unrelated formatting changes and leaves untracked files; it was not run for the commit. Stubs were removed by hand from the `.g.cs` files.
