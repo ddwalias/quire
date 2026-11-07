@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.Tree.Parsing.Panceaux;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Parsing.Panceaux.BinaryMergeValueChildren, Ptc.EquationEditor")]
 public partial class BinaryMergeValueChildren : global::Quire.EquationEditor.Tree.Parsing.Panacea
 {
-    [global::Quire.Mirror.MirrorStub]
-    public BinaryMergeValueChildren() { }
 }
