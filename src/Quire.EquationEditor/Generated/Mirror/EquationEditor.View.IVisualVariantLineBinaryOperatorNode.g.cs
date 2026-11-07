@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.View;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.View.IVisualVariantLineBinaryOperatorNode, Ptc.EquationEditor")]
 public partial interface IVisualVariantLineBinaryOperatorNode : global::Quire.EquationEditor.View.IVisualBinaryOperatorNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode, global::Quire.EquationEditor.View.IVisualVariantLineBinaryOperatorValues
 {
-    [global::Quire.Mirror.MirrorStub]
-    void ResetOffsets() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

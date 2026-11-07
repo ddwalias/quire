@@ -22,4 +22,5 @@
 - Batch 18: `View.IMathViewTransformer`, `IHighlightRectProvider`, `IVisualAtomicTextLeafEditor`, `IVisualInputControlEditor`, `IVisualUnaryEditor`, `IVisualPairNaryNodeEditor`, `IVisualOutfixNodeEditor` abstract contracts; Release IL PASS, 234 checked (`.mirror-cache/release-il-6c40b59e64ce/release-il.json`).
 - Batch 19: `View.IVisualNode`, `IVisualOutfixNode`, `IVisualPairNaryNode`, `IVisualUnaryOperatorNode`, `IVisualParensHighlighter`, `IVisualMathNodeHighlighter` abstract contracts; Release IL PASS, 240 checked (`.mirror-cache/release-il-05626f6cc3cd/release-il.json`).
 - Batch 20: `View.IVisualMathNode`, `IVisualMathNodeEditor`, `IVisualMathNodeWithMathChildren`, `IVisualLeafOperatorEditor` abstract contracts; Release IL PASS, 256 checked (`.mirror-cache/release-il-c7a29a00f905/release-il.json`).
-- Remaining: 5,785 `MirrorStub` attributes in 208 generated files; not yet batched. No mismatches in completed batches.
+- Batch 21: `View.IVisualSymbolicEvaluationNodeEditor`, `IVisualPlaceholderNodeEditor`, `IVisualVariantLineBinaryOperatorNodeEditor`, `IVisualVariantLineBinaryOperatorNode` abstract contracts; Release IL PASS, 230 checked (`.mirror-cache/release-il-ba21d5b88bee/release-il.json`).
+- Remaining: 5,781 `MirrorStub` attributes in 204 generated files; not yet batched. No mismatches in completed batches.
