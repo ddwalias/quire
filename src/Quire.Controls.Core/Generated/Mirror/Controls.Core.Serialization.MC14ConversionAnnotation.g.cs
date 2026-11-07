@@ -11,46 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.MC14ConversionAnnotation, Ptc.Controls.Core")]
 public static partial class MC14ConversionAnnotation
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ConversionAnnotationsProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public const string AnnotatedTooltipResourceKey = "AnnotatedTooltip";
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.ResourceDictionary _resourceDictionary;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.Serialization.AnnotationTypeList GetConversionAnnotations(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetConversionAnnotations(global::System.Windows.UIElement element, global::Quire.Controls.Core.Serialization.AnnotationTypeList value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ClearConversionAnnotations(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool HasConversionAnnotations(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void AddConversionAnnotation(global::System.Windows.UIElement element, global::Quire.PersistentDataObjects.MC14ConversionAnnotationType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetOldConversionAnnotation(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetConversionFailedAnnotation(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IList<global::Quire.Controls.Core.VisualAdornerBase> GetTopLevelAnnotationAdorners(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void HandleChangedByConversionChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void SetAnnotations(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void RemoveAnnotations(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void ElementIsLoadedSetAnnotations(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void ElementTrySetAnnotations(global::System.Windows.FrameworkElement origElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetMC14ConversionAnnotationByType(global::Quire.PersistentDataObjects.MC14ConversionAnnotationType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.Serialization.ConversionAnnotationMessage GetConversionAnnotationDescriptor(global::Quire.PersistentDataObjects.MC14ConversionAnnotationType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.Serialization.ConversionAnnotationMessage GetConversionAnnotationDescriptor(string typeName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetCategoryDesription(string categoryKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
