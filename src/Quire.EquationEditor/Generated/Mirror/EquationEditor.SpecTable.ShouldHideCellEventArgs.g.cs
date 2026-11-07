@@ -11,10 +11,6 @@ namespace Quire.EquationEditor.SpecTable;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.SpecTable.ShouldHideCellEventArgs, Ptc.EquationEditor")]
 public partial class ShouldHideCellEventArgs : global::System.EventArgs
 {
-    [global::Quire.Mirror.MirrorStub]
     public bool ShouldHideCell;
-    [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.Controls.Core.IEquationControl Cell;
-    [global::Quire.Mirror.MirrorStub]
-    public ShouldHideCellEventArgs(global::Quire.Controls.Core.IEquationControl cell) { }
 }
