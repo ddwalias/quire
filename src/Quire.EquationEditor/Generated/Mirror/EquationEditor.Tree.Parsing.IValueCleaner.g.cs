@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.Tree.Parsing;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Parsing.IValueCleaner, Ptc.EquationEditor")]
 public partial interface IValueCleaner
 {
-    [global::Quire.Mirror.MirrorStub]
-    string CleanValue(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

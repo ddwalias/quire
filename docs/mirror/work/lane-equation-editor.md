@@ -15,4 +15,5 @@
 - Batch 11: `Tree.Parsing.Panceaux.ReplaceWithDefaultNode`, `AutoLabelIdChild`, `AutoLabelIdDescendant`, `TransformTo`, `PullOutAdjacentDescendantFromChild`, `ReparentNode`; Release IL PASS, 212 checked (`.mirror-cache/release-il-d2213606017b/release-il.json`).
 - Batch 12: `Tree.Parsing.Panceaux.ReparentChild`, `ReparentNodeAndPullOutChild`, `ReplaceChildDescriptor`; Release IL PASS, 225 checked (`.mirror-cache/release-il-134942401d5a/release-il.json`).
 - Batch 13: `Tree.Parsing.IChildHandlerPanacea` abstract contract; Release IL PASS, 228 checked (`.mirror-cache/release-il-5bb1abc86d89/release-il.json`).
-- Remaining: 5,864 `MirrorStub` attributes in 237 generated files; not yet batched. No mismatches in completed batches.
+- Batch 14: `Tree.Transform.IStringToMathNodeTransform`, `IXmlToMathNodeTransform`, `Tree.Parsing.IValueCleaner` abstract contracts; Release IL PASS, 229 checked (`.mirror-cache/release-il-815791fa5ad8/release-il.json`).
+- Remaining: 5,860 `MirrorStub` attributes in 234 generated files; not yet batched. No mismatches in completed batches.

@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.Tree.Transform;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Transform.IStringToMathNodeTransform, Ptc.EquationEditor")]
 public partial interface IStringToMathNodeTransform
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.Tree.MathNode Transform(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

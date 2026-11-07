@@ -11,8 +11,4 @@ namespace Quire.EquationEditor.Tree.Transform;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Transform.IXmlToMathNodeTransform, Ptc.EquationEditor")]
 public partial interface IXmlToMathNodeTransform
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.Tree.MathNode Transform(global::System.Xml.XmlNode xmlMathRegionNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.Tree.MathNode Transform(string sExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
