@@ -801,3 +801,11 @@
 - Report: `.mirror-cache/release-il-62e6a1c039e3/release-il.json` — PASS, 1,995 checked, 1,995 exact, 0 failures, 1,258 unfinished (was 1,301).
 - Remaining mismatches: none in claimed batch.
 - Still open: 1,258 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer_4`, `OleContainerModel_1`, `OleContainerViewModel_3`), and `IPublicOleContainerModel_1`.
+
+## Batch 104 — ObservableUIElementCollection
+
+- Owner: Lane N (Orca task `task_ed3239f64a4d`); branch `mirror/n-controls-core-20261108`; worktree `C:/Users/DuyDang/orca/workspaces/Quire/controls-core-resume-20261108`.
+- Claimed: every member of `Ptc.Controls.Core.ObservableUIElementCollection` (indexer, eight `UIElementCollection` overrides, `OnChanged`, `OnPropertiesChanged`, `OnPropertyChanged(string)`, `OnPropertyChanged(PropertyChangedEventArgs)`, `OnCollectionChanged`, `OnRangeChanging`, `OnRangeChanged`, explicit `INotifyCollectionRangeChanged.Count`, `IsEmpty`); stubs removed from the `.g.cs`, which keeps the class header.
+- Report: `.mirror-cache/release-il-618908c0d5a5/release-il.json` — PASS, 2,013 checked, 2,013 exact, 0 failures, 1,240 unfinished (was 1,258).
+- Remaining mismatches: none in claimed batch. `Equals` needs the flag-and-`as` shape: the idiomatic `is not X other` pattern gave a type-operation mismatch at the first `isinst`.
+- Batch 103 (commit `6a4641ee`, cherry-picked here) landed on main; its Release IL gate passed twice (`release-il-a6e068ad616d`, `gate-il-823ed257df8c`, `gate-il-b7e5ee45b166`).

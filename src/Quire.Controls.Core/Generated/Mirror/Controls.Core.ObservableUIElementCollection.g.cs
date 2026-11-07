@@ -11,40 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.ObservableUIElementCollection, Ptc.Controls.Core")]
 public partial class ObservableUIElementCollection : global::System.Windows.Controls.UIElementCollection, global::Quire.Wpf.INotifyCollectionRangeChanged, global::System.Collections.IEnumerable, global::System.Collections.Specialized.INotifyCollectionChanged, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.UIElement this[int index] { get => base[index]; set => base[index] = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public override int Add(global::System.Windows.UIElement element) => base.Add(element);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Remove(global::System.Windows.UIElement element) => base.Remove(element);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Clear() => base.Clear();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Equals(object obj) => base.Equals(obj);
-    [global::Quire.Mirror.MirrorStub]
-    public override int GetHashCode() => base.GetHashCode();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Insert(int index, global::System.Windows.UIElement element) => base.Insert(index, element);
-    [global::Quire.Mirror.MirrorStub]
-    public override void RemoveAt(int index) => base.RemoveAt(index);
-    [global::Quire.Mirror.MirrorStub]
-    public override void RemoveRange(int index, int count) => base.RemoveRange(index, count);
-    [global::Quire.Mirror.MirrorStub]
-    private void OnChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e, bool range = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnPropertiesChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnPropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnPropertyChanged(global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnCollectionChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e, bool range = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnRangeChanging(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnRangeChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int global::Quire.Wpf.INotifyCollectionRangeChanged.Count() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsEmpty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
