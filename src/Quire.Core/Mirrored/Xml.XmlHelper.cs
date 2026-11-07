@@ -61,5 +61,29 @@ static partial class XmlHelper
     // Placeholder stub, declared here so ReplaceNonPrintableCharacters keeps Mathcad's member ordinal. Mathcad's
     // "new XPathDocument(stream) ?? throw" leaves the value on the stack at the throw; .NET 10 Roslyn always pops it,
     // so this body cannot match Mathcad's IL.
-    public static global::System.Collections.Generic.List<string> GetNodeValueFromXml(string xmlPath, string xPathExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorVerified("Release IL")]
+    public static global::System.Collections.Generic.List<string> GetNodeValueFromXml(string xmlPath, string xPathExpr)
+    {
+        global::System.Collections.Generic.List<string> list = new global::System.Collections.Generic.List<string>();
+        global::System.IO.FileStream fileStream = new global::System.IO.FileStream(xmlPath, global::System.IO.FileMode.Open, global::System.IO.FileAccess.Read);
+        if (fileStream.CanRead)
+        {
+            // Release IL keeps the dup/brtrue null test and has no pop before the throw, so this is not a ?? throw.
+            global::System.Xml.XPath.XPathDocument xPathDocument = new global::System.Xml.XPath.XPathDocument(fileStream);
+            if (xPathDocument == null)
+            {
+                throw new global::System.ArgumentNullException("xPathDocument");
+            }
+            global::System.Xml.XPath.XPathExpression expr = global::System.Xml.XPath.XPathExpression.Compile(xPathExpr);
+            global::System.Xml.XPath.XPathNodeIterator xPathNodeIterator = xPathDocument.CreateNavigator().Select(expr);
+            for (int i = 0; i < xPathNodeIterator.Count; i++)
+            {
+                if (xPathNodeIterator.MoveNext())
+                {
+                    list.Add(xPathNodeIterator.Current.Value);
+                }
+            }
+        }
+        return list;
+    }
 }

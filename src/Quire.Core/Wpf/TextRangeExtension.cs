@@ -105,7 +105,73 @@ public static partial class TextRangeExtension
         return Enumerable.Empty<T>();
     }
 
-    private static IEnumerable<T> EnumerateInlinesInRange<T>(this global::System.Windows.Documents.TextRange range, IEnumerable<Block> blocks) where T : Inline => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [MirrorVerified("Release IL")]
+    private static IEnumerable<T> EnumerateInlinesInRange<T>(this global::System.Windows.Documents.TextRange range, IEnumerable<Block> blocks) where T : Inline
+    {
+        IEnumerable<Block> enumerable = blocks.Where(range.IntersectsWith).ToList();
+        foreach (Block item in enumerable)
+        {
+            // Release IL allocates these two locals before the pattern variables; unassigned declarations emit no IL.
+            IEnumerable<Block> blocks3;
+            IEnumerable<Block> blocks2;
+            // Release IL tests Paragraph, Table, Section, List and BlockUIContainer before any body, and places the
+            // assertion path after the four bodies, so the tests and labels are kept in that order.
+            if (item is Paragraph paragraph)
+            {
+                goto ParagraphBlock;
+            }
+            if (item is Table table)
+            {
+                goto TableBlock;
+            }
+            if (item is global::System.Windows.Documents.Section section)
+            {
+                goto SectionBlock;
+            }
+            if (item is global::System.Windows.Documents.List list)
+            {
+                goto ListBlock;
+            }
+            if (!(item is BlockUIContainer))
+            {
+                goto FailBlock;
+            }
+            continue;
+
+        ParagraphBlock:
+            foreach (T item5 in range.EnumerateInlinesInRange<T>(paragraph.Inlines))
+            {
+                yield return item5;
+            }
+            continue;
+
+        TableBlock:
+            blocks3 = table.RowGroups.SelectMany((TableRowGroup rowGroup) => rowGroup.Rows.SelectMany((TableRow row) => row.Cells.SelectMany((TableCell cell) => cell.Blocks)));
+            foreach (T item4 in range.EnumerateInlinesInRange<T>(blocks3))
+            {
+                yield return item4;
+            }
+            continue;
+
+        SectionBlock:
+            foreach (T item3 in range.EnumerateInlinesInRange<T>(section.Blocks))
+            {
+                yield return item3;
+            }
+            continue;
+
+        ListBlock:
+            blocks2 = list.ListItems.SelectMany((ListItem listItem) => listItem.Blocks);
+            foreach (T item2 in range.EnumerateInlinesInRange<T>(blocks2))
+            {
+                yield return item2;
+            }
+            continue;
+
+        FailBlock:
+            DebugTools.FailAssertion(item?.GetType().Name);
+        }
+    }
 
     private static IEnumerable<T> EnumerateInlinesInRange<T>(this global::System.Windows.Documents.TextRange range, InlineCollection inlines) where T : Inline
     {
