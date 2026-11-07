@@ -11,10 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.IInputControlNodeInfo, Ptc.EquationEditor")]
 public partial interface IInputControlNodeInfo : global::Quire.EquationEditor.Tree.INodeInfoNotifyModel, global::Quire.EquationEditor.Tree.INodeInfo, global::System.ICloneable, global::Quire.EquationEditor.Tree.IReadOnlyAbstract
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string ValueSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.InputControlTypes InputControlType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

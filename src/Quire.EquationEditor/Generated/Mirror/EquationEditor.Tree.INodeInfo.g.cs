@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.INodeInfo, Ptc.EquationEditor")]
 public partial interface INodeInfo : global::System.ICloneable, global::Quire.EquationEditor.Tree.IReadOnlyAbstract
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsEquivalentTo(global::Quire.EquationEditor.Tree.INodeInfo other) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

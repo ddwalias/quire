@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.IComboBoxControlNodeInfo, Ptc.EquationEditor")]
 public partial interface IComboBoxControlNodeInfo : global::Quire.EquationEditor.Tree.INodeInfoNotifyModel, global::Quire.EquationEditor.Tree.INodeInfo, global::System.ICloneable, global::Quire.EquationEditor.Tree.IReadOnlyAbstract
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.Tree.ComboBoxInputControlData Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
