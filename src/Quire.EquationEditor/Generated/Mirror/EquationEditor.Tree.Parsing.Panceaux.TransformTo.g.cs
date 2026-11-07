@@ -11,10 +11,5 @@ namespace Quire.EquationEditor.Tree.Parsing.Panceaux;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Parsing.Panceaux.TransformTo, Ptc.EquationEditor")]
 public partial class TransformTo : global::Quire.EquationEditor.Tree.Parsing.Panacea
 {
-    [global::Quire.Mirror.MirrorStub]
     public readonly string MathNodeName;
-    [global::Quire.Mirror.MirrorStub]
-    public TransformTo(string mathNodeName) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void Accept(global::Quire.EquationEditor.Tree.Parsing.PanaceaVisitor visitor) => base.Accept(visitor);
 }

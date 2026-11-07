@@ -11,12 +11,6 @@ namespace Quire.EquationEditor.Tree.Parsing.Panceaux;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Parsing.Panceaux.AutoLabelIdDescendant, Ptc.EquationEditor")]
 public partial class AutoLabelIdDescendant : global::Quire.EquationEditor.Tree.Parsing.Panacea
 {
-    [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.Controls.Core.IdLabels NewIdLabel;
-    [global::Quire.Mirror.MirrorStub]
     public readonly int ChildIndex;
-    [global::Quire.Mirror.MirrorStub]
-    public AutoLabelIdDescendant(global::Quire.Controls.Core.IdLabels newIdLabel, int childIndex) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void Accept(global::Quire.EquationEditor.Tree.Parsing.PanaceaVisitor visitor) => base.Accept(visitor);
 }
