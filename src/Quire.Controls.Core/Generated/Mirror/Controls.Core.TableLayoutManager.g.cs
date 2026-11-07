@@ -81,13 +81,5 @@ public abstract partial class TableLayoutManager : global::System.ICloneable
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.TableLayoutManager+RowMetric, Ptc.Controls.Core")]
     private partial struct RowMetric
     {
-        [global::Quire.Mirror.MirrorStub]
-        public double RowHeight;
-        [global::Quire.Mirror.MirrorStub]
-        public double RowBaseline;
-        [global::Quire.Mirror.MirrorStub]
-        public double RowBottom;
-        [global::Quire.Mirror.MirrorStub]
-        public RowMetric(double rowHeight, double rowBaseline) { }
     }
 }

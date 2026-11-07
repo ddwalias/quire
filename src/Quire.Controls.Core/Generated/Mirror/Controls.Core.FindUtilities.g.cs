@@ -11,16 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.FindUtilities, Ptc.Controls.Core")]
 public partial class FindUtilities
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const global::System.StringComparison CaseSensitiveStringComparison = (global::System.StringComparison)(4);
-    [global::Quire.Mirror.MirrorStub]
-    public const global::System.StringComparison CaseInsensitiveStringComparison = (global::System.StringComparison)(5);
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Nullable<int> GetIndexInText(string haystack, string needle, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsWholeWord(string text, int start, int length) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Func<string, int> CreateSearchFunctionForGivenString(string valueToFind, bool isCaseSensitiveMatch, bool isWholeWordOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Func<string, int> CreateCaseInsensitiveSearchFunctionForGivenString(string valueToFind, string valueToReplaceWith, bool isWholeWordOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

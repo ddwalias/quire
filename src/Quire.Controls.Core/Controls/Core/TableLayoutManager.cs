@@ -53,4 +53,18 @@ public partial class TableLayoutManager
 
     [MirrorVerified("PtcControlsCoreTableLayoutManagerMechanicalDifferentialTests")]
     public Size MatrixSize => _matrixSize;
+
+    private partial struct RowMetric
+    {
+        public double RowHeight;
+        public double RowBaseline;
+        public double RowBottom;
+
+        public RowMetric(double rowHeight, double rowBaseline)
+        {
+            RowHeight = rowHeight;
+            RowBaseline = rowBaseline;
+            RowBottom = 0.0;
+        }
+    }
 }

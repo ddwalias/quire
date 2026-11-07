@@ -11,47 +11,8 @@ namespace Quire.Controls.Core.Settings;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.TextDecorationsToAttributesSerializer, Ptc.Controls.Core")]
 public partial class TextDecorationsToAttributesSerializer : global::Quire.Controls.Core.Serialization.XElementSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string LocalName = "textDecorations";
-    [global::Quire.Mirror.MirrorStub]
-    private const string Underline = "underline";
-    [global::Quire.Mirror.MirrorStub]
-    private const string Overline = "overline";
-    [global::Quire.Mirror.MirrorStub]
-    private const string Strikethrough = "strikethrough";
-    [global::Quire.Mirror.MirrorStub]
-    private const string Baseline = "baseline";
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.Controls.Core.Settings.TextDecorationsToAttributesSerializer.TextDecorationsExistence> _existingDecorations;
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasUnderline { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasOverLine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasStrikethrough { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasBaseline { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public TextDecorationsToAttributesSerializer(global::System.Windows.TextDecorationCollection textDecorations, global::System.Xml.Linq.XNamespace ns) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void ReadElementContents(global::System.Xml.Linq.XElement xElement) => base.ReadElementContents(xElement);
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteElementContents(global::System.Xml.Linq.XElement xElement) => base.WriteElementContents(xElement);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void CreateChildren(global::System.Xml.Linq.XElement thisElement = default) => base.CreateChildren(thisElement);
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.TextDecorationsToAttributesSerializer+TextDecorationsExistence, Ptc.Controls.Core")]
     private partial class TextDecorationsExistence
     {
-        [global::Quire.Mirror.MirrorStub]
-        private global::System.Windows.TextDecorationCollection _collection;
-        [global::Quire.Mirror.MirrorStub]
-        public bool Exists;
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Windows.TextDecorationCollection Collection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public TextDecorationsExistence(global::System.Windows.TextDecorationCollection collection, bool existence) { }
-        [global::Quire.Mirror.MirrorStub]
-        public bool IsSameDecoration(global::System.Windows.TextDecoration decoration) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }
