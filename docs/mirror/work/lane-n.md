@@ -706,4 +706,12 @@
   - `Settings.TextDecorationsToAttributesSerializer` (`LocalName`, `Underline`, `Overline`, `Strikethrough`, `Baseline`, `_existingDecorations`, `HasUnderline`, `HasOverLine`, `HasStrikethrough`, `HasBaseline`, `.ctor`, `ReadElementContents`, `WriteElementContents`, `CreateChildren`) and nested `TextDecorationsExistence` (`_collection`, `Exists`, `Collection`, `.ctor`, `IsSameDecoration`)
 - Report: `.mirror-cache/release-il-e645f53c0397/release-il.json` — PASS, 1,598 checked, 1,598 exact, 0 failures, 1,551 unfinished (was 1,576).
 - Remaining mismatches: none in claimed batch.
-- Still open: 1,551 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.
+
+## Batch 94 — RtfHelper leaf members and TableLayoutManager
+
+- Claimed:
+  - `RtfHelper` leaf members (`.cctor`, `ConvertPixelsToTwips(double)`, `NormalizeHorizontalPosition(double)`, consts `DefaultMarginInTwips`, `TwipsPerPoint`, `PointsPerInch`, `TwipsPerInch`, `WpfPointsPerInch`, `LeftMarginTag`, `RightMarginTag`, `PageWidthTag`)
+  - `TableLayoutManager` (all 33 remaining members: fields, constructors, point converters, `SearchOnColumn`, `SearchOnRow`, `CellIndexFromPoint`, `Measure` overloads, `CalculateRowAndColumnMetrics`, metric getters, `RowMetric`, and closure `<Measure>b__55_0`)
+- Report: `.mirror-cache/release-il-424c105e02cb/release-il.json` — PASS, 1,632 checked, 1,632 exact, 0 failures, 1,517 unfinished (was 1,551).
+- Remaining mismatches: none in claimed batch.
+- Still open: 1,517 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.
