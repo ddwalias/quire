@@ -26,4 +26,5 @@
 - Batch 22: `IEquationEditorSettings`, `IEquationTriadBuilder` abstract contracts; Release IL PASS, 228 checked (`.mirror-cache/release-il-0135eeabf16b/release-il.json`).
 - Batch 23: `SpecTable.ISpecTableView` abstract contract; Release IL PASS, 262 checked (`.mirror-cache/release-il-af2fc97583fe/release-il.json`).
 - Batch 24: `SpecTable.Model.ISpecTableColumn` abstract contract; Release IL PASS, 251 checked (`.mirror-cache/release-il-e490dd55f6d3/release-il.json`).
-- Remaining: 5,730 `MirrorStub` attributes in 200 generated files; not yet batched. No mismatches in completed batches.
+- Batch 25: `SpecTable.Model.ISpecTableMemento`, `IColumnMemento`, `SpecTable.ISpecTableCellMap`, `ISpecTableModel` abstract contracts; Release IL PASS, 281 checked (`.mirror-cache/release-il-ed08720857c7/release-il.json`).
+- Remaining: 5,683 `MirrorStub` attributes in 196 generated files; not yet batched. No mismatches in completed batches.

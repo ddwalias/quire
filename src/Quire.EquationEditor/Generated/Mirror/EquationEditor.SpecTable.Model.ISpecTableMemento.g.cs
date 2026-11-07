@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.SpecTable.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.SpecTable.Model.ISpecTableMemento, Ptc.EquationEditor")]
 public partial interface ISpecTableMemento
 {
-    [global::Quire.Mirror.MirrorStub]
-    void Restore(global::Quire.EquationEditor.SpecTable.ISpecTableModel model) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
