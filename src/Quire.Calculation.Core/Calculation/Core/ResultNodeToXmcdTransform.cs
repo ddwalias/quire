@@ -128,7 +128,11 @@ public partial class ResultNodeToXmcdTransform
 
     private void WriteDisplayMatrixXml(IDisplayMatrixResultNode displayMatrix)
     {
-        if (displayMatrix.Viewport.Size.Equals(displayMatrix.Size))
+        if (!displayMatrix.Viewport.Size.Equals(displayMatrix.Size))
+        {
+            // Mathcad's Release IL branches on !Equals before writing the full matrix.
+        }
+        else
         {
             WriteMatrixXml(displayMatrix);
             return;
