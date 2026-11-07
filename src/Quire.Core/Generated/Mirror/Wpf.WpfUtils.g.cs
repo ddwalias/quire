@@ -15,4 +15,6 @@ public static partial class WpfUtils
     public const string ApplicationExpressNameResourceKey = "Application.ExpressVersionName";
     [global::Quire.Mirror.MirrorStub]
     public const string WaitToPrintoutReadyKey = "WaitToPrintoutReadyQuestionMessage";
+    [global::Quire.Mirror.MirrorStub]
+    public static string GetApplicationFullName(global::Quire.License.LicenseType licenseType, global::System.Windows.FrameworkElement resourcesElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
