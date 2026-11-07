@@ -1,5 +1,6 @@
 using System.Runtime.ExceptionServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 using Quire.Calculation.Core;
 using Quire.Controls;
@@ -7,10 +8,6 @@ using Quire.Controls.Core;
 using Quire.Controls.Plots;
 using Quire.Controls.Worksheet;
 using Quire.EquationEditor.Tree;
-using Quire.EquationEditor.Tree.Parsing;
-using Quire.PersistentDataObjects;
-using MathRegionPersistentData = Quire.PersistentDataObjects.MathRegionPersistentData;
-using PlotRegionPersistentData = Quire.PersistentDataObjects.PlotRegionPersistentData;
 
 namespace Quire.Controls.Tests;
 
@@ -56,6 +53,15 @@ public class WorksheetControlTests
 
     private static double Value(CalculatableRegionControl r) =>
         Assert.IsType<UnitedValueResultNode>(r.Result!.Value).DisplayValue;
+
+    private static IEnumerable<T> LogicalChildren<T>(DependencyObject parent) where T : DependencyObject
+    {
+        foreach (var child in LogicalTreeHelper.GetChildren(parent).OfType<DependencyObject>())
+        {
+            if (child is T match) yield return match;
+            foreach (var descendant in LogicalChildren<T>(child)) yield return descendant;
+        }
+    }
 
     [Fact]
     public void Typed_regions_calculate_in_position_order() => Sta.Run(async () =>
@@ -105,9 +111,7 @@ public class WorksheetControlTests
         Assert.True(bad.HasError);
         Assert.Equal("(noop)", bad.Rl);
         Assert.Equal("x := (1 +", bad.SourceText);
-
-        var saved = Assert.IsType<MathRegionPersistentData>(Assert.Single(ws.ToDocument().Regions));
-        Assert.Equal("x := (1 +", saved.Source);
+        Assert.Equal(1, ws.RegionCount);
     });
 
     [Fact]
@@ -137,20 +141,17 @@ public class WorksheetControlTests
         Assert.Equal(0, ws.RegionCount);
         ws.Undo();
         await Settle(ws);
-        Assert.Equal(2, ws.ToDocument().Regions.Count);
+        Assert.Equal(2, ws.RegionCount);
     });
 
     [Fact]
     public void Save_and_reload_recalculates() => Sta.Run(async () =>
     {
-        WorksheetDocument doc;
-        using (var ws = new WorksheetControl())
-        {
-            Type(ws, 0, 0, "L := 2 ft");
-            Type(ws, 0, 40, "L = in");
-            ws.SetUnitSystem("uscs");
-            doc = ws.ToDocument();
-        }
+        using var ws = new WorksheetControl();
+        Type(ws, 0, 0, "L := 2 ft");
+        Type(ws, 0, 40, "L = in");
+        ws.SetUnitSystem("uscs");
+        var doc = ws.ToDocument();
         Assert.Equal("uscs", doc.Settings.UnitSystem);
 
         using var ws2 = new WorksheetControl();
@@ -178,17 +179,27 @@ public class WorksheetControlTests
     public void Solve_block_region_solves_and_exports() => Sta.Run(async () =>
     {
         using var ws = new WorksheetControl();
-        var data = new SolveBlockRegionPersistentData { Solver = LinearParser.ParseStatement("r := find(x)") };
-        data.Guesses.Add(LinearParser.ParseStatement("x := 3"));
-        data.Constraints.Add(LinearParser.ParseStatement("x^2 == 2"));
-        var doc = new WorksheetDocument();
-        data.Top = 0;
-        doc.Regions.Add(data);
-        doc.Regions.Add(new MathRegionPersistentData { Top = 200, Statement = LinearParser.ParseStatement("r =") });
-        ws.Load(doc);
+        var block = Assert.IsType<SolveBlockControl>(ws.InsertSolveBlock());
+        block.EndEdit(commit: false);
+
+        var guess = block.AddLine(SolveBlockEquationTypes.Definition);
+        guess.BeginEdit();
+        guess.InsertText("x := 3");
+        guess.EndEdit(commit: true);
+
+        var constraint = block.AddLine(SolveBlockEquationTypes.Constraint);
+        constraint.BeginEdit();
+        constraint.InsertText("x^2 == 2");
+        constraint.EndEdit(commit: true);
+
+        var solver = block.Lines.Single(line => line.Type == SolveBlockEquationTypes.Solver).Line;
+        solver.BeginEdit();
+        solver.InsertText("r := find(x)");
+        solver.EndEdit(commit: true);
+        block.EndEdit(commit: true);
+        Type(ws, 0, 200, "r = ");
         await Settle(ws);
 
-        var block = ws.Model.Items.OfType<SolveBlockControl>().Single();
         Assert.False(block.HasError);
         var eval = ws.Model.Items.OfType<EquationControl>().Single();
         Assert.Equal(Math.Sqrt(2), Value(eval), 6);
@@ -198,29 +209,26 @@ public class WorksheetControlTests
     public void Plot_region_receives_traces() => Sta.Run(async () =>
     {
         using var ws = new WorksheetControl();
-        var plot = new PlotRegionPersistentData { X = LinearParser.ParseExpression("z") };
-        plot.Y.Add(LinearParser.ParseExpression("z^2"));
-        var doc = new WorksheetDocument();
-        doc.Regions.Add(plot);
-        ws.Load(doc);
+        var control = Assert.IsType<XYPlotControl>(ws.InsertXYPlot());
+        var boxes = LogicalChildren<TextBox>(control).ToArray();
+        Assert.True(boxes.Length >= 3);
+        boxes[0].Text = "z^2";
+        boxes[2].Text = "z";
+        control.EndEdit(commit: true);
         await Settle(ws);
 
-        var control = ws.Model.Items.OfType<XYPlotControl>().Single();
-        var traces = Assert.IsAssignableFrom<ITrace2DResultNode>(control.Result!.Value).Traces;
+        var traces = Assert.IsType<Trace2DResultNode>(control.Result!.Value).Traces;
         Assert.Equal(100, Assert.Single(traces).Y[0], 9);
     });
 
     [Fact]
-    public void Text_regions_round_trip_their_content() => Sta.Run(() =>
+    public void Text_regions_accept_editor_content() => Sta.Run(() =>
     {
         using var ws = new WorksheetControl();
-        var doc = new WorksheetDocument();
-        doc.Regions.Add(new TextRegionPersistentData { Top = 8, SectionXaml = TextRegionPersistentData.PlainSection("Load case 1") });
-        ws.Load(doc);
-        var text = ws.Model.Items.OfType<TextRegionControl>().Single();
+        var text = Assert.IsType<TextRegionControl>(ws.InsertText());
+        text.InsertText("Load case 1");
+        text.EndEdit(commit: true);
         Assert.Equal("Load case 1", text.PlainText);
-        var saved = Assert.IsType<TextRegionPersistentData>(Assert.Single(ws.ToDocument().Regions));
-        Assert.Contains("Load case 1", saved.SectionXaml);
         return Task.CompletedTask;
     });
 
@@ -232,7 +240,7 @@ public class WorksheetControlTests
         await Settle(ws);
         ws.SetResultFormat(ws.Model.ResultFormat with { Decimals = 6 });
         Assert.Equal(6, e.ResultFormat.Decimals);
-        Assert.Equal(6, ws.ToDocument().Settings.Decimals);
+        Assert.Equal(6, ws.Model.ResultFormat.Decimals);
     });
 }
 
@@ -279,8 +287,7 @@ public class ReviewRegressionControlTests
 
         Assert.True(line.HasSyntaxError);
         Assert.Contains("(unparsed)", block.Rl);
-        var saved = Assert.IsType<SolveBlockRegionPersistentData>(block.Save());
-        Assert.Equal(new UnparsedStatement("x + =="), Assert.Single(saved.Constraints));
+        Assert.Equal(new UnparsedStatement("x + =="), line.Statement);
     });
 
     [Fact]

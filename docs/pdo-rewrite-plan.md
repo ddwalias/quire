@@ -3013,6 +3013,12 @@ Each entry records the original mirrored member identity, source declaration/bod
 4. **Stage 3 — generated reference cleanup:** regenerate generated mirrors after handwritten consumers no longer need these types. Never edit `Generated/` manually; generated member signatures remain gate-sensitive.
 5. **Stage 4 — remove unreferenced persistence types:** delete only declarations with no remaining references after earlier stages. Full removal of both families is blocked while mirrored signatures or bodies still require their original metadata.
 
+## Stage 1 progress
+
+- **Quire — deferred by coordinator:** `SampleWorksheet.Create` builds the product worksheet document and text/math/plot/solve-block region data directly. The current load/save surface requires those DTO declarations; changing that integration would require touching `WorksheetControl`, a `MirrorOf` type, so `SampleWorksheet.cs` and all DTO declarations remain unchanged.
+- **Quire.Controls.Tests — completed as a test project:** test setup now uses `WorksheetControl`, `SolveBlockControl`, `XYPlotControl`, and `TextRegionControl` APIs instead of directly constructing region DTOs. The existing save/reload integration test remains through the product-only `WorksheetControl` surface. Release tests pass (16/16); `dotnet build Quire.slnx -c Release` passes.
+- No Stage 2 work has started. The Quire application sample remains the first deferred Stage 1 consumer pending a non-mirrored replacement load API.
+
 ## Gate and mirror constraints
 
 - A mirrored signature that references a persistence type cannot change without changing metadata and failing Release IL parity. A body reference is also protected when the member has a Mathcad counterpart or is selected by the gate.
