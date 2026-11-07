@@ -1,4 +1,5 @@
 using Quire.Mirror;
+using Quire.Calculation.Core.Trace2DResults;
 
 namespace Quire.Calculation.Core;
 
@@ -107,6 +108,10 @@ public partial interface IStringResultNode : IResultNode
 
 public partial interface IMatrixResultNode : IResultNode
 {
+    IResultNode this[int r, int c] { get; }
+    int Count { get; }
+    TableSize Size { get; }
+    int Columns { get; }
     int Rows { get; }
     int Cols { get; }
 
@@ -125,6 +130,7 @@ public partial interface IMatrixResultNode : IResultNode
 
 public partial interface IFunctionResultNode : IResultNode
 {
+    string Description { get; set; }
     string Signature { get; }
 }
 
@@ -132,6 +138,10 @@ public sealed record TraceData(string Label, double[] X, double[] Y, IReadOnlyLi
 
 public partial interface ITrace2DResultNode : IResultNode
 {
+    ITraceAxisInfo RangeAxisInfo { get; }
+    ITraceAxisInfo ResultAxisInfo { get; }
+    ITraceDataPoints DataPoints { get; }
+    Trace2DResultType TraceResultType { get; }
     IReadOnlyList<TraceData> Traces { get; }
 }
 
@@ -158,22 +168,22 @@ public sealed record StringResultNode(string Value) : IStringResultNode
 }
 
 public sealed record MatrixResultNode(int Rows, int Cols, IReadOnlyList<double> DisplayValues, IReadOnlyList<UnitPower> Units,
-    IReadOnlyList<IReadOnlyList<UnitPower>>? ElementUnits, bool IsRangeTable) : IMatrixResultNode
+    IReadOnlyList<IReadOnlyList<UnitPower>>? ElementUnits, bool IsRangeTable) : IResultNode
 {
     public ResultValueType ValueType => ResultValueType.Matrix;
     public void Accept(IResultNodeVisitor visitor) { }
 }
 
-public sealed record FunctionResultNode(string Signature) : IFunctionResultNode
+public sealed record FunctionResultNode(string Signature) : IResultNode
 {
     public ResultValueType ValueType => ResultValueType.Function;
-    public void Accept(IResultNodeVisitor visitor) => visitor.Visit(this);
+    public void Accept(IResultNodeVisitor visitor) { }
 }
 
-public sealed record Trace2DResultNode(IReadOnlyList<TraceData> Traces) : ITrace2DResultNode
+public sealed record Trace2DResultNode(IReadOnlyList<TraceData> Traces) : IResultNode
 {
     public ResultValueType ValueType => ResultValueType.Trace2D;
-    public void Accept(IResultNodeVisitor visitor) => visitor.Visit(this);
+    public void Accept(IResultNodeVisitor visitor) { }
 }
 
 /// <summary>The engine's answer for one calculatable.</summary>
