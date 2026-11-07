@@ -11,6 +11,4 @@ namespace Quire.Controls.Include;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Include.ErrorOnIncludeWorksheet, Ptc.Controls.Include")]
 public partial class ErrorOnIncludeWorksheet : global::Quire.Controls.Include.IncludeWorksheetErrorWarningData
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ErrorOnIncludeWorksheet() { }
 }

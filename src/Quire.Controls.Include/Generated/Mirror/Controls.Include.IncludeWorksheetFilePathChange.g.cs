@@ -11,26 +11,4 @@ namespace Quire.Controls.Include;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Include.IncludeWorksheetFilePathChange, Ptc.Controls.Include")]
 internal partial class IncludeWorksheetFilePathChange : global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Include.IncludeWorksheetControl _control;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string _newText;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string _oldText;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly int _index;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool _cacheValid;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool _regionsLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public IncludeWorksheetFilePathChange(global::Quire.Controls.Include.IncludeWorksheetControl control, string newText) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

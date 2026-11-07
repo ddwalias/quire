@@ -11,8 +11,4 @@ namespace Quire.Controls.Include;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Include.WarningsList, Ptc.Controls.Include")]
 public partial class WarningsList : global::System.Collections.Generic.List<global::Quire.Controls.Include.WarningOnIncludeWorksheet>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public WarningsList() { }
-    [global::Quire.Mirror.MirrorStub]
-    public WarningsList(global::Quire.Controls.Include.WarningsList list) { }
 }

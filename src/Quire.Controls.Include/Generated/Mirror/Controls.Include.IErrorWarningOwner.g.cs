@@ -11,6 +11,4 @@ namespace Quire.Controls.Include;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Include.IErrorWarningOwner, Ptc.Controls.Include")]
 public partial interface IErrorWarningOwner
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Include.ErrorWarningHandler ErrorWarningHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

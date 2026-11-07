@@ -11,6 +11,4 @@ namespace Quire.Controls.Include;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Include.IMultiLevelInclusionProvider, Ptc.Controls.Include")]
 public partial interface IMultiLevelInclusionProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Include.IMultiLevelInclusionItem MultiLevelInclusionItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

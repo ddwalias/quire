@@ -11,6 +11,4 @@ namespace Quire.Controls.Include;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Include.IIncludeWorksheetControl, Ptc.Controls.Include")]
 public partial interface IIncludeWorksheetControl : global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.IDitaRegion, global::Quire.Serialization.IPersistentDataProvider, global::Quire.Controls.Core.IPageWideSizable, global::Quire.Controls.Core.IRegionFactoryOwner, global::System.IDisposable, global::Quire.Controls.Core.IWorksheetPropertiesTarget
 {
-    [global::Quire.Mirror.MirrorStub]
-    string IncludedFilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

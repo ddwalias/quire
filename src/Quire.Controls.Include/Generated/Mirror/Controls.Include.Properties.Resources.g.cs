@@ -11,14 +11,4 @@ namespace Quire.Controls.Include.Properties;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Include.Properties.Resources, Ptc.Controls.Include")]
 internal partial class Resources
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Resources.ResourceManager resourceMan;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Globalization.CultureInfo resourceCulture;
-    [global::Quire.Mirror.MirrorStub]
-    internal static global::System.Resources.ResourceManager ResourceManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal static global::System.Globalization.CultureInfo Culture { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal Resources() { }
 }

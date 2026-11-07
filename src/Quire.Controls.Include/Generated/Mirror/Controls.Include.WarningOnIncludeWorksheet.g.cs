@@ -11,11 +11,6 @@ namespace Quire.Controls.Include;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Include.WarningOnIncludeWorksheet, Ptc.Controls.Include")]
 public partial class WarningOnIncludeWorksheet : global::Quire.Controls.Include.IncludeWorksheetErrorWarningData
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int WarningCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public WarningOnIncludeWorksheet() { }
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Include.WarningOnIncludeWorksheet+FieldName, Ptc.Controls.Include")]
     public enum FieldName
     {

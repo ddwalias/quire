@@ -11,6 +11,4 @@ namespace Quire.Controls.Include;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Include.IncludeWorksheetConstants, Ptc.Controls.Include")]
 public static partial class IncludeWorksheetConstants
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string IncludeWorksheetHelpContext = "IncludeWorksheetControl";
 }

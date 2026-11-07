@@ -1,0 +1,22 @@
+# Lane CtlInc — Quire.Controls.Include (Ptc.Controls.Include.dll)
+
+- Owner: CtlInc (dispatch task_69b834ace823). Branch `mirror/controls-include-20261108` from `main`. Assembly assigned by maintainer.
+- Batch 1: 75 stubs across 15 types implemented and verified exact:
+  - `ProductInfo.Constants` (ConverterProductName, ConverterExe, .ctor)
+  - `IncludeWorksheetConstants` (IncludeWorksheetHelpContext)
+  - `IErrorWarningOwner` (ErrorWarningHandler)
+  - `IIncludeWorksheetControl` (IncludedFilePath)
+  - `IMultiLevelInclusionProvider` (MultiLevelInclusionItem)
+  - `IMultiLevelInclusionItem` (20 interface members)
+  - `ErrorOnIncludeWorksheet` (.ctor)
+  - `WarningOnIncludeWorksheet` (WarningCount, .ctor)
+  - `ErrorsList` (.ctor(ErrorsList), .ctor())
+  - `WarningsList` (.ctor(), .ctor(WarningsList))
+  - `RegionsList` (.ctor(), .ctor(IEnumerable<UIElement>))
+  - `BackupData` (12 properties, .ctor)
+  - `Properties.Resources` (resourceMan, resourceCulture, .ctor, ResourceManager, Culture)
+  - `IncludeWorksheetFilePathChange` (fields, .ctor, Do, Undo, Redo, Name)
+  - `SystemVariableValuesHandler` (EvalExpressionRlFormat, _variableName, events, .ctor, ConstractRl, SetResult, GetComputedValue, CanHideFromCalculationContext, HideFromCalculationContext)
+- Release IL: PASS; 132 checked, 103 exact, 0 failures. Report: `.mirror-cache/release-il-e3414b75c4c6/release-il.json`.
+- Stubs: 555 before, 480 remaining.
+- Remaining mismatches: none.

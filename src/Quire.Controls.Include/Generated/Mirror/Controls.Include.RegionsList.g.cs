@@ -11,8 +11,4 @@ namespace Quire.Controls.Include;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Include.RegionsList, Ptc.Controls.Include")]
 public partial class RegionsList : global::System.Collections.Generic.List<global::System.Windows.UIElement>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public RegionsList() { }
-    [global::Quire.Mirror.MirrorStub]
-    public RegionsList(global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> collection) { }
 }
