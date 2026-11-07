@@ -17,4 +17,5 @@
 - Batch 13: `Tree.Parsing.IChildHandlerPanacea` abstract contract; Release IL PASS, 228 checked (`.mirror-cache/release-il-5bb1abc86d89/release-il.json`).
 - Batch 14: `Tree.Transform.IStringToMathNodeTransform`, `IXmlToMathNodeTransform`, `Tree.Parsing.IValueCleaner` abstract contracts; Release IL PASS, 229 checked (`.mirror-cache/release-il-815791fa5ad8/release-il.json`).
 - Batch 15: `Tree.IInputControlDataWithValues`, `IInputResizableControlData`, `IListBoxScriptableControlData` abstract contracts; Release IL PASS, 237 checked (`.mirror-cache/release-il-36e0fc90cf9e/release-il.json`).
-- Remaining: 5,854 `MirrorStub` attributes in 231 generated files; not yet batched. No mismatches in completed batches.
+- Batch 16: `Tree.IReadOnly`, `IReadOnlyAbstract` abstract contracts; Release IL PASS, 228 checked (`.mirror-cache/release-il-0deecef81828/release-il.json`).
+- Remaining: 5,851 `MirrorStub` attributes in 229 generated files; not yet batched. No mismatches in completed batches.

@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.IReadOnly, Ptc.EquationEditor")]
 public partial interface IReadOnly : global::Quire.EquationEditor.Tree.IReadOnlyAbstract
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsEditable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
