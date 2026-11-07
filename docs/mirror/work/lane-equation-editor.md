@@ -25,4 +25,5 @@
 - Batch 21: `View.IVisualSymbolicEvaluationNodeEditor`, `IVisualPlaceholderNodeEditor`, `IVisualVariantLineBinaryOperatorNodeEditor`, `IVisualVariantLineBinaryOperatorNode` abstract contracts; Release IL PASS, 230 checked (`.mirror-cache/release-il-ba21d5b88bee/release-il.json`).
 - Batch 22: `IEquationEditorSettings`, `IEquationTriadBuilder` abstract contracts; Release IL PASS, 228 checked (`.mirror-cache/release-il-0135eeabf16b/release-il.json`).
 - Batch 23: `SpecTable.ISpecTableView` abstract contract; Release IL PASS, 262 checked (`.mirror-cache/release-il-af2fc97583fe/release-il.json`).
-- Remaining: 5,755 `MirrorStub` attributes in 201 generated files; not yet batched. No mismatches in completed batches.
+- Batch 24: `SpecTable.Model.ISpecTableColumn` abstract contract; Release IL PASS, 251 checked (`.mirror-cache/release-il-e490dd55f6d3/release-il.json`).
+- Remaining: 5,730 `MirrorStub` attributes in 200 generated files; not yet batched. No mismatches in completed batches.
