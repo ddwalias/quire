@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.View;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.View.IVisualMathNodeWithMathChildren, Ptc.EquationEditor")]
 public partial interface IVisualMathNodeWithMathChildren
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.View.IVisualMathNode[] MathChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

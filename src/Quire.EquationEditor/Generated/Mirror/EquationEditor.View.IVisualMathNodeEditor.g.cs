@@ -11,14 +11,4 @@ namespace Quire.EquationEditor.View;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.View.IVisualMathNodeEditor, Ptc.EquationEditor")]
 public partial interface IVisualMathNodeEditor
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool Blink { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void GetFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Remove() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ShowDefaultCaret(global::Quire.Direction caretSide) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetCaretType(bool isReadWrite) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
