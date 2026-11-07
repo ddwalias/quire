@@ -11,12 +11,4 @@ namespace Quire.Controls.CollapsibleArea;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.CollapsibleArea.AreaHeaderKeys, Ptc.Controls.CollapsibleArea")]
 public partial class AreaHeaderKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string DefaultAreaHeaderKey = "DefaultAreaHeaderKey";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ProtectedAreaHeaderKey = "ProtectedAreaHeaderKey";
-    [global::Quire.Mirror.MirrorStub]
-    public const string PasswordProtectedAreaHeaderKey = "PasswordProtectedAreaHeaderKey";
-    [global::Quire.Mirror.MirrorStub]
-    public AreaHeaderKeys() { }
 }

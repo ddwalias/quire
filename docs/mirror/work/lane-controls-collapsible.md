@@ -40,5 +40,19 @@
   - `OnToggleProtectState(object)`: the `func` lambda (`<>c__DisplayClass53_0::<OnToggleProtectState>b__0`) has `IsNullOrEmpty<char>` followed by `ldc.i4.0; cgt.un; ret` in Release IL. Shapes tried: `return str.IsNullOrEmpty();` (no `cgt.un`), `return str.IsNullOrEmpty() != false;` (C# folds it away). Not matched.
   - `HandleGridCellSizeChanged(Size, Size)`: Release IL calls `callvirt CollapsibleAreaViewModel::get_StrictMinimumSize`; `StrictMinimumSize` in the hand-written override compiles to `callvirt WhiteboardViewModel::get_StrictMinimumSize`. Not resolved (the base is `protected virtual`, no redeclaration in `MathboardViewModel`). Kept as the base pass-through, as on main.
 
+## Batch 5 — CollapsibleAreaControl and constant holders
+
+- Members: all Control members (fields, auto-properties, events, the `.ctor` closures, `HideFromCalculationContext`, `PrintViewport`, `ControlWidth`/`ControlMinHeight` handlers, `InitializeComponent`/`Connect`), plus the constant-only `AreaHeaderKeys`, `CollapsibleAreaConstants` and `ProductInfo.Constants` (constants and constructors moved to hand-written partials, MirrorStub markers removed).
+- Hand-written: `Mirrored/Controls.CollapsibleArea.CollapsibleAreaControl.cs` (one partial, members in Mathcad metadata order), `Mirrored/Controls.CollapsibleArea.AreaHeaderKeys.cs`, `...CollapsibleAreaConstants.cs`, `Mirrored/ProductInfo.Constants.cs`. The Control's generated `.g.cs` keeps only the class header.
+- Compile-order facts confirmed by the gate: a constant field counts toward a closure ordinal (`DragBorderName` and `ToggleButtonCanvasName` are counted). `_messageBoxMngr` sits right before the `MessageBoxManager` property, after the ctor. `_contentLoaded` and `InitializeComponent`/`Connect` are the XAML partial's members, last in order.
+- Shapes that matched: `if (d as T)`-style handlers as `T x = d as T; if (x == null) return;`; `if (_contentLoaded) return;` in `InitializeComponent`; `this` without the `(DependencyObject)(object)` cast for `AttachedProperties`; `HandlePrintViewportChanged`'s `if (isInPrintCommon.HasValue)` branch before the per-item `foreach`.
+- Release IL: PASS — 221 checked, 221 exact, 0 failures. Project-wide: 221 exact, 5 unfinished, 0 MirrorStub markers left in `Generated/Mirror`.
+- Remaining unfinished members (all placeholders, `=> throw global::Quire.Mirror.MirrorStub.NotImplemented();` unless noted):
+  - `CollapsibleAreaControl.PrintViewport` setter: Release IL uses `ldarg`-free `HasValue` value-materialization (`beq.s`, `ldc.i4.0`, `br.s`, then `brfalse.s`). Tried: block `if (A || B) return/set`, `if (sameState) return;`; both emit `bne.un` jump form. Not matched.
+  - `CollapsibleAreaControl.HideFromCalculationContext` setter: Release IL is `bne.un.s` + `ret` for `if (HideFromCalculationContext == value) return;` and then the nested closures; Quire emits `ceq`/`ldc.i4.0`/`ceq`/`brtrue` for the same test. Not matched; the two closures (`<>c__DisplayClass76_0`) are inside the placeholder.
+  - `CollapsibleAreaControl.HandlePrintViewportChanged` (internal static, closures `DisplayClass43_0/43_1`): the layout now matches up to a 1-byte offset difference in a `brfalse` (Quire 93 vs Mathcad 92) before the enumerator loop. Not matched.
+  - `CollapsibleAreaViewModel.OnToggleProtectState` (see batch 4): the `func` lambda `cgt.un` shape.
+  - `CollapsibleAreaViewModel.HandleGridCellSizeChanged`: pass-through as on main (see batch 4).
+
 ## Remaining (not yet started)
-- `CollapsibleAreaControl` (61 stubs), then the two ViewModel placeholders listed in batch 4.
+- Nothing implementable is left in this assembly. The 5 unfinished members above need a shape not yet found; the next step is the gate on those shapes, not new members.

@@ -11,6 +11,4 @@ namespace Quire.Controls.CollapsibleArea;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.CollapsibleArea.CollapsibleAreaConstants, Ptc.Controls.CollapsibleArea")]
 public static partial class CollapsibleAreaConstants
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string CollapsibleAreaHelpContext = "CollapsibleAreaControl";
 }
