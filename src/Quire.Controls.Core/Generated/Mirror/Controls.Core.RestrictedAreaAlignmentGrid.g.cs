@@ -11,22 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RestrictedAreaAlignmentGrid, Ptc.Controls.Core")]
 public partial class RestrictedAreaAlignmentGrid : global::Quire.Controls.Core.AlignmentGrid, global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid, global::Quire.Controls.Core.IAlignmentGrid, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IEnumerable<global::Quire.Pair<double, double>> AreasToSkip { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public RestrictedAreaAlignmentGrid() { }
-    [global::Quire.Mirror.MirrorStub]
-    public RestrictedAreaAlignmentGrid(global::System.Nullable<global::System.Windows.Size> gridSize) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Point GetNearestIntersectionInDirection(global::System.Windows.Point startPoint, global::Quire.Direction direction) => base.GetNearestIntersectionInDirection(startPoint, direction);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Point GetNextIntersection(global::System.Windows.Point startPoint, global::Quire.Direction direction) => base.GetNextIntersection(startPoint, direction);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Point GetNearestIntersectionPointDisregardingBounds(global::System.Windows.Point startPoint, global::Quire.Controls.Core.GridRestriction restriction, params global::Quire.Direction[] directionsToIgnore) => base.GetNearestIntersectionPointDisregardingBounds(startPoint, restriction, directionsToIgnore);
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point GetNearestInsertionPointIgnoringRestrictedAreas(global::System.Windows.Point startPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsWithinRestrictedArea(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Dispose() => base.Dispose();
 }

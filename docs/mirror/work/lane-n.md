@@ -747,4 +747,13 @@
   - `NodeHandleMapper` (`_nodeHandleList`, `HandlePrefix`, `.ctor()`, `Clear()`, `GetReplacedRl(ICalculatable)`, `GetNodesAndHandles`, `GetReplacedRl(ICalculatable, string)`, `Map`, `GetMappedNodeNandle`, `GetMappedEquation`, `GetIndexFromHandle`)
 - Report: `.mirror-cache/release-il-0dd5a792c0c2/release-il.json` — PASS, 1,745 checked, 1,739 exact, 0 failures, 1,435 unfinished (was 1,469).
 - Remaining mismatches: none in claimed batch.
-- Still open: 1,435 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.
+
+## Batch 98 — FindReplaceQuery, DeserializationStrategy, and RestrictedAreaAlignmentGrid
+
+- Claimed:
+  - `FindReplaceQuery` (`PostReplaceAndFindNext`, `IsFullySubscript`, `.ctor`)
+  - `Serialization.DeserializationStrategy` (`Regions`, `RegionFactory`, `AddRegion(UIElement, Point)`, `DeleteRegion(UIElement)`, `IsRegionNotAffectingCalculation(IRegionType)`, `SetRegions(IEnumerable<IRegionType>, IDeS11NProvider)`, `AddRegion(IRegionPersistentData, bool)`, `AddRegion(IRegionPersistentData)`, `CleanUpLastRegion(IRegionPersistentData)`, and closure `<>c__DisplayClass16_0`)
+  - `RestrictedAreaAlignmentGrid` (`AreasToSkip`, `.ctor()`, `.ctor(Size?)`, `GetNearestIntersectionInDirection`, `GetNextIntersection`, `GetNearestIntersectionPointDisregardingBounds`, `GetNearestInsertionPointIgnoringRestrictedAreas`, `IsWithinRestrictedArea`, `Dispose`, and closures `<>c__DisplayClass10_0`, `<>c__DisplayClass11_0`, `<>c__DisplayClass12_0`, `<>c__DisplayClass16_0`)
+- Report: `.mirror-cache/release-il-21ed139c7207/release-il.json` — PASS, 1,767 checked, 1,767 exact, 0 failures, 1,419 unfinished (was 1,435).
+- Remaining mismatches: none in claimed batch.
+- Still open: 1,419 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.

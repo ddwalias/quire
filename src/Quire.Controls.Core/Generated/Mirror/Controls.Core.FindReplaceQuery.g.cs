@@ -11,10 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.FindReplaceQuery, Ptc.Controls.Core")]
 public partial class FindReplaceQuery : global::Quire.Controls.Core.IFindReplaceQuery
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Action<bool> PostReplaceAndFindNext;
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsFullySubscript(global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions, string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public FindReplaceQuery(string oldValue, string newValue, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> findSubscriptPositions = default, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> replaceSubscriptPositions = default) { }
 }

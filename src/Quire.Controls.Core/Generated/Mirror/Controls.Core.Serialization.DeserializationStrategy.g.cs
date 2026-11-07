@@ -11,22 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.DeserializationStrategy, Ptc.Controls.Core")]
 public abstract partial class DeserializationStrategy : global::Quire.Controls.Core.Serialization.IDeserializationStrategy
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::System.Collections.Generic.IList<global::System.Windows.UIElement> Regions { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.Controls.Core.IRegionFactory RegionFactory { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void AddRegion(global::System.Windows.UIElement element, global::System.Windows.Point location);
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void DeleteRegion(global::System.Windows.UIElement control);
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual bool IsRegionNotAffectingCalculation(global::Quire.PersistentDataObjects.IRegionType regionData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegions(global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.IRegionType> regions, global::Quire.Serialization.IDeS11NProvider deS11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AddRegion(global::Quire.Serialization.IRegionPersistentData regionPersistentData, bool skipRegionsNotAffectingCalculation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void AddRegion(global::Quire.Serialization.IRegionPersistentData regionPersistentData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void CleanUpLastRegion(global::Quire.Serialization.IRegionPersistentData regionPersistentData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
