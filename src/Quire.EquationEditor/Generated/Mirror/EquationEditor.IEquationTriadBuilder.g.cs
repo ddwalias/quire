@@ -11,6 +11,4 @@ namespace Quire.EquationEditor;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.IEquationTriadBuilder, Ptc.EquationEditor")]
 public partial interface IEquationTriadBuilder
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IEquationControl BuildEquationControl(global::Quire.EquationEditor.IEquationModel eqModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

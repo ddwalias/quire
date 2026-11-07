@@ -11,8 +11,4 @@ namespace Quire.EquationEditor;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.IEquationEditorSettings, Ptc.EquationEditor")]
 public partial interface IEquationEditorSettings
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool ParenthesizeOperands { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.TableSize ResultMatrixMaxDisplaySize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
