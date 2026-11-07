@@ -809,3 +809,9 @@
 - Report: `.mirror-cache/release-il-618908c0d5a5/release-il.json` — PASS, 2,013 checked, 2,013 exact, 0 failures, 1,240 unfinished (was 1,258).
 - Remaining mismatches: none in claimed batch. `Equals` needs the flag-and-`as` shape: the idiomatic `is not X other` pattern gave a type-operation mismatch at the first `isinst`.
 - Batch 103 (commit `6a4641ee`, cherry-picked here) landed on main; its Release IL gate passed twice (`release-il-a6e068ad616d`, `gate-il-823ed257df8c`, `gate-il-b7e5ee45b166`).
+
+## Batch 105 — MatrixFormatSerializer
+
+- Claimed: all members of `Ptc.Controls.Core.Serialization.MatrixFormatSerializer` (constants, fields, constructor, `ReadXml`, `ReadMatrixFormatAttrs`, `ReadNestedMatrixFormats`, `ReadNestedMatrixFormat`, `WriteXml`, `WriteMatrixFormatAttrs`, `WriteNestedMatrixFormats`, `WriteNestedMatrixFormat`); stubs removed from the `.g.cs`, which keeps the class header.
+- Report: `.mirror-cache/release-il-878e26a23804/release-il.json` — PASS, 2,022 checked, 2,022 exact, 0 failures, 1,231 unfinished (was 1,240).
+- Remaining mismatches: none in claimed batch. Two shapes are kept as Release IL requires: `ReadXml`/`WriteXml` return early on a null format, and compare `"matrix"` with the literal on the left. Writing `!(x == null)` or `!=` on `MatrixFormat` failed the gate with a different overload call, and an `if (x != null)` block shape also failed.
