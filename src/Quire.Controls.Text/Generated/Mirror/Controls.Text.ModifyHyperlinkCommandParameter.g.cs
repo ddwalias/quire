@@ -11,16 +11,4 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.ModifyHyperlinkCommandParameter, Ptc.Controls.Text")]
 public partial class ModifyHyperlinkCommandParameter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShowDialog { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string UserInputText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string UserInputAddress { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Documents.Hyperlink ResultHyperlink { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual bool ResultIsSingleLinkEditOperation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ModifyHyperlinkCommandParameter(bool showDialog, string userInputText, string userInputAddress) { }
 }

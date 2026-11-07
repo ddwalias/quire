@@ -12,15 +12,5 @@ namespace Quire.Controls.Text;
 public partial class ContextMenuModifyHyperlinkCommandParameter : global::Quire.Controls.Text.ModifyHyperlinkCommandParameter, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
-    public string GenericLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string SingleLinkEditLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool ResultIsSingleLinkEditOperation { get => base.ResultIsSingleLinkEditOperation; set => base.ResultIsSingleLinkEditOperation = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public string CurrentLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public ContextMenuModifyHyperlinkCommandParameter() : base(default(bool), default(string), default(string)) { }
 }

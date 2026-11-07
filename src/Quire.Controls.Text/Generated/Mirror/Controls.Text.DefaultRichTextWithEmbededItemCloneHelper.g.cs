@@ -11,12 +11,4 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.DefaultRichTextWithEmbededItemCloneHelper, Ptc.Controls.Text")]
 public partial class DefaultRichTextWithEmbededItemCloneHelper : global::Quire.Controls.Text.IRichTextWithEmbededItemCloneHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.CopyWidgetBase CreatePopup() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IWhiteboardItemInText Clone(global::Quire.Controls.Core.IWhiteboardItemInText item, global::System.Nullable<global::System.Windows.Rect> boundsConstraint, global::Quire.Controls.Core.CopyWidgetBase popup) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Documents.InlineUIContainer Insert(global::Quire.Controls.Core.IWhiteboardItemInText item, global::System.Windows.Documents.TextPointer insertionpoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public DefaultRichTextWithEmbededItemCloneHelper() { }
 }
