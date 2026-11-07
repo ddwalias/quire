@@ -21,5 +21,13 @@
 - Shapes that matched first try: `protected readonly` for the `family initonly` field; `DebugTools.FailAssertion((string)null)` (ILSpy's `null` is ambiguous with the `Exception` overload); `region.Location = GetLocation(item)` order; `new CollapsibleAreaViewModel Clone();` in the interface.
 - Remaining mismatches in this batch: none.
 
+## Batch 3 — CollapsibleAreaModel
+
+- Members: all 26 model members (fields `_isCollapsed`, `_isBorderVisible = true`, nested `PropertyNames` constants, `CanToggleCollapseState`, `IsCollapsed`, `IsBorderVisible`, `ProtectionData`, `HasOpenDescendantOleObjects`, `PrintViewport`, `IsInPrinting` override, `PropertyChanged` event, `.ctor`, `ToggleCollapseState`, `ToggleBorderVisibleState`, `GetPersistentData`, `SetPersistentData`, `SetProtection`, `RemoveProtection`, `Clone`, `CopyStateTo`, `InitializeChildManager`, `FirePropertyChanged`, `ShouldCloneItem`).
+- Hand-written: `Mirrored/Controls.CollapsibleArea.CollapsibleAreaModel.cs`; 25 declarations removed from `Generated/Mirror/Controls.CollapsibleArea.CollapsibleAreaModel.g.cs`.
+- Shape tried and rejected: block-`if (x != value) { ... }` setters for `IsCollapsed` and `IsBorderVisible`. Gate: "Release IL differs" (`beq.s` to exit vs Mathcad's `bne.un.s` + `ret`). Kept instead: `if (x == value) return;` early return with a one-line comment (both setters).
+- Release IL: PASS — 67 checked, 67 exact, 0 failures. Model has 26 exact, 0 stubs.
+- Remaining mismatches in this batch: none.
+
 ## Remaining (not yet started)
-- `CollapsibleAreaModel` (23 stubs), `CollapsibleAreaViewModel` (67 stubs, incl. nested `CollapsibleAreaResizeData`), `CollapsibleAreaControl` (61 stubs).
+- `CollapsibleAreaViewModel` (67 stubs, incl. nested `CollapsibleAreaResizeData`), `CollapsibleAreaControl` (61 stubs).
