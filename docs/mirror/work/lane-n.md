@@ -679,4 +679,10 @@
 - Claimed: `Result10Repairer` (`RepairXDocument`, `UpdateNameSpace`, `UpdateResultNode`, const `TargetNamespaceUri`).
 - Report: `.mirror-cache/release-il-69780d0feb6c/release-il.json` — PASS, 1,521 checked, 1,521 exact, 0 failures, 1,591 unfinished.
 - Remaining mismatches: none in claimed batch.
-- Still open: 1,591 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), `IPublicOleContainerModel`1`, and `Settings.Presentation10Repairer` (6 incl. the `CreateNewParent` closure).
+
+## Batch 91 — Settings.Presentation10Repairer
+
+- Claimed: `Presentation10Repairer` (`RepairXDocument`, `UpdateNodeValue`, `UpdateNameSpace(IEnumerable, ICollection, string, string)`, `UpdateNameSpace(XDocument)`, `CreateNewParent`, `UpdateNodeStruct`, consts `_sourceNamespaceURI`, `_targetNamespaceURI`).
+- Report: `.mirror-cache/release-il-a86c4fd4baba/release-il.json` — PASS, 1,530 checked, 1,530 exact, 0 failures, 1,585 unfinished.
+- Remaining mismatches: none in claimed batch.
+- Still open: 1,585 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.
