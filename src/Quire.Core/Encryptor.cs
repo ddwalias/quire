@@ -42,4 +42,19 @@ public partial class Encryptor
     {
         return _legacyDecryptorsDictionary?.FirstOrDefault((KeyValuePair<Version, ICryptoTransform> el) => formatVersion.CompareTo(el.Key) <= 0).Value;
     }
+
+    [MirrorVerified("Release IL")]
+    public Encryptor(global::Quire.License.ILicenseManager licenseManager)
+    {
+        _cryptoTransformer = new global::System.Security.Cryptography.AesCryptoServiceProvider().CreateEncryptor(licenseManager.GetEncryptionKey(global::Quire.License.EncryptorVersion.Current), licenseManager.GetEncryptionInitVector(global::Quire.License.EncryptorVersion.Current));
+        DebugTools.DevAssert(_cryptoTransformer.CanReuseTransform, null);
+        _legacyDecryptorsDictionary = new global::System.Collections.Generic.SortedDictionary<global::System.Version, ICryptoTransform>
+        {
+            {
+                new global::System.Version(11, 0, 0, 0),
+                new global::System.Security.Cryptography.TripleDESCryptoServiceProvider().CreateDecryptor(licenseManager.GetEncryptionKey(global::Quire.License.EncryptorVersion.PrePrime11), licenseManager.GetEncryptionInitVector(global::Quire.License.EncryptorVersion.PrePrime11))
+            }
+        };
+        DebugTools.DevAssert(_legacyDecryptorsDictionary.First().Value.CanReuseTransform, null);
+    }
 }
