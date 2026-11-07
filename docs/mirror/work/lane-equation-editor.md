@@ -9,4 +9,5 @@
 - Batch 5: `EquationErrors` constructor; Release IL PASS, 179 checked (`.mirror-cache/release-il-ff0a18dd1c98/release-il.json`).
 - Batch 6: `Tree.StringCompressor.CompressString`, `DecompressString`; Release IL PASS, 181 checked (`.mirror-cache/release-il-52d2ad20edcb/release-il.json`).
 - Batch 7: `Tree.Parsing.Panceaux.BinaryMergeValueChildren` constructor; Release IL PASS, 181 checked (`.mirror-cache/release-il-ef6f770294c0/release-il.json`).
-- Remaining: 5,932 `MirrorStub` attributes in 252 generated files; not yet batched. No mismatches in completed batches.
+- Batch 8: `Tree.Parsing.Panceaux.InsertChildrenIntoParent`, `ReplaceWithChild`, `ReplaceWith`; Release IL PASS, 185 checked (`.mirror-cache/release-il-9f2adecc1e1b/release-il.json`).
+- Remaining: 5,925 `MirrorStub` attributes in 249 generated files; not yet batched. No mismatches in completed batches.

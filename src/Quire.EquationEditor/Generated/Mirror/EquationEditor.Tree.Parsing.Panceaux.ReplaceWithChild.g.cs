@@ -11,8 +11,4 @@ namespace Quire.EquationEditor.Tree.Parsing.Panceaux;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Parsing.Panceaux.ReplaceWithChild, Ptc.EquationEditor")]
 public partial class ReplaceWithChild : global::Quire.EquationEditor.Tree.Parsing.Panacea
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override void Accept(global::Quire.EquationEditor.Tree.Parsing.PanaceaVisitor visitor) => base.Accept(visitor);
-    [global::Quire.Mirror.MirrorStub]
-    public ReplaceWithChild() { }
 }
