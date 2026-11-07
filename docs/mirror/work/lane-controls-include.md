@@ -27,6 +27,10 @@
   - `IncludeWorksheetErrorWarningData` (32 stubs: ResetCode, error/warning consts, conflictwarnings, IsConflictWarningCode, IsCacheWarningCode, PathIndexes, FileName, Code, Text, IsPathRooted, .ctor)
   - `IncludeWorksheetSerializationStrategy` (6 stubs: _regionsToSerialize, _fileManager, .ctor, SerializeRegionsEpilog, GetRegions, RegionsToSerialize)
   - `IncludeFileDeserializationStrategy` (12 stubs: _calulatableRegions, _fileManager, CacheValid, Regions, RegionFactory, .ctor, DeserializeRegionProlog, DeserializeRegionsEpilog, AddRegion, DeleteRegion, IsRegionNotAffectingCalculation(UIElement), IsRegionNotAffectingCalculation(IRegionType))
-- Release IL: PASS; 175 checked, 175 exact, 0 failures. Report: `.mirror-cache/release-il-c40e59365f2c/release-il.json`.
-- Stubs: 436 before, 386 remaining.
+- Release IL: PASS; 175 checked, 175 exact, 0 failures. Landed as a3b4b9fd.
+- Batch 4: 55 members across `ErrorWarningHandler` and `ErrorWarningHandlerModel`:
+  - `ErrorWarningHandler` (21 stubs: _control, _errorsList, _warningsList, AdornersList, .ctor, ShowErrors, ShowWarnings, RemoveAdorners, RemoveNodeMessageAdorners, AddAdorners, AddErrorAdorners, ElementIsLoadedAddErrorAdorners, SetErrorFrame, AddWarningAdorners, ElementIsLoadedAddWarningAdorners, GetMergedWarningsList, GetMergedErrorsList, ExclamationPointAdorner .ctor, OnRender, _pen, _height)
+  - `ErrorWarningHandlerModel` (34 stubs: fields, WarningCodesSeparator, PathIndexes, ErrorsList, WarningsList, .ctor, GetIncludeWorksheetErrorWarningData, SetIncludeWorksheetErrorWarningData, UpdateError, UpdateWarning, UpdateErrors, UpdateWarnings, ClearErrors, ClearWarnings, FilterOutNotOwnErrorsWarnings, ValidateErrorsWarningsList, UpdateErrorsWarnings, IsResetCode, IsCalculationSuccedErrorCode, GetFilePathRelativeToCwd, FindInResource, GetErrorTextByCode, ShouldRemovePreviousError, CreateError, UpdateErrorStruct, GetWarningTextByCodes, CreateWarning, GetWarningCodeForDiffSetting, ParseCode, CleanUpLegacyWarnings, UpdateWarningStruct, GetWarningTextOnDiffSettings, GetConflictSettingNames, CreateConflictSettingString)
+- Release IL: PASS; 242 checked, 242 exact, 0 failures. Report: `.mirror-cache/release-il-4e5e4dbae731/release-il.json`.
+- Unfinished methods: 310 remaining (580 MirrorStub attributes).
 - Remaining mismatches: none.
