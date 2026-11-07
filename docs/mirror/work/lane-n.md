@@ -673,3 +673,10 @@
 - Claimed: `Serialization.Integration10Repairer` (`RepairXDocument`, `UpdateNameSpace`), `Settings.Calculation10Repairer` (`RepairXDocument`, `UpdateNodeValue`, consts `_sourceNamespaceURI`, `_targetNamespaceURI`).
 - Report: `.mirror-cache/release-il-833cbf816992/release-il.json` — PASS, 1,917 checked, 0 failures, 1,594 unfinished, 1,518 exact.
 - Remaining mismatches: none in claimed batch. Guard shape `if (Failed == DevAssert(...)) return;` is kept because Release IL branches on the inverted test.
+
+## Batch 90 — Serialization.Result10Repairer
+
+- Claimed: `Result10Repairer` (`RepairXDocument`, `UpdateNameSpace`, `UpdateResultNode`, const `TargetNamespaceUri`).
+- Report: `.mirror-cache/release-il-69780d0feb6c/release-il.json` — PASS, 1,521 checked, 1,521 exact, 0 failures, 1,591 unfinished.
+- Remaining mismatches: none in claimed batch.
+- Still open: 1,591 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), `IPublicOleContainerModel`1`, and `Settings.Presentation10Repairer` (6 incl. the `CreateNewParent` closure).

@@ -11,12 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.Result10Repairer, Ptc.Controls.Core")]
 internal static partial class Result10Repairer
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string TargetNamespaceUri = "http://schemas.mathsoft.com/result10";
-    [global::Quire.Mirror.MirrorStub]
-    public static void RepairXDocument(global::System.Xml.Linq.XDocument xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void UpdateNameSpace(global::System.Xml.Linq.XDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void UpdateResultNode(global::System.Xml.Linq.XDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
