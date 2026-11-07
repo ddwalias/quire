@@ -783,4 +783,13 @@
   - `MathFormatDobjController` (`FontFamilyName`, `FontSize`, `IsBold`, `IsItalic`, `IsUnderline`, `FontColor`, `HighlightColor`, `.ctor(DependencyObject)`, `SetPropertiesFrom`, `IsPropertySet`)
 - Report: `.mirror-cache/release-il-9a030a55dd1b/release-il.json` — PASS, 1,883 checked, 1,883 exact, 0 failures, 1,330 unfinished (was 1,357).
 - Remaining mismatches: none in claimed batch.
-- Still open: 1,330 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.
+
+## Batch 102 — OleContainerBase, OleSizeDataWithNotification, and XElementSerializable
+
+- Claimed:
+  - `Ole.OleContainerBase` (`_typeOfThis`, `_bitmap`, `Bitmap`, `AcquireBitmapSource`, `CreateBitmap`, `GetRenderRectInPixels`, `get_IsOleCreated`, `OnZoomChanged`, `.ctor()`, `.cctor()`, closure `<.cctor>b__1_0`)
+  - `Ole.OleSizeDataWithNotification` (`_autoResize`, `_oleViewportSize`, `HasFakeOleViewportSize`, `AutoResize`, `OleViewportSize`, `AutomaticSize`, `PropertyChanged`, `CopyFrom`, `.ctor(bool)`, `OnPropertyChanged`, `UpdateAndNotify`, `PropertyNames.AutoResize`, `PropertyNames.AutomaticSize`, and closures `<CopyFrom>b__0` in `<>c__DisplayClass6_0`, `<set_OleViewportSize>b__0` in `<>c__DisplayClass9_0`, `<set_AutoResize>b__0` in `<>c__DisplayClass16_0`)
+  - `Serialization.XElementSerializable` (`_name`, `Children`, `Name`, `Namespace`, `HasChildren`, `.ctor(XName, params object[])`, `CreateChildren`, `GetThisElement(XElement)`, `GetThisElement()`, `ReadXml(XElement)`, `WriteXml(XElement)`, `WriteXml(XDocument)`, `WriteElementContents`, `ReadElementContents`, `GetSchema`, `ReadXml(XmlReader)`, `WriteXml(XmlWriter)`, `GetXmlAttributeName`, `GetXmlAttributeDefaultValue`)
+- Report: `.mirror-cache/release-il-018bbc164611/release-il.json` — PASS, 1,922 checked, 1,922 exact, 0 failures, 1,301 unfinished (was 1,330).
+- Remaining mismatches: none in claimed batch.
+- Still open: 1,301 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer_4`, `OleContainerModel_1`, `OleContainerViewModel_3`), and `IPublicOleContainerModel_1`.
