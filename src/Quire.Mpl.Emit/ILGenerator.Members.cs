@@ -45,4 +45,8 @@ public partial class ILGenerator
     public virtual void EndScope() => throw new NotImplementedException();
     public virtual void MarkLabel(Label loc) => throw new NotImplementedException();
     public virtual void UsingNamespace(string usingNamespace) => throw new NotImplementedException();
+
+    public ILGenerator()
+    {
+    }
 }

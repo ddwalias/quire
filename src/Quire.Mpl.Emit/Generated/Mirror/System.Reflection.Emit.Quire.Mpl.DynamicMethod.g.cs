@@ -11,16 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.DynamicMethod, mplasb")]
 public partial class DynamicMethod : global::System.Reflection.MethodInfo
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Reflection.Emit.DynamicMethod _dynamicMethod;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.Emit.Quire.Mpl.DynamicMethod_ILGenerator _ilGenerator;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Reflection.Emit.Quire.Mpl.LocalVariableManager _localVariableManager;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string _name;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly int _idxId;
-    [global::Quire.Mirror.MirrorStub]
-    private static int _s_counter;
 }

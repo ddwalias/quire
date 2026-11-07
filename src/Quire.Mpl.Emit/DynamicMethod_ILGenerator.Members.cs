@@ -7,6 +7,10 @@ namespace System.Reflection.Emit.Quire.Mpl;
 
 internal partial class DynamicMethod_ILGenerator
 {
+    protected readonly System.Reflection.Emit.ILGenerator _ilGenerator;
+    protected readonly DynamicMethod _dynamicMethodMaster;
+    protected System.Collections.Generic.Dictionary<EntityWrappers.LocalBuilderReferenceWrapper, System.Reflection.Emit.LocalBuilder> _map;
+
     internal string Id => _dynamicMethodMaster.Id;
 
     public DynamicMethod_ILGenerator(System.Reflection.Emit.ILGenerator ilGenerator, DynamicMethod master)

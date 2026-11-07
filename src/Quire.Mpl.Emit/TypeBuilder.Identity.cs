@@ -11,6 +11,8 @@ public partial class TypeBuilder
     internal List<FieldBuilder> _fieldDefStore = new List<FieldBuilder>();
     internal List<EntityWrappers.CustomAttributeWrapper> _customAttributes = new List<EntityWrappers.CustomAttributeWrapper>();
 
+    public const int UnspecifiedTypeSize = 0;
+
     public override string Name { get; }
     public override AssemblyBuilder Assembly { get; }
     public override ModuleBuilder Module { get; }

@@ -11,10 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.DynamicMethod_ILGenerator, mplasb")]
 internal partial class DynamicMethod_ILGenerator : global::System.Reflection.Emit.Quire.Mpl.ILGenerator
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::System.Reflection.Emit.ILGenerator _ilGenerator;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::System.Reflection.Emit.Quire.Mpl.DynamicMethod _dynamicMethodMaster;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.LocalBuilderReferenceWrapper, global::System.Reflection.Emit.LocalBuilder> _map;
 }

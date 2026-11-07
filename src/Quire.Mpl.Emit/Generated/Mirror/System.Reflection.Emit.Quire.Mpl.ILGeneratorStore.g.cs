@@ -11,8 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.ILGeneratorStore, mplasb")]
 public partial class ILGeneratorStore : global::System.Reflection.Emit.Quire.Mpl.ILGenerator
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.MethodBase _method;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.Emit.Quire.Mpl.CommonMemberData _memberData;
 }

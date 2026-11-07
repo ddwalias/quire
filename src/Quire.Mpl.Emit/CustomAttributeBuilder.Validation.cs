@@ -25,4 +25,9 @@ public partial class CustomAttributeBuilder
         }
         writer.Write(bytes);
     }
+
+    // Fields declared after MainConstructor to preserve closure ordinal (<.ctor>b__8_0)
+    private ConstructorInfo _constructorInfo;
+    private object?[] _constructorArgs;
+    internal byte[] _blob;
 }

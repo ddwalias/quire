@@ -11,6 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.TypeBuilder, mplasb")]
 public partial class TypeBuilder : global::System.Reflection.TypeInfo
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const int UnspecifiedTypeSize = 0;
 }

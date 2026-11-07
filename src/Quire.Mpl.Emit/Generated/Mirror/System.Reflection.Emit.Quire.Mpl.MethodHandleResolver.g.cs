@@ -11,6 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.MethodHandleResolver, mplasb")]
 internal partial class MethodHandleResolver
 {
-    [global::Quire.Mirror.MirrorStub]
-    public MethodHandleResolver() { }
 }

@@ -11,6 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.MetadataReferenceTracker, mplasb")]
 public partial class MetadataReferenceTracker
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker _instance;
 }

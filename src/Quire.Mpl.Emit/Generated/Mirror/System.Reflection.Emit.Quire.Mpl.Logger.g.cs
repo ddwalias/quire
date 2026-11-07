@@ -11,6 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.Logger, mplasb")]
 public static partial class Logger
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Threading.Thread _logThread;
 }

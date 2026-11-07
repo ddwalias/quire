@@ -11,6 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.TryCatchBlockInfo, mplasb")]
 internal partial class TryCatchBlockInfo
 {
-    [global::Quire.Mirror.MirrorStub]
-    public TryCatchBlockInfo() { }
 }

@@ -11,19 +11,6 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.TypeNameBuilder, mplasb")]
 internal sealed partial class TypeNameBuilder
 {
-    [global::Quire.Mirror.MirrorStub]
-    private int _instNesting;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _firstInstArg;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _nestedName;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _hasAssemblySpec;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _useAngleBracketsForGenerics;
-    [global::Quire.Mirror.MirrorStub]
-    private int _stackIdx;
-
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.TypeNameBuilder+Format, mplasb")]
     internal enum Format
     {

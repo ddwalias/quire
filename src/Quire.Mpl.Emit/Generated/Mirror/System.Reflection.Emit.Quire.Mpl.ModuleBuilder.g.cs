@@ -11,10 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.ModuleBuilder, mplasb")]
 public partial class ModuleBuilder : global::System.Reflection.Module
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Reflection.Emit.Quire.Mpl.TypeBuilder _currentType;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Nullable<global::System.Reflection.Metadata.TypeDefinitionHandle> _currentTypeHandle;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker _metadataReferenceTracker;
 }

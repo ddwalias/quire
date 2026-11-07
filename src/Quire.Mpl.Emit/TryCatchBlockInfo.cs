@@ -11,4 +11,8 @@ internal partial class TryCatchBlockInfo
     public LabelHandle labelCatchEnd { get; set; }
     public LabelHandle endExceptionBlockLabel { get; set; }
     public EntityHandle exceptionToken { get; set; }
+
+    public TryCatchBlockInfo()
+    {
+    }
 }

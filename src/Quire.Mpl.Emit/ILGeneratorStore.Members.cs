@@ -9,6 +9,8 @@ namespace System.Reflection.Emit.Quire.Mpl;
 public partial class ILGeneratorStore
 {
     private List<ILInstruction> instructions;
+    private MethodBase _method;
+    private CommonMemberData _memberData;
     public List<ILInstruction> Instructions => instructions;
 
     public override int ILOffset => throw new NotImplementedException();

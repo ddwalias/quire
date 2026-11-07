@@ -58,3 +58,18 @@ None reported at batch 5.
 - Result: `Logger::.cctor` and `<.cctor>b__15_0` exact; the other Logger members stay exact. Idiomatic form matched on the first try; the only unusual shape is the file-name letters A and B.
 - Report: `.mirror-cache/release-il-d70f8d14531d/release-il.json` (PASS, 686 checked, 0 failures).
 - Remaining mismatches: none.
+
+## Batch 7 — all remaining stub-marked members
+
+- Owner: Lane B. Branch: `mirror/b-mpl-emit-20261107-b`.
+- Claimed: all 47 remaining stub-marked members in Quire.Mpl.Emit (7 constructors, 1 const, 39 fields).
+- Implementations & member moves:
+  - Default constructors implemented in hand-written partials: `EntityWrappers`, `FieldHandleResolver`, `ILGenerator`, `MethodHandleResolver`, `OpCodeMapper`, `TryCatchBlockInfo`, `TypeHandleResolver`.
+  - `TypeBuilder.UnspecifiedTypeSize` const moved into `TypeBuilder.Identity.cs`.
+  - Fields moved from `.g.cs` into hand-written partials: `CustomAttributeBuilder`, `DynamicAssemblyModel`, `DynamicMethod`, `DynamicMethod_ILGenerator`, `DynamicMethod_ILGenerator_Special`, `ILCodeConverter`, `ILGeneratorStore`, `Logger`, `MetadataReferenceTracker`, `ModuleBuilder`, `TypeNameBuilder`.
+  - Compile-order devices: `Logger._logThread` declared in `Logger.0Thread.cs` to precede `Logger.AProperties.cs` preserving `<.cctor>b__15_0`; fields in `DynamicMethod.Identity.cs` and `CustomAttributeBuilder.Validation.cs` placed to preserve constructor closure ordinals (`<.ctor>b__8_*`).
+  - Stubs removed from 19 `.g.cs` files under `Generated/`.
+- Result: Release IL exact across all checked methods; 0 remaining stubs.
+- Report: `.mirror-cache/release-il-0a70ee329787/release-il.json` (PASS, 686 checked, 0 failures, 0 unfinished).
+- Remaining stubs: 0.
+- Remaining mismatches: none.

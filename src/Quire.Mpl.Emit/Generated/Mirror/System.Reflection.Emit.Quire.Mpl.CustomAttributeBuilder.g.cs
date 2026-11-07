@@ -11,13 +11,6 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.CustomAttributeBuilder, mplasb")]
 public partial class CustomAttributeBuilder
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.ConstructorInfo _constructorInfo;
-    [global::Quire.Mirror.MirrorStub]
-    private object[] _constructorArgs;
-    [global::Quire.Mirror.MirrorStub]
-    internal byte[] _blob;
-
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.CustomAttributeBuilder+CustomAttributeEncoding, mplasb")]
     internal enum CustomAttributeEncoding
     {

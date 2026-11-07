@@ -11,21 +11,6 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.DynamicAssemblyModel, mplasb")]
 internal partial class DynamicAssemblyModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    private int _typeIndex;
-    [global::Quire.Mirror.MirrorStub]
-    private int _fieldIndex;
-    [global::Quire.Mirror.MirrorStub]
-    private int _methodIndex;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder _moduleBuilder;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.Metadata.Ecma335.MethodBodyStreamEncoder _methodBodyStream;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker _metadataReferenceTracker;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.Metadata.Ecma335.MetadataBuilder _metadata;
-
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.DynamicAssemblyModel+TypeIndexInfo, mplasb")]
     internal partial class TypeIndexInfo
     {

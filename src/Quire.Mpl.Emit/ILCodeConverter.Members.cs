@@ -9,6 +9,12 @@ namespace System.Reflection.Emit.Quire.Mpl;
 
 internal partial class ILCodeConverter
 {
+    private MetadataBuilder _metadata;
+    private MetadataReferenceTracker _referencesTracker;
+    private TypeBuilder _typeBuilder;
+    private ILGeneratorStore _codeStore;
+    private LabelManager _labelManager;
+    private ModuleBuilder _moduleBuilder;
     private Stack<TryCatchBlockInfo> _tryCatchStack = new Stack<TryCatchBlockInfo>();
 
     public ILCodeConverter(MetadataBuilder metadata, MetadataReferenceTracker referencesTracker, TypeBuilder typeBuilder, CommonMemberData commonMemberData)

@@ -40,6 +40,10 @@ internal partial class FieldHandleResolver
                 throw new InvalidDataException("Unknown field " + field.Name);
         }
     }
+
+    public FieldHandleResolver()
+    {
+    }
 }
 
 internal partial class TypeHandleResolver
@@ -78,5 +82,9 @@ internal partial class TypeHandleResolver
             default:
                 throw new InvalidDataException("Unknown type " + type.Name);
         }
+    }
+
+    public TypeHandleResolver()
+    {
     }
 }

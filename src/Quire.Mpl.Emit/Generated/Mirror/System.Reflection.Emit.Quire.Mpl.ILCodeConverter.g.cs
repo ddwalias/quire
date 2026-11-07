@@ -11,16 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.ILCodeConverter, mplasb")]
 internal partial class ILCodeConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.Metadata.Ecma335.MetadataBuilder _metadata;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker _referencesTracker;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.Emit.Quire.Mpl.TypeBuilder _typeBuilder;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.Emit.Quire.Mpl.ILGeneratorStore _codeStore;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.Emit.Quire.Mpl.LabelManager _labelManager;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder _moduleBuilder;
 }

@@ -26,4 +26,8 @@ internal partial class MethodHandleResolver
                 return module._metadataReferenceTracker.GetOrAddMethodHandle(methodInfo);
         }
     }
+
+    public MethodHandleResolver()
+    {
+    }
 }

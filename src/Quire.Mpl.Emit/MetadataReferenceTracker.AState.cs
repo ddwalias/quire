@@ -19,6 +19,7 @@ public partial class MetadataReferenceTracker
     private readonly Dictionary<EntityWrappers.MethodReferenceWrapper, MethodSpecificationHandle> _methodSpecs = new Dictionary<EntityWrappers.MethodReferenceWrapper, MethodSpecificationHandle>();
     private readonly Dictionary<EntityWrappers.ConstructorReferenceWrapper, MemberReferenceHandle> _constructorRefs = new Dictionary<EntityWrappers.ConstructorReferenceWrapper, MemberReferenceHandle>();
     private readonly Dictionary<EntityWrappers.FieldReferenceWrapper, MemberReferenceHandle> _fieldRefs = new Dictionary<EntityWrappers.FieldReferenceWrapper, MemberReferenceHandle>();
+    private static MetadataReferenceTracker? _instance;
 
     public MetadataReferenceTracker(MetadataBuilder metadata, ModuleBuilder moduleBuilder)
     {

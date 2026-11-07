@@ -11,8 +11,6 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.EntityWrappers, mplasb")]
 internal partial class EntityWrappers
 {
-    [global::Quire.Mirror.MirrorStub]
-    public EntityWrappers() { }
 
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.EntityWrappers+AssemblyReferenceWrapper, mplasb")]
     internal partial class AssemblyReferenceWrapper

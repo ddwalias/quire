@@ -11,6 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.OpCodeMapper, mplasb")]
 internal partial class OpCodeMapper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public OpCodeMapper() { }
 }

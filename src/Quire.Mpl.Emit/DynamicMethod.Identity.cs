@@ -70,4 +70,12 @@ public partial class DynamicMethod
             (DynamicMethod t) => new DynamicMethod_ILGenerator_Special(t._dynamicMethod.GetILGenerator(), t)
         }
     };
+
+    // Fields declared after .ctor to preserve closure ordinal (<.ctor>b__8_*)
+    private readonly System.Reflection.Emit.DynamicMethod _dynamicMethod;
+    private DynamicMethod_ILGenerator? _ilGenerator;
+    private readonly LocalVariableManager _localVariableManager;
+    private readonly string _name;
+    private readonly int _idxId;
+    private static int _s_counter;
 }

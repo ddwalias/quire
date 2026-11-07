@@ -7,6 +7,8 @@ namespace System.Reflection.Emit.Quire.Mpl;
 
 internal partial class DynamicMethod_ILGenerator_Special
 {
+    private bool _ignore_call;
+
     public DynamicMethod_ILGenerator_Special(System.Reflection.Emit.ILGenerator ilGenerator, DynamicMethod master)
         : base(ilGenerator, master)
     {
