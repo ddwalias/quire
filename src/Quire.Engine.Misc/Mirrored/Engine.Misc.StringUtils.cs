@@ -8,6 +8,10 @@ namespace Quire.Engine.Misc;
 
 partial class StringUtils
 {
+    public static char[] Whitespace = new char[] { ' ', '\t' };
+
+    private static char[] s_CommandSpecialChars = new char[] { '\\', '"', '\'', '\t', ' ' };
+
     public static string Capitalize(string s)
     {
         if (s.Length == 0)

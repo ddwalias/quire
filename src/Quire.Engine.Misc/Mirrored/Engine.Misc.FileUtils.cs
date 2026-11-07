@@ -1,7 +1,135 @@
 #nullable disable
 #pragma warning disable
+using System.Collections.Generic;
 
 namespace Quire.Engine.Misc;
+
+partial class FileUtils
+{
+    private static string s_Char_Alpha = "Α";
+    private static string s_Char_alpha = "α";
+    private static string s_Char_Beta = "Β";
+    private static string s_Char_beta = "β";
+    private static string s_Char_Gamma = "Γ";
+    private static string s_Char_gamma = "γ";
+    private static string s_Char_Delta = "Δ";
+    private static string s_Char_delta = "δ";
+    private static string s_Char_Epsilon = "Ε";
+    private static string s_Char_epsilon = "ε";
+    private static string s_Char_Zeta = "Ζ";
+    private static string s_Char_zeta = "ζ";
+    private static string s_Char_Eta = "Η";
+    private static string s_Char_eta = "η";
+    private static string s_Char_Theta = "Θ";
+    private static string s_Char_theta = "θ";
+    private static string s_Char_Iota = "Ι";
+    private static string s_Char_iota = "ι";
+    private static string s_Char_Kappa = "Κ";
+    private static string s_Char_kappa = "κ";
+    private static string s_Char_Lambda = "Λ";
+    private static string s_Char_lambda = "λ";
+    private static string s_Char_Mu = "Μ";
+    private static string s_Char_mu = "μ";
+    private static string s_Char_Nu = "Ν";
+    private static string s_Char_nu = "ν";
+    private static string s_Char_Xi = "Ξ";
+    private static string s_Char_xi = "ξ";
+    private static string s_Char_Omicron = "Ο";
+    private static string s_Char_omicron = "ο";
+    private static string s_Char_Pi = "Π";
+    private static string s_Char_pi = "π";
+    private static string s_Char_Rho = "Ρ";
+    private static string s_Char_rho = "ρ";
+    private static string s_Char_Sigma = "Σ";
+    private static string s_Char_sigma = "σ";
+    private static string s_Char_Tau = "Τ";
+    private static string s_Char_tau = "τ";
+    private static string s_Char_Upsilon = "Υ";
+    private static string s_Char_upsilon = "υ";
+    private static string s_Char_Phi = "Φ";
+    private static string s_Char_phi = "φ";
+    private static string s_Char_Chi = "Χ";
+    private static string s_Char_chi = "χ";
+    private static string s_Char_Psi = "Ψ";
+    private static string s_Char_psi = "ψ";
+    private static string s_Char_Omega = "Ω";
+    private static string s_Char_omega = "ω";
+    private static string s_Char_phi_alt = "ϕ";
+    private static string s_Char_pi_alt = "ϖ";
+    private static string s_Char_sigma_alt = "ς";
+    private static string s_Char_theta_alt = "ϑ";
+    private static string s_Char_bottom = "⊥";
+    private static string s_Char_ohm = "Ω";
+    private static string s_Char_currency = "¤";
+    private static string s_Char_yen = "¥";
+    private static string s_Char_deg = "°";
+    private static string s_Char_hbar = "ℏ";
+    private static string s_Char_infinity = "∞";
+    private static string s_Char_element_of = "∈";
+    private static string s_Char_hooked_f = "ƒ";
+    private static string s_Char_right_arrow = "→";
+    private static string s_Char_left_arrow = "←";
+    private static string s_Char_copyright = "©";
+    private static string s_Char_trademark = "™";
+    private static string s_Char_registered = "®";
+    private static string s_Char_DoubleStruckC = "ℂ";
+    private static string s_Char_DoubleStruckQ = "ℚ";
+    private static string s_Char_DoubleStruckR = "ℝ";
+    private static string s_Char_DoubleStruckZ = "ℤ";
+    private static string s_Start_Subscript = "\u0086₊";
+    private static string s_End_Subscript = "\u0087₊";
+    private static string s_Start_Superscript = "\u0086₊";
+    private static string s_End_Superscript = "\u0087₊";
+    private static char[] s_CharMappings = new char[48]
+    {
+        'e', '∈', 'h', 'ℏ', 'o', '°', 'p', 'π', 'w', 'ω',
+        'A', '∀', 'C', 'ℂ', 'E', '∃', 'O', 'Ω', 'Q', 'ℚ',
+        'R', 'ℝ', 'V', '∇', 'Y', '¥', 'Z', 'ℤ', '$', '¤',
+        '8', '∞', '#', '≠', '<', '≤', '>', '≥', '^', '∧',
+        'v', '∨', '!', '¬', '~', '≈', '=', '≡'
+    };
+    private static Dictionary<char, char> s_AsciiToUnicodeTable = new Dictionary<char, char>();
+    private static Dictionary<char, char> s_UnicodeToAsciiTable = new Dictionary<char, char>();
+    private static readonly string[] s_NameMappings = new string[296]
+    {
+        "a", null, s_Char_alpha, "alpha", "A", null, s_Char_Alpha, "Alpha", "b", null,
+        s_Char_beta, "beta", "B", null, s_Char_Beta, "Beta", "c", null, s_Char_chi, "chi",
+        "C", null, s_Char_Chi, "Chi", "d", null, s_Char_delta, "delta", "D", null,
+        s_Char_Delta, "Delta", "e", null, s_Char_epsilon, "epsilon", "E", null, s_Char_Epsilon, "Epsilon",
+        "f", null, s_Char_phi, "phi", "F", null, s_Char_Phi, "Phi", "g", null,
+        s_Char_gamma, "gamma", "G", null, s_Char_Gamma, "Gamma", "h", null, s_Char_eta, "eta",
+        "H", null, s_Char_Eta, "Eta", "i", null, s_Char_iota, "iota", "I", null,
+        s_Char_Iota, "Iota", "j", null, s_Char_phi_alt, "phi_alt", "J", null, s_Char_theta_alt, "theta_alt",
+        "k", null, s_Char_kappa, "kappa", "K", null, s_Char_Kappa, "Kappa", "l", null,
+        s_Char_lambda, "lambda", "L", null, s_Char_Lambda, "Lambda", "m", null, s_Char_mu, "mu",
+        "M", null, s_Char_Mu, "Mu", "n", null, s_Char_nu, "nu", "N", null,
+        s_Char_Nu, "Nu", "o", null, s_Char_omicron, "omicron", "O", null, s_Char_Omicron, "Omicron",
+        "p", null, s_Char_pi, "pi", "P", null, s_Char_Pi, "Pi", "q", null,
+        s_Char_theta, "theta", "Q", null, s_Char_Theta, "Theta", "r", null, s_Char_rho, "rho",
+        "R", null, s_Char_Rho, "Rho", "s", null, s_Char_sigma, "sigma", "S", null,
+        s_Char_Sigma, "Sigma", "t", null, s_Char_tau, "tau", "T", null, s_Char_Tau, "Tau",
+        "u", null, s_Char_upsilon, "upsilon", "U", null, s_Char_Upsilon, "Upsilon", "v", null,
+        s_Char_pi_alt, "pi_alt", "V", null, s_Char_sigma_alt, "sigma_alt", "w", null, s_Char_omega, "omega",
+        "W", null, s_Char_Omega, "Omega", "x", null, s_Char_xi, "xi", "X", null,
+        s_Char_Xi, "Xi", "y", null, s_Char_psi, "psi", "Y", null, s_Char_Psi, "Psi",
+        "z", null, s_Char_zeta, "zeta", "Z", null, s_Char_Zeta, "Zeta", null, null,
+        s_Char_currency, "currency", null, null, s_Char_ohm, "ohm", null, null, s_Char_yen, "yen",
+        null, null, s_Char_deg, "deg", null, null, s_Char_infinity, "infinity", null, null,
+        s_Char_hbar, "hbar", null, null, s_Char_element_of, "element_of", null, null, s_Char_bottom, "bottom",
+        null, null, s_Char_right_arrow, "right_arrow", null, null, s_Char_left_arrow, "left_arrow", null, null,
+        s_Char_copyright, "copyright", null, null, s_Char_trademark, "trademark", null, null, s_Char_registered, "registered",
+        null, null, s_Char_hooked_f, "hooked_f", null, null, s_Char_DoubleStruckC, "DoubleStruckC", null, null,
+        s_Char_DoubleStruckQ, "DoubleStruckQ", null, null, s_Char_DoubleStruckR, "DoubleStruckR", null, null, s_Char_DoubleStruckZ, "DoubleStruckZ",
+        null, "[", s_Start_Subscript, "StartSubscript", null, "]", s_End_Subscript, "EndSubscript", null, "(",
+        s_Start_Superscript, "StartSuperscript", null, ")", s_End_Superscript, "EndSuperscript"
+    };
+    private static Dictionary<string, string> s_CharNameToUnicodeStringTable = new Dictionary<string, string>();
+    private static Dictionary<char, string> s_UnicodeToCharNameTable = new Dictionary<char, string>();
+    private static List<Pair<string, char>> s_LongUnicodeToShortcutKeyTable = new List<Pair<string, char>>();
+    private static Dictionary<char, char> s_GreekShortcutKeyToUnicodeTable = new Dictionary<char, char>();
+    private static Dictionary<char, char> s_UnicodeToGreekShortcutKeyTable = new Dictionary<char, char>();
+    private static bool s_bNamedCharMapInitialized = false;
+}
 
 partial class FileUtils
 {

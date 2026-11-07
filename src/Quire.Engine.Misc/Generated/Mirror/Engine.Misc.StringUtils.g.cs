@@ -11,8 +11,4 @@ namespace Quire.Engine.Misc;
 [global::Quire.Mirror.MirrorOf("Engine.Misc.StringUtils, mcmisc")]
 public partial class StringUtils
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static char[] Whitespace;
-    [global::Quire.Mirror.MirrorStub]
-    private static char[] s_CommandSpecialChars;
 }
