@@ -13,6 +13,4 @@ public partial class EquationErrors
 {
     [global::Quire.Mirror.MirrorStub]
     public const string MaxRecursionDepthExceeded = "EquationControl.Error.XmlParsing.MaxRecursionDepthExceeded";
-    [global::Quire.Mirror.MirrorStub]
-    public EquationErrors() { }
 }
