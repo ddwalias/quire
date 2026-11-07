@@ -22,6 +22,11 @@
   - `IncludedCalculatableWrapper` (26 stubs: fields, events, properties, .ctor, SetSynchronizationStatus, SetCalculatingStatus, SetError, ContainsError, ShowError, FirePropertyChanged, FireSetErrorChanged, FireSynchronizationStatusChanged, FireCalculatingStatusChanged)
   - `IncludedCalculatableAggregateWrapper` (12 stubs: .ctor, WrappedCalculatableAggregate, Hookup/Unhook events, Dispose, Handle* event handlers, events, CalculatableChildren)
   - `IncludedCalculatableAggregateWithComponentWrapper` (6 stubs: .ctor, WrappedCalculatableWithComponent, DataExchangeModel, ComponentHandle, ComponentCookieMultiThreaded, IncrementComponentCookieMultiThreaded)
-- Release IL: PASS; 142 checked, 142 exact, 0 failures. Report: `.mirror-cache/release-il-cb21d9725178/release-il.json`.
-- Stubs: 480 before, 436 remaining.
+- Release IL: PASS; 142 checked, 142 exact, 0 failures. Landed as 92830eb3.
+- Batch 3: 50 stubs across ErrorWarningData and serialization strategies:
+  - `IncludeWorksheetErrorWarningData` (32 stubs: ResetCode, error/warning consts, conflictwarnings, IsConflictWarningCode, IsCacheWarningCode, PathIndexes, FileName, Code, Text, IsPathRooted, .ctor)
+  - `IncludeWorksheetSerializationStrategy` (6 stubs: _regionsToSerialize, _fileManager, .ctor, SerializeRegionsEpilog, GetRegions, RegionsToSerialize)
+  - `IncludeFileDeserializationStrategy` (12 stubs: _calulatableRegions, _fileManager, CacheValid, Regions, RegionFactory, .ctor, DeserializeRegionProlog, DeserializeRegionsEpilog, AddRegion, DeleteRegion, IsRegionNotAffectingCalculation(UIElement), IsRegionNotAffectingCalculation(IRegionType))
+- Release IL: PASS; 175 checked, 175 exact, 0 failures. Report: `.mirror-cache/release-il-c40e59365f2c/release-il.json`.
+- Stubs: 436 before, 386 remaining.
 - Remaining mismatches: none.

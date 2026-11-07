@@ -11,16 +11,4 @@ namespace Quire.Controls.Include;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Include.IncludeWorksheetSerializationStrategy, Ptc.Controls.Include")]
 public partial class IncludeWorksheetSerializationStrategy : global::Quire.Controls.Core.Serialization.ISerializationStrategy
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IList<global::System.Windows.UIElement> _regionsToSerialize;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Include.IncludeWorksheetFileManager _fileManager;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::System.Windows.UIElement> RegionsToSerialize { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public IncludeWorksheetSerializationStrategy(global::Quire.Controls.Include.IncludeWorksheetFileManager fileManager) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void SerializeRegionsEpilog(global::System.Xml.XmlDocument xmlDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.PersistentDataObjects.IRegionType> GetRegions(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

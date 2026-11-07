@@ -11,28 +11,4 @@ namespace Quire.Controls.Include;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Include.IncludeFileDeserializationStrategy, Ptc.Controls.Include")]
 public partial class IncludeFileDeserializationStrategy : global::Quire.Controls.Core.Serialization.DeserializationStrategy
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.List<global::System.Windows.UIElement> _calulatableRegions;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Include.IncludeWorksheetFileManager _fileManager;
-    [global::Quire.Mirror.MirrorStub]
-    public bool CacheValid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IList<global::System.Windows.UIElement> Regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Controls.Core.IRegionFactory RegionFactory { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public IncludeFileDeserializationStrategy(global::Quire.Controls.Include.IncludeWorksheetFileManager fileManager) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void DeserializeRegionProlog(global::System.Windows.UIElement element) => base.DeserializeRegionProlog(element);
-    [global::Quire.Mirror.MirrorStub]
-    public override void DeserializeRegionsEpilog(global::System.Xml.XmlDocument xmlDocument) => base.DeserializeRegionsEpilog(xmlDocument);
-    [global::Quire.Mirror.MirrorStub]
-    public override void AddRegion(global::System.Windows.UIElement element, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void DeleteRegion(global::System.Windows.UIElement control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool IsRegionNotAffectingCalculation(global::System.Windows.UIElement element) => base.IsRegionNotAffectingCalculation(element);
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool IsRegionNotAffectingCalculation(global::Quire.PersistentDataObjects.IRegionType regionData) => base.IsRegionNotAffectingCalculation(regionData);
 }
