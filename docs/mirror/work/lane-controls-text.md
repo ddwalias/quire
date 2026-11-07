@@ -47,3 +47,11 @@
 - Shapes: local declaration order matters (`position` before `oppositeDirection`, Mathcad local slots 11/12). The `lineBoundary` ternary must test `== Forward` first (Mathcad jumps to the Forward arm); the `!= Forward` form fails with "calls differ". The direction ternary `CompareTo(...) != 0 ? clickedPosition.LogicalDirection : oppositeDirection` matches.
 - Release IL (project-wide, no `--type`): PASS — 99 checked, 99 exact, 0 failures, 616 unfinished.
 - Remaining mismatches in this batch: none.
+
+## Batch 7 — ToggleScriptUndoCommand
+
+- Members: `Name`, `Do` (`using` on `CommandScope`), `RecreatedRange`, `RecreateSelection`, `Undo`, `Redo`; readonly fields (declaration order kept). Hand-written in `Mirrored/Controls.Text.ToggleScriptUndoCommand.cs` with `DocumentTextRange` alias (Quire has its own `TextRange`).
+- Remaining stubs (kept in the `.g.cs`): constructor and `CreateToggleScriptUndoCommand`.
+  - Constructor shape tried: sequential field assignments with one `TextPointer` local reused for start/end and `_insertionPoint = textRegion.Selection.IsNotEmpty() ? -1 : textRegion.SelectionStart`. The ternary matched; the `TextPointer` local did not. Mathcad keeps `this` on the stack across the `stloc` of each `GetInsertionPointAtPointer(ref ...)` argument, which this shape does not reproduce.
+  - `CreateToggleScriptUndoCommand` uses a `dup`/`brtrue` null check followed by `FailAssertion` with no local; not yet tried.
+- Release IL (project-wide, no `--type`): PASS — 106 checked, 105 exact, 0 failures, 610 unfinished.
