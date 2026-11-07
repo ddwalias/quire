@@ -11,26 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IUIElementFacade, Ptc.Controls.Core")]
 public partial interface IUIElementFacade : global::Quire.Services.IService, global::Quire.Controls.Core.IUIElementArrangeInfoProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool SetFocus(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Measure(object obj, global::System.Windows.Size size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Arrange(object obj, global::System.Windows.Rect finalRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Size GetDesiredSize(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Rect GetDescendantBounds(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsItemMeasureValid(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsItemArrangeValid(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetRenderTransform(object obj, global::System.Windows.Media.Transform transform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void BlockUntilLoaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void BlockUntilInput() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ExecuteOnLayoutUpdated(object control, global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

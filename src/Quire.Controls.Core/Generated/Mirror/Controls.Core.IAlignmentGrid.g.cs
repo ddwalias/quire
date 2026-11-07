@@ -11,20 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IAlignmentGrid, Ptc.Controls.Core")]
 public partial interface IAlignmentGrid : global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Rect GridArea { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Size GridCellSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Point GetNextIntersection(global::System.Windows.Point startPoint, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Point GetNearestIntersectionInDirection(global::System.Windows.Point startPoint, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Point GetNearestIntersectionPoint(global::System.Windows.Point startPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Point GetNearestIntersectionPointDisregardingBounds(global::System.Windows.Point startPoint, global::Quire.Controls.Core.GridRestriction restriction, params global::Quire.Direction[] directionsToIgnore) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Point ConvertDipsToGridCoordinates(global::System.Windows.Point dipCoordinates) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Point ConvertGridCoordinatesToDips(global::System.Windows.Point value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

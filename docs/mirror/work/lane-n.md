@@ -647,3 +647,9 @@
 - Claimed: every stubbed member of 36 interfaces (`ISpecialCopyVisitor`, `IPackagePartReferenceManager`, `IWhiteboardItem`, `IIOItem`, `IIORegionContainer`, `IFontManager`, `ICollapsibleAreaControl`, and 29 others), declared abstract in new hand-written partials; generated stubs removed in the same change.
 - Report: `.mirror-cache/release-il-49675c41d839/release-il.json` — PASS, 1,694 checked, 0 failures, 2,149 unfinished (was 2,332).
 - Remaining mismatches: none in claimed batch.
+
+## Batch 86 — Interface members (10 interfaces with 8–19 stubs)
+
+- Claimed: `IAlignmentGrid`, `IUIElementFacade`, `IOleContainer`, `IMathFormat`, `IRichTextBase`, `IRichTextWithEmbeddedItem`, `ITextStylesManager`, `IWhiteboardItemManager`, `IFrameworkElementFacade`, `IWorksheetProperties` (abstract declarations in hand-written partials; generated stubs removed).
+- Report: `.mirror-cache/release-il-5256ffb7bfb0/release-il.json` — PASS, 1,660 checked, 0 failures, 2,000 unfinished (was 2,149).
+- Remaining mismatches: none in claimed batch.
