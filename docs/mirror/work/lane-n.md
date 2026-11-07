@@ -660,3 +660,10 @@
 - Report: `.mirror-cache/release-il-e16d7ce73eee/release-il.json` — PASS, 1,910 checked, 0 failures, 1,601 unfinished (was 2,000).
 - Remaining mismatches: `IEquationControl.Changed` stays a stub. Declared as `RoutedEventHandler` in Mathcad, but Quire's `RegionControl.Changed` is `EventHandler?` (hand-written), so the abstract declaration breaks `Quire.Controls.EquationControl` (CS0738, another lane's project, found by the merge gate, not by the local check).
 - Tooling note: `release_il.py --project Quire.Controls.Core` built only `Quire.Controls.Core`; the merge gate built 12 dependents (`Quire`, `Quire.Controls*`, `Quire.EquationEditor`). Interface changes need the dependents built locally before landing.
+
+## Batch 88 — Small classes (extension getter, ImeHandler)
+
+- Claimed: `HasUIElementArrangeInfoProviderExtension.ArrangeInfoProvider`, `ImeHandler.HandleImeFocus`, `ImeHandler.PositioningIme` (hand-written bodies; generated stubs removed).
+- Report: `.mirror-cache/release-il-41edbbc225a7/release-il.json` — PASS, 1,913 checked, 0 failures, 1,598 unfinished, 3 more exact.
+- Remaining mismatches (not in this batch's claim): `FindReplaceQuery.IsFullySubscript` stays a stub. The Release IL calls `List<T>.get_Count` with `call`; the C# form emits `callvirt`, and no idiomatic C# shape changes that.
+- Batch 84–87 are committed on this branch and not yet landed (merge gate blocked by the main-checkout untracked folder; maintainer hold).

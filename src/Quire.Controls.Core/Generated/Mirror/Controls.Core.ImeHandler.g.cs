@@ -11,8 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.ImeHandler, Ptc.Controls.Core")]
 public partial class ImeHandler
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void HandleImeFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void PositioningIme(global::Quire.Controls.Core.IImeClient client) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
