@@ -11,8 +11,4 @@ namespace Quire.EquationEditor.Tree.Parsing;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Parsing.IChildHandlerPanacea, Ptc.EquationEditor")]
 public partial interface IChildHandlerPanacea
 {
-    [global::Quire.Mirror.MirrorStub]
-    int ChildIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.Tree.Parsing.IChildHandlerPanacea Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

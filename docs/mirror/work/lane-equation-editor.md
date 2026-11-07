@@ -14,4 +14,5 @@
 - Batch 10: `View.ICanBlockFocus` abstract property declarations; Release IL PASS, 202 checked (`.mirror-cache/release-il-be3416588bc7/release-il.json`).
 - Batch 11: `Tree.Parsing.Panceaux.ReplaceWithDefaultNode`, `AutoLabelIdChild`, `AutoLabelIdDescendant`, `TransformTo`, `PullOutAdjacentDescendantFromChild`, `ReparentNode`; Release IL PASS, 212 checked (`.mirror-cache/release-il-d2213606017b/release-il.json`).
 - Batch 12: `Tree.Parsing.Panceaux.ReparentChild`, `ReparentNodeAndPullOutChild`, `ReplaceChildDescriptor`; Release IL PASS, 225 checked (`.mirror-cache/release-il-134942401d5a/release-il.json`).
-- Remaining: 5,866 `MirrorStub` attributes in 238 generated files; not yet batched. No mismatches in completed batches.
+- Batch 13: `Tree.Parsing.IChildHandlerPanacea` abstract contract; Release IL PASS, 228 checked (`.mirror-cache/release-il-5bb1abc86d89/release-il.json`).
+- Remaining: 5,864 `MirrorStub` attributes in 237 generated files; not yet batched. No mismatches in completed batches.
