@@ -3013,11 +3013,24 @@ Each entry records the original mirrored member identity, source declaration/bod
 4. **Stage 3 — generated reference cleanup:** regenerate generated mirrors after handwritten consumers no longer need these types. Never edit `Generated/` manually; generated member signatures remain gate-sensitive.
 5. **Stage 4 — remove unreferenced persistence types:** delete only declarations with no remaining references after earlier stages. Full removal of both families is blocked while mirrored signatures or bodies still require their original metadata.
 
-## Stage 1 progress
+## Stage 1 progress and remaining worksheet-persistence blockers
 
-- **Quire — deferred by coordinator:** `SampleWorksheet.Create` builds the product worksheet document and text/math/plot/solve-block region data directly. The current load/save surface requires those DTO declarations; changing that integration would require touching `WorksheetControl`, a `MirrorOf` type, so `SampleWorksheet.cs` and all DTO declarations remain unchanged.
-- **Quire.Controls.Tests — completed as a test project:** test setup now uses `WorksheetControl`, `SolveBlockControl`, `XYPlotControl`, and `TextRegionControl` APIs instead of directly constructing region DTOs. The existing save/reload integration test remains through the product-only `WorksheetControl` surface. Release tests pass (16/16); `dotnet build Quire.slnx -c Release` passes.
-- No Stage 2 work has started. The Quire application sample remains the first deferred Stage 1 consumer pending a non-mirrored replacement load API.
+- **Quire.Controls.Tests:** the tests landed on `main` as `208e0958`; they use control APIs for region setup. The suite passed 16/16 tests and the Release solution build passed.
+- **Quire sample replacement API: blocked by the Release IL gate.** The authorized attempt added a new `WorksheetContentLoader` type to `Quire.Controls.Worksheet` while leaving every existing `MirrorOf` type and member unchanged. `lane_merge.py` rejected it because the new public and compiler-generated members have no Mathcad counterparts (20 unpaired rows); that code is not on `main`. A viable API location or a gate/assembly-scope decision is needed before `SampleWorksheet` can move off `WorksheetDocument` and its region DTOs.
+- No DTO declarations, `WorksheetControl` members, or other `MirrorOf` types were changed. Stage 2 has not started.
+
+### Remaining worksheet-persistence consumers
+
+| Consumer | Current dependency | Needed before it can move off the DTOs |
+|---|---|---|
+| `src/Quire/MainWindow.xaml.cs` | New, open, import, and save flows use `WorksheetDocument`, `WorksheetPackage`, and `WorksheetConverter`; the sample path is still backed by `SampleWorksheet.Create()`. | A non-PDO document/import/export API and a supported path between that API and the live worksheet surface. The sample-only replacement API attempt is blocked by new-member IL rows. |
+| `src/Quire.Controls.Worksheet/WorksheetControl.cs` | `Load(WorksheetDocument)`, `ToDocument()`, and snapshot/restore logic use `WorksheetDocument` and region DTOs. This is a `MirrorOf` type and was explicitly excluded from edits. | A separate maintainer decision for changing or adapting this surface while preserving every mirrored member. |
+| `src/Quire.Controls.Worksheet/WorksheetPackage.cs` | Save/load and XML conversion take or return `WorksheetDocument` and its region DTOs. | A non-PDO document model plus a serializer adapter; updating its `WorksheetControl` callers is outside the current authorization. |
+| `src/Quire.Controls.Worksheet/WorksheetConverter.cs` | Mathcad import produces `ImportResult.Document` as `WorksheetDocument` and builds region DTOs. | A non-PDO import result/model and an approved caller migration. |
+| `src/Quire.Controls.Worksheet/ControlFactory.cs` and `WorksheetModel.cs` | Region construction and worksheet settings still translate DTOs into controls/model state. | Replacement control/model inputs; the existing loader path is owned by the unchanged `WorksheetControl`. |
+| `src/Quire.Controls.Core/RegionControl.cs` and derived region controls | `Save()` and constructors continue to exchange region DTOs. | A non-PDO region data contract; changing overrides on `MirrorOf` controls is outside scope. |
+| `tests/Quire.Core.Tests/WorksheetPackageTests.cs` | Package and converter tests construct and inspect the DTOs directly. | Rewrite alongside the approved package/converter API migration. |
+| `tests/Quire.Controls.Tests/WorksheetControlTests.cs` | The save/reload integration test still exercises `ToDocument()` and `Load()`. | Rewrite when a supported non-PDO worksheet persistence API exists. |
 
 ## Gate and mirror constraints
 
