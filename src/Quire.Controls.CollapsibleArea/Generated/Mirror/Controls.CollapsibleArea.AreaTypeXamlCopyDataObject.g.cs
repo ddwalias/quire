@@ -11,12 +11,4 @@ namespace Quire.Controls.CollapsibleArea;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.CollapsibleArea.AreaTypeXamlCopyDataObject, Ptc.Controls.CollapsibleArea")]
 public partial class AreaTypeXamlCopyDataObject : global::Quire.PersistentData.IAreaType
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCollapsed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsBorderVisible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.ProtectionData ProtectionDataWrapper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public AreaTypeXamlCopyDataObject() { }
 }

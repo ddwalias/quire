@@ -11,12 +11,4 @@ namespace Quire.Controls.CollapsibleArea;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.CollapsibleArea.AreaHeaderConverter, Ptc.Controls.CollapsibleArea")]
 public partial class AreaHeaderConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.CollapsibleArea.AreaHeaderConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
-    public virtual object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual object ConvertBack(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public AreaHeaderConverter() { }
 }

@@ -11,16 +11,4 @@ namespace Quire.Controls.CollapsibleArea;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.CollapsibleArea.ToggleBorderCollapseStateCommand, Ptc.Controls.CollapsibleArea")]
 public partial class ToggleBorderCollapseStateCommand : global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.CollapsibleArea.ICollapsibleAreaModel _model;
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ToggleBorderCollapseStateCommand(global::Quire.Controls.CollapsibleArea.ICollapsibleAreaModel model) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
