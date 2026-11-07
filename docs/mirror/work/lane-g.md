@@ -1,6 +1,6 @@
 # Lane G — COM Interop Assemblies (D22)
 
-- Owner: Lane G; branch `mirror/g-interop-mathcad-20261024`; worktree `C:/Projects/Quire-wt/lane-g-interop`.
+- Owner: Lane G; branch `mirror/g-interop-mathcad-20261107-b`; worktree `C:/Users/DuyDang/orca/workspaces/Quire/lane-g-interop-20261107-b`.
 - Assemblies: `Quire.AutomationPrivate` (landed), `Quire.Interop.MathcadOld` (landed), `Quire.Interop.VSInterfacesLib` (landed), `Quire.Interop.Mathcad`.
 
 ## Summary Status
@@ -55,12 +55,23 @@
   - 17 coclasses: `ValueClass`, `NumericValueClass`, `StringValueClass`, `MatrixValueClass`, `WorksheetClass`, `ApplicationClass`, `WorksheetsClass`, `WindowsClass`, `WindowClass`, `RegionsClass`, `RegionClass`, `MathInterfaceClass`, `MathcadOldClass`, `CustomMetadataItemClass`, `CustomMetadataCollectionClass`, `WorksheetMetadataClass`, `RegionMetadataClass`
   - 4 event provider / sink helper classes: `_IWorksheetEvents_SinkHelper`, `_IWorksheetEvents_EventProvider`, `_IApplicationEvents_SinkHelper`, `_IApplicationEvents_EventProvider`
   - Total: 545 member declarations in the inventory.
-- Release IL report: `release_il.py --base main --project Quire.Interop.Mathcad` → 545 checked.
+- Release IL report: `release_il.py --base main --project Quire.Interop.Mathcad` (`.mirror-cache/release-il-b84db925053c/release-il.json`) → 545 checked.
   - **459 passed exact** under `declaration_only: true`.
-  - Remaining 86 differences (Roslyn language limitations / TlbImp compiler artifacts):
-    1. 10 coclass constructors: original has `internal` access, Roslyn emits `public` because CS0669 forbids user-defined constructors on `[ComImport]` classes.
-    2. 33 delegate members: TlbImp emits `.ctor(object, UIntPtr)` and no `BeginInvoke`/`EndInvoke`; Roslyn emits `.ctor(object, IntPtr)`, `BeginInvoke`, `EndInvoke` on all delegates.
-    3. 43 methods in `_EventProvider` and `_SinkHelper`: toolchain-synthesized COM event connection-point helpers (17 unreadable IL local signatures in `_SinkHelper`, plus IL opcode sequence differences in `_EventProvider`).
+  - Fixable mismatches (a): **0** (all 91 types and their member declarations match the original COM interfaces and coclasses).
+  - Genuine compiler / TlbImp artifacts (b): **86 differences** across 25 types:
+    1. 10 coclass constructors (`CustomMetadataCollectionClass`, `MathInterfaceClass`, `RegionClass`, `RegionMetadataClass`, `RegionsClass`, `ValueClass`, `WindowClass`, `WindowsClass`, `WorksheetMetadataClass`, `WorksheetsClass`):
+       - Mathcad IL: `.method assembly specialname rtspecialname instance void .ctor () runtime managed internalcall` (internal visibility for non-creatable COM coclasses).
+       - Roslyn limitation: CS0669 ("A class with the ComImport attribute cannot have a user-defined constructor") prevents declaring explicit constructors. Roslyn synthesizes a parameterless constructor with `runtime managed internalcall` but always emits `public` visibility.
+    2. 33 delegate members (11 delegates: `_IWorksheetEvents_ChangedEventHandler`, `_IWorksheetEvents_RecalculatedEventHandler`, 9 `_IApplicationEvents_*EventHandler`):
+       - Mathcad IL: TlbImp emits `.ctor(object, native uint)` (`UIntPtr`) and `Invoke(...)`. It emits NO `BeginInvoke` or `EndInvoke`.
+       - Roslyn limitation: Roslyn synthesizes `.ctor(object, native int)` (`IntPtr`), `Invoke(...)`, `BeginInvoke(...)`, and `EndInvoke(...)`. In C#, `MulticastDelegate` cannot be inherited explicitly (CS0644), so these members cannot be suppressed or altered. The 11 `Invoke` methods match exact (`declaration_only: true`); the other 33 members are compiler artifacts.
+    3. 43 methods in `_EventProvider` and `_SinkHelper`:
+       - 17 methods with unreadable IL local signatures in Mathcad binary: 10 in `_IApplicationEvents_SinkHelper`, 3 in `_IWorksheetEvents_SinkHelper`, 2 in `_IApplicationEvents_EventProvider` (`.ctor`, `Dispose`), and 2 in `_IWorksheetEvents_EventProvider` (`.ctor`, `Dispose`). TlbImp emitted empty `.locals init ()` StandAloneSig table entries (0 type elements), which violates ECMA-335 §II.23.2.12. MethodAudit / System.Reflection.Metadata / ILSpy reports `IL unreadable: Signature type sequence must have at least one element.` on the Mathcad binary itself.
+       - 26 methods in `_EventProvider` (`_IApplicationEvents_EventProvider`, `_IWorksheetEvents_EventProvider`):
+         * 11 `add_*` methods: TlbImp emits redundant `castclass System.Object` instructions before `IConnectionPoint.Advise` and `ArrayList.Add`. Roslyn treats reference-to-object conversion as an identity conversion and emits no `castclass`.
+         * 11 `remove_*` methods: TlbImp emits `castclass System.Object` and calls `Delegate.Equals(object)`. Roslyn resolves delegate virtual dispatch to `System.Object.Equals(object)`.
+         * 2 `Init` methods: TlbImp emits manual 16-element byte array initialization (`newarr`, 16 `stelem.i1`) and redundant `castclass IConnectionPoint` on a variable already typed as `IConnectionPoint`. Roslyn emits `RuntimeHelpers.InitializeArray`.
+         * 2 `Finalize` methods: TlbImp passes uninitialized local to `Monitor.Enter(object, ref bool)`. Roslyn requires definite assignment for `ref` parameters (`bool lockTaken = default;`), emitting `ldc.i4.0 / stloc`.
 - Structural check: all 91 types match original Release IL in signatures, GUIDs, DispIds, marshalling, enum literal values, and metadata.
 
 ---
