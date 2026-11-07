@@ -11,28 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.WhiteboardItemsCollection, Ptc.Controls.Core")]
 public partial class WhiteboardItemsCollection : global::Quire.Wpf.SerializableCollection<global::Quire.Controls.Core.IWhiteboardItem>, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<bool> _parentIsOnVisiblePage;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<bool> _parentSupportsInputsOutputs;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<bool> _containedInCollapsedWhiteboard;
-    [global::Quire.Mirror.MirrorStub]
-    public bool ParentIsOnVisiblePage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ParentSupportsInputsOutputs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ContainedInCollapsedWhiteboard { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public WhiteboardItemsCollection() { }
-    [global::Quire.Mirror.MirrorStub]
-    public WhiteboardItemsCollection(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnRangeChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => base.OnRangeChanged(args);
-    [global::Quire.Mirror.MirrorStub]
-    public override void GetObjectData(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) => base.GetObjectData(info, context);
-    [global::Quire.Mirror.MirrorStub]
-    protected WhiteboardItemsCollection(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Dispose() { }
 }

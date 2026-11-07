@@ -11,31 +11,6 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.FontManager, Ptc.Controls.Core")]
 public partial class FontManager : global::Quire.Controls.Core.IFontManager, global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const int MaxCacheSize = 100;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.TextDecorationCollection _emptyTextDecorations;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.TextDecorationCollection _underlineTextDecorations;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.FontManager.FontKey, global::Quire.Controls.Core.ExtendedFont> _fontCache;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.FontManager.FontKey, global::System.DateTime> _fontCacheMru;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.ExtendedFont GetFont(string fontFamilyName, double fontPointSize, bool isItalic, bool isBold, bool isUnderline, global::System.Nullable<global::System.Windows.Media.Color> fontColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.ExtendedFont GetFont(global::Quire.Controls.Core.IMathFormat mathFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.ExtendedFont GetScaledFont(global::Quire.Controls.Core.IMathFormat mathFormat, double scaleFactor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public double GetScaledFontSize(global::Quire.Controls.Core.IMathFormat mathFormat, double scaleFactor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.ExtendedFont GetFont(global::Quire.Controls.Core.FontManager.FontKey key) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AddFontToCache(global::Quire.Controls.Core.FontManager.FontKey key, global::Quire.Controls.Core.ExtendedFont font) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public FontManager() { }
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.FontManager+FontKey, Ptc.Controls.Core")]
     private partial class FontKey : global::System.Tuple<string, double, bool, bool, bool, global::System.Windows.Media.Color>
     {
