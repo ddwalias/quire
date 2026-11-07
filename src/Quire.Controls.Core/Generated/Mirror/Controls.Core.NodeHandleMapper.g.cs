@@ -11,26 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.NodeHandleMapper, Ptc.Controls.Core")]
 public partial class NodeHandleMapper
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::Quire.Pair<global::Quire.Calculation.Core.ICalculatable, uint>> _nodeHandleList;
-    [global::Quire.Mirror.MirrorStub]
-    private const string HandlePrefix = ":0x";
-    [global::Quire.Mirror.MirrorStub]
-    public NodeHandleMapper() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Clear() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetReplacedRl(global::Quire.Calculation.Core.ICalculatable equationControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Pair<string[], uint[]> GetNodesAndHandles(string rl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetReplacedRl(global::Quire.Calculation.Core.ICalculatable equationControl, string rl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public uint Map(global::Quire.Calculation.Core.ICalculatable equationControl, uint originalNodeHandle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public uint GetMappedNodeNandle(uint generatedNodeHandle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.ICalculatable GetMappedEquation(uint generatedNodeHandle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static int GetIndexFromHandle(uint generatedNodeHandle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

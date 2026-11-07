@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.INotifyMeasureOverride, Ptc.Controls.Core")]
 public partial interface INotifyMeasureOverride
 {
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action MeasureOverideCompleted { add { } remove { } }
 }

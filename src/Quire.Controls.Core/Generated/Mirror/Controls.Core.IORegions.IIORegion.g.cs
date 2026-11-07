@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IIORegion, Ptc.Controls.Core")]
 public partial interface IIORegion : global::Quire.Controls.Core.IORegions.IIORegionBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::System.Windows.DependencyObject, global::Quire.Controls.Core.IORegions.IORegionChangeType> IORegionChanged { add { } remove { } }
 }

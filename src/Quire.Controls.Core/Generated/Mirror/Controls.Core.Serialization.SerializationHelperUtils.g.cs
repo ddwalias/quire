@@ -11,22 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.SerializationHelperUtils, Ptc.Controls.Core")]
 public static partial class SerializationHelperUtils
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsConvertedFromMathcad14(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetConvertedFromMathcad14(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SaveToPartUsingTemporaryFile(global::System.Action<string> saveDocumentToTempFile, global::System.IO.Packaging.PackagePart part, string originalFileName = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void TryDeleteTemporaryFile(string filename) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void CopyObfuscatedStream(global::System.IO.Stream source, global::System.IO.Stream target, int maxBufferSize = 16384) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void FinalizeSeekableStream(global::System.IO.Stream seekableStream, string tempFilePath, global::System.IO.Stream originalStream = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string InitializeSeekableFileStream(global::System.IO.Stream originalStream, out global::System.IO.Stream seekableStream, bool makeCopy = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void Obfuscate(byte[] arrData, int length = 2147483647) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static byte Mask(byte data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

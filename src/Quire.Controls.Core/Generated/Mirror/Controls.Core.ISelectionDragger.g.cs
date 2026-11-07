@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.ISelectionDragger, Ptc.Controls.Core")]
 public partial interface ISelectionDragger
 {
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::System.Windows.Point> DragDone { add { } remove { } }
 }

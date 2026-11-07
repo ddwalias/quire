@@ -735,4 +735,16 @@
   - `VisualTableContents` (`Rows`, `CellCount`, `.ctor(TableLayoutManager)`, `OnVisualChildrenChanged`, `MeasureOverride`, `GetChildrenInRowMajorOrder`, `ArrangeOverride`, and nested iterator `<GetChildrenInRowMajorOrder>d__29`)
 - Report: `.mirror-cache/release-il-88cba98920c7/release-il.json` — PASS, 1,708 checked, 1,708 exact, 0 failures, 1,469 unfinished (was 1,484).
 - Remaining mismatches: none in claimed batch.
-- Still open: 1,469 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.
+
+## Batch 97 — INotifyMeasureOverride, IIORegion, ISelectionDragger, SerializationHelperUtils, AnnotationTypeList, and NodeHandleMapper
+
+- Claimed:
+  - `INotifyMeasureOverride` (`MeasureOverideCompleted`)
+  - `IORegions.IIORegion` (`IORegionChanged`)
+  - `ISelectionDragger` (`DragDone`)
+  - `Serialization.SerializationHelperUtils` (`IsConvertedFromMathcad14`, `SetConvertedFromMathcad14`, `SaveToPartUsingTemporaryFile`, `TryDeleteTemporaryFile`, `CopyObfuscatedStream`, `FinalizeSeekableStream`, `InitializeSeekableFileStream`, `Obfuscate`, `Mask`)
+  - `Serialization.AnnotationTypeList` (`.ctor()`, `.ctor(AnnotationTypeList, bool)`, `ToStrings()`, `this[int]`, `AddOnce`, `Contains(string)`, `Add`, `Clear`, `Contains(MC14ConversionAnnotationType)`, `CopyTo`, `Remove`, `Count`, `IsReadOnly`, `Freeze`, `IsFrozen`, `GetEnumerator()`, `IEnumerable.GetEnumerator()`, and closure `<ToStrings>b__3_0`)
+  - `NodeHandleMapper` (`_nodeHandleList`, `HandlePrefix`, `.ctor()`, `Clear()`, `GetReplacedRl(ICalculatable)`, `GetNodesAndHandles`, `GetReplacedRl(ICalculatable, string)`, `Map`, `GetMappedNodeNandle`, `GetMappedEquation`, `GetIndexFromHandle`)
+- Report: `.mirror-cache/release-il-0dd5a792c0c2/release-il.json` — PASS, 1,745 checked, 1,739 exact, 0 failures, 1,435 unfinished (was 1,469).
+- Remaining mismatches: none in claimed batch.
+- Still open: 1,435 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.
