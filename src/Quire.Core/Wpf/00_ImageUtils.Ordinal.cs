@@ -140,5 +140,45 @@ public partial class ImageUtils
         }
     }
 
-    public static void EncodeImage(BitmapSource source, string imageType, Stream target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [MirrorVerified("Release IL")]
+    public static void EncodeImage(BitmapSource source, string imageType, Stream target)
+    {
+        if (source == null)
+        {
+            return;
+        }
+        BitmapEncoder bitmapEncoder;
+        switch (imageType)
+        {
+            case "gif":
+                bitmapEncoder = new GifBitmapEncoder();
+                break;
+            case "jpg":
+            case "jpeg":
+                bitmapEncoder = new JpegBitmapEncoder();
+                break;
+            case "tif":
+            case "tiff":
+                bitmapEncoder = new TiffBitmapEncoder();
+                break;
+            case "wdp":
+                bitmapEncoder = new WmpBitmapEncoder();
+                break;
+            case "bmp":
+                bitmapEncoder = new BmpBitmapEncoder();
+                break;
+            case "png":
+                bitmapEncoder = new PngBitmapEncoder();
+                break;
+            default:
+                bitmapEncoder = null;
+                break;
+        }
+        if (DebugTools.AssertNotNull(bitmapEncoder, null).Failed)
+        {
+            bitmapEncoder = new PngBitmapEncoder();
+        }
+        bitmapEncoder.Frames.Add(BitmapFrame.Create(source));
+        bitmapEncoder.Save(target);
+    }
 }

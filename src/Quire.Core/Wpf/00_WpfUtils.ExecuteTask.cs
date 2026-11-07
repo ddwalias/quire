@@ -208,7 +208,25 @@ public static partial class WpfUtils
         }
     }
 
-    public static string ApplicationName => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorVerified("Release IL")]
+    public static string ApplicationName
+    {
+        get
+        {
+            if (global::Quire.License.LicenseManager.Instance != null)
+            {
+                if (global::Quire.Services.ApplicationVariant.IsEngNbPlus == true)
+                {
+                    return "Creo+ Engineering Notebook";
+                }
+                if (global::Quire.Services.ApplicationVariant.IsEngNb == true)
+                {
+                    return "Creo Engineering Notebook";
+                }
+            }
+            return string.Join(" ", (System.ReadOnlySpan<string>)["PTC Mathcad", global::Quire.Xml.XmlWorksheetData.AppVersionName]);
+        }
+    }
 
     public static string ProductName
     {

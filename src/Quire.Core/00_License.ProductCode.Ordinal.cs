@@ -9,7 +9,7 @@ public partial class ProductCode
     private string _part2 = "";
     private string _part3 = "";
 
-    public override string ToString() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public override string ToString() => string.Join("-", (global::System.ReadOnlySpan<string>)[_part1, _part2, _part3]);
 
     public string Part1
     {
