@@ -11,8 +11,4 @@ namespace Quire.EquationEditor.View;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.View.IVisualMathNodeHighlighter, Ptc.EquationEditor")]
 public partial interface IVisualMathNodeHighlighter
 {
-    [global::Quire.Mirror.MirrorStub]
-    double Opacity { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void Remove() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,8 +11,4 @@ namespace Quire.EquationEditor.View;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.View.IVisualNode, Ptc.EquationEditor")]
 public partial interface IVisualNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsLoaded { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Windows.RoutedEventHandler Loaded { add { } remove { } }
 }
