@@ -11,14 +11,4 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.HyperlinkEditState, Ptc.Controls.Text")]
 public partial struct HyperlinkEditState
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Text.LinkEditOperation PerformedLinkEditOperation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string UserInputText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool UserChangedText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Uri UserInputUri { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public HyperlinkEditState(global::Quire.Controls.Text.LinkEditOperation linkOperation, string inputText, bool userChangedText, global::System.Uri inputUri) { }
 }
