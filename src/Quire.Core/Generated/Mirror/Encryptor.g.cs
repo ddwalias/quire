@@ -13,6 +13,4 @@ public partial class Encryptor : global::Quire.IEncryptor, global::Quire.Service
 {
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.SortedDictionary<global::System.Version, global::System.Security.Cryptography.ICryptoTransform> _legacyDecryptorsDictionary;
-    [global::Quire.Mirror.MirrorStub]
-    private Encryptor() { }
 }
