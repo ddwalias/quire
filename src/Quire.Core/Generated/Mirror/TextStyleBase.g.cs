@@ -13,6 +13,4 @@ public abstract partial class TextStyleBase : global::Quire.ITextStyle, global::
 {
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.FontStretch _fontStretch;
-    [global::Quire.Mirror.MirrorStub]
-    protected void UpdateMemberValue(string propertyName, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

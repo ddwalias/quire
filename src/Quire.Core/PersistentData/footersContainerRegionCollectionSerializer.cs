@@ -8,10 +8,27 @@ namespace Quire.PersistentData;
 public partial class footersContainerRegionCollectionSerializer
 {
     [MirrorVerified("PtcPersistentDatafootersContainerRegionCollectionSerializerMechanicalDifferentialTests")]
-    public footersContainerRegionCollectionSerializer() { }
-
-    [MirrorVerified("PtcPersistentDatafootersContainerRegionCollectionSerializerMechanicalDifferentialTests")]
     public string RootNodeName => "footers";
+
+    [MirrorVerified("Release IL")]
+    public IEnumerable<IRegionType> Regions { get => ContainerWrapper.Regions; set => ContainerWrapper.Regions = value; }
+
+    [MirrorVerified("Release IL")]
+    public System.Xml.XmlElement Serialize(System.Xml.XmlDocument xmlContentDocument, bool useOverrides)
+    {
+        // Release IL null-tests the callback item through the IHasPreSerialize base interface (dup/brtrue shape).
+        ContainerWrapper.Footer.Regions?.Each((IRegionType item) => ((IHasPreSerialize)item)?.PreSerialize());
+        ContainerWrapper.FirstPageFooter.Regions?.Each((IRegionType item) => ((IHasPreSerialize)item)?.PreSerialize());
+        using (Quire.Xml.XmlNodeWriter xmlWriter = new Quire.Xml.XmlNodeWriter(xmlContentDocument))
+        {
+            GetXmlSerializer(useOverrides).Serialize(xmlWriter, ContainerWrapper.Container);
+        }
+        if (xmlContentDocument.ChildNodes.Count == 1)
+        {
+            return xmlContentDocument.ChildNodes[0] as System.Xml.XmlElement;
+        }
+        return null;
+    }
 
     public void Deserialize(System.Xml.XmlElement regionCollectionXml, bool useOverrides)
     {
@@ -36,9 +53,6 @@ public partial class footersContainerRegionCollectionSerializer
     }
 
     [MirrorVerified("Release IL")]
-    public IEnumerable<IRegionType> Regions { get => ContainerWrapper.Regions; set => ContainerWrapper.Regions = value; }
-
-    [MirrorVerified("Release IL")]
     private System.Xml.Serialization.XmlSerializer GetXmlSerializer(bool useOverrides)
     {
         if (useOverrides)
@@ -47,4 +61,7 @@ public partial class footersContainerRegionCollectionSerializer
         }
         return _xmlSerializerDefault ?? (_xmlSerializerDefault = worksheetRegionType.CreateDefaultSerializer(typeof(cachedWorksheetRegionType.footersContainer), RootNodeName));
     }
+
+    [MirrorVerified("PtcPersistentDatafootersContainerRegionCollectionSerializerMechanicalDifferentialTests")]
+    public footersContainerRegionCollectionSerializer() { }
 }
