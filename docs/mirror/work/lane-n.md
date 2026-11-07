@@ -774,4 +774,13 @@
   - `RealNumberFormatter` (`_helper`, `DisplayNumberFormat`, `.ctor(NumberFormat, IFormatterHelper)`, `FormatReal`, `AddNegIfNeeded`, `FormatRealToGeneral`, `FormatRealToDecimal`, `FormatRealToExponential`, `GetBaseVal`, `CreateExponentialENotationFormat`, `ToStringAndBack`, `FormatStringAndIsZeroRepresentation`, `CreateExponentialMultiplyByBaseToAPowerFormat`, `FormatExponent`, `FormatRealToPercent`, `GetFormatStringForDouble`, closures `<FormatRealToDecimal>b__9_0`, `<CreateExponentialENotationFormat>b__0`, `<CreateExponentialMultiplyByBaseToAPowerFormat>b__15_0`, `<FormatRealToPercent>b__17_0`)
 - Report: `.mirror-cache/release-il-a945a6001108/release-il.json` — PASS, 1,855 checked, 1,855 exact, 0 failures, 1,357 unfinished (was 1,389).
 - Remaining mismatches: none in claimed batch.
-- Still open: 1,357 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.
+
+## Batch 101 — BookmarkTagDialog, ExcelReader, and MathFormatDobjController
+
+- Claimed:
+  - `BookmarkTags.BookmarkTagDialog` (`InsertTagTextBox`, `OkButton`, `_contentLoaded`, `ShowBookmarkTagsDialog`, `.ctor(BookmarkTagViewModel)`, `BookmarkTagDialogLoaded`, `OnOkButtonClick`, `InitializeComponent`, `_CreateDelegate`, `IComponentConnector.Connect`, closure `<.ctor>b__4_0`)
+  - `Excel.ExcelReader` (`_nsManager`, `_doc`, `_sharedStringDoc`, `CreateExcelCel`, `CreateExcelRow`, `CompareColumn`, `MinColumn`, `CreateColumns`, `CreateExcelSheet`, `GetNextColumn`, `.ctor()`; note: `GetSharedString` and `LoadExcelBook` remain stubs because DocumentFormat.OpenXml 3.x dropped the public `OpenXmlPackage.Package` property present in Mathcad's 2.17.1.0 dependency)
+  - `MathFormatDobjController` (`FontFamilyName`, `FontSize`, `IsBold`, `IsItalic`, `IsUnderline`, `FontColor`, `HighlightColor`, `.ctor(DependencyObject)`, `SetPropertiesFrom`, `IsPropertySet`)
+- Report: `.mirror-cache/release-il-9a030a55dd1b/release-il.json` — PASS, 1,883 checked, 1,883 exact, 0 failures, 1,330 unfinished (was 1,357).
+- Remaining mismatches: none in claimed batch.
+- Still open: 1,330 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.

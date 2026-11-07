@@ -12,21 +12,7 @@ namespace Quire.Controls.Core.Excel;
 public partial class ExcelReader
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Xml.XmlNamespaceManager _nsManager;
-    [global::Quire.Mirror.MirrorStub]
-    private global::DocumentFormat.OpenXml.Packaging.SpreadsheetDocument _doc;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Xml.XmlDocument _sharedStringDoc;
-    [global::Quire.Mirror.MirrorStub]
     private string GetSharedString(string sharedStringId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.Excel.ExcelCell CreateExcelCel(global::System.Xml.XmlElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.Excel.ExcelRow CreateExcelRow(global::System.Xml.XmlElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.Excel.ExcelSheet CreateExcelSheet(global::System.Xml.XmlNode element, string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void LoadExcelBook(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public ExcelReader() { }
 }

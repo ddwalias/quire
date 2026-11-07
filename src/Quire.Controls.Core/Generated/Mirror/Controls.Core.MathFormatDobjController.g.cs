@@ -11,24 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.MathFormatDobjController, Ptc.Controls.Core")]
 public partial class MathFormatDobjController : global::Quire.Controls.Core.IMathFormatDobjController, global::Quire.Controls.Core.IMathFormat
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string FontFamilyName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<double> FontSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<bool> IsBold { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<bool> IsItalic { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<bool> IsUnderline { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::System.Windows.Media.Color> FontColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::System.Windows.Media.Color> HighlightColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public MathFormatDobjController(global::System.Windows.DependencyObject owner) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void SetPropertiesFrom(global::Quire.Controls.Core.IMathFormat mathFormat, bool overwriteLocalValues = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsPropertySet(global::System.Windows.DependencyProperty dependencyProperty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
