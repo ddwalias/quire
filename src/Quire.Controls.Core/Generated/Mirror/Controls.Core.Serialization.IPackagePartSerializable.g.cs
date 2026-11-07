@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.IPackagePartSerializable, Ptc.Controls.Core")]
 public partial interface IPackagePartSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    void Write(global::System.IO.Packaging.PackagePart part, bool useTempFile) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Read(global::System.IO.Packaging.PackagePart part) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

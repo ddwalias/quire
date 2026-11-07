@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IDelegateFocus, Ptc.Controls.Core")]
 public partial interface IDelegateFocus
 {
-    [global::Quire.Mirror.MirrorStub]
-    void DelegateFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.IMetadataSerializer, Ptc.Controls.Core")]
 public partial interface IMetadataSerializer
 {
-    [global::Quire.Mirror.MirrorStub]
-    void Serialize(global::Quire.Controls.Core.Serialization.IMetadataModel model, global::System.IO.TextWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Deserialize(global::System.IO.TextReader reader, global::Quire.Controls.Core.Serialization.IMetadataModel model) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

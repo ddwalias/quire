@@ -11,8 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IPropertyAggregate, Ptc.Controls.Core")]
 public partial interface IPropertyAggregate : global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    object GetValueByName(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetValueByName(string propertyName, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IUnitedMatrixState, Ptc.Controls.Core")]
 public partial interface IUnitedMatrixState : global::Quire.Controls.Core.IORegions.IErrorState
 {
-    [global::Quire.Mirror.MirrorStub]
-    double[][] Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

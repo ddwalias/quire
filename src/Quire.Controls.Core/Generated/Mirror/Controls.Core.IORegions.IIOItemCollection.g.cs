@@ -11,10 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IIOItemCollection, Ptc.Controls.Core")]
 public partial interface IIOItemCollection : global::System.Collections.IList, global::System.Collections.ICollection, global::System.Collections.IEnumerable, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IIOItem>, global::System.Collections.Specialized.INotifyCollectionChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action AliasChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IORegions.IIOItem GetItem(string alias, bool compareAliasCaseInsensitively) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ResetAlias(global::Quire.Controls.Core.IORegions.IIOItem item, string oldAlias, string newAlias) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

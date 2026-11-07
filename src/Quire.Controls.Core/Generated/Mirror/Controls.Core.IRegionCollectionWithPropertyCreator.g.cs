@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IRegionCollectionWithPropertyCreator, Ptc.Controls.Core")]
 public partial interface IRegionCollectionWithPropertyCreator : global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IRegionCollectionWithProperty CreateRegionCollection(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> regions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

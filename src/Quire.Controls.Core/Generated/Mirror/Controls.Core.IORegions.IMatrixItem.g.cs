@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IMatrixItem, Ptc.Controls.Core")]
 public partial interface IMatrixItem : global::Quire.Controls.Core.IORegions.IItemAlias
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IORegions.IUnitedMatrixState MatrixState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

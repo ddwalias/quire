@@ -11,8 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IZombie, Ptc.Controls.Core")]
 public partial interface IZombie : global::Quire.Core.IMaybeHasPointThatSnapsToPixel
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.GeneralTransform ItemToZombieTransform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Core.IMaybeHasPointThatSnapsToPixel SnapsToPixelItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

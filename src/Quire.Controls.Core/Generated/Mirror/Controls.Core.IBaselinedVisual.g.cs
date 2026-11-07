@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IBaselinedVisual, Ptc.Controls.Core")]
 public partial interface IBaselinedVisual : global::Quire.Controls.Core.INotifyMeasureOverride
 {
-    [global::Quire.Mirror.MirrorStub]
-    double TextBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

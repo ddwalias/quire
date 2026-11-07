@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.IFreezable, Ptc.Controls.Core")]
 public partial interface IFreezable
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsFrozen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void Freeze() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

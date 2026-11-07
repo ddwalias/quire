@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.ISupportPrintViewport, Ptc.Controls.Core")]
 public partial interface ISupportPrintViewport
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<global::System.Windows.Rect> PrintViewport { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

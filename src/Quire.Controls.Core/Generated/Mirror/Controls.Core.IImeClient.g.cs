@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IImeClient, Ptc.Controls.Core")]
 public partial interface IImeClient
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Point GetImeWindowPosition() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

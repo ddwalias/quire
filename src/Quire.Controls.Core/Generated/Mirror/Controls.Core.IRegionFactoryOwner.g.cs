@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IRegionFactoryOwner, Ptc.Controls.Core")]
 public partial interface IRegionFactoryOwner
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IRegionFactory RegionFactory { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

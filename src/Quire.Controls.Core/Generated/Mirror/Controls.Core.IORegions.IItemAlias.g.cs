@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IItemAlias, Ptc.Controls.Core")]
 public partial interface IItemAlias
 {
-    [global::Quire.Mirror.MirrorStub]
-    string Alias { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

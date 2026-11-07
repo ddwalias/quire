@@ -11,10 +11,4 @@ namespace Quire.Controls.Core.BookmarkTags;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.BookmarkTags.IBookmarksManager, Ptc.Controls.Core")]
 public partial interface IBookmarksManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action DataChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void SetBookmarkTagCommand(global::Quire.Controls.Core.IWhiteboardItem item, string oldTagValue, string tagValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void RemoveBookmarkTagCommand(global::Quire.Controls.Core.IWhiteboardItem item, string oldTagValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

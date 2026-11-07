@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IPageElementXamlHelper, Ptc.Controls.Core")]
 public partial interface IPageElementXamlHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.UIElement GetPrintView(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

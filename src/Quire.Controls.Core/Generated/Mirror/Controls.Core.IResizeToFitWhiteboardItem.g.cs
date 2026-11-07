@@ -11,8 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IResizeToFitWhiteboardItem, Ptc.Controls.Core")]
 public partial interface IResizeToFitWhiteboardItem : global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.ResizeToFitState ResizeState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::Quire.Controls.Core.IResizeToFitWhiteboardItem> RequestResizeToFitOrClearRestriction { add { } remove { } }
 }

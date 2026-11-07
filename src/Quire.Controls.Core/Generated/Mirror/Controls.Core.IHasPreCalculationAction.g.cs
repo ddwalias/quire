@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IHasPreCalculationAction, Ptc.Controls.Core")]
 public partial interface IHasPreCalculationAction
 {
-    [global::Quire.Mirror.MirrorStub]
-    void PreCalculationAction() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

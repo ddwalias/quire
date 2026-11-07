@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.Whiteboard;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Whiteboard.IHideFromCalculationButtonStatus, Ptc.Controls.Core")]
 public partial interface IHideFromCalculationButtonStatus
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool HideFromCalculationButtonEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool HideFromCalculationButtonChecked { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

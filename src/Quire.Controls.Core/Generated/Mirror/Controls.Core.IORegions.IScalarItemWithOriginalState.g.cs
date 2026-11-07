@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IScalarItemWithOriginalState, Ptc.Controls.Core")]
 public partial interface IScalarItemWithOriginalState : global::Quire.Controls.Core.IORegions.IScalarItem, global::Quire.Controls.Core.IORegions.IItemAlias
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IORegions.IUnitedScalarState OriginalScalarState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

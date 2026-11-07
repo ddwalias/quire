@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.ISpecialCopyType, Ptc.Controls.Core")]
 public partial interface ISpecialCopyType
 {
-    [global::Quire.Mirror.MirrorStub]
-    void Accept(global::Quire.ISpecialCopyVisitor visitor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

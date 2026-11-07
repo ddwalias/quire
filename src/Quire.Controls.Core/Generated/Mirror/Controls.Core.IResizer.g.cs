@@ -11,8 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IResizer, Ptc.Controls.Core")]
 public partial interface IResizer
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Point ResizeBy(global::System.Windows.Vector offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ResizeEnd(global::System.Windows.Point currentPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

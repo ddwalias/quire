@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IMathFormatElementCollection, Ptc.Controls.Core")]
 public partial interface IMathFormatElementCollection : global::Quire.Controls.Core.IMathFormatOwner, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.ICurrentMathFormatProperty
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.ICurrentMathFormatProperty> MathFormatElements { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

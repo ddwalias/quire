@@ -11,10 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IIndirectMessageAdornerOwner, Ptc.Controls.Core")]
 public partial interface IIndirectMessageAdornerOwner
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsAdornedElementReady { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<object, global::System.Windows.RoutedEventArgs> OnAdornedElementReady { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.FrameworkElement GetAdornedElement() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.IXmlElementSerializable, Ptc.Controls.Core")]
 internal partial interface IXmlElementSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    void ReadXml(global::System.Xml.XmlElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void WriteXml(global::System.Xml.XmlElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

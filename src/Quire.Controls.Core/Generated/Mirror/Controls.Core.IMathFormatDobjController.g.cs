@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IMathFormatDobjController, Ptc.Controls.Core")]
 public partial interface IMathFormatDobjController : global::Quire.Controls.Core.IMathFormat
 {
-    [global::Quire.Mirror.MirrorStub]
-    void SetPropertiesFrom(global::Quire.Controls.Core.IMathFormat mathFormat, bool overwriteLocalValues = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

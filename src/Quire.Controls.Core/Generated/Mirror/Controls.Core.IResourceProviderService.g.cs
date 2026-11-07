@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IResourceProviderService, Ptc.Controls.Core")]
 public partial interface IResourceProviderService : global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.ResourceDictionary RichTextContextMenuItemsDictionary { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

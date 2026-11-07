@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IWorksheetPropertiesTarget, Ptc.Controls.Core")]
 public partial interface IWorksheetPropertiesTarget
 {
-    [global::Quire.Mirror.MirrorStub]
-    void OnWorksheetPropertiesChanged(string[] propertyNames, global::Quire.Controls.Core.IWorksheetProperties oldProperties, global::Quire.Controls.Core.IWorksheetProperties newProperties) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

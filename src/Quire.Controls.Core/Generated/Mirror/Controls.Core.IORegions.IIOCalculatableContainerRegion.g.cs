@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IIOCalculatableContainerRegion, Ptc.Controls.Core")]
 public partial interface IIOCalculatableContainerRegion
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.ICalculatable GetCalculatableBySExpression(string sExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,10 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.ICustomSplitItem, Ptc.Controls.Core")]
 public partial interface ICustomSplitItem : global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::Quire.Controls.Core.ICustomSplitItem> SplitItemIfNeeded { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    double GetValidSplitOffset(double originalOffset, double pageHeight, ref int lineNumberHint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ValidateLayout() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

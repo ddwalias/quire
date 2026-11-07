@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IInputOutputItemsStates, Ptc.Controls.Core")]
 public partial interface IInputOutputItemsStates
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<global::Quire.Controls.Core.IORegions.IScalarItemWithOriginalState> InputItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<global::Quire.Controls.Core.IORegions.IScalarItem> OutputItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.ISupportCustomInitialization, Ptc.Controls.Core")]
 public partial interface ISupportCustomInitialization
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool InCustomInitialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

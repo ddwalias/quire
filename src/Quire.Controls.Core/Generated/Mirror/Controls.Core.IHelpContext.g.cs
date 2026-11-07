@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IHelpContext, Ptc.Controls.Core")]
 public partial interface IHelpContext
 {
-    [global::Quire.Mirror.MirrorStub]
-    string GetHelpContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

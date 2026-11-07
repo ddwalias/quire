@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IErrorState, Ptc.Controls.Core")]
 public partial interface IErrorState
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IORegions.IOManagerErrorCode ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

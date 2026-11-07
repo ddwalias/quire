@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.Protection;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Protection.IProtectableViewModel, Ptc.Controls.Core")]
 public partial interface IProtectableViewModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.ProtectionData ProtectionData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool ProtectionOperationsEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

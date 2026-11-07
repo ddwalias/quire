@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.INodeMessageAdornerReferenceHolder, Ptc.Controls.Core")]
 public partial interface INodeMessageAdornerReferenceHolder
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.NodeMessageAdorner> NodeMessageAdorners { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

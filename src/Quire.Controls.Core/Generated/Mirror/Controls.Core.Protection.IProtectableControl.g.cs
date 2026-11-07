@@ -11,10 +11,4 @@ namespace Quire.Controls.Core.Protection;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Protection.IProtectableControl, Ptc.Controls.Core")]
 public partial interface IProtectableControl
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.ProtectionLevel ProtectionLevel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.ProtectionData ProtectionData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::Quire.Controls.Core.Protection.IProtectableControl> ProtectedStateChanged { add { } remove { } }
 }

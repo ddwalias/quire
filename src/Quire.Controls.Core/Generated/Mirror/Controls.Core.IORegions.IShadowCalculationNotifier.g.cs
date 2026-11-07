@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IShadowCalculationNotifier, Ptc.Controls.Core")]
 public partial interface IShadowCalculationNotifier : global::System.Collections.Specialized.INotifyCollectionChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    void Add(global::Quire.Pair<global::Quire.Controls.Core.IORegions.IIORegion, global::Quire.Calculation.Core.ICalculatable> item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Remove(global::Quire.Pair<global::Quire.Controls.Core.IORegions.IIORegion, global::Quire.Calculation.Core.ICalculatable> item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

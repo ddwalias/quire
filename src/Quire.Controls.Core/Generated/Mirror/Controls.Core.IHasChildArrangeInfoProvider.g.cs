@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IHasChildArrangeInfoProvider, Ptc.Controls.Core")]
 public partial interface IHasChildArrangeInfoProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IUIElementArrangeInfoProvider ChildArrangeInfoProvider { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IRegionWithOuterParts, Ptc.Controls.Core")]
 public partial interface IRegionWithOuterParts
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.RegionBorder RegionBorder { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

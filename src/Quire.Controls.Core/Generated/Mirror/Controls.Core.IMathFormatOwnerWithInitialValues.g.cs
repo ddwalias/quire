@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IMathFormatOwnerWithInitialValues, Ptc.Controls.Core")]
 public partial interface IMathFormatOwnerWithInitialValues : global::Quire.Controls.Core.IMathFormatOwner, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.StaticMathFormat InitialMathFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.Whiteboard;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Whiteboard.IWhiteboardItemContainerWithActiveItem, Ptc.Controls.Core")]
 public partial interface IWhiteboardItemContainerWithActiveItem
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IWhiteboardItem ActiveItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

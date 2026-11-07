@@ -11,8 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IFindRestrictor, Ptc.Controls.Core")]
 public partial interface IFindRestrictor
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool CanSearch { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.ISearchableRegion SearchableRegion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

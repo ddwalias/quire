@@ -1,6 +1,6 @@
 # Lane N — Quire.Controls.Core
 
-- Owner: Lane N; branch `mirror/n-controls-core-20261025-01`; worktree `C:/Projects/Quire-wt/lane-n-controls-core`.
+- Owner: Lane N (Orca task `task_a0cac29ff7b0`); branch `mirror/n-controls-core-20261107-b`; worktree `C:/Users/DuyDang/orca/workspaces/Quire/lane-n-controls-core-20261107`.
 
 ## Batch 1 — Converters
 
@@ -634,21 +634,10 @@
 - Report: `.mirror-cache/release-il-30727802bf1d/release-il.json` — PASS, 1,513 checked, 1,513 exact, 0 failures.
 - Remaining mismatches: none in claimed batch.
 
+## Batch 84 — Interface members (63 small interfaces)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- Claimed: every stubbed member of the 63 interfaces with at most two stubs (interface properties, methods and events become abstract declarations in hand-written partials, `Controls.Core` namespaces unchanged; generated stubs removed in the same change).
+- Report: `.mirror-cache/release-il-67212f244b09/release-il.json` — PASS, 1,622 checked, 0 failures, 2,332 unfinished (was 2,443).
+- Remaining mismatches: none in claimed batch.
+- Note: `MirrorGen emit` in this worktree rewrote 742 generated files across 36 projects (stubs added in projects outside this lane); those were reverted and not committed. It did not drop the interface stubs, so they were removed by hand as in the batch 83 pattern.
+- Note: untracked `Generated/Mirror/` folders for `Quire.AutomationPrivate`, `Quire.Interop.Mathcad`, `Quire.Interop.MathcadOld` and `Quire.Interop.VSInterfacesLib` were created by that emit run and are left uncommitted; remove them when the lane finishes.

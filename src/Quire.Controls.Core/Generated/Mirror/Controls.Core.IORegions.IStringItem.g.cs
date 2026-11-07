@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IStringItem, Ptc.Controls.Core")]
 public partial interface IStringItem : global::Quire.Controls.Core.IORegions.IItemAlias
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IORegions.IStringState StringState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

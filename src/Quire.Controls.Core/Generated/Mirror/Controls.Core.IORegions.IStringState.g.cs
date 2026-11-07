@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IStringState, Ptc.Controls.Core")]
 public partial interface IStringState : global::Quire.Controls.Core.IORegions.IErrorState
 {
-    [global::Quire.Mirror.MirrorStub]
-    string Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

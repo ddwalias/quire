@@ -11,8 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IResizableElementInfo, Ptc.Controls.Core")]
 public partial interface IResizableElementInfo
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool PreserveAspectRatio { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.SubElementToResizeData SubElementToResizeData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
