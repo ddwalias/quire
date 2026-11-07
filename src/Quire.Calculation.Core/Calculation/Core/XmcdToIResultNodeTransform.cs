@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Xsl;
@@ -174,5 +175,73 @@ public partial class XmcdToIResultNodeTransform
             throw new InvalidOperationException(string.Format("Logic error: result for {0} node expected to be generated with {1} vectors but has {2}", "DataVectors", vectorCount, vectors.Count));
         }
         return new VectorListResultNode(vectors, vectorLength, vectorsType);
+    }
+
+    public IResultNode Transform(string xmcdResult)
+    {
+        if (string.IsNullOrEmpty(xmcdResult))
+        {
+            return Transform((XmlNode)null);
+        }
+        XmlDocument document = new XmlDocument();
+        XmlNamespaceManager namespaceManager = new XmlNamespaceManager(document.NameTable);
+        namespaceManager.AddNamespace("ml", "foo");
+        namespaceManager.AddNamespace("u", "bar");
+        XmlParserContext context = new XmlParserContext(null, namespaceManager, "en", XmlSpace.None);
+        XmlTextReader reader = new XmlTextReader(xmcdResult, XmlNodeType.Element, context);
+        IResultNode result;
+        try
+        {
+            document.Load(reader);
+            result = Transform(document);
+        }
+        finally
+        {
+            if (reader != null)
+            {
+                ((IDisposable)reader).Dispose();
+            }
+        }
+        return result;
+    }
+
+    public IResultNode Transform(XmlNode node)
+    {
+        if (node == null || node.FirstChild == null)
+        {
+            return _resultNodeFactory.CreateEmptyResultNode();
+        }
+        return MakeResultNode(node.FirstChild);
+    }
+
+    private IResultNode MakeResultNode(XmlNode node)
+    {
+        switch (node.LocalName)
+        {
+            case "real":
+                return _resultNodeFactory.CreateRealResultNode(double.Parse(node.InnerText, NumberFormatInfo.InvariantInfo));
+            case "imag":
+                return _resultNodeFactory.CreateImaginaryResultNode(double.Parse(node.InnerText, NumberFormatInfo.InvariantInfo));
+            case "complex":
+                return BuildComplex(node);
+            case "str":
+                return _resultNodeFactory.CreateStringResultNode(node.InnerText);
+            case "functionValue":
+                return _resultNodeFactory.CreateFunctionResultNode(node.Attributes["description"].Value);
+            case "unitedValue":
+                return BuildUnitedValue(node);
+            case "matrix":
+                return BuildMatrix(node);
+            case "DataVectors":
+                return BuildDataVectors(node);
+            case "Trace2dResult":
+                return BuildPlotTraceResult(node);
+            case "symResult":
+                return BuildSymbolic(node);
+            case "placeholder":
+                return _resultNodeFactory.CreateEmptyResultNode();
+            default:
+                throw new InvalidOperationException(string.Format("Logic error: xmcd format result contained an unexpected element ('{0}')", node.LocalName));
+        }
     }
 }

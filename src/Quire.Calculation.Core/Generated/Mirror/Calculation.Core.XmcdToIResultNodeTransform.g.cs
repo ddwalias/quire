@@ -16,14 +16,6 @@ public partial class XmcdToIResultNodeTransform : global::Quire.Calculation.Core
     [global::Quire.Mirror.MirrorStub]
     private const string ErrorAttributeConversionToEnum = "Format error: The attribute '{0}' value:{1} in node '{2}' failed conversion.";
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IResultNode Transform(string xmcdResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IResultNode Transform(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.IResultNode MakeResultNode(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.ITrace2DResultNode BuildPlotTraceResult(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Calculation.Core.ITraceAxisInfo BuildAxisInfo(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.IResultNode BuildMatrix(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -31,4 +23,6 @@ public partial class XmcdToIResultNodeTransform : global::Quire.Calculation.Core
     private global::Quire.Calculation.Core.IResultNode BuildDisplayMatrix(global::System.Xml.XmlNode node, int rows, int cols, global::Quire.TableSize viewportSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.IUnitedValueResultNode BuildUnitedValue(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.ITrace2DResultNode BuildPlotTraceResult(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
