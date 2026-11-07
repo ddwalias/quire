@@ -11,8 +11,4 @@ namespace Quire.EquationEditor.View;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.View.ICanBlockFocus, Ptc.EquationEditor")]
 public partial interface ICanBlockFocus
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool BlockFocus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsAdornerFocused { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
