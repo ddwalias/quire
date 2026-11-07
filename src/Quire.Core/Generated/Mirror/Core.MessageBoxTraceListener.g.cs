@@ -11,6 +11,4 @@ namespace Quire.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Core.MessageBoxTraceListener, Ptc.Core")]
 public sealed partial class MessageBoxTraceListener : global::System.Diagnostics.TraceListener
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override void Fail(string message, string detailMessage) => base.Fail(message, detailMessage);
 }
