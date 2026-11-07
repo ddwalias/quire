@@ -29,5 +29,16 @@
 - Release IL: PASS — 67 checked, 67 exact, 0 failures. Model has 26 exact, 0 stubs.
 - Remaining mismatches in this batch: none.
 
+## Batch 4 — CollapsibleAreaViewModel (75 of 77 members exact)
+
+- Members: all ViewModel members, including the nested `PropertyNames` (constants), nested `CollapsibleAreaResizeData`, `.cctor` (`CollapsedAreaHeight`), and the closures in `.ctor`, `BindCommands`, `HandleItemAdded`, `HandleCollapsibleStateChanged`, `ErrorPropertyChangedHandler`.
+- Hand-written: `Mirrored/Controls.CollapsibleArea.CollapsibleAreaViewModel.cs` (one partial, members in Mathcad metadata order). The generated `.g.cs` keeps only the class header; the nested types moved to the end of the hand-written class with their `MirrorOf` attributes.
+- Compile-order rule found by the gate: a closure's `DisplayClass{N}` / lambda ordinal is `1 +` the number of counted members declared before the method in source order. Counted: methods, accessors, constructors, properties (1 each), fields including backing fields and static fields. Not counted: `const` fields. Nested types count where they are declared, so they go after the methods. Mathcad source order is the metadata token order of its methods (a property's accessors sit at the property's declaration point; `private set` and `set` may precede `get`), and each field sits before the members that follow it.
+- Release IL: PASS — 151 checked, 151 exact, 0 failures; 63 unfinished in the project (Control 61, ViewModel 2).
+- Shapes tried and kept (matched): early-return setters (`AreaHasErrors`, `ProtectionOperationsEnabled`, as in the Model); `MinimumHeight = FindMinimumSize().Height;` (one statement); `insertionPoint.Offset(0.0, -Grid.GridCellSize.Height)` (Release IL uses `neg`); `IsAncestorOf(visual)` with no cast; `RestoreResizeData` with `resizeData as CollapsibleAreaResizeData`, null check and early return, then `OldSize`.
+- Unfinished in this batch (placeholders, `=> throw global::Quire.Mirror.MirrorStub.NotImplemented();`):
+  - `OnToggleProtectState(object)`: the `func` lambda (`<>c__DisplayClass53_0::<OnToggleProtectState>b__0`) has `IsNullOrEmpty<char>` followed by `ldc.i4.0; cgt.un; ret` in Release IL. Shapes tried: `return str.IsNullOrEmpty();` (no `cgt.un`), `return str.IsNullOrEmpty() != false;` (C# folds it away). Not matched.
+  - `HandleGridCellSizeChanged(Size, Size)`: Release IL calls `callvirt CollapsibleAreaViewModel::get_StrictMinimumSize`; `StrictMinimumSize` in the hand-written override compiles to `callvirt WhiteboardViewModel::get_StrictMinimumSize`. Not resolved (the base is `protected virtual`, no redeclaration in `MathboardViewModel`). Kept as the base pass-through, as on main.
+
 ## Remaining (not yet started)
-- `CollapsibleAreaViewModel` (67 stubs, incl. nested `CollapsibleAreaResizeData`), `CollapsibleAreaControl` (61 stubs).
+- `CollapsibleAreaControl` (61 stubs), then the two ViewModel placeholders listed in batch 4.
