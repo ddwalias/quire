@@ -11,26 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.SnappableItemBaseHelper, Ptc.Controls.Core")]
 public abstract partial class SnappableItemBaseHelper : global::Quire.Core.ISnappableItemHelper, global::Quire.Core.ISnapToPixelHelper, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Media.TranslateTransform _transform;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.DependencyPropertyChangedEventHandler _isOnVisiblePagePropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.UIElement _renderTarget;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.UIElement RenderTarget { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.GeneralTransform TransformFromPoint { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasPointThatSnapsToPixel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected static global::System.Nullable<global::System.Windows.Point> CalculateOffset(global::System.Windows.Media.Visual visual, global::System.Windows.Media.GeneralTransform transformFromSourceToVisual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected SnappableItemBaseHelper(global::System.Windows.UIElement itemElement, bool isPageDescendant) { }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Dispose() { }
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract global::System.Nullable<global::System.Windows.Point> RecalculateOffset();
-    [global::Quire.Mirror.MirrorStub]
-    protected void RecalculateRenderTransform() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,24 +11,4 @@ namespace Quire.Controls.Core.Settings;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.ResultsSerializer, Ptc.Controls.Core")]
 public partial class ResultsSerializer : global::System.Xml.Serialization.IXmlSerializable, global::Quire.Controls.Core.Serialization.IXElementSerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Xml.Linq.XNamespace nameSpace;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.Serialization.NumberFormatSerializer numberFormatSerializer;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.Serialization.MatrixFormatSerializer matrixFormatSerializer;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.Settings.UnitSerializer unitSerializer;
-    [global::Quire.Mirror.MirrorStub]
-    internal const string localName = "results";
-    [global::Quire.Mirror.MirrorStub]
-    public ResultsSerializer(global::Quire.Controls.Core.IEngineeringDocument document, global::System.Xml.Linq.XNamespace nameSpace) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void ReadXml(global::System.Xml.XmlReader reader) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteXml(global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ReadXml(global::System.Xml.Linq.XElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteXml(global::System.Xml.Linq.XElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

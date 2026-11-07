@@ -714,4 +714,15 @@
   - `TableLayoutManager` (all 33 remaining members: fields, constructors, point converters, `SearchOnColumn`, `SearchOnRow`, `CellIndexFromPoint`, `Measure` overloads, `CalculateRowAndColumnMetrics`, metric getters, `RowMetric`, and closure `<Measure>b__55_0`)
 - Report: `.mirror-cache/release-il-424c105e02cb/release-il.json` — PASS, 1,632 checked, 1,632 exact, 0 failures, 1,517 unfinished (was 1,551).
 - Remaining mismatches: none in claimed batch.
-- Still open: 1,517 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.
+
+## Batch 95 — Settings.ResultsSerializer, SnappableItem helpers, and CustomScriptServiceFunctions
+
+- Claimed:
+  - `Settings.ResultsSerializer` (`LocalName`, `.ctor`, `CreateChildren`, `WriteElementContents`, `ReadElementContents`, `ReadXml(XElement)`)
+  - `SnappableItemBaseHelper` (`_renderTarget`, `_pageDescendantItem`, `_isOnVisiblePageChangedHandler`, `_targetLoadedHandler`, `_targetUnloadedHandler`, `_layoutUpdatedHandler`, `IsPageDescendant`, `RenderTarget`, `ItemElement`, `.ctor`, `Dispose`, `RegisterEvents`, `UnregisterEvents`, `RecalculateRenderTransform`, `FindIsPageDescendant`, and closure `<.ctor>b__12_0`)
+  - `SnappableZombieItemHelper` (`_zombie`, `_onLayoutUpdated`, `Create<T>`, `.ctor`, `Dispose`, `OnLayoutUpdated`, nested interface `IZombieElement`, generic wrapper `ZombieElement<T>`, and closure `<.ctor>b__5_0`)
+  - `Whiteboard.SnapToPixelWhiteboardHelper` (`_item`, `Create<T>`, `.ctor`, `Dispose`, `TransformFromPoint`, `HasPointThatSnapsToPixel`, nested interface `IContainerElement`, generic wrapper `ContainerElement<T>`, and closures `<get_TransformFromPoint>b__6_0`, `<get_HasPointThatSnapsToPixel>b__8_0`)
+  - `Controls.Text.CustomScriptServiceFunctions` (`RunTypeToScriptState`, `ConvertScriptLevelInternal`, `CopyLocalFormattingValues<T>`, `SplitRun(TextPointer)`, `SplitRun<T>(TextPointer)`)
+- Report: `.mirror-cache/release-il-6e8d0d9060fc/release-il.json` — PASS, 1,676 checked, 1,672 exact, 0 failures, 1,484 unfinished (was 1,517).
+- Remaining mismatches: none in claimed batch.
+- Still open: 1,484 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.
