@@ -7,4 +7,5 @@
 - Batch 3: `InvalidEditorCommandException`, `Tree.Transform.InvalidSExpression`, `Tree.MathNodeInvalidLabelException`; Release IL PASS, 178 checked (`.mirror-cache/release-il-d1446894fc0a/release-il.json`).
 - Batch 4: `SpecTable.ShouldHideCellEventArgs`; Release IL PASS, 179 checked (`.mirror-cache/release-il-9f452aa711e6/release-il.json`).
 - Batch 5: `EquationErrors` constructor; Release IL PASS, 179 checked (`.mirror-cache/release-il-ff0a18dd1c98/release-il.json`).
-- Remaining: 5,935 `MirrorStub` attributes in 254 generated files; not yet batched. No mismatches in completed batches.
+- Batch 6: `Tree.StringCompressor.CompressString`, `DecompressString`; Release IL PASS, 181 checked (`.mirror-cache/release-il-52d2ad20edcb/release-il.json`).
+- Remaining: 5,933 `MirrorStub` attributes in 253 generated files; not yet batched. No mismatches in completed batches.

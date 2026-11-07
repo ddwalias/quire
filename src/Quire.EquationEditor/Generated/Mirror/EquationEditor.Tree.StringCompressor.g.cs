@@ -11,8 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.StringCompressor, Ptc.EquationEditor")]
 public static partial class StringCompressor
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string CompressString(string text, global::Quire.EquationEditor.Tree.CompressStringAlgorithmTypes algorithm = (global::Quire.EquationEditor.Tree.CompressStringAlgorithmTypes)(0)) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string DecompressString(string compressedText, global::Quire.EquationEditor.Tree.CompressStringAlgorithmTypes algorithm = (global::Quire.EquationEditor.Tree.CompressStringAlgorithmTypes)(0)) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
