@@ -11,12 +11,4 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.HyperlinkProperties, Ptc.Controls.Text")]
 public static partial class HyperlinkProperties
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty LinkVisitedProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static bool GetLinkVisited(global::System.Windows.DependencyObject dObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetLinkVisited(global::System.Windows.DependencyObject dObj, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,6 +11,4 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.HyperlinkInputValidationErrorKeys, Ptc.Controls.Text")]
 public static partial class HyperlinkInputValidationErrorKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string InvalidUriSyntaxKey = "InvalidUriSintaxKey";
 }

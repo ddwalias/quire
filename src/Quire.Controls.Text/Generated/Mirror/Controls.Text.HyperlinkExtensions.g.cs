@@ -11,6 +11,4 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.HyperlinkExtensions, Ptc.Controls.Text")]
 public static partial class HyperlinkExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool HasSimpleTextContent(this global::System.Windows.Documents.Hyperlink link, global::Quire.Controls.Text.RichTextWithEmbeddedItem ownerDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

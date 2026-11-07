@@ -11,6 +11,4 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.IWhiteboardItemInTextWrapper, Ptc.Controls.Text")]
 internal partial interface IWhiteboardItemInTextWrapper
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IWhiteboardItemInText WrappedItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

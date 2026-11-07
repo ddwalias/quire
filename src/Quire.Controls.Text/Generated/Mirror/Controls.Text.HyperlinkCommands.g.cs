@@ -11,14 +11,4 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.HyperlinkCommands, Ptc.Controls.Text")]
 public static partial class HyperlinkCommands
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfRichTextWithEmbeddedItem;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand ModifyHyperlink;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand RemoveHyperlinks;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand OpenHyperlink;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand CopyHyperlink;
 }
