@@ -11,28 +11,4 @@ namespace Quire.Controls.Include;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Include.IncludedCalculatableAggregateWrapper, Ptc.Controls.Include")]
 public partial class IncludedCalculatableAggregateWrapper : global::Quire.Controls.Include.IncludedCalculatableWrapper, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICanContainSymbolicCalculation
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.ICalculatableAggregate WrappedCalculatableAggregate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableRemoved;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableMoved;
-    [global::Quire.Mirror.MirrorStub]
-    public IncludedCalculatableAggregateWrapper(global::Quire.Calculation.Core.ICalculatableAggregate wrappedCalculatableAggregate) : base(default(global::Quire.Calculation.Core.ICalculatable)) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void HookupAggregateContainerEvents(global::Quire.Calculation.Core.ICalculatableAggregate aggregate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UnhookAggregateContainerEvents(global::Quire.Calculation.Core.ICalculatableAggregate aggregate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Dispose() => base.Dispose();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleCalculatableAdded(global::Quire.Calculation.Core.ICalculatableContainer container, global::Quire.Calculation.Core.ICalculatable newCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable removedCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleCalculatableMoved(global::Quire.Calculation.Core.ICalculatable movedCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

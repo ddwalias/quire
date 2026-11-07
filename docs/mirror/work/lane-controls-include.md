@@ -17,6 +17,11 @@
   - `Properties.Resources` (resourceMan, resourceCulture, .ctor, ResourceManager, Culture)
   - `IncludeWorksheetFilePathChange` (fields, .ctor, Do, Undo, Redo, Name)
   - `SystemVariableValuesHandler` (EvalExpressionRlFormat, _variableName, events, .ctor, ConstractRl, SetResult, GetComputedValue, CanHideFromCalculationContext, HideFromCalculationContext)
-- Release IL: PASS; 132 checked, 103 exact, 0 failures. Report: `.mirror-cache/release-il-e3414b75c4c6/release-il.json`.
-- Stubs: 555 before, 480 remaining.
+- Release IL: PASS; 132 checked, 103 exact, 0 failures. Landed as 5538ed53.
+- Batch 2: 44 stubs across Calculatable Wrapper family:
+  - `IncludedCalculatableWrapper` (26 stubs: fields, events, properties, .ctor, SetSynchronizationStatus, SetCalculatingStatus, SetError, ContainsError, ShowError, FirePropertyChanged, FireSetErrorChanged, FireSynchronizationStatusChanged, FireCalculatingStatusChanged)
+  - `IncludedCalculatableAggregateWrapper` (12 stubs: .ctor, WrappedCalculatableAggregate, Hookup/Unhook events, Dispose, Handle* event handlers, events, CalculatableChildren)
+  - `IncludedCalculatableAggregateWithComponentWrapper` (6 stubs: .ctor, WrappedCalculatableWithComponent, DataExchangeModel, ComponentHandle, ComponentCookieMultiThreaded, IncrementComponentCookieMultiThreaded)
+- Release IL: PASS; 142 checked, 142 exact, 0 failures. Report: `.mirror-cache/release-il-cb21d9725178/release-il.json`.
+- Stubs: 480 before, 436 remaining.
 - Remaining mismatches: none.

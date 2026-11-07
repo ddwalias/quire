@@ -11,16 +11,4 @@ namespace Quire.Controls.Include;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Include.IncludedCalculatableAggregateWithComponentWrapper, Ptc.Controls.Include")]
 public partial class IncludedCalculatableAggregateWithComponentWrapper : global::Quire.Controls.Include.IncludedCalculatableAggregateWrapper, global::Quire.Calculation.Core.ICalculatableAggregateWithComponent, global::Quire.Calculation.Core.ICalculatableWithDataExchange, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICanContainSymbolicCalculation
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.ICalculatableWithDataExchange WrappedCalculatableWithComponent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IDataExchangeModel DataExchangeModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<int> ComponentHandle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int ComponentCookieMultiThreaded { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public IncludedCalculatableAggregateWithComponentWrapper(global::Quire.Calculation.Core.ICalculatableAggregateWithComponent wrappedCalculatableAggregate) : base(default(global::Quire.Calculation.Core.ICalculatableAggregate)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public int IncrementComponentCookieMultiThreaded(bool isAutoCalc = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
