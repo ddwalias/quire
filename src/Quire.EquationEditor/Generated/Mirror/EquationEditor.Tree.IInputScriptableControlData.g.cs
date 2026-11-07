@@ -11,10 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.IInputScriptableControlData, Ptc.EquationEditor")]
 public partial interface IInputScriptableControlData : global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue, global::Quire.EquationEditor.Tree.IInputControlData, global::System.ICloneable
 {
-    [global::Quire.Mirror.MirrorStub]
-    string Script { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string ScriptObjectControlName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string ValueSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
