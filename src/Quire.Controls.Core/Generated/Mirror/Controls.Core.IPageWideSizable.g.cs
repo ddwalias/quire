@@ -11,10 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IPageWideSizable, Ptc.Controls.Core")]
 public partial interface IPageWideSizable
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool NotHookupSizeChangedHandlerUntilLoaded { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action HookupSizeChangedHandler { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void FireHookupSizeChangedHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

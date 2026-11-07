@@ -11,14 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IPackagePartReferenceManager, Ptc.Controls.Core")]
 public partial interface IPackagePartReferenceManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    string FullFilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.DateTime LastSavedDate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Func<string, global::System.IO.Packaging.PackagePart> GetPackagePartByRefId { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Func<global::Quire.Controls.Core.IPackagePartReferenceManager, string> GetRefIdForReferencedFile { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.IO.Packaging.PackagePart WriteToPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

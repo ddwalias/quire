@@ -11,12 +11,4 @@ namespace Quire.Controls.Core.Protection;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Protection.IProtectableModel, Ptc.Controls.Core")]
 public partial interface IProtectableModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.ProtectionData ProtectionData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool HasOpenDescendantOleObjects { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void SetProtection(global::Quire.ProtectionData protectionData, global::System.Version formatVersion = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void RemoveProtection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

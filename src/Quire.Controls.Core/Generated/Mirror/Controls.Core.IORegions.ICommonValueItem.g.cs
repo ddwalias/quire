@@ -11,12 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.ICommonValueItem, Ptc.Controls.Core")]
 public partial interface ICommonValueItem : global::Quire.Controls.Core.IORegions.IItemAlias
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IORegions.IUnitedScalarState ScalarState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IORegions.IUnitedMatrixState MatrixState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IORegions.IStringState StringState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IORegions.IErrorState ErrorState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

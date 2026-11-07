@@ -11,10 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IPrimeExceptionLogger, Ptc.Controls.Core")]
 public partial interface IPrimeExceptionLogger : global::Quire.Services.IExceptionLogger, global::Quire.Services.IApplicationLogger, global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Func<global::System.Collections.Generic.IEnumerable<string>> OpenFilesListGetter { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string GetOpenFilesData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetUndoStackData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

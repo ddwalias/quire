@@ -11,12 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.IWorksheetSectionPersistentData, Ptc.Controls.Core")]
 public partial interface IWorksheetSectionPersistentData
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SerializedRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IDictionary<global::System.Windows.UIElement, global::System.Windows.Point> RegionsToSerialize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool ConvertedFromMC14 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.PersistentDataObjects.worksheetMessageIdType MsgId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

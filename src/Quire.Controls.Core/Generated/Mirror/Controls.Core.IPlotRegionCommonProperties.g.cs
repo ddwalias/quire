@@ -11,10 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IPlotRegionCommonProperties, Ptc.Controls.Core")]
 public partial interface IPlotRegionCommonProperties
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool ShowAxisExpressions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool ShowTicks { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool ShowNumbers { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

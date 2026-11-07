@@ -11,16 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.IDeserializationStrategy, Ptc.Controls.Core")]
 public partial interface IDeserializationStrategy
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<global::System.Windows.UIElement> Regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IMathFormat DeserializeMathFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> DeserializeLabeledIdFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void DeserializeRegionProlog(global::System.Windows.UIElement region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void DeserializeRegionsEpilog(global::System.Xml.XmlDocument xmlContentDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegions(global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.IRegionType> regions, global::Quire.Serialization.IDeS11NProvider deS11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

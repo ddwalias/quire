@@ -11,12 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IDocumentSaveOptions, Ptc.Controls.Core")]
 public partial interface IDocumentSaveOptions
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool TryGeneratingInputOutputStates { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsDetachedCopy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsHandlingException { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool WaitForCalculationForSaveAsApi { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

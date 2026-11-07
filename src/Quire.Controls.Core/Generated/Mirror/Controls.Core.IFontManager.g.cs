@@ -11,12 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IFontManager, Ptc.Controls.Core")]
 public partial interface IFontManager : global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.ExtendedFont GetFont(string fontFamilyName, double fontPointSize, bool isItalic = false, bool isBold = false, bool isUnderline = false, global::System.Nullable<global::System.Windows.Media.Color> fontColor = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.ExtendedFont GetFont(global::Quire.Controls.Core.IMathFormat mathFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.ExtendedFont GetScaledFont(global::Quire.Controls.Core.IMathFormat mathFormat, double scaleFactor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    double GetScaledFontSize(global::Quire.Controls.Core.IMathFormat mathFormat, double scaleFactor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

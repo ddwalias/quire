@@ -11,10 +11,4 @@ namespace Quire.Controls.Core.Ole;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Ole.IOleContainerViewModel, Ptc.Controls.Core")]
 public partial interface IOleContainerViewModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Size MinSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Size DefaultMinSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Size EstablishInitialSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

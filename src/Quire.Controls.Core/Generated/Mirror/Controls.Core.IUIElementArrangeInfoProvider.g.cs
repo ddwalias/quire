@@ -11,10 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IUIElementArrangeInfoProvider, Ptc.Controls.Core")]
 public partial interface IUIElementArrangeInfoProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Size GetRenderSize(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Rect TransformBoundsToAncestor(object descendant, object ancestor, global::System.Windows.Rect bounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Point TranslatePoint(object source, object target, global::System.Windows.Point sourcePoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

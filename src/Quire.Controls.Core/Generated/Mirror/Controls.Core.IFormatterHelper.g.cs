@@ -11,12 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IFormatterHelper, Ptc.Controls.Core")]
 public partial interface IFormatterHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    string Mult(string left, string right) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string Exponent(string left, string right) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string Neg(string arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string Percent(string arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

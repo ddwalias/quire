@@ -11,16 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IInputRegion, Ptc.Controls.Core")]
 public partial interface IInputRegion : global::Quire.Controls.Core.IORegions.IIORegion, global::Quire.Controls.Core.IORegions.IIORegionBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<string> GetDefinedIdentifierSExpressions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool SubstituteAndCommitInputValue(string sExpr, string valueSExpr, string scalingSExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Undo.UndoableCommand CreateToggleInputCommand(global::System.Action<global::Quire.Controls.Core.IORegions.IInputRegion, bool> toggleInputTag, bool setTag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsSuitableForInputTaggingPrivate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ActivateAndScopeIdentifierPrivate(string idSExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetDefinitionSExpression(string idSExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

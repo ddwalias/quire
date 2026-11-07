@@ -11,16 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IRestrictedAreaAlignmentGrid, Ptc.Controls.Core")]
 public partial interface IRestrictedAreaAlignmentGrid : global::Quire.Controls.Core.IAlignmentGrid, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.Dictionary<object, global::Quire.Pair<double, double>> RestrictedAreas { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.Dictionary<object, global::Quire.Pair<double, double>> ProtectedAreas { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsWithinRestrictedArea(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Point GetNextIntersectionIgnoringRestrictedAreas(global::System.Windows.Point startPoint, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Point GetNearestIntersectionInDirectionIgnoringRestrictedAreas(global::System.Windows.Point startPoint, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Point GetNearestInsertionPointIgnoringRestrictedAreas(global::System.Windows.Point startPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

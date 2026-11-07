@@ -11,8 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IImageControl, Ptc.Controls.Core")]
 public partial interface IImageControl : global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::System.ICloneable, global::Quire.Serialization.IPersistentDataProvider, global::Quire.Controls.Core.IResizableElementInfo, global::Quire.Controls.Core.IResizeToFitWhiteboardItem
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.ImageSource Source { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Uri OriginalImageUri { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

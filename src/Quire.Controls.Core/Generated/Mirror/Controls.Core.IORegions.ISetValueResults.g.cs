@@ -11,12 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.ISetValueResults, Ptc.Controls.Core")]
 public partial interface ISetValueResults
 {
-    [global::Quire.Mirror.MirrorStub]
-    int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IOManagerErrorCode> AllResults { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IORegions.IOManagerErrorCode GetResult(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IORegions.IOManagerErrorCode GetResult(string alias) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

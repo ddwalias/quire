@@ -11,14 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IWhiteboardItemInText, Ptc.Controls.Core")]
 public partial interface IWhiteboardItemInText : global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::System.ICloneable
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsEmbedded { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.BookmarkTags.IBookmarksManager BookmarksManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool CanNavigate(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool CanReturn() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool CanTraverse(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

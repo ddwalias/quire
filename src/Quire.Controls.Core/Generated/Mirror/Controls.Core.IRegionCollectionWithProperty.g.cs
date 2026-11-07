@@ -11,12 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IRegionCollectionWithProperty, Ptc.Controls.Core")]
 public partial interface IRegionCollectionWithProperty : global::Quire.Controls.Core.ICurrentNumberFormatProperty, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.ICurrentMatrixFormatProperty, global::Quire.Core.ICurrentTextFormatProperty, global::Quire.Controls.Core.IMathFormatElementCollection, global::Quire.Controls.Core.IMathFormatOwner, global::Quire.Controls.Core.ICurrentMathFormatProperty, global::Quire.Controls.Core.ICurrentProofingLanguageProperty
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool AreAllTextRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool AreAllMathRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool HideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void DispatchCommand(global::System.Windows.Input.ICommand command, object parameter, global::Quire.Controls.Core.PropertiesForUpdate propertyForUpdate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

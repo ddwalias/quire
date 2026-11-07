@@ -11,16 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IOutputRegion, Ptc.Controls.Core")]
 public partial interface IOutputRegion : global::Quire.Controls.Core.IORegions.IIORegion, global::Quire.Controls.Core.IORegions.IIORegionBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::Quire.Calculation.Core.IResultNode> ResultChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    double GetRealResult() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    double GetRealUnitedResult(string unitsOfResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ActivateAndScopeResultPrivate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetEvaluationSExp(bool getDefineForDefineEval) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsSuitableForOutputTaggingPrivate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

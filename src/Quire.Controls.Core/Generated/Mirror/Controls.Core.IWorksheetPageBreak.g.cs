@@ -11,8 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IWorksheetPageBreak, Ptc.Controls.Core")]
 public partial interface IWorksheetPageBreak
 {
-    [global::Quire.Mirror.MirrorStub]
-    double VerticalPosition { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int NextPage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

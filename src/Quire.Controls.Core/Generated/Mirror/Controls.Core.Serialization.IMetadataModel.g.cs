@@ -11,10 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.IMetadataModel, Ptc.Controls.Core")]
 public partial interface IMetadataModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    string Creator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string LastModified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int Version { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

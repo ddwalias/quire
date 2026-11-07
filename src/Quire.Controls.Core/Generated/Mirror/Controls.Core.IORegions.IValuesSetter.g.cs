@@ -11,16 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IValuesSetter, Ptc.Controls.Core")]
 public partial interface IValuesSetter
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<string> Aliases { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void AddScalarValue(string alias, double value, string units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddMatrixValue(string alias, object[,] value, string units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddStringValue(string aliasArg, string valueArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddSExprValue(string aliasArg, string sexpressionArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IORegions.ISetValueResults SetValues(int seconds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,10 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IRegionFactory, Ptc.Controls.Core")]
 public partial interface IRegionFactory
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.PersistentDataObjects.IRegionType ConvertToIRegionType(global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> typeCreator, global::Quire.Serialization.IS11NProvider s11NProvider, global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Serialization.IRegionPersistentData ConvertFromIRegionType(global::Quire.Serialization.IDeS11NProvider deS11NProvider, global::System.Action<global::System.Windows.UIElement> deserializationProlog, global::Quire.PersistentDataObjects.IRegionType regionData, global::System.Func<global::Quire.PersistentDataObjects.IRegionType, bool> skip) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Serialization.IRegionPersistentData CreateFailedRegionPersistentData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

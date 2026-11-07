@@ -11,8 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ICurrentIdLabelProperty, Ptc.Controls.Core")]
 public partial interface ICurrentIdLabelProperty : global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<global::Quire.Controls.Core.IdLabels> CurrentIdLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<global::Quire.Controls.Core.IdLabels> CurrentDisplayIdLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

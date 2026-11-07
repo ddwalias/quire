@@ -11,16 +11,4 @@ namespace Quire.Controls.Core.IORegions;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IORegions.IIORegionContainer, Ptc.Controls.Core")]
 public partial interface IIORegionContainer : global::Quire.Controls.Core.IORegions.IIORegionBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IORegions.IIORegionManager InputOutputRegionManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IIORegionBase> IORegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool CanToggleInputRegion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool CanToggleOutputRegion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ToggleInputRegion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ToggleOutputRegion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

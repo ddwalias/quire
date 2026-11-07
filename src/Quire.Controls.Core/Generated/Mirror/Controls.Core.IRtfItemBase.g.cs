@@ -11,14 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IRtfItemBase, Ptc.Controls.Core")]
 public partial interface IRtfItemBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    int PageIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Size TopRectClippingSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Size FullSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Point TopLeft { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool NoLeftOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

@@ -11,10 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.ISpecialCopyVisitor, Ptc.Controls.Core")]
 public partial interface ISpecialCopyVisitor
 {
-    [global::Quire.Mirror.MirrorStub]
-    void Visit(global::Quire.Controls.Core.IEquationControl equationControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Visit(global::Quire.Controls.Core.IRichTextWithEmbeddedItem textBox) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Visit(global::Quire.Controls.Core.ICollapsibleAreaControl collapsibleArea) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

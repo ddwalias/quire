@@ -11,8 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IWhiteboardItemPresenter, Ptc.Controls.Core")]
 public partial interface IWhiteboardItemPresenter
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.Geometry Clip { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void HandleItemLocationChanged(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,12 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.ISpellCheckRegion, Ptc.Controls.Core")]
 public partial interface ISpellCheckRegion
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool CanAddToDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetWordToAddToDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void RefreshDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void DisableSpellCheck() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

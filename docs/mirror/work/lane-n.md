@@ -641,3 +641,9 @@
 - Remaining mismatches: none in claimed batch.
 - Note: `MirrorGen emit` in this worktree rewrote 742 generated files across 36 projects (stubs added in projects outside this lane); those were reverted and not committed. It did not drop the interface stubs, so they were removed by hand as in the batch 83 pattern.
 - Note: untracked `Generated/Mirror/` folders for `Quire.AutomationPrivate`, `Quire.Interop.Mathcad`, `Quire.Interop.MathcadOld` and `Quire.Interop.VSInterfacesLib` were created by that emit run and are left uncommitted; remove them when the lane finishes.
+
+## Batch 85 — Interface members (36 interfaces with at most nine stubs)
+
+- Claimed: every stubbed member of 36 interfaces (`ISpecialCopyVisitor`, `IPackagePartReferenceManager`, `IWhiteboardItem`, `IIOItem`, `IIORegionContainer`, `IFontManager`, `ICollapsibleAreaControl`, and 29 others), declared abstract in new hand-written partials; generated stubs removed in the same change.
+- Report: `.mirror-cache/release-il-49675c41d839/release-il.json` — PASS, 1,694 checked, 0 failures, 2,149 unfinished (was 2,332).
+- Remaining mismatches: none in claimed batch.
