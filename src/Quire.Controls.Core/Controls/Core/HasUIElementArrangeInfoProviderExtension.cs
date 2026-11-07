@@ -5,6 +5,8 @@ namespace Quire.Controls.Core;
 
 public static partial class HasUIElementArrangeInfoProviderExtension
 {
+    private static IFrameworkElementFacade _facade;
+
     public static IUIElementArrangeInfoProvider ArrangeInfoProvider
     {
         get

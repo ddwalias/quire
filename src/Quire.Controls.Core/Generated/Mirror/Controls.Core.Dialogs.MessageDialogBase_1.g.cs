@@ -11,10 +11,4 @@ namespace Quire.Controls.Core.Dialogs;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Dialogs.MessageDialogBase`1, Ptc.Controls.Core")]
 public abstract partial class MessageDialogBase<T> : global::System.Windows.Window where T : struct
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract global::System.Windows.Controls.TextBlock Message { get; }
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract global::System.Windows.Controls.Image Image { get; }
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract global::System.Windows.Controls.ItemsControl Buttons { get; }
 }

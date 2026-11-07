@@ -725,4 +725,14 @@
   - `Controls.Text.CustomScriptServiceFunctions` (`RunTypeToScriptState`, `ConvertScriptLevelInternal`, `CopyLocalFormattingValues<T>`, `SplitRun(TextPointer)`, `SplitRun<T>(TextPointer)`)
 - Report: `.mirror-cache/release-il-6e8d0d9060fc/release-il.json` — PASS, 1,676 checked, 1,672 exact, 0 failures, 1,484 unfinished (was 1,517).
 - Remaining mismatches: none in claimed batch.
-- Still open: 1,484 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.
+
+## Batch 96 — HasUIElementArrangeInfoProviderExtension, MessageDialogBase, PropertyAggregateExtension, and VisualTableContents
+
+- Claimed:
+  - `HasUIElementArrangeInfoProviderExtension` (`_facade`)
+  - `Dialogs.MessageDialogBase<T>` (`Message`, `Image`, `Buttons`)
+  - `PropertyAggregateExtension` (`SetPropertyValueWithCommandUndoable`, `SetPropertyValueWithCommand` (2 overloads), `ValidateReferenceType<T>`, `ValidateNullableType<T>`, `IsValidateValueType<T>`, `ErrorMessageTypeMissmatch`, `GetCommonPropertyValueForList`, `GetCommonFormat<T>`, plus closures `<>c`, `<>c__8`1`, `<>c__DisplayClass0_0`, `<>c__DisplayClass7_0`)
+  - `VisualTableContents` (`Rows`, `CellCount`, `.ctor(TableLayoutManager)`, `OnVisualChildrenChanged`, `MeasureOverride`, `GetChildrenInRowMajorOrder`, `ArrangeOverride`, and nested iterator `<GetChildrenInRowMajorOrder>d__29`)
+- Report: `.mirror-cache/release-il-88cba98920c7/release-il.json` — PASS, 1,708 checked, 1,708 exact, 0 failures, 1,469 unfinished (was 1,484).
+- Remaining mismatches: none in claimed batch.
+- Still open: 1,469 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.

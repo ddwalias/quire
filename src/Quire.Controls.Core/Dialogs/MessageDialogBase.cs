@@ -13,6 +13,12 @@ public abstract partial class MessageDialogBase<T> : Window where T : struct
 {
     private readonly Dictionary<string, Button> _buttonsDict = new Dictionary<string, Button>();
 
+    protected abstract TextBlock Message { get; }
+
+    protected abstract Image Image { get; }
+
+    protected abstract ItemsControl Buttons { get; }
+
     [MirrorVerified("PtcControlsCoreDialogsMessageDialogBase1MechanicalDifferentialTests")]
     private Button CancelButton { get; set; }
 

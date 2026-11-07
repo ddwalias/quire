@@ -11,22 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.PropertyAggregateExtension, Ptc.Controls.Core")]
 public static partial class PropertyAggregateExtension
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string ErrorMessageTypeMissmatch = "Type mismatch";
-    [global::Quire.Mirror.MirrorStub]
-    private static void SetPropertyValueWithCommandUndoable(global::Quire.Controls.Core.IPropertyAggregate propertyAggregate, string propertyName, object oldValue, object newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetPropertyValueWithCommand(this global::Quire.Controls.Core.IPropertyAggregate propertyAggregate, global::Quire.Controls.Core.SetPropertyValueCommandParameter parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetPropertyValueWithCommand(this global::Quire.Controls.Core.IPropertyAggregate propertyAggregate, global::Quire.Controls.Core.SetPropertyValueCommandParameter parameter, object newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static T ValidateReferenceType<T>(this global::Quire.Controls.Core.IPropertyAggregate propertyAggregate, object value, string propertyName) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Nullable<T> ValidateNullableType<T>(this global::Quire.Controls.Core.IPropertyAggregate propertyAggregate, object value, string propertyName) where T : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsValidateValueType<T>(this global::Quire.Controls.Core.IPropertyAggregate propertyAggregate, string propertyName, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object GetCommonPropertyValueForList(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IPropertyAggregate> items, global::Quire.Controls.Core.IPropertyAggregate compareTo, string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static T GetCommonFormat<T>(global::System.Collections.Generic.IEnumerable<T> formats, T compareTo, params string[] propertyNames) where T : class, global::Quire.Controls.Core.IPropertyAggregate, new() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

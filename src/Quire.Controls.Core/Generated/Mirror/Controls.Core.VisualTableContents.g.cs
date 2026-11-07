@@ -11,18 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.VisualTableContents, Ptc.Controls.Core")]
 public partial class VisualTableContents : global::System.Windows.Controls.Panel
 {
-    [global::Quire.Mirror.MirrorStub]
-    public virtual int Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual int CellCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected VisualTableContents(global::Quire.Controls.Core.TableLayoutManager layoutManager) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnVisualChildrenChanged(global::System.Windows.DependencyObject visualAdded, global::System.Windows.DependencyObject visualRemoved) => base.OnVisualChildrenChanged(visualAdded, visualRemoved);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> GetChildrenInRowMajorOrder() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
 }
