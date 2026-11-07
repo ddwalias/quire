@@ -11,8 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.IInputControlDataWithValues, Ptc.EquationEditor")]
 public partial interface IInputControlDataWithValues
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.ObjectModel.Collection<string> Values { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

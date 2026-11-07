@@ -11,8 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.IListBoxScriptableControlData, Ptc.EquationEditor")]
 public partial interface IListBoxScriptableControlData : global::Quire.EquationEditor.Tree.IInputScriptableControlDataWithInputs, global::Quire.EquationEditor.Tree.IInputScriptableControlData, global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue, global::Quire.EquationEditor.Tree.IInputControlData, global::System.ICloneable, global::Quire.EquationEditor.Tree.IInputControlDataWithValues
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool Sort { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.FlowDirection FlowDirection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
