@@ -116,4 +116,75 @@ namespace Quire.EquationEditor.Tree.Parsing.Panceaux
             visitor.Visit(this);
         }
     }
+
+    public partial class ReparentChild
+    {
+        public int ChildIndex
+        {
+            get => a;
+            set => a = value;
+        }
+
+        public ReparentChild(string newParentNodeName, int childIndex) : this(newParentNodeName, childIndex, 0)
+        {
+        }
+
+        public ReparentChild(string newParent, int childIndex, int indexInNewParent)
+        {
+            NewParent = newParent;
+            ChildIndex = childIndex;
+            IndexInNewParent = indexInNewParent;
+        }
+
+        public override void Accept(global::Quire.EquationEditor.Tree.Parsing.PanaceaVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
+
+        public global::Quire.EquationEditor.Tree.Parsing.IChildHandlerPanacea Clone()
+        {
+            return new ReparentChild(NewParent, ChildIndex, IndexInNewParent);
+        }
+    }
+
+    public partial class ReparentNodeAndPullOutChild
+    {
+        public ReparentNodeAndPullOutChild(string newParent, int childToExtractLocation, int parentIndexInNewParent, int childIndexInNewParent)
+        {
+            NewParent = newParent;
+            ChildToExtractIndex = childToExtractLocation;
+            ChildIndexInNewParent = childIndexInNewParent;
+            ParentIndexInNewParent = parentIndexInNewParent;
+        }
+
+        public override void Accept(global::Quire.EquationEditor.Tree.Parsing.PanaceaVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
+    }
+
+    public partial class ReplaceChildDescriptor
+    {
+        public int ChildIndex
+        {
+            get => a;
+            set => a = value;
+        }
+
+        public ReplaceChildDescriptor(int indexInParent, string newDescriptorName)
+        {
+            ChildIndex = indexInParent;
+            NewDescriptorName = newDescriptorName;
+        }
+
+        public override void Accept(global::Quire.EquationEditor.Tree.Parsing.PanaceaVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
+
+        public global::Quire.EquationEditor.Tree.Parsing.IChildHandlerPanacea Clone()
+        {
+            return new ReplaceChildDescriptor(ChildIndex, NewDescriptorName);
+        }
+    }
 }

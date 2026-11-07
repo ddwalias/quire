@@ -11,16 +11,6 @@ namespace Quire.EquationEditor.Tree.Parsing.Panceaux;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Parsing.Panceaux.ReplaceChildDescriptor, Ptc.EquationEditor")]
 public partial class ReplaceChildDescriptor : global::Quire.EquationEditor.Tree.Parsing.Panacea, global::Quire.EquationEditor.Tree.Parsing.IChildHandlerPanacea
 {
-    [global::Quire.Mirror.MirrorStub]
     public readonly string NewDescriptorName;
-    [global::Quire.Mirror.MirrorStub]
     private int a;
-    [global::Quire.Mirror.MirrorStub]
-    public int ChildIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ReplaceChildDescriptor(int indexInParent, string newDescriptorName) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void Accept(global::Quire.EquationEditor.Tree.Parsing.PanaceaVisitor visitor) => base.Accept(visitor);
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Parsing.IChildHandlerPanacea Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
