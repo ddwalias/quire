@@ -19,4 +19,5 @@
 - Batch 15: `Tree.IInputControlDataWithValues`, `IInputResizableControlData`, `IListBoxScriptableControlData` abstract contracts; Release IL PASS, 237 checked (`.mirror-cache/release-il-36e0fc90cf9e/release-il.json`).
 - Batch 16: `Tree.IReadOnly`, `IReadOnlyAbstract` abstract contracts; Release IL PASS, 228 checked (`.mirror-cache/release-il-0deecef81828/release-il.json`).
 - Batch 17: `Tree.IInputControlData`, `IInputControlDataCalculatedValue`, `IInputScriptableControlData`, `IInputScriptableControlDataWithInputs` abstract contracts; Release IL PASS, 269 checked (`.mirror-cache/release-il-116821c8e383/release-il.json`).
-- Remaining: 5,827 `MirrorStub` attributes in 225 generated files; not yet batched. No mismatches in completed batches.
+- Batch 18: `View.IMathViewTransformer`, `IHighlightRectProvider`, `IVisualAtomicTextLeafEditor`, `IVisualInputControlEditor`, `IVisualUnaryEditor`, `IVisualPairNaryNodeEditor`, `IVisualOutfixNodeEditor` abstract contracts; Release IL PASS, 234 checked (`.mirror-cache/release-il-6c40b59e64ce/release-il.json`).
+- Remaining: 5,820 `MirrorStub` attributes in 218 generated files; not yet batched. No mismatches in completed batches.

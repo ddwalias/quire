@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.View;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.View.IHighlightRectProvider, Ptc.EquationEditor")]
 public partial interface IHighlightRectProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Rect HighlightRect() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

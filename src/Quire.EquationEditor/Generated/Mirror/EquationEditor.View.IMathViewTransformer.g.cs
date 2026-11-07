@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.View;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.View.IMathViewTransformer, Ptc.EquationEditor")]
 public partial interface IMathViewTransformer
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.View.IVisualMathNode Transform(global::Quire.EquationEditor.Tree.MathNode subTreeRoot, ref global::System.Collections.Generic.IDictionary<global::Quire.EquationEditor.Tree.MathNode, global::Quire.EquationEditor.View.IVisualMathNode> modelToViewMap, global::Quire.Controls.Core.IMathFormat MathFormatToApply, bool overideLabelColor, object labelIdFormatDictionary) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

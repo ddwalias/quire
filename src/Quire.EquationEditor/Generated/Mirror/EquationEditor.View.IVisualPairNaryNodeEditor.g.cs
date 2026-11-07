@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.View;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.View.IVisualPairNaryNodeEditor, Ptc.EquationEditor")]
 public partial interface IVisualPairNaryNodeEditor : global::Quire.EquationEditor.View.IVisualMathNodeEditor
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<int> OperatorPartIndex { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
