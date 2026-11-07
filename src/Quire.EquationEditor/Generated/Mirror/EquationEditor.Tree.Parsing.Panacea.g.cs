@@ -11,8 +11,4 @@ namespace Quire.EquationEditor.Tree.Parsing;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Parsing.Panacea, Ptc.EquationEditor")]
 public abstract partial class Panacea
 {
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Accept(global::Quire.EquationEditor.Tree.Parsing.PanaceaVisitor visitor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected Panacea() { }
 }

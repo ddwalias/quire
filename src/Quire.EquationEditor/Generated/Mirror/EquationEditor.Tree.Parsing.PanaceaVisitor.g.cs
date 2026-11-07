@@ -39,34 +39,4 @@ public partial class PanaceaVisitor
     public global::Quire.Delegate1<global::Quire.EquationEditor.Tree.Parsing.Panceaux.PullOutAdjacentDescendantFromChild> PullOutAdjacentDescendantFromChildHandler;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Delegate1<global::Quire.EquationEditor.Tree.Parsing.Panceaux.InsertChildrenIntoParent> InsertChildrenIntoParentHandler;
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Visit(global::Quire.EquationEditor.Tree.Parsing.Panacea visited) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Visit(global::Quire.EquationEditor.Tree.Parsing.Panceaux.ReparentChild visited) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Visit(global::Quire.EquationEditor.Tree.Parsing.Panceaux.ReparentNode visited) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Visit(global::Quire.EquationEditor.Tree.Parsing.Panceaux.ReplaceChildDescriptor visited) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Visit(global::Quire.EquationEditor.Tree.Parsing.Panceaux.TransformTo visited) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Visit(global::Quire.EquationEditor.Tree.Parsing.Panceaux.BinaryMergeValueChildren visited) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Visit(global::Quire.EquationEditor.Tree.Parsing.Panceaux.ReplaceWithDefaultNode visited) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Visit(global::Quire.EquationEditor.Tree.Parsing.Panceaux.ReplaceWithChild visited) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Visit(global::Quire.EquationEditor.Tree.Parsing.Panceaux.ReplaceWith visited) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Visit(global::Quire.EquationEditor.Tree.Parsing.Panceaux.AutoLabelIdDescendant visited) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Visit(global::Quire.EquationEditor.Tree.Parsing.Panceaux.AutoLabelIdChild visited) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Visit(global::Quire.EquationEditor.Tree.Parsing.Panceaux.ReparentNodeAndPullOutChild visited) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Visit(global::Quire.EquationEditor.Tree.Parsing.Panceaux.PullOutAdjacentDescendantFromChild visited) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Visit(global::Quire.EquationEditor.Tree.Parsing.Panceaux.InsertChildrenIntoParent visited) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PanaceaVisitor() { }
 }
