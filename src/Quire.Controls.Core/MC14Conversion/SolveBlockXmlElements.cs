@@ -10,16 +10,7 @@ namespace Quire.Controls.Core.MC14Conversion;
 public partial class SolveBlockXmlElements
 {
     [MirrorVerified("PtcControlsCoreMC14ConversionSolveBlockXmlElementsMechanicalDifferentialTests")]
-    private static string MlDescendant(string localName) => string.Format(".//{0}:{1}", "ml", localName);
-
-    [MirrorVerified("PtcControlsCoreMC14ConversionSolveBlockXmlElementsMechanicalDifferentialTests")]
     private readonly global::System.Collections.IEnumerator _enumerator;
-
-    [MirrorVerified("PtcControlsCoreMC14ConversionSolveBlockXmlElementsMechanicalDifferentialTests")]
-    public SolveBlockXmlElements(global::System.Collections.IEnumerator enumerator)
-    {
-        _enumerator = enumerator;
-    }
 
     [MirrorVerified("PtcControlsCoreMC14ConversionSolveBlockXmlElementsMechanicalDifferentialTests")]
     private static readonly string[] SolverFunctions = new string[6]
@@ -31,6 +22,40 @@ public partial class SolveBlockXmlElements
         MlDescendant("Odesolve"),
         MlDescendant("Pdesolve")
     };
+
+    [MirrorVerified("PtcControlsCoreMC14ConversionSolveBlockXmlElementsMechanicalDifferentialTests")]
+    private static string MlDescendant(string localName) => string.Format(".//{0}:{1}", "ml", localName);
+
+    [MirrorVerified("PtcControlsCoreMC14ConversionSolveBlockXmlElementsMechanicalDifferentialTests")]
+    public SolveBlockXmlElements(global::System.Collections.IEnumerator enumerator)
+    {
+        _enumerator = enumerator;
+    }
+
+    public global::System.Collections.IEnumerator GetEnumerator()
+    {
+        bool stop;
+        do
+        {
+            if (_enumerator.MoveNext())
+            {
+                if (!(_enumerator.Current is XmlElement xmlElement))
+                {
+                    stop = true;
+                }
+                else
+                {
+                    stop = ContainsSolverFunction(xmlElement);
+                    yield return xmlElement;
+                }
+            }
+            else
+            {
+                stop = true;
+            }
+        }
+        while (!stop);
+    }
 
     [MirrorVerified("PtcControlsCoreMC14ConversionSolveBlockXmlElementsMechanicalDifferentialTests")]
     public static bool ContainsSolverFunction(XmlNode xmlNode) => ContainNodes(xmlNode, SolverFunctions);

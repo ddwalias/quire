@@ -11,8 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.CachedWorksheetPropertiesSource, Ptc.Controls.Core")]
 public partial class CachedWorksheetPropertiesSource : global::Quire.Controls.Core.IWorksheetPropertiesSource, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.IWorksheetProperties
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public CachedWorksheetPropertiesSource(global::Quire.Controls.Core.IWorksheetProperties propertiesSource) { }
 }

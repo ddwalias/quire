@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.MC14Conversion;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.MC14Conversion.SolveBlockXmlElements, Ptc.Controls.Core")]
 public partial class SolveBlockXmlElements : global::System.Collections.IEnumerable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.IEnumerator GetEnumerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

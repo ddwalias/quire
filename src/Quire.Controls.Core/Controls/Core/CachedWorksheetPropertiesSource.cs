@@ -1,5 +1,8 @@
 #nullable disable
+using System;
 using System.ComponentModel;
+using System.Globalization;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
 using Quire.Calculation.Core;
@@ -9,6 +12,24 @@ namespace Quire.Controls.Core;
 
 public partial class CachedWorksheetPropertiesSource
 {
+    private static readonly Type _typeOfThis = typeof(CachedWorksheetPropertiesSource);
+
+    public CachedWorksheetPropertiesSource(IWorksheetProperties propertiesSource)
+    {
+        if (AssertionE.Failed == (AssertionE)DebugTools.DevAssert(propertiesSource != null, null))
+        {
+            return;
+        }
+
+        Type typeOfWorksheetProperties = WorksheetPropertyNames.GetTypeOfWorksheetProperties();
+        CultureInfo invariantCulture = CultureInfo.InvariantCulture;
+        string[] names = WorksheetPropertyNames.GetNames();
+        foreach (string name in names)
+        {
+            object value = typeOfWorksheetProperties.GetProperty(name).GetValue(propertiesSource, BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty, null, null, invariantCulture);
+            _typeOfThis.GetProperty(name).SetValue(this, value, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetProperty, null, null, invariantCulture);
+        }
+    }
     [MirrorVerified("PtcControlsCoreCachedWorksheetPropertiesSourceMechanicalDifferentialTests")]
     public PageLayoutMode WorksheetPageLayoutMode { get; private set; }
 

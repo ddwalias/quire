@@ -11,10 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.BusyClock, Ptc.Controls.Core")]
 public partial class BusyClock : global::System.Windows.Shapes.Shape
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty BusyClockAngleProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public double BusyClockAngle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.Geometry DefiningGeometry { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

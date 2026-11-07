@@ -685,4 +685,15 @@
 - Claimed: `Presentation10Repairer` (`RepairXDocument`, `UpdateNodeValue`, `UpdateNameSpace(IEnumerable, ICollection, string, string)`, `UpdateNameSpace(XDocument)`, `CreateNewParent`, `UpdateNodeStruct`, consts `_sourceNamespaceURI`, `_targetNamespaceURI`).
 - Report: `.mirror-cache/release-il-a86c4fd4baba/release-il.json` — PASS, 1,530 checked, 1,530 exact, 0 failures, 1,585 unfinished.
 - Remaining mismatches: none in claimed batch.
-- Still open: 1,585 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.
+
+## Batch 92 — CachedWorksheetPropertiesSource, BusyClock, BytesComparer, SolveBlockXmlElements, ListOfRegionPersistentDataExtensions
+
+- Claimed:
+  - `CachedWorksheetPropertiesSource` (`.ctor(IWorksheetProperties)`, `_typeOfThis`)
+  - `BusyClock` (`BusyClockAngleProperty`, `BusyClockAngle`, `DefiningGeometry`)
+  - `Serialization.SerializationHelper.BytesComparer` (`Equals(byte[], byte[])`, `GetHashCode(byte[])`)
+  - `MC14Conversion.SolveBlockXmlElements` (`GetEnumerator`)
+  - `Serialization.ListOfRegionPersistentDataExtensions` (`AllDeserializationExceptions(IList<IRegionPersistentData>)`, `HasDeserializationErrors(IList<IRegionPersistentData>)`)
+- Report: `.mirror-cache/release-il-45a965110f26/release-il.json` — PASS, 1,560 checked, 1,560 exact, 0 failures, 1,576 unfinished (was 1,585).
+- Remaining mismatches: none in claimed batch.
+- Still open: 1,576 unfinished members. Largest groups: `RegionBorder` (87), `WorksheetPageLayout` (95), `NumberFormat`/`MathFormat` (35/37), `AttachedProperties` (49), `Whiteboard.ContainerItemManager` (56), the `Ole` generics (`OleContainer`4`, `OleContainerModel`1`, `OleContainerViewModel`3`), and `IPublicOleContainerModel`1`.

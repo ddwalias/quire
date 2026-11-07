@@ -47,5 +47,34 @@ public partial class SerializationHelper
     {
         [MirrorVerified("PtcControlsCoreSerializationSerializationHelperMechanicalDifferentialTests")]
         public BytesComparer() { }
+
+        public bool Equals(byte[] x, byte[] y)
+        {
+            if (x.Length != y.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < x.Length; i++)
+            {
+                if (x[i] != y[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public int GetHashCode(byte[] values)
+        {
+            int num = 0;
+            foreach (byte b in values)
+            {
+                num += b;
+            }
+
+            return num;
+        }
     }
 }

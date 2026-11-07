@@ -65,9 +65,5 @@ public partial class SerializationHelper : global::Quire.Serialization.ISerializ
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.SerializationHelper+BytesComparer, Ptc.Controls.Core")]
     public partial class BytesComparer : global::System.Collections.Generic.IEqualityComparer<byte[]>
     {
-        [global::Quire.Mirror.MirrorStub]
-        public bool Equals(byte[] x, byte[] y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public int GetHashCode(byte[] values) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

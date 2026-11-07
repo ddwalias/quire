@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.ListOfRegionPersistentDataExtensions, Ptc.Controls.Core")]
 public static partial class ListOfRegionPersistentDataExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IEnumerable<global::System.Exception> AllDeserializationExceptions(this global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool HasDeserializationErrors(this global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> elements) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
