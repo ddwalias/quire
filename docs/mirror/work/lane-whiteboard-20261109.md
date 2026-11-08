@@ -81,5 +81,24 @@
 - Release IL: PASS — 311 checked, 0 failures, 551 unfinished (`release-il-237a61e589d8`).
 - Remaining mismatches in this batch: none.
 
+## Batch 7 — WhiteboardBehavior
+
+- Members:
+  - `WhiteboardBehavior`: `UIEventsHandlerProperty`, `_itemManager`, `SetUIEventsHandler`, `GetUIEventsHandler`, `ItemManager`, `OnUIEventsHandlerChanged`, `HookupMouseEvents`, `.cctor`
+  - Closures:
+    - `<>c__DisplayClass6_0`: `<OnUIEventsHandlerChanged>b__0` (`SizeChanged`), `<OnUIEventsHandlerChanged>b__1` (`GotKeyboardFocus`), `<OnUIEventsHandlerChanged>b__2` (`KeyDown`), `<OnUIEventsHandlerChanged>b__3` (`RequestMoveAndResizeEvent`), `<OnUIEventsHandlerChanged>b__4` (`CaretLeavesTextAreaEvent`), `<OnUIEventsHandlerChanged>b__5` (`TabOutOfTextEvent`)
+    - `<>c__DisplayClass7_0`: `<HookupMouseEvents>g__PreviewMouseDownHandler|0` (local function), `<HookupMouseEvents>b__1` (`MouseDown`), `<HookupMouseEvents>b__2` (`MouseUp`)
+- Hand-written: `Mirrored/Controls.Whiteboard.WhiteboardBehavior.cs`.
+- Stubs removed: `Generated/Mirror/Controls.Whiteboard.WhiteboardBehavior.g.cs`.
+- Project reference: added `Quire.Controls.Text` to `src/Quire.Controls.Whiteboard/Quire.Controls.Whiteboard.csproj`.
+- Shapes:
+  - Declaration order `UIEventsHandlerProperty`, `_itemManager`, `SetUIEventsHandler`, `GetUIEventsHandler`, `ItemManager`, `OnUIEventsHandlerChanged`, `HookupMouseEvents` to position `OnUIEventsHandlerChanged` at ordinal 6 and `HookupMouseEvents` at ordinal 7.
+  - Local function `PreviewMouseDownHandler` declared before `MouseDown` and `MouseUp` handlers in `HookupMouseEvents` to produce `<HookupMouseEvents>g__PreviewMouseDownHandler|0`, `<HookupMouseEvents>b__1`, and `<HookupMouseEvents>b__2`.
+  - In `<OnUIEventsHandlerChanged>b__1`, `if (eventArgs.NewFocus == element) goto HandleFocus; return; HandleFocus: ImeHandler.HandleImeFocus();` to match the `beq.s/ret/call/ret` branch shape.
+  - In `<OnUIEventsHandlerChanged>b__2`, `switch (eventArgs.ImeProcessedKey) { case Key.ImeProcessed: break; }` which Roslyn lowers to `callvirt get_ImeProcessedKey; ldc.i4 155; pop; pop; ret;`.
+- Release IL: PASS — 328 checked, 0 failures, 534 unfinished (`release-il-e87a089e2a84`).
+- Remaining mismatches in this batch: none.
+
+
 
 

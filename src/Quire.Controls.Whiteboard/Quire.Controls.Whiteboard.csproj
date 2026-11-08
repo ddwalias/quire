@@ -2,5 +2,8 @@
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Quire.Controls.Text\Quire.Controls.Text.csproj" />
+  </ItemGroup>
   <Import Project="Generated\Mirror.props" />
 </Project>
