@@ -85,3 +85,9 @@
 - Shapes: `Settings` getter for the `bool?` setting `((bool?)this["UseWindowsDictionary"]).GetValueOrDefault()` matched on the first try; the string getter `(string)this[...] ?? null` matched too (the `dup`/`brtrue` in the original came from the `?? null`).
 - Attribute values copied from the original metadata (`DefaultSettingValue` "True" for `UseWindowsDictionary`), though the gate does not compare attributes.
 - Release IL: PASS — 148 checked, 148 exact, 0 failures, 568 unfinished.
+
+## Batch 12 — DictionaryHelper
+
+- Members: all (`MaxDictionaryWordLength`, `DictionaryWordStopFlags`, `WpfSpellerCustomDictionaryUri`, `WindowsSpellerCustomDictionaryPath`, `IsWindowsSpellerCustomDictionaryValid`, the static constructor, `AddWordToDictionary`, `RemoveFromDictionary`, `UpdateCustomDictionary`, `SynchronizeWindowsSpellerCustomDictionary`). Hand-written in `Mirrored/Controls.Text.DictionaryHelper.cs`.
+- Shapes: the static constructor is an explicit body (not field initializers), with the `DictionaryPath` default check under `DebugTools.IsDebug`. `UpdateCustomDictionary` uses lambdas over the two parameters; the `RemoveAll`/`Find` predicates compare with `StringComparison.Ordinal`. Every method matched on the first try.
+- Release IL: PASS — 159 checked, 159 exact, 0 failures, 561 unfinished.
