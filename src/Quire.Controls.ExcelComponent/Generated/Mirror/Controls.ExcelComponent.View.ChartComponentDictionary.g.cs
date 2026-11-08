@@ -11,14 +11,4 @@ namespace Quire.Controls.ExcelComponent.View;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.View.ChartComponentDictionary, Ptc.Controls.ExcelComponent")]
 public partial class ChartComponentDictionary : global::System.Windows.ResourceDictionary, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Type[] KeysOwnerTypes;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public ChartComponentDictionary() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

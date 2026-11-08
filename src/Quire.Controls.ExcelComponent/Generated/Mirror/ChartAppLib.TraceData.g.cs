@@ -11,30 +11,4 @@ namespace Quire.ChartAppLib;
 [global::Quire.Mirror.MirrorOf("ChartAppLib.TraceData, Ptc.Controls.ExcelComponent")]
 public partial struct TraceData
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.ChartAppLib.ChartAppType m_type;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.ChartAppLib.ChartMinMax m_minMax;
-    [global::Quire.Mirror.MirrorStub]
-    public int m_arrXLength;
-    [global::Quire.Mirror.MirrorStub]
-    public int m_arrYLength;
-    [global::Quire.Mirror.MirrorStub]
-    public int m_arrZLength;
-    [global::Quire.Mirror.MirrorStub]
-    public int m_sectionLength;
-    [global::Quire.Mirror.MirrorStub]
-    public double[] m_X;
-    [global::Quire.Mirror.MirrorStub]
-    public double[] m_Y;
-    [global::Quire.Mirror.MirrorStub]
-    public double[] m_Z;
-    [global::Quire.Mirror.MirrorStub]
-    public int m_uniqueId;
-    [global::Quire.Mirror.MirrorStub]
-    public string m_xUnits;
-    [global::Quire.Mirror.MirrorStub]
-    public string m_yUnits;
-    [global::Quire.Mirror.MirrorStub]
-    public string m_zUnits;
 }

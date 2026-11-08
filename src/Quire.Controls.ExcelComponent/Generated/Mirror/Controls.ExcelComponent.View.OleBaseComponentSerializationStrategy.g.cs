@@ -11,12 +11,4 @@ namespace Quire.Controls.ExcelComponent.View;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.View.OleBaseComponentSerializationStrategy, Ptc.Controls.ExcelComponent")]
 public abstract partial class OleBaseComponentSerializationStrategy : global::Quire.Controls.Whiteboard.WhiteBoardSerializationStrategy
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::Quire.Controls.ExcelComponent.View.OleBaseComponentControl _control;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> _regionCreator;
-    [global::Quire.Mirror.MirrorStub]
-    protected OleBaseComponentSerializationStrategy(global::Quire.Controls.ExcelComponent.View.OleBaseComponentControl control, global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> regionCreator) : base(default(global::Quire.Controls.Whiteboard.WhiteboardControl)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void SerializeRegionsEpilog(global::System.Xml.XmlDocument xmlDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

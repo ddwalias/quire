@@ -11,12 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.ChartResultConverterHelper, Ptc.Controls.ExcelComponent")]
 public partial class ChartResultConverterHelper : global::Quire.Calculation.Core.Trace2DResults.Trace2DResultConverterHelperBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override int MaxNumberOf2DPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool DiscreteValuesAllowed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool RangeUnitsAllowed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ChartResultConverterHelper(global::Quire.Controls.ExcelComponent.Model.ChartContainerModel resultsOwner) : base(default(global::Quire.Calculation.Core.Trace2DResults.ITrace2DResultOwner)) { }
 }
