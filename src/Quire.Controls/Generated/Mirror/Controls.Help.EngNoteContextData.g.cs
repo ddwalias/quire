@@ -12,9 +12,5 @@ namespace Quire.Controls.Help;
 public static partial class EngNoteContextData
 {
     [global::Quire.Mirror.MirrorStub]
-    private const string HelpEnvVarNameKey = "HelpEnvVarName";
-    [global::Quire.Mirror.MirrorStub]
     private static global::System.Text.RegularExpressions.Regex KeyValuePairRegex() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void Parse(string[] contextData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

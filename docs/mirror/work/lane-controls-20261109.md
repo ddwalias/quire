@@ -11,3 +11,5 @@
   - Shapes: switch statements with `default: FailAssertion; return null/break`; iterator methods with `if (field != null) yield return field;` per field matched first try. Fields moved from the stub file to the hand-written file in declaration order so the member ordinals of the iterator state machines (`d__7`, `d__8`) stay the same.
 - Batch 4: `IO.IOItem` (ctor, Alias get/set, ShowInWorksheet). Gate: PASS, 366 checked. Report: `.mirror-cache/release-il-92258b452204/release-il.json`.
   - Shapes: `PropertyChanged != null` check with a direct delegate call (matched the single ldfld pattern); `value != Alias` order preserved.
+- Batch 5: `Help.EngNoteContextData.Parse` (+ const `HelpEnvVarNameKey`). Gate: PASS, 367 checked. Report: `.mirror-cache/release-il-8b8f7c6eaec9/release-il.json`.
+  - `KeyValuePairRegex` left unimplemented (stub kept): `[GeneratedRegex]` gives exact pattern/IL shape `ldsfld <RegexGenerator_g>{hash}__KeyValuePairRegex_0`, but the generator hash differs (Quire type name vs Ptc), so the field token cannot match. Parse calls the stub, so `Parse` throws at runtime until the regex member is decided.
