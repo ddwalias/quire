@@ -821,3 +821,9 @@
 - Claimed: `RegionBorder` constants (`Part*`), `_typeOfThis`, the static dependency property and routed event fields, the static constructor, and the static change handlers (`OnRegionBorderBackgroundChanged`, `OnRegionBorderBrushChanged`, `OnDraggerBackgroundChanged`, the eleven dragger visibility handlers, `OnDraggerVisibilityChanged`, `OnShowBusyChanged`, `OnActiveSelectedChanged`, `OnForceBorderChanged`, `OnRightEdgeVisibilityChanged`, `OnBottomEdgeVisibilityChanged`, `OnCornerRadiusChanged`). Stubs removed from the `.g.cs`, which keeps its instance members.
 - Report: `.mirror-cache/release-il-7ccb2ab19086/release-il.json` — PASS, 2,041 checked, 2,041 exact, 0 failures, 1,213 unfinished.
 - Remaining mismatches: none in claimed batch. Remaining RegionBorder work: instance fields and properties, `ResizeElement`, `GetRegionBorder`, the drag and busy/active logic, and the `RequestMoveAndResize` event.
+
+## Batch 107 — RegionBorder dependency property wrappers
+
+- Claimed: the 21 `GetValue`/`SetValue` property wrappers, `IsBorderShapeVisible`, `IsBorderHeaderVisible`, `BorderShapeColor`, the private `AreDraggersShown` property, and the `RequestMoveAndResize` event. Stubs removed from the `.g.cs`.
+- Report: `.mirror-cache/release-il-c96fa06614b5/release-il.json` — PASS, 2,090 checked, 2,090 exact, 0 failures.
+- Remaining mismatches: none in claimed batch. Still open in RegionBorder: `ResizeElement`, `GetRegionBorder`, the drag, busy and active logic, and the `OnApplyTemplate` and `GetBoundingRect` members.

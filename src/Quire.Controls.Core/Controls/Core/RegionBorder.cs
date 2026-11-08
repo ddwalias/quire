@@ -190,6 +190,191 @@ public partial class RegionBorder
         ((RegionBorder)depObj)._cornerRadiusChanged?.Invoke();
     }
 
+    internal bool IsBorderShapeVisible
+    {
+        get
+        {
+            if (_border != null)
+            {
+                return _border.IsVisible;
+            }
+            return false;
+        }
+    }
+
+    internal bool IsBorderHeaderVisible
+    {
+        get
+        {
+            if (_border != null)
+            {
+                return _header.IsVisible;
+            }
+            return false;
+        }
+    }
+
+    internal Brush BorderShapeColor
+    {
+        get
+        {
+            if (_border != null)
+            {
+                return _border.Stroke;
+            }
+            return null;
+        }
+    }
+
+    public Brush DraggerBackground
+    {
+        get => (Brush)GetValue(DraggerBackgroundProperty);
+        set => SetValue(DraggerBackgroundProperty, value);
+    }
+
+    public Visibility LeftDraggerVisibility
+    {
+        get => (Visibility)GetValue(LeftDraggerVisibilityProperty);
+        set => SetValue(LeftDraggerVisibilityProperty, value);
+    }
+
+    public Visibility RightDraggerVisibility
+    {
+        get => (Visibility)GetValue(RightDraggerVisibilityProperty);
+        set => SetValue(RightDraggerVisibilityProperty, value);
+    }
+
+    public Visibility BottomDraggerVisibility
+    {
+        get => (Visibility)GetValue(BottomDraggerVisibilityProperty);
+        set => SetValue(BottomDraggerVisibilityProperty, value);
+    }
+
+    public Visibility BottomLeftDraggerVisibility
+    {
+        get => (Visibility)GetValue(BottomLeftDraggerVisibilityProperty);
+        set => SetValue(BottomLeftDraggerVisibilityProperty, value);
+    }
+
+    public Visibility BottomRightDraggerVisibility
+    {
+        get => (Visibility)GetValue(BottomRightDraggerVisibilityProperty);
+        set => SetValue(BottomRightDraggerVisibilityProperty, value);
+    }
+
+    public Visibility TopDraggerVisibility
+    {
+        get => (Visibility)GetValue(TopDraggerVisibilityProperty);
+        set => SetValue(TopDraggerVisibilityProperty, value);
+    }
+
+    public Visibility TopLeftDraggerVisibility
+    {
+        get => (Visibility)GetValue(TopLeftDraggerVisibilityProperty);
+        set => SetValue(TopLeftDraggerVisibilityProperty, value);
+    }
+
+    public Visibility TopRightDraggerVisibility
+    {
+        get => (Visibility)GetValue(TopRightDraggerVisibilityProperty);
+        set => SetValue(TopRightDraggerVisibilityProperty, value);
+    }
+
+    public Visibility MoveDraggerVisibility
+    {
+        get => (Visibility)GetValue(MoveDraggerVisibilityProperty);
+        set => SetValue(MoveDraggerVisibilityProperty, value);
+    }
+
+    public bool ShowBusy
+    {
+        get => (bool)GetValue(ShowBusyProperty);
+        set => SetValue(ShowBusyProperty, value);
+    }
+
+    public Color PageBackgroundColor
+    {
+        get => (Color)GetValue(PageBackgroundColorProperty);
+        set => SetValue(PageBackgroundColorProperty, value);
+    }
+
+    public bool IsActive
+    {
+        get => (bool)GetValue(IsActiveProperty);
+        set => SetValue(IsActiveProperty, value);
+    }
+
+    public bool IsSelected
+    {
+        get => (bool)GetValue(IsSelectedProperty);
+        set => SetValue(IsSelectedProperty, value);
+    }
+
+    public string Header
+    {
+        get => (string)GetValue(HeaderProperty);
+        set => SetValue(HeaderProperty, value);
+    }
+
+    public double ActiveRegionBackgroundOpacity
+    {
+        get => (double)GetValue(ActiveRegionBackgroundOpacityProperty);
+        set => SetValue(ActiveRegionBackgroundOpacityProperty, value);
+    }
+
+    public ForceBorderType ForceBorder
+    {
+        get => (ForceBorderType)GetValue(ForceBorderProperty);
+        set => SetValue(ForceBorderProperty, value);
+    }
+
+    public bool BorderVisibility
+    {
+        get => (bool)GetValue(BorderVisibilityProperty);
+        set => SetValue(BorderVisibilityProperty, value);
+    }
+
+    public bool RightEdgeVisibility
+    {
+        get => (bool)GetValue(RightEdgeVisibilityProperty);
+        set => SetValue(RightEdgeVisibilityProperty, value);
+    }
+
+    public bool BottomEdgeVisibility
+    {
+        get => (bool)GetValue(BottomEdgeVisibilityProperty);
+        set => SetValue(BottomEdgeVisibilityProperty, value);
+    }
+
+    public CornerRadius CornerRadius
+    {
+        get => (CornerRadius)GetValue(CornerRadiusProperty);
+        set => SetValue(CornerRadiusProperty, value);
+    }
+
+    private bool AreDraggersShown
+    {
+        get => _areDraggersShown;
+        set
+        {
+            _areDraggersShown = value;
+            if (_areDraggersShown)
+            {
+                ShowDraggers();
+            }
+            else
+            {
+                HideDraggers();
+            }
+        }
+    }
+
+    public event RequestMoveAndResizeHandler RequestMoveAndResize
+    {
+        add => AddHandler(RequestMoveAndResizeEvent, value);
+        remove => RemoveHandler(RequestMoveAndResizeEvent, value);
+    }
+
     [MirrorVerified("PtcControlsCoreRegionBorderMechanicalDifferentialTests")]
     private Shape _busyProgressBar;
 
