@@ -11,23 +11,4 @@ namespace Quire.Controls.ExcelComponent.View;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.View.ChartComponentUtils, Ptc.Controls.ExcelComponent")]
 public static partial class ChartComponentUtils
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void WaitForChartImagesReady(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.IDisposable CreateDisposablePrintHelper(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, bool resetZoom) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void WaitForChartImagesReady(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.ExcelComponent.View.IChartComponentControl> charts, global::System.Diagnostics.Stopwatch sw) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IEnumerable<global::Quire.Controls.ExcelComponent.View.IChartComponentControl> EnumerateChartComponents(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.View.ChartComponentUtils+PrintHelper, Ptc.Controls.ExcelComponent")]
-    private partial class PrintHelper : global::System.IDisposable
-    {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.Collections.Generic.IList<global::Quire.Controls.ExcelComponent.View.IChartComponentControl> _chartsList;
-        [global::Quire.Mirror.MirrorStub]
-        public PrintHelper(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, bool changeZoom) { }
-        [global::Quire.Mirror.MirrorStub]
-        public void Dispose() { }
-    }
 }
