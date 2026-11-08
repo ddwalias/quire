@@ -26,6 +26,13 @@ internal partial class SolveBlockCalculatable
         return UpdateEquationTypeOfSimpleCalculatable(calc);
     }
 
+    protected void FirePropertyChanged(global::System.ComponentModel.PropertyChangedEventArgs eventArgs)
+    {
+        global::System.ComponentModel.PropertyChangedEventHandler propertyChanged = PropertyChanged;
+        if (propertyChanged != null)
+            propertyChanged(this, eventArgs);
+    }
+
     public override global::Quire.Calculation.Core.ICalculatable WrappedCalculatable
     {
         get => base.WrappedCalculatable;
