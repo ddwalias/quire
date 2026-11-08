@@ -36,17 +36,7 @@ public partial class CustomSplitRichTextWithEmbeddedItem : global::Quire.Control
         [global::Quire.Mirror.MirrorStub]
         private global::System.Collections.Generic.IList<global::Quire.Controls.Text.CustomSplitRichTextWithEmbeddedItem.FlowDocumentSplitData.LineData> _lines;
         [global::Quire.Mirror.MirrorStub]
-        public global::System.Windows.Rect FirstLineRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Windows.Rect LastLineRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public FlowDocumentSplitData(global::System.Windows.Documents.FlowDocument doc) { }
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Windows.Rect GetLineRect(int iLine) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         public int EnsureLines() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private static global::System.Windows.Rect GetLineRect(global::System.Windows.Documents.TextPointer line, global::System.Windows.Documents.TextPointer nextLine) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
         [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.CustomSplitRichTextWithEmbeddedItem+FlowDocumentSplitData+LineData, Ptc.Controls.Text")]
         public partial class LineData

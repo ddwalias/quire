@@ -109,3 +109,10 @@
 - Exact: internal `.ctor`, `HandleTextChanged` and `OnRenderSizeChanged` overrides (base call, then `_splitData = null`), `FireSplitItemIfNeeded` (`SplitItemIfNeeded?.Invoke(this)`), and `FlowDocumentSplitData.LineData` (`TextPtr`, `LineRect`, `.ctor`).
 - Still stubbed: `GetValidSplitOffset`, `GetInvalidPointer`, `ValidateLayout`, the `FlowDocumentSplitData` members (`.ctor`, `FirstLineRect`, `LastLineRect`, `GetLineRect` x2, `EnsureLines`), the `_splitData` field and the `SplitItemIfNeeded` event declaration (add/remove are exact).
 - Release IL: PASS — 179 checked, 179 exact, 0 failures, 541 unfinished.
+
+## Batch 16 — FlowDocumentSplitData (constructor, line rects)
+
+- Exact: `FlowDocumentSplitData(FlowDocument)` ctor, `FirstLineRect`, `LastLineRect`, `GetLineRect(int)`, and static `GetLineRect(TextPointer, TextPointer)`.
+- Shape: `GetLineRect(int)` re-reads `line.LineRect` into the same nullable local before `Value` (`lineRect = line.LineRect; return lineRect.Value;`). `return line.LineRect.Value;` allocated a third local and differed.
+- Still stubbed: `EnsureLines`, `GetValidSplitOffset`, `GetInvalidPointer`, `ValidateLayout`, and the `_splitData`/event declarations that are not methods.
+- Release IL: PASS — 184 checked, 184 exact, 0 failures, 536 unfinished.
