@@ -273,3 +273,9 @@
 
 - Exact: `GetContextLinks` (`?.Yield().ToList()` on the caret hyperlink), `CanDrop` (`System.Windows.DragEventArgs`, the `Quire.Controls.Core` type is ambiguous), `OnSetMatrixFormat`, `OnSetNumberFormat` (`Command == ClearResultFormat ? CurrentNumberFormatClear : CurrentNumberFormat`), `ShowWarningDialog` (both overloads).
 - Release IL: PASS — 364 checked, 364 exact, 0 failures, 359 unfinished.
+
+## Batch 43 — RichTextWithEmbeddedItem descendant item, URL resolution and exactly-one hyperlink (3)
+
+- Exact: `GetDescendantItem` (early return of the local `item`), `ResolveUrl` (`out Uri` from `UrlUtils.TryCreateAbsoluteUri`), `CheckAndGetExactlyOneHyperlink` (`Failed ? null : FirstOrDefault()`; the `if (Failed) return null;` form gives the wrong branch sense).
+- Not matched: `GetEmbeddedObjectCaretOffset`. Release IL pushes `this` before the pointer local is stored and loads it by `ldloca`, so `GetInsertionPointAtPointer(ref pointer)` with a named local does not reproduce it. Left as a stub (same shape as `GetPointerToAddDictionary`).
+- Release IL: PASS — 367 checked, 367 exact, 0 failures, 356 unfinished.

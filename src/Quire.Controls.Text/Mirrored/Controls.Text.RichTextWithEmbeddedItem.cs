@@ -13,6 +13,7 @@ using Quire.Wpf;
 using Quire.Undo;
 using Quire.Calculation.Core;
 using Quire.Controls.Core.BookmarkTags;
+using Quire.Controls.Core.Whiteboard;
 using Quire.IO;
 using Quire.PersistentDataObjects;
 
@@ -596,4 +597,51 @@ public partial class RichTextWithEmbeddedItem
     {
         MessageBoxManager.ShowWarning(Application.Current.MainWindow, (TryFindResource(messageKey) as string) ?? string.Empty, WpfUtils.ApplicationFullName);
     }
+
+    private IWhiteboardItem GetDescendantItem(DependencyObject descendantObject)
+    {
+        IWhiteboardItem item = null;
+        if (ActiveItem == null)
+        {
+            return item;
+        }
+        item = WpfUtils.TryFindAncestorIncludingSelf<IWhiteboardItem>(descendantObject, false);
+        if (item == null)
+        {
+            return null;
+        }
+        if (item != this)
+        {
+            return null;
+        }
+        if (WpfUtils.TryFindVisualAncestor<IWhiteboardItemContainer>(item as DependencyObject, false) == null)
+        {
+            return null;
+        }
+        return item;
+    }
+
+    internal Uri ResolveUrl(Uri path)
+    {
+        if (path == null)
+        {
+            return null;
+        }
+        if (path.IsAbsoluteUri)
+        {
+            return path;
+        }
+        if (!UrlUtils.TryCreateAbsoluteUri(BaseRelativeDirectory, path, out Uri absoluteUri))
+        {
+            return null;
+        }
+        return absoluteUri;
+    }
+
+    private Hyperlink CheckAndGetExactlyOneHyperlink()
+    {
+        List<Hyperlink> contextLinks = GetContextLinks();
+        return DebugTools.DevAssert(contextLinks != null && contextLinks.Count == 1).Failed ? null : contextLinks.FirstOrDefault();
+    }
+
 }
