@@ -23,4 +23,7 @@
 - Batch: `Ptc.Controls.VisualKeywordDescriptor.SExpression` getter and setter.
 - Shapes tried: idiomatic auto-property; the compiler emitted both original accessors exactly.
 - Release IL: PASS, 607 checked, 0 failures; `.mirror-cache/release-il-2c373eca9e4f/release-il.json`.
+- Batch: `Ptc.Controls.VisualKeywordDescriptor.DisplayName` getter and setter.
+- Shapes tried: idiomatic pass-through override to the base property; exact Release IL and no gate failures.
+- Release IL: PASS, 607 checked, 0 failures; `.mirror-cache/release-il-68802dcdb4c1/release-il.json`.
 - Remaining: 4,494 unfinished members across 327 generated type files; these batches have no mismatches.
