@@ -11,3 +11,11 @@
 - Shapes: `Compare` as the decompiled `if (a == b) return 0;` form (matched first time). `GetPrintView` as `if (element is not IWhiteboardControl) return null;` then `as` + null test (matched first time). `ArrangeOverride` as `as` + `!= null` (matched first time).
 - Release IL: PASS — 82 checked, 82 exact, 0 failures, 926 unfinished after this batch (`release-il-59487b3819e9`).
 - Remaining mismatches in this batch: none.
+
+## Batch 2 — SectionIndicatorInfo
+
+- Members: `.ctor` x2, `Readonly` (auto, private set), `Text`, `Top`, `Height`, `MinHeightRatio` (get/set), `PropertyChanged` (`= delegate { }`), `FirePropertyChanged`; fields `_text`, `_top`, `_height`, `_minHeightRatio`.
+- Hand-written: `Mirrored/Controls.Mathboard.SectionIndicatorInfo.cs`; stubs removed from its `.g.cs`.
+- Shapes: first try declared the event and `_minHeightRatio` in source order → gate failed only on closure names (`<.ctor>b__24_0` vs Mathcad `<.ctor>b__4_0`). Lambda names use the containing constructor's ordinal, which counts members declared before it (fields included, auto-property backing fields not). Moving the ctors after `_text/_top/_height` and the event after the properties matched first time.
+- Release IL: PASS — 99 checked, 0 failures (`release-il-af69fc44bf5e`).
+- Remaining mismatches in this batch: none.
