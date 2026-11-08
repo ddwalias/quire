@@ -163,3 +163,8 @@
 - Exact: `GetHelpContext`, `HighlightAll` (`throw new NotImplementedException()` is the Release IL body, not a MirrorStub), `CopyImageToTempBitmap`, `GetTextInRange`, `IsSelectedChangedHandler`, `ClearInsertionPointsCache`, `ClearIsInSerialization`, `ClearRevertCoerceAfterSerializationProcess`, `ClearTextFormatCache`, `DisableSpellCheck`, `OnIsInPrintingPropertyChanged`, `OnIsInSavingCLRPropertyChanged`, `RemoveBaselineOffsetFromImage`, `SimulateMouseClick`, `CacheScriptStateInRange`, `FireGotFocusEvent`, `GetIsInSerialization`, `GetPointerToInsertionPoint`, `HandleIsOnVisiblePageChanged`, `HandleIsVisibleChanged`, `OnLoaded`.
 - Hand-written: new `Mirrored/Controls.Text.RichTextBase.cs`. Also the `DocumentTextRange` alias is needed here (Quire.TextRange).
 - Release IL: PASS — 237 checked, 237 exact, 0 failures, 486 unfinished.
+
+## Batch 24 — RichTextBase serialization flags and focus (8)
+
+- Exact: `SetIsInSerialization`, `SetRevertCoerceAfterSerializationProcess`, `OnIsInCopyPropertyChanged`, `WrapUndoAtSerialization` (the `return` after `StartCommandScope()` is the shape that matched; `if/else` did not), `ShouldSerializeProperty` (`SpellCheck.IsEnabledProperty`), `OnGotFocus`, `CacheTextFormat`, `SetSelection`.
+- Release IL: PASS — 245 checked, 245 exact, 0 failures, 478 unfinished.
