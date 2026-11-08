@@ -253,3 +253,8 @@
 
 - Exact: `CloneRichText`, `ExecuteClearMathFormat`, `ExecuteCommandKeepingSelection`, `GetEmbeddedItemSymbolOffset`, `RemoveHyperlinkUndoableCommand` (both overloads; the `Hyperlink` overload uses `link != null ? ... : null`, the form Mathcad emits with `brtrue`), `ContainsSimpleText`.
 - Release IL: PASS — 345 checked, 345 exact, 0 failures, 378 unfinished.
+
+## Batch 39 — RichTextWithEmbeddedItem key handling, word range and context-menu handling (3)
+
+- Exact: `OnPreviewKeyDown` (override; early `Handled` return before the base call), `GetWordRange` (returns `System.Windows.Documents.TextRange`, so the alias is required), `SetItemContextMenuHandling`.
+- Release IL: PASS — 348 checked, 348 exact, 0 failures, 375 unfinished.

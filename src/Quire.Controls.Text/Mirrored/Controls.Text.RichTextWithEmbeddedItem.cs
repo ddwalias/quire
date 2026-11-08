@@ -402,4 +402,29 @@ public partial class RichTextWithEmbeddedItem
         }
         return false;
     }
+
+    protected override void OnPreviewKeyDown(KeyEventArgs e)
+    {
+        if (HandleLinkOpsOnPreviewKeyDown(e.Key))
+        {
+            e.Handled = true;
+            return;
+        }
+        base.OnPreviewKeyDown(e);
+    }
+
+    internal DocumentTextRange GetWordRange()
+    {
+        return GetWordRangeAtCaretPosition(out string _, TextFromRunsStops.FindWordStrict, false);
+    }
+
+    private void SetItemContextMenuHandling(IWhiteboardItem item)
+    {
+        if (ContainerItemManager.IsItemActivated(item))
+        {
+            ContainerItemManager.ClearItemHandlesContextMenus(item);
+            return;
+        }
+        ContainerItemManager.SetItemHandlesContextMenus(item, ContainerItemManager.GetItemHandlesContextMenus(this));
+    }
 }

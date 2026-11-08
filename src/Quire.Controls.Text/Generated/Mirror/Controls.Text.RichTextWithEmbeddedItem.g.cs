@@ -164,8 +164,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     private void ReproduceRemovedHyperlinkColors(global::System.Collections.Generic.List<global::System.Windows.Documents.Inline> inlines, global::System.Windows.Documents.Hyperlink link) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Documents.TextRange GetWordRange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool CanModifyHyperlink() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool RangeContainsOnlyInlineElements(global::System.Windows.Documents.TextRange range, bool prohibitSelectionInBlockUiContainer = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -191,8 +189,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     public bool HasHyperlinkInMouseContext(object context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Documents.Hyperlink GetHyperlinkAtCaretPositionIncludingEdges() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnPreviewKeyDown(global::System.Windows.Input.KeyEventArgs e) => base.OnPreviewKeyDown(e);
     [global::Quire.Mirror.MirrorStub]
     private bool HandleLinkOpsOnPreviewKeyDown(global::System.Windows.Input.Key key) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -307,8 +303,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     public void CommitItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void DeactivateActiveItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetItemContextMenuHandling(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void Activate(bool isActive) => base.Activate(isActive);
     [global::Quire.Mirror.MirrorStub]
