@@ -830,4 +830,70 @@ public partial class RichTextWithEmbeddedItem
         dataObject.SetData(DataFormats.Xaml, xamlWithItems ?? xaml);
         DataObjectExtensions.SetTextWithEmbeddedItemsInfo(dataObject, info);
     }
+
+    private void OnPreviewEnter(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (ActiveItem == null)
+        {
+            return;
+        }
+        IWhiteboardItemInText activeItem = (IWhiteboardItemInText)ActiveItem;
+        if (activeItem.CanReturn())
+        {
+            return;
+        }
+        ActiveItem = null;
+        Activate(true);
+        InlineUIContainer container = GetContainer(activeItem);
+        if (DebugTools.AssertNotNull(container, "The active embedded item is not hosted in the document.").Passed)
+        {
+            SetCaretPositionAndClearSuggestedX(container.ElementEnd.GetInsertionPosition(LogicalDirection.Forward));
+        }
+        e.Handled = true;
+    }
+
+    public void ReplacePlaceholderWithEmbeddedItem(IWhiteboardItemInText item, int symbolOffset)
+    {
+        TextPointer position = textType.GetPositionAtOffset(Document, symbolOffset);
+        if (position != null)
+        {
+            Run run = position.GetAdjacentElement(LogicalDirection.Forward) as Run;
+            if (run != null && run.Text == " ")
+            {
+                var paragraph = position.Paragraph;
+                if (DebugTools.AssertNotNull(paragraph).Passed)
+                {
+                    DebugTools.DevAssert(RemoveInlineRecursively(paragraph.Inlines, run), "Failed to remove object placeholder, see if RemoveInlineRecursively needs to be updated");
+                }
+            }
+            else
+            {
+                DebugTools.FailAssertion("Expected object placeholder (empty run) was not found, and therefore the object was inserted w/o replacing anything.");
+            }
+            AddEmbeddedItem(item, position);
+        }
+    }
+
+    private void SetItem(InlineUIContainer container, IWhiteboardItemInText item)
+    {
+        IWhiteboardItemInTextWrapper oldWrapper = ContainerItemManager.GetParent(item) as IWhiteboardItemInTextWrapper;
+        if (oldWrapper != null)
+        {
+            oldWrapper.WrappedItem = null;
+        }
+        IWhiteboardItemInTextWrapper wrapper = GetWrapper(container.Child);
+        if (wrapper != null)
+        {
+            wrapper.WrappedItem = item;
+            return;
+        }
+        Grid grid = container.Child as Grid;
+        if (grid != null)
+        {
+            grid.Children.Clear();
+            grid.Children.Add(new WhiteboardItemInTextWrapper(item));
+            return;
+        }
+        DebugTools.FailAssertion("Unexpected InlineUIContainer.Child: " + container.Child?.GetType().FullName);
+    }
 }

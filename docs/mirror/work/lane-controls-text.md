@@ -313,3 +313,9 @@
 
 - Exact: `HandleItemsListChanged` (`switch` on the action with Add, Remove, Move cases, each storing its `Cast` in its own local, and `default` calling `FailAssertion`), `UpdateItemOffsetMap` (foreach over `WhiteboardItems`, remove or store the offset), `CopyWholeRangeXamlToDataObject` (the `out RichTextEmbeddedItemsInfo info` must be an inline out variable: a separate declaration puts the `info` local in the wrong slot).
 - Release IL: PASS — 381 checked, 381 exact, 0 failures, 342 unfinished.
+
+## Batch 50 — RichTextWithEmbeddedItem preview-enter, placeholder replacement and wrapper set (3)
+
+- Exact: `OnPreviewEnter` (`castclass` to `IWhiteboardItemInText`, `Activate(true)` on the base binding matches), `ReplacePlaceholderWithEmbeddedItem` (`var paragraph` avoids the `Paragraph` name clash with `Quire.Controls.Text.Paragraph`), `SetItem` (`container.Child?.GetType().FullName` inside the failure message).
+- Release IL: PASS — 384 checked, 384 exact, 0 failures, 339 unfinished.
+- Note: the earlier question about `Activate(true)` binding (batch 46) is answered by this batch: calls on `this` bind to the base method in IL, so `DeleteActiveOrSelectedItems` should follow the same shape.
