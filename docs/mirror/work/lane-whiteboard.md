@@ -40,3 +40,10 @@
 - Hand-written: `Mirrored/Controls.Mathboard.IAggregateMathboardViewModel.cs`, `Mirrored/Controls.Mathboard.IAggregateMathboardControl.cs`; stubs removed from the `.g.cs` interfaces.
 - Release IL: PASS — 104 checked, 0 failures; unfinished 888 (`release-il-1a10f861c49c`). The checked list is the changed-member set, so the interface declarations appear there only as changes.
 - Remaining mismatches in this batch: none.
+
+## Batch 6 — WhiteboardViewModel accessors
+
+- Members: `IsFocused`, `IsCrosshairVisible` (virtual), `ForbidGrowingMovementRight` (auto-property), `CanPasteSelection`, `CanInsertVerticalSpace` (virtual). Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; stubs removed from the `.g.cs`. Fields stay in the `.g.cs`.
+- Shapes: `OnPropertyChanged("IsFocused")` with an explicit name, because the class's override takes a required parameter. `OnPropertyChanged()` through CallerMemberName failed to compile, not the gate.
+- Release IL: PASS — 107 checked, 0 failures; 880 unfinished (`release-il-4f0098591619`).
+- Note for later closure members: a lambda's `b__N_M` ordinal counts every member before it in compile order (generated partials first), so moving a stub into the hand-written partial changes the ordinal of later lambda-containing members. Lambda members are left for a placeholder-ordering pass.
