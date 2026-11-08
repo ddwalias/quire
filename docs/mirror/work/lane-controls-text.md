@@ -62,3 +62,13 @@
 - `RichTextDeserializationStrategy`: `.ctor`, `Regions`, `RegionFactory`, both `AddRegion` overloads, `DeleteRegion`, `IsRegionNotAffectingCalculation`. Shapes: the nested `if (eq != null) { if (type == 2) return true; return type == 0; } return true;` form and the `if (eq == null) return true;` form both failed ("Release IL differs"); the single conditional `eq == null || type == Evaluation ? true : type == Expression` matched.
 - Added `ProjectReference` to `Quire.Controls.EquationControl` in the hand-written `Quire.Controls.Text.csproj` (the assembly map lists it as a dependency; no cycle). The generated `Mirror.props` is unchanged.
 - Release IL (project-wide, no `--type`): PASS — 116 checked, 116 exact, 0 failures, 599 unfinished.
+
+## Batch 9 — HyperlinkDialogViewModel
+
+- Members: all (`.ctor`, `UserCanModifyText`, `ContextText`, `ContextLinkAddress`, `UserInputAddress`, `UserInputText`, `PerformedLinkEditOperation`, `UserInputUri`, `IsOkButtonEnabled`, `TryCreateUriFromAddress`, `GetState`, `UpdatePerformedLinkOperation`, `ValidateDialogInputsState`). Hand-written in `Mirrored/Controls.Text.HyperlinkDialogViewModel.cs`.
+- Shapes that mattered:
+  - `TryCreateUriFromAddress` returns `true` on error (Mathcad's flag). Used `resultUri = cond ? null : Try(addr, out resultUri) ? resultUri : new Uri(addr, UriKind.RelativeOrAbsolute)`: the `UriKind` value `0` is `RelativeOrAbsolute`, not `Absolute` (which is `1`). Using `Absolute` failed with "Release IL differs".
+  - Setter with a shared `return`: `if (_userInputText == value || DebugTools.DevAssert(...).Failed) return;` matches the single shared `ret`; `if (eq) return;` followed by a separate assert-return does not.
+  - `GetState`: early `return default` placed first failed; `if (!HasErrors) { return new ...; } return default;` matched.
+  - `UpdatePerformedLinkOperation`: one assignment from a nested ternary (a single `set` call); two assignments in if/else failed.
+- Release IL (project-wide): PASS — 134 checked, 134 exact, 0 failures, 581 unfinished.
