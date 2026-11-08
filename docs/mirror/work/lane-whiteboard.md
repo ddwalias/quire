@@ -73,3 +73,10 @@
 - Shapes tried: `CanDelete` / `CanBackspace` as `if (SelectedItems.Any()) return true; return CanDeleteVerticalSpace…;` → "Release IL differs" (Mathcad branches to a shared `ldc.i4.1; ret` on `brtrue`). `return SelectedItems.Any() || CanDeleteVerticalSpace…;` → exact. `HandleBackspace`/`HandleDelete` as `if (…) { Delete…(); return; } DeleteVerticalSpace…(1);` matched first time.
 - Release IL: PASS — 174 checked, 0 failures (`release-il-a984642d6bf5`).
 - Batch 9 landed on the second try: the first `lane_merge` run failed on a base-build crash (MSBuild child nodes exited prematurely, free RAM about 6 GB, no disk error); the retry passed (`c80e837f`).
+
+## Batch 11 — WhiteboardViewModel event firing, saved state and activation
+
+- Members: `FireChildCausedResize`, `FireRequestMaximumSize`, `FireChanged`, `ClearSavedState`, `ClearSelectedItems`, `ClearState`, `UnSelectItems`, `ToggleItemSelection`, `Activate`, `DeactivateActiveItem`, `SetItemSize` (optional `DragMode` default), `SetItemLocationToNearestGridIntersection`.
+- Shapes: `FireRequestMaximumSize` as a direct call (the IL has no null test); `FireChanged` as `if (Changed != null) Changed(this, EventArgs.Empty);` after the `HandleUserInput` return. `ToggleItemSelection` and `Activate` matched first time with the `if / else if / else` and `if (A && B) … else …` shapes.
+- Not started: `AddItemAndActivate`, `RemoveWhiteboardItem`, `SetItemGridPosition` (they build nested command types, `AddItemsCommand`, `RemoveItemsCommand`, `MoveItemsCommand`).
+- Release IL: PASS — 186 checked, 0 failures (`release-il-072e5205fe42`).

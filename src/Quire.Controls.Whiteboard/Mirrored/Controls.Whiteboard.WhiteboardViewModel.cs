@@ -527,4 +527,139 @@ public partial class WhiteboardViewModel
 
         DeleteVerticalSpaceBelow(1);
     }
+
+    public virtual void FireChildCausedResize(Size oldSize, Size newSize)
+    {
+        ChildCausedResize(oldSize, newSize);
+    }
+
+    public void FireRequestMaximumSize()
+    {
+        RequestMaximumSize();
+    }
+
+    protected void FireChanged()
+    {
+        if (!HandleUserInput)
+        {
+            return;
+        }
+
+        if (Changed != null)
+        {
+            Changed(this, EventArgs.Empty);
+        }
+    }
+
+    public virtual void ClearSavedState()
+    {
+        _savedInsertionPoint = null;
+        _savedSelectionList.Clear();
+        _savedActiveItem = null;
+    }
+
+    public void ClearSelectedItems()
+    {
+        if (_selectedItems.Any())
+        {
+            _selectedItems.Clear();
+        }
+    }
+
+    public virtual void ClearState()
+    {
+        if (HandleUserInput)
+        {
+            ClearSelectedItems();
+        }
+
+        ActiveItem = null;
+        IsCrosshairVisible = false;
+    }
+
+    public void UnSelectItems(IEnumerable<IWhiteboardItem> itemsToDeselect)
+    {
+        if (itemsToDeselect.Any())
+        {
+            _selectedItems.RemoveRange(itemsToDeselect);
+        }
+    }
+
+    public void ToggleItemSelection(IWhiteboardItem item, bool includeActiveItem)
+    {
+        if (item == ActiveItem)
+        {
+            SelectItem(item);
+            return;
+        }
+
+        if (SelectedItems.Contains(item))
+        {
+            UnSelectItem(item);
+            if (SelectedItems.IsEmpty())
+            {
+                ActivateItem(item);
+            }
+        }
+        else if (includeActiveItem && ActiveItem != null)
+        {
+            SelectItems(new IWhiteboardItem[] { ActiveItem, item });
+        }
+        else
+        {
+            SelectItem(item);
+        }
+    }
+
+    public virtual void Activate(bool isActive)
+    {
+        if (isActive)
+        {
+            RestoreSavedState();
+            ClearSavedState();
+            if (ActiveItem == null && SelectedItems.IsEmpty())
+            {
+                IsCrosshairVisible = true;
+            }
+            else
+            {
+                if (ActiveItem != null)
+                {
+                    ActivateActiveItem();
+                }
+
+                IsCrosshairVisible = false;
+            }
+
+            FireActivated();
+        }
+        else
+        {
+            SaveState();
+            ClearState();
+        }
+    }
+
+    protected virtual void DeactivateActiveItem()
+    {
+        if (ActiveItem == null)
+        {
+            return;
+        }
+
+        ActiveItem.Activate(false);
+        WhiteboardItemMgr.DeactivateItem(ActiveItem);
+    }
+
+    public void SetItemSize(IWhiteboardItem item, Size size, DragMode dragMode = default)
+    {
+        WhiteboardItemMgr.SetSize(item, size, dragMode);
+        FireChanged();
+    }
+
+    public virtual void SetItemLocationToNearestGridIntersection(IWhiteboardItem item, Point location)
+    {
+        Point nearestIntersection = _alignmentGrid.GetNearestIntersectionPoint(location);
+        SetItemLocation(item, nearestIntersection);
+    }
 }
