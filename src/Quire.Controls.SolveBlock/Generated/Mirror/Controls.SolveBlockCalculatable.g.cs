@@ -18,8 +18,6 @@ internal partial class SolveBlockCalculatable : global::Quire.Calculation.Core.S
     [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
-    public SolveBlockCalculatable(global::Quire.Calculation.Core.ICalculatable wrappedCalculatable) : base(default(global::Quire.Calculation.Core.ICalculatable)) { }
-    [global::Quire.Mirror.MirrorStub]
     protected void FirePropertyChanged(global::System.ComponentModel.PropertyChangedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void HandleRequestEvaluation(global::Quire.Calculation.Core.ICalculatable calc) => base.HandleRequestEvaluation(calc);
