@@ -33,6 +33,12 @@ internal partial class SolveBlockCalculatable
             propertyChanged(this, eventArgs);
     }
 
+    protected override void HandleRequestEvaluation(global::Quire.Calculation.Core.ICalculatable calc)
+    {
+        if (!UpdateEquationType(WrappedCalculatable))
+            base.HandleRequestEvaluation(calc);
+    }
+
     public override global::Quire.Calculation.Core.ICalculatable WrappedCalculatable
     {
         get => base.WrappedCalculatable;
