@@ -30,4 +30,5 @@
 - Batch 26: `IEquationModel` abstract contract; Release IL PASS, 457 checked (`.mirror-cache/release-il-4a9b10a0f2aa/release-il.json`).
 - Batch 27: `Tree.INodeInfo`, `INodeInfoNotifyModel`, `IComboBoxControlNodeInfo`, `IInputControlNodeInfo` abstract contracts; Release IL PASS, 240 checked (`.mirror-cache/release-il-8fd14e2139b9/release-il.json`).
 - Batch 28: `Tree.IComboBoxInputControlDataAdapter`, `IStringToComboBoxMathTransformer`, `IInputScriptableWithInputNodeInfo` abstract contracts; Release IL PASS, 237 checked (`.mirror-cache/release-il-2055f9be7861/release-il.json`).
-- Remaining: 5,472 `MirrorStub` attributes in 188 generated files; not yet batched. No mismatches in completed batches.
+- Batch 29: `View.IVisualBinaryOperatorNodeEditor`, `IVisualBinaryOperatorNode` abstract contracts; Release IL PASS, 235 checked (`.mirror-cache/release-il-7dbdea1b218d/release-il.json`).
+- Remaining: 5,464 `MirrorStub` attributes in 186 generated files; not yet batched. No mismatches in completed batches.
