@@ -24,6 +24,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
 import time
 import uuid
@@ -414,6 +415,52 @@ CACHE_FORMAT = 1
 TOOL_TREES = ('tools/Quire.Tools.MethodAudit', 'tools/Quire.Tools.MirrorGen')
 
 
+def checkout_base(root, base, original, log, timeout):
+    """Materialize committed bytes without checkout filters or per-file Git checkout work."""
+    run(['git', 'clone', '--quiet', '--shared', '--no-checkout', root, original], root, log, timeout)
+    # info/attributes takes precedence over committed export attributes. Archive must include every blob unchanged.
+    (original / '.git/info/attributes').write_text(
+        '* -export-ignore -export-subst -text -ident -filter -working-tree-encoding\n', encoding='utf-8')
+    archive = original.parent / 'base.tar'
+    run(['git', 'archive', '--format=tar', f'--output={archive}', base], original, log, timeout)
+    if shutil.which('tar'):
+        run(['tar', '-xf', archive, '-C', original], original, log, timeout)
+    else:
+        with tarfile.open(archive) as source:
+            source.extractall(original, filter='data')
+    # Builds need the detached commit and its files, not a populated staging index.
+    (original / '.git/HEAD').write_text(base + '\n', encoding='ascii')
+
+
+def judge_key(root, base, sdk):
+    # Root build configuration and SDK pin also affect compilation, besides the two source trees.
+    inputs = [git('rev-parse', f'{base}:{tree}', cwd=root) for tree in TOOL_TREES]
+    inputs.extend(line for line in git('ls-tree', base, cwd=root).splitlines() if ' blob ' in line)
+    return hashlib.sha256(json.dumps([1, inputs, sdk]).encode('utf-8')).hexdigest()
+
+
+def build_judge(original, base, cache, dotnet, log, timeout):
+    sdk = subprocess.check_output([dotnet, '--version'], cwd=original, text=True, timeout=timeout).strip()
+    key = judge_key(original, base, sdk)
+    entry = cache / 'judges' / key
+    marker = entry / 'ready.json'
+    try:
+        output = entry / json.loads(marker.read_text(encoding='utf-8'))['output']
+        if (output / 'Quire.Tools.MethodAudit.dll').is_file():
+            return output / 'Quire.Tools.MethodAudit.dll'
+    except (OSError, ValueError, KeyError, TypeError):
+        pass
+    output = entry / uuid.uuid4().hex
+    output.mkdir(parents=True)
+    audit = original / 'tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj'
+    run([dotnet, 'build', audit, '-c', 'Release', '-o', output, '-nologo', '-v:q'], original, log, timeout)
+    if (output / 'Quire.Tools.MethodAudit.dll').is_file():
+        pending = entry / (uuid.uuid4().hex + '.json')
+        pending.write_text(json.dumps({'output': output.name}), encoding='utf-8')
+        os.replace(pending, marker)
+    return output / 'Quire.Tools.MethodAudit.dll'
+
+
 def inventory_key(root, commit, tool_commit, projects, install):
     """Identity of a committed tree's inventory: its sources (the commit: type map, SDK pin and build files included),
     the projects, the judge built from tool_commit's tool trees, and the install MethodAudit reads (path and every
@@ -470,20 +517,19 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
                 raise RuntimeError('member selection requires a production project')
             report.update(passed=True, checked=[], failures=[], reason='no production project changed')
             return report
-        with tempfile.TemporaryDirectory(prefix='quire-release-il-') as temp:
+        work_cache = cache.parent / 'gate-work'
+        work_cache.mkdir(parents=True, exist_ok=True)
+        with contextlib.nullcontext(tempfile.mkdtemp(prefix='quire-release-il-', dir=work_cache)) as temp:
             work = Path(temp)
             original = work / 'base'
             with timed(timings, 'base_checkout'):
-                run(['git', 'clone', '--quiet', '--shared', '--no-checkout', root, original], root, log, timeout)
-                run(['git', '-c', 'core.hooksPath=', 'checkout', '--quiet', '--detach', base], original, log, timeout)
+                checkout_base(root, base, original, log, timeout)
             # Fail closed: a base without the judge cannot judge.
             audit = original / 'tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj'
             if not audit.is_file():
                 raise RuntimeError(f'base {base[:12]} has no MethodAudit to judge with ({audit.relative_to(original)})')
-            tool_dir = work / 'tool'
             with timed(timings, 'judge_build'):
-                run([dotnet, 'build', audit, '-c', 'Release', '-o', tool_dir, '-nologo', '-v:q'], original, log, timeout)
-            tool = tool_dir / 'Quire.Tools.MethodAudit.dll'
+                tool = build_judge(original, base, cache, dotnet, log, timeout)
             # A project the candidate adds has no base build; its members start as new (or moved) rows.
             existing = [p for p in projects if (original / 'src' / p / f'{p}.csproj').is_file()]
             key = inventory_key(root, base, base, existing, install) if existing else None

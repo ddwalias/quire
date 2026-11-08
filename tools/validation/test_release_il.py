@@ -1,5 +1,6 @@
 """Acceptance checks for the Release IL gate, without executing production code."""
 import json
+import hashlib
 from pathlib import Path
 import subprocess
 import tempfile
@@ -407,7 +408,7 @@ class CheckTests(unittest.TestCase):
         self.runs, self.dotnet, self.scans = 0, [], []
         real_run = release_il.run
         def run(command, cwd, log, timeout, env=None):
-            if command[0] == 'git':
+            if command[0] in ('git', 'tar'):
                 return real_run(command, cwd, log, timeout, env)
             self.dotnet.append((list(map(str, command)), Path(cwd)))
         def scan(root, projects, tool, work, *args, **kwargs):
@@ -443,7 +444,7 @@ class CheckTests(unittest.TestCase):
         self.assertTrue(report['passed'], report)
         command, cwd = self.dotnet[0]
         self.assertTrue(command[2].endswith('Quire.Tools.MethodAudit.csproj'))
-        self.assertFalse(Path(command[2]).is_relative_to(self.repo.root))
+        self.assertTrue(Path(command[2]).is_relative_to(self.cache.parent / 'gate-work'))
         self.assertNotEqual(cwd, self.repo.root)
 
     def test_a_base_without_the_judge_fails_closed(self):
@@ -511,6 +512,53 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(len(json.loads(keep.read_text())['errors']), 25)
         # One build invocation names every project.
         self.assertIn(str((self.repo.root / 'src/P/P.csproj').resolve()), (work / 'build.slnx').read_text())
+
+
+class JudgeCacheTests(unittest.TestCase):
+    def setUp(self):
+        self.repo = Repo(self)
+        self.base = self.repo.commit()
+        self.cache = self.repo.root / '.mirror-cache'
+
+    def build(self):
+        return release_il.build_judge(self.repo.root, self.base, self.cache, 'dotnet',
+                                      self.cache / 'build.log', 60)
+
+    def fake_build(self, command, *args):
+        output = Path(command[command.index('-o') + 1])
+        (output / 'Quire.Tools.MethodAudit.dll').write_bytes(b'judge')
+
+    def test_miss_then_hit_and_changed_source_misses(self):
+        with mock.patch.object(release_il.subprocess, 'check_output', return_value='10.0.100'), \
+                mock.patch.object(release_il, 'run', side_effect=self.fake_build) as build:
+            first = self.build()
+            self.assertEqual(build.call_count, 1)
+            self.assertEqual(first, self.build())
+            self.assertEqual(build.call_count, 1)
+            self.repo.write('tools/Quire.Tools.MirrorGen/Model.cs', 'changed')
+            self.base = self.repo.commit()
+            self.assertNotEqual(first, self.build())
+            self.assertEqual(build.call_count, 2)
+        with mock.patch.object(release_il.subprocess, 'check_output', return_value='10.0.101'), \
+                mock.patch.object(release_il, 'run', side_effect=self.fake_build) as build:
+            self.build()
+            self.assertEqual(build.call_count, 1)
+
+    def test_checkout_file_list_and_hashes_equal_commit(self):
+        self.repo.write('.gitattributes', '*.txt export-ignore\n*.cs export-subst\n')
+        self.repo.write('included.txt', 'line one\nline two\n')
+        self.repo.write('tools/Quire.Tools.MirrorGen/Model.cs', '$Format:%H$\n')
+        self.base = self.repo.commit()
+        work = Path(tempfile.mkdtemp(prefix='quire-checkout-test-'))
+        original = work / 'base'
+        release_il.checkout_base(self.repo.root, self.base, original, work / 'log', 60)
+        files = sorted(p.relative_to(original).as_posix() for p in original.rglob('*')
+                       if p.is_file() and '.git' not in p.relative_to(original).parts)
+        expected = self.repo.git('ls-tree', '-r', '--name-only', self.base).splitlines()
+        self.assertEqual(files, sorted(expected))
+        for name in expected:
+            blob = subprocess.check_output(['git', 'show', f'{self.base}:{name}'], cwd=self.repo.root)
+            self.assertEqual(hashlib.sha256(blob).digest(), hashlib.sha256((original / name).read_bytes()).digest())
 
 
 if __name__ == '__main__':
