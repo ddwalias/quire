@@ -343,3 +343,9 @@
 - Exact: `SelectMatch` (written as `LogicalDirection.Forward == direction`; the constant must be the left operand to match Mathcad's `ldc.i4.1; ldarg.3`), `GetTextBoundary(direction, out partialText, stopFlags = FindWord)` (instance overload; the `Forward` arm is caret to end, the other arm is start to caret; the static 4-argument overload stays a stub), `OnPasteExecuted` (try/catch that logs `ex.ToString()`).
 - Not attempted: `CreateTextChangedCommand`. Mathcad stores `_undoRunsTextStyleKey = null` after `newobj` while the command is still on the stack, and no C# statement shape produces that.
 - Release IL: PASS — 393 checked, 393 exact, 0 failures, 330 unfinished.
+
+## Batch 55 — RichTextBase navigate-into-item caret placement (1)
+
+- Exact: `NavigateIntoItem(Direction)` (`Activate(true)`, then `switch` with `Left`/`Up` placing the caret at `ContentEnd` and `Right`/`Down` at `ContentStart`, then `return null`).
+- Not matched, left as a stub: `SubscriptsMatch`. Mathcad returns through one shared `ldc.i4.1; ret` reached by two `brtrue` branches (from `IsFullySubscript` and from `SequenceEqual`), and no plain `if`/`return` form reproduces that single return block. Tried the `if (!IsNotEmpty && IsFullySubscript) return true;` form; the first branch differed.
+- Release IL: PASS — 394 checked, 394 exact, 0 failures, 329 unfinished.

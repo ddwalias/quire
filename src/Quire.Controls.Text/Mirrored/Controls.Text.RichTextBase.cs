@@ -709,4 +709,22 @@ public partial class RichTextBase
             DebugTools.LogError(ex.ToString());
         }
     }
+
+    public Vector? NavigateIntoItem(Direction direction)
+    {
+        Activate(true);
+        switch (direction)
+        {
+            case Direction.Left:
+            case Direction.Up:
+                SetCaretPositionAndClearSuggestedX(Document.ContentEnd);
+                break;
+            case Direction.Right:
+            case Direction.Down:
+                SetCaretPositionAndClearSuggestedX(Document.ContentStart);
+                break;
+        }
+        return null;
+    }
+
 }
