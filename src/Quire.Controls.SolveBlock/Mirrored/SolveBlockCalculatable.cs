@@ -2,6 +2,16 @@ namespace Quire.Controls;
 
 internal partial class SolveBlockCalculatable
 {
+    public override global::Quire.Calculation.Core.ICalculatable WrappedCalculatable
+    {
+        get => base.WrappedCalculatable;
+        protected set
+        {
+            base.WrappedCalculatable = value;
+            UpdateEquationType(base.WrappedCalculatable);
+        }
+    }
+
     public global::Quire.Calculation.Core.EngineResult EngineResult
     {
         get
