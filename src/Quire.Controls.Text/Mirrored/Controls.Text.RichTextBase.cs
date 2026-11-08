@@ -459,4 +459,24 @@ public partial class RichTextBase
             WhiteboardDependencyProperties.SetIsRegionBorderVisible(this, true);
         }
     }
+
+    protected override void OnContextMenuOpening(ContextMenuEventArgs e)
+    {
+        DebugTools.DevAssert(!_contextMenuOpening);
+        _contextMenuOpening = true;
+        try
+        {
+            base.OnContextMenuOpening(e);
+        }
+        finally
+        {
+            _contextMenuOpening = false;
+        }
+    }
+
+    private void RaiseEvent(IDataObject data)
+    {
+        DataObjectPastingEventArgs args = new DataObjectPastingEventArgs(data, true, DataFormats.Xaml) { RoutedEvent = DataObject.PastingEvent };
+        RaiseEvent(args);
+    }
 }

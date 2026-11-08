@@ -194,3 +194,8 @@
 
 - Exact: `CaretShouldLeaveTextRegionInDirection`, `OnStyleChanged` (`if (!IsVisible) { canvas...; if (canvas == null || canvas.IsVisible) return; }`), `ExtractXamlFromClipboard`, `RestoreSelection`, `CloneContent`.
 - Release IL: PASS — 278 checked, 278 exact, 0 failures, 445 unfinished.
+
+## Batch 30 — RichTextBase context menu and paste event (2)
+
+- Exact: `OnContextMenuOpening` (`DevAssert(!_contextMenuOpening)`, then a try/finally on the flag) and `RaiseEvent(IDataObject)` (`DataObjectPastingEventArgs` with `RoutedEvent = DataObject.PastingEvent`).
+- Release IL: PASS — 280 checked, 280 exact, 0 failures, 443 unfinished.
