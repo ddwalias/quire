@@ -1,6 +1,7 @@
 #nullable disable
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Media;
 using Quire.Mirror;
 using Quire.Wpf;
 
@@ -92,4 +93,136 @@ public partial class WorksheetPageLayout
 
     [MirrorVerified("PtcControlsCoreWorksheetPageLayoutMechanicalDifferentialTests")]
     private static Point USInitialInsertionPoint => new Point(0.0, USGridCellSize.Height);
+
+    public double PageBodyContentWidth
+    {
+        get => _pageBodyContentWidth;
+        set
+        {
+            _pageBodyContentWidth = value;
+            OnPropertyChanged("PageBodyContentWidth");
+        }
+    }
+
+    public double PageBodyWidth
+    {
+        get => _pageBodyWidth;
+        internal set
+        {
+            _pageBodyWidth = value;
+            OnPropertyChanged("PageBodyWidth");
+        }
+    }
+
+    public Color PageBackgroundColor
+    {
+        get => _pageBackgroundColor;
+        set
+        {
+            _pageBackgroundColor = value;
+            OnPropertyChanged("PageBackgroundColor");
+        }
+    }
+
+    public double MajorGridLines
+    {
+        get => _majorGridLines;
+        private set
+        {
+            if (_majorGridLines == value)
+            {
+                return;
+            }
+            _majorGridLines = value;
+            OnPropertyChanged("MajorGridLines");
+        }
+    }
+
+    public double HeaderBodyWidth
+    {
+        get => _headerBodyWidth;
+        private set
+        {
+            if (_headerBodyWidth == value)
+            {
+                return;
+            }
+            _headerBodyWidth = value;
+            OnPropertyChanged("HeaderBodyWidth");
+        }
+    }
+
+    public double HeaderBodyHeight
+    {
+        get => _headerBodyHeight;
+        private set
+        {
+            if (_headerBodyHeight == value)
+            {
+                return;
+            }
+            _headerBodyHeight = value;
+            OnPropertyChanged("HeaderBodyHeight");
+        }
+    }
+
+    public double FooterBodyWidth
+    {
+        get => _footerBodyWidth;
+        private set
+        {
+            if (_footerBodyWidth == value)
+            {
+                return;
+            }
+            _footerBodyWidth = value;
+            OnPropertyChanged("FooterBodyWidth");
+        }
+    }
+
+    public double FooterBodyHeight
+    {
+        get => _footerBodyHeight;
+        private set
+        {
+            if (_footerBodyHeight == value)
+            {
+                return;
+            }
+            _footerBodyHeight = value;
+            OnPropertyChanged("FooterBodyHeight");
+        }
+    }
+
+    public PageSizeUnits PageSizeUnits
+    {
+        get => _pageSizeUnits;
+        internal set
+        {
+            if (value == _pageSizeUnits)
+            {
+                return;
+            }
+            _pageSizeUnits = value;
+                OnPropertyChanged("PageSizeUnits");
+        }
+    }
+
+    public Point InitialInsertionPoint => BuiltInPageSizes[PageSize].InitialInsertionPoint;
+
+    public GridSize GridSize
+    {
+        get => _gridSize;
+        set
+        {
+            if (_gridSize != value)
+            {
+                _gridSize = value;
+                PageSizeInformation pageSizeInformation = BuiltInPageSizes[PageSize];
+                GridCellSize = GridSize == GridSize.Fine ? pageSizeInformation.FineGridCellSize : pageSizeInformation.GridCellSize;
+                WorksheetRecreateSuggested?.Invoke();
+                OnPropertyChanged("GridSize");
+            }
+        }
+    }
 }

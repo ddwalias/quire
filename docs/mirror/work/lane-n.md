@@ -874,3 +874,10 @@
 - Report: `.mirror-cache/release-il-4bd492ba2a6b/release-il.json` — PASS, 2,184 checked, 2,184 exact, 0 failures.
 - Shapes Release IL requires: the initial insertion points build `Point` with `0.0` pushed before the grid-cell `Size` is read.
 - Remaining in WorksheetPageLayout: the instance properties, constructor (`WorksheetPageLayout() { }` stub), `Clone`, the setters and `PageSize` machinery, and the two closures (`UpdatePropertyAndDelayNotification` callers and the event initializers).
+
+## Batch 115 — WorksheetPageLayout simple property setters
+
+- Claimed: `PageBodyContentWidth`, `PageBodyWidth`, `PageBackgroundColor`, `MajorGridLines`, `HeaderBodyWidth`, `HeaderBodyHeight`, `FooterBodyWidth`, `FooterBodyHeight`, `PageSizeUnits`, `InitialInsertionPoint`, `GridSize`. Property stubs removed from the `.g.cs`; the nested `PropertyNames` constants stay.
+- Report: `.mirror-cache/release-il-8bc9c092eb0e/release-il.json` — PASS, 2,205 checked, 2,205 exact, 0 failures.
+- Shapes Release IL requires: the compare-and-notify setters are `if (field == value) return;` followed by the assignment and `OnPropertyChanged`, not a `!=` block.
+- Still open in WorksheetPageLayout: the cascading setters (`PageOrientation`, `PageHeight`, `PageWidth`, `PageMargin`, `HeaderMargin`, `FooterMargin`, `HeaderWidth`, `HeaderHeight`, `FooterWidth`, `FooterHeight`, `DisplayHeight`, `MarginType`, `PageSize`, `GridCellSize`, `HeaderFooterGridCellSize`), `LinesPerPage`, the constructor, `Clone`, the page-size and margin methods, and the closures.
