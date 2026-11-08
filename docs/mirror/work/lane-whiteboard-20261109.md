@@ -65,4 +65,21 @@
 - Release IL: PASS — 255 checked, 0 failures, 607 unfinished (`release-il-5ba6d854e46e`).
 - Remaining mismatches in this batch: none.
 
+## Batch 6 — MathboardModel
+
+- Members:
+  - `MathboardModel`: `.ctor`, `InitializeChildManager`, `HandleItemsListChanged`, `AddItems`, `RemoveItems`, `MoveItems`, `IsEmpty`, `CommitItem`, `IoRegionManager`, `BookmarksManager`, `CalculatableChildren`, `FireCalculatableAdded`, `FireCalculatableRemoved`, `FireCalculatableMoved`, `FireCalculatableHiddenStatusChanged`, `HandleShadowCalculationsChanged`, `GetChildShadowCalculatables`, `GetCalculatableOverrides`, `GetWrappedCalculatable`, `IsInPrinting`
+  - Events: `CalculatableHiddenStatusChanged`, `CalculatableAdded`, `CalculatableRemoved`, `CalculatableMoved`
+  - Closures / iterators: `<AddItems>b__9_0`, `<AddItems>b__9_1`, `<RemoveItems>b__10_0`, `<RemoveItems>b__10_1`, `<MoveItems>b__11_0`, `<MoveItems>b__11_1`, `<>c.<CommitItem>b__14_0`, `<>c__DisplayClass17_0.<set_IoRegionManager>b__0`, `<>d__31` (`CalculatableChildren`), `<HandleShadowCalculationsChanged>b__36_0`, `<HandleShadowCalculationsChanged>b__36_1`, `<>c__DisplayClass37_0.<GetChildShadowCalculatables>b__0`, `<>d__38` (`GetCalculatableOverrides`)
+- Hand-written: `Mirrored/Controls.Mathboard.MathboardModel.cs`.
+- Stubs removed: `Generated/Mirror/Controls.Mathboard.MathboardModel.g.cs`.
+- Shapes:
+  - Declaration sequence matching Mathcad source order to yield exact ordinals for all lambdas (`b__9_0/1`, `b__10_0/1`, `b__11_0/1`, `b__14_0`, `DisplayClass17_0`, `b__36_0/1`, `DisplayClass37_0`) and iterators (`d__31`, `d__38`).
+  - Pre-switch local declarations in `HandleItemsListChanged` to position compiler-generated `Action` temp local at slot `[3]`.
+  - Nested `if` statements in `GetCalculatableOverrides` iterator without early `yield break` to reproduce single exit jump target.
+  - Type-pattern switch in `set_BookmarksManager` (`case IMathboardControl ... when ...: break; case IRichTextWithEmbeddedItem ... when ...: break;`) matching Roslyn pattern matching branch and local slot assignment (`[0]` enumerator, `[1]` `IMathboardControl`, `[2]` `IRichTextWithEmbeddedItem`, `[3]` `IWhiteboardItem`).
+- Release IL: PASS — 311 checked, 0 failures, 551 unfinished (`release-il-237a61e589d8`).
+- Remaining mismatches in this batch: none.
+
+
 
