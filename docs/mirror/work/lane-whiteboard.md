@@ -80,3 +80,10 @@
 - Shapes: `FireRequestMaximumSize` as a direct call (the IL has no null test); `FireChanged` as `if (Changed != null) Changed(this, EventArgs.Empty);` after the `HandleUserInput` return. `ToggleItemSelection` and `Activate` matched first time with the `if / else if / else` and `if (A && B) … else …` shapes.
 - Not started: `AddItemAndActivate`, `RemoveWhiteboardItem`, `SetItemGridPosition` (they build nested command types, `AddItemsCommand`, `RemoveItemsCommand`, `MoveItemsCommand`).
 - Release IL: PASS — 186 checked, 0 failures (`release-il-072e5205fe42`).
+
+## Batch 12 — WhiteboardViewModel resize info, cut and delete guards
+
+- Members: `ActivateItem`, `BoundsOutsideContentSize`, `CutSelection`, `SaveResizeInformation`, `RestoreResizeInformation`, `DeleteActiveOrSelectedItems`, `CanDeleteActiveItem`, `CanDeleteSelectedItems`, `CanDeleteActiveOrSelectedItems`.
+- Shape tried: `BoundsOutsideContentSize` as `return a || b || c || d;` → "conditional branches: Quire 3, Mathcad 4". `if (a || b || c || d) { return true; } return false;` → exact.
+- Release IL: PASS — 195 checked, 0 failures (`release-il-8a1bffbaa875`).
+- Not started: `DeleteSelectedItems`, `DeleteActiveItem` (nested `RemoveSelectedItemsCommand`, `RemoveItemsCommand`).

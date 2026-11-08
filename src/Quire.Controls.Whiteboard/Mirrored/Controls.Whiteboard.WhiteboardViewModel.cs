@@ -662,4 +662,69 @@ public partial class WhiteboardViewModel
         Point nearestIntersection = _alignmentGrid.GetNearestIntersectionPoint(location);
         SetItemLocation(item, nearestIntersection);
     }
+
+    protected virtual void ActivateItem(IWhiteboardItem item)
+    {
+        item.Activate(true);
+    }
+
+    protected virtual bool BoundsOutsideContentSize(Rect rect)
+    {
+        if (rect.Bottom > ContentHeight || rect.Top < 0.0 || rect.Left < 0.0 || rect.Right > ContentWidth)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void CutSelection()
+    {
+        if (CopySelection())
+        {
+            DeleteSelectedItems();
+        }
+    }
+
+    public void SaveResizeInformation()
+    {
+        _savedMaxSize = MaximumSize;
+        _savedMinSize = MinimumSize;
+        InsertionPointForResize = InsertionPoint;
+    }
+
+    public void RestoreResizeInformation()
+    {
+        MaximumSize = _savedMaxSize;
+        MinimumSize = _savedMinSize;
+    }
+
+    private void DeleteActiveOrSelectedItems()
+    {
+        if (ActiveItem != null)
+        {
+            DeleteActiveItem();
+            return;
+        }
+
+        if (!EnumerableExtensions.IsNullOrEmpty(SelectedItems))
+        {
+            DeleteSelectedItems();
+        }
+    }
+
+    private bool CanDeleteActiveItem()
+    {
+        return ActiveItem != null;
+    }
+
+    private bool CanDeleteSelectedItems()
+    {
+        return !EnumerableExtensions.IsNullOrEmpty(SelectedItems);
+    }
+
+    private bool CanDeleteActiveOrSelectedItems()
+    {
+        return !EnumerableExtensions.IsNullOrEmpty(ActiveOrSelectedItems);
+    }
 }
