@@ -11,8 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Mathcad.Automation.SerializerCOMStreamAdaptor, automationmgd")]
 public partial class SerializerCOMStreamAdaptor : global::Quire.Utils.COMStreamAdaptor
 {
-    [global::Quire.Mirror.MirrorStub]
-    public SerializerCOMStreamAdaptor(global::System.Runtime.InteropServices.ComTypes.IStream stream) : base(default(global::System.Runtime.InteropServices.ComTypes.IStream)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void Commit() => base.Commit();
 }
