@@ -45,6 +45,4 @@ internal partial class SolveBlockCalculatable : global::Quire.Calculation.Core.S
     public virtual void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.SolveBlockEquationTypes GetEquationTypeOfRl(string rl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.SolveBlockEquationTypes GetEquationTypeOfCalc(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

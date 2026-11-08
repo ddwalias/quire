@@ -18,4 +18,18 @@ internal partial class SolveBlockCalculatable
 
         return -1;
     }
+
+    public static SolveBlockEquationTypes GetEquationTypeOfCalc(global::Quire.Calculation.Core.ICalculatable calc)
+    {
+        if (calc == null)
+            return (SolveBlockEquationTypes)0;
+
+        if (calc is not global::Quire.Calculation.Core.ICalculatableAggregate aggregate ||
+            global::Quire.EnumerableExtensions.IsNullOrEmpty(aggregate.CalculatableChildren))
+            return GetEquationTypeOfRl(calc.Rl);
+
+        return GetEquationTypeOfRl(
+            SolveBlockCalculatableAggregate.ComposeSolveblockChildRlFromEquationControl(
+                global::Quire.Calculation.Core.CalculatableAggregateExtensions.GetAggregateRl(aggregate)));
+    }
 }
