@@ -867,3 +867,10 @@
 - Shapes Release IL requires: `OnRender` declares `scale` before the render rectangle and builds `Rect` in an if/else with the `DevAssert` test in the then-position; the `Rect` is assigned from `new` in each branch.
 - Remaining mismatch (kept as generated stub, not landed): `AcquireBitmapSource` — Mathcad reads `RenderSize` inside the `Int32Rect` arguments; the assignment-expression form is still two bytes off in the then-block.
 - Still open in OleContainer: `AcquireBitmapSource`, `StorageFileNameForXamlSerialization`, `StartOleCloseOperation`, `GetOlePersistentData`, `TrySavingBitmapForPrint` (lambdas and anonymous delegates).
+
+## Batch 114 — WorksheetPageLayout static metric and US size members
+
+- Claimed: `MetricGridCellSize`, `MetricFineGridCellSize`, `MetricHeaderFooterGridCellSize`, `USGridCellSize`, `USFineGridCellSize`, `USHeaderFooterGridCellSize`, `StandardMetricMargin`, `StandardUSMargin`, `LegacyMargin`, `USHeaderMargin`, `MetricHeaderMargin`, `MetricInitialInsertionPoint`, `USInitialInsertionPoint`. Stubs removed from the `.g.cs`.
+- Report: `.mirror-cache/release-il-4bd492ba2a6b/release-il.json` — PASS, 2,184 checked, 2,184 exact, 0 failures.
+- Shapes Release IL requires: the initial insertion points build `Point` with `0.0` pushed before the grid-cell `Size` is read.
+- Remaining in WorksheetPageLayout: the instance properties, constructor (`WorksheetPageLayout() { }` stub), `Clone`, the setters and `PageSize` machinery, and the two closures (`UpdatePropertyAndDelayNotification` callers and the event initializers).
