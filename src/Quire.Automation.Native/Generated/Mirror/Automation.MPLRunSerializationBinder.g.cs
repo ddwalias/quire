@@ -11,8 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Mathcad.Automation.MPLRunSerializationBinder, automationmgd")]
 internal sealed partial class MPLRunSerializationBinder : global::System.Runtime.Serialization.SerializationBinder
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Type BindToType(string assemblyName, string typeName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public MPLRunSerializationBinder() { }
 }
