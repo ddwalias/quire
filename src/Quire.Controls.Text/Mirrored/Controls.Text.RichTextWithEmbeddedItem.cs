@@ -783,4 +783,51 @@ public partial class RichTextWithEmbeddedItem
             FunctionalitiesLimitationCommands.DisplayFreemiumAboutBox.Execute(parameter, null);
         }
     }
+
+    private void HandleItemsListChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        switch (e.Action)
+        {
+            case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+                IEnumerable<IWhiteboardItemInText> addedItems = e.NewItems.Cast<IWhiteboardItemInText>();
+                AddItems(addedItems);
+                return;
+            case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+                IEnumerable<IWhiteboardItemInText> removedItems = e.OldItems.Cast<IWhiteboardItemInText>();
+                RemoveItems(removedItems);
+                return;
+            case System.Collections.Specialized.NotifyCollectionChangedAction.Move:
+                IEnumerable<IWhiteboardItemInText> movedItems = e.NewItems.Cast<IWhiteboardItemInText>();
+                MoveItems(movedItems);
+                return;
+            default:
+                DebugTools.FailAssertion("Unsupported action: {0}", e.Action);
+                return;
+        }
+    }
+
+    private void UpdateItemOffsetMap()
+    {
+        foreach (IWhiteboardItem item in WhiteboardItems)
+        {
+            IWhiteboardItemInText embeddedItem = item as IWhiteboardItemInText;
+            if (IsItemRemovedFromDocument(embeddedItem))
+            {
+                _itemOffsetMap.Remove(embeddedItem);
+            }
+            else
+            {
+                _itemOffsetMap[embeddedItem] = textType.GetOffsetToPosition(Document, GetContainer(embeddedItem).ElementStart);
+            }
+        }
+    }
+
+    public void CopyWholeRangeXamlToDataObject(IDataObject dataObject)
+    {
+        string xaml = TextRange.SerializeRangeContentToXamlString();
+        List<IWhiteboardItem> items = GetWhiteboardItemsInRange(TextRange).ToList();
+        string xamlWithItems = InlayXamlWithEmbeddedItems(TextRange, xaml, out RichTextEmbeddedItemsInfo info, items);
+        dataObject.SetData(DataFormats.Xaml, xamlWithItems ?? xaml);
+        DataObjectExtensions.SetTextWithEmbeddedItemsInfo(dataObject, info);
+    }
 }

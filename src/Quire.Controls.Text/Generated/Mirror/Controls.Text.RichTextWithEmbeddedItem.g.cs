@@ -192,8 +192,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     protected override void CopyingHandler(object sender, global::System.Windows.DataObjectCopyingEventArgs e) => base.CopyingHandler(sender, e);
     [global::Quire.Mirror.MirrorStub]
-    public void CopyWholeRangeXamlToDataObject(global::System.Windows.IDataObject dataObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private string InlayXamlWithEmbeddedItems(global::System.Windows.Documents.TextRange rangeToSerialize, string xaml, out global::Quire.RichTextEmbeddedItemsInfo richTextEmbeddedItemsInfoData, global::System.Collections.Generic.List<global::Quire.Controls.Core.IWhiteboardItem> embeddedEquationItems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static string GetCombinedDocumentXaml(string xaml, global::System.Collections.Generic.IList<string> itemXamls) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -214,13 +212,9 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     private void RestoreTextBoxContent(global::Quire.Controls.Core.IWhiteboardItemInText item, int offset, bool isItemActive, bool isRedo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void UpdateItemOffsetMap() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnGotFocus(global::System.Windows.RoutedEventArgs e) => base.OnGotFocus(e);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnLostFocus(global::System.Windows.RoutedEventArgs e) => base.OnLostFocus(e);
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleItemsListChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void AddItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItemInText> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

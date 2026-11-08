@@ -308,3 +308,8 @@
 - Exact: `DeactivateActiveItem` (protected virtual; `info == null || !info.IsCommitted` before `Commit`), `HandleBookmarkTag` (command handler; `Failed` early return, then `Passed && ShowBookmarkTagsDialog(...)`), `DisplayHyperlink` (optional `showAboutBox = true`; `SetLinkVisited`, then the functionality check with `OpenHyperlinkUrl` or the freemium about-box command).
 - Not attempted: `ValidateURL` (its `FileInfo`/`DirectoryInfo` expression leaves the `FileInfo` on the stack across the `DirectoryInfo` store, which I have not reproduced), `GetWhiteboardItemsInRange` and `ExecuteRemoveItemFromListCommand` (closure and anonymous-type LINQ, ordinal first).
 - Release IL: PASS — 378 checked, 378 exact, 0 failures, 345 unfinished.
+
+## Batch 49 — RichTextWithEmbeddedItem item-list change dispatch, offset map and whole-range XAML copy (3)
+
+- Exact: `HandleItemsListChanged` (`switch` on the action with Add, Remove, Move cases, each storing its `Cast` in its own local, and `default` calling `FailAssertion`), `UpdateItemOffsetMap` (foreach over `WhiteboardItems`, remove or store the offset), `CopyWholeRangeXamlToDataObject` (the `out RichTextEmbeddedItemsInfo info` must be an inline out variable: a separate declaration puts the `info` local in the wrong slot).
+- Release IL: PASS — 381 checked, 381 exact, 0 failures, 342 unfinished.
