@@ -97,3 +97,9 @@
 - Members: all (`.ctor`, `HasCommandAction`, `HasSelection`, `Name`, `Do`, `Undo`, `Redo`, `MakeSelection`, `Execute`). Hand-written in `Mirrored/Controls.Text.EmbededItemsCommandWithKeepSelection.cs`.
 - Shapes: `Do` with `using (CommandScope ...)` inside the `if`, `result` assigned in both branches, matched first try. Constructor: `if (HasCommandAction) { ...; return; } DebugTools.DevAssert(HasSelection);` matched.
 - Release IL: PASS — 169 checked, 169 exact, 0 failures, 551 unfinished.
+
+## Batch 14 — ItemToImagesRichTextWithEmbededItemCloneHelper (three of four members)
+
+- Exact: `CreatePopup`, `Clone`, `Insert` (`Insert` keeps the `InlineUIContainer` in a local; a shape without the local was not tried because Mathcad creates the container before the `InsertBaselineOffsetTag` call and the local matched first time).
+- Stub kept: the constructor. Mathcad stores `_resourceDict` (a `ResourceDictionary` whose `Source` is `pack://application:,,,/<self>;component/TextDictionary.xaml`) and `_engineeringDocument` **before** calling `Object::.ctor`. C# always calls the base constructor first, so no C# shape matches. The hand-written partial declares both fields without assigning them, and the generated `{ }` constructor stub is left unchanged, so `_engineeringDocument` stays null until the constructor is resolved. Clone/Insert/CreatePopup depend on it; this is a known gap.
+- Release IL: PASS — 172 checked, 172 exact, 0 failures, 548 unfinished.
