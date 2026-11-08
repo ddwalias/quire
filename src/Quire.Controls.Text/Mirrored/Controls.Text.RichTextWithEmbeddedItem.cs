@@ -685,4 +685,28 @@ public partial class RichTextWithEmbeddedItem
         }
         return false;
     }
+
+    private static bool FindInEmbeddedItem(IWhiteboardItemInText item, string text, bool startFromCaret, LogicalDirection direction, FindOptions options, List<Pair<int, int>> subscriptPositions)
+    {
+        WhiteboardItemSearchRestrictor restrictor = WhiteboardItemSearchRestrictor.TryCreateFindRestrictor(item);
+        if (restrictor == null)
+        {
+            return false;
+        }
+        return restrictor.FindOnce(text, startFromCaret, direction, options, subscriptPositions);
+    }
+
+    private void CanModifyHyperlink(object sender, CanExecuteRoutedEventArgs e)
+    {
+        if (!CanModifyHyperlink())
+        {
+            return;
+        }
+        e.CanExecute = true;
+        ModifyHyperlinkCommandParameter parameter = e.Parameter as ModifyHyperlinkCommandParameter;
+        if (parameter != null)
+        {
+            parameter.ResultIsSingleLinkEditOperation = CanOpenOrEditOrCopySingleHyperlink();
+        }
+    }
 }

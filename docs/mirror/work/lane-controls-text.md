@@ -290,3 +290,9 @@
 
 - Exact: `AddEmbeddedItem(IWhiteboardItemInText, bool)` (the other two overloads stay stubs; the stub line for this overload is removed by its signature only, since `rmstub` removes every overload with the name), `DataObjectContainsAnyEmbeddedItems` (static, optional `filter`; the Mathcad `Nullable` is a pattern temporary, so the source is `is RichTextEmbeddedItemsInfo info`, not a named `info` local).
 - Release IL: PASS — 371 checked, 371 exact, 0 failures, 352 unfinished.
+
+## Batch 46 — RichTextWithEmbeddedItem embedded-item find and hyperlink modify command state (2)
+
+- Exact: `FindInEmbeddedItem` (static; `restrictor.FindOnce(...)` through the `IFindRestrictor` extension), `CanModifyHyperlink(object, CanExecuteRoutedEventArgs)` (command handler only; the parameterless `CanModifyHyperlink()` overload is still a stub, so its stub line is kept and only the handler's stub line is removed).
+- Not attempted: `DeleteActiveOrSelectedItems`. Mathcad calls `RichTextBase::Activate` with `callvirt`, but this class overrides `Activate`; the binding does not match a plain `Activate(true)` call. Needs a look before implementation.
+- Release IL: PASS — 373 checked, 373 exact, 0 failures, 350 unfinished.
