@@ -54,3 +54,9 @@
 - Shapes: `ActiveDescendant` as `as` tests with `??` fallbacks matched first time. Non-virtual declarations (no `virtual` keyword) emit `call` in Mathcad's IL even though the interface accessor is `final virtual`; keeping the `.g.cs` modifiers matched.
 - Release IL: PASS — 130 checked, 0 failures (`release-il-d3e4b7d8135c`).
 - Lambda-containing members (`Initialize`, `IsTabNavigatable`, command factories) are not started.
+
+## Batch 8 — WhiteboardViewModel size limits and selection accessors
+
+- Members: `SelectedItems`, `ActiveOrSelectedItems`, `SelectedDescendants`, `InsertionPointForResize` (private set, auto), `MinimumSize`, `MinimumWidth`, `MinimumHeight`, `StrictMinimumSize` (protected virtual), `MaximumSize`, `MaximumWidth`, `MaximumHeight`.
+- Shapes: `MinimumWidth` setter as `Math.Max(value > MaximumSize.Width ? MaximumSize.Width : value, StrictMinimumSize.Width)` (the IL uses the ternary and `Math.Max`, not `Math.Min`); `MinimumHeight` as `Math.Max(value, StrictMinimumSize.Height)`. Both matched first time.
+- Release IL: PASS — 148 checked, 0 failures (`release-il-11d2535cc461`).
