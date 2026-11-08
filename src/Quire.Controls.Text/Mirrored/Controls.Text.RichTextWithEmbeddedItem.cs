@@ -3,12 +3,15 @@
 
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using DocumentTextRange = System.Windows.Documents.TextRange;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using Quire.Controls.Core;
 using Quire.Wpf;
 using Quire.Undo;
+using Quire.Calculation.Core;
 
 namespace Quire.Controls.Text;
 
@@ -162,5 +165,103 @@ public partial class RichTextWithEmbeddedItem
     {
         base.OnIsInSavingCLRPropertyChanged(newValue);
         UpdateHyperlinkCanHaveToolTip();
+    }
+
+    protected static TextPointer GetNextLine(TextPointer line)
+    {
+        if (line != null)
+        {
+            return GetLineStartPosition(line, 1);
+        }
+        return null;
+    }
+
+    protected virtual void FireCalculatableAdded(ICalculatable calc)
+    {
+        if (CalculatableAdded != null)
+        {
+            CalculatableAdded(this, calc);
+        }
+    }
+
+    protected virtual void FireCalculatableRemoved(ICalculatable calc)
+    {
+        if (CalculatableRemoved != null)
+        {
+            CalculatableRemoved(calc);
+        }
+    }
+
+    protected virtual void FireCalculatableMoved(ICalculatable calc)
+    {
+        if (CalculatableMoved != null)
+        {
+            CalculatableMoved(calc);
+        }
+    }
+
+    private IWhiteboardItemInText GetItem(InlineUIContainer container)
+    {
+        return GetWrapper(container.Child)?.WrappedItem;
+    }
+
+    private void ProhibitMouseClickOnItem(DependencyObject obj, bool prohibit)
+    {
+        if (obj == null)
+        {
+            return;
+        }
+        obj.SetValue(AttachedProperties.ProhibitMouseClickProperty, prohibit);
+    }
+
+    private void CanDeleteActiveOrSelectedItems(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = ActiveItem != null || SelectionContainsEmbeddedItemsOnly;
+    }
+
+    internal List<Hyperlink> GetHyperlinksFromWholeDocument()
+    {
+        return GetHyperlinksInRange(new DocumentTextRange(Document.ContentStart, Document.ContentEnd), false);
+    }
+
+    internal Hyperlink GetHyperlinkAtCaretPosition()
+    {
+        if (Selection.IsEmpty)
+        {
+            return GetHyperlinkFromTextPointer(CaretPosition);
+        }
+        return null;
+    }
+
+    private void CanBookmarkTag(object sender, CanExecuteRoutedEventArgs e)
+    {
+        bool hasActiveItem = ActiveItem != null;
+        e.CanExecute = hasActiveItem;
+        e.Handled = hasActiveItem;
+    }
+
+    protected override void OnDragOver(System.Windows.DragEventArgs e)
+    {
+        base.OnDragOver(e);
+        if (!CanDrop(e))
+        {
+            e.Effects = DragDropEffects.None;
+        }
+    }
+
+    public override void SetSelection(int fromOffset, int toOffset)
+    {
+        ActiveItem = null;
+        Activate(true);
+        base.SetSelection(fromOffset, toOffset);
+    }
+
+    private void OpenHyperlink(object sender, ExecutedRoutedEventArgs e)
+    {
+        Hyperlink link = CheckAndGetExactlyOneHyperlink();
+        if (link != null)
+        {
+            link.RaiseEvent(new RequestNavigateEventArgs(link.NavigateUri, string.Empty));
+        }
     }
 }

@@ -237,3 +237,8 @@
 - Note: `TextRange` inside `Quire.Controls.Text` resolves to `Quire.TextRange` now that main has it; WPF signatures need the `DocumentTextRange` alias.
 - Skipped (lambda-ordinal risk): `AddItems`, `RemoveItems`, `MoveItems`, `EnumerateEmbeddedObjectsInRange`.
 - Release IL: PASS — 317 checked, 317 exact, 0 failures, 406 unfinished.
+
+## Batch 36 — RichTextWithEmbeddedItem calculatable events, caret and hyperlink helpers (13)
+
+- Exact: `GetNextLine`, `FireCalculatableAdded/Removed/Moved`, `GetItem`, `ProhibitMouseClickOnItem`, `CanDeleteActiveOrSelectedItems`, `GetHyperlinksFromWholeDocument`, `GetHyperlinkAtCaretPosition`, `CanBookmarkTag`, `OnDragOver`, `SetSelection` (override), `OpenHyperlink`.
+- Release IL: PASS — 330 checked, 330 exact, 0 failures, 393 unfinished.
