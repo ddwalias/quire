@@ -881,3 +881,10 @@
 - Report: `.mirror-cache/release-il-8bc9c092eb0e/release-il.json` — PASS, 2,205 checked, 2,205 exact, 0 failures.
 - Shapes Release IL requires: the compare-and-notify setters are `if (field == value) return;` followed by the assignment and `OnPropertyChanged`, not a `!=` block.
 - Still open in WorksheetPageLayout: the cascading setters (`PageOrientation`, `PageHeight`, `PageWidth`, `PageMargin`, `HeaderMargin`, `FooterMargin`, `HeaderWidth`, `HeaderHeight`, `FooterWidth`, `FooterHeight`, `DisplayHeight`, `MarginType`, `PageSize`, `GridCellSize`, `HeaderFooterGridCellSize`), `LinesPerPage`, the constructor, `Clone`, the page-size and margin methods, and the closures.
+
+## Batch 116 — WorksheetPageLayout constructor, events and background-colour field
+
+- Claimed: the constructor, `_pageBackgroundColor` initializer (`BackgroundTypeColors.Paper`), and the four event declarations with `= delegate { }` initializers. Stubs removed from the `.g.cs`.
+- Report: `.mirror-cache/release-il-97819d0a4b83/release-il.json` — PASS, 2,210 checked, 2,210 exact, 0 failures.
+- Ordinal calibration (WorksheetPageLayout, checked against the gate): a closure in a member takes the count of hand-written members declared before it, where a method counts 1, a field counts 1, a getter-only property counts 2, a get/set property counts 3, and a field-like event counts 3. Mathcad's constructor closure is numbered 29; the hand-written order was arranged to reach 29 (field, four events, `PageBodyContentWidth`-free prefix, then the constructor).
+- Still open: the cascading WorksheetPageLayout setters and methods, AttachedProperties, OleContainerModel_1 and OleContainerViewModel_3.

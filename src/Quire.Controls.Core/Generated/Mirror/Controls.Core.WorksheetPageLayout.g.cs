@@ -38,8 +38,6 @@ public partial class WorksheetPageLayout : global::System.ComponentModel.INotify
     [global::Quire.Mirror.MirrorStub]
     private double _pageBodyHeight;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Color _pageBackgroundColor;
-    [global::Quire.Mirror.MirrorStub]
     private double _majorGridLines;
     [global::Quire.Mirror.MirrorStub]
     private double _displayHeight;
@@ -105,8 +103,6 @@ public partial class WorksheetPageLayout : global::System.ComponentModel.INotify
     public int LinesPerPage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.PageSize GetDefaultPageSizeForLocale() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public WorksheetPageLayout() { }
     [global::Quire.Mirror.MirrorStub]
     private void UpdatePropertyAndDelayNotification(global::System.Action<global::Quire.Controls.Core.WorksheetPageLayout> updateAction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

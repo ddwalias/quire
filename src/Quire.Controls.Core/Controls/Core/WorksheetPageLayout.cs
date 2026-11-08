@@ -27,11 +27,13 @@ public partial class WorksheetPageLayout
     [MirrorVerified("PtcControlsCoreWorksheetPageLayoutMechanicalDifferentialTests")]
     private static Thickness MetricFooterMargin => MetricHeaderMargin;
 
-    [MirrorVerified("PtcControlsCoreWorksheetPageLayoutMechanicalDifferentialTests")]
-    public event Action<Size, Size> GridCellSizeChanged;
+    private Color _pageBackgroundColor = BackgroundTypeColors.Paper;
 
     [MirrorVerified("PtcControlsCoreWorksheetPageLayoutMechanicalDifferentialTests")]
-    public event Action<Size, Size> HeaderFooterGridCellSizeChanged;
+    public event Action<Size, Size> GridCellSizeChanged = delegate { };
+
+    [MirrorVerified("PtcControlsCoreWorksheetPageLayoutMechanicalDifferentialTests")]
+    public event Action<Size, Size> HeaderFooterGridCellSizeChanged = delegate { };
 
     [MirrorVerified("PtcControlsCoreWorksheetPageLayoutMechanicalDifferentialTests")]
     public event Action WorksheetRecreateSuggested;
@@ -47,6 +49,17 @@ public partial class WorksheetPageLayout
 
     [MirrorVerified("PtcControlsCoreWorksheetPageLayoutMechanicalDifferentialTests")]
     private static Size MetricHeaderFooterGridCellSize => ScaledSize(MetricGridCellSize, 0.5, 0.5);
+
+    public WorksheetPageLayout()
+    {
+        PageSize defaultPageSizeForLocale = GetDefaultPageSizeForLocale();
+        PageSizeInformation pageSizeInformation = BuiltInPageSizes[defaultPageSizeForLocale];
+        MarginType = PageMarginType.Standard;
+        PageMargin = pageSizeInformation.PageMargins[MarginType];
+        HeaderMargin = pageSizeInformation.HeaderMargin;
+        FooterMargin = pageSizeInformation.FooterMargin;
+        PageSize = defaultPageSizeForLocale;
+    }
 
     [MirrorVerified("PtcControlsCoreWorksheetPageLayoutMechanicalDifferentialTests")]
     private static Size USGridCellSize => new Size(WpfUtils.InchesToDips(0.2), WpfUtils.InchesToDips(0.2));
