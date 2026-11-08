@@ -248,3 +248,8 @@
 - Exact: `UpdateHyperlinkCanHaveToolTip` (`!(IsInPrinting || IsInCopy) && !IsInSaving`), `CanRemoveHyperlinks`, `IsItemRemovedFromDocument`, `RestoreSavedState`, `PasteItem`, `ActivateActiveItem`, `CanRemoveBookmarkTag`, `CanSetNumberFormat`.
 - Left as stubs: `CanModifyHyperlink` (both overloads, the bool one is not yet read) and `HasHyperlinkInMouseContext` (ternary layout not checked yet). Removing a stub removes every overload with that name, so these were kept together.
 - Release IL: PASS — 338 checked, 338 exact, 0 failures, 385 unfinished.
+
+## Batch 38 — RichTextWithEmbeddedItem clone, math format, offset and hyperlink-removal helpers (7)
+
+- Exact: `CloneRichText`, `ExecuteClearMathFormat`, `ExecuteCommandKeepingSelection`, `GetEmbeddedItemSymbolOffset`, `RemoveHyperlinkUndoableCommand` (both overloads; the `Hyperlink` overload uses `link != null ? ... : null`, the form Mathcad emits with `brtrue`), `ContainsSimpleText`.
+- Release IL: PASS — 345 checked, 345 exact, 0 failures, 378 unfinished.

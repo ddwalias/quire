@@ -162,10 +162,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.List<global::System.Windows.Documents.Hyperlink> GetContextLinks() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void RemoveHyperlinkUndoableCommand(global::System.Windows.Documents.Hyperlink link) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RemoveHyperlinkUndoableCommand(global::System.Collections.Generic.List<global::System.Windows.Documents.Hyperlink> links) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ReproduceRemovedHyperlinkColors(global::System.Collections.Generic.List<global::System.Windows.Documents.Inline> inlines, global::System.Windows.Documents.Hyperlink link) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Documents.TextRange GetWordRange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -173,8 +169,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     private bool CanModifyHyperlink() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool RangeContainsOnlyInlineElements(global::System.Windows.Documents.TextRange range, bool prohibitSelectionInBlockUiContainer = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal bool ContainsSimpleText(global::System.Windows.Documents.TextRange textRange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void RequestNavigateHandler(object sender, global::System.Windows.Navigation.RequestNavigateEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -220,13 +214,9 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     private void OnPreviewTabBackward(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void ExecuteClearMathFormat(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ExecuteChangeFontColor(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ExecuteChangeHighlightColor(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ExecuteCommandKeepingSelection(global::System.Func<bool> internalCommandDo, string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void CopyingHandler(object sender, global::System.Windows.DataObjectCopyingEventArgs e) => base.CopyingHandler(sender, e);
     [global::Quire.Mirror.MirrorStub]
@@ -298,8 +288,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     public void RemoveEmbeddedItem(global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public int GetEmbeddedItemSymbolOffset(global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static bool DataObjectContainsAnyEmbeddedItems(global::System.Windows.IDataObject dataObject, global::Quire.RichTextEmbeddedItemsInfo filter = (global::Quire.RichTextEmbeddedItemsInfo)(3)) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnPreviewDrop(global::System.Windows.DragEventArgs e) => base.OnPreviewDrop(e);
@@ -337,8 +325,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     private static global::Quire.Controls.Text.IWhiteboardItemInTextWrapper GetWrapper(object embeddedElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetItem(global::System.Windows.Documents.InlineUIContainer container, global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IRichTextWithEmbeddedItem CloneRichText(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void CloneContent(global::Quire.Controls.Text.RichTextWithEmbeddedItem original, global::Quire.Controls.Core.IEngineeringDocument engDoc, bool export = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

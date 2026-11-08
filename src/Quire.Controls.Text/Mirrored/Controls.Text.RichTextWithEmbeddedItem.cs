@@ -13,6 +13,7 @@ using Quire.Wpf;
 using Quire.Undo;
 using Quire.Calculation.Core;
 using Quire.Controls.Core.BookmarkTags;
+using Quire.PersistentDataObjects;
 
 namespace Quire.Controls.Text;
 
@@ -325,5 +326,80 @@ public partial class RichTextWithEmbeddedItem
     private void CanSetNumberFormat(object sender, CanExecuteRoutedEventArgs e)
     {
         e.CanExecute = CurrentNumberFormat != null || CurrentMatrixFormat != null;
+    }
+
+    public IRichTextWithEmbeddedItem CloneRichText(IEngineeringDocument engineeringDocument)
+    {
+        RichTextWithEmbeddedItem clone = new RichTextWithEmbeddedItem();
+        clone.CloneContent(this, engineeringDocument, false);
+        return clone;
+    }
+
+    private void ExecuteClearMathFormat(object sender, ExecutedRoutedEventArgs e)
+    {
+        ExecuteCommandKeepingSelection(CurrentMathFormat.ClearFormat, "ClearMathFormat");
+    }
+
+    private void ExecuteCommandKeepingSelection(Func<bool> internalCommandDo, string name)
+    {
+        CommandBuffer.Execute(new EmbededItemsCommandWithKeepSelection(this, name, internalCommandDo), null);
+    }
+
+    public int GetEmbeddedItemSymbolOffset(IWhiteboardItemInText item)
+    {
+        return textType.GetOffsetToPosition(Document, GetContainer(item).ElementStart);
+    }
+
+    private void RemoveHyperlinkUndoableCommand(Hyperlink link)
+    {
+        RemoveHyperlinkUndoableCommand(link != null ? EnumerableExtensions.Yield(link).ToList() : null);
+    }
+
+    private void RemoveHyperlinkUndoableCommand(List<Hyperlink> links)
+    {
+        if (DebugTools.DevAssert(links.IsNotEmpty()).Failed)
+        {
+            return;
+        }
+        bool undoAll = false;
+        using (CommandScope commandScope = new CommandScope("Remove hyperlink from text"))
+        {
+            using (DeclareChangeBlock())
+            {
+                foreach (Hyperlink link in links)
+                {
+                    InlineCollection parentInlines = link.GetParentInlines();
+                    if (DebugTools.DevAssert(parentInlines != null && parentInlines.Contains(link)).Failed)
+                    {
+                        undoAll = true;
+                        break;
+                    }
+                    link.SetTextFormatForLinkRemoval(out List<Inline> inlines);
+                    link.Inlines.RemoveAll();
+                    foreach (Inline inline in inlines)
+                    {
+                        parentInlines.InsertBefore(link, inline);
+                    }
+                    ReproduceRemovedHyperlinkColors(inlines, link);
+                    parentInlines.Remove(link);
+                }
+            }
+            if (undoAll)
+            {
+                while (CommandBuffer.CanUndo)
+                {
+                    CommandBuffer.Undo();
+                }
+            }
+        }
+    }
+
+    internal bool ContainsSimpleText(DocumentTextRange textRange)
+    {
+        if (EnumerateEmbeddedObjectsInRange(textRange).IsNullOrEmpty())
+        {
+            return textRange.EnumerateInlinesInRange<LineBreak>().IsNullOrEmpty();
+        }
+        return false;
     }
 }
