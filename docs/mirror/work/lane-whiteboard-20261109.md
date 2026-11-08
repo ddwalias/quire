@@ -51,3 +51,18 @@
 - Release IL: PASS — 230 checked, 0 failures, 627 unfinished (`release-il-b8d8f167d702`).
 - Remaining mismatches in this batch: none.
 
+## Batch 5 — WhiteboardModel
+
+- Members:
+  - `WhiteboardModel`: `WhiteboardItemMgr` (protected static get), `WhiteboardItems` (get/private set), `PositionComparer` (get/private set), `.ctor`, `Clone` (virtual), `CopyStateTo` (protected), `ShouldCloneItem` (protected virtual), `InsertItemAtPosition`, `RemoveItem` (virtual), `GetItemLocation` (protected virtual), `AddItemAtLocation` (virtual), `InsertItemAtAppropriatePosition` (protected), `SetItemLocation` (virtual), `UpdatePosition` (protected), `HasOpenDescendantOleObjects` (get), `IsDisposed` (protected get/private set), `Dispose` (virtual)
+  - Closures: `<>c__DisplayClass20_0` (`<UpdatePosition>b__0`), `<>c` (`<get_HasOpenDescendantOleObjects>b__22_0`)
+- Hand-written: `Mirrored/Controls.Whiteboard.WhiteboardModel.cs`.
+- Stubs removed: `Generated/Mirror/Controls.Whiteboard.WhiteboardModel.g.cs`.
+- Shapes:
+  - Declaration order matching Mathcad source order so `<UpdatePosition>b__0` gets ordinal 20 and `<get_HasOpenDescendantOleObjects>b__22_0` gets ordinal 22.
+  - `CopyStateTo` using `if (cloneable != null)` statement (emits `brfalse.s` branching to else) rather than ternary.
+  - `SetItemLocation` using early `if (WhiteboardItemMgr.GetItemLocation(item) == location) return;` matching IL.
+- Release IL: PASS — 255 checked, 0 failures, 607 unfinished (`release-il-5ba6d854e46e`).
+- Remaining mismatches in this batch: none.
+
+
