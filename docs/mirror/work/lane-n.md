@@ -846,3 +846,10 @@
 - Claimed: `OleContainer<TViewModel,TModel,TIPublicModel,TPersistentData>` `_typeOfThis`, `OleForceClosePriority`, `ContentChangedEvent`, `IsInPrintingProperty`, `IsInCopyProperty`, the static constructor, and the two static change handlers. New hand-written partial `src/Quire.Controls.Core/Ole/OleContainer.cs`; stubs removed from the `.g.cs`, which keeps its class header and instance members.
 - Report: `.mirror-cache/release-il-3ef9c3974b8d/release-il.json` — PASS, 2,113 checked, 2,113 exact, 0 failures.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 111 — OleContainer property members
+
+- Claimed: `ViewModel`, explicit `IOleContainer.ViewModel`, `PublicModel`, `OleForceCloseOperation`, `MinSizeForXamlSerialization`, `IsOleCreated`, `IsZoomAware`, `IsInPrinting`, `IsInCopy`, `SizeDataForXamlSerialization`, `CanPrint`, `ImageFileNameForPrintXamlSerialization`, `IsOleOpenForXamlSerializationInPrinting`, `MessageListForPrint`, `SiteCreated`, `IsOutOfPlaceActive`, `IsStorageEmpty`, `SnappingHelper`, `Zoom`, `IsPrintingZoomSet`, `HasEffectivePrintingZoom`. Stubs removed from the `.g.cs`.
+- Report: `.mirror-cache/release-il-d64976e1ef4f/release-il.json` — PASS, 2,141 checked, 2,141 exact, 0 failures.
+- Shapes Release IL requires: `MessageListForPrint` setter tests `value != null` around the loop.
+- Not in this batch: `StorageFileNameForXamlSerialization` (a lambda closure), the constructor, and the instance methods.
