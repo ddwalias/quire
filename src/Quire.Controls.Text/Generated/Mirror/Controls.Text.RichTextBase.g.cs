@@ -190,8 +190,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     private void HandleIsInPrintingChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected virtual void StartCommandScope() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected virtual void EndCommandScope() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public RichTextBase() { }
@@ -207,8 +205,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     private void SpellingErrorCorrected() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void SetStyleFromTextStyles(global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> textStyles) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual bool ToggleSubSuperscriptCommandCanExecute(object argsParameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleApplyTextStyle(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -244,8 +240,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     public string GetWordToAddToDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Documents.TextPointer GetPointerToAddDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ShouldNoOpOnSelection(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseMove(global::System.Windows.Input.MouseEventArgs args) => base.OnMouseMove(args);
@@ -271,8 +265,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     internal global::System.Windows.Markup.XmlLanguage ComputeProofingLanguage(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AddBlockedSelectDirectionForNextElement(global::System.Windows.Documents.LogicalDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual bool ShouldLeaveTextRegionOnCaretMove(global::Quire.Controls.Core.CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual global::Quire.Undo.IUndoableCommand CreateTextChangedCommand(global::System.Windows.Controls.TextChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -315,8 +307,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     private bool SubscriptsMatch(global::System.Windows.Documents.TextRange foundRange, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> findTextSubscriptsList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static global::System.Windows.Documents.TextPointer GetPositionAtTextOffset(global::System.Windows.Documents.TextPointer from, int offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CanReplace(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void HandleReplace(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -411,4 +401,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
         [global::Quire.Mirror.MirrorStub]
         public override void Redo() => base.Redo();
     }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.TextPointer GetPointerToAddDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

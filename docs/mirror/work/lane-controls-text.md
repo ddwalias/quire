@@ -206,3 +206,9 @@
 - Stub markers left in `Generated/Mirror`: `RichTextBase` (~300), `RichTextWithEmbeddedItem` (~400), `Paragraph` (38, 3 of them XAML), `FindReplaceRichTextBox` (38), `RichTextTitle` (25), `HyperlinkDialog` (17, XAML), `TextRegion` (13, XAML), `HyperlinkDialogErrorsResourceDictionary` (7, XAML), `ToggleScriptUndoCommand` (3), `WhiteboardItemInTextWrapper` (2), `ItemToImagesRichTextWithEmbededItemCloneHelper` (1, constructor), `ContextMenuModifyHyperlinkCommandParameter` (1, event declaration).
 - Blocked shapes: XAML `InitializeComponent`/`Connect` (maintainer decision); `ItemToImages` constructor (base call after field stores); `WhiteboardItemInTextWrapper.CompareBaselineOffset`; `ToggleScriptUndoCommand` constructor and `CreateToggleScriptUndoCommand`; `RichTextTitle.GetText`/`SetInitialTitleText` (`callvirt` on a `new` receiver, temporary between construction and use); `RichTextBase.GetTextOnlyFromRuns` (static `GetTextBoundary` vs instance stub signature).
 - Not yet started: most of `RichTextBase` (about 80 member names, including lambdas and iterators) and `RichTextWithEmbeddedItem`, `Paragraph` and `FindReplaceRichTextBox` members.
+
+## Batch 31 — RichTextBase command scope, subscript and find/replace helpers (4)
+
+- Exact: `StartCommandScope` (`TryGetValue` with early return), `ToggleSubSuperscriptCommandCanExecute` (`if (!Selection.IsEmpty) return Length > 0; return true;`), `ShouldLeaveTextRegionOnCaretMove` (`!= Up && != Down` guard, then `GetLineStartPosition(..., out lines)`), `CanReplace`.
+- Not matched: `GetPointerToAddDictionary`. Release IL pushes `this` before `CaretPosition` is stored in the caret local, so the call uses `ref caret` with a duplicated `ldarg.0`; no C# shape reproduced that. Left as a stub.
+- Release IL: PASS — 284 checked, 284 exact, 0 failures, 439 unfinished.

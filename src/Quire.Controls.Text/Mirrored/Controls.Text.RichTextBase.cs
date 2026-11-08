@@ -479,4 +479,51 @@ public partial class RichTextBase
         DataObjectPastingEventArgs args = new DataObjectPastingEventArgs(data, true, DataFormats.Xaml) { RoutedEvent = DataObject.PastingEvent };
         RaiseEvent(args);
     }
+
+    protected virtual void StartCommandScope()
+    {
+        int count;
+        if (!ScopeRefCounts.TryGetValue(this, out count))
+        {
+            if (ActiveScopes.Count == 0)
+            {
+                _isInCopyUndesiredCommandScope = new CommandScope("drop undo side effects");
+            }
+            ScopeRefCounts[this] = 1;
+            ActiveScopes.Add(this);
+            SetIsInSerialization();
+            return;
+        }
+        ScopeRefCounts[this] = count + 1;
+    }
+
+    protected virtual bool ToggleSubSuperscriptCommandCanExecute(object argsParameter)
+    {
+        if (SupportsSubscriptSuperscript && IsActive)
+        {
+            if (!Selection.IsEmpty)
+            {
+                return Selection.Text.Length > 0;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    protected virtual bool ShouldLeaveTextRegionOnCaretMove(CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection direction)
+    {
+        if (direction != CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection.Up && direction != CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection.Down)
+        {
+            return false;
+        }
+        int lines;
+        CaretPosition.GetLineStartPosition(Convert.ToInt32(direction), out lines);
+        return lines == 0;
+    }
+
+    private void CanReplace(object sender, CanExecuteRoutedEventArgs e)
+    {
+        bool hasValue = (e.Parameter as FindReplaceQuery)?.ValueToReplaceWith != null;
+        e.CanExecute = hasValue && !Selection.IsEmpty;
+    }
 }
