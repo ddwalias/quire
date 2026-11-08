@@ -11,10 +11,4 @@ namespace Quire.Controls.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOItem, Ptc.Controls")]
 public partial class IOItem : global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.IORegions.IIOItem
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string Alias { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public IOItem(global::System.Windows.DependencyObject region, string idsExpression, bool isIn) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void ShowInWorksheet() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
