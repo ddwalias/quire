@@ -11,34 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.ChartComponentErrors, Ptc.Controls.ExcelComponent")]
 public static partial class ChartComponentErrors
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string ComExceptionError = "chart_com_exception";
-    [global::Quire.Mirror.MirrorStub]
-    public const string LimitsTooClose = "chart_limits_too_close";
-    [global::Quire.Mirror.MirrorStub]
-    public const string MinLimitToBeSmallerThanMax = "chart_min_limit_to_be_smaller_than_max";
-    [global::Quire.Mirror.MirrorStub]
-    public const string MaxLimitToBeGreaterThanMin = "chart_max_limit_to_be_larger_than_min";
-    [global::Quire.Mirror.MirrorStub]
-    public const string LimitResultNotRealNumber = "chart_limit_result_not_real_number";
-    [global::Quire.Mirror.MirrorStub]
-    public const string LimitHasUnits = "chart_limit_has_units";
-    [global::Quire.Mirror.MirrorStub]
-    public const string DuplicateTraceExpression = "chart_duplicate_trace_expression";
-    [global::Quire.Mirror.MirrorStub]
-    public const string DuplicateLimitExpression = "chart_duplicate_limit_expression";
-    [global::Quire.Mirror.MirrorStub]
-    public const string InvalidIdentifier = "chart_invalid_identifier";
-    [global::Quire.Mirror.MirrorStub]
-    public const string InvalidIndex = "chart_invalid_index";
-    [global::Quire.Mirror.MirrorStub]
-    public const string OnlyNaNsAndComplex = "chart_only_nans_and_complex";
-    [global::Quire.Mirror.MirrorStub]
-    public static string ResultShouldBeRealVector;
-    [global::Quire.Mirror.MirrorStub]
-    public static string PlotElementsOutOfRange;
-    [global::Quire.Mirror.MirrorStub]
-    public static string TooManyPointsInResult;
-    [global::Quire.Mirror.MirrorStub]
-    public static string AddChartPrefix(string err) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,6 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapperExtensions, Ptc.Controls.ExcelComponent")]
 internal static partial class ExcelComponentCalculatableWrapperExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsValidType(this global::Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

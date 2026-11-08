@@ -11,14 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.OleBaseComponentErrors, Ptc.Controls.ExcelComponent")]
 public static partial class OleBaseComponentErrors
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string WronglyPlacedInputErrorKey = "WronglyPlacedInput.Error.Key";
-    [global::Quire.Mirror.MirrorStub]
-    public const string WronglyPlacedOutputErrorKey = "WronglyPlacedOutput.Error.Key";
-    [global::Quire.Mirror.MirrorStub]
-    public const string WronglyFormattedInputErrorKey = "WronglyFormattedInput.Error.Key";
-    [global::Quire.Mirror.MirrorStub]
-    public const string WronglyFormattedOutputErrorKey = "WronglyFormattedOutput.Error.Key";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ErrorsInHiddenSectionErrorKey = "ErrorsInHiddenSection.Error.Key";
 }

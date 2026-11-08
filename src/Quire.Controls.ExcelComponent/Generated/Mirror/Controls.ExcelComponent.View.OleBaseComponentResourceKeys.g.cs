@@ -11,18 +11,4 @@ namespace Quire.Controls.ExcelComponent.View;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.View.OleBaseComponentResourceKeys, Ptc.Controls.ExcelComponent")]
 public static partial class OleBaseComponentResourceKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string BorderHeaderKey = "Border.Header.Key";
-    [global::Quire.Mirror.MirrorStub]
-    public const string InputSectionCollapsed = "OleComponentControlInputSectionCollapsed";
-    [global::Quire.Mirror.MirrorStub]
-    public const string InputSectionExpanded = "OleComponentControlInputSectionExpanded";
-    [global::Quire.Mirror.MirrorStub]
-    public const string OutputSectionCollapsed = "OleComponentControlOutputSectionCollapsed";
-    [global::Quire.Mirror.MirrorStub]
-    public const string OutputSectionExpanded = "OleComponentControlOutputSectionExpanded";
-    [global::Quire.Mirror.MirrorStub]
-    public const string InputSectionToolTip = "OleComponentControlInputSectionToolTip";
-    [global::Quire.Mirror.MirrorStub]
-    public const string OutputSectionToolTip = "OleComponentControlOutputSectionToolTip";
 }

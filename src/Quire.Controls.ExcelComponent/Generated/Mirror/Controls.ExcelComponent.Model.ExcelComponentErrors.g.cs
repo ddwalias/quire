@@ -11,16 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.ExcelComponentErrors, Ptc.Controls.ExcelComponent")]
 public static partial class ExcelComponentErrors
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string ExcelSheetNotFoundError = "excel_sheet_not_found";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ExcelInvalidRangeError = "excel_range_address";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ExcelNotSupportedValueTypeError = "excel_not_supported_value_type";
-    [global::Quire.Mirror.MirrorStub]
-    public const string NonContiguousRangeError = "non_contiguous_range";
-    [global::Quire.Mirror.MirrorStub]
-    public const string COMExceptionError = "com_exception";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ExcelVersionNotInstalledError = "excel_version_not_installed";
 }

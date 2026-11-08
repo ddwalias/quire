@@ -11,10 +11,4 @@ namespace Quire.Controls.ExcelComponent;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.ExcelComponentCommands, Ptc.Controls.ExcelComponent")]
 public static partial class ExcelComponentCommands
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfExcelComponentControl;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand InsertExcelInputExpression;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand InsertExcelOutputExpression;
 }

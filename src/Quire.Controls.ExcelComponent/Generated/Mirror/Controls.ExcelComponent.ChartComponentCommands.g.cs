@@ -11,8 +11,4 @@ namespace Quire.Controls.ExcelComponent;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.ChartComponentCommands, Ptc.Controls.ExcelComponent")]
 public static partial class ChartComponentCommands
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfChartComponentControl;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand InsertAxisExpression;
 }

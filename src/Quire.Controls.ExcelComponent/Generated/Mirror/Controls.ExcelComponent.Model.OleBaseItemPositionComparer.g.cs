@@ -11,8 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.OleBaseItemPositionComparer, Ptc.Controls.ExcelComponent")]
 internal partial class OleBaseItemPositionComparer : global::Quire.Controls.Whiteboard.PositionComparer, global::Quire.Controls.Whiteboard.IWhiteboardItemPositionComparer, global::System.Collections.Generic.IComparer<global::Quire.Controls.Core.IWhiteboardItem>, global::System.Collections.Generic.IComparer<global::System.Windows.Point>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int Compare(global::Quire.Controls.Core.IWhiteboardItem itemOne, global::Quire.Controls.Core.IWhiteboardItem itemTwo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public OleBaseItemPositionComparer() { }
 }

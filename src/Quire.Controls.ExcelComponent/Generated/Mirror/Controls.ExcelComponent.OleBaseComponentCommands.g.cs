@@ -11,6 +11,4 @@ namespace Quire.Controls.ExcelComponent;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.OleBaseComponentCommands, Ptc.Controls.ExcelComponent")]
 public static partial class OleBaseComponentCommands
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand NewOleComponentExpression;
 }

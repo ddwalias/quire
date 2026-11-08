@@ -11,10 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.ExcelContainerMessageKeys, Ptc.Controls.ExcelComponent")]
 public static partial class ExcelContainerMessageKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string ServerStartedOnResizeWarning = "server_was_started_warning";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ExcelWorkBookUnhiddenWarning = "excel_workbook_unhidden";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ExcelResultsUnexpectedOnSaveWarning = "excel_results_unexpected_on_save";
 }

@@ -11,6 +11,4 @@ namespace Quire.Controls.ExcelComponent;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.ExcelComponentConstants, Ptc.Controls.ExcelComponent")]
 public static partial class ExcelComponentConstants
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string ExcelComponentHelpContext = "ExcelComponentControl";
 }
