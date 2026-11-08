@@ -16,10 +16,6 @@ internal partial class SolveBlockCalculatableAggregate : global::Quire.Controls.
     [global::Quire.Mirror.MirrorStub]
     private const int DefineSymEvalAggregateCount = 3;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.ICalculatableAggregate WrappedCalculatableAggregate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableRemoved;
