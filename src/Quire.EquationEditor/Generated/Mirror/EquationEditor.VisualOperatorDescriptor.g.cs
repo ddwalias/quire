@@ -11,26 +11,4 @@ namespace Quire.EquationEditor;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.VisualOperatorDescriptor, Ptc.EquationEditor")]
 public partial class VisualOperatorDescriptor
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string a;
-    [global::Quire.Mirror.MirrorStub]
-    private string b;
-    [global::Quire.Mirror.MirrorStub]
-    private string c;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.EquationEditor.VisualOperatorMenuStyle d;
-    [global::Quire.Mirror.MirrorStub]
-    private string e;
-    [global::Quire.Mirror.MirrorStub]
-    public string CanonicalName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Description { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.VisualOperatorMenuStyle MenuStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string VisualRepresentation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualOperatorDescriptor() { }
 }

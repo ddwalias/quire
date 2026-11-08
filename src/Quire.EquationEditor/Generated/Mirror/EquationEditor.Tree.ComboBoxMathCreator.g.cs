@@ -12,15 +12,5 @@ namespace Quire.EquationEditor.Tree;
 public partial class ComboBoxMathCreator
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.EquationEditor.Tree.ComboBoxMathCreator Default;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.EquationEditor.Tree.IStringToComboBoxMathTransformer a;
-    [global::Quire.Mirror.MirrorStub]
-    public ComboBoxMathCreator(global::Quire.EquationEditor.Tree.IStringToComboBoxMathTransformer transformer) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.MathNode CreateStringMathNode(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.MathNode CreateValueMath(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode CreateUnitMath(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
