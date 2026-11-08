@@ -1,4 +1,5 @@
 #nullable disable
+using System.Drawing;
 using Quire.ComponentModel;
 using Quire.Mirror;
 
@@ -7,50 +8,201 @@ namespace Quire.Controls;
 public partial class MathcadSettings
 {
     [MirrorVerified("Release IL")]
+    public static readonly MathcadSettings Instance;
+
+    [MirrorVerified("Release IL")]
     private static MathcadSettings _instance;
 
     [MirrorVerified("Release IL")]
     private static readonly PropertyBag _properties;
 
+    [MirrorVerified("Release IL")]
     public static readonly global::Quire.ComponentModel.PropertySpec CaretColorSpec;
 
+    [MirrorVerified("Release IL")]
     public static readonly global::Quire.ComponentModel.PropertySpec ReadOnlyCaretColorSpec;
 
+    [MirrorVerified("Release IL")]
     public static readonly global::Quire.ComponentModel.PropertySpec CaretBlinkSpec;
 
+    [MirrorVerified("Release IL")]
     public static readonly global::Quire.ComponentModel.PropertySpec CaretBlinkPeriodSpec;
 
+    [MirrorVerified("Release IL")]
     public static readonly global::Quire.ComponentModel.PropertySpec CaretHighlightOpacitySpec;
 
-    public static readonly global::Quire.ComponentModel.PropertySpec TypeoverColorSpec;
-
+    [MirrorVerified("Release IL")]
     public static readonly global::Quire.ComponentModel.PropertySpec ScopeOpacitySpec;
 
+    [MirrorVerified("Release IL")]
+    public static readonly global::Quire.ComponentModel.PropertySpec TypeoverColorSpec;
+
+    [MirrorVerified("Release IL")]
     public static readonly global::Quire.ComponentModel.PropertySpec ScopeColorSpec;
 
-    public static readonly global::Quire.ComponentModel.PropertySpec HighlightOperandsSpec;
-
-    public static readonly global::Quire.ComponentModel.PropertySpec ParenthesizeOperandsSpec;
-
-    public static readonly global::Quire.ComponentModel.PropertySpec AutoLabelIdsSpec;
-
-    public static readonly global::Quire.ComponentModel.PropertySpec FractionBarVerticalMarginSpec;
-
+    [MirrorVerified("Release IL")]
     public static readonly global::Quire.ComponentModel.PropertySpec NearestNeighborColorSpec;
 
+    [MirrorVerified("Release IL")]
     public static readonly global::Quire.ComponentModel.PropertySpec NearestNeighborOpacitySpec;
 
+    [MirrorVerified("Release IL")]
+    public static readonly global::Quire.ComponentModel.PropertySpec DefaultZoomSpec;
+
+    [MirrorVerified("Release IL")]
+    public static readonly global::Quire.ComponentModel.PropertySpec HighlightOperandsSpec;
+
+    [MirrorVerified("Release IL")]
+    public static readonly global::Quire.ComponentModel.PropertySpec ParenthesizeOperandsSpec;
+
+    [MirrorVerified("Release IL")]
+    public static readonly global::Quire.ComponentModel.PropertySpec AutoLabelIdsSpec;
+
+    [MirrorVerified("Release IL")]
+    public static readonly global::Quire.ComponentModel.PropertySpec ShowAlignmentPointSpec;
+
+    [MirrorVerified("Release IL")]
+    public static readonly global::Quire.ComponentModel.PropertySpec FractionBarVerticalMarginSpec;
+
+    [MirrorVerified("Release IL")]
+    public static readonly global::Quire.ComponentModel.PropertySpec FourCornersSpec;
+
+    [MirrorVerified("Release IL")]
+    public static readonly global::Quire.ComponentModel.PropertySpec SpaceBarScopingSpec;
+
+    [MirrorVerified("Release IL")]
+    public static readonly global::Quire.ComponentModel.PropertySpec ShowStandardToolBarSpec;
+
+    [MirrorVerified("Release IL")]
     public static readonly global::Quire.ComponentModel.PropertySpec EvalPlaceholderSpec;
 
+    [MirrorVerified("Release IL")]
     public static readonly global::Quire.ComponentModel.PropertySpec LineWrappingSignSpec;
 
+    [MirrorVerified("Release IL")]
     public static readonly global::Quire.ComponentModel.PropertySpec LineWrappingSignOffsetSpec;
 
+    [MirrorVerified("Release IL")]
     public static readonly global::Quire.ComponentModel.PropertySpec ShowResultMatrixFormatIndicesSpec;
 
+    [MirrorVerified("Release IL")]
+    public static readonly global::Quire.ComponentModel.PropertySpec FractionBarOverhangSpec;
+
+    [MirrorVerified("Release IL")]
+    public static readonly global::Quire.ComponentModel.PropertySpec TextRegionDefaultWidthSpec;
+
+    [MirrorVerified("Release IL")]
+    public static readonly global::Quire.ComponentModel.PropertySpec TextRegionDefaultFontSpec;
+
+    [MirrorVerified("Release IL")]
     public static readonly global::Quire.ComponentModel.PropertySpec HandleFocusForImeSpec;
 
+    [MirrorVerified("Release IL")]
     public static readonly global::Quire.ComponentModel.PropertySpec ComboBoxColorSpec;
+
+    [MirrorVerified("Release IL")]
+    public MathcadSettings()
+    {
+        _instance = this;
+    }
+
+    [MirrorVerified("Release IL")]
+    static MathcadSettings()
+    {
+        Instance = new MathcadSettings();
+        CaretColorSpec = new PropertySpec("Color", typeof(Color));
+        ReadOnlyCaretColorSpec = new PropertySpec("ReadOnly Color", typeof(Color));
+        CaretBlinkSpec = new PropertySpec("Blink", typeof(bool));
+        CaretBlinkPeriodSpec = new PropertySpec("Blink Period (ms)", typeof(int));
+        CaretHighlightOpacitySpec = new PropertySpec("Highlight Opacity", typeof(double));
+        ScopeOpacitySpec = new PropertySpec("Scope Highlight Opacity", typeof(double));
+        TypeoverColorSpec = new PropertySpec("Typeover Color", typeof(Color));
+        ScopeColorSpec = new PropertySpec("Scope Highlight Color", typeof(Color));
+        NearestNeighborColorSpec = new PropertySpec("Nearest Neighbor Color", typeof(Color));
+        NearestNeighborOpacitySpec = new PropertySpec("Nearest Neighbor Opacity", typeof(double));
+        DefaultZoomSpec = new PropertySpec("Default Zoom", typeof(double));
+        HighlightOperandsSpec = new PropertySpec("Highlight operands", typeof(bool));
+        ParenthesizeOperandsSpec = new PropertySpec("Parenthesize operands", typeof(bool));
+        AutoLabelIdsSpec = new PropertySpec("Auto labeling identifiers", typeof(bool));
+        ShowAlignmentPointSpec = new PropertySpec("Show alignment points", typeof(bool));
+        FractionBarVerticalMarginSpec = new PropertySpec("Fraction bar vertical margin", typeof(double));
+        FourCornersSpec = new PropertySpec("Four Corners region border style", typeof(bool));
+        SpaceBarScopingSpec = new PropertySpec("Spacebar scoping", typeof(bool));
+        ShowStandardToolBarSpec = new PropertySpec("Show Standard Toolbar", typeof(bool));
+        EvalPlaceholderSpec = new PropertySpec("Evaluation Placeholder", typeof(string));
+        LineWrappingSignSpec = new PropertySpec("Line Wrapping Sign", typeof(string));
+        LineWrappingSignOffsetSpec = new PropertySpec("Line Wrapping Sign Offset", typeof(double));
+        ShowResultMatrixFormatIndicesSpec = new PropertySpec("Show result matrix indices", typeof(bool));
+        FractionBarOverhangSpec = new PropertySpec("Overhang", typeof(double));
+        TextRegionDefaultWidthSpec = new PropertySpec("Text Region Default Width", typeof(int));
+        TextRegionDefaultFontSpec = new PropertySpec("Text Region Default Font", typeof(Font));
+        HandleFocusForImeSpec = new PropertySpec("Handle Focus For IME", typeof(bool));
+        ComboBoxColorSpec = new PropertySpec("ComboBox Color", typeof(Color));
+        _properties = new PropertyBag();
+        string category = "Application Properties";
+        ShowStandardToolBarSpec.Category = category;
+        _properties.Properties.Add(ShowStandardToolBarSpec);
+        string category2 = "Insertion Marker Properties";
+        CaretColorSpec.Category = category2;
+        _properties.Properties.Add(CaretColorSpec);
+        ReadOnlyCaretColorSpec.Category = category2;
+        _properties.Properties.Add(ReadOnlyCaretColorSpec);
+        CaretBlinkSpec.Category = category2;
+        _properties.Properties.Add(CaretBlinkSpec);
+        CaretBlinkPeriodSpec.Category = category2;
+        _properties.Properties.Add(CaretBlinkPeriodSpec);
+        CaretHighlightOpacitySpec.Category = category2;
+        _properties.Properties.Add(CaretHighlightOpacitySpec);
+        string category3 = "Operator Selection Properties";
+        ParenthesizeOperandsSpec.Category = category3;
+        _properties.Properties.Add(ParenthesizeOperandsSpec);
+        HighlightOperandsSpec.Category = category3;
+        _properties.Properties.Add(HighlightOperandsSpec);
+        string category4 = "Worksheet Properties";
+        DefaultZoomSpec.Category = category4;
+        _properties.Properties.Add(DefaultZoomSpec);
+        string category5 = "Math Normal Properties";
+        TypeoverColorSpec.Category = category5;
+        _properties.Properties.Add(TypeoverColorSpec);
+        ScopeColorSpec.Category = category5;
+        _properties.Properties.Add(ScopeColorSpec);
+        ScopeOpacitySpec.Category = category5;
+        _properties.Properties.Add(ScopeOpacitySpec);
+        NearestNeighborColorSpec.Category = category5;
+        _properties.Properties.Add(NearestNeighborColorSpec);
+        NearestNeighborOpacitySpec.Category = category5;
+        _properties.Properties.Add(NearestNeighborOpacitySpec);
+        ShowAlignmentPointSpec.Category = category5;
+        _properties.Properties.Add(ShowAlignmentPointSpec);
+        FractionBarVerticalMarginSpec.Category = category5;
+        _properties.Properties.Add(FractionBarVerticalMarginSpec);
+        FourCornersSpec.Category = category5;
+        _properties.Properties.Add(FourCornersSpec);
+        EvalPlaceholderSpec.Category = category5;
+        _properties.Properties.Add(EvalPlaceholderSpec);
+        LineWrappingSignSpec.Category = category5;
+        _properties.Properties.Add(LineWrappingSignSpec);
+        LineWrappingSignOffsetSpec.Category = category5;
+        _properties.Properties.Add(LineWrappingSignOffsetSpec);
+        ShowResultMatrixFormatIndicesSpec.Category = category5;
+        _properties.Properties.Add(ShowResultMatrixFormatIndicesSpec);
+        ComboBoxColorSpec.Category = category5;
+        _properties.Properties.Add(ComboBoxColorSpec);
+        string category6 = "Edting Behavior";
+        SpaceBarScopingSpec.Category = category6;
+        _properties.Properties.Add(SpaceBarScopingSpec);
+        AutoLabelIdsSpec.Category = category6;
+        _properties.Properties.Add(AutoLabelIdsSpec);
+        HandleFocusForImeSpec.Category = category6;
+        _properties.Properties.Add(HandleFocusForImeSpec);
+        string category7 = "Text Region";
+        TextRegionDefaultWidthSpec.Category = category7;
+        _properties.Properties.Add(TextRegionDefaultWidthSpec);
+        TextRegionDefaultFontSpec.Category = category7;
+        _properties.Properties.Add(TextRegionDefaultFontSpec);
+        _properties.GetValue += OnPropertiesGetValue;
+        _properties.SetValue += OnPropertiesSetValue;
+    }
 
     [MirrorVerified("Release IL")]
     public PropertyBag Properties => _properties;

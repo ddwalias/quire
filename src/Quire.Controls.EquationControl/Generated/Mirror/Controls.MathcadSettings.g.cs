@@ -12,24 +12,6 @@ namespace Quire.Controls;
 public partial class MathcadSettings : global::System.ComponentModel.INotifyPropertyChanged, global::Quire.ComponentModel.IInspectable, global::Quire.EquationEditor.IEquationEditorSettings
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Controls.MathcadSettings Instance;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec DefaultZoomSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec ShowAlignmentPointSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec FourCornersSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec SpaceBarScopingSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec ShowStandardToolBarSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec FractionBarOverhangSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec TextRegionDefaultWidthSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec TextRegionDefaultFontSpec;
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Drawing.Color TypeoverColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Drawing.Color CaretColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -73,8 +55,6 @@ public partial class MathcadSettings : global::System.ComponentModel.INotifyProp
     public global::System.Drawing.Color ComboBoxColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public MathcadSettings() { }
     [global::Quire.Mirror.MirrorStub]
     private void FirePropertyChanged(string name = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

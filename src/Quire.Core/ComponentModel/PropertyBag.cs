@@ -124,6 +124,11 @@ public class PropertySpec
         }
     }
 
+    public PropertySpec(string name, Type type)
+        : this(name, type.AssemblyQualifiedName, null, null, null)
+    {
+    }
+
     public PropertySpec(string name, Type type, string category, string description, object defaultValue)
         : this(name, type.AssemblyQualifiedName, category, description, defaultValue)
     {
