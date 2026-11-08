@@ -30,3 +30,12 @@
 - Shapes: pure interface declarations without bodies; matched first time.
 - Release IL: PASS — 253 checked, 0 failures, 747 unfinished (`release-il-190595613d5f`).
 - Remaining mismatches in this batch: none.
+
+## Batch 3 — IWhiteboardViewModel
+
+- Members: 115 interface declarations on `IWhiteboardViewModel` (properties, events, methods).
+- Hand-written: `Mirrored/Controls.Whiteboard.IWhiteboardViewModel.cs` (abstract interface declarations, no bodies).
+- Stubs removed: `Generated/Mirror/Controls.Whiteboard.IWhiteboardViewModel.g.cs`.
+- Shapes: pure interface declarations without bodies; matched first time.
+- Release IL: PASS — 339 checked, 0 failures, 632 unfinished (`release-il-282180e10a25`).
+- Remaining mismatches in this batch: none.
