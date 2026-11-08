@@ -12,45 +12,17 @@ namespace Quire.Controls.Text;
 public partial class RichTextTitle : global::Quire.Controls.Text.RichTextBase
 {
     [global::Quire.Mirror.MirrorStub]
-    private const int InnerSpacing = 30;
-    [global::Quire.Mirror.MirrorStub]
-    private const string XYPlotControl = "XYPlotControl";
-    [global::Quire.Mirror.MirrorStub]
-    private const string PolarPlotControl = "PolarPlotControl";
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsDirty;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isSanitizing;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.ITextStyleChangedHandler _textStyleChangedHandler;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand ToggleOrientation;
-    [global::Quire.Mirror.MirrorStub]
-    public string InitialTitleText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    protected override bool SupportsLists { get => base.SupportsLists; }
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool SupportsIndentation { get => base.SupportsIndentation; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Action ToggleOrientationRequest { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected override bool CanEnableSpellCheck { get => base.CanEnableSpellCheck; }
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsEditingAllowed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private static void ToggleOrientationCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void HandleToggleOrientationExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public RichTextTitle() { }
-    [global::Quire.Mirror.MirrorStub]
     protected override void PrePasting() => base.PrePasting();
     [global::Quire.Mirror.MirrorStub]
     protected override void PostPasting() => base.PostPasting();
-    [global::Quire.Mirror.MirrorStub]
-    public RichTextTitle(string initialTitleText) { }
     [global::Quire.Mirror.MirrorStub]
     private void SetParagraphMarginToZero() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -64,8 +36,6 @@ public partial class RichTextTitle : global::Quire.Controls.Text.RichTextBase
     [global::Quire.Mirror.MirrorStub]
     public string GetText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override void HandleTextChanged(object sender, global::System.Windows.Controls.TextChangedEventArgs e) => base.HandleTextChanged(sender, e);
-    [global::Quire.Mirror.MirrorStub]
     private void ChangeTextRegionAccordingToRules() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private double MeasureContentWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -77,10 +47,6 @@ public partial class RichTextTitle : global::Quire.Controls.Text.RichTextBase
     private double MeasureRunWidth(global::System.Windows.Documents.Run run) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => base.SetRegionPersistentData(d11NProvider, data);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnStyleChanged(global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> textStyles) => base.OnStyleChanged(textStyles);
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool ApplyTextStyleCanExecute(object parameter) => base.ApplyTextStyleCanExecute(parameter);
     [global::Quire.Mirror.MirrorStub]
     protected override bool ToggleSubSuperscriptCommandCanExecute(object argsParameter) => base.ToggleSubSuperscriptCommandCanExecute(argsParameter);
     [global::Quire.Mirror.MirrorStub]
@@ -94,9 +60,5 @@ public partial class RichTextTitle : global::Quire.Controls.Text.RichTextBase
     [global::Quire.Mirror.MirrorStub]
     private void ConvertListToParagraphs(global::System.Windows.Documents.List list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnGotFocus(global::System.Windows.RoutedEventArgs e) => base.OnGotFocus(e);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnLostFocus(global::System.Windows.RoutedEventArgs e) => base.OnLostFocus(e);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnIsInPrintingPropertyChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => base.OnIsInPrintingPropertyChanged(args);
+    public RichTextTitle(string initialTitleText) { }
 }

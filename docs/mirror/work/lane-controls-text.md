@@ -135,3 +135,10 @@
   - `int mid = lineNumberHint == 0 ? (count - 1) / 2 : lineNumberHint;` matched; `lineNumberHint != 0 ? lineNumberHint : (count - 1) / 2` placed the branches in the opposite order.
 - Declarations moved from `Generated` to the hand-written partial (no IL, so no gate effect except the ordinal, which stayed correct): `_splitData`, `SplitItemIfNeeded` event, the four line/rect fields and `_lines` of `FlowDocumentSplitData`. The class now has no `[MirrorStub]` markers.
 - Release IL: PASS — 190 checked, 190 exact, 0 failures, 532 unfinished.
+
+## Batch 20 — RichTextTitle (constants, static command, simple overrides)
+
+- Exact: `ToggleOrientation` static command (field initializer, `PlotsCategoryToggleAxisTitleOrientation`), `InnerSpacing`/`XYPlotControl`/`PolarPlotControl` constants, `IsDirty`, `_isSanitizing`, `_textStyleChangedHandler`, `InitialTitleText` and `ToggleOrientationRequest` auto-properties, `IsEditingAllowed` (`FunctionalityService` key 765), `SupportsLists`/`SupportsIndentation` (false), the parameterless ctor, `HandleTextChanged`, `OnStyleChanged` (calls `SetStyleFromTextStyles`), `ApplyTextStyleCanExecute`, `OnGotFocus`, `OnLostFocus` (selects ContentStart to ContentStart), `OnIsInPrintingPropertyChanged` (empty).
+- Mismatch found and fixed: `OnLostFocus` selects from `ContentStart` to `ContentStart` in Release IL, not to `ContentEnd`.
+- Still stubbed: `RichTextTitle(string)` ctor (uses `<>O` delegate caches), `TextStyleChangedHandler` property, `CanEnableSpellCheck`, `PrePasting`/`PostPasting`, `ToggleSubSuperscriptCommandCanExecute`, `SetRegionPersistentData`, the sanitize and measure helpers, `SetText`/`GetText`/`ResetText`/`ApplyInitialTextFormat`, and `RichTextTitle` ctor helpers.
+- Release IL: PASS — 205 checked, 205 exact, 0 failures, 518 unfinished.
