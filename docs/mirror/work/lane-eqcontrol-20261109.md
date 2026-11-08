@@ -20,4 +20,7 @@
 - Batch: constructors for `Ptc.Controls.VisualIdDescriptor` and `Ptc.Controls.VisualKeywordDescriptor`.
 - Shapes tried: idiomatic protected command-field assignments from the original source; matched without IL-specific shaping.
 - Release IL: PASS, 605 checked, 0 failures; `.mirror-cache/release-il-75d1fb5e2719/release-il.json`.
-- Remaining: 4,496 unfinished members across 327 generated type files; these batches have no mismatches.
+- Batch: `Ptc.Controls.VisualKeywordDescriptor.SExpression` getter and setter.
+- Shapes tried: idiomatic auto-property; the compiler emitted both original accessors exactly.
+- Release IL: PASS, 607 checked, 0 failures; `.mirror-cache/release-il-2c373eca9e4f/release-il.json`.
+- Remaining: 4,494 unfinished members across 327 generated type files; these batches have no mismatches.
