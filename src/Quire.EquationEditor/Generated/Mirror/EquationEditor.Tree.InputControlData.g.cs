@@ -12,26 +12,6 @@ namespace Quire.EquationEditor.Tree;
 public abstract partial class InputControlData : global::Quire.EquationEditor.Tree.IInputControlData, global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.InputControlTypes a;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Size b;
-    [global::Quire.Mirror.MirrorStub]
-    private string c;
-    [global::Quire.Mirror.MirrorStub]
-    private string d;
-    [global::Quire.Mirror.MirrorStub]
-    private double e;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.InputControlTypes InputControlType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size OutputFieldSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Background { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Foreground { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double FontSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public abstract object Clone();
     [global::Quire.Mirror.MirrorStub]
     public abstract bool IsEquivalentTo(global::Quire.EquationEditor.Tree.IInputControlData other);

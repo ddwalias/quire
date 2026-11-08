@@ -12,39 +12,5 @@ namespace Quire.EquationEditor.Tree;
 public abstract partial class InputControlDataCalculatedValue : global::Quire.EquationEditor.Tree.InputControlData, global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue, global::Quire.EquationEditor.Tree.IInputControlData, global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.EquationEditor.Tree.InputControlEngineTypes f;
-    [global::Quire.Mirror.MirrorStub]
-    private string g;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.EquationEditor.Tree.ScriptErrorType h;
-    [global::Quire.Mirror.MirrorStub]
-    private double i;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IList<object> j;
-    [global::Quire.Mirror.MirrorStub]
-    private string k;
-    [global::Quire.Mirror.MirrorStub]
-    private bool l;
-    [global::Quire.Mirror.MirrorStub]
-    private string m;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.InputControlEngineTypes EngineType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string EngineError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.ScriptErrorType ErrorType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double SelectedValueIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<object> SelectedCalculatedValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string RL { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool HasCalculatedValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsNeedsCalculate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string MathNodeName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected InputControlDataCalculatedValue() { }
 }
