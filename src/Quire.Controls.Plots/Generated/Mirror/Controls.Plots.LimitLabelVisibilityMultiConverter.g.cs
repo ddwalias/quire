@@ -11,16 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.LimitLabelVisibilityMultiConverter, Ptc.Controls.Plots")]
 internal partial class LimitLabelVisibilityMultiConverter : global::System.Windows.Data.IMultiValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Controls.Plots.LimitLabelVisibilityMultiConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
-    public const double OpacityVisible = 1d;
-    [global::Quire.Mirror.MirrorStub]
-    public object Convert(object[] values, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object[] ConvertBack(object value, global::System.Type[] targetTypes, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual bool Convert(object[] values) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected LimitLabelVisibilityMultiConverter() { }
 }
