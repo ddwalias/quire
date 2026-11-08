@@ -16,11 +16,5 @@ internal partial class SolverAggregateChildWrapper : global::Quire.Calculation.C
     [global::Quire.Mirror.MirrorStub]
     public override string Rl { get => base.Rl; }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.EngineError CurrentError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public SolverAggregateChildWrapper(global::Quire.Calculation.Core.ICalculatable wrappedCalculatable) : base(default(global::Quire.Calculation.Core.ICalculatable)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus) => base.SetSynchronizationStatus(syncStatus);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Commit() => base.Commit();
 }
