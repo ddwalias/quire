@@ -815,3 +815,9 @@
 - Claimed: all members of `Ptc.Controls.Core.Serialization.MatrixFormatSerializer` (constants, fields, constructor, `ReadXml`, `ReadMatrixFormatAttrs`, `ReadNestedMatrixFormats`, `ReadNestedMatrixFormat`, `WriteXml`, `WriteMatrixFormatAttrs`, `WriteNestedMatrixFormats`, `WriteNestedMatrixFormat`); stubs removed from the `.g.cs`, which keeps the class header.
 - Report: `.mirror-cache/release-il-878e26a23804/release-il.json` — PASS, 2,022 checked, 2,022 exact, 0 failures, 1,231 unfinished (was 1,240).
 - Remaining mismatches: none in claimed batch. Two shapes are kept as Release IL requires: `ReadXml`/`WriteXml` return early on a null format, and compare `"matrix"` with the literal on the left. Writing `!(x == null)` or `!=` on `MatrixFormat` failed the gate with a different overload call, and an `if (x != null)` block shape also failed.
+
+## Batch 106 — RegionBorder static members
+
+- Claimed: `RegionBorder` constants (`Part*`), `_typeOfThis`, the static dependency property and routed event fields, the static constructor, and the static change handlers (`OnRegionBorderBackgroundChanged`, `OnRegionBorderBrushChanged`, `OnDraggerBackgroundChanged`, the eleven dragger visibility handlers, `OnDraggerVisibilityChanged`, `OnShowBusyChanged`, `OnActiveSelectedChanged`, `OnForceBorderChanged`, `OnRightEdgeVisibilityChanged`, `OnBottomEdgeVisibilityChanged`, `OnCornerRadiusChanged`). Stubs removed from the `.g.cs`, which keeps its instance members.
+- Report: `.mirror-cache/release-il-7ccb2ab19086/release-il.json` — PASS, 2,041 checked, 2,041 exact, 0 failures, 1,213 unfinished.
+- Remaining mismatches: none in claimed batch. Remaining RegionBorder work: instance fields and properties, `ResizeElement`, `GetRegionBorder`, the drag and busy/active logic, and the `RequestMoveAndResize` event.
