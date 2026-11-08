@@ -87,3 +87,10 @@
 - Shape tried: `BoundsOutsideContentSize` as `return a || b || c || d;` → "conditional branches: Quire 3, Mathcad 4". `if (a || b || c || d) { return true; } return false;` → exact.
 - Release IL: PASS — 195 checked, 0 failures (`release-il-8a1bffbaa875`).
 - Not started: `DeleteSelectedItems`, `DeleteActiveItem` (nested `RemoveSelectedItemsCommand`, `RemoveItemsCommand`).
+
+## Batch 13 — WhiteboardViewModel members in Mathcad order (placeholders)
+
+- Moved every WhiteboardViewModel member (fields, properties, events, methods, constructors) from the `.g.cs` into `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`, in the reconstructed Mathcad source order. Unfinished members are unmarked placeholders (`=> throw NotImplemented`). Nested command types stay in the `.g.cs`.
+- Order reconstruction: each Release IL closure name `<Method>b__N_M` gives the member count before its containing method. Counting method bodies in metadata order, the auto-property backing fields, each property (1), each field and each event's backing field, that count matched all 26 closure constraints when auto-property backing fields and events count (backing field + event) except `Changed` (1). A plain "fields first" layout failed at `GetInsertionPointAfterCarriageReturn` (86 vs 85).
+- Explicit `IWhiteboardViewModel.CommandBindings` (`=> base.CommandBindings`) added here and to `MathboardViewModel` and `AggregateMathboardViewModel`, because the derived classes lost their compiler-generated re-implementation bridges when the base declared one.
+- Release IL: PASS — 195 checked, 0 failures (`release-il-f1055934f2c1`). No lambda method is implemented yet, so the closure ordinals are not yet exercised.

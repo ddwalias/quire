@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using Quire.Controls.Core;
 using Quire.Controls.Core.Whiteboard;
 using Quire.Wpf;
@@ -13,49 +14,49 @@ namespace Quire.Controls.Whiteboard;
 
 public partial class WhiteboardViewModel
 {
-    public bool IsFocused
-    {
-        get
-        {
-            return _isFocused;
-        }
-        set
-        {
-            _isFocused = value;
-            OnPropertyChanged("IsFocused");
-        }
-    }
+    internal WhiteboardViewModel(global::Quire.Controls.Whiteboard.IWhiteboardModel model) { }
 
-    public virtual bool IsCrosshairVisible
-    {
-        get
-        {
-            return _isCrosshairVisible;
-        }
-        set
-        {
-            _isCrosshairVisible = value;
-            OnPropertyChanged("IsCrosshairVisible");
-        }
-    }
+    internal void HandleChildSizeChangedUnitTestWrapper(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public bool ForbidGrowingMovementRight { get; set; }
+    public global::System.Windows.Input.ICommand MoveDownCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
-    public bool CanPasteSelection
-    {
-        get
-        {
-            return _activeItem == null;
-        }
-    }
+    private global::Quire.Controls.Core.RelayCommand _moveDownCommand;
 
-    public virtual bool CanInsertVerticalSpace
-    {
-        get
-        {
-            return ActiveOrSelectedItems.Count() == 0;
-        }
-    }
+    private global::Quire.Controls.Core.RelayCommand _moveUpCommand;
+
+    private global::Quire.Controls.Core.RelayCommand _moveLeftCommand;
+
+    private global::Quire.Controls.Core.RelayCommand _moveRightCommand;
+
+    private global::Quire.Controls.Core.RelayCommand _carriageReturnCommand;
+
+    private global::Quire.Controls.Core.RelayCommand _traverseForwardCommand;
+
+    private global::Quire.Controls.Core.RelayCommand _traverseBackwardCommand;
+
+    public global::System.Windows.Input.ICommand MoveUpCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    public global::System.Windows.Input.ICommand MoveRightCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    public global::System.Windows.Input.ICommand MoveLeftCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    public global::System.Windows.Input.ICommand CarriageReturnCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    public global::System.Windows.Input.ICommand TraverseForwardCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    public global::System.Windows.Input.ICommand TraverseBackwardCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    public static global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager WhiteboardItemMgr { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    public event global::System.Action<global::System.Windows.Size, global::System.Windows.Size> ChildCausedResize;
+
+    public event global::System.Action RequestMaximumSize;
+
+    public event global::System.Action Activated;
+
+    public event global::System.Action<global::Quire.Controls.Core.IWhiteboardItem> RequestActivatePartContainingChild;
+
+    public event global::System.Action<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem>> RequestBringIntoView;
 
     public WhiteboardItemsCollection WhiteboardItems
     {
@@ -79,11 +80,106 @@ public partial class WhiteboardViewModel
         }
     }
 
+    protected virtual void SetInsertionPoint(global::System.Windows.Point value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected void FireActivated()
+    {
+        Activated?.Invoke();
+    }
+
+    protected virtual void SimulateItemClickAndFireActivated(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location, int numberOfClicks) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual IWhiteboardItem ActiveItem
+    {
+        get
+        {
+            return _activeItem;
+        }
+        set
+        {
+            if (_activeItem == value)
+            {
+                return;
+            }
+
+            if (value != null && !WhiteboardItems.Contains(value))
+            {
+                throw new ArgumentException("Only a child can be set as an ActiveItem");
+            }
+
+            if (_activeItem != null)
+            {
+                UnhookActiveItem(_activeItem);
+                if (HandleUserInput)
+                {
+                    DeactivateActiveItem();
+                }
+            }
+
+            DeleteItemIfNeeded(_activeItem);
+            _activeItem = value;
+            if (_activeItem != null)
+            {
+                HookupActiveItem(_activeItem);
+                ClearSavedState();
+                ClearSelectedItems();
+                Rect itemRect = GetItemRect(_activeItem);
+                if (!itemRect.Contains(_insertionPoint))
+                {
+                    _insertionPoint = GetItemLocation(_activeItem);
+                }
+
+                IsCrosshairVisible = false;
+                if (HandleUserInput)
+                {
+                    ActivateActiveItem();
+                }
+
+                FireActivated();
+            }
+
+            OnPropertyChanged("ActiveItem");
+        }
+    }
+
+    protected virtual void HookupActiveItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected virtual void UnhookActiveItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected override void OnPropertyChanged(string propertyName) => base.OnPropertyChanged(propertyName);
+
+    private void ChildWhiteboardPropertyChangedHandler(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void DeleteItemIfNeeded(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual INotifyCollectionRangeChanged<IWhiteboardItem> SelectedItems
+    {
+        get
+        {
+            return _selectedItems;
+        }
+    }
+
+    protected IWhiteboardItem FirstSelectedItem { get; set; }
+
     protected bool HasSelectedItems
     {
         get
         {
             return SelectedItems.Any();
+        }
+    }
+
+    public IEnumerable<IWhiteboardItem> ActiveOrSelectedItems
+    {
+        get
+        {
+            if (ActiveItem != null)
+            {
+                return new List<IWhiteboardItem> { ActiveItem };
+            }
+
+            return SelectedItems;
         }
     }
 
@@ -112,6 +208,25 @@ public partial class WhiteboardViewModel
         }
     }
 
+    public IList<IWhiteboardItem> SelectedDescendants
+    {
+        get
+        {
+            if (ActiveItem == null)
+            {
+                return SelectedItems.ToList();
+            }
+
+            IWhiteboardControl control = ActiveItem as IWhiteboardControl;
+            if (control == null)
+            {
+                return SelectedItems.ToList();
+            }
+
+            return control.SelectedDescendants;
+        }
+    }
+
     public IAlignmentGrid Grid
     {
         get
@@ -119,6 +234,38 @@ public partial class WhiteboardViewModel
             return _alignmentGrid;
         }
     }
+
+    public bool IsFocused
+    {
+        get
+        {
+            return _isFocused;
+        }
+        set
+        {
+            _isFocused = value;
+            OnPropertyChanged("IsFocused");
+        }
+    }
+
+    public virtual bool IsCrosshairVisible
+    {
+        get
+        {
+            return _isCrosshairVisible;
+        }
+        set
+        {
+            _isCrosshairVisible = value;
+            OnPropertyChanged("IsCrosshairVisible");
+        }
+    }
+
+    public Point InsertionPointForResize { get; private set; }
+
+    public bool ForbidGrowingMovementRight { get; set; }
+
+    public virtual void HandleGridCellSizeChanged(global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public bool IsSelected { private get; set; }
 
@@ -167,63 +314,31 @@ public partial class WhiteboardViewModel
         }
     }
 
-    public DragMode CurrentDragMode { get; set; }
-
-    public Point GridPosition
+    protected virtual void SetContentHeight(double height)
     {
-        get
+        double contentHeight = Math.Max(MinimumHeight, height);
+        if (_contentHeight.IsEqualTo(contentHeight))
         {
-            return Grid.ConvertDipsToGridCoordinates(InsertionPoint);
+            return;
         }
-        set
-        {
-            InsertionPoint = Grid.ConvertGridCoordinatesToDips(value);
-        }
+
+        _contentHeight = contentHeight;
+        _alignmentGrid.GridArea = new Rect(new Size(ContentWidth, ContentHeight));
+        OnPropertyChanged("ContentHeight");
     }
 
-    public bool HandleUserInput { get; protected set; }
-
-    public virtual INotifyCollectionRangeChanged<IWhiteboardItem> SelectedItems
+    protected virtual void SetContentWidth(double width)
     {
-        get
+        double contentWidth = Math.Max(MinimumWidth, width);
+        if (_contentWidth.IsEqualTo(contentWidth))
         {
-            return _selectedItems;
+            return;
         }
+
+        _contentWidth = contentWidth;
+        _alignmentGrid.GridArea = new Rect(new Size(ContentWidth, ContentHeight));
+        OnPropertyChanged("ContentWidth");
     }
-
-    public IEnumerable<IWhiteboardItem> ActiveOrSelectedItems
-    {
-        get
-        {
-            if (ActiveItem != null)
-            {
-                return new List<IWhiteboardItem> { ActiveItem };
-            }
-
-            return SelectedItems;
-        }
-    }
-
-    public IList<IWhiteboardItem> SelectedDescendants
-    {
-        get
-        {
-            if (ActiveItem == null)
-            {
-                return SelectedItems.ToList();
-            }
-
-            IWhiteboardControl control = ActiveItem as IWhiteboardControl;
-            if (control == null)
-            {
-                return SelectedItems.ToList();
-            }
-
-            return control.SelectedDescendants;
-        }
-    }
-
-    public Point InsertionPointForResize { get; private set; }
 
     public Size MinimumSize
     {
@@ -333,106 +448,79 @@ public partial class WhiteboardViewModel
         }
     }
 
-    public virtual IWhiteboardItem ActiveItem
+    public virtual void UpdateSizeLimits(global::System.Windows.Size maximumSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected virtual global::System.Windows.Size FindMinimumSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public DragMode CurrentDragMode { get; set; }
+
+    public event global::System.Action<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem>> CopyWhiteboardItems;
+
+    protected readonly global::Quire.Controls.Whiteboard.IWhiteboardModel _whiteboardModel;
+
+    private static global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager _whiteboardItemMgr;
+
+    protected global::System.Windows.Point _insertionPoint;
+
+    private global::Quire.Controls.Core.IWhiteboardItem _activeItem;
+
+    private global::Quire.Wpf.IObservableRangeCollection<global::Quire.Controls.Core.IWhiteboardItem> _selectedItems;
+
+    protected global::Quire.Controls.Core.IAlignmentGrid _alignmentGrid;
+
+    private bool _isFocused;
+
+    private bool _isCrosshairVisible;
+
+    private global::System.Nullable<global::System.Windows.Point> _savedInsertionPoint;
+
+    private global::System.Collections.Generic.List<global::Quire.Controls.Core.IWhiteboardItem> _savedSelectionList;
+
+    private global::Quire.Controls.Core.IWhiteboardItem _savedActiveItem;
+
+    private global::System.Nullable<bool> _savedIsFocused;
+
+    private global::System.Windows.Size _savedMaxSize;
+
+    private global::System.Windows.Size _savedMinSize;
+
+    private double _contentHeight;
+
+    private double _contentWidth;
+
+    protected WhiteboardViewModel(global::Quire.Controls.Whiteboard.IWhiteboardModel model, bool handleUserInput, global::System.Nullable<global::System.Windows.Size> gridCellSize = default) { }
+
+    protected WhiteboardViewModel(global::Quire.Controls.Whiteboard.WhiteboardViewModel original) { }
+
+    protected internal WhiteboardViewModel(global::Quire.Controls.Whiteboard.IWhiteboardModel model, global::Quire.Controls.Core.IAlignmentGrid grid) { }
+
+    protected void Initialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void HandleItemsListChanging(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void HandleItemsListChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public Point GridPosition
     {
         get
         {
-            return _activeItem;
+            return Grid.ConvertDipsToGridCoordinates(InsertionPoint);
         }
         set
         {
-            if (_activeItem == value)
-            {
-                return;
-            }
-
-            if (value != null && !WhiteboardItems.Contains(value))
-            {
-                throw new ArgumentException("Only a child can be set as an ActiveItem");
-            }
-
-            if (_activeItem != null)
-            {
-                UnhookActiveItem(_activeItem);
-                if (HandleUserInput)
-                {
-                    DeactivateActiveItem();
-                }
-            }
-
-            DeleteItemIfNeeded(_activeItem);
-            _activeItem = value;
-            if (_activeItem != null)
-            {
-                HookupActiveItem(_activeItem);
-                ClearSavedState();
-                ClearSelectedItems();
-                Rect itemRect = GetItemRect(_activeItem);
-                if (!itemRect.Contains(_insertionPoint))
-                {
-                    _insertionPoint = GetItemLocation(_activeItem);
-                }
-
-                IsCrosshairVisible = false;
-                if (HandleUserInput)
-                {
-                    ActivateActiveItem();
-                }
-
-                FireActivated();
-            }
-
-            OnPropertyChanged("ActiveItem");
+            InsertionPoint = Grid.ConvertGridCoordinatesToDips(value);
         }
     }
 
-    protected IWhiteboardItem FirstSelectedItem { get; set; }
+    public virtual void AddItemAndActivate(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    protected virtual void SetContentHeight(double height)
-    {
-        double contentHeight = Math.Max(MinimumHeight, height);
-        if (_contentHeight.IsEqualTo(contentHeight))
-        {
-            return;
-        }
+    public void RemoveWhiteboardItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-        _contentHeight = contentHeight;
-        _alignmentGrid.GridArea = new Rect(new Size(ContentWidth, ContentHeight));
-        OnPropertyChanged("ContentHeight");
-    }
+    private global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> GetItemAtLocation(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    protected virtual void SetContentWidth(double width)
-    {
-        double contentWidth = Math.Max(MinimumWidth, width);
-        if (_contentWidth.IsEqualTo(contentWidth))
-        {
-            return;
-        }
+    public virtual void AddItemAtLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-        _contentWidth = contentWidth;
-        _alignmentGrid.GridArea = new Rect(new Size(ContentWidth, ContentHeight));
-        OnPropertyChanged("ContentWidth");
-    }
-
-    protected void FireActivated()
-    {
-        Activated?.Invoke();
-    }
-
-    public bool GetItemIsInPasting(IWhiteboardItem item)
-    {
-        return WhiteboardItemMgr.GetItemIsInPasting(item);
-    }
-
-    public virtual Point GetItemGridPosition(IWhiteboardItem item)
-    {
-        return Grid.ConvertDipsToGridCoordinates(GetItemLocation(item));
-    }
-
-    public virtual bool GetItemIgnoreForHorizontalMovementAndWidth(IWhiteboardItem item)
-    {
-        return WhiteboardItemMgr.GetIgnoreForHorizontalMovementAndWidth(item);
-    }
+    public void AddItems(global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> addItemsAtLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public virtual Point GetItemLocation(IWhiteboardItem item)
     {
@@ -444,146 +532,38 @@ public partial class WhiteboardViewModel
         return WhiteboardItemMgr.GetDesiredSize(item);
     }
 
-    public virtual Rect GetItemRect(IWhiteboardItem item)
+    public void SetItemSize(IWhiteboardItem item, Size size, DragMode dragMode = default)
     {
-        return WhiteboardItemMgr.GetItemRect(item);
+        WhiteboardItemMgr.SetSize(item, size, dragMode);
+        FireChanged();
     }
 
-    protected double GetItemBottom(IWhiteboardItem item)
+    public bool GetItemIsInPasting(IWhiteboardItem item)
     {
-        Rect rect = GetItemRect(item);
-        return rect.Bottom;
+        return WhiteboardItemMgr.GetItemIsInPasting(item);
     }
 
-    public double GetItemTop(IWhiteboardItem item)
+    public virtual void SetItemLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual void SetItemLocationToNearestGridIntersection(IWhiteboardItem item, Point location)
     {
-        Rect rect = GetItemRect(item);
-        return rect.Top;
+        Point nearestIntersection = _alignmentGrid.GetNearestIntersectionPoint(location);
+        SetItemLocation(item, nearestIntersection);
     }
 
-    protected double GetItemRightEdge(IWhiteboardItem item)
+    public void SetItemGridPosition(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual Point GetItemGridPosition(IWhiteboardItem item)
     {
-        return GetItemLocation(item).X + WhiteboardItemMgr.GetDesiredSize(item).Width;
+        return Grid.ConvertDipsToGridCoordinates(GetItemLocation(item));
     }
 
-    public void SelectAllItems()
+    public virtual bool GetItemIgnoreForHorizontalMovementAndWidth(IWhiteboardItem item)
     {
-        SelectItems(WhiteboardItems);
+        return WhiteboardItemMgr.GetIgnoreForHorizontalMovementAndWidth(item);
     }
 
-    public void HandleSelectAll()
-    {
-        SelectAllItems();
-    }
-
-    public void SelectItem(IWhiteboardItem item)
-    {
-        SelectItems(new IWhiteboardItem[] { item });
-    }
-
-    public void UnSelectItem(IWhiteboardItem item)
-    {
-        UnSelectItems(new IWhiteboardItem[] { item });
-    }
-
-    public bool CanDelete()
-    {
-        return SelectedItems.Any() || CanDeleteVerticalSpaceBelow;
-    }
-
-    public bool CanBackspace()
-    {
-        return SelectedItems.Any() || CanDeleteVerticalSpaceAbove;
-    }
-
-    public bool CanCopySelection()
-    {
-        return SelectedItems.Any();
-    }
-
-    public bool CanCutSelection()
-    {
-        return CanCopySelection();
-    }
-
-    public void HandleBackspace()
-    {
-        if (SelectedItems.Any())
-        {
-            DeleteSelectedItems();
-            return;
-        }
-
-        DeleteVerticalSpaceAbove(1);
-    }
-
-    public void HandleDelete()
-    {
-        if (SelectedItems.Any())
-        {
-            DeleteSelectedItems();
-            return;
-        }
-
-        DeleteVerticalSpaceBelow(1);
-    }
-
-    public virtual void FireChildCausedResize(Size oldSize, Size newSize)
-    {
-        ChildCausedResize(oldSize, newSize);
-    }
-
-    public void FireRequestMaximumSize()
-    {
-        RequestMaximumSize();
-    }
-
-    protected void FireChanged()
-    {
-        if (!HandleUserInput)
-        {
-            return;
-        }
-
-        if (Changed != null)
-        {
-            Changed(this, EventArgs.Empty);
-        }
-    }
-
-    public virtual void ClearSavedState()
-    {
-        _savedInsertionPoint = null;
-        _savedSelectionList.Clear();
-        _savedActiveItem = null;
-    }
-
-    public void ClearSelectedItems()
-    {
-        if (_selectedItems.Any())
-        {
-            _selectedItems.Clear();
-        }
-    }
-
-    public virtual void ClearState()
-    {
-        if (HandleUserInput)
-        {
-            ClearSelectedItems();
-        }
-
-        ActiveItem = null;
-        IsCrosshairVisible = false;
-    }
-
-    public void UnSelectItems(IEnumerable<IWhiteboardItem> itemsToDeselect)
-    {
-        if (itemsToDeselect.Any())
-        {
-            _selectedItems.RemoveRange(itemsToDeselect);
-        }
-    }
+    protected virtual void SelectedItemsAddNew(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public void ToggleItemSelection(IWhiteboardItem item, bool includeActiveItem)
     {
@@ -609,6 +589,200 @@ public partial class WhiteboardViewModel
         {
             SelectItem(item);
         }
+    }
+
+    public void SelectContiguous(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public void SelectRegionsInBounds(global::System.Windows.Rect rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public void SelectAllItems()
+    {
+        SelectItems(WhiteboardItems);
+    }
+
+    public void HandleSelectAll()
+    {
+        SelectAllItems();
+    }
+
+    public void TrySelectRegionsInBounds(global::System.Windows.Rect rect, global::Quire.Controls.Whiteboard.WhiteboardControl wbc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected virtual bool BoundsOutsideContentSize(Rect rect)
+    {
+        if (rect.Bottom > ContentHeight || rect.Top < 0.0 || rect.Left < 0.0 || rect.Right > ContentWidth)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool CanDelete()
+    {
+        return SelectedItems.Any() || CanDeleteVerticalSpaceBelow;
+    }
+
+    public bool CanBackspace()
+    {
+        return SelectedItems.Any() || CanDeleteVerticalSpaceAbove;
+    }
+
+    public void HandleBackspace()
+    {
+        if (SelectedItems.Any())
+        {
+            DeleteSelectedItems();
+            return;
+        }
+
+        DeleteVerticalSpaceAbove(1);
+    }
+
+    public void HandleDelete()
+    {
+        if (SelectedItems.Any())
+        {
+            DeleteSelectedItems();
+            return;
+        }
+
+        DeleteVerticalSpaceBelow(1);
+    }
+
+    public bool CanCopySelection()
+    {
+        return SelectedItems.Any();
+    }
+
+    public virtual bool CanAddItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    public bool CanCutSelection()
+    {
+        return CanCopySelection();
+    }
+
+    public bool CanPasteSelection
+    {
+        get
+        {
+            return _activeItem == null;
+        }
+    }
+
+    public virtual bool CopySelection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public void CutSelection()
+    {
+        if (CopySelection())
+        {
+            DeleteSelectedItems();
+        }
+    }
+
+    public virtual void Paste(global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> pasteItemsAtLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual void SaveState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual void ClearState()
+    {
+        if (HandleUserInput)
+        {
+            ClearSelectedItems();
+        }
+
+        ActiveItem = null;
+        IsCrosshairVisible = false;
+    }
+
+    public virtual void ClearSavedState()
+    {
+        _savedInsertionPoint = null;
+        _savedSelectionList.Clear();
+        _savedActiveItem = null;
+    }
+
+    private double _maximumHeight;
+
+    public virtual void RestoreSavedState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public void SaveResizeInformation()
+    {
+        _savedMaxSize = MaximumSize;
+        _savedMinSize = MinimumSize;
+        InsertionPointForResize = InsertionPoint;
+    }
+
+    public void RestoreResizeInformation()
+    {
+        MaximumSize = _savedMaxSize;
+        MinimumSize = _savedMinSize;
+    }
+
+    public virtual global::System.Nullable<global::System.Windows.Vector> NavigateInto(global::Quire.Direction direction, global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public global::System.Windows.Point GetNavigationStartLocation(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual void OnRequestMoveAndResize(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl whiteboardControl, global::Quire.Controls.Core.ResizeEventMouseArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public void SelectItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToSelect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public void UnSelectItems(IEnumerable<IWhiteboardItem> itemsToDeselect)
+    {
+        if (itemsToDeselect.Any())
+        {
+            _selectedItems.RemoveRange(itemsToDeselect);
+        }
+    }
+
+    public void SelectItem(IWhiteboardItem item)
+    {
+        SelectItems(new IWhiteboardItem[] { item });
+    }
+
+    public void UnSelectItem(IWhiteboardItem item)
+    {
+        UnSelectItems(new IWhiteboardItem[] { item });
+    }
+
+    private void UpdateSizeLimit(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl whiteBoard) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private global::System.Windows.Size FindSizeLimit(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private global::System.Windows.Size FindSizeLimit(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToIgnore) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetOverlappingItems(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual bool FindOncePrivate(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public void FireRequestMaximumSize()
+    {
+        RequestMaximumSize();
+    }
+
+    public virtual void FireChildCausedResize(Size oldSize, Size newSize)
+    {
+        ChildCausedResize(oldSize, newSize);
+    }
+
+    public virtual global::Quire.Controls.Whiteboard.WhiteboardViewModel.RemoveItemsCommand GetRemoveItemsCommand(string commandName, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> itemsAtLocations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public void ClearSelectedItems()
+    {
+        if (_selectedItems.Any())
+        {
+            _selectedItems.Clear();
+        }
+    }
+
+    public virtual global::System.Windows.Size ArrangeOverride(global::System.Windows.Size size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public bool HandleUserInput { get; protected set; }
+
+    public void ActivateActiveItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected virtual void ActivateItem(IWhiteboardItem item)
+    {
+        item.Activate(true);
     }
 
     public virtual void Activate(bool isActive)
@@ -640,6 +814,38 @@ public partial class WhiteboardViewModel
         }
     }
 
+    public virtual global::Quire.Controls.Whiteboard.WhiteboardViewModel.PasteItemsCommand GetPasteItemsCommand(string commandName, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> pasteItemsAtLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual bool IsTabNavigatable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    public virtual void TabInto(global::System.Windows.Input.FocusNavigationDirection dir) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public void HandleTabOutOfText(global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.FocusNavigationDirection> eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> SortItemsByLocation(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, bool descending) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public event global::System.EventHandler Changed;
+
+    public virtual bool HandleMouseDown(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl sender, global::System.Windows.Point position, global::System.Windows.Input.MouseButton button) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual void PreviewMouseLeftButtonDownHandler(object sender, global::System.Windows.Input.MouseButtonEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual void PreviewMouseRightButtonDownHandler(object sender, global::System.Windows.Input.MouseButtonEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual void PreviewMouseRightButtonUpHandler(object sender, global::System.Windows.RoutedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual void PreviewMouseLeftButtonUpHandler(object sender, global::System.Windows.RoutedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual bool HandleMouseUp(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl sender, global::System.Windows.Point position, global::System.Windows.Input.MouseButton button) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> RecursivelyEnumerateDescendantItemssBypassWhiteboard() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public global::System.Windows.Point GetDescendantInsertionPoint() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public void HandleCaretLeavesTextArea(global::Quire.Controls.Core.CommonRoutedEvents.CaretLeavesTextRegionEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public static global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> RecursivelyEnumerateDescendantsIgnoringTypes(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, params global::System.Type[] typesToIgnore) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     protected virtual void DeactivateActiveItem()
     {
         if (ActiveItem == null)
@@ -651,53 +857,48 @@ public partial class WhiteboardViewModel
         WhiteboardItemMgr.DeactivateItem(ActiveItem);
     }
 
-    public void SetItemSize(IWhiteboardItem item, Size size, DragMode dragMode = default)
+    protected virtual void HandleChildItemGotFocus(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected virtual void HandleChildRequestRemove(global::Quire.Controls.Core.IWhiteboardItem itemToRemove, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected virtual void HandleCarriageReturn() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected global::System.Windows.Point GetInsertionPointAfterCarriageReturn() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected double GetRightMostItemEdge(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected double GetLowestItemEdge(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected double GetItemBottom(IWhiteboardItem item)
     {
-        WhiteboardItemMgr.SetSize(item, size, dragMode);
-        FireChanged();
+        Rect rect = GetItemRect(item);
+        return rect.Bottom;
     }
 
-    public virtual void SetItemLocationToNearestGridIntersection(IWhiteboardItem item, Point location)
+    public double GetItemTop(IWhiteboardItem item)
     {
-        Point nearestIntersection = _alignmentGrid.GetNearestIntersectionPoint(location);
-        SetItemLocation(item, nearestIntersection);
+        Rect rect = GetItemRect(item);
+        return rect.Top;
     }
 
-    protected virtual void ActivateItem(IWhiteboardItem item)
+    protected double GetItemRightEdge(IWhiteboardItem item)
     {
-        item.Activate(true);
+        return GetItemLocation(item).X + WhiteboardItemMgr.GetDesiredSize(item).Width;
     }
 
-    protected virtual bool BoundsOutsideContentSize(Rect rect)
-    {
-        if (rect.Bottom > ContentHeight || rect.Top < 0.0 || rect.Left < 0.0 || rect.Right > ContentWidth)
-        {
-            return true;
-        }
+    protected virtual void DirectionalMoveHandler(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-        return false;
-    }
+    protected void DirectionalMoveHandler(global::Quire.Direction direction, bool allowGrowthDownOrRight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public void CutSelection()
-    {
-        if (CopySelection())
-        {
-            DeleteSelectedItems();
-        }
-    }
+    protected virtual global::System.Windows.Point GetNextIntersectionForMove(global::System.Windows.Point currentLocation, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public void SaveResizeInformation()
-    {
-        _savedMaxSize = MaximumSize;
-        _savedMinSize = MinimumSize;
-        InsertionPointForResize = InsertionPoint;
-    }
+    protected virtual bool IsValidInsertionPoint(global::System.Windows.Point pt) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public void RestoreResizeInformation()
-    {
-        MaximumSize = _savedMaxSize;
-        MinimumSize = _savedMinSize;
-    }
+    protected virtual void HandleTraverse(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void DeleteActiveItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected void DeleteSelectedItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private void DeleteActiveOrSelectedItems()
     {
@@ -713,6 +914,14 @@ public partial class WhiteboardViewModel
         }
     }
 
+    protected global::Quire.Controls.Core.IWhiteboardItem PredictFocus(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected virtual global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetItemsAccordingTabNavigateOrder(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsAccordingTabDirection, global::System.Windows.Input.FocusNavigationDirection direction, global::Quire.Controls.Core.IWhiteboardItem startItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected virtual bool CanTraverse(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected virtual bool CanMove(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     private bool CanDeleteActiveItem()
     {
         return ActiveItem != null;
@@ -727,4 +936,95 @@ public partial class WhiteboardViewModel
     {
         return !EnumerableExtensions.IsNullOrEmpty(ActiveOrSelectedItems);
     }
+
+    public virtual bool CanSeparateOverlappedItems(global::Quire.Dimension dimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public void SeparateOverlappedItems(global::Quire.Dimension dimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected virtual global::Quire.Controls.Whiteboard.WhiteboardViewModel.SeparateOverlappedItemsCommand CreateSeparateOverlappedItemsCommand(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToSeparate, global::Quire.Dimension dimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected void FireChanged()
+    {
+        if (!HandleUserInput)
+        {
+            return;
+        }
+
+        if (Changed != null)
+        {
+            Changed(this, EventArgs.Empty);
+        }
+    }
+
+    protected override void OnDispose() => base.OnDispose();
+
+    protected virtual global::Quire.Controls.Core.IWhiteboardItem GetChildItemFromLocation(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected virtual void SelectedItemsChangedHandler(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected virtual void HandleItemAdded(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected virtual void HandleItemRemoved(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void ChildTriggeredResizeHandler(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl whiteboard, global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected virtual void HandleItemMoved(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected virtual void HandleChildSizeChanged(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected void SetEqResizable(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected virtual bool ItemsOverlapped(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual Rect GetItemRect(IWhiteboardItem item)
+    {
+        return WhiteboardItemMgr.GetItemRect(item);
+    }
+
+    protected virtual void SetupCommandBindings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual bool CanInsertVerticalSpace
+    {
+        get
+        {
+            return ActiveOrSelectedItems.Count() == 0;
+        }
+    }
+
+    public virtual bool CanDeleteVerticalSpaceAbove { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    public virtual bool CanDeleteVerticalSpaceBelow { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    public virtual void InsertVerticalSpace(int numberOfLines, bool pushInsertionPoint, bool ignoreItemsOnCurrentLine) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual void DeleteVerticalSpaceAbove(int numberOfLines) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual void DeleteVerticalSpaceBelow(int numberOfLines) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public double LimitOffsetBasedOnItemsToMove(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToMove, double offsetY, global::Quire.Direction direction, global::System.Windows.Point insertionPointLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    protected virtual bool CanDeleteVerticalSpace(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual global::System.Windows.Size ResizeAndNotify(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> list, global::System.Windows.Size oldSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public virtual bool IsValidLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> newLocations, bool allowGrowthDownOrRight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    CommandBindingCollection IWhiteboardViewModel.CommandBindings
+    {
+        get
+        {
+            return base.CommandBindings;
+        }
+    }
+
+    private double _maximumWidth;
+
+    private double _minimumHeight;
+
+    private double _minimumWidth;
+
+    private readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventHandler> _itemSizeChangedHandlerMap;
+
+    private bool _enteredRestoreSavedState;
+
 }
