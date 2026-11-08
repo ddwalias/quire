@@ -119,9 +119,14 @@ public static class Canonical
 {
     /// <summary>Identify explicit implementations by their MethodImpl interface, not the compiler's
     /// spelling of its prefix (global::, a simple name, or a mapped namespace).</summary>
-    public static string MethodName(MethodModel method, Func<TypeSig, TypeSig>? map = null)
+    public static string MethodName(MethodModel method, Func<TypeSig, TypeSig>? map = null, TypeModel? declaringType = null)
     {
-        if (method.Access != Access.Private || !method.Name.Contains('.') || method.Implements.Length != 1)
+        // Obfuscated private Clone implementations on abstract classes retain their MethodImpl identity.
+        bool clone = declaringType is { Kind: TypeKind.Class, Abstract: true }
+            && !method.Static && method.GenericParams.Length == 0 && method.Params.Length == 0
+            && method.Return is NamedSig { Name: "System.Object" }
+            && method.Implements is [{ Interface: NamedSig { Name: "System.ICloneable" }, Method: "Clone" }];
+        if (method.Access != Access.Private || (!method.Name.Contains('.') && !clone) || method.Implements.Length != 1)
             return method.Name;
         var (iface, member) = method.Implements[0];
         return $"{Write(map == null ? iface : map(iface))}.{member}";

@@ -74,7 +74,7 @@ sealed class Artifact
                 .Where(m => Signatures.Method(m.Name, m.GenericParams.Length, m.Params.Select(p => p.Type), m.Return, m.Static) == raw.Key)];
             methodModels[raw.Token] = models;
         }
-        var keys = models.Select(m => Signatures.Method(Canonical.MethodName(m, map), m.GenericParams.Length,
+        var keys = models.Select(m => Signatures.Method(Canonical.MethodName(m, map, Model.Types.Single(t => t.FullName == raw.Owner)), m.GenericParams.Length,
             m.Params.Select(p => map == null ? p.Type : map(p.Type)), map == null ? m.Return : map(m.Return), m.Static))
             .Distinct().ToArray();
         // C++/CLI overloads may share a key but differ in custom modifiers. Their common

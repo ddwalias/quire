@@ -210,7 +210,7 @@ TypeSig Map(TypeSig sig) => sig switch
     _ => sig
 };
 string Key(MethodModel m, bool map) => Signatures.Method(m.Name, m.GenericParams.Length, m.Params.Select(p => map ? Map(p.Type) : p.Type), map ? Map(m.Return) : m.Return, m.Static);
-string ComparisonKey(MethodModel m, bool map) => Signatures.Method(Canonical.MethodName(m, map ? Map : null),
+string ComparisonKey(MethodModel m, bool map, TypeModel type) => Signatures.Method(Canonical.MethodName(m, map ? Map : null, type),
     m.GenericParams.Length, m.Params.Select(p => map ? Map(p.Type) : p.Type), map ? Map(m.Return) : m.Return, m.Static);
 // A .NET Framework original (the TlbImp interop assemblies) names BCL types in mscorlib, where the Quire build's
 // reference assemblies name System.Runtime. Only that spelling is unified; a type .NET moved elsewhere still differs.
@@ -297,7 +297,7 @@ foreach (var artifact in quire)
         Artifact? original = null;
         if (typeNames.TryGetValue((artifact.Name, type.FullName), out var fields) && originals.TryGetValue(fields[1].Trim(), out original))
             counterpart = Counterpart(raw, original, [.. original.Methods.Where(m => m.Owner == fields[0].Trim()
-                && OriginalKey(original, m) == ComparisonKey(method, true))], ref problem);
+                && OriginalKey(original, m) == ComparisonKey(method, true, type))], ref problem);
         matched.Add((artifact, raw, type, method, original, counterpart, problem));
     }
 // Keys omit custom modifiers, so C++/CLI global overloads can share one: those add their modifiers to their identity,

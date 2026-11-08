@@ -279,6 +279,47 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         self.assertTrue(compare(inventory(), inventory(row))['passed'])
 
 
+class ClonePairingTests(unittest.TestCase):
+    def test_abstract_clone_methodimpl_identity_is_narrow(self):
+        root = Path(__file__).resolve().parents[2]
+        with tempfile.TemporaryDirectory(prefix='quire-clone-pairing-') as directory:
+            work = Path(directory)
+            model = root / 'tools/Quire.Tools.MirrorGen/Model.cs'
+            (work / 'Test.csproj').write_text(f'''<Project Sdk="Microsoft.NET.Sdk">
+<PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net10.0</TargetFramework>
+<ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup>
+<ItemGroup><Compile Include="{model}" Link="Model.cs" /></ItemGroup></Project>''')
+            (work / 'Program.cs').write_text('''
+using Quire.Tools.MirrorGen;
+TypeModel Type(bool abstractClass, TypeKind kind = TypeKind.Class) => new() {
+    Assembly = "A", FullName = "T", Namespace = "", Name = "T",
+    Kind = kind, Access = Access.Private, Abstract = abstractClass };
+var type = Type(true);
+var method = new MethodModel("c", Access.Private, false, false, true, true, true, false,
+    new NamedSig("System.Runtime", "System.Object"), [], [],
+    [(new NamedSig("System.Runtime", "System.ICloneable"), "Clone")], false, false, false);
+void Check(MethodModel m, TypeModel? t, string expected)
+{
+    string actual = Canonical.MethodName(m, declaringType: t);
+    if (actual != expected) throw new Exception($"{actual} != {expected}");
+}
+Check(method, type, "System.ICloneable.Clone");
+Check(method with { Name = "System.ICloneable.Clone" }, type, "System.ICloneable.Clone");
+Check(method, null, "c");
+Check(method, Type(false), "c");
+Check(method, Type(true, TypeKind.Interface), "c");
+Check(method with { Access = Access.Public }, type, "c");
+Check(method with { Static = true }, type, "c");
+Check(method with { Return = new NamedSig("System.Runtime", "System.String") }, type, "c");
+Check(method with { Implements = [] }, type, "c");
+Check(method with { Implements = [(new NamedSig("System.Runtime", "System.IDisposable"), "Dispose")] }, type, "c");
+Check(method with { Implements = [(new NamedSig("System.Runtime", "System.ICloneable"), "Other")] }, type, "c");
+''')
+            result = subprocess.run(['dotnet', 'run', '--project', str(work / 'Test.csproj'),
+                                     '--configuration', 'Release'], capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+
 class Repo:
     """A disposable Git repository with src projects and the judge's tool trees."""
     def __init__(self, test):
