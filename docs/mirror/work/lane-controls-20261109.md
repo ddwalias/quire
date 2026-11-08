@@ -28,3 +28,5 @@
   - Shape: `_child` must be declared without an initializer while the constructor stays a stub, or the constructor's body would change.
 - Batch 11: `MruFileItem` (NumberedItems and MaximumMruFileNameToDisplay consts, four DependencyProperty registrations, FullPathAndFileName/IsPinned/NumberedName/FilePath accessors, three constructors, IsPinned_Changed, SetNumberedName). Gate: PASS, 455 checked. Report: `.mirror-cache/release-il-07bb99fec8d5/release-il.json`.
   - Shapes: the one-argument constructor calls the base directly (no `: this()`); the two-argument ones chain to `this(fullPathAndName)`. SetNumberedName uses `indexInList + 1 > NumberedItems ? displayName : format + displayName` (Mathcad branches the other way).
+- Batch 12: `CopyWidgetViewModel` (eight backing fields and change-notifying properties). Gate: PASS, 471 checked. Report: `.mirror-cache/release-il-ae269758cfce/release-il.json`.
+  - Shapes: plain `if (field == value) return;` setters match, including the lifted `DateTime?` equality and the `double` compare.
