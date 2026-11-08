@@ -813,4 +813,20 @@ public partial class RichTextBase
             ToggleRangeToState(start, pair.First, pair.Second + 1, ScriptState.Subscript);
         }
     }
+
+    private List<(TextPointer, TextPointer)> GetSameTypeRunRanges(IReadOnlyList<Run> runs, DocumentTextRange originalRange)
+    {
+        var result = new List<(TextPointer, TextPointer)>();
+        TextPointer runStart = originalRange.Start;
+        for (int i = 1; i < runs.Count; i++)
+        {
+            if (runs[i].GetType() != runs[i - 1].GetType())
+            {
+                result.Add((runStart, runs[i - 1].ContentEnd));
+                runStart = runs[i].ContentStart;
+            }
+        }
+        result.Add((runStart, originalRange.End));
+        return result;
+    }
 }

@@ -360,3 +360,12 @@
 
 - Exact: `SearchBackward` (`while (length > 0)` with `break` on no index, then `length = index.Value`; the same shape as `SearchForward`), `ReplaceText` (`preserveScriptState` branch with `ToggleRangeText(..., double.NaN)` and `return`; otherwise `Selection.Text = string.Empty`, an unused `new Run(text, Selection.Start)`, and a `foreach` over the subscript pairs that calls `ToggleRangeToState(..., Second + 1, ScriptState.Subscript)`).
 - Release IL: PASS — 399 checked, 399 exact, 0 failures, 324 unfinished.
+
+## Batch 58 — RichTextBase same-type run ranges (1)
+
+- Exact: `GetSameTypeRunRanges` (`for` from index 1 comparing run `GetType()` values; `ValueTuple` pairs added with `result.Add((runStart, runs[i - 1].ContentEnd))`).
+- Not matched, left as stubs:
+  - `ToggleRangeToState`. Mathcad keeps the second `TextPointer` in a local (`stloc.0; ldloc.0`) between its two `GetPositionAtTextOffset` calls and the `TextRange` constructor. A plain expression leaves out that local, so the body differs.
+  - `OnCorrectSpellingError`. Mathcad tests `IsNullOrEmpty(word)` with `brfalse` to the body and places a `ret` between the checks. The `&&` form emits `brtrue` to the end, so the layout differs.
+  - `SetRegionPersistentData` (base). Mathcad casts `data` to `textType`, duplicates it for the `DeS11NProvider` setter, and then reads `Document`. No plain statement form produces that `dup`.
+- Release IL: PASS — 400 checked, 400 exact, 0 failures, 323 unfinished.

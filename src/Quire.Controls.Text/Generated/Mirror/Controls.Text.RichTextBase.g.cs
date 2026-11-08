@@ -270,8 +270,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Documents.TextRange SearchWholeWordRuns(global::System.Windows.Documents.TextRange originalRange, string text, global::System.Windows.Documents.LogicalDirection direction, global::System.StringComparison comparisonType, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::System.ValueTuple<global::System.Windows.Documents.TextPointer, global::System.Windows.Documents.TextPointer>> GetSameTypeRunRanges(global::System.Collections.Generic.IReadOnlyList<global::System.Windows.Documents.Run> runs, global::System.Windows.Documents.TextRange originalRange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool SubscriptsMatch(global::System.Windows.Documents.TextRange foundRange, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> findTextSubscriptsList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static global::System.Windows.Documents.TextPointer GetPositionAtTextOffset(global::System.Windows.Documents.TextPointer from, int offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
