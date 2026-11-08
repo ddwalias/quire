@@ -11,14 +11,4 @@ namespace Quire.Calculation;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.EngineConstants, Ptc.Calculation")]
 internal static partial class EngineConstants
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string ResultKey = "%result";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ErrorKey = "%errors-new";
-    [global::Quire.Mirror.MirrorStub]
-    public const string IdBoundLabelsKey = "%labels";
-    [global::Quire.Mirror.MirrorStub]
-    public const string WarningRedefinitionKey = "%redefs";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Algorithms = "%algorithms";
 }

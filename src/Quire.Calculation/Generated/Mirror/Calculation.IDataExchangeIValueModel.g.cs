@@ -11,8 +11,4 @@ namespace Quire.Calculation;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.IDataExchangeIValueModel, Ptc.Calculation")]
 public partial interface IDataExchangeIValueModel : global::Quire.Calculation.Core.IDataExchangeModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    void SetValue(string place, global::Quire.IValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.IValue GetValue(string place) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

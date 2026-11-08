@@ -11,8 +11,4 @@ namespace Quire.Calculation;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.IValueToIResultNodeTransform, Ptc.Calculation")]
 public partial interface IValueToIResultNodeTransform
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool SimplifyUnits { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.IResultNode Transform(global::Quire.Automation.IAutomationValue v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

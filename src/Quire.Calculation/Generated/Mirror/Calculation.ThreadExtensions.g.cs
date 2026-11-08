@@ -11,8 +11,4 @@ namespace Quire.Calculation;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.ThreadExtensions, Ptc.Calculation")]
 public static partial class ThreadExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Globalization.CultureInfo appCulture;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Globalization.CultureInfo appCultureUI;
 }

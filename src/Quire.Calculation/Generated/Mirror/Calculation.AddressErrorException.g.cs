@@ -11,12 +11,4 @@ namespace Quire.Calculation;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.AddressErrorException, Ptc.Calculation")]
 public partial class AddressErrorException : global::System.Exception
 {
-    [global::Quire.Mirror.MirrorStub]
-    public AddressErrorException() { }
-    [global::Quire.Mirror.MirrorStub]
-    public AddressErrorException(string message) { }
-    [global::Quire.Mirror.MirrorStub]
-    public AddressErrorException(string message, global::System.Exception innerException) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected AddressErrorException(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) { }
 }

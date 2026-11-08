@@ -1,4 +1,5 @@
 #nullable disable
+using System;
 using System.Globalization;
 using System.Threading;
 using Quire.Mirror;
@@ -7,6 +8,9 @@ namespace Quire.Calculation;
 
 public static partial class ThreadExtensions
 {
+    private static CultureInfo appCulture;
+    private static CultureInfo appCultureUI;
+
     [MirrorVerified("PtcCalculationThreadExtensions_MechanicalDifferentialTests")]
     public static void CaptureUiThreadCulture()
     {
