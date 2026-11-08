@@ -173,3 +173,8 @@
 
 - Exact: `OnDrop` (`IsOnDrop` set around `base.OnDrop`), `ExecuteToggleScriptUndoCommand`, `PastingHandler`, `AttemptActivatingSpellCheck`, `OnPreviewTextInput`, `Copy` (try/finally with `ClearIsInCopy`), `FirePropertyChanged` (local handler copy).
 - Release IL: PASS — 252 checked, 252 exact, 0 failures, 471 unfinished.
+
+## Batch 26 — RichTextBase region data, property-changed guards, paste and caret handlers (6)
+
+- Exact: `DoGetRegionPersistentDataInternal` (object initializer for `textType`: `Document`, `S11NProvider`), `OnProhibitedPropertyChanged` (`DevAssert(false)`), `UpdateCurrentProofingLanguage`, `OnInheritedOnlyPropertyChanged` (`ReadLocalValue(e.Property) == UnsetValue`), `OnPreviewEnter` (`object.Equals(sender, this)`), `CanExecutePasteIntoTextRegion`.
+- Release IL: PASS — 258 checked, 258 exact, 0 failures, 465 unfinished.

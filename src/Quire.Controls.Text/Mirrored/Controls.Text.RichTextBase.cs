@@ -4,6 +4,8 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Input;
+using Quire.PersistentDataObjects;
+using Quire.Serialization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -230,5 +232,44 @@ public partial class RichTextBase
         {
             handler(this, e);
         }
+    }
+
+    protected virtual textType DoGetRegionPersistentDataInternal(IS11NProvider s11NProvider)
+    {
+        return new textType
+        {
+            Document = Document,
+            S11NProvider = s11NProvider,
+        };
+    }
+
+    private static void OnProhibitedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        DebugTools.DevAssert(false);
+    }
+
+    protected void UpdateCurrentProofingLanguage(DocumentTextRange range)
+    {
+        CurrentProofingLanguage = ComputeProofingLanguage(range);
+    }
+
+    protected static void OnInheritedOnlyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        DebugTools.DevAssert(d.ReadLocalValue(e.Property) == DependencyProperty.UnsetValue);
+    }
+
+    private void OnPreviewEnter(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (object.Equals(sender, this))
+        {
+            CacheSubscriptStateOnTypeOver(false);
+        }
+    }
+
+    private void CanExecutePasteIntoTextRegion(object sender, CanExecuteRoutedEventArgs e)
+    {
+        bool canPaste = WpfClipboard.CanPasteIntoTextRegion();
+        e.CanExecute = canPaste;
+        e.Handled = !canPaste;
     }
 }
