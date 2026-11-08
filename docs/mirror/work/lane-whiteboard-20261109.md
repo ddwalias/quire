@@ -39,3 +39,15 @@
 - Shapes: pure interface declarations without bodies; matched first time.
 - Release IL: PASS — 339 checked, 0 failures, 632 unfinished (`release-il-282180e10a25`).
 - Remaining mismatches in this batch: none.
+
+## Batch 4 — WhiteboardCommand, WhiteboardCommands
+
+- Members:
+  - `WhiteboardCommand`: `ViewModel`, `Name` (get/set), `.ctor`, `Execute`, abstract `Do`, `Undo`, `Redo`
+  - `WhiteboardCommands`: `.cctor` (static commands `DeleteActiveItem`, `DeleteSelectedItems`, `DeleteActiveOrSelectedItems`, `InsertVerticalSpace`, `DeleteVerticalSpaceAbove`, `DeleteVerticalSpaceBelow`, `SeparateOverlappedItemsVertically`, `SeparateOverlappedItemsHorizontally`, `SelectAllRegions`)
+- Hand-written: `Mirrored/Controls.Whiteboard.Commands.WhiteboardCommand.cs`, `Mirrored/Controls.Whiteboard.WhiteboardCommands.cs`.
+- Stubs removed: `Generated/Mirror/Controls.Whiteboard.Commands.WhiteboardCommand.g.cs`, `Generated/Mirror/Controls.Whiteboard.WhiteboardCommands.g.cs`.
+- Shapes: `ViewModel` as `_viewModel as WhiteboardViewModel`; `Execute` calling `CommandBuffer.Execute(this)`; `.cctor` initializing commands and input gestures matching IL.
+- Release IL: PASS — 230 checked, 0 failures, 627 unfinished (`release-il-b8d8f167d702`).
+- Remaining mismatches in this batch: none.
+

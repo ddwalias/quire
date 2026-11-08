@@ -11,20 +11,4 @@ namespace Quire.Controls.Whiteboard.Commands;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.Commands.WhiteboardCommand, Ptc.Controls.Whiteboard")]
 public abstract partial class WhiteboardCommand : global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.Controls.Whiteboard.IWhiteboardViewModel _viewModel;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.Controls.Whiteboard.WhiteboardViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected WhiteboardCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, string commandName) { }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract bool Do();
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void Undo();
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void Redo();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Execute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
