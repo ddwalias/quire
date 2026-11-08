@@ -11,16 +11,4 @@ namespace Quire.Calculation;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.DataExchangeScriptingHandler, Ptc.Calculation")]
 internal partial class DataExchangeScriptingHandler : global::Quire.Calculation.DataExchangeHandler
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.ICalculatableWithDataExchange _calculatableWithDataExchange;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.IDataExchangeScriptingModel DataExchangeeScriptingModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public DataExchangeScriptingHandler(global::Quire.Calculation.Core.ICalculatableWithDataExchange calculatableWithDataExchange, global::System.Windows.Threading.Dispatcher dispatcher, global::System.Action handleEngineNeedsUIThreadMessagesProcessed, global::Quire.Calculation.CalculationController.EngineOptions engineOptions) : base(default(global::Quire.Calculation.Core.IDataExchangeModel), default(global::System.Windows.Threading.Dispatcher), default(global::System.Action), default(global::Quire.Calculation.CalculationController.EngineOptions)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void SetValueDispatch(string id, global::Quire.IValue value, bool isAutoCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.IValue GetValueDispatch(string id, bool isCalculate, bool isAutoCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void CommitIfNeeded() => base.CommitIfNeeded();
 }
