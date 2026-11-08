@@ -178,3 +178,9 @@
 
 - Exact: `DoGetRegionPersistentDataInternal` (object initializer for `textType`: `Document`, `S11NProvider`), `OnProhibitedPropertyChanged` (`DevAssert(false)`), `UpdateCurrentProofingLanguage`, `OnInheritedOnlyPropertyChanged` (`ReadLocalValue(e.Property) == UnsetValue`), `OnPreviewEnter` (`object.Equals(sender, this)`), `CanExecutePasteIntoTextRegion`.
 - Release IL: PASS — 258 checked, 258 exact, 0 failures, 465 unfinished.
+
+## Batch 27 — RichTextBase helpers (6)
+
+- Exact: `LoadXamlContent` (try/catch with `DebugTools.LogError(ex.ToString())`), `UpdateCurrentFormats` (`GetIsSelected(this) ? (TextRange)TextRange : Selection`; the negated form `!GetIsSelected ? Selection : TextRange` laid out the arms the other way and differed), `GetSpellingErrorInPosition`, `ClearSplitFontSizeDataQueue`, `SetCaretOffsetAtContentEnd`, `SetCaretPositionAndClearSuggestedX`.
+- Not done: `GetTextOnlyFromRuns` (static; the Release IL calls `GetTextBoundary` with no receiver, but the generated stub declares `GetTextBoundary` as an instance method; to be checked against the original metadata).
+- Release IL: PASS — 264 checked, 264 exact, 0 failures, 459 unfinished.

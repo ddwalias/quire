@@ -272,4 +272,48 @@ public partial class RichTextBase
         e.CanExecute = canPaste;
         e.Handled = !canPaste;
     }
+
+    private void LoadXamlContent(string pasteXaml)
+    {
+        try
+        {
+            TextRangeExtensionMethods.LoadElementFromClipboard(Selection, pasteXaml);
+        }
+        catch (Exception ex)
+        {
+            DebugTools.LogError(ex.ToString());
+        }
+    }
+
+    protected virtual void UpdateCurrentFormats()
+    {
+        UpdateCurrentProofingLanguage(WhiteboardDependencyProperties.GetIsSelected(this) ? (DocumentTextRange)TextRange : Selection);
+    }
+
+    public SpellingError GetSpellingErrorInPosition(ref TextPointer position)
+    {
+        SpellingError spellingError;
+        GetSpellingErrorAtPosition(ref position, out spellingError);
+        return spellingError;
+    }
+
+    private void ClearSplitFontSizeDataQueue()
+    {
+        if (_splitData.Count > 0)
+        {
+            DebugTools.FailAssertion();
+        }
+        _splitData.Clear();
+    }
+
+    public void SetCaretOffsetAtContentEnd()
+    {
+        CaretOffset = TextRange.Start.GetTextInRun(LogicalDirection.Forward).Length;
+    }
+
+    protected void SetCaretPositionAndClearSuggestedX(TextPointer caretPosition)
+    {
+        EditingCommands.MoveToDocumentStart.Execute(null, this);
+        CaretPosition = caretPosition;
+    }
 }
