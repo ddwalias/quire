@@ -162,15 +162,11 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     private static void RequestNavigateHandler(object sender, global::System.Windows.Navigation.RequestNavigateEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void NavigateToHyperLink(global::System.Windows.Documents.Hyperlink link) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OpenHyperlinkUrl(global::System.Uri path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Nullable<global::Quire.IO.NavigateUrlErrorWarningKeys> ValidateURL(global::System.Uri absolutePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool HandleLinkOpsOnPreviewKeyDown(global::System.Windows.Input.Key key) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void CollectKeyDataForPostChangeHyperlinkInsertion(global::System.Windows.Input.Key key, global::System.Windows.Input.ModifierKeys keyModifiers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void TryPostChangeHyperlinkInsertion(global::System.Collections.Generic.ICollection<global::System.Windows.Controls.TextChange> changes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

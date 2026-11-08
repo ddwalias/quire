@@ -937,4 +937,43 @@ public partial class RichTextWithEmbeddedItem
         }
         return result;
     }
+
+    private void NavigateToHyperLink(Hyperlink link)
+    {
+        if (DebugTools.AssertNotNull(link).Failed)
+        {
+            return;
+        }
+        TextPointer position = null;
+        try
+        {
+            position = GetPositionFromPoint(Mouse.GetPosition(this), true);
+        }
+        catch (Exception)
+        {
+        }
+        if (DebugTools.DevAssert(position != null && link.ContentStart.CompareTo(position) <= 0 && link.ContentEnd.CompareTo(position) >= 0).Failed)
+        {
+            position = link.ElementStart;
+        }
+        if (!IsActive)
+        {
+            Activate(true);
+        }
+        else
+        {
+            Focus();
+        }
+        CaretPosition = position;
+        DisplayHyperlink(link);
+    }
+
+    internal void CollectKeyDataForPostChangeHyperlinkInsertion(Key key, ModifierKeys keyModifiers)
+    {
+        if (key == Key.Tab || key == Key.Return || key == Key.Space)
+        {
+            int caretOffset = CaretOffset;
+            _keyDownData = DebugTools.DevAssert(caretOffset >= 0).Passed ? new PreviewKeyDownData(key, caretOffset) : (PreviewKeyDownData?)null;
+        }
+    }
 }

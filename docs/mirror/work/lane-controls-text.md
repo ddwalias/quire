@@ -325,3 +325,9 @@
 - Exact: `DeleteActiveOrSelectedItems` (the `Activate(true)` question from batch 46 is settled: it binds to the base method, see batch 50), `GetWrapper` (static; `foreach` over `Grid.Children` with the duplicate check and `break`, the `break` lands on the `return result`).
 - Not attempted: `OpenHyperlinkUrl` (depends on `ValidateURL`, which is not implemented), `RangeContainsOnlyInlineElements` (the loop condition mixes `&` and `&&`, and the source form is unclear).
 - Release IL: PASS — 386 checked, 386 exact, 0 failures, 337 unfinished.
+
+## Batch 52 — RichTextWithEmbeddedItem hyperlink navigation and key-down data (2)
+
+- Exact: `NavigateToHyperLink` (try/catch around the mouse position, `DevAssert(...).Failed` fallback to `ElementStart`, `IsActive` branch with `Focus()`), `CollectKeyDataForPostChangeHyperlinkInsertion` (`Key.Tab`, `Key.Return`, `Key.Space`; the nullable is `Passed ? new PreviewKeyDownData(...) : (PreviewKeyDownData?)null`). The key numbers in IL are 3, 6, 18, which are Tab, Return, Space.
+- Not attempted: `UpdateHideFromCalculationButton` (its `Any` predicate is a `<>c` cached lambda, so closure ordinal first).
+- Release IL: PASS — 388 checked, 388 exact, 0 failures, 335 unfinished.
