@@ -829,4 +829,59 @@ public partial class RichTextBase
         result.Add((runStart, originalRange.End));
         return result;
     }
+
+    protected virtual void CopyingHandler(object sender, DataObjectCopyingEventArgs e)
+    {
+        if (!e.OriginalSource.Equals(this))
+        {
+            return;
+        }
+        if (Selection.IsNotEmpty())
+        {
+            e.DataObject.GetData(DataFormats.Rtf);
+            SerializeRangeContentToRtfString(new DocumentTextRange(Selection.Start.GetPositionAtOffset(0), Selection.End.GetPositionAtOffset(0)));
+            SerializeRangeContentToRtfString(TextRange);
+        }
+        DocumentAttachedProperties.ClearIsInCopy(this);
+    }
+
+    public virtual bool FindOncePrivate(string text, bool startFromCaret, LogicalDirection direction, FindOptions options, List<Pair<int, int>> subscriptPositions)
+    {
+        if ((options & FindOptions.FindInText) == 0)
+        {
+            return false;
+        }
+        TextPointer start = Document.ContentStart;
+        TextPointer end = Document.ContentEnd;
+        if (startFromCaret)
+        {
+            if (LogicalDirection.Forward == direction)
+            {
+                start = CaretPosition;
+            }
+            else
+            {
+                end = CaretPosition;
+            }
+        }
+        return FindInRange(start, end, text, direction, options, subscriptPositions);
+    }
+
+    private void SpellingErrorCorrected()
+    {
+        if (!_spellingErrorRange.HasValue)
+        {
+            return;
+        }
+        var (start, end) = _spellingErrorRange.Value;
+        _spellingErrorRange = null;
+        TextPointer startPointer = Document.ContentStart.GetPositionAtOffset(start);
+        TextPointer endPointer = startPointer?.GetPositionAtOffset(end);
+        if (endPointer != null)
+        {
+            CustomScriptRunBase.RecoverSubSuperscriptRunsInRange(new DocumentTextRange(startPointer, endPointer));
+            return;
+        }
+        DebugTools.FailAssertion((string)null);
+    }
 }

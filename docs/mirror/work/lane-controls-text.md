@@ -369,3 +369,9 @@
   - `OnCorrectSpellingError`. Mathcad tests `IsNullOrEmpty(word)` with `brfalse` to the body and places a `ret` between the checks. The `&&` form emits `brtrue` to the end, so the layout differs.
   - `SetRegionPersistentData` (base). Mathcad casts `data` to `textType`, duplicates it for the `DeS11NProvider` setter, and then reads `Document`. No plain statement form produces that `dup`.
 - Release IL: PASS — 400 checked, 400 exact, 0 failures, 323 unfinished.
+
+## Batch 59 — RichTextBase copy handler, find in text, and spelling-error recovery (3)
+
+- Exact: `CopyingHandler` (protected virtual; RTF serialization of the selection, then `ClearIsInCopy`), `FindOncePrivate` (public virtual; `FindInText` gate, then the caret goes to the start for `Forward` and the end otherwise), `SpellingErrorCorrected` (tuple deconstruction of `_spellingErrorRange.Value`; the end pointer uses `startPointer?.GetPositionAtOffset(end)`, which emits `call` as Mathcad does; the failure uses `FailAssertion((string)null)` because the `null` literal is ambiguous).
+- Not attempted: `EndCommandScope` (the queue and active-scope tail is long; left for a later batch), `GetSpellingErrorAtPosition` (try/catch with `ref` and `dup`).
+- Release IL: PASS — 403 checked, 403 exact, 0 failures, 320 unfinished.
