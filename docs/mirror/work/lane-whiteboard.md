@@ -60,3 +60,9 @@
 - Members: `SelectedItems`, `ActiveOrSelectedItems`, `SelectedDescendants`, `InsertionPointForResize` (private set, auto), `MinimumSize`, `MinimumWidth`, `MinimumHeight`, `StrictMinimumSize` (protected virtual), `MaximumSize`, `MaximumWidth`, `MaximumHeight`.
 - Shapes: `MinimumWidth` setter as `Math.Max(value > MaximumSize.Width ? MaximumSize.Width : value, StrictMinimumSize.Width)` (the IL uses the ternary and `Math.Max`, not `Math.Min`); `MinimumHeight` as `Math.Max(value, StrictMinimumSize.Height)`. Both matched first time.
 - Release IL: PASS — 148 checked, 0 failures (`release-il-11d2535cc461`).
+
+## Batch 9 — WhiteboardViewModel active item and content size
+
+- Members: `ActiveItem` (get/set, virtual), `FirstSelectedItem` (protected auto), `SetContentHeight`/`SetContentWidth` (protected virtual), `FireActivated` (`Activated?.Invoke()`), `GetItemIsInPasting`, `GetItemGridPosition`, `GetItemIgnoreForHorizontalMovementAndWidth`.
+- Shapes: `SetContent*` as `Math.Max(MinimumX, value)` into a local, then the `IsEqualTo` early return matched first time. `ActiveItem`'s setter as the sequence of early returns, the `value != null && !Contains` throw, and the nested `if` blocks matched first time, including `Rect itemRect` for the `Contains` test.
+- Release IL: PASS — 158 checked, 0 failures (`release-il-6b3aabd7c0ca`).

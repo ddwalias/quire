@@ -332,4 +332,105 @@ public partial class WhiteboardViewModel
             OnPropertyChanged("MaximumWidth");
         }
     }
+
+    public virtual IWhiteboardItem ActiveItem
+    {
+        get
+        {
+            return _activeItem;
+        }
+        set
+        {
+            if (_activeItem == value)
+            {
+                return;
+            }
+
+            if (value != null && !WhiteboardItems.Contains(value))
+            {
+                throw new ArgumentException("Only a child can be set as an ActiveItem");
+            }
+
+            if (_activeItem != null)
+            {
+                UnhookActiveItem(_activeItem);
+                if (HandleUserInput)
+                {
+                    DeactivateActiveItem();
+                }
+            }
+
+            DeleteItemIfNeeded(_activeItem);
+            _activeItem = value;
+            if (_activeItem != null)
+            {
+                HookupActiveItem(_activeItem);
+                ClearSavedState();
+                ClearSelectedItems();
+                Rect itemRect = GetItemRect(_activeItem);
+                if (!itemRect.Contains(_insertionPoint))
+                {
+                    _insertionPoint = GetItemLocation(_activeItem);
+                }
+
+                IsCrosshairVisible = false;
+                if (HandleUserInput)
+                {
+                    ActivateActiveItem();
+                }
+
+                FireActivated();
+            }
+
+            OnPropertyChanged("ActiveItem");
+        }
+    }
+
+    protected IWhiteboardItem FirstSelectedItem { get; set; }
+
+    protected virtual void SetContentHeight(double height)
+    {
+        double contentHeight = Math.Max(MinimumHeight, height);
+        if (_contentHeight.IsEqualTo(contentHeight))
+        {
+            return;
+        }
+
+        _contentHeight = contentHeight;
+        _alignmentGrid.GridArea = new Rect(new Size(ContentWidth, ContentHeight));
+        OnPropertyChanged("ContentHeight");
+    }
+
+    protected virtual void SetContentWidth(double width)
+    {
+        double contentWidth = Math.Max(MinimumWidth, width);
+        if (_contentWidth.IsEqualTo(contentWidth))
+        {
+            return;
+        }
+
+        _contentWidth = contentWidth;
+        _alignmentGrid.GridArea = new Rect(new Size(ContentWidth, ContentHeight));
+        OnPropertyChanged("ContentWidth");
+    }
+
+    protected void FireActivated()
+    {
+        Activated?.Invoke();
+    }
+
+    public bool GetItemIsInPasting(IWhiteboardItem item)
+    {
+        return WhiteboardItemMgr.GetItemIsInPasting(item);
+    }
+
+    public virtual Point GetItemGridPosition(IWhiteboardItem item)
+    {
+        return Grid.ConvertDipsToGridCoordinates(GetItemLocation(item));
+    }
+
+    public virtual bool GetItemIgnoreForHorizontalMovementAndWidth(IWhiteboardItem item)
+    {
+        return WhiteboardItemMgr.GetIgnoreForHorizontalMovementAndWidth(item);
+    }
 }
