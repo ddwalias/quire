@@ -645,4 +645,26 @@ public partial class RichTextBase
         }
         ClearIsInSerialization();
     }
+
+    private void OnPreviewCopy(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (!e.OriginalSource.Equals(this) || !IsActive)
+        {
+            return;
+        }
+        DocumentAttachedProperties.SetIsInCopy(this, true);
+    }
+
+    public void SaveWholeTextToRtf(Stream rtfStream)
+    {
+        try
+        {
+            StartCommandScope();
+            TextRange.Save(rtfStream, DataFormats.Rtf, true, false);
+        }
+        finally
+        {
+            EndCommandScope();
+        }
+    }
 }

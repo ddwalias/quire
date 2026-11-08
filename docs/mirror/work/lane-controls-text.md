@@ -331,3 +331,9 @@
 - Exact: `NavigateToHyperLink` (try/catch around the mouse position, `DevAssert(...).Failed` fallback to `ElementStart`, `IsActive` branch with `Focus()`), `CollectKeyDataForPostChangeHyperlinkInsertion` (`Key.Tab`, `Key.Return`, `Key.Space`; the nullable is `Passed ? new PreviewKeyDownData(...) : (PreviewKeyDownData?)null`). The key numbers in IL are 3, 6, 18, which are Tab, Return, Space.
 - Not attempted: `UpdateHideFromCalculationButton` (its `Any` predicate is a `<>c` cached lambda, so closure ordinal first).
 - Release IL: PASS — 388 checked, 388 exact, 0 failures, 335 unfinished.
+
+## Batch 53 — RichTextBase copy marking and whole-text RTF save (2)
+
+- Exact: `OnPreviewCopy` (`!e.OriginalSource.Equals(this) || !IsActive` early return, then `SetIsInCopy`), `SaveWholeTextToRtf` (`try`/`finally` around `StartCommandScope`, `TextRange.Save(..., Rtf, true, false)`, `EndCommandScope`).
+- Not matched, left as stubs: `HandleToggleSubscriptCommand` and `HandleToggleSuperscriptCommand`. Mathcad's `<HandleToggleSubscriptCommand>g__IsSubscriptElement|118_0` local function has ordinal 118, while the same local function in this merged type compiles to ordinal 290. Roslyn also caches the static method-group delegate in a `<>O` field, which Mathcad's IL does not do. Blocked on ordinal and caching; same as the closure-ordinal blockers.
+- Release IL: PASS — 390 checked, 390 exact, 0 failures, 333 unfinished.
