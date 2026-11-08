@@ -50,9 +50,15 @@
 - Remaining unfinished members (all placeholders, `=> throw global::Quire.Mirror.MirrorStub.NotImplemented();` unless noted):
   - `CollapsibleAreaControl.PrintViewport` setter: Release IL uses `ldarg`-free `HasValue` value-materialization (`beq.s`, `ldc.i4.0`, `br.s`, then `brfalse.s`). Tried: block `if (A || B) return/set`, `if (sameState) return;`; both emit `bne.un` jump form. Not matched.
   - `CollapsibleAreaControl.HideFromCalculationContext` setter: Release IL is `bne.un.s` + `ret` for `if (HideFromCalculationContext == value) return;` and then the nested closures; Quire emits `ceq`/`ldc.i4.0`/`ceq`/`brtrue` for the same test. Not matched; the two closures (`<>c__DisplayClass76_0`) are inside the placeholder.
-  - `CollapsibleAreaControl.HandlePrintViewportChanged` (internal static, closures `DisplayClass43_0/43_1`): the layout now matches up to a 1-byte offset difference in a `brfalse` (Quire 93 vs Mathcad 92) before the enumerator loop. Not matched.
   - `CollapsibleAreaViewModel.OnToggleProtectState` (see batch 4): the `func` lambda `cgt.un` shape.
   - `CollapsibleAreaViewModel.HandleGridCellSizeChanged`: pass-through as on main (see batch 4).
+
+## Batch 6 — HandlePrintViewportChanged
+
+- Member: `CollapsibleAreaControl.HandlePrintViewportChanged` (internal static).
+- Shape that matched: the same branch order as batch 5 (`if (isInPrintCommon.HasValue) {Each} else {foreach}`), with **no `return;` inside the `foreach`**. The `return` made Roslyn emit an extra `ret` before the outer `else` (leave target mismatch at `leave.s` / `brfalse` offsets); removing it gives Mathcad's single epilogue.
+- Release IL: PASS — 226 checked, 226 exact, 0 failures.
+- Remaining placeholders: `Control.PrintViewport` setter, `Control.HideFromCalculationContext` setter, `ViewModel.OnToggleProtectState`, and `ViewModel.HandleGridCellSizeChanged` (pass-through). Shapes tried for each are recorded in the sections below.
 
 ## Remaining (not yet started)
 - Nothing implementable is left in this assembly. The 5 unfinished members above need a shape not yet found; the next step is the gate on those shapes, not new members.

@@ -203,7 +203,50 @@ public partial class CollapsibleAreaControl
         set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
-    internal static void HandlePrintViewportChanged(ICollapsibleAreaControl area, Size renderSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal static void HandlePrintViewportChanged(ICollapsibleAreaControl area, Size renderSize)
+    {
+        Rect? val = ((area.PrintViewport.HasValue && area.IsCollapsed) ? new Rect?(Rect.Empty) : area.PrintViewport);
+        if (val.HasValue)
+        {
+            Rect value = val.Value;
+            bool? isInPrintCommon = null;
+            if (value.IsEmpty)
+            {
+                isInPrintCommon = false;
+            }
+            else if (value.IsEqualTo(new Rect(new Point(0.0, 0.0), renderSize)))
+            {
+                isInPrintCommon = true;
+            }
+            // Release IL emits the fixed-value branch before the per-item branch.
+            if (isInPrintCommon.HasValue)
+            {
+                area.WhiteboardItems.Each((IWhiteboardItem item) =>
+                {
+                    area.WhiteboardItemManager.SetItemIsInPrinting(item, isInPrintCommon.Value);
+                });
+            }
+            else
+            {
+                foreach (IWhiteboardItem whiteboardItem in area.WhiteboardItems)
+                {
+                    bool flag = MathboardControl.IsItemInViewPort(area.WhiteboardItemManager, whiteboardItem, value, out var subViewPort);
+                    if (!flag && whiteboardItem is IMathboardControl mathboardControl)
+                    {
+                        flag = mathboardControl.HasItemInViewPort(subViewPort);
+                    }
+                    area.WhiteboardItemManager.SetItemIsInPrinting(whiteboardItem, flag);
+                }
+            }
+        }
+        else
+        {
+            area.WhiteboardItems.Each((IWhiteboardItem item) =>
+            {
+                area.WhiteboardItemManager.ClearItemIsInPrinting(item);
+            });
+        }
+    }
 
     public override string GetBlockEquationTypeAttributeName(IWhiteboardItem item)
     {
