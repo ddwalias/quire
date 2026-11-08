@@ -2,6 +2,51 @@ namespace Quire.Controls;
 
 internal partial class SolveBlockCalculatable
 {
+    public global::Quire.Calculation.Core.EngineResult EngineResult
+    {
+        get
+        {
+            if (!(WrappedCalculatable is global::Quire.Calculation.Core.ICalculatableResultOwner owner))
+                return default;
+            return owner.EngineResult;
+        }
+        set
+        {
+            if (WrappedCalculatable is global::Quire.Calculation.Core.ICalculatableResultOwner owner)
+                owner.EngineResult = value;
+        }
+    }
+
+    public bool InterceptAndUpdateResult
+    {
+        get
+        {
+            if (!(WrappedCalculatable is global::Quire.Calculation.Core.ICalculatableResultOwner owner))
+                return false;
+            return owner.InterceptAndUpdateResult;
+        }
+    }
+
+    public bool UseICalculatableToRestoreResult
+    {
+        get
+        {
+            if (!(WrappedCalculatable is global::Quire.Calculation.Core.ICalculatableResultOwner owner))
+                return false;
+            return owner.UseICalculatableToRestoreResult;
+        }
+    }
+
+    public global::Quire.Calculation.Core.EngineError CurrentError
+    {
+        get
+        {
+            if (WrappedCalculatable is global::Quire.Calculation.Core.ICalculationErrorOwner owner)
+                return owner.CurrentError;
+            return null;
+        }
+    }
+
     public static int FindMatchingParenthesis(int startParenPos, string str)
     {
         int nesting = 1;

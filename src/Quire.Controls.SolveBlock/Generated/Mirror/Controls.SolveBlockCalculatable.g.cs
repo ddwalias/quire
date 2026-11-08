@@ -18,14 +18,6 @@ internal partial class SolveBlockCalculatable : global::Quire.Calculation.Core.S
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.SolveBlockEquationTypes EquationType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.EngineResult EngineResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool InterceptAndUpdateResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool UseICalculatableToRestoreResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.EngineError CurrentError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
     public SolveBlockCalculatable(global::Quire.Calculation.Core.ICalculatable wrappedCalculatable) : base(default(global::Quire.Calculation.Core.ICalculatable)) { }
