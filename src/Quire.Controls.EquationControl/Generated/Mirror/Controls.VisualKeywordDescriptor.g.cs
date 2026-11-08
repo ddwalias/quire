@@ -11,6 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.VisualKeywordDescriptor, Ptc.Controls.EquationControl")]
 public partial class VisualKeywordDescriptor : global::Quire.Controls.VisualIdDescriptor
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override object CommandParameter { get => base.CommandParameter; }
 }

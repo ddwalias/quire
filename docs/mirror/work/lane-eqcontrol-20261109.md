@@ -26,4 +26,7 @@
 - Batch: `Ptc.Controls.VisualKeywordDescriptor.DisplayName` getter and setter.
 - Shapes tried: idiomatic pass-through override to the base property; exact Release IL and no gate failures.
 - Release IL: PASS, 607 checked, 0 failures; `.mirror-cache/release-il-68802dcdb4c1/release-il.json`.
-- Remaining: 4,494 unfinished members across 327 generated type files; these batches have no mismatches.
+- Batch: `Ptc.Controls.VisualKeywordDescriptor.CommandParameter` getter.
+- Shapes tried: original `if (!SExpression.IsNullOrEmpty())` branch order with the mapped extension method; exact Release IL.
+- Release IL: PASS, 608 checked, 0 failures; `.mirror-cache/release-il-80c8f19f17a8/release-il.json`.
+- Remaining: 4,493 unfinished members across 327 generated type files; these batches have no mismatches.
