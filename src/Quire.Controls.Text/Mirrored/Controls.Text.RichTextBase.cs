@@ -593,4 +593,56 @@ public partial class RichTextBase
         return result;
     }
 
+
+    private void ApplySpellCheckValue(bool value)
+    {
+        DebugTools.LogData("RichTextBase.ApplySpellCheckValue(" + value.ToString() + "): Enter");
+        if (SpellCheck.GetIsEnabled(this) == value)
+        {
+            return;
+        }
+        try
+        {
+            if (!value)
+            {
+                SpellCheck.CustomDictionaries.Clear();
+            }
+            else
+            {
+                if (File.Exists(DictionaryHelper.WpfSpellerCustomDictionaryUri.LocalPath) && !DictionaryHelper.IsWindowsSpellerCustomDictionaryValid)
+                {
+                    SpellCheck.CustomDictionaries.Add(DictionaryHelper.WpfSpellerCustomDictionaryUri);
+                }
+            }
+            SpellCheck.SetIsEnabled(this, value);
+        }
+        catch (Exception ex)
+        {
+            DebugTools.FailAssertion(ex);
+        }
+    }
+
+    private void HandleIsInPrintingChanged(DependencyPropertyChangedEventArgs args)
+    {
+        if ((bool)args.NewValue)
+        {
+            SetIsInSerialization();
+            _textChangeCounter = 0;
+            return;
+        }
+        if (_textChangeCounter > 0)
+        {
+            using (CommandScope scope = new CommandScope(new CompoundCommand()))
+            {
+                SetRevertCoerceAfterSerializationProcess();
+                while (_textChangeCounter > 0)
+                {
+                    base.Undo();
+                    _textChangeCounter--;
+                }
+            }
+            ClearRevertCoerceAfterSerializationProcess();
+        }
+        ClearIsInSerialization();
+    }
 }

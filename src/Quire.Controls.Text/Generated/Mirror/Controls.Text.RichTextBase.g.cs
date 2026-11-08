@@ -188,8 +188,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     private static void ContextMenuOpened(object sender, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HandleIsInPrintingChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected virtual void EndCommandScope() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public RichTextBase() { }
@@ -227,8 +225,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     private void HandleSetCurrentProofingLanguage(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Serialization.TextRangeExtended GetWordRangeAtCaretPosition(out string wordText, global::Quire.Controls.Text.TextFromRunsStops stopFlags, bool allowCursorAtWordBoundary) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ApplySpellCheckValue(bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Documents.TextPointer GetSpellingErrorAtPosition(ref global::System.Windows.Documents.TextPointer textPointer, out global::System.Windows.Controls.SpellingError spellingError) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -271,8 +267,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     private void VerifyInsertionPositions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected internal int GetInsertionPointAtPointer(ref global::System.Windows.Documents.TextPointer pointer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void SelectTo(int toOffset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Collections.Generic.IEnumerable<object> EnumerateEmbeddedObjectsInRange(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -395,4 +389,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     private global::System.Windows.Documents.TextPointer GetPointerToAddDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void PostPasting() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public virtual void SelectTo(int toOffset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

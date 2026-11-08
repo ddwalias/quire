@@ -218,3 +218,9 @@
 - Exact: `OnPasteCanExecute`, `StartOrStopSpellCheckActivationTimer` (`if (start) { ... } else { ... }`, with the handled test inside the true branch and no `return`), `RefreshDictionary`, `SerializeRangeContentToRtfString` (static, nested `using`).
 - Not matched: `PostPasting`. Its `Each` lambda compiles to `<PostPasting>b__N_0`, and N is the method's ordinal in the merged type (Mathcad 159). With `PostPasting` in the hand-written partial the merged ordinal is 221, because the remaining generated members come first and cannot be reduced without implementing them. Left as a stub; blocked on lambda ordinal.
 - Release IL: PASS — 288 checked, 288 exact, 0 failures, 435 unfinished.
+
+## Batch 33 — RichTextBase spell-check toggle and print-state handler (2)
+
+- Exact: `ApplySpellCheckValue` (`if (!value) Clear(); else { if (exists && !valid) Add; }` inside try/catch), `HandleIsInPrintingChanged` (early return on `NewValue`; `while` loop with `base.Undo()` inside a `using (CommandScope)`).
+- Not matched: `SelectTo`. Release IL evaluates `Selection.IsEmpty` with a `brtrue` to the caret arm placed last and stores the anchor once through a shared `stloc.0`. Neither a ternary (arm order) nor if/else (per-branch stores) reproduced that. Left as a stub.
+- Release IL: PASS — 290 checked, 290 exact, 0 failures, 433 unfinished.
