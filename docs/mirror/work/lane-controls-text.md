@@ -285,3 +285,8 @@
 - Exact: `ShowQuestionWarningDialog` (`ShowQuestion(..., YesNo) == Yes`), `HasHyperlinkInMouseContext` (`element != null ? element.GetTextElementParentOrSelf<Hyperlink>() : GetHyperlinkFromTextPointer(GetPositionFromPoint(Mouse.GetPosition(this), false))`; the other arm order puts the calls in the wrong IL order).
 - Not matched, left as a stub: `InsertBaselineOffsetTag`. Mathcad calls `GetPropertyValue` and `ApplyPropertyValue` with `callvirt` on a `new TextRange(...)` receiver; Roslyn emits `call` for a `new` receiver. Same blocker as `RichTextTitle.GetText`.
 - Release IL: PASS — 369 checked, 369 exact, 0 failures, 354 unfinished.
+
+## Batch 45 — RichTextWithEmbeddedItem add-embedded-item overload and clipboard embedded-item check (2)
+
+- Exact: `AddEmbeddedItem(IWhiteboardItemInText, bool)` (the other two overloads stay stubs; the stub line for this overload is removed by its signature only, since `rmstub` removes every overload with the name), `DataObjectContainsAnyEmbeddedItems` (static, optional `filter`; the Mathcad `Nullable` is a pattern temporary, so the source is `is RichTextEmbeddedItemsInfo info`, not a named `info` local).
+- Release IL: PASS — 371 checked, 371 exact, 0 failures, 352 unfinished.

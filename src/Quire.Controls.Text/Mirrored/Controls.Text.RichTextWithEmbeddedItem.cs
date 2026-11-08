@@ -658,4 +658,31 @@ public partial class RichTextWithEmbeddedItem
         return link != null;
     }
 
+    public void AddEmbeddedItem(IWhiteboardItemInText item, bool activate)
+    {
+        using (CommandScope commandScope = new CommandScope("Add embedded item"))
+        {
+            if (activate)
+            {
+                ContainerItemManager.ActivateItem(item);
+            }
+            using (DeclareChangeBlock())
+            {
+                if (!Selection.IsEmpty)
+                {
+                    Selection.Text = "";
+                }
+                AddEmbeddedItem(item, null);
+            }
+        }
+    }
+
+    private static bool DataObjectContainsAnyEmbeddedItems(IDataObject dataObject, RichTextEmbeddedItemsInfo filter = RichTextEmbeddedItemsInfo.HasEmbeddedImagesAndMath)
+    {
+        if (dataObject.GetTextWithEmbeddedItemsInfo() is RichTextEmbeddedItemsInfo info)
+        {
+            return (info & filter) != 0;
+        }
+        return false;
+    }
 }
