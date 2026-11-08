@@ -168,3 +168,8 @@
 
 - Exact: `SetIsInSerialization`, `SetRevertCoerceAfterSerializationProcess`, `OnIsInCopyPropertyChanged`, `WrapUndoAtSerialization` (the `return` after `StartCommandScope()` is the shape that matched; `if/else` did not), `ShouldSerializeProperty` (`SpellCheck.IsEnabledProperty`), `OnGotFocus`, `CacheTextFormat`, `SetSelection`.
 - Release IL: PASS — 245 checked, 245 exact, 0 failures, 478 unfinished.
+
+## Batch 25 — RichTextBase input, paste and copy hooks (7)
+
+- Exact: `OnDrop` (`IsOnDrop` set around `base.OnDrop`), `ExecuteToggleScriptUndoCommand`, `PastingHandler`, `AttemptActivatingSpellCheck`, `OnPreviewTextInput`, `Copy` (try/finally with `ClearIsInCopy`), `FirePropertyChanged` (local handler copy).
+- Release IL: PASS — 252 checked, 252 exact, 0 failures, 471 unfinished.

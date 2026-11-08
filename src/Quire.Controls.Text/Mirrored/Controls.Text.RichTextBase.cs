@@ -2,6 +2,8 @@
 #pragma warning disable
 
 using System;
+using System.ComponentModel;
+using System.Windows.Input;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,6 +11,7 @@ using DocumentTextRange = System.Windows.Documents.TextRange;
 using System.Windows.Documents;
 using Quire.Controls.Core;
 using Quire.Core;
+using Quire.Undo;
 using Quire.Controls.Core.Whiteboard;
 using Quire.Wpf;
 
@@ -169,5 +172,63 @@ public partial class RichTextBase
     public virtual void SetSelection(int fromOffset, int toOffset)
     {
         Selection.Select(GetPointerToInsertionPoint(fromOffset), GetPointerToInsertionPoint(toOffset));
+    }
+
+    protected override void OnDrop(System.Windows.DragEventArgs dragEventArgs)
+    {
+        IsOnDrop = true;
+        base.OnDrop(dragEventArgs);
+        IsOnDrop = false;
+    }
+
+    protected virtual void ExecuteToggleScriptUndoCommand(DocumentTextRange toggleRange, ScriptState toggleToState)
+    {
+        CommandBuffer.Execute(ToggleScriptUndoCommand.CreateToggleScriptUndoCommand(this, toggleRange, toggleToState, true), null);
+    }
+
+    protected virtual void PastingHandler(object sender, DataObjectPastingEventArgs e)
+    {
+        _pasteDataObject = e.DataObject;
+        PrePasting();
+    }
+
+    private void AttemptActivatingSpellCheck()
+    {
+        StartOrStopSpellCheckActivationTimer(false);
+        if (CanEnableSpellCheck)
+        {
+            ApplySpellCheckValue(true);
+        }
+    }
+
+    protected override void OnPreviewTextInput(TextCompositionEventArgs e)
+    {
+        if (EnumerableExtensions.IsNotEmpty(e.Text))
+        {
+            CacheSubscriptStateOnTypeOver(true);
+        }
+        base.OnPreviewTextInput(e);
+    }
+
+    public void Copy()
+    {
+        DocumentAttachedProperties.SetIsInCopy(this, true);
+        try
+        {
+            base.Copy();
+        }
+        finally
+        {
+            DocumentAttachedProperties.ClearIsInCopy(this);
+        }
+    }
+
+    protected void FirePropertyChanged(PropertyChangedEventArgs e)
+    {
+        PropertyChangedEventHandler handler = PropertyChanged;
+        if (handler != null)
+        {
+            handler(this, e);
+        }
     }
 }
