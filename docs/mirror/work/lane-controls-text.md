@@ -189,3 +189,8 @@
 
 - Exact: `ApplyTextStyleCanExecute` (base form, `IsActive || IsSelected`), `ClearTextFormatCanExecute` (`if (!IsActive) { if (IsSelected) ...; return false; } return true;`), `CanAddToDictionary` (`word.Length <= 128`), `DequeueSplitFontSizeData`, `EnqueueSplitFontSizeData`, `GetRegionPersistentData` (try/finally around `IsInSaving`), `InitializePasteCommand`, `CanSetCurrentProofingLanguage`, `GetScriptType`.
 - Release IL: PASS — 273 checked, 273 exact, 0 failures, 450 unfinished.
+
+## Batch 29 — RichTextBase caret, style, clipboard and selection helpers (5)
+
+- Exact: `CaretShouldLeaveTextRegionInDirection`, `OnStyleChanged` (`if (!IsVisible) { canvas...; if (canvas == null || canvas.IsVisible) return; }`), `ExtractXamlFromClipboard`, `RestoreSelection`, `CloneContent`.
+- Release IL: PASS — 278 checked, 278 exact, 0 failures, 445 unfinished.

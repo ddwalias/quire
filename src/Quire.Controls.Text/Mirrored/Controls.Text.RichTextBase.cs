@@ -407,4 +407,56 @@ public partial class RichTextBase
         }
         return scriptState;
     }
+
+    protected bool CaretShouldLeaveTextRegionInDirection(CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection direction)
+    {
+        if (ShouldLeaveTextRegionOnCaretMove(direction))
+        {
+            RaiseEvent(new CommonRoutedEvents.CaretLeavesTextRegionEventArgs(CaretLeavesTextAreaEvent) { LeavingDirection = direction });
+            return true;
+        }
+        return false;
+    }
+
+    protected virtual void OnStyleChanged(ICollection<TextStyleData> textStyles)
+    {
+        if (!IsVisible)
+        {
+            Canvas canvas = VisualParent as Canvas;
+            if (canvas == null || canvas.IsVisible)
+            {
+                return;
+            }
+        }
+        SetStyleFromTextStyles(textStyles);
+    }
+
+    private string ExtractXamlFromClipboard()
+    {
+        IDataObject dataObject = Clipboard.GetDataObject();
+        if (dataObject == null || !dataObject.GetDataPresent(DataFormats.Xaml))
+        {
+            return null;
+        }
+        RaiseEvent(dataObject);
+        return dataObject.GetData(DataFormats.Xaml) as string;
+    }
+
+    private void RestoreSelection(string text, int selectionStart)
+    {
+        ClearInsertionPointsCache();
+        TextPointer start = GetPointerToInsertionPoint(selectionStart);
+        TextPointer end = GetPositionAtTextOffset(start, text.Length);
+        Selection.Select(start, end);
+    }
+
+    protected void CloneContent(RichTextBase original)
+    {
+        TextFormat.CopyTextFormat(original.Document, Document);
+        WpfUtils.TextRangeCopy(original.TextRange, TextRange, DataFormats.XamlPackage);
+        if (WhiteboardDependencyProperties.GetIsRegionBorderVisible(original))
+        {
+            WhiteboardDependencyProperties.SetIsRegionBorderVisible(this, true);
+        }
+    }
 }
