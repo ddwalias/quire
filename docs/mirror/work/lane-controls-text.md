@@ -242,3 +242,9 @@
 
 - Exact: `GetNextLine`, `FireCalculatableAdded/Removed/Moved`, `GetItem`, `ProhibitMouseClickOnItem`, `CanDeleteActiveOrSelectedItems`, `GetHyperlinksFromWholeDocument`, `GetHyperlinkAtCaretPosition`, `CanBookmarkTag`, `OnDragOver`, `SetSelection` (override), `OpenHyperlink`.
 - Release IL: PASS — 330 checked, 330 exact, 0 failures, 393 unfinished.
+
+## Batch 37 — RichTextWithEmbeddedItem tooltip, paste, activation and command-state helpers (8)
+
+- Exact: `UpdateHyperlinkCanHaveToolTip` (`!(IsInPrinting || IsInCopy) && !IsInSaving`), `CanRemoveHyperlinks`, `IsItemRemovedFromDocument`, `RestoreSavedState`, `PasteItem`, `ActivateActiveItem`, `CanRemoveBookmarkTag`, `CanSetNumberFormat`.
+- Left as stubs: `CanModifyHyperlink` (both overloads, the bool one is not yet read) and `HasHyperlinkInMouseContext` (ternary layout not checked yet). Removing a stub removes every overload with that name, so these were kept together.
+- Release IL: PASS — 338 checked, 338 exact, 0 failures, 385 unfinished.

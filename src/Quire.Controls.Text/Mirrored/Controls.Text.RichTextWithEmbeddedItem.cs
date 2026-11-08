@@ -12,6 +12,7 @@ using Quire.Controls.Core;
 using Quire.Wpf;
 using Quire.Undo;
 using Quire.Calculation.Core;
+using Quire.Controls.Core.BookmarkTags;
 
 namespace Quire.Controls.Text;
 
@@ -263,5 +264,66 @@ public partial class RichTextWithEmbeddedItem
         {
             link.RaiseEvent(new RequestNavigateEventArgs(link.NavigateUri, string.Empty));
         }
+    }
+
+    private void UpdateHyperlinkCanHaveToolTip()
+    {
+        HyperlinkCanHaveToolTip = !(IsInPrinting || IsInCopy) && !IsInSaving;
+    }
+
+    private void CanRemoveHyperlinks(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = IsActive && ActiveItem == null && EnumerableExtensions.IsNotEmpty(GetContextLinks());
+    }
+
+    private bool IsItemRemovedFromDocument(IWhiteboardItemInText item)
+    {
+        InlineUIContainer container = GetContainer(item);
+        if (container != null)
+        {
+            return !Document.ContentStart.IsInSameDocument(container.ElementStart);
+        }
+        return true;
+    }
+
+    private void RestoreSavedState()
+    {
+        if (_savedActiveItem != null && WhiteboardItems.Contains(_savedActiveItem))
+        {
+            ActiveItem = _savedActiveItem;
+        }
+    }
+
+    public void PasteItem(IWhiteboardItemInText item)
+    {
+        if (DebugTools.DevAssert(CanAddItems).Failed)
+        {
+            return;
+        }
+        AddEmbeddedItem(item, false);
+        CommitItem(item);
+    }
+
+    public void ActivateActiveItem()
+    {
+        if (ActiveItem == null)
+        {
+            return;
+        }
+        ActiveItem.Activate(true);
+        ContainerItemManager.ActivateItem(ActiveItem);
+        SetItemContextMenuHandling(ActiveItem);
+    }
+
+    private void CanRemoveBookmarkTag(object sender, CanExecuteRoutedEventArgs e)
+    {
+        bool hasActiveItem = ActiveItem != null;
+        e.CanExecute = hasActiveItem && BookmarkTag.HasBookmarkTag(ActiveItem as DependencyObject);
+        e.Handled = hasActiveItem;
+    }
+
+    private void CanSetNumberFormat(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = CurrentNumberFormat != null || CurrentMatrixFormat != null;
     }
 }
