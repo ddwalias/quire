@@ -38,26 +38,6 @@ public sealed partial class RegionBorder : global::System.Windows.Controls.Conte
     [global::Quire.Mirror.MirrorStub]
     private bool _areDraggersShown;
     [global::Quire.Mirror.MirrorStub]
-    public override void OnApplyTemplate() => base.OnApplyTemplate();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect GetBoundingRect() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnMouseLeftButtonDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnMouseLeftButtonDown(e);
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::Quire.Controls.Core.DragMode> GetDragMode(global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<global::Quire.Controls.Core.DragMode> GetDragMode(global::System.Windows.RoutedEventArgs args, out global::System.Windows.Controls.Control originalControlElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.IResizer RaiseMoveAndResizeEvent(global::Quire.Controls.Core.DragMode mode, global::System.Windows.FrameworkElement element, global::System.Windows.Point startPosition, global::System.Windows.DependencyObject originalEventSource, bool automation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ResizeElement(global::System.Windows.FrameworkElement element, global::System.Windows.Size newSize, global::Quire.Controls.Core.DragMode dragMode, bool automation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.FrameworkElement GetGrip(global::Quire.Controls.Core.DragMode dragMode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.RegionBorder GetRegionBorder(global::System.Windows.DependencyObject reference) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.BorderDragger FindBorderDraggerByName(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void UpdateBusyState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateActiveState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

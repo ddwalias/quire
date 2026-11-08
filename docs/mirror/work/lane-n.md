@@ -827,3 +827,9 @@
 - Claimed: the 21 `GetValue`/`SetValue` property wrappers, `IsBorderShapeVisible`, `IsBorderHeaderVisible`, `BorderShapeColor`, the private `AreDraggersShown` property, and the `RequestMoveAndResize` event. Stubs removed from the `.g.cs`.
 - Report: `.mirror-cache/release-il-c96fa06614b5/release-il.json` — PASS, 2,090 checked, 2,090 exact, 0 failures.
 - Remaining mismatches: none in claimed batch. Still open in RegionBorder: `ResizeElement`, `GetRegionBorder`, the drag, busy and active logic, and the `OnApplyTemplate` and `GetBoundingRect` members.
+
+## Batch 108 — RegionBorder template, drag and resize members
+
+- Claimed: `OnApplyTemplate`, `GetBoundingRect`, `OnMouseLeftButtonDown`, `GetDragMode` (both overloads), `RaiseMoveAndResizeEvent`, `ResizeElement`, `GetGrip`, `GetRegionBorder`, `FindBorderDraggerByName`, plus `_busyProgressBar` and `HideBusyStateElements` (moved ahead of the lambda). Stubs removed from the `.g.cs`.
+- Report: `.mirror-cache/release-il-4d12fcc3be6c/release-il.json` — PASS, 2,102 checked, 2,102 exact, 0 failures.
+- Shapes Release IL requires: `FindBorderDraggerByName`'s lambda display class is numbered by the count of hand-written members declared before it (Mathcad: 95), so the method sits after the nine visibility properties and the busy members; `OnMouseLeftButtonDown` declares `originalControlElement` before `dragMode`; `GetDragMode` keeps the switched name in a local declared before the switch; `GetGrip` is a switch statement that returns from each arm.

@@ -1,10 +1,13 @@
 #nullable disable
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Quire.Mirror;
+using Quire.Wpf;
 
 namespace Quire.Controls.Core;
 
@@ -286,6 +289,23 @@ public partial class RegionBorder
         set => SetValue(MoveDraggerVisibilityProperty, value);
     }
 
+    [MirrorVerified("PtcControlsCoreRegionBorderMechanicalDifferentialTests")]
+    private Shape _busyProgressBar;
+
+    [MirrorVerified("PtcControlsCoreRegionBorderMechanicalDifferentialTests")]
+    private void HideBusyStateElements() => _busyProgressBar.Visibility = (Visibility)2;
+
+
+    private BorderDragger FindBorderDraggerByName(string name)
+    {
+        if (_draggers != null)
+        {
+            return _draggers.First((BorderDragger item) => item.Name.Equals(name));
+        }
+        return null;
+    }
+
+
     public bool ShowBusy
     {
         get => (bool)GetValue(ShowBusyProperty);
@@ -375,11 +395,152 @@ public partial class RegionBorder
         remove => RemoveHandler(RequestMoveAndResizeEvent, value);
     }
 
-    [MirrorVerified("PtcControlsCoreRegionBorderMechanicalDifferentialTests")]
-    private Shape _busyProgressBar;
+    public override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate();
+        _borderGrid = Template.FindName(PartBorderGrid, this) as Grid;
+        _header = Template.FindName(PartHeader, this) as TextBlock;
+        _background = Template.FindName(PartBackground, this) as Rectangle;
+        _foreground = Template.FindName(PartForeground, this) as Rectangle;
+        _busyProgressBar = Template.FindName(PartBusyClock, this) as Shape;
+        UpdateActiveState();
+        UpdateBusyState();
+        UpdateBorderVisibilityState();
+        UpdateZIndex();
+    }
 
-    [MirrorVerified("PtcControlsCoreRegionBorderMechanicalDifferentialTests")]
-    private void HideBusyStateElements() => _busyProgressBar.Visibility = (Visibility)2;
+    public Rect GetBoundingRect()
+    {
+        return new Rect(0.0, 0.0, ActualWidth, ActualHeight);
+    }
+
+    protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+    {
+        if (TemplatedParent == null)
+        {
+            DebugTools.DevAssert(false, null);
+        }
+        Control originalControlElement;
+        DragMode? dragMode = GetDragMode(e, out originalControlElement);
+        if (dragMode.HasValue)
+        {
+            Control control = TemplatedParent as Control;
+            RaiseMoveAndResizeEvent(dragMode.Value, control, e.GetPosition(control), originalControlElement, automation: false);
+            e.Handled = true;
+        }
+    }
+
+    public DragMode? GetDragMode(RoutedEventArgs args)
+    {
+        Control originalControlElement;
+        return GetDragMode(args, out originalControlElement);
+    }
+
+    private DragMode? GetDragMode(RoutedEventArgs args, out Control originalControlElement)
+    {
+        DragMode? result = null;
+        originalControlElement = null;
+        DependencyObject source = args.OriginalSource as DependencyObject;
+        if (source == null)
+        {
+            return null;
+        }
+        originalControlElement = source.TryFindVisualAncestor<Control>();
+        if (originalControlElement == null)
+        {
+            return null;
+        }
+        RegionBorder regionBorder = originalControlElement.TryFindAncestorIncludingSelf<RegionBorder>();
+        if (originalControlElement != TemplatedParent)
+        {
+            DebugTools.AssertNotNull(regionBorder, null);
+        }
+        if (regionBorder != this)
+        {
+            return null;
+        }
+        // Release IL keeps the switched name in a local declared before the switch.
+        string name = originalControlElement.Name;
+        switch (name)
+        {
+            case PartMoveDragger:
+                result = DragMode.Move;
+                break;
+            case PartLeftDragger:
+                result = DragMode.ResizeLeft;
+                break;
+            case PartRightDragger:
+                result = DragMode.ResizeRight;
+                break;
+            case PartBottomDragger:
+                result = DragMode.ResizeBottom;
+                break;
+            case PartBottomLeftDragger:
+                result = DragMode.ResizeBottomLeft;
+                break;
+            case PartBottomRightDragger:
+                result = DragMode.ResizeBottomRight;
+                break;
+            case PartTopDragger:
+                result = DragMode.ResizeTop;
+                break;
+            case PartTopLeftDragger:
+                result = DragMode.ResizeTopLeft;
+                break;
+            case PartTopRightDragger:
+                result = DragMode.ResizeTopRight;
+                break;
+        }
+        return result;
+    }
+
+    private IResizer RaiseMoveAndResizeEvent(DragMode mode, FrameworkElement element, Point startPosition, DependencyObject originalEventSource, bool automation)
+    {
+        ResizeEventMouseArgs args = new ResizeEventMouseArgs(RequestMoveAndResizeEvent, mode, element, startPosition, originalEventSource, automation);
+        RaiseEvent(args);
+        return args.Resizer;
+    }
+
+    public static void ResizeElement(FrameworkElement element, Size newSize, DragMode dragMode, bool automation)
+    {
+        RegionBorder regionBorder = GetRegionBorder(element);
+        double width = double.IsNaN(regionBorder.Width) ? regionBorder.ActualWidth : regionBorder.Width;
+        double height = double.IsNaN(regionBorder.Height) ? regionBorder.ActualHeight : regionBorder.Height;
+        IResizer resizer = regionBorder.RaiseMoveAndResizeEvent(dragMode, element, new Point(width, height), regionBorder.GetGrip(dragMode), automation);
+        resizer.ResizeEnd(resizer.ResizeBy(new Vector(newSize.Width - width, newSize.Height - height)));
+    }
+
+    private FrameworkElement GetGrip(DragMode dragMode)
+    {
+        switch (dragMode)
+        {
+            case DragMode.Move:
+                return FindName(PartMoveDragger) as Control;
+            case DragMode.ResizeLeft:
+                return FindBorderDraggerByName(PartLeftDragger);
+            case DragMode.ResizeRight:
+                return FindBorderDraggerByName(PartRightDragger);
+            case DragMode.ResizeBottom:
+                return FindBorderDraggerByName(PartBottomDragger);
+            case DragMode.ResizeBottomLeft:
+                return FindBorderDraggerByName(PartBottomLeftDragger);
+            case DragMode.ResizeBottomRight:
+                return FindBorderDraggerByName(PartBottomRightDragger);
+            case DragMode.ResizeTop:
+                return FindBorderDraggerByName(PartTopDragger);
+            case DragMode.ResizeTopLeft:
+                return FindBorderDraggerByName(PartTopLeftDragger);
+            case DragMode.ResizeTopRight:
+                return FindBorderDraggerByName(PartTopRightDragger);
+            default:
+                return null;
+        }
+    }
+
+    public static RegionBorder GetRegionBorder(DependencyObject reference)
+    {
+        return reference.GetVisualDescendantsBreadthFirstOfType<RegionBorder>().FirstOrDefault();
+    }
 
     [MirrorVerified("PtcControlsCoreRegionBorderMechanicalDifferentialTests")]
     public RegionBorder() { }
