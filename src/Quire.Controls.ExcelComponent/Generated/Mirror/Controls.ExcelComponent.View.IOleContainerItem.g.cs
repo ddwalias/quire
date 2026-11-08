@@ -11,12 +11,4 @@ namespace Quire.Controls.ExcelComponent.View;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.View.IOleContainerItem, Ptc.Controls.ExcelComponent")]
 public partial interface IOleContainerItem : global::Quire.Controls.Core.Ole.IOleContainer, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.ICalculationComponent Component { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.ExcelComponent.ViewModel.IOleContainerItemViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsResizing { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void OnEngineError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

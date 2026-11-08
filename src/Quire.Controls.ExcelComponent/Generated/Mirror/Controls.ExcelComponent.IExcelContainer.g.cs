@@ -11,6 +11,4 @@ namespace Quire.Controls.ExcelComponent;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.IExcelContainer, Ptc.Controls.ExcelComponent")]
 public partial interface IExcelContainer : global::Quire.Controls.ExcelComponent.View.IOleContainerItem, global::Quire.Controls.Core.Ole.IOleContainer, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Serialization.IPersistentDataProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.ExcelComponent.ViewModel.IExcelContainerViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

@@ -11,8 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.IChartMinMaxCalculatable, Ptc.Controls.ExcelComponent")]
 internal partial interface IChartMinMaxCalculatable : global::Quire.Controls.ExcelComponent.Model.IChartMinMaxCommon, global::Quire.Controls.ExcelComponent.Model.IChartCalculatable, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild, global::Quire.Calculation.Core.ICalculatable
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper GetLimit(global::Quire.Controls.ExcelComponent.Model.ChartWrapperType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool SetLimit(global::Quire.Controls.ExcelComponent.Model.ChartWrapperType type, global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapper) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

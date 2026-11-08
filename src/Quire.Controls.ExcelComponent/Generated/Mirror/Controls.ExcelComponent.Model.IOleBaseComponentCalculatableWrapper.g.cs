@@ -11,24 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableWrapper, Ptc.Controls.ExcelComponent")]
 public partial interface IOleBaseComponentCalculatableWrapper : global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.Support.ICalculatableWrapper, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Calculation.Core.IResultOwnerWithSerializableEngineResult, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Calculation.Core.ICalculationHideableChild, global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    string LhsExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string RhsExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsInputEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsOutputEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsValidEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsInvalidEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsUnknownEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.ExcelComponent.Model.OleWrapperCustomErrorType CustomErrorType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableWrapper, global::Quire.Calculation.Core.EngineError> ErrorChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void SetCustomError(string errorMessage, global::Quire.Calculation.Core.EngineError originalError = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,16 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.IPublicExcelContainerModel, Ptc.Controls.ExcelComponent")]
 public partial interface IPublicExcelContainerModel : global::Quire.Controls.ExcelComponent.Model.IPublicOleDataExchangeContainerModel<global::Quire.PersistentData.excelContainerType>, global::Quire.Controls.Core.Ole.IPublicOleContainerModel<global::Quire.PersistentData.excelContainerType>, global::Quire.Calculation.ICalculationComponent, global::Quire.Calculation.IDataExchangeIValueModel, global::Quire.Calculation.Core.IDataExchangeModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.ExcelComponent.Model.QueryAttachedInputsOrOutputsHandler QueryAttachedInputsOrOutputs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool NeedRecalculateOnClose { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action RequestEvaluation { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void SetValue(string place, object value, bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Microsoft.Office.Interop.Excel.Range GetRange(string rangeAddress, bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool HasAttachedInputsOrOutputs(bool checkOutputOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

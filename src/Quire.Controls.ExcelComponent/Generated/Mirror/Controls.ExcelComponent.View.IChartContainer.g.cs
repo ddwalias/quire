@@ -11,8 +11,4 @@ namespace Quire.Controls.ExcelComponent.View;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.View.IChartContainer, Ptc.Controls.ExcelComponent")]
 public partial interface IChartContainer : global::Quire.Controls.ExcelComponent.View.IOleContainerItem, global::Quire.Controls.Core.Ole.IOleContainer, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Serialization.IPersistentDataProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.ExcelComponent.ViewModel.IChartContainerViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.ExcelComponent.Model.IPublicChartContainerModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

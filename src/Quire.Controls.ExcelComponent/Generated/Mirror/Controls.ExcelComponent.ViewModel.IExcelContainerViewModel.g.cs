@@ -11,8 +11,4 @@ namespace Quire.Controls.ExcelComponent.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.ViewModel.IExcelContainerViewModel, Ptc.Controls.ExcelComponent")]
 public partial interface IExcelContainerViewModel : global::Quire.Controls.ExcelComponent.ViewModel.IOleContainerItemViewModel, global::Quire.Controls.Core.Ole.IOleContainerViewModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<bool> IsAsIcon { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string GetExcelSelectionOrDefault(bool isInput) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,6 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.IPublicOleDataExchangeContainerModel`1, Ptc.Controls.ExcelComponent")]
 public partial interface IPublicOleDataExchangeContainerModel<TPersistentData> : global::Quire.Controls.Core.Ole.IPublicOleContainerModel<TPersistentData>
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool DoActionWithLock(global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

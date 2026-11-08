@@ -11,8 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.IExcelComponentCalculatableWrapper, Ptc.Controls.ExcelComponent")]
 public partial interface IExcelComponentCalculatableWrapper : global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableWrapper, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.Support.ICalculatableWrapper, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Calculation.Core.IResultOwnerWithSerializableEngineResult, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Calculation.Core.ICalculationHideableChild, global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType ExcelComponentEquationType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::Quire.Calculation.Core.ICalculatable, global::Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType, global::Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType> ExcelComponentEquationTypeChanged { add { } remove { } }
 }

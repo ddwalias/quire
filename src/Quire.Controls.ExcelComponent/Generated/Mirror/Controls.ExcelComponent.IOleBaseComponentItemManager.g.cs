@@ -11,8 +11,4 @@ namespace Quire.Controls.ExcelComponent;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.IOleBaseComponentItemManager, Ptc.Controls.ExcelComponent")]
 public partial interface IOleBaseComponentItemManager : global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager, global::Quire.Controls.Core.Whiteboard.IContainerItemManager, global::Quire.Controls.Core.IFrameworkElementFacade, global::Quire.Controls.Core.IUIElementFacade, global::Quire.Services.IService, global::Quire.Controls.Core.IUIElementArrangeInfoProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Point GetItemOleComponentLocation(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetItemOleComponentLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

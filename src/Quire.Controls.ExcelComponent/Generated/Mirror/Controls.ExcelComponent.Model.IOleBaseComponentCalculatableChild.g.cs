@@ -11,10 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild, Ptc.Controls.ExcelComponent")]
 public partial interface IOleBaseComponentCalculatableChild : global::Quire.Calculation.Core.ICalculatable
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Pair<bool, bool> IsFragment { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsConnectedToTheEngine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.EngineError Error { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

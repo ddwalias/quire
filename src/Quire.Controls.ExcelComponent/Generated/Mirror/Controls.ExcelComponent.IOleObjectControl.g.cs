@@ -11,12 +11,4 @@ namespace Quire.Controls.ExcelComponent;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.IOleObjectControl, Ptc.Controls.ExcelComponent")]
 public partial interface IOleObjectControl : global::Quire.Controls.Core.IOleBaseObjectControl, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Core.IMaybeHasPointThatSnapsToPixel
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool OleObjectAutoResize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool CanResetSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool CanUpdateLink { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool CanToggleAutoResize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

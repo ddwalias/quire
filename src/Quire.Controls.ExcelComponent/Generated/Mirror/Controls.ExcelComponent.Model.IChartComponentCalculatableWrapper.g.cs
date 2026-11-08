@@ -11,30 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper, Ptc.Controls.ExcelComponent")]
 internal partial interface IChartComponentCalculatableWrapper : global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableWrapper, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.Support.ICalculatableWrapper, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Calculation.Core.IResultOwnerWithSerializableEngineResult, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Calculation.Core.ICalculationHideableChild, global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.ExcelComponent.Model.ChartWrapperType ChartWrapperType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.ExcelComponent.Model.ChartWrapperType PreviousChartType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string RlIdWithLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<uint> TraceId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper> ChartTypeChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper, global::System.Collections.Generic.List<uint>> UpdateTraceWithDeserializedError { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void AddAssociatedTrace(global::Quire.Controls.ExcelComponent.Model.IChartTraceCalculatable trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool HasAssociatedTraces() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void RemoveAssociatedTrace(global::Quire.Controls.ExcelComponent.Model.IChartTraceCalculatable trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void UpdateAssociatedTraceData(global::Quire.Controls.ExcelComponent.Model.ChartTraceDataToUpdate dataToUpdate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.ExcelComponent.Model.ChartWrapperType ResetChartWrapperType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void UpdateIdentifierLabelsIfNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void HandleRequestEvaluationAux() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

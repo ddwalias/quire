@@ -11,16 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.IChartTraceCalculatable, Ptc.Controls.ExcelComponent")]
 internal partial interface IChartTraceCalculatable : global::Quire.Controls.ExcelComponent.Model.IChartCalculatable, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculationErrorOwner, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper XCalculatable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper YCalculatable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.SynchronizationStatus SyncStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.CalculatingStatus CalcStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper> ErrorOwners { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    uint TraceId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

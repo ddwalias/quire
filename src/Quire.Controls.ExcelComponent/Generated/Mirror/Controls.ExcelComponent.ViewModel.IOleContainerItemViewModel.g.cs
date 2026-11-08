@@ -11,8 +11,4 @@ namespace Quire.Controls.ExcelComponent.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.ViewModel.IOleContainerItemViewModel, Ptc.Controls.ExcelComponent")]
 public partial interface IOleContainerItemViewModel : global::Quire.Controls.Core.Ole.IOleContainerViewModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsResizing { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<bool> MinSizeChanged { add { } remove { } }
 }

@@ -11,26 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.IPublicChartContainerModel, Ptc.Controls.ExcelComponent")]
 public partial interface IPublicChartContainerModel : global::Quire.Controls.Core.Ole.IPublicOleContainerModel<global::Quire.PersistentData.chartContainerType>, global::Quire.Calculation.ICalculationComponent, global::Quire.Calculation.IDataExchangeIValueModel, global::Quire.Calculation.Core.IDataExchangeModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<uint> CurrentTraceIds { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double[,] DataLimits { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsImageReady { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsImageFrozen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Func<global::Quire.Calculation.Core.IResultNode, double[,], global::System.Text.StringBuilder, double[,]> OnProcessMinMax { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Exception RemoveTrace(uint traceId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ClearTracesAndLimits() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetRect(global::System.Windows.Int32Rect rectInPixels) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddImageFreezeSource(global::Quire.Controls.ExcelComponent.Model.ImageFreezeSources source, bool forceRun = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void RemoveImageFreezeSource(global::Quire.Controls.ExcelComponent.Model.ImageFreezeSources source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ForceUnfreezeImage(bool force) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
