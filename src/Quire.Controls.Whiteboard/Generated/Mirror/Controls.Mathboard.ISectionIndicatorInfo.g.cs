@@ -11,10 +11,4 @@ namespace Quire.Controls.Mathboard;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Mathboard.ISectionIndicatorInfo, Ptc.Controls.Whiteboard")]
 public partial interface ISectionIndicatorInfo : global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double Top { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double Height { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

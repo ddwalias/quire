@@ -19,3 +19,10 @@
 - Shapes: first try declared the event and `_minHeightRatio` in source order → gate failed only on closure names (`<.ctor>b__24_0` vs Mathcad `<.ctor>b__4_0`). Lambda names use the containing constructor's ordinal, which counts members declared before it (fields included, auto-property backing fields not). Moving the ctors after `_text/_top/_height` and the event after the properties matched first time.
 - Release IL: PASS — 99 checked, 0 failures (`release-il-af69fc44bf5e`).
 - Remaining mismatches in this batch: none.
+
+## Batch 3 — interface declarations
+
+- Members: `IWhiteboardItemsSeparator` (`CanSeparate`, `Separate`); `ISectionIndicatorInfo` (`Text`, `Top`, `Height` get-only).
+- Hand-written: `Mirrored/Controls.Whiteboard.IWhiteboardItemsSeparator.cs`, `Mirrored/Controls.Mathboard.ISectionIndicatorInfo.cs` (abstract declarations, no bodies); stubs removed from the `.g.cs` interfaces.
+- Release IL: PASS — 104 checked, 0 failures (`release-il-bce29b42fd10`).
+- Remaining mismatches in this batch: none.
