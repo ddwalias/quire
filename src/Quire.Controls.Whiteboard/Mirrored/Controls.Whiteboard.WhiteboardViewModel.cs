@@ -433,4 +433,98 @@ public partial class WhiteboardViewModel
     {
         return WhiteboardItemMgr.GetIgnoreForHorizontalMovementAndWidth(item);
     }
+
+    public virtual Point GetItemLocation(IWhiteboardItem item)
+    {
+        return WhiteboardItemMgr.GetItemLocation(item);
+    }
+
+    public Size GetItemDesiredSize(IWhiteboardItem item)
+    {
+        return WhiteboardItemMgr.GetDesiredSize(item);
+    }
+
+    public virtual Rect GetItemRect(IWhiteboardItem item)
+    {
+        return WhiteboardItemMgr.GetItemRect(item);
+    }
+
+    protected double GetItemBottom(IWhiteboardItem item)
+    {
+        Rect rect = GetItemRect(item);
+        return rect.Bottom;
+    }
+
+    public double GetItemTop(IWhiteboardItem item)
+    {
+        Rect rect = GetItemRect(item);
+        return rect.Top;
+    }
+
+    protected double GetItemRightEdge(IWhiteboardItem item)
+    {
+        return GetItemLocation(item).X + WhiteboardItemMgr.GetDesiredSize(item).Width;
+    }
+
+    public void SelectAllItems()
+    {
+        SelectItems(WhiteboardItems);
+    }
+
+    public void HandleSelectAll()
+    {
+        SelectAllItems();
+    }
+
+    public void SelectItem(IWhiteboardItem item)
+    {
+        SelectItems(new IWhiteboardItem[] { item });
+    }
+
+    public void UnSelectItem(IWhiteboardItem item)
+    {
+        UnSelectItems(new IWhiteboardItem[] { item });
+    }
+
+    public bool CanDelete()
+    {
+        return SelectedItems.Any() || CanDeleteVerticalSpaceBelow;
+    }
+
+    public bool CanBackspace()
+    {
+        return SelectedItems.Any() || CanDeleteVerticalSpaceAbove;
+    }
+
+    public bool CanCopySelection()
+    {
+        return SelectedItems.Any();
+    }
+
+    public bool CanCutSelection()
+    {
+        return CanCopySelection();
+    }
+
+    public void HandleBackspace()
+    {
+        if (SelectedItems.Any())
+        {
+            DeleteSelectedItems();
+            return;
+        }
+
+        DeleteVerticalSpaceAbove(1);
+    }
+
+    public void HandleDelete()
+    {
+        if (SelectedItems.Any())
+        {
+            DeleteSelectedItems();
+            return;
+        }
+
+        DeleteVerticalSpaceBelow(1);
+    }
 }

@@ -66,3 +66,10 @@
 - Members: `ActiveItem` (get/set, virtual), `FirstSelectedItem` (protected auto), `SetContentHeight`/`SetContentWidth` (protected virtual), `FireActivated` (`Activated?.Invoke()`), `GetItemIsInPasting`, `GetItemGridPosition`, `GetItemIgnoreForHorizontalMovementAndWidth`.
 - Shapes: `SetContent*` as `Math.Max(MinimumX, value)` into a local, then the `IsEqualTo` early return matched first time. `ActiveItem`'s setter as the sequence of early returns, the `value != null && !Contains` throw, and the nested `if` blocks matched first time, including `Rect itemRect` for the `Contains` test.
 - Release IL: PASS — 158 checked, 0 failures (`release-il-6b3aabd7c0ca`).
+
+## Batch 10 — WhiteboardViewModel selection, delete and item geometry helpers
+
+- Members: `GetItemLocation`, `GetItemDesiredSize`, `GetItemRect` (virtual/non-virtual as in the `.g.cs`), `GetItemBottom`, `GetItemTop`, `GetItemRightEdge`, `SelectAllItems`, `HandleSelectAll`, `SelectItem`, `UnSelectItem`, `CanDelete`, `CanBackspace`, `CanCopySelection`, `CanCutSelection`, `HandleBackspace`, `HandleDelete`.
+- Shapes tried: `CanDelete` / `CanBackspace` as `if (SelectedItems.Any()) return true; return CanDeleteVerticalSpace…;` → "Release IL differs" (Mathcad branches to a shared `ldc.i4.1; ret` on `brtrue`). `return SelectedItems.Any() || CanDeleteVerticalSpace…;` → exact. `HandleBackspace`/`HandleDelete` as `if (…) { Delete…(); return; } DeleteVerticalSpace…(1);` matched first time.
+- Release IL: PASS — 174 checked, 0 failures (`release-il-a984642d6bf5`).
+- Batch 9 landed on the second try: the first `lane_merge` run failed on a base-build crash (MSBuild child nodes exited prematurely, free RAM about 6 GB, no disk error); the retry passed (`c80e837f`).
