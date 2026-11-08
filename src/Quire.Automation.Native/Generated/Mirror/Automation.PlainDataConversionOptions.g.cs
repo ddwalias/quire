@@ -11,8 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Mathcad.Automation.PlainDataConversionOptions, automationmgd")]
 public partial class PlainDataConversionOptions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public double ImaginaryThreshold;
-    [global::Quire.Mirror.MirrorStub]
-    public PlainDataConversionOptions() { }
 }
