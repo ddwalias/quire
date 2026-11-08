@@ -296,3 +296,9 @@
 - Exact: `FindInEmbeddedItem` (static; `restrictor.FindOnce(...)` through the `IFindRestrictor` extension), `CanModifyHyperlink(object, CanExecuteRoutedEventArgs)` (command handler only; the parameterless `CanModifyHyperlink()` overload is still a stub, so its stub line is kept and only the handler's stub line is removed).
 - Not attempted: `DeleteActiveOrSelectedItems`. Mathcad calls `RichTextBase::Activate` with `callvirt`, but this class overrides `Activate`; the binding does not match a plain `Activate(true)` call. Needs a look before implementation.
 - Release IL: PASS — 373 checked, 373 exact, 0 failures, 350 unfinished.
+
+## Batch 47 — RichTextWithEmbeddedItem modify-hyperlink command and region persistent data (2)
+
+- Exact: `ModifyHyperlink(object, ExecutedRoutedEventArgs)` (command handler; `e.Parameter as ModifyHyperlinkCommandParameter ?? new ...(true, null, null)`; only the handler's stub line is removed, the parameter overload stays a stub), `SetRegionPersistentData` (override; base call, then the `textType` regions deserialized through `_deserializationStrategy` and the caret moved to `Document.ContentStart`).
+- Not attempted: `CanModifyHyperlink()` (bool overload). Its IL contains a `<>c` lambda cached in a static field (`<CanModifyHyperlink>b__20_0`), so the closure ordinal must match first.
+- Release IL: PASS — 375 checked, 375 exact, 0 failures, 348 unfinished.

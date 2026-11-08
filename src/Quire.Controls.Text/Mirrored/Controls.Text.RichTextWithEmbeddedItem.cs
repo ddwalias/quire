@@ -16,6 +16,7 @@ using Quire.Controls.Core.BookmarkTags;
 using Quire.Controls.Core.Whiteboard;
 using Quire.IO;
 using Quire.PersistentDataObjects;
+using Quire.Serialization;
 
 namespace Quire.Controls.Text;
 
@@ -708,5 +709,27 @@ public partial class RichTextWithEmbeddedItem
         {
             parameter.ResultIsSingleLinkEditOperation = CanOpenOrEditOrCopySingleHyperlink();
         }
+    }
+
+    private void ModifyHyperlink(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (DebugTools.DevAssert(CanModifyHyperlink()).Failed)
+        {
+            return;
+        }
+        ModifyHyperlink(e.Parameter as ModifyHyperlinkCommandParameter ?? new ModifyHyperlinkCommandParameter(true, null, null));
+    }
+
+    public override IList<IRegionPersistentData> SetRegionPersistentData(IDeS11NProvider d11NProvider, object data)
+    {
+        IList<IRegionPersistentData> regions = null;
+        base.SetRegionPersistentData(d11NProvider, data);
+        textType text = (textType)data;
+        if (text.Regions != null && text.Regions.Any())
+        {
+            regions = _deserializationStrategy.SetRegions(text.Regions, d11NProvider);
+            CaretPosition = Document.ContentStart;
+        }
+        return regions;
     }
 }

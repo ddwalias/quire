@@ -150,8 +150,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     private void CopyHyperlink(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void ModifyHyperlink(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal void ModifyHyperlink(global::Quire.Controls.Text.ModifyHyperlinkCommandParameter param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Documents.Hyperlink EditLinkUndoableCommand(global::Quire.Controls.Text.HyperlinkEditState hyperlinkState, global::System.Windows.Documents.TextRange convertToLinkRange, bool skipOneInsertionPosition = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -269,8 +267,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     public override void Activate(bool isActive) => base.Activate(isActive);
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.PersistentDataObjects.textType DoGetRegionPersistentDataInternal(global::Quire.Serialization.IS11NProvider s11NProvider) => base.DoGetRegionPersistentDataInternal(s11NProvider);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => base.SetRegionPersistentData(d11NProvider, data);
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Calculation.Core.Support.CalculatableChildHider InitializeChildManager() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
