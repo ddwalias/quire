@@ -18,25 +18,9 @@ public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TP
     [global::Quire.Mirror.MirrorStub]
     public string StorageFileNameForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    protected OleContainer(TViewModel viewModel, global::System.Windows.ResourceDictionary dictionary) { }
-    [global::Quire.Mirror.MirrorStub]
     public void StartOleCloseOperation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.Imaging.BitmapSource CreateBitmap(global::System.Windows.Int32Rect rectInPixels, global::System.Windows.Interop.HwndSource hwndSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void AcquireBitmapSource() => base.AcquireBitmapSource();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Int32Rect GetRenderRectInPixels(out global::System.Windows.Interop.HwndSource hwndSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Int32Rect GetRenderRectInPixels(global::System.Windows.Size renderSize, out global::System.Windows.Size scale) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Int32Rect GetRenderRectInPixels(global::System.Windows.Size renderSize, out global::System.Windows.Size scale, out global::System.Windows.Interop.HwndSource hwndSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected nint CreateHBitmap(global::System.Windows.Int32Rect rectInPixels, global::System.Windows.Interop.HwndSource hwndSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Media.Imaging.BitmapSource CreateBitmapSource(nint hBitmap, global::System.Windows.Int32Rect rectInDpi) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected string TrySavingBitmapForPrint() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

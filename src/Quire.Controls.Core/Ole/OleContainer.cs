@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Quire.Wpf;
 using System.Windows.Threading;
 using Quire.Controls.Core.AttachedBehavior;
 using Quire.Core;
@@ -332,5 +336,156 @@ public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TP
             DebugTools.AssertNotNull(TrySavingBitmapForPrint(), null);
         }
         ClearValue(DocumentAttachedProperties.ZoomProperty);
+    }
+
+    protected OleContainer(TViewModel viewModel, ResourceDictionary dictionary)
+    {
+        if (dictionary != null)
+        {
+            Resources.MergedDictionaries.Add(dictionary);
+        }
+        ViewModel = viewModel;
+        ViewModel.ViewChangedSync += OnViewChangedSync;
+        ViewModel.ViewChangedAsync += OnViewChangedOrSavedAsync;
+        ViewModel.SavedAsync += OnViewChangedOrSavedAsync;
+        ViewModel.BeforeActiveStateToggled += HandleBeforeActiveStateToggled;
+        ViewModel.PropertyChanged += OnViewModelPropertyChanged;
+        DataContext = ViewModel;
+        IValueConverter dimensionsConverter = GetDimensionsConverter();
+        SetBinding(FrameworkElement.WidthProperty, new Binding
+        {
+            Path = new PropertyPath("Width"),
+            Mode = BindingMode.TwoWay,
+            Converter = dimensionsConverter,
+            ConverterParameter = dimensionsConverter != null ? (object)true : null
+        });
+        SetBinding(FrameworkElement.HeightProperty, new Binding
+        {
+            Path = new PropertyPath("Height"),
+            Mode = BindingMode.TwoWay,
+            Converter = dimensionsConverter,
+            ConverterParameter = dimensionsConverter != null ? (object)false : null
+        });
+        SetBinding(FrameworkElement.MaxWidthProperty, new Binding
+        {
+            Path = new PropertyPath("MaxWidth"),
+            Mode = BindingMode.TwoWay
+        });
+        SetBinding(FrameworkElement.MaxHeightProperty, new Binding
+        {
+            Path = new PropertyPath("MaxHeight"),
+            Mode = BindingMode.TwoWay
+        });
+        _snappableHelper = SnappableItemHelper.Create(this, isPageDescendant: true);
+        _snappableHelper.RenderTarget = this;
+    }
+
+    protected override void OnRender(DrawingContext drawingContext)
+    {
+        base.OnRender(drawingContext);
+        ImageSource bitmap = Bitmap;
+        if (bitmap != null)
+        {
+            Size scale;
+            Int32Rect renderRectInPixels = GetRenderRectInPixels(Size.Empty, out scale);
+            Rect rectangle;
+            // Release IL constructs the Rect in place, so it is assigned from new in each branch.
+            if (DebugTools.DevAssert(!renderRectInPixels.IsEmpty, null).Passed)
+            {
+                rectangle = new Rect(new Size((double)renderRectInPixels.Width / scale.Width, (double)renderRectInPixels.Height / scale.Height));
+            }
+            else
+            {
+                rectangle = new Rect(RenderSize);
+            }
+            drawingContext.DrawImage(bitmap, rectangle);
+        }
+        else
+        {
+            drawingContext.DrawRectangle(Brushes.White, null, new Rect(RenderSize));
+        }
+    }
+
+    protected override BitmapSource CreateBitmap(Int32Rect rectInPixels, HwndSource hwndSource)
+    {
+        DebugTools.DevAssert(!HasEffectivePrintingZoom, null);
+        nint hBitmap = CreateHBitmap(rectInPixels, hwndSource);
+        return CreateBitmapSource(hBitmap, rectInPixels);
+    }
+
+    protected override Int32Rect GetRenderRectInPixels(out HwndSource hwndSource)
+    {
+        Size scale;
+        return GetRenderRectInPixels(ViewModel.AutomaticSize, out scale, out hwndSource);
+    }
+
+    protected Int32Rect GetRenderRectInPixels(Size renderSize, out Size scale)
+    {
+        HwndSource hwndSource;
+        return GetRenderRectInPixels(renderSize, out scale, out hwndSource);
+    }
+
+    protected Int32Rect GetRenderRectInPixels(Size renderSize, out Size scale, out HwndSource hwndSource)
+    {
+        scale = ImageUtils.DpiScaleForVisual(this, out hwndSource);
+        if (scale.IsEmpty)
+        {
+            return Int32Rect.Empty;
+        }
+        double value = IsZoomAware ? DocumentAttachedProperties.GetZoom(this) : 1.0;
+        scale = new Size(Math.Round(scale.Width, 2) * Math.Round(value, 2), Math.Round(scale.Height, 2) * Math.Round(value, 2));
+        if (renderSize.IsEmpty)
+        {
+            renderSize = RenderSize;
+        }
+        return new Int32Rect(0, 0, (Math.Round(renderSize.Width, 5) * scale.Width).IntRound(), (Math.Round(renderSize.Height, 5) * scale.Height).IntRound());
+    }
+
+    protected nint CreateHBitmap(Int32Rect rectInPixels, HwndSource hwndSource)
+    {
+        if (!rectInPixels.IsEmpty)
+        {
+            return ViewModel.CreateHBitmap(rectInPixels, hwndSource.Handle);
+        }
+        return IntPtr.Zero;
+    }
+
+    protected BitmapSource CreateBitmapSource(nint hBitmap, Int32Rect rectInDpi)
+    {
+        if (hBitmap == IntPtr.Zero)
+        {
+            return null;
+        }
+        DebugTools.LogData("OleContainer.CreateBitmapSource: Enter");
+        BitmapSource bitmapSource = null;
+        try
+        {
+            bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, rectInDpi, BitmapSizeOptions.FromEmptyOptions());
+            ViewModel.ClearMessage(MessageCategory.Render);
+        }
+        catch (Exception ex)
+        {
+            string messageKey;
+            if (ex is OutOfMemoryException)
+            {
+                GC.Collect();
+                messageKey = "out_of_memory_error";
+            }
+            else
+            {
+                messageKey = ex.Message;
+            }
+            ViewModel.SetMessage(MessageCategory.Render, NodeMessageAdornerType.Error, messageKey);
+        }
+        FormatConvertedBitmap formatConvertedBitmap = null;
+        if (bitmapSource != null)
+        {
+            formatConvertedBitmap = new FormatConvertedBitmap();
+            formatConvertedBitmap.BeginInit();
+            formatConvertedBitmap.Source = bitmapSource;
+            formatConvertedBitmap.DestinationFormat = PixelFormats.Bgr32;
+            formatConvertedBitmap.EndInit();
+        }
+        return formatConvertedBitmap;
     }
 }

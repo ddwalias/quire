@@ -859,3 +859,11 @@
 - Claimed: `OnZoomChanged`, `OnIsInPrintingPropertyChanged`, `OnIsInCopyPropertyChanged`, `ClearStorageOnPropertyChanged`, `HandleBeforeActiveStateToggled`, `ShouldSerializeProperty`, `GetDimensionsConverter`, `OnViewModelPropertyChanged`, `OnViewChangedSync`, `OnViewChangedOrSavedAsync`, `AbortOleCloseOperation`, `OleForceClose`, `OnCreationError` (both overloads), `CreateWindowlessOle`, `ThrowExceptionWithMessage`, `CleanStorage`, `SetOlePersistentData`, `OnWorksheetPropertiesChanged`, `Dispose`, `SetPrintingZoom`, `ApplyPrintingZoom`. Stubs removed from the `.g.cs`.
 - Report: `.mirror-cache/release-il-acd1922e0dc5/release-il.json` — PASS, 2,163 checked, 2,163 exact, 0 failures.
 - Remaining mismatches: none in claimed batch. Still open in OleContainer: `StartOleCloseOperation` (anonymous delegates), `StorageFileNameForXamlSerialization`, `GetOlePersistentData`, `TrySavingBitmapForPrint` (lambdas), the rendering and bitmap members, `GetRenderRectInPixels`, `CreateHBitmap`, `CreateBitmapSource`, `OnRender`, `AcquireBitmapSource`, and the constructor.
+
+## Batch 113 — OleContainer constructor, rendering and bitmap members
+
+- Claimed: the constructor, `OnRender`, `CreateBitmap`, the three `GetRenderRectInPixels` overloads, `CreateHBitmap`, `CreateBitmapSource`. Stubs removed from the `.g.cs`.
+- Report: `.mirror-cache/release-il-65a78fbc0c74/release-il.json` — PASS, 2,171 checked, 2,171 exact, 0 failures.
+- Shapes Release IL requires: `OnRender` declares `scale` before the render rectangle and builds `Rect` in an if/else with the `DevAssert` test in the then-position; the `Rect` is assigned from `new` in each branch.
+- Remaining mismatch (kept as generated stub, not landed): `AcquireBitmapSource` — Mathcad reads `RenderSize` inside the `Int32Rect` arguments; the assignment-expression form is still two bytes off in the then-block.
+- Still open in OleContainer: `AcquireBitmapSource`, `StorageFileNameForXamlSerialization`, `StartOleCloseOperation`, `GetOlePersistentData`, `TrySavingBitmapForPrint` (lambdas and anonymous delegates).
