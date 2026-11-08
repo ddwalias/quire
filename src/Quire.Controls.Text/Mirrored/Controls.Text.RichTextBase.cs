@@ -727,4 +727,52 @@ public partial class RichTextBase
         return null;
     }
 
+    internal TextRangeExtended GetWordRangeAtCaretPosition(out string wordText, TextFromRunsStops stopFlags, bool allowCursorAtWordBoundary)
+    {
+        wordText = null;
+        TextPointer start = GetTextBoundary(LogicalDirection.Backward, out string partialStart, stopFlags);
+        if (!allowCursorAtWordBoundary && partialStart.IsNullOrEmpty())
+        {
+            return null;
+        }
+        TextPointer end = GetTextBoundary(LogicalDirection.Forward, out string partialEnd, stopFlags);
+        if (!allowCursorAtWordBoundary && partialEnd.IsNullOrEmpty())
+        {
+            return null;
+        }
+        wordText = partialStart + partialEnd;
+        return new TextRangeExtended(start, end);
+    }
+
+    private DocumentTextRange SearchForward(DocumentTextRange originalRange, string rangeText, string text, StringComparison comparisonType, FindOptions options, List<Pair<int, int>> subscriptPositions)
+    {
+        int searchStart = 0;
+        while (searchStart < rangeText.Length)
+        {
+            int? index = FindUtilities.GetIndexInText(rangeText.Substring(searchStart), text, LogicalDirection.Forward, options);
+            if (!index.HasValue)
+            {
+                break;
+            }
+            int start = searchStart + index.Value;
+            DocumentTextRange match = GetRangeIfMatch(originalRange, text, start, comparisonType, subscriptPositions);
+            if (match != null)
+            {
+                return match;
+            }
+            searchStart = start + 1;
+        }
+        return null;
+    }
+
+    private DocumentTextRange TryFindWholeWord(TextPointer start, TextPointer end, int originalRangeStartPoint, DocumentTextRange originalRange, string text, LogicalDirection direction, StringComparison comparisonType, FindOptions options, List<Pair<int, int>> subscriptPositions)
+    {
+        int? index = FindUtilities.GetIndexInText(GetTextInRange(new DocumentTextRange(start, end)), text, direction, options);
+        if (index.HasValue)
+        {
+            int offset = GetInsertionPointAtPointer(ref start) - originalRangeStartPoint;
+            return GetRangeIfMatch(originalRange, text, offset + index.Value, comparisonType, subscriptPositions);
+        }
+        return null;
+    }
 }

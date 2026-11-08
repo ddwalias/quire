@@ -349,3 +349,9 @@
 - Exact: `NavigateIntoItem(Direction)` (`Activate(true)`, then `switch` with `Left`/`Up` placing the caret at `ContentEnd` and `Right`/`Down` at `ContentStart`, then `return null`).
 - Not matched, left as a stub: `SubscriptsMatch`. Mathcad returns through one shared `ldc.i4.1; ret` reached by two `brtrue` branches (from `IsFullySubscript` and from `SequenceEqual`), and no plain `if`/`return` form reproduces that single return block. Tried the `if (!IsNotEmpty && IsFullySubscript) return true;` form; the first branch differed.
 - Release IL: PASS — 394 checked, 394 exact, 0 failures, 329 unfinished.
+
+## Batch 56 — RichTextBase word range at caret and forward/whole-word search (3)
+
+- Exact: `GetWordRangeAtCaretPosition` (`out` word text, boundary checks through the instance `GetTextBoundary`, `partialStart + partialEnd`), `SearchForward` (`while` over `rangeText` with `searchStart = start + 1`; the `break` on no index is the shape that matches), `TryFindWholeWord` (`GetInsertionPointAtPointer(ref start) - originalRangeStartPoint + index.Value`).
+- Not attempted: `GetRangeIfMatch` (Mathcad's `new TextRange(p1, p2)` with `p1` duplicated on the stack, which no plain local form reproduces).
+- Release IL: PASS — 397 checked, 397 exact, 0 failures, 326 unfinished.
