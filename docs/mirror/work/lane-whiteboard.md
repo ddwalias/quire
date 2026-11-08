@@ -47,3 +47,10 @@
 - Shapes: `OnPropertyChanged("IsFocused")` with an explicit name, because the class's override takes a required parameter. `OnPropertyChanged()` through CallerMemberName failed to compile, not the gate.
 - Release IL: PASS — 107 checked, 0 failures; 880 unfinished (`release-il-4f0098591619`).
 - Note for later closure members: a lambda's `b__N_M` ordinal counts every member before it in compile order (generated partials first), so moving a stub into the hand-written partial changes the ordinal of later lambda-containing members. Lambda members are left for a placeholder-ordering pass.
+
+## Batch 7 — WhiteboardViewModel property accessors
+
+- Members: `WhiteboardItems`, `OverRightMargin` (auto), `InsertionPoint` (set through `SetInsertionPoint`), `HasSelectedItems` (protected), `ActiveDescendant`, `Grid`, `IsSelected` (private get, auto), `DefaultInsertionPoint` (virtual), `ContentSize`, `ContentHeight`/`ContentWidth` (set through the virtual `SetContent*`), `CurrentDragMode` (auto), `GridPosition`, `HandleUserInput` (protected set, auto).
+- Shapes: `ActiveDescendant` as `as` tests with `??` fallbacks matched first time. Non-virtual declarations (no `virtual` keyword) emit `call` in Mathcad's IL even though the interface accessor is `final virtual`; keeping the `.g.cs` modifiers matched.
+- Release IL: PASS — 130 checked, 0 failures (`release-il-d3e4b7d8135c`).
+- Lambda-containing members (`Initialize`, `IsTabNavigatable`, command factories) are not started.
