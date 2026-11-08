@@ -644,4 +644,18 @@ public partial class RichTextWithEmbeddedItem
         return DebugTools.DevAssert(contextLinks != null && contextLinks.Count == 1).Failed ? null : contextLinks.FirstOrDefault();
     }
 
+    private bool ShowQuestionWarningDialog(NavigateUrlErrorWarningKeys messageKey, string path)
+    {
+        return MessageBoxManager.ShowQuestion(Application.Current.MainWindow, string.Format((TryFindResource(messageKey) as string) ?? "{0}", path), WpfUtils.ApplicationFullName, MessageBoxButton.YesNo) == MessageBoxResult.Yes;
+    }
+
+    public bool HasHyperlinkInMouseContext(object context)
+    {
+        TextElement element = context as TextElement;
+        Hyperlink link = element != null
+            ? element.GetTextElementParentOrSelf<Hyperlink>()
+            : GetHyperlinkFromTextPointer(GetPositionFromPoint(Mouse.GetPosition(this), false));
+        return link != null;
+    }
+
 }

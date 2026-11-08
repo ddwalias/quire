@@ -170,13 +170,9 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     private void DisplayHyperlink(global::System.Windows.Documents.Hyperlink link, bool showAboutBox = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private bool ShowQuestionWarningDialog(global::Quire.IO.NavigateUrlErrorWarningKeys messageKey, string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OpenHyperlinkUrl(global::System.Uri path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Nullable<global::Quire.IO.NavigateUrlErrorWarningKeys> ValidateURL(global::System.Uri absolutePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasHyperlinkInMouseContext(object context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool HandleLinkOpsOnPreviewKeyDown(global::System.Windows.Input.Key key) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

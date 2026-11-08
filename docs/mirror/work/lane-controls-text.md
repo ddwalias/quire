@@ -279,3 +279,9 @@
 - Exact: `GetDescendantItem` (early return of the local `item`), `ResolveUrl` (`out Uri` from `UrlUtils.TryCreateAbsoluteUri`), `CheckAndGetExactlyOneHyperlink` (`Failed ? null : FirstOrDefault()`; the `if (Failed) return null;` form gives the wrong branch sense).
 - Not matched: `GetEmbeddedObjectCaretOffset`. Release IL pushes `this` before the pointer local is stored and loads it by `ldloca`, so `GetInsertionPointAtPointer(ref pointer)` with a named local does not reproduce it. Left as a stub (same shape as `GetPointerToAddDictionary`).
 - Release IL: PASS — 367 checked, 367 exact, 0 failures, 356 unfinished.
+
+## Batch 44 — RichTextWithEmbeddedItem question dialog and mouse hyperlink context (2)
+
+- Exact: `ShowQuestionWarningDialog` (`ShowQuestion(..., YesNo) == Yes`), `HasHyperlinkInMouseContext` (`element != null ? element.GetTextElementParentOrSelf<Hyperlink>() : GetHyperlinkFromTextPointer(GetPositionFromPoint(Mouse.GetPosition(this), false))`; the other arm order puts the calls in the wrong IL order).
+- Not matched, left as a stub: `InsertBaselineOffsetTag`. Mathcad calls `GetPropertyValue` and `ApplyPropertyValue` with `callvirt` on a `new TextRange(...)` receiver; Roslyn emits `call` for a `new` receiver. Same blocker as `RichTextTitle.GetText`.
+- Release IL: PASS — 369 checked, 369 exact, 0 failures, 354 unfinished.
