@@ -17,10 +17,6 @@ public partial class CustomSplitRichTextWithEmbeddedItem : global::Quire.Control
     public event global::System.Action<global::Quire.Controls.Core.ICustomSplitItem> SplitItemIfNeeded;
     [global::Quire.Mirror.MirrorStub]
     public double GetValidSplitOffset(double originalOffset, double pageHeight, ref int lineNumberHint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Documents.TextPointer GetInvalidPointer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ValidateLayout() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.CustomSplitRichTextWithEmbeddedItem+FlowDocumentSplitData, Ptc.Controls.Text")]
     protected partial class FlowDocumentSplitData

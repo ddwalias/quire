@@ -2,6 +2,7 @@
 #pragma warning disable
 
 using System.Collections.Generic;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -25,6 +26,54 @@ public partial class CustomSplitRichTextWithEmbeddedItem
     {
         base.OnRenderSizeChanged(sizeInfo);
         _splitData = null;
+    }
+
+    protected TextPointer GetInvalidPointer()
+    {
+        TextPointer result;
+        if (!Document.ContentStart.HasValidLayout)
+        {
+            result = Document.ContentStart;
+        }
+        else if (!Document.ContentEnd.HasValidLayout)
+        {
+            result = Document.ContentEnd;
+        }
+        else if (Selection.IsEmpty)
+        {
+            result = CaretPosition.HasValidLayout ? null : CaretPosition;
+        }
+        else if (!Selection.Start.HasValidLayout)
+        {
+            result = Selection.Start;
+        }
+        else if (!Selection.End.HasValidLayout)
+        {
+            result = Selection.End;
+        }
+        else
+        {
+            result = null;
+        }
+        return result;
+    }
+
+    public void ValidateLayout()
+    {
+        TextPointer invalid = GetInvalidPointer();
+        if (invalid == null)
+        {
+            return;
+        }
+        try
+        {
+            _ = invalid.IsAtLineStartPosition;
+        }
+        catch (Exception ex)
+        {
+            DebugTools.FailAssertion(ex.Message);
+        }
+        DebugTools.DevAssert(GetInvalidPointer() == null, "Text pointer layout validation failed!");
     }
 
     protected void FireSplitItemIfNeeded()

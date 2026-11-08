@@ -121,3 +121,8 @@
 
 - Exact on the first shape: `_lines = new List<LineData> { new LineData { ... } }` for the first line, a nested `while (next != null && ptr.CompareTo(next) == 0)` loop, and a final `DevAssert(last.TextPtr.CompareTo(_lastLinePtr) == 0).Passed` guard before setting `LastLineRect`.
 - Release IL: PASS — 185 checked, 185 exact, 0 failures, 535 unfinished.
+
+## Batch 18 — CustomSplit layout validation
+
+- Exact: `ValidateLayout` (first shape) and `GetInvalidPointer` (protected). `GetInvalidPointer`'s last branch must be `if (!Selection.End.HasValidLayout) {...} else { result = null; }`; the ternary `cond ? null : Selection.End` shares one store and differed. The caret branch keeps the ternary (it matched).
+- Release IL: PASS — 187 checked, 187 exact, 0 failures, 533 unfinished.
