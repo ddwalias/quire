@@ -775,4 +775,42 @@ public partial class RichTextBase
         }
         return null;
     }
+
+    private DocumentTextRange SearchBackward(DocumentTextRange originalRange, string rangeText, string text, StringComparison comparisonType, FindOptions options, List<Pair<int, int>> subscriptPositions)
+    {
+        int length = rangeText.Length;
+        while (length > 0)
+        {
+            int? index = FindUtilities.GetIndexInText(rangeText.Substring(0, length), text, LogicalDirection.Backward, options);
+            if (!index.HasValue)
+            {
+                break;
+            }
+            DocumentTextRange match = GetRangeIfMatch(originalRange, text, index.Value, comparisonType, subscriptPositions);
+            if (match != null)
+            {
+                return match;
+            }
+            length = index.Value;
+        }
+        return null;
+    }
+
+    private void ReplaceText(string text, bool preserveScriptState, ScriptState scriptState, List<Pair<int, int>> subscriptPositions, int selectionStartOffset)
+    {
+        if (preserveScriptState)
+        {
+            Selection.Text = text;
+            CustomScriptRunBase.ToggleRangeText(Selection, scriptState, double.NaN);
+            return;
+        }
+        Selection.Text = string.Empty;
+        new Run(text, Selection.Start);
+        foreach (Pair<int, int> pair in subscriptPositions)
+        {
+            ClearInsertionPointsCache();
+            TextPointer start = GetPointerToInsertionPoint(selectionStartOffset);
+            ToggleRangeToState(start, pair.First, pair.Second + 1, ScriptState.Subscript);
+        }
+    }
 }

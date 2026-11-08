@@ -266,8 +266,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     protected bool FindInRange(global::System.Windows.Documents.TextPointer start, global::System.Windows.Documents.TextPointer end, string text, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Documents.TextRange SearchBackward(global::System.Windows.Documents.TextRange originalRange, string rangeText, string text, global::System.StringComparison comparisonType, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Documents.TextRange GetRangeIfMatch(global::System.Windows.Documents.TextRange originalRange, string text, int index, global::System.StringComparison comparisonType, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Documents.TextRange SearchWholeWordRuns(global::System.Windows.Documents.TextRange originalRange, string text, global::System.Windows.Documents.LogicalDirection direction, global::System.StringComparison comparisonType, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -279,8 +277,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     internal static global::System.Windows.Documents.TextPointer GetPositionAtTextOffset(global::System.Windows.Documents.TextPointer from, int offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void HandleReplace(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ReplaceText(string text, bool preserveScriptState, global::Quire.Controls.Text.ScriptState scriptState, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions, int selectionStartOffset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ReplaceTextInHyperlink(string text, global::System.Windows.Documents.Hyperlink hyperlink, bool preserveScriptState, global::Quire.Controls.Text.ScriptState scriptState, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions, int selectionStartOffset, out bool shouldRestoreStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

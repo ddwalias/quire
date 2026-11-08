@@ -355,3 +355,8 @@
 - Exact: `GetWordRangeAtCaretPosition` (`out` word text, boundary checks through the instance `GetTextBoundary`, `partialStart + partialEnd`), `SearchForward` (`while` over `rangeText` with `searchStart = start + 1`; the `break` on no index is the shape that matches), `TryFindWholeWord` (`GetInsertionPointAtPointer(ref start) - originalRangeStartPoint + index.Value`).
 - Not attempted: `GetRangeIfMatch` (Mathcad's `new TextRange(p1, p2)` with `p1` duplicated on the stack, which no plain local form reproduces).
 - Release IL: PASS — 397 checked, 397 exact, 0 failures, 326 unfinished.
+
+## Batch 57 — RichTextBase backward search and subscript text replacement (2)
+
+- Exact: `SearchBackward` (`while (length > 0)` with `break` on no index, then `length = index.Value`; the same shape as `SearchForward`), `ReplaceText` (`preserveScriptState` branch with `ToggleRangeText(..., double.NaN)` and `return`; otherwise `Selection.Text = string.Empty`, an unused `new Run(text, Selection.Start)`, and a `foreach` over the subscript pairs that calls `ToggleRangeToState(..., Second + 1, ScriptState.Subscript)`).
+- Release IL: PASS — 399 checked, 399 exact, 0 failures, 324 unfinished.
