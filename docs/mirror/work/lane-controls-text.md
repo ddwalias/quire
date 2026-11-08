@@ -142,3 +142,11 @@
 - Mismatch found and fixed: `OnLostFocus` selects from `ContentStart` to `ContentStart` in Release IL, not to `ContentEnd`.
 - Still stubbed: `RichTextTitle(string)` ctor (uses `<>O` delegate caches), `TextStyleChangedHandler` property, `CanEnableSpellCheck`, `PrePasting`/`PostPasting`, `ToggleSubSuperscriptCommandCanExecute`, `SetRegionPersistentData`, the sanitize and measure helpers, `SetText`/`GetText`/`ResetText`/`ApplyInitialTextFormat`, and `RichTextTitle` ctor helpers.
 - Release IL: PASS — 205 checked, 205 exact, 0 failures, 518 unfinished.
+
+## Batch 21 — RichTextTitle text helpers and paste hooks
+
+- Exact: `SetParagraphMarginToZero`, `SetText` (`TextAlignment.Center`), `ResetText`, `ApplyInitialTextFormat`, `ChangeTextRegionAccordingToRules` (`TextAlignment.Center`), `SetRegionPersistentData` (override), `PrePasting`, `PostPasting` (try/finally with `MathFormatForPaste.Instance?.Dispose()`).
+- Findings: `TextAlignment.Right` is `1` and `Center` is `2` in WPF; Mathcad uses `2`. `string.Empty` loads a field; Mathcad loads `""`.
+- Shape not reproduced: `GetText` (`new TextRange(...).Text.Replace(...)`). Mathcad calls `callvirt get_Text` on a freshly constructed `TextRange`; Roslyn emits `call` for a property read on a `new` receiver. A local would add a local slot Mathcad does not have. Left as a stub.
+- Shape not reproduced: `SetInitialTitleText` needs `ApplyTextFormatValues` to run between `new TextRange(...)` and its `.Text` read, which requires a temporary. Left as a stub.
+- Release IL: PASS — 213 checked, 213 exact, 0 failures, 510 unfinished.

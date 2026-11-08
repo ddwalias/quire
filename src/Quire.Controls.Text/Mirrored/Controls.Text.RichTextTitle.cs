@@ -1,15 +1,22 @@
 #nullable disable
 #pragma warning disable
 
+using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Documents;
+using DocumentTextRange = System.Windows.Documents.TextRange;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Quire.Controls.Core;
 using Quire.Controls.Core.Whiteboard;
 using Quire.FunctionalitiesLimitation;
 using Quire.Wpf;
+using Quire.Core;
+using Quire.Serialization;
+using Quire.PersistentDataObjects;
 using Quire.Services;
+using Quire.Undo;
 
 namespace Quire.Controls.Text;
 
@@ -40,6 +47,74 @@ public partial class RichTextTitle
     {
         SetInitialTitleText();
         SetParagraphMarginToZero();
+    }
+
+    private void SetParagraphMarginToZero()
+    {
+        Style style = new Style(typeof(System.Windows.Documents.Paragraph));
+        style.Setters.Add(new Setter(Block.MarginProperty, new Thickness(0.0)));
+        Resources.Add(typeof(System.Windows.Documents.Paragraph), style);
+    }
+
+    public void SetText(string text)
+    {
+        System.Windows.Documents.Paragraph paragraph = new System.Windows.Documents.Paragraph(new Run(text)) { TextAlignment = TextAlignment.Center };
+        Document.Blocks.Clear();
+        Document.Blocks.Add(paragraph);
+    }
+
+    public void ResetText()
+    {
+        SetText(InitialTitleText);
+        IsDirty = false;
+    }
+
+    public void ApplyInitialTextFormat(TextFormat textFormat)
+    {
+        if (textFormat == null)
+        {
+            return;
+        }
+        textFormat.ApplyAllTextFormatValuesToControl(this, Document.Blocks.FirstBlock);
+        ChangeTextRegionAccordingToRules();
+    }
+
+    private void ChangeTextRegionAccordingToRules()
+    {
+        SanitizeUnsupportedFormatting();
+        Width = MeasureContentWidth() + 30.0;
+        Document.TextAlignment = TextAlignment.Center;
+    }
+
+    public override IList<IRegionPersistentData> SetRegionPersistentData(IDeS11NProvider d11NProvider, object data)
+    {
+        if (data == null)
+        {
+            return null;
+        }
+        IsDirty = true;
+        return base.SetRegionPersistentData(d11NProvider, data);
+    }
+
+    protected override void PrePasting()
+    {
+        base.PrePasting();
+        MathFormatForPaste.SetDefault();
+        _pastingCommandScope = new CommandScope("Paste RichTextTitle.");
+    }
+
+    protected override void PostPasting()
+    {
+        try
+        {
+            base.PostPasting();
+        }
+        finally
+        {
+            _pastingCommandScope.Dispose();
+            _pastingCommandScope = null;
+            MathFormatForPaste.Instance?.Dispose();
+        }
     }
 
     protected override void HandleTextChanged(object sender, TextChangedEventArgs e)

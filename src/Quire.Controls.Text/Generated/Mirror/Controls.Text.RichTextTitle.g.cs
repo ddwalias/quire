@@ -20,23 +20,7 @@ public partial class RichTextTitle : global::Quire.Controls.Text.RichTextBase
     [global::Quire.Mirror.MirrorStub]
     private static void HandleToggleOrientationExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override void PrePasting() => base.PrePasting();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void PostPasting() => base.PostPasting();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetParagraphMarginToZero() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void SetInitialTitleText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetText(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ResetText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ApplyInitialTextFormat(global::Quire.Core.TextFormat textFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ChangeTextRegionAccordingToRules() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private double MeasureContentWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -45,8 +29,6 @@ public partial class RichTextTitle : global::Quire.Controls.Text.RichTextBase
     private double MeasureInlineWidth(global::System.Windows.Documents.Inline inline) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private double MeasureRunWidth(global::System.Windows.Documents.Run run) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => base.SetRegionPersistentData(d11NProvider, data);
     [global::Quire.Mirror.MirrorStub]
     protected override bool ToggleSubSuperscriptCommandCanExecute(object argsParameter) => base.ToggleSubSuperscriptCommandCanExecute(argsParameter);
     [global::Quire.Mirror.MirrorStub]
@@ -61,4 +43,6 @@ public partial class RichTextTitle : global::Quire.Controls.Text.RichTextBase
     private void ConvertListToParagraphs(global::System.Windows.Documents.List list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public RichTextTitle(string initialTitleText) { }
+    [global::Quire.Mirror.MirrorStub]
+    public string GetText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
