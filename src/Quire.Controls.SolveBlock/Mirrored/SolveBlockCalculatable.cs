@@ -39,6 +39,17 @@ internal partial class SolveBlockCalculatable
             base.HandleRequestEvaluation(calc);
     }
 
+    public virtual bool ContainsError(global::Quire.Calculation.Core.EngineError error)
+    {
+        return error.ErrorSource == this;
+    }
+
+    public virtual void ShowError(global::Quire.Calculation.Core.EngineError error)
+    {
+        if (WrappedCalculatable is global::Quire.Calculation.Core.ICalculationErrorOwner owner)
+            owner.ShowError(error);
+    }
+
     public override global::Quire.Calculation.Core.ICalculatable WrappedCalculatable
     {
         get => base.WrappedCalculatable;
