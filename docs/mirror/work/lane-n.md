@@ -840,3 +840,9 @@
 - Report: `.mirror-cache/release-il-3618536adb5a/release-il.json` — PASS, 2,110 checked, 2,110 exact, 0 failures.
 - Shapes Release IL requires: `ShowBusyStateElements` returns early on a null grid; `GetDesiredDraggerVisibility` is a switch statement that returns from each arm.
 - Remaining mismatches (kept as generated stubs, not landed): `UpdateBackgroundAndForeground` — branch structure matches but a then-block is two bytes shorter than Mathcad's; the early-return shape and the `Color ==` operand order did not close it. `UpdateBorderVisibilityState` — Mathcad emits `brfalse` for `ShowBusy ? visibility : Visibility.Visible`, Roslyn emits `brtrue` with the constant on the fall-through.
+
+## Batch 110 — OleContainer static members
+
+- Claimed: `OleContainer<TViewModel,TModel,TIPublicModel,TPersistentData>` `_typeOfThis`, `OleForceClosePriority`, `ContentChangedEvent`, `IsInPrintingProperty`, `IsInCopyProperty`, the static constructor, and the two static change handlers. New hand-written partial `src/Quire.Controls.Core/Ole/OleContainer.cs`; stubs removed from the `.g.cs`, which keeps its class header and instance members.
+- Report: `.mirror-cache/release-il-3ef9c3974b8d/release-il.json` — PASS, 2,113 checked, 2,113 exact, 0 failures.
+- Remaining mismatches: none in claimed batch.

@@ -12,17 +12,7 @@ namespace Quire.Controls.Core.Ole;
 public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TPersistentData> : global::Quire.Controls.Core.Ole.OleContainerBase, global::Quire.Controls.Core.Ole.IOleContainer, global::Quire.Controls.Core.IWorksheetPropertiesTarget, global::Quire.Core.IMaybeHasPointThatSnapsToPixel, global::System.IDisposable where TViewModel : global::Quire.Controls.Core.Ole.OleContainerViewModel<TModel, TIPublicModel, TPersistentData> where TModel : global::Quire.Controls.Core.Ole.OleContainerModel<TPersistentData>, TIPublicModel where TIPublicModel : global::Quire.Controls.Core.Ole.IPublicOleContainerModel<TPersistentData> where TPersistentData : global::Quire.PersistentData.IOleObjectPersistentData
 {
     [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    private const global::System.Windows.Threading.DispatcherPriority OleForceClosePriority = (global::System.Windows.Threading.DispatcherPriority)(4);
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.RoutedEvent ContentChangedEvent;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.SnappableItemHelper _snappableHelper;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsInPrintingProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsInCopyProperty;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Nullable<double> _prePrintingZoom;
     [global::Quire.Mirror.MirrorStub]
@@ -69,10 +59,6 @@ public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TP
     public bool IsPrintingZoomSet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected bool HasEffectivePrintingZoom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnIsInPrintingPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnIsInCopyPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnZoomChanged() => base.OnZoomChanged();
     [global::Quire.Mirror.MirrorStub]
