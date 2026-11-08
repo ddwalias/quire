@@ -12,19 +12,5 @@ namespace Quire.EquationEditor.Tree;
 public partial class ListBoxScriptableControlData : global::Quire.EquationEditor.Tree.InputScriptableControlDataWithInputs, global::Quire.EquationEditor.Tree.IListBoxScriptableControlData, global::Quire.EquationEditor.Tree.IInputScriptableControlDataWithInputs, global::Quire.EquationEditor.Tree.IInputScriptableControlData, global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue, global::Quire.EquationEditor.Tree.IInputControlData, global::System.ICloneable, global::Quire.EquationEditor.Tree.IInputControlDataWithValues
 {
     [global::Quire.Mirror.MirrorStub]
-    private const int a = 70;
-    [global::Quire.Mirror.MirrorStub]
-    private const int b = 140;
-    [global::Quire.Mirror.MirrorStub]
-    private bool c;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.FlowDirection d;
-    [global::Quire.Mirror.MirrorStub]
-    public bool Sort { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.FlowDirection FlowDirection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ListBoxScriptableControlData(string mathNodeName, global::Quire.Controls.Core.InputControlTypes inputControlTypes) : base(default(string), default(global::Quire.Controls.Core.InputControlTypes)) { }
-    [global::Quire.Mirror.MirrorStub]
     public override object Clone() => base.Clone();
 }
