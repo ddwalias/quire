@@ -12,11 +12,5 @@ namespace Quire.Controls.ExcelComponent.Model;
 public partial class OleObjectModel : global::Quire.Controls.Core.Ole.OleContainerModel<global::Quire.PersistentData.oleObjectRegionType>, global::Quire.Controls.ExcelComponent.Model.IOleObjectModel, global::Quire.Controls.Core.Ole.IPublicOleContainerModel<global::Quire.PersistentData.oleObjectRegionType>
 {
     [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey ToggleActivateStateFunctionalityKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public OleObjectModel(bool autoResize) : base(default(global::Quire.OLE.IOleSiteManager), default(bool)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, global::Quire.PersistentData.oleObjectRegionType ole) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.PersistentData.oleObjectRegionType GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider, string uniqueId, global::System.Action onServerBusy) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
