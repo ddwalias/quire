@@ -993,4 +993,27 @@ public partial class RichTextBase
         }
         return false;
     }
+
+    private TextPointer GetSpellingErrorAtPosition(ref TextPointer textPointer, out SpellingError spellingError)
+    {
+        spellingError = null;
+        if (DebugTools.AssertNotNull(textPointer).Failed)
+        {
+            return null;
+        }
+        TextPointer position = null;
+        try
+        {
+            spellingError = GetSpellingError(position = textPointer) ?? GetSpellingError(position = textPointer.GetReversedTextPointer());
+        }
+        catch
+        {
+            DebugTools.DevAssert(false);
+        }
+        if (spellingError != null)
+        {
+            return position;
+        }
+        return null;
+    }
 }

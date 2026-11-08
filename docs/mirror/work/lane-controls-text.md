@@ -393,3 +393,9 @@
 - Exact: `FindInRange` (protected, non-virtual as the stub declares it; `subscriptPositions?.Count == 1` gives the `call` on `get_Count` that Mathcad emits, where `!= null && Count` gave `callvirt`; the comparison is `options.HasFlag(…)` through boxed `Enum.HasFlag`; `isWholeSubscript` is a plain `bool` and `IsNullOrEmpty(...) | isWholeSubscript` is non-short-circuit).
 - Note: `FindOncePrivate` (batch 59) calls `FindInRange` with `callvirt`, so it matched only once `FindInRange` was non-virtual; the stub's modifier is the one to keep.
 - Release IL: PASS — 407 checked, 407 exact, 0 failures, 316 unfinished.
+
+## Batch 63 — RichTextBase spelling error at a text position (1)
+
+- Exact: `GetSpellingErrorAtPosition(ref TextPointer, out SpellingError)` (`spellingError = GetSpellingError(position = textPointer) ?? GetSpellingError(position = textPointer.GetReversedTextPointer())` inside a try; `catch { DevAssert(false); }`; the return is `if (spellingError != null) return position; return null;`).
+- Not matched, tried and reverted: `SearchWholeWordRuns`. Mathcad pushes `this` before it stores `originalRange.Start` in the local used by the `ref` argument, and a plain `TextPointer` local followed by `GetInsertionPointAtPointer(ref …)` does not reproduce that. The `break` form and the separate `int startOffset;` declaration both fixed the rest of the method; only this one ordering remains.
+- Release IL: PASS — 408 checked, 408 exact, 0 failures, 315 unfinished.
