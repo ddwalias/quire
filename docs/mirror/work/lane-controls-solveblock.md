@@ -7,11 +7,12 @@
 - Batch 8 constructor: PASS (`38 checked`); landed `f1756f18`.
 - Batch 9 simple equation type update: PASS (`39 checked`); landed `1a947618`.
 - Batch 10 `UpdateEquationType`: PASS (`40 checked`); landed `adcea50f`.
-- Batch 11 field: PASS (`40 checked`); landed `47c1dc7e`.
+- Batch 11 `_equationType`: PASS (`40 checked`); landed `47c1dc7e`.
 - Batch 12 notifier: PASS (`41 checked`); landed `91575596`.
 - Batch 13 evaluation request: PASS (`42 checked`); landed `1ab5bfb`.
 - Batch 14 error ownership: PASS (`44 checked`); landed `c9460106`.
 - Batch 15 restore result: PASS (`45 checked`); landed `bfc84597`.
-- Batch 16 `EquationType` getter/setter: PASS (`47 checked`; `.mirror-cache/release-il-6fecc88bda51`); initial branch shape failed, equality early-return fixed it.
+- Batch 16 `EquationType`: PASS (`47 checked`); landed `9e93b697`.
+- Batch 17 aggregate updater pair: PASS (`49 checked`; `.mirror-cache/release-il-de4bed99c7c0`).
 - `GetEquationTypeOfRl` remains stubbed due enum/closure mismatch.
-- Remaining: 374 stub markers in 18 generated types; no known mismatches in landed batches.
+- Remaining: 372 stub markers in 18 generated types; no known mismatches in landed batches.

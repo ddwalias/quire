@@ -28,10 +28,6 @@ internal partial class SolveBlockCalculatableAggregate : global::Quire.Controls.
     [global::Quire.Mirror.MirrorStub]
     public SolveBlockCalculatableAggregate(global::Quire.Calculation.Core.ICalculatableAggregate wrappedCalculatableAggregate) : base(default(global::Quire.Calculation.Core.ICalculatable)) { }
     [global::Quire.Mirror.MirrorStub]
-    protected override bool UpdateEquationType(global::Quire.Calculation.Core.ICalculatable calc) => base.UpdateEquationType(calc);
-    [global::Quire.Mirror.MirrorStub]
-    protected bool UpdateEquationTypeOfAggregateCalculatable(global::Quire.Calculation.Core.ICalculatableAggregate calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal static string GetDefinedVariable(global::System.Text.RegularExpressions.Match topDefineMatch) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static string GetSymbolicEvalExpression(global::System.Text.RegularExpressions.Match symbolicEvalMatch) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
