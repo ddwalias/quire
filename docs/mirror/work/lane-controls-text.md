@@ -157,3 +157,9 @@
 - Shape note: `if (width > 0.0) return width; return 0.0;` lays out the zero return first; Release IL branches on `bgt` to the width return.
 - Still stubbed in RichTextTitle: `MeasureInlineWidth` (68 IL instructions), `SetInitialTitleText`, `GetText`, `TextStyleChangedHandler` (property setter), `CanEnableSpellCheck`, `ToggleSubSuperscriptCommandCanExecute`, `SanitizeUnsupportedFormatting`, `CollectUnsupportedBlocks`/`Inlines`, `RemoveHyperlinkPreservingText`, `ConvertListToParagraphs`, and the `RichTextTitle(string)` ctor.
 - Release IL: PASS — 216 checked, 216 exact, 0 failures, 507 unfinished.
+
+## Batch 23 — RichTextBase small members (21)
+
+- Exact: `GetHelpContext`, `HighlightAll` (`throw new NotImplementedException()` is the Release IL body, not a MirrorStub), `CopyImageToTempBitmap`, `GetTextInRange`, `IsSelectedChangedHandler`, `ClearInsertionPointsCache`, `ClearIsInSerialization`, `ClearRevertCoerceAfterSerializationProcess`, `ClearTextFormatCache`, `DisableSpellCheck`, `OnIsInPrintingPropertyChanged`, `OnIsInSavingCLRPropertyChanged`, `RemoveBaselineOffsetFromImage`, `SimulateMouseClick`, `CacheScriptStateInRange`, `FireGotFocusEvent`, `GetIsInSerialization`, `GetPointerToInsertionPoint`, `HandleIsOnVisiblePageChanged`, `HandleIsVisibleChanged`, `OnLoaded`.
+- Hand-written: new `Mirrored/Controls.Text.RichTextBase.cs`. Also the `DocumentTextRange` alias is needed here (Quire.TextRange).
+- Release IL: PASS — 237 checked, 237 exact, 0 failures, 486 unfinished.
