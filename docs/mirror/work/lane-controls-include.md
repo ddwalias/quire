@@ -40,6 +40,9 @@
 - Release IL: PASS; 342 checked, 342 exact, 0 failures. Landed as 993dd465.
 - Batch 7: 115 unfinished methods / 203 stubs across `IncludeWorksheetModel`:
   - `IncludeWorksheetModel` (fields, ContentChanged event, .ctor, ReloadedInFreemium, IsTopLevel, ResetDataRecursivly, ReloadIfNeeded, CacheValid, SetRegionPersistentData, PropagateParentData, Dispose, ReadCachedPart, WriteCachedPart, AddSystemVariableValuesHandlers, ConstructUniqueIdForIncluded, UpdateIncludedCalculatableWrappers, CreateAndAddIncludedCalculatableWrappers, OpenFile, CleanIncludedCalculatableWrappers, HideFromCalculationContext, ToggleHiddenState, UpdateFileFromFreemium, ExtractCalculatablesIncluded, FilterOutNotOwnErrorsWarnings, ValidateErrorsWarningsList, ClearErrors, ClearWarnings, UpdateErrors, UpdateWarnings, UpdateError, UpdateWarning, GetConflictSettingNames, CreateConflictSettingString, AddErrorWarningAdorners, RemoveErrorWarningAdorners, RemoveNodeMessageAdorners, S11NProvider, and compiler closures `<>c`, `<>c__DisplayClass134_0`, `<>c__DisplayClass135_0`, `<>c__DisplayClass136_0`)
-- Release IL: PASS; 475 checked, 475 exact, 0 failures. Report: `.mirror-cache/release-il-1fd6960e4a05/release-il.json`.
-- Unfinished methods: 121 remaining (228 MirrorStub attributes in IncludeWorksheetControl).
+- Release IL: PASS; 475 checked, 475 exact, 0 failures. Landed as a6368d72.
+- Batch 8: 228 stubs across `IncludeWorksheetControl`:
+  - `IncludeWorksheetControl` (all 228 stubs implemented: dependency properties, fields, events, properties, .ctor, static .cctor, lifecycle, visual tree navigation, calculation integration, error/warning handling, selection, keyboard/mouse commands, serialization support, closures `<set_HideFromCalculationContext>b__0/1` in `<>c__DisplayClass34_0`, `<OnIsInCopyPropertyChanged>b__90_0`, `<.ctor>b__91_0..5`, `<Activate>b__146_0`, `<Dispose>b__158_0`, method group cache `<0..3>`)
+- Release IL: PASS; 611 checked, 611 exact, 0 failures. Report: `.mirror-cache/release-il-4b1bade4d195/release-il.json`.
+- Remaining stubs: 0 (all 555 stubs across 20 types in Quire.Controls.Include resolved).
 - Remaining mismatches: none.
