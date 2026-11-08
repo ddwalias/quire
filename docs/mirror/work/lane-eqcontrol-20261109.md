@@ -14,4 +14,7 @@
 - Batch: `Ptc.Controls.Internal.VisualNumericNode` constructor; sets `MathFormat.IsItalic` to `false` as in the original C#.
 - Shapes tried: idiomatic constructor body; matched the original Release IL.
 - Release IL: PASS, 600 checked, 0 failures; `.mirror-cache/release-il-33a944f546ea/release-il.json`.
-- Remaining: 4,501 unfinished members across 327 generated type files; these batches have no mismatches.
+- Batch: constructors for `Ptc.Controls.VisualConstantDescriptor`, `Ptc.Controls.VisualModifierDescriptor`, and `Ptc.Controls.VisualUnitDescriptor`.
+- Shapes tried: idiomatic protected-field assignments to the enum and command values shown in the original source; no unusual IL-specific shaping.
+- Release IL: PASS, 603 checked, 0 failures; `.mirror-cache/release-il-bbd011d3bedb/release-il.json`.
+- Remaining: 4,498 unfinished members across 327 generated type files; these batches have no mismatches.

@@ -11,6 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.VisualConstantDescriptor, Ptc.Controls.EquationControl")]
 public partial class VisualConstantDescriptor : global::Quire.Controls.VisualIdDescriptor
 {
-    [global::Quire.Mirror.MirrorStub]
-    public VisualConstantDescriptor() { }
 }

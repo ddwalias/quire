@@ -11,6 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.VisualUnitDescriptor, Ptc.Controls.EquationControl")]
 public partial class VisualUnitDescriptor : global::Quire.Controls.VisualIdDescriptor
 {
-    [global::Quire.Mirror.MirrorStub]
-    public VisualUnitDescriptor() { }
 }

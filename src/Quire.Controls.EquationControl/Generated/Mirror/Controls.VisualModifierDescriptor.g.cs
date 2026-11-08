@@ -11,6 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.VisualModifierDescriptor, Ptc.Controls.EquationControl")]
 public partial class VisualModifierDescriptor : global::Quire.Controls.VisualKeywordDescriptor
 {
-    [global::Quire.Mirror.MirrorStub]
-    public VisualModifierDescriptor() { }
 }
