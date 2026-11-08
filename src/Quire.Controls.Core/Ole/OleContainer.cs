@@ -1,11 +1,15 @@
 #nullable disable
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Threading;
 using Quire.Controls.Core.AttachedBehavior;
 using Quire.Core;
 using Quire.Mirror;
 using Quire.PersistentData;
+using Quire.Serialization;
 
 namespace Quire.Controls.Core.Ole;
 
@@ -155,5 +159,178 @@ public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TP
             }
             return false;
         }
+    }
+
+    protected override void OnZoomChanged()
+    {
+        if (ViewModel.IsOleAppSupportZoom)
+        {
+            InvalidateVisual();
+        }
+    }
+
+    protected virtual void OnIsInPrintingPropertyChanged(DependencyPropertyChangedEventArgs e)
+    {
+        DebugTools.DevAssert(IsOleCreated && IsStorageEmpty == (!CanPrint || (bool)e.NewValue), null);
+        ClearStorageOnPropertyChanged(e, deleteFile: true);
+    }
+
+    protected virtual void OnIsInCopyPropertyChanged(DependencyPropertyChangedEventArgs e)
+    {
+        DebugTools.DevAssert(IsStorageEmpty.Equals(e.NewValue), null);
+        ClearStorageOnPropertyChanged(e, deleteFile: false);
+    }
+
+    protected void ClearStorageOnPropertyChanged(DependencyPropertyChangedEventArgs e, bool deleteFile)
+    {
+        if (!(bool)e.NewValue)
+        {
+            CleanStorage(deleteFile);
+        }
+    }
+
+    protected virtual void HandleBeforeActiveStateToggled()
+    {
+    }
+
+    protected override bool ShouldSerializeProperty(DependencyProperty dp)
+    {
+        if (dp == UIElement.RenderTransformProperty)
+        {
+            return false;
+        }
+        return base.ShouldSerializeProperty(dp);
+    }
+
+    protected virtual IValueConverter GetDimensionsConverter()
+    {
+        return null;
+    }
+
+    protected virtual void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs args)
+    {
+        if (args.PropertyName == "AutoResize" || args.PropertyName == "Width" || args.PropertyName == "Height")
+        {
+            RaiseEvent(new RoutedEventArgs(ContentChangedEvent));
+        }
+    }
+
+    protected virtual void OnViewChangedSync()
+    {
+        Bitmap = null;
+        if (!HasEffectivePrintingZoom)
+        {
+            InvalidateVisual();
+        }
+    }
+
+    protected virtual void OnViewChangedOrSavedAsync()
+    {
+        RaiseEvent(new RoutedEventArgs(ContentChangedEvent));
+    }
+
+    public void AbortOleCloseOperation()
+    {
+        if (OleForceCloseOperation != null)
+        {
+            DebugTools.DevAssert(OleForceCloseOperation.Abort(), null);
+        }
+        ViewModel.AbortDeactivate();
+    }
+
+    private void OleForceClose()
+    {
+        ViewModel.OleForceClose();
+    }
+
+    protected virtual void OnCreationError(bool isNew)
+    {
+        if (isNew)
+        {
+            ThrowExceptionWithMessage("server_busy_create_error");
+        }
+        else
+        {
+            ThrowExceptionWithMessage("server_busy_create_error_from_file");
+        }
+    }
+
+    protected virtual void OnCreationError()
+    {
+    }
+
+    public void CreateWindowlessOle()
+    {
+        if (!ViewModel.CreateWindowlessOle())
+        {
+            OnCreationError();
+        }
+    }
+
+    protected void ThrowExceptionWithMessage(string messageKey)
+    {
+        string text = TryFindResource(messageKey) as string;
+        if (DebugTools.AssertNotNull(text, null).Failed)
+        {
+            text = messageKey;
+        }
+        throw new ApplicationException(text);
+    }
+
+    public void CleanStorage(bool deleteFile = true)
+    {
+        PublicModel.CleanStorage(deleteFile);
+    }
+
+    public virtual IList<IRegionPersistentData> SetOlePersistentData(IDeS11NProvider d11NProvider, TPersistentData data)
+    {
+        return ViewModel.SetRegionPersistentData(d11NProvider, data);
+    }
+
+    public void OnWorksheetPropertiesChanged(string[] propertyNames, IWorksheetProperties oldProperties, IWorksheetProperties newProperties)
+    {
+        ViewModel.OnWorksheetPropertiesChanged(propertyNames, oldProperties, newProperties);
+    }
+
+    public void Dispose()
+    {
+        _snappableHelper.Dispose();
+        AbortOleCloseOperation();
+        ViewModel.Dispose();
+    }
+
+    public void SetPrintingZoom(bool set, double? newPrintingZoom)
+    {
+        if (!set)
+        {
+            DebugTools.DevAssert(!newPrintingZoom.HasValue, null);
+        }
+        bool hasValue = _prePrintingZoom.HasValue;
+        if (set && !CanPrint)
+        {
+            DebugTools.DevAssert(!hasValue, null);
+            return;
+        }
+        double num = (set ? newPrintingZoom : _prePrintingZoom) ?? Zoom;
+        if (hasValue != set)
+        {
+            _prePrintingZoom = set ? new double?(Zoom) : null;
+            ApplyPrintingZoom(set ? new double?(num) : null);
+        }
+        DebugTools.DevAssert(Zoom == num, null);
+    }
+
+    protected virtual void ApplyPrintingZoom(double? zoom)
+    {
+        if (zoom.HasValue)
+        {
+            SetValue(DocumentAttachedProperties.ZoomProperty, zoom.Value);
+            return;
+        }
+        if (CanPrint)
+        {
+            DebugTools.AssertNotNull(TrySavingBitmapForPrint(), null);
+        }
+        ClearValue(DocumentAttachedProperties.ZoomProperty);
     }
 }

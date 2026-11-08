@@ -18,33 +18,9 @@ public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TP
     [global::Quire.Mirror.MirrorStub]
     public string StorageFileNameForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnZoomChanged() => base.OnZoomChanged();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnIsInPrintingPropertyChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnIsInCopyPropertyChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void ClearStorageOnPropertyChanged(global::System.Windows.DependencyPropertyChangedEventArgs e, bool deleteFile) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected OleContainer(TViewModel viewModel, global::System.Windows.ResourceDictionary dictionary) { }
     [global::Quire.Mirror.MirrorStub]
-    protected virtual void HandleBeforeActiveStateToggled() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool ShouldSerializeProperty(global::System.Windows.DependencyProperty dp) => base.ShouldSerializeProperty(dp);
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual global::System.Windows.Data.IValueConverter GetDimensionsConverter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnViewModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void StartOleCloseOperation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AbortOleCloseOperation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OleForceClose() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnViewChangedSync() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnViewChangedOrSavedAsync() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
     [global::Quire.Mirror.MirrorStub]
@@ -62,27 +38,7 @@ public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TP
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Media.Imaging.BitmapSource CreateBitmapSource(nint hBitmap, global::System.Windows.Int32Rect rectInDpi) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnCreationError(bool isNew) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnCreationError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CreateWindowlessOle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void ThrowExceptionWithMessage(string messageKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected string TrySavingBitmapForPrint() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void CleanStorage(bool deleteFile = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetOlePersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, TPersistentData data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public virtual TPersistentData GetOlePersistentData(global::Quire.Serialization.IS11NProvider s11NProvider, string uniqueId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void OnWorksheetPropertiesChanged(string[] propertyNames, global::Quire.Controls.Core.IWorksheetProperties oldProperties, global::Quire.Controls.Core.IWorksheetProperties newProperties) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Dispose() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void SetPrintingZoom(bool set, global::System.Nullable<double> newPrintingZoom) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void ApplyPrintingZoom(global::System.Nullable<double> zoom) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

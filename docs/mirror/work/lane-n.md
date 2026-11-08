@@ -853,3 +853,9 @@
 - Report: `.mirror-cache/release-il-d64976e1ef4f/release-il.json` — PASS, 2,141 checked, 2,141 exact, 0 failures.
 - Shapes Release IL requires: `MessageListForPrint` setter tests `value != null` around the loop.
 - Not in this batch: `StorageFileNameForXamlSerialization` (a lambda closure), the constructor, and the instance methods.
+
+## Batch 112 — OleContainer lifecycle, persistence and printing-zoom members
+
+- Claimed: `OnZoomChanged`, `OnIsInPrintingPropertyChanged`, `OnIsInCopyPropertyChanged`, `ClearStorageOnPropertyChanged`, `HandleBeforeActiveStateToggled`, `ShouldSerializeProperty`, `GetDimensionsConverter`, `OnViewModelPropertyChanged`, `OnViewChangedSync`, `OnViewChangedOrSavedAsync`, `AbortOleCloseOperation`, `OleForceClose`, `OnCreationError` (both overloads), `CreateWindowlessOle`, `ThrowExceptionWithMessage`, `CleanStorage`, `SetOlePersistentData`, `OnWorksheetPropertiesChanged`, `Dispose`, `SetPrintingZoom`, `ApplyPrintingZoom`. Stubs removed from the `.g.cs`.
+- Report: `.mirror-cache/release-il-acd1922e0dc5/release-il.json` — PASS, 2,163 checked, 2,163 exact, 0 failures.
+- Remaining mismatches: none in claimed batch. Still open in OleContainer: `StartOleCloseOperation` (anonymous delegates), `StorageFileNameForXamlSerialization`, `GetOlePersistentData`, `TrySavingBitmapForPrint` (lambdas), the rendering and bitmap members, `GetRenderRectInPixels`, `CreateHBitmap`, `CreateBitmapSource`, `OnRender`, `AcquireBitmapSource`, and the constructor.
