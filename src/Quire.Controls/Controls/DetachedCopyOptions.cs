@@ -5,6 +5,18 @@ namespace Quire.Controls;
 
 public partial class DetachedCopyOptions
 {
+    public static readonly DetachedCopyOptions Empty;
+    public static readonly DetachedCopyOptions HandlingException;
+
+    static DetachedCopyOptions()
+    {
+        Empty = new DetachedCopyOptions();
+        HandlingException = new DetachedCopyOptions
+        {
+            IsHandlingException = true
+        };
+    }
+
     [MirrorVerified("PtcControlsDetachedCopyOptionsMechanicalDifferentialTests")]
     private DetachedCopyOptions() { }
 

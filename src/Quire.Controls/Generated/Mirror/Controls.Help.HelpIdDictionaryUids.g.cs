@@ -11,10 +11,4 @@ namespace Quire.Controls.Help;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Help.HelpIdDictionaryUids, Ptc.Controls")]
 public static partial class HelpIdDictionaryUids
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string ToggleInputRegion = "Ribbon.Tab.Document.MCAD.ToggleInputRegion.Tooltip";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ToggleOutputRegion = "Ribbon.Tab.Document.MCAD.ToggleOutputRegion.Tooltip";
-    [global::Quire.Mirror.MirrorStub]
-    public const string GettingStarted = "Ribbon.Tab.GettingStarted.Help.Help";
 }

@@ -11,8 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ThicknessNullableConverter, Ptc.Controls")]
 internal partial class ThicknessNullableConverter : global::System.ComponentModel.NullableConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ThicknessNullableConverter() : base(default(global::System.Type)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override object ConvertTo(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value, global::System.Type destinationType) => base.ConvertTo(context, culture, value, destinationType);
 }

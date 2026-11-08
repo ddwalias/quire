@@ -11,8 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.BooleanConverterWithDefaultValue, Ptc.Controls")]
 internal partial class BooleanConverterWithDefaultValue : global::Quire.Controls.Core.XmlBooleanConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public BooleanConverterWithDefaultValue(string attributeName, global::System.Collections.Generic.Dictionary<string, object> attributeNameToDefaultValueDictionary) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override object ConvertTo(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value, global::System.Type destinationType) => base.ConvertTo(context, culture, value, destinationType);
 }

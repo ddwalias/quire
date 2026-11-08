@@ -11,10 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.RegularSaveOptions, Ptc.Controls")]
 public partial class RegularSaveOptions : global::Quire.Controls.Core.IDocumentSaveOptions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Controls.RegularSaveOptions Empty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Controls.RegularSaveOptions NonPrimeFormatForApi;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Controls.RegularSaveOptions WithStatesGeneration;
 }

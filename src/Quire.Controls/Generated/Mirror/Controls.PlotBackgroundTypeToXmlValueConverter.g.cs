@@ -11,10 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.PlotBackgroundTypeToXmlValueConverter, Ptc.Controls")]
 internal partial class PlotBackgroundTypeToXmlValueConverter : global::System.ComponentModel.EnumConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public PlotBackgroundTypeToXmlValueConverter(string attrName, global::System.Collections.Generic.Dictionary<string, object> attributeNameToDefaultValueDictionary) : base(default(global::System.Type)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override object ConvertTo(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value, global::System.Type destinationType) => base.ConvertTo(context, culture, value, destinationType);
-    [global::Quire.Mirror.MirrorStub]
-    public override object ConvertFrom(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value) => base.ConvertFrom(context, culture, value);
 }

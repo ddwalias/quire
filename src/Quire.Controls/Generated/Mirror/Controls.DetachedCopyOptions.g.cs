@@ -11,8 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.DetachedCopyOptions, Ptc.Controls")]
 public partial class DetachedCopyOptions : global::Quire.Controls.Core.IDocumentSaveOptions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Controls.DetachedCopyOptions Empty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Controls.DetachedCopyOptions HandlingException;
 }

@@ -11,8 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ColorNullableConverter, Ptc.Controls")]
 internal partial class ColorNullableConverter : global::System.ComponentModel.NullableConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ColorNullableConverter() : base(default(global::System.Type)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override object ConvertTo(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value, global::System.Type destinationType) => base.ConvertTo(context, culture, value, destinationType);
 }

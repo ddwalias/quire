@@ -11,6 +11,4 @@ namespace Quire.Controls.Properties;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Properties.Settings, Ptc.Controls")]
 internal sealed partial class Settings : global::Quire.ApplicationSettingsSafe
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string MicrosoftPdfDriverName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

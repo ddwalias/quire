@@ -11,6 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.DefaultPdfDriverNames, Ptc.Controls")]
 internal static partial class DefaultPdfDriverNames
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string MicrosoftPrintToPdf = "Microsoft Print To PDF";
 }
