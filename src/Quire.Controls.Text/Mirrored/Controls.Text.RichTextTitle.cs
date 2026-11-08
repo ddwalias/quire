@@ -2,11 +2,13 @@
 #pragma warning disable
 
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Documents;
 using DocumentTextRange = System.Windows.Documents.TextRange;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Input;
 using Quire.Controls.Core;
 using Quire.Controls.Core.Whiteboard;
@@ -115,6 +117,47 @@ public partial class RichTextTitle
             _pastingCommandScope = null;
             MathFormatForPaste.Instance?.Dispose();
         }
+    }
+
+    private double MeasureContentWidth()
+    {
+        double width = 0.0;
+        foreach (Block block in Document.Blocks)
+        {
+            System.Windows.Documents.Paragraph paragraph = block as System.Windows.Documents.Paragraph;
+            if (paragraph != null)
+            {
+                double paragraphWidth = MeasureParagraphWidth(paragraph);
+                width = Math.Max(width, paragraphWidth);
+            }
+        }
+        // Release IL branches on width > 0 to the return of width, so the zero case is tested first.
+        if (!(width > 0.0))
+        {
+            return 0.0;
+        }
+        return width;
+    }
+
+    private double MeasureParagraphWidth(System.Windows.Documents.Paragraph paragraph)
+    {
+        double width = 0.0;
+        foreach (Inline inline in paragraph.Inlines)
+        {
+            width += MeasureInlineWidth(inline);
+        }
+        return width;
+    }
+
+    private double MeasureRunWidth(Run run)
+    {
+        if (string.IsNullOrEmpty(run.Text))
+        {
+            return 0.0;
+        }
+        Typeface typeface = new Typeface(run.FontFamily, run.FontStyle, run.FontWeight, run.FontStretch);
+        FormattedText text = new FormattedText(run.Text, CultureInfo.CurrentCulture, run.FlowDirection, typeface, run.FontSize, Brushes.Black, new NumberSubstitution(), 1.0);
+        return text.WidthIncludingTrailingWhitespace;
     }
 
     protected override void HandleTextChanged(object sender, TextChangedEventArgs e)

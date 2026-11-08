@@ -150,3 +150,10 @@
 - Shape not reproduced: `GetText` (`new TextRange(...).Text.Replace(...)`). Mathcad calls `callvirt get_Text` on a freshly constructed `TextRange`; Roslyn emits `call` for a property read on a `new` receiver. A local would add a local slot Mathcad does not have. Left as a stub.
 - Shape not reproduced: `SetInitialTitleText` needs `ApplyTextFormatValues` to run between `new TextRange(...)` and its `.Text` read, which requires a temporary. Left as a stub.
 - Release IL: PASS — 213 checked, 213 exact, 0 failures, 510 unfinished.
+
+## Batch 22 — RichTextTitle measure helpers (content, paragraph, run)
+
+- Exact: `MeasureContentWidth` (foreach over `Document.Blocks`, `if (paragraph != null)` with no `break`; zero case tested first with `if (!(width > 0.0)) return 0.0; return width;`), `MeasureParagraphWidth`, `MeasureRunWidth`.
+- Shape note: `if (width > 0.0) return width; return 0.0;` lays out the zero return first; Release IL branches on `bgt` to the width return.
+- Still stubbed in RichTextTitle: `MeasureInlineWidth` (68 IL instructions), `SetInitialTitleText`, `GetText`, `TextStyleChangedHandler` (property setter), `CanEnableSpellCheck`, `ToggleSubSuperscriptCommandCanExecute`, `SanitizeUnsupportedFormatting`, `CollectUnsupportedBlocks`/`Inlines`, `RemoveHyperlinkPreservingText`, `ConvertListToParagraphs`, and the `RichTextTitle(string)` ctor.
+- Release IL: PASS — 216 checked, 216 exact, 0 failures, 507 unfinished.

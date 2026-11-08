@@ -22,13 +22,7 @@ public partial class RichTextTitle : global::Quire.Controls.Text.RichTextBase
     [global::Quire.Mirror.MirrorStub]
     private void SetInitialTitleText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private double MeasureContentWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private double MeasureParagraphWidth(global::System.Windows.Documents.Paragraph paragraph) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private double MeasureInlineWidth(global::System.Windows.Documents.Inline inline) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private double MeasureRunWidth(global::System.Windows.Documents.Run run) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override bool ToggleSubSuperscriptCommandCanExecute(object argsParameter) => base.ToggleSubSuperscriptCommandCanExecute(argsParameter);
     [global::Quire.Mirror.MirrorStub]
