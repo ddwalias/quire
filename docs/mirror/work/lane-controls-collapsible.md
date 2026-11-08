@@ -65,5 +65,25 @@
 - Shape that matched: `base.HandleGridCellSizeChanged(...)`, the `Each` lambda, then `MinimumHeight = StrictMinimumSize.Height;` as one statement. The local form `Size strictMinimumSize = StrictMinimumSize; MinimumHeight = strictMinimumSize.Height;` gave Mathcad's `this` push in the wrong place (`ldarg.0` after the stloc) and bound the `StrictMinimumSize` read to `WhiteboardViewModel::get_StrictMinimumSize`. The one-statement form binds to `CollapsibleAreaViewModel::get_StrictMinimumSize`, as Mathcad does.
 - Release IL: PASS — 229 checked, 229 exact, 0 failures.
 
+## Batch 8 — attempts on the three remaining placeholders (no shape found)
+
+Gate: `release_il.py --project Quire.Controls.CollapsibleArea` (G) or a scratch build + `ilspycmd` dump (D). Each is a single Mathcad member; the other placeholders stay as they are.
+
+- `CollapsibleAreaControl.PrintViewport` setter. Mathcad leaves the unchanged-check on the stack (`beq.s` into the comparison arm, `ldc.i4.0; br.s`, then one `brfalse.s` and an early `ret`).
+  1. (G) `bool unchanged = A.HasValue == B.HasValue && (!A.HasValue || A.GetValueOrDefault() == B.GetValueOrDefault()); if (unchanged) return;` — `bne.un.s` at the first compare, Mathcad `beq.s`.
+  2. (G) `if (A.HasValue != B.HasValue ? false : (...)) return;` — Roslyn rewrites `c ? false : Y` to `!c && Y`, `bne.un` again.
+  3. (G) `if (A == B) return;` on `Rect?` — the lifted operator adds `ldloc.0/stloc.1/stloc.2` temporaries that Mathcad does not have.
+  4. (G) `bool unchanged = A.HasValue != B.HasValue ? false : (...); if (unchanged) return;` — `bne.un.s`, plus a bool local Mathcad does not have.
+  5. (G) explicit `goto` layout matching the branch order — Roslyn chains the jumps into `bne.un`.
+- `CollapsibleAreaControl.HideFromCalculationContext` setter. Mathcad materializes the comparison (`ceq; ldc.i4.0; ceq; brtrue.s`) before the early `ret`.
+  1. (G) `if (HideFromCalculationContext == value) return;` (the original body) — `bne.un.s 2` where Mathcad has `ceq; ldc.i4.0; ceq; brtrue.s`.
+  2. (D) `if (!(HideFromCalculationContext != value)) return;` — folds to the same `bne.un.s`.
+- `CollapsibleAreaViewModel.OnToggleProtectState` (method exact on its own; its closure `<>c__DisplayClass53_0::<OnToggleProtectState>b__0` is not). Mathcad's lambda falls through `IsNullOrEmpty<char>` with `ldc.i4.0; cgt.un; ret` (the lambda is compiler-generated, so it cannot stay a placeholder while the method lands).
+  1. (G) `return str.IsNullOrEmpty();` — no `ldc.i4.0; cgt.un`.
+  2. (G) `return str.IsNullOrEmpty() != false;` — still differs; (D) the dump shows Roslyn folds it to the plain call.
+  3. (D) `bool isNullOrEmpty = str.IsNullOrEmpty(); return isNullOrEmpty;` — folds as well.
+
+Conclusion: the three members need compare/bool values materialized on the stack that C# source forms did not produce here. No shape passed the gate; they stay placeholders. Unfinished in the project: 3 (PrintViewport setter, HideFromCalculationContext setter, OnToggleProtectState). Release IL: 229 checked, 229 exact, 0 failures.
+
 ## Remaining (not yet started)
 - Nothing implementable is left in this assembly. The 5 unfinished members above need a shape not yet found; the next step is the gate on those shapes, not new members.
