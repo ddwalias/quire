@@ -11,34 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.MruFileItem, Ptc.Controls")]
 public partial class MruFileItem : global::System.Windows.DependencyObject
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const int NumberedItems = 9;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty NumberedNameProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FilePathProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsPinnedProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FullPathAndFileNameProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public const int MaximumMruFileNameToDisplay = 27;
-    [global::Quire.Mirror.MirrorStub]
-    public string FullPathAndFileName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsPinned { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string NumberedName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string FilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public MruFileItem(string fullPathAndName) : this() { }
-    [global::Quire.Mirror.MirrorStub]
-    public MruFileItem(string fullPathAndName, bool isPinned) : this() { }
-    [global::Quire.Mirror.MirrorStub]
-    public MruFileItem(string fullPathAndName, global::Quire.Controls.MruFileTypes mruFileType) : this() { }
-    [global::Quire.Mirror.MirrorStub]
-    private static void IsPinned_Changed(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetNumberedName(int indexInList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
