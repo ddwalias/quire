@@ -16,5 +16,5 @@
 
 - Members: `Instance` (static field initializer), private `.ctor`, `Convert`, `ConvertBack` in each; class attributes `[ValueConversion]` on the hand-written partials. Hand-written: `Mirrored/Controls.Plots.View.{BooleanToVisibilityConverter,ColorToSolidColorBrushConverter}.cs`; stubs removed from the matching `.g.cs`.
 - Shapes: idiomatic forms matched first time (`solidColorBrush.Freeze()` without the `(Freezable)` cast; `??` for the result).
-- Release IL: PASS — 362 checked, 0 failures; exact count rises by 6 (2 types + the converter members checked).
+- Release IL: PASS — 362 checked, 362 exact, 0 failures, 4883 unfinished.
 - Remaining mismatches in this batch: none.
