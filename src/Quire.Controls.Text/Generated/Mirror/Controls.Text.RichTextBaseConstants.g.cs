@@ -11,6 +11,4 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.RichTextBaseConstants, Ptc.Controls.Text")]
 public static partial class RichTextBaseConstants
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string RichTextHelpContext = "RichTextBase";
 }

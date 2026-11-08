@@ -78,3 +78,10 @@
 - Members: all (`.ctor`, `ConvertToLinkRange`, `ContextText`, `ContextLinkAddress`, `ContextLink`, `UserCanModifyText`). Hand-written in `Mirrored/Controls.Text.HyperlinkContextValues.cs`; the WPF `TextRange` is aliased as `DocumentTextRange` (Quire has its own `TextRange`).
 - Release IL: PASS on the first shape — 142 checked, 142 exact, 0 failures, 573 unfinished.
 - Note for maintainers: a gate run failed once with "disk was full" while writing `inventory.json` (the C: drive had 195 MB free). It passed after removing my own stale temp build trees and the `gate-il-*` directories whose `gate.json` names `mirror/controls-text-20261108`. Other lanes' gate directories were left alone (about 170 remain in the main checkout's `.mirror-cache`, roughly 48 GB).
+
+## Batch 11 — constants and application settings
+
+- `RichTextBaseConstants` (const only), `ProductInfo.Constants` (consts + `.ctor`), `Properties.Settings` (`defaultInstance`, `Default`, `DictionaryPath`, `UseWindowsDictionary`, `.ctor`). Hand-written in `Mirrored/`.
+- Shapes: `Settings` getter for the `bool?` setting `((bool?)this["UseWindowsDictionary"]).GetValueOrDefault()` matched on the first try; the string getter `(string)this[...] ?? null` matched too (the `dup`/`brtrue` in the original came from the `?? null`).
+- Attribute values copied from the original metadata (`DefaultSettingValue` "True" for `UseWindowsDictionary`), though the gate does not compare attributes.
+- Release IL: PASS — 148 checked, 148 exact, 0 failures, 568 unfinished.
