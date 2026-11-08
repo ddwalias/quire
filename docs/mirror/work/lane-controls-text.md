@@ -258,3 +258,8 @@
 
 - Exact: `OnPreviewKeyDown` (override; early `Handled` return before the base call), `GetWordRange` (returns `System.Windows.Documents.TextRange`, so the alias is required), `SetItemContextMenuHandling`.
 - Release IL: PASS — 348 checked, 348 exact, 0 failures, 375 unfinished.
+
+## Batch 40 — RichTextWithEmbeddedItem focus, commit and context-menu overrides (3)
+
+- Exact: `OnContextMenuOpening` (override; returns early when not focused), `CommitItem`, `HandleChildItemGotFocus`.
+- Release IL: PASS — 351 checked, 351 exact, 0 failures, 372 unfinished.

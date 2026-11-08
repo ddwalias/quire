@@ -246,10 +246,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     protected override void OnLostFocus(global::System.Windows.RoutedEventArgs e) => base.OnLostFocus(e);
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnContextMenuOpening(global::System.Windows.Controls.ContextMenuEventArgs e) => base.OnContextMenuOpening(e);
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleChildItemGotFocus(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void HandleItemsListChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void AddItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItemInText> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -299,8 +295,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     private void HandleBookmarkTag(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleRemoveBookmarkTag(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CommitItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void DeactivateActiveItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

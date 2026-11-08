@@ -427,4 +427,30 @@ public partial class RichTextWithEmbeddedItem
         }
         ContainerItemManager.SetItemHandlesContextMenus(item, ContainerItemManager.GetItemHandlesContextMenus(this));
     }
+
+    protected override void OnContextMenuOpening(ContextMenuEventArgs e)
+    {
+        if (!IsFocused)
+        {
+            return;
+        }
+        base.OnContextMenuOpening(e);
+    }
+
+    public void CommitItem(IWhiteboardItem item)
+    {
+        ICalculatable calculatable = item as ICalculatable;
+        if (calculatable != null)
+        {
+            calculatable.Commit();
+        }
+    }
+
+    private void HandleChildItemGotFocus(IWhiteboardItem item)
+    {
+        if (item != ActiveItem && WhiteboardItems.Contains(item))
+        {
+            ActiveItem = item as IWhiteboardItemInText;
+        }
+    }
 }
