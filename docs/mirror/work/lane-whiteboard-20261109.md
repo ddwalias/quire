@@ -99,6 +99,22 @@
 - Release IL: PASS — 328 checked, 0 failures, 534 unfinished (`release-il-e87a089e2a84`).
 - Remaining mismatches in this batch: none.
 
+## Batch 8 — EquationTypeIndicatorControl, WrappedChildManager
+
+- Members:
+  - `EquationTypeIndicatorControl`: `IndicatorTextProperty`, `TopProperty`, `MainGrid`, `_contentLoaded`, `IndicatorText`, `Top`, `IndicatorColor` (auto-property), `.ctor()`, `.cctor()`, `InitializeComponent()`, `IComponentConnector.Connect(int, object)`
+  - `WrappedChildManager`:
+    - Fields: `_createCalculatableWrapper`, `_lookupCalculatableWrapper`, `_removeCalculatableWrapper`, `_notifyHiddenStateChanged`, `_notifyContainerChildrenChanged`
+    - Methods: `.ctor`, `EffectiveChildren` (iterator `d__6`), `ChildAddedCore`, `ChildAdded` (lambda `b__8_0`), `ChildRemovedCore`, `ChildRemoved` (lambda `b__10_0`), `ChildMoved` (lambda `b__11_0`), `HandleCalculatableMovedInChildContainer`, `HandleCalculatableAddedToChildContainer`, `HandleCalculatableRemovedFromChildContainer`, `GetContainerChildren` (iterator `d__15`), `HiddenStateChanged`
+- Hand-written: `Mirrored/Controls.Mathboard.EquationTypeIndicatorControl.cs`, `Mirrored/Controls.Mathboard.WrappedChildManager.cs`.
+- Stubs removed: `Generated/Mirror/Controls.Mathboard.EquationTypeIndicatorControl.g.cs`, `Generated/Mirror/Controls.Mathboard.WrappedChildManager.g.cs`.
+- Shapes:
+  - `EquationTypeIndicatorControl`: declaration order matching Mathcad order; `.cctor` registering `IndicatorTextProperty` and `TopProperty` via `Canvas.TopProperty.AddOwner`; `InitializeComponent` with early return on `_contentLoaded`.
+  - `WrappedChildManager`: declaration order matching Mathcad source order so all closure/iterator ordinals match (`d__6`, `b__8_0`, `b__10_0`, `b__11_0`, `d__15`); `ChildMoved` using `if (calculatable is not ICalculationHideableChild hideable || !hideable.HideFromCalculationContext)`.
+- Release IL: PASS — 371 checked, 0 failures, 499 unfinished (`release-il-0e18f40b7986`).
+- Remaining mismatches in this batch: none.
+
+
 
 
 

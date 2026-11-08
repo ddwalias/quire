@@ -11,38 +11,4 @@ namespace Quire.Controls.Mathboard;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Mathboard.WrappedChildManager, Ptc.Controls.Whiteboard")]
 public partial class WrappedChildManager : global::Quire.Calculation.Core.Support.CalculatableChildHider
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::System.Func<global::Quire.Calculation.Core.ICalculatable, bool, global::Quire.Calculation.Core.ICalculatable> _createCalculatableWrapper;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Func<global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculatable> _lookupCalculatableWrapper;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Action<global::Quire.Calculation.Core.ICalculatable> _removeCalculatableWrapper;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Action<global::Quire.Calculation.Core.ICalculatable, bool> _notifyHiddenStateChanged;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Action _notifyContainerChildrenChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public WrappedChildManager(global::System.Collections.Generic.IEnumerable<object> getChildren, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableAdded, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableRemoved, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableMoved, global::System.Func<global::Quire.Calculation.Core.ICalculatable, bool, global::Quire.Calculation.Core.ICalculatable> createCalculatableWrapper, global::System.Func<global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculatable> lookupCalculatableWrapper, global::System.Action<global::Quire.Calculation.Core.ICalculatable> removeCalculatableWrapper, global::System.Action<global::Quire.Calculation.Core.ICalculatable, bool> notifyHiddenStateChanged, global::System.Action notifyContainerChildrenChanged) { }
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IEnumerable<object> EffectiveChildren(global::System.Collections.Generic.IEnumerable<object> realChildren) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void ChildAddedCore(object child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void ChildAdded(object child) => base.ChildAdded(child);
-    [global::Quire.Mirror.MirrorStub]
-    protected void ChildRemovedCore(object child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void ChildRemoved(object child) => base.ChildRemoved(child);
-    [global::Quire.Mirror.MirrorStub]
-    public override void ChildMoved(object child) => base.ChildMoved(child);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleCalculatableMovedInChildContainer(global::Quire.Calculation.Core.ICalculatable calc) => base.HandleCalculatableMovedInChildContainer(calc);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleCalculatableAddedToChildContainer(global::Quire.Calculation.Core.ICalculatableContainer container, global::Quire.Calculation.Core.ICalculatable calc) => base.HandleCalculatableAddedToChildContainer(container, calc);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleCalculatableRemovedFromChildContainer(global::Quire.Calculation.Core.ICalculatable calc) => base.HandleCalculatableRemovedFromChildContainer(calc);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> GetContainerChildren(global::Quire.Calculation.Core.ICalculatableContainer container) => base.GetContainerChildren(container);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HiddenStateChanged(global::Quire.Calculation.Core.ICalculatable calc, bool hideFromCalculationContext) => base.HiddenStateChanged(calc, hideFromCalculationContext);
 }
