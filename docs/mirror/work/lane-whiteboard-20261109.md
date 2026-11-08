@@ -131,3 +131,22 @@
 
 
 
+
+## Batch 10 — AggregateMathboardViewModel
+
+- Members:
+  - `AggregateMathboardViewModel`:
+    - Fields: `_sectionIndicators`, `_hideFromCalculationContext`
+    - Constructors: `.ctor(IAggregateMathboardModel, Size?)`, `.ctor(IAggregateMathboardModel, IAlignmentGrid)`, `.ctor(AggregateMathboardViewModel)`
+    - Methods: `Clone()`, `CloneAggregateMathboardViewModel()`, `Initialize(IAggregateMathboardModel)`, `MeasureOverrideHelper(Size)`, `ArrangeOverride(Size)`, `HandleGridCellSizeChanged(Size, Size)`, `SetIndicatorsDimensions()`, `UpdateHideFromCalculationButton()`, `ToggleHideFromCalculationContext()`, `IWhiteboardViewModel.CommandBindings` (explicit interface implementation)
+    - Properties: `SectionIndicators` (get), `HideFromCalculationContext` (get/set)
+  - Closures:
+    - `<>c__DisplayClass16_0`: `<set_HideFromCalculationContext>b__0` (`action`), `<set_HideFromCalculationContext>b__1` (`doMethod`), `<set_HideFromCalculationContext>b__2` (`undoMethod`)
+- Hand-written: `Mirrored/Controls.Mathboard.AggregateMathboardViewModel.cs`.
+- Stubs removed: `Generated/Mirror/Controls.Mathboard.AggregateMathboardViewModel.g.cs`.
+- Shapes:
+  - Member declaration sequence placing `HideFromCalculationContext` setter at syntax ordinal 16, producing `<>c__DisplayClass16_0`.
+  - `.ctor(AggregateMathboardViewModel)` ternary expression `original.IsInPrinting ? new SectionIndicatorInfo(...) : new SectionIndicatorInfo { ... }` compiling to `brtrue.s` branch and exact instruction sequence.
+  - `SetIndicatorsDimensions` declaring `Pair<double, double> pair;` before `double height = ContentSize.Height;` to place `pair` at local slot `[1]` and temporary `Size` struct local at slot `[4]`.
+- Release IL: PASS — 401 checked, 0 failures, 453 unfinished (`release-il-ba9d960dfb3e`).
+- Remaining mismatches in this batch: none.
