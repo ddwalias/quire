@@ -964,4 +964,33 @@ public partial class RichTextBase
         }
         return current ?? from.DocumentEnd;
     }
+
+    protected bool FindInRange(TextPointer start, TextPointer end, string text, LogicalDirection direction, FindOptions options, List<Pair<int, int>> subscriptPositions)
+    {
+        DebugTools.DevAssert(options.HasFlag(FindOptions.FindInText));
+        DebugTools.DevAssert(!(start.CompareTo(end) > 0));
+        StringComparison comparisonType = options.HasFlag(FindOptions.MatchCase) ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
+        DocumentTextRange range = new DocumentTextRange(start, end);
+        string rangeText = GetTextInRange(range);
+        DocumentTextRange match;
+        bool isWholeSubscript = subscriptPositions?.Count == 1 && subscriptPositions[0].First == 0 && subscriptPositions[0].Second == text.Length - 1;
+        if (options.HasFlag(FindOptions.WholeWordOnly) && (subscriptPositions.IsNullOrEmpty() | isWholeSubscript))
+        {
+            match = SearchWholeWordRuns(range, text, direction, comparisonType, options, subscriptPositions);
+        }
+        else if (direction == LogicalDirection.Forward)
+        {
+            match = SearchForward(range, rangeText, text, comparisonType, options, subscriptPositions);
+        }
+        else
+        {
+            match = SearchBackward(range, rangeText, text, comparisonType, options, subscriptPositions);
+        }
+        if (match != null)
+        {
+            SelectMatch(match.Start, match.End, direction);
+            return true;
+        }
+        return false;
+    }
 }

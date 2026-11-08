@@ -387,3 +387,9 @@
 - Exact: `RichTextBase.GetPositionAtTextOffset` (static; the `offset` parameter is reduced in place, and the result is `current ?? from.DocumentEnd`), `RichTextWithEmbeddedItem.RangeContainsOnlyInlineElements` (the loop condition is `(start != null && start.CompareTo(end) < 0) & result`; without the parentheses C# binds `&` tighter and the IL differs).
 - Not attempted: `ReplaceTextInHyperlink` (nullable arithmetic with many temporaries that do not map to a plain source form).
 - Release IL: PASS — 406 checked, 406 exact, 0 failures, 317 unfinished.
+
+## Batch 62 — RichTextBase find within a range (1)
+
+- Exact: `FindInRange` (protected, non-virtual as the stub declares it; `subscriptPositions?.Count == 1` gives the `call` on `get_Count` that Mathcad emits, where `!= null && Count` gave `callvirt`; the comparison is `options.HasFlag(…)` through boxed `Enum.HasFlag`; `isWholeSubscript` is a plain `bool` and `IsNullOrEmpty(...) | isWholeSubscript` is non-short-circuit).
+- Note: `FindOncePrivate` (batch 59) calls `FindInRange` with `callvirt`, so it matched only once `FindInRange` was non-virtual; the stub's modifier is the one to keep.
+- Release IL: PASS — 407 checked, 407 exact, 0 failures, 316 unfinished.
