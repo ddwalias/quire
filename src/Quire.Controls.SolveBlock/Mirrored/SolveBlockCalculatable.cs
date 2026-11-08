@@ -8,6 +8,21 @@ internal partial class SolveBlockCalculatable
         UpdateEquationTypeOfSimpleCalculatable(wrappedCalculatable);
     }
 
+    public SolveBlockEquationTypes EquationType
+    {
+        get => _equationType;
+        protected set
+        {
+            if (_equationType == value)
+                return;
+
+            var eventArgs = new global::Quire.Wpf.PropertyChangedEventArgs<SolveBlockEquationTypes>(
+                "EquationType", _equationType, value);
+            _equationType = value;
+            FirePropertyChanged(eventArgs);
+        }
+    }
+
     protected bool UpdateEquationTypeOfSimpleCalculatable(global::Quire.Calculation.Core.ICalculatable calc)
     {
         SolveBlockEquationTypes oldEquationType = EquationType;
