@@ -11,6 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualArgSeparatorSymbolNode, Ptc.Controls.EquationControl")]
 internal partial class VisualArgSeparatorSymbolNode : global::Quire.Controls.Internal.VisualSymbolNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    public VisualArgSeparatorSymbolNode() : base(default(char)) { }
 }

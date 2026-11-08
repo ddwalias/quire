@@ -11,6 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualSpacer, Ptc.Controls.EquationControl")]
 internal partial class VisualSpacer : global::Quire.Controls.Internal.VisualSymbolNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    public VisualSpacer() : base(default(char)) { }
 }

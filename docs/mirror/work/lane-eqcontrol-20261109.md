@@ -8,4 +8,7 @@
 - Batch: constructors for `Ptc.Controls.Internal.VisualDerivativeOperatorNode` and `Ptc.Controls.Internal.VisualPartialDerivativeOperatorNode`; each uses the corresponding descriptor-table key from the original source.
 - Shapes tried: idiomatic constructor initializer with dictionary indexer; both matched without unusual IL-specific shaping.
 - Release IL: PASS, 597 checked, 0 failures; `.mirror-cache/release-il-7a877fb8ce53/release-il.json`.
-- Remaining: 4,504 unfinished members across 327 generated type files; these batches have no mismatches.
+- Batch: constructors for `Ptc.Controls.Internal.VisualSpacer` and `Ptc.Controls.Internal.VisualArgSeparatorSymbolNode`.
+- Shapes tried: idiomatic constructor initializers and assignments matching the original; both matched without unusual IL-specific shaping.
+- Release IL: PASS, 599 checked, 0 failures; `.mirror-cache/release-il-3d69026b90fa/release-il.json`.
+- Remaining: 4,502 unfinished members across 327 generated type files; these batches have no mismatches.
