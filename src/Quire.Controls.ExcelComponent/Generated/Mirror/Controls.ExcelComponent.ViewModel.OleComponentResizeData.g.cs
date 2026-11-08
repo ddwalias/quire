@@ -11,20 +11,4 @@ namespace Quire.Controls.ExcelComponent.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.ViewModel.OleComponentResizeData, Ptc.Controls.ExcelComponent")]
 internal partial class OleComponentResizeData : global::Quire.Controls.Core.IResizeData
 {
-    [global::Quire.Mirror.MirrorStub]
-    public double InputSectionHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double OutputSectionHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size OldSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size OldMinSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double OleContainerItemTop { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size OleContainerItemSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> LocationMap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public OleComponentResizeData(global::System.Windows.Size oldSize, global::System.Windows.Size oldMinSize, double oleContainerItemTop, double oleContainerItemWidth, double oleContainerItemHeight, double inputHeight, double outputHeight, global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> locationMap) { }
 }

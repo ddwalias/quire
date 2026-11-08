@@ -11,12 +11,4 @@ namespace Quire.Controls.ExcelComponent.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.ViewModel.OleObjectResizeData, Ptc.Controls.ExcelComponent")]
 internal partial class OleObjectResizeData : global::Quire.Controls.Core.IResizeData
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size OldSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double DiagonalForRedo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double DiagonalForUndo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public OleObjectResizeData(global::System.Windows.Size oldSize, double undoDiagonal, double redoDiagonal) { }
 }
