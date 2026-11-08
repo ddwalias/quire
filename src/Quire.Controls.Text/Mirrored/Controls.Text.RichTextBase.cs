@@ -4,6 +4,8 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Windows.Markup;
+using Quire.Controls.Core.Serialization;
 using Quire.PersistentDataObjects;
 using Quire.Serialization;
 using System.Linq;
@@ -315,5 +317,94 @@ public partial class RichTextBase
     {
         EditingCommands.MoveToDocumentStart.Execute(null, this);
         CaretPosition = caretPosition;
+    }
+
+    protected virtual bool ApplyTextStyleCanExecute(object parameter)
+    {
+        if (IsActive || IsSelected)
+        {
+            return parameter is TextStyleData;
+        }
+        return false;
+    }
+
+    private bool ClearTextFormatCanExecute(object parameter)
+    {
+        if (!IsActive)
+        {
+            if (IsSelected)
+            {
+                return parameter is TextFormat;
+            }
+            return false;
+        }
+        return true;
+    }
+
+    public bool CanAddToDictionary()
+    {
+        string word = GetWordToAddToDictionary();
+        if (word != null)
+        {
+            return word.Length <= 128;
+        }
+        return false;
+    }
+
+    public double? DequeueSplitFontSizeData()
+    {
+        if (_splitData.Count != 0)
+        {
+            return _splitData.Dequeue();
+        }
+        return null;
+    }
+
+    private void EnqueueSplitFontSizeData(double newValue)
+    {
+        _splitData.Enqueue(newValue);
+        if (_splitData.Count > 2)
+        {
+            DebugTools.FailAssertion();
+        }
+    }
+
+    public object GetRegionPersistentData(IS11NProvider s11NProvider)
+    {
+        IsInSaving = true;
+        textType result;
+        try
+        {
+            result = DoGetRegionPersistentDataInternal(s11NProvider);
+        }
+        finally
+        {
+            IsInSaving = false;
+        }
+        return result;
+    }
+
+    private void InitializePasteCommand()
+    {
+        CommandBindings.Add(new CommandBinding(ApplicationCommands.Paste, OnPasteExecuted, OnPasteCanExecute));
+    }
+
+    private void CanSetCurrentProofingLanguage(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = WhiteboardDependencyProperties.GetIsSelected(this) || !XmlLanguage.Empty.Equals(CurrentProofingLanguage);
+    }
+
+    private ScriptState GetScriptType(Run run)
+    {
+        ScriptState scriptState = ScriptState.None;
+        if (run is SubscriptRun)
+        {
+            scriptState = ScriptState.Subscript;
+        }
+        if (run is SuperscriptRun)
+        {
+            scriptState = ScriptState.Superscript;
+        }
+        return scriptState;
     }
 }

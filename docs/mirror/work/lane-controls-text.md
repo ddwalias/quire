@@ -184,3 +184,8 @@
 - Exact: `LoadXamlContent` (try/catch with `DebugTools.LogError(ex.ToString())`), `UpdateCurrentFormats` (`GetIsSelected(this) ? (TextRange)TextRange : Selection`; the negated form `!GetIsSelected ? Selection : TextRange` laid out the arms the other way and differed), `GetSpellingErrorInPosition`, `ClearSplitFontSizeDataQueue`, `SetCaretOffsetAtContentEnd`, `SetCaretPositionAndClearSuggestedX`.
 - Not done: `GetTextOnlyFromRuns` (static; the Release IL calls `GetTextBoundary` with no receiver, but the generated stub declares `GetTextBoundary` as an instance method; to be checked against the original metadata).
 - Release IL: PASS — 264 checked, 264 exact, 0 failures, 459 unfinished.
+
+## Batch 28 — RichTextBase command and split-data helpers (9)
+
+- Exact: `ApplyTextStyleCanExecute` (base form, `IsActive || IsSelected`), `ClearTextFormatCanExecute` (`if (!IsActive) { if (IsSelected) ...; return false; } return true;`), `CanAddToDictionary` (`word.Length <= 128`), `DequeueSplitFontSizeData`, `EnqueueSplitFontSizeData`, `GetRegionPersistentData` (try/finally around `IsInSaving`), `InitializePasteCommand`, `CanSetCurrentProofingLanguage`, `GetScriptType`.
+- Release IL: PASS — 273 checked, 273 exact, 0 failures, 450 unfinished.
