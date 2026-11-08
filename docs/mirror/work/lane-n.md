@@ -895,3 +895,11 @@
 - Report: `.mirror-cache/release-il-8e5a1352d007/release-il.json` — PASS, 2,258 checked, 2,258 exact, 0 failures.
 - Shapes Release IL requires: `PageOrientation`, `MarginType`, `PageSize`, `PageMargin`, `HeaderMargin`, `FooterMargin` keep the `!=` block form; `HeaderWidth`, `HeaderHeight`, `FooterWidth`, `FooterHeight`, `DisplayHeight`, `PageBodyHeight`-related guards use early return; `SetPageMarginInPageSizeUnits` returns early; `PageHeight` and `GridCellSize` read `GridCellSize` inline; `OnSizeChanged` is a string switch.
 - Blocked, not in this batch (closures): `UpdatePropertyAndDelayNotification` (local function, ordinal 122), `SetPageSize` (display class 124), `SetPageOrientation` (display class 125).
+
+## Batch 118 — AttachedProperties static fields, static constructor and accessors
+
+- Claimed: the attached-property fields and the static constructor, and the closure-free accessors and change handlers of `AttachedProperties` (Get/Set/Clear pairs, `CanActivateCoerceValue`, `SupportsInputsOutputsPropertyChangedHandler`, `IsOnVisiblePagePropertyChangedHandler`, `ContainedInCollapsedWhiteboardPropertyChangedHandler`, `HandleLabeledIdFormatChanged`, `OnRegisterCommandBindingChanged`, `SuppressBringIntoViewIfNeededAndExecute`, the rest of the getters and setters). Stubs removed from the `.g.cs`.
+- Report: `.mirror-cache/release-il-7421c4fb8bc6/release-il.json` — PASS, 2,302 checked, 2,302 exact, 0 failures.
+- Shapes Release IL requires: `IsOnVisiblePagePropertyChangedHandler` takes its `IMaybeHasPointThatSnapsToPixel` pattern into a separate `as` local before the snappable helper; `SetProhibitSizeChangedEventHandler` and `ClearProhibitSizeChangedEventHandler` return early on a failed assertion.
+- Kept as generated stubs (not landed): `SetRegisterCommandBindings`, `GetRegisterCommandBindings`, `SetIsBringToView`, `GetIsBringToView` — Mathcad calls `DependencyObject.SetValue`/`GetValue` with `call` on a guarded receiver, and Quire emits `callvirt` for the same source shapes; `GetPrintView` — the cast sequence differs and the gate reports a structure mismatch.
+- Blocked (closures): `OnCanActivateChanged` (lambda; display class 32).
