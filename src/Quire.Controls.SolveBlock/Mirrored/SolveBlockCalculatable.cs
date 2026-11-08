@@ -21,6 +21,11 @@ internal partial class SolveBlockCalculatable
         return EquationType != oldEquationType;
     }
 
+    protected virtual bool UpdateEquationType(global::Quire.Calculation.Core.ICalculatable calc)
+    {
+        return UpdateEquationTypeOfSimpleCalculatable(calc);
+    }
+
     public override global::Quire.Calculation.Core.ICalculatable WrappedCalculatable
     {
         get => base.WrappedCalculatable;
