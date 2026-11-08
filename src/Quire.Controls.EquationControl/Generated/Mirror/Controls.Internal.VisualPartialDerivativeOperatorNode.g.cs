@@ -11,6 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualPartialDerivativeOperatorNode, Ptc.Controls.EquationControl")]
 internal partial class VisualPartialDerivativeOperatorNode : global::Quire.Controls.Internal.VisualDerivativeOperatorNodeBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    public VisualPartialDerivativeOperatorNode() : base(default(global::Quire.EquationEditor.Tree.MathNodeDescriptor)) { }
 }
