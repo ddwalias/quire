@@ -11,4 +11,7 @@
 - Batch: constructors for `Ptc.Controls.Internal.VisualSpacer` and `Ptc.Controls.Internal.VisualArgSeparatorSymbolNode`.
 - Shapes tried: idiomatic constructor initializers and assignments matching the original; both matched without unusual IL-specific shaping.
 - Release IL: PASS, 599 checked, 0 failures; `.mirror-cache/release-il-3d69026b90fa/release-il.json`.
-- Remaining: 4,502 unfinished members across 327 generated type files; these batches have no mismatches.
+- Batch: `Ptc.Controls.Internal.VisualNumericNode` constructor; sets `MathFormat.IsItalic` to `false` as in the original C#.
+- Shapes tried: idiomatic constructor body; matched the original Release IL.
+- Release IL: PASS, 600 checked, 0 failures; `.mirror-cache/release-il-33a944f546ea/release-il.json`.
+- Remaining: 4,501 unfinished members across 327 generated type files; these batches have no mismatches.

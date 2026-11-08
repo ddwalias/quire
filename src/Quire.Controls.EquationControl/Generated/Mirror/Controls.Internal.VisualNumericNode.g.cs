@@ -11,6 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualNumericNode, Ptc.Controls.EquationControl")]
 internal partial class VisualNumericNode : global::Quire.Controls.Internal.VisualTextNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    public VisualNumericNode() { }
 }
