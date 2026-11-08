@@ -11,6 +11,5 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.SolveBlockConstants, Ptc.Controls.SolveBlock")]
 public static partial class SolveBlockConstants
 {
-    [global::Quire.Mirror.MirrorStub]
     public const string SolveBlockHelpContext = "SolveBlockControl";
 }
