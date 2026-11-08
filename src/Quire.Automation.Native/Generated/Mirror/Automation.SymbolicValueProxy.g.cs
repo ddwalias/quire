@@ -11,14 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Mathcad.Automation.SymbolicValueProxy, automationmgd")]
 public partial class SymbolicValueProxy : global::Quire.Automation.ValueProxy, global::Quire.Automation.ISymbolicValueProxy, global::Quire.Automation.IValueProxy
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected object m_value;
-    [global::Quire.Mirror.MirrorStub]
-    public override object Core { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Automation.ISymbolicValueProxy AsSymbolic { get => base.AsSymbolic; }
-    [global::Quire.Mirror.MirrorStub]
-    public object Symbolic { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public SymbolicValueProxy(object v, bool bSimplify, global::Quire.Mcd.RuntimeOptions o) : base(default(bool), default(global::Quire.Mcd.RuntimeOptions)) { }
 }
