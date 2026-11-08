@@ -17,6 +17,8 @@ using Quire.Controls.Core.Whiteboard;
 using Quire.IO;
 using Quire.PersistentDataObjects;
 using Quire.Serialization;
+using Quire.Services;
+using Quire.FunctionalitiesLimitation;
 
 namespace Quire.Controls.Text;
 
@@ -731,5 +733,54 @@ public partial class RichTextWithEmbeddedItem
             CaretPosition = Document.ContentStart;
         }
         return regions;
+    }
+
+    protected virtual void DeactivateActiveItem()
+    {
+        if (ActiveItem == null)
+        {
+            return;
+        }
+        ActiveItem.Activate(false);
+        ContainerItemManager.DeactivateItem(ActiveItem);
+        ICalculatable calculatable = ActiveItem as ICalculatable;
+        if (calculatable != null)
+        {
+            ICalculatableInfo calculatableInfo = calculatable as ICalculatableInfo;
+            if (calculatableInfo == null || !calculatableInfo.IsCommitted)
+            {
+                calculatable.Commit();
+            }
+        }
+        SetItemContextMenuHandling(ActiveItem);
+    }
+
+    private void HandleBookmarkTag(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (DebugTools.AssertNotNull(ActiveItem).Failed)
+        {
+            return;
+        }
+        string tag = BookmarkTag.GetBookmarkTag(ActiveItem as DependencyObject);
+        BookmarkTagViewModel viewModel = new BookmarkTagViewModel(tag);
+        if (DebugTools.AssertNotNull(BookmarksManager).Passed && BookmarkTagDialog.ShowBookmarkTagsDialog(viewModel, Application.Current.MainWindow))
+        {
+            BookmarksManager.SetBookmarkTagCommand(ActiveItem, tag, viewModel.Tag);
+        }
+    }
+
+    private void DisplayHyperlink(Hyperlink link, bool showAboutBox = true)
+    {
+        HyperlinkProperties.SetLinkVisited(link, true);
+        if (FunctionalityService.Instance.IsFunctionalityEnabled((EnumFunctionalityKey)14))
+        {
+            OpenHyperlinkUrl(link.NavigateUri);
+            return;
+        }
+        if (DebugTools.DevAssert(showAboutBox).Passed)
+        {
+            DisplayFreemiumAboutBoxCommandParameter parameter = new DisplayFreemiumAboutBoxCommandParameter(new HyperlinkToScreenProvider(this, CaretPosition), (EnumFunctionalityKey)14);
+            FunctionalitiesLimitationCommands.DisplayFreemiumAboutBox.Execute(parameter, null);
+        }
     }
 }

@@ -302,3 +302,9 @@
 - Exact: `ModifyHyperlink(object, ExecutedRoutedEventArgs)` (command handler; `e.Parameter as ModifyHyperlinkCommandParameter ?? new ...(true, null, null)`; only the handler's stub line is removed, the parameter overload stays a stub), `SetRegionPersistentData` (override; base call, then the `textType` regions deserialized through `_deserializationStrategy` and the caret moved to `Document.ContentStart`).
 - Not attempted: `CanModifyHyperlink()` (bool overload). Its IL contains a `<>c` lambda cached in a static field (`<CanModifyHyperlink>b__20_0`), so the closure ordinal must match first.
 - Release IL: PASS — 375 checked, 375 exact, 0 failures, 348 unfinished.
+
+## Batch 48 — RichTextWithEmbeddedItem deactivate, bookmark tag command and hyperlink display (3)
+
+- Exact: `DeactivateActiveItem` (protected virtual; `info == null || !info.IsCommitted` before `Commit`), `HandleBookmarkTag` (command handler; `Failed` early return, then `Passed && ShowBookmarkTagsDialog(...)`), `DisplayHyperlink` (optional `showAboutBox = true`; `SetLinkVisited`, then the functionality check with `OpenHyperlinkUrl` or the freemium about-box command).
+- Not attempted: `ValidateURL` (its `FileInfo`/`DirectoryInfo` expression leaves the `FileInfo` on the stack across the `DirectoryInfo` store, which I have not reproduced), `GetWhiteboardItemsInRange` and `ExecuteRemoveItemFromListCommand` (closure and anonymous-type LINQ, ordinal first).
+- Release IL: PASS — 378 checked, 378 exact, 0 failures, 345 unfinished.

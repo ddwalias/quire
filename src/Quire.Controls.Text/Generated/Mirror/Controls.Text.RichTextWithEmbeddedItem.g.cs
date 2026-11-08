@@ -164,8 +164,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     private void NavigateToHyperLink(global::System.Windows.Documents.Hyperlink link) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void DisplayHyperlink(global::System.Windows.Documents.Hyperlink link, bool showAboutBox = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OpenHyperlinkUrl(global::System.Uri path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Nullable<global::Quire.IO.NavigateUrlErrorWarningKeys> ValidateURL(global::System.Uri absolutePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -259,10 +257,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     private static bool RemoveInlineRecursively(global::System.Windows.Documents.InlineCollection inlines, global::System.Windows.Documents.Inline inlineToRemove) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int GetEmbeddedObjectCaretOffset(object embeddedObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleBookmarkTag(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void DeactivateActiveItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void Activate(bool isActive) => base.Activate(isActive);
     [global::Quire.Mirror.MirrorStub]
