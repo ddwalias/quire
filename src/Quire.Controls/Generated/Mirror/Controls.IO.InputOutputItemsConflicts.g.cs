@@ -11,16 +11,4 @@ namespace Quire.Controls.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.InputOutputItemsConflicts, Ptc.Controls")]
 public partial class InputOutputItemsConflicts : global::Quire.Controls.IO.IInputOutputItemsConflicts
 {
-    [global::Quire.Mirror.MirrorStub]
-    public InputOutputItemsConflicts() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void AddGeneralWarning(string warning) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddGeneralError(string error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddItemWarning(string alias, string warning) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddItemError(string alias, string error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AppendLists(global::Quire.Controls.IO.IInputOutputItemsConflicts source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

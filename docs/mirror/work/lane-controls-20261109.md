@@ -4,3 +4,6 @@
 - Assembly assigned by maintainer; no WORK.md row.
 - Batch 1: `IO.ScaledEvaluation` (ctor, Create, ExtractUnits, GetComputedValue x3, ConstructCurrentRl, `_builder`, `EvalExpressionRlFormat`, `EvalScaledExpressionRlFormat`). Gate: PASS, 333 checked. Report: `.mirror-cache/release-il-18c272f96625/release-il.json`.
   - Shapes that failed first: field initializer for `_builder` ran before the base ctor call (Release IL: base call first) → assigned in ctor body. `ExtractUnits` local order: result before unitedResult. `GetComputedValue` out-var declared as `IList<Unit> resultUnits;` before `result`-slot order fix → exact.
+- Batch 2: `IO.InputOutputItemsConflicts` (ctor, AddGeneralWarning, AddGeneralError, AddItemWarning, AddItemError, AppendLists) and `IO.CollectionWithSyncStatus` (`_items`, ctor, Add). Gate: PASS, 341 checked. Report: `.mirror-cache/release-il-fa7c7a75783d/release-il.json`.
+  - Shapes: constructor assigns the four lists in body; `CollectionWithSyncStatus._items` as field initializer (base-after order matched).
+  - Blocked, not implemented: `CollectionWithSyncStatus.SynchronizationStatus` getter and `OnShadowSynchronized` compare with `SynchronizationStatus` value 3 (Mathcad); Quire's `Quire.Calculation.Core.SynchronizationStatus` has only `Pending=0, Synchronized=1`. Needs a Calculation.Core enum decision (other lane's assembly).
