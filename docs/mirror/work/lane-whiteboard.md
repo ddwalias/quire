@@ -33,3 +33,10 @@
 - Hand-written: `Mirrored/Controls.Mathboard.IVerticalWhiteboardSections.cs`, `Mirrored/Controls.Whiteboard.IUIElementManager.cs`; stubs removed from the `.g.cs` interfaces.
 - Release IL: PASS — 114 checked, 0 failures (`release-il-ce8278883795`).
 - Remaining mismatches in this batch: none.
+
+## Batch 5 — aggregate mathboard interface declarations
+
+- Members: `IAggregateMathboardViewModel` (`SectionIndicators` get-only, `HideFromCalculationContext` get/set, `MeasureOverrideHelper`); `IAggregateMathboardControl` (`SectionIndicators`, `IEnumerable<ISectionIndicatorInfo>`).
+- Hand-written: `Mirrored/Controls.Mathboard.IAggregateMathboardViewModel.cs`, `Mirrored/Controls.Mathboard.IAggregateMathboardControl.cs`; stubs removed from the `.g.cs` interfaces.
+- Release IL: PASS — 104 checked, 0 failures; unfinished 888 (`release-il-1a10f861c49c`). The checked list is the changed-member set, so the interface declarations appear there only as changes.
+- Remaining mismatches in this batch: none.

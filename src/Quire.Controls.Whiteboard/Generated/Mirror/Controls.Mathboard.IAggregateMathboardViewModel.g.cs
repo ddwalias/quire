@@ -11,10 +11,4 @@ namespace Quire.Controls.Mathboard;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Mathboard.IAggregateMathboardViewModel, Ptc.Controls.Whiteboard")]
 public partial interface IAggregateMathboardViewModel : global::Quire.Controls.Mathboard.IMathboardViewModel, global::Quire.Controls.Core.ICurrentNumberFormatProperty, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.ICurrentMatrixFormatProperty, global::Quire.Core.ICurrentTextFormatProperty, global::Quire.Controls.Whiteboard.IWhiteboardViewModel, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainerWithActiveItem, global::System.IDisposable, global::System.ICloneable
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Mathboard.ISectionIndicatorInfo[] SectionIndicators { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool HideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Size MeasureOverrideHelper(global::System.Windows.Size constraint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
