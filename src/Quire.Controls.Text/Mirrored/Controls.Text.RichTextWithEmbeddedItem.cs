@@ -13,6 +13,7 @@ using Quire.Wpf;
 using Quire.Undo;
 using Quire.Calculation.Core;
 using Quire.Controls.Core.BookmarkTags;
+using Quire.IO;
 using Quire.PersistentDataObjects;
 
 namespace Quire.Controls.Text;
@@ -541,5 +542,58 @@ public partial class RichTextWithEmbeddedItem
             parent = ContainerItemManager.GetParent(grid);
         }
         return parent as InlineUIContainer;
+    }
+
+    private List<Hyperlink> GetContextLinks()
+    {
+        if (!Selection.IsEmpty)
+        {
+            return GetHyperlinksInRange(Selection);
+        }
+        return GetHyperlinkAtCaretPositionIncludingEdges()?.Yield().ToList();
+    }
+
+    private bool CanDrop(System.Windows.DragEventArgs args)
+    {
+        TextPointer position = GetPositionFromPoint(args.GetPosition(this), false);
+        if (DataObjectContainsAnyEmbeddedItems(args.Data, RichTextEmbeddedItemsInfo.HasEmbeddedImagesAndMath))
+        {
+            return GetHyperlinkFromTextPointer(position) == null;
+        }
+        return true;
+    }
+
+    private void OnSetMatrixFormat(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (e.Source != this)
+        {
+            return;
+        }
+        using (CommandScope commandScope = new CommandScope(e.Command.ToString()))
+        {
+            DispatchCommandToItems(e.Command as RoutedUICommand, e.Parameter, PropertiesForUpdate.CurrentMatrixFormat);
+        }
+    }
+
+    private void OnSetNumberFormat(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (e.Source != this)
+        {
+            return;
+        }
+        using (CommandScope commandScope = new CommandScope(e.Command.ToString()))
+        {
+            DispatchCommandToItems(e.Command as RoutedUICommand, e.Parameter, e.Command == EquationCommands.ClearResultFormat ? PropertiesForUpdate.CurrentNumberFormatClear : PropertiesForUpdate.CurrentNumberFormat);
+        }
+    }
+
+    private void ShowWarningDialog(NavigateUrlErrorWarningKeys messageKey, string param)
+    {
+        MessageBoxManager.ShowWarning(Application.Current.MainWindow, string.Format((TryFindResource(messageKey) as string) ?? "{0}", param), WpfUtils.ApplicationFullName);
+    }
+
+    private void ShowWarningDialog(NavigateUrlErrorWarningKeys messageKey)
+    {
+        MessageBoxManager.ShowWarning(Application.Current.MainWindow, (TryFindResource(messageKey) as string) ?? string.Empty, WpfUtils.ApplicationFullName);
     }
 }

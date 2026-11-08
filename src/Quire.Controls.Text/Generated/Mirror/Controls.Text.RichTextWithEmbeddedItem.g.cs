@@ -160,8 +160,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Documents.Hyperlink EditLinkUndoableCommand(global::Quire.Controls.Text.HyperlinkEditState hyperlinkState, global::System.Windows.Documents.TextRange convertToLinkRange, bool skipOneInsertionPosition = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::System.Windows.Documents.Hyperlink> GetContextLinks() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ReproduceRemovedHyperlinkColors(global::System.Collections.Generic.List<global::System.Windows.Documents.Inline> inlines, global::System.Windows.Documents.Hyperlink link) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool CanModifyHyperlink() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -175,10 +173,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     private void DisplayHyperlink(global::System.Windows.Documents.Hyperlink link, bool showAboutBox = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool ShowQuestionWarningDialog(global::Quire.IO.NavigateUrlErrorWarningKeys messageKey, string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ShowWarningDialog(global::Quire.IO.NavigateUrlErrorWarningKeys messageKey, string param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ShowWarningDialog(global::Quire.IO.NavigateUrlErrorWarningKeys messageKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OpenHyperlinkUrl(global::System.Uri path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -278,8 +272,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     protected override void OnPreviewDrop(global::System.Windows.DragEventArgs e) => base.OnPreviewDrop(e);
     [global::Quire.Mirror.MirrorStub]
-    private bool CanDrop(global::System.Windows.DragEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void ReplacePlaceholderWithEmbeddedItem(global::Quire.Controls.Core.IWhiteboardItemInText item, int symbolOffset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool RemoveInlineRecursively(global::System.Windows.Documents.InlineCollection inlines, global::System.Windows.Documents.Inline inlineToRemove) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -321,10 +313,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     protected override void HandleSelectionChanged(object sender, global::System.EventArgs args) => base.HandleSelectionChanged(sender, args);
     [global::Quire.Mirror.MirrorStub]
     protected override void UpdateCurrentFormats() => base.UpdateCurrentFormats();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnSetNumberFormat(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnSetMatrixFormat(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void DispatchCommandToItems(global::System.Windows.Input.RoutedCommand cmd, object parameter, global::Quire.Controls.Core.PropertiesForUpdate propertyForUpdate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

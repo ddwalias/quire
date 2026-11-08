@@ -268,3 +268,8 @@
 
 - Exact: `ContainsError`, `ShowError` (foreach over `CalculatableChildren` with `as ICalculationErrorOwner`), `GetHyperlinkAtCaretPositionIncludingEdges` (`??` chain; the second adjacent-hyperlink direction is `dir == Forward ? Backward : Forward`, the only form that gives Mathcad's `beq`), `HandleRemoveBookmarkTag`, `RemoveEmbeddedItem`, `RemoveItemFromList`, `GetContainer`.
 - Release IL: PASS — 358 checked, 358 exact, 0 failures, 365 unfinished.
+
+## Batch 42 — RichTextWithEmbeddedItem context links, drop check, number/matrix format and warning dialogs (5 names, 6 members)
+
+- Exact: `GetContextLinks` (`?.Yield().ToList()` on the caret hyperlink), `CanDrop` (`System.Windows.DragEventArgs`, the `Quire.Controls.Core` type is ambiguous), `OnSetMatrixFormat`, `OnSetNumberFormat` (`Command == ClearResultFormat ? CurrentNumberFormatClear : CurrentNumberFormat`), `ShowWarningDialog` (both overloads).
+- Release IL: PASS — 364 checked, 364 exact, 0 failures, 359 unfinished.
