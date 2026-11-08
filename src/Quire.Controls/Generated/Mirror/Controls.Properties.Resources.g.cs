@@ -11,22 +11,4 @@ namespace Quire.Controls.Properties;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Properties.Resources, Ptc.Controls")]
 public partial class Resources
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Resources.ResourceManager resourceMan;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Resources.ResourceManager ResourceManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static string Command_ActivateRegion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static string Command_DeleteActiveRegion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static string Command_NewImageRegion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static string Command_NewMathRegion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static string Command_NewTextRegion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static string Command_RecalculateWorksheet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static string OpenFile_Filter_Images { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
