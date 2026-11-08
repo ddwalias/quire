@@ -11,27 +11,10 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.CustomSplitRichTextWithEmbeddedItem, Ptc.Controls.Text")]
 public partial class CustomSplitRichTextWithEmbeddedItem : global::Quire.Controls.Text.RichTextWithEmbeddedItem, global::Quire.Controls.Core.ICustomSplitItem, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Text.CustomSplitRichTextWithEmbeddedItem.FlowDocumentSplitData _splitData;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.Core.ICustomSplitItem> SplitItemIfNeeded;
-    [global::Quire.Mirror.MirrorStub]
-    public double GetValidSplitOffset(double originalOffset, double pageHeight, ref int lineNumberHint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.CustomSplitRichTextWithEmbeddedItem+FlowDocumentSplitData, Ptc.Controls.Text")]
     protected partial class FlowDocumentSplitData
     {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.Windows.Documents.TextPointer _firstLinePtr;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.Windows.Documents.TextPointer _lastLinePtr;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.Windows.Rect _firstLineRect;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.Windows.Rect _lastLineRect;
-        [global::Quire.Mirror.MirrorStub]
-        private global::System.Collections.Generic.IList<global::Quire.Controls.Text.CustomSplitRichTextWithEmbeddedItem.FlowDocumentSplitData.LineData> _lines;
-
         [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.CustomSplitRichTextWithEmbeddedItem+FlowDocumentSplitData+LineData, Ptc.Controls.Text")]
         public partial class LineData
         {

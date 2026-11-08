@@ -126,3 +126,12 @@
 
 - Exact: `ValidateLayout` (first shape) and `GetInvalidPointer` (protected). `GetInvalidPointer`'s last branch must be `if (!Selection.End.HasValidLayout) {...} else { result = null; }`; the ternary `cond ? null : Selection.End` shares one store and differed. The caret branch keeps the ternary (it matched).
 - Release IL: PASS — 187 checked, 187 exact, 0 failures, 533 unfinished.
+
+## Batch 19 — CustomSplit: GetValidSplitOffset and remaining declarations
+
+- Exact: `GetValidSplitOffset` (binary search over lines with the closure `<>c__DisplayClass5_0`). Shapes that mattered:
+  - The method is declared **first** in the hand-written partial. The closure ordinal (`DisplayClass5_0`) is the count of earlier members in the merged partial; with it after the constructor and overrides the ordinal was `8` and failed.
+  - Selector lambda: `if (!(rect.Height <= pageHeight)) return originalOffset; return rect.Top;` matched. `rect.Height > pageHeight ? originalOffset : rect.Top` and the block `if (rect.Height > pageHeight) return orig` both laid out the branches in the wrong order (`bgt`/`ble.un` vs Release `ble`).
+  - `int mid = lineNumberHint == 0 ? (count - 1) / 2 : lineNumberHint;` matched; `lineNumberHint != 0 ? lineNumberHint : (count - 1) / 2` placed the branches in the opposite order.
+- Declarations moved from `Generated` to the hand-written partial (no IL, so no gate effect except the ordinal, which stayed correct): `_splitData`, `SplitItemIfNeeded` event, the four line/rect fields and `_lines` of `FlowDocumentSplitData`. The class now has no `[MirrorStub]` markers.
+- Release IL: PASS — 190 checked, 190 exact, 0 failures, 532 unfinished.
