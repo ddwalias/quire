@@ -199,3 +199,10 @@
 
 - Exact: `OnContextMenuOpening` (`DevAssert(!_contextMenuOpening)`, then a try/finally on the flag) and `RaiseEvent(IDataObject)` (`DataObjectPastingEventArgs` with `RoutedEvent = DataObject.PastingEvent`).
 - Release IL: PASS — 280 checked, 280 exact, 0 failures, 443 unfinished.
+
+## Status at batch 30 (checkpoint)
+
+- Landed on `main` through batch 30. Project-wide Release IL: 280 checked, 280 exact, 0 failures, 443 unfinished.
+- Stub markers left in `Generated/Mirror`: `RichTextBase` (~300), `RichTextWithEmbeddedItem` (~400), `Paragraph` (38, 3 of them XAML), `FindReplaceRichTextBox` (38), `RichTextTitle` (25), `HyperlinkDialog` (17, XAML), `TextRegion` (13, XAML), `HyperlinkDialogErrorsResourceDictionary` (7, XAML), `ToggleScriptUndoCommand` (3), `WhiteboardItemInTextWrapper` (2), `ItemToImagesRichTextWithEmbededItemCloneHelper` (1, constructor), `ContextMenuModifyHyperlinkCommandParameter` (1, event declaration).
+- Blocked shapes: XAML `InitializeComponent`/`Connect` (maintainer decision); `ItemToImages` constructor (base call after field stores); `WhiteboardItemInTextWrapper.CompareBaselineOffset`; `ToggleScriptUndoCommand` constructor and `CreateToggleScriptUndoCommand`; `RichTextTitle.GetText`/`SetInitialTitleText` (`callvirt` on a `new` receiver, temporary between construction and use); `RichTextBase.GetTextOnlyFromRuns` (static `GetTextBoundary` vs instance stub signature).
+- Not yet started: most of `RichTextBase` (about 80 member names, including lambdas and iterators) and `RichTextWithEmbeddedItem`, `Paragraph` and `FindReplaceRichTextBox` members.
