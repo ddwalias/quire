@@ -884,4 +884,49 @@ public partial class RichTextBase
         }
         DebugTools.FailAssertion((string)null);
     }
+
+    protected virtual void EndCommandScope()
+    {
+        int count;
+        if (!ScopeRefCounts.TryGetValue(this, out count) || count <= 0)
+        {
+            DebugTools.FailAssertion((string)null);
+            return;
+        }
+        count--;
+        if (count > 0)
+        {
+            ScopeRefCounts[this] = count;
+            return;
+        }
+        ScopeRefCounts.Remove(this);
+        SerializedObjectsToReleaseFromScope.Enqueue(this);
+        ClearIsInSerialization();
+        ActiveScopes.Remove(this);
+        if (ActiveScopes.Count != 0 || _isInCopyUndesiredCommandScope == null)
+        {
+            return;
+        }
+        foreach (RichTextBase richTextBase in SerializedObjectsToReleaseFromScope)
+        {
+            richTextBase.SetRevertCoerceAfterSerializationProcess();
+        }
+        try
+        {
+            while (CommandBuffer.CanUndo)
+            {
+                CommandBuffer.Undo();
+            }
+        }
+        finally
+        {
+            foreach (RichTextBase richTextBase2 in SerializedObjectsToReleaseFromScope)
+            {
+                richTextBase2.ClearRevertCoerceAfterSerializationProcess();
+            }
+            SerializedObjectsToReleaseFromScope.Clear();
+        }
+        _isInCopyUndesiredCommandScope.Dispose();
+        _isInCopyUndesiredCommandScope = null;
+    }
 }

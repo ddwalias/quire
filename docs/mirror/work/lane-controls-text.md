@@ -375,3 +375,9 @@
 - Exact: `CopyingHandler` (protected virtual; RTF serialization of the selection, then `ClearIsInCopy`), `FindOncePrivate` (public virtual; `FindInText` gate, then the caret goes to the start for `Forward` and the end otherwise), `SpellingErrorCorrected` (tuple deconstruction of `_spellingErrorRange.Value`; the end pointer uses `startPointer?.GetPositionAtOffset(end)`, which emits `call` as Mathcad does; the failure uses `FailAssertion((string)null)` because the `null` literal is ambiguous).
 - Not attempted: `EndCommandScope` (the queue and active-scope tail is long; left for a later batch), `GetSpellingErrorAtPosition` (try/catch with `ref` and `dup`).
 - Release IL: PASS — 403 checked, 403 exact, 0 failures, 320 unfinished.
+
+## Batch 60 — RichTextBase end of command scope (1)
+
+- Exact: `EndCommandScope` (protected virtual). The ref-count check with `FailAssertion((string)null)`, the queue and active-scope bookkeeping, `if (ActiveScopes.Count != 0 || _isInCopyUndesiredCommandScope == null) return;` (one shared return, which is the only layout that matches), the `SetRevert…` foreach, and then `try { while (CanUndo) Undo(); } finally { foreach … ClearRevert…; SerializedObjectsToReleaseFromScope.Clear(); }`. The final `_isInCopyUndesiredCommandScope` dispose and null store follow the try.
+- Release IL: PASS — 404 checked, 404 exact, 0 failures, 319 unfinished.
+- Not matched, tried and reverted: `CalculateBaseline` (`new TextRange(...).Text` uses `callvirt` on a `new` receiver, which Roslyn emits as `call`); `ExecuteAddItemToListCommand` (closure display class ordinal is 188 here against 117 in Mathcad, and moving the method to the top of the partial only moved it from 287 to 188).
