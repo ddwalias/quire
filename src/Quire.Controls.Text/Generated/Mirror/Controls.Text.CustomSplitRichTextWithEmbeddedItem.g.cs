@@ -35,8 +35,6 @@ public partial class CustomSplitRichTextWithEmbeddedItem : global::Quire.Control
         private readonly global::System.Windows.Rect _lastLineRect;
         [global::Quire.Mirror.MirrorStub]
         private global::System.Collections.Generic.IList<global::Quire.Controls.Text.CustomSplitRichTextWithEmbeddedItem.FlowDocumentSplitData.LineData> _lines;
-        [global::Quire.Mirror.MirrorStub]
-        public int EnsureLines() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
         [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.CustomSplitRichTextWithEmbeddedItem+FlowDocumentSplitData+LineData, Ptc.Controls.Text")]
         public partial class LineData

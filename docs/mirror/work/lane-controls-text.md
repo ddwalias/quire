@@ -116,3 +116,8 @@
 - Shape: `GetLineRect(int)` re-reads `line.LineRect` into the same nullable local before `Value` (`lineRect = line.LineRect; return lineRect.Value;`). `return line.LineRect.Value;` allocated a third local and differed.
 - Still stubbed: `EnsureLines`, `GetValidSplitOffset`, `GetInvalidPointer`, `ValidateLayout`, and the `_splitData`/event declarations that are not methods.
 - Release IL: PASS — 184 checked, 184 exact, 0 failures, 536 unfinished.
+
+## Batch 17 — FlowDocumentSplitData.EnsureLines
+
+- Exact on the first shape: `_lines = new List<LineData> { new LineData { ... } }` for the first line, a nested `while (next != null && ptr.CompareTo(next) == 0)` loop, and a final `DevAssert(last.TextPtr.CompareTo(_lastLinePtr) == 0).Passed` guard before setting `LastLineRect`.
+- Release IL: PASS — 185 checked, 185 exact, 0 failures, 535 unfinished.

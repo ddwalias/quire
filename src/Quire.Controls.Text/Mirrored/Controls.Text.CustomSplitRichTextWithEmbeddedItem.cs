@@ -1,6 +1,7 @@
 #nullable disable
 #pragma warning disable
 
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -72,6 +73,36 @@ public partial class CustomSplitRichTextWithEmbeddedItem
                 return lineRect.Value;
             }
             return GetLineRect(line.TextPtr, iLine + 1 < _lines.Count ? _lines[iLine + 1].TextPtr : null);
+        }
+
+        public int EnsureLines()
+        {
+            if (EnumerableExtensions.IsNullOrEmpty(_lines))
+            {
+                _lines = new List<LineData> { new LineData { TextPtr = _firstLinePtr, LineRect = _firstLineRect } };
+                TextPointer ptr = _firstLinePtr;
+                while (ptr != null)
+                {
+                    TextPointer next = RichTextWithEmbeddedItem.GetNextLine(ptr);
+                    TextPointer cursor = ptr;
+                    while (next != null && ptr.CompareTo(next) == 0)
+                    {
+                        cursor = cursor.GetNextInsertionPosition(LogicalDirection.Forward);
+                        next = RichTextWithEmbeddedItem.GetNextLine(cursor);
+                    }
+                    if (next != null)
+                    {
+                        _lines.Add(new LineData { TextPtr = next });
+                    }
+                    ptr = next;
+                }
+                LineData last = _lines[_lines.Count - 1];
+                if (DebugTools.DevAssert(last.TextPtr.CompareTo(_lastLinePtr) == 0).Passed)
+                {
+                    last.LineRect = _lastLineRect;
+                }
+            }
+            return _lines.Count;
         }
 
         private static Rect GetLineRect(TextPointer line, TextPointer nextLine)
