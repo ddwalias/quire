@@ -38,7 +38,6 @@
 - Shapes tried and kept (matched): early-return setters (`AreaHasErrors`, `ProtectionOperationsEnabled`, as in the Model); `MinimumHeight = FindMinimumSize().Height;` (one statement); `insertionPoint.Offset(0.0, -Grid.GridCellSize.Height)` (Release IL uses `neg`); `IsAncestorOf(visual)` with no cast; `RestoreResizeData` with `resizeData as CollapsibleAreaResizeData`, null check and early return, then `OldSize`.
 - Unfinished in this batch (placeholders, `=> throw global::Quire.Mirror.MirrorStub.NotImplemented();`):
   - `OnToggleProtectState(object)`: the `func` lambda (`<>c__DisplayClass53_0::<OnToggleProtectState>b__0`) has `IsNullOrEmpty<char>` followed by `ldc.i4.0; cgt.un; ret` in Release IL. Shapes tried: `return str.IsNullOrEmpty();` (no `cgt.un`), `return str.IsNullOrEmpty() != false;` (C# folds it away). Not matched.
-  - `HandleGridCellSizeChanged(Size, Size)`: Release IL calls `callvirt CollapsibleAreaViewModel::get_StrictMinimumSize`; `StrictMinimumSize` in the hand-written override compiles to `callvirt WhiteboardViewModel::get_StrictMinimumSize`. Not resolved (the base is `protected virtual`, no redeclaration in `MathboardViewModel`). Kept as the base pass-through, as on main.
 
 ## Batch 5 — CollapsibleAreaControl and constant holders
 
@@ -59,6 +58,12 @@
 - Shape that matched: the same branch order as batch 5 (`if (isInPrintCommon.HasValue) {Each} else {foreach}`), with **no `return;` inside the `foreach`**. The `return` made Roslyn emit an extra `ret` before the outer `else` (leave target mismatch at `leave.s` / `brfalse` offsets); removing it gives Mathcad's single epilogue.
 - Release IL: PASS — 226 checked, 226 exact, 0 failures.
 - Remaining placeholders: `Control.PrintViewport` setter, `Control.HideFromCalculationContext` setter, `ViewModel.OnToggleProtectState`, and `ViewModel.HandleGridCellSizeChanged` (pass-through). Shapes tried for each are recorded in the sections below.
+
+## Batch 7 — ViewModel.HandleGridCellSizeChanged
+
+- Member: `CollapsibleAreaViewModel.HandleGridCellSizeChanged` (was a base pass-through on main).
+- Shape that matched: `base.HandleGridCellSizeChanged(...)`, the `Each` lambda, then `MinimumHeight = StrictMinimumSize.Height;` as one statement. The local form `Size strictMinimumSize = StrictMinimumSize; MinimumHeight = strictMinimumSize.Height;` gave Mathcad's `this` push in the wrong place (`ldarg.0` after the stloc) and bound the `StrictMinimumSize` read to `WhiteboardViewModel::get_StrictMinimumSize`. The one-statement form binds to `CollapsibleAreaViewModel::get_StrictMinimumSize`, as Mathcad does.
+- Release IL: PASS — 229 checked, 229 exact, 0 failures.
 
 ## Remaining (not yet started)
 - Nothing implementable is left in this assembly. The 5 unfinished members above need a shape not yet found; the next step is the gate on those shapes, not new members.

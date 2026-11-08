@@ -386,7 +386,15 @@ public partial class CollapsibleAreaViewModel
         return false;
     }
 
-    public override void HandleGridCellSizeChanged(Size oldSize, Size newSize) => base.HandleGridCellSizeChanged(oldSize, newSize);
+    public override void HandleGridCellSizeChanged(Size oldSize, Size newSize)
+    {
+        base.HandleGridCellSizeChanged(oldSize, newSize);
+        WhiteboardItems.OfType<IWhiteboardControl>().Each((IWhiteboardControl item) =>
+        {
+            item.GridCellSizeChangedHandler(oldSize, newSize);
+        });
+        MinimumHeight = StrictMinimumSize.Height;
+    }
 
     protected override void HandleItemAdded(IWhiteboardItem item)
     {
