@@ -114,6 +114,19 @@
 - Release IL: PASS — 371 checked, 0 failures, 499 unfinished (`release-il-0e18f40b7986`).
 - Remaining mismatches in this batch: none.
 
+## Batch 9 — UIElementManager
+
+- Members:
+  - `UIElementManager`: `SetFocusOnItem`, `GetItemLocation`, `SetItemLocation`, `ArrangeItem`, `GetItemRenderSize`, `GetItemDesiredSize`, `SetItemSize`, `SetRenderTransform`, `BlockUntilLoaded`, `GetDependencyPropertyValueOnItem`, `GetUIElement`, `.ctor()`
+- Hand-written: `Mirrored/Controls.Whiteboard.UIElementManager.cs`.
+- Stubs removed: `Generated/Mirror/Controls.Whiteboard.UIElementManager.g.cs`.
+- Shapes:
+  - `SetItemSize`: `as FrameworkElement` with early null return (`if (frameworkElement == null) return;`) matching the `brtrue.s IL_000b; ret;` shape.
+  - `BlockUntilLoaded`: `WpfUtils.DoEvents(Dispatcher.CurrentDispatcher, (DispatcherPriority)6)`.
+- Release IL: PASS — 382 checked, 0 failures, 476 unfinished (`release-il-309209ec385c`).
+- Remaining mismatches in this batch: none.
+
+
 
 
 
