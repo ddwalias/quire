@@ -14,37 +14,9 @@ public partial class MathcadSettings : global::System.ComponentModel.INotifyProp
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Controls.MathcadSettings Instance;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec CaretColorSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec ReadOnlyCaretColorSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec CaretBlinkSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec CaretBlinkPeriodSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec CaretHighlightOpacitySpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec ScopeOpacitySpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec TypeoverColorSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec ScopeColorSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec NearestNeighborColorSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec NearestNeighborOpacitySpec;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.ComponentModel.PropertySpec DefaultZoomSpec;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec HighlightOperandsSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec ParenthesizeOperandsSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec AutoLabelIdsSpec;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.ComponentModel.PropertySpec ShowAlignmentPointSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec FractionBarVerticalMarginSpec;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.ComponentModel.PropertySpec FourCornersSpec;
     [global::Quire.Mirror.MirrorStub]
@@ -52,27 +24,11 @@ public partial class MathcadSettings : global::System.ComponentModel.INotifyProp
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.ComponentModel.PropertySpec ShowStandardToolBarSpec;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec EvalPlaceholderSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec LineWrappingSignSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec LineWrappingSignOffsetSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec ShowResultMatrixFormatIndicesSpec;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.ComponentModel.PropertySpec FractionBarOverhangSpec;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.ComponentModel.PropertySpec TextRegionDefaultWidthSpec;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.ComponentModel.PropertySpec TextRegionDefaultFontSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec HandleFocusForImeSpec;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.ComponentModel.PropertySpec ComboBoxColorSpec;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::Quire.ComponentModel.PropertyBag _properties;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.MathcadSettings _instance;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Drawing.Color TypeoverColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -116,13 +72,7 @@ public partial class MathcadSettings : global::System.ComponentModel.INotifyProp
     [global::Quire.Mirror.MirrorStub]
     public global::System.Drawing.Color ComboBoxColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.ComponentModel.PropertyBag Properties { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnPropertiesSetValue(object sender, global::Quire.ComponentModel.PropertySpecEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnPropertiesGetValue(object sender, global::Quire.ComponentModel.PropertySpecEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public MathcadSettings() { }
     [global::Quire.Mirror.MirrorStub]
