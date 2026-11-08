@@ -11,12 +11,4 @@ namespace Quire.EquationEditor.View;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.View.IVisualIdNodeEditor, Ptc.EquationEditor")]
 public partial interface IVisualIdNodeEditor : global::Quire.EquationEditor.View.IVisualMathNodeEditor
 {
-    [global::Quire.Mirror.MirrorStub]
-    int CaretPosition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes CaretInsertionType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void SetSelection(int start, int end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void UnsetSelection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

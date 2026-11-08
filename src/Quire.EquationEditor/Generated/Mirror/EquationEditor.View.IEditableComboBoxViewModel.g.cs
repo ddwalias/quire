@@ -11,24 +11,4 @@ namespace Quire.EquationEditor.View;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.View.IEditableComboBoxViewModel, Ptc.EquationEditor")]
 public partial interface IEditableComboBoxViewModel : global::Quire.EquationEditor.View.IComboBoxViewModelBase, global::Quire.EquationEditor.View.IInputControlViewModelBase, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    int SelectedTableRowIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int CellCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int Columns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Size PlaceHolderBoxSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double MidPointBetweenFirstAndSecondRow { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double MidPointBetweenFirstAndSecondColumn { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Size TableSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.View.IReadonlyCellData GetCellAt(int row, int column) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void CreateSelection(int firstCellIdx, int secondCellIdx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

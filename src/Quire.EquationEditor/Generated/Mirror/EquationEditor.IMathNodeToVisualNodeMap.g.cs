@@ -11,18 +11,4 @@ namespace Quire.EquationEditor;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.IMathNodeToVisualNodeMap, Ptc.EquationEditor")]
 public partial interface IMathNodeToVisualNodeMap
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.Tree.MathNode RootModelNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.View.IVisualMathNode RootVisualNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void Regenerate(global::Quire.EquationEditor.Tree.MathNode equationRootNode, global::Quire.Controls.Core.IMathFormat MathFormatToApply, bool overideLabelColor, object getValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.Tree.MathNode AssociateNode(global::Quire.EquationEditor.View.IVisualMathNode visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.View.IVisualMathNode AssociateNode(global::Quire.EquationEditor.Tree.MathNode modelNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::Quire.EquationEditor.View.IVisualMathNode>> AssociateNodesCollection(global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode>> nodesToMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<T> AllVisualNodesOfType<T>() where T : global::Quire.EquationEditor.View.IVisualMathNode => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

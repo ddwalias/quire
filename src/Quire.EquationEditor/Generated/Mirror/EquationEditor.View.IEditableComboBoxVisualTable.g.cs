@@ -11,12 +11,4 @@ namespace Quire.EquationEditor.View;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.View.IEditableComboBoxVisualTable, Ptc.EquationEditor")]
 public partial interface IEditableComboBoxVisualTable : global::Quire.Wpf.ICanBlockUndoRedo
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.View.IEditableComboBoxViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Tuple<int, int> SelectedCells { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IMathFormat GetCellFormatAt(int row, int column) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

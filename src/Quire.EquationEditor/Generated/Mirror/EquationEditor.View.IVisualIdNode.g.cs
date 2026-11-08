@@ -11,18 +11,4 @@ namespace Quire.EquationEditor.View;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.View.IVisualIdNode, Ptc.EquationEditor")]
 public partial interface IVisualIdNode : global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.Tree.FormattedString Identifier { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<global::Quire.Controls.Core.IdLabels> IdLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<double> CharacterWidths { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double CaretNormalHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double CaretNormalOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double CaretSubscriptHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double CaretSubscriptOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

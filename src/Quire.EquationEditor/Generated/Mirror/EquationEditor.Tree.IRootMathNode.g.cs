@@ -11,14 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.IRootMathNode, Ptc.EquationEditor")]
 public partial interface IRootMathNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action SubTreeNodeValueChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.EventHandler<global::Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs> RequestRestoreInsertionPoint { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void RequestNotifySubTreeNodeValueChanged(global::Quire.EquationEditor.Tree.MathNode mathNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void DispatchRequestUndoableCommandExecution(global::Quire.DelegateFunction0<bool> action, string commandName, global::Quire.EquationEditor.Tree.MathNode nodeToRestore) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void DelegateRequestRestoreInsertionPoint(global::Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs requestRestoreInsertionPointEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

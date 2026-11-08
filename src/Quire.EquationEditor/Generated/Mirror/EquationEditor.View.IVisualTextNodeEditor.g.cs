@@ -11,14 +11,4 @@ namespace Quire.EquationEditor.View;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.View.IVisualTextNodeEditor, Ptc.EquationEditor")]
 public partial interface IVisualTextNodeEditor : global::Quire.EquationEditor.View.IVisualMathNodeEditor
 {
-    [global::Quire.Mirror.MirrorStub]
-    int CaretPosition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<double> CharacterWidths { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void SetSelection(int start, int end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void UnsetSelection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
