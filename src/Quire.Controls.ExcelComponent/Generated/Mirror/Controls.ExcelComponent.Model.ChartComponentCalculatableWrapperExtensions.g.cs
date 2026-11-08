@@ -11,22 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapperExtensions, Ptc.Controls.ExcelComponent")]
 internal static partial class ChartComponentCalculatableWrapperExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsLimitExpression(this global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapper) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsTraceOrCommonExpression(this global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapper) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsValidType(this global::Quire.Controls.ExcelComponent.Model.ChartWrapperType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsUnknownType(this global::Quire.Controls.ExcelComponent.Model.ChartWrapperType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsValidOrUnknownType(this global::Quire.Controls.ExcelComponent.Model.ChartWrapperType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsTraceOrCommonType(this global::Quire.Controls.ExcelComponent.Model.ChartWrapperType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsCommonTraceType(this global::Quire.Controls.ExcelComponent.Model.ChartWrapperType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsIndexedTraceType(this global::Quire.Controls.ExcelComponent.Model.ChartWrapperType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsLimitType(this global::Quire.Controls.ExcelComponent.Model.ChartWrapperType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
