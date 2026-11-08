@@ -11,8 +11,4 @@ namespace Quire.Controls.Whiteboard;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardElementXamlHelper, Ptc.Controls.Whiteboard")]
 public partial class WhiteboardElementXamlHelper : global::Quire.Controls.Core.FrameworkElementXamlHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.UIElement GetPrintView(global::System.Windows.UIElement element) => base.GetPrintView(element);
-    [global::Quire.Mirror.MirrorStub]
-    public WhiteboardElementXamlHelper() { }
 }

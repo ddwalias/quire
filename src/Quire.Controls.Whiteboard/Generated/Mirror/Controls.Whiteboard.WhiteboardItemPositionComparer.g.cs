@@ -11,8 +11,4 @@ namespace Quire.Controls.Whiteboard;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardItemPositionComparer, Ptc.Controls.Whiteboard")]
 public partial class WhiteboardItemPositionComparer : global::Quire.Controls.Whiteboard.PositionComparer, global::Quire.Controls.Whiteboard.IWhiteboardItemPositionComparer, global::System.Collections.Generic.IComparer<global::Quire.Controls.Core.IWhiteboardItem>, global::System.Collections.Generic.IComparer<global::System.Windows.Point>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public virtual int Compare(global::Quire.Controls.Core.IWhiteboardItem itemOne, global::Quire.Controls.Core.IWhiteboardItem itemTwo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public WhiteboardItemPositionComparer() { }
 }

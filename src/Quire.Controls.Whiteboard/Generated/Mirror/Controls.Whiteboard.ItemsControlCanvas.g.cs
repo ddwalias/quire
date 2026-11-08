@@ -11,8 +11,4 @@ namespace Quire.Controls.Whiteboard;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.ItemsControlCanvas, Ptc.Controls.Whiteboard")]
 public partial class ItemsControlCanvas : global::System.Windows.Controls.Canvas
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size arrangeSize) => base.ArrangeOverride(arrangeSize);
-    [global::Quire.Mirror.MirrorStub]
-    public ItemsControlCanvas() { }
 }
