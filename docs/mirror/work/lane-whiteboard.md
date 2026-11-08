@@ -102,3 +102,9 @@
 - Finding: nested types declared in the `.g.cs` are counted as members for Roslyn's closure ordinal (they compile first). Moved them to the end of the hand-written partial so they do not shift the earlier closures. Their own closures are unaffected.
 - Release IL: PASS — 215 checked, 0 failures (`release-il-5a9efd6b8a04`).
 - Still placeholders: the other lambda-containing methods (`Initialize`, `SetInsertionPoint`, `HookupActiveItem`, `SelectItems`, `TabInto`, `get_IsTabNavigatable`, and others).
+
+## Open: closure ordinal model (WhiteboardViewModel, not yet resolved)
+
+- `IsTabNavigatable` (metadata k=152, Mathcad `b__236_0`) implemented with its cached `Any` lambda: Quire emits `b__230_0`, six short. The current layout is the batch-13 model (each field-like event counts two units: backing field plus event; `Changed` counts one). Measured on Quire: events count one unit each before this member, which would make the layout six short.
+- Not resolved: with events counted as one unit, the constraint model overshoots at `RestoreSavedState`/`SelectItems` (have 82, need 81) because a forced auto-property block lands between two constraints. Next step: resolve by measuring Quire ordinals for the lambda members in the next batch, not by re-deriving the model by hand.
+- `IsTabNavigatable` stays a placeholder; the change was reverted rather than landed.
