@@ -319,3 +319,9 @@
 - Exact: `OnPreviewEnter` (`castclass` to `IWhiteboardItemInText`, `Activate(true)` on the base binding matches), `ReplacePlaceholderWithEmbeddedItem` (`var paragraph` avoids the `Paragraph` name clash with `Quire.Controls.Text.Paragraph`), `SetItem` (`container.Child?.GetType().FullName` inside the failure message).
 - Release IL: PASS — 384 checked, 384 exact, 0 failures, 339 unfinished.
 - Note: the earlier question about `Activate(true)` binding (batch 46) is answered by this batch: calls on `this` bind to the base method in IL, so `DeleteActiveOrSelectedItems` should follow the same shape.
+
+## Batch 51 — RichTextWithEmbeddedItem delete command and embedded wrapper lookup (2)
+
+- Exact: `DeleteActiveOrSelectedItems` (the `Activate(true)` question from batch 46 is settled: it binds to the base method, see batch 50), `GetWrapper` (static; `foreach` over `Grid.Children` with the duplicate check and `break`, the `break` lands on the `return result`).
+- Not attempted: `OpenHyperlinkUrl` (depends on `ValidateURL`, which is not implemented), `RangeContainsOnlyInlineElements` (the loop condition mixes `&` and `&&`, and the source form is unclear).
+- Release IL: PASS — 386 checked, 386 exact, 0 failures, 337 unfinished.

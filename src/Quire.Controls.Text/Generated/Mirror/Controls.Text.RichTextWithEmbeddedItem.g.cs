@@ -256,8 +256,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     private void RepairWrapperHosts() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Text.IWhiteboardItemInTextWrapper GetWrapper(object embeddedElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected void CloneContent(global::Quire.Controls.Text.RichTextWithEmbeddedItem original, global::Quire.Controls.Core.IEngineeringDocument engDoc, bool export = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ToggleHideFromCalculationContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -275,8 +273,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     protected override void UpdateCurrentFormats() => base.UpdateCurrentFormats();
     [global::Quire.Mirror.MirrorStub]
     private void DispatchCommandToItems(global::System.Windows.Input.RoutedCommand cmd, object parameter, global::Quire.Controls.Core.PropertiesForUpdate propertyForUpdate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DeleteActiveOrSelectedItems(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static void InsertBaselineOffsetTag(double value, global::System.Windows.Documents.TextPointer insertionPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

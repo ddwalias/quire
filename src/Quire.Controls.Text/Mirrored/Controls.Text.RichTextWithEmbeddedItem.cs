@@ -896,4 +896,45 @@ public partial class RichTextWithEmbeddedItem
         }
         DebugTools.FailAssertion("Unexpected InlineUIContainer.Child: " + container.Child?.GetType().FullName);
     }
+
+    private void DeleteActiveOrSelectedItems(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (ActiveItem != null)
+        {
+            RemoveItem(ActiveItem);
+        }
+        else
+        {
+            EditingCommands.Delete.Execute(null, this);
+        }
+        Activate(true);
+    }
+
+    private static IWhiteboardItemInTextWrapper GetWrapper(object embeddedElement)
+    {
+        IWhiteboardItemInTextWrapper wrapper = embeddedElement as IWhiteboardItemInTextWrapper;
+        if (wrapper != null)
+        {
+            return wrapper;
+        }
+        Grid grid = embeddedElement as Grid;
+        if (grid == null)
+        {
+            return null;
+        }
+        IWhiteboardItemInTextWrapper result = null;
+        foreach (UIElement element in grid.Children)
+        {
+            IWhiteboardItemInTextWrapper candidate = element as IWhiteboardItemInTextWrapper;
+            if (candidate != null)
+            {
+                if (DebugTools.DevAssert(result == null, "More than one wrapper hosted in the Grid of an embedded item.").Failed)
+                {
+                    break;
+                }
+                result = candidate;
+            }
+        }
+        return result;
+    }
 }
