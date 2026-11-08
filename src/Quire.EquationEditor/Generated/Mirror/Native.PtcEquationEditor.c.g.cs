@@ -11,8 +11,4 @@ namespace Quire.Native.PtcEquationEditor;
 [global::Quire.Mirror.MirrorOf("c, Ptc.EquationEditor")]
 internal partial interface c
 {
-    [global::Quire.Mirror.MirrorStub]
-    void b(global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void d(global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_0, global::Quire.EquationEditor.TypeoverChangeEventArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

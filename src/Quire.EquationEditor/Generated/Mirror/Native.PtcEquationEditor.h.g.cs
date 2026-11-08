@@ -11,16 +11,4 @@ namespace Quire.Native.PtcEquationEditor;
 [global::Quire.Mirror.MirrorOf("h, Ptc.EquationEditor")]
 internal partial interface h
 {
-    [global::Quire.Mirror.MirrorStub]
-    void a(global::Quire.Delegate0 A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void b(global::Quire.Delegate0 A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void c(global::Quire.Delegate0 A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void d(global::Quire.Delegate0 A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
