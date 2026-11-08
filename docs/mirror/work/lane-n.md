@@ -903,3 +903,11 @@
 - Shapes Release IL requires: `IsOnVisiblePagePropertyChangedHandler` takes its `IMaybeHasPointThatSnapsToPixel` pattern into a separate `as` local before the snappable helper; `SetProhibitSizeChangedEventHandler` and `ClearProhibitSizeChangedEventHandler` return early on a failed assertion.
 - Kept as generated stubs (not landed): `SetRegisterCommandBindings`, `GetRegisterCommandBindings`, `SetIsBringToView`, `GetIsBringToView` — Mathcad calls `DependencyObject.SetValue`/`GetValue` with `call` on a guarded receiver, and Quire emits `callvirt` for the same source shapes; `GetPrintView` — the cast sequence differs and the gate reports a structure mismatch.
 - Blocked (closures): `OnCanActivateChanged` (lambda; display class 32).
+
+## Batch 119 — shape attempts for non-closure members (one attempt)
+
+- Landed: `OleContainer.AcquireBitmapSource`, candidate A (`RenderSize.Width` read directly inside the `Int32Rect` arguments; the temporary is the compiler's own). Release IL: `.mirror-cache/release-il-` PASS, 2,303 checked, 2,303 exact, 0 failures.
+- Not landed (kept as generated stubs), with the gate results for each candidate:
+  - AttachedProperties `SetRegisterCommandBindings`, `GetRegisterCommandBindings`, `SetIsBringToView`, `GetIsBringToView`: candidate A (direct receiver, early return) FAIL with `callvirt` vs Mathcad `call`; candidate B (cast receiver, early return, and the ternary form for the getter) FAIL with the same call difference.
+  - AttachedProperties `GetPrintView`: candidate A (local helper, early return) FAIL; candidate B (local helper, `(IWhiteboardItem)(helper?.GetPrintView(...))`) FAIL.
+  - OleContainer `AcquireBitmapSource`, candidate B (`num` local with two `RenderSize` reads) FAIL, which is the shape that was two bytes off before.

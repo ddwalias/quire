@@ -488,4 +488,17 @@ public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TP
         }
         return formatConvertedBitmap;
     }
+
+    protected override void AcquireBitmapSource()
+    {
+        if (ViewModel.IsOleAppSupportZoom)
+        {
+            double zoom = DocumentAttachedProperties.GetZoom(this);
+            _bitmap = CreateBitmap(new Int32Rect(0, 0, (RenderSize.Width * zoom).IntRound(), (RenderSize.Height * zoom).IntRound()), PresentationSource.FromVisual(this) as HwndSource);
+        }
+        else if (SiteCreated)
+        {
+            base.AcquireBitmapSource();
+        }
+    }
 }

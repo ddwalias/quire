@@ -20,8 +20,6 @@ public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TP
     [global::Quire.Mirror.MirrorStub]
     public void StartOleCloseOperation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override void AcquireBitmapSource() => base.AcquireBitmapSource();
-    [global::Quire.Mirror.MirrorStub]
     protected string TrySavingBitmapForPrint() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual TPersistentData GetOlePersistentData(global::Quire.Serialization.IS11NProvider s11NProvider, string uniqueId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
