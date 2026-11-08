@@ -13,6 +13,8 @@ using System.Windows;
 using System.Windows.Controls;
 using DocumentTextRange = System.Windows.Documents.TextRange;
 using System.Windows.Documents;
+using System.IO;
+using System.Windows.Input;
 using Quire.Controls.Core;
 using Quire.Core;
 using Quire.Undo;
@@ -23,6 +25,7 @@ namespace Quire.Controls.Text;
 
 public partial class RichTextBase
 {
+
     public virtual string GetHelpContext()
     {
         return RichTextBaseConstants.RichTextHelpContext;
@@ -526,4 +529,68 @@ public partial class RichTextBase
         bool hasValue = (e.Parameter as FindReplaceQuery)?.ValueToReplaceWith != null;
         e.CanExecute = hasValue && !Selection.IsEmpty;
     }
+
+    private void OnPasteCanExecute(object sender, CanExecuteRoutedEventArgs e)
+    {
+        IDataObject data = Clipboard.GetDataObject();
+        e.CanExecute = data.GetDataPresent(DataFormats.Text) || data.GetDataPresent(DataFormats.Dib) || data.GetDataPresent(DataFormats.Xaml) || data.GetDataPresent(DataFormats.XamlPackage) || data.GetDataPresent(DataFormats.Rtf) || data.GetDataPresent(DataFormats.Bitmap);
+    }
+
+    private void StartOrStopSpellCheckActivationTimer(bool start)
+    {
+        if (start)
+        {
+            RoutedEventArgs args = new RoutedEventArgs(SpellCheckTimerStartEvent);
+            RaiseEvent(args);
+            if (args.Handled)
+            {
+                _spellCheckActivationTimer.Start();
+                _pendingSpellCheckTimers.Add(_spellCheckActivationTimer);
+            }
+        }
+        else
+        {
+            _spellCheckActivationTimer.Stop();
+            _pendingSpellCheckTimers.Remove(_spellCheckActivationTimer);
+        }
+    }
+
+    public void RefreshDictionary()
+    {
+        if (!SpellCheck.GetIsEnabled(this))
+        {
+            return;
+        }
+        if (DebugTools.DevAssert(File.Exists(DictionaryHelper.WpfSpellerCustomDictionaryUri.LocalPath)).Passed)
+        {
+            try
+            {
+                SpellCheck.CustomDictionaries.Add(DictionaryHelper.WpfSpellerCustomDictionaryUri);
+                if (DictionaryHelper.IsWindowsSpellerCustomDictionaryValid)
+                {
+                    SpellCheck.CustomDictionaries.Remove(DictionaryHelper.WpfSpellerCustomDictionaryUri);
+                }
+            }
+            catch (Exception ex)
+            {
+                DebugTools.FailAssertion(ex);
+            }
+        }
+    }
+
+    public static string SerializeRangeContentToRtfString(DocumentTextRange range)
+    {
+        string result;
+        using (MemoryStream stream = new MemoryStream())
+        {
+            range.Save(stream, DataFormats.Rtf, true);
+            stream.Position = 0;
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                result = reader.ReadToEnd();
+            }
+        }
+        return result;
+    }
+
 }

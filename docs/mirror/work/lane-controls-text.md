@@ -212,3 +212,9 @@
 - Exact: `StartCommandScope` (`TryGetValue` with early return), `ToggleSubSuperscriptCommandCanExecute` (`if (!Selection.IsEmpty) return Length > 0; return true;`), `ShouldLeaveTextRegionOnCaretMove` (`!= Up && != Down` guard, then `GetLineStartPosition(..., out lines)`), `CanReplace`.
 - Not matched: `GetPointerToAddDictionary`. Release IL pushes `this` before `CaretPosition` is stored in the caret local, so the call uses `ref caret` with a duplicated `ldarg.0`; no C# shape reproduced that. Left as a stub.
 - Release IL: PASS — 284 checked, 284 exact, 0 failures, 439 unfinished.
+
+## Batch 32 — RichTextBase spell-check timer, dictionary refresh, paste and RTF helpers (4)
+
+- Exact: `OnPasteCanExecute`, `StartOrStopSpellCheckActivationTimer` (`if (start) { ... } else { ... }`, with the handled test inside the true branch and no `return`), `RefreshDictionary`, `SerializeRangeContentToRtfString` (static, nested `using`).
+- Not matched: `PostPasting`. Its `Each` lambda compiles to `<PostPasting>b__N_0`, and N is the method's ordinal in the merged type (Mathcad 159). With `PostPasting` in the hand-written partial the merged ordinal is 221, because the remaining generated members come first and cannot be reduced without implementing them. Left as a stub; blocked on lambda ordinal.
+- Release IL: PASS — 288 checked, 288 exact, 0 failures, 435 unfinished.
