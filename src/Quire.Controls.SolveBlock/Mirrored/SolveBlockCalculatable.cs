@@ -50,6 +50,12 @@ internal partial class SolveBlockCalculatable
             owner.ShowError(error);
     }
 
+    public void RestoreResult()
+    {
+        if (WrappedCalculatable is global::Quire.Calculation.Core.ICalculatableResultOwner owner)
+            owner.RestoreResult();
+    }
+
     public override global::Quire.Calculation.Core.ICalculatable WrappedCalculatable
     {
         get => base.WrappedCalculatable;

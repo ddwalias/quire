@@ -7,9 +7,10 @@
 - Batch 8 constructor: PASS (`38 checked`); landed `f1756f18`.
 - Batch 9 `UpdateEquationTypeOfSimpleCalculatable`: PASS (`39 checked`); landed `1a947618`.
 - Batch 10 `UpdateEquationType`: PASS (`40 checked`); landed `adcea50f`.
-- Batch 11 `_equationType` field: PASS (`40 checked`); landed `47c1dc7e`.
+- Batch 11 `_equationType`: PASS (`40 checked`); landed `47c1dc7e`.
 - Batch 12 `FirePropertyChanged`: PASS (`41 checked`); landed `91575596`.
 - Batch 13 `HandleRequestEvaluation`: PASS (`42 checked`); landed `1ab5bfb`.
-- Batch 14 `ContainsError`, `ShowError`: PASS (`44 checked`; `.mirror-cache/release-il-466962c91b83`).
+- Batch 14 `ContainsError`, `ShowError`: PASS (`44 checked`); landed `c9460106`.
+- Batch 15 `RestoreResult`: PASS (`45 checked`; `.mirror-cache/release-il-a662be11fd02`).
 - `GetEquationTypeOfRl` remains stubbed due enum/closure mismatch.
-- Remaining: 376 stub markers in 18 generated types; no known mismatches in landed batches.
+- Remaining: 375 stub markers in 18 generated types; no known mismatches in landed batches.

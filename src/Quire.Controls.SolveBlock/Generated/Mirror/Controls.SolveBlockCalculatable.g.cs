@@ -17,7 +17,5 @@ internal partial class SolveBlockCalculatable : global::Quire.Calculation.Core.S
     [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
-    public void RestoreResult() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.SolveBlockEquationTypes GetEquationTypeOfRl(string rl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
