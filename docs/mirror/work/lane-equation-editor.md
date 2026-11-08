@@ -29,4 +29,5 @@
 - Batch 25: `SpecTable.Model.ISpecTableMemento`, `IColumnMemento`, `SpecTable.ISpecTableCellMap`, `ISpecTableModel` abstract contracts; Release IL PASS, 281 checked (`.mirror-cache/release-il-ed08720857c7/release-il.json`).
 - Batch 26: `IEquationModel` abstract contract; Release IL PASS, 457 checked (`.mirror-cache/release-il-4a9b10a0f2aa/release-il.json`).
 - Batch 27: `Tree.INodeInfo`, `INodeInfoNotifyModel`, `IComboBoxControlNodeInfo`, `IInputControlNodeInfo` abstract contracts; Release IL PASS, 240 checked (`.mirror-cache/release-il-8fd14e2139b9/release-il.json`).
-- Remaining: 5,481 `MirrorStub` attributes in 191 generated files; not yet batched. No mismatches in completed batches.
+- Batch 28: `Tree.IComboBoxInputControlDataAdapter`, `IStringToComboBoxMathTransformer`, `IInputScriptableWithInputNodeInfo` abstract contracts; Release IL PASS, 237 checked (`.mirror-cache/release-il-2055f9be7861/release-il.json`).
+- Remaining: 5,472 `MirrorStub` attributes in 188 generated files; not yet batched. No mismatches in completed batches.

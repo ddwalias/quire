@@ -11,8 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.IStringToComboBoxMathTransformer, Ptc.EquationEditor")]
 public partial interface IStringToComboBoxMathTransformer
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.Tree.MathNode TransformStringToNumericMathTree(string value, bool parseNaNs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.Tree.MathNode TransformStringMathNode(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

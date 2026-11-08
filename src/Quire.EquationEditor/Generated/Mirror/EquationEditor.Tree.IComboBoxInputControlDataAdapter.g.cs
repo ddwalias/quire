@@ -11,12 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.IComboBoxInputControlDataAdapter, Ptc.EquationEditor")]
 public partial interface IComboBoxInputControlDataAdapter
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<string> Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<global::System.ValueTuple<string, global::System.Collections.Generic.IList<string>>> GroupByRows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string TableTitle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int SelectedValueRow { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
