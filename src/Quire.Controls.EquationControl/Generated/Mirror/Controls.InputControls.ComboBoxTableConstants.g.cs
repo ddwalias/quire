@@ -11,8 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.ComboBoxTableConstants, Ptc.Controls.EquationControl")]
 public static partial class ComboBoxTableConstants
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const int MinimumRowsNum = 2;
-    [global::Quire.Mirror.MirrorStub]
-    public const int MinimumColumnsNum = 2;
 }
