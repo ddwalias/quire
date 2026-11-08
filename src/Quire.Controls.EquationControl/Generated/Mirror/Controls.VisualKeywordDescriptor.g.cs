@@ -17,6 +17,4 @@ public partial class VisualKeywordDescriptor : global::Quire.Controls.VisualIdDe
     public override object CommandParameter { get => base.CommandParameter; }
     [global::Quire.Mirror.MirrorStub]
     public override string DisplayName { get => base.DisplayName; set => base.DisplayName = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualKeywordDescriptor() { }
 }

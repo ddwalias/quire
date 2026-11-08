@@ -21,6 +21,4 @@ public partial class VisualIdDescriptor : global::Quire.Controls.SymbolDescripto
     public global::Quire.EquationEditor.Tree.FormattedString IdName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override object CommandParameter { get => base.CommandParameter; }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualIdDescriptor() { }
 }

@@ -17,4 +17,7 @@
 - Batch: constructors for `Ptc.Controls.VisualConstantDescriptor`, `Ptc.Controls.VisualModifierDescriptor`, and `Ptc.Controls.VisualUnitDescriptor`.
 - Shapes tried: idiomatic protected-field assignments to the enum and command values shown in the original source; no unusual IL-specific shaping.
 - Release IL: PASS, 603 checked, 0 failures; `.mirror-cache/release-il-bbd011d3bedb/release-il.json`.
-- Remaining: 4,498 unfinished members across 327 generated type files; these batches have no mismatches.
+- Batch: constructors for `Ptc.Controls.VisualIdDescriptor` and `Ptc.Controls.VisualKeywordDescriptor`.
+- Shapes tried: idiomatic protected command-field assignments from the original source; matched without IL-specific shaping.
+- Release IL: PASS, 605 checked, 0 failures; `.mirror-cache/release-il-75d1fb5e2719/release-il.json`.
+- Remaining: 4,496 unfinished members across 327 generated type files; these batches have no mismatches.
