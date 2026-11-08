@@ -11,20 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.EngineeringDocCommands, Ptc.Controls")]
 public static partial class EngineeringDocCommands
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand Cut;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand Copy;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand Paste;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand Delete;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand ZoomOut;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand ZoomIn;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand Enter;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand Traverse;
 }

@@ -11,10 +11,4 @@ namespace Quire.Controls.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.UnitMonomialBuilder, Ptc.Controls")]
 internal partial class UnitMonomialBuilder
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.IO.UnitMonomialBuilder _instance;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.IO.UnitMonomialBuilder Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal string ConstructUnitMonomial(global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.Unit> units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

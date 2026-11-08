@@ -11,20 +11,4 @@ namespace Quire.Controls.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IdDefinition, Ptc.Controls")]
 internal partial class IdDefinition : global::Quire.Controls.IO.ShadowCalculatable, global::Quire.Controls.IO.IShadowIdDefinition, global::Quire.Calculation.Core.Support.ISimpleCalculatable, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.Support.ICalcWithSyncStatus, global::Quire.Calculation.Core.ICalcWithCache
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal const string DefinitionSexpFormat = "(:= {0} {1})";
-    [global::Quire.Mirror.MirrorStub]
-    internal IdDefinition(string idSExpression, double value, string scalingSExpression) { }
-    [global::Quire.Mirror.MirrorStub]
-    internal static string ConstructValueSExpression(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string ConstructCurrentRl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void SetResult(global::Quire.Calculation.Core.IResultNode result) => base.SetResult(result);
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsErrorOnScalingUnits() => base.IsErrorOnScalingUnits();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Equals(object obj) => base.Equals(obj);
-    [global::Quire.Mirror.MirrorStub]
-    public override int GetHashCode() => base.GetHashCode();
 }

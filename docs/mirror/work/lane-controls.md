@@ -13,4 +13,15 @@
   - `DetachedCopyOptions` (Empty, HandlingException, .cctor)
   - `RegularSaveOptions` (Empty, NonPrimeFormatForApi, WithStatesGeneration, .cctor)
   - `Properties.Settings` (MicrosoftPdfDriverName get/set, .cctor defaultInstance initializer)
-- Release IL: PASS; 291 checked, 291 exact, 0 failures. Report: `.mirror-cache/release-il-07131876152f/release-il.json`.
+- Release IL: PASS; 291 checked, 291 exact, 0 failures. Report: `.mirror-cache/release-il-07131876152f/release-il.json`. Landed: commit `7cb1ad3a`.
+- Batch 2: 31 stubs across 8 types implemented and verified exact:
+  - `McdxPageModel` (.ctor, GetPlotBackgroundSerializableAttribute, GetBooleanPropertySerializableAttribute, .cctor)
+  - `DimensionSelectorController` (_view, .ctor, HandleCommit, HandleMouseOverCell)
+  - `EngineeringDocCommands` (Cut, Copy, Paste, Delete, ZoomOut, ZoomIn, Enter, Traverse, .cctor)
+  - `DocumentAreaCommands.DependencyPropertySetCommand` (_value, Name, .ctor, Do)
+  - `ElementToCalcFormatEnabledConverter` (Convert)
+  - `ElementToComplexNumberFormatEnabledConverter` (Convert)
+  - `IO.UnitMonomialBuilder` (_instance, Instance, ConstructUnitMonomial)
+  - `IO.IdDefinition` (DefinitionSexpFormat, .ctor, ConstructValueSExpression, ConstructCurrentRl, SetResult, IsErrorOnScalingUnits, Equals, GetHashCode)
+  - Shapes tried: In `IdDefinition.ConstructCurrentRl`, hoisting return variable `string text;` matched Mathcad's local slots `[0] text, [1] arg, [2] sExpr` and bottom branch. In `DependencyPropertySetCommand.Name`, `string.Format` matched string interpolation IL.
+- Release IL: PASS; 313 checked, 313 exact, 0 failures, 572 unfinished. Report: `.mirror-cache/release-il-1e890757a479/release-il.json`.
