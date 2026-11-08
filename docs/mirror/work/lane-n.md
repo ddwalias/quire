@@ -833,3 +833,10 @@
 - Claimed: `OnApplyTemplate`, `GetBoundingRect`, `OnMouseLeftButtonDown`, `GetDragMode` (both overloads), `RaiseMoveAndResizeEvent`, `ResizeElement`, `GetGrip`, `GetRegionBorder`, `FindBorderDraggerByName`, plus `_busyProgressBar` and `HideBusyStateElements` (moved ahead of the lambda). Stubs removed from the `.g.cs`.
 - Report: `.mirror-cache/release-il-4d12fcc3be6c/release-il.json` — PASS, 2,102 checked, 2,102 exact, 0 failures.
 - Shapes Release IL requires: `FindBorderDraggerByName`'s lambda display class is numbered by the count of hand-written members declared before it (Mathcad: 95), so the method sits after the nine visibility properties and the busy members; `OnMouseLeftButtonDown` declares `originalControlElement` before `dragMode`; `GetDragMode` keeps the switched name in a local declared before the switch; `GetGrip` is a switch statement that returns from each arm.
+
+## Batch 109 — RegionBorder visual-state helpers (part 1)
+
+- Claimed: `UpdateBusyState`, `UpdateActiveState`, `SetBackgroundSelectedLook`, `SetBackgroundActiveLook`, `SetBackgroundDefaultLook`, `ShowBusyStateElements`, `UpdateZIndex`, `GetDesiredDraggerVisibility`. Stubs removed from the `.g.cs`.
+- Report: `.mirror-cache/release-il-3618536adb5a/release-il.json` — PASS, 2,110 checked, 2,110 exact, 0 failures.
+- Shapes Release IL requires: `ShowBusyStateElements` returns early on a null grid; `GetDesiredDraggerVisibility` is a switch statement that returns from each arm.
+- Remaining mismatches (kept as generated stubs, not landed): `UpdateBackgroundAndForeground` — branch structure matches but a then-block is two bytes shorter than Mathcad's; the early-return shape and the `Color ==` operand order did not close it. `UpdateBorderVisibilityState` — Mathcad emits `brfalse` for `ShowBusy ? visibility : Visibility.Visible`, Roslyn emits `brtrue` with the constant on the fall-through.

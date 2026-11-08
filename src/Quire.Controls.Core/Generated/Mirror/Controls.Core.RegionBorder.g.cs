@@ -38,17 +38,7 @@ public sealed partial class RegionBorder : global::System.Windows.Controls.Conte
     [global::Quire.Mirror.MirrorStub]
     private bool _areDraggersShown;
     [global::Quire.Mirror.MirrorStub]
-    private void UpdateBusyState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateActiveState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void UpdateBackgroundAndForeground() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetBackgroundSelectedLook() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetBackgroundActiveLook() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetBackgroundDefaultLook() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetBorderLook() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -59,12 +49,6 @@ public sealed partial class RegionBorder : global::System.Windows.Controls.Conte
     private void HideDraggers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateDraggersLook() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Visibility GetDesiredDraggerVisibility(global::Quire.Controls.Core.BorderDragger dragger) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ShowBusyStateElements() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateZIndex() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RegionBorder+RequestMoveAndResizeHandler, Ptc.Controls.Core")]
     public delegate void RequestMoveAndResizeHandler(object sender, global::Quire.Controls.Core.ResizeEventMouseArgs e);

@@ -542,6 +542,97 @@ public partial class RegionBorder
         return reference.GetVisualDescendantsBreadthFirstOfType<RegionBorder>().FirstOrDefault();
     }
 
+    private void UpdateBusyState()
+    {
+        if (ShowBusy)
+        {
+            ShowBusyStateElements();
+        }
+        else
+        {
+            HideBusyStateElements();
+        }
+    }
+
+    private void UpdateActiveState()
+    {
+        SetBorderLook();
+        AreDraggersShown = IsActive || IsSelected;
+        if (!IsActive || !IsSelected)
+        {
+            UpdateBackgroundAndForeground();
+        }
+    }
+
+    private void SetBackgroundSelectedLook()
+    {
+        if (_foreground != null && _background != null)
+        {
+            _foreground.Opacity = 0.4;
+            _background.Opacity = 0.0;
+        }
+    }
+
+    private void SetBackgroundActiveLook()
+    {
+        if (_foreground != null && _background != null)
+        {
+            _foreground.Opacity = 0.0;
+            _background.Opacity = ActiveRegionBackgroundOpacity;
+        }
+    }
+
+    private void SetBackgroundDefaultLook()
+    {
+        if (_foreground != null && _background != null)
+        {
+            _foreground.Opacity = 0.0;
+            _background.Opacity = 0.0;
+        }
+    }
+
+    private void ShowBusyStateElements()
+    {
+        if (_borderGrid == null)
+        {
+            return;
+        }
+        _busyProgressBar.Visibility = Visibility.Visible;
+    }
+
+    private void UpdateZIndex()
+    {
+        if (TemplatedParent is UIElement)
+        {
+            Panel.SetZIndex(TemplatedParent as UIElement, IsActive ? 1 : 0);
+        }
+    }
+
+    private Visibility GetDesiredDraggerVisibility(BorderDragger dragger)
+    {
+        switch (dragger.Name)
+        {
+            case PartLeftDragger:
+                return LeftDraggerVisibility;
+            case PartRightDragger:
+                return RightDraggerVisibility;
+            case PartBottomDragger:
+                return BottomDraggerVisibility;
+            case PartTopDragger:
+                return TopDraggerVisibility;
+            case PartBottomLeftDragger:
+                return BottomLeftDraggerVisibility;
+            case PartTopLeftDragger:
+                return TopLeftDraggerVisibility;
+            case PartBottomRightDragger:
+                return BottomRightDraggerVisibility;
+            case PartTopRightDragger:
+                return TopRightDraggerVisibility;
+            default:
+                return Visibility.Collapsed;
+        }
+    }
+
     [MirrorVerified("PtcControlsCoreRegionBorderMechanicalDifferentialTests")]
     public RegionBorder() { }
 }
