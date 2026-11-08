@@ -14,12 +14,6 @@ internal partial class SolveBlockCalculatable : global::Quire.Calculation.Core.S
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.SolveBlockEquationTypes _equationType;
     [global::Quire.Mirror.MirrorStub]
-    private static global::System.Text.RegularExpressions.Regex _definitionMatch;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Text.RegularExpressions.Regex _constraintMatch;
-    [global::Quire.Mirror.MirrorStub]
-    protected static global::System.Text.RegularExpressions.Regex _solverMatch;
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Calculation.Core.ICalculatable WrappedCalculatable { get => base.WrappedCalculatable; protected set => base.WrappedCalculatable = value; }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.SolveBlockEquationTypes EquationType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
