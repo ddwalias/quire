@@ -16,9 +16,5 @@ public partial class VisualIdDescriptor : global::Quire.Controls.SymbolDescripto
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.EquationEditor.Tree.FormattedString _idName;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::Quire.Controls.Core.IdLabels> Label { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.FormattedString IdName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override object CommandParameter { get => base.CommandParameter; }
 }

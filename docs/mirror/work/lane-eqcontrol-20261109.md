@@ -29,4 +29,7 @@
 - Batch: `Ptc.Controls.VisualKeywordDescriptor.CommandParameter` getter.
 - Shapes tried: original `if (!SExpression.IsNullOrEmpty())` branch order with the mapped extension method; exact Release IL.
 - Release IL: PASS, 608 checked, 0 failures; `.mirror-cache/release-il-80c8f19f17a8/release-il.json`.
-- Remaining: 4,493 unfinished members across 327 generated type files; these batches have no mismatches.
+- Batch: `Ptc.Controls.VisualIdDescriptor.Label` and `IdName` getter/setter pairs.
+- Shapes tried: idiomatic field-backed property accessors; exact Release IL.
+- Release IL: PASS, 612 checked, 0 failures; `.mirror-cache/release-il-dd2a85af2c43/release-il.json`.
+- Remaining: 4,489 unfinished members across 327 generated type files; these batches have no mismatches.
