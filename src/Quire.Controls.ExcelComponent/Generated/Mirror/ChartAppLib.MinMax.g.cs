@@ -11,8 +11,4 @@ namespace Quire.ChartAppLib;
 [global::Quire.Mirror.MirrorOf("ChartAppLib.MinMax, Ptc.Controls.ExcelComponent")]
 public partial struct MinMax
 {
-    [global::Quire.Mirror.MirrorStub]
-    public double m_Min;
-    [global::Quire.Mirror.MirrorStub]
-    public double m_Max;
 }

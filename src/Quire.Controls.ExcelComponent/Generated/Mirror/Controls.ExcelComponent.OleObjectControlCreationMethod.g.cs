@@ -11,8 +11,4 @@ namespace Quire.Controls.ExcelComponent;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.OleObjectControlCreationMethod, Ptc.Controls.ExcelComponent")]
 public abstract partial class OleObjectControlCreationMethod
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract bool Visit(global::Quire.Controls.ExcelComponent.OleObjectControl control, string oleContainerPath);
-    [global::Quire.Mirror.MirrorStub]
-    protected OleObjectControlCreationMethod() { }
 }

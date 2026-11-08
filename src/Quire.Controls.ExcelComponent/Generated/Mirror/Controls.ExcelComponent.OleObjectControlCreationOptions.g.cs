@@ -11,10 +11,4 @@ namespace Quire.Controls.ExcelComponent;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.OleObjectControlCreationOptions, Ptc.Controls.ExcelComponent")]
 public partial class OleObjectControlCreationOptions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool OleObjectAutoResize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.ExcelComponent.OleObjectControlCreationMethod OleObjectControlCreationMethod { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public OleObjectControlCreationOptions(global::Quire.Controls.ExcelComponent.OleObjectControlCreationMethod creationMethod, bool autoResize) { }
 }

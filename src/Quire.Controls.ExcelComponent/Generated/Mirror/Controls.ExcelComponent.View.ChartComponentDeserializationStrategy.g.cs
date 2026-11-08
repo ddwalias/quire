@@ -11,6 +11,4 @@ namespace Quire.Controls.ExcelComponent.View;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.View.ChartComponentDeserializationStrategy, Ptc.Controls.ExcelComponent")]
 public partial class ChartComponentDeserializationStrategy : global::Quire.Controls.ExcelComponent.View.OleBaseComponentDeserializationStrategy
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ChartComponentDeserializationStrategy(global::Quire.Controls.ExcelComponent.View.ChartComponentControl control) : base(default(global::Quire.Controls.ExcelComponent.View.OleBaseComponentControl)) { }
 }

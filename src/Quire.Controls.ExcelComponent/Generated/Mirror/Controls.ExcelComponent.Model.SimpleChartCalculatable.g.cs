@@ -11,6 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.SimpleChartCalculatable, Ptc.Controls.ExcelComponent")]
 internal partial class SimpleChartCalculatable : global::Quire.Controls.ExcelComponent.Model.SimpleOleCalculatable, global::Quire.Controls.ExcelComponent.Model.IChartCalculatable, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild, global::Quire.Calculation.Core.ICalculatable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public SimpleChartCalculatable(bool isFragment) : base(default(bool)) { }
 }
