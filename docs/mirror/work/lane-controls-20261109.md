@@ -13,3 +13,6 @@
   - Shapes: `PropertyChanged != null` check with a direct delegate call (matched the single ldfld pattern); `value != Alias` order preserved.
 - Batch 5: `Help.EngNoteContextData.Parse` (+ const `HelpEnvVarNameKey`). Gate: PASS, 367 checked. Report: `.mirror-cache/release-il-8b8f7c6eaec9/release-il.json`.
   - `KeyValuePairRegex` left unimplemented (stub kept): `[GeneratedRegex]` gives exact pattern/IL shape `ldsfld <RegexGenerator_g>{hash}__KeyValuePairRegex_0`, but the generator hash differs (Quire type name vs Ptc), so the field token cannot match. Parse calls the stub, so `Parse` throws at runtime until the regex member is decided.
+- Batch 6: `LanguageUtils` (FallbackLanguage, ChinesePrefix, `_supportedLanguages`, `_mathcadToChartAppL10N`, static initializer, GetCultureLanguage). Gate: PASS, 369 checked. Report: `.mirror-cache/release-il-7b5cad45706b/release-il.json`.
+  - Shapes: `if / else if / else` chain assigns `language` then `if (!replace) return language;` (IL puts the plain return first). Collection initializer and array initializer match.
+  - Blocked: `SetChartAppL10N` and const `ChartAppRegKey`. Mathcad's literal is `Software\PTC\Mathcad Prime\ChartApp`; Quire's stub holds `Software\Quire\Quire\ChartApp`. Exact IL needs the Mathcad literal, which is a product/ownership decision (no mapping in docs).
