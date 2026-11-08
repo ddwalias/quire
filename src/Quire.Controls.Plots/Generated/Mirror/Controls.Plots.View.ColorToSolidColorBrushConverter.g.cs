@@ -11,12 +11,4 @@ namespace Quire.Controls.Plots.View;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.View.ColorToSolidColorBrushConverter, Ptc.Controls.Plots")]
 public partial class ColorToSolidColorBrushConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Controls.Plots.View.ColorToSolidColorBrushConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
-    private ColorToSolidColorBrushConverter() { }
-    [global::Quire.Mirror.MirrorStub]
-    public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object ConvertBack(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
