@@ -11,12 +11,4 @@ namespace Quire.Controls.Whiteboard;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardCanvas, Ptc.Controls.Whiteboard")]
 public partial class WhiteboardCanvas : global::System.Windows.Controls.Canvas, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public WhiteboardCanvas(global::Quire.Controls.Whiteboard.IWhiteboardViewModel dataContext) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
