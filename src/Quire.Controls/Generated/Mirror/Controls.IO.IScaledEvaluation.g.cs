@@ -11,10 +11,4 @@ namespace Quire.Controls.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IScaledEvaluation, Ptc.Controls")]
 internal partial interface IScaledEvaluation : global::Quire.Calculation.Core.Support.ISimpleCalculatable, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.Support.ICalcWithSyncStatus, global::Quire.Calculation.Core.ICalcWithCache
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.IO.ScaledEvaluation.ScaledEvaluationResult GetComputedValue(out double value, out string units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.IO.ScaledEvaluation.ScaledEvaluationResult GetComputedValue(out double[][] value, out string units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.IO.ScaledEvaluation.ScaledEvaluationResult GetComputedValue(out string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

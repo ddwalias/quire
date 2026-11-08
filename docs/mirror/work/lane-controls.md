@@ -24,4 +24,17 @@
   - `IO.UnitMonomialBuilder` (_instance, Instance, ConstructUnitMonomial)
   - `IO.IdDefinition` (DefinitionSexpFormat, .ctor, ConstructValueSExpression, ConstructCurrentRl, SetResult, IsErrorOnScalingUnits, Equals, GetHashCode)
   - Shapes tried: In `IdDefinition.ConstructCurrentRl`, hoisting return variable `string text;` matched Mathcad's local slots `[0] text, [1] arg, [2] sExpr` and bottom branch. In `DependencyPropertySetCommand.Name`, `string.Format` matched string interpolation IL.
-- Release IL: PASS; 313 checked, 313 exact, 0 failures, 572 unfinished. Report: `.mirror-cache/release-il-1e890757a479/release-il.json`.
+- Release IL: PASS; 313 checked, 313 exact, 0 failures, 572 unfinished. Report: `.mirror-cache/release-il-1e890757a479/release-il.json`. Landed: commit `d20d7e74`.
+- Batch 3: 41 stubs across 8 types implemented and verified exact:
+  - `IO.ShadowCalculationNotifier` (Add, Remove)
+  - `IO.SexprDefinition` (IsValid, .ctor, ConstructRl)
+  - `IO.MatrixDefinition` (MatrixSexpFormat, .ctor, BuildListOfValues, ConstructCurrentRl, SetResult, IsErrorOnScalingUnits, IsMatrixEqual, Equals, GetHashCode)
+  - `IO.IShadowIdDefinition` (ValueSExpression, ScalingSExpression)
+  - `IO.IScaledEvaluation` (GetComputedValue x3)
+  - `IDimensionSelectorView` (CommandParameter, RowDisplayText, ColumnDisplayText, MouseOverCell, Commit, SetSelection)
+  - `IO.IInputOutputItemsConflicts` (GeneralWarnings, GeneralErrors, ItemWarnings, ItemErrors, AddGeneralWarning, AddGeneralError, AddItemWarning, AddItemError, AppendLists)
+  - `IO.ICalculationOverrideContainer` (CalculatableChildren, SetCalculationOverrideForSExpr, GetCalculationOverrideForSExpr, RemoveCalculationOverrides, RemoveCalculationOverrideForSExpr, IsEmpty, GetInputCalculationOverrides, GetOutputCalculationOverrides)
+  - Blocked: `IO.CollectionWithSyncStatus` blocked on `Quire.Calculation.Core.SynchronizationStatus.Synchronized` defined as 1 instead of 3 in another lane's assembly.
+  - Shapes tried: In `MatrixDefinition.IsMatrixEqual`, `goto IL_MATCH` over false return matched Mathcad's instruction ordering where false return precedes true return. In `MatrixDefinition.ConstructCurrentRl`, return slot hoisting matched local variable layout.
+- Release IL: PASS; 359 checked, 359 exact, 0 failures, 526 unfinished. Report: `.mirror-cache/release-il-221440793cbf/release-il.json`.
+

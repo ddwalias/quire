@@ -11,8 +11,4 @@ namespace Quire.Controls.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IShadowIdDefinition, Ptc.Controls")]
 public partial interface IShadowIdDefinition : global::Quire.Calculation.Core.Support.ISimpleCalculatable, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.Support.ICalcWithSyncStatus, global::Quire.Calculation.Core.ICalcWithCache
 {
-    [global::Quire.Mirror.MirrorStub]
-    string ValueSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string ScalingSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

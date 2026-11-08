@@ -11,20 +11,4 @@ namespace Quire.Controls.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.ICalculationOverrideContainer, Ptc.Controls")]
 internal partial interface ICalculationOverrideContainer
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.Support.ISimpleCalculatable> CalculatableChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.Support.ISimpleCalculatable SetCalculationOverrideForSExpr(string sExprKey, global::Quire.Controls.IO.CalculationOverridesTypes type, global::Quire.Calculation.Core.Support.ISimpleCalculatable newOverride) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.Support.ISimpleCalculatable GetCalculationOverrideForSExpr(string sExprKey, global::Quire.Controls.IO.CalculationOverridesTypes type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<global::Quire.Calculation.Core.ICalculatable> RemoveCalculationOverrides(global::Quire.Controls.IO.CalculationOverridesTypes type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.Support.ISimpleCalculatable RemoveCalculationOverrideForSExpr(string sExprKey, global::Quire.Controls.IO.CalculationOverridesTypes type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsEmpty(string sExprKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.Support.ISimpleCalculatable> GetInputCalculationOverrides() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.Support.ISimpleCalculatable> GetOutputCalculationOverrides() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

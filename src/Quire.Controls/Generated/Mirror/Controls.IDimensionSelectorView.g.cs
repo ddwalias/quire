@@ -11,16 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.IDimensionSelectorView, Ptc.Controls")]
 public partial interface IDimensionSelectorView
 {
-    [global::Quire.Mirror.MirrorStub]
-    object CommandParameter { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string RowDisplayText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string ColumnDisplayText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Controls.MouseOverCellHandler MouseOverCell { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Delegate0 Commit { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void SetSelection(params int[] childIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

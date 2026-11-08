@@ -11,10 +11,4 @@ namespace Quire.Controls.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.SexprDefinition, Ptc.Controls")]
 internal partial class SexprDefinition : global::Quire.Controls.IO.ShadowCalculatable, global::Quire.Controls.IO.IShadowIdDefinition, global::Quire.Calculation.Core.Support.ISimpleCalculatable, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.Support.ICalcWithSyncStatus, global::Quire.Calculation.Core.ICalcWithCache
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsValid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal SexprDefinition(string idSexpr, string valueSexpr, string scalingSexpr = default) { }
-    [global::Quire.Mirror.MirrorStub]
-    private string ConstructRl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
