@@ -1,139 +1,474 @@
-using System.Collections.ObjectModel;
+#nullable disable
+using System;
+using System.Collections;
 using System.ComponentModel;
+using System.Drawing.Design;
+using Quire.Mirror;
 
 namespace Quire.ComponentModel;
 
-/// <summary>An object whose properties are defined at run time and shown through a <see cref="PropertyBag"/>.</summary>
+[MirrorOf("Flobbster.Windows.Forms.IInspectable, Ptc.Core")]
 public interface IInspectable
 {
     PropertyBag Properties { get; }
 }
 
-/// <summary>One run-time property: its name, type and the metadata a property grid shows.</summary>
-public class PropertySpec(string name, Type type, string? category = null, string? description = null, object? defaultValue = null)
+[MirrorOf("Flobbster.Windows.Forms.PropertySpec, Ptc.Core")]
+public class PropertySpec
 {
-    public string Name { get; } = name;
-    public Type Type { get; } = type;
-    public string? Category { get; set; } = category;
-    public string? Description { get; set; } = description;
-    public object? DefaultValue { get; set; } = defaultValue;
+    private Attribute[] attributes;
 
-    /// <summary>Assembly-qualified name of a UITypeEditor, if the property has a custom editor.</summary>
-    public string? EditorTypeName { get; set; }
+    private string category;
 
-    /// <summary>Assembly-qualified name of a TypeConverter, if the property needs one.</summary>
-    public string? ConverterTypeName { get; set; }
+    private object defaultValue;
 
-    public Attribute[] Attributes { get; set; } = [];
+    private string description;
+
+    private string editor;
+
+    private string name;
+
+    private string type;
+
+    private string typeConverter;
+
+    public Attribute[] Attributes
+    {
+        get
+        {
+            return attributes;
+        }
+        set
+        {
+            attributes = value;
+        }
+    }
+
+    public string Category
+    {
+        get
+        {
+            return category;
+        }
+        set
+        {
+            category = value;
+        }
+    }
+
+    public string ConverterTypeName
+    {
+        get
+        {
+            return typeConverter;
+        }
+        set
+        {
+            typeConverter = value;
+        }
+    }
+
+    public object DefaultValue
+    {
+        get
+        {
+            return defaultValue;
+        }
+        set
+        {
+            defaultValue = value;
+        }
+    }
+
+    public string Description
+    {
+        get
+        {
+            return description;
+        }
+        set
+        {
+            description = value;
+        }
+    }
+
+    public string EditorTypeName
+    {
+        get
+        {
+            return editor;
+        }
+        set
+        {
+            editor = value;
+        }
+    }
+
+    public string Name
+    {
+        get
+        {
+            return name;
+        }
+    }
+
+    public string TypeName
+    {
+        get
+        {
+            return type;
+        }
+        set
+        {
+            type = value;
+        }
+    }
+
+    public PropertySpec(string name, Type type, string category, string description, object defaultValue)
+        : this(name, type.AssemblyQualifiedName, category, description, defaultValue)
+    {
+    }
+
+    public PropertySpec(string name, string type, string category, string description, object defaultValue)
+    {
+        this.name = name;
+        this.type = type;
+        this.category = category;
+        this.description = description;
+        this.defaultValue = defaultValue;
+        attributes = null;
+    }
 }
 
-public class PropertySpecEventArgs(PropertySpec property, object? value) : EventArgs
+[MirrorOf("Flobbster.Windows.Forms.PropertySpecEventArgs, Ptc.Core")]
+public class PropertySpecEventArgs : EventArgs
 {
-    public PropertySpec Property { get; } = property;
-    public object? Value { get; set; } = value;
+    private PropertySpec property;
+
+    private object val;
+
+    public PropertySpec Property => property;
+
+    public object Value
+    {
+        get
+        {
+            return val;
+        }
+        set
+        {
+            val = value;
+        }
+    }
+
+    public PropertySpecEventArgs(PropertySpec property, object val)
+    {
+        this.property = property;
+        this.val = val;
+    }
 }
 
+[MirrorOf("Flobbster.Windows.Forms.PropertySpecEventHandler, Ptc.Core")]
 public delegate void PropertySpecEventHandler(object sender, PropertySpecEventArgs e);
 
-/// <summary>
-/// A type descriptor whose properties are <see cref="PropertySpec"/>s. Reads and writes are routed through the
-/// <see cref="GetValue"/> and <see cref="SetValue"/> events, so the owner decides where values live.
-/// </summary>
-public class PropertyBag : CustomTypeDescriptor
+[MirrorOf("Flobbster.Windows.Forms.PropertyBag, Ptc.Core")]
+public class PropertyBag : ICustomTypeDescriptor
 {
-    public sealed class PropertySpecCollection : Collection<PropertySpec>
+    [Serializable]
+    [MirrorOf("Flobbster.Windows.Forms.PropertyBag+PropertySpecCollection, Ptc.Core")]
+    public class PropertySpecCollection : IEnumerable
     {
-        public PropertySpec? this[string name] => this.FirstOrDefault(p => p.Name == name);
-        public bool Contains(string name) => this[name] != null;
+        private ArrayList innerArray;
+
+        public int Count => innerArray.Count;
+
+        public PropertySpec this[int index]
+        {
+            get
+            {
+                return (PropertySpec)innerArray[index];
+            }
+            set
+            {
+                innerArray[index] = value;
+            }
+        }
+
+        public PropertySpecCollection()
+        {
+            innerArray = new ArrayList();
+        }
+
+        public int Add(PropertySpec value)
+        {
+            return innerArray.Add(value);
+        }
+
+        public int IndexOf(string name)
+        {
+            int num = 0;
+            foreach (PropertySpec item in innerArray)
+            {
+                if (item.Name == name)
+                {
+                    return num;
+                }
+                num++;
+            }
+            return -1;
+        }
+
+        public bool Contains(string name)
+        {
+            foreach (PropertySpec item in innerArray)
+            {
+                if (item.Name == name)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return innerArray.GetEnumerator();
+        }
     }
 
-    private readonly Dictionary<PropertySpec, PropertyDescriptor> _descriptors = [];
-
-    public PropertySpecCollection Properties { get; } = [];
-    public string? DefaultProperty { get; set; }
-
-    public event PropertySpecEventHandler? GetValue;
-    public event PropertySpecEventHandler? SetValue;
-
-    protected virtual void OnGetValue(PropertySpecEventArgs e) => GetValue?.Invoke(this, e);
-    protected virtual void OnSetValue(PropertySpecEventArgs e) => SetValue?.Invoke(this, e);
-
-    public override PropertyDescriptorCollection GetProperties() => GetProperties(null);
-
-    public override PropertyDescriptorCollection GetProperties(Attribute[]? attributes)
+    [MirrorOf("Flobbster.Windows.Forms.PropertyBag+PropertySpecDescriptor, Ptc.Core")]
+    private sealed class SpecDescriptor : PropertyDescriptor
     {
-        var descriptors = Properties.Select(Descriptor);
-        if (attributes is { Length: > 0 }) descriptors = descriptors.Where(d => d.Attributes.Contains(attributes));
-        return new([.. descriptors]);
-    }
+        private PropertyBag bag;
 
-    /// <summary>One descriptor per spec, kept so value-changed subscriptions (e.g. from bindings) stay attached.</summary>
-    private PropertyDescriptor Descriptor(PropertySpec spec)
-    {
-        if (!_descriptors.TryGetValue(spec, out var d)) _descriptors[spec] = d = new SpecDescriptor(this, spec);
-        return d;
-    }
+        private PropertySpec item;
 
-    public override PropertyDescriptor? GetDefaultProperty() =>
-        DefaultProperty == null ? null : GetProperties()[DefaultProperty];
+        public override Type ComponentType => item.GetType();
 
-    public override object? GetPropertyOwner(PropertyDescriptor? pd) => this;
-
-    private sealed class SpecDescriptor(PropertyBag bag, PropertySpec spec) : PropertyDescriptor(spec.Name, Metadata(spec))
-    {
-        public override Type ComponentType => bag.GetType();
-        public override Type PropertyType => spec.Type;
         public override bool IsReadOnly => Attributes.Matches(ReadOnlyAttribute.Yes);
 
-        public override object? GetValue(object? component)
+        public override Type PropertyType => Type.GetType(item.TypeName);
+
+        public SpecDescriptor(PropertySpec item, PropertyBag bag, string name, Attribute[] attrs)
+            : base(name, attrs)
         {
-            var e = new PropertySpecEventArgs(spec, spec.DefaultValue);
+            this.bag = bag;
+            this.item = item;
+        }
+
+        public override bool CanResetValue(object component)
+        {
+            if (item.DefaultValue == null)
+            {
+                return false;
+            }
+            return !GetValue(component).Equals(item.DefaultValue);
+        }
+
+        public override object GetValue(object component)
+        {
+            PropertySpecEventArgs e = new PropertySpecEventArgs(item, null);
             bag.OnGetValue(e);
             return e.Value;
         }
 
-        public override void SetValue(object? component, object? value)
+        public override void ResetValue(object component)
         {
-            bag.OnSetValue(new PropertySpecEventArgs(spec, value));
-            if (component != null) OnValueChanged(component, EventArgs.Empty);
+            SetValue(component, item.DefaultValue);
         }
-        public override bool CanResetValue(object component) => spec.DefaultValue != null;
-        public override void ResetValue(object component) => SetValue(component, spec.DefaultValue);
-        public override bool ShouldSerializeValue(object component) => !Equals(GetValue(component), spec.DefaultValue);
 
-        private static Attribute[] Metadata(PropertySpec spec)
+        public override void SetValue(object component, object value)
         {
-            var list = new List<Attribute>(spec.Attributes);
-            if (spec.Category != null) list.Add(new CategoryAttribute(spec.Category));
-            if (spec.Description != null) list.Add(new DescriptionAttribute(spec.Description));
-            if (spec.EditorTypeName != null)
-                list.Add(new EditorAttribute(spec.EditorTypeName, "System.Drawing.Design.UITypeEditor, System.Drawing.Design"));
-            if (spec.ConverterTypeName != null) list.Add(new TypeConverterAttribute(spec.ConverterTypeName));
-            return [.. list];
+            PropertySpecEventArgs e = new PropertySpecEventArgs(item, value);
+            bag.OnSetValue(e);
+        }
+
+        public override bool ShouldSerializeValue(object component)
+        {
+            object value = GetValue(component);
+            if (item.DefaultValue == null && value == null)
+            {
+                return false;
+            }
+            return !value.Equals(item.DefaultValue);
         }
     }
+
+    private string defaultProperty;
+
+    private PropertySpecCollection properties;
+
+    public string DefaultProperty
+    {
+        get
+        {
+            return defaultProperty;
+        }
+        set
+        {
+            defaultProperty = value;
+        }
+    }
+
+    public PropertySpecCollection Properties => properties;
+
+    public event PropertySpecEventHandler GetValue;
+
+    public event PropertySpecEventHandler SetValue;
+
+    public PropertyBag()
+    {
+        defaultProperty = null;
+        properties = new PropertySpecCollection();
+    }
+
+    protected virtual void OnGetValue(PropertySpecEventArgs e)
+    {
+        if (GetValue != null)
+        {
+            GetValue(this, e);
+        }
+    }
+
+    protected virtual void OnSetValue(PropertySpecEventArgs e)
+    {
+        if (SetValue != null)
+        {
+            SetValue(this, e);
+        }
+    }
+
+    AttributeCollection ICustomTypeDescriptor.GetAttributes()
+    {
+        return TypeDescriptor.GetAttributes(this, noCustomTypeDesc: true);
+    }
+
+    string ICustomTypeDescriptor.GetClassName()
+    {
+        return TypeDescriptor.GetClassName(this, noCustomTypeDesc: true);
+    }
+
+    string ICustomTypeDescriptor.GetComponentName()
+    {
+        return TypeDescriptor.GetComponentName(this, noCustomTypeDesc: true);
+    }
+
+    TypeConverter ICustomTypeDescriptor.GetConverter()
+    {
+        return TypeDescriptor.GetConverter(this, noCustomTypeDesc: true);
+    }
+
+    EventDescriptor ICustomTypeDescriptor.GetDefaultEvent()
+    {
+        return TypeDescriptor.GetDefaultEvent(this, noCustomTypeDesc: true);
+    }
+
+    PropertyDescriptor ICustomTypeDescriptor.GetDefaultProperty()
+    {
+        PropertySpec propertySpec = null;
+        if (defaultProperty != null)
+        {
+            int index = properties.IndexOf(defaultProperty);
+            propertySpec = properties[index];
+        }
+        if (propertySpec != null)
+        {
+            return new SpecDescriptor(propertySpec, this, propertySpec.Name, null);
+        }
+        return null;
+    }
+
+    object ICustomTypeDescriptor.GetEditor(Type editorBaseType)
+    {
+        return TypeDescriptor.GetEditor(this, editorBaseType, noCustomTypeDesc: true);
+    }
+
+    EventDescriptorCollection ICustomTypeDescriptor.GetEvents()
+    {
+        return TypeDescriptor.GetEvents(this, noCustomTypeDesc: true);
+    }
+
+    EventDescriptorCollection ICustomTypeDescriptor.GetEvents(Attribute[] attributes)
+    {
+        return TypeDescriptor.GetEvents(this, attributes, noCustomTypeDesc: true);
+    }
+
+    PropertyDescriptorCollection ICustomTypeDescriptor.GetProperties()
+    {
+        return ((ICustomTypeDescriptor)this).GetProperties(new Attribute[0]);
+    }
+
+    PropertyDescriptorCollection ICustomTypeDescriptor.GetProperties(Attribute[] attributes)
+    {
+        ArrayList arrayList = new ArrayList();
+        foreach (PropertySpec property in properties)
+        {
+            ArrayList arrayList2 = new ArrayList();
+            if (property.Category != null)
+            {
+                arrayList2.Add(new CategoryAttribute(property.Category));
+            }
+            if (property.Description != null)
+            {
+                arrayList2.Add(new DescriptionAttribute(property.Description));
+            }
+            if (property.EditorTypeName != null)
+            {
+                arrayList2.Add(new EditorAttribute(property.EditorTypeName, typeof(UITypeEditor)));
+            }
+            if (property.ConverterTypeName != null)
+            {
+                arrayList2.Add(new TypeConverterAttribute(property.ConverterTypeName));
+            }
+            if (property.Attributes != null)
+            {
+                arrayList2.AddRange(property.Attributes);
+            }
+            Attribute[] attrs = (Attribute[])arrayList2.ToArray(typeof(Attribute));
+            SpecDescriptor value = new SpecDescriptor(property, this, property.Name, attrs);
+            arrayList.Add(value);
+        }
+        return new PropertyDescriptorCollection((PropertyDescriptor[])arrayList.ToArray(typeof(PropertyDescriptor)));
+    }
+
+    object ICustomTypeDescriptor.GetPropertyOwner(PropertyDescriptor pd)
+    {
+        return this;
+    }
+
 }
 
-/// <summary>A <see cref="PropertyBag"/> that stores the values itself.</summary>
+[MirrorOf("Flobbster.Windows.Forms.PropertyTable, Ptc.Core")]
 public class PropertyTable : PropertyBag
 {
-    private readonly Dictionary<string, object?> _values = [];
+    private Hashtable propValues;
 
-    public object? this[string name]
+    public object this[string key]
     {
-        get => _values.TryGetValue(name, out var v) ? v : Properties[name]?.DefaultValue;
-        set => _values[name] = value;
+        get
+        {
+            return propValues[key];
+        }
+        set
+        {
+            propValues[key] = value;
+        }
+    }
+
+    public PropertyTable()
+    {
+        propValues = new Hashtable();
     }
 
     protected override void OnGetValue(PropertySpecEventArgs e)
     {
-        e.Value = this[e.Property.Name];
+        e.Value = propValues[e.Property.Name];
         base.OnGetValue(e);
     }
 
     protected override void OnSetValue(PropertySpecEventArgs e)
     {
-        this[e.Property.Name] = e.Value;
+        propValues[e.Property.Name] = e.Value;
         base.OnSetValue(e);
     }
 }
