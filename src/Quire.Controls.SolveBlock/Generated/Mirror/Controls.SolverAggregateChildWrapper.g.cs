@@ -12,9 +12,5 @@ namespace Quire.Controls;
 internal partial class SolverAggregateChildWrapper : global::Quire.Calculation.Core.Support.CalculatableWrapper, global::Quire.Calculation.Core.ICalculationErrorOwner
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly string _wrappedRlFormat;
-    [global::Quire.Mirror.MirrorStub]
     public override string Rl { get => base.Rl; }
-    [global::Quire.Mirror.MirrorStub]
-    public SolverAggregateChildWrapper(global::Quire.Calculation.Core.ICalculatable wrappedCalculatable) : base(default(global::Quire.Calculation.Core.ICalculatable)) { }
 }

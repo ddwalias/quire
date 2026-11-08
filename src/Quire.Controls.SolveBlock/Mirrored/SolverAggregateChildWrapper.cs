@@ -2,6 +2,13 @@ namespace Quire.Controls;
 
 internal partial class SolverAggregateChildWrapper
 {
+    private readonly string _wrappedRlFormat = "(fragment {0})";
+
+    public SolverAggregateChildWrapper(global::Quire.Calculation.Core.ICalculatable wrappedCalculatable)
+        : base(wrappedCalculatable)
+    {
+    }
+
     public global::Quire.Calculation.Core.EngineError CurrentError
     {
         get
