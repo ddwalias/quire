@@ -72,3 +72,9 @@
   - `GetState`: early `return default` placed first failed; `if (!HasErrors) { return new ...; } return default;` matched.
   - `UpdatePerformedLinkOperation`: one assignment from a nested ternary (a single `set` call); two assignments in if/else failed.
 - Release IL (project-wide): PASS — 134 checked, 134 exact, 0 failures, 581 unfinished.
+
+## Batch 10 — HyperlinkContextValues
+
+- Members: all (`.ctor`, `ConvertToLinkRange`, `ContextText`, `ContextLinkAddress`, `ContextLink`, `UserCanModifyText`). Hand-written in `Mirrored/Controls.Text.HyperlinkContextValues.cs`; the WPF `TextRange` is aliased as `DocumentTextRange` (Quire has its own `TextRange`).
+- Release IL: PASS on the first shape — 142 checked, 142 exact, 0 failures, 573 unfinished.
+- Note for maintainers: a gate run failed once with "disk was full" while writing `inventory.json` (the C: drive had 195 MB free). It passed after removing my own stale temp build trees and the `gate-il-*` directories whose `gate.json` names `mirror/controls-text-20261108`. Other lanes' gate directories were left alone (about 170 remain in the main checkout's `.mirror-cache`, roughly 48 GB).
