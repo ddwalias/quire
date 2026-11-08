@@ -2,7 +2,7 @@
 
 - Owner: SolveBlock lane; branch: `mirror/solveblock-20261108`.
 - Batches 1–5 passed/landed; batch 5 `9481c27a`.
-- Batch 6 passthrough properties: PASS (`36 checked`); initial MSB4166, retry PASS; landed `e5f6a6e4`.
+- Batch 6 passthroughs: PASS (`36 checked`); initial MSB4166, retry PASS; landed `e5f6a6e4`.
 - Batch 7 `WrappedCalculatable`: PASS (`37 checked`); landed `64b35a02`.
 - Batch 8 constructor: PASS (`38 checked`); landed `f1756f18`.
 - Batch 9 simple equation update: PASS (`39 checked`); landed `1a947618`.
@@ -14,7 +14,9 @@
 - Batch 15 restore result: PASS (`45 checked`); landed `bfc84597`.
 - Batch 16 `EquationType`: PASS (`47 checked`); landed `9e93b697`.
 - Batch 17 aggregate updater: PASS (`49 checked`); landed `aa6074cc`.
-- Batch 18 aggregate event lifecycle: PASS (`52 checked`); landed `c7f265ad`.
-- Batch 19 aggregate wrapper properties: PASS (`54 checked`; `.mirror-cache/release-il-89ef7dcb6342`).
+- Batch 18 aggregate lifecycle: PASS (`52 checked`); landed `c7f265ad`.
+- Batch 19 aggregate properties: PASS (`54 checked`); landed `c4bf799e`.
+- Batch 20 deserialization strategy blocked by mapped `SolveBlockControl`/`WhiteboardControl` mismatch (`release-il-e1aad10a62c3`).
+- Batch 21 child-wrapper error methods: PASS (`56 checked`; `.mirror-cache/release-il-3edab3fc5055`).
 - `GetEquationTypeOfRl` remains stubbed due enum/closure mismatch.
-- Remaining: 367 stub markers in 18 generated types; no known mismatches in landed batches.
+- Remaining: 365 stub markers in 18 generated types; no known mismatches in landed batches.

@@ -23,8 +23,4 @@ internal partial class SolverAggregateChildWrapper : global::Quire.Calculation.C
     public override void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus) => base.SetSynchronizationStatus(syncStatus);
     [global::Quire.Mirror.MirrorStub]
     public override void Commit() => base.Commit();
-    [global::Quire.Mirror.MirrorStub]
-    public bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
