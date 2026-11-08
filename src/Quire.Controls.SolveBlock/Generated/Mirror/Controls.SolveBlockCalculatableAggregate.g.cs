@@ -40,12 +40,6 @@ internal partial class SolveBlockCalculatableAggregate : global::Quire.Controls.
     [global::Quire.Mirror.MirrorStub]
     internal static string ComposeSolveblockChildRlFromEquationControl(global::System.Collections.Generic.IList<string> aggregateRl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HookupAggregateContainerEvents(global::Quire.Calculation.Core.ICalculatableAggregate aggregate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UnhookAggregateContainerEvents(global::Quire.Calculation.Core.ICalculatableAggregate aggregate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Dispose() => base.Dispose();
-    [global::Quire.Mirror.MirrorStub]
     private void HandleCalculatableAdded(global::Quire.Calculation.Core.ICalculatableContainer container, global::Quire.Calculation.Core.ICalculatable newCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable removedCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

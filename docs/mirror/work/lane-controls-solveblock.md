@@ -13,6 +13,7 @@
 - Batch 14 error ownership: PASS (`44 checked`); landed `c9460106`.
 - Batch 15 restore result: PASS (`45 checked`); landed `bfc84597`.
 - Batch 16 `EquationType`: PASS (`47 checked`); landed `9e93b697`.
-- Batch 17 aggregate updater pair: PASS (`49 checked`; `.mirror-cache/release-il-de4bed99c7c0`).
+- Batch 17 aggregate equation updater: PASS (`49 checked`); landed `aa6074cc`.
+- Batch 18 event hookup/unhook and disposal: PASS (`52 checked`; `.mirror-cache/release-il-2d197fca6c9a`).
 - `GetEquationTypeOfRl` remains stubbed due enum/closure mismatch.
-- Remaining: 372 stub markers in 18 generated types; no known mismatches in landed batches.
+- Remaining: 369 stub markers in 18 generated types; no known mismatches in landed batches.
