@@ -263,3 +263,8 @@
 
 - Exact: `OnContextMenuOpening` (override; returns early when not focused), `CommitItem`, `HandleChildItemGotFocus`.
 - Release IL: PASS — 351 checked, 351 exact, 0 failures, 372 unfinished.
+
+## Batch 41 — RichTextWithEmbeddedItem calculation errors, caret hyperlink, bookmark removal and item list helpers (7)
+
+- Exact: `ContainsError`, `ShowError` (foreach over `CalculatableChildren` with `as ICalculationErrorOwner`), `GetHyperlinkAtCaretPositionIncludingEdges` (`??` chain; the second adjacent-hyperlink direction is `dir == Forward ? Backward : Forward`, the only form that gives Mathcad's `beq`), `HandleRemoveBookmarkTag`, `RemoveEmbeddedItem`, `RemoveItemFromList`, `GetContainer`.
+- Release IL: PASS — 358 checked, 358 exact, 0 failures, 365 unfinished.

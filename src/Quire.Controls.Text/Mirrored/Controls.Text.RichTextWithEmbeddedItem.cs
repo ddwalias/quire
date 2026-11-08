@@ -453,4 +453,93 @@ public partial class RichTextWithEmbeddedItem
             ActiveItem = item as IWhiteboardItemInText;
         }
     }
+
+    public bool ContainsError(EngineError error)
+    {
+        foreach (ICalculatable child in CalculatableChildren)
+        {
+            ICalculationErrorOwner owner = child as ICalculationErrorOwner;
+            if (owner != null && owner.ContainsError(error))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void ShowError(EngineError error)
+    {
+        foreach (ICalculatable child in CalculatableChildren)
+        {
+            ICalculationErrorOwner owner = child as ICalculationErrorOwner;
+            if (owner != null && owner.ContainsError(error))
+            {
+                owner.ShowError(error);
+                return;
+            }
+        }
+    }
+
+    internal Hyperlink GetHyperlinkAtCaretPositionIncludingEdges()
+    {
+        return GetHyperlinkAtCaretPosition()
+            ?? TextPointerExtensions.GetAdjacentHyperlink(CaretPosition, CaretPosition.LogicalDirection)
+            ?? TextPointerExtensions.GetAdjacentHyperlink(CaretPosition, CaretPosition.LogicalDirection == LogicalDirection.Forward ? LogicalDirection.Backward : LogicalDirection.Forward);
+    }
+
+    private void HandleRemoveBookmarkTag(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (DebugTools.AssertNotNull(ActiveItem).Failed || DebugTools.AssertNotNull(BookmarksManager).Failed)
+        {
+            return;
+        }
+        string bookmarkTag = BookmarkTag.GetBookmarkTag(ActiveItem as DependencyObject);
+        BookmarksManager.RemoveBookmarkTagCommand(ActiveItem, bookmarkTag);
+    }
+
+    public void RemoveEmbeddedItem(IWhiteboardItemInText item)
+    {
+        InlineUIContainer container = GetContainer(item);
+        if (DebugTools.AssertNotNull(container, "Removing an embedded item that is not hosted in the document.").Failed)
+        {
+            return;
+        }
+        SetCaretPositionAndClearSuggestedX(container.ElementEnd.GetInsertionPosition(LogicalDirection.Forward));
+        if (item.BookmarksManager != null)
+        {
+            item.BookmarksManager = null;
+        }
+        container.ElementStart.Paragraph.Inlines.Remove(container);
+    }
+
+    private void RemoveItemFromList(IWhiteboardItemInText item)
+    {
+        if (!WhiteboardItems.Contains(item))
+        {
+            return;
+        }
+        WhiteboardItems.Remove(item);
+        if (item == ActiveItem)
+        {
+            ActiveItem = null;
+        }
+        item.OnGotFocusEvent -= HandleChildItemGotFocus;
+        item.RequestRemove -= HandleChildItemRequestRemove;
+    }
+
+    private InlineUIContainer GetContainer(IWhiteboardItemInText item)
+    {
+        IWhiteboardItemInTextWrapper wrapper = ContainerItemManager.GetParent(item) as IWhiteboardItemInTextWrapper;
+        if (wrapper == null)
+        {
+            return null;
+        }
+        object parent = ContainerItemManager.GetParent(wrapper);
+        Grid grid = parent as Grid;
+        if (grid != null)
+        {
+            parent = ContainerItemManager.GetParent(grid);
+        }
+        return parent as InlineUIContainer;
+    }
 }
