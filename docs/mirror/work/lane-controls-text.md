@@ -103,3 +103,9 @@
 - Exact: `CreatePopup`, `Clone`, `Insert` (`Insert` keeps the `InlineUIContainer` in a local; a shape without the local was not tried because Mathcad creates the container before the `InsertBaselineOffsetTag` call and the local matched first time).
 - Stub kept: the constructor. Mathcad stores `_resourceDict` (a `ResourceDictionary` whose `Source` is `pack://application:,,,/<self>;component/TextDictionary.xaml`) and `_engineeringDocument` **before** calling `Object::.ctor`. C# always calls the base constructor first, so no C# shape matches. The hand-written partial declares both fields without assigning them, and the generated `{ }` constructor stub is left unchanged, so `_engineeringDocument` stays null until the constructor is resolved. Clone/Insert/CreatePopup depend on it; this is a known gap.
 - Release IL: PASS — 172 checked, 172 exact, 0 failures, 548 unfinished.
+
+## Batch 15 — CustomSplitRichTextWithEmbeddedItem (simple members)
+
+- Exact: internal `.ctor`, `HandleTextChanged` and `OnRenderSizeChanged` overrides (base call, then `_splitData = null`), `FireSplitItemIfNeeded` (`SplitItemIfNeeded?.Invoke(this)`), and `FlowDocumentSplitData.LineData` (`TextPtr`, `LineRect`, `.ctor`).
+- Still stubbed: `GetValidSplitOffset`, `GetInvalidPointer`, `ValidateLayout`, the `FlowDocumentSplitData` members (`.ctor`, `FirstLineRect`, `LastLineRect`, `GetLineRect` x2, `EnsureLines`), the `_splitData` field and the `SplitItemIfNeeded` event declaration (add/remove are exact).
+- Release IL: PASS — 179 checked, 179 exact, 0 failures, 541 unfinished.

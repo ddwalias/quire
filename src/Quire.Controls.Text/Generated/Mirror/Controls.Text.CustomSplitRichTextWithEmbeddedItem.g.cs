@@ -16,19 +16,11 @@ public partial class CustomSplitRichTextWithEmbeddedItem : global::Quire.Control
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Controls.Core.ICustomSplitItem> SplitItemIfNeeded;
     [global::Quire.Mirror.MirrorStub]
-    internal CustomSplitRichTextWithEmbeddedItem() { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleTextChanged(object sender, global::System.Windows.Controls.TextChangedEventArgs args) => base.HandleTextChanged(sender, args);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnRenderSizeChanged(global::System.Windows.SizeChangedInfo sizeInfo) => base.OnRenderSizeChanged(sizeInfo);
-    [global::Quire.Mirror.MirrorStub]
     public double GetValidSplitOffset(double originalOffset, double pageHeight, ref int lineNumberHint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Documents.TextPointer GetInvalidPointer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ValidateLayout() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void FireSplitItemIfNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.CustomSplitRichTextWithEmbeddedItem+FlowDocumentSplitData, Ptc.Controls.Text")]
     protected partial class FlowDocumentSplitData
@@ -59,12 +51,6 @@ public partial class CustomSplitRichTextWithEmbeddedItem : global::Quire.Control
         [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.CustomSplitRichTextWithEmbeddedItem+FlowDocumentSplitData+LineData, Ptc.Controls.Text")]
         public partial class LineData
         {
-            [global::Quire.Mirror.MirrorStub]
-            public global::System.Windows.Documents.TextPointer TextPtr { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-            [global::Quire.Mirror.MirrorStub]
-            public global::System.Nullable<global::System.Windows.Rect> LineRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-            [global::Quire.Mirror.MirrorStub]
-            public LineData() { }
         }
     }
 }
