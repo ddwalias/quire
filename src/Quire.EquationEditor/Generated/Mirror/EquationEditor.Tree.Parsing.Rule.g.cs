@@ -11,18 +11,4 @@ namespace Quire.EquationEditor.Tree.Parsing;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Parsing.Rule, Ptc.EquationEditor")]
 public partial struct Rule
 {
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::System.Collections.Generic.IList<string> Names;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::System.Collections.Generic.IList<int> Slots;
-    [global::Quire.Mirror.MirrorStub]
-    public bool ApplyToAllSlots { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public Rule(params string[] names) { }
-    [global::Quire.Mirror.MirrorStub]
-    public Rule(string name, params int[] slots) { }
-    [global::Quire.Mirror.MirrorStub]
-    public Rule(int slot, params string[] names) { }
-    [global::Quire.Mirror.MirrorStub]
-    public Rule(string[] names, int[] slots) { }
 }

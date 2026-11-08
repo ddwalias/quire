@@ -15,6 +15,4 @@ public partial class FunctionOperatorNames
     public const string Root = "root";
     [global::Quire.Mirror.MirrorStub]
     public const string If = "if";
-    [global::Quire.Mirror.MirrorStub]
-    public FunctionOperatorNames() { }
 }

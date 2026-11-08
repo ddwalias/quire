@@ -11,12 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.SymbolMargin, Ptc.EquationEditor")]
 public partial struct SymbolMargin
 {
-    [global::Quire.Mirror.MirrorStub]
-    public double Left;
-    [global::Quire.Mirror.MirrorStub]
-    public double Right;
-    [global::Quire.Mirror.MirrorStub]
-    public SymbolMargin(double margin) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static implicit operator global::Quire.EquationEditor.Tree.SymbolMargin(int margin) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
