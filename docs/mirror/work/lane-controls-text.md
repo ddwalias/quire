@@ -224,3 +224,9 @@
 - Exact: `ApplySpellCheckValue` (`if (!value) Clear(); else { if (exists && !valid) Add; }` inside try/catch), `HandleIsInPrintingChanged` (early return on `NewValue`; `while` loop with `base.Undo()` inside a `using (CommandScope)`).
 - Not matched: `SelectTo`. Release IL evaluates `Selection.IsEmpty` with a `brtrue` to the caret arm placed last and stores the anchor once through a shared `stloc.0`. Neither a ternary (arm order) nor if/else (per-branch stores) reproduced that. Left as a stub.
 - Release IL: PASS — 290 checked, 290 exact, 0 failures, 433 unfinished.
+
+## Batch 34 — RichTextWithEmbeddedItem small members (first group, 17)
+
+- New hand-written partial `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`. Exact: `Accept`, `Clone` (virtual), `EndInit`, `OnStyleChanged`, `OnToggleHideFromCalculationContext`, `CanToggleHideFromCalculationContext`, `ClearSavedState`, `ClearState`, `SaveState`, `RemoveItem`, `GetLineStartPosition`, `GetFirstLine`, `GetLastLine`, `UNITTEST_ExecuteAddItemToListCommand`, `ExecuteDecreaseFontSize`, `ExecuteIncreaseFontSize`, `CanOpenOrEditOrCopySingleHyperlink` (both overloads; the bool one is `GetContextLinks()?.Count == 1`).
+- Not matched: `LogDocumentContents` (empty body in Release IL, but the method header differs: Mathcad uses a fat header with `.maxstack 6` and a `[Conditional("DEBUG")]` attribute; neither the attribute nor the plain form matched). Left as a stub.
+- Release IL: PASS — 307 checked, 307 exact, 0 failures, 416 unfinished.
