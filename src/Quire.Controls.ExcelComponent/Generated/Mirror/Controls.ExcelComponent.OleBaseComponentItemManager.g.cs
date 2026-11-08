@@ -11,14 +11,4 @@ namespace Quire.Controls.ExcelComponent;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.OleBaseComponentItemManager, Ptc.Controls.ExcelComponent")]
 public partial class OleBaseComponentItemManager : global::Quire.Controls.Whiteboard.WhiteboardItemManager, global::Quire.Controls.ExcelComponent.IOleBaseComponentItemManager, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager, global::Quire.Controls.Core.Whiteboard.IContainerItemManager, global::Quire.Controls.Core.IFrameworkElementFacade, global::Quire.Controls.Core.IUIElementFacade, global::Quire.Services.IService, global::Quire.Controls.Core.IUIElementArrangeInfoProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point GetItemOleComponentLocation(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetItemOleComponentLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Rect GetItemRect(global::Quire.Controls.Core.IWhiteboardItem item) => base.GetItemRect(item);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> SortItemsByLocation(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, bool descending) => base.SortItemsByLocation(items, descending);
-    [global::Quire.Mirror.MirrorStub]
-    public OleBaseComponentItemManager() { }
 }
