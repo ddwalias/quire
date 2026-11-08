@@ -423,6 +423,21 @@ class CheckTests(unittest.TestCase):
         return release_il.check(base or self.base, ['P'], self.repo.root / '.mirror-cache' / f'r{self.runs}',
                                 root=self.repo.root, install=self.install, cache=self.cache, **kwargs)
 
+    def test_timings_are_written_without_changing_verdict(self):
+        report = self.check()
+        self.assertTrue(report['passed'])
+        self.assertEqual(set(report['timings']), {
+            'judge_build', 'base_checkout', 'base_build', 'base_scan',
+            'candidate_build', 'candidate_scan', 'compare', 'total'})
+        for duration in report['timings'].values():
+            self.assertGreaterEqual(duration, 0)
+        saved = json.loads((self.repo.root / '.mirror-cache/r1/release-il.json').read_text())
+        self.assertEqual(saved['timings'], report['timings'])
+        self.assertGreater(report['timings']['total'], 0)
+        cached = self.check()
+        self.assertEqual(cached['timings']['base_build'], 0)
+        self.assertEqual(cached['timings']['base_scan'], 0)
+
     def test_the_judge_is_built_from_the_base_commit(self):
         report = self.check()
         self.assertTrue(report['passed'], report)

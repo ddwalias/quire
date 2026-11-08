@@ -25,6 +25,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import uuid
 from xml.sax.saxutils import quoteattr
 
@@ -343,38 +344,52 @@ def builds_cppcli(root, projects):
     return any(p.suffix.lower() == '.vcxproj' for d in build_closure(root, projects) for p in build_files(d))
 
 
-def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vcxproj=None, keep=None):
+@contextlib.contextmanager
+def timed(timings, name):
+    """Record elapsed wall time, including a step that raises."""
+    start = time.perf_counter()
+    try:
+        yield
+    finally:
+        timings[name] = time.perf_counter() - start
+
+
+def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vcxproj=None, keep=None,
+                   timings=None, prefix='candidate'):
     """Build the projects in Release and scan them with MethodAudit; keep is where a failed scan's inventory goes."""
-    assemblies = work / 'assemblies'
-    env = dict(os.environ)
-    # C++/CLI builds use the pinned MSVC; the production .csproj receives it as QuireMsvcInstallDir.
-    if vcxproj or builds_cppcli(root, projects):
-        env['QuireMsvcInstallDir'] = f'{msvc_instance()}{os.sep}'
-    if vcxproj:
-        # OutDir/IntDir keep outputs out of the tree; MethodAudit then requires <project>.dll there (the TargetName).
-        run([msbuild(), vcxproj, '-t:Rebuild', '-p:Configuration=Release', '-p:Platform=x64',
-             f'-p:OutDir={assemblies}{os.sep}', f'-p:IntDir={work / "obj"}{os.sep}', '-nologo', '-v:m'],
-            root, log, timeout, env)
-    targets = [] if vcxproj else [root / 'src' / project / f'{project}.csproj' for project in projects]
-    if missing := [t for t in targets if not t.is_file()]:
-        raise RuntimeError(f'production project missing from comparison: {missing[0]}')
-    if targets:
-        # One clean (--no-incremental) build of every project and its references, into one directory: a separate
-        # build per project rebuilt the shared reference closure each time, with the same outputs.
-        solution = work / 'build.slnx'
-        solution.parent.mkdir(parents=True, exist_ok=True)
-        solution.write_text('<Solution>\n' + ''.join(f'  <Project Path={quoteattr(str(t.resolve()))} />\n' for t in targets)
-                            + '</Solution>\n', encoding='utf-8')
-        run([dotnet, 'build', solution, '-c', 'Release', '--no-incremental', '-o', assemblies,
-             '-nologo', '-v:q', '-p:EnableSourceControlManagerQueries=false'], root, log, timeout, env)
-    for project in projects:
-        if reason := msvc_mismatch(assemblies / f'{project}.dll'):
-            raise RuntimeError(f'{project}.dll: {reason}')
+    timings = timings if timings is not None else {}
+    with timed(timings, prefix + '_build'):
+        assemblies = work / 'assemblies'
+        env = dict(os.environ)
+        # C++/CLI builds use the pinned MSVC; the production .csproj receives it as QuireMsvcInstallDir.
+        if vcxproj or builds_cppcli(root, projects):
+            env['QuireMsvcInstallDir'] = f'{msvc_instance()}{os.sep}'
+        if vcxproj:
+            # OutDir/IntDir keep outputs out of the tree; MethodAudit then requires <project>.dll there (the TargetName).
+            run([msbuild(), vcxproj, '-t:Rebuild', '-p:Configuration=Release', '-p:Platform=x64',
+                 f'-p:OutDir={assemblies}{os.sep}', f'-p:IntDir={work / "obj"}{os.sep}', '-nologo', '-v:m'],
+                root, log, timeout, env)
+        targets = [] if vcxproj else [root / 'src' / project / f'{project}.csproj' for project in projects]
+        if missing := [t for t in targets if not t.is_file()]:
+            raise RuntimeError(f'production project missing from comparison: {missing[0]}')
+        if targets:
+            # One clean (--no-incremental) build of every project and its references, into one directory: a separate
+            # build per project rebuilt the shared reference closure each time, with the same outputs.
+            solution = work / 'build.slnx'
+            solution.parent.mkdir(parents=True, exist_ok=True)
+            solution.write_text('<Solution>\n' + ''.join(f'  <Project Path={quoteattr(str(t.resolve()))} />\n' for t in targets)
+                                + '</Solution>\n', encoding='utf-8')
+            run([dotnet, 'build', solution, '-c', 'Release', '--no-incremental', '-o', assemblies,
+                 '-nologo', '-v:q', '-p:EnableSourceControlManagerQueries=false'], root, log, timeout, env)
+        for project in projects:
+            if reason := msvc_mismatch(assemblies / f'{project}.dll'):
+                raise RuntimeError(f'{project}.dll: {reason}')
     inventory = work / 'inventory.json'
     try:
-        run([dotnet, tool, '--repo', root, '--assemblies', assemblies, '--install', install,
-             '--output', inventory, '--release-il',
-             *(arg for p in projects for arg in ('--project', p))], root, log, timeout)
+        with timed(timings, prefix + '_scan'):
+            run([dotnet, tool, '--repo', root, '--assemblies', assemblies, '--install', install,
+                 '--output', inventory, '--release-il',
+                 *(arg for p in projects for arg in ('--project', p))], root, log, timeout)
         failure = None
     except RuntimeError as error:
         failure = error
@@ -437,6 +452,9 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
     """Compare base and candidate (root's working tree). The judge, MethodAudit, is built from the base commit so a
     candidate cannot change what judges it. Base inventories are cached by inventory_key; store_candidate also caches a
     passing candidate under its HEAD commit, for a root whose tree is exactly that commit (il_merge's clean clone)."""
+    total_start = time.perf_counter()
+    timings = dict.fromkeys(('judge_build', 'base_checkout', 'base_build', 'base_scan',
+                             'candidate_build', 'candidate_scan', 'compare', 'total'), 0.0)
     install = Path(install or mathcad_install())
     cache = cache or CACHE
     results.mkdir(parents=True, exist_ok=False)
@@ -445,7 +463,7 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
     report = {'base': base, 'tip': git('rev-parse', 'HEAD', cwd=root),
               'working_tree': git('status', '--porcelain', cwd=root), 'projects': projects,
               'types': list(types), 'methods': list(methods), 'passed': False,
-              'candidate': str(vcxproj) if vcxproj else 'csproj'}
+              'candidate': str(vcxproj) if vcxproj else 'csproj', 'timings': timings}
     try:
         if not projects:
             if types or methods:
@@ -455,14 +473,16 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
         with tempfile.TemporaryDirectory(prefix='quire-release-il-') as temp:
             work = Path(temp)
             original = work / 'base'
-            run(['git', 'clone', '--quiet', '--shared', '--no-checkout', root, original], root, log, timeout)
-            run(['git', '-c', 'core.hooksPath=', 'checkout', '--quiet', '--detach', base], original, log, timeout)
+            with timed(timings, 'base_checkout'):
+                run(['git', 'clone', '--quiet', '--shared', '--no-checkout', root, original], root, log, timeout)
+                run(['git', '-c', 'core.hooksPath=', 'checkout', '--quiet', '--detach', base], original, log, timeout)
             # Fail closed: a base without the judge cannot judge.
             audit = original / 'tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj'
             if not audit.is_file():
                 raise RuntimeError(f'base {base[:12]} has no MethodAudit to judge with ({audit.relative_to(original)})')
             tool_dir = work / 'tool'
-            run([dotnet, 'build', audit, '-c', 'Release', '-o', tool_dir, '-nologo', '-v:q'], original, log, timeout)
+            with timed(timings, 'judge_build'):
+                run([dotnet, 'build', audit, '-c', 'Release', '-o', tool_dir, '-nologo', '-v:q'], original, log, timeout)
             tool = tool_dir / 'Quire.Tools.MethodAudit.dll'
             # A project the candidate adds has no base build; its members start as new (or moved) rows.
             existing = [p for p in projects if (original / 'src' / p / f'{p}.csproj').is_file()]
@@ -472,13 +492,14 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
             if before is None:
                 print('Building base Release assemblies', flush=True)
                 before = build_and_scan(original, existing, tool, work / 'before', install, dotnet, log, timeout,
-                                        keep=results / 'base-inventory.json')
+                                        keep=results / 'base-inventory.json', timings=timings, prefix='base')
                 store_inventory(cache, key, before)
             else:
                 print(f'Base inventory from cache ({key[:12]})', flush=True)
             print('Building candidate Release assemblies', flush=True)
             after = build_and_scan(root, projects, tool, work / 'after', install, dotnet, log, timeout, vcxproj,
-                                   keep=results / 'inventory.json')
+                                   keep=results / 'inventory.json', timings=timings)
+            compare_start = time.perf_counter()
             # The same reference artifact must have been read by both scans.
             identities = lambda data: {m['original']['assembly']: (m['original']['sha256'], m['original']['mvid'])
                                        for m in data['methods'] if m.get('original')}
@@ -487,6 +508,7 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
             if any((vcxproj is None or name in new_id) and new_id.get(name) != identity for name, identity in old_id.items()):
                 raise RuntimeError('Mathcad reference identity changed between scans')
             report.update(compare(before, after, types, methods))
+            timings['compare'] = time.perf_counter() - compare_start
             report['originals'] = new_id
             if store_candidate and report['passed'] and not vcxproj and not report['working_tree']:
                 # Judged by the base's tool, so keyed by it: if the candidate changes the tool, its key never hits.
@@ -497,6 +519,7 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
     except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as error:
         report['error'] = str(error)
     finally:
+        timings['total'] = time.perf_counter() - total_start
         (results / 'release-il.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
     return report
 
