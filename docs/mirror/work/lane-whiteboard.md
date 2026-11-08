@@ -94,3 +94,11 @@
 - Order reconstruction: each Release IL closure name `<Method>b__N_M` gives the member count before its containing method. Counting method bodies in metadata order, the auto-property backing fields, each property (1), each field and each event's backing field, that count matched all 26 closure constraints when auto-property backing fields and events count (backing field + event) except `Changed` (1). A plain "fields first" layout failed at `GetInsertionPointAfterCarriageReturn` (86 vs 85).
 - Explicit `IWhiteboardViewModel.CommandBindings` (`=> base.CommandBindings`) added here and to `MathboardViewModel` and `AggregateMathboardViewModel`, because the derived classes lost their compiler-generated re-implementation bridges when the base declared one.
 - Release IL: PASS — 195 checked, 0 failures (`release-il-f1055934f2c1`). No lambda method is implemented yet, so the closure ordinals are not yet exercised.
+
+## Batch 14 — WhiteboardViewModel movement and traversal commands
+
+- Members: `MoveDownCommand`, `MoveUpCommand`, `MoveRightCommand`, `MoveLeftCommand`, `CarriageReturnCommand`, `TraverseForwardCommand`, `TraverseBackwardCommand` (lazy `RelayCommand` getters with two lambdas each, or one for carriage return).
+- Closure ordinals verified: `<get_MoveDownCommand>b__10_0` and the others match Mathcad after the batch-13 reordering.
+- Finding: nested types declared in the `.g.cs` are counted as members for Roslyn's closure ordinal (they compile first). Moved them to the end of the hand-written partial so they do not shift the earlier closures. Their own closures are unaffected.
+- Release IL: PASS — 215 checked, 0 failures (`release-il-5a9efd6b8a04`).
+- Still placeholders: the other lambda-containing methods (`Initialize`, `SetInsertionPoint`, `HookupActiveItem`, `SelectItems`, `TabInto`, `get_IsTabNavigatable`, and others).
