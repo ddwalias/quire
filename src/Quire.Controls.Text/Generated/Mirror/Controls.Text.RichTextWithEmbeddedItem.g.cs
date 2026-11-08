@@ -166,8 +166,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.List<global::System.Windows.Documents.Hyperlink> GetContextLinks() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void RemoveHyperlinks(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void RemoveHyperlinkUndoableCommand(global::System.Windows.Documents.Hyperlink link) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void RemoveHyperlinkUndoableCommand(global::System.Collections.Generic.List<global::System.Windows.Documents.Hyperlink> links) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -202,15 +200,11 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     public bool HasHyperlinkInMouseContext(object context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Documents.Hyperlink GetHyperlinkFromTextPointer(global::System.Windows.Documents.TextPointer ptr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Documents.Hyperlink GetHyperlinkAtCaretPositionIncludingEdges() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Documents.Hyperlink GetHyperlinkAtCaretPosition() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.List<global::System.Windows.Documents.Hyperlink> GetHyperlinksFromWholeDocument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::System.Windows.Documents.Hyperlink> GetHyperlinksInRange(global::System.Windows.Documents.TextRange range, bool allowEmpty = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnPreviewKeyDown(global::System.Windows.Input.KeyEventArgs e) => base.OnPreviewKeyDown(e);
     [global::Quire.Mirror.MirrorStub]
@@ -221,14 +215,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     private void TryPostChangeHyperlinkInsertion(global::System.Collections.Generic.ICollection<global::System.Windows.Controls.TextChange> changes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Documents.TextPointer GetPotentialLinkEndPosition(global::System.Collections.Generic.ICollection<global::System.Windows.Controls.TextChange> changes, global::System.Windows.Input.Key key, int insertionPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UNITTEST_ExecuteRemoveItemFromListCommand(global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnIsInPrintingPropertyChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => base.OnIsInPrintingPropertyChanged(args);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnIsInSavingCLRPropertyChanged(bool newValue) => base.OnIsInSavingCLRPropertyChanged(newValue);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnIsInCopyPropertyChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => base.OnIsInCopyPropertyChanged(args);
     [global::Quire.Mirror.MirrorStub]
     private void UpdateHyperlinkCanHaveToolTip() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -243,8 +229,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     private void OnPreviewTabForward(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnPreviewTabBackward(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CanExecuteMathFormatCommands(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ExecuteClearMathFormat(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -292,8 +276,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     private void HandleChildItemGotFocus(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HandleChildItemRequestRemove(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Direction dir) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void HandleItemsListChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void AddItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItemInText> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -317,8 +299,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     protected override void HandleTextChanged(object sender, global::System.Windows.Controls.TextChangedEventArgs args) => base.HandleTextChanged(sender, args);
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Undo.IUndoableCommand CreateTextChangedCommand(global::System.Windows.Controls.TextChangedEventArgs args) => base.CreateTextChangedCommand(args);
-    [global::Quire.Mirror.MirrorStub]
-    public void AddItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void TabInto(global::System.Windows.Input.FocusNavigationDirection dir) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

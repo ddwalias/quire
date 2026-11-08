@@ -230,3 +230,10 @@
 - New hand-written partial `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`. Exact: `Accept`, `Clone` (virtual), `EndInit`, `OnStyleChanged`, `OnToggleHideFromCalculationContext`, `CanToggleHideFromCalculationContext`, `ClearSavedState`, `ClearState`, `SaveState`, `RemoveItem`, `GetLineStartPosition`, `GetFirstLine`, `GetLastLine`, `UNITTEST_ExecuteAddItemToListCommand`, `ExecuteDecreaseFontSize`, `ExecuteIncreaseFontSize`, `CanOpenOrEditOrCopySingleHyperlink` (both overloads; the bool one is `GetContextLinks()?.Count == 1`).
 - Not matched: `LogDocumentContents` (empty body in Release IL, but the method header differs: Mathcad uses a fat header with `.maxstack 6` and a `[Conditional("DEBUG")]` attribute; neither the attribute nor the plain form matched). Left as a stub.
 - Release IL: PASS — 307 checked, 307 exact, 0 failures, 416 unfinished.
+
+## Batch 35 — RichTextWithEmbeddedItem command, hyperlink and state-change handlers (10)
+
+- Exact: `UNITTEST_ExecuteRemoveItemFromListCommand`, `GetHyperlinksInRange` (`EnumerateHyperlinksInRange(range, allowEmpty).ToList()`), `RemoveHyperlinks`, `AddItem`, `CanExecuteMathFormatCommands`, `GetHyperlinkFromTextPointer`, `HandleChildItemRequestRemove`, `OnIsInCopyPropertyChanged`, `OnIsInPrintingPropertyChanged`, `OnIsInSavingCLRPropertyChanged` (each base call then `UpdateHyperlinkCanHaveToolTip()`).
+- Note: `TextRange` inside `Quire.Controls.Text` resolves to `Quire.TextRange` now that main has it; WPF signatures need the `DocumentTextRange` alias.
+- Skipped (lambda-ordinal risk): `AddItems`, `RemoveItems`, `MoveItems`, `EnumerateEmbeddedObjectsInRange`.
+- Release IL: PASS — 317 checked, 317 exact, 0 failures, 406 unfinished.
