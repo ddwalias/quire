@@ -11,24 +11,4 @@ namespace Quire.Calculation;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.MatrixValueProxyWrapper, Ptc.Calculation")]
 internal partial class MatrixValueProxyWrapper : global::Quire.Calculation.Core.IMatrixValueProxyWrapper
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::Quire.Automation.PlainDataConversionOptions _conversionOptions;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Automation.IMatrixValueProxy Proxy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsUniform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public uint Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public uint Cols { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Xml { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public MatrixValueProxyWrapper(global::Quire.Automation.IMatrixValueProxy proxy) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IValueProxyWrapper Get(uint rowIndex, uint columnIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteXml(global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IMatrixValueDataAccessorWrapper GetPlainData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
