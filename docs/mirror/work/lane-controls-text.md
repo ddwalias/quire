@@ -91,3 +91,9 @@
 - Members: all (`MaxDictionaryWordLength`, `DictionaryWordStopFlags`, `WpfSpellerCustomDictionaryUri`, `WindowsSpellerCustomDictionaryPath`, `IsWindowsSpellerCustomDictionaryValid`, the static constructor, `AddWordToDictionary`, `RemoveFromDictionary`, `UpdateCustomDictionary`, `SynchronizeWindowsSpellerCustomDictionary`). Hand-written in `Mirrored/Controls.Text.DictionaryHelper.cs`.
 - Shapes: the static constructor is an explicit body (not field initializers), with the `DictionaryPath` default check under `DebugTools.IsDebug`. `UpdateCustomDictionary` uses lambdas over the two parameters; the `RemoveAll`/`Find` predicates compare with `StringComparison.Ordinal`. Every method matched on the first try.
 - Release IL: PASS — 159 checked, 159 exact, 0 failures, 561 unfinished.
+
+## Batch 13 — EmbededItemsCommandWithKeepSelection
+
+- Members: all (`.ctor`, `HasCommandAction`, `HasSelection`, `Name`, `Do`, `Undo`, `Redo`, `MakeSelection`, `Execute`). Hand-written in `Mirrored/Controls.Text.EmbededItemsCommandWithKeepSelection.cs`.
+- Shapes: `Do` with `using (CommandScope ...)` inside the `if`, `result` assigned in both branches, matched first try. Constructor: `if (HasCommandAction) { ...; return; } DebugTools.DevAssert(HasSelection);` matched.
+- Release IL: PASS — 169 checked, 169 exact, 0 failures, 551 unfinished.
