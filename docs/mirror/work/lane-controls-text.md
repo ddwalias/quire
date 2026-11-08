@@ -337,3 +337,9 @@
 - Exact: `OnPreviewCopy` (`!e.OriginalSource.Equals(this) || !IsActive` early return, then `SetIsInCopy`), `SaveWholeTextToRtf` (`try`/`finally` around `StartCommandScope`, `TextRange.Save(..., Rtf, true, false)`, `EndCommandScope`).
 - Not matched, left as stubs: `HandleToggleSubscriptCommand` and `HandleToggleSuperscriptCommand`. Mathcad's `<HandleToggleSubscriptCommand>g__IsSubscriptElement|118_0` local function has ordinal 118, while the same local function in this merged type compiles to ordinal 290. Roslyn also caches the static method-group delegate in a `<>O` field, which Mathcad's IL does not do. Blocked on ordinal and caching; same as the closure-ordinal blockers.
 - Release IL: PASS — 390 checked, 390 exact, 0 failures, 333 unfinished.
+
+## Batch 54 — RichTextBase selection match, text boundary and paste handler (3)
+
+- Exact: `SelectMatch` (written as `LogicalDirection.Forward == direction`; the constant must be the left operand to match Mathcad's `ldc.i4.1; ldarg.3`), `GetTextBoundary(direction, out partialText, stopFlags = FindWord)` (instance overload; the `Forward` arm is caret to end, the other arm is start to caret; the static 4-argument overload stays a stub), `OnPasteExecuted` (try/catch that logs `ex.ToString()`).
+- Not attempted: `CreateTextChangedCommand`. Mathcad stores `_undoRunsTextStyleKey = null` after `newobj` while the command is still on the stack, and no C# statement shape produces that.
+- Release IL: PASS — 393 checked, 393 exact, 0 failures, 330 unfinished.

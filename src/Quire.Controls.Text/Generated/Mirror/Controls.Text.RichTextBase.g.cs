@@ -194,8 +194,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     private void InitializeFeatureFlagCommandBindings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void OnPasteExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OnCorrectSpellingError(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SpellingErrorCorrected() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -270,8 +268,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     protected bool FindInRange(global::System.Windows.Documents.TextPointer start, global::System.Windows.Documents.TextPointer end, string text, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void SelectMatch(global::System.Windows.Documents.TextPointer matchStart, global::System.Windows.Documents.TextPointer matchEnd, global::System.Windows.Documents.LogicalDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Documents.TextRange SearchForward(global::System.Windows.Documents.TextRange originalRange, string rangeText, string text, global::System.StringComparison comparisonType, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Documents.TextRange SearchBackward(global::System.Windows.Documents.TextRange originalRange, string rangeText, string text, global::System.StringComparison comparisonType, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -319,8 +315,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     public virtual void OnWorksheetPropertiesChanged(string[] propertyNames, global::Quire.Controls.Core.IWorksheetProperties oldProperties, global::Quire.Controls.Core.IWorksheetProperties newProperties) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void Dispose() { }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Documents.TextPointer GetTextBoundary(global::System.Windows.Documents.LogicalDirection direction, out string partialText, global::Quire.Controls.Text.TextFromRunsStops stopFlags = (global::Quire.Controls.Text.TextFromRunsStops)(5)) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static global::System.Windows.Documents.TextPointer GetTextBoundary(global::System.Windows.Documents.LogicalDirection direction, out string partialText, global::Quire.Controls.Text.TextFromRunsStops stopFlags, global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

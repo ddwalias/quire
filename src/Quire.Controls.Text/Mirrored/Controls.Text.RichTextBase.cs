@@ -667,4 +667,46 @@ public partial class RichTextBase
             EndCommandScope();
         }
     }
+
+    private void SelectMatch(TextPointer matchStart, TextPointer matchEnd, LogicalDirection direction)
+    {
+        Focus();
+        if (LogicalDirection.Forward == direction)
+        {
+            Selection.Select(matchStart, matchEnd);
+        }
+        else
+        {
+            Selection.Select(matchEnd, matchStart);
+        }
+    }
+
+    internal TextPointer GetTextBoundary(LogicalDirection direction, out string partialText, TextFromRunsStops stopFlags = TextFromRunsStops.FindWord)
+    {
+        DocumentTextRange range = direction == LogicalDirection.Forward
+            ? new DocumentTextRange(CaretPosition, Document.ContentEnd)
+            : new DocumentTextRange(Document.ContentStart, CaretPosition);
+        return GetTextBoundary(direction, out partialText, stopFlags, range);
+    }
+
+    private void OnPasteExecuted(object sender, ExecutedRoutedEventArgs e)
+    {
+        try
+        {
+            string xaml = ExtractXamlFromClipboard();
+            if (string.IsNullOrEmpty(xaml))
+            {
+                Paste();
+            }
+            else
+            {
+                LoadXamlContent(xaml);
+            }
+            e.Handled = true;
+        }
+        catch (Exception ex)
+        {
+            DebugTools.LogError(ex.ToString());
+        }
+    }
 }
