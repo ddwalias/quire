@@ -976,4 +976,25 @@ public partial class RichTextWithEmbeddedItem
             _keyDownData = DebugTools.DevAssert(caretOffset >= 0).Passed ? new PreviewKeyDownData(key, caretOffset) : (PreviewKeyDownData?)null;
         }
     }
+
+    private bool RangeContainsOnlyInlineElements(DocumentTextRange range, bool prohibitSelectionInBlockUiContainer = false)
+    {
+        bool result = true;
+        TextPointer start = range.Start.GetInsertionPosition(LogicalDirection.Forward);
+        TextPointer end = range.End.GetInsertionPosition(LogicalDirection.Backward);
+        while ((start != null && start.CompareTo(end) < 0) & result)
+        {
+            TextPointerContext context = start.GetPointerContext(LogicalDirection.Forward);
+            if (context == TextPointerContext.ElementStart)
+            {
+                result = start.GetAdjacentElement(LogicalDirection.Forward) is Inline;
+            }
+            else if (prohibitSelectionInBlockUiContainer && context == TextPointerContext.EmbeddedElement)
+            {
+                result = start.Parent is Inline;
+            }
+            start = start.GetNextContextPosition(LogicalDirection.Forward);
+        }
+        return result;
+    }
 }

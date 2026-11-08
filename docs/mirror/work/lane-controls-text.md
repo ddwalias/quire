@@ -381,3 +381,9 @@
 - Exact: `EndCommandScope` (protected virtual). The ref-count check with `FailAssertion((string)null)`, the queue and active-scope bookkeeping, `if (ActiveScopes.Count != 0 || _isInCopyUndesiredCommandScope == null) return;` (one shared return, which is the only layout that matches), the `SetRevert…` foreach, and then `try { while (CanUndo) Undo(); } finally { foreach … ClearRevert…; SerializedObjectsToReleaseFromScope.Clear(); }`. The final `_isInCopyUndesiredCommandScope` dispose and null store follow the try.
 - Release IL: PASS — 404 checked, 404 exact, 0 failures, 319 unfinished.
 - Not matched, tried and reverted: `CalculateBaseline` (`new TextRange(...).Text` uses `callvirt` on a `new` receiver, which Roslyn emits as `call`); `ExecuteAddItemToListCommand` (closure display class ordinal is 188 here against 117 in Mathcad, and moving the method to the top of the partial only moved it from 287 to 188).
+
+## Batch 61 — text-offset positions and inline-only range check (2)
+
+- Exact: `RichTextBase.GetPositionAtTextOffset` (static; the `offset` parameter is reduced in place, and the result is `current ?? from.DocumentEnd`), `RichTextWithEmbeddedItem.RangeContainsOnlyInlineElements` (the loop condition is `(start != null && start.CompareTo(end) < 0) & result`; without the parentheses C# binds `&` tighter and the IL differs).
+- Not attempted: `ReplaceTextInHyperlink` (nullable arithmetic with many temporaries that do not map to a plain source form).
+- Release IL: PASS — 406 checked, 406 exact, 0 failures, 317 unfinished.

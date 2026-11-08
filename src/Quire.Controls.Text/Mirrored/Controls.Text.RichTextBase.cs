@@ -929,4 +929,39 @@ public partial class RichTextBase
         _isInCopyUndesiredCommandScope.Dispose();
         _isInCopyUndesiredCommandScope = null;
     }
+
+    internal static TextPointer GetPositionAtTextOffset(TextPointer from, int offset)
+    {
+        if (from == null || offset < 0)
+        {
+            DebugTools.DevAssert(false);
+            return null;
+        }
+        TextPointer current = from;
+        while (current != null && offset > 0)
+        {
+            if (TextPointerContext.Text == current.GetPointerContext(LogicalDirection.Forward))
+            {
+                int runLength = current.GetTextRunLength(LogicalDirection.Forward);
+                int step = offset > runLength ? runLength : offset;
+                current = current.GetPositionAtOffset(step);
+                offset -= step;
+            }
+            else
+            {
+                TextPointer next = current;
+                while (next != null && TextPointerContext.Text != next.GetPointerContext(LogicalDirection.Forward))
+                {
+                    next = next.GetNextContextPosition(LogicalDirection.Forward);
+                }
+                if (next != null)
+                {
+                    DocumentTextRange range = new DocumentTextRange(current, next);
+                    offset -= range.Text.Length;
+                }
+                current = next;
+            }
+        }
+        return current ?? from.DocumentEnd;
+    }
 }
