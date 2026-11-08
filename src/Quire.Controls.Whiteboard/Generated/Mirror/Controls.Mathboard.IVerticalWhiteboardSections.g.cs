@@ -11,14 +11,4 @@ namespace Quire.Controls.Mathboard;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Mathboard.IVerticalWhiteboardSections, Ptc.Controls.Whiteboard")]
 public partial interface IVerticalWhiteboardSections
 {
-    [global::Quire.Mirror.MirrorStub]
-    int BlockSectionCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action SectionsMaybeChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    string GetBlockSectionName(uint sectionIdx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetBlockSectionItems(uint sectionIdx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    double GetBlockSectionMinHeightRatio(uint sectionIdx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

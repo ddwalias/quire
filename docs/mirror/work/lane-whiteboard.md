@@ -26,3 +26,10 @@
 - Hand-written: `Mirrored/Controls.Whiteboard.IWhiteboardItemsSeparator.cs`, `Mirrored/Controls.Mathboard.ISectionIndicatorInfo.cs` (abstract declarations, no bodies); stubs removed from the `.g.cs` interfaces.
 - Release IL: PASS — 104 checked, 0 failures (`release-il-bce29b42fd10`).
 - Remaining mismatches in this batch: none.
+
+## Batch 4 — interface declarations
+
+- Members: `IVerticalWhiteboardSections` (`BlockSectionCount`, `SectionsMaybeChanged` event, `GetBlockSectionName`, `GetBlockSectionItems`, `GetBlockSectionMinHeightRatio`); `IUIElementManager` (nine abstract methods).
+- Hand-written: `Mirrored/Controls.Mathboard.IVerticalWhiteboardSections.cs`, `Mirrored/Controls.Whiteboard.IUIElementManager.cs`; stubs removed from the `.g.cs` interfaces.
+- Release IL: PASS — 114 checked, 0 failures (`release-il-ce8278883795`).
+- Remaining mismatches in this batch: none.
