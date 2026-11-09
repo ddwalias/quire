@@ -11,16 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.XyEquation, Ptc.Controls.Plots")]
 public partial class XyEquation
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string _xSExpression;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string _ySExpression;
-    [global::Quire.Mirror.MirrorStub]
-    public string XsExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string YsExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public XyEquation(string xSExpression, string ySExpression) { }
-    [global::Quire.Mirror.MirrorStub]
-    public XyEquation() { }
 }

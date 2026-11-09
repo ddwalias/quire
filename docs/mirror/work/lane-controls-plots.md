@@ -107,3 +107,9 @@
 - Members: `ColorMapZToBrush` (`Instance` static field, private `.ctor`, `Convert`, `ConvertBack`); `GammaColorMap` (`GetBrush`, `.ctor`). Hand-written: `Mirrored/Controls.Plots.{ColorMapZToBrush,GammaColorMap}.cs`; stubs removed from both `.g.cs`.
 - Shapes: `ColorMapZToBrush.Convert` as `return`-per-path (the first try) gave a branch-width mismatch (`ble.s` vs `ble`). Mathcad assigns one `object result` on every path and returns it once; the if/else-assignment form matched. `GammaColorMap.GetBrush` with `new HsvColor { Gamma = (float)value }` matched first time.
 - Release IL: PASS — 434 checked, 434 exact, 0 failures, 4820 unfinished.
+
+## Batch 16 — XyEquation, XyzEquation
+
+- Members: `XyEquation` (`_xSExpression`, `_ySExpression` readonly fields, `XsExpression` and `YsExpression` getters, two `.ctor`s with the `this(string.Empty, string.Empty)` chain); `XyzEquation` (`_zSExpression`, `ZsExpression` getter, `.ctor` with `base(...)`, and the default `.ctor` chaining to the three-argument constructor with the trace-expression literal). Hand-written: `Mirrored/Controls.Plots.{XyEquation,XyzEquation}.cs`; stubs removed from both `.g.cs`.
+- Shapes: all matched the opcode check first time.
+- Release IL: PASS — 441 checked, 441 exact, 0 failures, 4813 unfinished.
