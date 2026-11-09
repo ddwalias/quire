@@ -85,3 +85,7 @@
 - Batch: `Controls.GenericResources` (`.ctor`, `InitializeComponent`, `IComponentConnector.Connect`, `_contentLoaded`, constant); `Controls.IEquationControlCreator` (abstract declarations); `Controls.InputControls.BaseScriptableInputControl` (`.ctor`, `ViewModel`); `Controls.ControlAdorners.OvertypeAdorner` (`PointA`/`PointB` dependency properties, `.cctor`, `.ctor`, `OnRender`, `UpdateAdornerLocation`).
 - Shapes tried: XAML pack URI uses the Quire assembly name; the other members matched on the first candidate.
 - Release IL: PASS, 702 checked (`.mirror-cache/release-il-e1f592b9f07c/release-il.json`).
+- Batch: `Controls.InputControls.ButtonPropertiesEditor` (`.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`); `ButtonPropertiesEditorViewModel` (`Model`, `Text`, `.ctor`, `HandleModelPropertyChanged`); `CheckBoxControl` (`.ctor`, `ViewModel`, `OnPreviewMouseRightButtonDown`, `InitializeComponent`, `Connect`).
+- Shapes tried: XAML pack URIs use the Quire assembly name; the other members matched on the first candidate.
+- Note: no `.xaml` files exist yet under `src/Quire.Controls.EquationControl` for the URIs used here or by GenericResources/EquationControlErrorMessages; the IL matches, but `LoadComponent` will fail at runtime until those resources are added.
+- Release IL: PASS, 713 checked (`.mirror-cache/release-il-29185259ef71/release-il.json`).

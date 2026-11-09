@@ -11,12 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.ButtonPropertiesEditorViewModel, Ptc.Controls.EquationControl")]
 internal partial class ButtonPropertiesEditorViewModel : global::Quire.Controls.InputControls.InputControlEditorViewModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.InputControls.IButtonPropertiesEditorModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ButtonPropertiesEditorViewModel(global::Quire.Controls.InputControls.IInputControlEditorModel model) : base(default(global::Quire.Controls.InputControls.IInputControlEditorModel)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => base.HandleModelPropertyChanged(sender, e);
 }
