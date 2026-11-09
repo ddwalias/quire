@@ -18,6 +18,9 @@
 - Batch 8: License.LicenseManager fields and PropertyNames constants (`License.LicenseManager`, `License.LicenseManager+PropertyNames`). Gate: PASS, 4015 checked (exact `.cctor` in `LicenseManager`). Report: `.mirror-cache/release-il-4474aa111aa3/release-il.json`. Merged to `main` at `63b3450b0`.
   - Shapes: `LicenseManager` 3 constants, 22 instance/static fields with exact `.cctor` field initializers (`semicolon`, `validServerPortRegex`, `_oneMonth`), and `PropertyNames` 15 constants placed in `Generated/License.LicenseManager.Fields.cs` preserving closure ordinals across Mirrored partials. 40 stubs eliminated.
 
+- Batch 9: PersistentDataObjects root serializer types (`axes3Type`, `axisBaseTypeMarker`, `calculation`, `matrix`, `presentation`, `propertiesType`): `_typeOfThis` (exact `.cctor` via `typeof`), `_xmlSerializer`, root-name constants, and `axes3Type` raw `XmlNode` fields (`[XmlIgnore]`). Assembly for these members is `Ptc.Core` (`--assembly Ptc.Core`; there is no `PersistentDataObjects.dll` in the install). Gate: PASS, 4021 checked, 4021 exact, 0 failures (`.mirror-cache/release-il-fcc3bdec951f/release-il.json`). 17 stubs eliminated.
+  - Shapes: field initializers and constants in `Mirrored/PersistentDataObjects.<type>.cs`; the six `.g.cs` files lose the stub blocks only (CRLF kept).
+
 ## Remaining Parked Stubs (139)
 - PersistentDataObjects (34 stubs): Parked per task guidelines and decisions (42 PDO members parked).
 - PersistentData (53 stubs): Serialization models and companion serializers bound to PersistentDataObjects.

@@ -11,16 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.axes3Type, Ptc.Core")]
 public partial class axes3Type
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    private const string _rootAttributeName = "axes";
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlNode xAxisRaw;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlNode yAxisRaw;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlNode zAxisRaw;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Xml.Serialization.XmlSerializer _xmlSerializer;
 }

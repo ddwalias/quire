@@ -5,6 +5,10 @@ namespace Quire.PersistentDataObjects;
 
 partial class matrix
 {
+    private static readonly global::System.Type _typeOfThis = typeof(matrix);
+    private static global::System.Xml.Serialization.XmlSerializer _xmlSerializer;
+    public const string RootAttributeName = "matrix";
+
     public static global::System.Xml.Serialization.XmlSerializer XmlSerializer { get => _xmlSerializer ?? (_xmlSerializer = CreateSerializer(_typeOfThis, "matrix")); }
     public static global::System.Xml.Serialization.XmlSerializer CreateSerializer(global::System.Type typeOfRoot, string rootNodeName)
     {

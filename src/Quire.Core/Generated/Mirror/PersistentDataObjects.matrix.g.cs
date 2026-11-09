@@ -11,10 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.matrix, Ptc.Core")]
 public partial class matrix : global::Quire.PersistentDataObjects.exprElementType
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Xml.Serialization.XmlSerializer _xmlSerializer;
-    [global::Quire.Mirror.MirrorStub]
-    public const string RootAttributeName = "matrix";
 }
