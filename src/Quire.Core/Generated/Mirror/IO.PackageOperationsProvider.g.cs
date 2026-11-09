@@ -11,46 +11,4 @@ namespace Quire.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.IO.PackageOperationsProvider, Ptc.Core")]
 public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperationsProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string MainPartContentType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.main+xml";
-    [global::Quire.Mirror.MirrorStub]
-    private const string CoreMetadataContentType = "application/vnd.openxmlformats-package.core-properties+xml";
-    [global::Quire.Mirror.MirrorStub]
-    private const string MainPartRelashinshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
-    [global::Quire.Mirror.MirrorStub]
-    private const string CoreMetadataRelashinshipType = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
-    [global::Quire.Mirror.MirrorStub]
-    private const string PackageMediaPath = "/mathcad/media/";
-    [global::Quire.Mirror.MirrorStub]
-    private const string ImagePathFormat = "/mathcad/media/{0}.{1}";
-    [global::Quire.Mirror.MirrorStub]
-    public const string IncludeRelationshipUri = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/include";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ImageRelationshipUri = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ExcelRelationshipUri = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/excel";
-    [global::Quire.Mirror.MirrorStub]
-    public const string OleRelationshipUri = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/oleObject";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ChartRelationshipUri = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart";
-    [global::Quire.Mirror.MirrorStub]
-    public const string FlowDocumentRelationshipUri = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/flowDocument";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ProtectedRegionRelationshipUri = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/ProtectedData";
-    [global::Quire.Mirror.MirrorStub]
-    public const string OleMimeType = "application/vnd.openxmlformats-officedocument.oleObject";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ProtectedMimeType = "application/octet-stream";
-    [global::Quire.Mirror.MirrorStub]
-    public const string IntegrationType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.integration+xml";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ApplicationPropertiesType = "application/mathcad.extended-properties+xml";
-    [global::Quire.Mirror.MirrorStub]
-    public const string CalculationType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.settings.calculation+xml";
-    [global::Quire.Mirror.MirrorStub]
-    public const string PresentationType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.settings.presentation+xml";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ResultType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.result+xml";
-    [global::Quire.Mirror.MirrorStub]
-    private const string ImageTypePrefix = "image/";
 }

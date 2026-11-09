@@ -11,6 +11,4 @@ namespace Quire.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Serialization.SpiritResolver, Ptc.Core")]
 public partial class SpiritResolver : global::Quire.Serialization.PtcXmlResolver
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Serialization.SpiritResolver _instance;
 }

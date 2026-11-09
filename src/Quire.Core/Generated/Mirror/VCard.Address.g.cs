@@ -11,18 +11,4 @@ namespace Quire.VCard;
 [global::Quire.Mirror.MirrorOf("Ptc.VCard.Address, Ptc.Core")]
 public partial struct Address
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string POBox;
-    [global::Quire.Mirror.MirrorStub]
-    public string ExtendedAddress;
-    [global::Quire.Mirror.MirrorStub]
-    public string StreetAddress;
-    [global::Quire.Mirror.MirrorStub]
-    public string City;
-    [global::Quire.Mirror.MirrorStub]
-    public string StateOrProvince;
-    [global::Quire.Mirror.MirrorStub]
-    public string PostalCode;
-    [global::Quire.Mirror.MirrorStub]
-    public string CountryName;
 }

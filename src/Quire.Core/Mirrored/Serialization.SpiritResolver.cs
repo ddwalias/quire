@@ -5,6 +5,8 @@ namespace Quire.Serialization;
 
 partial class SpiritResolver
 {
+    private static global::Quire.Serialization.SpiritResolver _instance;
+
     public static global::Quire.Serialization.SpiritResolver Instance
     {
         get

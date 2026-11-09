@@ -11,8 +11,4 @@ namespace Quire.VCard;
 [global::Quire.Mirror.MirrorOf("Ptc.VCard.VCardContentLine, Ptc.Core")]
 public partial class VCardContentLine
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly char[] semicolon;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly char[] equals;
 }

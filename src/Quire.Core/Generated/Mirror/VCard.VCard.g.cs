@@ -11,6 +11,4 @@ namespace Quire.VCard;
 [global::Quire.Mirror.MirrorOf("Ptc.VCard.VCard, Ptc.Core")]
 public partial class VCard
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly string[] Newline;
 }

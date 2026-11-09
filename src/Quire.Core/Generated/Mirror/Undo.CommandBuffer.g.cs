@@ -11,11 +11,6 @@ namespace Quire.Undo;
 [global::Quire.Mirror.MirrorOf("Ptc.Undo.CommandBuffer, Ptc.Core")]
 public partial class CommandBuffer
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Undo.CommandBuffer _defaultBuffer;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.Dictionary<object, global::Quire.Undo.CommandBuffer> _instances;
-
     [global::Quire.Mirror.MirrorOf("Ptc.Undo.CommandBuffer+MasterCommand, Ptc.Core")]
     private partial class MasterCommand : global::Quire.Undo.CompoundCommand
     {

@@ -6,6 +6,13 @@ namespace Quire.Undo;
 
 public partial class CommandScope
 {
+    private readonly CommandBuffer _parentBuffer;
+    private readonly CommandBuffer _buffer;
+    private readonly string _name;
+    private bool _canUndoTreeOperations;
+    private static readonly Stack<CommandScope> _scopeStack = new Stack<CommandScope>();
+    public static bool RequireTreeOperationsInUndoScope = false;
+
     public CommandScope(string name, bool canUndoTreeOperations)
     {
         _canUndoTreeOperations = canUndoTreeOperations;

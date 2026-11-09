@@ -11,9 +11,6 @@ namespace Quire.Xml;
 [global::Quire.Mirror.MirrorOf("Ptc.Xml.SchemasManager, Ptc.Core")]
 public static partial class SchemasManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.List<global::Quire.Xml.SchemasManager.SchemaData> RuntimeSchemaDatas;
-
     [global::Quire.Mirror.MirrorOf("Ptc.Xml.SchemasManager+SchemaNameEnum, Ptc.Core")]
     public enum SchemaNameEnum
     {
@@ -32,9 +29,5 @@ public static partial class SchemasManager
     [global::Quire.Mirror.MirrorOf("Ptc.Xml.SchemasManager+SchemaData, Ptc.Core")]
     public partial class SchemaData
     {
-        [global::Quire.Mirror.MirrorStub]
-        private global::System.Xml.Schema.XmlSchema _schema;
-        [global::Quire.Mirror.MirrorStub]
-        private global::System.Xml.Schema.XmlSchemaSet _schemaSet;
     }
 }

@@ -10,6 +10,9 @@ namespace Quire.Serialization;
 
 internal partial class XmlConverter
 {
+    private const string ArrayXmlNodeWrapperStart = "<array>";
+    private const string ArrayXmlNodeWrapperEnd = "</array>";
+
     public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
     {
         bool result;

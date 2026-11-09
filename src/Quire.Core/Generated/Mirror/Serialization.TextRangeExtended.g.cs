@@ -11,6 +11,4 @@ namespace Quire.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Serialization.TextRangeExtended, Ptc.Core")]
 public partial class TextRangeExtended : global::System.Windows.Documents.TextRange
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string StylePattern = " style=\"(?<style>[^.\"]+)\"";
 }

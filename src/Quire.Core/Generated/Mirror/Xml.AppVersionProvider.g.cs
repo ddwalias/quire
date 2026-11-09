@@ -11,10 +11,4 @@ namespace Quire.Xml;
 [global::Quire.Mirror.MirrorOf("Ptc.Xml.AppVersionProvider, Ptc.Core")]
 public static partial class AppVersionProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Xml.AppVersionData _versionData;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly object Lock;
-    [global::Quire.Mirror.MirrorStub]
-    private const string ResourceName = "Quire.Core.AppVersion.json";
 }

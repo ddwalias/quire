@@ -8,6 +8,13 @@ public partial class CommandBuffer
 {
     [MirrorVerified("PtcUndoCommandBufferMechanicalDifferentialTests")]
     private static CommandBuffer _currentInstance;
+    private static CommandBuffer _defaultBuffer;
+    private static Dictionary<object, CommandBuffer> _instances = new Dictionary<object, CommandBuffer>(1);
+
+    static CommandBuffer()
+    {
+        Reset();
+    }
 
     [MirrorVerified("PtcUndoCommandBufferMechanicalDifferentialTests")]
     public static CommandBuffer CurrentInstance { get => _currentInstance; set => _currentInstance = value; }

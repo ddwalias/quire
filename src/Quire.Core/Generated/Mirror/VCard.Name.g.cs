@@ -11,14 +11,4 @@ namespace Quire.VCard;
 [global::Quire.Mirror.MirrorOf("Ptc.VCard.Name, Ptc.Core")]
 public partial struct Name
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string FamilyName;
-    [global::Quire.Mirror.MirrorStub]
-    public string GivenName;
-    [global::Quire.Mirror.MirrorStub]
-    public string AdditionalNames;
-    [global::Quire.Mirror.MirrorStub]
-    public string HonorificPrefixes;
-    [global::Quire.Mirror.MirrorStub]
-    public string HonorificSuffixes;
 }

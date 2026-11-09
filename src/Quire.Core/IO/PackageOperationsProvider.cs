@@ -7,6 +7,28 @@ namespace Quire.IO;
 
 public partial class PackageOperationsProvider
 {
+    private const string MainPartContentType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.main+xml";
+    private const string CoreMetadataContentType = "application/vnd.openxmlformats-package.core-properties+xml";
+    private const string MainPartRelashinshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
+    private const string CoreMetadataRelashinshipType = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
+    private const string PackageMediaPath = "/mathcad/media/";
+    private const string ImagePathFormat = "/mathcad/media/{0}.{1}";
+    public const string IncludeRelationshipUri = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/include";
+    public const string ImageRelationshipUri = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image";
+    public const string ExcelRelationshipUri = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/excel";
+    public const string OleRelationshipUri = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/oleObject";
+    public const string ChartRelationshipUri = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart";
+    public const string FlowDocumentRelationshipUri = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/flowDocument";
+    public const string ProtectedRegionRelationshipUri = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/ProtectedData";
+    public const string OleMimeType = "application/vnd.openxmlformats-officedocument.oleObject";
+    public const string ProtectedMimeType = "application/octet-stream";
+    public const string IntegrationType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.integration+xml";
+    public const string ApplicationPropertiesType = "application/mathcad.extended-properties+xml";
+    public const string CalculationType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.settings.calculation+xml";
+    public const string PresentationType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.settings.presentation+xml";
+    public const string ResultType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.result+xml";
+    private const string ImageTypePrefix = "image/";
+
     private readonly string[] _compressedTypes = new string[9]
     {
         "application/vnd.openxmlformats-officedocument.oleObject",

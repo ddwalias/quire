@@ -13,6 +13,8 @@ namespace Quire.Serialization;
 
 public partial class TextRangeExtended
 {
+    private const string StylePattern = " style=\"(?<style>[^.\"]+)\"";
+
     [MirrorVerified("PtcSerializationTextRangeExtendedMechanicalDifferentialTests")]
     public TextRangeExtended(TextPointer tpStart, TextPointer tpEnd) : base(tpStart, tpEnd) { }
 

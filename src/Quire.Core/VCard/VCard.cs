@@ -5,6 +5,8 @@ namespace Quire.VCard;
 
 public partial class VCard
 {
+    private static readonly string[] Newline = new string[1] { "\r\n" };
+
     public VCard(string vCardString)
     {
         foreach (string vCardStringLine in GetVCardStringLines(vCardString))

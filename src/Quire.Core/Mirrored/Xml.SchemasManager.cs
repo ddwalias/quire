@@ -8,6 +8,9 @@ static partial class SchemasManager
 
     partial class SchemaData
     {
+        private global::System.Xml.Schema.XmlSchema _schema;
+        private global::System.Xml.Schema.XmlSchemaSet _schemaSet;
+
         public static implicit operator string(SchemaData data)
         {
             if (data == null)

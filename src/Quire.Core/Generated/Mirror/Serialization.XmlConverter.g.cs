@@ -11,8 +11,4 @@ namespace Quire.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Serialization.XmlConverter, Ptc.Core")]
 internal partial class XmlConverter : global::System.ComponentModel.ExpandableObjectConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string ArrayXmlNodeWrapperStart = "<array>";
-    [global::Quire.Mirror.MirrorStub]
-    private const string ArrayXmlNodeWrapperEnd = "</array>";
 }

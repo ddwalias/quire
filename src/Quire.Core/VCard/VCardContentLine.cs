@@ -5,6 +5,9 @@ namespace Quire.VCard;
 
 public partial class VCardContentLine
 {
+    private static readonly char[] semicolon = new char[1] { ';' };
+    private static readonly char[] equals = new char[1] { '=' };
+
     public VCardContentLine(string line)
     {
         int separator = line.IndexOf(":");
