@@ -271,3 +271,10 @@
 - Shapes: all eleven matched first time, including the `SetIsCommitted(value: false)` named argument and the `_engineResultForSerialization = null` assignment in `SetError`.
 - Deliberately left: `OnPlotCalculatableError` (it sets `IsNumOfPointsMutable`, a member whose owner I have not confirmed for TraceModel).
 - Release IL: PASS — 539 checked, 539 exact, 0 failures.
+
+## Batch 39 — TraceModel axis-change and type-default helpers
+
+- Members: `AxisModelRangeChanged`, `ResultAxisLimitValueChanged`, `UpdateFilteringAllowed`, `UpdateIsTypeDefault(bool forceUpdate = false)` (the non-short-circuit `ResultValid | forceUpdate`), `SetDefaultType`, `AxesScalingChanged`, `RangeAxisLimitValueChanged`, `EquationControlRequestEvaluation`, `ResetIsTypeDefault(bool? value = null)`. Hand-written: appended to `Mirrored/Controls.Plots.Model.TraceModel.cs`; their stubs removed from the `.g.cs`.
+- Shapes: all nine matched on the first gate run after one compile fix (`TraceType` is already in scope through the `Trace2DResults` using; the qualified name does not compile).
+- Left: `RecalculateResultOnPlotTypeChange` (calls `ResultManager`, not checked in Quire yet).
+- Release IL: PASS — 548 checked, 548 exact, 0 failures.

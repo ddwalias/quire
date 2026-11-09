@@ -276,4 +276,70 @@ internal partial class TraceModel
     {
         return GetAxis(AxesIndex.Range).Type;
     }
+
+    private void AxisModelRangeChanged()
+    {
+        if (IsUsingDensityVisualization)
+        {
+            ImageRendererModel.BeginInit();
+            ImageRendererModel.DataRange = DataRange;
+            ImageRendererModel.EndInit();
+        }
+        _plottingPointsFilter.PlottingPoints = _analyzedData.PointsCollection != null ? new PointCollection(_analyzedData.PointsCollection) : null;
+    }
+
+    public void ResultAxisLimitValueChanged()
+    {
+        SetAnalyzedData();
+    }
+
+    private void UpdateFilteringAllowed()
+    {
+        _plottingPointsFilter.FilteringAllowed = TraceTypeIsLinearAndAxesScalingIsLinear();
+    }
+
+    private void UpdateIsTypeDefault(bool forceUpdate = false)
+    {
+        if (ResultValid | forceUpdate)
+        {
+            _isTypeDefault = (_analyzedData.HasMoreThanOneColumn && Type == TraceType.Waterfall) || (!_analyzedData.HasMoreThanOneColumn && Type == TraceType.Lines);
+        }
+        else
+        {
+            ResetIsTypeDefault();
+        }
+    }
+
+    private void SetDefaultType()
+    {
+        if (!_isTypeDefault.HasValue)
+        {
+            UpdateIsTypeDefault(forceUpdate: true);
+        }
+        if (_isTypeDefault.HasValue && _isTypeDefault.Value)
+        {
+            SetTypeImpl(_analyzedData.HasMoreThanOneColumn ? TraceType.Waterfall : TraceType.Lines, callStyleChanged: true);
+        }
+    }
+
+    private void AxesScalingChanged(AxisScaling scaling)
+    {
+        UpdateFilteringAllowed();
+        SetAnalyzedData();
+    }
+
+    public void RangeAxisLimitValueChanged()
+    {
+        Commit();
+    }
+
+    private void EquationControlRequestEvaluation()
+    {
+        Commit();
+    }
+
+    public void ResetIsTypeDefault(bool? value = null)
+    {
+        _isTypeDefault = value;
+    }
 }

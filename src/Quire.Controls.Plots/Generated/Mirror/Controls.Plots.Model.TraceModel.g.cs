@@ -128,23 +128,7 @@ internal partial class TraceModel : global::Quire.Controls.Plots.Model.PlotCalcu
     [global::Quire.Mirror.MirrorStub]
     internal TraceModel(global::Quire.Controls.Plots.Presenter.PlotType plotType, global::Quire.Controls.Plots.Presenter.IEquationItem rangeEquationItem, global::Quire.Controls.Plots.Presenter.IEquationItem resultEquationItem, global::Quire.Controls.Plots.Presenter.IAxisModel rangeAxisModel, global::Quire.Controls.Plots.Presenter.IAxisModel resultAxisModel, global::System.Windows.Size viewPortDpi) { }
     [global::Quire.Mirror.MirrorStub]
-    private void AxisModelRangeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ResultAxisLimitValueChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateFilteringAllowed() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateIsTypeDefault(bool forceUpdate = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetDefaultType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AxesScalingChanged(global::Quire.Controls.Plots.Presenter.AxisScaling scaling) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RangeAxisLimitValueChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Nullable<double> MinPlottingPointCoordinate(global::System.Func<global::System.Windows.Point, global::System.Nullable<double>> selector) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void EquationControlRequestEvaluation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetEquation(global::Quire.Controls.Plots.Presenter.AxesIndex axis, global::Quire.Controls.Plots.Presenter.IEquationItem equationItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -203,8 +187,6 @@ internal partial class TraceModel : global::Quire.Controls.Plots.Model.PlotCalcu
     private void SetPolarPlotRect(global::System.Windows.Media.PointCollection points) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Calculation.Core.EngineResult CopyMinMaxAndUnitsResults(global::Quire.Calculation.Core.EngineResult source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ResetIsTypeDefault(global::System.Nullable<bool> value = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.TraceModel+TraceAnalyzedData, Ptc.Controls.Plots")]
     private partial struct TraceAnalyzedData
