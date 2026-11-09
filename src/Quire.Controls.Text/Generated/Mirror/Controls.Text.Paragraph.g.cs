@@ -22,21 +22,9 @@ public partial class Paragraph : global::Quire.Controls.Text.CustomSplitRichText
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Size PageSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Thickness PageMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double InnerWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool NotHookupSizeChangedHandlerUntilLoaded { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override double VerticalAlignmentOffset { get => base.VerticalAlignmentOffset; }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action HookupSizeChangedHandler;
-    [global::Quire.Mirror.MirrorStub]
-    private static object CoerceCanvasLeft(global::System.Windows.DependencyObject d, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void CanvasLeftChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public Paragraph() { }
     [global::Quire.Mirror.MirrorStub]
@@ -51,8 +39,6 @@ public partial class Paragraph : global::Quire.Controls.Text.CustomSplitRichText
     private void LogSizeChange(global::System.Windows.SizeChangedInfo sizeInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.PersistentDataObjects.textType DoGetRegionPersistentDataInternal(global::Quire.Serialization.IS11NProvider s11NProvider) => base.DoGetRegionPersistentDataInternal(s11NProvider);
-    [global::Quire.Mirror.MirrorStub]
-    public void FireHookupSizeChangedHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override object Clone() => base.Clone();
     [global::Quire.Mirror.MirrorStub]

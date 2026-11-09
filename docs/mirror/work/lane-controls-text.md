@@ -551,3 +551,14 @@
 - Hand-written: `src/Quire.Controls.Text/Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stubs removed from `Generated/Mirror/Controls.Text.RichTextWithEmbeddedItem.g.cs`.
 - Release IL: PASS — 480 checked, 0 failures (`.mirror-cache/gate-b88b`); 6 accessors added.
 - Remaining mismatches in this batch: none.
+
+## Batch 89 — RichTextWithEmbeddedItem container, region, and selection queries (5)
+
+- Exact: `ContainerItemManager` (static `WhiteboardItemContainerExtensions.ItemManager`), `RegionsWithConverterAnnotations` (explicit static extension call on `this`, which is also what the IL shows), `SelectedWhiteboardItems` (`GetWhiteboardItemsInRange(Selection)`), `BaseRelativeDirectory` (worksheet file path directory, else the calculation working directory), `SelectionFullyInsideHyperlink` (nested `if` with the shared `return false`; the inner `return false` gives the second false block the IL has).
+- Release IL: PASS — 485 checked, 0 failures.
+
+## Batch 90 — Paragraph page size, margin, inner width, and hookup (8 accessors)
+
+- New hand-written partial `src/Quire.Controls.Text/Mirrored/Controls.Text.Paragraph.cs`. Exact: `PageSize`, `PageMargin` (worksheet properties), `InnerWidth` get/set (`MinWidth` fallback when the field is zero; set guard with `FirePropertyChanged`), `NotHookupSizeChangedHandlerUntilLoaded` (auto-property), `CoerceCanvasLeft` (`DevAssert(basevalue is double)`, then `!Equals(0.0)` reset), `CanvasLeftChanged` (empty), `FireHookupSizeChangedHandler` (invokes the event field).
+- Not matched, left as a stub: `LogSizeChange`. Mathcad's body is a bare `ret`, but the original compiler kept unused locals with `.initlocals False`; Roslyn Release output drops the locals and sets `.initlocals True`. Not reproducible from source.
+- Release IL: PASS — 494 checked, 0 failures (`.mirror-cache/gate-b90b`).

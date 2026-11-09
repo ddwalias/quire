@@ -1095,4 +1095,43 @@ public partial class RichTextWithEmbeddedItem
     public IRegionFactory RegionFactory { get; set; }
 
     public IEnumerable<ICalculatable> CalculatableChildren => _childManager.CalculatableChildren;
+
+    public IContainerItemManager ContainerItemManager => WhiteboardItemContainerExtensions.ItemManager;
+
+    public IEnumerable<UIElement> RegionsWithConverterAnnotations => WhiteboardItemContainerExtensions.RegionsWithConverterAnnotations(this);
+
+    private IEnumerable<IWhiteboardItem> SelectedWhiteboardItems => GetWhiteboardItemsInRange(Selection);
+
+    private string BaseRelativeDirectory
+    {
+        get
+        {
+            IWorksheetProperties worksheetProperties = WorksheetPropertiesManager.GetWorksheetProperties(this);
+            if (!string.IsNullOrEmpty(worksheetProperties.FilePath))
+            {
+                return System.IO.Path.GetDirectoryName(worksheetProperties.FilePath);
+            }
+
+            return worksheetProperties.DocCalculationVariables.CurrentWorkingDirectory;
+        }
+    }
+
+    private bool SelectionFullyInsideHyperlink
+    {
+        get
+        {
+            Hyperlink hyperlink = GetHyperlinkFromTextPointer(Selection.Start);
+            if (hyperlink != null)
+            {
+                if (hyperlink.ElementStart.CompareTo(Selection.Start) == -1)
+                {
+                    return hyperlink.ElementEnd.CompareTo(Selection.End) == 1;
+                }
+
+                return false;
+            }
+
+            return false;
+        }
+    }
 }
