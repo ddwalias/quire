@@ -20,4 +20,4 @@
 - Batch: `Controls.InputControls.InputSliderEngineFactory` and `InputTextBoxEngineFactory` (`CreateEngine`, `.ctor` each).
 - Shapes tried: switch expressions for JScript, VBScript and Python arms with default script fallback matched both.
 - Release IL: PASS, 623 checked (`.mirror-cache/release-il-7d4c96f2e877/release-il.json`).
-- Remaining: all other stub-marked members in EquationControl; 5,362 markers across 307 types after this batch.
+- Remaining: all other stub-marked members in EquationControl; 5,358 markers across 305 types after this batch.
