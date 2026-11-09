@@ -11,10 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotInvalidResultException, Ptc.Controls.Plots")]
 internal partial class PlotInvalidResultException : global::System.Exception
 {
-    [global::Quire.Mirror.MirrorStub]
-    public PlotInvalidResultException(string message) { }
-    [global::Quire.Mirror.MirrorStub]
-    public PlotInvalidResultException() { }
-    [global::Quire.Mirror.MirrorStub]
-    public PlotInvalidResultException(string message, global::System.Exception innerException) { }
 }

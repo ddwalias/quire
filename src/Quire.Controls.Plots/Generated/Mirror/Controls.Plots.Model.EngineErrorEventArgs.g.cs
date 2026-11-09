@@ -11,10 +11,4 @@ namespace Quire.Controls.Plots.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.EngineErrorEventArgs, Ptc.Controls.Plots")]
 public partial class EngineErrorEventArgs : global::System.EventArgs
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Calculation.Core.EngineError _engineError;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.EngineError EngineError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public EngineErrorEventArgs(global::Quire.Calculation.Core.EngineError engineError) { }
 }
