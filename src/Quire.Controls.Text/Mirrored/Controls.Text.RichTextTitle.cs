@@ -199,4 +199,21 @@ public partial class RichTextTitle
     protected override void OnIsInPrintingPropertyChanged(DependencyPropertyChangedEventArgs args)
     {
     }
+
+    private static void ToggleOrientationCanExecute(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = sender is RichTextTitle title && title.ToggleOrientationRequest != null;
+    }
+
+    private static void HandleToggleOrientationExecuted(object sender, ExecutedRoutedEventArgs e)
+    {
+        RichTextTitle title = sender as RichTextTitle;
+        if (title == null || title.ToggleOrientationRequest == null)
+        {
+            return;
+        }
+
+        title.ToggleOrientationRequest.Invoke();
+        e.Handled = true;
+    }
 }

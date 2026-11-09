@@ -1134,4 +1134,77 @@ public partial class RichTextWithEmbeddedItem
             return false;
         }
     }
+
+    private static IMessageBoxManager MessageBoxManager
+    {
+        get
+        {
+            if (_messageBoxMngr == null || !_messageBoxMngr.IsConnected)
+            {
+                return _messageBoxMngr = AppServiceRegistry.GetService<IMessageBoxManager>();
+            }
+
+            return _messageBoxMngr;
+        }
+    }
+
+    public global::Quire.Core.ISnapToPixelHelper SnappingHelper => _snappingHelper ??= SnapToPixelWhiteboardHelper.Create(this);
+
+    protected bool SelectionContainsEmbeddedItemsOnly
+    {
+        get
+        {
+            if (Selection.IsEmpty)
+            {
+                return false;
+            }
+
+            TextPointer pointer = Selection.Start;
+            while (Selection.End.CompareTo(pointer) > 0)
+            {
+                if (pointer.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
+                {
+                    return false;
+                }
+
+                if (pointer.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.EmbeddedElement && GetWrapper(pointer.GetAdjacentElement(LogicalDirection.Forward)) == null)
+                {
+                    return false;
+                }
+
+                pointer = pointer.GetPositionAtOffset(1);
+            }
+
+            return true;
+        }
+    }
+
+    public IEnumerable<object> EmbeddedObjects
+    {
+        get
+        {
+            IList<object> embeddedObjects = new List<object>();
+            TextPointer pointer = Document.ContentStart;
+            while (pointer != null)
+            {
+                if (pointer.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.EmbeddedElement)
+                {
+                    object element = pointer.GetAdjacentElement(LogicalDirection.Forward);
+                    IWhiteboardItemInTextWrapper wrapper = GetWrapper(element);
+                    if (wrapper != null)
+                    {
+                        element = wrapper.WrappedItem;
+                    }
+
+                    embeddedObjects.Add(element);
+                }
+
+                pointer = pointer.GetPositionAtOffset(1, LogicalDirection.Forward);
+            }
+
+            return embeddedObjects;
+        }
+    }
+
+    protected global::Quire.Calculation.Core.Support.CalculatableChildHider InitializeChildManager() => new global::Quire.Calculation.Core.Support.CalculatableChildHider(WhiteboardItems, FireCalculatableAdded, FireCalculatableRemoved, FireCalculatableMoved, true);
 }

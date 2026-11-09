@@ -562,3 +562,17 @@
 - New hand-written partial `src/Quire.Controls.Text/Mirrored/Controls.Text.Paragraph.cs`. Exact: `PageSize`, `PageMargin` (worksheet properties), `InnerWidth` get/set (`MinWidth` fallback when the field is zero; set guard with `FirePropertyChanged`), `NotHookupSizeChangedHandlerUntilLoaded` (auto-property), `CoerceCanvasLeft` (`DevAssert(basevalue is double)`, then `!Equals(0.0)` reset), `CanvasLeftChanged` (empty), `FireHookupSizeChangedHandler` (invokes the event field).
 - Not matched, left as a stub: `LogSizeChange`. Mathcad's body is a bare `ret`, but the original compiler kept unused locals with `.initlocals False`; Roslyn Release output drops the locals and sets `.initlocals True`. Not reproducible from source.
 - Release IL: PASS — 494 checked, 0 failures (`.mirror-cache/gate-b90b`).
+
+## Batch 91 — RichTextTitle toggle-orientation handlers (2)
+
+- Exact: `ToggleOrientationCanExecute` (`e.CanExecute = sender is RichTextTitle title && ...`; the pattern form puts the `e` receiver before the `as` cast, which is the Mathcad order), `HandleToggleOrientationExecuted` (the single early `return` guard, then `Invoke()` and `Handled = true`).
+- Not matched, left as stubs:
+  - `RemoveHyperlinkPreservingText`: Mathcad calls `TextPointer.InsertTextInRun` with `call` on a local receiver; Roslyn emits `callvirt` for the same call (instruction 8 differs). No plain source form found.
+  - `TextStyleChangedHandler` (RichTextTitle and RichTextWithEmbeddedItem): Mathcad's setter takes `ldvirtftn RichTextBase::OnStyleChanged`. Both classes override `OnStyleChanged`, so the method group binds to the override. A `((RichTextBase)this).OnStyleChanged` cast does not compile (protected access through a base-type qualifier).
+- Release IL: PASS — 496 checked, 0 failures (`.mirror-cache/gate-b91d`).
+
+## Batch 92 — embedded-item message box, snapping helper, selection and embedded-object queries (7)
+
+- Exact: `MessageBoxManager` (lazy static with the `IsConnected` guard; `return _messageBoxMngr = ...GetService` gives the `dup; stsfld` IL), `SnappingHelper` (`??=` on the field), `SelectionContainsEmbeddedItemsOnly` (bottom-tested `while` with the two `GetPointerContext` checks), `EmbeddedObjects` (`IList<object>` local, so the `Add` is `ICollection<object>::Add`), `InitializeChildManager` (`new CalculatableChildHider(...)` with the three virtual `Fire*` method groups), `RichTextBase.SelectedEmbeddedObjects`, `RichTextBase.GetTextOnlyFromRuns` (`TextFromRunsStops.None`).
+- Note: `SnappingHelper` and `InitializeChildManager` use the fully qualified `global::Quire.Core` / `global::Quire.Calculation.Core` types; the unqualified names resolve to other types with the same name in this file's using set.
+- Release IL: PASS — 503 checked, 0 failures (`.mirror-cache/gate-b92d`).

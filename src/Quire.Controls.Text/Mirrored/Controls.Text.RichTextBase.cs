@@ -1430,4 +1430,13 @@ public partial class RichTextBase
             return new DocumentTextRange(inline.ContentStart, inline.ContentEnd).IsEmpty;
         }
     }
+
+    public IEnumerable<object> SelectedEmbeddedObjects => EnumerateEmbeddedObjectsInRange(Selection);
+
+    public static string GetTextOnlyFromRuns(DocumentTextRange range)
+    {
+        string text;
+        GetTextBoundary(LogicalDirection.Forward, out text, TextFromRunsStops.None, range);
+        return text;
+    }
 }
