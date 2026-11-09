@@ -11,14 +11,4 @@ namespace Quire.EquationEditor.Tree.Parsing;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle, Ptc.EquationEditor")]
 public partial struct MathNodeAnalysisHandle
 {
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.EquationEditor.Tree.MathNode Node;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.EquationEditor.Tree.Parsing.Fixity EffectiveFixity;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.EquationEditor.Tree.Parsing.Associativity EffectiveAssociativity;
-    [global::Quire.Mirror.MirrorStub]
-    public MathNodeAnalysisHandle(global::Quire.EquationEditor.Tree.MathNode node) { }
-    [global::Quire.Mirror.MirrorStub]
-    public MathNodeAnalysisHandle(global::Quire.EquationEditor.Tree.MathNode node, global::Quire.EquationEditor.Tree.Parsing.Fixity fixity, global::Quire.EquationEditor.Tree.Parsing.Associativity associativity) { }
 }

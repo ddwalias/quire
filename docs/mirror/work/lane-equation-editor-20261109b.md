@@ -8,8 +8,11 @@
 
 - Batch 8: `Tree.Transform.SExpressionUtility.EscapeStringValue` and private `a(string)`; `Tree.SExpressionHelperUtilites` (`a(string)`, `ExtractIdOrFunctionDefinitionName`, `IsIdentifierSExpr`, `IsValidType`, `SplitScalingAndValue`); `Tree.NodeInfoExtensions` (`ValueLength`, `ValueAsString`, `ClearValue`, `SetValue`). Release IL PASS, 324 checked, 0 failures (`.mirror-cache/release-il-055dcfc0a2d1/release-il.json`). Shape that matched: type-pattern `switch` on `INodeInfo` for NodeInfoExtensions (the `if (!(x is T t))` form failed with the wrong block order: `calls differ at #0`, release-il-caa3ad17f3ab).
 
+- Batch 9: `Tree.NearestNeighborSelector.SelectNeighbors(MathNode)` (one-argument overload) and `Tree.Parsing.MathNodeAnalysisHandle` (`Node`, `EffectiveFixity`, `EffectiveAssociativity` fields and both constructors, as a partial struct). Release IL PASS, 327 checked, 0 failures (`.mirror-cache/release-il-d95d46d29e40/release-il.json`).
+
 ## Blocked (stubs kept)
 
+- `Tree.NearestNeighborSelector.SelectNeighbors(MathNode, out bool)` (virtual, switch on `Fixity` with an `out` parameter). Mathcad's switch temporary is local 3, after the three block locals; C# put it in slot 0 (braced cases, release-il-23d8111cb024) and slot 1 (unbraced `Special` case, release-il-1a7e6d2256e8). Shapes not yet tried: different local declaration order. Stub kept.
 - `Tree.Transform.SExpressionUtility.EscapeIdValue`, `CleanWhitespace`, the `a_`/`b` static fields and the cctor. Three independent causes, each seen in the gate (release-il-58c975d22d22):
   - Field name: the IL field is `a` (ILSpy shows `m_a`), but `a` clashes with method `a` in C#, so MirrorGen names it `a_`. The gate compares the field name (`ldsfld ...::a_` vs `::a`).
   - cctor: the constant `char[]` uses `RuntimeHelpers.InitializeArray` with blob type `bs+a`. Dotfuscator renamed `<PrivateImplementationDetails>` to `bs`, and Roslyn emits `<PrivateImplementationDetails>+__StaticArrayInitTypeSize=10`.
