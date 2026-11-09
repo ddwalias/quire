@@ -5,6 +5,8 @@ namespace Quire;
 
 public partial struct DirectionalPair<TLeft, TRight>
 {
+    private Pair<TLeft, TRight> _pair;
+
     [MirrorVerified("Release IL")]
     public DirectionalPair(TLeft left, TRight right)
     {

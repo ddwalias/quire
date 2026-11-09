@@ -11,6 +11,4 @@ namespace Quire.Services;
 [global::Quire.Mirror.MirrorOf("Ptc.Services.ApplicationBehaviorOptions, Ptc.Core")]
 public partial class ApplicationBehaviorOptions : global::Quire.Services.IApplicationBehaviorOptions, global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    private int _delayRecalculationInMsecAfterCloseExcel;
 }

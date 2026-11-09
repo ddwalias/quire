@@ -11,6 +11,4 @@ namespace Quire.Services;
 [global::Quire.Mirror.MirrorOf("Ptc.Services.FunctionalityServiceWrapper, Ptc.Core")]
 public partial class FunctionalityServiceWrapper
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Services.FunctionalityServiceWrapper _instance;
 }

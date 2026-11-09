@@ -5,6 +5,8 @@ namespace Quire.Services;
 
 partial class ApplicationBehaviorOptions
 {
+    private int _delayRecalculationInMsecAfterCloseExcel;
+
     public int DelayRecalculationInMsecAfterCloseExcel
     {
         get => _delayRecalculationInMsecAfterCloseExcel;

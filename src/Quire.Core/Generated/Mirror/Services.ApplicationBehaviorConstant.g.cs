@@ -11,8 +11,4 @@ namespace Quire.Services;
 [global::Quire.Mirror.MirrorOf("Ptc.Services.ApplicationBehaviorConstant, Ptc.Core")]
 public partial class ApplicationBehaviorConstant
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const int DefaultTimeToWaitForResultInSec = 60;
-    [global::Quire.Mirror.MirrorStub]
-    public const int WaitIndefinitely = -1;
 }

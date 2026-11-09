@@ -11,8 +11,4 @@ namespace Quire.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Serialization.XamlConstants, Ptc.Core")]
 public static partial class XamlConstants
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string XamlEntryName = "/Document.xaml";
-    [global::Quire.Mirror.MirrorStub]
-    public const string XamlPayloadDirectory = "/Xaml";
 }

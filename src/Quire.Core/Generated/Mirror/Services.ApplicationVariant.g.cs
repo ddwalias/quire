@@ -11,10 +11,6 @@ namespace Quire.Services;
 [global::Quire.Mirror.MirrorOf("Ptc.Services.ApplicationVariant, Ptc.Core")]
 public sealed partial class ApplicationVariant
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Nullable<bool> _isEngNbPlus;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Nullable<bool> _isEngNb;
     [global::Quire.Mirror.MirrorOf("Ptc.Services.ApplicationVariant+ApplicationType, Ptc.Core")]
     public enum ApplicationType
     {

@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.DirectionalPair`2, Ptc.Core")]
 public partial struct DirectionalPair<TLeft, TRight>
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Pair<TLeft, TRight> _pair;
 }

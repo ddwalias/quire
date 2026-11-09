@@ -11,22 +11,4 @@ namespace Quire.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Serialization.TextXamlConstants, Ptc.Core")]
 public static partial class TextXamlConstants
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string RunName = "Run";
-    [global::Quire.Mirror.MirrorStub]
-    public const string SubSuperScriptNamespace = "Quire.Controls.Text";
-    [global::Quire.Mirror.MirrorStub]
-    public const string SubscriptName = "SubscriptRun";
-    [global::Quire.Mirror.MirrorStub]
-    public const string SuperscriptName = "SuperscriptRun";
-    [global::Quire.Mirror.MirrorStub]
-    public const string EmptyRun = "<Run> </Run>";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Whitespace = " ";
-    [global::Quire.Mirror.MirrorStub]
-    public const string DefaultMathFontFamilyName = "Quire UniMath Prime";
-    [global::Quire.Mirror.MirrorStub]
-    public const string DefaultConverterMathFontFamilyName = "Quire UniMath";
-    [global::Quire.Mirror.MirrorStub]
-    public const string EmbeddedMathFonts = "Quire.Controls.Core;component/Fonts/#";
 }

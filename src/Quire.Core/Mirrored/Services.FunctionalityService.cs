@@ -5,5 +5,7 @@ namespace Quire.Services;
 
 partial class FunctionalityService
 {
+    private static global::Quire.Services.FunctionalityService _instance;
+
     public static global::Quire.Services.FunctionalityService Instance { get => _instance ?? (_instance = new global::Quire.Services.FunctionalityService()); }
 }

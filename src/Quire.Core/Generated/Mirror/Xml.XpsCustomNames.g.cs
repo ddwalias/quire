@@ -11,14 +11,4 @@ namespace Quire.Xml;
 [global::Quire.Mirror.MirrorOf("Ptc.Xml.XpsCustomNames, Ptc.Core")]
 public static partial class XpsCustomNames
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string Body = "PageBody";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Header = "Header";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Footer = "Footer";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Region = "Region";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Adorner = "Adorner";
 }

@@ -11,10 +11,4 @@ namespace Quire.Xml;
 [global::Quire.Mirror.MirrorOf("Ptc.Xml.xmlStandardElement, Ptc.Core")]
 public partial class xmlStandardElement
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string AttSpace = "xml:space";
-    [global::Quire.Mirror.MirrorStub]
-    public const string AttValPreserve = "preserve";
-    [global::Quire.Mirror.MirrorStub]
-    public const string AttValTrue = "true";
 }

@@ -5,6 +5,9 @@ namespace Quire.Services;
 
 partial class ApplicationVariant
 {
+    private static global::System.Nullable<bool> _isEngNbPlus;
+    private static global::System.Nullable<bool> _isEngNb;
+
     public static global::System.Nullable<bool> IsEngNbPlus
     {
         get => _isEngNbPlus;
