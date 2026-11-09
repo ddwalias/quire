@@ -54,4 +54,7 @@
 - Batch: `Controls.EquationControlErrorMessages::{.ctor, InitializeComponent, IComponentConnector.Connect}`.
 - Shapes tried: constructor delegates to initialization, load-once guard, resource load, and connector flag matched; initial Ptc assembly URI differed, Quire self URI matched.
 - Release IL: PASS, 654 checked (`.mirror-cache/release-il-6bbad93dd157/release-il.json`). Earlier candidate: FAIL at `167586b6b48b` (resource URI constant).
-- Remaining: all other stub-marked members in EquationControl; 5,321 markers across 294 types after this batch.
+- Batch: `Controls.AlgorithmIconConverter::{CheckMarkIcon, SelectedIcon, Convert, ConvertBack, .ctor}`.
+- Shapes tried: ordered bitmap initializers, null-coalescing string conversion, auto-select split, default algorithm membership, and ordinal-ignore-case comparisons matched.
+- Release IL: PASS, 657 checked (`.mirror-cache/release-il-95f96981757f/release-il.json`).
+- Remaining: all other stub-marked members in EquationControl; 5,316 markers across 294 types after this batch.
