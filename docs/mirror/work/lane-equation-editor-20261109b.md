@@ -63,3 +63,5 @@
 
 - Batch 24: `Tree.Scoping.ScopedNodes` constructor (fields `a`/`b`, `DevAssert` when single block), `ScopedLines`, `GetFirstScopedNode`, `ScopeAsSingleBlock`, `GetLastScopedNode`. Mathcad reads `ScopedLines` through its getter, not the field, so the idiomatic property use matched. Release IL PASS, 458 checked, 0 failures (`.mirror-cache/release-il-e3daa0d2b4e8/release-il.json`).
 - Still stubbed in ScopedNodes: `All`, `Any`, `FirstOrDefault` (predicate closures in nested `a`/`b` classes whose methods are named `a`; blocked by the same name clash and closure ordinals) and the nested `a_`/`b_` classes.
+
+- Batch 25: `Tree.Transform.ParsedSExpression` `Label`, `Value`, `SExpList`, `IsString` (fields `a`/`b`/`c`/`d`), `HasList`, `HasValue`, `IsValid`. Release IL PASS, 469 checked, 0 failures (`.mirror-cache/release-il-3e16ad0d9432/release-il.json`). `HasList` first gate failed (release-il-5f0aaac9d834): `Count > 0` compiled to `cgt`, Mathcad's `cgt.un` is what `Count != 0` emits; the `!= 0` form matched. The parameterless constructor stays a stub (it is already Mathcad's empty constructor).

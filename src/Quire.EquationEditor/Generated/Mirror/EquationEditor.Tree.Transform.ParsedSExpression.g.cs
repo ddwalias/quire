@@ -12,27 +12,5 @@ namespace Quire.EquationEditor.Tree.Transform;
 public partial class ParsedSExpression
 {
     [global::Quire.Mirror.MirrorStub]
-    private string a;
-    [global::Quire.Mirror.MirrorStub]
-    private string b;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.Transform.ParsedSExpression> c;
-    [global::Quire.Mirror.MirrorStub]
-    private bool d;
-    [global::Quire.Mirror.MirrorStub]
-    public string Label { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.Transform.ParsedSExpression> SExpList { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsString { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasList { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsValid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public ParsedSExpression() { }
 }
