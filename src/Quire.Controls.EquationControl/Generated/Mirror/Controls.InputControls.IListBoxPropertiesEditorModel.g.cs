@@ -11,8 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.IListBoxPropertiesEditorModel, Ptc.Controls.EquationControl")]
 public partial interface IListBoxPropertiesEditorModel : global::Quire.Controls.InputControls.IInputControlEditorScriptableModel, global::Quire.Controls.InputControls.IInputControlEditorModel, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.FlowDirection FlowDirection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsSort { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

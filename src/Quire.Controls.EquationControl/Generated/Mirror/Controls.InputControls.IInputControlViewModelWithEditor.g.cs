@@ -11,6 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.IInputControlViewModelWithEditor, Ptc.Controls.EquationControl")]
 public partial interface IInputControlViewModelWithEditor
 {
-    [global::Quire.Mirror.MirrorStub]
-    void CommitEditorChanges() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

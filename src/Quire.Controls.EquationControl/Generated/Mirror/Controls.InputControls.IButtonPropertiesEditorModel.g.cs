@@ -11,6 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.IButtonPropertiesEditorModel, Ptc.Controls.EquationControl")]
 public partial interface IButtonPropertiesEditorModel : global::Quire.Controls.InputControls.IInputControlEditorScriptableModel, global::Quire.Controls.InputControls.IInputControlEditorModel, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

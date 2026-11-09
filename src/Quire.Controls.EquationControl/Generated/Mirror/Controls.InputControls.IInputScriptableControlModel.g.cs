@@ -11,8 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.IInputScriptableControlModel, Ptc.Controls.EquationControl")]
 public partial interface IInputScriptableControlModel : global::Quire.Controls.InputControls.IInputResizableControlModel, global::Quire.Controls.InputControls.IInputControlModel, global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    string Script { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool Apply(string userScript, out object scriptObject, out string exception, object[] inputs, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

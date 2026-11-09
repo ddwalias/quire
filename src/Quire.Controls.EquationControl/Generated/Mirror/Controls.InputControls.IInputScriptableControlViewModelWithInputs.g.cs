@@ -11,6 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.IInputScriptableControlViewModelWithInputs, Ptc.Controls.EquationControl")]
 public partial interface IInputScriptableControlViewModelWithInputs
 {
-    [global::Quire.Mirror.MirrorStub]
-    void HandleSExpressionChanged(global::Quire.Controls.Core.IEquationControl eq) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

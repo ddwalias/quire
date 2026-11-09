@@ -11,12 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.IGestureManager, Ptc.Controls.EquationControl")]
 internal partial interface IGestureManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool Execute(global::System.Windows.Input.KeyEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool Execute(string c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddBinding(global::System.Windows.Input.KeyGesture gesture, global::Quire.Controls.Internal.EditorCommand command) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddBinding(string key, global::Quire.Controls.Internal.EditorCommand command) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

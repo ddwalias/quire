@@ -11,12 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.IHistoryPopup, Ptc.Controls.EquationControl")]
 internal partial interface IHistoryPopup
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsPopupOpen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Delegate1<int> HistoryItemSelected { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void Show() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Hide() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

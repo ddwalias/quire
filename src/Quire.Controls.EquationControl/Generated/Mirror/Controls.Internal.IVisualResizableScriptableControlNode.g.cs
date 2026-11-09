@@ -11,6 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.IVisualResizableScriptableControlNode, Ptc.Controls.EquationControl")]
 public partial interface IVisualResizableScriptableControlNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    void UpdateOnBorderResize(global::System.Windows.Vector offset, bool changeWidth, bool changeHeight, global::System.Windows.Controls.UIElementCollection uiElementCollection = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,6 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.IVisualInputScriptableControlNodeAutomation, Ptc.Controls.EquationControl")]
 public partial interface IVisualInputScriptableControlNodeAutomation
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.InputControls.InputScriptableControlViewModelWithInputs ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

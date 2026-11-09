@@ -11,14 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.IComboBoxTableModel, Ptc.Controls.EquationControl")]
 public partial interface IComboBoxTableModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    string TableTitle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int SelectedNameValuesRowIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.View.IReadonlyCellData> UnitsForValueColumns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.INameValuesRow> NameValuesRows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.View.IReadonlyCellData GetCellAt(int rowIdx, int colIdx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

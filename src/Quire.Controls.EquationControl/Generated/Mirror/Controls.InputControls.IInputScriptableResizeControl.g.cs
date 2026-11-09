@@ -11,6 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.IInputScriptableResizeControl, Ptc.Controls.EquationControl")]
 public partial interface IInputScriptableResizeControl : global::Quire.Controls.InputControls.IInputScriptableControl, global::Quire.Controls.InputControls.IInputScriptableControlBase, global::Quire.Controls.InputControls.IInputControl, global::Quire.Controls.InputControls.IInputControlBase, global::System.Windows.IFrameworkInputElement, global::System.Windows.IInputElement
 {
-    [global::Quire.Mirror.MirrorStub]
-    void Resize(object sender, global::System.Windows.Controls.Primitives.DragDeltaEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

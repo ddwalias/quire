@@ -11,6 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.IVisualBinaryOperatorNodeWithCustomVisibility, Ptc.Controls.EquationControl")]
 public partial interface IVisualBinaryOperatorNodeWithCustomVisibility : global::Quire.EquationEditor.View.IVisualBinaryOperatorNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Visibility CustomOperatorVisibility { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

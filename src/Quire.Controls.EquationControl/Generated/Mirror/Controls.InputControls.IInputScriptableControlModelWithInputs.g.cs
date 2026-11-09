@@ -11,10 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.IInputScriptableControlModelWithInputs, Ptc.Controls.EquationControl")]
 public partial interface IInputScriptableControlModelWithInputs : global::Quire.Controls.InputControls.IInputScriptableControlModel, global::Quire.Controls.InputControls.IInputResizableControlModel, global::Quire.Controls.InputControls.IInputControlModel, global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable, global::Quire.Calculation.Core.IDataExchangeScriptingModel, global::Quire.Calculation.Core.IDataExchangeModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    string InputFieldSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action CommitNeeded { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void HandleSExpressionChanged(global::Quire.Controls.Core.IEquationControl eq) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

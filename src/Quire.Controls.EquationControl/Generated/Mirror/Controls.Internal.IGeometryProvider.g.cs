@@ -11,6 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.IGeometryProvider, Ptc.Controls.EquationControl")]
 internal partial interface IGeometryProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.Geometry Geometry { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
