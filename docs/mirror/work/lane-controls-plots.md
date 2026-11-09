@@ -201,3 +201,11 @@
 - Shapes: constructor passes `TraceType3D.Undefined`, `null`, and zero to the base; `HasNoData` returns false.
 - Release IL: PASS — 469 checked, 469 exact, 0 failures.
 - Remaining: `PlotLegendLayoutManager.GetNumberOfColumnsFitWidth` remains blocked by the documented local-slot mismatch; other unimplemented stubs remain unclaimed.
+
+## Batch 29 — ContourXYAxisViewModel
+
+- Members: `.ctor(AxesType)` (base call with `PlotType.Contour`) and `SetResultRange` override. Hand-written: `Mirrored/Controls.Plots.Contour.ViewModel.ContourXYAxisViewModel.cs`; both stubs removed from its `.g.cs`.
+- Shapes: the constructor and override matched the Release IL gate on the first pass.
+- Release IL: PASS — 471 checked, 471 exact, 0 failures.
+- Rejected: `ContourZAxisViewModel` (ctor, `SetResultRange`, `LimitsExpressionValueChanged` override with the `IsValueValid` `||` chain and `SetRange` early return). Gate failed on `LimitsExpressionValueChanged` ("Release IL differs"); reverted, not landed. Idiomatic `||` short-circuit shape is the first suspect; not investigated further.
+- Remaining: `ContourZAxisViewModel` (open); `PlotLegendLayoutManager.GetNumberOfColumnsFitWidth` remains blocked by the documented local-slot mismatch; other unimplemented stubs remain unclaimed.

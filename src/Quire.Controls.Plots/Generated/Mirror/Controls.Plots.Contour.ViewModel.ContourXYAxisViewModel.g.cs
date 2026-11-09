@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots.Contour.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Contour.ViewModel.ContourXYAxisViewModel, Ptc.Controls.Plots")]
 internal partial class ContourXYAxisViewModel : global::Quire.Controls.Plots.Base3D.ViewModel.Base3DAxisViewModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal ContourXYAxisViewModel(global::Quire.Controls.Plots.Presenter.AxesType axisType) : base(default(global::Quire.Controls.Plots.Presenter.AxesType), default(global::Quire.Controls.Plots.Presenter.PlotType)) { }
-    [global::Quire.Mirror.MirrorStub]
-    internal override void SetResultRange(global::System.Nullable<double> resultStart, global::System.Nullable<double> resultEnd) => base.SetResultRange(resultStart, resultEnd);
 }
