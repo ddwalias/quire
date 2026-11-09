@@ -11,12 +11,4 @@ namespace Quire.depman;
 [global::Quire.Mirror.MirrorOf("depman.Environment, mcdepman")]
 public partial interface Environment
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.IDictionary Lookup(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.IDictionary LookupEx(string name, global::Quire.depman.ScopingMode m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ExecuteInterruptibly(global::System.Threading.ThreadStart ts, bool bCoopOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int GetRegionId() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
