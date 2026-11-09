@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots.Contour.View;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Contour.View.ColorSample, Ptc.Controls.Plots")]
 public partial struct ColorSample
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush Color { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Width { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

@@ -223,3 +223,10 @@
 - Shapes: `string.Format(CultureInfo.CurrentUICulture, "\t{0:N0}", TooManyPointsForPlotType, maximalAllowedNumberOfPoints)` matched first time. The IL formats the key constant, not the count: the count is passed but unused by the `\t{0:N0}` pattern. Kept as Mathcad has it.
 - Release IL: PASS — 496 checked, 496 exact, 0 failures.
 - Open: `IsLimitsCalculationRelatedCustomError` stays a stub. Its Mathcad IL compares against `"Ptc.Plots.TICKMARKS_HAS_UNITS"` and `"RESULT_NOT_REAL_NUMBER"`, while the Quire constant `TickmarksHasUnits` is `"Quire.Plots.TICKMARKS_HAS_UNITS"`. Using the constant fails the literal match; using the Ptc literal would contradict the name mapping. Needs a decision from the maintainer.
+
+## Batch 32 — ColorSample
+
+- Members: `Color` (Brush, `readonly get`, `internal set`), `Width` (double, `readonly get`, `internal set`). Hand-written: `Mirrored/Controls.Plots.Contour.View.ColorSample.cs`; both property stubs removed from its `.g.cs`.
+- Shapes: auto-properties with `readonly` getters (Mathcad marks the getters `IsReadOnly`) matched first time.
+- Release IL: PASS — 500 checked, 500 exact, 0 failures.
+- Remaining mismatches in this batch: none.
