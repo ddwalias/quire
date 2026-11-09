@@ -399,3 +399,11 @@
 - Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stubs replaced.
 - Skipped in this group: `HandleChildSizeChanged` (raises the `ChildCausedResize` event and compares `Size` values, shape not yet checked), `HandleCarriageReturn` and `DeleteSelectedItems`/`DeleteVerticalSpaceAbove`/`Below` (`new XCommand(...).Execute()` devirtualization blocker).
 - Release IL: PASS — 847 checked, 0 failures (`release-il-5903c6f14cc8`).
+
+## Batch 26 — WhiteboardViewModel plain members
+
+- Members: `GetRemoveItemsCommand`, `GetPasteItemsCommand` (virtual, `new` returned, no call on the new object), `SelectedItemsAddNew`, `GetNextIntersectionForMove`, `HandleTraverse`, `UpdateSizeLimit`, `Paste`, `CopySelection`, `ChildWhiteboardPropertyChangedHandler`, `TrySelectRegionsInBounds`.
+- Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stubs replaced.
+- Note: `ChildWhiteboardPropertyChangedHandler` needs `global::System.ComponentModel.PropertyChangedEventArgs`; the short name is ambiguous with the generic `PropertyChangedEventArgs<T>`.
+- Gate note: the first run failed only on `AggregateMathboard` `ICalculatable` members, because the worktree was behind `main` (`b63122fbe`/`a1717832d`). A fast-forward of the worktree cleared it; no member change caused it.
+- Release IL: PASS — 857 checked, 0 failures (`release-il-a045db3a8f24`).
