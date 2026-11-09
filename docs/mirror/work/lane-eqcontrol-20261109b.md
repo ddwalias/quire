@@ -60,4 +60,7 @@
 - Batch: `Controls.InputControls.HorizontalThicknessSubtractionConverter::{Instance, .ctor, Convert, ConvertBack}`.
 - Shapes tried: direct type-pattern checks for `double` and `Thickness`, assertion fallback, and `NotImplementedException` matched.
 - Release IL: PASS, 660 checked (`.mirror-cache/release-il-df71a0e104ef/release-il.json`).
+- Batch: `Controls.InputControls.RadioButtonCheckedChangedEventArgs::{SourceViewModel, IsChecked, .ctor}`.
+- Shapes tried: auto-properties with constructor assignments matched.
+- Release IL: PASS, 663 checked (`.mirror-cache/release-il-e93b2d8910c0/release-il.json`).
 - Remaining: all other stub-marked members in EquationControl; 5,316 markers across 294 types after this batch.

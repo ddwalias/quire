@@ -11,10 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.RadioButtonCheckedChangedEventArgs, Ptc.Controls.EquationControl")]
 public partial class RadioButtonCheckedChangedEventArgs : global::System.EventArgs
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.InputControls.RadioButtonViewModel SourceViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsChecked { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public RadioButtonCheckedChangedEventArgs(global::Quire.Controls.InputControls.RadioButtonViewModel sourceViewModel, bool isChecked) { }
 }
