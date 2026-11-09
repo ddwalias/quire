@@ -1167,4 +1167,41 @@ public partial class RichTextBase
         }
         DebugTools.FailAssertion("Unexpected command: {0}", command.Name);
     }
+
+    private void CreateSplitFontSizeDataBeforeApplyPropOnRange(DocumentTextRange range)
+    {
+        if (range.IsEmpty)
+        {
+            return;
+        }
+        ClearSplitFontSizeDataQueue();
+        TextPointer start = range.Start;
+        ICustomFontSizeOwner startOwner = start.Parent as ICustomFontSizeOwner;
+        Inline startInline;
+        if (startOwner != null)
+        {
+            startInline = start.Parent as Inline;
+            if (startInline != null && startInline.ContentStart.CompareTo(start) < 0)
+            {
+                if (DependencyPropertyHelper.GetValueSource(startInline, Control.FontSizeProperty).BaseValueSource == BaseValueSource.Local)
+                {
+                    EnqueueSplitFontSizeData(startOwner.FontSizeForReport);
+                }
+            }
+        }
+        TextPointer end = range.End;
+        ICustomFontSizeOwner endOwner = end.Parent as ICustomFontSizeOwner;
+        Inline endInline;
+        if (endOwner != null)
+        {
+            endInline = end.Parent as Inline;
+            if (endInline != null && endInline.ContentEnd.CompareTo(end) > 0)
+            {
+                if (DependencyPropertyHelper.GetValueSource(endInline, Control.FontSizeProperty).BaseValueSource == BaseValueSource.Local)
+                {
+                    EnqueueSplitFontSizeData(endOwner.FontSizeForReport);
+                }
+            }
+        }
+    }
 }

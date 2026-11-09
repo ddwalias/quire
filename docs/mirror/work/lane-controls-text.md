@@ -418,3 +418,10 @@
 - Exact: `ShouldNoOpOnSelection` (command-enable gate for the directional select commands; each `EditingCommands.Select*` compares by reference and sets `CanExecute` from the blocked-select direction flag, then the unexpected-command assertion).
 - Not attempted in this batch: `OnPreviewBackspace` (reverted; Mathcad branches the first clause with `beq` to the body, which a plain `if` does not produce; the `?.` offset and the font-size ternary arm order did match once adjusted).
 - Release IL: PASS — 411 checked, 411 exact, 0 failures, 312 unfinished.
+
+## Batch 67 — RichTextBase split font-size data before a property apply (1)
+
+- Exact: `CreateSplitFontSizeDataBeforeApplyPropOnRange` (returns early on an empty range; for the start and end runs it enqueues the font size when the inline's font size is set locally, `BaseValueSource.Local`).
+- Note: the value-source check must be written inline (`DependencyPropertyHelper.GetValueSource(...).BaseValueSource == BaseValueSource.Local`). A named `ValueSource` local takes a different slot from the compiler temporary Mathcad uses.
+- Release IL: PASS — 412 checked, 412 exact, 0 failures, 311 unfinished.
+- Tried and reverted: `IsFullySubscript` (the cached lambda is `<IsFullySubscript>b__293_0` here against `b__297_0` in Mathcad, so the closure ordinal is short by four).
