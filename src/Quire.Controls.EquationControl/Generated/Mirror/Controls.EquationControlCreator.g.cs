@@ -11,10 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.EquationControlCreator, Ptc.Controls.EquationControl")]
 public partial class EquationControlCreator : global::Quire.Controls.IEquationControlCreator
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IEquationControl Create() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IEquationControl CreateWithTextInput(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public EquationControlCreator() { }
 }
