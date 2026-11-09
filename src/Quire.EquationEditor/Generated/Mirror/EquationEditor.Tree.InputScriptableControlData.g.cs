@@ -36,8 +36,6 @@ public abstract partial class InputScriptableControlData : global::Quire.Equatio
     [global::Quire.Mirror.MirrorStub]
     public InputScriptableControlData(string mathNodeName, global::Quire.Controls.Core.InputControlTypes inputControlTypes) { }
     [global::Quire.Mirror.MirrorStub]
-    public InputScriptableControlData(string mathNodeName, global::Quire.Controls.Core.InputControlTypes inputControlTypes, global::Quire.EquationEditor.Tree.Transform.ParsedSExpression parsedSExp) { }
-    [global::Quire.Mirror.MirrorStub]
     protected static byte[] a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override bool IsEquivalentTo(global::Quire.EquationEditor.Tree.IInputControlData other) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

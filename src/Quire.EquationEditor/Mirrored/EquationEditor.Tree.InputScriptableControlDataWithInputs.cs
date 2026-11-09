@@ -19,6 +19,22 @@ public partial class InputScriptableControlDataWithInputs
     {
     }
 
+    public InputScriptableControlDataWithInputs(string mathNodeName, InputControlTypes inputControlTypes, Transform.ParsedSExpression parsedSExp)
+        : base(mathNodeName, inputControlTypes, parsedSExp)
+    {
+        IInputControlData control = Transform.ParsedSExpressionToComboBoxInputControlData.Transform(
+            mathNodeName, inputControlTypes, parsedSExp);
+        IInputResizableControlData resizableControl = control as IInputResizableControlData;
+        if (resizableControl != null)
+        {
+            Height = resizableControl.Height;
+            Width = resizableControl.Width;
+        }
+        IInputScriptableControlDataWithInputs scriptableControl = control as IInputScriptableControlDataWithInputs;
+        if (scriptableControl != null)
+            InputFieldSExpression = scriptableControl.InputFieldSExpression;
+    }
+
     public string InputFieldSExpression
     {
         get => e;
