@@ -150,3 +150,21 @@
   - `SetIndicatorsDimensions` declaring `Pair<double, double> pair;` before `double height = ContentSize.Height;` to place `pair` at local slot `[1]` and temporary `Size` struct local at slot `[4]`.
 - Release IL: PASS — 401 checked, 0 failures, 453 unfinished (`release-il-ba9d960dfb3e`).
 - Remaining mismatches in this batch: none.
+
+## Batch 11 — AggregateMathboardModel
+
+- Members:
+  - `AggregateMathboardModel`:
+    - Constructor: `.ctor(IWhiteboardItemPositionComparer)`
+    - Events: `RequestEvaluation`, `GetValueOfIdentifierBefore`, `TreatAsUpToDate`, `SectionsMaybeChanged`
+    - Abstract members: `Rl` (get), `BlockSectionCount` (get), `GetBlockSectionItems(uint)`, `GetBlockSectionName(uint)`, `GetBlockSectionMinHeightRatio(uint)`
+    - Methods: `Commit()`, `SetStatusSynchronized()`, `SetSynchronizationStatus(SynchronizationStatus)`, `SetCalculatingStatus(CalculatingStatus)`, `SetResult(IResultNode)`, `SetError(EngineError)`, `SetIdentifierLabels(IDictionary<ResolvedId, string[]>)`, `SetAutoSelectAlgorithm(IDictionary<int, string>)`, `SetRedefinitionWarnings(IList<EngineRedefInfo>)`, `FireRequestEvaluation()`, `FireGetValueOfIdentifierBefore(string)`, `FireTreatAsUpToDate()`, `FireSectionsMaybeChanged()`
+    - Property: `ContainsSymbolicEvaluation`
+  - Closure: `<>c.<get_ContainsSymbolicEvaluation>b__34_0`
+- Hand-written: `Mirrored/Controls.Mathboard.AggregateMathboardModel.cs`.
+- Stubs removed: `Generated/Mirror/Controls.Mathboard.AggregateMathboardModel.g.cs`.
+- Shapes:
+  - Member declaration sequence placing `ContainsSymbolicEvaluation` at member ordinal 34 to match `<>c.<get_ContainsSymbolicEvaluation>b__34_0`.
+  - Prototype `ICalculatable` interface satisfaction members (`SetResult(CalculationResult)`, `SynchronizationStatus`, `RlChanged`) placed after `ContainsSymbolicEvaluation` at the bottom of the hand-written file, keeping `AggregateMathboardModel.g.cs` empty so `.g.cs` compilation order does not shift member ordinals.
+- Release IL: PASS — 419 checked, 0 failures, 435 unfinished (`release-il-dd006b1334d3`).
+- Remaining mismatches in this batch: none.
