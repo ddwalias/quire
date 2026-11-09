@@ -258,3 +258,9 @@
 - Members: `FireIsTraceCommitted`, `FireResultValidChanged`, `FireValidateTraceVsPlotType`, `FireStyleChanged`, `SetIsCommitted` (private), `FireEquationError` (protected), `FireAnalyzedDataChanged`. Hand-written: appended to `Mirrored/Controls.Plots.Model.TraceModel.cs` (adds `using Quire.Calculation.Core;`); their stubs removed from the `.g.cs`.
 - Shapes: the `if (X != null) X(...)` form matched for the plain `Fire*` helpers. `FireAnalyzedDataChanged` and `FireEquationError` first used `?.Invoke`, which differs: Mathcad copies the event into a local before the null test (`stloc.0`/`ldloc.0`), so the handler-copy form matched.
 - Release IL: PASS — 520 checked, 520 exact, 0 failures.
+
+## Batch 37 — PlotTrace event and selection helpers
+
+- Members: `SelectTrace`, `DeselectTrace`, `fireTraceClicked` (Mathcad's lowercase name kept), `ResetIsTypeDefault`, private `FireTypeChanged`, `FireErrorChanged`, `FireCalculatingStatusChangedEvent`, `FireTraceChanged`. Hand-written: `Mirrored/Controls.Plots.PlotTrace.cs`; their stubs removed from `PlotTrace.g.cs`.
+- Shapes: the plain `if (X != null) X(...)` form matched for all but `FireTraceChanged`, which uses the handler-copy form (Mathcad's `?.Invoke` is compiled with a local, the same pattern as TraceModel batch 36).
+- Release IL: PASS — 528 checked, 528 exact, 0 failures.
