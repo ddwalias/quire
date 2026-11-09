@@ -461,3 +461,8 @@
 
 - Exact: `HyperlinkDialogLoaded` (`base.DialogLoaded()`, then clear `FrameworkElement.MaxWidthProperty` on both text boxes).
 - Release IL: PASS — 418 checked, 0 failures; one exact member added. Previously exact methods remained exact.
+
+## Batch 75 — HyperlinkDialog entry point (1)
+
+- Exact: `ShowHyperlinkDialog` (assert non-null view model, construct dialog, conditionally set owner, then return `ShowDialog().GetValueOrDefault()`).
+- Release IL: PASS — 419 checked, 0 failures; one exact member added. Previously exact methods remained exact.

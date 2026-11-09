@@ -8,6 +8,23 @@ namespace Quire.Controls.Text;
 
 public partial class HyperlinkDialog
 {
+    public static bool ShowHyperlinkDialog(HyperlinkDialogViewModel hyperlinkViewModel, Window owner)
+    {
+        if (DebugTools.AssertNotNull(hyperlinkViewModel, null).Failed)
+        {
+            return false;
+        }
+
+        HyperlinkDialog dialog = new(hyperlinkViewModel);
+        if (owner != null)
+        {
+            dialog.Owner = owner;
+        }
+
+        bool? result = dialog.ShowDialog();
+        return result.GetValueOrDefault();
+    }
+
     private void HyperlinkDialogLoaded()
     {
         base.DialogLoaded();

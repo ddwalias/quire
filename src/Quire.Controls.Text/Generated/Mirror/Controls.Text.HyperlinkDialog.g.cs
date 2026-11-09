@@ -22,8 +22,6 @@ public partial class HyperlinkDialog : global::Quire.Controls.Core.ControlsWindo
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Text.HyperlinkDialogViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public static bool ShowHyperlinkDialog(global::Quire.Controls.Text.HyperlinkDialogViewModel hyperlinkViewModel, global::System.Windows.Window owner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private HyperlinkDialog(global::Quire.Controls.Text.HyperlinkDialogViewModel hyperlinkViewModel) { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
