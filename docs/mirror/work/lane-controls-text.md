@@ -446,3 +446,13 @@
 - Exact: `ToggleScriptUndoCommand.CreateToggleScriptUndoCommand` (document identity guard, constructor call, assertion, return).
 - Not matched, left as a stub: private `.ctor`. Its first differing IL instruction is the evaluation order for the first `range.Start` pointer: Mathcad loads `this` before the range argument while Roslyn loads the range first; the remaining `ref TextPointer` local shape matches. The constructor stub remains generated.
 - Release IL: PASS — 416 checked, 0 failures, 1 exact member added. The candidate retaining the constructor stub passed after the constructor implementation failed exact comparison.
+
+## Batch 72 — WhiteboardItemInTextWrapper baseline comparison (no member landed)
+
+- Tried and reverted: `CompareBaselineOffset`. First candidate (compute the negated wrapped-item offset in a local before `DevAssert`) failed because it called `get_WrappedItem` before `TextBlock.GetBaselineOffset`; Mathcad calls `GetBaselineOffset` first. Second candidate (assignment expression on the right side of `==`) fixed call order but differed at instruction 10: Roslyn emitted `stloc.0; ldloc.0`, while Mathcad emits `dup; stloc.0` before `ceq`.
+- Release IL: FAIL — 417 checked; both reports identify only `CompareBaselineOffset` as differing. Member remains a stub.
+
+## Batch 73 — HyperlinkDialog OK button guard (1)
+
+- Exact: `OnOkButtonClick` (`DevAssert(!ViewModel.HasErrors, null).Failed` early return, then the base `OnOkButtonClick` call).
+- Release IL: PASS — 417 checked, 0 failures; one exact member added. Previously exact methods remained exact.
