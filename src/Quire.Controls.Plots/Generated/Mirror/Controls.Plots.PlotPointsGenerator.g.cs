@@ -11,12 +11,6 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotPointsGenerator, Ptc.Controls.Plots")]
 internal partial class PlotPointsGenerator
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.List<global::System.Windows.Point> points;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::System.Windows.Point> Points { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public PlotPointsGenerator(global::Quire.Controls.Plots.PlotPointsGenerator.RealFunction f, double xMin, double xMax, double nPoints) { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotPointsGenerator+RealFunction, Ptc.Controls.Plots")]
     public delegate double RealFunction(double x);

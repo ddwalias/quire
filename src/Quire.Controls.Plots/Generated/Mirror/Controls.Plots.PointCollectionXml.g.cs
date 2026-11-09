@@ -11,12 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PointCollectionXml, Ptc.Controls.Plots")]
 public partial class PointCollectionXml : global::System.Collections.ObjectModel.Collection<global::System.Windows.Point>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static double Parse(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void Validate(global::System.Xml.XmlNode x, string paramName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Add(global::System.Xml.XmlNode x, global::System.Xml.XmlNode y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PointCollectionXml() { }
 }
