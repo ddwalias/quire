@@ -12,20 +12,6 @@ namespace Quire.EquationEditor.Tree.Scoping;
 public partial class ScopedNodes
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode>> a;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool b;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode>> ScopedLines { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.MathNode GetFirstScopedNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ScopeAsSingleBlock { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.MathNode GetLastScopedNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ScopedNodes(global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode>> scopedNodesByLines, bool scopeAsSingleBlock = false) { }
-    [global::Quire.Mirror.MirrorStub]
     public bool All(global::System.Func<global::Quire.EquationEditor.Tree.MathNode, bool> predicate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool Any(global::System.Func<global::Quire.EquationEditor.Tree.MathNode, bool> predicate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
