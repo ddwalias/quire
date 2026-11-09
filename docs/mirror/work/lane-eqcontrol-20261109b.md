@@ -35,4 +35,7 @@
 - Batch: `Controls.EquationControlCreator::{Create, CreateWithTextInput, .ctor}`.
 - Shapes tried: expression-bodied constructor and factory calls matched the reference.
 - Release IL: PASS, 633 checked (`.mirror-cache/release-il-2728d78908b5/release-il.json`).
-- Remaining: all other stub-marked members in EquationControl; 5,342 markers across 298 types after this batch.
+- Batch: `Controls.SymbolDescriptorConverter::{Convert, ConvertBack, .ctor}`.
+- Shapes tried: XML attribute lookup, optional description, and `NotImplementedException` matched using idiomatic locals.
+- Release IL: PASS, 635 checked (`.mirror-cache/release-il-41d2d314c3ed/release-il.json`).
+- Remaining: all other stub-marked members in EquationControl; 5,339 markers across 297 types after this batch.
