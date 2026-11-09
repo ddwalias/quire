@@ -349,3 +349,13 @@
 
 
 
+
+## Batch 20 — WhiteboardItemsSeparator constructor, CanSeparate
+
+- Members: `WhiteboardItemsSeparator`: `.ctor(IEnumerable<IWhiteboardItem>, Dimension, IAlignmentGrid, IWhiteboardItemManager)`, `CanSeparate()`, plus the six private fields.
+- Skipped: `Separate()` (the coordinator's task note marks `WhiteboardItemsSeparator.Separate` as deferred; it stays a generated stub).
+- Hand-written: `Mirrored/Controls.Whiteboard.WhiteboardItemsSeparator.cs`; the class is now `partial` in both files.
+- Stubs removed: fields, constructor and `CanSeparate` from `Generated/Mirror/Controls.Whiteboard.WhiteboardItemsSeparator.g.cs`.
+- Shapes: `_oldItemRectMap`/`_newItemRectMap` use field initializers (IL stores them before the base call).
+- Release IL: PASS — 826 checked, 0 failures (`release-il-606dee4f3d1b`). First run `release-il-efe12761865e` failed with MSBuild `MSB4166` child-node exits and no C# errors; the rerun passed unchanged.
+- Remaining mismatches in this batch: none.
