@@ -222,5 +222,27 @@
 - Release IL: PASS — 502 checked, 0 failures, 350 unfinished (`release-il-fa956f357501`).
 - Remaining mismatches in this batch: none.
 
+## Batch 15 — AggregateMathboardControl
+
+- Members:
+  - `AggregateMathboardControl`:
+    - Properties: `AggregateModel`, `AggregateViewModel`, `HideFromCalculationContext` (get/set), `Rl`, `SynchronizationStatus`, `CalculatingStatus`, `ErrorCount`, `ErrorSExpression`, `ErrorCode`, `ErrorText`, `IsCommitted`, `Error`, `EngineResult` (get/set), `InterceptAndUpdateResult`, `UseICalculatableToRestoreResult`, `SectionIndicators`, `ContainsSymbolicEvaluation`
+    - Constructors: `.ctor(IMathboardViewModel, ResourceDictionary)`
+    - Events: `RequestEvaluation`, `GetValueOfIdentifierBefore`, `TreatAsUpToDate`
+    - Methods: `ViewModelPropertyChangedHandler(object, PropertyChangedEventArgs)`, `BindProperties()`, `HookupEvents()`, `BindCommands()`, `Commit()`, `SetStatusSynchronized()`, `SetSynchronizationStatus(SynchronizationStatus)`, `SetCalculatingStatus(CalculatingStatus)`, `SetResult(IResultNode)`, `SetError(EngineError)`, `SetIdentifierLabels(IDictionary<ResolvedId, string[]>)`, `SetAutoSelectAlgorithm(IDictionary<int, string>)`, `SetRedefinitionWarnings(IList<EngineRedefInfo>)`, `RestoreResult()`, `MeasureOverride(Size)`, `FireRequestEvaluation()`, `FireGetValueOfIdentifierBefore(string)`, `FireTreatAsUpToDate()`, `DeserializeRegionsEpilog(IDeS11NProvider, mathBoardType)`, `SerializeRegionsEpilog(IS11NProvider, mathBoardType)`
+  - Closures: `<HookupEvents>b__10_0`
+- Hand-written: `Mirrored/Controls.Mathboard.AggregateMathboardControl.cs`.
+- Stubs removed: `Generated/Mirror/Controls.Mathboard.AggregateMathboardControl.g.cs`.
+- Shapes:
+  - Member declaration sequence placing `HookupEvents` at syntax member index 10, generating exact closure name `<HookupEvents>b__10_0`.
+  - Constants `(SynchronizationStatus)3` and `(CalculatingStatus)2` matching Mathcad enum values for `Synchronized` and `NotComputing`.
+  - `ErrorCount` ternary `(Error != null) ? 1 : 0` emitting `ldnull; cgt.un; ret;`.
+  - `ErrorCode` and `ErrorText` accessing `Error` twice (`if (Error == null) return string.Empty; return Error.ErrorCode;` / `return Error.ResourceString;`) without local slot.
+  - Direct field reads in event firing methods (`if (RequestEvaluation != null) RequestEvaluation(this);`) without temporary local slots.
+  - Reassignment of `constraint` parameter in `MeasureOverride` matching `starg.s constraint`.
+- Release IL: PASS — 543 checked, 0 failures, 308 unfinished (`release-il-0b69db0490a3`).
+- Remaining mismatches in this batch: none.
+
+
 
 
