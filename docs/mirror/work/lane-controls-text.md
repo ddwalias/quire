@@ -440,3 +440,9 @@
 
 - Tried and reverted, no member landed: `ComputeProofingLanguage` (lambda `<ComputeProofingLanguage>b__N_0`: ours 293 at the end of the hand-written partial and 193 at its top, Mathcad 169), `ContextMenuOpened` (ordering of the bool store and the array element load differs from Mathcad), `SetStyleFromTextStyles` (display class 105 in Mathcad; not attempted after the ordinal check).
 - Finding: `RichTextBase` has about 193 generated members, and they come before the hand-written partial in the merged type. Any closure whose Mathcad ordinal is below about 193 cannot match by placement alone (`ComputeProofingLanguage` 169, `SetStyleFromTextStyles` 105, `ExecuteAddItemToListCommand` 117 in `RichTextWithEmbeddedItem`). Those need the generated-member count reduced, which only the maintainer's MirrorGen can change.
+
+## Batch 71 — ToggleScriptUndoCommand factory (1)
+
+- Exact: `ToggleScriptUndoCommand.CreateToggleScriptUndoCommand` (document identity guard, constructor call, assertion, return).
+- Not matched, left as a stub: private `.ctor`. Its first differing IL instruction is the evaluation order for the first `range.Start` pointer: Mathcad loads `this` before the range argument while Roslyn loads the range first; the remaining `ref TextPointer` local shape matches. The constructor stub remains generated.
+- Release IL: PASS — 416 checked, 0 failures, 1 exact member added. The candidate retaining the constructor stub passed after the constructor implementation failed exact comparison.

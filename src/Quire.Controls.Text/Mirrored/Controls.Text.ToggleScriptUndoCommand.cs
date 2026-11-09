@@ -20,6 +20,22 @@ public partial class ToggleScriptUndoCommand
     private readonly int _insertionPoint;
     private readonly bool _shouldRecreateSelection;
 
+    public static ToggleScriptUndoCommand CreateToggleScriptUndoCommand(
+        RichTextBase textRegion,
+        DocumentTextRange range,
+        ScriptState switchToScript,
+        bool bRecreateSelection = true)
+    {
+        ToggleScriptUndoCommand command = !textRegion.Document.ContentStart.IsInSameDocument(range.Start)
+            ? null
+            : new ToggleScriptUndoCommand(textRegion, range, switchToScript, bRecreateSelection);
+        if (command == null)
+        {
+            DebugTools.FailAssertion(null, Array.Empty<object>());
+        }
+        return command;
+    }
+
     public string Name => "Toggle Range Text";
 
     public bool Do()

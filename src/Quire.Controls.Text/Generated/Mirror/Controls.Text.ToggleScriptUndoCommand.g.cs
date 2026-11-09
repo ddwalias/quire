@@ -12,7 +12,5 @@ namespace Quire.Controls.Text;
 public partial class ToggleScriptUndoCommand : global::Quire.Undo.IUndoableCommand
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Text.ToggleScriptUndoCommand CreateToggleScriptUndoCommand(global::Quire.Controls.Text.RichTextBase textRegion, global::System.Windows.Documents.TextRange range, global::Quire.Controls.Text.ScriptState switchToScript, bool bRecreateSelection = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private ToggleScriptUndoCommand(global::Quire.Controls.Text.RichTextBase textRegion, global::System.Windows.Documents.TextRange range, global::Quire.Controls.Text.ScriptState switchToScript, bool bRecreateSelection) { }
 }
