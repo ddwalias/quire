@@ -22,5 +22,6 @@
 - Batch 23 child wrapper format and constructor: PASS (`60 checked`; `.mirror-cache/release-il-6cfd2635c8f4`).
 - Batch 24 `HideableSolverAggregate`: PASS (`65 checked`; `.mirror-cache/release-il-46127dde98e9`); landed `4e856283` (`Mirror HideableSolverAggregate`). Initial setter conditional had inverted branch layout; a negative type-pattern guard with early return matched the reference.
 - Batch 25 `HideableSolveBlockCalculatable`: PASS (`74 checked`; `.mirror-cache/release-il-05e5e4f024de`). Initial setter `if` emitted a branch to the return instead of the update body; the explicit branch shape matched the reference.
+- Batch 26 `HideableSolveBlockCalculatableAggregate`: PASS (`83 checked`; `.mirror-cache/release-il-2e1e5969feb2`). Reused the setter branch shape required by the reference.
 - `GetEquationTypeOfRl` remains stubbed due enum/closure mismatch.
-- Remaining: 348 stub markers in 18 generated types; no known mismatches in landed batches.
+- Remaining: 340 stub markers in 18 generated types; no known mismatches in landed batches.
