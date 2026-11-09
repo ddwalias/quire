@@ -35,14 +35,16 @@ public partial class TextStyleData
     [MirrorVerified("PtcTextStyleDataMechanicalDifferentialTests")]
     public override string ToString() => StyleName;
 
+    private static readonly Type _typeOfThis = typeof(TextStyleData);
+
     [MirrorVerified("PtcTextStyleDataMechanicalDifferentialTests")]
-    public static DependencyProperty StyleProperty;
+    public static DependencyProperty StyleProperty = DependencyProperty.Register("Style", typeof(Style), _typeOfThis);
 
     [MirrorVerified("PtcTextStyleDataMechanicalDifferentialTests")]
     internal static void SetStyle(DependencyObject element, Style value) => element.SetValue(StyleProperty, value);
 
     [MirrorVerified("PtcTextStyleDataMechanicalDifferentialTests")]
-    public static DependencyProperty StyleNameProperty;
+    public static DependencyProperty StyleNameProperty = DependencyProperty.Register("StyleName", typeof(string), _typeOfThis);
 
     [MirrorVerified("PtcTextStyleDataMechanicalDifferentialTests")]
     internal static void SetStyleName(DependencyObject element, string value) => element.SetValue(StyleNameProperty, value);

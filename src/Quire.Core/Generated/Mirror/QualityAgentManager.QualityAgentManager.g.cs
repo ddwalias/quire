@@ -11,22 +11,4 @@ namespace Quire.QualityAgentManager;
 [global::Quire.Mirror.MirrorOf("Ptc.QualityAgentManager.QualityAgentManager, Ptc.Core")]
 public partial class QualityAgentManager : global::Quire.QualityAgentManager.IQualityAgentManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string ProdDcuExe = "prod_dcu.exe";
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string _mathcadPrimeInstallPath;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.QualityAgentManager.IQualityAgentReportData _reportData;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.DateTime _startupTime;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string _mathcadPrimeVersion;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Threading.Tasks.Task _computeCheckSumOperationState;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Action _checkSumDelegate;
-    [global::Quire.Mirror.MirrorStub]
-    private string _mathcadPrimeChecksum;
-    [global::Quire.Mirror.MirrorStub]
-    private const string Dummy = "1234567890123456789012345678901234567890123456789012345678901234";
 }

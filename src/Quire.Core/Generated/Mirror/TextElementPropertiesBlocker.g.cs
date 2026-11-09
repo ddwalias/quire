@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.TextElementPropertiesBlocker, Ptc.Core")]
 public static partial class TextElementPropertiesBlocker
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IList<global::System.Windows.DependencyProperty> _dependencyPropertiesToFixate;
 }

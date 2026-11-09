@@ -11,18 +11,4 @@ namespace Quire.QualityAgentManager;
 [global::Quire.Mirror.MirrorOf("Ptc.QualityAgentManager.QualityAgentReportData, Ptc.Core")]
 public partial struct QualityAgentReportData : global::Quire.QualityAgentManager.IQualityAgentReportData
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string DateTimeReportFormat = "R";
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Nullable<global::System.DateTime> _licenseIssueDate;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.DateTime _startTime;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.DateTime _endTime;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.TimeZoneInfo _timeZone;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Globalization.CultureInfo _currentCulture;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Globalization.CultureInfo _currentUiCulture;
 }

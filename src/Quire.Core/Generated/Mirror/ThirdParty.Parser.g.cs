@@ -11,61 +11,24 @@ namespace Quire.ThirdParty;
 [global::Quire.Mirror.MirrorOf("Ptc.ThirdParty.Parser, Ptc.Core")]
 public sealed partial class Parser
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string NewLine = "\r\n";
-    [global::Quire.Mirror.MirrorStub]
-    private const int STD_OUTPUT_HANDLE = -11;
-    [global::Quire.Mirror.MirrorStub]
-    private const int spaceBeforeParam = 2;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.ArrayList arguments;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Hashtable argumentMap;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.ThirdParty.ErrorReporter reporter;
-
     [global::Quire.Mirror.MirrorOf("Ptc.ThirdParty.Parser+HelpArgument, Ptc.Core")]
     private partial class HelpArgument
     {
-        [global::Quire.Mirror.MirrorStub]
-        public bool help;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.ThirdParty.Parser+COORD, Ptc.Core")]
     private partial struct COORD
     {
-        [global::Quire.Mirror.MirrorStub]
-        internal short x;
-        [global::Quire.Mirror.MirrorStub]
-        internal short y;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.ThirdParty.Parser+SMALL_RECT, Ptc.Core")]
     private partial struct SMALL_RECT
     {
-        [global::Quire.Mirror.MirrorStub]
-        internal short Left;
-        [global::Quire.Mirror.MirrorStub]
-        internal short Top;
-        [global::Quire.Mirror.MirrorStub]
-        internal short Right;
-        [global::Quire.Mirror.MirrorStub]
-        internal short Bottom;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.ThirdParty.Parser+CONSOLE_SCREEN_BUFFER_INFO, Ptc.Core")]
     private partial struct CONSOLE_SCREEN_BUFFER_INFO
     {
-        [global::Quire.Mirror.MirrorStub]
-        internal global::Quire.ThirdParty.Parser.COORD dwSize;
-        [global::Quire.Mirror.MirrorStub]
-        internal global::Quire.ThirdParty.Parser.COORD dwCursorPosition;
-        [global::Quire.Mirror.MirrorStub]
-        internal short wAttributes;
-        [global::Quire.Mirror.MirrorStub]
-        internal global::Quire.ThirdParty.Parser.SMALL_RECT srWindow;
-        [global::Quire.Mirror.MirrorStub]
-        internal global::Quire.ThirdParty.Parser.COORD dwMaximumWindowSize;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.ThirdParty.Parser+ArgumentHelpStrings, Ptc.Core")]
@@ -76,11 +39,5 @@ public sealed partial class Parser
     [global::Quire.Mirror.MirrorOf("Ptc.ThirdParty.Parser+Argument, Ptc.Core")]
     private partial class Argument
     {
-        [global::Quire.Mirror.MirrorStub]
-        private global::System.Type elementType;
-        [global::Quire.Mirror.MirrorStub]
-        private global::Quire.ThirdParty.ArgumentType flags;
-        [global::Quire.Mirror.MirrorStub]
-        private global::System.Collections.ArrayList collectionValues;
     }
 }

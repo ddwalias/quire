@@ -1,4 +1,5 @@
 #nullable disable
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Linq;
 using Quire.Mirror;
@@ -57,4 +58,6 @@ public partial class Encryptor
         };
         DebugTools.DevAssert(_legacyDecryptorsDictionary.First().Value.CanReuseTransform, null);
     }
+
+    private SortedDictionary<Version, ICryptoTransform> _legacyDecryptorsDictionary;
 }

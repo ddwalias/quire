@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.Encryptor, Ptc.Core")]
 public partial class Encryptor : global::Quire.IEncryptor, global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.SortedDictionary<global::System.Version, global::System.Security.Cryptography.ICryptoTransform> _legacyDecryptorsDictionary;
 }

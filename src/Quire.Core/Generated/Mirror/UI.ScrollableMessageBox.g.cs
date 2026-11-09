@@ -11,8 +11,4 @@ namespace Quire.UI;
 [global::Quire.Mirror.MirrorOf("Ptc.UI.ScrollableMessageBox, Ptc.Core")]
 public partial class ScrollableMessageBox : global::System.Windows.Window, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Button okButton;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
 }

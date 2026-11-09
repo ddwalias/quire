@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.TextStyleData, Ptc.Core")]
 public partial class TextStyleData : global::System.Windows.DependencyObject
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
 }

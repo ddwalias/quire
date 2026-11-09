@@ -7,6 +7,16 @@ namespace Quire.QualityAgentManager;
 
 public partial class QualityAgentManager
 {
+    private const string ProdDcuExe = "prod_dcu.exe";
+    private readonly string _mathcadPrimeInstallPath;
+    private IQualityAgentReportData _reportData;
+    private readonly DateTime _startupTime;
+    private readonly string _mathcadPrimeVersion;
+    private readonly global::System.Threading.Tasks.Task _computeCheckSumOperationState;
+    private readonly Action _checkSumDelegate;
+    private string _mathcadPrimeChecksum;
+    private const string Dummy = "1234567890123456789012345678901234567890123456789012345678901234";
+
     [MirrorVerified("Release IL")]
     public QualityAgentManager(string mathcadPrimeInstallationPath)
     {

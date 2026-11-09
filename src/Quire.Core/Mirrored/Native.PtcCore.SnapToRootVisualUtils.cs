@@ -5,6 +5,8 @@ namespace Quire.Native.PtcCore;
 
 static partial class SnapToRootVisualUtils
 {
+    private static global::System.Windows.Media.ScaleTransform _dpiScale;
+
     private static global::System.Windows.Media.ScaleTransform DpiScale
     {
         get

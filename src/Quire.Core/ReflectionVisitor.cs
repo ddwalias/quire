@@ -7,6 +7,9 @@ namespace Quire;
 
 public partial class ReflectionVisitor
 {
+    private System.Reflection.MethodInfo _lastMethod;
+    private object _lastVisitable;
+
     [MirrorVerified("Release IL")]
     public void Visit(object visitable)
     {

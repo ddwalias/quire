@@ -11,10 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.PropertyChangeUpdateMonitor, Ptc.Core")]
 public partial class PropertyChangeUpdateMonitor : global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.Dictionary<string, global::System.ValueTuple<object, object>> _propertiesUpdated;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.ComponentModel.INotifyPropertyChanged _objectToMonitor;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Action<global::System.Collections.Generic.IDictionary<string, global::System.ValueTuple<object, object>>> _actionToPerform;
 }

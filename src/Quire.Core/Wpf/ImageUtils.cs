@@ -21,6 +21,20 @@ namespace Quire.Wpf;
 
 public partial class ImageUtils
 {
+    public string ImageExtension;
+
+    public static partial class BitmapFormats
+    {
+        public const string Gif = "gif";
+        public const string Jpg = "jpg";
+        public const string Jpeg = "jpeg";
+        public const string Tiff = "tiff";
+        public const string Tif = "tif";
+        public const string Wdp = "wdp";
+        public const string Bmp = "bmp";
+        public const string Png = "png";
+    }
+
     [MirrorVerified("PtcWpfImageUtilsMechanicalDifferentialTests")]
     public static BitmapSource CreateBitmapFromVisual(double dpiX, double dpiY, Rect box, Visual visual) => CreateBitmapFromVisual(dpiX, dpiY, box, visual, false, null);
 

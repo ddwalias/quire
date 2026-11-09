@@ -88,8 +88,20 @@ public partial class ChunkedMemoryStream
     [MirrorVerified("MindTouchIOChunkedMemoryStreamMechanicalDifferentialTests")]
     public static int ChunkSize { get; set; }
 
+    public const int DefaultChunkSize = 16384;
+    private long _length;
+    private long _position;
+    private byte[] _buffer;
+    private readonly int _bufferIndex;
+    private int _bufferCount;
+    private byte[][] _chunks;
+
     [MirrorVerified("Release IL")]
     private bool _closed;
+
+    private readonly bool _fixed;
+    private readonly bool _readonly;
+    private readonly bool _publiclyVisible;
 
     [MirrorVerified("Release IL")]
     public override bool CanRead => !_closed;

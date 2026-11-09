@@ -11,8 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.WpfUtils, Ptc.Core")]
 public static partial class WpfUtils
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string ApplicationExpressNameResourceKey = "Application.ExpressVersionName";
-    [global::Quire.Mirror.MirrorStub]
-    public const string WaitToPrintoutReadyKey = "WaitToPrintoutReadyQuestionMessage";
 }

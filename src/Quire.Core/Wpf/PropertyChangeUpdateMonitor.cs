@@ -5,6 +5,10 @@ namespace Quire.Wpf;
 
 public partial class PropertyChangeUpdateMonitor
 {
+    private global::System.Collections.Generic.Dictionary<string, global::System.ValueTuple<object, object>> _propertiesUpdated;
+    private readonly global::System.ComponentModel.INotifyPropertyChanged _objectToMonitor;
+    private readonly global::System.Action<global::System.Collections.Generic.IDictionary<string, global::System.ValueTuple<object, object>>> _actionToPerform;
+
     [MirrorVerified("Release IL")]
     public PropertyChangeUpdateMonitor(
         System.ComponentModel.INotifyPropertyChanged objectToMonitor,

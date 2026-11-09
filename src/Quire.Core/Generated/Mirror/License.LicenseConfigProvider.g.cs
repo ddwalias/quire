@@ -14,13 +14,5 @@ public partial class LicenseConfigProvider
     [global::Quire.Mirror.MirrorOf("Ptc.License.LicenseConfigProvider+XmlNodeNames, Ptc.Core")]
     private static partial class XmlNodeNames
     {
-        [global::Quire.Mirror.MirrorStub]
-        public const string LicenseConfigElemName = "LicenseConfig";
-        [global::Quire.Mirror.MirrorStub]
-        public const string LicenseCodesElemName = "LicenseCodes";
-        [global::Quire.Mirror.MirrorStub]
-        public const string HashCodeElemName = "HashCode";
-        [global::Quire.Mirror.MirrorStub]
-        public const string ProductCodeElemName = "ProductCode";
     }
 }

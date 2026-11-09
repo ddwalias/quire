@@ -11,26 +11,8 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ImageUtils, Ptc.Core")]
 public partial class ImageUtils
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string ImageExtension;
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ImageUtils+BitmapFormats, Ptc.Core")]
     public static partial class BitmapFormats
     {
-        [global::Quire.Mirror.MirrorStub]
-        public const string Gif = "gif";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Jpg = "jpg";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Jpeg = "jpeg";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Tiff = "tiff";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Tif = "tif";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Wdp = "wdp";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Bmp = "bmp";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Png = "png";
     }
 }

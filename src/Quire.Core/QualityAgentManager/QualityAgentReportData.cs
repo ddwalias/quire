@@ -5,7 +5,14 @@ namespace Quire.QualityAgentManager;
 
 public partial struct QualityAgentReportData
 {
+    private const string DateTimeReportFormat = "R";
+    private readonly global::System.DateTime? _licenseIssueDate;
     private readonly global::Quire.License.LicenseType _licenseType;
+    private readonly global::System.DateTime _startTime;
+    private readonly global::System.DateTime _endTime;
+    private readonly global::System.TimeZoneInfo _timeZone;
+    private readonly global::System.Globalization.CultureInfo _currentCulture;
+    private readonly global::System.Globalization.CultureInfo _currentUiCulture;
 
     public QualityAgentReportData(
         string hostId,

@@ -4,6 +4,8 @@ namespace Quire;
 
 public static partial class TextElementPropertiesBlocker
 {
+    private static global::System.Collections.Generic.IList<global::System.Windows.DependencyProperty> _dependencyPropertiesToFixate;
+
     // Preserve Mathcad's method ordinal for the LINQ callbacks below.
     static TextElementPropertiesBlocker()
     {

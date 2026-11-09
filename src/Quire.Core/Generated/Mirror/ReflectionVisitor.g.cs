@@ -11,8 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.ReflectionVisitor, Ptc.Core")]
 public abstract partial class ReflectionVisitor : global::Quire.IReflectionVisitor, global::Quire.IVisitor
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.MethodInfo _lastMethod;
-    [global::Quire.Mirror.MirrorStub]
-    private object _lastVisitable;
 }

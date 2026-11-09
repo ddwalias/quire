@@ -11,6 +11,4 @@ namespace Quire.Native.PtcCore;
 [global::Quire.Mirror.MirrorOf("SnapToRootVisualUtils, Ptc.Core")]
 public static partial class SnapToRootVisualUtils
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.Media.ScaleTransform _dpiScale;
 }

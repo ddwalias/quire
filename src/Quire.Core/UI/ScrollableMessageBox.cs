@@ -21,6 +21,10 @@ public partial class ScrollableMessageBox
     [MirrorVerified("Release IL")]
     internal TextBox MessageContainer;
 
+    internal Button okButton;
+
+    private bool _contentLoaded;
+
     [MirrorVerified("Release IL")]
     public ScrollableMessageBox(string message, string caption)
     {

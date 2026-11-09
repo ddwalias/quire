@@ -11,24 +11,4 @@ namespace Quire.MindTouch.IO;
 [global::Quire.Mirror.MirrorOf("MindTouch.IO.ChunkedMemoryStream, Ptc.Core")]
 public partial class ChunkedMemoryStream : global::System.IO.Stream
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const int DefaultChunkSize = 16384;
-    [global::Quire.Mirror.MirrorStub]
-    private long _length;
-    [global::Quire.Mirror.MirrorStub]
-    private long _position;
-    [global::Quire.Mirror.MirrorStub]
-    private byte[] _buffer;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly int _bufferIndex;
-    [global::Quire.Mirror.MirrorStub]
-    private int _bufferCount;
-    [global::Quire.Mirror.MirrorStub]
-    private byte[][] _chunks;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool _fixed;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool _readonly;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool _publiclyVisible;
 }

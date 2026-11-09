@@ -19,8 +19,34 @@ public partial class Parser
 
     partial class HelpArgument
     {
+        [Argument(ArgumentType.AtMostOnce, ShortName = "?")]
+        public bool help;
+
         [MirrorVerified("PtcThirdPartyParserMechanicalDifferentialTests")]
         public HelpArgument() { }
+    }
+
+    private partial struct COORD
+    {
+        internal short x;
+        internal short y;
+    }
+
+    private partial struct SMALL_RECT
+    {
+        internal short Left;
+        internal short Top;
+        internal short Right;
+        internal short Bottom;
+    }
+
+    private partial struct CONSOLE_SCREEN_BUFFER_INFO
+    {
+        internal COORD dwSize;
+        internal COORD dwCursorPosition;
+        internal short wAttributes;
+        internal SMALL_RECT srWindow;
+        internal COORD dwMaximumWindowSize;
     }
 
     partial struct ArgumentHelpStrings
@@ -89,6 +115,10 @@ public partial class Parser
         [MirrorVerified("PtcThirdPartyParserMechanicalDifferentialTests")]
         public Type Type => fieldInfo.FieldType;
 
+        private Type elementType;
+        private ArgumentType flags;
+        private global::System.Collections.ArrayList collectionValues;
+
         [MirrorVerified("PtcThirdPartyParserMechanicalDifferentialTests")]
         private bool isDefault;
 
@@ -108,8 +138,16 @@ public partial class Parser
     [MirrorVerified("Release IL")]
     private static ArgumentHelpStrings GetHelpStrings(Argument arg) => new ArgumentHelpStrings(arg.SyntaxHelp, arg.FullHelpText);
 
+    public const string NewLine = "\r\n";
+    private const int STD_OUTPUT_HANDLE = -11;
+    private const int spaceBeforeParam = 2;
+    private global::System.Collections.ArrayList arguments;
+    private global::System.Collections.Hashtable argumentMap;
+
     [MirrorVerified("Release IL")]
     private Argument defaultArgument;
+
+    private ErrorReporter reporter;
 
     [MirrorVerified("Release IL")]
     public bool HasDefaultArgument => defaultArgument != null;

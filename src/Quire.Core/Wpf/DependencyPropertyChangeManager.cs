@@ -10,6 +10,8 @@ namespace Quire.Wpf;
 
 public static partial class DependencyPropertyChangeManager
 {
+    private static readonly Type _typeOfPropertyChangeManager = typeof(DependencyPropertyChangeManager);
+    private static readonly DependencyPropertyKey _propertyChangeNotifiersKey = DependencyProperty.RegisterAttachedReadOnly("PropertyChangeNotifiers", typeof(IDictionary<DependencyProperty, DependencyPropertyChangeNotifier>), _typeOfPropertyChangeManager, new PropertyMetadata((PropertyChangedCallback)null));
     public static void AddPropertyChangedHandler(DependencyProperty property, DependencyObject obj, DependencyPropertyChangedEventHandler handler)
     {
         if (DebugTools.AssertNotNull(obj, null).Failed)
@@ -143,8 +145,8 @@ public static partial class DependencyPropertyChangeManager
         [MirrorVerified("Release IL")]
         public bool HasSourcePropertyChangedHandlers() => SourcePropertyChanged != null;
 
-        [MirrorVerified("Release IL")]
-        public static readonly DependencyProperty ValueProperty;
+        private static readonly Type _typeOfPropertyChangeNotifier = typeof(DependencyPropertyChangeNotifier);
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(object), _typeOfPropertyChangeNotifier, new PropertyMetadata((PropertyChangedCallback)HandleValueChanged));
 
         [MirrorVerified("Release IL")]
         public void Dispose()

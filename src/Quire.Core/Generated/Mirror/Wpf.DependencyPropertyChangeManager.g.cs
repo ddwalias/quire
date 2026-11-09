@@ -11,15 +11,8 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.DependencyPropertyChangeManager, Ptc.Core")]
 public static partial class DependencyPropertyChangeManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfPropertyChangeManager;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyPropertyKey _propertyChangeNotifiersKey;
-
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.DependencyPropertyChangeManager+DependencyPropertyChangeNotifier, Ptc.Core")]
     private partial class DependencyPropertyChangeNotifier : global::System.Windows.DependencyObject, global::System.IDisposable
     {
-        [global::Quire.Mirror.MirrorStub]
-        private static readonly global::System.Type _typeOfPropertyChangeNotifier;
     }
 }
