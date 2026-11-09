@@ -119,3 +119,9 @@
 - Members: `PointCollectionXml` (static `Parse`, static `Validate`, `Add(XmlNode, XmlNode)` overload, `.ctor`); `PlotPointsGenerator` (readonly `points` field with its initializer, `Points` getter, `.ctor` with the bottom-tested `for` loop and `break`). The nested `RealFunction` delegate stays in the `.g.cs`. Hand-written: `Mirrored/Controls.Plots.{PointCollectionXml,PlotPointsGenerator}.cs`; stubs removed from both `.g.cs`.
 - Shapes: all matched the opcode check first time.
 - Release IL: PASS — 446 checked, 446 exact, 0 failures, 4808 unfinished.
+
+## Batch 18 — Presenter.TraceStyleSelector
+
+- Members: `_currentColorIndex` field, `ApplyNextStyle(ITraceModel)` (castclass to `SolidColorBrush` for the colour, enum `none` and `Solid` assignments, `++` with a `>=` wrap to zero), `.ctor`. Hand-written: `Mirrored/Controls.Plots.Presenter.TraceStyleSelector.cs`; stubs removed from the `.g.cs`.
+- Shapes: all matched the opcode check first time.
+- Release IL: PASS — 447 checked, 447 exact, 0 failures, 4807 unfinished.
