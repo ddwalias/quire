@@ -528,3 +528,10 @@
 - Hand-written: `src/Quire.Controls.Text/Mirrored/Controls.Text.RichTextBase.cs`; stubs removed from `Generated/Mirror/Controls.Text.RichTextBase.g.cs`.
 - Release IL: PASS — 457 checked, 0 failures (`.mirror-cache/gate-b85b`).
 - Remaining mismatches in this batch: none.
+
+## Batch 86 — RichTextWithEmbeddedItem calculation-button, format, and tooltip properties (6)
+
+- Exact: `HideFromCalculationButtonEnabled`, `HideFromCalculationButtonChecked`, `CurrentNumberFormat`, `CurrentMatrixFormat`, `CurrentMathFormat` (field-backed get; set stores the field then `FirePropertyChanged` with the property name), `HyperlinkCanHaveToolTip` (dependency property get/set through `GetValue`/`SetValue`).
+- Hand-written: `src/Quire.Controls.Text/Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stubs removed from `Generated/Mirror/Controls.Text.RichTextWithEmbeddedItem.g.cs`.
+- Release IL: PASS — 469 checked, 0 failures (`.mirror-cache/gate-b86`); 12 accessors added.
+- Remaining mismatches in this batch: none.

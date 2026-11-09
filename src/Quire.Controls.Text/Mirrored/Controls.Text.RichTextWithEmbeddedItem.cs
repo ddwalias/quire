@@ -997,4 +997,60 @@ public partial class RichTextWithEmbeddedItem
         }
         return result;
     }
+
+    public bool HideFromCalculationButtonEnabled
+    {
+        get => _hideFromCalculationButtonEnabled;
+        set
+        {
+            _hideFromCalculationButtonEnabled = value;
+            FirePropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(HideFromCalculationButtonEnabled)));
+        }
+    }
+
+    public bool HideFromCalculationButtonChecked
+    {
+        get => _hideFromCalculationButtonChecked;
+        set
+        {
+            _hideFromCalculationButtonChecked = value;
+            FirePropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(HideFromCalculationButtonChecked)));
+        }
+    }
+
+    public NumberFormat CurrentNumberFormat
+    {
+        get => _currentNumberFormat;
+        set
+        {
+            _currentNumberFormat = value;
+            FirePropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(CurrentNumberFormat)));
+        }
+    }
+
+    public MatrixFormat CurrentMatrixFormat
+    {
+        get => _currentMatrixFormat;
+        set
+        {
+            _currentMatrixFormat = value;
+            FirePropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(CurrentMatrixFormat)));
+        }
+    }
+
+    public MathFormat CurrentMathFormat
+    {
+        get => _currentMathFormat;
+        set
+        {
+            _currentMathFormat = value;
+            FirePropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(CurrentMathFormat)));
+        }
+    }
+
+    public bool HyperlinkCanHaveToolTip
+    {
+        get => (bool)GetValue(HyperlinkCanHaveToolTipProperty);
+        set => SetValue(HyperlinkCanHaveToolTipProperty, value);
+    }
 }
