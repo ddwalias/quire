@@ -66,4 +66,7 @@
 - Batch: `Controls.InputControls.IsUnitCellConverter::{Instance, .ctor, Convert, ConvertBack}`.
 - Shapes tried: short-circuit type-pattern expression and `NotImplementedException` matched.
 - Release IL: PASS, 666 checked (`.mirror-cache/release-il-92cfbd6ec368/release-il.json`).
+- Batch: `Controls.InputControls.RadioButtonEventAggregator::{IsCheckedChanged, PublishIsCheckedChanged, .ctor}`.
+- Shapes tried: field-like event accessors, null-conditional event invocation, and empty constructor matched.
+- Release IL: PASS, 667 checked (`.mirror-cache/release-il-b0ea66752af2/release-il.json`).
 - Remaining: all other stub-marked members in EquationControl; 5,316 markers across 294 types after this batch.

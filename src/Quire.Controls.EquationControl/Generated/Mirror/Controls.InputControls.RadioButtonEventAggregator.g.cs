@@ -11,10 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.RadioButtonEventAggregator, Ptc.Controls.EquationControl")]
 public partial class RadioButtonEventAggregator
 {
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler<global::Quire.Controls.InputControls.RadioButtonCheckedChangedEventArgs> IsCheckedChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public void PublishIsCheckedChanged(global::Quire.Controls.InputControls.RadioButtonViewModel sourceViewModel, bool isChecked) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public RadioButtonEventAggregator() { }
 }
