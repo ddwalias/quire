@@ -26,4 +26,7 @@
 - Batch: `Controls.InputControls.EditableComboBoxCommands::{OpenEditingMode, CloseEditingMode}`.
 - Shapes tried: ordered static field initializers, including the functionality command constructor, matched the reference type initializer.
 - Release IL: PASS, 625 checked (`.mirror-cache/release-il-8b4e27ddea81/release-il.json`).
-- Remaining: all other stub-marked members in EquationControl; 5,354 markers across 303 types after this batch.
+- Batch: `Controls.ControlAdorners.OuterGrabbingAreaMarginConverter` and `OuterGrabbingAreaVisibilityConverter` (`Convert`, `ConvertBack`, `.ctor` each).
+- Shapes tried: type tests with explicit unbox/default branches, thickness calculation, visibility thresholds, and `NotImplementedException` matched.
+- Release IL: PASS, 629 checked (`.mirror-cache/release-il-7a22e9ab3455/release-il.json`).
+- Remaining: all other stub-marked members in EquationControl; 5,348 markers across 301 types after this batch.
