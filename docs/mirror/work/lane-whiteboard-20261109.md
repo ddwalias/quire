@@ -186,3 +186,19 @@
 - Release IL: PASS — 442 checked, 0 failures, 412 unfinished (`release-il-8608bd007943`).
 - Remaining mismatches in this batch: none.
 
+## Batch 13 — WhiteboardItemManager
+
+- Members:
+  - `WhiteboardItemManager`:
+    - Methods: `GetItemIsInPasting(IWhiteboardItem)`, `SetItemIsInPasting(IWhiteboardItem, bool)`, `ClearItemIsInPasting(IWhiteboardItem)`, `GetItemIsInPrinting(IWhiteboardItem)`, `SetItemIsInPrinting(IWhiteboardItem, bool)`, `ClearItemIsInPrinting(IWhiteboardItem)`, `GetItemLocation(IWhiteboardItem)`, `GetItemLocation(IWhiteboardItem, Func<UIElement, double>, Func<UIElement, double>)`, `GetItemLocation(IWorksheetPageBreak, Func<UIElement, double>, Func<UIElement, double>)`, `GetItemLocation(UIElement, Func<UIElement, double>, Func<UIElement, double>)`, `SetItemLocation(IWhiteboardItem, Point)`, `GetItemPresenter(IWhiteboardItem)`, `ShouldItemBeDeletedIfEmpty(IWhiteboardItem)`, `SetShouldItemBeDeletedIfEmpty(IWhiteboardItem, bool)`, `ClearShouldItemBeDeletedIfEmpty(IWhiteboardItem)`, `IsResizingItem(IWhiteboardItem)`, `GetIgnoreForHorizontalMovementAndWidth(IWhiteboardItem)`, `ItemsOverlapped(IEnumerable<IWhiteboardItem>)`, `GetItemRect(IWhiteboardItem)`, `GetItemTop(IWhiteboardItem)`, `GetItemBottom(IWhiteboardItem)`, `SortItemsByLocation(IEnumerable<IWhiteboardItem>, bool)`, `.ctor()`
+  - Closures: `<SortItemsByLocation>b__21_0`, `<SortItemsByLocation>b__21_1`
+- Hand-written: `Mirrored/Controls.Whiteboard.WhiteboardItemManager.cs`.
+- Stubs removed: `Generated/Mirror/Controls.Whiteboard.WhiteboardItemManager.g.cs`.
+- Shapes:
+  - Declaration sequence placing `SortItemsByLocation` at member index 21, generating exact closure names `<SortItemsByLocation>b__21_0` and `<SortItemsByLocation>b__21_1`.
+  - `SetItemLocation`: `IWhiteboardItemPresenter itemPresenter = GetItemPresenter(item); if (itemPresenter != null) itemPresenter.HandleItemLocationChanged(point);` to produce local slot 0 and `brfalse.s` branching instead of `?.` operator's stack dup.
+  - `GetIgnoreForHorizontalMovementAndWidth`: `return item is IOleContainer || item is IPageWideSizable;` matching `brtrue.s` jump to `ldc.i4.1; ret;`.
+- Release IL: PASS — 466 checked, 0 failures, 388 unfinished (`release-il-729bae86dfa0`).
+- Remaining mismatches in this batch: none.
+
+
