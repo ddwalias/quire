@@ -47,4 +47,8 @@
 - Batch: `Controls.VisualFunctionDescriptor::{Params, Header, Command, CommandParameter, ScreenRepresentation, .ctor}`.
 - Shapes tried: comma-counting `while`, four-part header concatenation, static command getter/empty setter, fallback screen representation, and function label initialization matched.
 - Release IL: PASS, 646 checked (`.mirror-cache/release-il-f4fe6b2c7682/release-il.json`).
-- Remaining: all other stub-marked members in EquationControl; 5,329 markers across 295 types after this batch.
+- Unfinished: `Controls.AlgorithmOptionsIconConverter::{CheckMarkIcon, Convert, ConvertBack, .ctor}`. Tried `if/else`, conditional expressions, and goto labels; all gated candidates differed. Reports: `6eb1d4927b4d` (getter/comparison order), `6c5388364c31` and `8adcbedfda61` (getter order), `b037da61e357` (first branch offset), `53e86a46a89c` (second branch direction/offset). Restore stubs and resume later without repeating these shapes.
+- Batch: `Controls.SymbolDescriptorFilter::{FilterByCategoryKey, FilterExcludingCategoryKey, FilterByCanonicalName, MatchCategory, MatchCanonicalName}`.
+- Shapes tried: explicit `DictionaryEntry` locals fixed evaluation order; `MatchCategory` foreach and canonical-name for loop matched. Property-pattern if/else differed in branch layout; the labeled false/accepted paths matched.
+- Release IL: PASS, 651 checked (`.mirror-cache/release-il-f413d4aa974f/release-il.json`). Earlier candidates: FAIL at `71266f8a0173`, `9d8c769456df`, and `ac51a073577a` (local/evaluation order and exclusion branch layout).
+- Remaining: all other stub-marked members in EquationControl; 5,324 markers across 294 types after this batch.
