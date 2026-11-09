@@ -11,36 +11,4 @@ namespace Quire.Controls.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOItemCollection, Ptc.Controls")]
 internal partial class IOItemCollection : global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Core.IORegions.IIOItem>, global::Quire.Controls.Core.IORegions.IIOItemCollection, global::System.Collections.IList, global::System.Collections.ICollection, global::System.Collections.IEnumerable, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IIOItem>, global::System.Collections.Specialized.INotifyCollectionChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool _isInp;
-    [global::Quire.Mirror.MirrorStub]
-    private void FireAliasChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal IOItemCollection(bool isInp) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void ResetAlias(global::Quire.Controls.Core.IORegions.IIOItem item, string oldAlias, string newAlias) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void HandleTaggedRegionRemoved(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void HandleTaggedRegionChanged(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string CreateDefaultAlias(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsValidItem(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CleanAliasesOfRegion(global::System.Windows.DependencyObject region, bool removeMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.IO.IOItem> CreateIOItemsAndResetAliases(global::System.Windows.DependencyObject region, global::System.Collections.Generic.IEnumerable<string> idSExpr, bool isInp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IIOItem> CreateRegionIOItems(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IIOItem> GetRegionIOItems(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool RegionSExpresionListChanged(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IList<string> GetSExpresionsListOfExistingIOItems(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CreateIOItems(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RemoveIOItems(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
