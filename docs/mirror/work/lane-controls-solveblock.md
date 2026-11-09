@@ -24,6 +24,7 @@
 - Batch 25 `HideableSolveBlockCalculatable`: PASS (`74 checked`; `.mirror-cache/release-il-05e5e4f024de`); landed `0482bcd6`. Initial setter `if` emitted a branch to the return instead of the update body; the explicit branch shape matched the reference.
 - Batch 26 `HideableSolveBlockCalculatableAggregate`: PASS (`83 checked`; `.mirror-cache/release-il-2e1e5969feb2`); landed `08d1aab9`. Reused the setter branch shape required by the reference.
 - Batch 27 `SolveBlockSerializationStrategy`: PASS (`96 checked`; `.mirror-cache/release-il-883c363870e9`); landed `6c54eaff`.
-- Batch 28 `SolverAggregateChildWrapper.Rl`: PASS (`97 checked`; `.mirror-cache/release-il-5faff5a2879d`).
+- Batch 28 `SolverAggregateChildWrapper.Rl`: PASS (`97 checked`; `.mirror-cache/release-il-5faff5a2879d`); landed `8d2d79e0`.
+- Batch 29 `SolveBlockViewModel`: PASS (`106 checked`; `.mirror-cache/release-il-05a67683ef31`). The constructor uses direct grid-size expressions to preserve operand order, and the preview handler keeps its work in the non-null branch to match Release IL.
 - `GetEquationTypeOfRl` remains stubbed due enum/closure mismatch.
-- Remaining: 221 stub markers in generated types; no known mismatches in landed batches.
+- Remaining: 213 stub markers in generated types; no known mismatches in landed batches.
