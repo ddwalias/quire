@@ -143,6 +143,72 @@ public partial class FormattedString
     }
 
 
+    public void Remove(int startIndex, int count)
+    {
+        if (count <= 0)
+            return;
+        RemoveRange(startIndex, startIndex + count - 1);
+    }
+
+    public FormattedString Substring(int startIndex) => Substring(startIndex, Length - startIndex);
+
+    object System.ICloneable.Clone() => Clone();
+
+    private string a(string text)
+    {
+        int subscriptStart = text.IndexOf(c);
+        if (subscriptStart == -1)
+            return text;
+        if (subscriptStart != 0)
+            return text.Substring(0, subscriptStart);
+        return text.Substring(0, a(text, 0) + 1);
+    }
+
+    private char? b(Inline inline)
+    {
+        // Release IL returns the found marker before the empty nullable.
+        if (e.TryGetValue(inline.GetType(), out char marker))
+            return marker;
+        return null;
+    }
+
+    private static int b(Run run)
+    {
+        if (run == null)
+            throw new ArgumentNullException(nameof(run));
+        int depth = 0;
+        Inline inline = run;
+        while (inline != null)
+        {
+            if (inline is Quire.Wpf.Subscript)
+                depth++;
+            inline = inline.Parent as Inline;
+        }
+        return depth;
+    }
+
+    private static bool a(Inline left, Inline right) => left.GetType() == right.GetType();
+
+    private static Run a(Inline inlineToSearch)
+    {
+        Run run = inlineToSearch as Run;
+        if (run != null)
+            return run;
+        // Release IL retains the span on the stack across the null check.
+        Span span = inlineToSearch as Span;
+        if (span == null)
+            throw new ArgumentException("Inline was an unexpected type (not Run or Span)", nameof(inlineToSearch));
+        return a(span.Inlines.LastInline);
+    }
+
+    private void a()
+    {
+        g = null;
+        h = null;
+        i = null;
+    }
+
+
     public int Length
     {
         // Mathcad clears initlocals on this getter despite its fat method header.
