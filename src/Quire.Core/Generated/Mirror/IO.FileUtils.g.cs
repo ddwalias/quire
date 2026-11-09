@@ -11,12 +11,4 @@ namespace Quire.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.IO.FileUtils, Ptc.Core")]
 public partial class FileUtils
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string MathcadPrimeRegSubKey = "Software\\Quire\\Quire";
-    [global::Quire.Mirror.MirrorStub]
-    public const string MathcadPrime1RegSubKey = "Software\\Quire\\Quire\\Quire 1.0";
-    [global::Quire.Mirror.MirrorStub]
-    public const string AppDataMathcadPrimeOldFolderName = "Quire";
-    [global::Quire.Mirror.MirrorStub]
-    public const string AppDataEngNbFolderName = "Engineering Notebook";
 }

@@ -5,6 +5,11 @@ namespace Quire.IO;
 
 partial class FileUtils
 {
+    public const string MathcadPrimeRegSubKey = "Software\\Quire\\Quire";
+    public const string MathcadPrime1RegSubKey = "Software\\Quire\\Quire\\Quire 1.0";
+    public const string AppDataMathcadPrimeOldFolderName = "Quire";
+    public const string AppDataEngNbFolderName = "Engineering Notebook";
+
     public static int FindHighestNumberedFileName(string folder, string baseFileName, bool numberIsLastExtension, out string foundFileName)
     {
         int num = -1;
