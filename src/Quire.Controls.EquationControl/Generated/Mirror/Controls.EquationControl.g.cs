@@ -9,7 +9,7 @@
 namespace Quire.Controls;
 
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.EquationControl, Ptc.Controls.EquationControl")]
-public partial class EquationControl : global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Calculation.Core.ICalcWithCache, global::Quire.Controls.Core.IEquationControl, global::Quire.Calculation.Core.ICalculatableInfo, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculationHideableChild, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Calculation.Core.IResultOwnerWithSerializableEngineResult, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Controls.Core.IDitaRegion, global::Quire.Serialization.IPersistentDataProvider, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::Quire.Controls.Core.IWhiteboardItemInText, global::System.ICloneable, global::Quire.Controls.Core.ISearchableRegion, global::Quire.Controls.Core.IORegions.IInputRegion, global::Quire.Controls.Core.IORegions.IIORegion, global::Quire.Controls.Core.IORegions.IIORegionBase, global::Quire.Controls.Core.IORegions.IOutputRegion, global::Quire.Controls.Core.IMathFormatOwner, global::Quire.Controls.Core.ISupportCustomInitialization, global::Quire.Controls.Core.IMathFormatForDeserialization, global::Quire.ISpecialCopyType, global::Quire.Calculation.Core.ICalculatableWithDataExchange, global::Quire.Controls.Core.IBaselinedVisual, global::Quire.Controls.Core.INotifyMeasureOverride, global::System.IConvertible, global::Quire.Controls.Core.ICurrentNumberFormatProperty, global::Quire.Controls.Core.ICurrentMatrixFormatProperty, global::Quire.Controls.Core.ICurrentMathFormatProperty, global::Quire.Controls.ICurrentIdLabelProperty, global::Quire.Controls.Core.IIndirectMessageAdornerOwner, global::Quire.Controls.Core.IImeClient
+public partial class EquationControl : global::System.Windows.Controls.ContentControl, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Calculation.Core.ICalcWithCache, global::Quire.Controls.Core.IEquationControl, global::Quire.Calculation.Core.ICalculatableInfo, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculationHideableChild, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Calculation.Core.IResultOwnerWithSerializableEngineResult, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Controls.Core.IDitaRegion, global::Quire.Serialization.IPersistentDataProvider, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::Quire.Controls.Core.IWhiteboardItemInText, global::System.ICloneable, global::Quire.Controls.Core.ISearchableRegion, global::Quire.Controls.Core.IORegions.IInputRegion, global::Quire.Controls.Core.IORegions.IIORegion, global::Quire.Controls.Core.IORegions.IIORegionBase, global::Quire.Controls.Core.IORegions.IOutputRegion, global::Quire.Controls.Core.IMathFormatOwner, global::Quire.Controls.Core.ISupportCustomInitialization, global::Quire.Controls.Core.IMathFormatForDeserialization, global::Quire.ISpecialCopyType, global::Quire.Calculation.Core.ICalculatableWithDataExchange, global::Quire.Controls.Core.IBaselinedVisual, global::Quire.Controls.Core.INotifyMeasureOverride, global::System.IConvertible, global::Quire.Controls.Core.ICurrentNumberFormatProperty, global::Quire.Controls.Core.ICurrentMatrixFormatProperty, global::Quire.Controls.Core.ICurrentMathFormatProperty, global::Quire.Controls.ICurrentIdLabelProperty, global::Quire.Controls.Core.IIndirectMessageAdornerOwner, global::Quire.Controls.Core.IImeClient
 {
     [global::Quire.Mirror.MirrorStub]
     private string _rl;
@@ -25,6 +25,8 @@ public partial class EquationControl : global::Quire.Calculation.Core.ICalculata
     internal readonly global::Quire.EquationEditor.IEquationModel _model;
     [global::Quire.Mirror.MirrorStub]
     private const string FirstPropertyForXamlSerializationPropertyName = "FirstPropertyForXamlSerialization";
+    [global::Quire.Mirror.MirrorStub]
+    internal readonly global::Quire.Controls.Internal.VisualMathRegionNode _view;
     [global::Quire.Mirror.MirrorStub]
     private bool _isSymbolicEvalKeywordsShown;
     [global::Quire.Mirror.MirrorStub]
@@ -86,9 +88,13 @@ public partial class EquationControl : global::Quire.Calculation.Core.ICalculata
     [global::Quire.Mirror.MirrorStub]
     private static string _unitLabel;
     [global::Quire.Mirror.MirrorStub]
+    public string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public bool OverrideIdLabelByResolvedForDefinitionLhs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    public global::Quire.Calculation.Core.SynchronizationStatus SynchronizationStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.CalculatingStatus CalculatingStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -123,6 +129,8 @@ public partial class EquationControl : global::Quire.Calculation.Core.ICalculata
     public string Algorithm { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.AlgorithmOptions AlgorithmOptions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    public bool IsSelected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool InCustomInitialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -318,6 +326,8 @@ public partial class EquationControl : global::Quire.Calculation.Core.ICalculata
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<object, global::System.Windows.RoutedEventArgs> OnAdornedElementReady;
     [global::Quire.Mirror.MirrorStub]
+    public event global::System.Windows.RoutedEventHandler Changed;
+    [global::Quire.Mirror.MirrorStub]
     private event global::System.Action<global::Quire.Controls.Core.FocusChangeLevel> _postActivated;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<string> SExpressionChanging;
@@ -333,6 +343,8 @@ public partial class EquationControl : global::Quire.Calculation.Core.ICalculata
     public void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetStatusSynchronized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus calculatingStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -394,7 +406,7 @@ public partial class EquationControl : global::Quire.Calculation.Core.ICalculata
     [global::Quire.Mirror.MirrorStub]
     private void ToggleInput(bool setTag, string sExpr, global::System.Action<global::Quire.Controls.Core.IORegions.IInputRegion, bool> toggleInputTag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal EquationControl(global::Quire.EquationEditor.IEquationModel model) : this(default(global::Quire.EquationEditor.Tree.Statement)) { }
+    internal EquationControl(global::Quire.EquationEditor.IEquationModel model) { }
     [global::Quire.Mirror.MirrorStub]
     private void SetupInputGestures() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -432,9 +444,9 @@ public partial class EquationControl : global::Quire.Calculation.Core.ICalculata
     [global::Quire.Mirror.MirrorStub]
     private void HandleExpressionValueChanged(global::Quire.Controls.Core.IEquationControl equation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public EquationControl(string sExpression) : this(default(global::Quire.EquationEditor.Tree.Statement)) { }
+    public EquationControl(string sExpression) { }
     [global::Quire.Mirror.MirrorStub]
-    public EquationControl(string sExpression, bool isForEngineCalculation) : this(default(global::Quire.EquationEditor.Tree.Statement)) { }
+    public EquationControl(string sExpression, bool isForEngineCalculation) { }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.EquationControl CreateWithTextInput(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

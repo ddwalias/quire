@@ -125,12 +125,6 @@ public abstract partial class OleBaseComponentModel : global::Quire.Controls.Mat
     protected override global::Quire.Calculation.Core.Support.CalculatableChildHider InitializeChildManager() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void SetIdentifierLabels(global::System.Collections.Generic.IDictionary<global::Quire.Calculation.Core.ResolvedId, string[]> idLabelMap) => base.SetIdentifierLabels(idLabelMap);
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.SynchronizationStatus global::Quire.Calculation.Core.ICalculatable.SynchronizationStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.EventHandler global::Quire.Calculation.Core.ICalculatable.RlChanged { add { } remove { } }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.OleBaseComponentModel+PropertyNames, Ptc.Controls.ExcelComponent")]
     public static partial class PropertyNames

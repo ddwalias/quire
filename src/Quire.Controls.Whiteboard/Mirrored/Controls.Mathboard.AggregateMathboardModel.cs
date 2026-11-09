@@ -116,8 +116,4 @@ public abstract partial class AggregateMathboardModel : MathboardModel, IAggrega
 
     public bool ContainsSymbolicEvaluation => CalculatableChildren.Any((ICalculatable child) => child is ICanContainSymbolicCalculation canContainSymbolicCalculation && canContainSymbolicCalculation.ContainsSymbolicEvaluation);
 
-    // Explicit interface satisfaction for Quire prototype members on ICalculatable not present in Mathcad.
-    void ICalculatable.SetResult(CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    SynchronizationStatus ICalculatable.SynchronizationStatus => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    event EventHandler ICalculatable.RlChanged { add { } remove { } }
 }

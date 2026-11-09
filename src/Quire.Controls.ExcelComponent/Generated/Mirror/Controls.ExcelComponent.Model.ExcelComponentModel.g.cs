@@ -65,10 +65,4 @@ public partial class ExcelComponentModel : global::Quire.Controls.ExcelComponent
     private static bool IsValidItem(global::Quire.Controls.ExcelComponent.Model.IExcelComponentCalculatableWrapper wrapper) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public ExcelComponentModel() { }
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.SynchronizationStatus global::Quire.Calculation.Core.ICalculatable.SynchronizationStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.EventHandler global::Quire.Calculation.Core.ICalculatable.RlChanged { add { } remove { } }
 }

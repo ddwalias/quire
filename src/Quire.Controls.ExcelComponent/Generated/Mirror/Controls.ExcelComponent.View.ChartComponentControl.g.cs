@@ -59,8 +59,4 @@ public partial class ChartComponentControl : global::Quire.Controls.ExcelCompone
     object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.ExcelComponent.View.ChartComponentControl Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.EventHandler global::Quire.Calculation.Core.ICalculatable.RlChanged { add { } remove { } }
 }

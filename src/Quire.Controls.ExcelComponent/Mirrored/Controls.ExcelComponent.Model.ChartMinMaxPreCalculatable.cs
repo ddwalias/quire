@@ -129,14 +129,4 @@ internal partial class ChartMinMaxPreCalculatable
     {
     }
 
-    // These Quire interface shims follow the Mathcad members to preserve the captured callback ordinal.
-    void ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
-    global::Quire.Calculation.Core.SynchronizationStatus ICalculatable.SynchronizationStatus => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
-    event EventHandler ICalculatable.RlChanged
-    {
-        add { }
-        remove { }
-    }
 }

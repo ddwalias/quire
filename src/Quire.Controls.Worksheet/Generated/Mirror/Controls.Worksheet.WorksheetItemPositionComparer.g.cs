@@ -15,4 +15,6 @@ public partial class WorksheetItemPositionComparer : global::Quire.Controls.Whit
     private static global::Quire.Controls.Worksheet.IWorksheetItemManager ItemManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int Compare(global::Quire.Controls.Core.IWhiteboardItem itemOne, global::Quire.Controls.Core.IWhiteboardItem itemTwo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public WorksheetItemPositionComparer() { }
 }

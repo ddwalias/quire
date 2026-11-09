@@ -9,7 +9,7 @@
 namespace Quire.Controls.Worksheet;
 
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetModel, Ptc.Controls.Worksheet")]
-public partial class WorksheetModel : global::Quire.Controls.Worksheet.IWorksheetModel, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableContext, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculationErrorOwner, global::System.ComponentModel.INotifyPropertyChanged
+internal partial class WorksheetModel : global::Quire.Controls.Worksheet.IWorksheetModel, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableContext, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculationErrorOwner, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.Support.CalculatableChildHider _childHider;
@@ -24,13 +24,9 @@ public partial class WorksheetModel : global::Quire.Controls.Worksheet.IWorkshee
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.UnitSystems _customBaseUnitSystem;
     [global::Quire.Mirror.MirrorStub]
-    private bool _simplifyUnitSystem;
-    [global::Quire.Mirror.MirrorStub]
     private bool _isCalculationsEnabled;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.ICalculatable _lastVisibleCalculatable;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isAutoCalcOn;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Worksheet.WorksheetItemPositionComparer _itemPositionComparer;
     [global::Quire.Mirror.MirrorStub]
@@ -44,8 +40,6 @@ public partial class WorksheetModel : global::Quire.Controls.Worksheet.IWorkshee
     [global::Quire.Mirror.MirrorStub]
     public bool IsCalculating { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool EvaluatingEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public string EngineVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.CalculationOptions DocCalculationOptions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -55,10 +49,6 @@ public partial class WorksheetModel : global::Quire.Controls.Worksheet.IWorkshee
     public global::Quire.Calculation.Core.UnitSystems DefaultUnitSystem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.UnitSystems CustomBaseUnitSystem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor> CustomBaseUnitDescriptors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor> CustomDerivedUnitDescriptors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool SimplifyUnitSystem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -70,17 +60,15 @@ public partial class WorksheetModel : global::Quire.Controls.Worksheet.IWorkshee
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Controls.Worksheet.IWorksheetItemManager ItemManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.WhiteboardItemsCollection WhiteboardItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.ITextStylesManager TextStylesManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Core.IWorksheetPageBreak> PageBreaks { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IORegions.IIORegionManager InputOutputRegionManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.BookmarkTags.IBookmarksManager BookmarksManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.EngineError CurrentError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
+    [global::Quire.Mirror.MirrorStub]
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableRemoved;
+    [global::Quire.Mirror.MirrorStub]
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableMoved;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Func<string> GetEngineVersion;
     [global::Quire.Mirror.MirrorStub]
@@ -88,11 +76,17 @@ public partial class WorksheetModel : global::Quire.Controls.Worksheet.IWorkshee
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action StopEvaluating;
     [global::Quire.Mirror.MirrorStub]
+    public event global::System.Action<global::Quire.Calculation.Core.UnitSystems, global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor>, global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor>> UnitSystemUpdated;
+    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<bool> SimplifyUnitsFlagUpdated;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<string, object> CalculationOptionUpdated;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<string, object> SystemVariableUpdated;
+    [global::Quire.Mirror.MirrorStub]
+    public event global::System.Action RecalculateAllRequested;
+    [global::Quire.Mirror.MirrorStub]
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculateNowRequested;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action StartAutoCalc;
     [global::Quire.Mirror.MirrorStub]
@@ -100,15 +94,11 @@ public partial class WorksheetModel : global::Quire.Controls.Worksheet.IWorkshee
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable>> CommitAndNotifyDependentCalculatables;
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action ContextUnloaded;
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<int, global::System.Windows.Threading.DispatcherPriority> WaitForCalculationIdle;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Func<string, object> GetEngineOption;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> ItemMoved;
     [global::Quire.Mirror.MirrorStub]
     public void HandleScriptingRunWorksheetRecalculate(bool flag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -130,65 +120,5 @@ public partial class WorksheetModel : global::Quire.Controls.Worksheet.IWorkshee
     [global::Quire.Mirror.MirrorStub]
     private void FireStopAutoCalc() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HandleCollectionChangedForCalculation(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleItemMoved(object item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleItemRemoved(object item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleItemAdded(object item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CommitItemIfNeeded(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CommitItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void FireCommitAndNotifyDependentCalculatables(global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> toBeCommitted) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void FireWaitForCalculationIdle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void FireWaitForCalculationIdle(int seconds, global::System.Windows.Threading.DispatcherPriority priority) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireBinOctHexModeOptionUpdated(string binOctHexMode, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireCalculationOptionUpdated(string name, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireSystemVariableUpdated(string name, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireUnitSystemUpdated(global::Quire.Calculation.Core.UnitSystems unitSystem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleUnitSystemUpdated() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireSimplifyUnitsFlagChanged(bool simplifyUnitSystem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void FireRecalculateAll() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void FireCalculateNow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void FireCalculateRegionNow(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DisposeCalculationContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void Initialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleShadowCalculatableCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RemoveItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddItemAtLocation(object item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetItemWorksheetLocation(object item, global::System.Windows.Point newLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point GetItemWorksheetLocation(object item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IWhiteboardItem FirstItemInDirection(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, global::Quire.Direction direction, global::System.Windows.Point startPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public WorksheetModel(global::Quire.Calculation.CalculationBinder binder) : this() { }
 }

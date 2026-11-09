@@ -205,7 +205,4 @@ public abstract partial class AggregateMathboardControl : MathboardControl, IAgg
 
     public bool ContainsSymbolicEvaluation => AggregateModel.ContainsSymbolicEvaluation;
 
-    // Explicit interface satisfaction for Quire prototype members on ICalculatable not present in Mathcad.
-    void ICalculatable.SetResult(CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    event EventHandler ICalculatable.RlChanged { add { } remove { } }
 }

@@ -93,10 +93,4 @@ internal partial class ChartMinMaxCalculatable : global::Quire.Controls.ExcelCom
     private global::Quire.Controls.ExcelComponent.Model.ChartWrapperType GetLimitType(int iLimitAxis, int iLimitSide) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper GetWrapper(int iLimitAxis, int iLimitSide) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.SynchronizationStatus global::Quire.Calculation.Core.ICalculatable.SynchronizationStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.EventHandler global::Quire.Calculation.Core.ICalculatable.RlChanged { add { } remove { } }
 }

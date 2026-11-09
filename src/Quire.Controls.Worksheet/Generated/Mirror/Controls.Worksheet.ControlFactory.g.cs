@@ -9,7 +9,7 @@
 namespace Quire.Controls.Worksheet;
 
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.ControlFactory, Ptc.Controls.Worksheet")]
-public partial class ControlFactory : global::Quire.Controls.Worksheet.IControlFactory, global::Quire.Services.IService
+internal partial class ControlFactory : global::Quire.Controls.Worksheet.IControlFactory, global::Quire.Services.IService
 {
     [global::Quire.Mirror.MirrorStub]
     private const string DataFormatRichText = "Rich Text Format";
@@ -73,4 +73,6 @@ public partial class ControlFactory : global::Quire.Controls.Worksheet.IControlF
     public global::Quire.Controls.Worksheet.IWhiteboardItemZombie CreateWhiteboardItemZombie(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void InitializeTextRegion(global::Quire.Controls.Core.IRichTextBase control, global::Quire.Core.TextFormat textFormat, global::System.Windows.Markup.XmlLanguage proofingLanguage, string content, string dataFormat, bool caretPositionAtTheEnd = false, bool isBorder = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public ControlFactory() { }
 }

@@ -16,6 +16,8 @@ public partial class App : global::System.Windows.Application
     [global::Quire.Mirror.MirrorStub]
     private const string openFileName = "OpenFileName";
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public static string OpenFileName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private void PrimeStartup(object sender, global::System.Windows.StartupEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -37,4 +39,6 @@ public partial class App : global::System.Windows.Application
     private static void SetupCultureInfo(string culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void LoadAppConfigurations() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public App() { }
 }

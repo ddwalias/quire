@@ -139,10 +139,6 @@ internal abstract partial class PlotCalculatable : global::Quire.Controls.Plots.
     protected void DetachOnTraceEquationSExpressionChanged(global::Quire.Controls.Plots.Presenter.IPlotEquation plotEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected PlotCalculatable() { }
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.EventHandler global::Quire.Calculation.Core.ICalculatable.RlChanged { add { } remove { } }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.PlotCalculatable+PropertyNames, Ptc.Controls.Plots")]
     public partial class PropertyNames

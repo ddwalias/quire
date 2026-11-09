@@ -115,10 +115,6 @@ public partial class RealNumberCalculatable : global::Quire.Controls.Plots.Model
     public void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public RealNumberCalculatable() { }
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.EventHandler global::Quire.Calculation.Core.ICalculatable.RlChanged { add { } remove { } }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.RealNumberCalculatable+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames

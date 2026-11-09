@@ -143,10 +143,6 @@ internal partial class PlotTraceModel3D : global::Quire.Controls.Plots.Model.Plo
     private static global::System.Windows.Media.Media3D.Transform3D TransformForVisual(global::System.Windows.Media.Media3D.Rect3D bounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Calculation.Core.EngineResult GetPrintResults(global::Quire.Calculation.Core.EngineResult sourceResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.EventHandler global::Quire.Calculation.Core.ICalculatable.RlChanged { add { } remove { } }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.Model.PlotTraceModel3D+PropertyNames, Ptc.Controls.Plots")]
     internal sealed partial class PropertyNames : global::Quire.Controls.Plots.Model.PlotCalculatable.PropertyNames
