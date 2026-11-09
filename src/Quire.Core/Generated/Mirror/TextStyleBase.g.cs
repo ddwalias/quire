@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.TextStyleBase, Ptc.Core")]
 public abstract partial class TextStyleBase : global::Quire.ITextStyle, global::Quire.ITextStyleObject
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.FontStretch _fontStretch;
 }

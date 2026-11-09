@@ -58,8 +58,14 @@ public static partial class TextElementAttachedProperties
         }
     }
 
+    private static readonly Type TypeOfThis = typeof(TextElementAttachedProperties);
+
+    public const string DefaultTextStyle = "Normal";
+
+    private const double FONT_SIZE_TOLERANCE = 0.0001d;
+
     [MirrorVerified("PtcTextElementAttachedPropertiesMechanicalDifferentialTests")]
-    public static DependencyProperty StyleKeyProperty;
+    public static DependencyProperty StyleKeyProperty = DependencyProperty.RegisterAttached("StyleKey", typeof(string), TypeOfThis, new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits));
 
     [MirrorVerified("PtcTextElementAttachedPropertiesMechanicalDifferentialTests")]
     public static void ClearTextStyleData(DependencyObject element) => element.ClearValue(StyleKeyProperty);

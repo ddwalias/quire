@@ -11,12 +11,4 @@ namespace Quire.Properties;
 [global::Quire.Mirror.MirrorOf("Ptc.Properties.SettingsHelper, Ptc.Core")]
 public static partial class SettingsHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly string LicenseSettingsNamespace;
-    [global::Quire.Mirror.MirrorStub]
-    public const string LicenseType = "LicenseType";
-    [global::Quire.Mirror.MirrorStub]
-    public const string LicensePathForm = "LicensePathForm";
-    [global::Quire.Mirror.MirrorStub]
-    public const string LicensePath = "LicensePath";
 }

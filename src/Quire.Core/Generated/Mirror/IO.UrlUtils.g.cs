@@ -11,17 +11,6 @@ namespace Quire.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.IO.UrlUtils, Ptc.Core")]
 public static partial class UrlUtils
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly string mathcad15Extenstion;
-    [global::Quire.Mirror.MirrorStub]
-    private const string TemplatePrimeExtenstion = ".mctx";
-    [global::Quire.Mirror.MirrorStub]
-    private const string InternalLinkPrefix = "#";
-    [global::Quire.Mirror.MirrorStub]
-    private const string PrimeExtenstion = ".mcdx";
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Collections.Generic.List<global::Quire.IO.UrlUtils.UriProtocolCreationData> _schemeDetectionList;
-
     [global::Quire.Mirror.MirrorOf("Ptc.IO.UrlUtils+RegConstants, Ptc.Core")]
     private static partial class RegConstants
     {

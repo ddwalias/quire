@@ -11,21 +11,6 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.UserSettingsProvider, Ptc.Core")]
 public partial class UserSettingsProvider : global::System.Configuration.SettingsProvider, global::System.Configuration.IApplicationSettingsProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal const string ApplicationSettingsGroupName = "applicationSettings";
-    [global::Quire.Mirror.MirrorStub]
-    internal const string UserSettingsGroupName = "userSettings";
-    [global::Quire.Mirror.MirrorStub]
-    private const string CompanyName = "Quire";
-    [global::Quire.Mirror.MirrorStub]
-    private const string UserConfigFileName = "user.config";
-    [global::Quire.Mirror.MirrorStub]
-    private const string FolderNamePattern = "Quire_Url_[a-zA-Z0-9]{32}";
-    [global::Quire.Mirror.MirrorStub]
-    private const string SettingsGroupName = "userSettings";
-    [global::Quire.Mirror.MirrorStub]
-    private static bool _useAssemblyVersionInConfigPath;
-
     [global::Quire.Mirror.MirrorOf("Ptc.UserSettingsProvider+GetSectionStatusEnum, Ptc.Core")]
     public enum GetSectionStatusEnum
     {

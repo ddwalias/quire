@@ -11,10 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.TextElementAttachedProperties, Ptc.Core")]
 public static partial class TextElementAttachedProperties
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type TypeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public const string DefaultTextStyle = "Normal";
-    [global::Quire.Mirror.MirrorStub]
-    private const double FONT_SIZE_TOLERANCE = 0.0001d;
 }
