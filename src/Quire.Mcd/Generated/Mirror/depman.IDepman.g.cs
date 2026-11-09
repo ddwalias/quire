@@ -12,22 +12,6 @@ namespace Quire.depman;
 public partial interface IDepman : global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
-    void AddNodeCallback(global::Quire.utl_mgd.Function f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddNodeCallback(global::Quire.depman.DepNodeCallback c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddBusyCallback(global::Quire.utl_mgd.Function f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddBusyCallback(global::Quire.Engine.BooleanCallback b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void RemoveBusyCallback(global::Quire.Engine.BooleanCallback b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddUpToDateCallback(global::Quire.utl_mgd.Function f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddUpToDateCallback(global::Quire.Engine.BooleanCallback b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void RemoveUpToDateCallback(global::Quire.Engine.BooleanCallback b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     int AddAfter(int h, global::Quire.depman.Scope s, global::Quire.depman.Action a, global::System.Collections.ICollection static_deps, int priority, int client_handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     int AddAfterWithDef(int h, global::Quire.depman.Scope s, global::Quire.depman.Action a, global::System.Collections.ICollection static_deps, global::System.Collections.ICollection static_defs, int priority, int client_handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

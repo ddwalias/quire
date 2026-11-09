@@ -2,6 +2,22 @@ namespace Quire.depman;
 
 public partial interface IDepman
 {
+    void AddNodeCallback(global::Quire.utl_mgd.Function f);
+
+    void AddNodeCallback(DepNodeCallback c);
+
+    void AddBusyCallback(global::Quire.utl_mgd.Function f);
+
+    void AddBusyCallback(global::Quire.Engine.BooleanCallback b);
+
+    void RemoveBusyCallback(global::Quire.Engine.BooleanCallback b);
+
+    void AddUpToDateCallback(global::Quire.utl_mgd.Function f);
+
+    void AddUpToDateCallback(global::Quire.Engine.BooleanCallback b);
+
+    void RemoveUpToDateCallback(global::Quire.Engine.BooleanCallback b);
+
     bool IsUpToDate
     {
         [return: global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.U1)]
