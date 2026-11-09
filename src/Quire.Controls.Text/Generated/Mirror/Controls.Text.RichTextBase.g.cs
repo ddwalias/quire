@@ -220,8 +220,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     public string GetWordToAddToDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void ShouldNoOpOnSelection(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseMove(global::System.Windows.Input.MouseEventArgs args) => base.OnMouseMove(args);
     [global::Quire.Mirror.MirrorStub]
     protected virtual void PrePasting() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

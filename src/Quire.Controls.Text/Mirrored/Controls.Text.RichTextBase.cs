@@ -1087,4 +1087,84 @@ public partial class RichTextBase
         }
         RecalculateTextScriptState();
     }
+
+    private void ShouldNoOpOnSelection(object sender, CanExecuteRoutedEventArgs args)
+    {
+        RoutedCommand command = args.Command as RoutedCommand;
+        if (DebugTools.AssertNotNull(command).Failed)
+        {
+            return;
+        }
+        if (args.Command == EditingCommands.SelectDownByLine)
+        {
+            args.CanExecute = (BlockedSelectDirection & BlockedSelectionDirection.Down) != BlockedSelectionDirection.None;
+            return;
+        }
+        if (args.Command == EditingCommands.SelectDownByPage)
+        {
+            args.CanExecute = (BlockedSelectDirection & BlockedSelectionDirection.Down) != BlockedSelectionDirection.None;
+            return;
+        }
+        if (args.Command == EditingCommands.SelectDownByParagraph)
+        {
+            args.CanExecute = (BlockedSelectDirection & BlockedSelectionDirection.Down) != BlockedSelectionDirection.None;
+            return;
+        }
+        if (args.Command == EditingCommands.SelectRightByCharacter)
+        {
+            args.CanExecute = (BlockedSelectDirection & BlockedSelectionDirection.Right) != BlockedSelectionDirection.None;
+            return;
+        }
+        if (args.Command == EditingCommands.SelectRightByWord)
+        {
+            args.CanExecute = (BlockedSelectDirection & BlockedSelectionDirection.Right) != BlockedSelectionDirection.None;
+            return;
+        }
+        if (args.Command == EditingCommands.SelectToDocumentEnd)
+        {
+            args.CanExecute = (BlockedSelectDirection & BlockedSelectionDirection.End) != BlockedSelectionDirection.None;
+            return;
+        }
+        if (args.Command == EditingCommands.SelectToLineEnd)
+        {
+            args.CanExecute = (BlockedSelectDirection & BlockedSelectionDirection.End) != BlockedSelectionDirection.None;
+            return;
+        }
+        if (args.Command == EditingCommands.SelectUpByLine)
+        {
+            args.CanExecute = (BlockedSelectDirection & BlockedSelectionDirection.Up) != BlockedSelectionDirection.None;
+            return;
+        }
+        if (args.Command == EditingCommands.SelectUpByPage)
+        {
+            args.CanExecute = (BlockedSelectDirection & BlockedSelectionDirection.Up) != BlockedSelectionDirection.None;
+            return;
+        }
+        if (args.Command == EditingCommands.SelectUpByParagraph)
+        {
+            args.CanExecute = (BlockedSelectDirection & BlockedSelectionDirection.Up) != BlockedSelectionDirection.None;
+            return;
+        }
+        if (args.Command == EditingCommands.SelectLeftByCharacter)
+        {
+            args.CanExecute = (BlockedSelectDirection & BlockedSelectionDirection.Left) != BlockedSelectionDirection.None;
+            return;
+        }
+        if (args.Command == EditingCommands.SelectLeftByWord)
+        {
+            args.CanExecute = (BlockedSelectDirection & BlockedSelectionDirection.Left) != BlockedSelectionDirection.None;
+            return;
+        }
+        if (args.Command == EditingCommands.SelectToDocumentStart)
+        {
+            args.CanExecute = (BlockedSelectDirection & BlockedSelectionDirection.Start) != BlockedSelectionDirection.None;
+            return;
+        }
+        if (args.Command == EditingCommands.SelectToLineStart)
+        {
+            args.CanExecute = (BlockedSelectDirection & BlockedSelectionDirection.Start) != BlockedSelectionDirection.None;
+            return;
+        }
+        DebugTools.FailAssertion("Unexpected command: {0}", command.Name);
+    }
 }

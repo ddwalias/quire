@@ -412,3 +412,9 @@
 - Note: `BaselineAlignment` values in this WPF build are Baseline=3, Top=0, Center=1, Bottom=2, TextTop=4, TextBottom=5; the IL constant 3 is `Baseline`, not `TextTop`.
 - Not matched, tried and left as the stub: `HandleReplace`. Mathcad evaluates `query.ValueToFind != null && query.ValueToFind.Equals(Selection.Text)` as a value (`ldc.i4.0` and `br` inside the `&&`), and the plain `if` form emits branches only.
 - Release IL: PASS — 410 checked, 410 exact, 0 failures, 313 unfinished.
+
+## Batch 66 — RichTextBase selection command gating (1)
+
+- Exact: `ShouldNoOpOnSelection` (command-enable gate for the directional select commands; each `EditingCommands.Select*` compares by reference and sets `CanExecute` from the blocked-select direction flag, then the unexpected-command assertion).
+- Not attempted in this batch: `OnPreviewBackspace` (reverted; Mathcad branches the first clause with `beq` to the body, which a plain `if` does not produce; the `?.` offset and the font-size ternary arm order did match once adjusted).
+- Release IL: PASS — 411 checked, 411 exact, 0 failures, 312 unfinished.
