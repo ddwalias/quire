@@ -12,6 +12,14 @@ public partial class TextBoxScriptableControlData
 
     private TextAlignment o;
 
+    public TextBoxScriptableControlData(string mathNodeName, Quire.Controls.Core.InputControlTypes inputControlTypes)
+        : base(mathNodeName, inputControlTypes)
+    {
+        Width = b;
+        Height = a;
+        Values = new System.Collections.ObjectModel.Collection<string> { string.Empty };
+    }
+
     public bool AcceptsReturn
     {
         get => c;

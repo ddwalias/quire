@@ -14,29 +14,7 @@ public abstract partial class InputScriptableControlData : global::Quire.Equatio
     [global::Quire.Mirror.MirrorStub]
     protected string a_;
     [global::Quire.Mirror.MirrorStub]
-    protected byte[] b;
-    [global::Quire.Mirror.MirrorStub]
-    private string c;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.ObjectModel.Collection<string> d;
-    [global::Quire.Mirror.MirrorStub]
     public string Script { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public string ScriptObjectControlName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ValueSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.ObjectModel.Collection<string> Values { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public byte[] ScriptHashCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public InputScriptableControlData() { }
-    [global::Quire.Mirror.MirrorStub]
-    public InputScriptableControlData(string mathNodeName) { }
-    [global::Quire.Mirror.MirrorStub]
-    public InputScriptableControlData(string mathNodeName, global::Quire.Controls.Core.InputControlTypes inputControlTypes) { }
-    [global::Quire.Mirror.MirrorStub]
     protected static byte[] a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsEquivalentTo(global::Quire.EquationEditor.Tree.IInputControlData other) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
