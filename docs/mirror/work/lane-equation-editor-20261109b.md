@@ -19,6 +19,9 @@
 - Batch 12: `Tree.RadioButtonScriptableControlData` constructor (`Height = a; Width = b;` after the base call, with the field initializer `Orientation.Vertical` for `c`), `Orientation` and `FlowDirection` properties (fields `c`, `d`). Release IL PASS, 343 checked, 0 failures (`.mirror-cache/release-il-1dc11e8d9302/release-il.json`). The field initializer matched the Roslyn shape as written.
 - Still stubbed: `Clone` on all scriptable control data types (object initializer, see the `.initlocals` blocker).
 
+- Batch 13: `Tree.MatrixNodeInfo` `IsMatrixComplete` (IL field `b`, Quire name `b`; the generator's `b_` was dropped) and `FullSize` (field `c`), plus `RowsBeforeViewport`, `ColsBeforeViewport`, `RowsAfterViewport`, `ColsAfterViewport`. Release IL PASS, 351 checked, 0 failures (`.mirror-cache/release-il-1dedc0c1aeea/release-il.json`). The first gate (release-il-a29a4ce9bba7, 347 checked) passed with `IsMatrixComplete` and `FullSize` only.
+- Not attempted in MatrixNodeInfo: `ViewportSize`, `ViewportOffset`, `ShowIndices`, `CollapseNestedMatrices`, `Origin`, `MatrixFormat`, all of which read the field `a` (IL name `a`), which the generator renames to `a_`. This is the same clash as SExpressionUtility. `Remainder` and `ActualSize` are not attempted.
+
 ## Blocked (stubs kept)
 
 - `Tree.NearestNeighborSelector.SelectNeighbors(MathNode, out bool)` (virtual, switch on `Fixity` with an `out` parameter). Mathcad's switch temporary is local 3, after the three block locals; C# put it in slot 0 (braced cases, release-il-23d8111cb024) and slot 1 (unbraced `Special` case, release-il-1a7e6d2256e8). Shapes not yet tried: different local declaration order. Stub kept.
