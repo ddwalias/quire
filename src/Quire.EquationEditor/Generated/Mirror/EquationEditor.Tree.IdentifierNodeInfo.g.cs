@@ -16,19 +16,11 @@ public partial class IdentifierNodeInfo : global::Quire.EquationEditor.Tree.Valu
     [global::Quire.Mirror.MirrorStub]
     public string algorithm;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.IdLabels c;
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.FormattedString Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override string ValueSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::Quire.Controls.Core.IdLabels> IdLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasNoLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IdLabels ResolvedIdLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IdLabels IdLabelForDisplay { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public IdentifierNodeInfo() { }
     [global::Quire.Mirror.MirrorStub]

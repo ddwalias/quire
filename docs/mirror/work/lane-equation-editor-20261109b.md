@@ -22,6 +22,8 @@
 - Batch 13: `Tree.MatrixNodeInfo` `IsMatrixComplete` (IL field `b`, Quire name `b`; the generator's `b_` was dropped) and `FullSize` (field `c`), plus `RowsBeforeViewport`, `ColsBeforeViewport`, `RowsAfterViewport`, `ColsAfterViewport`. Release IL PASS, 351 checked, 0 failures (`.mirror-cache/release-il-1dedc0c1aeea/release-il.json`). The first gate (release-il-a29a4ce9bba7, 347 checked) passed with `IsMatrixComplete` and `FullSize` only.
 - Not attempted in MatrixNodeInfo: `ViewportSize`, `ViewportOffset`, `ShowIndices`, `CollapseNestedMatrices`, `Origin`, `MatrixFormat`, all of which read the field `a` (IL name `a`), which the generator renames to `a_`. This is the same clash as SExpressionUtility. `Remainder` and `ActualSize` are not attempted.
 
+- Batch 14: `Tree.IdentifierNodeInfo` `ResolvedIdLabel` (field `c`), `HasNoLabel` (`IdLabel.IsNullOrNone()`), `IdLabelForDisplay`. Release IL PASS, 355 checked, 0 failures (`.mirror-cache/release-il-363060715199/release-il.json`). `IdLabel` (undo command buffer) and the nested `a` class are not attempted.
+
 ## Blocked (stubs kept)
 
 - `Tree.NearestNeighborSelector.SelectNeighbors(MathNode, out bool)` (virtual, switch on `Fixity` with an `out` parameter). Mathcad's switch temporary is local 3, after the three block locals; C# put it in slot 0 (braced cases, release-il-23d8111cb024) and slot 1 (unbraced `Special` case, release-il-1a7e6d2256e8). Shapes not yet tried: different local declaration order. Stub kept.
