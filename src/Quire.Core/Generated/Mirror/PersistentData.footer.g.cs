@@ -11,6 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.footer, Ptc.Core")]
 public partial class footer : global::Quire.PersistentData.headerFooterRegions, global::Quire.PersistentData.IRegionCollectionType
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string RootNodeName = "footer";
 }

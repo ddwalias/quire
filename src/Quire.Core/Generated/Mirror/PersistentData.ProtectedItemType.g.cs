@@ -11,8 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.ProtectedItemType, Ptc.Core")]
 public partial class ProtectedItemType : global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider, global::Quire.Serialization.IDeS11NConsumer
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string dataidrefField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentData.IProtectableDataType _dataToProtect;
 }

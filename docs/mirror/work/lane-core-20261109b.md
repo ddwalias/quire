@@ -25,6 +25,8 @@
 
 - Batch 11: PersistentDataObjects `textType` (`_lastVerToContainPageGaps` exact `new Version(1, 0, 1, 12)` `.cctor`, `_s11NProvider`, `_deS11NProvider`, `_saveInline`), `presentationPageModel` (`_pageMargin`, `_thicknessConverter` `.cctor`), `worksheetRegionType` (`_typeOfThis` `.cctor`, two serializer fields, `RootAttributeName`). Gate: PASS, 4025 checked, 4025 exact, 0 failures (`.mirror-cache/release-il-7573b818e5bb/release-il.json`). 8 stubs eliminated.
 
+- Batch 12: PersistentData root and container members (`AreaType` `XmlRootElementName` and two serializer fields; `cachedWorksheetRegionCollectionSerializer._cachedWorksheet`; `footerRegionCollectionSerializer._footer`; `headerRegionCollectionSerializer._header`; `worksheetRegionCollectionSerializer._worksheet`; `footersContainerRegionCollectionSerializer` / `headersContainerRegionCollectionSerializer` wrapper and two serializer fields; `footersContainerWrapper` / `headersContainerWrapper` / `footer` / `header` / `worksheet` / `cachedWorksheetType` `RootNodeName` constants; `ProtectedItemType.dataidrefField` and `_dataToProtect`). Gate: PASS, 4025 checked, 4025 exact, 0 failures (`.mirror-cache/release-il-ae2332d3f92e/release-il.json`). Field-only members add no method rows, so the count is unchanged. 21 stubs eliminated.
+
 ## Remaining Parked Stubs (139)
 - PersistentDataObjects (34 stubs): Parked per task guidelines and decisions (42 PDO members parked).
 - PersistentData (53 stubs): Serialization models and companion serializers bound to PersistentDataObjects.

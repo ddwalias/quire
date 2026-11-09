@@ -11,6 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.cachedWorksheetRegionCollectionSerializer, Ptc.Core")]
 public partial class cachedWorksheetRegionCollectionSerializer : global::Quire.PersistentData.RegionCollectionSerializer<global::Quire.PersistentData.cachedWorksheetType>
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentData.cachedWorksheetType _cachedWorksheet;
 }

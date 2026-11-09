@@ -5,6 +5,8 @@ namespace Quire.PersistentData;
 
 partial class footersContainerWrapper
 {
+    public const string RootNodeName = "footers";
+
     public global::Quire.PersistentData.footer Footer
     {
         get

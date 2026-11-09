@@ -11,10 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.AreaType, Ptc.Core")]
 public partial class AreaType : global::Quire.PersistentData.mathBoardType, global::Quire.PersistentData.IRegionCollectionType, global::Quire.PersistentData.IAreaType, global::Quire.PersistentData.IProtectableDataType
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string XmlRootElementName = "Area";
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Xml.Serialization.XmlSerializer _xmlSerializerDefault;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Xml.Serialization.XmlSerializer _xmlSerializerWithOverrides;
 }

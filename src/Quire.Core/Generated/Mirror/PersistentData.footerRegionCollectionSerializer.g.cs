@@ -11,6 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.footerRegionCollectionSerializer, Ptc.Core")]
 public partial class footerRegionCollectionSerializer : global::Quire.PersistentData.RegionCollectionSerializer<global::Quire.PersistentData.footer>
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentData.footer _footer;
 }

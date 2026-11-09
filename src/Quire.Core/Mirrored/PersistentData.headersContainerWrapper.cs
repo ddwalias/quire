@@ -5,6 +5,8 @@ namespace Quire.PersistentData;
 
 partial class headersContainerWrapper
 {
+    public const string RootNodeName = "headers";
+
     public global::Quire.PersistentData.header Header
     {
         get

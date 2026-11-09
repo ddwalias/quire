@@ -11,6 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.worksheetRegionCollectionSerializer, Ptc.Core")]
 public partial class worksheetRegionCollectionSerializer : global::Quire.PersistentData.RegionCollectionSerializer<global::Quire.PersistentData.worksheet>
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentData.worksheet _worksheet;
 }
