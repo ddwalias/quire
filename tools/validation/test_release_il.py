@@ -409,7 +409,8 @@ class CheckTests(unittest.TestCase):
         (self.install / 'sub').mkdir(parents=True)
         (self.install / 'sub' / 'Ptc.dll').write_bytes(b'x')
         self.cache = self.repo.root / '.mirror-cache' / 'inventory-cache'
-        self.runs, self.dotnet, self.scans = 0, [], []
+        self.runs, self.dotnet, self.scans, self.scanned = 0, [], [], []
+        self.rows = self.row
         real_run = release_il.run
         def run(command, cwd, log, timeout, env=None):
             if command[0] in ('git', 'tar'):
@@ -417,16 +418,23 @@ class CheckTests(unittest.TestCase):
             self.dotnet.append((list(map(str, command)), Path(cwd)))
         def scan(root, projects, tool, work, *args, **kwargs):
             self.scans.append(Path(root))
-            return {'methods': [method(exact=False, original={'assembly': 'A', 'sha256': 's', 'mvid': 'm'})]}
+            self.scanned.append(list(projects))
+            return {'methods': [row for project in projects for row in self.rows(project)]}
         self.purged = []
         for target, value in (('run', run), ('build_and_scan', scan), ('purge', lambda *paths: self.purged.append(paths))):
             patcher = mock.patch.object(release_il, target, value)
             patcher.start()
             self.addCleanup(patcher.stop)
 
-    def check(self, base=None, **kwargs):
+    @staticmethod
+    def row(project, **extra):
+        """MethodAudit's rows of one project: each names the project it was read from."""
+        return [method(**dict(dict(id=f'{project}::T::M', project=project, exact=False,
+                                   original={'assembly': 'A', 'sha256': 's', 'mvid': 'm'}), **extra))]
+
+    def check(self, base=None, projects=('P',), **kwargs):
         self.runs += 1
-        return release_il.check(base or self.base, ['P'], self.repo.root / '.mirror-cache' / f'r{self.runs}',
+        return release_il.check(base or self.base, list(projects), self.repo.root / '.mirror-cache' / f'r{self.runs}',
                                 root=self.repo.root, install=self.install, cache=self.cache, **kwargs)
 
     def test_timings_are_written_without_changing_verdict(self):
@@ -460,7 +468,7 @@ class CheckTests(unittest.TestCase):
         self.assertIn('no MethodAudit', report['error'])
         self.assertEqual(self.scans, [])
 
-    def test_base_inventories_are_cached_and_keyed_by_install_and_projects(self):
+    def test_base_inventories_are_cached_and_keyed_by_install(self):
         self.assertFalse(self.check()['base_cached'])
         self.assertEqual(len(self.scans), 2)
         self.assertTrue(self.check()['base_cached'])
@@ -470,20 +478,103 @@ class CheckTests(unittest.TestCase):
         for entry in self.cache.glob('*.json'):  # corrupt entries fall back to building
             entry.write_text('{')
         self.assertFalse(self.check()['base_cached'])
-        key = release_il.inventory_key
-        self.assertNotEqual(key(self.repo.root, self.base, self.base, ['P'], self.install),
-                            key(self.repo.root, self.base, self.base, ['P', 'Q'], self.install))
+
+    def three_projects(self):
+        """P; Q referencing P through Generated/Mirror.props; R on its own."""
+        self.repo.project('Q', 'P', props=True)
+        self.repo.project('R')
+        self.base = self.repo.commit()
+
+    def test_a_base_hits_on_rows_stored_for_other_project_sets_and_a_partial_hit_builds(self):
+        self.three_projects()
+        self.assertFalse(self.check(projects=['P', 'Q'])['base_cached'])
+        self.assertTrue(self.check(projects=['Q'])['base_cached'])
+        self.assertTrue(self.check(projects=['P'])['base_cached'])
+        scans = len(self.scanned)
+        self.assertFalse(self.check(projects=['P', 'Q', 'R'])['base_cached'])  # R was never scanned: build all three
+        self.assertEqual(self.scanned[scans], ['P', 'Q', 'R'])
+        self.assertTrue(self.check(projects=['R'])['base_cached'])
+        self.assertTrue(self.check(projects=['Q', 'P'])['base_cached'])
+        # The assembled inventory is what one scan of these projects in this order writes.
+        base = json.loads((self.repo.root / '.mirror-cache' / f'r{self.runs}' / 'base-inventory.json').read_text())
+        self.assertEqual([m['id'] for m in base['methods']], ['Q::T::M', 'P::T::M'])
+
+    def test_a_changed_reference_misses_and_an_unrelated_change_hits(self):
+        self.three_projects()
+        self.check(projects=['Q'])
+        self.repo.write('src/R/U.cs', 'unrelated')
+        self.assertTrue(self.check(self.repo.commit(), projects=['Q'])['base_cached'])
+        self.repo.write('src/P/U.cs', 'compiled into what Q references')
+        self.assertFalse(self.check(self.repo.commit(), projects=['Q'])['base_cached'])
+
+    def test_the_type_map_root_files_src_projects_and_judge_are_keyed(self):
+        self.three_projects()
+        self.check(projects=['Q'])
+        for path in ('docs/mirror/type-map.csv', 'Directory.Build.props', 'src/S/S.csproj',
+                     'tools/Quire.Tools.MethodAudit/Program.cs', 'tools/Quire.Tools.MirrorGen/Model.cs'):
+            with self.subTest(path):
+                self.repo.write(path, path)
+                base = self.repo.commit()
+                self.assertFalse(self.check(base, projects=['Q'])['base_cached'])
+                self.assertTrue(self.check(base, projects=['Q'])['base_cached'])
+
+    def test_whether_a_mixed_mode_reference_was_scanned_is_keyed(self):
+        self.repo.project('U')
+        self.repo.write('src/U/MixedMode/U.vcxproj', '<Project />')
+        self.repo.project('E', 'U')
+        self.base = self.repo.commit()
+        self.assertFalse(self.check(projects=['E'])['base_cached'])
+        self.assertFalse(self.check(projects=['E', 'U'])['base_cached'])  # MethodAudit binds U's C++ types by name
+        self.assertTrue(self.check(projects=['E', 'U'])['base_cached'])
+        self.assertTrue(self.check(projects=['E'])['base_cached'])
+
+    def private_implementation_details(self, mirror_of):
+        """P's sources bind mirror_of; its rows pair one of its types and a <PrivateImplementationDetails> method with A.
+        What that container pairs with can depend on what else is scanned, unless P's types bind A alone."""
+        self.repo.write('src/P/Generated/T.g.cs', f'[global::Quire.Mirror.MirrorOf("{mirror_of}")]')
+        self.base = self.repo.commit()
+        self.rows = lambda project: self.row(project) + (self.row(
+            project, id='P::<PrivateImplementationDetails>::H', type='<PrivateImplementationDetails>') if project == 'P' else [])
+
+    def test_rows_proven_context_free_hit_across_project_sets(self):
+        self.three_projects()
+        self.private_implementation_details('Ptc.T, A')
+        self.check(projects=['P', 'R'])
+        self.assertTrue(self.check(projects=['P'])['base_cached'])
+
+    def test_context_bound_rows_hit_only_with_the_same_scan(self):
+        self.three_projects()
+        for case, mirror_of in (('P binds another assembly too', 'Ptc.T, B'),
+                                ('a MirrorOf without a literal proves nothing', 'Ptc.T, A")] [MirrorOf(Name')):
+            with self.subTest(case):
+                self.private_implementation_details(mirror_of)
+                self.assertFalse(self.check(projects=['P', 'R'])['base_cached'])
+                self.assertFalse(self.check(projects=['P'])['base_cached'])
+                self.assertTrue(self.check(projects=['P', 'R'])['base_cached'])
+                self.assertTrue(self.check(projects=['R'])['base_cached'])  # R's rows are context-free
+        with self.subTest('mixed-mode rows'):
+            self.repo.write('src/P/M.cs', 'mixed')
+            self.base = self.repo.commit()
+            self.rows = lambda project: self.row(project, mixed_mode=project == 'P')
+            self.assertFalse(self.check(projects=['P', 'R'])['base_cached'])
+            self.assertFalse(self.check(projects=['P'])['base_cached'])
+            self.assertTrue(self.check(projects=['P', 'R'])['base_cached'])
+
+    def test_rows_of_an_assembly_not_named_as_its_project_are_not_stored(self):
+        self.rows = lambda project: self.row('Other')
+        self.check()
+        self.assertEqual(list(self.cache.glob('*.json')), [])
 
     def test_only_a_committed_passing_candidate_is_stored(self):
-        key = release_il.inventory_key(self.repo.root, self.tip, self.base, ['P'], self.install)
+        entries = lambda: len(list(self.cache.glob('*.json')))
         self.repo.write('src/P/Dirty.cs', '')
         self.check(store_candidate=True)
-        self.assertIsNone(release_il.cached_inventory(self.cache, key))
+        self.assertEqual(entries(), 1)  # the base's
         (self.repo.root / 'src/P/Dirty.cs').unlink()
         self.check()
-        self.assertIsNone(release_il.cached_inventory(self.cache, key))
+        self.assertEqual(entries(), 1)
         self.check(store_candidate=True)
-        self.assertIsNotNone(release_il.cached_inventory(self.cache, key))
+        self.assertEqual(entries(), 2)
         # The next run whose base is that tip starts from the stored inventory.
         self.repo.write('src/P/U.cs', '')
         self.repo.commit()

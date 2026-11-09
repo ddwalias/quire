@@ -22,8 +22,14 @@ own copy re-runs main's), so a branch cannot change the tool or the rules that j
 MethodAudit, MirrorGen or `tools/validation` takes effect for the runs after it lands. It reads production assemblies directly, without a
 test host, and never runs tests.
 
-Base inventories are cached in `.mirror-cache/inventory-cache/`, keyed by the base commit, the
-project list, the judge's MethodAudit/MirrorGen trees and the install's DLL listing. The merge gate
+Base inventories are cached in `.mirror-cache/inventory-cache/` per project, keyed by the content of
+what MethodAudit reads for it: the Git trees of the project's `ProjectReference` closure, the root
+files, the `src` directory names, the type map, the judge (its MethodAudit/MirrorGen trees, root files
+and SDK), the install's DLL listing, and which mixed-mode references were scanned with it. A base whose
+projects all hit is assembled from those rows without building, whichever commit or lane stored them;
+any miss builds and scans them all. Rows that can depend on everything scanned with them (a mixed-mode
+project's, or a `<PrivateImplementationDetails>` MethodAudit could pair with another project's Mathcad
+assembly) hit only for the same scan. The merge gate
 stores each committed candidate it passes (in the main checkout's cache, shared by every lane), so the
 next lane's base scan is usually a cache hit. Uncommitted candidates are never cached; a corrupt or
 locked entry is rebuilt. Delete the folder to force a rebuild. Each run's work directory (base

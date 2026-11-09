@@ -194,7 +194,6 @@ def land_under_lock(args, main_dir, lane, record, base, tip, number, landing):
                 and inputs_untouched(moved, lane, record['projects'], record['native_projects'])):
             land(main_dir, rebased)
             landing.update(path='rebased-unaffected', tip=rebased)
-            copy_inventory(lane, tip, rebased, base, record['projects'])
         elif number < ROUNDS:
             landing['path'] = 'retry'
             return None
@@ -214,17 +213,6 @@ def land_under_lock(args, main_dir, lane, record, base, tip, number, landing):
         raise
     landing['pushed'] = True
     return 0
-
-
-def copy_inventory(root, tip, rebased, judge, projects):
-    """The rebased tip's compared IL is the validated tip's: let the next lane's base scan hit the cache. Best effort."""
-    try:
-        install = release_il.mathcad_install()
-        data = release_il.cached_inventory(release_il.CACHE, release_il.inventory_key(root, tip, judge, projects, install))
-        if data and projects:
-            release_il.store_inventory(release_il.CACHE, release_il.inventory_key(root, rebased, judge, projects, install), data)
-    except (OSError, ValueError, subprocess.SubprocessError):
-        pass
 
 
 if __name__ == '__main__':

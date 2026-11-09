@@ -410,7 +410,7 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
 
 
 CACHE = ROOT / '.mirror-cache' / 'inventory-cache'
-CACHE_FORMAT = 1
+CACHE_FORMAT = 2
 # A run's directory is older than this only if its run was killed: every step is bounded by --timeout.
 STALE_WORK = 12 * 3600
 PURGE = '''import os, shutil, stat, sys
@@ -513,15 +513,91 @@ def build_judge(original, base, cache, dotnet, log, timeout):
     return output / 'Quire.Tools.MethodAudit.dll'
 
 
-def inventory_key(root, commit, tool_commit, projects, install):
-    """Identity of a committed tree's inventory: its sources (the commit: type map, SDK pin and build files included),
-    the projects, the judge built from tool_commit's tool trees, and the install MethodAudit reads (path and every
-    DLL's size and mtime; hashing the DLLs would cost more than it saves)."""
-    tools = [git('rev-parse', f'{tool_commit}:{tree}', cwd=root) for tree in TOOL_TREES]
+def slice_keys(root, commit, judge, projects, install):
+    """Cache key of each project's rows in an inventory of root (a clean tree of commit) scanned with exactly these
+    projects by judge (build_judge's key: the judge's sources, root files and SDK). MethodAudit derives a project's rows
+    from its assembly and those it references (its ProjectReference closure), the type map, the src directory names and
+    the install, so the key is their content, not the commit or the other projects: a lane's base hits on rows another
+    lane stored for other projects. Two things the rows can depend on beyond that are keyed too: whether a mixed-mode
+    reference was scanned (MethodAudit binds a scanned one's C++ types by name, Program.cs:131-141, an unscanned one's
+    only through the type map), and, for rows not context_free, every scanned project (scan_key)."""
+    src = [line.split(None, 3) for line in git('ls-tree', commit, 'src/', cwd=root).splitlines()]
+    trees = {Path(path).name: sha for _, _, sha, path in src}
     install = Path(install)
     dlls = sorted((str(p.relative_to(install)), s.st_size, s.st_mtime_ns) for p in install.rglob('*.dll') for s in [p.stat()])
-    payload = json.dumps([CACHE_FORMAT, commit, sorted(projects), tools, str(install), dlls])
-    return hashlib.sha256(payload.encode('utf-8')).hexdigest()
+    common = [CACHE_FORMAT, judge, [line for line in git('ls-tree', commit, cwd=root).splitlines() if ' blob ' in line],
+              [path if kind == 'tree' else f'{path} {sha}' for _, kind, sha, path in src],
+              git('rev-parse', f'{commit}:{TYPE_MAP}', cwd=root),
+              str(install), dlls]  # every DLL's size and mtime: hashing the DLLs would cost more than it saves
+    dirs = build_closure(root, projects)
+    references = {d.name: project_references(root, d) for d in dirs}
+    mixed = {d.name for d in dirs if any(p.suffix.lower() == '.vcxproj' for p in build_files(d))}
+    keys = {}
+    for project in projects:
+        closure = closure_names(references, project)
+        payload = [common, project, sorted((name, trees.get(name)) for name in closure),
+                   sorted(q for q in projects if q != project and q in closure & mixed)]
+        keys[project] = hashlib.sha256(json.dumps(payload).encode('utf-8')).hexdigest()
+    return keys
+
+
+def scan_key(keys, project):
+    """Key of rows that depend on everything scanned with them."""
+    return hashlib.sha256(json.dumps([keys[project], sorted(keys.values())]).encode('utf-8')).hexdigest()
+
+
+PID = '<PrivateImplementationDetails>'
+
+
+def context_free(root, commit, project, rows):
+    """Whether a project's rows are the same whatever else is scanned with them. MethodAudit pairs the project's
+    <PrivateImplementationDetails> with the only loaded Mathcad assembly that has one, else with the one assembly the
+    project's types bind (Program.cs:150-161), and every scanned project loads the assemblies it binds. That holds the
+    same pairing in every scan when the project's types bind one assembly A (every MirrorOf in src/<project> names A, and
+    one of its own rows paired with A) and the container paired with A. A mixed-mode project's global functions pair
+    through that binding too (Program.cs:236-242), and a container without methods leaves no rows to show it, so mixed-mode
+    rows are never context-free. The proof follows MethodAudit's pairing: revisit it when that changes."""
+    if any(m.get('mixed_mode') for m in rows):
+        return False
+    paired = lambda generated: {m['original']['assembly'] for m in rows
+                                if m.get('original') and m['type'].startswith(PID) == generated}
+    if not any(m['type'].startswith(PID) for m in rows):
+        return True
+    if len(container := paired(True)) != 1 or not container <= paired(False):
+        return False
+    # Every MirrorOf in the project's sources, as MethodAudit splits its argument; a mention without a literal proves nothing.
+    found = subprocess.run(['git', 'grep', '-h', '-o', '-E', r'MirrorOf(Attribute)?(\("[^"]*")?', commit, '--',
+                            f'src/{project}/'], cwd=root, capture_output=True, text=True).stdout.split('\n')
+    named = {(m.split(',')[1].strip(' "').lower() if m.count(',') else None) for m in filter(None, found)}
+    return named == {container.pop().lower()}
+
+
+def cached_slices(cache, keys):
+    """The inventory the projects' stored rows make up, in scan order (as one scan writes them), or None on any miss."""
+    methods = []
+    for project, key in keys.items():
+        entry = cached_inventory(cache, key)
+        if entry and entry.get('scan_bound'):
+            entry = cached_inventory(cache, scan_key(keys, project))
+        if entry is None:
+            return None
+        methods += entry['methods']
+    return {'projects': list(keys), 'methods': methods}
+
+
+def store_slices(cache, root, commit, keys, data):
+    """Store each project's rows of a scan of keys' projects; rows not context_free under their scan_key, behind a marker."""
+    rows = {project: [] for project in keys}
+    for row in data['methods']:
+        if row.get('project') not in rows:
+            return  # a row the keys cannot attribute (an assembly not named as its project): store nothing
+        rows[row['project']].append(row)
+    for project, methods in rows.items():
+        if context_free(root, commit, project, methods):
+            store_inventory(cache, keys[project], {'methods': methods})
+        else:
+            store_inventory(cache, scan_key(keys, project), {'methods': methods})
+            store_inventory(cache, keys[project], {'methods': [], 'scan_bound': True})
 
 
 def cached_inventory(cache, key):
@@ -534,7 +610,7 @@ def cached_inventory(cache, key):
 
 
 def store_inventory(cache, key, data):
-    """Only inventories of committed trees: never a working tree, which the key cannot identify. Best effort: another
+    """Only inventories of committed trees: never a working tree, which the keys cannot identify. Best effort: another
     lane reading or writing the same entry (Windows refuses to replace an open file) only costs a later rebuild."""
     temp = cache / f'{key}.{uuid.uuid4().hex}.tmp'
     try:
@@ -549,8 +625,8 @@ def store_inventory(cache, key, data):
 def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeout=1800,
           root=ROOT, install=None, vcxproj=None, cache=None, store_candidate=False):
     """Compare base and candidate (root's working tree). The judge, MethodAudit, is built from the base commit so a
-    candidate cannot change what judges it. Base inventories are cached by inventory_key; store_candidate also caches a
-    passing candidate under its HEAD commit, for a root whose tree is exactly that commit (il_merge's clean clone)."""
+    candidate cannot change what judges it. Base inventories are cached per project by slice_keys; store_candidate also
+    caches a passing candidate's, for a root whose tree is exactly its HEAD commit (il_merge's clean clone)."""
     total_start = time.perf_counter()
     timings = dict.fromkeys(('judge_build', 'base_checkout', 'base_build', 'base_scan',
                              'candidate_build', 'candidate_scan', 'compare', 'total'), 0.0)
@@ -581,16 +657,17 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
                 tool = build_judge(original, base, cache, dotnet, log, timeout)
             # A project the candidate adds has no base build; its members start as new (or moved) rows.
             existing = [p for p in projects if (original / 'src' / p / f'{p}.csproj').is_file()]
-            key = inventory_key(root, base, base, existing, install) if existing else None
-            before = cached_inventory(cache, key) if key else {'methods': []}
-            report['base_cached'] = bool(key) and before is not None
+            judge = tool.parent.parent.name  # build_judge's key: entries judged by another judge never hit
+            keys = slice_keys(original, base, judge, existing, install) if existing else {}
+            before = cached_slices(cache, keys) if keys else {'methods': []}
+            report['base_cached'] = bool(keys) and before is not None
             if before is None:
                 print('Building base Release assemblies', flush=True)
                 before = build_and_scan(original, existing, tool, work / 'before', install, dotnet, log, timeout,
                                         keep=results / 'base-inventory.json', timings=timings, prefix='base')
-                store_inventory(cache, key, before)
-            else:
-                print(f'Base inventory from cache ({key[:12]})', flush=True)
+                store_slices(cache, original, base, keys, before)
+            elif keys:
+                print(f'Base inventory from cache ({len(keys)} projects)', flush=True)
             print('Building candidate Release assemblies', flush=True)
             after = build_and_scan(root, projects, tool, work / 'after', install, dotnet, log, timeout, vcxproj,
                                    keep=results / 'inventory.json', timings=timings)
@@ -606,8 +683,8 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
             timings['compare'] = time.perf_counter() - compare_start
             report['originals'] = new_id
             if store_candidate and report['passed'] and not vcxproj and not report['working_tree']:
-                # Judged by the base's tool, so keyed by it: if the candidate changes the tool, its key never hits.
-                store_inventory(cache, inventory_key(root, report['tip'], base, projects, install), after)
+                # Judged by the base's tool, so keyed by it: if the candidate changes the tool, its keys never hit.
+                store_slices(cache, root, report['tip'], slice_keys(root, report['tip'], judge, projects, install), after)
             # Kept locally for exact signatures, tokens and artifact identities; no original IL.
             (results / 'base-inventory.json').write_text(json.dumps(before, indent=2) + '\n', encoding='utf-8')
             (results / 'inventory.json').write_text(json.dumps(after, indent=2) + '\n', encoding='utf-8')
