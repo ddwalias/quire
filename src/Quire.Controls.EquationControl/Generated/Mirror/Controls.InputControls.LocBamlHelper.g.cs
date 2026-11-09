@@ -11,6 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.LocBamlHelper, Ptc.Controls.EquationControl")]
 public static partial class LocBamlHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Array GetValues(global::System.Type enumType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

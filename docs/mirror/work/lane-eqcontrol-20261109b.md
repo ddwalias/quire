@@ -8,4 +8,7 @@
 - Batch: `Controls.InputControls.DoubleRule::{Validate, .ctor}`, `UDoubleRule::{Validate, .ctor}`.
 - Shapes tried: `string.Empty` differed from the required empty string literal; `value == null ? null : value.ToString()` differed in branch direction; reversed ternary predicate matched.
 - Release IL: PASS, 616 checked (`.mirror-cache/release-il-e9752a832884/release-il.json`). Earlier candidate reports: FAIL at `d7dcf40a63da` (empty-string field), `d252be5d7941` (UDoubleRule null branch).
-- Remaining: all other stub-marked members in EquationControl; 5,375 markers across 314 types after this batch.
+- Batch: `Controls.InputControls.LocBamlHelper::GetValues`.
+- Shapes tried: direct null comparison and enum check matched.
+- Release IL: PASS, 617 checked (`.mirror-cache/release-il-faa1d717a424/release-il.json`).
+- Remaining: all other stub-marked members in EquationControl; 5,374 markers across 313 types after this batch.
