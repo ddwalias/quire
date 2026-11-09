@@ -11,12 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.HideableSolverAggregate, Ptc.Controls.SolveBlock")]
 internal partial class HideableSolverAggregate : global::Quire.Controls.SolverAggregate, global::Quire.Calculation.Core.ICalculationHideableChild, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool CanHideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public HideableSolverAggregate(global::Quire.Calculation.Core.ICalculatable calculatable) : base(default(global::Quire.Calculation.Core.ICalculatable)) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void WrappedCalculatablePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
