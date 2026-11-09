@@ -104,3 +104,6 @@
 - Batch: `Controls.InputControls.ButtonModel` (`Data`, `.ctor`, `SelectedValue`, `Text`, `IsChecked`, `Apply`, `HandlePostInputFieldResultChanged`, `DefaultScript`).
 - Shapes tried: `valueIndex` assigned per branch (boxed in each), `error` declared after it, early `return` on engine error, and a single `Hashtable` text check matched on the first candidate.
 - Release IL: PASS, 787 checked (`.mirror-cache/release-il-ea9e567881bf/release-il.json`).
+- Batch: `Controls.InputControls.ButtonViewModel` (`Model`, `BackgroundColor`, `Text`, `IsChecked`, `.ctor`, `HandleModelPropertyChanged`, `OnClick`).
+- Shapes tried: string switch with a shared body and `Model.IsChecked = !Model.IsChecked` matched on the first candidate. The unused `_isChecked` field is kept with a pragma so the field layout matches.
+- Release IL: PASS, 797 checked (`.mirror-cache/release-il-d93b802c8c81/release-il.json`).

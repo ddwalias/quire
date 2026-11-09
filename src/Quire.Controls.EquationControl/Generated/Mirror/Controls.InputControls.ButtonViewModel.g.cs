@@ -11,22 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.ButtonViewModel, Ptc.Controls.EquationControl")]
 internal partial class ButtonViewModel : global::Quire.Controls.InputControls.InputScriptableControlViewModelWithInputs
 {
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isChecked;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.PropertyInfo _backgroundColor;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.InputControls.ButtonModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.PropertyInfo BackgroundColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsChecked { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ButtonViewModel(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue data) : base(default(global::Quire.Controls.InputControls.IInputScriptableControlModelWithInputs)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => base.HandleModelPropertyChanged(sender, e);
-    [global::Quire.Mirror.MirrorStub]
-    internal void OnClick() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
