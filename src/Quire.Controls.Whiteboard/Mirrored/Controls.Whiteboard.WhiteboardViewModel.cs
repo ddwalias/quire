@@ -17,7 +17,10 @@ public partial class WhiteboardViewModel
 {
     internal WhiteboardViewModel(global::Quire.Controls.Whiteboard.IWhiteboardModel model) { }
 
-    internal void HandleChildSizeChangedUnitTestWrapper(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal void HandleChildSizeChangedUnitTestWrapper(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Size oldSize, global::System.Windows.Size newSize)
+    {
+        HandleChildSizeChanged(item, oldSize, newSize);
+    }
 
     private global::Quire.Controls.Core.RelayCommand _moveDownCommand;
 
@@ -537,7 +540,11 @@ public partial class WhiteboardViewModel
         }
     }
 
-    public virtual void UpdateSizeLimits(global::System.Windows.Size maximumSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void UpdateSizeLimits(Size maximumSize)
+    {
+        MaximumSize = maximumSize;
+        MinimumSize = FindMinimumSize();
+    }
 
     protected virtual global::System.Windows.Size FindMinimumSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -883,7 +890,17 @@ public partial class WhiteboardViewModel
 
     public bool HandleUserInput { get; protected set; }
 
-    public void ActivateActiveItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void ActivateActiveItem()
+    {
+        // Mathcad IL branches past a guard return (brtrue; ret) and reads ActiveItem again for each call.
+        if (ActiveItem == null)
+        {
+            return;
+        }
+
+        ActivateItem(ActiveItem);
+        WhiteboardItemMgr.ActivateItem(ActiveItem);
+    }
 
     protected virtual void ActivateItem(IWhiteboardItem item)
     {
@@ -962,7 +979,13 @@ public partial class WhiteboardViewModel
         WhiteboardItemMgr.DeactivateItem(ActiveItem);
     }
 
-    protected virtual void HandleChildItemGotFocus(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void HandleChildItemGotFocus(IWhiteboardItem item)
+    {
+        if (item == null || WhiteboardItems.Contains(item))
+        {
+            ActiveItem = item;
+        }
+    }
 
     protected virtual void HandleChildRequestRemove(global::Quire.Controls.Core.IWhiteboardItem itemToRemove, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -997,11 +1020,20 @@ public partial class WhiteboardViewModel
 
     protected virtual global::System.Windows.Point GetNextIntersectionForMove(global::System.Windows.Point currentLocation, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    protected virtual bool IsValidInsertionPoint(global::System.Windows.Point pt) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual bool IsValidInsertionPoint(Point pt)
+    {
+        return true;
+    }
 
     protected virtual void HandleTraverse(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void DeleteActiveItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void DeleteActiveItem()
+    {
+        if (ActiveItem != null)
+        {
+            GetRemoveItemsCommand("Remove Active Item", GetItemAtLocation(ActiveItem)).Execute();
+        }
+    }
 
     protected void DeleteSelectedItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -1073,7 +1105,9 @@ public partial class WhiteboardViewModel
 
     private void ChildTriggeredResizeHandler(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl whiteboard, global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    protected virtual void HandleItemMoved(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void HandleItemMoved(IWhiteboardItem item)
+    {
+    }
 
     protected virtual void HandleChildSizeChanged(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

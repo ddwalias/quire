@@ -368,3 +368,11 @@
 - Rejected shape: `IsTabNavigatable => WhiteboardItems.Any(item => WhiteboardItemMgr.IsTabNavigatable(item))` produced the exact IL, but its lambda is `<get_IsTabNavigatable>b__230_0` where Mathcad has `b__236_0`. The class has six fewer preceding member declarations than Mathcad, so this needs placeholder members in Mathcad order first. It stays a stub.
 - Release IL: PASS — 828 checked, 0 failures (`release-il-7f8a8eaf6c19`).
 - Remaining mismatches in this batch: none. Blocked and skipped: `DropTargetDrop` (recorded devirtualization blocker, batch 14), `Separate` (deferred).
+
+## Batch 22 — WhiteboardViewModel plain members (no closures)
+
+- Members: `HandleChildSizeChangedUnitTestWrapper`, `UpdateSizeLimits`, `ActivateActiveItem`, `HandleChildItemGotFocus`, `IsValidInsertionPoint`, `DeleteActiveItem`, `HandleItemMoved`.
+- Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs` (placeholder stubs in place; nothing removed from `Generated/`).
+- Shapes: `ActivateActiveItem` uses the guard `if (ActiveItem == null) return;` (Mathcad `brtrue; ret`), reading `ActiveItem` again for each call; the other members are direct.
+- Skipped (closure-ordinal or devirtualization): `IsTabNavigatable` (ordinal), the `new XCommand(...).Execute()` members (devirtualization blocker from batch 14).
+- Release IL: PASS — 835 checked, 0 failures (`release-il-ad06e789ccfe`).
