@@ -79,3 +79,6 @@
 - Batch: `Controls.InputControls.CellData` (`.ctor`, `Text`, `Row`, `Column` accessors, `PropertyChanged` event accessors, `IsEmpty`, `IsEmptyOrWhitespace`, `Clear`, `OnPropertyChanged`).
 - Shapes tried: fields/event/properties declared in the hand-written partial; `Passed ? value : string.Empty` and `DevAssert(value >= 0)` guards matched on the first candidate.
 - Release IL: PASS, 681 checked (`.mirror-cache/release-il-b6e49320e792/release-il.json`).
+- Batch: `Controls.EquationInsertCommand` (three constructors, `ParameterToFunctionalityKeyDictionaryList`, `ContainsSExpression`, `AddFunctionalityKeyAccordingSExpression`, `GetFunctionalityKeyAccordingSExpression`, static dictionary and constants).
+- Shapes tried: local-list getter and `out` lookup with `FailAssertion` fallback matched on the first candidate.
+- Release IL: PASS, 688 checked (`.mirror-cache/release-il-fd4577092fdd/release-il.json`).
