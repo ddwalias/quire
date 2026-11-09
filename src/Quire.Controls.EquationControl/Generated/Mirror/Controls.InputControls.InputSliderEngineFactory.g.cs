@@ -11,8 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputSliderEngineFactory, Ptc.Controls.EquationControl")]
 public partial class InputSliderEngineFactory : global::Quire.Controls.InputControls.IInputControlEngineFactory
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.InputControls.IInputControlEngine CreateEngine(global::Quire.EquationEditor.Tree.InputControlEngineTypes engineType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public InputSliderEngineFactory() { }
 }

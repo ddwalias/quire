@@ -34,3 +34,25 @@ public partial class InputListBoxEngineFactory
         _ => new InputListBoxEngineDefaultScript(),
     };
 }
+
+public partial class InputSliderEngineFactory
+{
+    public IInputControlEngine CreateEngine(InputControlEngineTypes engineType) => engineType switch
+    {
+        InputControlEngineTypes.VBScript => new InputSliderEngineVBScript(),
+        InputControlEngineTypes.JScript => new InputSliderEngineJScript(),
+        InputControlEngineTypes.Python => new InputSliderEnginePython(),
+        _ => new InputSliderEngineDefaultScript(),
+    };
+}
+
+public partial class InputTextBoxEngineFactory
+{
+    public IInputControlEngine CreateEngine(InputControlEngineTypes engineType) => engineType switch
+    {
+        InputControlEngineTypes.VBScript => new InputTextBoxEngineVBScript(),
+        InputControlEngineTypes.JScript => new InputTextBoxEngineJScript(),
+        InputControlEngineTypes.Python => new InputTextBoxEnginePython(),
+        _ => new InputTextBoxEngineDefaultScript(),
+    };
+}
