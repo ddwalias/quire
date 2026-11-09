@@ -1,6 +1,6 @@
 # Equation Editor lane checkpoint (20261109b)
 
-- Owner: EquationEditor dispatched worker (task_ab0a80ddc63d)
+- Owner: EquationEditor dispatched worker (task_6b037491df3f)
 - Branch: `mirror/equation-editor-20261109b`
 - Assembly: `Quire.EquationEditor` (managed members, `src/Quire.EquationEditor`)
 
@@ -40,3 +40,5 @@
 - Earlier blocked shapes from the 20261109 checkpoint still apply: `.initlocals` header flag (`ListBoxScriptableControlData.Clone`, `DetachedTypeoverState` ctor), constructors that store fields before the base `Object` call (`LinearSegment()`), and `InputControlDataCalculatedValue.HasCalculatedValue`.
 
 - Batch 15: `Tree.FormattedString.Length`, `IsSimpleString`, `GetHashCode`, `ToString` (fields `g`, `h`, `j`). Release IL PASS, 359 checked, 0 failures (`.mirror-cache/release-il-a61c8b78b70a/release-il.json`). Initial gate `release-il-3361fcff3e22` failed compilation because regeneration needs compiled hand-written metadata; targeted MirrorGen writer regeneration removed the duplicate stubs. Idiomatic `Length` failed only `.initlocals True` versus Mathcad `False` (release-il-a852884b9af7; il_diff instruction #26); getter-level `SkipLocalsInit` matched, with `AllowUnsafeBlocks` enabled for the attribute. No remaining mismatches in this batch.
+
+- Batch 16: `Tree.InputScriptableControlDataWithInputs` fields `e`-`m`, all nine properties, two-argument constructor and `IsEquivalentTo`. Release IL PASS, 379 checked, 0 failures (`.mirror-cache/release-il-82411da843f0/release-il.json`), idiomatic shapes matched first try (including `Values?.Count ?? 0`). `Clone` remains under the known header blocker; parsed-expression constructor remains for a separate batch.
