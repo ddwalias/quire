@@ -11,8 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualApply, Ptc.Controls.EquationControl")]
 internal partial class VisualApply : global::Quire.Controls.Internal.VisualLinearBinaryOperatorNode<global::Quire.Controls.Internal.VisualSpacer>, global::Quire.EquationEditor.View.IVisualApply, global::Quire.EquationEditor.View.IVisualBinaryOperatorNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => base.GetNodeAtPoint(hitPoint);
-    [global::Quire.Mirror.MirrorStub]
-    public VisualApply() { }
 }
