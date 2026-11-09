@@ -29,4 +29,7 @@
 - Batch: `Controls.ControlAdorners.OuterGrabbingAreaMarginConverter` and `OuterGrabbingAreaVisibilityConverter` (`Convert`, `ConvertBack`, `.ctor` each).
 - Shapes tried: type tests with explicit unbox/default branches, thickness calculation, visibility thresholds, and `NotImplementedException` matched.
 - Release IL: PASS, 629 checked (`.mirror-cache/release-il-7a22e9ab3455/release-il.json`).
-- Remaining: all other stub-marked members in EquationControl; 5,348 markers across 301 types after this batch.
+- Batch: `Controls.MultiStartAndOptimizeEnabledConverter::{Convert, ConvertBack, .ctor}`.
+- Shapes tried: null-conditional string fallback and direct `HashSet.Contains`; `ConvertBack` returns null; implicit constructor matches.
+- Release IL: PASS, 631 checked (`.mirror-cache/release-il-5e0d5d0ee41a/release-il.json`).
+- Remaining: all other stub-marked members in EquationControl; 5,345 markers across 300 types after this batch.
