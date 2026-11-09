@@ -144,3 +144,10 @@
   - Head-tested `while` with `int columns` declared inside the body: local slot 4 instead of Mathcad's slot 3 (`Release IL differs`).
   - Same with `int columns;` declared once in the `else` block: still `Release IL differs`.
 - Not resolved: the `columns` temporary's slot in the second loop. Next step is an op-level diff of the two bodies, which needs the candidate IL extracted per method (the awk extraction did not isolate the method).
+
+## Batch 21 — LineStyleToDashArrayConverter
+
+- Members: `Instance`, private `.ctor`, `Convert`, `ConvertBack`. Hand-written: `Mirrored/Controls.Plots.LineStyleToDashArrayConverter.cs`; all stubs removed from its `.g.cs`.
+- Rejected candidate: `value is LineStyle lineStyle ? lineStyle : LineStyle.None` failed `Convert` at instruction 3 (`brfalse.s 5` vs Mathcad's `brtrue.s 3`). The original-style `value is LineStyle ? (LineStyle)value : LineStyle.None` matches.
+- Release IL: PASS — 456 checked, 456 exact, 0 failures, 4794 unfinished.
+- Remaining: `PlotLegendLayoutManager.GetNumberOfColumnsFitWidth` remains blocked by the documented local-slot mismatch; other unimplemented stubs remain unclaimed.
