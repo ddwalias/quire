@@ -51,4 +51,7 @@
 - Batch: `Controls.SymbolDescriptorFilter::{FilterByCategoryKey, FilterExcludingCategoryKey, FilterByCanonicalName, MatchCategory, MatchCanonicalName}`.
 - Shapes tried: explicit `DictionaryEntry` locals fixed evaluation order; `MatchCategory` foreach and canonical-name for loop matched. Property-pattern if/else differed in branch layout; the labeled false/accepted paths matched.
 - Release IL: PASS, 651 checked (`.mirror-cache/release-il-f413d4aa974f/release-il.json`). Earlier candidates: FAIL at `71266f8a0173`, `9d8c769456df`, and `ac51a073577a` (local/evaluation order and exclusion branch layout).
-- Remaining: all other stub-marked members in EquationControl; 5,324 markers across 294 types after this batch.
+- Batch: `Controls.EquationControlErrorMessages::{.ctor, InitializeComponent, IComponentConnector.Connect}`.
+- Shapes tried: constructor delegates to initialization, load-once guard, resource load, and connector flag matched; initial Ptc assembly URI differed, Quire self URI matched.
+- Release IL: PASS, 654 checked (`.mirror-cache/release-il-6bbad93dd157/release-il.json`). Earlier candidate: FAIL at `167586b6b48b` (resource URI constant).
+- Remaining: all other stub-marked members in EquationControl; 5,321 markers across 294 types after this batch.
