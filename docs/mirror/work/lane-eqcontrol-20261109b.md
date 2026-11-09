@@ -101,3 +101,6 @@
 - Batch: `Controls.InputControls.CheckBoxModel` (`.ctor`, `SelectedValue`, `FlowDirection`, `ImagePath`, `IsChecked`, `Text`, `Apply`, `HandlePostInputFieldResultChanged`, `DefaultScript`, `Data`).
 - Shapes tried: `string.Empty` FAILED at the constructor (Mathcad uses the `""` literal). `return Data.SelectedValueIndex != 0.0` FAILED on the getter (Mathcad branches on `== 0.0`); the explicit `if` returns matched. The setter's first `il_diff` difference was local slot order: `string error` must be declared before `object valueIndex`; the reordered form matched.
 - Release IL: PASS, 777 checked (`.mirror-cache/release-il-b1db382e210e/release-il.json`). Earlier candidate: FAIL at `32b9d2bb64e1`.
+- Batch: `Controls.InputControls.ButtonModel` (`Data`, `.ctor`, `SelectedValue`, `Text`, `IsChecked`, `Apply`, `HandlePostInputFieldResultChanged`, `DefaultScript`).
+- Shapes tried: `valueIndex` assigned per branch (boxed in each), `error` declared after it, early `return` on engine error, and a single `Hashtable` text check matched on the first candidate.
+- Release IL: PASS, 787 checked (`.mirror-cache/release-il-ea9e567881bf/release-il.json`).
