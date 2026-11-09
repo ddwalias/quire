@@ -12,12 +12,6 @@ namespace Quire.Controls.IO;
 public partial class IOManager : global::Quire.Controls.Core.IORegions.IIORegionManager, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
-    private int _defaultCalculationTimeout;
-    [global::Quire.Mirror.MirrorStub]
-    public int DefaultCalculationTimeout { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private void FireIODataChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public IOManager(global::Quire.Controls.Core.IEngineeringDocument doc) { }
     [global::Quire.Mirror.MirrorStub]
     public void HandleElementAddedToParentContainer(global::Quire.Controls.Core.IORegions.IIORegion ioRegion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -27,8 +21,6 @@ public partial class IOManager : global::Quire.Controls.Core.IORegions.IIORegion
     public void HandleElementsListSelectedInParentContainer(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IIORegionBase> ioItemsList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleElementSelectedInParentContainer(global::Quire.Controls.Core.IORegions.IIORegion region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsValidAlias(string alias, bool isIn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.Calculation.Core.ICalculatable> GetCalculationOverrides(global::Quire.Controls.Core.IORegions.IIORegion region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

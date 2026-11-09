@@ -16,6 +16,42 @@ namespace Quire.Controls.IO;
 
 public partial class IOManager
 {
+    private int _defaultCalculationTimeout;
+
+    public int DefaultCalculationTimeout
+    {
+        get => _defaultCalculationTimeout;
+        set
+        {
+            if (value < -1)
+            {
+                return;
+            }
+            _defaultCalculationTimeout = value;
+        }
+    }
+
+    public bool IsValidAlias(string alias, bool isIn)
+    {
+        if (string.IsNullOrEmpty(alias))
+        {
+            return false;
+        }
+        if (isIn)
+        {
+            return Inputs.GetItem(alias, false) == null;
+        }
+        return Outputs.GetItem(alias, false) == null;
+    }
+
+    private void FireIODataChanged()
+    {
+        if (IODataChanged != null)
+        {
+            IODataChanged.Invoke();
+        }
+    }
+
     [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
     private readonly IEngineeringDocument _document;
 
