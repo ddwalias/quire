@@ -166,3 +166,10 @@
 - Shapes: direct casts for the two `values` elements, a `Thickness` object initializer, conditional right-margin addition, and `NotImplementedException` in `ConvertBack` matched.
 - Release IL: PASS — 462 checked, 462 exact, 0 failures.
 - Remaining: `PlotLegendLayoutManager.GetNumberOfColumnsFitWidth` remains blocked by the documented local-slot mismatch; other unimplemented stubs remain unclaimed.
+
+## Batch 24 — VectorFormatHelper
+
+- Members: `VectorRl`. Hand-written: `Mirrored/Controls.Plots.Plot3D.Model.VectorFormatHelper.cs`; its stub removed from the `.g.cs`.
+- Reference: member-specific extraction omitted the IL file; the method body was read from the cached full `Ptc.Controls.Plots.il` Release disassembly. LINQ projection and invariant numeric formatting matched, including the compiler-generated lambda method.
+- Release IL: PASS — 466 checked, 466 exact, 0 failures.
+- Remaining: `PlotLegendLayoutManager.GetNumberOfColumnsFitWidth` remains blocked by the documented local-slot mismatch; other unimplemented stubs remain unclaimed.

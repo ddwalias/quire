@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.Model.VectorFormatHelper, Ptc.Controls.Plots")]
 internal static partial class VectorFormatHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal static string VectorRl(params double[] vector) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
