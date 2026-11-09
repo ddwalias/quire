@@ -34,3 +34,10 @@
 - Release IL: PASS — 373 checked, 373 exact, 0 failures, 4875 unfinished.
 - Remaining mismatches in this batch: none.
 - Not yet done: `BackgroundTypeEToBackgroundConverter` (enum `switch` with a `switch` table; next batch).
+
+## Batch 5 — BackgroundTypeEToBackgroundConverter
+
+- Members: `Instance` (non-readonly static field initializer), `Convert`, `ConvertBack`, `.ctor` (implicit, no hand-written ctor). Hand-written: `Mirrored/Controls.Plots.View.BackgroundTypeEToBackgroundConverter.cs`; stubs removed from the `.g.cs`.
+- Shapes: `Convert` as `if (value is BackgroundTypeE backgroundType) switch` with `return` per case → first try failed with "switch targets: Quire 4, Mathcad 5": Mathcad's table covers values 0..4 with `Undefined` (0) sharing the default block. Adding `case BackgroundTypeE.Undefined:` directly above `default:` → exact.
+- Release IL: PASS — 376 checked, 376 exact, 0 failures, 4873 unfinished.
+- Remaining mismatches in this batch: none.
