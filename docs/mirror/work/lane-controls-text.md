@@ -535,3 +535,11 @@
 - Hand-written: `src/Quire.Controls.Text/Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stubs removed from `Generated/Mirror/Controls.Text.RichTextWithEmbeddedItem.g.cs`.
 - Release IL: PASS — 469 checked, 0 failures (`.mirror-cache/gate-b86`); 12 accessors added.
 - Remaining mismatches in this batch: none.
+
+## Batch 87 — RichTextWithEmbeddedItem add-items gate, error, hide-context, and math format getters (5)
+
+- Exact: `CanAddItems` (`ActiveItem == null` gate, then `!SelectionFullyInsideHyperlink`, else `false`), `CurrentError` (`ActiveItem as ICalculationErrorOwner` local, null check, then `CurrentError`), `CanHideFromCalculationContext` (`!WhiteboardItems.OfType<ICalculationHideableChild>().IsNullOrEmpty()`), `HasRegionsWithConverterAnnotations` (`this.HasRegionsWithConverterAnnotations()` extension), `TargetMathFormat` (`new StaticMathFormat(new MathFormatDobjController(this))`).
+- Note: `using System.Linq;` was added for `OfType`; this changed no existing method (previously exact methods stayed exact).
+- Hand-written: `src/Quire.Controls.Text/Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stubs removed from `Generated/Mirror/Controls.Text.RichTextWithEmbeddedItem.g.cs`.
+- Release IL: PASS — 474 checked, 0 failures (`.mirror-cache/gate-b87`).
+- Remaining mismatches in this batch: none.

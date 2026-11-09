@@ -2,6 +2,7 @@
 #pragma warning disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -1053,4 +1054,37 @@ public partial class RichTextWithEmbeddedItem
         get => (bool)GetValue(HyperlinkCanHaveToolTipProperty);
         set => SetValue(HyperlinkCanHaveToolTipProperty, value);
     }
+
+    public bool CanAddItems
+    {
+        get
+        {
+            if (ActiveItem == null)
+            {
+                return !SelectionFullyInsideHyperlink;
+            }
+
+            return false;
+        }
+    }
+
+    public EngineError CurrentError
+    {
+        get
+        {
+            ICalculationErrorOwner errorOwner = ActiveItem as ICalculationErrorOwner;
+            if (errorOwner != null)
+            {
+                return errorOwner.CurrentError;
+            }
+
+            return null;
+        }
+    }
+
+    public bool CanHideFromCalculationContext => !WhiteboardItems.OfType<ICalculationHideableChild>().IsNullOrEmpty();
+
+    public bool HasRegionsWithConverterAnnotations => this.HasRegionsWithConverterAnnotations();
+
+    public StaticMathFormat TargetMathFormat => new StaticMathFormat(new MathFormatDobjController(this));
 }
