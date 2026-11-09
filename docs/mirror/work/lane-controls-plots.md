@@ -151,3 +151,10 @@
 - Rejected candidate: `value is LineStyle lineStyle ? lineStyle : LineStyle.None` failed `Convert` at instruction 3 (`brfalse.s 5` vs Mathcad's `brtrue.s 3`). The original-style `value is LineStyle ? (LineStyle)value : LineStyle.None` matches.
 - Release IL: PASS — 456 checked, 456 exact, 0 failures, 4794 unfinished.
 - Remaining: `PlotLegendLayoutManager.GetNumberOfColumnsFitWidth` remains blocked by the documented local-slot mismatch; other unimplemented stubs remain unclaimed.
+
+## Batch 22 — PlotLegendLayoutManager (unblocked members)
+
+- Members: both constructors, `CalcMaxDecimalPerColumn`, `Clone`. Hand-written: `Mirrored/Controls.Plots.PlotLegendLayoutManager.cs`; these four stubs removed from its `.g.cs`. `GetNumberOfColumnsFitWidth` remains a stub.
+- Shapes: constructors chain to the base constructors; `CalcMaxDecimalPerColumn` returns a `MaxMatrixWidth` array sized from `cellsContent.Count`; `Clone` constructs a copy.
+- Release IL: PASS — 459 checked, 459 exact, 0 failures.
+- Remaining: `GetNumberOfColumnsFitWidth` is blocked by the known local-slot mismatch; other unimplemented stubs remain unclaimed.

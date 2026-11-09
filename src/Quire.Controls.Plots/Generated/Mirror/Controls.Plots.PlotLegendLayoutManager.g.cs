@@ -12,13 +12,5 @@ namespace Quire.Controls.Plots;
 internal partial class PlotLegendLayoutManager : global::Quire.Controls.Core.TableLayoutManager
 {
     [global::Quire.Mirror.MirrorStub]
-    public PlotLegendLayoutManager() { }
-    [global::Quire.Mirror.MirrorStub]
-    private PlotLegendLayoutManager(global::Quire.Controls.Plots.PlotLegendLayoutManager other) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.Controls.Core.MaxMatrixWidth[] CalcMaxDecimalPerColumn(global::System.Collections.Generic.IList<global::Quire.Controls.Core.LayoutMetrics> cellsInfo, global::System.Windows.Controls.UIElementCollection cellsContent, int rows) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override object Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public int GetNumberOfColumnsFitWidth(double newWidth, global::System.Windows.Controls.UIElementCollection children, global::Quire.Controls.Core.ColumnAlignments columnAlignment) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
