@@ -33,10 +33,4 @@ internal partial class SolveBlockCalculatableAggregate : global::Quire.Controls.
     internal static bool IsRlForSymbolicEval(global::System.Collections.Generic.IList<string> aggregateRl, out int symbolicEvalIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static string ComposeSolveblockChildRlFromEquationControl(global::System.Collections.Generic.IList<string> aggregateRl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleCalculatableAdded(global::Quire.Calculation.Core.ICalculatableContainer container, global::Quire.Calculation.Core.ICalculatable newCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable removedCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleCalculatableMoved(global::Quire.Calculation.Core.ICalculatable movedCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

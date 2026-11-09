@@ -56,4 +56,24 @@ internal partial class SolveBlockCalculatableAggregate
         EquationType = SolveBlockCalculatable.GetEquationTypeOfCalc(calc);
         return EquationType != oldEquationType;
     }
+
+    private void HandleCalculatableAdded(
+        global::Quire.Calculation.Core.ICalculatableContainer container,
+        global::Quire.Calculation.Core.ICalculatable newCalc)
+    {
+        if (CalculatableAdded != null)
+            CalculatableAdded(this, newCalc);
+    }
+
+    private void HandleCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable removedCalc)
+    {
+        if (CalculatableRemoved != null)
+            CalculatableRemoved(removedCalc);
+    }
+
+    private void HandleCalculatableMoved(global::Quire.Calculation.Core.ICalculatable movedCalc)
+    {
+        if (CalculatableMoved != null)
+            CalculatableMoved(movedCalc);
+    }
 }
