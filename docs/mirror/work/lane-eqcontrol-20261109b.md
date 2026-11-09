@@ -125,3 +125,6 @@
 - Batch: `Controls.InputControls.InputControlEditorResourceDirectory` (`KeysOwnerTypes` set by the type initializer, `.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`).
 - Shapes tried: `new Type[] { typeof(...) }` initializer matched on the first candidate.
 - Release IL: PASS, 819 checked (`.mirror-cache/release-il-5bba8223e8ef/release-il.json`).
+- Batch: `Controls.VisualCategoriesDictionary` (14 category constants, `.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`).
+- Shapes tried: constants transcribed unchanged; the resource-dictionary pattern matched on the first candidate.
+- Release IL: PASS, 822 checked (`.mirror-cache/release-il-9ee638f49d20/release-il.json`).
