@@ -11,14 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.SolveBlockSerializationStrategy, Ptc.Controls.SolveBlock")]
 internal partial class SolveBlockSerializationStrategy : global::Quire.Controls.Whiteboard.WhiteBoardSerializationStrategy
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::Quire.Controls.SolveBlockControl _control;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> _regionCreator;
-    [global::Quire.Mirror.MirrorStub]
-    public SolveBlockSerializationStrategy(global::Quire.Controls.SolveBlockControl control, global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> regionCreator) : base(default(global::Quire.Controls.Whiteboard.WhiteboardControl)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.PersistentDataObjects.IRegionInWhiteboardType ConvertToRegionPersistantData(global::Quire.Serialization.IS11NProvider s11NProvider, global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void SerializeRegionsEpilog(global::System.Xml.XmlDocument xmlDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
