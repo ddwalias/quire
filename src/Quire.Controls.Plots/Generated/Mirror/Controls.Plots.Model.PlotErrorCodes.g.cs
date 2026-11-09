@@ -61,6 +61,4 @@ public static partial class PlotErrorCodes
     public const string UnsupportedType = "PlotControl.Error.UnsupportedType";
     [global::Quire.Mirror.MirrorStub]
     public static bool IsLimitsCalculationRelatedCustomError(string errorCode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string CreateTooManyPointsForTraceTypeMessage(int maximalAllowedNumberOfPoints) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

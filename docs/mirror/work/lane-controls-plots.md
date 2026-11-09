@@ -216,3 +216,10 @@
 - Shapes: auto-properties and the `.ctor` (setter calls) matched first time. `GetValuesWithCorrectedZeroForGeneralFormat` first failed on the `&&` grouping: Mathcad's flag and loop-condition chains are right-grouped (`a && (b && c)`), so separate `ldc.i4.0` exits appear. Left-grouped chains (`(a && b && c)`) share one exit and differ. The right-grouped form matched.
 - Release IL: PASS — 495 checked, 495 exact, 0 failures.
 - Remaining mismatches in this batch: none.
+
+## Batch 31 — PlotErrorCodes.CreateTooManyPointsForTraceTypeMessage
+
+- Members: `CreateTooManyPointsForTraceTypeMessage`. Hand-written: `Mirrored/Controls.Plots.Model.PlotErrorCodes.cs`; its stub removed from the `.g.cs`.
+- Shapes: `string.Format(CultureInfo.CurrentUICulture, "\t{0:N0}", TooManyPointsForPlotType, maximalAllowedNumberOfPoints)` matched first time. The IL formats the key constant, not the count: the count is passed but unused by the `\t{0:N0}` pattern. Kept as Mathcad has it.
+- Release IL: PASS — 496 checked, 496 exact, 0 failures.
+- Open: `IsLimitsCalculationRelatedCustomError` stays a stub. Its Mathcad IL compares against `"Ptc.Plots.TICKMARKS_HAS_UNITS"` and `"RESULT_NOT_REAL_NUMBER"`, while the Quire constant `TickmarksHasUnits` is `"Quire.Plots.TICKMARKS_HAS_UNITS"`. Using the constant fails the literal match; using the Ptc literal would contradict the name mapping. Needs a decision from the maintainer.
