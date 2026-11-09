@@ -315,6 +315,34 @@
 - Release IL: PASS — 709 checked, 0 failures, 133 unfinished (`release-il-d01b30b9a937`).
 - Remaining mismatches in this batch: none.
 
+## Batch 19 — WhiteboardControl
+
+- Members:
+  - `WhiteboardControl`:
+    - Fields: `DeleteEmptySpaceDefaultLinesCount`, `DeleteIfEmptyProperty`, `DragDropManagerProperty`, `IsActiveProperty`, `ChangedEvent`, `InsertionPointPropertyName`, `WhiteboardItemsForXamlSerializationPropertyName`, `_snappingHelper`
+    - Constructors: `.cctor()`, `.ctor(IWhiteboardViewModel)`
+    - Properties: `WhiteboardItemManager` (get), `IWhiteboardItemContainer.ContainerItemManager` (get), `IHasChildArrangeInfoProvider.ChildArrangeInfoProvider` (get), `ViewModel` (protected get/set), `IsTabNavigatable` (get), `GridPosition` (get/set), `InsertionPoint` (get/set), `DefaultInsertionPoint` (get), `IsCrosshairVisible` (get/set), `ActiveItem` (get/set), `ActiveOrSelectedItems` (get), `ActiveDescendant` (get), `SelectedDescendants` (get), `WhiteboardItems` (get), `WhiteboardItemsForXamlSerialization` (virtual get/set), `GridCellSize` (get/set), `CanAddItems` (get), `SelectedItems` (get), `InsertionPointForResize` (get), `ForbidGrowingMovementRight` (set), `HasRegionsWithConverterAnnotations` (get), `RegionsWithConverterAnnotations` (get), `TargetMathFormat` (get), `TargetLabeledIdFormat` (get), `SnappingHelper` (get)
+    - Events: `RequestActivatePartContainingChild`, `RequestScrollTo`, `DragSelectBeyondBorder`, `ChildTriggeredResize`, `RequestMaximumSize`, `Activated`
+    - Methods: `RecursivelyEnumerateDescendantItemssBypassWhiteboard()`, `CanSeparateOverlappedItems(Dimension)`, `SeparateOverlappedItems(Dimension)`, `HandleIsSelectedPropertyChanged(DependencyObject, DependencyPropertyChangedEventArgs)`, `SetIsSelected(bool)`, `GetIsSelected(UIElement)`, `SetIsSelected(UIElement, bool)`, `GetIsActive(UIElement)`, `SetIsActive(UIElement, bool)`, `OnIsInCopyPropertyChanged(DependencyObject, DependencyPropertyChangedEventArgs)`, `HookupCustomEventHandlers()`, `BringIntoView(IEnumerable<IWhiteboardItem>)`, `FireCopyWhiteboardItems(IEnumerable<IWhiteboardItem>)`, `HandleRequestScrollTo(IWhiteboardControl, Rect)`, `FireChanged(object, EventArgs)`, `ChildCausedResizeHandler(Size, Size)`, `RequestMaximumSizeHandler()`, `OnTraversedFocusEvent(object, CustomRoutedEventArgs<FocusNavigationDirection>)`, `SetupBindings()`, `CopySelection()`, `CutSelection()`, `TabInto(FocusNavigationDirection)`, `PasteItems(IDictionary<IWhiteboardItem, Point>)`, `OnDragSelectBeyondBorder(Rect)`, `ViewModelPropertyChangedHandler(object, PropertyChangedEventArgs)`, `GetItemRect(IWhiteboardItem)`, `GetItemLocation(IWhiteboardItem)`, `SetItemLocation(IWhiteboardItem, Point)`, `GetItemGridPosition(IWhiteboardItem)`, `ActivateWhiteboard(bool)`, `SetInsertionPointWhenLoaded(Point)`, `SetItemGridPosition(IWhiteboardItem, Point)`, `AddItem(IWhiteboardItem)`, `AddItems(Dictionary<IWhiteboardItem, Point>)`, `RemoveItem(IWhiteboardItem)`, `AddItemAtLocation(IWhiteboardItem, Point, bool)`, `ToggleItemSelection(IWhiteboardItem, bool)`, `SelectContiguous(IWhiteboardItem)`, `ClearSelection()`, `SelectItems(IEnumerable<IWhiteboardItem>)`, `UnSelectItems(IEnumerable<IWhiteboardItem>)`, `SelectItem(IWhiteboardItem)`, `UnSelectItem(IWhiteboardItem)`, `SaveVisualState()`, `RestoreVisualState()`, `ClearVisualState()`, `SaveResizeInformation()`, `RestoreResizeInformation()`, `GridCellSizeChangedHandler(Size, Size)`, `NavigateInto(Direction, Point)`, `UpdateSizeLimits(Size)`, `GetNavigationStartLocation(Direction)`, `SelectAllItems()`, `GetDescendantInsertionPoint()`, `FindOncePrivate(string, bool, LogicalDirection, FindOptions, List<Pair<int, int>>)`, `HighlightAll(string, FindOptions)`, `CanInsertVerticalSpace(object, CanExecuteRoutedEventArgs)`, `CanDeleteVerticalSpaceAbove(object, CanExecuteRoutedEventArgs)`, `CanDeleteVerticalSpaceBelow(object, CanExecuteRoutedEventArgs)`, `InsertVerticalSpace(object, ExecutedRoutedEventArgs)`, `DeleteVerticalSpaceAbove(object, ExecutedRoutedEventArgs)`, `DeleteVerticalSpaceBelow(object, ExecutedRoutedEventArgs)`, `GetImeWindowPosition()`, `Dispose()`
+  - Closures:
+    - `<>c`: `<.cctor>b__41_0`, `<.ctor>b__43_0`, `<.ctor>b__43_1`, `<.ctor>b__43_2`, `<.ctor>b__43_3`
+    - `<>c__DisplayClass42_0`: `<OnIsInCopyPropertyChanged>b__0`, `<OnIsInCopyPropertyChanged>b__1`
+    - Instance lambdas: `<HookupCustomEventHandlers>b__44_0`, `<HookupCustomEventHandlers>b__44_1`, `<ActivateWhiteboard>b__100_0`
+    - `<>c__DisplayClass101_0`: `<SetInsertionPointWhenLoaded>b__0`
+    - `<>c__DisplayClass123_0`: `<GridCellSizeChangedHandler>b__0`
+- Hand-written: `Mirrored/Controls.Whiteboard.WhiteboardControl.cs`.
+- Stubs removed: `Generated/Mirror/Controls.Whiteboard.WhiteboardControl.g.cs`.
+- Shapes:
+  - Exact member declaration ordering matching Roslyn syntax ordinals `<.cctor>b__41_0`, `<>c__DisplayClass42_0`, `<.ctor>b__43_*`, `<HookupCustomEventHandlers>b__44_*`, `<ActivateWhiteboard>b__100_0`, `<>c__DisplayClass101_0`, and `<>c__DisplayClass123_0`.
+  - Field placement: `ChangedEvent`, `InsertionPointPropertyName`, and `WhiteboardItemsForXamlSerializationPropertyName` declared in the middle of the class before their consuming members to match the 41/59/23 ordinal interval structure; `_snappingHelper` declared immediately preceding `SnappingHelper`.
+  - `BringIntoView` early return on `items.IsNullOrEmpty()` emitting `brfalse.s; ret`.
+  - `HandleRequestScrollTo` guard as `control as IWhiteboardItem; if (item == null) return;` emitting `brtrue.s; ret`.
+  - Property metadata overrides in `.cctor` without extra `PropertyMetadata` casts.
+  - Direct `this` references passed to `SerializationHelperUtils.IsConvertedFromMathcad14` and `MathFormatDobjController`.
+- Release IL: PASS — 824 checked, 0 failures, 175 unfinished (`release-il-e0c1ee32981f`).
+- Remaining mismatches in this batch: none.
+
+
 
 
 
