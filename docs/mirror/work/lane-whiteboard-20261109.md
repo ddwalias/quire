@@ -201,4 +201,26 @@
 - Release IL: PASS — 466 checked, 0 failures, 388 unfinished (`release-il-729bae86dfa0`).
 - Remaining mismatches in this batch: none.
 
+## Batch 14 — WhiteboardDragger
+
+- Members:
+  - `WhiteboardDragger`:
+    - Fields: `_default`, `IsDragSourceProperty`, `IsDropTargetProperty`, `_dragDropManager`, `_whiteboardControl`, `_startLocation`, `_dataFormat`, `_dragData`, `_whiteboardItemManager`
+    - Properties: `Default`, `ViewModel`
+    - Event: `OnNoDrag`
+    - Methods: `MouseDown`, `GetIsDragSource`, `SetIsDragSource`, `IsDragSourceChanged`, `GetIsDropTarget`, `SetIsDropTarget`, `IsDropTargetChanged`, `FireOnNoDrag`, `EndDrag`, `DragSourceMouseLeftButtonDown(object, MouseButtonEventArgs)`, `DragSourceMouseLeftButtonDown(FrameworkElement)`, `DragSourceMouseLeftButtonUp`, `DragSourceMouseMove`, `TopWindowQueryContinueDrag`, `TopWindowDragEnter`, `TopWindowDragOver`, `TopWindowDragLeave`, `VisualCleanup`, `DoDrag`, `DropTargetDragEnter`, `DropTargetDragOver`, `DropTargetDragLeave`, `HookupDragSourceEvents`, `UnhookDragSourceEvents`, `HookupDropTargetEvents`, `UnhookDropTargetEvents`, `.ctor()`
+    - Closures: `<EndDrag>b__25_0`, `<TopWindowQueryContinueDrag>b__30_0`, `<VisualCleanup>b__34_0`, `<>c__DisplayClass35_0` (`<DoDrag>b__0`)
+    - Stub preserved: `DropTargetDrop` (Roslyn devirtualizes `new MoveItemsCommand(...).Execute()` to non-virtual `call`, whereas Mathcad IL calls `callvirt WhiteboardCommand.Execute`).
+- Hand-written: `Mirrored/Controls.Whiteboard.WhiteboardDragger.cs`.
+- Stubs removed: `Generated/Mirror/Controls.Whiteboard.WhiteboardDragger.g.cs`.
+- Shapes:
+  - Member sequence placing `EndDrag` at member 25, `TopWindowQueryContinueDrag` at 30, `VisualCleanup` at 34, `DoDrag` at 35, generating exact closure names `<EndDrag>b__25_0`, `<TopWindowQueryContinueDrag>b__30_0`, `<VisualCleanup>b__34_0`, `<>c__DisplayClass35_0`.
+  - Early returns `if (dragSource == null) return;` and `if (dropTarget == null) return;` in `IsDragSourceChanged` and `IsDropTargetChanged` to match `brtrue.s IL_000b; ret;`.
+  - Early return `if (_whiteboardControl == null) return;` in `DragSourceMouseLeftButtonDown`.
+  - Split guards `if (_whiteboardControl == null || ViewModel == null || ViewModel.CurrentDragMode != DragMode.Move) return;` followed by `if (!WpfUtils.IsSignificantMouseMove(...)) return;` in `DragSourceMouseMove`.
+  - Early return `if (_whiteboardControl == null || whiteboardViewModel == null || whiteboardViewModel.ActiveOrSelectedItems.Count() == 0) return;` in `DoDrag`.
+- Release IL: PASS — 502 checked, 0 failures, 350 unfinished (`release-il-fa956f357501`).
+- Remaining mismatches in this batch: none.
+
+
 
