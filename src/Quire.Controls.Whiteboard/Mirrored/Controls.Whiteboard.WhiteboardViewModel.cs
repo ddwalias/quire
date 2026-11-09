@@ -1088,7 +1088,26 @@ public partial class WhiteboardViewModel
         return false;
     }
 
-    protected virtual bool CanMove(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual bool CanMove(Direction direction)
+    {
+        if (!HandleUserInput)
+        {
+            return false;
+        }
+
+        Point nearestIntersectionInDirection = _alignmentGrid.GetNearestIntersectionInDirection(GetNavigationStartLocation(direction), direction);
+        if (SelectedItems.Count() <= 0)
+        {
+            if (nearestIntersectionInDirection.X.IsBetween(0.0, ContentWidth))
+            {
+                return nearestIntersectionInDirection.Y.IsBetween(0.0, ContentHeight);
+            }
+
+            return false;
+        }
+
+        return true;
+    }
 
     private bool CanDeleteActiveItem()
     {

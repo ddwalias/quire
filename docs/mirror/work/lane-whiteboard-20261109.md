@@ -383,3 +383,12 @@
 - Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stubs replaced, nothing in `Generated/` changed.
 - Shapes: `HandleTabOutOfText` uses the guard `if (!CanTraverse(...)) return;` (Mathcad `brtrue; ret`). The first version, with the body nested under the `if`, gave the wrong branch layout.
 - Release IL: PASS — 841 checked, 0 failures (`release-il-010a8aa8a15f`).
+
+## Batch 24 — WhiteboardViewModel.CanMove
+
+- Member: `CanMove(Direction)` (protected virtual), direct form with the guard `if (!HandleUserInput) return false;`.
+- Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stub replaced.
+- Blocked and left as stubs in this batch:
+  - `DeleteItemIfNeeded`: the Mathcad body keeps the `RemoveItemsCommand` on the stack with `dup` (set property, then `Execute`, then `pop`). The idiomatic local form emits `stloc`/`ldloc`, so it does not match.
+  - `IsValidLocation`: the Mathcad IL calls `GetItemIgnoreForHorizontalMovementAndWidth` with `call` (non-virtual), but the candidate declares it `public virtual` and implements `IWhiteboardViewModel` with it. Changing that flag is an interface/ownership decision, so it is skipped.
+- Release IL: PASS — 842 checked, 0 failures (`release-il-f291ef01626c`).
