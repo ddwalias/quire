@@ -265,6 +265,33 @@
 - Release IL: PASS — 552 checked, 0 failures, 290 unfinished (`release-il-728b337697d3`).
 - Remaining mismatches in this batch: none.
 
+## Batch 17 — MathboardViewModel
+
+- Members:
+  - `MathboardViewModel`:
+    - Fields: `_currentNumberFormat`, `_currentMatrixFormat`, `_currentTextFormat`, `_hideFromCalculationButtonEnabled`, `_hideFromCalculationButtonChecked`, `_containerFrameThickness`, `_mathboardModel`
+    - Nested types: `PropertyNames`, `RemoveMathboardItemsCommand`, `PasteMathboardItemsCommand`
+    - Constructors: `.ctor(IMathboardModel, Size?)`, `.ctor(IMathboardModel, IAlignmentGrid)`, `.ctor(MathboardViewModel)`
+    - Properties: `ContainerFrameThickness` (get/set), `Model` (get), `CurrentNumberFormat` (get/set), `CurrentMatrixFormat` (get/set), `CurrentTextFormat` (get/set), `HideFromCalculationButtonEnabled` (get/set), `HideFromCalculationButtonChecked` (get/set), `ActiveItem` (set), `IndicatorRange` (get)
+    - Methods: `Initialize(IMathboardModel)`, `HookupEventHandlers()`, `Commit()`, `RecalculateCmdHandler()`, `Commit(IWhiteboardItem)`, `CanToggleRegionsAsInput()`, `ToggleInputRegions()`, `CanToggleRegionsAsOutput()`, `ToggleOutputRegions()`, `ToggleHideFromCalculationContext()`, `OnActiveTextRegionContentChanged(object, RoutedEventArgs)`, `HandleChildItemGotFocus(IWhiteboardItem)`, `GetRemoveItemsCommand(string, IDictionary<IWhiteboardItem, Point>)`, `GetPasteItemsCommand(string, IDictionary<IWhiteboardItem, Point>)`, `SetupCommandBindings()`, `CanBookmarkTag(object, CanExecuteRoutedEventArgs)`, `HandleBookmarkTag(object, ExecutedRoutedEventArgs)`, `CanRemoveBookmarkTag(object, CanExecuteRoutedEventArgs)`, `HandleRemoveBookmarkTag(object, ExecutedRoutedEventArgs)`, `CreateSeparateOverlappedItemsCommand(IEnumerable<IWhiteboardItem>, Dimension)`, `UpdateHideFromCalculationButton()`, `FormatChangedHandler(object, EventArgs)`, `UpdateActiveItemFormat()`, `UpdatePropertiesFormat()`, `GetDefaultDimensions(IWhiteboardItem, out double, out double)`, `UpdateTabStopStatus(IWhiteboardItem)`
+  - Closures:
+    - `<SetupCommandBindings>b__15_0`, `_1`, `_2`, `_3`
+    - `<CanRemoveBookmarkTag>b__18_0`
+    - `<ToggleHideFromCalculationContext>b__39_0`, `_1`, `_2`, `_3`, `_4`, `_5`
+    - `<>c__DisplayClass39_0` (`<ToggleHideFromCalculationContext>b__6`)
+    - `<UpdateHideFromCalculationButton>b__71_0`
+    - `<>c__DisplayClass72_0` (`<GetWhiteboardItem>b__0`)
+    - Nested command DisplayClasses: `PasteMathboardItemsCommand.<>c__DisplayClass1_0` (`<DoWithResize>b__0`)
+- Hand-written: `Mirrored/Controls.Mathboard.MathboardViewModel.cs`.
+- Stubs removed: `Generated/Mirror/Controls.Mathboard.MathboardViewModel.g.cs`.
+- Shapes:
+  - Exact Roslyn member ordinal matching via deliberate ordering of fields, methods, properties, and nested types, matching closure names `<SetupCommandBindings>b__15_*`, `<CanRemoveBookmarkTag>b__18_0`, `<ToggleHideFromCalculationContext>b__39_*`, `<UpdateHideFromCalculationButton>b__71_0`, and `<>c__DisplayClass72_0`.
+  - Added `[MirrorOf]` attributes to nested commands `RemoveMathboardItemsCommand` and `PasteMathboardItemsCommand` to resolve counterpart mapping.
+  - Early returns in `set_ActiveItem` (`if (value == base.ActiveItem) return;`) and `HandleBookmarkTag` (`if (DebugTools.AssertNotNull(whiteboardItem, null).Failed) return;`).
+- Release IL: PASS — 633 checked, 0 failures, 209 unfinished (`release-il-ef910bf63b4d`).
+- Remaining mismatches in this batch: none.
+
+
 
 
 
