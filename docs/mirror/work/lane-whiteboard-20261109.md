@@ -376,3 +376,10 @@
 - Shapes: `ActivateActiveItem` uses the guard `if (ActiveItem == null) return;` (Mathcad `brtrue; ret`), reading `ActiveItem` again for each call; the other members are direct.
 - Skipped (closure-ordinal or devirtualization): `IsTabNavigatable` (ordinal), the `new XCommand(...).Execute()` members (devirtualization blocker from batch 14).
 - Release IL: PASS — 835 checked, 0 failures (`release-il-ad06e789ccfe`).
+
+## Batch 23 — WhiteboardViewModel plain members (no closures)
+
+- Members: `RemoveWhiteboardItem`, `GetItemAtLocation` (private, collection-initializer dictionary), `AddItemAtLocation`, `SetItemLocation`, `HandleTabOutOfText`, `CanTraverse`.
+- Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stubs replaced, nothing in `Generated/` changed.
+- Shapes: `HandleTabOutOfText` uses the guard `if (!CanTraverse(...)) return;` (Mathcad `brtrue; ret`). The first version, with the body nested under the `if`, gave the wrong branch layout.
+- Release IL: PASS — 841 checked, 0 failures (`release-il-010a8aa8a15f`).

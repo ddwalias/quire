@@ -610,11 +610,20 @@ public partial class WhiteboardViewModel
 
     public virtual void AddItemAndActivate(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public void RemoveWhiteboardItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void RemoveWhiteboardItem(global::Quire.Controls.Core.IWhiteboardItem item)
+    {
+        GetRemoveItemsCommand("Remove Whiteboard Item", GetItemAtLocation(item)).Execute();
+    }
 
-    private global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> GetItemAtLocation(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private IDictionary<IWhiteboardItem, Point> GetItemAtLocation(IWhiteboardItem item)
+    {
+        return new Dictionary<IWhiteboardItem, Point> { { item, GetItemLocation(item) } };
+    }
 
-    public virtual void AddItemAtLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void AddItemAtLocation(IWhiteboardItem item, Point location)
+    {
+        _whiteboardModel.AddItemAtLocation(item, location);
+    }
 
     public void AddItems(global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> addItemsAtLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -639,7 +648,11 @@ public partial class WhiteboardViewModel
         return WhiteboardItemMgr.GetItemIsInPasting(item);
     }
 
-    public virtual void SetItemLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void SetItemLocation(IWhiteboardItem item, Point location)
+    {
+        _whiteboardModel.SetItemLocation(item, location);
+        FireChanged();
+    }
 
     public virtual void SetItemLocationToNearestGridIntersection(IWhiteboardItem item, Point location)
     {
@@ -942,7 +955,17 @@ public partial class WhiteboardViewModel
 
     public virtual void TabInto(global::System.Windows.Input.FocusNavigationDirection dir) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public void HandleTabOutOfText(global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.FocusNavigationDirection> eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void HandleTabOutOfText(CustomRoutedEventArgs<FocusNavigationDirection> eventArgs)
+    {
+        // Mathcad IL returns early on a failed CanTraverse (brtrue; ret) instead of nesting the body.
+        if (!CanTraverse(eventArgs.Parameter))
+        {
+            return;
+        }
+
+        eventArgs.Handled = true;
+        HandleTraverse(eventArgs.Parameter);
+    }
 
     public virtual global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> SortItemsByLocation(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, bool descending) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -1055,7 +1078,15 @@ public partial class WhiteboardViewModel
 
     protected virtual global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetItemsAccordingTabNavigateOrder(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsAccordingTabDirection, global::System.Windows.Input.FocusNavigationDirection direction, global::Quire.Controls.Core.IWhiteboardItem startItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    protected virtual bool CanTraverse(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual bool CanTraverse(FocusNavigationDirection direction)
+    {
+        if (PredictFocus(direction) != null)
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     protected virtual bool CanMove(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
