@@ -11,10 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.SecondTicktLabelVisibilityMultiConverter, Ptc.Controls.Plots")]
 internal partial class SecondTicktLabelVisibilityMultiConverter : global::Quire.Controls.Plots.LimitLabelVisibilityMultiConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Controls.Plots.SecondTicktLabelVisibilityMultiConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool Convert(object[] values) => base.Convert(values);
-    [global::Quire.Mirror.MirrorStub]
-    private SecondTicktLabelVisibilityMultiConverter() { }
 }

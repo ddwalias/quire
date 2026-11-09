@@ -26,3 +26,11 @@
 - Shape check (opcode-level) passed for both types before the gate.
 - Release IL: PASS — 368 checked, 368 exact, 0 failures, 4878 unfinished.
 - Remaining mismatches in this batch: none.
+
+## Batch 4 — OpacityConverter, SecondTicktLabelVisibilityMultiConverter
+
+- Members: `OpacityConverter` (`Instance`, private `.ctor`, `Convert`, `ConvertBack`); `SecondTicktLabelVisibilityMultiConverter` (`Instance` declared `new` to hide the base field, private `.ctor`, `protected override Convert(object[])`). Hand-written: `Mirrored/Controls.Plots.Plot3D.View.OpacityConverter.cs` and `Mirrored/Controls.Plots.SecondTicktLabelVisibilityMultiConverter.cs`; stubs removed from the matching `.g.cs`.
+- Shapes: the `SecondTickt` override matched the opcode-level check first time. `OpacityConverter.Convert` uses the source form (`values.Length != 3 || ...` guard, `DebugTools.FailAssertion(null, Array.Empty<object>())`, local `flag`/`flag2`) and matched the Release gate first time.
+- Release IL: PASS — 373 checked, 373 exact, 0 failures, 4875 unfinished.
+- Remaining mismatches in this batch: none.
+- Not yet done: `BackgroundTypeEToBackgroundConverter` (enum `switch` with a `switch` table; next batch).
