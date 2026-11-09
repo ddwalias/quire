@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots.Traces;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Traces.FilledTriangleSymbol, Ptc.Controls.Plots")]
 public partial class FilledTriangleSymbol : global::Quire.Controls.Plots.Traces.TriangleSymbol
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsFilled { get => base.IsFilled; }
-    [global::Quire.Mirror.MirrorStub]
-    public FilledTriangleSymbol() { }
 }

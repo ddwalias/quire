@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots.Traces;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Traces.FilledRhombusSymbol, Ptc.Controls.Plots")]
 public partial class FilledRhombusSymbol : global::Quire.Controls.Plots.Traces.RhombusSymbol
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsFilled { get => base.IsFilled; }
-    [global::Quire.Mirror.MirrorStub]
-    public FilledRhombusSymbol() { }
 }
