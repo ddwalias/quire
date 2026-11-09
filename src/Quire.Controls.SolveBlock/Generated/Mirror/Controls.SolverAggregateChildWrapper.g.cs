@@ -11,6 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.SolverAggregateChildWrapper, Ptc.Controls.SolveBlock")]
 internal partial class SolverAggregateChildWrapper : global::Quire.Calculation.Core.Support.CalculatableWrapper, global::Quire.Calculation.Core.ICalculationErrorOwner
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override string Rl { get => base.Rl; }
 }
