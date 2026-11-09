@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.ViewModel.Plot3DAxisViewModel, Ptc.Controls.Plots")]
 internal partial class Plot3DAxisViewModel : global::Quire.Controls.Plots.Base3D.ViewModel.Base3DAxisViewModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal Plot3DAxisViewModel(global::Quire.Controls.Plots.Presenter.AxesType axisType) : base(default(global::Quire.Controls.Plots.Presenter.AxesType), default(global::Quire.Controls.Plots.Presenter.PlotType)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void LimitsExpressionValueChanged() => base.LimitsExpressionValueChanged();
 }

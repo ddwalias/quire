@@ -230,3 +230,10 @@
 - Shapes: auto-properties with `readonly` getters (Mathcad marks the getters `IsReadOnly`) matched first time.
 - Release IL: PASS — 500 checked, 500 exact, 0 failures.
 - Remaining mismatches in this batch: none.
+
+## Batch 33 — Plot3DAxisViewModel
+
+- Members: `.ctor(AxesType)` (base call with `PlotType.Plot3D`, `assembly` access in Mathcad, kept `internal`) and the empty `protected override LimitsExpressionValueChanged`. Hand-written: `Mirrored/Controls.Plots.Plot3D.ViewModel.Plot3DAxisViewModel.cs`; both stubs removed from its `.g.cs`.
+- Shapes: the empty override matched first time. The Z-axis override (batch 33 attempt, reverted earlier) has a body and is still open.
+- Release IL: PASS — 502 checked, 502 exact, 0 failures.
+- Remaining mismatches in this batch: none.
