@@ -122,3 +122,6 @@
 - Batch: `Controls.InputControls.InputControlsResourceDictionary` (`.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`); `Controls.InputControls.InputControlResources` (`Instance` set by the type initializer, `.ctor`, `InitializeComponent`, `Connect`).
 - Shapes tried: the XAML pack URIs use the Quire assembly name; both matched on the first candidate.
 - Release IL: PASS, 815 checked (`.mirror-cache/release-il-654fe8614f13/release-il.json`).
+- Batch: `Controls.InputControls.InputControlEditorResourceDirectory` (`KeysOwnerTypes` set by the type initializer, `.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`).
+- Shapes tried: `new Type[] { typeof(...) }` initializer matched on the first candidate.
+- Release IL: PASS, 819 checked (`.mirror-cache/release-il-5bba8223e8ef/release-il.json`).
