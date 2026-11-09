@@ -11,12 +11,4 @@ namespace Quire.Controls.Plots.Traces;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Traces.PlusSymbol, Ptc.Controls.Plots")]
 public partial class PlusSymbol : global::Quire.Controls.Plots.Traces.Symbol
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Media.Geometry Create(global::System.Windows.Point point, global::Quire.Controls.Plots.Traces.ISymbolProperties properties) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.Media.PathFigure CreateVerticalLine(global::System.Windows.Point point, double size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.Media.PathFigure CreateGorizontalLine(global::System.Windows.Point point, double size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PlusSymbol() { }
 }
