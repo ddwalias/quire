@@ -1,3 +1,5 @@
+using System.Windows;
+
 namespace Quire.EquationEditor.Tree;
 
 public partial class CheckBoxScriptableControlData
@@ -7,5 +9,13 @@ public partial class CheckBoxScriptableControlData
     {
         Height = a;
         Width = b;
+    }
+
+    private FlowDirection c;
+
+    public FlowDirection FlowDirection
+    {
+        get => c;
+        set => c = value;
     }
 }

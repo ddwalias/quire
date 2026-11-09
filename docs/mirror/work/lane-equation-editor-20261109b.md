@@ -13,6 +13,9 @@
 - Batch 10: `Tree.InputControlDataCreator.Create` (type-pattern-free `switch` over `InputControlTypes` with six scriptable-control constructors and a default `DevAssert`). Release IL PASS, 328 checked, 0 failures (`.mirror-cache/release-il-842b633328f6/release-il.json`).
 - Not attempted: `Tree.InputControlNodeCreator.Create` and `CreateInputField` call the obfuscated `Native.PtcEquationEditor.r` (`r.a.a(...)`, `r.d(...)`). Stubs kept until that class's mapping is reviewed.
 
+- Batch 11: `Tree.CheckBoxScriptableControlData.FlowDirection` (field `c` and property); `Tree.TextBoxScriptableControlData` `AcceptsReturn`, `IsReadOnly`, `Border`, `TextAlignment` (fields `c`, `d`, `n`, `o` and properties). Release IL PASS, 338 checked, 0 failures (`.mirror-cache/release-il-d084b066a885/release-il.json`). The CheckBox constructor from batch 5 is kept in the same partial file.
+- Not attempted: `RadioButtonScriptableControlData` `Orientation` and `FlowDirection` (`Orientation` has a field initializer, which may need a constructor shape), and the TextBox constructor (it sets `Values = new Collection<string> { ... }`).
+
 ## Blocked (stubs kept)
 
 - `Tree.NearestNeighborSelector.SelectNeighbors(MathNode, out bool)` (virtual, switch on `Fixity` with an `out` parameter). Mathcad's switch temporary is local 3, after the three block locals; C# put it in slot 0 (braced cases, release-il-23d8111cb024) and slot 1 (unbraced `Special` case, release-il-1a7e6d2256e8). Shapes not yet tried: different local declaration order. Stub kept.

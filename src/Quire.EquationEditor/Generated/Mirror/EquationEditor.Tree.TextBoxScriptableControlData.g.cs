@@ -16,22 +16,6 @@ public partial class TextBoxScriptableControlData : global::Quire.EquationEditor
     [global::Quire.Mirror.MirrorStub]
     protected const int b = 100;
     [global::Quire.Mirror.MirrorStub]
-    private bool c;
-    [global::Quire.Mirror.MirrorStub]
-    private bool d;
-    [global::Quire.Mirror.MirrorStub]
-    private bool n;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.TextAlignment o;
-    [global::Quire.Mirror.MirrorStub]
-    public bool AcceptsReturn { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsReadOnly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Border { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.TextAlignment TextAlignment { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public TextBoxScriptableControlData(string mathNodeName, global::Quire.Controls.Core.InputControlTypes inputControlTypes) : base(default(string), default(global::Quire.Controls.Core.InputControlTypes)) { }
     [global::Quire.Mirror.MirrorStub]
     public override object Clone() => base.Clone();
