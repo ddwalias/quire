@@ -1,6 +1,6 @@
 # Equation Editor lane checkpoint (20261109b)
 
-- Owner: EquationEditor dispatched worker (task_55cd8e4686f2)
+- Owner: EquationEditor dispatched worker (task_ab0a80ddc63d)
 - Branch: `mirror/equation-editor-20261109b`
 - Assembly: `Quire.EquationEditor` (managed members, `src/Quire.EquationEditor`)
 
@@ -38,3 +38,5 @@
 
 - About 4610 non-const stub-marked members (stub count includes `const` fields, which keep their attribute). Largest: `Equation.EquationModel`, `Tree.MathNode`, `SpecTable.Model.*`, `Tree.Transform.*ToXml/RlTransform`, `Native.PtcEquationEditor.*` (obfuscated classes). Not batched.
 - Earlier blocked shapes from the 20261109 checkpoint still apply: `.initlocals` header flag (`ListBoxScriptableControlData.Clone`, `DetachedTypeoverState` ctor), constructors that store fields before the base `Object` call (`LinearSegment()`), and `InputControlDataCalculatedValue.HasCalculatedValue`.
+
+- Batch 15: `Tree.FormattedString.Length`, `IsSimpleString`, `GetHashCode`, `ToString` (fields `g`, `h`, `j`). Release IL PASS, 359 checked, 0 failures (`.mirror-cache/release-il-a61c8b78b70a/release-il.json`). Initial gate `release-il-3361fcff3e22` failed compilation because regeneration needs compiled hand-written metadata; targeted MirrorGen writer regeneration removed the duplicate stubs. Idiomatic `Length` failed only `.initlocals True` versus Mathcad `False` (release-il-a852884b9af7; il_diff instruction #26); getter-level `SkipLocalsInit` matched, with `AllowUnsafeBlocks` enabled for the attribute. No remaining mismatches in this batch.

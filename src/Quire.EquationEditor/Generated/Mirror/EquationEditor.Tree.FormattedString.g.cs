@@ -24,13 +24,7 @@ public partial class FormattedString : global::System.ICloneable, global::System
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Controls.TextBlock f;
     [global::Quire.Mirror.MirrorStub]
-    private string g;
-    [global::Quire.Mirror.MirrorStub]
-    private string h;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Documents.Span i;
-    [global::Quire.Mirror.MirrorStub]
-    private int j;
     [global::Quire.Mirror.MirrorStub]
     private bool k;
     [global::Quire.Mirror.MirrorStub]
@@ -41,10 +35,6 @@ public partial class FormattedString : global::System.ICloneable, global::System
     public global::System.Windows.Documents.Span ContentForXaml { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Length { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsSimpleString { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public char this[int position] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -72,8 +62,6 @@ public partial class FormattedString : global::System.ICloneable, global::System
     [global::Quire.Mirror.MirrorStub]
     public bool Equals(global::Quire.EquationEditor.Tree.FormattedString other, global::System.StringComparison comparisonType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public override int GetHashCode() => base.GetHashCode();
-    [global::Quire.Mirror.MirrorStub]
     public void Insert(int insertAt, string stringToInsert, int subscriptDepth) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Append(global::Quire.EquationEditor.Tree.FormattedString stringToAppend) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -91,8 +79,6 @@ public partial class FormattedString : global::System.ICloneable, global::System
     public int GetSubscriptDepthAtPosition(int position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Documents.TextRange SelectCharacterAtPosition(int position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]
     object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
