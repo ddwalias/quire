@@ -362,21 +362,13 @@ public partial class IOManager : global::Quire.Controls.Core.IORegions.IIORegion
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+InputOutputItemsStates, Ptc.Controls")]
     public partial class InputOutputItemsStates : global::Quire.Controls.Core.IORegions.IInputOutputItemsStates
     {
-        [global::Quire.Mirror.MirrorStub]
-        public InputOutputItemsStates(global::System.Collections.Generic.IList<global::Quire.Controls.Core.IORegions.IScalarItemWithOriginalState> inputs, global::System.Collections.Generic.IList<global::Quire.Controls.Core.IORegions.IScalarItem> outputs) { }
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+ValuesSetter, Ptc.Controls")]
     private partial class ValuesSetter : global::Quire.Controls.Core.IORegions.IValuesSetter
     {
         [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.Collections.Generic.List<global::Quire.Controls.IO.IOManager.ISingleValueSetter> _setters;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.WeakReference _managerRef;
-        [global::Quire.Mirror.MirrorStub]
         public global::System.Collections.Generic.IEnumerable<string> Aliases { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public ValuesSetter(global::Quire.Controls.IO.IOManager manager) { }
         [global::Quire.Mirror.MirrorStub]
         public void AddScalarValue(string alias, double value, string units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
@@ -392,10 +384,6 @@ public partial class IOManager : global::Quire.Controls.Core.IORegions.IIORegion
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+SetValueResults, Ptc.Controls")]
     private partial class SetValueResults : global::Quire.Controls.Core.IORegions.ISetValueResults
     {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.Collections.Generic.IDictionary<string, global::Quire.Controls.Core.IORegions.IOManagerErrorCode> _aliasToOperationResultsMap;
-        [global::Quire.Mirror.MirrorStub]
-        public SetValueResults(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.IO.IOManager.ISingleValueSetter> setters) { }
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.Controls.Core.IORegions.IOManagerErrorCode GetResult(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
@@ -448,10 +436,6 @@ public partial class IOManager : global::Quire.Controls.Core.IORegions.IIORegion
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+UnitedMatrixSetter, Ptc.Controls")]
     private partial class UnitedMatrixSetter : global::Quire.Controls.IO.IOManager.UnitedValueSetter
     {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly double[,] _value;
-        [global::Quire.Mirror.MirrorStub]
-        public UnitedMatrixSetter(string alias, object[,] value, string units) : base(default(string), default(string)) { }
         [global::Quire.Mirror.MirrorStub]
         public UnitedMatrixSetter(string alias, double[][] value, string units) : base(default(string), default(string)) { }
         [global::Quire.Mirror.MirrorStub]

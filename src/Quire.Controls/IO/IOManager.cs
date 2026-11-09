@@ -1,5 +1,8 @@
 #nullable disable
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using Quire.Controls.Core;
 using Quire.Controls.Core.IORegions;
@@ -251,6 +254,12 @@ public partial class IOManager
 
     partial class InputOutputItemsStates
     {
+        public InputOutputItemsStates(IList<IScalarItemWithOriginalState> inputs, IList<IScalarItem> outputs)
+        {
+            InputItems = inputs;
+            OutputItems = outputs;
+        }
+
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         public IList<IScalarItemWithOriginalState> InputItems { get; private set; }
 
@@ -260,8 +269,16 @@ public partial class IOManager
 
     partial class SetValueResults
     {
+        public SetValueResults(IEnumerable<ISingleValueSetter> setters)
+        {
+            _operationsResults = setters.Select(setter => setter.OperationResult).ToList();
+            _aliasToOperationResultsMap = setters.ToDictionary(setter => setter.Alias, setter => setter.OperationResult);
+        }
+
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         private readonly IList<IOManagerErrorCode> _operationsResults;
+
+        private readonly IDictionary<string, IOManagerErrorCode> _aliasToOperationResultsMap;
 
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         public int Count => _operationsResults.Count;
@@ -342,6 +359,55 @@ public partial class IOManager
             : base(alias)
         {
             _stringValueSExpr = stringValue == null ? null : string.Format("\"{0}\"", SExpressionUtility.EscapeStringValue(stringValue));
+        }
+    }
+
+    partial class ValuesSetter
+    {
+        private readonly List<ISingleValueSetter> _setters;
+
+        private readonly WeakReference _managerRef;
+
+        public ValuesSetter(IOManager manager)
+        {
+            _managerRef = new WeakReference(manager);
+            _setters = new List<ISingleValueSetter>();
+        }
+    }
+
+    partial class UnitedMatrixSetter
+    {
+        private readonly double[,] _value;
+
+        public UnitedMatrixSetter(string alias, object[,] value, string units)
+            : base(alias, units)
+        {
+            if (value == null)
+            {
+                return;
+            }
+            int rows = value.GetLength(0);
+            int cols = value.GetLength(1);
+            bool valid = true;
+            _value = new double[rows, cols];
+            for (int i = 0; i < rows & valid; i++)
+            {
+                for (int j = 0; j < cols & valid; j++)
+                {
+                    if (value[i, j] is double)
+                    {
+                        _value[i, j] = (double)value[i, j];
+                    }
+                    else
+                    {
+                        valid = false;
+                    }
+                }
+            }
+            if (!valid)
+            {
+                _value = null;
+            }
         }
     }
 }
