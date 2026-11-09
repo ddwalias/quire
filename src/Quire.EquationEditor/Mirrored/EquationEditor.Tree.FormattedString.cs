@@ -5,9 +5,143 @@ namespace Quire.EquationEditor.Tree;
 
 public partial class FormattedString
 {
+    private System.Windows.Controls.TextBlock f;
     private string g;
     private string h;
+    private Span i;
     private int j;
+    private bool k;
+
+    public FormattedString()
+    {
+    }
+
+    public static FormattedString CreateReadOnly()
+    {
+        FormattedString formatted = new FormattedString();
+        DebugTools.DevAssert(!formatted.IsEditable, a__);
+        return formatted;
+    }
+
+    public static FormattedString CreateEditable()
+    {
+        FormattedString formatted = CreateReadOnly();
+        formatted.MakeEditable();
+        return formatted;
+    }
+
+    public static FormattedString CreateReadOnlyFromXmlString(string inline)
+    {
+        FormattedString formatted = new FormattedString { h = inline };
+        DebugTools.DevAssert(!formatted.IsEditable, a__);
+        return formatted;
+    }
+
+    public static FormattedString CreateEditable(Span inline)
+    {
+        FormattedString formatted = new FormattedString { i = inline };
+        DebugTools.DevAssert(!formatted.IsEditable, a__);
+        formatted.MakeEditable();
+        return formatted;
+    }
+
+    public static FormattedString CreateReadOnly(string source)
+    {
+        FormattedString formatted = new FormattedString { g = source, j = source.Length };
+        DebugTools.DevAssert(!formatted.IsEditable, a__);
+        return formatted;
+    }
+
+    public static FormattedString CreateEditable(string source)
+    {
+        FormattedString formatted = CreateReadOnly(source);
+        formatted.MakeEditable();
+        return formatted;
+    }
+
+    public static implicit operator FormattedString(string s) => CreateEditable(s);
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null)
+            return false;
+        if (obj == this)
+            return true;
+        if (obj.GetType() != typeof(FormattedString))
+            return false;
+        return Equals((FormattedString)obj);
+    }
+
+    public bool Equals(FormattedString other)
+    {
+        if (other == null)
+            return false;
+        if (other == this)
+            return true;
+        return object.Equals(other.ToString(), ToString());
+    }
+
+    public bool Equals(FormattedString other, StringComparison comparisonType)
+    {
+        if (other == null)
+            return false;
+        if (other == this)
+            return true;
+        return string.Equals(other.ToString(), ToString(), comparisonType);
+    }
+
+    public System.Windows.Controls.TextBlock WpfTextBlock
+    {
+        get
+        {
+            if (!DebugTools.DevAssert(IsEditable, "Cannot access TextBlock property while in ReadOnlyState.").Failed)
+                return f;
+            return null;
+        }
+    }
+
+    public string XmlString
+    {
+        get
+        {
+            if (IsEditable)
+                h = System.Windows.Markup.XamlWriter.Save(WpfTextBlock.Inlines.FirstInline);
+            return h;
+        }
+    }
+
+    public Span ContentForXaml
+    {
+        set
+        {
+            MakeEditable();
+            WpfTextBlock.Inlines.Clear();
+            WpfTextBlock.Inlines.Add(value);
+            j = Text.Length;
+        }
+    }
+
+    public string Text
+    {
+        get
+        {
+            if (!IsEditable)
+                return g;
+            StringBuilder text = new StringBuilder();
+            DebugTools.DevAssert(WpfTextBlock.Inlines.Count < 2, null);
+            a(WpfTextBlock.Inlines.FirstInline, text, false);
+            return text.ToString();
+        }
+    }
+
+    public bool IsEditable
+    {
+        get => k;
+        // Mathcad names this private setter a(bool); its mapping remains unresolved.
+        [Quire.Mirror.MirrorStub]
+        private set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
+
 
     public int Length
     {

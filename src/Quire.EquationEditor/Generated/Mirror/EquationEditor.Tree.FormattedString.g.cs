@@ -22,45 +22,7 @@ public partial class FormattedString : global::System.ICloneable, global::System
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Collections.Generic.Dictionary<global::System.Type, char> e;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.TextBlock f;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Documents.Span i;
-    [global::Quire.Mirror.MirrorStub]
-    private bool k;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.TextBlock WpfTextBlock { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string XmlString { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Documents.Span ContentForXaml { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public char this[int position] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsEditable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public FormattedString() { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.EquationEditor.Tree.FormattedString CreateReadOnly() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.EquationEditor.Tree.FormattedString CreateEditable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.EquationEditor.Tree.FormattedString CreateReadOnlyFromXmlString(string inline) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.EquationEditor.Tree.FormattedString CreateEditable(global::System.Windows.Documents.Span inline) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.EquationEditor.Tree.FormattedString CreateReadOnly(string source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.EquationEditor.Tree.FormattedString CreateEditable(string source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static implicit operator global::Quire.EquationEditor.Tree.FormattedString(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Equals(object obj) => base.Equals(obj);
-    [global::Quire.Mirror.MirrorStub]
-    public bool Equals(global::Quire.EquationEditor.Tree.FormattedString other) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Equals(global::Quire.EquationEditor.Tree.FormattedString other, global::System.StringComparison comparisonType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Insert(int insertAt, string stringToInsert, int subscriptDepth) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
