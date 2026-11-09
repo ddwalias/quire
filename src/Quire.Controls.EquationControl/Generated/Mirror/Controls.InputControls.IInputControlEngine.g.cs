@@ -11,6 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.IInputControlEngine, Ptc.Controls.EquationControl")]
 public partial interface IInputControlEngine : global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.Tree.InputControlEngineTypes EngineType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

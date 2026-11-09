@@ -11,8 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.IComboBoxTopRow, Ptc.Controls.EquationControl")]
 internal partial interface IComboBoxTopRow : global::Quire.Controls.InputControls.IComboBoxRow
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.View.IReadonlyCellData TableTitleCell { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.View.IReadonlyCellData> UnitCells { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

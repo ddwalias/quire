@@ -110,3 +110,6 @@
 - Batch: `Controls.InputControls.ComboBoxTopRow` (`.ctor`, `TableTitleCell`, `UnitCells`, and the two explicit `IComboBoxTopRow` implementations).
 - Shapes tried: base constructor `(0, count)` and explicit interface properties delegating to the public ones matched on the first candidate.
 - Release IL: PASS, 802 checked (`.mirror-cache/release-il-854d68aa02d1/release-il.json`).
+- Batch: interface declarations `Controls.InputControls.IInputControl`, `IInputControlEngine`, `IInputControlEngineFactory`, `IComboBoxRow`, `IComboBoxTopRow`, `Controls.Internal.IVisualText`, `Controls.ISpecTableControl` (members become abstract, no bodies).
+- Shapes tried: abstract declarations for each interface member matched on the first candidate; abstract declarations need no body ([validation](../validation.md)).
+- Release IL: PASS, 813 checked (`.mirror-cache/release-il-195f905f7b5a/release-il.json`).

@@ -11,8 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.IComboBoxRow, Ptc.Controls.EquationControl")]
 public partial interface IComboBoxRow
 {
-    [global::Quire.Mirror.MirrorStub]
-    int CellCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsValid(int rowIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
