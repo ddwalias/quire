@@ -1317,6 +1317,25 @@ public partial class RichTextBase
 
     public bool IsSelected => WhiteboardDependencyProperties.GetIsSelected(this);
 
+    public ScriptState TextScriptState
+    {
+        get => (ScriptState)GetValue(TextScriptStateProperty);
+        private set
+        {
+            SetValue(TextScriptStatePropertyKey, value);
+            FirePropertyChanged(new PropertyChangedEventArgs("IsSubscript"));
+            FirePropertyChanged(new PropertyChangedEventArgs("IsSuperscript"));
+        }
+    }
+
+    protected TextFormat SelectionTextFormat => new TextFormat(CurrentTextFormat, Selection, false);
+
+    protected virtual bool FixHyperlinkEmptyRuns => true;
+
+    protected BlockedSelectionDirection BlockedSelectDirection { get; private set; }
+
+    protected int PasteStartPositionOffset { get; private set; }
+
     public TextRangeExtended TextRange => new TextRangeExtended(Document.ContentStart, Document.ContentEnd);
 
     public string Text

@@ -513,3 +513,10 @@
 - Release IL: PASS — 445 checked, 0 failures (`.mirror-cache/gate-b83b`); 3 members added (4 methods counted with the setter).
 - Landing: NOT landed. Free space on C: was 11.6 GB before the gate and 7.6 GB after it, below the 10 GB stop threshold, so `lane_merge.py` was not run.
 - Remaining mismatches in this batch: `SelectionStart`, `SelectionEnd` (stubs).
+
+## Batch 84 — RichTextBase text-script state, selection format, and paste/blocked-direction state (5)
+
+- Exact: `TextScriptState` (get via `GetValue`, private set through `TextScriptStatePropertyKey` followed by the `IsSubscript` and `IsSuperscript` change notifications), `SelectionTextFormat` (`new TextFormat(CurrentTextFormat, Selection, false)`), `FixHyperlinkEmptyRuns` (virtual, `true`), `BlockedSelectDirection` and `PasteStartPositionOffset` (auto-properties with private setters; the setter IL is a plain field store).
+- Hand-written: `src/Quire.Controls.Text/Mirrored/Controls.Text.RichTextBase.cs`; stubs removed from `Generated/Mirror/Controls.Text.RichTextBase.g.cs`.
+- Release IL: PASS — 453 checked, 0 failures (`.mirror-cache/gate-b84`); 8 methods exact (property accessors counted separately).
+- Remaining mismatches in this batch: none.
