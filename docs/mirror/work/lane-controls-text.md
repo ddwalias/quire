@@ -505,3 +505,11 @@
 - Hand-written: `src/Quire.Controls.Text/Mirrored/Controls.Text.RichTextBase.cs`; stubs removed from `Generated/Mirror/Controls.Text.RichTextBase.g.cs`.
 - Release IL: PASS — 441 checked, 441 exact, 0 failures, 282 unfinished.
 - Remaining mismatches in this batch: none.
+
+## Batch 83 — RichTextBase text range, text, and emptiness (3)
+
+- Exact: `TextRange` (new `TextRangeExtended` over the document content start and end), `Text` get/set (`GetTextInRange(TextRange)`; the setter writes `TextRange.Text`), `IsEmpty` (the block and inline count guards, then `new DocumentTextRange(...).IsEmpty`; the `var inline` local matches Mathcad's second local, and `Paragraph` is written as `System.Windows.Documents.Paragraph` because `Quire.Controls.Text.Paragraph` shadows it).
+- Not matched, left as stubs: `SelectionStart`, `SelectionEnd`. Mathcad pushes `this` for the `GetInsertionPointAtPointer` call before it evaluates `Selection.Start` into the local used by the `ref` argument (`ldarg.0; ldarg.0; call get_Selection; callvirt get_Start; stloc.0; ldloca.s 0`). The plain `TextPointer start = Selection.Start; return GetInsertionPointAtPointer(ref start);` form emits the first `ldarg.0` after the `stloc`, the same ordering problem as batch 63. Gate reported "Release IL differs" for both.
+- Release IL: PASS — 445 checked, 0 failures (`.mirror-cache/gate-b83b`); 3 members added (4 methods counted with the setter).
+- Landing: NOT landed. Free space on C: was 11.6 GB before the gate and 7.6 GB after it, below the 10 GB stop threshold, so `lane_merge.py` was not run.
+- Remaining mismatches in this batch: `SelectionStart`, `SelectionEnd` (stubs).

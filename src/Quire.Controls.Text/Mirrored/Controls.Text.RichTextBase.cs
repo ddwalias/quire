@@ -1316,4 +1316,47 @@ public partial class RichTextBase
     public bool IsActive => WhiteboardDependencyProperties.GetIsActive(this);
 
     public bool IsSelected => WhiteboardDependencyProperties.GetIsSelected(this);
+
+    public TextRangeExtended TextRange => new TextRangeExtended(Document.ContentStart, Document.ContentEnd);
+
+    public string Text
+    {
+        get => GetTextInRange(TextRange);
+        set => TextRange.Text = value;
+    }
+
+    public bool IsEmpty
+    {
+        get
+        {
+            if (Document.Blocks.Count == 0)
+            {
+                return true;
+            }
+
+            if (Document.Blocks.Count > 1)
+            {
+                return false;
+            }
+
+            var paragraph = Document.Blocks.FirstBlock as System.Windows.Documents.Paragraph;
+            if (paragraph == null)
+            {
+                return false;
+            }
+
+            if (paragraph.Inlines.Count == 0)
+            {
+                return true;
+            }
+
+            if (paragraph.Inlines.Count > 1)
+            {
+                return false;
+            }
+
+            var inline = paragraph.Inlines.FirstInline;
+            return new DocumentTextRange(inline.ContentStart, inline.ContentEnd).IsEmpty;
+        }
+    }
 }
