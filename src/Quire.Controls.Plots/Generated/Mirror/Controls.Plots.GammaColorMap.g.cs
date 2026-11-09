@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.GammaColorMap, Ptc.Controls.Plots")]
 internal partial class GammaColorMap : global::Quire.Controls.Plots.IColorMap
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush GetBrush(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public GammaColorMap() { }
 }

@@ -101,3 +101,9 @@
 - Members: `TraceColorTable` (`Default` static field initializer, private `.ctor` adding seven brushes, static `parseColor`); `StyleSelectorWithDictionary` (`Dictionary` auto-property, `SelectStyle` override, `.ctor`; `[ContentProperty("Dictionary")]` on the hand-written partial). Hand-written: `Mirrored/Controls.Plots.{TraceColorTable,StyleSelectorWithDictionary}.cs`; stubs removed from the `.g.cs`. The JetBrains `[UsedImplicitly]` attribute is not carried (not referenced in the Quire project).
 - Shapes: all matched the opcode check first time.
 - Release IL: PASS — 430 checked, 430 exact, 0 failures, 4823 unfinished.
+
+## Batch 15 — ColorMapZToBrush, GammaColorMap
+
+- Members: `ColorMapZToBrush` (`Instance` static field, private `.ctor`, `Convert`, `ConvertBack`); `GammaColorMap` (`GetBrush`, `.ctor`). Hand-written: `Mirrored/Controls.Plots.{ColorMapZToBrush,GammaColorMap}.cs`; stubs removed from both `.g.cs`.
+- Shapes: `ColorMapZToBrush.Convert` as `return`-per-path (the first try) gave a branch-width mismatch (`ble.s` vs `ble`). Mathcad assigns one `object result` on every path and returns it once; the if/else-assignment form matched. `GammaColorMap.GetBrush` with `new HsvColor { Gamma = (float)value }` matched first time.
+- Release IL: PASS — 434 checked, 434 exact, 0 failures, 4820 unfinished.
