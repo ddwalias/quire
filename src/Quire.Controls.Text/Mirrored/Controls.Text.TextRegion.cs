@@ -7,6 +7,11 @@ namespace Quire.Controls.Text;
 
 public partial class TextRegion
 {
+    public TextRegion()
+    {
+        InitializeComponent();
+    }
+
     protected override bool ShouldSerializeProperty(DependencyProperty dp)
     {
         if ("Style" == dp.Name || "Template" == dp.Name)

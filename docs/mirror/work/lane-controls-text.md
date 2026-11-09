@@ -486,3 +486,8 @@
 
 - Exact: `CloneTextRegion` (construct a new region, clone this content with the default non-export mode, copy `Width`, and return the clone).
 - Release IL: PASS — 422 checked, 0 failures; one exact member added. Previously exact methods remained exact.
+
+## Batch 80 — TextRegion constructor (1)
+
+- Exact: `.ctor` (implicit base constructor call followed by `InitializeComponent`).
+- Release IL: PASS — 423 checked, 0 failures; one exact member added. `InitializeComponent` remains a stub.
