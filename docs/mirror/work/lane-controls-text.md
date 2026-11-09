@@ -456,3 +456,8 @@
 
 - Exact: `OnOkButtonClick` (`DevAssert(!ViewModel.HasErrors, null).Failed` early return, then the base `OnOkButtonClick` call).
 - Release IL: PASS — 417 checked, 0 failures; one exact member added. Previously exact methods remained exact.
+
+## Batch 74 — HyperlinkDialog loaded handler (1)
+
+- Exact: `HyperlinkDialogLoaded` (`base.DialogLoaded()`, then clear `FrameworkElement.MaxWidthProperty` on both text boxes).
+- Release IL: PASS — 418 checked, 0 failures; one exact member added. Previously exact methods remained exact.

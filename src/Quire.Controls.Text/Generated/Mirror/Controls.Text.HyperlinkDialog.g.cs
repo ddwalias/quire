@@ -26,8 +26,6 @@ public partial class HyperlinkDialog : global::Quire.Controls.Core.ControlsWindo
     [global::Quire.Mirror.MirrorStub]
     private HyperlinkDialog(global::Quire.Controls.Text.HyperlinkDialogViewModel hyperlinkViewModel) { }
     [global::Quire.Mirror.MirrorStub]
-    private void HyperlinkDialogLoaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
