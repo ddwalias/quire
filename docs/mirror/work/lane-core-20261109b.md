@@ -31,6 +31,8 @@
 
 - Batch 14: `PersistentData.OleUtils` static tables (25 stubs: OLE progId constants, the `Guid` fields for Excel, ChartAppOLE and equation classes, and `ChartAppOleGuidsConversionDict`). Declarations moved to `Mirrored/PersistentData.OleUtils.cs` in Mathcad order; the reviewed explicit static constructor already in `PersistentData/OleUtils.cs` supplies the initializers, so no method row changed. Gate: PASS, 4027 checked, 4027 exact, 0 failures (`.mirror-cache/release-il-7418e46d627f/release-il.json`). 25 stubs eliminated.
 
+- Batch 15: `Xml.XmlWorksheetData` static members (37 stubs: namespace-manager fields built from the existing `createMcdxNamespaceManager`/`createMathcad14NamespaceManager`, the three `AppVersionProvider` version fields, `AppVersionName`, `Architecture` from `Environment.Is64BitProcess`, the `worksheet`/`math`/namespace constants, `_stream`, `_buildId`). The field initializers in Mathcad's `.cctor` order (namespace managers, versions, name, architecture) are declared in `Mirrored/Xml.XmlWorksheetData.Statics.cs` and form the exact `.cctor`. Gate: PASS, 4028 checked, 4028 exact, 0 failures (`.mirror-cache/release-il-10b740198a0e/release-il.json`). 37 stubs eliminated.
+
 ## Remaining Parked Stubs (139)
 - PersistentDataObjects (34 stubs): Parked per task guidelines and decisions (42 PDO members parked).
 - PersistentData (53 stubs): Serialization models and companion serializers bound to PersistentDataObjects.
