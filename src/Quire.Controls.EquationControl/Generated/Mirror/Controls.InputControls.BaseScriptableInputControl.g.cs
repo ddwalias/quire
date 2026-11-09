@@ -11,8 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.BaseScriptableInputControl, Ptc.Controls.EquationControl")]
 public partial class BaseScriptableInputControl : global::Quire.Controls.InputControls.InputControl, global::Quire.Controls.InputControls.IInputScriptableControlBase, global::Quire.Controls.InputControls.IInputControl, global::Quire.Controls.InputControls.IInputControlBase, global::System.Windows.IFrameworkInputElement, global::System.Windows.IInputElement
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.InputControls.IInputScriptableControlViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public BaseScriptableInputControl() { }
 }

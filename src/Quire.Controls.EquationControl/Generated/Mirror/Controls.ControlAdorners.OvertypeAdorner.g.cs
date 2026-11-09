@@ -11,20 +11,4 @@ namespace Quire.Controls.ControlAdorners;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ControlAdorners.OvertypeAdorner, Ptc.Controls.EquationControl")]
 internal partial class OvertypeAdorner : global::System.Windows.Documents.Adorner
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Media.SolidColorBrush _renderBrush;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty PointAProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty PointBProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point PointA { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point PointB { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public OvertypeAdorner(global::System.Windows.UIElement adornedElement) : base(default(global::System.Windows.UIElement)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
-    [global::Quire.Mirror.MirrorStub]
-    public void UpdateAdornerLocation(global::System.Windows.Point pointA, global::System.Windows.Point pointB) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

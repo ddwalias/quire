@@ -82,3 +82,6 @@
 - Batch: `Controls.EquationInsertCommand` (three constructors, `ParameterToFunctionalityKeyDictionaryList`, `ContainsSExpression`, `AddFunctionalityKeyAccordingSExpression`, `GetFunctionalityKeyAccordingSExpression`, static dictionary and constants).
 - Shapes tried: local-list getter and `out` lookup with `FailAssertion` fallback matched on the first candidate.
 - Release IL: PASS, 688 checked (`.mirror-cache/release-il-fd4577092fdd/release-il.json`).
+- Batch: `Controls.GenericResources` (`.ctor`, `InitializeComponent`, `IComponentConnector.Connect`, `_contentLoaded`, constant); `Controls.IEquationControlCreator` (abstract declarations); `Controls.InputControls.BaseScriptableInputControl` (`.ctor`, `ViewModel`); `Controls.ControlAdorners.OvertypeAdorner` (`PointA`/`PointB` dependency properties, `.cctor`, `.ctor`, `OnRender`, `UpdateAdornerLocation`).
+- Shapes tried: XAML pack URI uses the Quire assembly name; the other members matched on the first candidate.
+- Release IL: PASS, 702 checked (`.mirror-cache/release-il-e1f592b9f07c/release-il.json`).
