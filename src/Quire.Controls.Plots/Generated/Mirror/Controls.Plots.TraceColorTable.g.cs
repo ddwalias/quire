@@ -11,10 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.TraceColorTable, Ptc.Controls.Plots")]
 public partial class TraceColorTable : global::System.Collections.Generic.List<global::System.Windows.Media.Brush>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Plots.TraceColorTable Default;
-    [global::Quire.Mirror.MirrorStub]
-    private TraceColorTable() { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Color parseColor(string color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

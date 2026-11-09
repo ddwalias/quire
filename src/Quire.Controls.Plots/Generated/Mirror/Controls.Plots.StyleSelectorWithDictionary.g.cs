@@ -11,10 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.StyleSelectorWithDictionary, Ptc.Controls.Plots")]
 public partial class StyleSelectorWithDictionary : global::System.Windows.Controls.StyleSelector
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.IDictionary Dictionary { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Style SelectStyle(object item, global::System.Windows.DependencyObject container) => base.SelectStyle(item, container);
-    [global::Quire.Mirror.MirrorStub]
-    public StyleSelectorWithDictionary() { }
 }
