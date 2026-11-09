@@ -11,10 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.RegionCollectionSerializer`1, Ptc.Core")]
 public abstract partial class RegionCollectionSerializer<TCollection> : global::Quire.PersistentData.RegionCollectionPreSerializer, global::Quire.PersistentData.IRegionCollectionSerializer where TCollection : class, global::Quire.PersistentData.IRegionCollectionType
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfCollection;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Xml.Serialization.XmlSerializer _worksheetXmlSerializerWithOverrides;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Xml.Serialization.XmlSerializer _worksheetXmlSerializerDefault;
 }

@@ -5,6 +5,8 @@ namespace Quire.PersistentData;
 
 partial class fieldTypePageNumber
 {
+    private static global::System.Collections.Generic.Dictionary<string, string> _enumSerializationValues;
+
     public static global::System.Collections.Generic.Dictionary<string, string> EnumSerializationValues
     {
         get

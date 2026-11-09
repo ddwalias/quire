@@ -11,6 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.oleBaseContainerType, Ptc.Core")]
 public abstract partial class oleBaseContainerType : global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string itemidrefField;
 }

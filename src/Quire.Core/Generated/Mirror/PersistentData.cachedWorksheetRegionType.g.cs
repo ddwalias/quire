@@ -11,8 +11,6 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.cachedWorksheetRegionType, Ptc.Core")]
 public partial class cachedWorksheetRegionType : global::Quire.PersistentDataObjects.regionInWhiteboardBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Type[] SupportedTypes;
 
     [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.cachedWorksheetRegionType+headersContainer, Ptc.Core")]
     public partial class headersContainer

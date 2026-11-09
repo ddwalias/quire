@@ -11,6 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.ProtectableTypesRegistry, Ptc.Core")]
 public static partial class ProtectableTypesRegistry
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Collections.Generic.Dictionary<string, global::System.Type> _map;
 }

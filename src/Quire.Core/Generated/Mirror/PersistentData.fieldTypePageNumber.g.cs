@@ -11,6 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.fieldTypePageNumber, Ptc.Core")]
 public partial class fieldTypePageNumber
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.Dictionary<string, string> _enumSerializationValues;
 }

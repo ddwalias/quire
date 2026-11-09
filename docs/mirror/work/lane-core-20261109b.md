@@ -27,6 +27,8 @@
 
 - Batch 12: PersistentData root and container members (`AreaType` `XmlRootElementName` and two serializer fields; `cachedWorksheetRegionCollectionSerializer._cachedWorksheet`; `footerRegionCollectionSerializer._footer`; `headerRegionCollectionSerializer._header`; `worksheetRegionCollectionSerializer._worksheet`; `footersContainerRegionCollectionSerializer` / `headersContainerRegionCollectionSerializer` wrapper and two serializer fields; `footersContainerWrapper` / `headersContainerWrapper` / `footer` / `header` / `worksheet` / `cachedWorksheetType` `RootNodeName` constants; `ProtectedItemType.dataidrefField` and `_dataToProtect`). Gate: PASS, 4025 checked, 4025 exact, 0 failures (`.mirror-cache/release-il-ae2332d3f92e/release-il.json`). Field-only members add no method rows, so the count is unchanged. 21 stubs eliminated.
 
+- Batch 13: `cachedWorksheetRegionType.SupportedTypes` (exact eight-entry `.cctor` array, same order), `RegionCollectionSerializer<TCollection>` (`_typeOfCollection = typeof(TCollection)` `.cctor` and two serializer fields), `ProtectableTypesRegistry._map` (declared; the existing explicit static constructor fills it), `fieldTypePageNumber._enumSerializationValues` (no `.cctor` in Release IL, so no initializer), `oleBaseContainerType.itemidrefField`. Gate: PASS, 4027 checked, 4027 exact, 0 failures (`.mirror-cache/release-il-d632fc5f4fea/release-il.json`). 7 stubs eliminated.
+
 ## Remaining Parked Stubs (139)
 - PersistentDataObjects (34 stubs): Parked per task guidelines and decisions (42 PDO members parked).
 - PersistentData (53 stubs): Serialization models and companion serializers bound to PersistentDataObjects.

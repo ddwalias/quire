@@ -5,6 +5,8 @@ namespace Quire.PersistentData;
 
 partial class oleBaseContainerType
 {
+    private string itemidrefField;
+
     public string itemidref
     {
         get
