@@ -1016,4 +1016,35 @@ public partial class RichTextBase
         }
         return null;
     }
+
+    protected virtual void HandleTextChanged(object sender, TextChangedEventArgs args)
+    {
+        _cachedBaseline = null;
+        ClearInsertionPointsCache();
+        using (CommandScope commandScope = new CommandScope("RichTextBase.OnTextChanged"))
+        {
+            RaiseEvent(new RoutedEventArgs(ContentChangedEvent));
+            if (args.UndoAction == UndoAction.Create && _changeLevel == 0)
+            {
+                ExecuteTextChangedAndReactivateCommand(args);
+            }
+        }
+        if (IsLoaded)
+        {
+            UpdateCurrentRuns(Selection, args.UndoAction == UndoAction.Create && args.Changes?.Count > 0, args.Changes?.FirstOrDefault()?.RemovedLength > 0);
+            CurrentTextFormat = SelectionTextFormat;
+            if (CurrentInsertionScriptState.HasValue)
+            {
+                _changeLevel++;
+                ToggleRunElementAccordingToScriptState(args);
+                _changeLevel--;
+            }
+            if (_spellingErrorRange.HasValue)
+            {
+                _changeLevel++;
+                SpellingErrorCorrected();
+                _changeLevel--;
+            }
+        }
+    }
 }

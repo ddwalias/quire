@@ -399,3 +399,9 @@
 - Exact: `GetSpellingErrorAtPosition(ref TextPointer, out SpellingError)` (`spellingError = GetSpellingError(position = textPointer) ?? GetSpellingError(position = textPointer.GetReversedTextPointer())` inside a try; `catch { DevAssert(false); }`; the return is `if (spellingError != null) return position; return null;`).
 - Not matched, tried and reverted: `SearchWholeWordRuns`. Mathcad pushes `this` before it stores `originalRange.Start` in the local used by the `ref` argument, and a plain `TextPointer` local followed by `GetInsertionPointAtPointer(ref …)` does not reproduce that. The `break` form and the separate `int startOffset;` declaration both fixed the rest of the method; only this one ordering remains.
 - Release IL: PASS — 408 checked, 408 exact, 0 failures, 315 unfinished.
+
+## Batch 64 — RichTextBase text-changed handler (1)
+
+- Exact: `HandleTextChanged` (protected virtual; the `_cachedBaseline` reset and insertion-point cache clear, a `CommandScope` around the content-changed event and the create-and-reactivate call, then `UpdateCurrentRuns` with the create test and `args.Changes?.FirstOrDefault()?.RemovedLength > 0` (a lifted comparison, which gives the temporary Mathcad keeps), `CurrentTextFormat = SelectionTextFormat`, and the change-level guarded script-state and spelling-error updates).
+- Note: the new-run argument and the removed-length comparison must both stay inline in the call; a local for either changes the IL order.
+- Release IL: PASS — 409 checked, 409 exact, 0 failures, 314 unfinished.
