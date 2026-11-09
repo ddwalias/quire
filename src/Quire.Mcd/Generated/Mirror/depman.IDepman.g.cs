@@ -12,10 +12,6 @@ namespace Quire.depman;
 public partial interface IDepman : global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
-    bool IsUpToDate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsBusy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     void AddNodeCallback(global::Quire.utl_mgd.Function f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void AddNodeCallback(global::Quire.depman.DepNodeCallback c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
