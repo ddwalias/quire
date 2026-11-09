@@ -2,6 +2,21 @@ namespace Quire.Controls;
 
 internal partial class SolveBlockCalculatableAggregate
 {
+    private static string GetSymbolicEvalExpression(global::System.Text.RegularExpressions.Match symbolicEvalMatch)
+    {
+        if (symbolicEvalMatch == null || !symbolicEvalMatch.Success)
+            return null;
+
+        string expression = symbolicEvalMatch.Groups["expression"].Value;
+        if (expression.StartsWith("(eval_range_loops"))
+        {
+            expression = expression.Substring("(eval_range_loops".Length);
+            expression = expression.Remove(expression.Length - 1);
+        }
+
+        return expression;
+    }
+
     public global::Quire.Calculation.Core.ICalculatableAggregate WrappedCalculatableAggregate =>
         (global::Quire.Calculation.Core.ICalculatableAggregate)WrappedCalculatable;
 
