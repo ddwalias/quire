@@ -89,3 +89,9 @@
   - `FindSecondaryRadius` return: `value` / `x` temporaries did not match; the named `Vector val2 = new Vector(val.Value.X, val.Value.Y); return val2.Length;` matches (struct local constructed in place, Point temp in the next slot).
 - Runtime smoke test (scratch console app, not committed): `new StarSymbol().Create(new Point(10,10), props)` returns a `PathGeometry` with bounds, so the earlier throw is gone.
 - Release IL: PASS — 423 checked, 423 exact, 0 failures, 4829 unfinished.
+
+## Batch 13 — Presenter.AxesTypeToIndex, PlotGraphAxisConsts
+
+- Members: `AxesTypeToIndex` (`Index` static, `.ctor`); `PlotGraphAxisConsts` (six `const` fields: `arrowHeadSize`, `tickLineHalfSize`, `strokethickness`, `Halfstrokethickness`, `TicksTextSize`, `tickTextOffset`). Hand-written: `Mirrored/Controls.Plots.Presenter.AxesTypeToIndex.cs` and `Mirrored/Controls.Plots.PlotGraphAxisConsts.cs`; stubs removed from both `.g.cs`.
+- Shapes: `Index` as a `switch` statement with stacked case labels (`case X: case Angular:`) and a `default:` that calls `DebugTools.DevAssert(false, null)` before `return AxesIndex.None` matched first time.
+- Release IL: PASS — 424 checked, 424 exact, 0 failures, 4828 unfinished.

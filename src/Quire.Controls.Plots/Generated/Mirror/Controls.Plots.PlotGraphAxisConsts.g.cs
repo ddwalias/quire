@@ -11,16 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotGraphAxisConsts, Ptc.Controls.Plots")]
 internal static partial class PlotGraphAxisConsts
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const double arrowHeadSize = 5d;
-    [global::Quire.Mirror.MirrorStub]
-    public const int tickLineHalfSize = 2;
-    [global::Quire.Mirror.MirrorStub]
-    public const double strokethickness = 0.5d;
-    [global::Quire.Mirror.MirrorStub]
-    public const double Halfstrokethickness = 0.25d;
-    [global::Quire.Mirror.MirrorStub]
-    public const double TicksTextSize = 8d;
-    [global::Quire.Mirror.MirrorStub]
-    public const int tickTextOffset = 3;
 }

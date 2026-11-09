@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots.Presenter;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Presenter.AxesTypeToIndex, Ptc.Controls.Plots")]
 public partial class AxesTypeToIndex
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Plots.Presenter.AxesIndex Index(global::Quire.Controls.Plots.Presenter.AxesType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public AxesTypeToIndex() { }
 }
