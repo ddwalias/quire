@@ -359,3 +359,12 @@
 - Shapes: `_oldItemRectMap`/`_newItemRectMap` use field initializers (IL stores them before the base call).
 - Release IL: PASS — 826 checked, 0 failures (`release-il-606dee4f3d1b`). First run `release-il-efe12761865e` failed with MSBuild `MSB4166` child-node exits and no C# errors; the rerun passed unchanged.
 - Remaining mismatches in this batch: none.
+
+## Batch 21 — WhiteboardViewModel.WhiteboardItemMgr, CanAddItems
+
+- Members: `WhiteboardViewModel`: static `WhiteboardItemMgr` get (`AppServiceRegistry.GetService<IWhiteboardItemManager>()` with the `IsConnected` re-fetch), `CanAddItems` get.
+- Hand-written: `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs` (`using Quire.Services;` added). The stubs were placeholders in that file, so nothing was removed from `Generated/`.
+- Shapes: `CanAddItems` uses the `is IWhiteboardItemContainer` pattern with a local; `SelectedItems.Count()` binds to the instance `INotifyCollectionRangeChanged.Count()` as Mathcad does.
+- Rejected shape: `IsTabNavigatable => WhiteboardItems.Any(item => WhiteboardItemMgr.IsTabNavigatable(item))` produced the exact IL, but its lambda is `<get_IsTabNavigatable>b__230_0` where Mathcad has `b__236_0`. The class has six fewer preceding member declarations than Mathcad, so this needs placeholder members in Mathcad order first. It stays a stub.
+- Release IL: PASS — 828 checked, 0 failures (`release-il-7f8a8eaf6c19`).
+- Remaining mismatches in this batch: none. Blocked and skipped: `DropTargetDrop` (recorded devirtualization blocker, batch 14), `Separate` (deferred).

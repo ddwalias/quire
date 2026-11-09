@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using Quire.Controls.Core;
 using Quire.Controls.Core.Whiteboard;
+using Quire.Services;
 using Quire.Wpf;
 
 namespace Quire.Controls.Whiteboard;
@@ -123,7 +124,18 @@ public partial class WhiteboardViewModel
         }
     }
 
-    public static global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager WhiteboardItemMgr { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public static IWhiteboardItemManager WhiteboardItemMgr
+    {
+        get
+        {
+            if (_whiteboardItemMgr == null || !_whiteboardItemMgr.IsConnected)
+            {
+                return _whiteboardItemMgr = AppServiceRegistry.GetService<IWhiteboardItemManager>();
+            }
+
+            return _whiteboardItemMgr;
+        }
+    }
 
     public event global::System.Action<global::System.Windows.Size, global::System.Windows.Size> ChildCausedResize;
 
@@ -731,7 +743,23 @@ public partial class WhiteboardViewModel
         return SelectedItems.Any();
     }
 
-    public virtual bool CanAddItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public virtual bool CanAddItems
+    {
+        get
+        {
+            if (ActiveItem == null)
+            {
+                return SelectedItems.Count() == 0;
+            }
+
+            if (ActiveDescendant is IWhiteboardItemContainer whiteboardItemContainer)
+            {
+                return whiteboardItemContainer.CanAddItems;
+            }
+
+            return false;
+        }
+    }
 
     public bool CanCutSelection()
     {
