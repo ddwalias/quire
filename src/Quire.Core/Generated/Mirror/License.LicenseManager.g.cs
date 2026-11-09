@@ -11,89 +11,8 @@ namespace Quire.License;
 [global::Quire.Mirror.MirrorOf("Ptc.License.LicenseManager, Ptc.Core")]
 public sealed partial class LicenseManager : global::System.ComponentModel.INotifyPropertyChanged, global::Quire.License.ILicenseManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string ENG_NB_VARIANT_ENV = "ENG_NB_VARIANT";
-    [global::Quire.Mirror.MirrorStub]
-    private const int MaxNumMessages = 30;
-    [global::Quire.Mirror.MirrorStub]
-    private const int DefaultLicenseRefreshInterval = 3600000;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.License.LicenseManager _instance;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Threading.Dispatcher _uiThreadDispatcher;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Threading.Timer _refreshTimer;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.ResourceDictionary _licenseMessageDictionary;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<bool> _hasValidLicense;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.License.LicenseType _licenseType;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<global::System.DateTime> _issueDate;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<global::System.DateTime> _expirationDate;
-    [global::Quire.Mirror.MirrorStub]
-    private string _hostId;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.License.LicenseBorrowStatus _licenseBorrowStatus;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<global::System.DateTime> _borrowedUntil;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isEducationalLicense;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isUsingReleaseFeature;
-    [global::Quire.Mirror.MirrorStub]
-    private string _productCode;
-    [global::Quire.Mirror.MirrorStub]
-    private string _salesOrderNumber;
-    [global::Quire.Mirror.MirrorStub]
-    private string _customerNumber;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isEngNbPlus;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isEngNb;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isEngNotebookLostConnection;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly char[] semicolon;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Text.RegularExpressions.Regex validServerPortRegex;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.TimeSpan _oneMonth;
-
     [global::Quire.Mirror.MirrorOf("Ptc.License.LicenseManager+PropertyNames, Ptc.Core")]
     public static partial class PropertyNames
     {
-        [global::Quire.Mirror.MirrorStub]
-        public const string HasValidLicense = "HasValidLicense";
-        [global::Quire.Mirror.MirrorStub]
-        public const string DaysLeft = "DaysLeft";
-        [global::Quire.Mirror.MirrorStub]
-        public const string LicenseType = "LicenseType";
-        [global::Quire.Mirror.MirrorStub]
-        public const string IssueDate = "IssueDate";
-        [global::Quire.Mirror.MirrorStub]
-        public const string ExpirationDate = "ExpirationDate";
-        [global::Quire.Mirror.MirrorStub]
-        public const string HostId = "HostId";
-        [global::Quire.Mirror.MirrorStub]
-        public const string ProductCode = "ProductCode";
-        [global::Quire.Mirror.MirrorStub]
-        public const string SalesOrderNumber = "SalesOrderNumber";
-        [global::Quire.Mirror.MirrorStub]
-        public const string CustomerNumber = "CustomerNumber";
-        [global::Quire.Mirror.MirrorStub]
-        public const string IsEngNbPlus = "IsEngNbPlus";
-        [global::Quire.Mirror.MirrorStub]
-        public const string IsEngNb = "IsEngNb";
-        [global::Quire.Mirror.MirrorStub]
-        public const string IsEngNotebookLostConnection = "IsEngNotebookLostConnection";
-        [global::Quire.Mirror.MirrorStub]
-        public const string LicenseMessageText = "LicenseMessageText";
-        [global::Quire.Mirror.MirrorStub]
-        public const string LicenseBorrowStatus = "LicenseBorrowStatus";
-        [global::Quire.Mirror.MirrorStub]
-        public const string BorrowedUntil = "BorrowedUntil";
     }
 }
