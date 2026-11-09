@@ -11,18 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.ButtonControl, Ptc.Controls.EquationControl")]
 public partial class ButtonControl : global::System.Windows.Controls.Button, global::Quire.Controls.InputControls.IInputScriptableControl, global::Quire.Controls.InputControls.IInputScriptableControlBase, global::Quire.Controls.InputControls.IInputControl, global::Quire.Controls.InputControls.IInputControlBase, global::System.Windows.IFrameworkInputElement, global::System.Windows.IInputElement, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.InputControls.IInputControlViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ButtonControl(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue data) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void ButtonControl_OnClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnPreviewMouseRightButtonDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnPreviewMouseRightButtonDown(e);
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

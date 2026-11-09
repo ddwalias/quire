@@ -11,14 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.CheckBoxPropertiesEditor, Ptc.Controls.EquationControl")]
 public partial class CheckBoxPropertiesEditor : global::System.Windows.Controls.UserControl, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.InputControls.CheckBoxPropertiesEditorViewModel CheckBoxViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public CheckBoxPropertiesEditor(global::Quire.Controls.InputControls.IInputControlEditorModel model) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -89,3 +89,6 @@
 - Shapes tried: XAML pack URIs use the Quire assembly name; the other members matched on the first candidate.
 - Note: no `.xaml` files exist yet under `src/Quire.Controls.EquationControl` for the URIs used here or by GenericResources/EquationControlErrorMessages; the IL matches, but `LoadComponent` will fail at runtime until those resources are added.
 - Release IL: PASS, 713 checked (`.mirror-cache/release-il-29185259ef71/release-il.json`).
+- Batch: `Controls.InputControls.CheckBoxPropertiesEditor` (`CheckBoxViewModel`, `.ctor`, `InitializeComponent`, `Connect`); `CheckBoxPropertiesEditorViewModel` (`Model`, `RightToLeft`, `Text`, `.ctor`, `HandleModelPropertyChanged`); `ButtonControl` (`ViewModel`, `.ctor`, `ButtonControl_OnClick`, `OnPreviewMouseRightButtonDown`, `InitializeComponent`, `Connect`).
+- Shapes tried: an `if`/`else if` chain for `HandleModelPropertyChanged` FAILED at call #2 (`calls differ`: Mathcad compares all three names before the case bodies). A `switch` on `e.PropertyName` with the shared `RightToLeft`/`Text` case matched.
+- Release IL: PASS, 730 checked (`.mirror-cache/release-il-e960ade3edc2/release-il.json`). Earlier candidate: FAIL at `e416c8bf9d82`.
