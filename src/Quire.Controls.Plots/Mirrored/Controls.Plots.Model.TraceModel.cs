@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using Quire;
+using Quire.Calculation.Core;
 using Quire.Calculation.Core.Trace2DResults;
 using Quire.Controls.Plots.Presenter;
 using Quire.Wpf;
@@ -148,5 +149,64 @@ internal partial class TraceModel
     private void InvalidateEngineResult()
     {
         EngineResult = default;
+    }
+
+    private void FireIsTraceCommitted(bool isTraceCommitted)
+    {
+        if (IsTraceCommittedChanged != null)
+        {
+            IsTraceCommittedChanged(isTraceCommitted);
+        }
+    }
+
+    private void FireResultValidChanged(bool resultValid)
+    {
+        if (ResultValidChanged != null)
+        {
+            ResultValidChanged(resultValid);
+        }
+    }
+
+    private void FireAnalyzedDataChanged()
+    {
+        Action<ITraceModel> handler = AnalyzedDataChanged;
+        if (handler != null)
+        {
+            handler(this);
+        }
+    }
+
+    private void FireValidateTraceVsPlotType()
+    {
+        if (ValidateTraceVsPlotType != null)
+        {
+            ValidateTraceVsPlotType();
+        }
+    }
+
+    private void FireStyleChanged()
+    {
+        if (StyleChanged != null)
+        {
+            StyleChanged();
+        }
+    }
+
+    private void SetIsCommitted(bool value)
+    {
+        if (value != _isCommitted)
+        {
+            _isCommitted = value;
+            FireIsTraceCommitted(_isCommitted);
+        }
+    }
+
+    protected void FireEquationError(EngineError engineError)
+    {
+        Action<EngineError> handler = EquationError;
+        if (handler != null)
+        {
+            handler(engineError);
+        }
     }
 }

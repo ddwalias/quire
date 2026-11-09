@@ -252,3 +252,9 @@
 - Shapes: all five matched first time, including the `Interval` initializer (struct temp, `Lower` then `Upper`) and the `!=` check whose else-branch is the `_angularRange` return.
 - Release IL: PASS — 513 checked, 513 exact, 0 failures.
 - Note: the `.g.cs` edits are byte-preserving (CRLF kept). Batch 34 landed `TraceModel.g.cs` as an LF blob after a text-mode rewrite; the working tree and HEAD agree under autocrlf, so the line-ending churn is in history only.
+
+## Batch 36 — TraceModel event-raising helpers
+
+- Members: `FireIsTraceCommitted`, `FireResultValidChanged`, `FireValidateTraceVsPlotType`, `FireStyleChanged`, `SetIsCommitted` (private), `FireEquationError` (protected), `FireAnalyzedDataChanged`. Hand-written: appended to `Mirrored/Controls.Plots.Model.TraceModel.cs` (adds `using Quire.Calculation.Core;`); their stubs removed from the `.g.cs`.
+- Shapes: the `if (X != null) X(...)` form matched for the plain `Fire*` helpers. `FireAnalyzedDataChanged` and `FireEquationError` first used `?.Invoke`, which differs: Mathcad copies the event into a local before the null test (`stloc.0`/`ldloc.0`), so the handler-copy form matched.
+- Release IL: PASS — 520 checked, 520 exact, 0 failures.
