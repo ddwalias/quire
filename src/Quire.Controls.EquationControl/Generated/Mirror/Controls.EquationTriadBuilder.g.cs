@@ -11,10 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.EquationTriadBuilder, Ptc.Controls.EquationControl")]
 internal partial class EquationTriadBuilder : global::Quire.EquationEditor.IEquationTriadBuilder
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IEquationControl BuildEquationControl(global::Quire.EquationEditor.IEquationModel eqModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void AttachStyleFromExternalResource(global::Quire.Controls.EquationControl control, string sourceUri, string styleName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public EquationTriadBuilder() { }
 }

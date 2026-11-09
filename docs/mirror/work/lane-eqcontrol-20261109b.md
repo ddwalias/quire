@@ -38,4 +38,7 @@
 - Batch: `Controls.SymbolDescriptorConverter::{Convert, ConvertBack, .ctor}`.
 - Shapes tried: XML attribute lookup, optional description, and `NotImplementedException` matched using idiomatic locals.
 - Release IL: PASS, 635 checked (`.mirror-cache/release-il-41d2d314c3ed/release-il.json`).
-- Remaining: all other stub-marked members in EquationControl; 5,339 markers across 297 types after this batch.
+- Batch: `Controls.EquationTriadBuilder::{BuildEquationControl, AttachStyleFromExternalResource, .ctor}`.
+- Shapes tried: initial `Ptc.Controls.EquationControl` pack URI failed self-assembly normalization; `Quire.Controls.EquationControl` URI matched. Object initializer and descriptor-name ternary matched.
+- Release IL: PASS, 637 checked (`.mirror-cache/release-il-c0af06e7fe83/release-il.json`). Earlier candidate: FAIL at `bc5e1be6979a` (pack URI constant).
+- Remaining: all other stub-marked members in EquationControl; 5,336 markers across 296 types after this batch.
