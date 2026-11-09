@@ -180,3 +180,10 @@
 - Shape: implicit base initialization through the empty constructor matched.
 - Release IL: PASS — 466 checked, 466 exact, 0 failures.
 - Remaining: `PlotLegendLayoutManager.GetNumberOfColumnsFitWidth` remains blocked by the documented local-slot mismatch; other unimplemented stubs remain unclaimed.
+
+## Batch 26 — RenderingPropertyNames
+
+- Members: `Stroke`, `DashStyle`, `.ctor`. Hand-written: `Mirrored/Controls.Plots.Contour.View.RenderingPropertyNames.cs`; all stubs removed from its `.g.cs`.
+- Shape: the two original string constants and empty constructor matched.
+- Release IL: PASS — 466 checked, 466 exact, 0 failures.
+- Remaining: `PlotLegendLayoutManager.GetNumberOfColumnsFitWidth` remains blocked by the documented local-slot mismatch; other unimplemented stubs remain unclaimed.

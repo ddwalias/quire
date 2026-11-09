@@ -11,10 +11,4 @@ namespace Quire.Controls.Plots.Contour.View;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Contour.View.RenderingPropertyNames, Ptc.Controls.Plots")]
 public partial class RenderingPropertyNames
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string Stroke = "Stroke";
-    [global::Quire.Mirror.MirrorStub]
-    public const string DashStyle = "DashStyle";
-    [global::Quire.Mirror.MirrorStub]
-    public RenderingPropertyNames() { }
 }
