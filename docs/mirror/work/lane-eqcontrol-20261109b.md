@@ -11,4 +11,7 @@
 - Batch: `Controls.InputControls.LocBamlHelper::GetValues`.
 - Shapes tried: direct null comparison and enum check matched.
 - Release IL: PASS, 617 checked (`.mirror-cache/release-il-faa1d717a424/release-il.json`).
-- Remaining: all other stub-marked members in EquationControl; 5,374 markers across 313 types after this batch.
+- Batch: `Controls.InputControls.InputCheckBoxEngineFactory::{CreateEngine, .ctor}`.
+- Shapes tried: switch expression with JScript, VBScript and Python arms and default script fallback matched.
+- Release IL: PASS, 618 checked (`.mirror-cache/release-il-5d9644f84e08/release-il.json`).
+- Remaining: all other stub-marked members in EquationControl; 5,372 markers across 312 types after this batch.
