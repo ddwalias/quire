@@ -34,13 +34,9 @@ public partial interface IDepman : global::System.IDisposable
     [global::Quire.Mirror.MirrorStub]
     int AddBefore(int h, global::Quire.depman.Scope s, global::Quire.depman.Action a, global::System.Collections.ICollection static_deps, int priority, int client_handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    void BeginMove() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     void MoveAfter(int h1, int h2, global::Quire.depman.Scope s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void MoveBefore(int h1, int h2, global::Quire.depman.Scope s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void EndMove() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void Remove(int h) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
