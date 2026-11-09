@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.InputControlDataCreator, Ptc.EquationEditor")]
 public static partial class InputControlDataCreator
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.EquationEditor.Tree.IInputControlData Create(string mathNodeName, global::Quire.Controls.Core.InputControlTypes inputControlType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
