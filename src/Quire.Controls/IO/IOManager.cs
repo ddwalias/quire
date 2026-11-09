@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using Quire.Controls.Core;
 using Quire.Controls.Core.IORegions;
+using Quire.Core;
 using Quire.Mirror;
 
 namespace Quire.Controls.IO;
@@ -68,6 +69,13 @@ public partial class IOManager
 
     partial class UnitedScalarState
     {
+        internal UnitedScalarState(double value, string units, IOManagerErrorCode errorCode)
+        {
+            Value = value;
+            Units = units;
+            ErrorCode = errorCode;
+        }
+
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         public double Value { get; private set; }
 
@@ -80,6 +88,13 @@ public partial class IOManager
 
     partial class UnitedMatrixState
     {
+        internal UnitedMatrixState(double[][] value, string units, IOManagerErrorCode errorCode)
+        {
+            Value = value;
+            Units = units;
+            ErrorCode = errorCode;
+        }
+
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         public double[][] Value { get; private set; }
 
@@ -92,12 +107,35 @@ public partial class IOManager
 
     partial class StringState
     {
+        private string _value;
+
+        internal StringState(string value, IOManagerErrorCode errorCode)
+        {
+            Value = value;
+            ErrorCode = errorCode;
+        }
+
+        public string Value
+        {
+            get
+            {
+                DebugTools.DevAssert(_value == null || ErrorCode == IOManagerErrorCode.NoError, null);
+                return _value;
+            }
+            private set => _value = value;
+        }
+
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         public IOManagerErrorCode ErrorCode { get; private set; }
     }
 
     partial class ErrorState
     {
+        public ErrorState(IOManagerErrorCode errorCode)
+        {
+            ErrorCode = errorCode;
+        }
+
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         public IOManagerErrorCode ErrorCode { get; private set; }
     }

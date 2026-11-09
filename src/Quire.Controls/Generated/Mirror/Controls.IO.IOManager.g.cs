@@ -221,33 +221,21 @@ public partial class IOManager : global::Quire.Controls.Core.IORegions.IIORegion
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+UnitedScalarState, Ptc.Controls")]
     private partial class UnitedScalarState : global::Quire.Controls.Core.IORegions.IUnitedScalarState, global::Quire.Controls.Core.IORegions.IErrorState
     {
-        [global::Quire.Mirror.MirrorStub]
-        internal UnitedScalarState(double value, string units, global::Quire.Controls.Core.IORegions.IOManagerErrorCode errorCode) { }
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+UnitedMatrixState, Ptc.Controls")]
     private partial class UnitedMatrixState : global::Quire.Controls.Core.IORegions.IUnitedMatrixState, global::Quire.Controls.Core.IORegions.IErrorState
     {
-        [global::Quire.Mirror.MirrorStub]
-        internal UnitedMatrixState(double[][] value, string units, global::Quire.Controls.Core.IORegions.IOManagerErrorCode errorCode) { }
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+StringState, Ptc.Controls")]
     private partial class StringState : global::Quire.Controls.Core.IORegions.IStringState, global::Quire.Controls.Core.IORegions.IErrorState
     {
-        [global::Quire.Mirror.MirrorStub]
-        private string _value;
-        [global::Quire.Mirror.MirrorStub]
-        public string Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        internal StringState(string value, global::Quire.Controls.Core.IORegions.IOManagerErrorCode errorCode) { }
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+ErrorState, Ptc.Controls")]
     private partial class ErrorState : global::Quire.Controls.Core.IORegions.IErrorState
     {
-        [global::Quire.Mirror.MirrorStub]
-        public ErrorState(global::Quire.Controls.Core.IORegions.IOManagerErrorCode errorCode) { }
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+UnitedValueGetter, Ptc.Controls")]

@@ -38,3 +38,4 @@
 - Batch 15: `DitaWriter` helpers (CurrentIdString, ZeroCurrentId, ImageFileName, EnsureDirectoryExists). Gate: PASS, 498 checked. Report: `.mirror-cache/release-il-994a15e49edd/release-il.json`.
   - Shapes: `ImageFileName` as a four-argument `string.Format` matches the compiler's params-span lowering with no extra code.
   - Left unimplemented: the DitaWriter constructor, WriteHeader, WriteImageElementCreateFile, WriteContentControl and the write methods that follow (large XML/WPF bodies).
+- Batch 16: `IO.IOManager` nested state classes (UnitedScalarState, UnitedMatrixState, StringState, ErrorState constructors; StringState.Value with its assertion getter). Gate: PASS, 504 checked. Report: `.mirror-cache/release-il-19f2b3637b7a/release-il.json`.
