@@ -476,3 +476,8 @@
 
 - Exact: `ViewModel` getter as a private get-only auto-property, producing the original `<ViewModel>k__BackingField` access.
 - Release IL: PASS — 420 checked, 0 failures; one exact member added. The constructor remains a stub.
+
+## Batch 78 — TextRegion serialization property filter (1)
+
+- Exact: `ShouldSerializeProperty` (return false for the `Style` and `Template` dependency properties by name; otherwise call the base implementation).
+- Release IL: PASS — 421 checked, 0 failures; one exact member added. Previously exact methods remained exact.

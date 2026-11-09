@@ -18,8 +18,6 @@ public partial class TextRegion : global::Quire.Controls.Text.RichTextWithEmbedd
     [global::Quire.Mirror.MirrorStub]
     protected override bool ShouldLeaveTextRegionOnCaretMove(global::Quire.Controls.Core.CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection direction) => base.ShouldLeaveTextRegionOnCaretMove(direction);
     [global::Quire.Mirror.MirrorStub]
-    protected override bool ShouldSerializeProperty(global::System.Windows.DependencyProperty dp) => base.ShouldSerializeProperty(dp);
-    [global::Quire.Mirror.MirrorStub]
     public override object Clone() => base.Clone();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Text.TextRegion CloneTextRegion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
