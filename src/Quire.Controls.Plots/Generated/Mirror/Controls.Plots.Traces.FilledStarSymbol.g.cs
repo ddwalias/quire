@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots.Traces;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Traces.FilledStarSymbol, Ptc.Controls.Plots")]
 public partial class FilledStarSymbol : global::Quire.Controls.Plots.Traces.StarSymbol
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsFilled { get => base.IsFilled; }
-    [global::Quire.Mirror.MirrorStub]
-    public FilledStarSymbol() { }
 }

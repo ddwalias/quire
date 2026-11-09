@@ -11,10 +11,4 @@ namespace Quire.Controls.Plots.Traces;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Traces.PointSymbol, Ptc.Controls.Plots")]
 public partial class PointSymbol : global::Quire.Controls.Plots.Traces.Symbol
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsFilled { get => base.IsFilled; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Media.Geometry Create(global::System.Windows.Point point, global::Quire.Controls.Plots.Traces.ISymbolProperties properties) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PointSymbol() { }
 }
