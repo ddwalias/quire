@@ -158,3 +158,11 @@
 - Shapes: constructors chain to the base constructors; `CalcMaxDecimalPerColumn` returns a `MaxMatrixWidth` array sized from `cellsContent.Count`; `Clone` constructs a copy.
 - Release IL: PASS — 459 checked, 459 exact, 0 failures.
 - Remaining: `GetNumberOfColumnsFitWidth` is blocked by the known local-slot mismatch; other unimplemented stubs remain unclaimed.
+
+## Batch 23 — PlotGraph3dZEquationMarginConverter
+
+- Members: `Instance`, private `.ctor`, `Convert`, `ConvertBack`. Hand-written: `Mirrored/Controls.Plots.Plot3D.View.PlotGraph3dZEquationMarginConverter.cs`; all stubs removed from its `.g.cs`.
+- Reference: member-specific extraction omitted the IL file; the method bodies were read from the cached full `Ptc.Controls.Plots.il` Release disassembly.
+- Shapes: direct casts for the two `values` elements, a `Thickness` object initializer, conditional right-margin addition, and `NotImplementedException` in `ConvertBack` matched.
+- Release IL: PASS — 462 checked, 462 exact, 0 failures.
+- Remaining: `PlotLegendLayoutManager.GetNumberOfColumnsFitWidth` remains blocked by the documented local-slot mismatch; other unimplemented stubs remain unclaimed.
