@@ -175,7 +175,8 @@ lock. Details are in [validation](validation.md).
   exports and matches manifest names without the `?A0x` tag. Changed native projects are gated by `native_gate.py`:
   a function that passed must still pass; new or changed functions must pass.
 - **Merging:** lanes validate outside the lock; under it, `main` unchanged or moved without touching the candidate's
-  inputs lands without rebuilding, otherwise it is revalidated. Base inventories are cached in the main checkout.
+  inputs lands without rebuilding, otherwise the lane validates again outside the lock (under it only in the third
+  round). Base inventories are cached in the main checkout.
 - **Mapping:** `utl-mgd.dll,EHExceptionRecord` is a `c++ artefact`, like the other CRT exception types; the
   mixed-mode build emits it under its C++ name.
 

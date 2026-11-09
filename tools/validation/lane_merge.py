@@ -114,25 +114,34 @@ def main(argv=None):
             if code is not None:
                 return code
         raise AssertionError('the last round always lands or fails')
-    except (OSError, RuntimeError, subprocess.SubprocessError) as error:
+    except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as error:
         print(f'BLOCKED: {getattr(error, "stderr", None) or error}', file=sys.stderr)
         return 1
+    finally:
+        subprocess.run(['git', 'update-ref', '-d', pin(args.branch)], capture_output=True)
 
 
 # Rounds of validation outside the lock. A round whose base main has since moved in a way that touches the candidate's
-# inputs releases the lock and validates again; the last round revalidates under the lock instead, so a lane lands
-# even while main keeps moving. Holding the lock only to land keeps one lane's revalidation from stalling every other.
+# inputs releases the lock and validates again; only the last round revalidates under the lock, so a lane lands even
+# while main keeps moving, and otherwise the lock is held just to land.
 ROUNDS = 3
+
+
+def pin(branch):
+    """The ref holding the base the branch's current round validates against."""
+    return f'refs/lane-merge/{branch}'
 
 
 def attempt(args, main_dir, lane, number):
     """One round: validate against a fresh origin/main outside the lock, then land under it. Returns the exit code, or
     None to validate again (main moved and the candidate's inputs changed; never on the last round)."""
-    # Optimistic validation outside the lock, against a fresh origin/main.
+    # Optimistic validation outside the lock, against a fresh origin/main. The base is pinned to a ref of this lane's:
+    # a lane landing meanwhile fetches, which moves origin/main under this round.
     git('fetch', '-q', 'origin')
-    rebase(args.branch, 'origin/main')
+    git('update-ref', pin(args.branch), 'refs/remotes/origin/main')
+    rebase(args.branch, pin(args.branch))
     receipt = il_merge.ROOT / '.mirror-cache' / f'gate-il-{uuid.uuid4().hex[:12]}'
-    args.base, args.apply, args.results = 'refs/remotes/origin/main', False, receipt
+    args.base, args.apply, args.results = pin(args.branch), False, receipt
     code = il_merge.gate(args)
     if code:
         return code
@@ -145,10 +154,16 @@ def attempt(args, main_dir, lane, number):
             landing['lock_wait_s'] = round(time.perf_counter() - waiting, 1)
             held_since = time.perf_counter()
             try:
-                return land_under_lock(args, main_dir, lane, record, base, tip, number, landing)
+                code = land_under_lock(args, main_dir, lane, record, base, tip, number, landing)
             finally:
                 landing['lock_held_s'] = round(time.perf_counter() - held_since, 1)
-    except (OSError, RuntimeError, subprocess.SubprocessError) as error:
+        if code is None:
+            print(f"main moved under {args.branch}'s inputs; validating again (round {number + 1} of {ROUNDS})",
+                  flush=True)
+        else:
+            print(f"Landing: {landing.get('path')}; {receipt / 'gate.json'}", flush=True)
+        return code
+    except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as error:
         landing['error'] = getattr(error, 'stderr', None) or str(error)
         raise
     finally:

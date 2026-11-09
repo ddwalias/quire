@@ -181,13 +181,13 @@ in that round's receipt with the round number and the seconds spent waiting for 
   root files other than `*.md`, the type map, MethodAudit, MirrorGen, `tools/validation/`, and for
   native projects their folders, `docs/mirror/native/` and the assembly map). It lands without building.
 - `retry`: anything else releases the lock and starts another round against the new `origin/main`,
-  so one lane's revalidation never stalls the others.
+  so a revalidation does not hold the lock while other lanes wait to land.
 - `revalidated`: in the last of three rounds, anything else is validated again under the lock, so
   a lane still lands while `main` keeps moving.
 
 A rebase conflict is aborted and its files listed. There are no stored validation refs, baseline
 commits, protected-list approvals or two-stage validation records. Changes without production
-inputs skip compilation. The merge receipt is `.mirror-cache/gate-il-<id>/gate.json`.
+inputs skip compilation. Each round's receipt is `.mirror-cache/gate-il-<id>/gate.json`; the console names the landing one.
 
 Native projects (`src/<P>/` with `<P>.vcxproj` and no `<P>.csproj`) the branch affects are checked by
 `native_gate.py` after the IL check; both must pass. A change to `docs/mirror/native/internal-targets.json`,

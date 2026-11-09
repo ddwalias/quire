@@ -54,7 +54,9 @@ def native_gate():
 
 
 def gate(args):
-    if git('status', '--porcelain'):
+    # Only applying writes the checkout. A check-only run (lane_merge's, outside the lock) must not read it either: a
+    # lane landing meanwhile is mid-update there, and status's index refresh can block that lane's merge.
+    if args.apply and git('status', '--porcelain'):
         raise RuntimeError('commit or stash changes in the main checkout first')
     ref = args.base if args.base.startswith('refs/') else f'refs/heads/{args.base}'
     if args.apply and ref != f'refs/heads/{args.base}':

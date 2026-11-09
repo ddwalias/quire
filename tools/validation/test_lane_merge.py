@@ -47,7 +47,7 @@ class LaneMergeTests(unittest.TestCase):
                       mock.patch.object(il_merge, 'ROOT', il_merge.ROOT)):
             patch.start()
             self.addCleanup(patch.stop)
-        self.checks, self.locked = [], []
+        self.checks, self.bases, self.locked = [], [], []
 
     def write(self, root, path, text):
         (root / path).parent.mkdir(parents=True, exist_ok=True)
@@ -65,14 +65,15 @@ class LaneMergeTests(unittest.TestCase):
         self.commit(self.other, 'upstream')
         git(self.other, 'push', '-q', 'origin', 'main')
 
-    def land(self, during=None, rounds=1):
-        """lane_merge with the gate's checks recorded; during: a path another lane changes on origin during each of the
-        first `rounds` checks. Returns the exit code and the last round's landing; self.landings has every round's."""
+    def land(self, during=()):
+        """lane_merge with the gate's checks recorded; during[i]: a path another lane changes on origin during check
+        i + 1. Returns the exit code and the last round's landing; self.landings has every round's."""
         def check(base, projects, results, *args, **kwargs):
             self.checks.append(projects)
+            self.bases.append(base)
             self.locked.append(merge_lock.is_held())
-            if during and len(self.checks) <= rounds:
-                self.upstream(during, f'upstream {len(self.checks)}\n')
+            if len(self.checks) <= len(during):
+                self.upstream(during[len(self.checks) - 1], f'upstream {len(self.checks)}\n')
             return {'passed': True, 'checked': [], 'failures': []}
         with mock.patch.object(il_merge.release_il, 'check', side_effect=check):
             code = lane_merge.main(['work', '--main', str(self.main)])
@@ -89,7 +90,7 @@ class LaneMergeTests(unittest.TestCase):
         self.assertEqual(git(self.origin, 'rev-parse', 'main'), git(self.lane, 'rev-parse', 'work'))
 
     def test_an_unrelated_upstream_change_lands_without_building_again(self):
-        code, landing = self.land(during='README.md')
+        code, landing = self.land(during=['README.md'])
         self.assertEqual(code, 0)
         self.assertEqual(self.checks, [['P']])
         self.assertEqual(landing['path'], 'rebased-unaffected')
@@ -97,9 +98,12 @@ class LaneMergeTests(unittest.TestCase):
         self.assertEqual(git(self.origin, 'show', 'main:README.md'), 'upstream 1')
 
     def test_an_upstream_change_to_a_compared_project_is_validated_again_outside_the_lock(self):
-        code, landing = self.land(during='src/P/Other.cs')
+        code, landing = self.land(during=['src/P/Other.cs'])
         self.assertEqual(code, 0)
         self.assertEqual(self.checks, [['P'], ['P']])
+        # Round 2 validated against main with the other lane's change, which the landed tip sits on.
+        self.assertEqual(self.bases[1], git(self.origin, 'rev-parse', 'main~1'))
+        self.assertNotEqual(self.bases[0], self.bases[1])
         self.assertEqual(self.locked, [False, False])
         self.assertEqual([(l['round'], l['path']) for l in self.landings], [(1, 'retry'), (2, 'validated')])
         self.assertNotIn('pushed', self.landings[0])
@@ -111,7 +115,7 @@ class LaneMergeTests(unittest.TestCase):
         self.assertEqual(git(self.origin, 'show', 'main:src/P/Other.cs'), 'upstream 1')
 
     def test_while_main_keeps_moving_the_last_round_revalidates_under_the_lock(self):
-        code, landing = self.land(during='src/P/Other.cs', rounds=lane_merge.ROUNDS)
+        code, landing = self.land(during=['src/P/Other.cs'] * lane_merge.ROUNDS)
         self.assertEqual(code, 0)
         self.assertEqual(len(self.checks), lane_merge.ROUNDS + 1)
         self.assertEqual(self.locked, [False] * lane_merge.ROUNDS + [True])
@@ -119,6 +123,15 @@ class LaneMergeTests(unittest.TestCase):
         self.assertTrue(landing['pushed'])
         self.assertEqual(git(self.origin, 'rev-parse', 'main'), git(self.lane, 'rev-parse', 'work'))
         self.assertEqual(git(self.origin, 'show', 'main:src/P/Other.cs'), f'upstream {lane_merge.ROUNDS}')
+
+    def test_a_retried_round_can_land_without_building_again(self):
+        code, landing = self.land(during=['src/P/Other.cs', 'README.md'])
+        self.assertEqual(code, 0)
+        self.assertEqual(len(self.checks), 2)
+        self.assertEqual([l['path'] for l in self.landings], ['retry', 'rebased-unaffected'])
+        self.assertEqual(git(self.origin, 'rev-parse', 'main'), git(self.lane, 'rev-parse', 'work'))
+        self.assertEqual(git(self.origin, 'show', 'main:README.md'), 'upstream 2')
+        self.assertEqual(git(self.main, 'for-each-ref', 'refs/lane-merge/'), '')  # the pinned base is removed
 
     def test_an_upstream_move_out_of_a_compared_project_is_revalidated(self):
         git(self.other, 'pull', '-q', '--ff-only')
