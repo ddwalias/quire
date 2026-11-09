@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.Model.CurveVisualData3D, Ptc.Controls.Plots")]
 internal partial class CurveVisualData3D : global::Quire.Controls.Plots.Plot3D.Model.PlotTraceVisualData3D
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override bool HasNoData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal CurveVisualData3D(global::System.Windows.Media.Media3D.Transform3D transform3D, int verticesCount) : base(default(global::Quire.Controls.Plots.Plot3D.Model.TraceType3D), default(global::System.Windows.Media.Media3D.Transform3D), default(int)) { }
 }
