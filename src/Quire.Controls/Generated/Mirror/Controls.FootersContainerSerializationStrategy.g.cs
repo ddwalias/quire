@@ -11,14 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.FootersContainerSerializationStrategy, Ptc.Controls")]
 internal partial class FootersContainerSerializationStrategy : global::Quire.Controls.Core.Serialization.ISerializationStrategy
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.WorksheetSectionSerializationStrategy _footerStrategy;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.WorksheetSectionSerializationStrategy _firstPageFooterStrategy;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.PersistentData.footersContainerRegionCollectionSerializer _containerSerializer;
-    [global::Quire.Mirror.MirrorStub]
-    public FootersContainerSerializationStrategy(global::Quire.Controls.WorksheetSectionSerializationStrategy footerStrategy, global::Quire.Controls.WorksheetSectionSerializationStrategy firstPageFooterStrategy, global::Quire.PersistentData.footersContainerRegionCollectionSerializer containerSerializer) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.PersistentDataObjects.IRegionType> GetRegions(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

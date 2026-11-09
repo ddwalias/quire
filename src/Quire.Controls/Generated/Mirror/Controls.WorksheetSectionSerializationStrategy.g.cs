@@ -11,12 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.WorksheetSectionSerializationStrategy, Ptc.Controls")]
 internal partial class WorksheetSectionSerializationStrategy : global::Quire.Controls.Core.Serialization.ISerializationStrategy
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.PersistentData.IWorksheetSectionPersistentData _worksheetSectionData;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> _worksheetSectionRegionDataCreator;
-    [global::Quire.Mirror.MirrorStub]
-    public WorksheetSectionSerializationStrategy(global::Quire.PersistentData.IWorksheetSectionPersistentData sectionData, global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> worksheetSectionRegionDataCreator) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.PersistentDataObjects.IRegionType> GetRegions(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
