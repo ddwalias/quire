@@ -125,3 +125,11 @@
 - Members: `_currentColorIndex` field, `ApplyNextStyle(ITraceModel)` (castclass to `SolidColorBrush` for the colour, enum `none` and `Solid` assignments, `++` with a `>=` wrap to zero), `.ctor`. Hand-written: `Mirrored/Controls.Plots.Presenter.TraceStyleSelector.cs`; stubs removed from the `.g.cs`.
 - Shapes: all matched the opcode check first time.
 - Release IL: PASS — 447 checked, 447 exact, 0 failures, 4807 unfinished.
+
+## Batch 19 — GradientColorMap
+
+- Members: static fields `TypeOfThis` (private readonly), `SpecialProperty` (readonly), `GradientStopsProperty` (non-readonly) with `DependencyProperty.Register` initializers; `Special` and `GradientStops` dependency-backed properties; `GetBrush`; `.ctor`. Hand-written: `Mirrored/Controls.Plots.GradientColorMap.cs`; stubs removed from the `.g.cs`.
+- Shapes that failed, then matched in `GetBrush`:
+  - The colour ternary `color = cond ? Special : Color` gives a different arm layout. Mathcad stores the colour in each arm of an if/else.
+  - The if/else with `gradientStop2 == null || !(gradientStop2.Offset >= value)` puts the test in the wrong branch order (`bge.s` vs `blt.un.s`). `if (gradientStop2 != null && gradientStop2.Offset >= value) color = gradientStop2.Color; else color = Special;` matches.
+- Release IL: PASS — 453 checked, 453 exact, 0 failures, 4802 unfinished.

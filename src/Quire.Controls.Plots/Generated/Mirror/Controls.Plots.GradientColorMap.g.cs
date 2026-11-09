@@ -11,18 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.GradientColorMap, Ptc.Controls.Plots")]
 public partial class GradientColorMap : global::System.Windows.DependencyObject, global::Quire.Controls.Plots.IColorMap
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type TypeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty SpecialProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty GradientStopsProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Color Special { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.GradientStopCollection GradientStops { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush GetBrush(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public GradientColorMap() { }
 }
