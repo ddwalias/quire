@@ -11,8 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.IsNotNullOrEmptyToVisibilityConverter, Ptc.Core")]
 public partial class IsNotNullOrEmptyToVisibilityConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Wpf.IsNotNullOrEmptyToVisibilityConverter InstanceUsingHidden;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Wpf.IsNotNullOrEmptyToVisibilityConverter InstanceUsingCollapsed;
 }

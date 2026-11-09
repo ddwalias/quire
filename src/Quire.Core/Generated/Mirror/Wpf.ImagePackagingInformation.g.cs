@@ -11,14 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ImagePackagingInformation, Ptc.Core")]
 public partial struct ImagePackagingInformation
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Uri ImageSourceUri;
-    [global::Quire.Mirror.MirrorStub]
-    public byte[] ImageOriginalStreamHash;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Imaging.BitmapSource Image;
-    [global::Quire.Mirror.MirrorStub]
-    public const string DefaultImageNameFormat = "Image{0}";
-    [global::Quire.Mirror.MirrorStub]
-    public string ImageExtension;
 }

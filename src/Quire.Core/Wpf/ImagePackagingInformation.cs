@@ -1,10 +1,18 @@
 #nullable disable
+using System;
+using System.Windows.Media.Imaging;
 using Quire.Mirror;
 
 namespace Quire.Wpf;
 
 public partial struct ImagePackagingInformation
 {
+    public Uri ImageSourceUri;
+    public byte[] ImageOriginalStreamHash;
+    public BitmapSource Image;
+    public const string DefaultImageNameFormat = "Image{0}";
+    public string ImageExtension;
+
     [MirrorVerified("PtcWpfImagePackagingInformationMechanicalDifferentialTests")]
     public string ImageNameFormat { get; set; }
 

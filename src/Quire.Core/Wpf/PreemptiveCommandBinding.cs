@@ -7,6 +7,12 @@ namespace Quire.Wpf;
 
 public partial class PreemptiveCommandBinding
 {
+    private readonly UIElement _element;
+    private readonly bool _bindingMarksEventAsHandled;
+    private readonly CommandBinding _binding;
+    private readonly CanExecuteRoutedEventHandler _canExecuteWrapper;
+    private readonly ExecutedRoutedEventHandler _executedWrapper;
+
     [MirrorVerified("PtcWpfPreemptiveCommandBindingMechanicalDifferentialTests")]
     private static void EmptyEventHandler(object sender, EventArgs e) { }
 

@@ -6,6 +6,10 @@ namespace Quire.Wpf;
 
 public partial class CachedDoubleStringConverter
 {
+    private string strCache;
+    private double doubleCache;
+    private const double ScientificNotationThreshold = 0.0001d;
+
     [MirrorVerified("Release IL")]
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

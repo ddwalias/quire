@@ -6,6 +6,9 @@ namespace Quire.Wpf;
 
 partial class WeakDelegate
 {
+    private readonly System.WeakReference _weakReference;
+    private readonly System.Reflection.MethodInfo _method;
+
     [MirrorVerified("Release IL")]
     public WeakDelegate(System.Delegate realDelegate)
     {

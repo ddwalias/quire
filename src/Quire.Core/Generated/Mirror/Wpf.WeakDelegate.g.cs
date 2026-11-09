@@ -11,8 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.WeakDelegate, Ptc.Core")]
 public partial class WeakDelegate
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.WeakReference _weakReference;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Reflection.MethodInfo _method;
 }

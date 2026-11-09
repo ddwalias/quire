@@ -5,6 +5,154 @@ namespace Quire.Wpf;
 
 partial class UnsafeNativeMethods
 {
+    public partial struct POINT
+    {
+        public int x;
+        public int y;
+    }
+
+    public partial struct RECT
+    {
+        public int left;
+        public int top;
+        public int right;
+        public int bottom;
+    }
+
+    public partial struct TS_STATUS
+    {
+        public DynamicStatusFlags dynamicFlags;
+        public StaticStatusFlags staticFlags;
+    }
+
+    public partial struct TS_SELECTIONSTYLE
+    {
+        public TsActiveSelEnd ase;
+        [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Bool)]
+        public bool interimChar;
+    }
+
+    public partial struct TS_SELECTION_ACP
+    {
+        public int start;
+        public int end;
+        public TS_SELECTIONSTYLE style;
+    }
+
+    public partial struct TS_RUNINFO
+    {
+        public int count;
+        public TsRunType type;
+    }
+
+    public partial struct TS_TEXTCHANGE
+    {
+        public int start;
+        public int oldEnd;
+        public int newEnd;
+    }
+
+    public partial struct TF_PRESERVEDKEY
+    {
+        public int vKey;
+        public int modifiers;
+    }
+
+    public partial struct TF_DA_COLOR
+    {
+        public TF_DA_COLORTYPE type;
+        public int indexOrColorRef;
+    }
+
+    public partial struct TF_DISPLAYATTRIBUTE
+    {
+        public TF_DA_COLOR crText;
+        public TF_DA_COLOR crBk;
+        public TF_DA_LINESTYLE lsStyle;
+        [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Bool)]
+        public bool fBoldLine;
+        public TF_DA_COLOR crLine;
+        public TF_DA_ATTR_INFO bAttr;
+    }
+
+    public partial struct TF_RENDERINGMARKUP
+    {
+        public ITfRange range;
+        public TF_DISPLAYATTRIBUTE tfDisplayAttr;
+    }
+
+    public partial struct TF_LANGUAGEPROFILE
+    {
+        internal global::System.Guid clsid;
+        internal short langid;
+        internal global::System.Guid catid;
+        [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Bool)]
+        internal bool fActive;
+        internal global::System.Guid guidProfile;
+    }
+
+    public partial struct COMPOSITIONFORM
+    {
+        public uint dwStyle;
+        public POINT ptCurrentPos;
+        public RECT rcArea;
+    }
+
+    public const int TF_CLIENTID_NULL = 0;
+    public const char TS_CHAR_EMBEDDED = '\uFFFC';
+    public const char TS_CHAR_REGION = '\u0000';
+    public const char TS_CHAR_REPLACEMENT = '\uFFFD';
+    public const int TS_DEFAULT_SELECTION = -1;
+    public const int TS_S_ASYNC = 262912;
+    public const int TS_E_NOSELECTION = -2147220987;
+    public const int TS_E_NOLAYOUT = -2147220986;
+    public const int TS_E_INVALIDPOINT = -2147220985;
+    public const int TS_E_SYNCHRONOUS = -2147220984;
+    public const int TS_E_READONLY = -2147220983;
+    public const int TS_E_FORMAT = -2147220982;
+    public const int TF_INVALID_COOKIE = -1;
+    public const int TF_DICTATION_ON = 1;
+    public const int TF_COMMANDING_ON = 8;
+    public static readonly global::System.Guid IID_ITextStoreACPSink = new global::System.Guid(584338580u, 42009, 17730, 162, 114, 174, 38, 9, 62, 206, 207);
+    public static readonly global::System.Guid IID_ITfThreadFocusSink = new global::System.Guid(3237075724u, 14880, 16476, 163, 3, 150, 182, 1, 10, 136, 95);
+    public static readonly global::System.Guid IID_ITfTextEditSink = new global::System.Guid(2166871049u, 52435, 18051, 150, 122, 180, 61, 91, 72, 43, 247);
+    public static readonly global::System.Guid IID_ITfLanguageProfileNotifySink = new global::System.Guid(1137311253u, 62612, 19479, 157, 226, 184, 164, 172, 53, 10, 168);
+    public static readonly global::System.Guid IID_ITfCompartmentEventSink = new global::System.Guid(1950006623u, 62061, 18655, 140, 197, 35, 132, 146, 65, 155, 100);
+    public static readonly global::System.Guid IID_ITfTransitoryExtensionSink = new global::System.Guid(2786396527u, 7255, 18451, 138, 21, 85, 238, 110, 90, 131, 156);
+    public static readonly global::System.Guid GUID_TFCAT_TIP_KEYBOARD = new global::System.Guid(880041059u, 45808, 18308, 139, 103, 94, 18, 200, 112, 26, 49);
+    public static readonly global::System.Guid GUID_PROP_ATTRIBUTE = new global::System.Guid(884233840, 29990, 4562, 161, 71, 0, 16, 90, 39, 153, 181);
+    public static readonly global::System.Guid GUID_PROP_LANGID = new global::System.Guid(847302176u, 32818, 4562, 182, 3, 0, 16, 90, 39, 153, 181);
+    public static readonly global::System.Guid GUID_PROP_READING = new global::System.Guid(1415837632u, 36401, 4562, 191, 70, 0, 16, 90, 39, 153, 181);
+    public static readonly global::System.Guid GUID_PROP_INPUTSCOPE = new global::System.Guid(387177818, 26855, 19035, 154, 246, 89, 42, 89, 92, 119, 141);
+    public static readonly global::System.Guid GUID_COMPARTMENT_KEYBOARD_DISABLED = new global::System.Guid(1906684499, 6481, 18027, 159, 188, 156, 136, 8, 250, 132, 242);
+    public static global::System.Guid GUID_COMPARTMENT_KEYBOARD_OPENCLOSE = new global::System.Guid(1478965933, 443, 16740, 149, 198, 117, 91, 160, 181, 22, 45);
+    public static readonly global::System.Guid GUID_COMPARTMENT_HANDWRITING_OPENCLOSE = new global::System.Guid(4188941419u, 6246, 17249, 175, 114, 122, 163, 9, 72, 137, 14);
+    public static readonly global::System.Guid GUID_COMPARTMENT_SPEECH_DISABLED = new global::System.Guid(1455801863, 1795, 20057, 142, 82, 203, 200, 78, 139, 190, 53);
+    public static readonly global::System.Guid GUID_COMPARTMENT_SPEECH_OPENCLOSE = new global::System.Guid(1414359651u, 58088, 18258, 187, 209, 0, 9, 96, 188, 160, 131);
+    public static readonly global::System.Guid GUID_COMPARTMENT_SPEECH_GLOBALSTATE = new global::System.Guid(710213262, 3336, 17932, 167, 93, 135, 3, 95, 244, 54, 197);
+    public static readonly global::System.Guid GUID_COMPARTMENT_KEYBOARD_INPUTMODE_CONVERSION = new global::System.Guid(3438304728u, 19079, 4567, 166, 226, 0, 6, 91, 132, 67, 92);
+    public static readonly global::System.Guid GUID_COMPARTMENT_KEYBOARD_INPUTMODE_SENTENCE = new global::System.Guid(3438304729u, 19079, 4567, 166, 226, 0, 6, 91, 132, 67, 92);
+    public static readonly global::System.Guid GUID_COMPARTMENT_TRANSITORYEXTENSION = new global::System.Guid(2346928117u, 51104, 4567, 180, 8, 0, 6, 91, 132, 67, 92);
+    public static readonly global::System.Guid GUID_COMPARTMENT_TRANSITORYEXTENSION_DOCUMENTMANAGER = new global::System.Guid(2346928119u, 51104, 4567, 180, 8, 0, 6, 91, 132, 67, 92);
+    public static readonly global::System.Guid GUID_COMPARTMENT_TRANSITORYEXTENSION_PARENT = new global::System.Guid(2346928120u, 51104, 4567, 180, 8, 0, 6, 91, 132, 67, 92);
+    public static readonly global::System.Guid Clsid_SpeechTip = new global::System.Guid(3703402408u, 815, 4563, 181, 177, 0, 192, 79, 195, 36, 161);
+    public static readonly global::System.Guid Guid_Null = new global::System.Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    public static readonly global::System.Guid IID_ITfFnCustomSpeechCommand = new global::System.Guid(4238787401u, 41263, 17315, 141, 214, 90, 90, 66, 130, 87, 123);
+    public static readonly global::System.Guid IID_ITfFnReconversion = new global::System.Guid("4cea93c0-0a58-11d3-8df0-00105a2799b5");
+    public static readonly global::System.Guid IID_ITfFnConfigure = new global::System.Guid(2297784262u, 5975, 18936, 161, 178, 137, 35, 76, 30, 239, 249);
+    public static readonly global::System.Guid IID_ITfFnConfigureRegisterWord = new global::System.Guid(3147137162u, 28047, 19402, 132, 0, 83, 144, 181, 134, 174, 223);
+    public static readonly global::System.Guid TSATTRID_Font_FaceName = new global::System.Guid(3040259766u, 1339, 20152, 182, 90, 80, 218, 30, 129, 231, 46);
+    public static readonly global::System.Guid TSATTRID_Font_SizePts = new global::System.Guid(3360240386u, 42473, 17773, 175, 4, 128, 5, 228, 19, 15, 3);
+    public static readonly global::System.Guid TSATTRID_Font_Style_Height = new global::System.Guid(2123592823, 4838, 17803, 146, 106, 31, 164, 78, 232, 243, 145);
+    public static readonly global::System.Guid TSATTRID_Text_VerticalWriting = new global::System.Guid(1807384981, 1135, 20137, 179, 17, 151, 253, 102, 196, 39, 75);
+    public static readonly global::System.Guid TSATTRID_Text_Orientation = new global::System.Guid(1806397567u, 34693, 19513, 139, 82, 150, 248, 120, 48, 63, 251);
+    public static readonly global::System.Guid TSATTRID_Text_ReadOnly = new global::System.Guid(2239981079u, 56882, 19197, 165, 15, 162, 219, 17, 14, 110, 77);
+    public static readonly global::System.Guid GUID_SYSTEM_FUNCTIONPROVIDER = new global::System.Guid("9a698bb0-0f21-11d3-8df1-00105a2799b5");
+    public const uint CFS_DEFAULT = 0u;
+    public const uint CFS_RECT = 1u;
+    public const uint CFS_POINT = 2u;
+    public const uint CFS_FORCE_POSITION = 32u;
+    public const uint WM_IME_COMPOSITION = 271u;
 
     [System.Runtime.InteropServices.DllImport("msctf.dll")]
     [System.Security.SuppressUnmanagedCodeSecurity]

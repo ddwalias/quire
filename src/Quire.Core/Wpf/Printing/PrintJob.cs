@@ -11,6 +11,9 @@ namespace Quire.Wpf.Printing;
 
 public partial class PrintJob
 {
+    private System.Windows.Xps.Packaging.XpsDocument _activeXpsDocument;
+    private XpsDocumentWriter _docWriter;
+
     public void Print(System.Printing.PrintQueue queue, System.Printing.PrintTicket ticket, bool async)
     {
         XpsDocumentWriter docWriter = System.Printing.PrintQueue.CreateXpsDocumentWriter(queue);

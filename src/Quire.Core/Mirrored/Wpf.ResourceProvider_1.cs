@@ -5,6 +5,8 @@ namespace Quire.Wpf;
 
 partial class ResourceProvider<TDictionary>
 {
+    private static TDictionary _dictionary;
+
     public static void VerifyResources(global::System.Windows.ResourceDictionary dictionary, params global::System.Type[] keysOwnerTypes)
     {
         if (keysOwnerTypes.IsNullOrEmpty())

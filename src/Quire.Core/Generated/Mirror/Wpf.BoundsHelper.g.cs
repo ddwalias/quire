@@ -15,9 +15,5 @@ public static partial class BoundsHelper
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.BoundsHelper+Line, Ptc.Core")]
     private partial struct Line
     {
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Windows.Point Begin;
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Windows.Point End;
     }
 }

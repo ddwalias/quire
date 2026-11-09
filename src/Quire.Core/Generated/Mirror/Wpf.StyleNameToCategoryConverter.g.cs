@@ -11,6 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.StyleNameToCategoryConverter, Ptc.Core")]
 public partial class StyleNameToCategoryConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string StyleKeyPrefixLegacy = "Legacy";
 }

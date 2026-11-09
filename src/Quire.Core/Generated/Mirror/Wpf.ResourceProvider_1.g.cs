@@ -11,6 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ResourceProvider`1, Ptc.Core")]
 public partial class ResourceProvider<TDictionary> where TDictionary : global::System.Windows.ResourceDictionary, new()
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static TDictionary _dictionary;
 }

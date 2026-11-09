@@ -8,6 +8,13 @@ namespace Quire.Wpf;
 
 public partial class CheckBoxData
 {
+    private bool _isChecked;
+
+    public static partial class PropertyNames
+    {
+        public const string IsChecked = "IsChecked";
+    }
+
     [MirrorVerified("PtcWpfCheckBoxDataMechanicalDifferentialTests")]
     public string Message { get; private set; }
 

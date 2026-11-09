@@ -11,8 +11,4 @@ namespace Quire.Wpf.Printing;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.Printing.PrintJob, Ptc.Core")]
 public partial class PrintJob
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Xps.Packaging.XpsDocument _activeXpsDocument;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Xps.XpsDocumentWriter _docWriter;
 }

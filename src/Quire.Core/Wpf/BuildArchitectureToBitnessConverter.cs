@@ -9,6 +9,9 @@ namespace Quire.Wpf;
 
 public partial class BuildArchitectureToBitnessConverter : global::System.Windows.Data.IValueConverter
 {
+    private const string ThirtyTwoBit = "32-bit";
+    private const string SixtyFourBit = "64-bit";
+
     [MirrorVerified("Release IL")]
     public static readonly BuildArchitectureToBitnessConverter Instance = new BuildArchitectureToBitnessConverter();
 

@@ -11,8 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ColorUtilities, Ptc.Core")]
 public static partial class ColorUtilities
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Color[] baseColors;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Color[] grayScaleColors;
 }

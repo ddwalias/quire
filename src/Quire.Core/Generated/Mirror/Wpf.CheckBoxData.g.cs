@@ -11,13 +11,8 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.CheckBoxData, Ptc.Core")]
 public partial class CheckBoxData : global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isChecked;
-
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.CheckBoxData+PropertyNames, Ptc.Core")]
     public static partial class PropertyNames
     {
-        [global::Quire.Mirror.MirrorStub]
-        public const string IsChecked = "IsChecked";
     }
 }

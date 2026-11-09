@@ -6,6 +6,8 @@ namespace Quire.Wpf;
 
 public partial class StyleNameToCategoryConverter
 {
+    public const string StyleKeyPrefixLegacy = "Legacy";
+
     [MirrorVerified("Release IL")]
     public static StyleNameToCategoryConverter Instance = new StyleNameToCategoryConverter();
 

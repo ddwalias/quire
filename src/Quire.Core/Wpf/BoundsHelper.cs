@@ -1,4 +1,5 @@
 #nullable disable
+using System.Windows;
 using Quire.Mirror;
 
 namespace Quire.Wpf;
@@ -7,6 +8,9 @@ public static partial class BoundsHelper
 {
     partial struct Line
     {
+        public Point Begin;
+        public Point End;
+
         [MirrorVerified("Release IL")]
         public double Slope;
 

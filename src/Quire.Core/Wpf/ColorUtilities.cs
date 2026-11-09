@@ -6,6 +6,77 @@ namespace Quire.Wpf;
 
 public static partial class ColorUtilities
 {
+    public static Color[] baseColors = new Color[6]
+    {
+        new Color
+        {
+            A = byte.MaxValue,
+            R = 125,
+            G = 125,
+            B = byte.MaxValue
+        },
+        new Color
+        {
+            A = byte.MaxValue,
+            R = 25,
+            G = byte.MaxValue,
+            B = byte.MaxValue
+        },
+        new Color
+        {
+            A = byte.MaxValue,
+            R = 50,
+            G = 200,
+            B = 50
+        },
+        new Color
+        {
+            A = byte.MaxValue,
+            R = byte.MaxValue,
+            G = 200,
+            B = 0
+        },
+        new Color
+        {
+            A = byte.MaxValue,
+            R = byte.MaxValue,
+            G = 91,
+            B = 0
+        },
+        new Color
+        {
+            A = byte.MaxValue,
+            R = 208,
+            G = 0,
+            B = byte.MaxValue
+        }
+    };
+
+    public static Color[] grayScaleColors = new Color[3]
+    {
+        new Color
+        {
+            A = byte.MaxValue,
+            R = 130,
+            G = 130,
+            B = 130
+        },
+        new Color
+        {
+            A = byte.MaxValue,
+            R = 160,
+            G = 160,
+            B = 160
+        },
+        new Color
+        {
+            A = byte.MaxValue,
+            R = 190,
+            G = 190,
+            B = 190
+        }
+    };
+
     public static List<Color> GetExtendedBaseColorTable()
     {
         List<Color> list = new List<Color>(baseColors.Length * 4);

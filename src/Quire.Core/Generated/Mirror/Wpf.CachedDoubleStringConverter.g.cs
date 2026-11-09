@@ -11,10 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.CachedDoubleStringConverter, Ptc.Core")]
 public partial class CachedDoubleStringConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string strCache;
-    [global::Quire.Mirror.MirrorStub]
-    private double doubleCache;
-    [global::Quire.Mirror.MirrorStub]
-    private const double ScientificNotationThreshold = 0.0001d;
 }

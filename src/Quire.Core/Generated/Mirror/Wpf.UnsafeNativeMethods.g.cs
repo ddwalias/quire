@@ -11,117 +11,6 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods, Ptc.Core")]
 public partial class UnsafeNativeMethods
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const int TF_CLIENTID_NULL = 0;
-    [global::Quire.Mirror.MirrorStub]
-    public const char TS_CHAR_EMBEDDED = '\uFFFC';
-    [global::Quire.Mirror.MirrorStub]
-    public const char TS_CHAR_REGION = '\u0000';
-    [global::Quire.Mirror.MirrorStub]
-    public const char TS_CHAR_REPLACEMENT = '\uFFFD';
-    [global::Quire.Mirror.MirrorStub]
-    public const int TS_DEFAULT_SELECTION = -1;
-    [global::Quire.Mirror.MirrorStub]
-    public const int TS_S_ASYNC = 262912;
-    [global::Quire.Mirror.MirrorStub]
-    public const int TS_E_NOSELECTION = -2147220987;
-    [global::Quire.Mirror.MirrorStub]
-    public const int TS_E_NOLAYOUT = -2147220986;
-    [global::Quire.Mirror.MirrorStub]
-    public const int TS_E_INVALIDPOINT = -2147220985;
-    [global::Quire.Mirror.MirrorStub]
-    public const int TS_E_SYNCHRONOUS = -2147220984;
-    [global::Quire.Mirror.MirrorStub]
-    public const int TS_E_READONLY = -2147220983;
-    [global::Quire.Mirror.MirrorStub]
-    public const int TS_E_FORMAT = -2147220982;
-    [global::Quire.Mirror.MirrorStub]
-    public const int TF_INVALID_COOKIE = -1;
-    [global::Quire.Mirror.MirrorStub]
-    public const int TF_DICTATION_ON = 1;
-    [global::Quire.Mirror.MirrorStub]
-    public const int TF_COMMANDING_ON = 8;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid IID_ITextStoreACPSink;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid IID_ITfThreadFocusSink;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid IID_ITfTextEditSink;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid IID_ITfLanguageProfileNotifySink;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid IID_ITfCompartmentEventSink;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid IID_ITfTransitoryExtensionSink;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid GUID_TFCAT_TIP_KEYBOARD;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid GUID_PROP_ATTRIBUTE;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid GUID_PROP_LANGID;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid GUID_PROP_READING;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid GUID_PROP_INPUTSCOPE;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid GUID_COMPARTMENT_KEYBOARD_DISABLED;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Guid GUID_COMPARTMENT_KEYBOARD_OPENCLOSE;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid GUID_COMPARTMENT_HANDWRITING_OPENCLOSE;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid GUID_COMPARTMENT_SPEECH_DISABLED;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid GUID_COMPARTMENT_SPEECH_OPENCLOSE;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid GUID_COMPARTMENT_SPEECH_GLOBALSTATE;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid GUID_COMPARTMENT_KEYBOARD_INPUTMODE_CONVERSION;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid GUID_COMPARTMENT_KEYBOARD_INPUTMODE_SENTENCE;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid GUID_COMPARTMENT_TRANSITORYEXTENSION;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid GUID_COMPARTMENT_TRANSITORYEXTENSION_DOCUMENTMANAGER;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid GUID_COMPARTMENT_TRANSITORYEXTENSION_PARENT;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid Clsid_SpeechTip;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid Guid_Null;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid IID_ITfFnCustomSpeechCommand;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid IID_ITfFnReconversion;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid IID_ITfFnConfigure;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid IID_ITfFnConfigureRegisterWord;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid TSATTRID_Font_FaceName;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid TSATTRID_Font_SizePts;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid TSATTRID_Font_Style_Height;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid TSATTRID_Text_VerticalWriting;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid TSATTRID_Text_Orientation;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid TSATTRID_Text_ReadOnly;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Guid GUID_SYSTEM_FUNCTIONPROVIDER;
-    [global::Quire.Mirror.MirrorStub]
-    public const uint CFS_DEFAULT = 0u;
-    [global::Quire.Mirror.MirrorStub]
-    public const uint CFS_RECT = 1u;
-    [global::Quire.Mirror.MirrorStub]
-    public const uint CFS_POINT = 2u;
-    [global::Quire.Mirror.MirrorStub]
-    public const uint CFS_FORCE_POSITION = 32u;
-    [global::Quire.Mirror.MirrorStub]
-    public const uint WM_IME_COMPOSITION = 271u;
-
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+PopFlags, Ptc.Core")]
     [global::System.Flags]
     public enum PopFlags
@@ -368,142 +257,66 @@ public partial class UnsafeNativeMethods
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+POINT, Ptc.Core")]
     public partial struct POINT
     {
-        [global::Quire.Mirror.MirrorStub]
-        public int x;
-        [global::Quire.Mirror.MirrorStub]
-        public int y;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+RECT, Ptc.Core")]
     public partial struct RECT
     {
-        [global::Quire.Mirror.MirrorStub]
-        public int left;
-        [global::Quire.Mirror.MirrorStub]
-        public int top;
-        [global::Quire.Mirror.MirrorStub]
-        public int right;
-        [global::Quire.Mirror.MirrorStub]
-        public int bottom;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+TS_STATUS, Ptc.Core")]
     public partial struct TS_STATUS
     {
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Wpf.UnsafeNativeMethods.DynamicStatusFlags dynamicFlags;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Wpf.UnsafeNativeMethods.StaticStatusFlags staticFlags;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+TS_SELECTIONSTYLE, Ptc.Core")]
     public partial struct TS_SELECTIONSTYLE
     {
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Wpf.UnsafeNativeMethods.TsActiveSelEnd ase;
-        [global::Quire.Mirror.MirrorStub]
-        public bool interimChar;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+TS_SELECTION_ACP, Ptc.Core")]
     public partial struct TS_SELECTION_ACP
     {
-        [global::Quire.Mirror.MirrorStub]
-        public int start;
-        [global::Quire.Mirror.MirrorStub]
-        public int end;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Wpf.UnsafeNativeMethods.TS_SELECTIONSTYLE style;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+TS_RUNINFO, Ptc.Core")]
     public partial struct TS_RUNINFO
     {
-        [global::Quire.Mirror.MirrorStub]
-        public int count;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Wpf.UnsafeNativeMethods.TsRunType type;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+TS_TEXTCHANGE, Ptc.Core")]
     public partial struct TS_TEXTCHANGE
     {
-        [global::Quire.Mirror.MirrorStub]
-        public int start;
-        [global::Quire.Mirror.MirrorStub]
-        public int oldEnd;
-        [global::Quire.Mirror.MirrorStub]
-        public int newEnd;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+TF_PRESERVEDKEY, Ptc.Core")]
     public partial struct TF_PRESERVEDKEY
     {
-        [global::Quire.Mirror.MirrorStub]
-        public int vKey;
-        [global::Quire.Mirror.MirrorStub]
-        public int modifiers;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+TF_DA_COLOR, Ptc.Core")]
     public partial struct TF_DA_COLOR
     {
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Wpf.UnsafeNativeMethods.TF_DA_COLORTYPE type;
-        [global::Quire.Mirror.MirrorStub]
-        public int indexOrColorRef;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+TF_DISPLAYATTRIBUTE, Ptc.Core")]
     public partial struct TF_DISPLAYATTRIBUTE
     {
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Wpf.UnsafeNativeMethods.TF_DA_COLOR crText;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Wpf.UnsafeNativeMethods.TF_DA_COLOR crBk;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Wpf.UnsafeNativeMethods.TF_DA_LINESTYLE lsStyle;
-        [global::Quire.Mirror.MirrorStub]
-        public bool fBoldLine;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Wpf.UnsafeNativeMethods.TF_DA_COLOR crLine;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Wpf.UnsafeNativeMethods.TF_DA_ATTR_INFO bAttr;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+TF_RENDERINGMARKUP, Ptc.Core")]
     public partial struct TF_RENDERINGMARKUP
     {
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Wpf.UnsafeNativeMethods.ITfRange range;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Wpf.UnsafeNativeMethods.TF_DISPLAYATTRIBUTE tfDisplayAttr;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+TF_LANGUAGEPROFILE, Ptc.Core")]
     public partial struct TF_LANGUAGEPROFILE
     {
-        [global::Quire.Mirror.MirrorStub]
-        internal global::System.Guid clsid;
-        [global::Quire.Mirror.MirrorStub]
-        internal short langid;
-        [global::Quire.Mirror.MirrorStub]
-        internal global::System.Guid catid;
-        [global::Quire.Mirror.MirrorStub]
-        internal bool fActive;
-        [global::Quire.Mirror.MirrorStub]
-        internal global::System.Guid guidProfile;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+COMPOSITIONFORM, Ptc.Core")]
     public partial struct COMPOSITIONFORM
     {
-        [global::Quire.Mirror.MirrorStub]
-        public uint dwStyle;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Wpf.UnsafeNativeMethods.POINT ptCurrentPos;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Wpf.UnsafeNativeMethods.RECT rcArea;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfMessagePump, Ptc.Core")]

@@ -11,14 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.PreemptiveCommandBinding, Ptc.Core")]
 public partial class PreemptiveCommandBinding
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.UIElement _element;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool _bindingMarksEventAsHandled;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Input.CommandBinding _binding;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Input.CanExecuteRoutedEventHandler _canExecuteWrapper;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Input.ExecutedRoutedEventHandler _executedWrapper;
 }
