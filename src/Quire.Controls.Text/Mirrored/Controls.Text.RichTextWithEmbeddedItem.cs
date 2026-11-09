@@ -1087,4 +1087,12 @@ public partial class RichTextWithEmbeddedItem
     public bool HasRegionsWithConverterAnnotations => this.HasRegionsWithConverterAnnotations();
 
     public StaticMathFormat TargetMathFormat => new StaticMathFormat(new MathFormatDobjController(this));
+
+    public IBookmarksManager BookmarksManager { get; set; }
+
+    public WhiteboardItemsCollection WhiteboardItems => _whiteboardItems;
+
+    public IRegionFactory RegionFactory { get; set; }
+
+    public IEnumerable<ICalculatable> CalculatableChildren => _childManager.CalculatableChildren;
 }

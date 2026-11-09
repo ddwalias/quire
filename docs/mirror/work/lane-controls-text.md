@@ -543,3 +543,11 @@
 - Hand-written: `src/Quire.Controls.Text/Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stubs removed from `Generated/Mirror/Controls.Text.RichTextWithEmbeddedItem.g.cs`.
 - Release IL: PASS — 474 checked, 0 failures (`.mirror-cache/gate-b87`).
 - Remaining mismatches in this batch: none.
+
+## Batch 88 — RichTextWithEmbeddedItem bookmark, whiteboard, region-factory and child properties (4)
+
+- Exact: `BookmarksManager` and `RegionFactory` (auto-properties; setters are plain field stores), `WhiteboardItems` (get-only field return), `CalculatableChildren` (get-only, from `_childManager.CalculatableChildren`).
+- Note: the stubs were removed from the generated file together with their hand-written replacements in one change; the first attempt without the hand-written members broke the build (interface members missing), so the gate was rerun after the fix.
+- Hand-written: `src/Quire.Controls.Text/Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stubs removed from `Generated/Mirror/Controls.Text.RichTextWithEmbeddedItem.g.cs`.
+- Release IL: PASS — 480 checked, 0 failures (`.mirror-cache/gate-b88b`); 6 accessors added.
+- Remaining mismatches in this batch: none.
