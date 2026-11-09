@@ -1204,4 +1204,43 @@ public partial class RichTextBase
             }
         }
     }
+
+    private void HandleTextFormattingChanged(DependencyPropertyChangedEventArgs arg)
+    {
+        DocumentTextRange range = Selection;
+        if (Selection.IsEmpty && arg.Property == Control.FontSizeProperty)
+        {
+            range = GetWordRangeAtCaretPosition(out string _, TextFromRunsStops.FindWordStrict, true);
+            if (range.IsEmpty)
+            {
+                range = Selection;
+            }
+        }
+        CreateSplitFontSizeDataBeforeApplyPropOnRange(range);
+        TextFormat.ApplyPropertyValueFormat(arg.Property, arg.NewValue, range);
+        if (IsActive)
+        {
+            Focus();
+        }
+    }
+
+    private void CacheSubscriptStateOnTypeOver(bool immediateAction)
+    {
+        if (!Selection.IsEmpty)
+        {
+            CustomScriptRunBase run = Selection.Start.Parent as CustomScriptRunBase;
+            if (run != null && run.ContentStart.CompareTo(Selection.Start) == 0)
+            {
+                ScriptState state = CustomScriptServiceFunctions.RunTypeToScriptState(run);
+                if (immediateAction)
+                {
+                    CurrentInsertionScriptState = (state, CurrentTextFormat.FontSize);
+                }
+                else
+                {
+                    _reviveScriptAfterBackspaceData = (state, CurrentTextFormat.FontSize);
+                }
+            }
+        }
+    }
 }

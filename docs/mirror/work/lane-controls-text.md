@@ -425,3 +425,8 @@
 - Note: the value-source check must be written inline (`DependencyPropertyHelper.GetValueSource(...).BaseValueSource == BaseValueSource.Local`). A named `ValueSource` local takes a different slot from the compiler temporary Mathcad uses.
 - Release IL: PASS — 412 checked, 412 exact, 0 failures, 311 unfinished.
 - Tried and reverted: `IsFullySubscript` (the cached lambda is `<IsFullySubscript>b__293_0` here against `b__297_0` in Mathcad, so the closure ordinal is short by four).
+
+## Batch 68 — RichTextBase formatting-change handler and subscript caching on type-over (2)
+
+- Exact: `HandleTextFormattingChanged` (protected/private stub kept the same; `Selection` range, widened to the caret word for a font-size change on an empty selection, split font-size data, `TextFormat.ApplyPropertyValueFormat`, then `Focus()` when active), `CacheSubscriptStateOnTypeOver` (written as one nested `if (!Selection.IsEmpty)` block; an early `return` on empty selection gives a different branch layout).
+- Release IL: PASS — 414 checked, 414 exact, 0 failures, 309 unfinished.
