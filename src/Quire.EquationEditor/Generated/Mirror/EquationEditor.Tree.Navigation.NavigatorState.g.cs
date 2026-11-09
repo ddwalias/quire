@@ -28,12 +28,6 @@ public partial struct NavigatorState
     [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes CaretInsertionType;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<int> CaretPosition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<int> SelectionStart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<int> SelectionEnd { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public NavigatorState(global::Quire.EquationEditor.Tree.MathNode current, int caretPosition) { }
     [global::Quire.Mirror.MirrorStub]
     public NavigatorState(global::Quire.EquationEditor.Tree.MathNode current, int caretPosition, global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes insertionType) { }
