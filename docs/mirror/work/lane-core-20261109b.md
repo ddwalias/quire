@@ -33,10 +33,9 @@
 
 - Batch 15: `Xml.XmlWorksheetData` static members (37 stubs: namespace-manager fields built from the existing `createMcdxNamespaceManager`/`createMathcad14NamespaceManager`, the three `AppVersionProvider` version fields, `AppVersionName`, `Architecture` from `Environment.Is64BitProcess`, the `worksheet`/`math`/namespace constants, `_stream`, `_buildId`). The field initializers in Mathcad's `.cctor` order (namespace managers, versions, name, architecture) are declared in `Mirrored/Xml.XmlWorksheetData.Statics.cs` and form the exact `.cctor`. Gate: PASS, 4028 checked, 4028 exact, 0 failures (`.mirror-cache/release-il-10b740198a0e/release-il.json`). 37 stubs eliminated.
 
-## Remaining Parked Stubs (139)
-- PersistentDataObjects (34 stubs): Parked per task guidelines and decisions (42 PDO members parked).
-- PersistentData (53 stubs): Serialization models and companion serializers bound to PersistentDataObjects.
-- Xml.XmlWorksheetData (37 stubs): Bound to `PersistentDataObjects.propertiesTypeSerializationVersionArchitecture Architecture`.
+## Remaining Parked Stubs (15, after batch 15)
+
+Batches 9-15 cleared the PersistentDataObjects, PersistentData, Xml.XmlWorksheetData and OleUtils stubs (124 stubs). The groups below are still parked; the checkpoint records no clearance, so they were not retried.
 - Services.ApplicationLogger (6 stubs): Reverted/parked to preserve `WriteToLog` `DisplayClass24_0` closure ordinal.
 - Core.TextFormat (5 stubs): 711-byte `.cctor` registration sequence parked.
 - WpfClipboard (3 stubs): Reverted/parked to preserve `SetText` `DisplayClass12_0` closure ordinal.
