@@ -11,18 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.CheckBoxViewModel, Ptc.Controls.EquationControl")]
 internal partial class CheckBoxViewModel : global::Quire.Controls.InputControls.InputScriptableControlViewModelWithInputs
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.InputControls.CheckBoxModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsChecked { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ImagePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.FlowDirection FlowDirection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public CheckBoxViewModel(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue data) : base(default(global::Quire.Controls.InputControls.IInputScriptableControlModelWithInputs)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => base.HandleModelPropertyChanged(sender, e);
 }

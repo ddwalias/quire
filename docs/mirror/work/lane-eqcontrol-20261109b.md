@@ -95,3 +95,6 @@
 - Batch: `Controls.EquationControlWithTransform` (four constructors, `Control`, `DesiredNumericHeight`, `HorizontalAlignment`, `VerticalAlignment`, `SetTransform`, `ChangeTranslateTransformHorizontally/Vertically`, `InnerMargin`, backing fields).
 - Shapes tried: constructor chaining, field initializers for the transforms, `OneTimeSetExt` setter and the alignment `switch` (Center, then Left/Top, then Right/Bottom, throw default) matched on the first candidate.
 - Release IL: PASS, 745 checked (`.mirror-cache/release-il-edf223c00b04/release-il.json`).
+- Batch: `Controls.InputControls.DataListItem` (`Name`, `Value`, `GroupName`, `ToString`, `.ctor`); `Controls.InputControls.CheckBoxViewModel` (`Model`, `IsChecked`, `ImagePath`, `Text`, `FlowDirection`, `.ctor`, `HandleModelPropertyChanged`).
+- Shapes tried: auto-properties matched; the `HandleModelPropertyChanged` string switch with a shared body matched on the first candidate (same shape as the CheckBox editor view model). The first gate run failed only on a missing `using` (candidate build error, not a shape mismatch).
+- Release IL: PASS, 763 checked (`.mirror-cache/release-il-81417aa026da/release-il.json`).
