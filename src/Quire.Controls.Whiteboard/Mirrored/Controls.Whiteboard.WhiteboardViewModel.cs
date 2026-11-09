@@ -1143,7 +1143,51 @@ public partial class WhiteboardViewModel
 
     public virtual bool HandleMouseDown(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl sender, global::System.Windows.Point position, global::System.Windows.Input.MouseButton button) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public virtual void PreviewMouseLeftButtonDownHandler(object sender, global::System.Windows.Input.MouseButtonEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void PreviewMouseLeftButtonDownHandler(object sender, MouseButtonEventArgs eventArgs)
+    {
+        object originalSource = eventArgs.OriginalSource;
+        IWhiteboardItem whiteboardItem = (originalSource as DependencyObject).TryFindAncestorIncludingSelf<IWhiteboardItem>();
+        if (whiteboardItem == null)
+        {
+            return;
+        }
+
+        IWhiteboardItem whiteboardItem2 = whiteboardItem;
+        while (!WhiteboardItems.Contains(whiteboardItem2) && whiteboardItem2 != sender)
+        {
+            whiteboardItem2 = (whiteboardItem2 as DependencyObject).TryFindVisualAncestor<IWhiteboardItem>();
+            if (whiteboardItem2 is IWhiteboardControl)
+            {
+                return;
+            }
+        }
+
+        if (!WhiteboardItems.Contains(whiteboardItem2))
+        {
+            return;
+        }
+
+        if (((int)Keyboard.Modifiers & 2) > 0)
+        {
+            if ((whiteboardItem is IRichTextWithEmbeddedItem richTextWithEmbeddedItem && richTextWithEmbeddedItem.HasHyperlinkInMouseContext(eventArgs.OriginalSource)) || whiteboardItem is Quire.Controls.Include.IIncludeWorksheetControl { IncludedFilePath: not null })
+            {
+                eventArgs.Handled = false;
+                return;
+            }
+
+            ToggleItemSelection(whiteboardItem2, includeActiveItem: true);
+            eventArgs.Handled = true;
+        }
+        else if (((int)Keyboard.Modifiers & 4) > 0)
+        {
+            SelectContiguous(whiteboardItem2);
+            eventArgs.Handled = true;
+        }
+        else
+        {
+            eventArgs.Handled = false;
+        }
+    }
 
     public virtual void PreviewMouseRightButtonDownHandler(object sender, MouseButtonEventArgs eventArgs)
     {

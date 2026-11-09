@@ -431,3 +431,13 @@
 - Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs` (`using System.Collections.Specialized;` added); placeholder stubs replaced.
 - Skipped: `FindMinimumSize` (decompiled temporaries, not shaped yet), `NavigateInto` (`new TranslateTransform(...).Transform`, devirtualization risk), `PreviewMouseLeftButtonDownHandler`, `FindSizeLimit` (closure), `RecursivelyEnumerate*` (iterators).
 - Release IL: PASS — 872 checked, 0 failures (`release-il-1a8d7d1a12d6`).
+
+## Batch 30 — WhiteboardViewModel.PreviewMouseLeftButtonDownHandler
+
+- Member: `PreviewMouseLeftButtonDownHandler(object, MouseButtonEventArgs)`, with `as DependencyObject` casts (Mathcad `isinst`; the `is ... ? x : null` form compiles to `castclass`), `((int)Keyboard.Modifiers & n)` (ModifierKeys to int), and the `IIncludeWorksheetControl` pattern from `Quire.Controls.Include`.
+- Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stub replaced.
+- Not landed (still stubs), with the reason:
+  - `FindMinimumSize`: structure matches; local slot numbering differs (Mathcad stores `Size val` in local 0, ours in local 2). Not resolved.
+  - `NavigateInto`: the first differing instruction is a branch offset (`brtrue.s` target off by one byte) before the body; the source of the size difference is not located.
+  - `FindSizeLimit` and `RecursivelyEnumerate*`: closure or iterator state-machine ordinals (skipped as ordinal-dependent).
+- Release IL: PASS — 873 checked, 0 failures (`release-il-2fa6f6b87089`).
