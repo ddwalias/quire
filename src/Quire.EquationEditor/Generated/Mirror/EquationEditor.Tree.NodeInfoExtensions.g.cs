@@ -11,12 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.NodeInfoExtensions, Ptc.EquationEditor")]
 public static partial class NodeInfoExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static int ValueLength(global::Quire.EquationEditor.Tree.INodeInfo nodeInfo, global::Quire.EquationEditor.Tree.NodeValueType nodeValueType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string ValueAsString(global::Quire.EquationEditor.Tree.INodeInfo nodeInfo, global::Quire.EquationEditor.Tree.NodeValueType nodeValueType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ClearValue(this global::Quire.EquationEditor.Tree.INodeInfo nodeInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetValue(this global::Quire.EquationEditor.Tree.INodeInfo nodeInfo, string newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

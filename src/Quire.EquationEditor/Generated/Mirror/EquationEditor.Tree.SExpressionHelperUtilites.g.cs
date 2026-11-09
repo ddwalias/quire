@@ -11,14 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.SExpressionHelperUtilites, Ptc.EquationEditor")]
 public static partial class SExpressionHelperUtilites
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal static global::Quire.EquationEditor.Tree.MathNode a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string ExtractIdOrFunctionDefinitionName(string idSExp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsIdentifierSExpr(string idSExp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsValidType(string idSExp, global::System.Collections.Generic.IEnumerable<string> allowedDescriptors, global::System.Collections.Generic.IEnumerable<string> disallowedDescriptors) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SplitScalingAndValue(ref string valueSExpr, out string scalingSExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
