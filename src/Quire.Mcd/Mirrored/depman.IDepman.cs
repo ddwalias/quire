@@ -42,6 +42,8 @@ public partial interface IDepman
 
     void EndMove();
 
+    void UnLockAll();
+
     void SetAutoCalc([global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.U1)] bool b);
 
     [return: global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.U1)]
@@ -51,6 +53,8 @@ public partial interface IDepman
 
     [return: global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.U1)]
     bool GetCalcNow();
+
+    void SetCalcNowTrue();
 
     void SetNumThreads(int n);
 
