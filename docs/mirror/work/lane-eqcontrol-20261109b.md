@@ -44,4 +44,7 @@
 - Batch: `Controls.VisualIdDescriptor::CommandParameter` (backing fields and existing constructor/properties retained).
 - Shapes tried: null test, then the `IdName` or `SymbolicRepresentation` constructor argument with `Label`, matched the reference.
 - Release IL: PASS, 638 checked (`.mirror-cache/release-il-3b5dcaa9f971/release-il.json`).
-- Remaining: all other stub-marked members in EquationControl; 5,335 markers across 296 types after this batch.
+- Batch: `Controls.VisualFunctionDescriptor::{Params, Header, Command, CommandParameter, ScreenRepresentation, .ctor}`.
+- Shapes tried: comma-counting `while`, four-part header concatenation, static command getter/empty setter, fallback screen representation, and function label initialization matched.
+- Release IL: PASS, 646 checked (`.mirror-cache/release-il-f4fe6b2c7682/release-il.json`).
+- Remaining: all other stub-marked members in EquationControl; 5,329 markers across 295 types after this batch.

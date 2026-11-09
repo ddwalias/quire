@@ -11,16 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.VisualFunctionDescriptor, Ptc.Controls.EquationControl")]
 public partial class VisualFunctionDescriptor : global::Quire.Controls.VisualIdDescriptor
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string Params { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string Header { get => base.Header; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Input.RoutedCommand Command { get => base.Command; set => base.Command = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public override object CommandParameter { get => base.CommandParameter; }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ScreenRepresentation { get => base.ScreenRepresentation; set => base.ScreenRepresentation = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualFunctionDescriptor() { }
 }
