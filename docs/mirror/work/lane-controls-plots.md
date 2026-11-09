@@ -194,3 +194,10 @@
 - Shapes: constructor passes `TraceType3D.Curve` to the base; `HasNoData` compares `Vertices.Count` to zero.
 - Release IL: PASS — 468 checked, 468 exact, 0 failures.
 - Remaining: `PlotLegendLayoutManager.GetNumberOfColumnsFitWidth` remains blocked by the documented local-slot mismatch; other unimplemented stubs remain unclaimed.
+
+## Batch 28 — UndefinedVisualData3D
+
+- Members: constructor and `HasNoData`. Hand-written: `Mirrored/Controls.Plots.Plot3D.Model.UndefinedVisualData3D.cs`; both stubs removed from its `.g.cs`.
+- Shapes: constructor passes `TraceType3D.Undefined`, `null`, and zero to the base; `HasNoData` returns false.
+- Release IL: PASS — 469 checked, 469 exact, 0 failures.
+- Remaining: `PlotLegendLayoutManager.GetNumberOfColumnsFitWidth` remains blocked by the documented local-slot mismatch; other unimplemented stubs remain unclaimed.
