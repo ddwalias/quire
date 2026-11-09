@@ -405,3 +405,10 @@
 - Exact: `HandleTextChanged` (protected virtual; the `_cachedBaseline` reset and insertion-point cache clear, a `CommandScope` around the content-changed event and the create-and-reactivate call, then `UpdateCurrentRuns` with the create test and `args.Changes?.FirstOrDefault()?.RemovedLength > 0` (a lifted comparison, which gives the temporary Mathcad keeps), `CurrentTextFormat = SelectionTextFormat`, and the change-level guarded script-state and spelling-error updates).
 - Note: the new-run argument and the removed-length comparison must both stay inline in the call; a local for either changes the IL order.
 - Release IL: PASS — 409 checked, 409 exact, 0 failures, 314 unfinished.
+
+## Batch 65 — RichTextBase selection-changed handler (1)
+
+- Exact: `HandleSelectionChanged` (protected virtual; paste completion in `try`/`finally`, the run, script-state and text-format updates, the blocked-direction setup, and the revive-after-backspace block that applies `BaselineAlignment.Baseline` and the font size from the insertion state).
+- Note: `BaselineAlignment` values in this WPF build are Baseline=3, Top=0, Center=1, Bottom=2, TextTop=4, TextBottom=5; the IL constant 3 is `Baseline`, not `TextTop`.
+- Not matched, tried and left as the stub: `HandleReplace`. Mathcad evaluates `query.ValueToFind != null && query.ValueToFind.Equals(Selection.Text)` as a value (`ldc.i4.0` and `br` inside the `&&`), and the plain `if` form emits branches only.
+- Release IL: PASS — 410 checked, 410 exact, 0 failures, 313 unfinished.

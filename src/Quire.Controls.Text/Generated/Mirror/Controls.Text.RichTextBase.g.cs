@@ -226,8 +226,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     protected virtual void PrePasting() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected virtual void HandleSelectionChanged(object sender, global::System.EventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool WasScriptElementDeletedOnChangeEvent(global::System.Windows.Controls.TextChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void UpdateCurrentRuns(global::System.Windows.Documents.TextRange range, bool isNewRun = false, bool textRemoved = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

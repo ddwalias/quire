@@ -1047,4 +1047,44 @@ public partial class RichTextBase
             }
         }
     }
+
+    protected virtual void HandleSelectionChanged(object sender, EventArgs args)
+    {
+        ClearSplitFontSizeDataQueue();
+        if (_pasteDataObject != null)
+        {
+            try
+            {
+                PostPasting();
+            }
+            finally
+            {
+                _pasteDataObject = null;
+            }
+        }
+        UpdateCurrentRuns(TextRange, false, false);
+        CacheScriptStateInRange(Selection);
+        CurrentTextFormat = SelectionTextFormat;
+        if (Selection.IsEmpty)
+        {
+            _lastCaretPosition = CaretPosition;
+        }
+        UpdateCurrentProofingLanguage(Selection);
+        BlockedSelectDirection = BlockedSelectionDirection.None;
+        AddBlockedSelectDirectionForNextElement(LogicalDirection.Backward);
+        AddBlockedSelectDirectionForNextElement(LogicalDirection.Forward);
+        CurrentInsertionScriptState = null;
+        if (_reviveScriptAfterBackspaceData.HasValue)
+        {
+            CurrentInsertionScriptState = _reviveScriptAfterBackspaceData;
+            TextPointer pointer = Selection.End.GetNextInsertionPosition(LogicalDirection.Forward);
+            if (pointer == null || pointer.IsAtLineStartPosition)
+            {
+                Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.Baseline);
+                Selection.ApplyPropertyValue(Control.FontSizeProperty, CurrentInsertionScriptState.Value.Item2);
+            }
+            _reviveScriptAfterBackspaceData = null;
+        }
+        RecalculateTextScriptState();
+    }
 }
