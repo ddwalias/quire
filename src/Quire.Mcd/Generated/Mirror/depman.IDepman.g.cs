@@ -88,19 +88,5 @@ public partial interface IDepman : global::System.IDisposable
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Mcd.RuntimeOptions GetRuntimeOptions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    void SetNumThreads(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int GetNumThreads() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void WaitUpToDate(int timeout) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void StopMessages() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     global::System.Collections.ICollection GetHandles() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void DisableDeps() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void EnableDeps() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void DumpNodes(string filename) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

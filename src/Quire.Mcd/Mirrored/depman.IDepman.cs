@@ -27,4 +27,18 @@ public partial interface IDepman
 
     [return: global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.U1)]
     bool GetCalcNow();
+
+    void SetNumThreads(int n);
+
+    int GetNumThreads();
+
+    void WaitUpToDate(int timeout);
+
+    void StopMessages();
+
+    void DisableDeps();
+
+    void EnableDeps();
+
+    void DumpNodes(string filename);
 }
