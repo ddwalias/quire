@@ -92,3 +92,6 @@
 - Batch: `Controls.InputControls.CheckBoxPropertiesEditor` (`CheckBoxViewModel`, `.ctor`, `InitializeComponent`, `Connect`); `CheckBoxPropertiesEditorViewModel` (`Model`, `RightToLeft`, `Text`, `.ctor`, `HandleModelPropertyChanged`); `ButtonControl` (`ViewModel`, `.ctor`, `ButtonControl_OnClick`, `OnPreviewMouseRightButtonDown`, `InitializeComponent`, `Connect`).
 - Shapes tried: an `if`/`else if` chain for `HandleModelPropertyChanged` FAILED at call #2 (`calls differ`: Mathcad compares all three names before the case bodies). A `switch` on `e.PropertyName` with the shared `RightToLeft`/`Text` case matched.
 - Release IL: PASS, 730 checked (`.mirror-cache/release-il-e960ade3edc2/release-il.json`). Earlier candidate: FAIL at `e416c8bf9d82`.
+- Batch: `Controls.EquationControlWithTransform` (four constructors, `Control`, `DesiredNumericHeight`, `HorizontalAlignment`, `VerticalAlignment`, `SetTransform`, `ChangeTranslateTransformHorizontally/Vertically`, `InnerMargin`, backing fields).
+- Shapes tried: constructor chaining, field initializers for the transforms, `OneTimeSetExt` setter and the alignment `switch` (Center, then Left/Top, then Right/Bottom, throw default) matched on the first candidate.
+- Release IL: PASS, 745 checked (`.mirror-cache/release-il-edf223c00b04/release-il.json`).
