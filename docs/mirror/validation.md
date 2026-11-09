@@ -26,7 +26,9 @@ Base inventories are cached in `.mirror-cache/inventory-cache/`, keyed by the ba
 project list, the judge's MethodAudit/MirrorGen trees and the install's DLL listing. The merge gate
 stores each committed candidate it passes (in the main checkout's cache, shared by every lane), so the
 next lane's base scan is usually a cache hit. Uncommitted candidates are never cached; a corrupt or
-locked entry is rebuilt. Delete the folder to force a rebuild. Scope diffs list both sides of a
+locked entry is rebuilt. Delete the folder to force a rebuild. Each run's work directory (base
+checkout and both builds) in `.mirror-cache/gate-work/` is moved to `gate-work/.trash/` when the run
+ends and deleted by a background process; a killed run's directory goes after 12 hours. Scope diffs list both sides of a
 renamed file, so moving a file out of a project affects that project too.
 
 The check requires changed/new methods and every previously exact method in affected projects

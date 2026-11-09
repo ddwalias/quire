@@ -411,6 +411,58 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
 
 CACHE = ROOT / '.mirror-cache' / 'inventory-cache'
 CACHE_FORMAT = 1
+# A run's directory is older than this only if its run was killed: every step is bounded by --timeout.
+STALE_WORK = 12 * 3600
+PURGE = '''import os, shutil, stat, sys
+from pathlib import Path
+def writable(function, path, error):  # Git marks object files read-only; a file still open stays for a later purge
+    try:
+        os.chmod(path, stat.S_IWRITE)
+        function(path)
+    except OSError:
+        pass
+for path in map(Path, sys.argv[1:]):
+    for entry in (list(path.iterdir()) if path.name == '.trash' and path.is_dir() else [path]):
+        try:
+            shutil.rmtree(entry, onexc=writable)
+        except OSError:  # still in use: the next run's purge retries what is in .trash
+            pass
+'''
+
+
+def purge(trash, *paths):
+    """Delete trash's entries and paths in a detached process that outlives the run. It runs in trash's parent, not the
+    caller's directory: Windows cannot remove a directory that is some process's current directory (a lane worktree)."""
+    detached = {'creationflags': subprocess.DETACHED_PROCESS | subprocess.CREATE_NEW_PROCESS_GROUP} if os.name == 'nt' \
+        else {'start_new_session': True}
+    subprocess.Popen([sys.executable, '-I', '-c', PURGE, trash, *paths], cwd=trash.parent, stdin=subprocess.DEVNULL,
+                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, close_fds=True, **detached)
+
+
+@contextlib.contextmanager
+def work_directory(parent):
+    """A run's work directory (base checkout, both builds), discarded when the run ends. Deleting thousands of build
+    files would hold up the gate, so the directory is renamed into parent/.trash, which is instant, and purged in the
+    background. Directories a killed run left behind go the same way once older than STALE_WORK."""
+    parent.mkdir(parents=True, exist_ok=True)
+    work = Path(tempfile.mkdtemp(prefix='quire-release-il-', dir=parent))
+    try:
+        yield work
+    finally:
+        trash, now, unmoved = parent / '.trash', time.time(), []
+        for entry in [work, *(other for other in parent.glob('quire-release-il-*') if other != work)]:
+            try:
+                if entry != work and now - entry.stat().st_mtime <= STALE_WORK:
+                    continue  # another run's
+                trash.mkdir(exist_ok=True)
+                os.replace(entry, trash / entry.name)
+            except FileNotFoundError:  # moved or purged by a concurrent run
+                pass
+            except OSError:  # a file still open in it: delete this run's where it is; another's waits for a later sweep
+                if entry == work:
+                    unmoved.append(entry)
+        with contextlib.suppress(OSError):
+            purge(trash, *unmoved)
 # The judge's sources: MethodAudit compiles MirrorGen's metadata model.
 TOOL_TREES = ('tools/Quire.Tools.MethodAudit', 'tools/Quire.Tools.MirrorGen')
 
@@ -517,10 +569,7 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
                 raise RuntimeError('member selection requires a production project')
             report.update(passed=True, checked=[], failures=[], reason='no production project changed')
             return report
-        work_cache = cache.parent / 'gate-work'
-        work_cache.mkdir(parents=True, exist_ok=True)
-        with contextlib.nullcontext(tempfile.mkdtemp(prefix='quire-release-il-', dir=work_cache)) as temp:
-            work = Path(temp)
+        with work_directory(cache.parent / 'gate-work') as work:
             original = work / 'base'
             with timed(timings, 'base_checkout'):
                 checkout_base(root, base, original, log, timeout)

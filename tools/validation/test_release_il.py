@@ -1,9 +1,13 @@
 """Acceptance checks for the Release IL gate, without executing production code."""
 import json
 import hashlib
+import os
 from pathlib import Path
+import stat
 import subprocess
+import sys
 import tempfile
+import time
 import unittest
 from unittest import mock
 import release_il
@@ -414,7 +418,8 @@ class CheckTests(unittest.TestCase):
         def scan(root, projects, tool, work, *args, **kwargs):
             self.scans.append(Path(root))
             return {'methods': [method(exact=False, original={'assembly': 'A', 'sha256': 's', 'mvid': 'm'})]}
-        for target, value in (('run', run), ('build_and_scan', scan)):
+        self.purged = []
+        for target, value in (('run', run), ('build_and_scan', scan), ('purge', lambda *paths: self.purged.append(paths))):
             patcher = mock.patch.object(release_il, target, value)
             patcher.start()
             self.addCleanup(patcher.stop)
@@ -491,6 +496,44 @@ class CheckTests(unittest.TestCase):
         self.repo.commit()
         self.assertFalse(self.check(judge_tip)['base_cached'])
 
+    def test_runs_discard_their_work_and_a_killed_runs_but_not_a_running_one(self):
+        gate_work = self.cache.parent / 'gate-work'
+        killed, running = gate_work / 'quire-release-il-killed', gate_work / 'quire-release-il-running'
+        for directory in (killed, running):
+            (directory / 'base').mkdir(parents=True)
+        old = time.time() - release_il.STALE_WORK - 60
+        os.utime(killed, (old, old))
+        self.assertTrue(self.check()['passed'])
+        self.assertEqual([p.name for p in gate_work.glob('quire-release-il-*')], [running.name])
+        trashed = {p.name for p in (gate_work / '.trash').iterdir()}
+        self.assertEqual(len(trashed), 2)
+        self.assertIn(killed.name, trashed)
+        self.assertEqual(self.purged, [(gate_work / '.trash',)])
+        # A failing run discards its work too.
+        self.repo.git('rm', '-rq', 'tools/Quire.Tools.MethodAudit')
+        self.assertFalse(self.check(self.repo.commit())['passed'])
+        self.assertEqual([p.name for p in gate_work.glob('quire-release-il-*')], [running.name])
+        self.assertEqual(len(self.purged), 2)
+
+    def test_an_unrenamable_run_is_purged_in_place_but_another_runs_is_left(self):
+        gate_work = self.cache.parent / 'gate-work'
+        killed = gate_work / 'quire-release-il-killed'
+        killed.mkdir(parents=True)
+        old = time.time() - release_il.STALE_WORK - 60
+        os.utime(killed, (old, old))
+        real_replace = os.replace
+        def replace(source, target):  # a file still open in every work directory
+            if Path(source).name.startswith('quire-release-il-'):
+                raise PermissionError(source)
+            return real_replace(source, target)
+        with mock.patch.object(release_il.os, 'replace', replace):
+            self.assertTrue(self.check()['passed'])
+        [(trash, own)] = self.purged
+        self.assertEqual(trash, gate_work / '.trash')
+        self.assertEqual(own.parent, gate_work)
+        self.assertNotEqual(own, killed)
+        self.assertTrue(killed.is_dir())
+
     def test_a_failed_scan_keeps_its_inventory_and_reports_errors(self):
         mock.patch.stopall()
         work = self.repo.root / 'work'
@@ -559,6 +602,22 @@ class JudgeCacheTests(unittest.TestCase):
         for name in expected:
             blob = subprocess.check_output(['git', 'show', f'{self.base}:{name}'], cwd=self.repo.root)
             self.assertEqual(hashlib.sha256(blob).digest(), hashlib.sha256((original / name).read_bytes()).digest())
+
+
+class WorkCleanupTests(unittest.TestCase):
+    def test_purge_empties_trash_and_deletes_unmoved_directories_with_read_only_files(self):
+        temp = tempfile.TemporaryDirectory(prefix='quire-purge-test-')
+        self.addCleanup(temp.cleanup)
+        root = Path(temp.name)
+        trash, unmoved = root / '.trash', root / 'quire-release-il-open'
+        for directory in (trash / 'quire-release-il-a' / '.git' / 'objects', unmoved / 'after'):
+            directory.mkdir(parents=True)
+            (directory / 'f').write_bytes(b'x')
+            os.chmod(directory / 'f', stat.S_IREAD)
+        subprocess.run([sys.executable, '-c', release_il.PURGE, trash, unmoved], check=True, timeout=60)
+        self.assertEqual(list(trash.iterdir()), [])
+        self.assertFalse(unmoved.exists())
+
 
 
 if __name__ == '__main__':
