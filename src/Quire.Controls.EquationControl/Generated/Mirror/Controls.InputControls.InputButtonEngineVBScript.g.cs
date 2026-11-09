@@ -22,8 +22,6 @@ internal partial class InputButtonEngineVBScript : global::Quire.Controls.InputC
     [global::Quire.Mirror.MirrorStub]
     public override string AddInternalScripts(string script, string controlObjectName, object[] inputs, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.AddInternalScripts(script, controlObjectName, inputs, engineParams);
     [global::Quire.Mirror.MirrorStub]
-    protected override void UpdateScriptableClassValues(ref object value, object scriptControlObject, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void GetExistingEvents(string convertUserScript) => base.GetExistingEvents(convertUserScript);
     [global::Quire.Mirror.MirrorStub]
     protected override object GetScriptClassProperties(object scriptObjectProperties = default) => base.GetScriptClassProperties(scriptObjectProperties);

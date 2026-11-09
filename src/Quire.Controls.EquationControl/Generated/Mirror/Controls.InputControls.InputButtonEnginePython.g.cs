@@ -30,7 +30,5 @@ internal partial class InputButtonEnginePython : global::Quire.Controls.InputCon
     [global::Quire.Mirror.MirrorStub]
     protected override object GetScriptClassProperties(object scriptObjectProperties = default) => base.GetScriptClassProperties(scriptObjectProperties);
     [global::Quire.Mirror.MirrorStub]
-    protected override void UpdateScriptableClassValues(ref object value, object scriptControlObject, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public InputButtonEnginePython() { }
 }
