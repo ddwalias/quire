@@ -491,3 +491,9 @@
 
 - Exact: `.ctor` (implicit base constructor call followed by `InitializeComponent`).
 - Release IL: PASS — 423 checked, 0 failures; one exact member added. `InitializeComponent` remains a stub.
+
+## Batch 81 — TextRegion caret boundary (1)
+
+- Exact: `ShouldLeaveTextRegionOnCaretMove` (enum switch for Left/Right, next insertion positions with document-boundary fallbacks, caret comparison, then base fallback).
+- Rejected candidate: sequential `if (direction == Left)` / `if (direction == Right)` emitted `bne.un.s` at instruction 2; Mathcad emits `beq.s`. The enum `switch` form matches.
+- Release IL: PASS — 424 checked, 0 failures; one exact member added. Previously exact methods remained exact.
