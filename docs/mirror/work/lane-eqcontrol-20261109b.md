@@ -76,3 +76,6 @@
 - Shapes tried: base hit-test cast, nested hit-result checks, descendant transform, and empty constructor matched.
 - Release IL: PASS, 670 checked (`.mirror-cache/release-il-8847b03c6129/release-il.json`).
 - Remaining: all other stub-marked members in EquationControl; 5,316 markers across 294 types after this batch.
+- Batch: `Controls.InputControls.CellData` (`.ctor`, `Text`, `Row`, `Column` accessors, `PropertyChanged` event accessors, `IsEmpty`, `IsEmptyOrWhitespace`, `Clear`, `OnPropertyChanged`).
+- Shapes tried: fields/event/properties declared in the hand-written partial; `Passed ? value : string.Empty` and `DevAssert(value >= 0)` guards matched on the first candidate.
+- Release IL: PASS, 681 checked (`.mirror-cache/release-il-b6e49320e792/release-il.json`).
