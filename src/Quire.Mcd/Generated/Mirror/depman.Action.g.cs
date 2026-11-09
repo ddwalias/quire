@@ -11,12 +11,4 @@ namespace Quire.depman;
 [global::Quire.Mirror.MirrorOf("depman.Action, mcdepman")]
 public partial interface Action : global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.depman.ActionResult Invoke(global::Quire.depman.Environment env, object state) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.ICollection GetDefs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsUndefine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsChildOnly() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
