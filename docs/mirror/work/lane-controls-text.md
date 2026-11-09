@@ -520,3 +520,11 @@
 - Hand-written: `src/Quire.Controls.Text/Mirrored/Controls.Text.RichTextBase.cs`; stubs removed from `Generated/Mirror/Controls.Text.RichTextBase.g.cs`.
 - Release IL: PASS — 453 checked, 0 failures (`.mirror-cache/gate-b84`); 8 methods exact (property accessors counted separately).
 - Remaining mismatches in this batch: none.
+
+## Batch 85 — RichTextBase spell-check gate, baseline cache, and current text format (3)
+
+- Exact: `CanEnableSpellCheck` (protected virtual; visible-page check, then the worksheet `SpellCheckEnabled` value, else `false`), `Baseline` (private; computes and caches `CalculateBaseline()` when `!_cachedBaseline.HasValue`), `CurrentTextFormat` get/set (protected by a virtual setter with the reference-equality guard, style-key capture, `FormatChanged` subscribe/unsubscribe, and the `CurrentTextFormat` change notification).
+- Rejected candidate: the setter with a leading `if (_currentTextFormat == value) return;`. Roslyn emitted `bne.un.s` plus an inline `ret` at instruction 3; Mathcad emits `beq.s` to one shared return. The one-block `if (_currentTextFormat != value) { ... }` form matches.
+- Hand-written: `src/Quire.Controls.Text/Mirrored/Controls.Text.RichTextBase.cs`; stubs removed from `Generated/Mirror/Controls.Text.RichTextBase.g.cs`.
+- Release IL: PASS — 457 checked, 0 failures (`.mirror-cache/gate-b85b`).
+- Remaining mismatches in this batch: none.

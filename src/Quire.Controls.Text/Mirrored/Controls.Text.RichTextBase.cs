@@ -1317,6 +1317,58 @@ public partial class RichTextBase
 
     public bool IsSelected => WhiteboardDependencyProperties.GetIsSelected(this);
 
+    protected virtual bool CanEnableSpellCheck
+    {
+        get
+        {
+            if (IsVisible && AttachedProperties.GetIsOnVisiblePage(this))
+            {
+                return WorksheetPropertiesManager.GetWorksheetProperties(this).SpellCheckEnabled;
+            }
+
+            return false;
+        }
+    }
+
+    private double Baseline
+    {
+        get
+        {
+            if (!_cachedBaseline.HasValue)
+            {
+                _cachedBaseline = CalculateBaseline();
+            }
+
+            return _cachedBaseline.Value;
+        }
+    }
+
+    public virtual TextFormat CurrentTextFormat
+    {
+        get => _currentTextFormat;
+        set
+        {
+            // The IL branches to one shared return when the format is unchanged; an early return emits its own ret.
+            if (_currentTextFormat != value)
+            {
+                if (value != null)
+                {
+                    _oldTextFormatStyleKey = value.StyleKey;
+                    value.FormatChanged += HandleTextFormattingChanged;
+                }
+
+                if (_currentTextFormat != null)
+                {
+                    _oldTextFormatStyleKey = _currentTextFormat.StyleKey;
+                    _currentTextFormat.FormatChanged -= HandleTextFormattingChanged;
+                }
+
+                _currentTextFormat = value;
+                FirePropertyChanged(new PropertyChangedEventArgs("CurrentTextFormat"));
+            }
+        }
+    }
+
     public ScriptState TextScriptState
     {
         get => (ScriptState)GetValue(TextScriptStateProperty);
