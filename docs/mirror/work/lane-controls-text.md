@@ -435,3 +435,8 @@
 
 - Exact: `PrePasting` (protected virtual; `PasteStartPositionOffset` from the caret or selection start, the split font-size queue, the single-owner check that enqueues the font size when the selection is inside one custom-size inline, then `CurrentInsertionScriptState = null`).
 - Release IL: PASS — 415 checked, 415 exact, 0 failures, 308 unfinished.
+
+## Batch 70 — closure-ordinal finding for RichTextBase (no code change)
+
+- Tried and reverted, no member landed: `ComputeProofingLanguage` (lambda `<ComputeProofingLanguage>b__N_0`: ours 293 at the end of the hand-written partial and 193 at its top, Mathcad 169), `ContextMenuOpened` (ordering of the bool store and the array element load differs from Mathcad), `SetStyleFromTextStyles` (display class 105 in Mathcad; not attempted after the ordinal check).
+- Finding: `RichTextBase` has about 193 generated members, and they come before the hand-written partial in the merged type. Any closure whose Mathcad ordinal is below about 193 cannot match by placement alone (`ComputeProofingLanguage` 169, `SetStyleFromTextStyles` 105, `ExecuteAddItemToListCommand` 117 in `RichTextWithEmbeddedItem`). Those need the generated-member count reduced, which only the maintainer's MirrorGen can change.
