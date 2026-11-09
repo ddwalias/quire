@@ -209,3 +209,10 @@
 - Release IL: PASS — 471 checked, 471 exact, 0 failures.
 - Rejected: `ContourZAxisViewModel` (ctor, `SetResultRange`, `LimitsExpressionValueChanged` override with the `IsValueValid` `||` chain and `SetRange` early return). Gate failed on `LimitsExpressionValueChanged` ("Release IL differs"); reverted, not landed. Idiomatic `||` short-circuit shape is the first suspect; not investigated further.
 - Remaining: `ContourZAxisViewModel` (open); `PlotLegendLayoutManager.GetNumberOfColumnsFitWidth` remains blocked by the documented local-slot mismatch; other unimplemented stubs remain unclaimed.
+
+## Batch 30 — TickScale
+
+- Members: auto-properties `MagnitudeThreashold`, `UseMagnitudeThreashold`, `Show`, `Count`, `Labels`, `Values`, `StartGap`, `Pattern`, `VisabilityPattern`; `.ctor`, `ShouldDrawTick`, `TickMarkPosition`, `FormatValues`, private `GetValuesWithCorrectedZeroForGeneralFormat`, private static `GetValueMagnitude`. Hand-written: `Mirrored/Controls.Plots.Presenter.TickScale.cs`; all stubs (including the property declarations) removed from its `.g.cs`.
+- Shapes: auto-properties and the `.ctor` (setter calls) matched first time. `GetValuesWithCorrectedZeroForGeneralFormat` first failed on the `&&` grouping: Mathcad's flag and loop-condition chains are right-grouped (`a && (b && c)`), so separate `ldc.i4.0` exits appear. Left-grouped chains (`(a && b && c)`) share one exit and differ. The right-grouped form matched.
+- Release IL: PASS — 495 checked, 495 exact, 0 failures.
+- Remaining mismatches in this batch: none.
