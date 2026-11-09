@@ -98,3 +98,6 @@
 - Batch: `Controls.InputControls.DataListItem` (`Name`, `Value`, `GroupName`, `ToString`, `.ctor`); `Controls.InputControls.CheckBoxViewModel` (`Model`, `IsChecked`, `ImagePath`, `Text`, `FlowDirection`, `.ctor`, `HandleModelPropertyChanged`).
 - Shapes tried: auto-properties matched; the `HandleModelPropertyChanged` string switch with a shared body matched on the first candidate (same shape as the CheckBox editor view model). The first gate run failed only on a missing `using` (candidate build error, not a shape mismatch).
 - Release IL: PASS, 763 checked (`.mirror-cache/release-il-81417aa026da/release-il.json`).
+- Batch: `Controls.InputControls.CheckBoxModel` (`.ctor`, `SelectedValue`, `FlowDirection`, `ImagePath`, `IsChecked`, `Text`, `Apply`, `HandlePostInputFieldResultChanged`, `DefaultScript`, `Data`).
+- Shapes tried: `string.Empty` FAILED at the constructor (Mathcad uses the `""` literal). `return Data.SelectedValueIndex != 0.0` FAILED on the getter (Mathcad branches on `== 0.0`); the explicit `if` returns matched. The setter's first `il_diff` difference was local slot order: `string error` must be declared before `object valueIndex`; the reordered form matched.
+- Release IL: PASS, 777 checked (`.mirror-cache/release-il-b1db382e210e/release-il.json`). Earlier candidate: FAIL at `32b9d2bb64e1`.
