@@ -64,14 +64,6 @@ public partial interface IDepman : global::System.IDisposable
     [global::Quire.Mirror.MirrorStub]
     void SetNotifyComputing(int h, bool b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    void SetAutoCalc(bool b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool GetAutoCalc() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetCalcNow(bool b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool GetCalcNow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     void SetCalcNowTrue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     global::System.Collections.IDictionary GetValueAt(int h, string name, bool bSync, global::Quire.depman.ResolveMode mode, global::System.Collections.IDictionary pending_value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -17,4 +17,14 @@ public partial interface IDepman
     void BeginMove();
 
     void EndMove();
+
+    void SetAutoCalc([global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.U1)] bool b);
+
+    [return: global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.U1)]
+    bool GetAutoCalc();
+
+    void SetCalcNow([global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.U1)] bool b);
+
+    [return: global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.U1)]
+    bool GetCalcNow();
 }
