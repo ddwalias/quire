@@ -1243,4 +1243,24 @@ public partial class RichTextBase
             }
         }
     }
+
+    protected virtual void PrePasting()
+    {
+        ClearInsertionPointsCache();
+        PasteStartPositionOffset = Selection.IsEmpty ? CaretOffset : SelectionStart;
+        ClearSplitFontSizeDataQueue();
+        if (Selection.Start.Parent.Equals(Selection.End.Parent))
+        {
+            ICustomFontSizeOwner owner = Selection.Start.Parent as ICustomFontSizeOwner;
+            if (owner != null)
+            {
+                Inline inline = Selection.Start.Parent as Inline;
+                if (inline != null && Selection.Start.CompareTo(inline.ContentStart) != 0 && Selection.End.CompareTo(inline.ContentEnd) != 0)
+                {
+                    EnqueueSplitFontSizeData(owner.FontSizeForReport);
+                }
+            }
+        }
+        CurrentInsertionScriptState = null;
+    }
 }

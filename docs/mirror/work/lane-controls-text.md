@@ -430,3 +430,8 @@
 
 - Exact: `HandleTextFormattingChanged` (protected/private stub kept the same; `Selection` range, widened to the caret word for a font-size change on an empty selection, split font-size data, `TextFormat.ApplyPropertyValueFormat`, then `Focus()` when active), `CacheSubscriptStateOnTypeOver` (written as one nested `if (!Selection.IsEmpty)` block; an early `return` on empty selection gives a different branch layout).
 - Release IL: PASS — 414 checked, 414 exact, 0 failures, 309 unfinished.
+
+## Batch 69 — RichTextBase pre-paste state (1)
+
+- Exact: `PrePasting` (protected virtual; `PasteStartPositionOffset` from the caret or selection start, the split font-size queue, the single-owner check that enqueues the font size when the selection is inside one custom-size inline, then `CurrentInsertionScriptState = null`).
+- Release IL: PASS — 415 checked, 415 exact, 0 failures, 308 unfinished.
