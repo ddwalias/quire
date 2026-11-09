@@ -407,3 +407,13 @@
 - Note: `ChildWhiteboardPropertyChangedHandler` needs `global::System.ComponentModel.PropertyChangedEventArgs`; the short name is ambiguous with the generic `PropertyChangedEventArgs<T>`.
 - Gate note: the first run failed only on `AggregateMathboard` `ICalculatable` members, because the worktree was behind `main` (`b63122fbe`/`a1717832d`). A fast-forward of the worktree cleared it; no member change caused it.
 - Release IL: PASS — 857 checked, 0 failures (`release-il-a045db3a8f24`).
+
+## Batch 27 — WhiteboardViewModel selection, arrange and caret members
+
+- Members: `SelectRegionsInBounds`, `HandleChildSizeChanged`, `ArrangeOverride`, `GetNavigationStartLocation`, `HandleCaretLeavesTextArea`.
+- Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs` (`using System.Windows.Media;` added for `TranslateTransform`); placeholder stubs replaced.
+- Shapes that Release IL requires:
+  - `GetNavigationStartLocation` negates the offset (`-ActiveItem.VerticalAlignmentOffset`); `0.0 - x` loads an extra `0.0` constant.
+  - `ArrangeOverride` enumerates the copy through `(IEnumerable<IWhiteboardItem>)` (interface call sites), not the `List<T>` enumerator.
+  - `HandleCaretLeavesTextArea` returns early with `if (flag) return;` (Mathcad `brfalse` to the body; `ret`).
+- Release IL: PASS — 862 checked, 0 failures (`release-il-045cf01c884b`).

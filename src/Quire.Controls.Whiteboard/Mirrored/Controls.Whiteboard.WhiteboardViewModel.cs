@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using Quire.Controls.Core;
 using Quire.Controls.Core.Whiteboard;
 using Quire.Services;
@@ -718,7 +719,25 @@ public partial class WhiteboardViewModel
 
     public void SelectContiguous(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public void SelectRegionsInBounds(global::System.Windows.Rect rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SelectRegionsInBounds(Rect rect)
+    {
+        List<IWhiteboardItem> list = new List<IWhiteboardItem>();
+        List<IWhiteboardItem> list2 = new List<IWhiteboardItem>();
+        foreach (IWhiteboardItem whiteboardItem in _whiteboardModel.WhiteboardItems)
+        {
+            if (rect.IntersectsWith(GetItemRect(whiteboardItem)))
+            {
+                list.Add(whiteboardItem);
+            }
+            else if (SelectedItems.Contains(whiteboardItem))
+            {
+                list2.Add(whiteboardItem);
+            }
+        }
+
+        UnSelectItems(list2);
+        SelectItems(list);
+    }
 
     public void SelectAllItems()
     {
@@ -898,7 +917,58 @@ public partial class WhiteboardViewModel
 
     public virtual global::System.Nullable<global::System.Windows.Vector> NavigateInto(global::Quire.Direction direction, global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public global::System.Windows.Point GetNavigationStartLocation(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public Point GetNavigationStartLocation(Direction direction)
+    {
+        Point val = InsertionPoint;
+        if (ActiveItem == null)
+        {
+            return val;
+        }
+
+        if (ActiveItem is IWhiteboardControl whiteboardControl)
+        {
+            Point itemLocation = GetItemLocation(ActiveItem);
+            val = whiteboardControl.GetNavigationStartLocation(direction);
+            Size renderSize = WhiteboardItemMgr.GetRenderSize(whiteboardControl);
+            switch (direction)
+            {
+                case Direction.Up:
+                    val = new Point(val.X, 0.0);
+                    break;
+                case Direction.Left:
+                    val = new Point(0.0, val.Y);
+                    break;
+                case Direction.Down:
+                    val = new Point(val.X, renderSize.Height);
+                    break;
+                case Direction.Right:
+                    val = new Point(renderSize.Width, val.Y);
+                    break;
+            }
+
+            val = new TranslateTransform(itemLocation.X, itemLocation.Y).Transform(val);
+        }
+        else
+        {
+            Rect itemRect = GetItemRect(ActiveItem);
+            val = itemRect.TopLeft;
+            switch (direction)
+            {
+                case Direction.Left:
+                    // Mathcad IL negates the offset (neg) rather than subtracting from a 0.0 constant.
+                    val.Offset(0.0, -ActiveItem.VerticalAlignmentOffset);
+                    break;
+                case Direction.Right:
+                    val.Offset(itemRect.Width, -ActiveItem.VerticalAlignmentOffset);
+                    break;
+                case Direction.Down:
+                    val.Offset(0.0, itemRect.Height);
+                    break;
+            }
+        }
+
+        return val;
+    }
 
     public virtual void OnRequestMoveAndResize(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl whiteboardControl, global::Quire.Controls.Core.ResizeEventMouseArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -959,7 +1029,19 @@ public partial class WhiteboardViewModel
         }
     }
 
-    public virtual global::System.Windows.Size ArrangeOverride(global::System.Windows.Size size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual Size ArrangeOverride(Size size)
+    {
+        // Mathcad IL enumerates through IEnumerable<T>, so the copy is viewed through the interface.
+        foreach (IWhiteboardItem item in (IEnumerable<IWhiteboardItem>)new List<IWhiteboardItem>(WhiteboardItems))
+        {
+            WhiteboardItemMgr.ClearHandleChangesEnabled(item);
+            Point itemLocation = WhiteboardItemMgr.GetItemLocation(item);
+            itemLocation.Y += item.VerticalAlignmentOffset;
+            WhiteboardItemMgr.Arrange(item, new Rect(itemLocation, WhiteboardItemMgr.GetDesiredSize(item)));
+        }
+
+        return size;
+    }
 
     public bool HandleUserInput { get; protected set; }
 
@@ -1070,7 +1152,53 @@ public partial class WhiteboardViewModel
         return InsertionPoint;
     }
 
-    public void HandleCaretLeavesTextArea(global::Quire.Controls.Core.CommonRoutedEvents.CaretLeavesTextRegionEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void HandleCaretLeavesTextArea(CommonRoutedEvents.CaretLeavesTextRegionEventArgs args)
+    {
+        Direction direction = Direction.Down;
+        switch (args.LeavingDirection)
+        {
+            case CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection.Down:
+                direction = Direction.Down;
+                break;
+            case CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection.Up:
+                direction = Direction.Up;
+                break;
+            case CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection.Left:
+                direction = Direction.Left;
+                break;
+            case CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection.Right:
+                direction = Direction.Right;
+                break;
+        }
+
+        Point navigationStartLocation = GetNavigationStartLocation(direction);
+        Point nearestIntersectionInDirection = _alignmentGrid.GetNearestIntersectionInDirection(navigationStartLocation, direction);
+        bool flag = false;
+        switch (direction)
+        {
+            case Direction.Down:
+                flag = nearestIntersectionInDirection.Y.IsGreaterThanOrEqual(ContentHeight);
+                break;
+            case Direction.Up:
+                flag = nearestIntersectionInDirection.Y.IsLessThanOrEqual(0.0);
+                break;
+            case Direction.Left:
+                flag = nearestIntersectionInDirection.X.IsLessThanOrEqual(0.0);
+                break;
+            case Direction.Right:
+                flag = nearestIntersectionInDirection.X.IsGreaterThanOrEqual(ContentWidth);
+                break;
+        }
+
+        // Mathcad IL returns early when the caret stays inside the grid (brfalse to the body; ret).
+        if (flag)
+        {
+            return;
+        }
+
+        DirectionalMoveHandler(direction);
+        args.Handled = true;
+    }
 
     public static global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> RecursivelyEnumerateDescendantsIgnoringTypes(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, params global::System.Type[] typesToIgnore) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -1258,7 +1386,26 @@ public partial class WhiteboardViewModel
     {
     }
 
-    protected virtual void HandleChildSizeChanged(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void HandleChildSizeChanged(IWhiteboardItem item, Size oldSize, Size newSize)
+    {
+        SetEqResizable(item);
+        Rect itemRect = GetItemRect(item);
+        Size contentSize = ContentSize;
+        if (newSize.Width.IsGreaterThan(oldSize.Width) && itemRect.Right.IsGreaterThan(ContentWidth))
+        {
+            contentSize.Width = itemRect.Right;
+        }
+
+        if (newSize.Height.IsGreaterThan(oldSize.Height) && itemRect.Bottom.IsGreaterThan(ContentHeight))
+        {
+            contentSize.Height = itemRect.Bottom;
+        }
+
+        if (contentSize != ContentSize)
+        {
+            ChildCausedResize(ContentSize, contentSize);
+        }
+    }
 
     protected void SetEqResizable(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
