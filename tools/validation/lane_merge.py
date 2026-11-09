@@ -7,8 +7,11 @@ without --apply) outside the merge lock, recording base B and tip T. Then, under
 if main is still B, T lands as validated. If main moved, the branch is rebased onto it; when that rebase is clean, the
 rebased branch affects no more projects than were validated, and B..main touches none of the candidate's build inputs
 (inputs_untouched), the compared IL and its base are what was validated, so it lands without building again.
-Otherwise it is revalidated under the lock as before. The receipt .mirror-cache/gate-il-<id>/gate.json records the
-path taken under "landing". A failed rebase is aborted and its conflicts reported.
+Otherwise the lock is released and the branch is validated again against the new origin/main (path "retry"); only
+the last of ROUNDS rounds revalidates under the lock, so a lane still lands while main keeps moving, and the lock is
+otherwise held just to land. Each round's receipt .mirror-cache/gate-il-<id>/gate.json records the path taken, the
+round and the seconds spent waiting for and holding the lock under "landing". A failed rebase is aborted and its
+conflicts reported.
 """
 import argparse
 import json
@@ -16,6 +19,7 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+import time
 import uuid
 
 from merge_lock import held
@@ -85,7 +89,6 @@ def main(argv=None):
     parser.add_argument('--type', action='append', default=[])
     parser.add_argument('--method', action='append', default=[])
     args = parser.parse_args(argv)
-    landing = None
     try:
         main_dir = args.main or main_worktree()
         if not main_dir:
@@ -106,66 +109,96 @@ def main(argv=None):
         # One cache for every lane: the next lane's base is the tip this one lands.
         release_il.CACHE = Path(main_dir) / '.mirror-cache' / 'inventory-cache'
         args.dotnet, args.timeout = 'dotnet', 1800
-        # Optimistic validation outside the lock, against a fresh origin/main.
-        git('fetch', '-q', 'origin')
-        rebase(args.branch, 'origin/main')
-        receipt = il_merge.ROOT / '.mirror-cache' / f'gate-il-{uuid.uuid4().hex[:12]}'
-        args.base, args.apply, args.results = 'refs/remotes/origin/main', False, receipt
-        code = il_merge.gate(args)
-        if code:
-            return code
-        record = json.loads((receipt / 'gate.json').read_text(encoding='utf-8'))
-        base, tip = record['base'], record['tip']
-        with held():
-            git('fetch', '-q', 'origin', cwd=main_dir)
-            git('merge', '-q', '--ff-only', 'origin/main', cwd=main_dir)
-            current = git('rev-parse', 'refs/heads/main', cwd=main_dir)
-            if git('rev-parse', f'refs/heads/{args.branch}') != tip:
-                raise RuntimeError('candidate moved during validation; retry')
-            landing = {'main': current, 'validated_base': base, 'validated_tip': tip}
-            if current == base:
-                land(main_dir, tip)
-                landing.update(path='validated', tip=tip)
-            else:
-                rebase(args.branch, 'main')
-                rebased = git('rev-parse', f'refs/heads/{args.branch}')
-                moved = git('diff', '--name-only', base, current).splitlines()
-                changed = git('diff', '--name-only', current, rebased).splitlines()
-                natives = il_merge.affected_native(changed, il_merge.native_projects(lane))
-                # A src directory added or removed on main changes the judge's set of Quire assemblies.
-                same_src = git('ls-tree', '--name-only', base, 'src/') == git('ls-tree', '--name-only', current, 'src/')
-                if (changed and same_src and set(release_il.affected_projects(current, lane)) <= set(record['projects'])
-                        and set(natives) <= set(record['native_projects'])
-                        and inputs_untouched(moved, lane, record['projects'], record['native_projects'])):
-                    land(main_dir, rebased)
-                    landing.update(path='rebased-unaffected', tip=rebased)
-                    copy_inventory(lane, tip, rebased, base, record['projects'])
-                else:
-                    args.base, args.apply = 'main', True
-                    args.results = il_merge.ROOT / '.mirror-cache' / f'gate-il-{uuid.uuid4().hex[:12]}'
-                    landing.update(path='revalidated', tip=rebased, receipt=str(args.results / 'gate.json'))
-                    code = il_merge.gate(args)
-                    if code:
-                        landing['path'] = 'revalidation-failed'
-                        return code
-            try:
-                git('push', 'origin', 'main', cwd=main_dir)
-            except subprocess.CalledProcessError:
-                # Leave main as origin has it, so a retry sees the branch's changes again.
-                git('reset', '-q', '--keep', current, cwd=main_dir)
-                raise
-            landing['pushed'] = True
-        return 0
+        for number in range(1, ROUNDS + 1):
+            code = attempt(args, main_dir, lane, number)
+            if code is not None:
+                return code
+        raise AssertionError('the last round always lands or fails')
     except (OSError, RuntimeError, subprocess.SubprocessError) as error:
-        detail = getattr(error, 'stderr', None) or str(error)
-        if landing is not None:
-            landing['error'] = detail
-        print(f'BLOCKED: {detail}', file=sys.stderr)
+        print(f'BLOCKED: {getattr(error, "stderr", None) or error}', file=sys.stderr)
         return 1
+
+
+# Rounds of validation outside the lock. A round whose base main has since moved in a way that touches the candidate's
+# inputs releases the lock and validates again; the last round revalidates under the lock instead, so a lane lands
+# even while main keeps moving. Holding the lock only to land keeps one lane's revalidation from stalling every other.
+ROUNDS = 3
+
+
+def attempt(args, main_dir, lane, number):
+    """One round: validate against a fresh origin/main outside the lock, then land under it. Returns the exit code, or
+    None to validate again (main moved and the candidate's inputs changed; never on the last round)."""
+    # Optimistic validation outside the lock, against a fresh origin/main.
+    git('fetch', '-q', 'origin')
+    rebase(args.branch, 'origin/main')
+    receipt = il_merge.ROOT / '.mirror-cache' / f'gate-il-{uuid.uuid4().hex[:12]}'
+    args.base, args.apply, args.results = 'refs/remotes/origin/main', False, receipt
+    code = il_merge.gate(args)
+    if code:
+        return code
+    record = json.loads((receipt / 'gate.json').read_text(encoding='utf-8'))
+    base, tip = record['base'], record['tip']
+    landing = {'round': number}
+    try:
+        waiting = time.perf_counter()
+        with held():
+            landing['lock_wait_s'] = round(time.perf_counter() - waiting, 1)
+            held_since = time.perf_counter()
+            try:
+                return land_under_lock(args, main_dir, lane, record, base, tip, number, landing)
+            finally:
+                landing['lock_held_s'] = round(time.perf_counter() - held_since, 1)
+    except (OSError, RuntimeError, subprocess.SubprocessError) as error:
+        landing['error'] = getattr(error, 'stderr', None) or str(error)
+        raise
     finally:
-        if landing is not None:
-            record['landing'] = landing
-            (receipt / 'gate.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
+        record['landing'] = landing
+        (receipt / 'gate.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
+
+
+def land_under_lock(args, main_dir, lane, record, base, tip, number, landing):
+    git('fetch', '-q', 'origin', cwd=main_dir)
+    git('merge', '-q', '--ff-only', 'origin/main', cwd=main_dir)
+    current = git('rev-parse', 'refs/heads/main', cwd=main_dir)
+    if git('rev-parse', f'refs/heads/{args.branch}') != tip:
+        raise RuntimeError('candidate moved during validation; retry')
+    landing.update(main=current, validated_base=base, validated_tip=tip)
+    if current == base:
+        land(main_dir, tip)
+        landing.update(path='validated', tip=tip)
+    else:
+        rebase(args.branch, 'main')
+        rebased = git('rev-parse', f'refs/heads/{args.branch}')
+        moved = git('diff', '--name-only', base, current).splitlines()
+        changed = git('diff', '--name-only', current, rebased).splitlines()
+        natives = il_merge.affected_native(changed, il_merge.native_projects(lane))
+        # A src directory added or removed on main changes the judge's set of Quire assemblies.
+        same_src = git('ls-tree', '--name-only', base, 'src/') == git('ls-tree', '--name-only', current, 'src/')
+        if (changed and same_src and set(release_il.affected_projects(current, lane)) <= set(record['projects'])
+                and set(natives) <= set(record['native_projects'])
+                and inputs_untouched(moved, lane, record['projects'], record['native_projects'])):
+            land(main_dir, rebased)
+            landing.update(path='rebased-unaffected', tip=rebased)
+            copy_inventory(lane, tip, rebased, base, record['projects'])
+        elif number < ROUNDS:
+            landing['path'] = 'retry'
+            return None
+        else:
+            args.base, args.apply = 'main', True
+            args.results = il_merge.ROOT / '.mirror-cache' / f'gate-il-{uuid.uuid4().hex[:12]}'
+            landing.update(path='revalidated', tip=rebased, receipt=str(args.results / 'gate.json'))
+            code = il_merge.gate(args)
+            if code:
+                landing['path'] = 'revalidation-failed'
+                return code
+    try:
+        git('push', 'origin', 'main', cwd=main_dir)
+    except subprocess.CalledProcessError:
+        # Leave main as origin has it, so a retry sees the branch's changes again.
+        git('reset', '-q', '--keep', current, cwd=main_dir)
+        raise
+    landing['pushed'] = True
+    return 0
 
 
 def copy_inventory(root, tip, rebased, judge, projects):

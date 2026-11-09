@@ -171,8 +171,8 @@ python tools/validation/merge_gate.py mirror/<lane>-<unit>
 
 The lane wrapper rebases onto a fresh `origin/main` and validates the committed candidate in a
 temporary clone **outside** the merge lock, so lanes validate in parallel. It then takes the lock,
-fetches and fast-forwards `main`, and lands one of three ways, recorded under `landing.path` in the
-receipt:
+fetches and fast-forwards `main`, and ends the round one of four ways, recorded under `landing.path`
+in that round's receipt with the round number and the seconds spent waiting for and holding the lock:
 
 - `validated`: `main` has not moved; the validated tip lands.
 - `rebased-unaffected`: `main` moved, the rebase is clean, the rebased branch affects no more
@@ -180,7 +180,10 @@ receipt:
   (compared projects and their forward reference closure, `src/` files outside project folders,
   root files other than `*.md`, the type map, MethodAudit, MirrorGen, `tools/validation/`, and for
   native projects their folders, `docs/mirror/native/` and the assembly map). It lands without building.
-- `revalidated`: anything else is validated again under the lock, as before.
+- `retry`: anything else releases the lock and starts another round against the new `origin/main`,
+  so one lane's revalidation never stalls the others.
+- `revalidated`: in the last of three rounds, anything else is validated again under the lock, so
+  a lane still lands while `main` keeps moving.
 
 A rebase conflict is aborted and its files listed. There are no stored validation refs, baseline
 commits, protected-list approvals or two-stage validation records. Changes without production

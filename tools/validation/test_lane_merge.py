@@ -10,6 +10,7 @@ from unittest import mock
 
 import il_merge
 import lane_merge
+import merge_lock
 
 
 def git(cwd, *args):
@@ -46,7 +47,7 @@ class LaneMergeTests(unittest.TestCase):
                       mock.patch.object(il_merge, 'ROOT', il_merge.ROOT)):
             patch.start()
             self.addCleanup(patch.stop)
-        self.checks = []
+        self.checks, self.locked = [], []
 
     def write(self, root, path, text):
         (root / path).parent.mkdir(parents=True, exist_ok=True)
@@ -64,18 +65,21 @@ class LaneMergeTests(unittest.TestCase):
         self.commit(self.other, 'upstream')
         git(self.other, 'push', '-q', 'origin', 'main')
 
-    def land(self, during=None):
+    def land(self, during=None, rounds=1):
+        """lane_merge with the gate's checks recorded; during: a path another lane changes on origin during each of the
+        first `rounds` checks. Returns the exit code and the last round's landing; self.landings has every round's."""
         def check(base, projects, results, *args, **kwargs):
             self.checks.append(projects)
-            if during and len(self.checks) == 1:
-                self.upstream(during)
+            self.locked.append(merge_lock.is_held())
+            if during and len(self.checks) <= rounds:
+                self.upstream(during, f'upstream {len(self.checks)}\n')
             return {'passed': True, 'checked': [], 'failures': []}
         with mock.patch.object(il_merge.release_il, 'check', side_effect=check):
             code = lane_merge.main(['work', '--main', str(self.main)])
         receipts = sorted((self.main / '.mirror-cache').glob('gate-il-*/gate.json'), key=os.path.getmtime)
-        landing = next((json.loads(r.read_text()).get('landing') for r in receipts
-                        if 'landing' in json.loads(r.read_text())), None)
-        return code, landing
+        self.landings = [record['landing'] for record in (json.loads(r.read_text()) for r in receipts)
+                         if 'landing' in record]
+        return code, (self.landings[-1] if self.landings else None)
 
     def test_an_unmoved_main_lands_the_validated_tip(self):
         code, landing = self.land()
@@ -90,14 +94,31 @@ class LaneMergeTests(unittest.TestCase):
         self.assertEqual(self.checks, [['P']])
         self.assertEqual(landing['path'], 'rebased-unaffected')
         self.assertEqual(git(self.origin, 'rev-parse', 'main'), git(self.lane, 'rev-parse', 'work'))
-        self.assertEqual(git(self.origin, 'show', 'main:README.md'), 'upstream')
+        self.assertEqual(git(self.origin, 'show', 'main:README.md'), 'upstream 1')
 
-    def test_an_upstream_change_to_a_compared_project_is_revalidated(self):
+    def test_an_upstream_change_to_a_compared_project_is_validated_again_outside_the_lock(self):
         code, landing = self.land(during='src/P/Other.cs')
         self.assertEqual(code, 0)
         self.assertEqual(self.checks, [['P'], ['P']])
-        self.assertEqual(landing['path'], 'revalidated')
+        self.assertEqual(self.locked, [False, False])
+        self.assertEqual([(l['round'], l['path']) for l in self.landings], [(1, 'retry'), (2, 'validated')])
+        self.assertNotIn('pushed', self.landings[0])
+        self.assertTrue(landing['pushed'])
+        for entry in self.landings:
+            self.assertGreaterEqual(entry['lock_wait_s'], 0)
+            self.assertGreaterEqual(entry['lock_held_s'], 0)
         self.assertEqual(git(self.origin, 'rev-parse', 'main'), git(self.lane, 'rev-parse', 'work'))
+        self.assertEqual(git(self.origin, 'show', 'main:src/P/Other.cs'), 'upstream 1')
+
+    def test_while_main_keeps_moving_the_last_round_revalidates_under_the_lock(self):
+        code, landing = self.land(during='src/P/Other.cs', rounds=lane_merge.ROUNDS)
+        self.assertEqual(code, 0)
+        self.assertEqual(len(self.checks), lane_merge.ROUNDS + 1)
+        self.assertEqual(self.locked, [False] * lane_merge.ROUNDS + [True])
+        self.assertEqual([l['path'] for l in self.landings], ['retry'] * (lane_merge.ROUNDS - 1) + ['revalidated'])
+        self.assertTrue(landing['pushed'])
+        self.assertEqual(git(self.origin, 'rev-parse', 'main'), git(self.lane, 'rev-parse', 'work'))
+        self.assertEqual(git(self.origin, 'show', 'main:src/P/Other.cs'), f'upstream {lane_merge.ROUNDS}')
 
     def test_an_upstream_move_out_of_a_compared_project_is_revalidated(self):
         git(self.other, 'pull', '-q', '--ff-only')
