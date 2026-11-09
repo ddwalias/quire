@@ -168,3 +168,21 @@
   - Prototype `ICalculatable` interface satisfaction members (`SetResult(CalculationResult)`, `SynchronizationStatus`, `RlChanged`) placed after `ContainsSymbolicEvaluation` at the bottom of the hand-written file, keeping `AggregateMathboardModel.g.cs` empty so `.g.cs` compilation order does not shift member ordinals.
 - Release IL: PASS — 419 checked, 0 failures, 435 unfinished (`release-il-dd006b1334d3`).
 - Remaining mismatches in this batch: none.
+
+## Batch 12 — WhiteboardItemResizer
+
+- Members:
+  - `WhiteboardItemResizer`:
+    - Fields: `_mode`, `_container`, `_startPoint`, `_currentPoint`, `_started`, `_bringIntoViewDispatcherTimer`, `_pt`
+    - Property: `StartPointInElementCoordinates`
+    - Event: `DragDone`
+    - Constructor: `.ctor(FrameworkElement, Point, DragMode, FrameworkElement, bool, bool)`
+    - Methods: `ResizeEnd`, `MouseMove(Point)`, `StartCaptureEvents`, `EndCaptureEvents`, `MouseUp(object, MouseButtonEventArgs)`, `MouseMove(object, MouseEventArgs)`, `NotifyResizeProgress`, `BringIntoViewCallback`, `OffsetTo`, `MouseUpResizeRightMode`, `MouseMoveResizeRightMode`, `MouseUpResizeBottomMode`, `MouseMoveResizeBottomMode`, `MouseUpResizeBottomRightMode`, `MouseMoveResizeBottomRightMode`, `ResizeLeft`, `MouseMoveResizeLeftMode`, `ResizeBy`, `TransformToElement`, `HandleMouseUp`, `HandleMouseMove`
+    - Nested delegates: `ResizeEndHandler`, `ResizeProgressHandler` (retained in `.g.cs` with `MirrorOf` attributes)
+- Hand-written: `Mirrored/Controls.Whiteboard.WhiteboardItemResizer.cs`.
+- Stubs removed: `Generated/Mirror/Controls.Whiteboard.WhiteboardItemResizer.g.cs`.
+- Shapes:
+  - `StartCaptureEvents`: early return `if (_started) return;` matching Mathcad's `brfalse.s IL_0009; ret;` branch layout.
+- Release IL: PASS — 442 checked, 0 failures, 412 unfinished (`release-il-8608bd007943`).
+- Remaining mismatches in this batch: none.
+
