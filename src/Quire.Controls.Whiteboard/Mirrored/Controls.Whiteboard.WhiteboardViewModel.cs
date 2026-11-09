@@ -180,7 +180,11 @@ public partial class WhiteboardViewModel
         Activated?.Invoke();
     }
 
-    protected virtual void SimulateItemClickAndFireActivated(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location, int numberOfClicks) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void SimulateItemClickAndFireActivated(IWhiteboardItem item, Point location, int numberOfClicks)
+    {
+        item.SimulateMouseClick(location, numberOfClicks);
+        FireActivated();
+    }
 
     public virtual IWhiteboardItem ActiveItem
     {
@@ -1112,7 +1116,10 @@ public partial class WhiteboardViewModel
         HandleTraverse(eventArgs.Parameter);
     }
 
-    public virtual global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> SortItemsByLocation(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, bool descending) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public virtual IEnumerable<IWhiteboardItem> SortItemsByLocation(IEnumerable<IWhiteboardItem> items, bool descending)
+    {
+        return WhiteboardItemMgr.SortItemsByLocation(items, descending);
+    }
 
     public event global::System.EventHandler Changed;
 
@@ -1120,11 +1127,17 @@ public partial class WhiteboardViewModel
 
     public virtual void PreviewMouseLeftButtonDownHandler(object sender, global::System.Windows.Input.MouseButtonEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public virtual void PreviewMouseRightButtonDownHandler(object sender, global::System.Windows.Input.MouseButtonEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void PreviewMouseRightButtonDownHandler(object sender, MouseButtonEventArgs eventArgs)
+    {
+    }
 
-    public virtual void PreviewMouseRightButtonUpHandler(object sender, global::System.Windows.RoutedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void PreviewMouseRightButtonUpHandler(object sender, RoutedEventArgs eventArgs)
+    {
+    }
 
-    public virtual void PreviewMouseLeftButtonUpHandler(object sender, global::System.Windows.RoutedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void PreviewMouseLeftButtonUpHandler(object sender, RoutedEventArgs eventArgs)
+    {
+    }
 
     public virtual bool HandleMouseUp(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl sender, global::System.Windows.Point position, global::System.Windows.Input.MouseButton button) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -1355,7 +1368,10 @@ public partial class WhiteboardViewModel
 
     public void SeparateOverlappedItems(global::Quire.Dimension dimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    protected virtual global::Quire.Controls.Whiteboard.WhiteboardViewModel.SeparateOverlappedItemsCommand CreateSeparateOverlappedItemsCommand(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToSeparate, global::Quire.Dimension dimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        protected virtual SeparateOverlappedItemsCommand CreateSeparateOverlappedItemsCommand(IEnumerable<IWhiteboardItem> itemsToSeparate, Dimension dimension)
+    {
+        return new SeparateOverlappedItemsCommand(this, itemsToSeparate, dimension);
+    }
 
     protected void FireChanged()
     {
@@ -1443,7 +1459,24 @@ public partial class WhiteboardViewModel
 
     protected virtual bool CanDeleteVerticalSpace(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public virtual global::System.Windows.Size ResizeAndNotify(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> list, global::System.Windows.Size oldSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public virtual Size ResizeAndNotify(IEnumerable<IWhiteboardItem> list, Size oldSize)
+    {
+        Size val = oldSize;
+        foreach (IWhiteboardItem item in list)
+        {
+            Point itemLocation = GetItemLocation(item);
+            Size itemDesiredSize = GetItemDesiredSize(item);
+            val.Width = Math.Max(val.Width, itemDesiredSize.Width + itemLocation.X);
+            val.Height = Math.Max(val.Height, itemDesiredSize.Height + itemLocation.Y + item.VerticalAlignmentOffset);
+        }
+
+        if (val != oldSize)
+        {
+            FireChildCausedResize(oldSize, val);
+        }
+
+        return val;
+    }
 
     public virtual bool IsValidLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> newLocations, bool allowGrowthDownOrRight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

@@ -417,3 +417,10 @@
   - `ArrangeOverride` enumerates the copy through `(IEnumerable<IWhiteboardItem>)` (interface call sites), not the `List<T>` enumerator.
   - `HandleCaretLeavesTextArea` returns early with `if (flag) return;` (Mathcad `brfalse` to the body; `ret`).
 - Release IL: PASS — 862 checked, 0 failures (`release-il-045cf01c884b`).
+
+## Batch 28 — WhiteboardViewModel mouse no-op handlers, sorting, resize notify
+
+- Members: `PreviewMouseRightButtonDownHandler`, `PreviewMouseRightButtonUpHandler`, `PreviewMouseLeftButtonUpHandler` (empty bodies), `SimulateItemClickAndFireActivated`, `SortItemsByLocation`, `CreateSeparateOverlappedItemsCommand` (returns `new`), `ResizeAndNotify`.
+- Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stubs replaced.
+- Skipped: `PreviewMouseLeftButtonDownHandler` (large pattern-matching body, not yet shaped), `InsertVerticalSpace` (`new InsertSpaceCommand(...).Execute()`, devirtualization blocker), `FindSizeLimit` (closure), `HandleMouseUp`, `NavigateInto`, `SelectedItemsChangedHandler`, `HandleItemsListChanged`, `FindMinimumSize`, `RecursivelyEnumerate*` (iterators).
+- Release IL: PASS — 869 checked, 0 failures (`release-il-437cf4bdc018`).
