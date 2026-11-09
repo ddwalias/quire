@@ -291,6 +291,31 @@
 - Release IL: PASS — 633 checked, 0 failures, 209 unfinished (`release-il-ef910bf63b4d`).
 - Remaining mismatches in this batch: none.
 
+## Batch 18 — MathboardControl
+
+- Members:
+  - `MathboardControl`:
+    - Field: `_model`
+    - Constructors: `.cctor()`, `.ctor(IMathboardViewModel, ResourceDictionary)`
+    - Properties: `MathboardViewModel` (get), `SerializationStrategy` (abstract get/set), `DeserializationStrategy` (abstract get/set), `CurrentNumberFormat` (get/set), `CurrentMatrixFormat` (get/set), `CurrentTextFormat` (get/set), `HideFromCalculationButtonEnabled` (get), `HideFromCalculationButtonChecked` (get), `CanHideFromCalculationContext` (get), `HideFromCalculationContext` (abstract get/set), `CalculatableChildren` (get), `CurrentError` (get), `VerticalAlignmentOffset` (get), `IsEmpty` (get), `InputOutputRegionManager` (get/set), `BookmarksManager` (get/set), `IORegions` (get), `RegionFactory` (get/set), `DeserializeMathFormat` (set), `DeserializeLabeledIdFormat` (set)
+    - Events: `PropertyChanged`, `CalculatableAdded`, `CalculatableRemoved`, `CalculatableMoved`, `OnGotFocusEvent`, `RequestRemove`
+    - Methods: `SetupInputGestures()`, `BindProperties()`, `BindProperty(string, DependencyProperty, BindingMode)`, `HookupEvents()`, `BindCommands()`, `ViewModelPropertyChangedHandler(object, PropertyChangedEventArgs)`, `OnGotFocus(RoutedEventArgs)`, `OnSetNumberFormatField(object, ExecutedRoutedEventArgs)`, `OnSetMatrixFormatField(object, ExecutedRoutedEventArgs)`, `OnSetTextFormatField(object, ExecutedRoutedEventArgs)`, `CanChangeTextStyle(object, CanExecuteRoutedEventArgs)`, `DispatchCommandWithinSolveBlock(RoutedCommand, object, PropertiesForUpdate)`, `HandleCalculatableAdded(ICalculatableContainer, ICalculatable)`, `HandleCalculatableRemoved(ICalculatable)`, `HandleCalculatableMoved(ICalculatable)`, `OnToggleHideFromCalculationContext(object, RoutedEventArgs)`, `FirePropertyChanged(PropertyChangedEventArgs)`, `ContainsError(EngineError)`, `ShowError(EngineError)`, `GetBlockEquationTypeAttributeName(IWhiteboardItem)` (abstract), `Activate(bool)`, `NavigateIntoItem(Direction)`, `SimulateMouseClick(Point, int)`, `CanToggleInputRegion()`, `CanToggleOutputRegion()`, `ToggleInputRegion()`, `ToggleOutputRegion()`, `CanInsertVerticalSpace(object, CanExecuteRoutedEventArgs)`, `CanDeleteVerticalSpaceAbove(object, CanExecuteRoutedEventArgs)`, `CanDeleteVerticalSpaceBelow(object, CanExecuteRoutedEventArgs)`, `InsertVerticalSpace(object, ExecutedRoutedEventArgs)`, `DeleteVerticalSpaceAbove(object, ExecutedRoutedEventArgs)`, `DeleteVerticalSpaceBelow(object, ExecutedRoutedEventArgs)`, `FireOnGotFocus()`, `ShouldSerializeContent()`, `GetInternalHelpContext()` (abstract), `GetHelpContext()`, `OnIsInPrintingPropertyChanged(DependencyObject, DependencyPropertyChangedEventArgs)`, `HasItemInViewPort(Rect)`, `IsItemInViewPort(IWhiteboardItemManager, IWhiteboardItem, Rect, out Rect)`
+  - Closures:
+    - `<>c`: `<.ctor>b__23_0`, `_1`, `_2`, `_3`, `_4`, `_5`
+    - `<BindCommands>b__28_0`
+    - `<>c__DisplayClass109_0`: `<HasItemInViewPort>b__0`
+    - `<>c__DisplayClass109_1`: `<HasItemInViewPort>b__1`
+- Hand-written: `Mirrored/Controls.Mathboard.MathboardControl.cs`.
+- Stubs removed: `Generated/Mirror/Controls.Mathboard.MathboardControl.g.cs`.
+- Shapes:
+  - Exact source order matching `Ptc.Controls.Mathboard.MathboardControl.members.tsv`, placing `.ctor` after `HideFromCalculationButtonChecked` to match lambda ordinal `<.ctor>b__23_*` and `BindCommands` to match `<BindCommands>b__28_0`, while preserving `<>c__DisplayClass109_*` for `HasItemInViewPort`.
+  - Sequential guards `if (this != e.Source) return; RoutedUICommand routedUICommand = e.Command as RoutedUICommand; if (routedUICommand == null) return;` matching `beq.s IL_next; ret; ... brtrue.s IL_body; ret;`.
+  - Unary negation `-itemRect.X` and `-itemRect.Y` in `IsItemInViewPort` avoiding `0.0` double constant load.
+  - Early return `if (d is not MathboardControl mathboardControl) return;` in `OnIsInPrintingPropertyChanged`.
+- Release IL: PASS — 709 checked, 0 failures, 133 unfinished (`release-il-d01b30b9a937`).
+- Remaining mismatches in this batch: none.
+
+
 
 
 
