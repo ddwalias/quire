@@ -11,10 +11,4 @@ namespace Quire.depman;
 [global::Quire.Mirror.MirrorOf("depman.SEnvironment, mcdepman")]
 internal partial interface SEnvironment
 {
-    [global::Quire.Mirror.MirrorStub]
-    unsafe global::Quire.depman.Position* Lookup(global::Quire.depman.Scope s, global::Quire.depman.DSym sym) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.depman.SharedThreadContext GetSharedThreadContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int GetRegionId() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
