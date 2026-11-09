@@ -119,3 +119,6 @@
 - Batch: `Controls.InputControls.InputButtonEngineJScript`, `InputButtonEnginePython`, `InputButtonEngineVBScript` (`UpdateScriptableClassValues`, empty body in Release IL).
 - Shapes tried: empty body matched. The other stub-marked pass-through members of these classes (`Script`, `AddInternalScripts`, `GetExistingEvents`, `GetScriptClassProperties`) are still generated stubs; selecting the whole type with `--type` checks them and they do not match, so they stay open and the gate run is project-wide without `--type`.
 - Release IL: PASS, 808 checked (`.mirror-cache/release-il-0f33ee000a12/release-il.json`).
+- Batch: `Controls.InputControls.InputControlsResourceDictionary` (`.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`); `Controls.InputControls.InputControlResources` (`Instance` set by the type initializer, `.ctor`, `InitializeComponent`, `Connect`).
+- Shapes tried: the XAML pack URIs use the Quire assembly name; both matched on the first candidate.
+- Release IL: PASS, 815 checked (`.mirror-cache/release-il-654fe8614f13/release-il.json`).
