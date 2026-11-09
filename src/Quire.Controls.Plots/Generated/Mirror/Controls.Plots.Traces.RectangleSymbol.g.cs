@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots.Traces;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Traces.RectangleSymbol, Ptc.Controls.Plots")]
 public partial class RectangleSymbol : global::Quire.Controls.Plots.Traces.Symbol
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Media.Geometry Create(global::System.Windows.Point point, global::Quire.Controls.Plots.Traces.ISymbolProperties properties) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public RectangleSymbol() { }
 }

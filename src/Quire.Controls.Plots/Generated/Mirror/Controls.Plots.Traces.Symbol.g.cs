@@ -12,11 +12,5 @@ namespace Quire.Controls.Plots.Traces;
 public abstract partial class Symbol
 {
     [global::Quire.Mirror.MirrorStub]
-    public virtual bool IsFilled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected static global::System.Windows.Media.Geometry CreatePathGeometryPointCollection(global::System.Windows.Media.PointCollection pointCollection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public abstract global::System.Windows.Media.Geometry Create(global::System.Windows.Point point, global::Quire.Controls.Plots.Traces.ISymbolProperties properties);
-    [global::Quire.Mirror.MirrorStub]
-    protected Symbol() { }
 }

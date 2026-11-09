@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots.Traces;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Traces.FilledRectangleSymbol, Ptc.Controls.Plots")]
 public partial class FilledRectangleSymbol : global::Quire.Controls.Plots.Traces.RectangleSymbol
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsFilled { get => base.IsFilled; }
-    [global::Quire.Mirror.MirrorStub]
-    public FilledRectangleSymbol() { }
 }
