@@ -65,12 +65,4 @@ public partial interface IDepman : global::System.IDisposable
     global::System.Collections.IList GetDependencies(int h) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     global::System.Collections.IList GetDependents(string name, int h) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void StartWorkers(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void StopWorkers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Mcd.RuntimeOptions GetRuntimeOptions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.ICollection GetHandles() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

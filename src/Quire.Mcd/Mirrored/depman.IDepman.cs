@@ -2,6 +2,14 @@ namespace Quire.depman;
 
 public partial interface IDepman
 {
+    void StartWorkers(int n);
+
+    void StopWorkers();
+
+    global::Quire.Mcd.RuntimeOptions GetRuntimeOptions();
+
+    global::System.Collections.ICollection GetHandles();
+
     void AddNodeCallback(global::Quire.utl_mgd.Function f);
 
     void AddNodeCallback(DepNodeCallback c);
