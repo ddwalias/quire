@@ -11,8 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.StringCompressor, Ptc.Controls.EquationControl")]
 internal static partial class StringCompressor
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string CompressString(string text, global::Quire.Controls.InputControls.CompressStringAlgorithmTypes algorithm = (global::Quire.Controls.InputControls.CompressStringAlgorithmTypes)(0)) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string DecompressString(string compressedText, global::Quire.Controls.InputControls.CompressStringAlgorithmTypes algorithm = (global::Quire.Controls.InputControls.CompressStringAlgorithmTypes)(0)) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
