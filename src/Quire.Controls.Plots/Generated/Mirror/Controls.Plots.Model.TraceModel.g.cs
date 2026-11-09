@@ -150,14 +150,6 @@ internal partial class TraceModel : global::Quire.Controls.Plots.Model.PlotCalcu
     [global::Quire.Mirror.MirrorStub]
     private void EquationControlRequestEvaluation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void CalculateRadialRange(global::System.Collections.Generic.IEnumerable<global::System.Windows.Point> points, out double min, out double max) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.PointCollection CalculateRadialTransformByOffset(global::System.Windows.Media.PointCollection points) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.PointCollection CalculatePolarTransformPoints(global::System.Windows.Media.PointCollection points) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.PointCollection CalculateLogTransformPoints(global::System.Collections.Generic.IEnumerable<global::System.Windows.Point> points) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Presenter.IAxisModel GetAxis(global::Quire.Controls.Plots.Presenter.AxesIndex axis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Presenter.IPlotEquation GetEquation(global::Quire.Controls.Plots.Presenter.AxesIndex axis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -179,10 +171,6 @@ internal partial class TraceModel : global::Quire.Controls.Plots.Model.PlotCalcu
     public void UpdatePlottingPointsForDisplay() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.PointCollection GetPlottingPointsForDisplay() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool TraceTypeIsLinearAndAxesScalingIsLinear() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool Containes(global::System.Windows.Point arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.List<global::System.Windows.Point> GetGraphPointsForPlottingCoordinateOnRangeAxis(double rangeAxisValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

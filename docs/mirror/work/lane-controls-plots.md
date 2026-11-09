@@ -237,3 +237,11 @@
 - Shapes: the empty override matched first time. The Z-axis override (batch 33 attempt, reverted earlier) has a body and is still open.
 - Release IL: PASS — 502 checked, 502 exact, 0 failures.
 - Remaining mismatches in this batch: none.
+
+## Batch 34 — TraceModel transform and range helpers
+
+- Members: `CalculateRadialRange` (static, `out` min/max), `CalculateRadialTransformByOffset`, `CalculatePolarTransformPoints`, `CalculateLogTransformPoints`, `TraceTypeIsLinearAndAxesScalingIsLinear`, `Containes`. Hand-written: `Mirrored/Controls.Plots.Model.TraceModel.cs`; their stubs removed from the `.g.cs`.
+- Shapes: all six matched first time with plain `foreach` loops and `point.X`/`point.Y` access (ILSpy's `Point current = point` copies are not in the IL). The polar and log helpers use `x`/`y` locals and the `?:` NaN fallback for log.
+- Callees left as stubs: none of these helpers depends on an unfinished body beyond the axis properties they already call.
+- Release IL: PASS — 508 checked, 508 exact, 0 failures.
+- Remaining in TraceModel and the other target types: the rest of the TraceModel stubs (event-heavy and WPF-coupled members) and all PlotTrace, PlotControl and PlotGraphAxis stubs.
