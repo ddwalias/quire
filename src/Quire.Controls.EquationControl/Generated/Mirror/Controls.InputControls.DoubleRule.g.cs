@@ -11,8 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.DoubleRule, Ptc.Controls.EquationControl")]
 public partial class DoubleRule : global::System.Windows.Controls.ValidationRule
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Controls.ValidationResult Validate(object value, global::System.Globalization.CultureInfo cultureInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public DoubleRule() { }
 }
