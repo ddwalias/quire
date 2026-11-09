@@ -4,6 +4,9 @@ using System.Windows;
 using Quire.Controls.Core;
 using Quire.Controls.Core.IORegions;
 using Quire.Core;
+using Quire.EquationEditor.Tree;
+using Quire.EquationEditor.Tree.Transform;
+using Quire.Core;
 using Quire.Mirror;
 
 namespace Quire.Controls.IO;
@@ -142,6 +145,13 @@ public partial class IOManager
 
     partial class UnitedValueGetter
     {
+        protected UnitedValueGetter(string alias, string scaledByUnits)
+        {
+            Alias = alias;
+            ScaledByUnits = scaledByUnits;
+            ScalingSExpression = EnumerableExtensions.IsNotEmpty<char>(scaledByUnits) ? InfixMonomialToSExpressionTransform.GetInstance(true).Transform(ScaledByUnits) : string.Empty;
+        }
+
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         public string ScaledByUnits { get; private set; }
 
@@ -154,6 +164,15 @@ public partial class IOManager
 
     partial class ScalarOutputGetter
     {
+        private readonly GetOutputValueTypes _valueTypes;
+
+        public ScalarOutputGetter(string alias, GetOutputValueTypes valueTypes, string scaledByUnits = default)
+            : base(alias, scaledByUnits)
+        {
+            _valueTypes = valueTypes;
+            DebugTools.DevAssert((uint)valueTypes > 0, null);
+        }
+
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         public IUnitedScalarState ScalarState { get; private set; }
     }
@@ -172,6 +191,15 @@ public partial class IOManager
 
     partial class ScalarInputGetter
     {
+        private readonly GetInputValueTypes _valueTypes;
+
+        public ScalarInputGetter(string alias, GetInputValueTypes valueTypes, string scaledByUnits = default)
+            : base(alias, scaledByUnits)
+        {
+            _valueTypes = valueTypes;
+            DebugTools.DevAssert((uint)valueTypes > 0, null);
+        }
+
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         public IUnitedScalarState OriginalScalarState { get; private set; }
 
@@ -181,18 +209,42 @@ public partial class IOManager
 
     partial class UnitedMatrixGetter
     {
+        private readonly CalculationOverridesTypes _getterType;
+
+        public UnitedMatrixGetter(string alias, bool isInput, string scaledByUnits = default)
+            : base(alias, scaledByUnits)
+        {
+            _getterType = isInput ? CalculationOverridesTypes.InputOverriddenValueGetter : CalculationOverridesTypes.OutputOverriddenValueGetter;
+        }
+
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         public IUnitedMatrixState MatrixState { get; private set; }
     }
 
     partial class StringGetter
     {
+        private readonly CalculationOverridesTypes _getterType;
+
+        public StringGetter(string alias, bool isInput)
+            : base(alias, null)
+        {
+            _getterType = isInput ? CalculationOverridesTypes.InputOverriddenValueGetter : CalculationOverridesTypes.OutputOverriddenValueGetter;
+        }
+
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         public IStringState StringState { get; private set; }
     }
 
     partial class CommonValueGetter
     {
+        private readonly CalculationOverridesTypes _getterType;
+
+        public CommonValueGetter(string alias, bool isInput)
+            : base(alias, null)
+        {
+            _getterType = isInput ? CalculationOverridesTypes.InputOverriddenValueGetter : CalculationOverridesTypes.OutputOverriddenValueGetter;
+        }
+
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         public IErrorState ErrorState { get; private set; }
     }
@@ -220,6 +272,11 @@ public partial class IOManager
 
     partial class UnitlessValueSetter
     {
+        protected UnitlessValueSetter(string alias)
+        {
+            Alias = alias;
+        }
+
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         public string Alias { get; private set; }
 
@@ -229,6 +286,13 @@ public partial class IOManager
 
     partial class UnitedValueSetter
     {
+        protected UnitedValueSetter(string alias, string units)
+            : base(alias)
+        {
+            Units = units;
+            ScalingSExpression = EnumerableExtensions.IsNotEmpty<char>(Units) ? InfixMonomialToSExpressionTransform.GetInstance(true).Transform(Units) : string.Empty;
+        }
+
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         private string Units { get; set; }
 
@@ -238,6 +302,16 @@ public partial class IOManager
 
     partial class SExpressionSetter
     {
+        private string _sexprScaling;
+
+        public SExpressionSetter(string alias, string sexpr)
+            : base(alias, null)
+        {
+            _sexprValue = sexpr;
+            _sexprScaling = null;
+            SExpressionHelperUtilites.SplitScalingAndValue(ref _sexprValue, out _sexprScaling);
+        }
+
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         private string _sexprValue;
 
@@ -258,5 +332,16 @@ public partial class IOManager
 
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         protected override bool IsValueValid() => DoubleExtension.IsValid(_value);
+    }
+
+    partial class StringValueSetter
+    {
+        private readonly string _stringValueSExpr;
+
+        public StringValueSetter(string alias, string stringValue)
+            : base(alias)
+        {
+            _stringValueSExpr = stringValue == null ? null : string.Format("\"{0}\"", SExpressionUtility.EscapeStringValue(stringValue));
+        }
     }
 }

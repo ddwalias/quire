@@ -39,3 +39,5 @@
   - Shapes: `ImageFileName` as a four-argument `string.Format` matches the compiler's params-span lowering with no extra code.
   - Left unimplemented: the DitaWriter constructor, WriteHeader, WriteImageElementCreateFile, WriteContentControl and the write methods that follow (large XML/WPF bodies).
 - Batch 16: `IO.IOManager` nested state classes (UnitedScalarState, UnitedMatrixState, StringState, ErrorState constructors; StringState.Value with its assertion getter). Gate: PASS, 504 checked. Report: `.mirror-cache/release-il-19f2b3637b7a/release-il.json`.
+- Batch 17: `IO.IOManager` constructors of the getter and setter nested classes (UnitedValueGetter base, ScalarOutput/InputGetter, UnitedMatrix/String/CommonValueGetter, UnitlessValueSetter, UnitedValueSetter, StringValueSetter, SExpressionSetter). Gate: PASS, 514 checked. Report: `.mirror-cache/release-il-c1cb57aad692/release-il.json`.
+  - Shapes: `DevAssert((uint)valueTypes > 0, null)` gives Mathcad's `cgt.un` (signed `> 0` gives `cgt`). `stringValue == null ? null : Format(...)` matches the branch order; `!= null ? … : null` does not.
