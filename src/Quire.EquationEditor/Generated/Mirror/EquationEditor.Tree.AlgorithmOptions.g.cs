@@ -20,27 +20,5 @@ public partial class AlgorithmOptions : global::System.ICloneable
     [global::Quire.Mirror.MirrorStub]
     private bool a_;
     [global::Quire.Mirror.MirrorStub]
-    private bool b;
-    [global::Quire.Mirror.MirrorStub]
     public bool IsMultiStart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsOptimize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasAnyOption { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public AlgorithmOptions() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void ToggleMultiStart() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ToggleOptimize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public AlgorithmOptions(global::Quire.EquationEditor.Tree.AlgorithmOptions other) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.AlgorithmOptions Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string ToSExpression() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
