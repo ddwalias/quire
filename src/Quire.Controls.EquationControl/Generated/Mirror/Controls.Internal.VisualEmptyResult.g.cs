@@ -11,8 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualEmptyResult, Ptc.Controls.EquationControl")]
 internal partial class VisualEmptyResult : global::Quire.Controls.Internal.VisualTextNode, global::Quire.EquationEditor.View.IVisualEmptyResultNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override string Text { get => base.Text; }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualEmptyResult() { }
 }

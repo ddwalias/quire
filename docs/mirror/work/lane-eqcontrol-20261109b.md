@@ -69,4 +69,7 @@
 - Batch: `Controls.InputControls.RadioButtonEventAggregator::{IsCheckedChanged, PublishIsCheckedChanged, .ctor}`.
 - Shapes tried: field-like event accessors, null-conditional event invocation, and empty constructor matched.
 - Release IL: PASS, 667 checked (`.mirror-cache/release-il-b0ea66752af2/release-il.json`).
+- Batch: `Controls.Internal.VisualEmptyResult::{Text, .ctor}`.
+- Shapes tried: direct settings property getter and `MathFormat.IsItalic = true` constructor matched.
+- Release IL: PASS, 669 checked (`.mirror-cache/release-il-f868c1b7e31c/release-il.json`).
 - Remaining: all other stub-marked members in EquationControl; 5,316 markers across 294 types after this batch.
