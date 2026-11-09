@@ -20,8 +20,6 @@ public partial class TextRegion : global::Quire.Controls.Text.RichTextWithEmbedd
     [global::Quire.Mirror.MirrorStub]
     public override object Clone() => base.Clone();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Text.TextRegion CloneTextRegion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Delegate _CreateDelegate(global::System.Type delegateType, string handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

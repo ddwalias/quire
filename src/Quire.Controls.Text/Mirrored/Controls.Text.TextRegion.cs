@@ -16,4 +16,12 @@ public partial class TextRegion
 
         return base.ShouldSerializeProperty(dp);
     }
+
+    public TextRegion CloneTextRegion()
+    {
+        TextRegion textRegion = new TextRegion();
+        textRegion.CloneContent(this, null);
+        textRegion.Width = Width;
+        return textRegion;
+    }
 }

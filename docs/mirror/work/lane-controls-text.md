@@ -481,3 +481,8 @@
 
 - Exact: `ShouldSerializeProperty` (return false for the `Style` and `Template` dependency properties by name; otherwise call the base implementation).
 - Release IL: PASS — 421 checked, 0 failures; one exact member added. Previously exact methods remained exact.
+
+## Batch 79 — TextRegion clone (1)
+
+- Exact: `CloneTextRegion` (construct a new region, clone this content with the default non-export mode, copy `Width`, and return the clone).
+- Release IL: PASS — 422 checked, 0 failures; one exact member added. Previously exact methods remained exact.
