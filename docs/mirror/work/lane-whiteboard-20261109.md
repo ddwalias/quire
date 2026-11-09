@@ -392,3 +392,10 @@
   - `DeleteItemIfNeeded`: the Mathcad body keeps the `RemoveItemsCommand` on the stack with `dup` (set property, then `Execute`, then `pop`). The idiomatic local form emits `stloc`/`ldloc`, so it does not match.
   - `IsValidLocation`: the Mathcad IL calls `GetItemIgnoreForHorizontalMovementAndWidth` with `call` (non-virtual), but the candidate declares it `public virtual` and implements `IWhiteboardViewModel` with it. Changing that flag is an interface/ownership decision, so it is skipped.
 - Release IL: PASS — 842 checked, 0 failures (`release-il-f291ef01626c`).
+
+## Batch 25 — WhiteboardViewModel plain members
+
+- Members: `SaveState`, `GetDescendantInsertionPoint` (pattern `is IWhiteboardControl` with `return default;`), `HandleChildRequestRemove`, `DirectionalMoveHandler(Direction)` (calls the two-argument overload, still a stub), `ItemsOverlapped`.
+- Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stubs replaced.
+- Skipped in this group: `HandleChildSizeChanged` (raises the `ChildCausedResize` event and compares `Size` values, shape not yet checked), `HandleCarriageReturn` and `DeleteSelectedItems`/`DeleteVerticalSpaceAbove`/`Below` (`new XCommand(...).Execute()` devirtualization blocker).
+- Release IL: PASS — 847 checked, 0 failures (`release-il-5903c6f14cc8`).

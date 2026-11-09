@@ -806,7 +806,24 @@ public partial class WhiteboardViewModel
 
     public virtual void Paste(global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> pasteItemsAtLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public virtual void SaveState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void SaveState()
+    {
+        _savedInsertionPoint = null;
+        if (IsCrosshairVisible)
+        {
+            _savedInsertionPoint = InsertionPoint;
+        }
+
+        if (SelectedItems.Any())
+        {
+            _savedSelectionList = SelectedItems.ToList();
+        }
+
+        if (ActiveItem != null)
+        {
+            _savedActiveItem = ActiveItem;
+        }
+    }
 
     public virtual void ClearState()
     {
@@ -985,7 +1002,27 @@ public partial class WhiteboardViewModel
 
     public virtual global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> RecursivelyEnumerateDescendantItemssBypassWhiteboard() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public global::System.Windows.Point GetDescendantInsertionPoint() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public Point GetDescendantInsertionPoint()
+    {
+        if (SelectedItems.Any())
+        {
+            return default;
+        }
+
+        if (ActiveItem is IWhiteboardControl whiteboardControl)
+        {
+            Point descendantInsertionPoint = whiteboardControl.GetDescendantInsertionPoint();
+            Point itemLocation = WhiteboardItemMgr.GetItemLocation(ActiveItem);
+            return new Point(itemLocation.X + descendantInsertionPoint.X, itemLocation.Y + descendantInsertionPoint.Y);
+        }
+
+        if (ActiveItem != null)
+        {
+            return WhiteboardItemMgr.GetItemLocation(ActiveItem);
+        }
+
+        return InsertionPoint;
+    }
 
     public void HandleCaretLeavesTextArea(global::Quire.Controls.Core.CommonRoutedEvents.CaretLeavesTextRegionEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -1010,7 +1047,10 @@ public partial class WhiteboardViewModel
         }
     }
 
-    protected virtual void HandleChildRequestRemove(global::Quire.Controls.Core.IWhiteboardItem itemToRemove, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void HandleChildRequestRemove(IWhiteboardItem itemToRemove, Direction direction)
+    {
+        RemoveWhiteboardItem(itemToRemove);
+    }
 
     protected virtual void HandleCarriageReturn() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -1037,7 +1077,10 @@ public partial class WhiteboardViewModel
         return GetItemLocation(item).X + WhiteboardItemMgr.GetDesiredSize(item).Width;
     }
 
-    protected virtual void DirectionalMoveHandler(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void DirectionalMoveHandler(Direction direction)
+    {
+        DirectionalMoveHandler(direction, allowGrowthDownOrRight: true);
+    }
 
     protected void DirectionalMoveHandler(global::Quire.Direction direction, bool allowGrowthDownOrRight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -1163,7 +1206,10 @@ public partial class WhiteboardViewModel
 
     protected void SetEqResizable(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    protected virtual bool ItemsOverlapped(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual bool ItemsOverlapped(IEnumerable<IWhiteboardItem> items)
+    {
+        return WhiteboardItemMgr.ItemsOverlapped(items);
+    }
 
     public virtual Rect GetItemRect(IWhiteboardItem item)
     {
