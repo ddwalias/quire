@@ -68,4 +68,25 @@ public partial class DitaWriter
         [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
         public virtual void Dispose() => _writer.WriteEndElement();
     }
+
+    private string CurrentIdString => string.Format("ml-{0}", _currentId);
+
+    public void ZeroCurrentId()
+    {
+        _currentId = 0;
+    }
+
+    private string ImageFileName(string extension)
+    {
+        return string.Format("{0}\\{1}{2}.{3}", "graphics", _fileName, _currentId, extension);
+    }
+
+    private void EnsureDirectoryExists()
+    {
+        string directoryName = DirectoryName;
+        if (!Directory.Exists(directoryName))
+        {
+            Directory.CreateDirectory(directoryName);
+        }
+    }
 }

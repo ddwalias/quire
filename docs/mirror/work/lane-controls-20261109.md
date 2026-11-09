@@ -35,3 +35,6 @@
   - Not matched, left as an unmarked placeholder: `CleanAliasesOfRegion`. Tried: early returns, nested `if (IsValidItem) { if (!Failed) ... }`, and combined `IsValidItem && !Failed`. Each left the first conditional branch targeting a different `ret` layout than Mathcad's shared `ret`.
 - Batch 14: `RegionCloneForImageHelper` (constructor, ApplyLayoutSettings). Gate: PASS, 492 checked. Report: `.mirror-cache/release-il-19b9cf30e6b8/release-il.json`.
   - Shapes: the layout method matched the natural source on the first try, including the `2.0 * margin` order and the `scale *=` steps.
+- Batch 15: `DitaWriter` helpers (CurrentIdString, ZeroCurrentId, ImageFileName, EnsureDirectoryExists). Gate: PASS, 498 checked. Report: `.mirror-cache/release-il-994a15e49edd/release-il.json`.
+  - Shapes: `ImageFileName` as a four-argument `string.Format` matches the compiler's params-span lowering with no extra code.
+  - Left unimplemented: the DitaWriter constructor, WriteHeader, WriteImageElementCreateFile, WriteContentControl and the write methods that follow (large XML/WPF bodies).

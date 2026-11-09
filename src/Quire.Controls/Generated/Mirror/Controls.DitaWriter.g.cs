@@ -28,17 +28,9 @@ public partial class DitaWriter : global::System.Xml.XmlTextWriter, global::Quir
     [global::Quire.Mirror.MirrorStub]
     public const string PubsBody = "pubsBody";
     [global::Quire.Mirror.MirrorStub]
-    private string CurrentIdString { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public DitaWriter(string fileName, global::Quire.Serialization.ISerializationHelper documentHelper) : base(default(global::System.IO.TextWriter)) { }
     [global::Quire.Mirror.MirrorStub]
     private void WriteHeader() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ZeroCurrentId() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string ImageFileName(string extension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void EnsureDirectoryExists() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.IO.FileStream WriteImageElementCreateFile(string extension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
