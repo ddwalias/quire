@@ -133,3 +133,14 @@
   - The colour ternary `color = cond ? Special : Color` gives a different arm layout. Mathcad stores the colour in each arm of an if/else.
   - The if/else with `gradientStop2 == null || !(gradientStop2.Offset >= value)` puts the test in the wrong branch order (`bge.s` vs `blt.un.s`). `if (gradientStop2 != null && gradientStop2.Offset >= value) color = gradientStop2.Color; else color = Special;` matches.
 - Release IL: PASS — 453 checked, 453 exact, 0 failures, 4802 unfinished.
+
+## Batch 20 attempt — PlotLegendLayoutManager (not landed; reverted)
+
+- Members: `.ctor` x2, `CalcMaxDecimalPerColumn` (override, `newarr`), `Clone` (override), `GetNumberOfColumnsFitWidth`. Left as stubs.
+- Shapes tried for `GetNumberOfColumnsFitWidth`:
+  - `Size matrixSize` assigned before the first compare: the first `get_MatrixSize` call lands in the wrong position (`calls differ`). Mathcad reads `MatrixSize` inline in the first comparison and keeps local 2 as a struct temporary.
+  - Inline `plotLegendLayoutManager.MatrixSize.Width` everywhere: fixes that call order. The `else` branch then differs in the loop shape.
+  - `else { while (true) { if (cmp >= 0 || Columns <= 1) break; ... } }`: rejected. Mathcad lays the branch out as a head-tested `while (Compare(newWidth, MatrixSize.Width) < 0 && Columns > 1)` with bottom-tested layout.
+  - Head-tested `while` with `int columns` declared inside the body: local slot 4 instead of Mathcad's slot 3 (`Release IL differs`).
+  - Same with `int columns;` declared once in the `else` block: still `Release IL differs`.
+- Not resolved: the `columns` temporary's slot in the second loop. Next step is an op-level diff of the two bodies, which needs the candidate IL extracted per method (the awk extraction did not isolate the method).
