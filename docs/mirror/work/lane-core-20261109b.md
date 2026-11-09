@@ -29,6 +29,8 @@
 
 - Batch 13: `cachedWorksheetRegionType.SupportedTypes` (exact eight-entry `.cctor` array, same order), `RegionCollectionSerializer<TCollection>` (`_typeOfCollection = typeof(TCollection)` `.cctor` and two serializer fields), `ProtectableTypesRegistry._map` (declared; the existing explicit static constructor fills it), `fieldTypePageNumber._enumSerializationValues` (no `.cctor` in Release IL, so no initializer), `oleBaseContainerType.itemidrefField`. Gate: PASS, 4027 checked, 4027 exact, 0 failures (`.mirror-cache/release-il-d632fc5f4fea/release-il.json`). 7 stubs eliminated.
 
+- Batch 14: `PersistentData.OleUtils` static tables (25 stubs: OLE progId constants, the `Guid` fields for Excel, ChartAppOLE and equation classes, and `ChartAppOleGuidsConversionDict`). Declarations moved to `Mirrored/PersistentData.OleUtils.cs` in Mathcad order; the reviewed explicit static constructor already in `PersistentData/OleUtils.cs` supplies the initializers, so no method row changed. Gate: PASS, 4027 checked, 4027 exact, 0 failures (`.mirror-cache/release-il-7418e46d627f/release-il.json`). 25 stubs eliminated.
+
 ## Remaining Parked Stubs (139)
 - PersistentDataObjects (34 stubs): Parked per task guidelines and decisions (42 PDO members parked).
 - PersistentData (53 stubs): Serialization models and companion serializers bound to PersistentDataObjects.
