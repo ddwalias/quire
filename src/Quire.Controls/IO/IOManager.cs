@@ -148,6 +148,11 @@ public partial class IOManager
 
     partial class UnitedValueGetter
     {
+        public virtual bool IsScalingValid()
+        {
+            return EnumerableExtensions.IsNullOrEmpty<char>(ScaledByUnits) || EnumerableExtensions.IsNotEmpty<char>(ScalingSExpression);
+        }
+
         protected UnitedValueGetter(string alias, string scaledByUnits)
         {
             Alias = alias;
@@ -167,6 +172,8 @@ public partial class IOManager
 
     partial class ScalarOutputGetter
     {
+        string IItemAlias.Alias => Alias;
+
         private readonly GetOutputValueTypes _valueTypes;
 
         public ScalarOutputGetter(string alias, GetOutputValueTypes valueTypes, string scaledByUnits = default)
@@ -182,6 +189,16 @@ public partial class IOManager
 
     partial class ItemAliasComparer
     {
+        public override bool Equals(IItemAlias x, IItemAlias y)
+        {
+            return x.Alias.Equals(y.Alias, _caseInsensitiveAliasComparisonEnabled ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal);
+        }
+
+        public override int GetHashCode(IItemAlias obj)
+        {
+            return obj.Alias.ToUpperInvariant().GetHashCode();
+        }
+
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         private readonly bool _caseInsensitiveAliasComparisonEnabled;
 
@@ -194,6 +211,8 @@ public partial class IOManager
 
     partial class ScalarInputGetter
     {
+        string IItemAlias.Alias => Alias;
+
         private readonly GetInputValueTypes _valueTypes;
 
         public ScalarInputGetter(string alias, GetInputValueTypes valueTypes, string scaledByUnits = default)
@@ -212,6 +231,8 @@ public partial class IOManager
 
     partial class UnitedMatrixGetter
     {
+        string IItemAlias.Alias => Alias;
+
         private readonly CalculationOverridesTypes _getterType;
 
         public UnitedMatrixGetter(string alias, bool isInput, string scaledByUnits = default)
