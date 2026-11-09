@@ -23,4 +23,7 @@
 - Batch: `Controls.InputControls.InputControlCommands::{_typeOfThis, .ctor}`.
 - Shapes tried: a `typeof(InputControlCommands)` field initializer plus implicit constructor matched the type handle and constructor IL.
 - Release IL: PASS, 624 checked (`.mirror-cache/release-il-d3235b658241/release-il.json`).
-- Remaining: all other stub-marked members in EquationControl; 5,356 markers across 304 types after this batch.
+- Batch: `Controls.InputControls.EditableComboBoxCommands::{OpenEditingMode, CloseEditingMode}`.
+- Shapes tried: ordered static field initializers, including the functionality command constructor, matched the reference type initializer.
+- Release IL: PASS, 625 checked (`.mirror-cache/release-il-8b4e27ddea81/release-il.json`).
+- Remaining: all other stub-marked members in EquationControl; 5,354 markers across 303 types after this batch.
