@@ -245,3 +245,10 @@
 - Callees left as stubs: none of these helpers depends on an unfinished body beyond the axis properties they already call.
 - Release IL: PASS — 508 checked, 508 exact, 0 failures.
 - Remaining in TraceModel and the other target types: the rest of the TraceModel stubs (event-heavy and WPF-coupled members) and all PlotTrace, PlotControl and PlotGraphAxis stubs.
+
+## Batch 35 — TraceModel parameter range and RL helpers
+
+- Members: `GetParameterRange` (returns an `Interval` object initializer, or `_angularRange` for angular axes), `GetXAxisLimitEditorValue` (static), `GetxyplotScalingRl`, `GetExpRl`, `InvalidateEngineResult` (`EngineResult = default`). Hand-written: appended to `Mirrored/Controls.Plots.Model.TraceModel.cs`; their stubs removed from the `.g.cs`.
+- Shapes: all five matched first time, including the `Interval` initializer (struct temp, `Lower` then `Upper`) and the `!=` check whose else-branch is the `_angularRange` return.
+- Release IL: PASS — 513 checked, 513 exact, 0 failures.
+- Note: the `.g.cs` edits are byte-preserving (CRLF kept). Batch 34 landed `TraceModel.g.cs` as an LF blob after a text-mode rewrite; the working tree and HEAD agree under autocrlf, so the line-ending churn is in history only.

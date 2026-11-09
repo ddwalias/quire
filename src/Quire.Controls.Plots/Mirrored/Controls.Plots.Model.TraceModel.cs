@@ -110,4 +110,43 @@ internal partial class TraceModel
         }
         return false;
     }
+
+    private Interval GetParameterRange()
+    {
+        IAxisModel rangeAxisModel = RangeAxisModel;
+        if (rangeAxisModel.Type != AxesType.Angular)
+        {
+            return new Interval
+            {
+                Lower = GetXAxisLimitEditorValue(rangeAxisModel.StartExpression, rangeAxisModel.StartDefault),
+                Upper = GetXAxisLimitEditorValue(rangeAxisModel.EndExpression, rangeAxisModel.EndDefault)
+            };
+        }
+        return _angularRange;
+    }
+
+    private static double GetXAxisLimitEditorValue(IAxisLimitEditor limitEditor, double defaultValue)
+    {
+        if (limitEditor != null && limitEditor.IsValueValid)
+        {
+            return limitEditor.CalculatedValue;
+        }
+        return defaultValue;
+    }
+
+    private string GetxyplotScalingRl(AxesIndex axesType)
+    {
+        IPlotEquation equation = _equations[(int)axesType].Equation;
+        return GetReplacedRl(equation.ScalingEquation, equation.ScalingRl);
+    }
+
+    private string GetExpRl(AxesIndex axesType)
+    {
+        return GetReplacedRl(_equations[(int)axesType].Equation.Expression);
+    }
+
+    private void InvalidateEngineResult()
+    {
+        EngineResult = default;
+    }
 }

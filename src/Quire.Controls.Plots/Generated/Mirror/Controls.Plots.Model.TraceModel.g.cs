@@ -192,16 +192,6 @@ internal partial class TraceModel : global::Quire.Controls.Plots.Model.PlotCalcu
     [global::Quire.Mirror.MirrorStub]
     private void FireStyleChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Interval GetParameterRange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static double GetXAxisLimitEditorValue(global::Quire.Controls.Plots.Presenter.IAxisLimitEditor limitEditor, double defaultValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string GetxyplotScalingRl(global::Quire.Controls.Plots.Presenter.AxesIndex axesType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string GetExpRl(global::Quire.Controls.Plots.Presenter.AxesIndex axesType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void InvalidateEngineResult() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void SetError(global::Quire.Calculation.Core.EngineError error) => base.SetError(error);
