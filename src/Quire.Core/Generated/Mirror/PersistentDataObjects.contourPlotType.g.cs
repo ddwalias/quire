@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.contourPlotType, Ptc.Core")]
 public partial class contourPlotType
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlNode plotEquationRaw;
 }

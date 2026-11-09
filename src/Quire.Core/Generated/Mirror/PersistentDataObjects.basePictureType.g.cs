@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.basePictureType, Ptc.Core")]
 public partial class basePictureType : global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string itemidrefField;
 }

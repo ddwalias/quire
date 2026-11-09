@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.solveBlockRegionType, Ptc.Core")]
 public partial class solveBlockRegionType : global::Quire.PersistentDataObjects.regionInWhiteboardBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Type[] SupportedTypes;
 }

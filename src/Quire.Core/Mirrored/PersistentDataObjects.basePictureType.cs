@@ -5,6 +5,8 @@ namespace Quire.PersistentDataObjects;
 
 partial class basePictureType
 {
+    private string itemidrefField;
+
     public string itemidref
     {
         get

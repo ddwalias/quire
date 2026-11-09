@@ -21,6 +21,8 @@
 - Batch 9: PersistentDataObjects root serializer types (`axes3Type`, `axisBaseTypeMarker`, `calculation`, `matrix`, `presentation`, `propertiesType`): `_typeOfThis` (exact `.cctor` via `typeof`), `_xmlSerializer`, root-name constants, and `axes3Type` raw `XmlNode` fields (`[XmlIgnore]`). Assembly for these members is `Ptc.Core` (`--assembly Ptc.Core`; there is no `PersistentDataObjects.dll` in the install). Gate: PASS, 4021 checked, 4021 exact, 0 failures (`.mirror-cache/release-il-fcc3bdec951f/release-il.json`). 17 stubs eliminated.
   - Shapes: field initializers and constants in `Mirrored/PersistentDataObjects.<type>.cs`; the six `.g.cs` files lose the stub blocks only (CRLF kept).
 
+- Batch 10: PersistentDataObjects field and constant stubs (`basePictureType.itemidrefField`, `contourPlotType.plotEquationRaw` with `[XmlIgnore]`, `regionBase.PageUnitsConvertionFactor`, `solveBlockRegionType.SupportedTypes` with its exact `.cctor` array initializer). Gate: PASS, 4022 checked, 4022 exact, 0 failures (`.mirror-cache/release-il-bc76c5943a35/release-il.json`). 4 stubs eliminated.
+
 ## Remaining Parked Stubs (139)
 - PersistentDataObjects (34 stubs): Parked per task guidelines and decisions (42 PDO members parked).
 - PersistentData (53 stubs): Serialization models and companion serializers bound to PersistentDataObjects.
