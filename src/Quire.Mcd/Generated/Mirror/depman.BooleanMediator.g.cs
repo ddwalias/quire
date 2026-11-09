@@ -11,12 +11,4 @@ namespace Quire.depman;
 [global::Quire.Mirror.MirrorOf("depman.BooleanMediator, mcdepman")]
 public partial interface BooleanMediator
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void AddCallback(global::Quire.Engine.BooleanCallback b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void RemoveCallback(global::Quire.Engine.BooleanCallback b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void WaitValueTrue(int timeout) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
