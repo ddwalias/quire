@@ -173,3 +173,10 @@
 - Reference: member-specific extraction omitted the IL file; the method body was read from the cached full `Ptc.Controls.Plots.il` Release disassembly. LINQ projection and invariant numeric formatting matched, including the compiler-generated lambda method.
 - Release IL: PASS — 466 checked, 466 exact, 0 failures.
 - Remaining: `PlotLegendLayoutManager.GetNumberOfColumnsFitWidth` remains blocked by the documented local-slot mismatch; other unimplemented stubs remain unclaimed.
+
+## Batch 25 — AxisMarkersCollection
+
+- Members: `.ctor`. Hand-written: `Mirrored/Controls.Plots.Model.AxisMarkersCollection.cs`; its stub removed from the `.g.cs`.
+- Shape: implicit base initialization through the empty constructor matched.
+- Release IL: PASS — 466 checked, 466 exact, 0 failures.
+- Remaining: `PlotLegendLayoutManager.GetNumberOfColumnsFitWidth` remains blocked by the documented local-slot mismatch; other unimplemented stubs remain unclaimed.

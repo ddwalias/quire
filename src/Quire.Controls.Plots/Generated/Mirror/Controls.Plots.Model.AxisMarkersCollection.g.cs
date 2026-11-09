@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.AxisMarkersCollection, Ptc.Controls.Plots")]
 public partial class AxisMarkersCollection : global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.Plots.Model.AxisMarker>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public AxisMarkersCollection() { }
 }
