@@ -264,3 +264,10 @@
 - Members: `SelectTrace`, `DeselectTrace`, `fireTraceClicked` (Mathcad's lowercase name kept), `ResetIsTypeDefault`, private `FireTypeChanged`, `FireErrorChanged`, `FireCalculatingStatusChangedEvent`, `FireTraceChanged`. Hand-written: `Mirrored/Controls.Plots.PlotTrace.cs`; their stubs removed from `PlotTrace.g.cs`.
 - Shapes: the plain `if (X != null) X(...)` form matched for all but `FireTraceChanged`, which uses the handler-copy form (Mathcad's `?.Invoke` is compiled with a local, the same pattern as TraceModel batch 36).
 - Release IL: PASS — 528 checked, 528 exact, 0 failures.
+
+## Batch 38 — TraceModel accessors and calculatable overrides
+
+- Members: `GetAxis`, `GetEquation`, `GetPlottingPointsForDisplay`, `GetRangeAxisType`; overrides `Commit`, `SetError`, `PreprocessEquationSpecificError`, `OnEquationSpecificError`, `BeforeRequestEvaluation`, `OnTraceEquationSExpressionChanged`; private `ClearPoints`. Hand-written: appended to `Mirrored/Controls.Plots.Model.TraceModel.cs`; their stubs (including the `=> base.X(...)` forwarders) removed from the `.g.cs`.
+- Shapes: all eleven matched first time, including the `SetIsCommitted(value: false)` named argument and the `_engineResultForSerialization = null` assignment in `SetError`.
+- Deliberately left: `OnPlotCalculatableError` (it sets `IsNumOfPointsMutable`, a member whose owner I have not confirmed for TraceModel).
+- Release IL: PASS — 539 checked, 539 exact, 0 failures.

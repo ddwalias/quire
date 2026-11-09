@@ -209,4 +209,71 @@ internal partial class TraceModel
             handler(engineError);
         }
     }
+
+    protected override void OnTraceEquationSExpressionChanged()
+    {
+        base.OnTraceEquationSExpressionChanged();
+        SetIsCommitted(value: false);
+    }
+
+    public IAxisModel GetAxis(AxesIndex axis)
+    {
+        return _axes[(int)axis];
+    }
+
+    public IPlotEquation GetEquation(AxesIndex axis)
+    {
+        return _equations[(int)axis].Equation;
+    }
+
+    public PointCollection GetPlottingPointsForDisplay()
+    {
+        return _plottingPointsForDisplay.ViewPoints;
+    }
+
+    public override void Commit()
+    {
+        FireRequestEvaluation();
+    }
+
+    public override void SetError(EngineError error)
+    {
+        if (error != null)
+        {
+            _engineResultForSerialization = null;
+        }
+        base.SetError(error);
+    }
+
+    protected override void PreprocessEquationSpecificError()
+    {
+        base.PreprocessEquationSpecificError();
+        ClearPoints();
+    }
+
+    protected override void OnEquationSpecificError(ICalculatable equation)
+    {
+        base.OnEquationSpecificError(equation);
+        FireEquationError(Error);
+    }
+
+    private void ClearPoints()
+    {
+        NumberOfPointsInResult = 0;
+        _analyzedData.SetDefaults();
+        _analyzedData.PointsCollection = new PointCollection();
+        SetPlottingPoints(_analyzedData.PointsCollection);
+    }
+
+    protected override void BeforeRequestEvaluation()
+    {
+        SetIsCommitted(value: true);
+        ResultValid = false;
+        FireEquationError(null);
+    }
+
+    public AxesType GetRangeAxisType()
+    {
+        return GetAxis(AxesIndex.Range).Type;
+    }
 }
