@@ -11,12 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.worksheetRegionType, Ptc.Core")]
 public partial class worksheetRegionType : global::Quire.PersistentDataObjects.regionInWhiteboardBase, global::Quire.PersistentDataObjects.IRegionInWhiteboardType, global::Quire.PersistentDataObjects.IRegionType, global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider, global::Quire.Serialization.IS11NProvider, global::Quire.Serialization.IBaseS11NProvider, global::Quire.PersistentDataObjects.IHasPreSerialize
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Xml.Serialization.XmlSerializer _xmlSerializerWithOverrides;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Xml.Serialization.XmlSerializer _xmlSerializerDefault;
-    [global::Quire.Mirror.MirrorStub]
-    public const string RootAttributeName = "region";
 }

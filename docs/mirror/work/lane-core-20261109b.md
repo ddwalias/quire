@@ -23,6 +23,8 @@
 
 - Batch 10: PersistentDataObjects field and constant stubs (`basePictureType.itemidrefField`, `contourPlotType.plotEquationRaw` with `[XmlIgnore]`, `regionBase.PageUnitsConvertionFactor`, `solveBlockRegionType.SupportedTypes` with its exact `.cctor` array initializer). Gate: PASS, 4022 checked, 4022 exact, 0 failures (`.mirror-cache/release-il-bc76c5943a35/release-il.json`). 4 stubs eliminated.
 
+- Batch 11: PersistentDataObjects `textType` (`_lastVerToContainPageGaps` exact `new Version(1, 0, 1, 12)` `.cctor`, `_s11NProvider`, `_deS11NProvider`, `_saveInline`), `presentationPageModel` (`_pageMargin`, `_thicknessConverter` `.cctor`), `worksheetRegionType` (`_typeOfThis` `.cctor`, two serializer fields, `RootAttributeName`). Gate: PASS, 4025 checked, 4025 exact, 0 failures (`.mirror-cache/release-il-7573b818e5bb/release-il.json`). 8 stubs eliminated.
+
 ## Remaining Parked Stubs (139)
 - PersistentDataObjects (34 stubs): Parked per task guidelines and decisions (42 PDO members parked).
 - PersistentData (53 stubs): Serialization models and companion serializers bound to PersistentDataObjects.

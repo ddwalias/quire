@@ -11,12 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.textType, Ptc.Core")]
 public partial class textType : global::Quire.PersistentData.RegionCollectionPreSerializer, global::Quire.PersistentDataObjects.IMC14AnnotationProvider, global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider, global::Quire.Serialization.IDeS11NConsumer, global::Quire.PersistentData.IRegionCollectionType, global::Quire.PersistentDataObjects.IHasPreSerialize, global::Quire.Core.ITextFormatCreation
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Version _lastVerToContainPageGaps;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Serialization.IS11NProvider _s11NProvider;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Serialization.IDeS11NProvider _deS11NProvider;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _saveInline;
 }

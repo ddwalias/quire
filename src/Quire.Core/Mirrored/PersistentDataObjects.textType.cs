@@ -1,12 +1,19 @@
 #nullable disable
 #pragma warning disable
+using System;
 using System.Linq;
 using Quire.Mirror;
+using Quire.Serialization;
 
 namespace Quire.PersistentDataObjects;
 
 partial class textType
 {
+    private static readonly Version _lastVerToContainPageGaps = new Version(1, 0, 1, 12);
+    private IS11NProvider _s11NProvider;
+    private IDeS11NProvider _deS11NProvider;
+    private bool _saveInline;
+
     [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
     public textType()
     {

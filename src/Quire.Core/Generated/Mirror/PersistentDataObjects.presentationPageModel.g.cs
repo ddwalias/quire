@@ -11,8 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.presentationPageModel, Ptc.Core")]
 public partial class presentationPageModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<global::System.Windows.Thickness> _pageMargin;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.ThicknessConverter _thicknessConverter;
 }

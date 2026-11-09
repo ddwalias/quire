@@ -5,6 +5,9 @@ namespace Quire.PersistentDataObjects;
 
 partial class presentationPageModel
 {
+    private global::System.Nullable<global::System.Windows.Thickness> _pageMargin;
+    private static readonly global::System.Windows.ThicknessConverter _thicknessConverter = new global::System.Windows.ThicknessConverter();
+
     public global::System.Nullable<global::System.Windows.Thickness> PageMargin
     {
         get
