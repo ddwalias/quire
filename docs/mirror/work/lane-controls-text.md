@@ -497,3 +497,11 @@
 - Exact: `ShouldLeaveTextRegionOnCaretMove` (enum switch for Left/Right, next insertion positions with document-boundary fallbacks, caret comparison, then base fallback).
 - Rejected candidate: sequential `if (direction == Left)` / `if (direction == Right)` emitted `bne.un.s` at instruction 2; Mathcad emits `beq.s`. The enum `switch` form matches.
 - Release IL: PASS — 424 checked, 0 failures; one exact member added. Previously exact methods remained exact.
+
+## Batch 82 — RichTextBase state and flag properties (14)
+
+- Members: `IsInPrinting`, `IsInCopy`, `IsInSaving`, `WpfRecreateScripts`, `RevertCoerceAfterSerializationProcess`, `IsSubscript`, `IsSuperscript`, `IsOnDrop`, `SupportsLists`, `SupportsIndentation`, `SupportsSubscriptSuperscript`, `IsNotEmpty`, `IsActive`, `IsSelected`.
+- Shapes: `WpfRecreateScripts` keeps the public getter with an `internal set` (the stub's accessor modifiers; a whole-property `internal` made the getter internal and failed the declaration check). `IsInSaving` setter is a guard clause before `OnIsInSavingCLRPropertyChanged`.
+- Hand-written: `src/Quire.Controls.Text/Mirrored/Controls.Text.RichTextBase.cs`; stubs removed from `Generated/Mirror/Controls.Text.RichTextBase.g.cs`.
+- Release IL: PASS — 441 checked, 441 exact, 0 failures, 282 unfinished.
+- Remaining mismatches in this batch: none.

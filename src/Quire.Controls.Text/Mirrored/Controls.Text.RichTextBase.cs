@@ -1263,4 +1263,57 @@ public partial class RichTextBase
         }
         CurrentInsertionScriptState = null;
     }
+
+    public bool IsInPrinting => (bool)GetValue(IsInPrintingProperty);
+
+    public bool IsInCopy => (bool)GetValue(IsInCopyProperty);
+
+    public bool IsInSaving
+    {
+        get => _isInSaving;
+        private set
+        {
+            if (_isInSaving == value)
+            {
+                return;
+            }
+
+            OnIsInSavingCLRPropertyChanged(value);
+            _isInSaving = value;
+        }
+    }
+
+    public bool WpfRecreateScripts
+    {
+        get => (bool)GetValue(WpfRecreateScriptsProperty);
+        internal set
+        {
+            if (value && WpfRecreateScripts)
+            {
+                DebugTools.FailAssertion("check re-entrance");
+            }
+
+            SetValue(WpfRecreateScriptsProperty, value);
+        }
+    }
+
+    public bool RevertCoerceAfterSerializationProcess => (bool)GetValue(RevertCoerceAfterSerializationProcessProperty);
+
+    public bool IsSubscript => TextScriptState == ScriptState.Subscript;
+
+    public bool IsSuperscript => TextScriptState == ScriptState.Superscript;
+
+    public bool IsOnDrop { get; set; }
+
+    protected virtual bool SupportsLists => true;
+
+    protected virtual bool SupportsIndentation => true;
+
+    protected virtual bool SupportsSubscriptSuperscript => true;
+
+    public bool IsNotEmpty => !IsEmpty;
+
+    public bool IsActive => WhiteboardDependencyProperties.GetIsActive(this);
+
+    public bool IsSelected => WhiteboardDependencyProperties.GetIsSelected(this);
 }
