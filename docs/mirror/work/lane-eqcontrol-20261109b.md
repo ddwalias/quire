@@ -41,4 +41,7 @@
 - Batch: `Controls.EquationTriadBuilder::{BuildEquationControl, AttachStyleFromExternalResource, .ctor}`.
 - Shapes tried: initial `Ptc.Controls.EquationControl` pack URI failed self-assembly normalization; `Quire.Controls.EquationControl` URI matched. Object initializer and descriptor-name ternary matched.
 - Release IL: PASS, 637 checked (`.mirror-cache/release-il-c0af06e7fe83/release-il.json`). Earlier candidate: FAIL at `bc5e1be6979a` (pack URI constant).
-- Remaining: all other stub-marked members in EquationControl; 5,336 markers across 296 types after this batch.
+- Batch: `Controls.VisualIdDescriptor::CommandParameter` (backing fields and existing constructor/properties retained).
+- Shapes tried: null test, then the `IdName` or `SymbolicRepresentation` constructor argument with `Label`, matched the reference.
+- Release IL: PASS, 638 checked (`.mirror-cache/release-il-3b5dcaa9f971/release-il.json`).
+- Remaining: all other stub-marked members in EquationControl; 5,335 markers across 296 types after this batch.
