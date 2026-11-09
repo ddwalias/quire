@@ -424,3 +424,10 @@
 - Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stubs replaced.
 - Skipped: `PreviewMouseLeftButtonDownHandler` (large pattern-matching body, not yet shaped), `InsertVerticalSpace` (`new InsertSpaceCommand(...).Execute()`, devirtualization blocker), `FindSizeLimit` (closure), `HandleMouseUp`, `NavigateInto`, `SelectedItemsChangedHandler`, `HandleItemsListChanged`, `FindMinimumSize`, `RecursivelyEnumerate*` (iterators).
 - Release IL: PASS — 869 checked, 0 failures (`release-il-437cf4bdc018`).
+
+## Batch 29 — WhiteboardViewModel HandleMouseUp, HandleItemsListChanged, SelectedItemsChangedHandler
+
+- Members: `HandleMouseUp` (sets `CurrentDragMode`, returns false), `HandleItemsListChanged` (switch with `Each` method groups and `FailAssertion` default), `SelectedItemsChangedHandler` (large switch; `Each(WhiteboardItemMgr.SelectItem)` method groups).
+- Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs` (`using System.Collections.Specialized;` added); placeholder stubs replaced.
+- Skipped: `FindMinimumSize` (decompiled temporaries, not shaped yet), `NavigateInto` (`new TranslateTransform(...).Transform`, devirtualization risk), `PreviewMouseLeftButtonDownHandler`, `FindSizeLimit` (closure), `RecursivelyEnumerate*` (iterators).
+- Release IL: PASS — 872 checked, 0 failures (`release-il-1a8d7d1a12d6`).

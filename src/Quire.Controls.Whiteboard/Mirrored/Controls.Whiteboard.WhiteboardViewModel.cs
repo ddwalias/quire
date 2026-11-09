@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -612,7 +613,24 @@ public partial class WhiteboardViewModel
 
     private void HandleItemsListChanging(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void HandleItemsListChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleItemsListChanged(NotifyCollectionChangedEventArgs e)
+    {
+        switch (e.Action)
+        {
+            case NotifyCollectionChangedAction.Add:
+                e.NewItems.Cast<IWhiteboardItem>().Each(HandleItemAdded);
+                break;
+            case NotifyCollectionChangedAction.Remove:
+                e.OldItems.Cast<IWhiteboardItem>().Each(HandleItemRemoved);
+                break;
+            case NotifyCollectionChangedAction.Move:
+                e.OldItems.Cast<IWhiteboardItem>().Each(HandleItemMoved);
+                break;
+            default:
+                DebugTools.FailAssertion("Unsupported action: {0}", e.Action);
+                break;
+        }
+    }
 
     public Point GridPosition
     {
@@ -1139,7 +1157,11 @@ public partial class WhiteboardViewModel
     {
     }
 
-    public virtual bool HandleMouseUp(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl sender, global::System.Windows.Point position, global::System.Windows.Input.MouseButton button) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual bool HandleMouseUp(IWhiteboardControl sender, Point position, MouseButton button)
+    {
+        CurrentDragMode = DragMode.None;
+        return false;
+    }
 
     public virtual global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> RecursivelyEnumerateDescendantItemssBypassWhiteboard() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -1390,7 +1412,60 @@ public partial class WhiteboardViewModel
 
     protected virtual global::Quire.Controls.Core.IWhiteboardItem GetChildItemFromLocation(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    protected virtual void SelectedItemsChangedHandler(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void SelectedItemsChangedHandler(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (SelectedItems.Any() && FirstSelectedItem != SelectedItems.First())
+        {
+            FirstSelectedItem = SelectedItems.First();
+        }
+        else if (SelectedItems.IsEmpty())
+        {
+            FirstSelectedItem = null;
+        }
+
+        if (SelectedItems.Any() && ActiveItem != null)
+        {
+            ActiveItem = null;
+        }
+
+        if (SelectedItems.Any())
+        {
+            ClearSavedState();
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                if (SelectedItems.Count() == e.NewItems.Count)
+                {
+                    RequestActivatePartContainingChild(SelectedItems.First());
+                    Activate(isActive: true);
+                }
+
+                IsFocused = true;
+            }
+
+            IsCrosshairVisible = false;
+        }
+
+        if (HandleUserInput)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    e.NewItems.Cast<IWhiteboardItem>().Each(WhiteboardItemMgr.SelectItem);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    e.OldItems.Cast<IWhiteboardItem>().Each(WhiteboardItemMgr.DeselectItem);
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    WhiteboardItems.Each(WhiteboardItemMgr.DeselectItem);
+                    break;
+                default:
+                    DebugTools.FailAssertion("Unsupported action: {0}", e.Action);
+                    break;
+            }
+        }
+
+        OnPropertyChanged("SelectedItems");
+    }
 
     protected virtual void HandleItemAdded(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
