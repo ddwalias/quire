@@ -15,18 +15,6 @@ public static partial class XpsPrintInterop
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.Printing.XpsPrintInterop+XPS_JOB_STATUS, Ptc.Core")]
     private partial struct XPS_JOB_STATUS
     {
-        [global::Quire.Mirror.MirrorStub]
-        public uint jobId;
-        [global::Quire.Mirror.MirrorStub]
-        public int currentDocument;
-        [global::Quire.Mirror.MirrorStub]
-        public int currentPage;
-        [global::Quire.Mirror.MirrorStub]
-        public int currentPageTotal;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Wpf.Printing.XpsPrintInterop.XPS_JOB_COMPLETION completion;
-        [global::Quire.Mirror.MirrorStub]
-        public int jobStatus;
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.Printing.XpsPrintInterop+XPS_JOB_COMPLETION, Ptc.Core")]

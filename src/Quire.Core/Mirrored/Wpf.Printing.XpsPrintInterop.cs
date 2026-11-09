@@ -5,6 +5,15 @@ namespace Quire.Wpf.Printing;
 
 static partial class XpsPrintInterop
 {
+    private partial struct XPS_JOB_STATUS
+    {
+        public uint jobId;
+        public int currentDocument;
+        public int currentPage;
+        public int currentPageTotal;
+        public global::Quire.Wpf.Printing.XpsPrintInterop.XPS_JOB_COMPLETION completion;
+        public int jobStatus;
+    }
 
     [System.Runtime.InteropServices.DllImport("XpsPrint.dll", CharSet = System.Runtime.InteropServices.CharSet.Unicode)]
     private static extern int StartXpsPrintJob(string printerName, string jobName, string outputFileName, nint progressEvent, Microsoft.Win32.SafeHandles.SafeWaitHandle completionEvent, [System.Runtime.InteropServices.In][System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.LPArray)] byte[] printablePagesOn, uint printablePagesOnCount, out IXpsPrintJob xpsPrintJob, out IXpsPrintJobStream documentStream, nint printTicketStream);

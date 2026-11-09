@@ -6,6 +6,39 @@ namespace Quire.Win32;
 
 public static partial class User32
 {
+    public static readonly nint INVALID_HANDLE_VALUE = new nint(-1);
+    public const int VK_SHIFT = 16;
+    public const int VK_CONTROL = 17;
+    public const int VK_MENU = 18;
+    public const int KEYEVENTF_EXTENDEDKEY = 1;
+    public const int KEYEVENTF_KEYUP = 2;
+    public const int KEYEVENTF_UNICODE = 4;
+    public const int KEYEVENTF_SCANCODE = 8;
+    public const int MOUSEEVENTF_VIRTUALDESK = 16384;
+    public const int EM_SETSEL = 177;
+    public const int EM_GETLINECOUNT = 186;
+    public const int EM_LINEFROMCHAR = 201;
+    public const int SM_CXMAXTRACK = 59;
+    public const int SM_CYMAXTRACK = 60;
+    public const int SM_XVIRTUALSCREEN = 76;
+    public const int SM_YVIRTUALSCREEN = 77;
+    public const int SM_CXVIRTUALSCREEN = 78;
+    public const int SM_CYVIRTUALSCREEN = 79;
+    public const int SM_SWAPBUTTON = 23;
+    public const int GWL_STYLE = -16;
+    public const int GWL_EXSTYLE = -20;
+    public const int WS_VSCROLL = 2097152;
+    public const int WS_HSCROLL = 1048576;
+    public const int ES_MULTILINE = 4;
+    public const int ES_AUTOVSCROLL = 64;
+    public const int ES_AUTOHSCROLL = 128;
+    public const int INPUT_MOUSE = 0;
+    public const int INPUT_KEYBOARD = 1;
+    public const uint MF_BYCOMMAND = 0u;
+    public const uint SC_RESTORE = 61728u;
+    public const uint SC_MINIMIZE = 61472u;
+    public const uint SC_MAXIMIZE = 61488u;
+
     [System.Runtime.InteropServices.DllImport("user32.dll", SetLastError = true)]
     public static extern int SendInput(int nInputs, ref INPUT mi, int cbSize);
 
