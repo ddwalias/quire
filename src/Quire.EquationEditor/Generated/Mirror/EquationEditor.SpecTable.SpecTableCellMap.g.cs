@@ -16,13 +16,5 @@ public partial class SpecTableCellMap : global::Quire.EquationEditor.SpecTable.I
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IEquationControl, global::Quire.EquationEditor.IEquationModel> b;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IEquationControl> Views { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public void Map(global::Quire.EquationEditor.IEquationModel eqModel, global::Quire.Controls.Core.IEquationControl eqView) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IEquationControl GetAssociatedView(global::Quire.EquationEditor.IEquationModel cellModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.IEquationModel GetAssociatedModel(global::Quire.Controls.Core.IEquationControl viewObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public SpecTableCellMap() { }
 }
