@@ -128,29 +128,15 @@ internal partial class TraceModel : global::Quire.Controls.Plots.Model.PlotCalcu
     [global::Quire.Mirror.MirrorStub]
     internal TraceModel(global::Quire.Controls.Plots.Presenter.PlotType plotType, global::Quire.Controls.Plots.Presenter.IEquationItem rangeEquationItem, global::Quire.Controls.Plots.Presenter.IEquationItem resultEquationItem, global::Quire.Controls.Plots.Presenter.IAxisModel rangeAxisModel, global::Quire.Controls.Plots.Presenter.IAxisModel resultAxisModel, global::System.Windows.Size viewPortDpi) { }
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<double> MinPlottingPointCoordinate(global::System.Func<global::System.Windows.Point, global::System.Nullable<double>> selector) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void SetEquation(global::Quire.Controls.Plots.Presenter.AxesIndex axis, global::Quire.Controls.Plots.Presenter.IEquationItem equationItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void SetEquationWithoutCommit(global::Quire.Controls.Plots.Presenter.AxesIndex axis, global::Quire.Controls.Plots.Presenter.IEquationItem equationItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AttachAxisEquationEventHandlers(global::Quire.Controls.Plots.Presenter.IEquationItem equationItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DetachAxisEquationEventHandlers(global::Quire.Controls.Plots.Presenter.IEquationItem equationItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CommitIfEquationsNotEmpty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void RecalculateResultOnPlotTypeChange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetPlottingPoints(global::System.Windows.Media.PointCollection value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdatePlottingPointsForDisplay() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.List<global::System.Windows.Point> GetGraphPointsForPlottingCoordinateOnRangeAxis(double rangeAxisValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public double GetClosestPlottingCoordinateOnRangeAxis(double value, double threshold) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetTypeImpl(global::Quire.Calculation.Core.Trace2DResults.TraceType type, bool callStyleChanged = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnPlotCalculatableError(global::Quire.Controls.Plots.Model.EngineErrorEventArgs args) => base.OnPlotCalculatableError(args);
     [global::Quire.Mirror.MirrorStub]
@@ -166,8 +152,6 @@ internal partial class TraceModel : global::Quire.Controls.Plots.Model.PlotCalcu
     [global::Quire.Mirror.MirrorStub]
     private bool CreateAllPointsByTraceType(global::Quire.Calculation.Core.IVectorListResultNode xResult, global::Quire.Calculation.Core.IVectorListResultNode yResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void SetRect(double top, double left, double bottom, double right) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool AnalyzeResult(global::Quire.Calculation.Core.IMatrixResultNode matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool AnalyzeResult(global::Quire.Calculation.Core.ITrace2DResultNode traceReducedResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -177,14 +161,6 @@ internal partial class TraceModel : global::Quire.Controls.Plots.Model.PlotCalcu
     private void AnalyzeAxisAndTypeData(global::Quire.Calculation.Core.ITrace2DResultNode plotResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetAnalyzedData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetAnalyzedDataForAxis(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel, string[] labels, global::System.Action<global::Quire.Controls.Plots.Presenter.IAxisModel, string[]> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetAnalyzedDataForResultAxis(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel, string[] labels) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetAnalyzedDataForRangeAxis(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel, string[] labels) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetPolarPlotRect(global::System.Windows.Media.PointCollection points) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Calculation.Core.EngineResult CopyMinMaxAndUnitsResults(global::Quire.Calculation.Core.EngineResult source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

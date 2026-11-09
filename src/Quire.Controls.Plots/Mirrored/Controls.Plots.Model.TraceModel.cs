@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using Quire;
@@ -341,5 +342,150 @@ internal partial class TraceModel
     public void ResetIsTypeDefault(bool? value = null)
     {
         _isTypeDefault = value;
+    }
+
+    private double? MinPlottingPointCoordinate(Func<Point, double?> selector)
+    {
+        if (_plottingPointsFilter.PlottingPoints == null)
+        {
+            return null;
+        }
+        return _plottingPointsFilter.PlottingPoints.Select(selector).Min();
+    }
+
+    private void SetEquationWithoutCommit(AxesIndex axis, IEquationItem equationItem)
+    {
+        DetachAxisEquationEventHandlers(_equations[(int)axis]);
+        _equations[(int)axis] = equationItem;
+        AttachAxisEquationEventHandlers(_equations[(int)axis]);
+    }
+
+    private void AttachAxisEquationEventHandlers(IEquationItem equationItem)
+    {
+        if (equationItem != null)
+        {
+            IPlotEquation equation = equationItem.Equation;
+            equation.RequestEvaluation += EquationControlRequestEvaluation;
+            AttachOnTraceEquationSExpressionChanged(equation);
+        }
+    }
+
+    private void DetachAxisEquationEventHandlers(IEquationItem equationItem)
+    {
+        if (equationItem != null)
+        {
+            IPlotEquation equation = equationItem.Equation;
+            DetachOnTraceEquationSExpressionChanged(equation);
+            equation.RequestEvaluation -= EquationControlRequestEvaluation;
+            ClearEquationError(equation.Expression);
+            ClearEquationError(equation.ScalingEquation);
+        }
+    }
+
+    private void CommitIfEquationsNotEmpty()
+    {
+        if (!ContainsEmptyEquation)
+        {
+            Commit();
+        }
+    }
+
+    private void SetPlottingPoints(PointCollection value)
+    {
+        _plottingPointsFilter.PlottingPoints = value;
+    }
+
+    private void SetTypeImpl(TraceType type, bool callStyleChanged = false)
+    {
+        callStyleChanged |= _type != type;
+        _type = type;
+        UpdateFilteringAllowed();
+        if (callStyleChanged)
+        {
+            FireStyleChanged();
+        }
+    }
+
+    private void SetRect(double top, double left, double bottom, double right)
+    {
+        if (double.IsInfinity(top) || double.IsInfinity(left) || double.IsInfinity(bottom) || double.IsInfinity(right))
+        {
+            return;
+        }
+        TopLeft = new Point(left, top);
+        BottomRight = new Point(right, bottom);
+    }
+
+    private void SetAnalyzedDataForAxis(IAxisModel axisModel, string[] labels, Action<IAxisModel, string[]> action)
+    {
+        if (labels != null)
+        {
+            axisModel.IsDiscrete = true;
+            axisModel.MajorTickMarks.Labels = labels;
+            axisModel.MajorTickMarks.Count = labels.Length;
+            axisModel.ScalingChanged -= AxesScalingChanged;
+            axisModel.Scaling = AxisScaling.Linear;
+            axisModel.ScalingChanged += AxesScalingChanged;
+        }
+        else
+        {
+            axisModel.IsDiscrete = false;
+            axisModel.MajorTickMarks.Labels = null;
+            axisModel.SetTickMarksPattern(0.0, null);
+            axisModel.MajorTickMarks.VisabilityPattern = null;
+        }
+        axisModel.XIsString = XIsDiscrete;
+        axisModel.YIsString = YIsDiscrete;
+        action(axisModel, labels);
+    }
+
+    private void SetAnalyzedDataForResultAxis(IAxisModel axisModel, string[] labels)
+    {
+        if (labels != null)
+        {
+            _analyzedData.RectPoints.Top = 0.0;
+            _analyzedData.RectPoints.Bottom = labels.Length - 1;
+        }
+    }
+
+    private void SetAnalyzedDataForRangeAxis(IAxisModel axisModel, string[] labels)
+    {
+        if (labels != null)
+        {
+            if (Type == TraceType.Effects)
+            {
+                axisModel.SetTickMarksPattern(-0.25, _effectsTickPattern);
+                axisModel.MajorTickMarks.VisabilityPattern = new bool[3] { true, false, true };
+                _analyzedData.RectPoints.Left = -0.25;
+                _analyzedData.RectPoints.Right = (double)(labels.Length / 3 - 1) + 0.25;
+            }
+            else
+            {
+                axisModel.SetTickMarksPattern(0.0, null);
+                axisModel.MajorTickMarks.VisabilityPattern = null;
+                _analyzedData.RectPoints.Left = 0.0;
+                _analyzedData.RectPoints.Right = labels.Length - 1;
+            }
+        }
+    }
+
+    private void SetPolarPlotRect(PointCollection points)
+    {
+        if (points == null)
+        {
+            SetRect(0.0, 0.0, double.NaN, double.NaN);
+            return;
+        }
+        if (_axes[1].Scaling == AxisScaling.Logarithmic)
+        {
+            points = CalculateLogTransformPoints(points);
+        }
+        CalculateRadialRange(points, out double min, out double max);
+        if (_axes[1].Scaling == AxisScaling.Logarithmic)
+        {
+            min = Math.Pow(10.0, min);
+            max = Math.Pow(10.0, max);
+        }
+        SetRect(min, min, max, max);
     }
 }

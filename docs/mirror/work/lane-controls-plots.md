@@ -278,3 +278,10 @@
 - Shapes: all nine matched on the first gate run after one compile fix (`TraceType` is already in scope through the `Trace2DResults` using; the qualified name does not compile).
 - Left: `RecalculateResultOnPlotTypeChange` (calls `ResultManager`, not checked in Quire yet).
 - Release IL: PASS — 548 checked, 548 exact, 0 failures.
+
+## Batch 40 — TraceModel plotting-point, rect and equation-attachment helpers
+
+- Members: `MinPlottingPointCoordinate`, `SetEquationWithoutCommit`, `AttachAxisEquationEventHandlers`, `DetachAxisEquationEventHandlers`, `CommitIfEquationsNotEmpty`, `SetPlottingPoints`, `SetTypeImpl` (`callStyleChanged |= _type != type`), `SetRect`, `SetAnalyzedDataForAxis`, `SetAnalyzedDataForResultAxis`, `SetAnalyzedDataForRangeAxis`, `SetPolarPlotRect`. Hand-written: appended to `Mirrored/Controls.Plots.Model.TraceModel.cs` (adds `using System.Linq;`); their stubs removed from the `.g.cs`.
+- Shapes: `SetRect` first failed on layout. Mathcad's `if (!I(top) && !I(left) && …) { assign }` compiles as `if (I(top) || I(left) || I(bottom) || I(right)) return;` followed by the assignments; the early-return form matched.
+- Blocked: `SetEquation` stays a stub. Its Mathcad IL compares `SynchronizationStatus` against 3 (`Ptc.Calculation.Core.SynchronizationStatus`: `Pending = 0, Synchronized = 3`), while Quire's enum (`src/Quire.Calculation.Core/ICalculatable.cs`) has `Pending, Synchronized` = 0, 1. Fixing the value (`Synchronized = 3`) is a change in `Quire.Calculation.Core`, owned by another lane.
+- Release IL: PASS — 560 checked, 560 exact, 0 failures.
