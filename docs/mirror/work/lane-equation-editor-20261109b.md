@@ -16,6 +16,9 @@
 - Batch 11: `Tree.CheckBoxScriptableControlData.FlowDirection` (field `c` and property); `Tree.TextBoxScriptableControlData` `AcceptsReturn`, `IsReadOnly`, `Border`, `TextAlignment` (fields `c`, `d`, `n`, `o` and properties). Release IL PASS, 338 checked, 0 failures (`.mirror-cache/release-il-d084b066a885/release-il.json`). The CheckBox constructor from batch 5 is kept in the same partial file.
 - Not attempted: `RadioButtonScriptableControlData` `Orientation` and `FlowDirection` (`Orientation` has a field initializer, which may need a constructor shape), and the TextBox constructor (it sets `Values = new Collection<string> { ... }`).
 
+- Batch 12: `Tree.RadioButtonScriptableControlData` constructor (`Height = a; Width = b;` after the base call, with the field initializer `Orientation.Vertical` for `c`), `Orientation` and `FlowDirection` properties (fields `c`, `d`). Release IL PASS, 343 checked, 0 failures (`.mirror-cache/release-il-1dc11e8d9302/release-il.json`). The field initializer matched the Roslyn shape as written.
+- Still stubbed: `Clone` on all scriptable control data types (object initializer, see the `.initlocals` blocker).
+
 ## Blocked (stubs kept)
 
 - `Tree.NearestNeighborSelector.SelectNeighbors(MathNode, out bool)` (virtual, switch on `Fixity` with an `out` parameter). Mathcad's switch temporary is local 3, after the three block locals; C# put it in slot 0 (braced cases, release-il-23d8111cb024) and slot 1 (unbraced `Special` case, release-il-1a7e6d2256e8). Shapes not yet tried: different local declaration order. Stub kept.
