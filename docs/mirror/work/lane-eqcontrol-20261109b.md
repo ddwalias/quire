@@ -14,4 +14,7 @@
 - Batch: `Controls.InputControls.InputCheckBoxEngineFactory::{CreateEngine, .ctor}`.
 - Shapes tried: switch expression with JScript, VBScript and Python arms and default script fallback matched.
 - Release IL: PASS, 618 checked (`.mirror-cache/release-il-5d9644f84e08/release-il.json`).
-- Remaining: all other stub-marked members in EquationControl; 5,372 markers across 312 types after this batch.
+- Batch: `Controls.InputControls.InputButtonEngineFactory`, `InputRadioButtonEngineFactory`, and `InputListBoxEngineFactory` (`CreateEngine`, `.ctor` each).
+- Shapes tried: switch expressions for JScript, VBScript and Python arms with default script fallback matched all three.
+- Release IL: PASS, 621 checked (`.mirror-cache/release-il-b47e5a7469d2/release-il.json`).
+- Remaining: all other stub-marked members in EquationControl; 5,366 markers across 309 types after this batch.
