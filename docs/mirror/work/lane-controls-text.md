@@ -466,3 +466,13 @@
 
 - Exact: `ShowHyperlinkDialog` (assert non-null view model, construct dialog, conditionally set owner, then return `ShowDialog().GetValueOrDefault()`).
 - Release IL: PASS — 419 checked, 0 failures; one exact member added. Previously exact methods remained exact.
+
+## Batch 76 — HyperlinkDialog constructor shape (no member landed)
+
+- Tried and reverted: private `.ctor`. The gate rejected the lambda method name (`<.ctor>b__9_0` vs Mathcad `<.ctor>b__4_0`) and the focus target arm order (`InsertDisplayTextBox` vs `InsertAddressTextBox` at the first field access). The direct local-variable candidate was not retained because it also moves the pending `this` argument ahead of the getter call; the constructor remains a stub.
+- Release IL: FAIL — 422 checked; constructor differs and the generated lambda has no counterpart.
+
+## Batch 77 — HyperlinkDialog view model getter (1)
+
+- Exact: `ViewModel` getter as a private get-only auto-property, producing the original `<ViewModel>k__BackingField` access.
+- Release IL: PASS — 420 checked, 0 failures; one exact member added. The constructor remains a stub.

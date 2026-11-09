@@ -8,6 +8,8 @@ namespace Quire.Controls.Text;
 
 public partial class HyperlinkDialog
 {
+    private HyperlinkDialogViewModel ViewModel { get; }
+
     public static bool ShowHyperlinkDialog(HyperlinkDialogViewModel hyperlinkViewModel, Window owner)
     {
         if (DebugTools.AssertNotNull(hyperlinkViewModel, null).Failed)
