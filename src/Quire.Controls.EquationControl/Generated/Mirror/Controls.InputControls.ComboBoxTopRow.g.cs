@@ -11,14 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.ComboBoxTopRow, Ptc.Controls.EquationControl")]
 public partial class ComboBoxTopRow : global::Quire.Controls.InputControls.ComboBoxRow, global::Quire.Controls.InputControls.IComboBoxTopRow, global::Quire.Controls.InputControls.IComboBoxRow
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.InputControls.ICellData TableTitleCell { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData> UnitCells { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.View.IReadonlyCellData global::Quire.Controls.InputControls.IComboBoxTopRow.TableTitleCell { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.View.IReadonlyCellData> global::Quire.Controls.InputControls.IComboBoxTopRow.UnitCells { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ComboBoxTopRow(int count) : base(default(int), default(int)) { }
 }

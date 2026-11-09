@@ -107,3 +107,6 @@
 - Batch: `Controls.InputControls.ButtonViewModel` (`Model`, `BackgroundColor`, `Text`, `IsChecked`, `.ctor`, `HandleModelPropertyChanged`, `OnClick`).
 - Shapes tried: string switch with a shared body and `Model.IsChecked = !Model.IsChecked` matched on the first candidate. The unused `_isChecked` field is kept with a pragma so the field layout matches.
 - Release IL: PASS, 797 checked (`.mirror-cache/release-il-d93b802c8c81/release-il.json`).
+- Batch: `Controls.InputControls.ComboBoxTopRow` (`.ctor`, `TableTitleCell`, `UnitCells`, and the two explicit `IComboBoxTopRow` implementations).
+- Shapes tried: base constructor `(0, count)` and explicit interface properties delegating to the public ones matched on the first candidate.
+- Release IL: PASS, 802 checked (`.mirror-cache/release-il-854d68aa02d1/release-il.json`).
