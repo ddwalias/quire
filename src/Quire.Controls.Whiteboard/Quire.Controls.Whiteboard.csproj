@@ -4,6 +4,8 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Quire.Controls.Text\Quire.Controls.Text.csproj" />
+    <ProjectReference Include="..\Quire.Controls.Include\Quire.Controls.Include.csproj" />
+    <ProjectReference Include="..\Quire.Controls.EquationControl\Quire.Controls.EquationControl.csproj" />
   </ItemGroup>
   <Import Project="Generated\Mirror.props" />
 </Project>

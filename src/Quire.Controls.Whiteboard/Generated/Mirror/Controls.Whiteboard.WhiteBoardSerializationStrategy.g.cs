@@ -11,16 +11,4 @@ namespace Quire.Controls.Whiteboard;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteBoardSerializationStrategy, Ptc.Controls.Whiteboard")]
 public abstract partial class WhiteBoardSerializationStrategy : global::Quire.Controls.Core.Serialization.ISerializationStrategy
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Whiteboard.WhiteboardControl _whiteboard;
-    [global::Quire.Mirror.MirrorStub]
-    protected WhiteBoardSerializationStrategy(global::Quire.Controls.Whiteboard.WhiteboardControl control) { }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void SerializeRegionsEpilog(global::System.Xml.XmlDocument xmlDocument);
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract global::Quire.PersistentDataObjects.IRegionInWhiteboardType ConvertToRegionPersistantData(global::Quire.Serialization.IS11NProvider s11NProvider, global::Quire.Controls.Core.IWhiteboardItem item);
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.PersistentDataObjects.IRegionType> GetRegions(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point GetLocation(global::Quire.Controls.Core.IWhiteboardItem element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,18 +11,4 @@ namespace Quire.Controls.Whiteboard;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteBoardDeserializationStrategy, Ptc.Controls.Whiteboard")]
 public abstract partial class WhiteBoardDeserializationStrategy : global::Quire.Controls.Core.Serialization.DeserializationStrategyWithMathFormat
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Whiteboard.WhiteboardControl _whiteboard;
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IList<global::System.Windows.UIElement> Regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected WhiteBoardDeserializationStrategy(global::Quire.Controls.Whiteboard.WhiteboardControl control) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void DeserializeRegionProlog(global::System.Windows.UIElement region) => base.DeserializeRegionProlog(region);
-    [global::Quire.Mirror.MirrorStub]
-    public override void AddRegion(global::System.Windows.UIElement element, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void DeleteRegion(global::System.Windows.UIElement control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool IsRegionNotAffectingCalculation(global::System.Windows.UIElement element) => base.IsRegionNotAffectingCalculation(element);
 }

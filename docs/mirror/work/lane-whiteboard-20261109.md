@@ -243,6 +243,29 @@
 - Release IL: PASS — 543 checked, 0 failures, 308 unfinished (`release-il-0b69db0490a3`).
 - Remaining mismatches in this batch: none.
 
+## Batch 16 — WhiteBoardSerializationStrategy, WhiteBoardDeserializationStrategy
+
+- Members:
+  - `WhiteBoardSerializationStrategy`:
+    - Field: `_whiteboard`
+    - Constructor: `.ctor(WhiteboardControl)`
+    - Methods: `SerializeRegionsEpilog(XmlDocument)` (abstract), `ConvertToRegionPersistantData(IS11NProvider, IWhiteboardItem)` (abstract), `GetRegions(IS11NProvider)`, `GetLocation(IWhiteboardItem)`
+  - `WhiteBoardDeserializationStrategy`:
+    - Field: `_whiteboard`
+    - Constructor: `.ctor(WhiteboardControl)`
+    - Property: `Regions` (get)
+    - Methods: `DeserializeRegionProlog(UIElement)`, `AddRegion(UIElement, Point)`, `DeleteRegion(UIElement)`, `IsRegionNotAffectingCalculation(UIElement)`
+- Project references: added `Quire.Controls.Include` and `Quire.Controls.EquationControl` to `Quire.Controls.Whiteboard.csproj`.
+- Hand-written: `Mirrored/Controls.Whiteboard.WhiteBoardSerializationStrategy.cs`, `Mirrored/Controls.Whiteboard.WhiteBoardDeserializationStrategy.cs`.
+- Stubs removed: `Generated/Mirror/Controls.Whiteboard.WhiteBoardSerializationStrategy.g.cs`, `Generated/Mirror/Controls.Whiteboard.WhiteBoardDeserializationStrategy.g.cs`.
+- Shapes:
+  - Member sequence matching Mathcad metadata tokens in both classes.
+  - In `WhiteBoardDeserializationStrategy.DeleteRegion`, `if (control is IWhiteboardItem) _whiteboard.RemoveItem(control as IWhiteboardItem);` reproducing double `isinst` check before exception throw.
+  - In `WhiteBoardDeserializationStrategy.IsRegionNotAffectingCalculation`, `if (element is EquationControl equationControl) return equationControl.EquationType == EquationTypes.Evaluation; return false;` matching `ceq; ret`.
+- Release IL: PASS — 552 checked, 0 failures, 290 unfinished (`release-il-728b337697d3`).
+- Remaining mismatches in this batch: none.
+
+
 
 
 
