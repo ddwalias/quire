@@ -33,8 +33,6 @@ public partial struct NavigatorState
     [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState ChangeCurrentAndMakeValid(global::Quire.EquationEditor.Tree.MathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Direction WhatSideOfTheNodeIsTheCaret() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes DefaultCaretInsertionType(global::Quire.EquationEditor.Tree.MathNode idNode, int caretPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

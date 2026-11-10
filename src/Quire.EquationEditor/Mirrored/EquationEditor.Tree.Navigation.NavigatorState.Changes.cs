@@ -2,6 +2,53 @@ namespace Quire.EquationEditor.Tree.Navigation;
 
 public partial struct NavigatorState
 {
+    public NavigatorState ChangeCurrentAndMakeValid(MathNode node)
+    {
+        if (node == null)
+        {
+            return Empty;
+        }
+
+        global::Quire.Direction direction = global::Quire.Direction.Indeterminate;
+        if ((CaretSide == global::Quire.Direction.Left && node.AllowCaretOnLeft) ||
+            (CaretSide == global::Quire.Direction.Right && node.AllowCaretOnRight))
+        {
+            direction = CaretSide;
+        }
+
+        int? operatorPartIndex = OperatorPartIndex;
+        if (operatorPartIndex.HasValue && operatorPartIndex >= node.NavigablePartCount)
+        {
+            operatorPartIndex = node.NavigablePartCount - 1;
+        }
+
+        CaretInsertionTypes insertionType = CaretInsertionTypes.Normal;
+        TextRange? valueRange = null;
+        if (node.CarriesValue && node.HasCaretPositions && (!node.DistinctNodeEdges || direction == global::Quire.Direction.Indeterminate))
+        {
+            if (node.NodeInfo is IdentifierNodeInfo)
+            {
+                insertionType = CaretInsertionType;
+            }
+
+            if (!ValueRange.HasValue)
+            {
+                valueRange = new TextRange(0);
+            }
+            else
+            {
+                int valueLength = node.NodeInfoValueLength;
+                int selectionStart = ValueRange.Value.SelectionStart;
+                int selectionEnd = ValueRange.Value.SelectionEnd;
+                valueRange = new TextRange(
+                    selectionStart <= valueLength ? selectionStart : valueLength,
+                    selectionEnd <= valueLength ? selectionEnd : valueLength);
+            }
+        }
+
+        return new NavigatorState(node, direction, operatorPartIndex, EnterSide, insertionType, valueRange);
+    }
+
     public static bool UpdateCurrentIfNeeded(
         global::System.Collections.Generic.IList<int> path,
         ref NavigatorState nstate,
