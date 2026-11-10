@@ -831,4 +831,19 @@ internal partial class VisualMathRegionNode
 
         eventArgs.CanExecute = canExecute;
     }
+
+    public void FireRequestChangeToTextBox()
+    {
+        RequestChangeToTextBox?.Invoke();
+    }
+
+    public void FireInsertComboBoxControl(Quire.Controls.Core.InputControlTypes inputControlType)
+    {
+        InsertInputControl?.Invoke(inputControlType);
+    }
+
+    public void FireInsertInputControl(Quire.Controls.Core.InputControlTypes inputControlType)
+    {
+        InsertInputControl?.Invoke(inputControlType);
+    }
 }

@@ -249,3 +249,5 @@
 - Release IL: PASS, 1314 checked (`.mirror-cache/release-il-891e7459da7c/release-il.json`).
 - Batch: `Controls.Internal.VisualMathRegionNode` `FireCan*` handlers that query a `DelegateRef1<bool>` and assign `CanExecute` (8: column, clear-cells, linear n-ary, row, id-label, copy, cut, show history).
 - Release IL: PASS, 1322 checked (`.mirror-cache/release-il-6880d376ebca/release-il.json`).
+- Batch: `Controls.Internal.VisualMathRegionNode` null-conditional forwarders (`FireRequestChangeToTextBox`, `FireInsertComboBoxControl`, `FireInsertInputControl`).
+- Release IL: PASS, 1325 checked (`.mirror-cache/release-il-6006e06da4e1/release-il.json`).
