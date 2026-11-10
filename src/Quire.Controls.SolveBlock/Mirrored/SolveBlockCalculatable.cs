@@ -2,6 +2,8 @@ namespace Quire.Controls;
 
 internal partial class SolveBlockCalculatable
 {
+    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
     public SolveBlockCalculatable(global::Quire.Calculation.Core.ICalculatable wrappedCalculatable)
         : base(wrappedCalculatable)
     {
