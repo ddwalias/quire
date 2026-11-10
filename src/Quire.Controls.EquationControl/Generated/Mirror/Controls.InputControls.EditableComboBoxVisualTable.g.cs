@@ -30,13 +30,7 @@ public partial class EditableComboBoxVisualTable : global::Quire.Controls.Core.V
     [global::Quire.Mirror.MirrorStub]
     public override int CellCount { get => base.CellCount; }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IEditableComboBoxViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool IsActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.ExtendedFont OperatorFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.InputControls.EditableComboBoxTableCellsFontFormats CellsFontFormats { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     bool global::Quire.Wpf.ICanBlockUndoRedo.BlockUndoRedo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
