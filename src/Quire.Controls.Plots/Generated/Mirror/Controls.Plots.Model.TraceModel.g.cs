@@ -80,8 +80,6 @@ internal partial class TraceModel : global::Quire.Controls.Plots.Model.PlotCalcu
     [global::Quire.Mirror.MirrorStub]
     public override void SetResult(global::Quire.Calculation.Core.IResultNode result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void DoSetResult(global::Quire.Calculation.Core.IResultNode result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool AnalyzeResultData(global::Quire.Calculation.Core.IVectorListResultNode xResult, global::Quire.Calculation.Core.IVectorListResultNode yResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Calculation.Core.EngineResult CopyMinMaxAndUnitsResults(global::Quire.Calculation.Core.EngineResult source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -11,6 +11,7 @@ using Quire.Calculation.Core;
 using Quire.Calculation.Core.Trace2DResults;
 using Quire.Controls.Core;
 using Quire.Controls.Plots.Presenter;
+using Quire.Undo;
 using Quire.Wpf;
 
 namespace Quire.Controls.Plots.Model;
@@ -873,5 +874,61 @@ internal partial class TraceModel
             return;
         }
         throw ex;
+    }
+
+    private void DoSetResult(IResultNode result)
+    {
+        try
+        {
+            _plottingPointsFilter.BeginInit();
+            using (new CommandScope(new CompoundCommand()))
+            {
+                ClearPoints();
+                try
+                {
+                    if (result is IEmptyResultNode)
+                    {
+                        FireValidateTraceVsPlotType();
+                        SetAnalyzedData();
+                    }
+                    else if (result is IMatrixResultNode)
+                    {
+                        if (AnalyzeResult(result as IMatrixResultNode))
+                        {
+                            FireValidateTraceVsPlotType();
+                            SetAnalyzedData();
+                        }
+                    }
+                    else if (result is ITrace2DResultNode)
+                    {
+                        if (AnalyzeResult(result as ITrace2DResultNode))
+                        {
+                            FireValidateTraceVsPlotType();
+                            SetAnalyzedData();
+                        }
+                    }
+                    else
+                    {
+                        DebugTools.DevAssert(false, "Result is not an empty or a matrix result node.");
+                        OnPlotCalculatableError(new EngineErrorEventArgs(new EngineError
+                        {
+                            Message = "PlotControl.Error.ResultIsNotAMatrix"
+                        }));
+                    }
+                }
+                catch (PlotInvalidResultException ex)
+                {
+                    OnPlotCalculatableError(new EngineErrorEventArgs(new EngineError
+                    {
+                        Message = ex.Message
+                    }));
+                }
+            }
+        }
+        finally
+        {
+            _plottingPointsFilter.EndInit();
+            DebugTools.DevAssert(NumberOfPointsInResult >= FinalNumberOfDataPointsToRender, null);
+        }
     }
 }

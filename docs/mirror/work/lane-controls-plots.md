@@ -337,3 +337,10 @@
 - Members: `CreateAllPointsByTraceType` (trace-type switch over the `TraceResultAnalyzer` builders), `AnalyzeResult(IMatrixResultNode)`, `AnalyzeResult(ITrace2DResultNode)`, `AnalyzeVectors` (parametric range check, data-point analysis, engine result). Hand-written: appended to `Mirrored/Controls.Plots.Model.TraceModel.cs`; their stubs removed from the `.g.cs`.
 - Shapes: `AnalyzeResult(IMatrixResultNode)` first differed in local-slot order. Mathcad's error code is slot 0 and `plotResult` slot 1, so the error string is declared before the call (`string errorMessageCode;` then `out errorMessageCode`); `out var` in the initializer did not change the order.
 - Release IL: PASS — 625 checked, 625 exact, 0 failures.
+
+## Batch 49 — TraceModel DoSetResult
+
+- Members: `DoSetResult` (plotting-filter begin/end around a `CommandScope` over a `CompoundCommand`, result-kind dispatch with `as` casts, `PlotInvalidResultException` error routing). Hand-written: appended to `Mirrored/Controls.Plots.Model.TraceModel.cs` (adds `using Quire.Undo;`); its stub removed from the `.g.cs`.
+- Shapes: matched first time.
+- Blocked (not in this batch): `AnalyzeResultData` (its `Sum` lambda). Its generated lambda method is named `<AnalyzeResultData>b__207_0` in Quire against Mathcad's `b__172_0`. Roslyn's ordinal counts every member of the type in compile order, and the generated stubs in `Generated/` compile before hand-written members, so the ordinal is out of step until the remaining TraceModel stubs (fields, accessors, nested class) are moved into the hand-written file in Mathcad order as placeholders. The same applies to `SetResult`, `UpdatePlottingPointsForDisplay`, `MinPositiveX`, `MinPositiveY` (all use closures).
+- Release IL: PASS — 626 checked, 626 exact, 0 failures.
