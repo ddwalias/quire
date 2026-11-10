@@ -604,3 +604,91 @@
 - Exact: `OnPreviewMoveUpByLine` (sets `Handled`), `OnPreviewMoveDownByLine` (no `Handled`).
 - Shapes that were needed: `TextPointer lineStart;` is hoisted to the method top, because Mathcad's local slot 0 is the else-branch line start and the item is slot 1. The `if (...)` body ends with an explicit `return;` so the `CanNavigate` path jumps to the shared `ret`, as Mathcad's layout does.
 - Release IL: PASS — 518 checked, 0 failures (`.mirror-cache/gate-b97c`).
+
+## Stub audit (end of batch 97)
+
+Remaining stub declarations in the lane: 134 (72 plain IL, 20 closure ordinal below 193, 20 display-class, 7 lambda at or above 193, 10 XAML, 5 without a Mathcad body match). Each line says why it is still a stub.
+
+### Documented blockers
+
+- XAML InitializeComponent/Connect/_CreateDelegate (10): HyperlinkDialog, HyperlinkDialogErrorsResourceDictionary, Paragraph, TextRegion. Maintainer decision.
+- Closure ordinal below 193 (20): RichTextBase lambdas/local functions and RichTextWithEmbeddedItem/FindReplaceRichTextBox lambdas; placement cannot reproduce Mathcad's ordinal.
+- Display class ordinal (20) and lambda at or above 193 (7): ordinal-sensitive; not attempted.
+- No Mathcad body match (5): explicit-interface and setter-only members; not attempted.
+
+### Plain IL, tried and blocked
+
+- Paragraph.LogSizeChange: compiler artifact: Mathcad keeps unused locals (initlocals False); Roslyn Release drops them
+- Paragraph.CloneParagraph: not expressible: newobj; dup; void CloneContent on the copy; returned without a local
+- RichTextBase.VerticalAlignmentOffset: not expressible: Mathcad keeps the transform on the stack across the padding/baseline statements
+- RichTextBase.CreateTextChangedCommand: not expressible: stfld on this after newobj with the object still on the stack
+- RichTextBase.CalculateBaseline: documented callvirt on new receiver (checkpoint batch notes)
+- RichTextBase.GetPointerToAddDictionary: documented ref-argument ordering (this before local store)
+- RichTextTitle.TextStyleChangedHandler: tried: setter ldvirtftn RichTextBase::OnStyleChanged; class overrides OnStyleChanged; protected cast does not compile
+- RichTextTitle.SetInitialTitleText: documented callvirt on new receiver (RichTextTitle)
+- RichTextTitle.RemoveHyperlinkPreservingText: tried: Mathcad uses call for InsertTextInRun on a local; Roslyn emits callvirt
+- RichTextTitle.GetText: documented callvirt on new receiver (RichTextTitle)
+- RichTextWithEmbeddedItem.TextStyleChangedHandler: tried: setter ldvirtftn RichTextBase::OnStyleChanged; class overrides OnStyleChanged; protected cast does not compile
+- RichTextWithEmbeddedItem.CanModifyHyperlink: overload mapping ambiguous in audit (bool and two-arg overloads share a name); not attempted
+- RichTextWithEmbeddedItem.GetEmbeddedObjectCaretOffset: documented ref-argument ordering (this before local store)
+- RichTextWithEmbeddedItem.DispatchCommandToItems: blocked outside lane: IRegionCollectionWithProperty lacks ICurrentNumberFormatProperty/ICurrentMatrixFormatProperty base (Mathcad IL has no cast)
+- FindReplaceRichTextBox.TruncateTextIfNeeded: documented callvirt on new receiver (set_Text on new TextRange)
+
+### Plain IL, not attempted (complex bodies)
+
+- RichTextBase: public int SelectionStart
+- RichTextBase: public int SelectionEnd
+- RichTextBase: private static void ContextMenuOpened(object sender, global::System.Windows.RoutedEventArgs args) =>
+- RichTextBase: private void OnCorrectSpellingError(object sender, global::System.Windows.Input.ExecutedRoutedEventA
+- RichTextBase: private void HandleToggleSubSuperScriptCommand(global::System.Func<global::Quire.Controls.Text.Scrip
+- RichTextBase: public string GetWordToAddToDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+- RichTextBase: private void AddBlockedSelectDirectionForNextElement(global::System.Windows.Documents.LogicalDirecti
+- RichTextBase: private void OnPreviewBackspace(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs
+- RichTextBase: private void VerifyInsertionPositions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+- RichTextBase: public virtual global::System.Collections.Generic.IEnumerable<object> EnumerateEmbeddedObjectsInRang
+- RichTextBase: private global::System.Windows.Documents.TextRange GetRangeIfMatch(global::System.Windows.Documents.
+- RichTextBase: private global::System.Windows.Documents.TextRange SearchWholeWordRuns(global::System.Windows.Docume
+- RichTextBase: private bool SubscriptsMatch(global::System.Windows.Documents.TextRange foundRange, global::System.C
+- RichTextBase: protected virtual void HandleReplace(object sender, global::System.Windows.Input.ExecutedRoutedEvent
+- RichTextBase: private void ReplaceTextInHyperlink(string text, global::System.Windows.Documents.Hyperlink hyperlin
+- RichTextBase: private void ToggleRangeToState(global::System.Windows.Documents.TextPointer startPointer, int start
+- RichTextBase: public virtual void SetFormattedContent(string content, string dataFormat, global::System.Windows.Ma
+- RichTextBase: public virtual global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersisten
+- RichTextBase: public void ApplyTextFormatPropertyValueToControl(global::System.Windows.DependencyProperty property
+- RichTextBase: protected void BuildSubscriptPositions(global::System.Windows.Documents.TextRange range, global::Sys
+- RichTextTitle: private double MeasureInlineWidth(global::System.Windows.Documents.Inline inline) => throw global::Q
+- RichTextTitle: private void SanitizeUnsupportedFormatting() => throw global::Quire.Mirror.MirrorStub.NotImplemented
+- RichTextTitle: private static void CollectUnsupportedBlocks(global::System.Windows.Documents.BlockCollection blocks
+- RichTextTitle: private static void CollectUnsupportedInlines(global::System.Windows.Documents.InlineCollection inli
+- RichTextTitle: private void ConvertListToParagraphs(global::System.Windows.Documents.List list) => throw global::Qu
+- RichTextWithEmbeddedItem: public global::Quire.Controls.Core.IWhiteboardItem ActiveItem
+- RichTextWithEmbeddedItem: public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::
+- RichTextWithEmbeddedItem: public global::System.Windows.Rect FlowDocumentRect
+- RichTextWithEmbeddedItem: public global::System.Collections.Generic.IEnumerable<global::System.Windows.Documents.TextPointer>
+- RichTextWithEmbeddedItem: private void BindHyperlinkCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+- RichTextWithEmbeddedItem: private void CopyHyperlink(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) =>
+- RichTextWithEmbeddedItem: internal void ModifyHyperlink(global::Quire.Controls.Text.ModifyHyperlinkCommandParameter param) =>
+- RichTextWithEmbeddedItem: private global::System.Windows.Documents.Hyperlink EditLinkUndoableCommand(global::Quire.Controls.Te
+- RichTextWithEmbeddedItem: private void ReproduceRemovedHyperlinkColors(global::System.Collections.Generic.List<global::System.
+- RichTextWithEmbeddedItem: private static void RequestNavigateHandler(object sender, global::System.Windows.Navigation.RequestN
+- RichTextWithEmbeddedItem: private void OpenHyperlinkUrl(global::System.Uri path) => throw global::Quire.Mirror.MirrorStub.NotI
+- RichTextWithEmbeddedItem: private static global::System.Nullable<global::Quire.IO.NavigateUrlErrorWarningKeys> ValidateURL(glo
+- RichTextWithEmbeddedItem: private bool HandleLinkOpsOnPreviewKeyDown(global::System.Windows.Input.Key key) => throw global::Qu
+- RichTextWithEmbeddedItem: private void OnPreviewTabBackward(object sender, global::System.Windows.Input.ExecutedRoutedEventArg
+- RichTextWithEmbeddedItem: private string InlayXamlWithEmbeddedItems(global::System.Windows.Documents.TextRange rangeToSerializ
+- RichTextWithEmbeddedItem: private void AddItemToList(global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::
+- RichTextWithEmbeddedItem: private void OnPreviewMoveLeftByCharacter(object sender, global::System.Windows.Input.ExecutedRouted
+- RichTextWithEmbeddedItem: private void OnPreviewMoveRightByCharacter(object sender, global::System.Windows.Input.ExecutedRoute
+- RichTextWithEmbeddedItem: public void AddEmbeddedItem(global::Quire.Controls.Core.IWhiteboardItemInText item, global::System.W
+- RichTextWithEmbeddedItem: public void AddEmbeddedItem(global::Quire.Controls.Core.IWhiteboardItemInText equation, int textCare
+- RichTextWithEmbeddedItem: private void RepairWrapperHosts() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+- RichTextWithEmbeddedItem: protected void CloneContent(global::Quire.Controls.Text.RichTextWithEmbeddedItem original, global::Q
+- RichTextWithEmbeddedItem: internal static void InsertBaselineOffsetTag(double value, global::System.Windows.Documents.TextPoin
+- RichTextWithEmbeddedItem: private void LogDocumentContents(string suffix = default) => throw global::Quire.Mirror.MirrorStub.N
+- WhiteboardItemInTextWrapper: private void CompareBaselineOffset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+- FindReplaceRichTextBox: private void HandlePaste() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+- FindReplaceRichTextBox: private void InsertPlainText(string formattedText, global::System.Windows.Documents.TextPointer inse
+- FindReplaceRichTextBox: private void ConvertSExpressionAndPasteText(string formattedText, global::System.Windows.Documents.T
+- FindReplaceRichTextBox: private global::System.Collections.Generic.List<global::System.ValueTuple<bool, string>> ParseFormat
+- FindReplaceRichTextBox: private void PasteFormattedContent(string formattedText, string dataFormat) => throw global::Quire.M
+- FindReplaceRichTextBox: private void RemoveHyperlinksIfNeeded(global::System.Windows.Documents.TextRange range) => throw glo
