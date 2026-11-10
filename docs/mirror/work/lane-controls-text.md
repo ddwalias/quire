@@ -714,3 +714,22 @@ Remaining stub declarations in the lane: 134 (72 plain IL, 20 closure ordinal be
 - Exact: `CollectUnsupportedInlines`, `CollectUnsupportedBlocks` (recursive, with the `Paragraph` text-indent and margin reset).
 - Rejected: the `if (x != null) { ...; continue; }` chain. Roslyn emitted `brfalse`-based branches; Mathcad's layout is `brtrue` to out-of-line bodies with `br` to the loop condition, the layout of a type-pattern `switch`. The `switch (inline) { case Hyperlink h: ... break; }` form matched.
 - Release IL: PASS — 526 checked, 0 failures (`.mirror-cache/gate-b101b`).
+
+## Batch 102 — RichTextBase text format applied to a control (rejected)
+
+- Tried and reverted: `ApplyTextFormatPropertyValueToControl`. The `paragraph?.Inlines.FirstInline == null ? value : ...` ternary emits `brfalse` where Mathcad has `brtrue` to the GetValue arm; `is null` and `null ==` spellings differed the same way. The structure otherwise matched. Member stays a stub.
+
+## Batch 103 — RichTextWithEmbeddedItem tab backward (1)
+
+- Exact: `OnPreviewTabBackward` (active-item and `CanTraverse` guards, `Handled`, foreach over the whiteboard items with `break` on the active item and the `IsTabNavigatable` candidate, then `TabInto` or the `TabOutOfTextEvent` raise).
+- Release IL: PASS — 527 checked, 0 failures.
+
+## Batch 104 — FindReplace hyperlink removal (rejected)
+
+- Tried and reverted: `RemoveHyperlinksIfNeeded`. The shape matched, except Mathcad calls `Paragraph.get_Inlines` with `call` on a local that was just null-checked, and Roslyn emits `callvirt`. Member stays a stub.
+
+## Batch 105 — FindReplace paste formatted content (1)
+
+- Exact: `PasteFormattedContent` (XAML or RTF branch, `SetFormattedContent` with the current proofing language, then the superscript-run loop that calls `CustomScriptRunBase.ToggleRangeText` with `ScriptState.None` and NaN).
+- Note: `TextRangeExtension.EnumerateRunsInRange(TextRange)` was called statically; the extension-method form did not resolve on the inherited `TextRange` property.
+- Release IL: PASS — 528 checked, 0 failures (`.mirror-cache/gate-b105c`).

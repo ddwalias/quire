@@ -1400,4 +1400,40 @@ public partial class RichTextWithEmbeddedItem
         SetItemContextMenuHandling(item);
         WhiteboardItems.Add(item);
     }
+
+    private void OnPreviewTabBackward(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (ActiveItem == null)
+        {
+            return;
+        }
+
+        if (((IWhiteboardItemInText)ActiveItem).CanTraverse(FocusNavigationDirection.Previous))
+        {
+            return;
+        }
+
+        e.Handled = true;
+        IWhiteboardItem candidate = null;
+        foreach (IWhiteboardItem item in WhiteboardItems)
+        {
+            if (item == ActiveItem)
+            {
+                break;
+            }
+
+            if (ContainerItemManager.IsTabNavigatable(item))
+            {
+                candidate = item;
+            }
+        }
+
+        if (candidate != null)
+        {
+            ContainerItemManager.TabInto(candidate, FocusNavigationDirection.Previous);
+            return;
+        }
+
+        RaiseEvent(new CustomRoutedEventArgs<FocusNavigationDirection>(TabOutOfTextEvent, FocusNavigationDirection.Previous));
+    }
 }

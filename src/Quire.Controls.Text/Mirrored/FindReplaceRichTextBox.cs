@@ -48,4 +48,16 @@ public partial class FindReplaceRichTextBox
         Run run = new Run(formattedText, insertPosition);
         CaretPosition = run.ContentEnd;
     }
+
+    private void PasteFormattedContent(string formattedText, string dataFormat)
+    {
+        if (dataFormat == global::System.Windows.DataFormats.Xaml || dataFormat == global::System.Windows.DataFormats.Rtf)
+        {
+            SetFormattedContent(formattedText, dataFormat, CurrentProofingLanguage, null);
+            foreach (global::Quire.Controls.Text.SuperscriptRun run in global::Quire.Wpf.TextRangeExtension.EnumerateRunsInRange(TextRange).OfType<global::Quire.Controls.Text.SuperscriptRun>())
+            {
+                global::Quire.Controls.Text.CustomScriptRunBase.ToggleRangeText(new global::System.Windows.Documents.TextRange(run.ContentStart, run.ContentEnd), global::Quire.Controls.Text.ScriptState.None, double.NaN);
+            }
+        }
+    }
 }

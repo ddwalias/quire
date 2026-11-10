@@ -40,8 +40,6 @@ public partial class FindReplaceRichTextBox : global::Quire.Controls.Text.RichTe
     [global::Quire.Mirror.MirrorStub]
     private global::System.Text.RegularExpressions.MatchCollection ExtractSubscriptMatchesAndText(string formattedText, out string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void PasteFormattedContent(string formattedText, string dataFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void SetFormattedContent(string content, string dataFormat, global::System.Windows.Markup.XmlLanguage proofingLanguage, global::Quire.Core.TextFormat textFormat = default) => base.SetFormattedContent(content, dataFormat, proofingLanguage, textFormat);
     [global::Quire.Mirror.MirrorStub]
     private void RemoveHyperlinksIfNeeded(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
