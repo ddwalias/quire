@@ -171,4 +171,21 @@ internal partial class SolveBlockModel
             HandleChildCalcHiddenStateChanged,
             HandleContainerChildrenChanged);
     }
+
+    private global::Quire.Controls.Core.IWhiteboardItem GetWhiteboardItemThatOwnsCalculatable(
+        global::Quire.Calculation.Core.ICalculatable calculatable)
+    {
+        global::Quire.Calculation.Core.ICalculatable wrappedCalculatable = GetWrappedCalculatable(calculatable);
+        foreach (global::Quire.Controls.Core.IWhiteboardItem whiteboardItem in WhiteboardItems)
+        {
+            if (whiteboardItem == wrappedCalculatable)
+                return whiteboardItem;
+            if (whiteboardItem is global::Quire.Calculation.Core.ICalculatableContainer container &&
+                !(container is global::Quire.Calculation.Core.ICalculatableAggregate) &&
+                container.CalculatableChildren.Contains(wrappedCalculatable))
+                return whiteboardItem;
+        }
+
+        return null;
+    }
 }
