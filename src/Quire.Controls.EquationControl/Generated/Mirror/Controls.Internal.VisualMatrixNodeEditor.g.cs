@@ -11,8 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualMatrixNodeEditor, Ptc.Controls.EquationControl")]
 internal partial class VisualMatrixNodeEditor : global::Quire.Controls.Internal.VisualOutfixNodeEditor
 {
-    [global::Quire.Mirror.MirrorStub]
-    public VisualMatrixNodeEditor(global::Quire.Controls.Internal.VisualOutfixNode editNode, global::Quire.Controls.Internal.VisualMathRegionNode region) : base(default(global::Quire.Controls.Internal.VisualOutfixNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
 }

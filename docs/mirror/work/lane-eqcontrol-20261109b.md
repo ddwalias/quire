@@ -137,3 +137,6 @@
 - Batch: `Controls.Internal.VisualExponentSymbolNode` (`.ctor` passing `'^'`, `ArrangeStaticLayout`).
 - Shapes tried: `new Size(DesiredSize.Width - Margin.Left - Margin.Right, ...)` matched on the first candidate (Roslyn's struct temporaries account for the local slots).
 - Release IL: PASS, 837 checked (`.mirror-cache/release-il-ce8f741bc468/release-il.json`).
+- Batch: `Controls.Internal.VisualLoopNodeEditor` (`.ctor`, `ShowOperatorHighlight`); `Controls.Internal.VisualMatrixNodeEditor` (`.ctor`, `ArrangeOverride`).
+- Shapes tried: cast-to-loop base argument, the operator visibility ternary, and the fence arrangement with the running width matched on the first candidate.
+- Release IL: PASS, 841 checked (`.mirror-cache/release-il-29fee51c1f91/release-il.json`).

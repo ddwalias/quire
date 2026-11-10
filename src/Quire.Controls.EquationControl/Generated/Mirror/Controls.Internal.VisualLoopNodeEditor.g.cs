@@ -11,8 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualLoopNodeEditor, Ptc.Controls.EquationControl")]
 internal partial class VisualLoopNodeEditor : global::Quire.Controls.Internal.VisualBinaryOperatorNodeEditor
 {
-    [global::Quire.Mirror.MirrorStub]
-    public VisualLoopNodeEditor(global::Quire.Controls.Internal.VisualMathNode editNode, global::Quire.Controls.Internal.VisualMathRegionNode region) : base(default(global::Quire.Controls.Internal.VisualBinaryOperatorNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void ShowOperatorHighlight(bool show) => base.ShowOperatorHighlight(show);
 }
