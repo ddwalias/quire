@@ -24,8 +24,6 @@ public partial class ParsedSExpressionToInlineTransform
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Documents.Inline c(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Documents.Run b(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Documents.Inline a(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public ParsedSExpressionToInlineTransform() { }
