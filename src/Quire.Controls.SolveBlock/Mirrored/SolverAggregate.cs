@@ -155,6 +155,44 @@ internal partial class SolverAggregate
         FireCalculatableMoved(wrapper);
     }
 
+    private void AddAlgorithmIfRequired(
+        global::System.Text.StringBuilder solverRlBuilder,
+        global::Quire.Calculation.Core.ICalculatable wrappedCalculatable,
+        string solverName)
+    {
+        string pattern = global::System.Text.RegularExpressions.Regex.Escape(solverName) +
+            "\\s+\\(@ALGO\\s+([\\w-]+)\\)";
+        string algorithm = string.Empty;
+        if (WrappedCalculatable is global::Quire.Controls.EquationControl equationControl)
+        {
+            global::System.Text.RegularExpressions.Match match =
+                global::System.Text.RegularExpressions.Regex.Match(equationControl.EquationSExpression, pattern);
+            if (match != null && match.Success)
+                algorithm = match.Groups[1].Value;
+        }
+
+        switch (solverName.ToLower())
+        {
+            case "find":
+            case "minerr":
+                if (algorithm != string.Empty)
+                    solverRlBuilder.Append(" ").Append(GetSolvingAlgorithmRl(algorithm));
+                break;
+            case "odesolve":
+                if (algorithm != string.Empty)
+                    solverRlBuilder.Append(" ").Append(algorithm);
+                else
+                    solverRlBuilder.Append(" ").Append(OdeDefaultAlgorithmString);
+                break;
+            case "pdesolve":
+                if (algorithm != string.Empty)
+                    solverRlBuilder.Append(" ").Append(PdeAlgoToRL[algorithm]);
+                else
+                    solverRlBuilder.Append(" ").Append(PdeDefaultAlgorithmString);
+                break;
+        }
+    }
+
     protected override bool UpdateEquationType(global::Quire.Calculation.Core.ICalculatable calc)
     {
         if (!(WrappedCalculatable is global::Quire.Calculation.Core.ICalculatableAggregate aggregate) ||

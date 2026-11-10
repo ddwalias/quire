@@ -24,8 +24,6 @@ internal partial class SolverAggregate : global::Quire.Controls.SolveBlockCalcul
     [global::Quire.Mirror.MirrorStub]
     private static string GetSolvingAlgorithmRl(string algorithmString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void AddAlgorithmIfRequired(global::System.Text.StringBuilder solverRlBuilder, global::Quire.Calculation.Core.ICalculatable wrappedCalculatable, string solverName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public bool IsSolverOfSymbolicContainsFind(string rl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.SolverAggregateChildWrapperAggregate GetSolverWrappedAggregate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
