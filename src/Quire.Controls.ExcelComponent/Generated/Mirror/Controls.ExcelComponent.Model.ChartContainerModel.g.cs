@@ -26,25 +26,9 @@ public partial class ChartContainerModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.Dictionary<uint, double[,]> _dataLimitsDict;
     [global::Quire.Mirror.MirrorStub]
-    public override string ProgId { get => base.ProgId; }
-    [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.Dictionary<global::System.Guid, global::System.Guid> GuidsConversionDict { get => base.GuidsConversionDict; }
     [global::Quire.Mirror.MirrorStub]
     public string HelpServerPath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override string[] ExcludeElementsNames { get => base.ExcludeElementsNames; }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool AsyncUpdateVisibleSize { get => base.AsyncUpdateVisibleSize; }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey ToggleActivateStateFunctionalityKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsTypeDefault { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.Trace2DResults.TraceType Type { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool ShouldCommitAtLeastOnce { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool ShouldCommitIfDirty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<uint> CurrentTraceIds { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -53,8 +37,6 @@ public partial class ChartContainerModel : global::Quire.Controls.ExcelComponent
     public bool IsImageFrozen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.ExcelComponent.Model.ImageFreezeSources ImageFreezeSources { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool CheckOleActiveState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.ChartAppLib.ChartAppOLE ChartObject { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
