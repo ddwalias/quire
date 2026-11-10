@@ -25,6 +25,7 @@ internal partial class SolveBlockModel
                 FireCalculatableAdded(SolverResultDefinition);
             }
 
+            // Release IL uses the literal format call instead of interpolated-string lowering.
             SolverResultDefinition.Rl = global::System.String.Format(
                 "(define {0} {1})", SolverResultIdName, Solver.DefinedRl);
             FireSolverResultDefinitionEvaluation();

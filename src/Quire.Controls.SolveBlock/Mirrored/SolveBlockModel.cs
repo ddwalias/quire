@@ -434,6 +434,7 @@ internal partial class SolveBlockModel
         else if (IsSolverAggregateChildType(movedCalc))
         {
             MirrorChildInSolverAggregate(wrappedCalculatable);
+            // Release IL requires a distinct terminal ret after this branch.
             return;
         }
     }

@@ -30,6 +30,7 @@ public partial class SolveBlockControl
 
     public global::Quire.Controls.Core.IWhiteboardItem Solver => _sbModel.SolverItem;
 
+    // Keep these members before EngineResults to preserve its Mathcad closure ordinal.
     object global::System.ICloneable.Clone() => Clone();
 
     public SolveBlockControl Clone() => new SolveBlockControl(this);

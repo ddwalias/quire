@@ -126,3 +126,33 @@ The 40 remaining generated stub markers are recorded individually in the ledger 
 - `ContainsError` — closure-ordinal issue
 - `ShowError` — closure-ordinal issue
 
+## Landed batches in this classification turn
+
+- Batch 64 `UpdateTheSolverIfNeededToReflectMovedCalculatable`: PASS 191, `release-il-281b1938a523`; `f853a539d` `Mirror moved solver child handling`. The explicit terminal return after mirroring preserves the branch target.
+- Batch 65 solver status overrides: PASS 191, `release-il-209bb1d0ae6e`; `59e78a1e0` `Mirror solver status overrides`. Initial partial accessibility failed compilation; using `internal` fixed it.
+- Batch 66 `HandleSolverRequestEvaluation`: PASS 192, `release-il-4625aac2c439`; `afb17ff90` `Mirror solver evaluation request handling`. Wrong type namespace and interpolated-string shapes were rejected; the Support type and `String.Format` matched.
+- Batch 67 error subscription/commit handlers: PASS 195, `release-il-91501b23eca3`; `e9237b040` `Mirror SolveBlockModel error event handlers`. Separate negative type-pattern guards fixed local slots, and a branch-to-body goto matched the commit handler.
+- Batch 68 control metadata methods: PASS 198, `release-il-ddd467f3afde`; `74d8e6c20` `Mirror SolveBlockControl equation metadata`. Keeping them before `EngineResults` restored closure `b__62_0`.
+- Batch 69 control error/result-owner properties: PASS 200, `release-il-b09e1dc4902c`; `a168a8df1` `Mirror SolveBlockControl error summary`. `Error` remains a closure-ordinal issue (`b__56_0` vs `b__52_0`).
+- Batch 70 result-manager loops: PASS 202, `release-il-b4aead464619`; `414295396` `Mirror SolveBlockControl result manager updates`.
+- Batch 71 section and label properties: PASS 207, `release-il-e51e08be9018`; `f6e0d08d9` `Mirror SolveBlockControl section accessors`; placed before `EngineResults` to preserve its closure ordinal.
+- Batch 72 control error-event forwarding: PASS 209, `release-il-3c884664a18c`; `3411e0323` `Mirror SolveBlockControl error event forwarding`.
+- Batch 73 `EndInit`: PASS 210, `release-il-7b3f3bd43163`; `749d0745d` `Mirror SolveBlockControl initialization`.
+- Batch 74 grid-size update: PASS 211, `release-il-3092e075c6bf`; `d1f76b437` `Mirror SolveBlockControl grid size update`.
+- Batch 75 `SolveBlockCalculatable.PropertyChanged`: PASS 211, `release-il-d5f58f177005`; `edee3d5d7` `Mirror SolveBlockCalculatable property event`.
+- Batch 76 model error-change handlers: PASS 213, `release-il-ef003c9dd4df`; `54f2e1071` `Mirror SolveBlockModel error change events`. Direct gotos preserve the event-body call order.
+- Batch 77 `GetChildIndexForResult`: PASS 214, `release-il-2c6434f5abbb`; `0b9872a78` `Mirror solver result child index lookup`. A local Regex is required for `callvirt`.
+- Batch 78 symbolic find detection: PASS 215, `release-il-fe1d79ef4f06`; `3bf87c4ab` `Mirror solver symbolic find detection`.
+- Batch 79 clone methods: PASS 217, `release-il-26d7154e62b3`; `de38ffe89` `Mirror SolveBlockControl clone methods`; the private constructor remains closure-ordinal blocked.
+- Batch 80 `HandleChildWrapperPropertyChanged`: PASS 218, `release-il-840d4d998ee0`; `a231de7b1` `Mirror SolveBlockModel child wrapper changes`.
+- Batch 81 base-forwarding members: PASS 218, `release-il-4b7d8f50894e`; `7403d307e` `Mirror SolveBlockModel base forwarding`.
+- Batch 82 `ChildCalcErrorChanged`: PASS 218, `release-il-9a95e14ed40a`; `18e657b68` `Mark SolveBlockModel error event as implemented`.
+- Batch 83 `SolveBlockModel.Rl`: PASS 219, `release-il-b1e551912dce`; `d764f2b34` `Mirror SolveBlockModel RL getter`.
+- Batch 84 eval RL composition: PASS 220, `release-il-34791708a809`; `4a1eeef21` `Mirror solve block eval RL composition`.
+- Batch 85 symbolic RL composition: PASS 221, `release-il-a980c4fd60b4`; `3d7c938a9` `Mirror symbolic solve block RL composition`. Namespace/overload candidates failed compilation, and early returns failed at branch offset 16 before the nested success checks matched.
+- Batch 86 control storage declarations: PASS 221, `release-il-49b5a122ea4c`; `18aea7317` `Mark SolveBlockControl storage as implemented`.
+- Batch 87 `ParseWrappedRl`: PASS 222, `release-il-73075667a126`; `bd1c99a85` `Mirror solver RL parser`. The aggregate RL call was corrected to the extension method and local Regex variables preserve `callvirt`.
+- Batch 88 model static RL fields: PASS 223, `release-il-0099edfd8e89`; `9ca67fd6f` `Mirror SolveBlockModel RL constants`.
+- Batch 89 solver evaluation request handling: PASS 224, `release-il-a1c0f333e3c8`; `9527b6b9c` `Mirror solver request evaluation handling`. Branching to a shared terminal return matched the required long branch.
+
+Rejected closure candidate: `SolverAggregate.IsChild` failed at `b__77_0` vs Mathcad `b__60_0` (`release-il-a437a392dd99`, 227 checked) and was reverted; it is recorded among the closure-ordinal members above.
