@@ -318,3 +318,6 @@
 - Batch: `Controls.Internal.VisualScaledSymbolNode`: `Clone()` (new node from `_symbol`, `MathFormat.SetPropertiesFrom(MathFormat, true)`, copies `_scaleFactor`) and the explicit `ICloneable.Clone()` forwarding to it. Added to the existing `Mirrored/Controls.Internal.VisualScaledSymbolNode.cs` partial.
 - Shapes tried: the local-then-return clone matched on the first candidate.
 - Release IL: PASS, 1651 checked (`.mirror-cache/release-il-d7b6abd6d0b5/release-il.json`).
+- Batch: `Controls.Internal.VisualStepRangeOperatorNode.GetNodeAtPoint` (foreach over `Children`, operator symbol and operand hit tests). Added to the existing `Mirrored/Controls.Internal.VisualStepRangeOperatorNode.cs` partial.
+- Shapes tried: (1) `if (child is VisualSymbolNode symbol)` FAILED with a type-operation difference: Release IL is `isinst` then a separate `castclass VisualSymbolNode`, so the source uses `is` then an explicit cast (commented in the code). (2) `continue`-on-failed-bound checks FAILED: Release IL branches with `blt.un`/`bgt.un` (proceed-block form `if (x >= l && x <= r)`); the proceed-block form matched. Candidate disassembly was produced with `ilspycmd -il` on a scratch Release build.
+- Release IL: PASS, 1652 checked (`.mirror-cache/release-il-524f2167bd28/release-il.json`).
