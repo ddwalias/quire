@@ -96,8 +96,11 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         removed = method(project='Quire.Mcd')
         moved = method(project='Quire.Mcdepman')
         self.assertTrue(compare(inventory(removed), inventory(moved))['passed'])
+        declaration = dict(moved, exact_match=None, declaration_only=True)
+        self.assertTrue(compare(inventory(removed), inventory(declaration))['passed'])
         self.assertFalse(compare(inventory(removed), inventory())['passed'])
         self.assertFalse(compare(inventory(removed), inventory(dict(moved, exact_match=False)))['passed'])
+        self.assertFalse(compare(inventory(removed), inventory(dict(declaration, shape_matches=False)))['passed'])
 
     def test_renumbered_generated_members_without_counterpart_may_be_removed(self):
         stale = method('MoveNext', exact=False)

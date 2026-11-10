@@ -225,7 +225,8 @@ def compare(before, after, types=(), methods=()):
         if any(row.get('project') != removed.get('project')
                and row.get('type') == removed.get('type')
                and row.get('signature') == removed.get('signature')
-               and row.get('shape_matches') is True and row.get('exact_match') is True
+               and row.get('shape_matches') is True
+               and (row.get('exact_match') is True or row.get('declaration_only') is True)
                for row in new.values()):
             continue
         failures.append({'method': key, 'reason': 'method removed'})
