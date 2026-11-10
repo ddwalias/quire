@@ -71,6 +71,13 @@ public partial class SolveBlockControl
         FirePropertyChanged(global::Quire.Calculation.Core.ErrorChangedEventArgs.GetArgs());
     }
 
+    public override void EndInit()
+    {
+        base.EndInit();
+        if (_sbModel != null)
+            global::Quire.Calculation.Core.ResultManager.DispatchResults(_engineResults, ResultOwners);
+    }
+
     public EngineResult[] EngineResults
     {
         get
