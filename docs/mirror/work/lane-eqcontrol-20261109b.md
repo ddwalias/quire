@@ -231,3 +231,5 @@
 - Release IL: PASS, 1191 checked (`.mirror-cache/release-il-311c8f6b4e95/release-il.json`).
 - Batch: `Controls.InputControls.EditableComboBoxViewModel`: `InsertRow`, `InsertColumn` (the `isNotEmpty` result stays on the stack in Release IL, the natural local form matches), `AreOnlyValuesSelected`, `PasteEditModeBySelection`, `CanPasteEditMode`.
 - Release IL: PASS, 1196 checked (`.mirror-cache/release-il-6c0862f7f6e8/release-il.json`).
+- Batch: `Controls.InputControls.EditableComboBoxViewModel.CreateSelection` (the lower bound is written `0 <= min`: Release IL uses `bgt`, `min >= 0` compiles to `blt`) and `TextBox_CanPaste` (the `Handled` assignment is nested under the null check, `CanExecute` is set afterwards, the `FailAssertion` is the outer `else`). The partial now starts with `#nullable disable`, which keeps `NullableContextAttribute` out of the Release IL.
+- Release IL: PASS, 1198 checked (`.mirror-cache/release-il-eb4e5e71d693/release-il.json`).

@@ -1,8 +1,11 @@
+#nullable disable
 using Quire.Matrices;
 using Quire.EquationEditor.View;
 using System.Collections.Generic;
 using Quire.Core;
 using Quire.EquationEditor.Tree;
+using System;
+using System.Windows.Input;
 namespace Quire.Controls.InputControls;
 
 public partial class EditableComboBoxViewModel
@@ -142,5 +145,33 @@ public partial class EditableComboBoxViewModel
         }
 
         return false;
+    }
+
+    public void CreateSelection(int cellIndexA, int cellIndexB)
+    {
+        // Release IL tests 0 <= min with bgt; min >= 0 compiles to blt.
+        if (DebugTools.DevAssert(0 <= Math.Min(cellIndexA, cellIndexB) && Math.Max(cellIndexA, cellIndexB) < CellCount, null).Failed)
+        {
+            return;
+        }
+
+        SelectedCells = Tuple.Create(cellIndexA, cellIndexB);
+    }
+
+    public void TextBox_CanPaste(object sender, CanExecuteRoutedEventArgs e)
+    {
+        if (sender is ComboBoxCellDataType cellDataType)
+        {
+            MathNode mathNode = TryReadMathNodeFromClipboard();
+            if (mathNode != null)
+            {
+                e.Handled = true;
+            }
+
+            e.CanExecute = TransformMathNodeToComboBoxValues.CanTransform(mathNode, cellDataType);
+            return;
+        }
+
+        DebugTools.FailAssertion("Unhandled case");
     }
 }

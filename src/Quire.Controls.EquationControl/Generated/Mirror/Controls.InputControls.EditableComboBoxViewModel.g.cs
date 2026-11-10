@@ -40,8 +40,6 @@ public partial class EditableComboBoxViewModel : global::Quire.Controls.InputCon
     [global::Quire.Mirror.MirrorStub]
     public EditableComboBoxViewModel(global::Quire.Controls.InputControls.ComboBoxTableModel tableModel) : base(default(global::Quire.Controls.InputControls.ComboBoxTableModel)) { }
     [global::Quire.Mirror.MirrorStub]
-    public void CreateSelection(int cellIndexA, int cellIndexB) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.List<global::Quire.Controls.InputControls.ICellData> ExpandComboBoxRowsColumns(int targetRectBottom, int targetRectRight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Nullable<global::Quire.DiscreteRect> PasteSelectedValues(global::Quire.DiscreteRect selectedRect, global::Quire.EquationEditor.Tree.MathNode matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -51,8 +49,6 @@ public partial class EditableComboBoxViewModel : global::Quire.Controls.InputCon
     private void PasteEditMode(global::Quire.DiscreteRect sourceRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void CopyEditMode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void TextBox_CanPaste(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void TextBox_OnPaste(object sender, global::Quire.EquationEditor.Tree.ComboBoxCellDataType cellDataType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
