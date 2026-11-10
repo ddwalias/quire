@@ -24,12 +24,14 @@ test host, and never runs tests.
 
 Base inventories are cached in `.mirror-cache/inventory-cache/` per project, keyed by the content of
 what MethodAudit reads for it: the Git trees of the project's `ProjectReference` closure, the root
-files, the `src` directory names, the type map, the judge (its MethodAudit/MirrorGen trees, root files
-and SDK), the install's DLL listing, and which mixed-mode references were scanned with it. A base whose
-projects all hit is assembled from those rows without building, whichever commit or lane stored them;
-any miss builds and scans them all. Rows that can depend on everything scanned with them (a mixed-mode
-project's, or a `<PrivateImplementationDetails>` MethodAudit could pair with another project's Mathcad
-assembly) hit only for the same scan. The merge gate
+files other than `*.md`, the `src` directory names, the type map, the judge (its MethodAudit/MirrorGen
+trees, root files and SDK), `release_il.py` itself (the build recipe), the install's DLL listing, and
+which members of its closure were scanned with it (MethodAudit binds a scanned reference's types through
+that assembly's own bindings, an unscanned one's through the type map). A project's rows depend on
+nothing else scanned with it. A base whose projects all hit is assembled from those rows without
+building, whichever commit or lane stored them; any miss builds and scans them all. Base and candidate
+trees hold the committed bytes (no EOL conversion or checkout filters, whatever `core.autocrlf` says),
+so a stored candidate's rows can serve a later base. The merge gate
 stores each committed candidate it passes (in the main checkout's cache, shared by every lane), so the
 next lane's base scan is usually a cache hit. Uncommitted candidates are never cached; a corrupt or
 locked entry is rebuilt. Delete the folder to force a rebuild. Each run's work directory (base
@@ -145,6 +147,9 @@ type (vtables, `ThrowInfo`) holds layout-dependent addresses and is not hashed.
 Generated nested types inherit the reviewed enclosing type's mapping only when the exact
 nested name exists as a compiler-generated type in the same original artifact. Unmapped
 or differently numbered helpers still fail; no generated body is exempted.
+A `<PrivateImplementationDetails>` container pairs with the container of the one Mathcad assembly, among
+those the project's own types bind, that has one; otherwise it is unbound. It never pairs with an assembly
+only another audited project binds.
 Generated ordinals depend on member declaration order, including field declarations;
 align source order when the compiler emits different numeric suffixes. Every member counts,
 accessors and nested types included, across partial files in compile order (`Generated/`

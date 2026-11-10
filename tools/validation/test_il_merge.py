@@ -1,6 +1,7 @@
 """Exercise gate decisions in a disposable Git repository; no actual build or push."""
 import argparse
 import json
+import os
 from pathlib import Path
 import subprocess
 import tempfile
@@ -66,6 +67,24 @@ class IlMergeTests(GateRepo):
             self.assertEqual(check.call_args.kwargs['root'].name, 'tree')
             self.assertNotEqual(check.call_args.kwargs['root'], self.root)
         self.assertEqual(self.git('rev-parse', 'main'), self.base)
+
+    def test_the_candidate_tree_holds_committed_bytes_whatever_core_autocrlf_says(self):
+        """As checkout_base gives the base: a stored candidate's rows serve as a later base under the same key."""
+        (self.root / 'src/P/T.cs').write_bytes(b'first\nsecond\n')
+        self.git('add', '.')
+        self.git('commit', '-qm', 'candidate')
+        self.git('checkout', '-q', 'main')
+        seen = {}
+        def check(base, projects, results, *args, root, **kwargs):
+            seen['bytes'] = (root / 'src/P/T.cs').read_bytes()
+            seen['status'] = subprocess.run(['git', 'status', '--porcelain'], cwd=root, capture_output=True,
+                                            text=True, check=True).stdout
+            seen['projects'] = projects
+            return {'passed': False, 'failures': []}
+        autocrlf = {'GIT_CONFIG_COUNT': '1', 'GIT_CONFIG_KEY_0': 'core.autocrlf', 'GIT_CONFIG_VALUE_0': 'true'}
+        with mock.patch.dict(os.environ, autocrlf), mock.patch.object(il_merge.release_il, 'check', side_effect=check):
+            self.assertEqual(il_merge.gate(self.args()), 1)
+        self.assertEqual(seen, {'bytes': b'first\nsecond\n', 'status': '', 'projects': ['P']})
 
     def test_a_moved_candidate_is_not_landed(self):
         self.candidate(runtime=True)
