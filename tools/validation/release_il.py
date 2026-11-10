@@ -621,15 +621,20 @@ CACHE_TTL = 3 * 24 * 3600
 
 
 def evict(cache):
-    """Delete stored inventories (and temporaries a killed run left) unused for CACHE_TTL. Best effort: an entry another
-    run has open stays (Windows refuses to delete it) and goes next time; one deleted under a reader is a miss."""
-    now = time.time()
+    """Delete stored inventories (and temporaries a killed run left) unused for CACHE_TTL before the newest entry, so a
+    pause with no gate runs does not empty the cache. Best effort: an entry another run has open stays (Windows refuses
+    to delete it) and goes next time; one deleted under a reader is a miss."""
     with contextlib.suppress(OSError):
+        entries = []
         for entry in os.scandir(cache):
             with contextlib.suppress(OSError):
-                if entry.name.endswith(('.json', '.tmp')) and entry.is_file() \
-                        and now - entry.stat().st_mtime > CACHE_TTL:
-                    os.unlink(entry.path)
+                if entry.name.endswith(('.json', '.tmp')) and entry.is_file():
+                    entries.append((entry.path, entry.stat().st_mtime))
+        newest = max((mtime for _, mtime in entries), default=0)
+        for path, mtime in entries:
+            if newest - mtime > CACHE_TTL:
+                with contextlib.suppress(OSError):
+                    os.unlink(path)
 
 
 def store_inventory(cache, key, data):

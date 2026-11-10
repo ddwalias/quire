@@ -664,14 +664,24 @@ class CheckTests(unittest.TestCase):
         (self.cache / 'fresh.json').write_text('{}')
         for entry in stored:
             os.utime(entry, (nearly, nearly))
+        judges = [self.cache / 'judges', *(self.cache / 'judges').rglob('*')]
+        for path in judges:  # judge builds are not inventory entries, however old
+            os.utime(path, (expired, expired))
         self.assertTrue(self.check()['base_cached'])
         names = {p.name for p in self.cache.iterdir()}
         self.assertNotIn('old.json', names)
         self.assertNotIn('killed.tmp', names)
         self.assertIn('fresh.json', names)
-        self.assertIn('judges', names)
+        self.assertTrue(all(path.exists() for path in judges))
         for entry in stored:  # read by the hit, so refreshed rather than expiring
             self.assertGreater(entry.stat().st_mtime, nearly + 60)
+
+    def test_a_pause_without_gate_runs_does_not_empty_the_cache(self):
+        self.check()
+        paused = time.time() - release_il.CACHE_TTL - 3600  # every entry, the newest included, is older than the TTL
+        for entry in self.cache.glob('*.json'):
+            os.utime(entry, (paused, paused))
+        self.assertTrue(self.check()['base_cached'])
 
     def test_a_failed_scan_keeps_its_inventory_and_reports_errors(self):
         mock.patch.stopall()
