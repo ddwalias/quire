@@ -11,18 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InsertFunctionCommandParameter, Ptc.Controls.EquationControl")]
 public partial class InsertFunctionCommandParameter : global::Quire.Controls.InsertIdCommandParameter
 {
-    [global::Quire.Mirror.MirrorStub]
-    private int _argsCount;
-    [global::Quire.Mirror.MirrorStub]
-    private string[] _args;
-    [global::Quire.Mirror.MirrorStub]
-    public int ArgsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string[] Args { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public InsertFunctionCommandParameter(string funcName, int argsCount, global::System.Nullable<global::Quire.Controls.Core.IdLabels> label) : base(default(global::Quire.EquationEditor.Tree.FormattedString), default(global::System.Nullable<global::Quire.Controls.Core.IdLabels>)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public InsertFunctionCommandParameter(string funcName, int argsCount) : base(default(global::Quire.EquationEditor.Tree.FormattedString), default(global::System.Nullable<global::Quire.Controls.Core.IdLabels>)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public InsertFunctionCommandParameter(string funcName, string[] args) : base(default(global::Quire.EquationEditor.Tree.FormattedString), default(global::System.Nullable<global::Quire.Controls.Core.IdLabels>)) { }
 }

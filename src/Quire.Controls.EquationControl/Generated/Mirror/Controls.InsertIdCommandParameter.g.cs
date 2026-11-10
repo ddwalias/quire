@@ -11,14 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InsertIdCommandParameter, Ptc.Controls.EquationControl")]
 public partial class InsertIdCommandParameter
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.EquationEditor.Tree.FormattedString _name;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<global::Quire.Controls.Core.IdLabels> _label;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.FormattedString Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::Quire.Controls.Core.IdLabels> Label { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public InsertIdCommandParameter(global::Quire.EquationEditor.Tree.FormattedString name, global::System.Nullable<global::Quire.Controls.Core.IdLabels> label) { }
 }
