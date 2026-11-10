@@ -12,15 +12,9 @@ namespace Quire.Controls.Internal;
 internal partial class VisualInputControlEditor : global::Quire.Controls.Internal.VisualMathNodeEditor<global::Quire.Controls.Internal.VisualInputControlNode>, global::Quire.EquationEditor.View.IVisualInputControlEditor, global::Quire.EquationEditor.View.IVisualMathNodeEditor
 {
     [global::Quire.Mirror.MirrorStub]
-    private double BORDER_THICKNESS;
-    [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Controls.Internal.Caret _caret;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Windows.Controls.Border _border;
-    [global::Quire.Mirror.MirrorStub]
-    public VisualInputControlEditor(global::Quire.Controls.Internal.VisualInputControlNode editNode, global::Quire.Controls.Internal.VisualMathRegionNode region) : base(default(global::Quire.Controls.Internal.VisualMathNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualInputControlEditor(global::Quire.Controls.Internal.VisualInputControlNode editNode, global::System.Windows.FrameworkElement adornedElement, global::Quire.Controls.Internal.VisualMathRegionNode region) : base(default(global::Quire.Controls.Internal.VisualMathNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]
