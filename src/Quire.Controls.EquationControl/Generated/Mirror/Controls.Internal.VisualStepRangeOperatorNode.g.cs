@@ -18,10 +18,6 @@ internal partial class VisualStepRangeOperatorNode : global::Quire.Controls.Inte
     [global::Quire.Mirror.MirrorStub]
     private double _effectiveScriptBaseline;
     [global::Quire.Mirror.MirrorStub]
-    public override double EffectiveBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override double EffectiveScriptBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override double TextBaselineY { get => base.TextBaselineY; }
     [global::Quire.Mirror.MirrorStub]
     public VisualStepRangeOperatorNode() : base(default(string), default(global::Quire.Controls.Internal.VisualMathNode[])) { }

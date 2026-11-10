@@ -188,3 +188,6 @@
 - Batch: `Controls.InputControls.TextBoxControl` (constructor, `ViewModel`, the two overrides, `InitializeComponent`, `Connect`; URI `.../scriptabletextbox/textboxcontrol.xaml` kept, not in the repository); `Controls.EquationControlConstants` help-context helpers (`GetEquationIdentifierHelpContext`, `GetEquationOperatorHelpContext`, `GetPlaceholderHelpContext`).
 - Shapes tried: the `??` fallback with string concatenation and the placeholder chaining matched on the first candidate.
 - Release IL: PASS, 974 checked (`.mirror-cache/release-il-3b3d231e0d32/release-il.json`).
+- Batch: `Controls.Internal.VisualSymKeywordsStackNode` (`EffectiveBaselineY`, `EffectiveScriptBaselineY`, `GetNodeAtPoint` through the operands panel) and `Controls.Internal.VisualStepRangeOperatorNode` (`EffectiveBaselineY`, `EffectiveScriptBaselineY`).
+- Shapes tried: the hit-test chain through the panel cell matched on the first candidate. Left open: `VisualStepRangeOperatorNode.GetNodeAtPoint` (the enumerator loop; not in this batch).
+- Release IL: PASS, 979 checked (`.mirror-cache/release-il-40ce8a800af6/release-il.json`).
