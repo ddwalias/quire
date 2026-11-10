@@ -173,6 +173,47 @@ internal partial class SolveBlockModel
         return IsSolverAggregateChildType(equationType);
     }
 
+    private void HandleChildWrapperPropertyChanged(
+        object sender, global::System.ComponentModel.PropertyChangedEventArgs args)
+    {
+        if (args.PropertyName == "EquationType")
+        {
+
+            var eventArgs =
+                (global::Quire.Wpf.PropertyChangedEventArgs<global::Quire.Controls.SolveBlockEquationTypes>)args;
+            global::Quire.Controls.ISolveBlockCalculatable wrapper =
+                (global::Quire.Controls.ISolveBlockCalculatable)sender;
+            if (eventArgs.NewValue == global::Quire.Controls.SolveBlockEquationTypes.Solver)
+            {
+                global::Quire.Calculation.Core.ICalculatable wrappedCalculatable = wrapper.WrappedCalculatable;
+                UpdateWhichItemIsSolver();
+                if (Solver == null || wrappedCalculatable != Solver.WrappedCalculatable)
+                    wrappedCalculatable.Commit();
+            }
+            else if (eventArgs.OldValue == global::Quire.Controls.SolveBlockEquationTypes.Solver)
+            {
+                if (wrapper == Solver)
+                    UpdateWhichItemIsSolver();
+            }
+            else if (!IsSolverAggregateChildType(eventArgs.OldValue) &&
+                     IsSolverAggregateChildType(eventArgs.NewValue))
+            {
+                if (Solver != null && IsChildAboveSolver(wrapper))
+                    MirrorChildInSolverAggregate(wrapper);
+                wrapper.WrappedCalculatable.Commit();
+            }
+            else if (IsSolverAggregateChildType(eventArgs.OldValue) &&
+                     !IsSolverAggregateChildType(eventArgs.NewValue))
+            {
+                if (Solver != null && IsChildAboveSolver(wrapper))
+                    Solver.RemoveChild(GetWrappedCalculatable(wrapper));
+                wrapper.WrappedCalculatable.Commit();
+            }
+
+            FireSectionsMaybeChanged();
+        }
+    }
+
     public SolveBlockEquationTypes GetSolveBlockEquationType(global::Quire.Controls.Core.IWhiteboardItem item)
     {
         if (GuessValueItems.Contains(item))

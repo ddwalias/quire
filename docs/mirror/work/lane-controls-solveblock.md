@@ -64,11 +64,11 @@
 - Remaining: 86 stub markers in generated types; known blockers: `GetDefinedVariable` call vs. callvirt mismatch, `GetEquationTypeOfRl` enum/closure mismatch, `MatchEquationType` local-slot order mismatch, deserialization strategy mapped type mismatch, `SolveBlockChildManager.Rewrap` anonymous helper without a Mathcad counterpart and `SolverAggregate.Children` closure ordinal mismatch.
 ## Remaining stub classification (2026-11-10)
 
-The 57 generated stub markers are classified as follows; “unblocked” means no checkpointed IL/ownership obstacle or recorded closure-ordinal failure is known for that member.
+The 56 generated stub markers are classified as follows; “unblocked” means no checkpointed IL/ownership obstacle or recorded closure-ordinal failure is known for that member.
 
 - Checkpointed blockers (10 markers): `SolveBlockCalculatable.GetEquationTypeOfRl`; `SolveBlockCalculatableAggregate.GetDefinedVariable`; `SolveBlockChildManager.Rewrap`; all four `SolveBlockDeserializationStrategy` markers (mapped-type mismatch); `SolveBlockModel.MatchEquationType`.
 - Closure-ordinal issues (13 markers): `SolverAggregate.Children` (recorded closure ordinal mismatch) `SolverAggregate.ClearError` (candidate lambda ordinal `b__88_0` vs. Mathcad `b__73_0`) and the six `SolveBlockControl` indicator properties (`GuessValuesIndicatorTop/Bottom`, `ConstraintsIndicatorTop/Bottom`, `SolverIndicatorTop/Bottom`), whose prior candidate shifted `get_EngineResults` closure from `b__62_0` to `b__50_0`.
-- Unblocked (34 markers): all remaining markers in `SolveBlockCalculatable`, `SolveBlockCalculatableAggregate`, `SolveBlockControl`, `SolveBlockModel`, and `SolverAggregate`, excluding the members listed in the two categories above. This includes fields/constants, constructors, simple accessors, overrides, and methods; each is eligible for a batch after its Release IL is read. No new closure blocker has yet been inferred for these members.
+- Unblocked (33 markers): all remaining markers in `SolveBlockCalculatable`, `SolveBlockCalculatableAggregate`, `SolveBlockControl`, `SolveBlockModel`, and `SolverAggregate`, excluding the members listed in the two categories above. This includes fields/constants, constructors, simple accessors, overrides, and methods; each is eligible for a batch after its Release IL is read. No new closure blocker has yet been inferred for these members.
 
 No classification changes the generated files; this inventory records the current state before further implementation.
 - Batch 64 `SolveBlockModel.UpdateTheSolverIfNeededToReflectMovedCalculatable`: PASS (`191 checked`; `.mirror-cache/release-il-281b1938a523`). The explicit return after `MirrorChildInSolverAggregate` preserves the IL branch target followed by a separate method return.
@@ -207,4 +207,6 @@ No classification changes the generated files; this inventory records the curren
 - Batch 78 `SolverAggregate.IsSolverOfSymbolicContainsFind`: PASS (`215 checked`; `.mirror-cache/release-il-fe1d79ef4f06`). The two symbolic operator regex checks and case-insensitive `find` expression test match Release IL.
 
 - Batch 79 `SolveBlockControl.ICloneable.Clone` and `Clone`: PASS (`217 checked`; `.mirror-cache/release-il-26d7154e62b3`). The public clone method constructs the private clone overload; that constructor remains a closure-ordinal blocker.
+
+- Batch 80 `SolveBlockModel.HandleChildWrapperPropertyChanged`: PASS (`218 checked`; `.mirror-cache/release-il-840d4d998ee0`). The initial negative guard emitted `brtrue` to the return; a positive `if (PropertyName == "EquationType")` body matched the reference's branch to the trailing return.
 
