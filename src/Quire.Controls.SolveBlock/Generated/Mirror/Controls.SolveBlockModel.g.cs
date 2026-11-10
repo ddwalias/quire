@@ -108,8 +108,6 @@ internal partial class SolveBlockModel : global::Quire.Controls.Mathboard.Aggreg
     [global::Quire.Mirror.MirrorStub]
     private void HandleContainerChildrenChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.Calculation.Core.ICalculatable GetWrappedCalculatable(global::Quire.Calculation.Core.ICalculatable calculatable) => base.GetWrappedCalculatable(calculatable);
-    [global::Quire.Mirror.MirrorStub]
     private bool IsChildAboveSolver(global::Quire.Calculation.Core.ICalculatable child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool IsSolverAggregateChildType(global::Quire.Controls.SolveBlockEquationTypes eqType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

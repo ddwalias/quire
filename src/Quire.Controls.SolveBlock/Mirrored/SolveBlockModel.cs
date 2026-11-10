@@ -11,6 +11,14 @@ internal partial class SolveBlockModel
         return clone;
     }
 
+    protected override global::Quire.Calculation.Core.ICalculatable GetWrappedCalculatable(
+        global::Quire.Calculation.Core.ICalculatable calculatable)
+    {
+        if (!(calculatable is global::Quire.Controls.ISolveBlockCalculatable))
+            return calculatable;
+        return (calculatable as global::Quire.Controls.ISolveBlockCalculatable).WrappedCalculatable;
+    }
+
     protected override void AddItems(IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items)
     {
         base.AddItems(items);
