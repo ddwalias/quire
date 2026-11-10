@@ -213,3 +213,6 @@
 - Release IL: PASS, 1042 checked (`.mirror-cache/release-il-5769f4177c2b/release-il.json`). Earlier candidates: FAIL at the `FindClosestChild` maxstack.
 - Batch: `Controls.InputControls.InputControlEditorViewModel.ApplyScript`, `ShowUserFriendlyError`, and the `SelectedScriptingLanguage` property (getter and setter).
 - Release IL: PASS, 1046 checked (`.mirror-cache/release-il-563195f659b1/release-il.json`).
+- Batch: `Controls.Internal.MatrixLayoutManager.CalcMaxDecimalPerColumn`. `ExtractVisualTextWidth` remains a stub (its `isinst`/`dup` shape is still open).
+- Shapes tried: the ternary FAILED (Roslyn put the binary branch after the jump, Mathcad puts it first and stores `text` in each branch), so an if/else matched the calls. Local slots FAILED until `node`, `metrics`, `text` were declared before `maxWidths` (Mathcad's slot order); the nullable directive is off to avoid `NullableContextAttribute`.
+- Release IL: PASS, 1047 checked (`.mirror-cache/release-il-1db89f5dd348/release-il.json`).
