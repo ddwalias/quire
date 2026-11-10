@@ -24,23 +24,7 @@ public partial class MessageDialogWithProgressBar : global::Quire.Controls.Core.
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    public string ProgressBarMessageFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Controls.TextBlock Message { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Controls.Image Image { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Controls.ItemsControl Buttons { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private MessageDialogWithProgressBar(global::System.Windows.Window ownerWindow, string title, global::Quire.Wpf.ProgressBarData progressBarData) : base(default(global::System.Windows.Window), default(string)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.Dialogs.SaveAndSyncDialogResult Show(global::System.Windows.Window ownerWindow, string message, string title, global::Quire.Wpf.ProgressBarData progressBarData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleProgressStopped(bool finished) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleProgressValueChanged(object sender, global::System.ComponentModel.ProgressChangedEventArgs progressArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnClosed(global::System.EventArgs e) => base.OnClosed(e);
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

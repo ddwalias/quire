@@ -20,21 +20,7 @@ public partial class SaveAndSyncErrorWarningDialog : global::Quire.Controls.Core
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Controls.TextBlock Message { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Controls.Image Image { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Controls.ItemsControl Buttons { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private SaveAndSyncErrorWarningDialog(global::System.Windows.Window ownerWindow, string caption, global::System.Collections.Generic.IEnumerable<global::Quire.MessageBoxes.ErrorWarningTabData> tabs) : base(default(global::System.Windows.Window), default(string)) { }
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnContentRendered(global::System.EventArgs e) => base.OnContentRendered(e);
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.Dialogs.SaveAndSyncDialogResult Show(global::System.Windows.Window ownerWindow, string title, global::System.Collections.Generic.IEnumerable<global::Quire.MessageBoxes.ErrorWarningTabData> tabs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IStyleConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -381,6 +381,8 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
   - Gate: PASS, 689 checked. Report: `.mirror-cache/release-il-a5bf65c9e039/release-il.json`.
 - **Batch 24 (ProofingLanguageDropDownSelector, P; branch `mirror/quire-main-rest-pure-20261111`):** `BeginInit`, the constructor, nested `CultureItemsManager` (static comparer with its lambda, `CulturesDataItems`, ctor, `Insert`). Blocked/unfinished, stub kept: `EnsureItemHeader` (its interpolated-string handler lands in local slot 1 where Mathcad uses slot 2, and the branch layout of `!Equals` differs; not matched after one attempt).
   - Gate: PASS, 698 checked. Report: `.mirror-cache/release-il-c4af1536a0d0/release-il.json`.
+- **Batch 25 (MessageDialogWithProgressBar and SaveAndSyncErrorWarningDialog code members, P; branch `mirror/quire-main-rest-pure-20261111`):** progress bar: `ProgressBarMessageFormat`, `Message`, `Image`, `Buttons`, `Show`, `HandleProgressStopped`, `HandleProgressValueChanged`, `OnClosed`. Save-and-sync: `Message`, `Image`, `Buttons`, `OnContentRendered`. Blocked, stubs kept: both constructors and XAML `InitializeComponent`/`Connect` placeholders (XAML). Unfinished: `SaveAndSyncErrorWarningDialog.Show` (its `tabs.Any` lambda is named `<Show>b__6_0` in Quire, `<Show>b__2_0` in Mathcad, and the count was not matched by reordering).
+  - Gate: PASS, 711 checked. Report: `.mirror-cache/release-il-0e4a93018ada/release-il.json`.
 
 ## Remaining (after batch 10)
 
