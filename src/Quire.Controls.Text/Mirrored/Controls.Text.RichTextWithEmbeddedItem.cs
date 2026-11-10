@@ -1484,4 +1484,102 @@ public partial class RichTextWithEmbeddedItem
     {
         AddEmbeddedItem(equation, textType.GetPositionAtOffset(Document, textCaretPosition));
     }
+
+    private void OnPreviewMoveLeftByCharacter(object sender, ExecutedRoutedEventArgs e)
+    {
+        TextPointer caret;
+        TextPointer next;
+        if (ActiveItem != null)
+        {
+            IWhiteboardItemInText item = ActiveItem as IWhiteboardItemInText;
+            if (!item.CanNavigate(Direction.Left))
+            {
+                ActiveItem = null;
+                Activate(true);
+                InlineUIContainer container = GetContainer(item);
+                if (DebugTools.AssertNotNull(container, "The active embedded item is not hosted in the document.").Passed)
+                {
+                    SetCaretPositionAndClearSuggestedX(container.ElementStart.GetInsertionPosition(LogicalDirection.Backward));
+                }
+            }
+
+            return;
+        }
+
+        caret = CaretPosition;
+        next = CaretPosition.GetNextInsertionPosition(LogicalDirection.Backward);
+        if (next != null)
+        {
+            while (caret.CompareTo(next) > 0)
+            {
+                if (caret.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.EmbeddedElement)
+                {
+                    InlineUIContainer embeddedContainer = caret.Parent as InlineUIContainer;
+                    if (embeddedContainer != null)
+                    {
+                        IWhiteboardItemInText embeddedItem = GetItem(embeddedContainer);
+                        if (embeddedItem != null)
+                        {
+                            embeddedItem.NavigateIntoItem(Direction.Left);
+                            e.Handled = true;
+                            return;
+                        }
+                    }
+                }
+
+                caret = caret.GetPositionAtOffset(-1);
+            }
+        }
+
+        CaretShouldLeaveTextRegionInDirection(CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection.Left);
+    }
+
+    private void OnPreviewMoveRightByCharacter(object sender, ExecutedRoutedEventArgs e)
+    {
+        TextPointer caret;
+        TextPointer next;
+        if (ActiveItem != null)
+        {
+            IWhiteboardItemInText item = ActiveItem as IWhiteboardItemInText;
+            if (!item.CanNavigate(Direction.Right))
+            {
+                ActiveItem = null;
+                Activate(true);
+                InlineUIContainer container = GetContainer(item);
+                if (DebugTools.AssertNotNull(container, "The active embedded item is not hosted in the document.").Passed)
+                {
+                    SetCaretPositionAndClearSuggestedX(container.ElementEnd.GetInsertionPosition(LogicalDirection.Forward));
+                }
+            }
+
+            return;
+        }
+
+        caret = CaretPosition;
+        next = CaretPosition.GetNextInsertionPosition(LogicalDirection.Forward);
+        if (next != null)
+        {
+            while (caret.CompareTo(next) < 0)
+            {
+                if (caret.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.EmbeddedElement)
+                {
+                    InlineUIContainer embeddedContainer = caret.Parent as InlineUIContainer;
+                    if (embeddedContainer != null)
+                    {
+                        IWhiteboardItemInText embeddedItem = GetItem(embeddedContainer);
+                        if (embeddedItem != null)
+                        {
+                            embeddedItem.NavigateIntoItem(Direction.Right);
+                            e.Handled = true;
+                            return;
+                        }
+                    }
+                }
+
+                caret = caret.GetPositionAtOffset(1);
+            }
+        }
+
+        CaretShouldLeaveTextRegionInDirection(CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection.Right);
+    }
 }

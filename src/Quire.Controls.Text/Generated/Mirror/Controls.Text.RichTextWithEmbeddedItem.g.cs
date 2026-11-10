@@ -156,10 +156,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     private void ResetCaretPositionWhenNecessary(global::System.Windows.Documents.TextPointer referenceLineStartPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void OnPreviewMoveLeftByCharacter(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnPreviewMoveRightByCharacter(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void HandleTextChanged(object sender, global::System.Windows.Controls.TextChangedEventArgs args) => base.HandleTextChanged(sender, args);
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Undo.IUndoableCommand CreateTextChangedCommand(global::System.Windows.Controls.TextChangedEventArgs args) => base.CreateTextChangedCommand(args);

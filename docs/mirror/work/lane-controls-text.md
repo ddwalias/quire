@@ -777,3 +777,18 @@ Remaining stub declarations in the lane: 134 (72 plain IL, 20 closure ordinal be
 
 - Exact: `ConvertListToParagraphs` (next-block and document guards, nested foreach over list items and blocks, the paragraph copy with the `Margin` object initializer and the inline-moving `while`, then removal of the list and reinsertion of the new paragraphs before the saved next block or at the end).
 - Release IL: PASS — 533 checked, 0 failures (`.mirror-cache/gate-b113`).
+
+## Batch 116 — RichTextWithEmbeddedItem caret-by-character moves left and right (2)
+
+- Exact: `OnPreviewMoveLeftByCharacter` and `OnPreviewMoveRightByCharacter`. The `caret` and `next` locals are declared at the method top (Mathcad's slots 0 and 1, ahead of the active-item branch locals), the active-item branch ends with `return`, and the caret `while` walks through embedded elements and calls `NavigateIntoItem`.
+- Release IL: PASS — 535 checked, 0 failures (`.mirror-cache/gate-b117`).
+
+## Rejected or not expressible in this run (no member landed)
+
+- `RichTextWithEmbeddedItem.CloneContent`: the `engDoc` guard and the `using`/`foreach`/`try` layout match except that the early `return` inside the `using` is encoded differently (two-byte body-length difference).
+- `RichTextBase.VerifyInsertionPositions`: the structure matches, but Mathcad loads a copy of `previous` (slot 3) in the receiver position where Roslyn loads the source local (slot 0).
+- `RichTextWithEmbeddedItem.ValidateURL`: the `FileInfo` is left on the stack while the `DirectoryInfo` is constructed and stored, which no source form produces.
+- `RichTextWithEmbeddedItem.OpenHyperlinkUrl`: begins with `ldc.i4.0; brfalse`, which skips a block containing the validation calls; Roslyn folds a constant `if` away, so the shape cannot be reproduced.
+- `FindReplaceRichTextBox.HandlePaste`: the clipboard reference is duplicated and kept on the stack across selection and caret statements.
+- `RichTextBase.GetRangeIfMatch`: a computed `TextPointer` is duplicated into both the `TextRange` constructor and the second offset call (no local).
+- `RichTextBase.ConvertSExpressionAndPasteText`, `ParseFormattedTextToTextSegments`: stack-held values across statements (see batch 106).
