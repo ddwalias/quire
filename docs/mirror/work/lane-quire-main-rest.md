@@ -342,3 +342,6 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
   - Blocked, stub kept: `UniqueTextStyleNameRule.Validate`. Mathcad calls `String.IndexOfAny` with `call`; Roslyn emits `callvirt` for the same receiver (the first attempt failed on that call alone).
 - **Batch 8 (converters, U):** `WorksheetPageLayoutToRowCountConverter` (Convert, ConvertBack), `NumberStyleEnablesRadixStyleMultiConverter` (Convert, ConvertBack), `ReadonlyOptionConverter` (SaveAndSync const, Instance, Convert, ConvertBack).
   - Gate: PASS, 439 checked. Report: `.mirror-cache/release-il-d9283ec20269/release-il.json`.
+- **Batch 9 (id-label and dips converters, U):** `IdLabelsEnumToLocalizedStringConverter` (Convert, ConvertBack, ctor), `IdLabelToItemIndexInFormatsListConverter` (Convert, ConvertBack, FindItemIndexToSelect, ctor), `DipsToDisplayUnitsConverter` (Instance, `_numOfDigitsForRound`, Convert, ConvertBack; private ctor stays generated).
+  - Gate: PASS, 474 checked. Report: `.mirror-cache/release-il-8fcc658b3077/release-il.json`.
+  - Shape: the lambda in `Convert` is named `<Convert>b__0_0` only when no earlier member is in the generated file; a generated constructor ahead of `Convert` gave `b__1_0`. Both constructors moved into the hand-written file after the methods (Mathcad order: Convert, ConvertBack, FindItemIndexToSelect, ctor).
