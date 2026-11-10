@@ -11,28 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ISolverAggregate, Ptc.Controls.SolveBlock")]
 internal partial interface ISolverAggregate : global::Quire.Controls.ISolveBlockCalculatable, global::Quire.Calculation.Core.Support.ICalculatableWrapper, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatable, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatableContainer
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> Children { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.ICalculatable LastChild { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string DefinedRl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void AddChild(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddChildAggregate(global::Quire.Calculation.Core.ICalculatable calculatable, global::Quire.Calculation.Core.ICalculatableContainer container) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsSolverOfSymbolicContainsFind(string rl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void InsertChildBefore(global::Quire.Calculation.Core.ICalculatable insertBefore, global::Quire.Calculation.Core.ICalculatable calcToInsert) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void RemoveChild(global::Quire.Calculation.Core.ICalculatable calcToRemove) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsChild(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void MoveChildBefore(global::Quire.Calculation.Core.ICalculatable moveBefore, global::Quire.Calculation.Core.ICalculatable calcToMove) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int GetIndexOfChild(global::Quire.Calculation.Core.ICalculatable child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void CommitAllChildren() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
