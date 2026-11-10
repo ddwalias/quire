@@ -11,34 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualLoopNode, Ptc.Controls.EquationControl")]
 internal partial class VisualLoopNode : global::Quire.Controls.Internal.VisualBinaryOperatorNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const double OPERATOR_PAD = 4d;
-    [global::Quire.Mirror.MirrorStub]
-    private const double BODY_LEFT_PAD = 8d;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Internal.VisualSymbolNode _operator;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Internal.VerticalFence _operatorRightMinorPart;
-    [global::Quire.Mirror.MirrorStub]
-    private double _verticalOffset;
-    [global::Quire.Mirror.MirrorStub]
-    public override double EffectiveBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override double EffectiveScriptBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override double TextBaselineY { get => base.TextBaselineY; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode Operator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Controls.Internal.VisualMathNode OperatorElement { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualLoopNode(string loopSymbol) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
-    [global::Quire.Mirror.MirrorStub]
-    internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetVisibilityOfOperatorSymbol(global::System.Windows.Visibility visibility) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

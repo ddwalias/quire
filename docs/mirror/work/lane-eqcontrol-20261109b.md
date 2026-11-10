@@ -149,3 +149,6 @@
 - Batch: `Controls.ScaledEquationControl` (`.ctor()` chaining to `(true)`, `.ctor(bool)` with the spec-table model, `GetHelpContext`); `Controls.Internal.VisualUnaryOperatorNodeForEditor` (abstract `Child`, `OperatorElement`, protected `.ctor`).
 - Shapes tried: `GetHelpContext` as `if (x == placeholder) return a; return x;` FAILED (Mathcad branches on `brtrue` with the fallthrough return first); the conditional-expression return matched.
 - Release IL: PASS, 857 checked (`.mirror-cache/release-il-3d7c5e423aae/release-il.json`). Earlier candidate: FAIL at `1d0cb4464212`.
+- Batch: `Controls.Internal.VisualLoopNode` (constants, fields, `.ctor`, `EffectiveBaselineY`, `EffectiveScriptBaselineY`, `TextBaselineY`, `Operator`, `OperatorElement`, `MeasureOverride`, `ArrangeOverride`, `GetNodeAtPoint`, `SetVisibilityOfOperatorSymbol`).
+- Shapes tried: measure/arrange/hit-test written with the comparison forms that Roslyn emits for `>=`/`<=` on doubles (`blt.un`/`bgt.un` branches) matched on the first candidate.
+- Release IL: PASS, 867 checked (`.mirror-cache/release-il-7fad71f9eee0/release-il.json`).
