@@ -15,6 +15,20 @@ public partial class SolveBlockControl
     protected override IDeserializationStrategy DeserializationStrategy { get; set; }
     public ITextStyleChangedHandler TextStyleChangedHandler { get; set; }
 
+    public bool IsSolveBlockLabelVisible
+    {
+        get => (bool)((DependencyObject)this).GetValue(IsSolveBlockLabelVisibleProperty);
+        set => ((DependencyObject)this).SetValue(IsSolveBlockLabelVisibleProperty, value);
+    }
+
+    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GuessValues =>
+        _sbModel.GuessValueItems;
+
+    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> Constraints =>
+        _sbModel.ConstraintItems;
+
+    public global::Quire.Controls.Core.IWhiteboardItem Solver => _sbModel.SolverItem;
+
     public global::Quire.Controls.SolveBlockEquationTypes GetSolveBlockEquationType(
         global::Quire.Controls.Core.IWhiteboardItem item) => _sbModel.GetSolveBlockEquationType(item);
 
