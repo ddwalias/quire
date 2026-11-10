@@ -3,6 +3,7 @@ using System.Windows;
 using Quire.Calculation.Core;
 using Quire.Controls.Core;
 using Quire.Controls.Core.Serialization;
+using Quire.Core;
 
 namespace Quire.Controls;
 
@@ -76,6 +77,13 @@ public partial class SolveBlockControl
         base.EndInit();
         if (_sbModel != null)
             global::Quire.Calculation.Core.ResultManager.DispatchResults(_engineResults, ResultOwners);
+    }
+
+    private void UpdateGridCellSizeIfNeeded(object sender, RoutedEventArgs e)
+    {
+        Size gridCellSize = WorksheetPropertiesManager.GetWorksheetProperties(this).GridCellSize;
+        if (!GridCellSize.IsEqualTo(gridCellSize))
+            GridCellSize = gridCellSize;
     }
 
     public EngineResult[] EngineResults
