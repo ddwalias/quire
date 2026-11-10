@@ -10,6 +10,33 @@ namespace Quire.Controls.ExcelComponent.ViewModel;
 
 public abstract partial class OleBaseComponentViewModel
 {
+    public WhiteboardItemsCollection InputItems { get; private set; }
+
+    public WhiteboardItemsCollection OutputItems { get; private set; }
+
+    internal double SectionsMinimumHeight { get; set; }
+
+    private bool IsInternalResizing { get; set; }
+
+    protected internal static IOleBaseComponentItemManager OleComponentItemMgr => global::Quire.Controls.ExcelComponent.Model.OleBaseComponentModel.OleComponentItemMgr;
+
+    public bool ShouldAlignOleContainerItemWithGridLines => OutputSectionExists;
+
+    protected override Size StrictMinimumSize => _strictMinimumSize;
+
+    public virtual void EndInit()
+    {
+    }
+
+    protected virtual void OnLoadOleContainerItem()
+    {
+    }
+
+    private void OnResizeOleContainerItem()
+    {
+        SetRestrictedArea();
+    }
+
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+ToggleSectionVisibilityCommand, Ptc.Controls.ExcelComponent")]
     public partial class ToggleSectionVisibilityCommand : IUndoableCommand
     {

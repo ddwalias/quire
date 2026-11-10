@@ -38,10 +38,6 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Input.ICommand ToggleOutputSectionVisibilityCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    protected internal static global::Quire.Controls.ExcelComponent.IOleBaseComponentItemManager OleComponentItemMgr { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShouldAlignOleContainerItemWithGridLines { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.EngineError Error { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.ExcelComponent.View.IOleContainerItem OleContainerItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -57,10 +53,6 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     protected double OleContainerItemWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public abstract bool OutputSectionExists { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.WhiteboardItemsCollection InputItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.WhiteboardItemsCollection OutputItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsInputSectionVisible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -82,15 +74,9 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     public override bool CanAddItems { get => base.CanAddItems; }
     [global::Quire.Mirror.MirrorStub]
-    internal double SectionsMinimumHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size StrictMinimumSize { get => base.StrictMinimumSize; }
-    [global::Quire.Mirror.MirrorStub]
     protected double DefaultSectionsMinimumHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Size OleContainerItemInitialSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsInternalResizing { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal bool IsResizing { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -106,8 +92,6 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     private void Init() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public virtual void EndInit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private double AlignHeightWithGridLines(double height, bool isOleContainerItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ClearRestrictedArea() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -117,8 +101,6 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     public void IndicateHiddenErrors() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetOleContainerItem(global::Quire.Controls.ExcelComponent.View.IOleContainerItem container) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnLoadOleContainerItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void SetInputSectionVisibilityState(bool bVisible, bool bMoveInsertionPoint = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -209,8 +191,6 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     protected global::System.Windows.Size FindMinimumSize(bool useDefault) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size FindMinimumSize(global::System.Windows.Size oleContainerItemMinimalSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnResizeOleContainerItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size AdjustOleContainerItemSize(global::System.Windows.Size oleContainerItemSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
