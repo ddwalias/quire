@@ -6,6 +6,18 @@
 - Unblocked: 140
 - Blocked: 229
 
+## Landed Batches Summary
+
+All 140 unblocked members have been implemented and landed to `main` with exact Release IL parity across 4 batches:
+
+- **Batch 1** (`d2ffeb0ec`): Mirror ColorInfo and standalone color converters (Release IL batch 1) — 39 stubs (PASS; 297 checked)
+- **Batch 2** (`8855f31d8`): Mirror ColorInfo gradient and component converters (Release IL batch 2) — 31 stubs (PASS; 343 checked)
+- **Batch 3** (`2404f7318`): Mirror validation rules and proxies (Release IL batch 3) — 47 stubs (PASS; 396 checked)
+- **Batch 4** (`39e98f47f`): Mirror type descriptors, view model, and scroll viewer (Release IL batch 4) — 23 stubs (PASS; 453 checked)
+
+Total unblocked members remaining: **0**.
+Remaining blocked members: **229** across 8 files (see Blocked Summary by Reason).
+
 ## Blocked Summary by Reason
 
 | Reason Category | Files | Stub Count | Details |
