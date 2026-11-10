@@ -34,3 +34,10 @@ Not blocked by the listed reasons: no `LoadComponent`/XAML loads, no dynamic scr
 ## Gate
 
 - Release IL baseline (before batch 1): FAIL on this type's 65 non-exact stub members, as listed above; exact members unchanged.
+
+## Batch 1: events and instance fields
+
+- Members: 96 `public event` declarations and 21 instance/const fields of `VisualMathRegionNode` (moved from the `.g.cs` stubs to the hand-written partial; markers removed in the same change).
+- Shapes: declarations only; accessors already exact. No closure or ordinal concerns.
+- Release IL: PASS, 1670 checked (`.mirror-cache/release-il-03c6dd47b771/release-il.json`).
+- Remaining: static fields and `.cctor` (U5), simple methods (U3), blocked closure group.
