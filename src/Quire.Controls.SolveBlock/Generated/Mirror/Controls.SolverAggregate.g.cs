@@ -12,34 +12,6 @@ namespace Quire.Controls;
 internal partial class SolverAggregate : global::Quire.Controls.SolveBlockCalculatable, global::Quire.Controls.ISolverAggregate, global::Quire.Controls.ISolveBlockCalculatable, global::Quire.Calculation.Core.Support.ICalculatableWrapper, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatable, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatableContainer
 {
     [global::Quire.Mirror.MirrorStub]
-    private const string OdeDefaultAlgorithmString = "adams";
-    [global::Quire.Mirror.MirrorStub]
-    private const string PdeDefaultAlgorithmString = "0";
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.Dictionary<string, string> PdeAlgoToRL;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.Dictionary<string, string> SolvingAlgoToRL;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.Dictionary<string, string> SolvingAlgoOptionsToRL;
-    [global::Quire.Mirror.MirrorStub]
-    private const string SolverFind = "find";
-    [global::Quire.Mirror.MirrorStub]
-    private const string Minerr = "minerr";
-    [global::Quire.Mirror.MirrorStub]
-    private const string Pdesolve = "pdesolve";
-    [global::Quire.Mirror.MirrorStub]
-    private const string Odesolve = "odesolve";
-    [global::Quire.Mirror.MirrorStub]
-    private const string PrognExp = "(progn:0x0000ffff ,%!)";
-    [global::Quire.Mirror.MirrorStub]
-    private const string LambdaExp = "lambda";
-    [global::Quire.Mirror.MirrorStub]
-    public const string RL_NIL = "nil";
-    [global::Quire.Mirror.MirrorStub]
-    private const int DefaultEvalIndex = 2;
-    [global::Quire.Mirror.MirrorStub]
-    private const string UndefineSubscripts = "undefine-subscripts";
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> Children { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;

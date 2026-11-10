@@ -4,6 +4,40 @@ namespace Quire.Controls;
 
 internal partial class SolverAggregate
 {
+    private const string OdeDefaultAlgorithmString = "adams";
+    private const string PdeDefaultAlgorithmString = "0";
+    private static Dictionary<string, string> PdeAlgoToRL = new Dictionary<string, string>
+    {
+        { "", "0" },
+        { "polynomial", "1" },
+        { "centralDifferences", "2" },
+        { "5PointDifferences", "3" }
+    };
+    private static Dictionary<string, string> SolvingAlgoToRL = new Dictionary<string, string>
+    {
+        { "", "smart" },
+        { "linear", "linear" },
+        { "nonlinearLevenbergMarquardt", "levmar" },
+        { "nonlinearConjugateGradient", "conjgrad" },
+        { "nonlinearSQP", "sqp" },
+        { "nonlinearInteriorPoint", "interpoint" },
+        { "nonlinearActiveSet", "activeset" }
+    };
+    private static Dictionary<string, string> SolvingAlgoOptionsToRL = new Dictionary<string, string>
+    {
+        { "multiStart", "mstart" },
+        { "optimize", "optim" }
+    };
+    private const string SolverFind = "find";
+    private const string Minerr = "minerr";
+    private const string Pdesolve = "pdesolve";
+    private const string Odesolve = "odesolve";
+    private const string PrognExp = "(progn:0x0000ffff ,%!)";
+    private const string LambdaExp = "lambda";
+    public const string RL_NIL = "nil";
+    private const int DefaultEvalIndex = 2;
+    private const string UndefineSubscripts = "undefine-subscripts";
+
     private string _rl;
     private readonly List<global::Quire.Calculation.Core.ICalculatable> _calculatableChildren;
 
