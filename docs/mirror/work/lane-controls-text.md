@@ -800,4 +800,9 @@ Remaining stub declarations in the lane: 134 (72 plain IL, 20 closure ordinal be
 
 - `RichTextWithEmbeddedItem.RequestNavigateHandler` (static): landed. `handled` is initialised inside the `AssertNotNull(...).Passed` block, as the Mathcad IL does.
 - `RichTextBase.OnPreviewBackspace`: rejected. Mathcad calls `TextElement::get_ContentStart` non-virtually (`call`) on a local `Run` receiver; Roslyn emits `callvirt` for that receiver. Reverted.
-- Still not attempted: `RichTextBase.ReplaceTextInHyperlink`, `HandleReplace`, `AddBlockedSelectDirectionForNextElement` (previously rejected, see above), `RichTextWithEmbeddedItem.EditLinkUndoableCommand`, `InlayXamlWithEmbeddedItems`, `RichTextBase.GetTextBoundary` (3-argument overload: instance method with a nested boundary loop; the 4-argument static overload uses `Enum.HasFlag` with boxing).
+- `RichTextBase.HandleReplace`: rejected (earlier batch). Mathcad joins `&&` as a value, which Roslyn does not reproduce in this position.
+- `RichTextBase.AddBlockedSelectDirectionForNextElement`: rejected (earlier batch). The long-branch encoding leaves a 3-byte gap.
+- `RichTextBase.ReplaceTextInHyperlink`: not reconstructed. It needs a lifted `Nullable<int>` arithmetic form with an assignment inside a lifted comparison.
+- `RichTextWithEmbeddedItem.EditLinkUndoableCommand`: analysed, not gated. At IL `0x1ed-0x1f5`, `blockContainer.Child` is read, then set to `null`, then passed to `new InlineUIContainer(...)`. The child stays on the stack across the setter, and no source form emits that order.
+- `RichTextWithEmbeddedItem.InlayXamlWithEmbeddedItems`: analysed, not gated. `GetAdjacentElement(Backward)` is kept on the stack and tested with two `as` casts (`dup; isinst; stloc; isinst; stloc`). A named local would add a slot, so the shape is not reproduced.
+- `RichTextBase.GetTextBoundary` (4-argument static): analysed, not gated. The first `GetInsertionPosition(Forward)` result stays on the stack across the `end` store, the `StringBuilder` and step stores, and is stored only at IL `0x99`. Statement order cannot produce that.
