@@ -42,11 +42,7 @@ public partial class SolveBlockControl : global::Quire.Controls.Mathboard.Aggreg
     [global::Quire.Mirror.MirrorStub]
     public double SolverIndicatorBottom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public override int ErrorCount { get => base.ErrorCount; }
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Calculation.Core.EngineError Error { get => base.Error; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatableResultOwner> ResultOwners { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public SolveBlockControl() : base(default(global::Quire.Controls.Mathboard.IMathboardViewModel), default(global::System.Windows.ResourceDictionary)) { }
     [global::Quire.Mirror.MirrorStub]

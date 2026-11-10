@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Windows;
 using Quire.Calculation.Core;
 using Quire.Controls.Core;
@@ -16,6 +17,11 @@ public partial class SolveBlockControl
 
     public global::Quire.Controls.SolveBlockEquationTypes GetSolveBlockEquationType(
         global::Quire.Controls.Core.IWhiteboardItem item) => _sbModel.GetSolveBlockEquationType(item);
+
+    public override int ErrorCount => _sbModel.ChildErrorCountTotal;
+
+    public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatableResultOwner>
+        ResultOwners => _sbModel.AllCalculatables;
 
     public override string GetBlockEquationTypeAttributeName(
         global::Quire.Controls.Core.IWhiteboardItem item) => _sbModel.GetBlockEquationTypeAttributeName(item);
