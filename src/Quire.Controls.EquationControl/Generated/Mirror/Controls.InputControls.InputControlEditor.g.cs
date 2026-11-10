@@ -11,30 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputControlEditor, Ptc.Controls.EquationControl")]
 public partial class InputControlEditor : global::Quire.Controls.Core.ControlsWindow, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.InputControls.IInputControlEditorViewModel _viewModel;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TabControl TabControl;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.ComboBox cbLanguage;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TextBox tbScript;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Grid gridPropertyEditor;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public InputControlEditor(string editorTitleResourceKey, global::System.Windows.Controls.Control compositePropertyTab, global::Quire.Controls.InputControls.IInputControlEditorModel model) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void PostInitializeComponent(string editorTitleResourceKey, global::System.Windows.Controls.Control compositePropertyTab, global::Quire.Controls.InputControls.IInputControlEditorModel model) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ButtonFileOpen_OnClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ButtonFileSave_OnClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void InputControlEditor_OnClosing(object sender, global::System.ComponentModel.CancelEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
