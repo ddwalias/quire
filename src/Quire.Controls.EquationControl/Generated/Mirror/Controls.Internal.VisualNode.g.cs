@@ -11,8 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualNode, Ptc.Controls.EquationControl")]
 internal partial class VisualNode : global::System.Windows.Controls.Panel, global::System.Runtime.Serialization.ISerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public VisualNode() { }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualNode(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) { }
 }

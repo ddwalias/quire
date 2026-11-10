@@ -11,12 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualMatrixSuperscriptBinaryNode, Ptc.Controls.EquationControl")]
 internal partial class VisualMatrixSuperscriptBinaryNode : global::Quire.Controls.Internal.VisualSuperscriptBinaryNode<global::Quire.Controls.Internal.VisualSpacer>
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
-    [global::Quire.Mirror.MirrorStub]
-    internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => base.GetNodeAtPoint(hitPoint);
-    [global::Quire.Mirror.MirrorStub]
-    public VisualMatrixSuperscriptBinaryNode() { }
 }

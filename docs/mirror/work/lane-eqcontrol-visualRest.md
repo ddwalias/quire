@@ -123,3 +123,20 @@
 3. **Batch 3 (Operator and symbol nodes)**: VisualConjugateOperatorNode, VisualFractionOperatorNode, VisualGradientOperatorNode, VisualIntegralOperatorNode, VisualLimitOperatorNode, VisualPairNaryNode, VisualRangedPrefixNode, VisualTryNode, VisualVectorizationOperatorNode.
 4. **Batch 4 (Text and AST nodes)**: VisualAtomicTextLeafNode, VisualIdNode, VisualIdentifierNodeEditor, VisualLinearUnaryNode, VisualLinearUnaryEditor, VisualProgramNode, VisualStringNode, VisualTextNode, VisualTextNodeEditor, VisualTextRun, VisualTextSpan.
 5. **Batch 5 (Complex math nodes and layout)**: VisualBinaryOperatorNode, VisualBinaryOperatorNodeEditor, VisualLinearBinaryOperatorNode, VisualLinearOutfixNode, VisualMultiLineAligningBinaryOperatorNode, VisualMultiLineWrappingBinaryOperatorNode, VisualNthRootNodeEditor, VisualNthRootOperatorNode, VisualOutfixNodeEditor, VisualPlaceholderNode, VisualStepRangeOperatorNodeEditor, VisualSymbolNode, VisualSymbolicEvaluationNode, VisualSymbolicEvaluationNodeEditor, VisualVariantLineBinaryOperatorNode, VisualMathNode, VisualMathNodeEditor_1, VisualMatrixNode, VisualLayoutManager, VisualScoper.
+
+## Batch 1: Small leaf visual nodes and hit test results
+
+- Members: 25 members across 7 types:
+  - VisualDefinitionNode: constructor VisualDefinitionNode(VisualSymbolNode opSymbol).
+  - VisualNode: .ctor(), .ctor(SerializationInfo, StreamingContext).
+  - VisualWrappingSign: _yoffset field, .ctor(), Text getter, YOffset getter.
+  - VisualLeafOperatorNode: .ctor(string symbol), NavigatableParts getter, OnVisualParentChanged, GetNodeAtPoint.
+  - VisualMathNodeHitTestResult: NodeHit, CaretSideHit, NodeSideHit, OperatorPartIndexHit, IsOperatorHit fields, and all 3 constructor overloads.
+  - VisualMatrixSuperscriptBinaryNode: .ctor(), MeasureOverride, ArrangeOverride, GetNodeAtPoint.
+  - VisualSuperscriptOutfixOperatorNode: .ctor(left, right), .ctor(horizontal, left, right), GetNodeAtPoint.
+- Shapes tried:
+  - VisualMatrixSuperscriptBinaryNode.MeasureOverride: natural double height; declaration ahead of 
+ef Point alignmentPoint matched Mathcad local variable index [2].
+  - VisualMatrixSuperscriptBinaryNode.GetNodeAtPoint: declaring both GeneralTransform locals before branching matched Mathcad local indexing.
+  - VisualSuperscriptOutfixOperatorNode.GetNodeAtPoint: caching (LeftFence as Fence).ActualWidth into a local before comparison matched the call order.
+- Release IL: PASS, 1750 checked (.mirror-cache/release-il-9b6fc1cf3171/release-il.json).

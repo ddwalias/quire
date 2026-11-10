@@ -11,12 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualLeafOperatorNode, Ptc.Controls.EquationControl")]
 internal partial class VisualLeafOperatorNode : global::Quire.Controls.Internal.VisualSymbolNode, global::Quire.EquationEditor.View.IVisualLeafOperatorNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode[] NavigatableParts { get => base.NavigatableParts; }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualLeafOperatorNode(string symbol) : base(default(char)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnVisualParentChanged(global::System.Windows.DependencyObject oldParent) => base.OnVisualParentChanged(oldParent);
-    [global::Quire.Mirror.MirrorStub]
-    internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => base.GetNodeAtPoint(hitPoint);
 }

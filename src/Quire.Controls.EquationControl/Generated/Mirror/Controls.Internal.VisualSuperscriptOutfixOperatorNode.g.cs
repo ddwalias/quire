@@ -11,10 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualSuperscriptOutfixOperatorNode, Ptc.Controls.EquationControl")]
 internal partial class VisualSuperscriptOutfixOperatorNode : global::Quire.Controls.Internal.VisualLinearOutfixNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    public VisualSuperscriptOutfixOperatorNode(global::Quire.DelegateFunction0<global::Quire.Controls.Internal.Fence> leftFenceFactory, global::Quire.DelegateFunction0<global::Quire.Controls.Internal.Fence> rightFenceFactory) { }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualSuperscriptOutfixOperatorNode(bool horizontal, global::Quire.DelegateFunction0<global::Quire.Controls.Internal.Fence> leftFenceFactory, global::Quire.DelegateFunction0<global::Quire.Controls.Internal.Fence> rightFenceFactory) { }
-    [global::Quire.Mirror.MirrorStub]
-    internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => base.GetNodeAtPoint(hitPoint);
 }

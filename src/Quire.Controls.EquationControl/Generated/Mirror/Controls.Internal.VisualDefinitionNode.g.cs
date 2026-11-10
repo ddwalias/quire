@@ -11,6 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualDefinitionNode, Ptc.Controls.EquationControl")]
 internal partial class VisualDefinitionNode : global::Quire.Controls.Internal.VisualLinearBinaryOperatorNode, global::Quire.Controls.Internal.IVisualBinaryOperatorNodeWithCustomVisibility, global::Quire.EquationEditor.View.IVisualBinaryOperatorNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    public VisualDefinitionNode(global::Quire.Controls.Internal.VisualSymbolNode opSymbol) { }
 }

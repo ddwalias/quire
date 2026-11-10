@@ -11,20 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualMathNodeHitTestResult, Ptc.Controls.EquationControl")]
 internal partial class VisualMathNodeHitTestResult : global::System.Windows.Media.PointHitTestResult
 {
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.Controls.Internal.VisualMathNode NodeHit;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.Direction CaretSideHit;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.Direction NodeSideHit;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::System.Nullable<int> OperatorPartIndexHit;
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsOperatorHit;
-    [global::Quire.Mirror.MirrorStub]
-    public VisualMathNodeHitTestResult(global::Quire.Controls.Internal.VisualMathNode nodeHit, global::Quire.Direction caretSideHit, global::Quire.Direction nodeSideHit, global::System.Windows.Point pointHit) : base(default(global::System.Windows.Media.Visual), default(global::System.Windows.Point)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualMathNodeHitTestResult(global::Quire.Controls.Internal.VisualMathNode nodeHit, global::Quire.Direction caretSideHit, global::System.Nullable<int> operatorPartIndexHit, global::System.Windows.Point pointHit) : base(default(global::System.Windows.Media.Visual), default(global::System.Windows.Point)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualMathNodeHitTestResult(global::Quire.Controls.Internal.VisualMathNode nodeHit, global::Quire.Direction caretSideHit, global::Quire.Direction nodeSideHit, global::System.Nullable<int> operatorPartIndexHit, global::System.Windows.Point pointHit) : base(default(global::System.Windows.Media.Visual), default(global::System.Windows.Point)) { }
 }
