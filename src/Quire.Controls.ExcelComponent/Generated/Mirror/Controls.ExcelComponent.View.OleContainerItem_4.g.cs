@@ -42,8 +42,6 @@ public abstract partial class OleContainerItem<TViewModel, TModel, TIPublicModel
     [global::Quire.Mirror.MirrorStub]
     public virtual void OnEngineError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Data.IValueConverter GetDimensionsConverter() => base.GetDimensionsConverter();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnViewModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => base.OnViewModelPropertyChanged(sender, args);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size arrangeBounds) => base.ArrangeOverride(arrangeBounds);
@@ -55,17 +53,4 @@ public abstract partial class OleContainerItem<TViewModel, TModel, TIPublicModel
     public string GetHelpContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void HandleBeforeActiveStateToggled() => base.HandleBeforeActiveStateToggled();
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.View.OleContainerItem`4+DimensionsConverter, Ptc.Controls.ExcelComponent")]
-    public partial class DimensionsConverter : global::System.Windows.Data.IValueConverter
-    {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::Quire.Controls.ExcelComponent.View.OleContainerItem<TViewModel, TModel, TIPublicModel, TPersistentData> _container;
-        [global::Quire.Mirror.MirrorStub]
-        public DimensionsConverter(global::Quire.Controls.ExcelComponent.View.OleContainerItem<TViewModel, TModel, TIPublicModel, TPersistentData> oleContainer) { }
-        [global::Quire.Mirror.MirrorStub]
-        public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public object ConvertBack(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    }
 }
