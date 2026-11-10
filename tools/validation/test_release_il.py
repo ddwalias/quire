@@ -92,6 +92,13 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         result = compare(inventory(method(exact=False)), inventory())
         self.assertEqual(result['failures'][0]['reason'], 'method removed')
 
+    def test_removed_method_is_moved_only_to_an_exact_counterpart_in_another_project(self):
+        removed = method(project='Quire.Mcd')
+        moved = method(project='Quire.Mcdepman')
+        self.assertTrue(compare(inventory(removed), inventory(moved))['passed'])
+        self.assertFalse(compare(inventory(removed), inventory())['passed'])
+        self.assertFalse(compare(inventory(removed), inventory(dict(moved, exact_match=False)))['passed'])
+
     def test_renumbered_generated_members_without_counterpart_may_be_removed(self):
         stale = method('MoveNext', exact=False)
         stale.update(id='P::T+<Get>d__13::MoveNext', type='T+<Get>d__13', original=None)

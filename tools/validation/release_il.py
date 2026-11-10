@@ -221,6 +221,13 @@ def compare(before, after, types=(), methods=()):
         # D19/D21: a product-only member (no Mathcad counterpart, so never exact) may be removed.
         if old[key].get('original') is None and old[key].get('exact_match') is not True:
             continue
+        removed = old[key]
+        if any(row.get('project') != removed.get('project')
+               and row.get('type') == removed.get('type')
+               and row.get('signature') == removed.get('signature')
+               and row.get('shape_matches') is True and row.get('exact_match') is True
+               for row in new.values()):
+            continue
         failures.append({'method': key, 'reason': 'method removed'})
     for name in types:
         if not any(m['type'] == name for m in new.values()):
