@@ -12,9 +12,5 @@ namespace Quire;
 public partial class AliasTextBox : global::System.Windows.Controls.TextBox
 {
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::System.Windows.Controls.TextBox> PreMouseDown;
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnMouseDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnMouseDown(e);
-    [global::Quire.Mirror.MirrorStub]
     public AliasTextBox() { }
 }

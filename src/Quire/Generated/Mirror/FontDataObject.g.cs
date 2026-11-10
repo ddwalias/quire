@@ -11,12 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.FontDataObject, MathcadPrime")]
 public partial class FontDataObject
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.FontFamily FontFamily { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string LocalizedName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public FontDataObject(global::System.Windows.Media.FontFamily fontFamily, global::System.Windows.Markup.XmlLanguage lang) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 }

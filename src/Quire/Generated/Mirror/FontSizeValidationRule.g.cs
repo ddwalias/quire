@@ -12,21 +12,5 @@ namespace Quire;
 public partial class FontSizeValidationRule : global::System.Windows.Controls.ValidationRule
 {
     [global::Quire.Mirror.MirrorStub]
-    private const double MinFontSizeForText = 1d;
-    [global::Quire.Mirror.MirrorStub]
-    private const double MaxFontSizeForText = 1638d;
-    [global::Quire.Mirror.MirrorStub]
-    private const int PrecisionForText = 1;
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual double MinFontSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual double MaxFontSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual int Precision { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static bool ValidateFontSizeStringInput(string input, global::System.Globalization.CultureInfo cultureInfo, out double fontSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Controls.ValidationResult Validate(object value, global::System.Globalization.CultureInfo cultureInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public FontSizeValidationRule() { }
 }

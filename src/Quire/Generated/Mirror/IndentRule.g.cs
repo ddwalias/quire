@@ -12,7 +12,5 @@ namespace Quire;
 public partial class IndentRule : global::System.Windows.Controls.ValidationRule
 {
     [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Controls.ValidationResult Validate(object value, global::System.Globalization.CultureInfo cultureInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public IndentRule() { }
 }
