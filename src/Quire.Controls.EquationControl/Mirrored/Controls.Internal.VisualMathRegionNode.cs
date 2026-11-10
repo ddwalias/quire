@@ -1333,4 +1333,29 @@ internal partial class VisualMathRegionNode
             }
         }
     }
+
+    event Quire.Delegate0 Quire.EquationEditor.View.IVisualMathRegionNode.Loaded
+    {
+        add
+        {
+            _loadedEvent = (Quire.Delegate0)Delegate.Combine(_loadedEvent, value);
+        }
+        remove
+        {
+            _loadedEvent = (Quire.Delegate0)Delegate.Remove(_loadedEvent, value);
+        }
+    }
+
+    public void ShowVisualHistory(IList<Quire.EquationEditor.View.IVisualMathNode> nodes)
+    {
+        if (_historyPopup != null)
+        {
+            Children.Remove(_historyPopup);
+        }
+        _historyPopup = new HistoryPopup(nodes);
+        Children.Add(_historyPopup);
+        _historyPopup.HistoryItemSelected += FireRestoreFromHistory;
+        _historyPopup.Show();
+    }
+
 }

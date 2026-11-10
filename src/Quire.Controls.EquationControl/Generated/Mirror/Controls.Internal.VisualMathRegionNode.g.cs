@@ -20,8 +20,6 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Windows.DependencyProperty RootPaddingProperty;
     [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Delegate0 global::Quire.EquationEditor.View.IVisualMathRegionNode.Loaded { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
     internal VisualMathRegionNode() { }
     [global::Quire.Mirror.MirrorStub]
     internal VisualMathRegionNode(global::Quire.Controls.Internal.GestureManager gestureManager, global::Quire.DelegateFunction1<string, global::Quire.Calculation.Core.EngineError> getErrorDisplayTextDelegate) { }
@@ -71,8 +69,6 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     public void SetError(global::Quire.Calculation.Core.IEngineError error, global::System.Collections.Generic.IList<global::Quire.EquationEditor.View.IVisualMathNode> nodes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RemoveWarnings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ShowVisualHistory(global::System.Collections.Generic.IList<global::Quire.EquationEditor.View.IVisualMathNode> nodes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void RecursiveRemoveOfEditors(global::System.Windows.Controls.Panel visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -65,3 +65,12 @@ Not blocked by the listed reasons: no `LoadComponent`/XAML loads, no dynamic scr
 - Members: `OnTextInput` (override, `foreach` over `e.Text`), `FireInsertFunction` (both overloads, `?.Invoke`), `GetAdorners`, `OnRootNodeChanged`, `SimulateMouseClick`.
 - Shapes tried: `SimulateMouseClick` as `if (n == 1) … else if (n == 2) …` FAILED; Mathcad dispatches with two `beq` tests and a shared return, which a two-case `switch` with `break` matched.
 - Release IL: PASS, 1711 checked (`.mirror-cache/release-il-dcd69ce9f7f5/release-il.json`).
+
+## Batch 6: explicit Loaded event, ShowVisualHistory
+
+- Members: `IVisualMathRegionNode.Loaded` explicit event (`_loadedEvent` with `Delegate.Combine`/`Delegate.Remove`), `ShowVisualHistory`.
+- Release IL: PASS, 1721 checked (`.mirror-cache/release-il-d72bda39513a/release-il.json`). Branch merged with `main` first; the gate compared against newer `main` code from other lanes.
+
+## Blocked after batch 6
+
+- `FireCanSwitchToLineBreakOperator`: Mathcad IL uses `[DevComponents.WpfRibbon]DevComponents.WpfRibbon.IButtonCommandParameter`. `Quire.Controls.EquationControl` does not reference that assembly, so the type cannot be named. Needs a project reference (outside this lane; maintainer). Stub kept.
