@@ -93,10 +93,4 @@ internal partial class SolverAggregate : global::Quire.Controls.SolveBlockCalcul
     public override bool ContainsError(global::Quire.Calculation.Core.EngineError error) => base.ContainsError(error);
     [global::Quire.Mirror.MirrorStub]
     public override void ShowError(global::Quire.Calculation.Core.EngineError error) => base.ShowError(error);
-    [global::Quire.Mirror.MirrorStub]
-    private void FireCalculatableAdded(global::Quire.Controls.SolverAggregateChildWrapper wrapper, global::Quire.Calculation.Core.ICalculatableContainer container) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireCalculatableRemoved(global::Quire.Controls.SolverAggregateChildWrapper wrapper) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireCalculatableMoved(global::Quire.Controls.SolverAggregateChildWrapper wrapper) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

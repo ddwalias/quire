@@ -115,4 +115,26 @@ internal partial class SolverAggregate
 
         FireCalculatableMoved(wrapper);
     }
+
+    private void FireCalculatableAdded(
+        global::Quire.Controls.SolverAggregateChildWrapper wrapper,
+        global::Quire.Calculation.Core.ICalculatableContainer container)
+    {
+        if (CalculatableAdded != null)
+            CalculatableAdded(container ?? this, wrapper);
+        if (!wrapper.ContainsSymbolicEvaluation)
+            wrapper.Commit();
+    }
+
+    private void FireCalculatableRemoved(global::Quire.Controls.SolverAggregateChildWrapper wrapper)
+    {
+        if (CalculatableRemoved != null)
+            CalculatableRemoved(wrapper);
+    }
+
+    private void FireCalculatableMoved(global::Quire.Controls.SolverAggregateChildWrapper wrapper)
+    {
+        if (CalculatableMoved != null)
+            CalculatableMoved(wrapper);
+    }
 }
