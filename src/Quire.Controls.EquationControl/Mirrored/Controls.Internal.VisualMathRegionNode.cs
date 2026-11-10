@@ -1012,4 +1012,53 @@ internal partial class VisualMathRegionNode
             SetIsReplacingPreviouseOperator.Invoke(isReplacingPreviouseOperator);
         }
     }
+
+    public Size Size
+    {
+        get
+        {
+            // Mathcad reads ActualHeight before ActualWidth.
+            double height = ActualHeight;
+            return new Size(ActualWidth, height);
+        }
+    }
+
+    public override double TextBaselineY
+    {
+        get
+        {
+            if (RootNode is VisualMathNode rootNode)
+            {
+                return rootNode.TextBaselineY + RootPadding.Top;
+            }
+            return 0.0;
+        }
+    }
+
+    [System.Diagnostics.Conditional("EQUATION_WRAPPING_DEBUG")]
+    private void Register_EQUATION_WRAPPING_DEBUG_Handlers()
+    {
+    }
+
+    public void WriteImageTo(System.IO.Stream stream)
+    {
+        WpfUtils.DoEvents();
+        ImageUtils.SavePngFromElementUsingScreenDpi(this, stream, null);
+    }
+
+    void IVisualMathRegionNode.Focus()
+    {
+        base.Focus();
+    }
+
+    private static void HandleProhibitMouseClickPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        System.Windows.Controls.UIElementCollection children = ((VisualMathRegionNode)d).Children;
+        DebugTools.DevAssert(children.Count < 2);
+        bool isHitTestVisible = !Equals(e.NewValue, true);
+        for (int i = 0; i < children.Count; i++)
+        {
+            children[i].IsHitTestVisible = isHitTestVisible;
+        }
+    }
 }

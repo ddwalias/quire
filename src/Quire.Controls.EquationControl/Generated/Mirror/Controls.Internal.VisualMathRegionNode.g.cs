@@ -20,25 +20,13 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Windows.DependencyProperty RootPaddingProperty;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size Size { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override double TextBaselineY { get => base.TextBaselineY; }
-    [global::Quire.Mirror.MirrorStub]
     event global::Quire.Delegate0 global::Quire.EquationEditor.View.IVisualMathRegionNode.Loaded { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    private void Register_EQUATION_WRAPPING_DEBUG_Handlers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void HandleProhibitMouseClickPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal VisualMathRegionNode() { }
     [global::Quire.Mirror.MirrorStub]
     internal VisualMathRegionNode(global::Quire.Controls.Internal.GestureManager gestureManager, global::Quire.DelegateFunction1<string, global::Quire.Calculation.Core.EngineError> getErrorDisplayTextDelegate) { }
     [global::Quire.Mirror.MirrorStub]
     public void RefreshView() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.EquationEditor.View.IVisualMathRegionNode.Focus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteImageTo(global::System.IO.Stream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void SetupCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

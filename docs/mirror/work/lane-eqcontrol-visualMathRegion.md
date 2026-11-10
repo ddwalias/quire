@@ -41,3 +41,9 @@ Not blocked by the listed reasons: no `LoadComponent`/XAML loads, no dynamic scr
 - Shapes: declarations only; accessors already exact. No closure or ordinal concerns.
 - Release IL: PASS, 1670 checked (`.mirror-cache/release-il-03c6dd47b771/release-il.json`).
 - Remaining: static fields and `.cctor` (U5), simple methods (U3), blocked closure group.
+
+## Batch 2: simple members
+
+- Members: `Size` (get), `TextBaselineY` (override get), `Register_EQUATION_WRAPPING_DEBUG_Handlers` (`[Conditional]`, empty), `WriteImageTo`, `IVisualMathRegionNode.Focus`, `HandleProhibitMouseClickPropertyChanged`.
+- Shapes tried: `Size` reads `ActualHeight` into a local before `ActualWidth` (Mathcad order); other members matched on the first candidate.
+- Release IL: PASS, 1676 checked (`.mirror-cache/release-il-83e439d1b902/release-il.json`).
