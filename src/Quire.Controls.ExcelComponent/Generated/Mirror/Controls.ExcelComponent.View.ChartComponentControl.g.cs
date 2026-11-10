@@ -16,12 +16,6 @@ public partial class ChartComponentControl : global::Quire.Controls.ExcelCompone
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Controls.ExcelComponent.ViewModel.ChartComponentViewModel _chartViewModel;
     [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.Controls.Core.Serialization.ISerializationStrategy SerializationStrategy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.Controls.Core.Serialization.IDeserializationStrategy DeserializationStrategy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Threading.DispatcherOperation UpdateIdentifierLabelsOperation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.ExcelComponent.View.ChartContainer ChartContainer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Controls.ExcelComponent.View.IChartContainer global::Quire.Controls.ExcelComponent.View.IChartComponentControl.ChartContainer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -38,13 +32,9 @@ public partial class ChartComponentControl : global::Quire.Controls.ExcelCompone
     [global::Quire.Mirror.MirrorStub]
     private void HandleRequestUpdateIdentifierLabels() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.Controls.ExcelComponent.View.IOleContainerItem CreateOleContainerItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void SetStatusSynchronized() => base.SetStatusSynchronized();
     [global::Quire.Mirror.MirrorStub]
     private void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override string GetInternalHelpContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override string GetHelpContext() => base.GetHelpContext();
     [global::Quire.Mirror.MirrorStub]
@@ -55,8 +45,4 @@ public partial class ChartComponentControl : global::Quire.Controls.ExcelCompone
     public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.ExcelComponent.View.ChartComponentControl Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
