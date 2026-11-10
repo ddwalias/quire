@@ -4,6 +4,7 @@ namespace Quire.Controls;
 
 internal partial class SolverAggregate
 {
+    private string _rl;
     private readonly List<global::Quire.Calculation.Core.ICalculatable> _calculatableChildren;
 
     public string DefinedRl { get; private set; }
@@ -13,6 +14,10 @@ internal partial class SolverAggregate
     private string[] SolverArgs { get; set; }
     private string LeftOfSolverApply { get; set; }
     private string RightOfSolverApply { get; set; }
+
+    public override string Rl => _rl;
+    public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren =>
+        _calculatableChildren;
 
     public global::Quire.Calculation.Core.ICalculatable LastChild
     {

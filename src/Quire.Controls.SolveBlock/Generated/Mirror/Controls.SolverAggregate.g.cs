@@ -12,8 +12,6 @@ namespace Quire.Controls;
 internal partial class SolverAggregate : global::Quire.Controls.SolveBlockCalculatable, global::Quire.Controls.ISolverAggregate, global::Quire.Controls.ISolveBlockCalculatable, global::Quire.Calculation.Core.Support.ICalculatableWrapper, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatable, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatableContainer
 {
     [global::Quire.Mirror.MirrorStub]
-    private string _rl;
-    [global::Quire.Mirror.MirrorStub]
     private const string OdeDefaultAlgorithmString = "adams";
     [global::Quire.Mirror.MirrorStub]
     private const string PdeDefaultAlgorithmString = "0";
@@ -42,11 +40,7 @@ internal partial class SolverAggregate : global::Quire.Controls.SolveBlockCalcul
     [global::Quire.Mirror.MirrorStub]
     private const string UndefineSubscripts = "undefine-subscripts";
     [global::Quire.Mirror.MirrorStub]
-    public override string Rl { get => base.Rl; }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> Children { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
     [global::Quire.Mirror.MirrorStub]
