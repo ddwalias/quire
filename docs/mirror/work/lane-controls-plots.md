@@ -310,3 +310,10 @@
 - Left: `MinPositiveX`/`MinPositiveY` (lambda passed to `MinPlottingPointCoordinate`; the compiler-generated closure class and its ordinal need their own pass).
 - Shapes: all matched first time, 20 accessors counting getters and setters.
 - Release IL: PASS — 611 checked, 611 exact, 0 failures.
+
+## Batch 45 — PlotTrace symbol, line-style and equation helpers
+
+- Members: `ChangeSymbol`, `ChangeLineStyle` (density-restricted pairing of symbol and line style), `SetEquation(AxesType, IPlotEquation)`, `GetEquation(AxesIndex)`, private static `GetMinGap` (sort and minimum positive gap). Hand-written: `Mirrored/Controls.Plots.PlotTrace.cs` (adds `using System;` and `using System.Collections.Generic;`); their stubs removed from `PlotTrace.g.cs`.
+- Shapes: all five matched first gate run after one compile fix. PlotTrace's `TraceSymbol` name resolves to the `string TraceSymbol` property, so the enum is written `Presenter.TraceSymbol.none` (Mathcad's IL uses the full enum name).
+- Left: `SetAxis` and `MoveFocusToEquation` (WPF event and focus types).
+- Release IL: PASS — 616 checked, 616 exact, 0 failures.

@@ -224,10 +224,6 @@ public partial class PlotTrace : global::System.Windows.FrameworkElement, global
     [global::Quire.Mirror.MirrorStub]
     private static void TypeChangedCallback(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool ChangeSymbol(global::Quire.Controls.Plots.Presenter.TraceSymbol value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool ChangeLineStyle(global::Quire.Controls.Plots.Presenter.LineStyle value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::Quire.Controls.Plots.Presenter.TraceStyleState> DoStyleChangeCommand() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UndoStyleChangeCommand(global::System.Nullable<global::Quire.Controls.Plots.Presenter.TraceStyleState> doData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -237,10 +233,6 @@ public partial class PlotTrace : global::System.Windows.FrameworkElement, global
     public void MoveFocusToEquation(global::Quire.Controls.Plots.Presenter.AxesIndex id) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ConformStyleToPointCount() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetEquation(global::Quire.Controls.Plots.Presenter.AxesType axis, global::Quire.Controls.Plots.Presenter.IPlotEquation equation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Presenter.IPlotEquation GetEquation(global::Quire.Controls.Plots.Presenter.AxesIndex axesIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetAxis(global::Quire.Controls.Plots.Presenter.IPlotAxisView xAxis, global::Quire.Controls.Plots.Presenter.IPlotAxisView yAxis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -261,8 +253,6 @@ public partial class PlotTrace : global::System.Windows.FrameworkElement, global
     private void SetColorStyle(global::System.Windows.Media.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetMinGap() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static double GetMinGap(global::System.Collections.Generic.List<double> values) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]

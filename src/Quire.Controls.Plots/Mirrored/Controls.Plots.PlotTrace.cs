@@ -1,6 +1,8 @@
 #nullable disable
 #pragma warning disable
 
+using System;
+using System.Collections.Generic;
 using Quire.Controls.Plots.Presenter;
 
 namespace Quire.Controls.Plots;
@@ -66,5 +68,50 @@ public partial class PlotTrace
         {
             handler(this);
         }
+    }
+
+    public bool ChangeSymbol(TraceSymbol value)
+    {
+        Symbol = value;
+        if (RestrictedToDensityPointsOrSolidLine)
+        {
+            LineStyle = Symbol == Presenter.TraceSymbol.none ? LineStyle.Solid : LineStyle.None;
+        }
+        return Symbol == value;
+    }
+
+    public bool ChangeLineStyle(LineStyle value)
+    {
+        LineStyle = value;
+        if (RestrictedToDensityPointsOrSolidLine)
+        {
+            Symbol = LineStyle == LineStyle.None ? Presenter.TraceSymbol.point : Presenter.TraceSymbol.none;
+        }
+        return LineStyle == value;
+    }
+
+    public void SetEquation(AxesType axis, IPlotEquation equation)
+    {
+        _plotEquations[(int)AxesTypeToIndex.Index(axis)] = equation;
+    }
+
+    public IPlotEquation GetEquation(AxesIndex axesIndex)
+    {
+        return _plotEquations[(int)axesIndex];
+    }
+
+    private static double GetMinGap(List<double> values)
+    {
+        values.Sort();
+        double num = double.PositiveInfinity;
+        for (int i = 1; i < values.Count; i++)
+        {
+            double num2 = values[i] - values[i - 1];
+            if (num2 > 0.0)
+            {
+                num = Math.Min(num, num2);
+            }
+        }
+        return num;
     }
 }
