@@ -205,3 +205,6 @@
 - Release IL: PASS, 1032 checked (`.mirror-cache/release-il-85bfe8e40199/release-il.json`). Earlier candidates: FAIL at `91a18b09706c` and `7635b064371a` (the span shape).
 - Batch: `Controls.InputControls.InputControlEditorViewModel.CancelScript` (restores the last-known-good engine type and script when a validation error is present).
 - Release IL: PASS, 1033 checked (`.mirror-cache/release-il-3ccd852a71f6/release-il.json`).
+- Batch: `Controls.Internal.MatrixLayoutManager.Clone`.
+- Shapes tried: `ExtractVisualTextWidth` with the `as` cast chain FAILED: Mathcad keeps one `isinst` result on the stack across the operator and child reads (`isinst; dup`), which the expression forms can't reproduce. Restored as a throwing stub. `CalcMaxDecimalPerColumn` stays open (412 bytes; not yet read).
+- Release IL: PASS, 1034 checked (`.mirror-cache/release-il-0a3276c9afec/release-il.json`). Earlier candidate: FAIL at `c0decc144086`.
