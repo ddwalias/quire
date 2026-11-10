@@ -23,22 +23,4 @@ public partial class DimensionEditDialogViewModel : global::Quire.Controls.Core.
     private global::Quire.Calculation.Core.UnitDescriptor _unitSelectedItem;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.UnitSystems _unitSystem;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<string> DimensionDataSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor> UnitDataSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::Quire.DialogAction> Action { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsDimensionEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string DimensionSelectedItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.UnitDescriptor UnitSelectedItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCustomDataChanged { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public DimensionEditDialogViewModel(global::Quire.Calculation.Core.UnitSystems unitSystem, global::System.Nullable<global::Quire.DialogAction> action, global::System.Collections.Generic.Dictionary<string, global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor>> categories, global::System.Collections.Generic.List<string> dimensionDataSource, string dimensionSelectedItem, global::Quire.Calculation.Core.UnitDescriptor unitSelectedItem) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void HandlePostDimensionChanged(global::System.Windows.Controls.ListBox listBox) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
