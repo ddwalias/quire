@@ -165,3 +165,6 @@
 - Shapes tried: plain auto-property and direct method-group arguments matched on the first candidate.
 - Blocked (not attempted): the CheckBox/ListBox/RadioButton/Slider/TextBox script engines' `UpdateScriptableClassValues` bodies use C# `dynamic`; the first candidate (`<>o__14` holder for the `Check` site) differed from Mathcad's `<>o__11`, and a probe showed holder numbering is per type from 0, so the source order that produces 11 is not yet understood. Reverted; the group stays open.
 - Release IL: PASS, 895 checked (`.mirror-cache/release-il-18d31fd6ce31/release-il.json`).
+- Batch: `Controls.InputControls.EditableComboBoxLayoutManager` (`Clone`, `CalcMaxDecimalPerColumn` with the assertion and the cell-count array).
+- Shapes tried: `(string)null` in the assertion call matched; the first candidate failed only on a modifier mismatch (the class is `internal`).
+- Release IL: PASS, 897 checked (`.mirror-cache/release-il-f662911a0270/release-il.json`).

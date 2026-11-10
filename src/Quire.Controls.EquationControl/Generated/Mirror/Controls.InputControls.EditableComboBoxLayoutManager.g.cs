@@ -15,8 +15,4 @@ internal partial class EditableComboBoxLayoutManager : global::Quire.Controls.Co
     public EditableComboBoxLayoutManager() { }
     [global::Quire.Mirror.MirrorStub]
     public EditableComboBoxLayoutManager(global::Quire.Controls.InputControls.EditableComboBoxLayoutManager other) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override object Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.Controls.Core.MaxMatrixWidth[] CalcMaxDecimalPerColumn(global::System.Collections.Generic.IList<global::Quire.Controls.Core.LayoutMetrics> cellsInfo, global::System.Windows.Controls.UIElementCollection cellsContent, int rows) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
