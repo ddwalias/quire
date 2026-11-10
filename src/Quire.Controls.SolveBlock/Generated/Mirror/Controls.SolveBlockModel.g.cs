@@ -22,8 +22,6 @@ internal partial class SolveBlockModel : global::Quire.Controls.Mathboard.Aggreg
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> ConstraintItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren { get => base.CalculatableChildren; }
-    [global::Quire.Mirror.MirrorStub]
     public int ChildErrorCountTotal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -31,8 +29,6 @@ internal partial class SolveBlockModel : global::Quire.Controls.Mathboard.Aggreg
     private global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildrenAboveSolver { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action ChildCalcErrorChanged;
-    [global::Quire.Mirror.MirrorStub]
-    protected override void MoveItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => base.MoveItems(items);
     [global::Quire.Mirror.MirrorStub]
     private void UpdateWhichItemIsSolver() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

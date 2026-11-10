@@ -4,6 +4,13 @@ namespace Quire.Controls;
 
 internal partial class SolveBlockModel
 {
+    public override global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable>
+        CalculatableChildren => base.CalculatableChildren;
+
+    protected override void MoveItems(
+        global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) =>
+        base.MoveItems(items);
+
     private readonly global::System.Collections.Generic.IDictionary<global::Quire.Calculation.Core.ICalculatable, global::Quire.Controls.ISolveBlockCalculatable> _solveBlockCalculatableMap =
         new global::System.Collections.Generic.Dictionary<global::Quire.Calculation.Core.ICalculatable, global::Quire.Controls.ISolveBlockCalculatable>();
     private global::Quire.Controls.ISolverAggregate _solver;
