@@ -22,29 +22,9 @@ internal partial class RadioButtonModel : global::Quire.Controls.InputControls.I
     [global::Quire.Mirror.MirrorStub]
     private string _itemsCache;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.EquationEditor.Tree.RadioButtonScriptableControlData Data { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override object SelectedValue { get => base.SelectedValue; }
     [global::Quire.Mirror.MirrorStub]
     public double SelectedIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.ObjectModel.Collection<string> DataSourceItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.Orientation Orientation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ImagePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string GroupID { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ButtonID { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.FlowDirection FlowDirection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsDataSourceChanged { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.InputControls.DataListItem> EditorDataSourceItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public RadioButtonModel(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue data) : base(default(global::Quire.Controls.InputControls.IInputControlEngineFactory), default(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue)) { }
     [global::Quire.Mirror.MirrorStub]
@@ -53,6 +33,4 @@ internal partial class RadioButtonModel : global::Quire.Controls.InputControls.I
     protected override void HandlePostInputFieldResultChanged(ref object valueIndex, object scriptObject, string errorException, bool isRecalculate = false) => base.HandlePostInputFieldResultChanged(ref valueIndex, scriptObject, errorException, isRecalculate);
     [global::Quire.Mirror.MirrorStub]
     public override string DefaultScript(global::Quire.EquationEditor.Tree.InputControlEngineTypes engineType) => base.DefaultScript(engineType);
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleButtonsChanged(global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.InputControls.DataListItem> editorDataSourceItems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

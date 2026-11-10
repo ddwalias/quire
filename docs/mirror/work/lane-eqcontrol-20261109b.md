@@ -284,3 +284,6 @@
 - Batch: `Controls.InputControls.SliderPropertiesEditorViewModel`: private `Model` getter (interface cast) and the forwarding properties `Orientation`, `Border`, `SmallChange`, `LargeChange`, `TickFrequency`, `Minimum`, `Maximum`, `ShowMinMax`, `Invert`. `TickPlacement`, `Ticks` (their `_ticks` state and `OnPropertyChanged` calls), the constructor and `HandleModelPropertyChanged` stay open.
 - Shapes tried: plain forwarding setters matched on the first candidate.
 - Release IL: PASS, 1469 checked (`.mirror-cache/release-il-e0c7fcf93e7b/release-il.json`).
+- Batch: `Controls.InputControls.RadioButtonModel`: private `Data` getter, `Orientation`, `FlowDirection`, `DataSourceItems` (forward and `OnPropertyChanged`), `ImagePath`, `Name`, `GroupID`, `ButtonID` (the existing `_imagePath`/`_name`/`_groupID`/`_buttonID` fields, notify on set), auto properties `IsDataSourceChanged` and `EditorDataSourceItems`, and `HandleButtonsChanged`. `SelectedIndex` (its setter has the script engine call), `SelectedValue`, `Apply`, `HandlePostInputFieldResultChanged`, `DefaultScript` and the constructor stay open.
+- Shapes tried: the forward/notify shape and the `new List<object> { 0 }` collection initializer matched on the first candidate.
+- Release IL: PASS, 1489 checked (`.mirror-cache/release-il-a2d7034a9923/release-il.json`).
