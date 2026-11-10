@@ -16,31 +16,15 @@ public abstract partial class OleDataExchangeContainerModel<TPersistentData> : g
     [global::Quire.Mirror.MirrorStub]
     public abstract bool ShouldCommitIfDirty { get; }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Threading.Dispatcher Dispatcher { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected abstract bool CheckOleActiveState { get; }
     [global::Quire.Mirror.MirrorStub]
     protected OleDataExchangeContainerModel(global::Quire.OLE.IOleSiteManager oleSiteManager, bool autoResize) : base(default(global::Quire.OLE.IOleSiteManager), default(bool)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Lock(bool wait) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Lock() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public abstract void SetValue(string place, global::Quire.IValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform);
     [global::Quire.Mirror.MirrorStub]
     public abstract global::Quire.IValue GetValue(string place);
     [global::Quire.Mirror.MirrorStub]
     public abstract void Commit();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual bool ShouldSkipUnchangedValueMultiThreaded(string place) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void CheckInstalledAndAvailable(bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool DoActionWithLock(global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected internal static string ConvertToEngineError(string error, int numArguments) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.IDataExchangeModel.Unlock() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.OleDataExchangeContainerModel`1+EngineValueTypes, Ptc.Controls.ExcelComponent")]
     protected static partial class EngineValueTypes
