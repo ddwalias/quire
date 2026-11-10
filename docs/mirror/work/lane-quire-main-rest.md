@@ -373,6 +373,8 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
 - **Batch 19 (MessageBoxManager, U; branch `mirror/quire-main-rest-pure-20261111`):** the four private `Show` overloads, all `ShowWarning/Question/Error/Info` overloads, `ShowQuestionWithOptions`, `ShowOkDialog`, `IsDisabled`, the four delegate properties, `IsConnected`, ctor. Gate: PASS, 672 checked. Report: `.mirror-cache/release-il-7ea8d6de9d01/release-il.json`.
 - **Batch 20 (MessageDialogWithOptions code members, P; branch `mirror/quire-main-rest-pure-20261111`):** `Message`, `Image`, `Buttons` overrides, `Show`, `ShowOkDialog`. Blocked, stubs kept: constructor (calls `InitializeComponent`), `InitializeComponent`, both `Connect` (XAML); the XAML-named fields stay generated.
   - Gate: PASS, 677 checked. Report: `.mirror-cache/release-il-3d77e588f1e2/release-il.json`.
+- **Batch 21 (DialogWithOptions overrides, P; branch `mirror/quire-main-rest-pure-20261111`):** `Message` (null), `Image` (null), `Buttons`. Blocked, stubs kept: constructor, `InitializeComponent`, both `Connect` (XAML).
+  - Gate: PASS, 680 checked. Report: `.mirror-cache/release-il-83fcf7e31b62/release-il.json`.
 
 ## Remaining (after batch 10)
 

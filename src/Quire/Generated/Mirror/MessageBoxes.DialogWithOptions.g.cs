@@ -16,12 +16,6 @@ public partial class DialogWithOptions : global::Quire.Controls.Core.Dialogs.Mes
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Controls.TextBlock Message { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Controls.Image Image { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Controls.ItemsControl Buttons { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public DialogWithOptions(global::System.Windows.Window ownerWindow, string caption, global::System.Windows.FrameworkElement frameworkElement, string[] buttons) : base(default(global::System.Windows.Window), default(string)) { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
