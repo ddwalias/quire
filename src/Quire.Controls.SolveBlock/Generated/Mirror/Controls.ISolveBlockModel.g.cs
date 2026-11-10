@@ -11,14 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ISolveBlockModel, Ptc.Controls.SolveBlock")]
 internal partial interface ISolveBlockModel : global::Quire.Controls.Mathboard.IAggregateMathboardModel, global::Quire.Controls.Mathboard.IMathboardModel, global::Quire.Controls.Whiteboard.IWhiteboardModel, global::System.ICloneable, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Controls.Mathboard.IVerticalWhiteboardSections
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IWhiteboardItem SolverItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GuessValueItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> ConstraintItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int ChildErrorCountTotal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action ChildCalcErrorChanged { add { } remove { } }
 }

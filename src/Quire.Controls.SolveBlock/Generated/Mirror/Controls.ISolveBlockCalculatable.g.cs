@@ -11,6 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ISolveBlockCalculatable, Ptc.Controls.SolveBlock")]
 internal partial interface ISolveBlockCalculatable : global::Quire.Calculation.Core.Support.ICalculatableWrapper, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatable, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.SolveBlockEquationTypes EquationType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
