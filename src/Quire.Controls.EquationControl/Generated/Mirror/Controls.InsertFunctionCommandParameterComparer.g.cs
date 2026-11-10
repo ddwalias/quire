@@ -12,13 +12,5 @@ namespace Quire.Controls;
 public partial class InsertFunctionCommandParameterComparer : global::System.Collections.Generic.IEqualityComparer<object>
 {
     [global::Quire.Mirror.MirrorStub]
-    public bool Equals(object x, object y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int GetHashCode(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Equals(global::Quire.Controls.InsertFunctionCommandParameter x, global::Quire.Controls.InsertFunctionCommandParameter y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int GetHashCode(global::Quire.Controls.InsertFunctionCommandParameter obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public InsertFunctionCommandParameterComparer() { }
 }
