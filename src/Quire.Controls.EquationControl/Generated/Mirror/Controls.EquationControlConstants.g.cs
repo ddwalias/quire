@@ -63,10 +63,4 @@ public static partial class EquationControlConstants
     internal static readonly global::System.Collections.Generic.HashSet<string> EnabledAlgorithmsForOptions;
     [global::Quire.Mirror.MirrorStub]
     internal static readonly string[] specialIdentifiers;
-    [global::Quire.Mirror.MirrorStub]
-    internal static string GetEquationIdentifierHelpContext(string helpContentPrefix = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static string GetEquationOperatorHelpContext(string helpContentPrefix = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static string GetPlaceholderHelpContext(string helpContentPrefix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

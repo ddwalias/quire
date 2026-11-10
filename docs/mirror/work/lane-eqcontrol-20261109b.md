@@ -185,3 +185,6 @@
 - Batch: `Controls.VisualOperatorDescriptor` (constructor setting the insert-operator command, `CanonicalName`, `MultiKeyStrokesBinding`, `CommandParameter`, `GeneratedKeybindingToDisplay`, `OperatorOrdinal`); `Controls.Internal.VisualScaledSymbolNode.ScaleToHeight`.
 - Shapes tried: the keybinding fallback `base ?? (string)converter.ConvertTo(...)` and the scale-to-height guards matched on the first candidate. Left open in this class: `Clone` (both overloads, the chained `dup` shape has no statement equivalent yet), and the constructors and `Geometry` override that are still generated pass-throughs.
 - Release IL: PASS, 965 checked (`.mirror-cache/release-il-a06c0e8fb353/release-il.json`).
+- Batch: `Controls.InputControls.TextBoxControl` (constructor, `ViewModel`, the two overrides, `InitializeComponent`, `Connect`; URI `.../scriptabletextbox/textboxcontrol.xaml` kept, not in the repository); `Controls.EquationControlConstants` help-context helpers (`GetEquationIdentifierHelpContext`, `GetEquationOperatorHelpContext`, `GetPlaceholderHelpContext`).
+- Shapes tried: the `??` fallback with string concatenation and the placeholder chaining matched on the first candidate.
+- Release IL: PASS, 974 checked (`.mirror-cache/release-il-3b3d231e0d32/release-il.json`).
