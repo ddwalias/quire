@@ -18,15 +18,9 @@ internal abstract partial class VisualOperatorNode : global::Quire.Controls.Inte
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Controls.Internal.VisualMathNode[] _operands;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Internal.VisualMathNode[] OperatorSymbols { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Internal.VisualMathNode[] Operands { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.View.IVisualMathNode[] NavigatableParts { get => base.NavigatableParts; }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => base[index]; set => base[index] = value; }
     [global::Quire.Mirror.MirrorStub]
     protected VisualOperatorNode(string name, params global::Quire.Controls.Internal.VisualMathNode[] operatorSymbols) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void SetVisibilityOfOperatorSymbols(global::System.Windows.Visibility visibility) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
