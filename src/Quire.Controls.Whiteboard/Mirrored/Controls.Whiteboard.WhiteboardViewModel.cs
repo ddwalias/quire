@@ -1764,8 +1764,23 @@ public partial class WhiteboardViewModel
         private readonly global::Quire.Undo.CompoundCommand _nestedCommand;
         [global::Quire.Mirror.MirrorStub]
         public RemoveSelectedItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, string commandName) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override bool Do()
+        {
+            bool result;
+            using (var scope = new global::Quire.Undo.CommandScope(_nestedCommand))
+            {
+                result = _viewModel.GetRemoveItemsCommand("Remove Selected Items", _itemsAtLocations).Execute();
+            }
+
+            if (result)
+            {
+                ViewModel.IsFocused = true;
+                ViewModel.IsCrosshairVisible = true;
+            }
+
+            return result;
+        }
+
         public override void Undo()
         {
             _nestedCommand.Undo();
@@ -1791,8 +1806,27 @@ public partial class WhiteboardViewModel
         private readonly global::Quire.Controls.Core.IWhiteboardItem _itemToActivate;
         [global::Quire.Mirror.MirrorStub]
         public PasteItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, string commandName, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> pasteItemsAtLocation) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
-        [global::Quire.Mirror.MirrorStub]
-        protected override bool DoWithResize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        protected override bool DoWithResize()
+        {
+            if (!_addItemsCommand.Do())
+            {
+                return false;
+            }
+
+            WhiteboardItemMgr.BlockUntilLoaded();
+            _viewModel.ClearSelectedItems();
+            if (_itemToActivate != null)
+            {
+                _itemToActivate.Activate(true);
+            }
+            else
+            {
+                ViewModel.SelectItems(_itemsAtLocation.Keys);
+            }
+
+            return true;
+        }
+
         public override void Undo()
         {
             _addItemsCommand.Undo();

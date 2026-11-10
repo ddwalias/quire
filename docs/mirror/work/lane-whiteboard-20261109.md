@@ -467,3 +467,9 @@
 - Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stubs and `[MirrorStub]` attributes removed.
 - Release IL: PASS — 893 checked, 0 failures (`release-il-bd188c836945`).
 - Landing note: the first `lane_merge.py` run (round 3 under lock) printed `BLOCKED: error: failed to push some refs` and the wrapper hit my 590 s timeout (exit 124). `ls-remote origin main` then showed the landed commit (`94fd20b04`, batches 31-32), so that push had reached origin; the retry printed `BLOCKED: branch has no changes`. Batch 33 is landed by the step below.
+
+## Batch 34 — RemoveSelectedItemsCommand.Do, PasteItemsCommand.DoWithResize
+
+- Members: `RemoveSelectedItemsCommand.Do` (`bool result; using (var scope = new CommandScope(_nestedCommand)) { result = _viewModel.GetRemoveItemsCommand(...).Execute(); }` then the focus/crosshair block when `result`); `PasteItemsCommand.DoWithResize` (`if (!_addItemsCommand.Do()) return false;`, then `BlockUntilLoaded`, `ClearSelectedItems`, activate-or-select).
+- Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; stubs and `[MirrorStub]` attributes removed.
+- Release IL: PASS — 895 checked, 0 failures (`release-il-0244e2ea00a8`).
