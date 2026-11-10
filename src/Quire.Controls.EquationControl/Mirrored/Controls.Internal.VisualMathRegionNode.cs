@@ -1403,4 +1403,44 @@ internal partial class VisualMathRegionNode
         desiredSize.Width += RootPadding.Left + RootPadding.Right;
         return desiredSize;
     }
+
+    public bool CanConvertToTextRegion()
+    {
+        bool canConvert = false;
+        if (Quire.License.LicenseManager.Instance.HasValidLicense)
+        {
+            if (DataContext is EquationControl equationControl)
+            {
+                canConvert = IsTextRegionEnabled(equationControl);
+            }
+            else
+            {
+                var whiteboardContainer = DataContext as Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer;
+                if (whiteboardContainer != null && !(whiteboardContainer is System.Windows.Controls.RichTextBox)
+                    && whiteboardContainer.ActiveItem is EquationControl activeEquation)
+                {
+                    canConvert = IsTextRegionEnabled(activeEquation);
+                }
+                else if (!(DataContext is Quire.Controls.Core.Whiteboard.IItemContainerWithoutTextRegion)
+                    && DataContext is Quire.Controls.Core.Whiteboard.IWhiteboardItemContainerWithActiveItem withActiveItem
+                    && withActiveItem.ActiveItem is EquationControl activeItemEquation)
+                {
+                    canConvert = IsTextRegionEnabled(activeItemEquation);
+                }
+            }
+        }
+        return canConvert;
+    }
+
+    private bool IsTextRegionEnabled(EquationControl equationControl)
+    {
+        return equationControl.IsChangeToTextBoxReady()
+            && equationControl.EquationType == Quire.Controls.Core.EquationTypes.Expression
+            && !equationControl.EquationSExpression.Contains("@")
+            && equationControl.CurrentCaretInsertionType == Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes.Normal
+            && equationControl.CurrentNode?.Parent.DescriptorName == "ROOT"
+            && (equationControl.CurrentNode?.DescriptorName == "IDENTIFIER"
+                    && ((Quire.EquationEditor.Tree.IdentifierNodeInfo)equationControl.CurrentNode?.NodeInfo).HasNoLabel
+                || equationControl.CurrentNode?.DescriptorName == "NUMERIC");
+    }
 }

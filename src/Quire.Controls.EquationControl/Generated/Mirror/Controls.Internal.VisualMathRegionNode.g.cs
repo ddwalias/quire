@@ -48,10 +48,6 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     public void FireCanSwitchToLineBreakOperator(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs canExecuteRoutedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool CanConvertToTextRegion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsTextRegionEnabled(global::Quire.Controls.EquationControl equationControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void FireCanInsertInputControl(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs canExecuteRoutedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void BuildAndExecPasteCmd() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
