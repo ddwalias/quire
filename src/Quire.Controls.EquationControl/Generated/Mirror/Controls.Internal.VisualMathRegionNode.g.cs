@@ -76,8 +76,6 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     public void SetError(global::Quire.Calculation.Core.IEngineError error, global::Quire.EquationEditor.View.IVisualMathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void HandleWarningDisplayFilterChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void SetError(global::Quire.Calculation.Core.IEngineError error, global::System.Collections.Generic.IList<global::Quire.EquationEditor.View.IVisualMathNode> nodes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RemoveWarnings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -88,23 +86,9 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     private void RecursiveRemoveOfEditors(global::System.Windows.Controls.Panel visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnVisualParentChanged(global::System.Windows.DependencyObject obj) => base.OnVisualParentChanged(obj);
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.ScaleTransform GetTransformBasedOnNumericNodeHeight(double desiredHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal void SimulateMouseClick(global::System.Windows.Point location, int numberOfClicks) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void HandleMathFormatChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => base.HandleMathFormatChanged(e);
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleLabeledIdFormatDictionaryChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void BackUpLabeledIdDictionary(global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> labeledIdDictionary) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool IsLabeledIdDictionaryEqualToBackUp(global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> labeledIdDictionary) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsExtendedFontEqualsToBackUp(global::Quire.Controls.Core.IdLabels labelID, global::Quire.Controls.Core.ExtendedFont extendedFont) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void Dispose() { }
 }

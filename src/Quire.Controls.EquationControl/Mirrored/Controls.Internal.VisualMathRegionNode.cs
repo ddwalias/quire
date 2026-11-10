@@ -1203,4 +1203,73 @@ internal partial class VisualMathRegionNode
             RestoreFromHistory.Invoke(index);
         }
     }
+
+    private static void HandleWarningDisplayFilterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is VisualMathRegionNode node)
+        {
+            node.WarningDisplayFilterChanged?.Invoke();
+        }
+    }
+
+    internal override System.Windows.Media.HitTestResult GetNodeAtPoint(Point hitPoint)
+    {
+        var node = (VisualMathNode)Children[0];
+        System.Windows.Media.GeneralTransform transform = TransformToDescendant(node);
+        return node.GetNodeAtPoint(transform.Transform(hitPoint));
+    }
+
+    protected override void OnVisualParentChanged(DependencyObject obj)
+    {
+        base.OnVisualParentChanged(obj);
+        if (VisualParentChanged != null)
+        {
+            VisualParentChanged.Invoke(this, obj, VisualParent);
+        }
+    }
+
+    public System.Windows.Media.ScaleTransform GetTransformBasedOnNumericNodeHeight(double desiredHeight)
+    {
+        double scale = desiredHeight / Font.FontSize;
+        return new System.Windows.Media.ScaleTransform(scale, scale);
+    }
+
+    public override void HandleMathFormatChanged(DependencyPropertyChangedEventArgs e)
+    {
+        base.HandleMathFormatChanged(e);
+        if (MathFormatChanged != null)
+        {
+            MathFormatChanged.Invoke(e);
+        }
+    }
+
+    public void HandleLabeledIdFormatDictionaryChanged(DependencyPropertyChangedEventArgs args)
+    {
+        var previousFormat = args.OldValue as IDictionary<IdLabels, ExtendedFont>;
+        var currentFormat = args.NewValue as IDictionary<IdLabels, ExtendedFont>;
+        if (currentFormat == null)
+        {
+            BackUpLabeledIdDictionary(previousFormat);
+            return;
+        }
+        if (previousFormat == null && IsLabeledIdDictionaryEqualToBackUp(currentFormat))
+        {
+            return;
+        }
+        FireLabeledIdFormatChanged();
+    }
+
+    private bool IsExtendedFontEqualsToBackUp(IdLabels labelID, ExtendedFont extendedFont)
+    {
+        if (extendedFont.Equals(_previousLabeledIdFormat[labelID]))
+        {
+            return extendedFont.RevisionNumber != _previousLabeledIdFormatRevisionNumber[labelID];
+        }
+        return true;
+    }
+
+    internal void Dispose()
+    {
+        Disposed?.Invoke();
+    }
 }
