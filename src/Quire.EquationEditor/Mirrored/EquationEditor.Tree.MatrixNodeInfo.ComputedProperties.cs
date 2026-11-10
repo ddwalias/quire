@@ -2,6 +2,27 @@ namespace Quire.EquationEditor.Tree;
 
 public partial class MatrixNodeInfo
 {
+    // Mathcad's comparer has .initlocals False.
+    [global::System.Runtime.CompilerServices.SkipLocalsInit]
+    public bool IsEquivalentTo(MatrixNodeInfo other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+
+        if (ViewportSize != other.ViewportSize ||
+            Origin != other.Origin ||
+            ViewportOffset != other.ViewportOffset ||
+            FullSize != other.FullSize ||
+            ShowIndices != other.ShowIndices)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public bool IsResized
     {
         get
