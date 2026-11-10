@@ -7,6 +7,7 @@ using Quire.EquationEditor.View;
 using System.Linq;
 using Quire.Wpf;
 using Quire.Controls.InputControls;
+using Quire.Matrices;
 
 namespace Quire.Controls.Internal;
 
@@ -731,5 +732,15 @@ internal partial class VisualMathRegionNode
         {
             SetIdLabel.Invoke(idLabels);
         }
+    }
+
+    public void ClearEditors()
+    {
+        RecursiveRemoveOfEditors(this);
+    }
+
+    public void HandleLabeledIdFormatChanged(System.Windows.DependencyPropertyChangedEventArgs args)
+    {
+        FireLabeledIdFormatChanged();
     }
 }

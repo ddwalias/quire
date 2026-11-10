@@ -376,8 +376,6 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     public void ShowVisualHistory(global::System.Collections.Generic.IList<global::Quire.EquationEditor.View.IVisualMathNode> nodes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void ClearEditors() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void RecursiveRemoveOfEditors(global::System.Windows.Controls.Panel visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void FireRestoreFromHistory(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -411,8 +409,6 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     public override void HandleMathFormatChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => base.HandleMathFormatChanged(e);
     [global::Quire.Mirror.MirrorStub]
     public void HandleLabeledIdFormatDictionaryChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleLabeledIdFormatChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void BackUpLabeledIdDictionary(global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> labeledIdDictionary) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -241,3 +241,5 @@
 - Release IL: PASS, 1250 checked (`.mirror-cache/release-il-14783bce6474/release-il.json`).
 - Batch: `Controls.Internal.VisualFactory` editor factories (27 `Create*Editor` methods: region and node arguments forwarded with `castclass`). `CreateBinaryOperatorEditor` passes `false` to the `bool` parameter (`ldc.i4.0`).
 - Release IL: PASS, 1277 checked (`.mirror-cache/release-il-94dc4152c2d0/release-il.json`).
+- Batch: straight-line members of `Controls.SpecTableControl` (18: navigation guards and handlers, `Commit`, `HandleRequestEvaluation`, `FireChangedEvent`, `FireContentChangedEvents`, `GetColumnFromIndex`, `SubstituteAndCommitInputValue`, `GetCellAt`, `SimulateMouseClick`), `Controls.InputControls.EditableComboBoxVisualTable` (4: `CanDeleteSelection`, the row/column/child lookups) and `Controls.Internal.VisualMathRegionNode` (2: `ClearEditors`, `HandleLabeledIdFormatChanged`). The enum literals are written as `Direction` and `IORegionChangeType` members.
+- Release IL: PASS, 1301 checked (`.mirror-cache/release-il-93427ebe10d5/release-il.json`).

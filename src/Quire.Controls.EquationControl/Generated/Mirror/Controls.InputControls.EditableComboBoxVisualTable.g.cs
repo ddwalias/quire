@@ -76,8 +76,6 @@ public partial class EditableComboBoxVisualTable : global::Quire.Controls.Core.V
     [global::Quire.Mirror.MirrorStub]
     private void HandleDeleteColumns(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void CanDeleteSelection(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void HandleOnDeleteSelection(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void CanClearSelectedCells(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -156,15 +154,9 @@ public partial class EditableComboBoxVisualTable : global::Quire.Controls.Core.V
     [global::Quire.Mirror.MirrorStub]
     private static bool IsTextBoxDataContextIsCellData(object element, out global::Quire.EquationEditor.View.IReadonlyCellData cellData, out global::System.Windows.Controls.TextBox textBox) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private int GetRowFromTextBoxIndex(int idx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private int GetColumnFromTextBoxIndex(int idx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.EquationEditor.View.IReadonlyCellData GetCellDataAtRowColumnFromVisualTableChildren(int row, int column) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.UIElement GetChildAt(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.UIElement GetChildElemAtRowColumn(int row, int column) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool IsVisualDataEqualsViewModelTableData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

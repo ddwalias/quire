@@ -1,5 +1,9 @@
 using Quire.Calculation.Core;
 using Quire.Controls.Core;
+using Quire.Controls.Core.IORegions;
+using Quire.Matrices;
+using Quire.PersistentData;
+using System.Windows;
 
 namespace Quire.Controls;
 
@@ -37,5 +41,95 @@ public partial class SpecTableControl
     {
         get;
         set;
+    }
+
+    public void SimulateMouseClick(System.Windows.Point location, int numberOfClicks)
+    {
+        Activate(true);
+    }
+
+    private void CanNavigateDown(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = Model.CanNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Down, false);
+    }
+
+    private void CanNavigateUp(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = Model.CanNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Up, false);
+    }
+
+    private void CanNavigateRight(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = Model.CanNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Right, false);
+    }
+
+    private void CanNavigateLeft(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = Model.CanNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Left, false);
+    }
+
+    private void OnNavigateRightByTerm(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Right, true);
+    }
+
+    private void OnNavigateLeftBuyTerm(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Left, true);
+    }
+
+    private void OnNavigateDown(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Down, false);
+    }
+
+    private void OnNavigateUp(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Up, false);
+    }
+
+    private void OnNavigateRight(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Right, false);
+    }
+
+    private void OnNavigateLeft(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Left, false);
+    }
+
+    private void Commit()
+    {
+        Model.Commit();
+    }
+
+    private void HandleRequestEvaluation(Quire.Calculation.Core.ICalculatable calculatable)
+    {
+        Commit();
+    }
+
+    private void FireChangedEvent()
+    {
+        RaiseEvent(new RoutedEventArgs(SpecTableControl.ChangedEvent, this));
+    }
+
+    public Quire.EquationEditor.SpecTable.Model.ISpecTableColumn GetColumnFromIndex(int index)
+    {
+        return Model.GetColumn(index);
+    }
+
+    public void FireContentChangedEvents()
+    {
+        FireContentAndRegionChangedEvents(IORegionChangeType.Content);
+    }
+
+    public bool SubstituteAndCommitInputValue(string sExpr, string valueSExpr, string scalingSExpr)
+    {
+        return Model.SubstituteAndCommitInputValue(sExpr, valueSExpr, scalingSExpr, IsActive);
+    }
+
+    internal Quire.Controls.EquationControl GetCellAt(int row, int column)
+    {
+        return View.GetCellAt(row, column);
     }
 }
