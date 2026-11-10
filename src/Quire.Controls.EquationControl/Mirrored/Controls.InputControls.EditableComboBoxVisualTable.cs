@@ -2,6 +2,8 @@ using Quire.Controls.Core;
 using Quire.Controls.InputControls;
 using Quire.EquationEditor.View;
 using Quire.Matrices;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Quire.Controls.InputControls;
 
@@ -40,4 +42,30 @@ public partial class EditableComboBoxVisualTable
     {
         return GetChildAt(MatrixHelper.IndexOf(row, column, Columns));
     }
+
+    private void FireContentChanged()
+    {
+        ContentChanged?.Invoke();
+    }
+
+    private void CanTabNavigate(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = IsKeyboardFocusWithin && !IsKeyboardFocused;
+    }
+
+    private void ForwardTabNavigate(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        MoveFocusedElement(FocusNavigationDirection.Next, GetCellDataFromTextBox(e.Source, out _));
+        e.Handled = true;
+    }
+
+    private void BackwardTabNavigate(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        MoveFocusedElement(FocusNavigationDirection.Previous, GetCellDataFromTextBox(e.Source, out _));
+        e.Handled = true;
+    }
+
+    public bool IsActive => IsVisible;
+
+    public System.Tuple<int, int> SelectedCells => _viewModel.SelectedCells;
 }

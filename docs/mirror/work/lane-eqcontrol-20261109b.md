@@ -245,3 +245,5 @@
 - Release IL: PASS, 1301 checked (`.mirror-cache/release-il-93427ebe10d5/release-il.json`).
 - Batch: straight-line members of `Controls.InputControls.EditableComboBoxTableBorder` (`Refresh`), `ComboBoxControl` (`OnCloseComboBoxDropDown`, `CreatedEditableViewModel`), `ComboBoxViewModel` (`CreatedEditableViewModel`), `ComboBoxViewModelBase` (`CreateDataAdapter`, the nested `ComboBoxTableModelAdapter`), and `ComboBoxControlWidget` (`OnEditableComboBoxContentChanged`, `Refresh`).
 - Release IL: PASS, 1308 checked (`.mirror-cache/release-il-89f99c431ef9/release-il.json`).
+- Batch: `Controls.InputControls.EditableComboBoxVisualTable`: `FireContentChanged` (`?.Invoke()`), `CanTabNavigate`, `ForwardTabNavigate`, `BackwardTabNavigate` (`FocusNavigationDirection.Next` / `Previous`), properties `IsActive`, `SelectedCells`. The explicit `ICanBlockUndoRedo.BlockUndoRedo`, `CellCount`, `OnCloseEditMode` (try/finally) and the command setup stay open.
+- Release IL: PASS, 1314 checked (`.mirror-cache/release-il-891e7459da7c/release-il.json`).
