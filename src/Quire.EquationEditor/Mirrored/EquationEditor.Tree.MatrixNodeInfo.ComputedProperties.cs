@@ -2,6 +2,14 @@ namespace Quire.EquationEditor.Tree;
 
 public partial class MatrixNodeInfo
 {
+    public void MakeReadOnly()
+    {
+    }
+
+    public void MakeEditable()
+    {
+    }
+
     // Mathcad's comparer has .initlocals False.
     [global::System.Runtime.CompilerServices.SkipLocalsInit]
     public bool IsEquivalentTo(MatrixNodeInfo other)
