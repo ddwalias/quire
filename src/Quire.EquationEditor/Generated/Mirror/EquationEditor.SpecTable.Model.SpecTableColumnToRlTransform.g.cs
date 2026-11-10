@@ -14,6 +14,4 @@ public partial class SpecTableColumnToRlTransform
     public static readonly global::Quire.EquationEditor.SpecTable.Model.SpecTableColumnToRlTransform Default;
     [global::Quire.Mirror.MirrorStub]
     public string Transform(global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn column, out global::System.Collections.Generic.List<global::Quire.Pair<global::Quire.EquationEditor.IEquationModel, uint>> mapColNodeTagToChildNodeTag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static string a(string A_0, global::Quire.EquationEditor.IEquationModel A_1, global::System.Collections.Generic.List<global::Quire.Pair<global::Quire.EquationEditor.IEquationModel, uint>> A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

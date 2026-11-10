@@ -2,6 +2,24 @@ namespace Quire.EquationEditor.SpecTable.Model;
 
 public partial class SpecTableColumnToRlTransform
 {
+    internal static string a(
+        string text,
+        global::Quire.EquationEditor.IEquationModel model,
+        global::System.Collections.Generic.List<global::Quire.Pair<global::Quire.EquationEditor.IEquationModel, uint>> map)
+    {
+        var builder = new global::System.Text.StringBuilder(text);
+        var regex = new global::System.Text.RegularExpressions.Regex(":0x[0-9a-fA-F]{8}");
+        foreach (global::System.Text.RegularExpressions.Match match in regex.Matches(text))
+        {
+            uint tag = uint.Parse(match.Value.Substring(3), global::System.Globalization.NumberStyles.AllowHexSpecifier);
+            map.Add(new global::Quire.Pair<global::Quire.EquationEditor.IEquationModel, uint>(model, tag));
+            builder.Remove(match.Index + 3, 8);
+            builder.Insert(match.Index + 3, string.Format("{0:x8}", map.Count));
+        }
+
+        return builder.ToString();
+    }
+
     internal string a(
         ISpecTableColumn column,
         global::Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer transformer,
