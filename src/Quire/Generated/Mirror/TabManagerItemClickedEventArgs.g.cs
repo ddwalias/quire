@@ -11,10 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.TabManagerItemClickedEventArgs, MathcadPrime")]
 public partial class TabManagerItemClickedEventArgs : global::System.Windows.RoutedEventArgs
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Input.MouseButtonEventArgs OriginalClickArgs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.TabManagerItem SourceTabItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public TabManagerItemClickedEventArgs(global::System.Windows.RoutedEvent routedEvent, global::Quire.TabManagerItem tabItem, global::System.Windows.Input.MouseButtonEventArgs originalClickArgs) { }
 }

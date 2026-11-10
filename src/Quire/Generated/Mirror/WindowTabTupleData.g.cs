@@ -14,15 +14,5 @@ public partial class WindowTabTupleData : global::System.ComponentModel.INotifyP
     [global::Quire.Mirror.MirrorStub]
     private int _order;
     [global::Quire.Mirror.MirrorStub]
-    public global::AvalonDock.Layout.LayoutAnchorable Wnd { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public string Header { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Order { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public WindowTabTupleData(global::AvalonDock.Layout.LayoutAnchorable wnd, int order) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnPropertyChanged(string propertyName = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

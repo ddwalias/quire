@@ -15,14 +15,4 @@ public partial class TwoParametersObject
     private readonly object _parameterOne;
     [global::Quire.Mirror.MirrorStub]
     private readonly object _parameterTwo;
-    [global::Quire.Mirror.MirrorStub]
-    public object ParameterOne { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object ParameterTwo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public TwoParametersObject(object parameterOneToInsert, object parameterTwoToInsert) { }
-    [global::Quire.Mirror.MirrorStub]
-    public string GetParameterOneAsString() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetParameterTwoAsString() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

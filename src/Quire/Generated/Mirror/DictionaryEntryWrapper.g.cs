@@ -11,12 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.DictionaryEntryWrapper, MathcadPrime")]
 public partial class DictionaryEntryWrapper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public object Key { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public DictionaryEntryWrapper(object key, object value) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.DictionaryEntry ToDictionaryEntry() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

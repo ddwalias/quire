@@ -14,7 +14,5 @@ public partial class OpenEngineeringDocumentParameter
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.DocumentReadonlyOptions ReadonlyOptions;
     [global::Quire.Mirror.MirrorStub]
-    public string FilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public OpenEngineeringDocumentParameter() { }
 }

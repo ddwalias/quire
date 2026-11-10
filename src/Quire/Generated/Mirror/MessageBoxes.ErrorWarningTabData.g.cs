@@ -11,12 +11,4 @@ namespace Quire.MessageBoxes;
 [global::Quire.Mirror.MirrorOf("Spirit.MessageBoxes.ErrorWarningTabData, MathcadPrime")]
 public partial class ErrorWarningTabData
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.IO.GeneralIssue> GeneralIssues { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.IO.ItemIssue> ItemIssues { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ErrorWarningTabData(bool isError, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.IO.GeneralIssue> generalIssues, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.IO.ItemIssue> itemIssues) { }
 }
