@@ -11,12 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.PageMarginSelectorTypeValueConverter, MathcadPrime")]
 public partial class PageMarginSelectorTypeValueConverter : global::System.Windows.Data.IMultiValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.PageMarginSelectorTypeValueConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
-    private PageMarginSelectorTypeValueConverter() { }
-    [global::Quire.Mirror.MirrorStub]
-    public object Convert(object[] values, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object[] ConvertBack(object value, global::System.Type[] targetTypes, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -383,6 +383,9 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
   - Gate: PASS, 698 checked. Report: `.mirror-cache/release-il-c4af1536a0d0/release-il.json`.
 - **Batch 25 (MessageDialogWithProgressBar and SaveAndSyncErrorWarningDialog code members, P; branch `mirror/quire-main-rest-pure-20261111`):** progress bar: `ProgressBarMessageFormat`, `Message`, `Image`, `Buttons`, `Show`, `HandleProgressStopped`, `HandleProgressValueChanged`, `OnClosed`. Save-and-sync: `Message`, `Image`, `Buttons`, `OnContentRendered`. Blocked, stubs kept: both constructors and XAML `InitializeComponent`/`Connect` placeholders (XAML). Unfinished: `SaveAndSyncErrorWarningDialog.Show` (its `tabs.Any` lambda is named `<Show>b__6_0` in Quire, `<Show>b__2_0` in Mathcad, and the count was not matched by reordering).
   - Gate: PASS, 711 checked. Report: `.mirror-cache/release-il-0e4a93018ada/release-il.json`.
+- **Batch 26 (converters and MRU interface, U; branch `feature/quire-main-pure-agy`):** `DocNameToTabHeaderConverter` (Convert, ConvertBack), `MarginConverter` (Instance, ctor, Convert, ConvertBack), `ObjectToBoolConverter` (Instance, both Convert, both ConvertBack), `PageMarginSelectorTypeValueConverter` (Instance, ctor, Convert, ConvertBack), `MruFiles.IMruFilePersistanceManager` (all 6 interface members).
+  - Gate: PASS, 733 checked. Report: `.mirror-cache/release-il-57f7391e39fe/release-il.json`.
+  - Shapes: `MarginConverter` pre-declares PageSize and PageMarginType locals so object temp takes local slot 2; `PageMarginSelectorTypeValueConverter` uses if/else structure matching Mathcad's brfalse/ret layout.
 
 ## Remaining (after batch 10)
 

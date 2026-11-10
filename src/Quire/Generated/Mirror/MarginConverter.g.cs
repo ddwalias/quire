@@ -11,12 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.MarginConverter, MathcadPrime")]
 internal partial class MarginConverter : global::System.Windows.Data.IMultiValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.MarginConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
-    private MarginConverter() { }
-    [global::Quire.Mirror.MirrorStub]
-    public object Convert(object[] values, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object[] ConvertBack(object value, global::System.Type[] targetTypes, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
