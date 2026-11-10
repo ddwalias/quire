@@ -92,9 +92,91 @@ namespace Quire { namespace depman {
         property bool Value { bool get(); }
     };
 
-    [Quire::Mirror::MirrorOfAttribute("depman.SEnvironment, mcdepman")]
-    interface class SEnvironment
+    [Quire::Mirror::MirrorOfAttribute("depman.DSym, mcdepman")]
+    public value struct DSym
     {
-        int GetRegionId();
+        System::String^ name;
+        Quire::utl_mgd::LabelSet^ labels;
+
+    private:
+        System::String^ m_full;
+
+    public:
+        DSym(System::String^ symbol)
+            : name(Quire::utl_mgd::LabelUtils::SplitName(symbol)),
+              labels(Quire::utl_mgd::LabelTrie::InternLabels(symbol)) {}
+
+        property bool wild
+        {
+            bool get() { return labels->Wild(); }
+        }
+
+        property System::String^ full
+        {
+            System::String^ get()
+            {
+                if (m_full == nullptr)
+                    m_full = name + labels->ToString();
+
+                return m_full;
+            }
+        }
+
+        virtual int GetHashCode() override
+        {
+            return full->GetHashCode();
+        }
+
+        virtual bool Equals(System::Object^ other) override
+        {
+            DSym^ symbol = dynamic_cast<DSym^>(other);
+            if (symbol == nullptr)
+                return false;
+
+            if (labels != symbol->labels)
+                return false;
+
+            // Release IL keeps the failed name comparison as the final branch.
+            if (!name->Equals(symbol->name))
+                return false;
+
+            return true;
+        }
     };
+
+    [Quire::Mirror::MirrorOfAttribute("depman.SharedThreadContext, mcdepman")]
+    ref class SharedThreadContext
+    {
+    private:
+        System::Collections::Hashtable^ m_thread_map;
+        Quire::utl_mgd::SafeMutex^ m_mutex;
+        Quire::utl_mgd::SafeMutex^ m_data_mutex;
+        bool m_abort_requested;
+        Quire::Mcd::RuntimeOptions^ m_runtime_options;
+        int m_worker_stack_size;
+
+        SharedThreadContext^ GetSharedThreadContext() { return this; }
+
+    public:
+        SharedThreadContext(int workerStackSize)
+            : m_thread_map(gcnew System::Collections::Hashtable()),
+              m_mutex(gcnew Quire::utl_mgd::SafeMutex("DependencyMutex")),
+              m_data_mutex(gcnew Quire::utl_mgd::SafeMutex("ThreadDataMutex")),
+              m_runtime_options(gcnew Quire::Mcd::RuntimeOptions()),
+              m_worker_stack_size(workerStackSize)
+        {
+            ++Quire::Mcd::RuntimeOptions::s_ro_counter;
+        }
+
+        property Quire::utl_mgd::SafeMutex^ Mutex
+        {
+            Quire::utl_mgd::SafeMutex^ get() { return m_mutex; }
+        }
+
+        property Quire::Mcd::RuntimeOptions^ RuntimeOptions
+        {
+            Quire::Mcd::RuntimeOptions^ get() { return m_runtime_options; }
+        }
+    };
+
 }}
