@@ -1899,8 +1899,26 @@ public partial class WhiteboardViewModel
             DoRedo(false);
         }
 
-        [global::Quire.Mirror.MirrorStub]
-        private void DoRedo(bool doAction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        private void DoRedo(bool doAction)
+        {
+            _isActiveItem = _viewModel.ActiveItem == _item;
+            IResizableElementWithDataStore resizable = _item as IResizableElementWithDataStore;
+            Size newSize = _newSize;
+            if (resizable != null)
+            {
+                if (doAction)
+                {
+                    _oldData = resizable.StoreResizeData(_oldSize, _newSize);
+                }
+                else
+                {
+                    newSize = resizable.CoerceNewSize(_newSize, _oldData);
+                }
+            }
+
+            _viewModel.SetItemSize(_item, newSize, _dragMode);
+        }
+
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+ResizeItemCommandWithSideEffects, Ptc.Controls.Whiteboard")]
@@ -2116,8 +2134,23 @@ public partial class WhiteboardViewModel
             return true;
         }
 
-        [global::Quire.Mirror.MirrorStub]
-        public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override void Undo()
+        {
+            if (_moveCommand != null)
+            {
+                _moveCommand.Undo();
+            }
+
+            if (_pushInsertionPoint)
+            {
+                _viewModel.InsertionPoint = _insertionPoint;
+            }
+
+            Size size = _viewModel.ContentSize;
+            UndoResize();
+            ViewModel.FireChildCausedResize(size, _viewModel.ContentSize);
+        }
+
         public override void Redo()
         {
             Do();

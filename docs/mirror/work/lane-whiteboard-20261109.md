@@ -493,3 +493,9 @@
 - Shapes Release IL requires: `LimitOffsetBasedOnMinimumHeight` has only one `double` local (no extra temp), so the expression is written inline and the negation wraps the product; `DeleteSpaceCommand.Do` leaves the `_moveCommand == null` check after the insertion-point move.
 - Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; stubs and `[MirrorStub]` attributes removed.
 - Release IL: PASS — 907 checked, 0 failures (`release-il-ea91314919b8`).
+
+## Batch 38 — InsertSpaceCommand.Undo, ResizeItemCommand.DoRedo
+
+- Members: `InsertSpaceCommand.Undo` (null-guarded `_moveCommand.Undo()`, insertion-point restore, then size capture, `UndoResize()`, `FireChildCausedResize`); `ResizeItemCommand.DoRedo(bool)` (`_isActiveItem = ActiveItem == _item`, `as` pattern local, `if (doAction) _oldData = StoreResizeData(...) else newSize = CoerceNewSize(...)`, then `SetItemSize`).
+- Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; stubs and `[MirrorStub]` attributes removed.
+- Release IL: PASS — 909 checked, 0 failures (`release-il-5aa6bf11f3e3`).
