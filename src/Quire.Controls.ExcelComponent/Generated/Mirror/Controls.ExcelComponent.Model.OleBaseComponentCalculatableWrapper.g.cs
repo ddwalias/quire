@@ -16,8 +16,6 @@ internal abstract partial class OleBaseComponentCalculatableWrapper : global::Qu
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.EngineError _error;
     [global::Quire.Mirror.MirrorStub]
-    protected global::System.Action EquationChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public abstract global::Quire.Pair<bool, bool> IsFragment { get; }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.ExcelComponent.Model.OleWrapperCustomErrorType CustomErrorType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -31,10 +29,6 @@ internal abstract partial class OleBaseComponentCalculatableWrapper : global::Qu
     public abstract bool IsUnknownEquation { get; }
     [global::Quire.Mirror.MirrorStub]
     public bool IsValidEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string LhsExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string RhsExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsConnectedToTheEngine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
