@@ -128,6 +128,8 @@ foreach (var artifact in quire)
 // and native size in a Mathcad assembly the Quire assembly binds, when the type map lists that original as a C++ artefact
 // or not at all (template instances and compiler-generated types, which it leaves out). A type the map mirrors or excludes
 // otherwise still needs its reviewed [MirrorOf]; a type without such an original stays unbound and has no counterpart.
+// Only an audited assembly's C++ types bind so: the gate keys a project's cached rows by which mixed-mode references it
+// audited with it.
 foreach (var artifact in quire.Where(a => !a.IlOnly))
 {
     var bound = typeNames.Where(t => t.Key.Assembly == artifact.Name).Select(t => t.Value[1].ToLowerInvariant()).ToHashSet();
@@ -176,7 +178,9 @@ var assemblyNames = new Dictionary<string, string>(StringComparer.OrdinalIgnoreC
 // The assembly is named as its metadata names it, which the type map's file name may not match in case.
 string[]? Binding(string assembly, string name)
 {
-    if (typeNames.TryGetValue((assembly, name), out var own)) return own;
+    // An audited assembly's [MirrorOf] names the Mathcad assembly as written; it is named canonically, as an unaudited
+    // one's binding is below, so the name does not depend on what else is audited.
+    if (typeNames.TryGetValue((assembly, name), out var own)) return [own[0], CanonicalAssembly(own[1])];
     if (!reviewed.TryGetValue(name, out var bound)) return null;
     string[]? binding = bound.Count == 1 ? bound[0] : null;
     if (binding == null)
@@ -189,13 +193,17 @@ string[]? Binding(string assembly, string name)
         binding = model?.Types.FirstOrDefault(t => t.FullName == name)?.MirrorOf?.Split(',').Select(s => s.Trim()).ToArray();
         if (binding == null || !Reviewed(name, binding)) return null;
     }
-    if (!assemblyNames.TryGetValue(binding[1], out var canonical))
+    return [binding[0], CanonicalAssembly(binding[1])];
+}
+string CanonicalAssembly(string assembly)
+{
+    if (!assemblyNames.TryGetValue(assembly, out var canonical))
     {
-        try { canonical = originals.TryGetValue(binding[1], out var loaded) ? loaded.Name : MetadataLoader.Load(InstallFile(binding[1]))?.Name ?? binding[1]; }
-        catch (Exception e) when (e is IOException or BadImageFormatException) { canonical = binding[1]; }
-        assemblyNames[binding[1]] = canonical;
+        try { canonical = originals.TryGetValue(assembly, out var loaded) ? loaded.Name : MetadataLoader.Load(InstallFile(assembly))?.Name ?? assembly; }
+        catch (Exception e) when (e is IOException or BadImageFormatException) { canonical = assembly; }
+        assemblyNames[assembly] = canonical;
     }
-    return [binding[0], canonical];
+    return canonical;
 }
 TypeSig Map(TypeSig sig) => sig switch
 {
@@ -313,9 +321,9 @@ var originalNames = matched.Where(m => m.Counterpart != null)
 // (the reference's resolution scope, not the assembly reading it). An unbound type keeps its own Quire or Mathcad
 // assembly, so it cannot match a Mathcad type of the same name elsewhere; framework types stay unqualified, and a
 // module's own compiler types (<Module>, <PrivateImplementationDetails>) are its own (StructureReader).
+// Every Mathcad assembly the type map lists, loaded or not, so a project's rows do not depend on what else is audited.
 var products = Directory.GetDirectories(Path.Combine(repo, "src")).Select(d => Path.GetFileName(d).ToLowerInvariant())
-    .Concat(quire.Select(a => a.Name.ToLowerInvariant())).Concat(originals.Values.Select(o => o.Name.ToLowerInvariant()))
-    .Concat(mathcadAssemblies).ToHashSet();
+    .Concat(quire.Select(a => a.Name.ToLowerInvariant())).Concat(mathcadAssemblies).ToHashSet();
 var structures = new Dictionary<Artifact, StructureReader>();
 StructureReader Reader(Artifact a, bool isQuire) => structures.TryGetValue(a, out var reader) ? reader
     : structures[a] = new StructureReader(a.Metadata, a.Pe, new StrictSigProvider(a.Name), name => name,
