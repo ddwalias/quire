@@ -28,6 +28,24 @@ public partial class SolveBlockControl
 
     protected override string GetInternalHelpContext() => "SolveBlockControl";
 
+    public void ReplaceCalculatablesWithWrappersInResultManager()
+    {
+        foreach (global::Quire.Controls.SolveBlockCalculatable calculatable in _sbModel.AllCalculatables)
+        {
+            global::Quire.Calculation.Core.ResultManager.Instance.ReplaceCalculatable(
+                calculatable.WrappedCalculatable, calculatable);
+        }
+    }
+
+    public void ReplaceCalculatablesAndResultWithWrappersInResultManager()
+    {
+        foreach (global::Quire.Controls.SolveBlockCalculatable calculatable in _sbModel.AllCalculatables)
+        {
+            global::Quire.Calculation.Core.ResultManager.Instance.ReplaceCalculatableAndResult(
+                calculatable.WrappedCalculatable, calculatable);
+        }
+    }
+
     public EngineResult[] EngineResults
     {
         get
