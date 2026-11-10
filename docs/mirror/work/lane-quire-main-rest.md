@@ -348,6 +348,9 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
 - **Batch 10 (dimension edit view model, U):** `DimensionEditDialogViewModel` (DimensionDataSource, UnitDataSource with its lambda, Action, IsDimensionEnabled, DimensionSelectedItem, UnitSelectedItem, IsCustomDataChanged, ctor, HandlePostDimensionChanged). Fields stay generated.
   - Gate: PASS, 487 checked. Report: `.mirror-cache/release-il-4dc5c6e1905d/release-il.json`.
   - Shape: the lambda in `UnitDataSource` is `<get_UnitDataSource>b__10_0` in Mathcad. The ordinal counts the constructor, which comes first in Mathcad's source, so the constructor moved to the top of the hand-written members.
+- **Batch 11 (ColumnViewModel, U; branch `mirror/quire-main-rest-pure-20261111`):** `ColumnViewModel` (CollectionProperty with its static initializer, Collection, ColumnDataName, CurrentDirection, PropertyChanged event, HandleCollectionSortOrderCleared, OnCollectionChanged, NotifySortOrderChanged, SortByNextOrder, GetNextSortDirection, FirePropertyChanged, ctor). `_isCollectionInitialized` stays generated.
+  - Gate: PASS, 499 checked. Report: `.mirror-cache/release-il-20cc601339f8/release-il.json`.
+  - Shapes: `OnCollectionChanged` tests each assertion in its own `if` (a combined `||` branches differently). `CurrentDirection` tests the name with `!=` and returns on the else path, with an empty then-block (the `==` form calls `op_Equality`). `GetNextSortDirection` falls to one trailing `return null` after the switch (the default section then reuses the subject's slot as Mathcad does).
 
 ## Remaining (after batch 10)
 
