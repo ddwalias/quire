@@ -359,6 +359,9 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
   - Gate: PASS, 567 checked. Report: `.mirror-cache/release-il-03373819a20e/release-il.json`.
   - Shapes: members are in Mathcad's metadata order (the lambda ordinal `<BuildDerivedInsertDataSource>b__20_N` changed to `b__61_N` when the members were in a different order). `Commit` is a pattern `if (... is WorksheetControl worksheetControl)` around the body (the early-return form differs).
   - Blocked, stub kept: `HandleDialogAction`. Its nullable `switch` temp takes local slot 1 (Mathcad uses slot 3, after the case-block locals), and the `!ShowDimEditDialog || (...)` guard lays out its branches differently (Mathcad: `bne.un` to the method end). No source form tried so far matched both.
+- **Batch 14 (TextStyleEditDialogViewModel, U; branch `mirror/quire-main-rest-pure-20261111`):** `TextStyleEditDialogViewModel` except two members kept as unmarked placeholders: `FontFamily` (its setter needs `FontConstants`, not in Quire) and `UpdateMarkerStyle` (its `MarkerStyle` and `LastBlock` pattern temps take different local slots than Mathcad's). Fields and consts stay generated; `_okIsEnabled` moved with its initializer.
+  - Gate: PASS, 618 checked. Report: `.mirror-cache/release-il-69b38af43a33/release-il.json`.
+  - Shapes: `(double)` casts where Mathcad emits `conv.r8` on `Nullable<double>.Value`; `textStyleData?.BaseOnKey != null` (Roslyn emits `call` for the property as Mathcad does; `!= null` after `&&` emits `callvirt`); a two-case enum `switch` written as `if`/`else if` (Mathcad lays out the first case body before the second test); `ResetValue` tests `is TextDecorationCollection textDecorations`. Unmarked placeholders keep the constructor's lambda ordinal (`<.ctor>b__20_0`) because a generated `UpdateMarkerStyle` stub counted before the constructor.
 
 ## Remaining (after batch 10)
 
