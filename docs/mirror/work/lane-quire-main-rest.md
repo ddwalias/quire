@@ -332,3 +332,6 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
 - **Batch 4 (constants and converters, U):** `IOWindowConstants` (three consts, `AliasPath`, `IdNamePath` initializers), `PropertyNames` (const, `CurrentDirectionPath`), `TextDecorationCollectionToBooleanConverter` (Convert, ConvertBack), `FlowDocumentFamilyConverter` (Convert, ConvertBack).
   - Gate: PASS, 329 checked. Report: `.mirror-cache/release-il-0143022a3562/release-il.json`.
   - Shape: `FlowDocumentFamilyConverter.Convert` joins the pack-URI path with an explicit `string.Concat`; a literal `+` literal is folded by the compiler, and Mathcad's IL keeps the call. Keeps the Mathcad literal `Ptc.Controls.Core;component/...` (the holding assembly is Quire, so it is not `<self>`).
+- **Batch 5 (small converters and statics, U):** `StyleFontSizeToStringConverter.ConvertBack`, `StyleFontSizeValidationRule` (const, MaxFontSize), `DisplayUnitsUtils` (`CmToMmMult` initializer, DipsToDisplayUnits), `EmptyDropDownSelectorItem` (Value, Header with initializer, IsChecked; default ctor), `StylePropertiesLocalized` (Convert, ConvertBack).
+  - Gate: PASS, 362 checked. Report: `.mirror-cache/release-il-c8ec93ef8f0b/release-il.json`.
+  - Shape: `DipsToDisplayUnits` assigns a local in if/else and returns it (Mathcad's `bne.un` else branch); the early-return form does not match.

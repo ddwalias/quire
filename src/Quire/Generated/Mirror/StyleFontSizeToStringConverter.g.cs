@@ -12,7 +12,5 @@ namespace Quire;
 public partial class StyleFontSizeToStringConverter : global::Quire.FontSizeToStringConverter
 {
     [global::Quire.Mirror.MirrorStub]
-    public override object ConvertBack(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => base.ConvertBack(value, targetType, parameter, culture);
-    [global::Quire.Mirror.MirrorStub]
     public StyleFontSizeToStringConverter() { }
 }

@@ -12,9 +12,5 @@ namespace Quire;
 public partial class StyleFontSizeValidationRule : global::Quire.FontSizeValidationRule
 {
     [global::Quire.Mirror.MirrorStub]
-    public const int DefaultMaxFontSize = 999;
-    [global::Quire.Mirror.MirrorStub]
-    protected override double MaxFontSize { get => base.MaxFontSize; }
-    [global::Quire.Mirror.MirrorStub]
     public StyleFontSizeValidationRule() { }
 }

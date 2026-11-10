@@ -11,8 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.DisplayUnitsUtils, MathcadPrime")]
 internal static partial class DisplayUnitsUtils
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly double CmToMmMult;
-    [global::Quire.Mirror.MirrorStub]
-    public static double DipsToDisplayUnits(double numInDips, global::Quire.Controls.Core.PageSizeUnits pageSizeUnits) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

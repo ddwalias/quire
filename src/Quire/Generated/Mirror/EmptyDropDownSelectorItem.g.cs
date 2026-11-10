@@ -11,12 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.EmptyDropDownSelectorItem, MathcadPrime")]
 public partial class EmptyDropDownSelectorItem : global::Quire.IDropDownSelectorItem
 {
-    [global::Quire.Mirror.MirrorStub]
-    public object Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object Header { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsChecked { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public EmptyDropDownSelectorItem() { }
 }
