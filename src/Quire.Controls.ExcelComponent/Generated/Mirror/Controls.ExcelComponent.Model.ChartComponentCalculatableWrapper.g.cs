@@ -48,11 +48,7 @@ internal partial class ChartComponentCalculatableWrapper : global::Quire.Control
     [global::Quire.Mirror.MirrorStub]
     public void UpdateAssociatedTraceData(global::Quire.Controls.ExcelComponent.Model.ChartTraceDataToUpdate dataToUpdate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void HandleRequestEvaluationAux() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Controls.ExcelComponent.Model.OleWrapperCustomErrorType GetCustomErrorType(string errorCode) => base.GetCustomErrorType(errorCode);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void ClearEquationType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void SetIdentifierLabels(global::System.Collections.Generic.IDictionary<global::Quire.Calculation.Core.ResolvedId, string[]> idLabelMap) => base.SetIdentifierLabels(idLabelMap);
     [global::Quire.Mirror.MirrorStub]

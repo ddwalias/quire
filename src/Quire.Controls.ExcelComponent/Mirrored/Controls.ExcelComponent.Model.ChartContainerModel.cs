@@ -1,3 +1,5 @@
+using System;
+using Quire.Calculation;
 using Quire.FunctionalitiesLimitation;
 
 namespace Quire.Controls.ExcelComponent.Model;
@@ -23,4 +25,28 @@ public partial class ChartContainerModel
     protected override bool CheckOleActiveState => false;
 
     public bool IsImageFrozen => ImageFreezeSources != ImageFreezeSources.None;
+
+    public override IValue GetValue(string place)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void SetString(string place, IValue value)
+    {
+        throw new AddressErrorException(place);
+    }
+
+    public void AddImageFreezeSource(ImageFreezeSources source, bool forceRun = false)
+    {
+        if (forceRun)
+        {
+            Run();
+        }
+        AddOrRemoveImageFreezeSource(source, add: true);
+    }
+
+    public void RemoveImageFreezeSource(ImageFreezeSources source)
+    {
+        AddOrRemoveImageFreezeSource(source, add: false);
+    }
 }

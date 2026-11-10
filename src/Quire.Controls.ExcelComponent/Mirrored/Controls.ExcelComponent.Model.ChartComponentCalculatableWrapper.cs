@@ -7,6 +7,17 @@ internal partial class ChartComponentCalculatableWrapper
 {
     private BaseComponentEquationType ComponentEquationType { get; set; }
 
+    public void HandleRequestEvaluationAux()
+    {
+        base.HandleRequestEvaluation(WrappedCalculatable);
+    }
+
+    protected override void ClearEquationType()
+    {
+        ComponentEquationType = BaseComponentEquationType.Unknown;
+        ChartWrapperType = ChartWrapperType.Unknown;
+    }
+
     public static string ConstructRl(ChartWrapperType type, string rhsExpression)
     {
         string rlIdWithLabel = GetRlIdWithLabel(type);

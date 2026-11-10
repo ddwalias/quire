@@ -56,11 +56,7 @@ public partial class ChartContainerModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     public override void SetValue(string place, global::Quire.IValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.IValue GetValue(string place) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Exception RemoveTrace(uint traceId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetString(string place, global::Quire.IValue value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetMatrix(string place, global::Quire.IValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -69,10 +65,6 @@ public partial class ChartContainerModel : global::Quire.Controls.ExcelComponent
     public void ClearTracesAndLimits() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetRect(global::System.Windows.Int32Rect rectInPixels) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddImageFreezeSource(global::Quire.Controls.ExcelComponent.Model.ImageFreezeSources source, bool forceRun = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RemoveImageFreezeSource(global::Quire.Controls.ExcelComponent.Model.ImageFreezeSources source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ForceUnfreezeImage(bool force) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
