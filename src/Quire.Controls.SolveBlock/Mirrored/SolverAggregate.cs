@@ -163,6 +163,43 @@ internal partial class SolverAggregate
         return rl.Contains("undefine-subscripts");
     }
 
+    protected override void HandleRequestEvaluation(global::Quire.Calculation.Core.ICalculatable calc)
+    {
+        if (UpdateEquationType(WrappedCalculatable))
+            goto Finished;
+
+        ParseWrappedRl();
+        UpdateSolverRL();
+        FireRequestEvaluation(this);
+        if (IsSolverOfSymbolicContainsFind(Rl))
+        {
+            if (WrappedCalculatable is global::Quire.Controls.EquationControl
+                {
+                    ContainsSymbolicEvaluation: not false
+                } equationControl)
+            {
+                if (equationControl.CalculatableChildren.Count() > 1)
+                {
+                    SolverAggregateChildWrapperAggregate solverWrappedAggregate = GetSolverWrappedAggregate();
+                    if (solverWrappedAggregate != null)
+                    {
+                        foreach (global::Quire.Calculation.Core.ICalculatable child in solverWrappedAggregate.CalculatableChildren)
+                        {
+                            if (!IsSolverOfSymbolicContainsUndefineSubscripts(child.Rl) &&
+                                !IsSolverOfSymbolicContainsFind(child.Rl))
+                            {
+                                child.Commit();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    Finished:
+        return;
+    }
+
     public void AddChild(global::Quire.Calculation.Core.ICalculatable calculatable)
     {
         var wrapper = new global::Quire.Controls.SolverAggregateChildWrapper(calculatable);
