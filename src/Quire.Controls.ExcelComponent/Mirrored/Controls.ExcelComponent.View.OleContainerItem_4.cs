@@ -12,6 +12,18 @@ public abstract partial class OleContainerItem<TViewModel, TModel, TIPublicModel
     {
     }
 
+    public double VerticalAlignmentOffset => 0.0;
+
+    public global::System.Nullable<global::System.Windows.Vector> NavigateIntoItem(global::Quire.Direction direction)
+    {
+        return null;
+    }
+
+    protected override void HandleBeforeActiveStateToggled()
+    {
+        global::Quire.Controls.Core.AttachedProperties.SetIsBringToView(this, true);
+    }
+
     protected override IValueConverter GetDimensionsConverter()
     {
         return new DimensionsConverter(this);
