@@ -281,3 +281,6 @@
 - Batch: `Controls.InputControls.SliderModel`: private `Data` getter and the properties `Orientation` (setter compares before writing), `TickPlacement`, `TickFrequency`, `SmallChange`, `LargeChange`, `Minimum`, `Maximum`, `ShowMinMax`, `Invert`, `IsSnapToTickEnabled`, `Border`, `Interval` (get forwards to `Data`, set forwards then `OnPropertyChanged(nameof(...))`). `Position` (its setter runs the script engine), `SelectedValue`, `Apply`, `HandlePostInputFieldResultChanged`, `DefaultScript`, and the constructor stay open.
 - Shapes tried: the plain forward/notify shape matched on the first candidate.
 - Release IL: PASS, 1450 checked (`.mirror-cache/release-il-e68677a95a93/release-il.json`).
+- Batch: `Controls.InputControls.SliderPropertiesEditorViewModel`: private `Model` getter (interface cast) and the forwarding properties `Orientation`, `Border`, `SmallChange`, `LargeChange`, `TickFrequency`, `Minimum`, `Maximum`, `ShowMinMax`, `Invert`. `TickPlacement`, `Ticks` (their `_ticks` state and `OnPropertyChanged` calls), the constructor and `HandleModelPropertyChanged` stay open.
+- Shapes tried: plain forwarding setters matched on the first candidate.
+- Release IL: PASS, 1469 checked (`.mirror-cache/release-il-e0c7fcf93e7b/release-il.json`).
