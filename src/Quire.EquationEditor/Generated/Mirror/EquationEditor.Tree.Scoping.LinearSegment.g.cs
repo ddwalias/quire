@@ -34,7 +34,5 @@ public partial class LinearSegment
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Collections.Generic.LinkedList<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private int a(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool IsContinuousNaryChildren(global::Quire.EquationEditor.Tree.MathNode leftNode, global::Quire.EquationEditor.Tree.MathNode rightNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
