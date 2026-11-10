@@ -96,10 +96,6 @@ public abstract partial class OleBaseComponentControl : global::Quire.Controls.M
     [global::Quire.Mirror.MirrorStub]
     public int ComponentCookieMultiThreaded { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private static void HandleOleComponentLocationTopChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void HandleOleComponentLocationLeftChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus computingStatus) => base.SetCalculatingStatus(computingStatus);
     [global::Quire.Mirror.MirrorStub]
     public override void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus) => base.SetSynchronizationStatus(syncStatus);

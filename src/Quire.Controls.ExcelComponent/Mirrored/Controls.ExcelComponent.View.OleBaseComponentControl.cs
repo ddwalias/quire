@@ -1,4 +1,5 @@
 using System.Windows;
+using Quire.Controls.Core;
 
 namespace Quire.Controls.ExcelComponent.View;
 
@@ -52,5 +53,15 @@ public abstract partial class OleBaseComponentControl
     public static void SetOleComponentLocationTop(DependencyObject whiteboardItem, double value)
     {
         whiteboardItem.SetValue(OleComponentLocationTopProperty, (object)value);
+    }
+
+    private static void HandleOleComponentLocationTopChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+    {
+        obj.SetValue(AttachedProperties.PreviousLocationTopProperty, args.NewValue);
+    }
+
+    private static void HandleOleComponentLocationLeftChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+    {
+        obj.SetValue(AttachedProperties.PreviousLocationLeftProperty, args.NewValue);
     }
 }
