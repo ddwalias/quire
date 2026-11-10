@@ -1,3 +1,5 @@
+using Quire.Calculation.Core;
+
 namespace Quire.Controls.ExcelComponent.Model;
 
 public abstract partial class OleBaseComponentModel
@@ -16,5 +18,10 @@ public abstract partial class OleBaseComponentModel
 
     private static void HandleContainerChildrenChanged()
     {
+    }
+
+    protected virtual ICalculatable LookupCalculatableWrapper(ICalculatable calc)
+    {
+        return GetWrapper(calc);
     }
 }

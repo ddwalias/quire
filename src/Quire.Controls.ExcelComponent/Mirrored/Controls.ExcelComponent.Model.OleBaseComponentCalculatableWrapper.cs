@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Windows;
 using Quire.Calculation.Core;
 
 namespace Quire.Controls.ExcelComponent.Model;
@@ -54,5 +55,13 @@ internal abstract partial class OleBaseComponentCalculatableWrapper
     private void WrappedCalculatablePropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         FirePropertyChanged(e);
+    }
+
+    private void OnEquationChanged(object sender, RoutedEventArgs args)
+    {
+        if (EquationChangedHandler != null)
+        {
+            EquationChangedHandler();
+        }
     }
 }

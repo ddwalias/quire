@@ -54,12 +54,6 @@ public partial class ExcelComponentModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     private string GetOutputDefineLeftHandSide(global::Quire.Calculation.Core.ICalculatable eq) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.ExcelComponent.Model.IExcelComponentCalculatableWrapper GetExcelComponentCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.EngineError GetError(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType GetEquationType(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override object Clone() => base.Clone();
     [global::Quire.Mirror.MirrorStub]
     private static bool IsValidItem(global::Quire.Controls.ExcelComponent.Model.IExcelComponentCalculatableWrapper wrapper) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -38,8 +38,6 @@ public partial class ChartComponentModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     internal void CommitPre() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal void CommitPost() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void Commit() => base.Commit();
     [global::Quire.Mirror.MirrorStub]
     protected override void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) => base.FireCalculatableAdded(calculatable);
@@ -61,8 +59,6 @@ public partial class ChartComponentModel : global::Quire.Controls.ExcelComponent
     protected override void RemoveCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override object Clone() => base.Clone();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleChildWrapperChartTypeChanged(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapper) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleChildWrapperRemovedOrChartTypeChanged(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapper, global::System.Nullable<global::Quire.Controls.ExcelComponent.Model.ChartWrapperType> prevTypeWhenRemoving) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

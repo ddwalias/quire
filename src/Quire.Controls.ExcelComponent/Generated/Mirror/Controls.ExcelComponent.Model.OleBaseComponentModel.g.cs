@@ -102,8 +102,6 @@ public abstract partial class OleBaseComponentModel : global::Quire.Controls.Mat
     [global::Quire.Mirror.MirrorStub]
     protected abstract global::Quire.Calculation.Core.ICalculatable CreateCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc, bool arg2);
     [global::Quire.Mirror.MirrorStub]
-    protected virtual global::Quire.Calculation.Core.ICalculatable LookupCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected abstract void RemoveCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc);
     [global::Quire.Mirror.MirrorStub]
     private void HandleChildCalcHiddenStateChanged(global::Quire.Calculation.Core.ICalculatable calc, bool arg2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

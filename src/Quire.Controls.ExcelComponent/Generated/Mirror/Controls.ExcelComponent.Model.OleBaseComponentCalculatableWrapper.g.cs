@@ -91,6 +91,4 @@ internal abstract partial class OleBaseComponentCalculatableWrapper : global::Qu
     private void HookupCalculatableEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UnhookCalculatableEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnEquationChanged(object sender, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
