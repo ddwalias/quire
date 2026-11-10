@@ -112,21 +112,13 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     public double[] CustomScriptsSizesForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    internal static bool SpellCheckReady { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Nullable<global::System.ValueTuple<global::Quire.Controls.Text.ScriptState, double>> CurrentInsertionScriptState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public virtual int CaretOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Collections.Generic.IEnumerable<global::System.Windows.Documents.TextPointer> InsertionPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int SelectionStart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int SelectionEnd { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual double VerticalAlignmentOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Markup.XmlLanguage CurrentProofingLanguage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
@@ -218,8 +210,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     public void SetTextFormatPropertyValue(global::System.Windows.DependencyProperty property, object value, bool isUndoRedo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public virtual void OnWorksheetPropertiesChanged(string[] propertyNames, global::Quire.Controls.Core.IWorksheetProperties oldProperties, global::Quire.Controls.Core.IWorksheetProperties newProperties) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public virtual void Dispose() { }
     [global::Quire.Mirror.MirrorStub]
     internal static global::System.Windows.Documents.TextPointer GetTextBoundary(global::System.Windows.Documents.LogicalDirection direction, out string partialText, global::Quire.Controls.Text.TextFromRunsStops stopFlags, global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -283,6 +273,4 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     private global::System.Windows.Documents.TextPointer GetPointerToAddDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void PostPasting() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void SelectTo(int toOffset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

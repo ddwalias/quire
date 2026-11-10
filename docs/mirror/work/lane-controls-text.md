@@ -576,3 +576,15 @@
 - Exact: `MessageBoxManager` (lazy static with the `IsConnected` guard; `return _messageBoxMngr = ...GetService` gives the `dup; stsfld` IL), `SnappingHelper` (`??=` on the field), `SelectionContainsEmbeddedItemsOnly` (bottom-tested `while` with the two `GetPointerContext` checks), `EmbeddedObjects` (`IList<object>` local, so the `Add` is `ICollection<object>::Add`), `InitializeChildManager` (`new CalculatableChildHider(...)` with the three virtual `Fire*` method groups), `RichTextBase.SelectedEmbeddedObjects`, `RichTextBase.GetTextOnlyFromRuns` (`TextFromRunsStops.None`).
 - Note: `SnappingHelper` and `InitializeChildManager` use the fully qualified `global::Quire.Core` / `global::Quire.Calculation.Core` types; the unqualified names resolve to other types with the same name in this file's using set.
 - Release IL: PASS — 503 checked, 0 failures (`.mirror-cache/gate-b92d`).
+
+## Batch 93 — RichTextBase proofing language and script state (4 accessors)
+
+- Exact: `CurrentProofingLanguage` get (`_currentProofingLanguage ??= ComputeProofingLanguage(TextRange)`) and private set (`Equals(value, field)` guard, then the `CurrentProofingLanguage` change notification); `CurrentInsertionScriptState` get/set (auto-property with the nullable tuple type).
+- Release IL: PASS — 507 checked, 0 failures (`.mirror-cache/gate-b93`).
+
+## Batch 94 — RichTextBase insertion points, spell-check readiness, select-to, worksheet properties (4)
+
+- Exact: `InsertionPoints` (cache check, then the insertion-position walk and `VerifyInsertionPositions()`), `SpellCheckReady` (foreach over `ToList()`, the `DevAssert(...).Failed` check that removes the timer, then `IsNullOrEmpty()`), `SelectTo` (`Selection.Select(anchor, ...)`; the nested ternary arms are written with `== 0 ? Start : End`, and the outer form is `Selection.IsEmpty ? CaretPosition : ...`), `OnWorksheetPropertiesChanged` (`((ReadOnlySpan<string>)propertyNames).Contains(...)` gives the `op_Implicit` plus `MemoryExtensions.Contains` IL).
+- Note: `SelectTo` needed both ternary arms reversed from the first attempt; the first two attempts differed at instruction 3 and then at 7.
+- Hand-written: `src/Quire.Controls.Text/Mirrored/Controls.Text.RichTextBase.cs`; stubs removed from `Generated/Mirror/Controls.Text.RichTextBase.g.cs`.
+- Release IL: PASS — 511 checked, 0 failures (`.mirror-cache/gate-b94d`).

@@ -1439,4 +1439,85 @@ public partial class RichTextBase
         GetTextBoundary(LogicalDirection.Forward, out text, TextFromRunsStops.None, range);
         return text;
     }
+
+    public XmlLanguage CurrentProofingLanguage
+    {
+        get => _currentProofingLanguage ??= ComputeProofingLanguage(TextRange);
+        private set
+        {
+            if (!Equals(value, _currentProofingLanguage))
+            {
+                _currentProofingLanguage = value;
+                FirePropertyChanged(new PropertyChangedEventArgs(nameof(CurrentProofingLanguage)));
+            }
+        }
+    }
+
+    protected (ScriptState, double)? CurrentInsertionScriptState { get; set; }
+
+    protected IEnumerable<TextPointer> InsertionPoints
+    {
+        get
+        {
+            if (_cachedInsertionPoints != null)
+            {
+                return _cachedInsertionPoints;
+            }
+
+            _cachedInsertionPoints = new List<TextPointer>();
+            TextPointer position = Document.ContentStart;
+            if (!position.IsAtInsertionPosition)
+            {
+                position = position.GetNextInsertionPosition(LogicalDirection.Forward);
+            }
+
+            while (position != null)
+            {
+                _cachedInsertionPoints.Add(position.GetInsertionPosition(LogicalDirection.Forward));
+                position = position.GetNextInsertionPosition(LogicalDirection.Forward);
+            }
+
+            VerifyInsertionPositions();
+            return _cachedInsertionPoints;
+        }
+    }
+
+    internal static bool SpellCheckReady
+    {
+        get
+        {
+            foreach (global::System.Windows.Threading.DispatcherTimer timer in _pendingSpellCheckTimers.ToList())
+            {
+                if (DebugTools.DevAssert(timer.IsEnabled, null).Failed)
+                {
+                    _pendingSpellCheckTimers.Remove(timer);
+                }
+            }
+
+            return _pendingSpellCheckTimers.IsNullOrEmpty();
+        }
+    }
+
+    public virtual void SelectTo(int toOffset)
+    {
+        TextPointer anchor = Selection.IsEmpty ? CaretPosition : (CaretPosition.CompareTo(Selection.End) == 0 ? Selection.Start : Selection.End);
+        Selection.Select(anchor, GetPointerToInsertionPoint(toOffset));
+    }
+
+    public virtual void OnWorksheetPropertiesChanged(string[] propertyNames, IWorksheetProperties oldProperties, IWorksheetProperties newProperties)
+    {
+        if (((ReadOnlySpan<string>)propertyNames).Contains("SpellCheckEnabled"))
+        {
+            if (!newProperties.SpellCheckEnabled)
+            {
+                DisableSpellCheck();
+                return;
+            }
+
+            if (CanEnableSpellCheck && !_spellCheckActivationTimer.IsEnabled)
+            {
+                StartOrStopSpellCheckActivationTimer(true);
+            }
+        }
+    }
 }
