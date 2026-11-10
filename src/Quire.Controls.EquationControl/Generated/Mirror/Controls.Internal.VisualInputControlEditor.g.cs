@@ -15,14 +15,4 @@ internal partial class VisualInputControlEditor : global::Quire.Controls.Interna
     private readonly global::Quire.Controls.Internal.Caret _caret;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Windows.Controls.Border _border;
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Media.GeneralTransform GetDesiredTransform(global::System.Windows.Media.GeneralTransform transform) => base.GetDesiredTransform(transform);
-    [global::Quire.Mirror.MirrorStub]
-    protected static void HandleCaretPositionChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnCaretStateChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

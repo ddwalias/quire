@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using Quire.EquationEditor.View;
 using Quire.Wpf;
 
@@ -86,5 +87,63 @@ internal partial class VisualInputControlEditor
         }
 
         _caret.Blink = Blink;
+    }
+
+    protected override Size MeasureOverride(Size constraint)
+    {
+        Size size = EditNode.DesiredSize;
+        _border.Width = size.Width;
+        _border.Height = size.Height;
+        _border.Measure(constraint);
+        _caret.Line.BeginInit();
+        _caret.Line.X1 = _caret.Line.StrokeThickness / 2;
+        _caret.Line.X2 = _caret.Line.StrokeThickness / 2;
+        _caret.Line.Y1 = 0;
+        _caret.Line.Y2 = size.Height;
+        _caret.Line.EndInit();
+        _caret.Line.Measure(constraint);
+        size.Width += 2;
+        return size;
+    }
+
+    protected override Size ArrangeOverride(Size finalSize)
+    {
+        double offset = CaretState == CaretStateValues.RightMargin ? finalSize.Width - 1 : 0.0;
+        _caret.Line.Arrange(new Rect(new Point(offset, 0.0), _caret.Line.DesiredSize));
+        _border.Arrange(new Rect(new Point(1.0, 0.0), _border.DesiredSize));
+        return finalSize;
+    }
+
+    public override GeneralTransform GetDesiredTransform(GeneralTransform transform)
+    {
+        return WpfUtils.GroupTransformsAsFrozen(new TranslateTransform(-1, 0), base.GetDesiredTransform(transform));
+    }
+
+    protected static void HandleCaretPositionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        ((VisualInputControlEditor)d).OnCaretStateChanged();
+    }
+
+    protected virtual void OnCaretStateChanged()
+    {
+        switch (CaretState)
+        {
+            case CaretStateValues.Left:
+                EditNode.NavigateInto(Direction.Left);
+                break;
+            case CaretStateValues.Right:
+                EditNode.NavigateInto(Direction.Right);
+                break;
+            case CaretStateValues.LeftMargin:
+            case CaretStateValues.RightMargin:
+                break;
+            default:
+                DebugTools.FailAssertion("unexpected Caret State");
+                EditNode.NavigateInto(Direction.Indeterminate);
+                break;
+        }
+
+        _caret.Line.Visibility = CaretState == CaretStateValues.LeftMargin || CaretState == CaretStateValues.RightMargin ? Visibility.Visible : Visibility.Hidden;
+        UpdateCaretBlinking();
     }
 }
