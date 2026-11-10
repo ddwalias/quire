@@ -27,6 +27,7 @@
 - Batch 28 `SolverAggregateChildWrapper.Rl`: PASS (`97 checked`; `.mirror-cache/release-il-5faff5a2879d`); landed `8d2d79e0`.
 - Batch 29 `SolveBlockViewModel`: PASS (`106 checked`; `.mirror-cache/release-il-05a67683ef31`); landed `5a797c91`. The constructor uses direct grid-size expressions to preserve operand order, and the preview handler keeps its work in the non-null branch to match Release IL.
 - Batch 30 `SolveBlockCalculatableAggregate.GetSymbolicEvalExpression`: PASS (`107 checked`; `.mirror-cache/release-il-f6b964389fe0`); landed `daa08f8a`. Candidate `GetDefinedVariable` differed because Roslyn emitted `call` where Mathcad emitted `callvirt`; it remains stubbed.
-- Batch 31 aggregate event forwarding handlers: PASS (`110 checked`; `.mirror-cache/release-il-c16aec751984`).
+- Batch 31 aggregate event forwarding handlers: PASS (`110 checked`; `.mirror-cache/release-il-c16aec751984`); landed `cb356540`.
+- Batch 32 `SolverAggregateChildWrapperAggregate` constructor and child properties: PASS (`113 checked`; `.mirror-cache/release-il-801b248be88f`).
 - `GetEquationTypeOfRl` remains stubbed due enum/closure mismatch.
-- Remaining: 209 stub markers in generated types; known blockers: `GetDefinedVariable` call vs. callvirt mismatch, `GetEquationTypeOfRl` enum/closure mismatch and deserialization strategy mapped type mismatch.
+- Remaining: 206 stub markers in generated types; known blockers: `GetDefinedVariable` call vs. callvirt mismatch, `GetEquationTypeOfRl` enum/closure mismatch and deserialization strategy mapped type mismatch.
