@@ -27,24 +27,6 @@ public partial struct NavigatorState
     [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes CaretInsertionType;
     [global::Quire.Mirror.MirrorStub]
-    public NavigatorState(global::Quire.EquationEditor.Tree.MathNode current, int caretPosition) { }
-    [global::Quire.Mirror.MirrorStub]
-    public NavigatorState(global::Quire.EquationEditor.Tree.MathNode current, int caretPosition, global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes insertionType) { }
-    [global::Quire.Mirror.MirrorStub]
-    public NavigatorState(global::Quire.EquationEditor.Tree.MathNode current, global::Quire.TextRange range) { }
-    [global::Quire.Mirror.MirrorStub]
-    public NavigatorState(global::Quire.EquationEditor.Tree.MathNode current) { }
-    [global::Quire.Mirror.MirrorStub]
-    public NavigatorState(global::Quire.EquationEditor.Tree.MathNode current, global::Quire.Direction caretSide) { }
-    [global::Quire.Mirror.MirrorStub]
-    public NavigatorState(global::Quire.EquationEditor.Tree.MathNode current, global::Quire.Direction caretSide, global::Quire.Direction nodeSide) { }
-    [global::Quire.Mirror.MirrorStub]
-    public NavigatorState(global::Quire.EquationEditor.Tree.MathNode current, global::Quire.Direction caretSide, global::System.Nullable<int> operatorPartIndex) { }
-    [global::Quire.Mirror.MirrorStub]
-    public NavigatorState(global::Quire.EquationEditor.Tree.MathNode current, global::Quire.Direction caretSide, global::Quire.Direction nodeSide, global::Quire.Direction enterSide) { }
-    [global::Quire.Mirror.MirrorStub]
-    public NavigatorState(global::Quire.EquationEditor.Tree.MathNode current, global::Quire.Direction caretSide, global::System.Nullable<int> operatorPartIndex, global::Quire.Direction enterSide) { }
-    [global::Quire.Mirror.MirrorStub]
     public NavigatorState(global::Quire.EquationEditor.Tree.MathNode current, global::Quire.Direction caretSide, global::Quire.Direction nodeSide, global::Quire.Direction enterSide, global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes insertionType, global::System.Nullable<global::Quire.TextRange> valueRange) { }
     [global::Quire.Mirror.MirrorStub]
     public NavigatorState(global::Quire.EquationEditor.Tree.MathNode current, global::Quire.Direction caretSide, global::System.Nullable<int> operatorPartIndex, global::Quire.Direction enterSide, global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes insertionType, global::System.Nullable<global::Quire.TextRange> valueRange) { }
