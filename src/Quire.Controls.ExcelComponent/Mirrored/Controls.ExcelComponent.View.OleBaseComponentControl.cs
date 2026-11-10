@@ -33,4 +33,24 @@ public abstract partial class OleBaseComponentControl
     {
         return string.Empty;
     }
+
+    public static double GetItemWidth(DependencyObject whiteboardItem)
+    {
+        return (double)whiteboardItem.GetValue(FrameworkElement.WidthProperty);
+    }
+
+    public static void SetItemWidth(DependencyObject whiteboardItem, double value)
+    {
+        whiteboardItem.SetValue(FrameworkElement.WidthProperty, (object)value);
+    }
+
+    public static double GetOleComponentLocationTop(DependencyObject whiteboardItem)
+    {
+        return (double)whiteboardItem.GetValue(OleComponentLocationTopProperty);
+    }
+
+    public static void SetOleComponentLocationTop(DependencyObject whiteboardItem, double value)
+    {
+        whiteboardItem.SetValue(OleComponentLocationTopProperty, (object)value);
+    }
 }
