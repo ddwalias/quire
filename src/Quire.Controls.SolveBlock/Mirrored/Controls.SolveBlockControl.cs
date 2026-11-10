@@ -30,6 +30,10 @@ public partial class SolveBlockControl
 
     public global::Quire.Controls.Core.IWhiteboardItem Solver => _sbModel.SolverItem;
 
+    object global::System.ICloneable.Clone() => Clone();
+
+    public SolveBlockControl Clone() => new SolveBlockControl(this);
+
     public global::Quire.Controls.SolveBlockEquationTypes GetSolveBlockEquationType(
         global::Quire.Controls.Core.IWhiteboardItem item) => _sbModel.GetSolveBlockEquationType(item);
 
