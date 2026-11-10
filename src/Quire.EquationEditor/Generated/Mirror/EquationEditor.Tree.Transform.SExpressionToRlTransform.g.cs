@@ -23,8 +23,6 @@ public partial class SExpressionToRlTransform
     private string a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string Transform(string sExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string TransformIdSubNode(string sExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Transform.SExpressionToRlTransform+a, Ptc.EquationEditor")]
     private sealed partial class a_
