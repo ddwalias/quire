@@ -32,6 +32,4 @@ public partial struct NavigatorState
     public NavigatorState(global::Quire.EquationEditor.Tree.MathNode current, global::Quire.Direction caretSide, global::System.Nullable<int> operatorPartIndex, global::Quire.Direction enterSide, global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes insertionType, global::System.Nullable<global::Quire.TextRange> valueRange) { }
     [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Nullable<int> a(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.Direction A_1, global::Quire.Direction A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

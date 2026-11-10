@@ -2,6 +2,46 @@ namespace Quire.EquationEditor.Tree.Navigation;
 
 public partial struct NavigatorState
 {
+    private static int? a(MathNode node, global::Quire.Direction caretSide, global::Quire.Direction nodeSide)
+    {
+        if (node == null)
+        {
+            return null;
+        }
+
+        if (caretSide != global::Quire.Direction.Indeterminate)
+        {
+            return null;
+        }
+
+        if (node.NavigablePartCount == 0)
+        {
+            return null;
+        }
+
+        if (node.NavigablePartCount == 1)
+        {
+            return 0;
+        }
+
+        if (nodeSide == global::Quire.Direction.Left)
+        {
+            return 0;
+        }
+
+        if (nodeSide == global::Quire.Direction.Right)
+        {
+            return node.NavigablePartCount - 1;
+        }
+
+        if (node.NavigablePartCount > 2 && nodeSide == global::Quire.Direction.Indeterminate)
+        {
+            return 1;
+        }
+
+        return null;
+    }
+
     public static CaretInsertionTypes DefaultCaretInsertionType(MathNode idNode, int caretPosition)
     {
         if (idNode.NodeInfo is not IdentifierNodeInfo identifierNodeInfo)
