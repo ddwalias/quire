@@ -11,18 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.VisualModifierDescriptorTable, Ptc.Controls.EquationControl")]
 public partial class VisualModifierDescriptorTable : global::Quire.Controls.VisualDescriptorTableBase, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::Quire.Controls.VisualDescriptorTableBase.InitializationInfo _initInfo;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.VisualModifierDescriptorTable Default;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public VisualModifierDescriptorTable() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Delegate _CreateDelegate(global::System.Type delegateType, string handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
