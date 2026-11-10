@@ -441,3 +441,22 @@
   - `NavigateInto`: the first differing instruction is a branch offset (`brtrue.s` target off by one byte) before the body; the source of the size difference is not located.
   - `FindSizeLimit` and `RecursivelyEnumerate*`: closure or iterator state-machine ordinals (skipped as ordinal-dependent).
 - Release IL: PASS — 873 checked, 0 failures (`release-il-2fa6f6b87089`).
+
+## Batch 31 — WhiteboardViewModel HookupActiveItem, UnhookActiveItem
+
+- Members: `HookupActiveItem(IWhiteboardItem)`, `UnhookActiveItem(IWhiteboardItem)` (protected virtual; `isinst IWhiteboardItemContainer` guard, then `item.PropertyChanged +=/-= ChildWhiteboardPropertyChangedHandler`, no local).
+- Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stubs replaced.
+- Release IL: PASS — 875 checked, 0 failures (`release-il-a2dcc9d8cf0e`). Landed with batch 32.
+
+## Batch 32 — nested command Do/Undo/Redo members (WhiteboardResizingCommand, AddItemsCommand, RemoveItemsCommand, RemoveSelectedItemsCommand, PasteItemsCommand)
+
+- Members: `WhiteboardResizingCommand`: `BackupTheSize`, `Do`, `UndoResize`; `AddItemsCommand`: `Undo`, `Redo`; `RemoveItemsCommand`: `Redo`; `RemoveSelectedItemsCommand`: `Undo`, `Redo`; `PasteItemsCommand`: `Undo`, `Redo`.
+- Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs` (nested classes); `[MirrorStub]` attribute and stub body removed from each member. `Generated/` untouched (WhiteboardViewModel.g.cs holds only the class declaration).
+- Shapes: `BackupTheSize` uses a pattern variable `resizable` (its IL local is the pattern local); `UndoResize` uses an early `return` inside the pattern `if`; `Redo` methods that re-run `Do` are written as `Do();`, which Roslyn emits as `callvirt WhiteboardCommand::Do` with the expected member reference.
+- Release IL: PASS — 885 checked, 0 failures (`release-il-6fb8acc9ba87`).
+
+## Remaining in this lane — reasons (not retried)
+
+- Closure-ordinal model unresolved (per lane note): members whose Release IL has `<Member>b__N_k`, `<>c__DisplayClassN_k`, `d__N`, or `g__` names, e.g. `SetInsertionPoint`, `HandleGridCellSizeChanged`, `Initialize`, `HandleItemsListChanging`, `SelectContiguous`, `RestoreSavedState`, `OnRequestMoveAndResize`, `SelectItems`, `FindSizeLimit`, `GetOverlappingItems`, `FindOncePrivate`, `TabInto`, `HandleMouseDown`, `GetInsertionPointAfterCarriageReturn`, `GetRightMostItemEdge`, `GetLowestItemEdge`, `PredictFocus`, `GetItemsAccordingTabNavigateOrder`, `CanSeparateOverlappedItems`, `SeparateOverlappedItems`, `GetChildItemFromLocation`, `HandleItemAdded`, `HandleItemRemoved`, `ChildTriggeredResizeHandler`, `SetEqResizable`, `SetupCommandBindings`, `LimitOffsetBasedOnItemsToMove`, `CanDeleteVerticalSpace`, `AddItemsCommand.DoWithResize`, `RemoveItemsCommand.Do`, `MoveItemsCommand.CheckMovementWithoutGrowth`/`Undo`, `RecursivelyEnumerate*` (iterators).
+- Devirtualization of `new XCommand(...).Execute()` (checked this batch with a standalone Roslyn experiment: a `new` receiver, including through a cast, compiles to `call`; Mathcad's Release IL uses `callvirt` on the non-virtual `WhiteboardCommand.Execute`/`Do`, so no source shape matches it): `AddItemAndActivate`, `AddItems`, `SetItemGridPosition`, `DeleteSelectedItems`, `DeleteVerticalSpaceAbove`/`Below`, `InsertVerticalSpace`, `HandleCarriageReturn`, `DirectionalMoveHandler(Direction, bool)`, `RemoveItemsCommand.Undo` (`new AddItemsCommand(...).Do()`), `WhiteboardDragger.DropTargetDrop`. Needs a maintainer decision on the generator or compiler setting; not retried.
+- Other, with reasons from earlier batches: `DeleteItemIfNeeded` (`dup` on the command), `NavigateInto` (branch offset), `FindMinimumSize` (local slot numbering), `IsValidLocation` (`call` on a `virtual` declaration; ownership decision), `WhiteboardItemsSeparator.Separate` (deferred), `IsTabNavigatable` (closure ordinal).

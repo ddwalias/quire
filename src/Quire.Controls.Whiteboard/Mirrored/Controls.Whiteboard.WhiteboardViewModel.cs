@@ -240,9 +240,21 @@ public partial class WhiteboardViewModel
         }
     }
 
-    protected virtual void HookupActiveItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void HookupActiveItem(IWhiteboardItem item)
+    {
+        if (item is IWhiteboardItemContainer)
+        {
+            item.PropertyChanged += ChildWhiteboardPropertyChangedHandler;
+        }
+    }
 
-    protected virtual void UnhookActiveItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void UnhookActiveItem(IWhiteboardItem item)
+    {
+        if (item is IWhiteboardItemContainer)
+        {
+            item.PropertyChanged -= ChildWhiteboardPropertyChangedHandler;
+        }
+    }
 
     protected override void OnPropertyChanged(string propertyName) => base.OnPropertyChanged(propertyName);
 
@@ -1659,12 +1671,35 @@ public partial class WhiteboardViewModel
         protected WhiteboardResizingCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, string commandName) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
         [global::Quire.Mirror.MirrorStub]
         protected abstract bool DoWithResize();
-        [global::Quire.Mirror.MirrorStub]
-        protected void BackupTheSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public void UndoResize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        protected void BackupTheSize()
+        {
+            Size size = _viewModel.ContentSize;
+            if (_viewModel is IResizableElementViewModelWithDataStore resizable)
+            {
+                _oldData = resizable.StoreResizeData(size, size);
+            }
+
+            _oldSize = size;
+        }
+
+        public override bool Do()
+        {
+            BackupTheSize();
+            return DoWithResize();
+        }
+
+        public void UndoResize()
+        {
+            if (_viewModel is IResizableElementViewModelWithDataStore resizable)
+            {
+                resizable.RestoreResizeData(_oldData);
+                return;
+            }
+
+            _viewModel.MinimumSize = new Size(0.0, 0.0);
+            _viewModel.MaximumSize = WpfUtils.SizeInfinity;
+            _viewModel.ContentSize = _oldSize;
+        }
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+AddItemsCommand, Ptc.Controls.Whiteboard")]
@@ -1682,10 +1717,19 @@ public partial class WhiteboardViewModel
         public AddItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, string commandName, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> itemsAtLocations) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
         [global::Quire.Mirror.MirrorStub]
         protected override bool DoWithResize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override void Undo()
+        {
+            _viewModel.GetRemoveItemsCommand("Remove Items", _itemsAtLocations).Do();
+            _viewModel.InsertionPoint = _insertionPoint;
+            UndoResize();
+            _viewModel.IsFocused = true;
+            _viewModel.IsCrosshairVisible = true;
+        }
+
+        public override void Redo()
+        {
+            Do();
+        }
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+RemoveItemsCommand, Ptc.Controls.Whiteboard")]
@@ -1705,8 +1749,10 @@ public partial class WhiteboardViewModel
         public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override void Redo()
+        {
+            Do();
+        }
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+RemoveSelectedItemsCommand, Ptc.Controls.Whiteboard")]
@@ -1720,10 +1766,18 @@ public partial class WhiteboardViewModel
         public RemoveSelectedItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, string commandName) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
         [global::Quire.Mirror.MirrorStub]
         public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override void Undo()
+        {
+            _nestedCommand.Undo();
+            ViewModel.SelectItems(_itemsAtLocations.Keys);
+        }
+
+        public override void Redo()
+        {
+            _nestedCommand.Redo();
+            ViewModel.IsFocused = true;
+            ViewModel.IsCrosshairVisible = true;
+        }
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+PasteItemsCommand, Ptc.Controls.Whiteboard")]
@@ -1739,10 +1793,16 @@ public partial class WhiteboardViewModel
         public PasteItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, string commandName, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> pasteItemsAtLocation) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
         [global::Quire.Mirror.MirrorStub]
         protected override bool DoWithResize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override void Undo()
+        {
+            _addItemsCommand.Undo();
+            UndoResize();
+        }
+
+        public override void Redo()
+        {
+            Do();
+        }
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+ResizeItemCommand, Ptc.Controls.Whiteboard")]
