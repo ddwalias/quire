@@ -24,4 +24,10 @@ public abstract partial class OleBaseComponentModel
     {
         return GetWrapper(calc);
     }
+
+    protected virtual void SetErrorFallback(EngineError error)
+    {
+        SetChildError(null);
+        SetComponentError(error);
+    }
 }

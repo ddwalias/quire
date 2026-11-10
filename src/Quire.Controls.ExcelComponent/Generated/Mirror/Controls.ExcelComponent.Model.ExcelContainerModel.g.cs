@@ -58,11 +58,7 @@ public partial class ExcelContainerModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     public override void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Microsoft.Office.Interop.Excel.Sheets GetWorksheets(bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Microsoft.Office.Interop.Excel.Workbook GetWorkbook(bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Microsoft.Office.Interop.Excel.Workbook GetSafeWorkBook(bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Microsoft.Office.Interop.Excel.Application GetSafeApplication(bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -87,8 +83,6 @@ public partial class ExcelContainerModel : global::Quire.Controls.ExcelComponent
     protected override global::Quire.OLE.OleResult CheckServerStatus(bool forceRun) => base.CheckServerStatus(forceRun);
     [global::Quire.Mirror.MirrorStub]
     private void OnOleShownSync() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireRequestEvaluation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnOleClosedSync() => base.OnOleClosedSync();
     [global::Quire.Mirror.MirrorStub]

@@ -84,8 +84,6 @@ public abstract partial class OleBaseComponentModel : global::Quire.Controls.Mat
     [global::Quire.Mirror.MirrorStub]
     protected abstract void SetErrorByNodeHandle(global::Quire.Calculation.Core.EngineError error);
     [global::Quire.Mirror.MirrorStub]
-    protected virtual void SetErrorFallback(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void SetError(global::Quire.Calculation.Core.EngineError error) => base.SetError(error);
     [global::Quire.Mirror.MirrorStub]
     protected virtual void SetChildError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

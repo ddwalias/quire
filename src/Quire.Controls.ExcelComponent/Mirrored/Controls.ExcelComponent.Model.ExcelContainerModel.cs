@@ -25,4 +25,34 @@ public partial class ExcelContainerModel
     private void OnWorkbookOpen(global::Quire.Microsoft.Office.Interop.Excel.Workbook wb)
     {
     }
+
+    internal global::Quire.Microsoft.Office.Interop.Excel.Workbook GetSafeWorkBook(bool forceRun)
+    {
+        try
+        {
+            return GetWorkbook(forceRun);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private void FireRequestEvaluation()
+    {
+        if (RequestEvaluation != null)
+        {
+            RequestEvaluation();
+        }
+    }
+
+    private global::Quire.Microsoft.Office.Interop.Excel.Sheets GetWorksheets(bool forceRun)
+    {
+        global::Quire.Microsoft.Office.Interop.Excel.Workbook workbook = GetWorkbook(forceRun);
+        if (workbook == null)
+        {
+            return null;
+        }
+        return workbook.Worksheets;
+    }
 }
