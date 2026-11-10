@@ -18,11 +18,7 @@ public partial class ExcelContainerViewModel : global::Quire.Controls.ExcelCompo
     [global::Quire.Mirror.MirrorStub]
     private global::System.Nullable<global::System.Windows.Size> _cachedMinimalSize;
     [global::Quire.Mirror.MirrorStub]
-    protected override bool IsStrictMinSize { get => base.IsStrictMinSize; }
-    [global::Quire.Mirror.MirrorStub]
     public override bool IsResizing { get => base.IsResizing; protected internal set => base.IsResizing = value; }
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool MustTakeLockOnUserDeactivation { get => base.MustTakeLockOnUserDeactivation; }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<bool> IsAsIcon { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

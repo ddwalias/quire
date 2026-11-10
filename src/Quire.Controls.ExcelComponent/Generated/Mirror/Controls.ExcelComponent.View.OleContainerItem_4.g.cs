@@ -16,8 +16,6 @@ public abstract partial class OleContainerItem<TViewModel, TModel, TIPublicModel
     [global::Quire.Mirror.MirrorStub]
     public double VerticalAlignmentOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsEmpty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public abstract global::Quire.Calculation.ICalculationComponent Component { get; }
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Controls.ExcelComponent.ViewModel.IOleContainerItemViewModel global::Quire.Controls.ExcelComponent.View.IOleContainerItem.ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -39,8 +37,6 @@ public abstract partial class OleContainerItem<TViewModel, TModel, TIPublicModel
     public global::System.Nullable<global::System.Windows.Vector> NavigateIntoItem(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SimulateMouseClick(global::System.Windows.Point location, int numberOfClicks) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void OnEngineError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnViewModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => base.OnViewModelPropertyChanged(sender, args);
     [global::Quire.Mirror.MirrorStub]

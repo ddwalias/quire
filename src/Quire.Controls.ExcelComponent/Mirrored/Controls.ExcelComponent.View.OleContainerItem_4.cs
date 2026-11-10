@@ -6,6 +6,12 @@ namespace Quire.Controls.ExcelComponent.View;
 
 public abstract partial class OleContainerItem<TViewModel, TModel, TIPublicModel, TPersistentData>
 {
+    public bool IsEmpty => false;
+
+    public virtual void OnEngineError(global::Quire.Calculation.Core.EngineError error)
+    {
+    }
+
     protected override IValueConverter GetDimensionsConverter()
     {
         return new DimensionsConverter(this);

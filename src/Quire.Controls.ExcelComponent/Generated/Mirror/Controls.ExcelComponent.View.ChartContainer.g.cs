@@ -24,8 +24,6 @@ public partial class ChartContainer : global::Quire.Controls.ExcelComponent.View
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Calculation.ICalculationComponent Component { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    protected override bool IsZoomAware { get => base.IsZoomAware; }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Int32Rect RenderRectInPixels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ChartContainer() : base(default(global::Quire.Controls.ExcelComponent.ViewModel.ChartContainerViewModel), default(global::System.Windows.ResourceDictionary)) { }
