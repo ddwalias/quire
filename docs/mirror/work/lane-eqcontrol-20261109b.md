@@ -128,3 +128,6 @@
 - Batch: `Controls.VisualCategoriesDictionary` (14 category constants, `.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`).
 - Shapes tried: constants transcribed unchanged; the resource-dictionary pattern matched on the first candidate.
 - Release IL: PASS, 822 checked (`.mirror-cache/release-il-9ee638f49d20/release-il.json`).
+- Batch: `Controls.InputControls.ListBoxPropertiesEditor`, `SliderPropertiesEditor`, `TextBoxPropertiesEditor` (`.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`; the list box editor also keeps its `_viewModel` field).
+- Shapes tried: the same XAML editor pattern as the ButtonPropertiesEditor matched on the first candidate for all three.
+- Release IL: PASS, 831 checked (`.mirror-cache/release-il-ac82157a74c1/release-il.json`).
