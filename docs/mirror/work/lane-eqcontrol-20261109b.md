@@ -267,3 +267,5 @@
 - Release IL: PASS, 1378 checked (`.mirror-cache/release-il-f396de3a74c7/release-il.json`).
 - Batch: `Controls.InputControls.ComboBoxTableModel`: `UpdateShiftedCellsColumnPosition`, `ClearCellContent`. The cached-lambda members (`ClearSelectedCellsContent`, `AreAllSelectedCellsEmpty`, `TrimWhitespacesInUnitCells`, `UpdateCellsPositionForShiftedNameValuesRows`) stay open: their compiler-generated `<>c` names depend on the compile order.
 - Release IL: PASS, 1380 checked (`.mirror-cache/release-il-d97159c0cc78/release-il.json`).
+- Batch: `Controls.SpecTableControl`: `HighlightAll`, `ShouldSerializeContent`, `FireCalculatableRemoved`, `OnMouseDown`; properties `FirstPropertyForXamlSerialization`, `IsCalculating` and `CurrentMathFormat` (the throwing accessors are written as `throw new NotImplementedException()`). `HideFromCalculationContext` stays a stub because its interface-required setter is not read yet.
+- Release IL: PASS, 1389 checked (`.mirror-cache/release-il-1aa3065f2d27/release-il.json`).

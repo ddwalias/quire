@@ -9,6 +9,7 @@ using System.Windows;
 using Quire.EquationEditor.SpecTable.Model;
 using System.Windows.Input;
 using System.Windows.Media;
+using System;
 
 namespace Quire.Controls;
 
@@ -189,5 +190,42 @@ public partial class SpecTableControl
         }
 
         return new SpecTableControl(model);
+    }
+
+    public bool HighlightAll(string text, FindOptions options)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool ShouldSerializeContent()
+    {
+        return false;
+    }
+
+    private void FireCalculatableRemoved(ICalculatable wrapper)
+    {
+        if (CalculatableRemoved != null)
+        {
+            CalculatableRemoved.Invoke(wrapper);
+        }
+    }
+
+    protected override void OnMouseDown(MouseButtonEventArgs e)
+    {
+        DelegateFocus();
+    }
+
+    public bool FirstPropertyForXamlSerialization => true;
+
+    public bool IsCalculating
+    {
+        get => throw new NotImplementedException();
+        set => throw new NotImplementedException();
+    }
+
+    public MathFormat CurrentMathFormat
+    {
+        get => MathFormat;
+        set => throw new NotImplementedException();
     }
 }
