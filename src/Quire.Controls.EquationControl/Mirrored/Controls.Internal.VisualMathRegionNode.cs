@@ -524,4 +524,212 @@ internal partial class VisualMathRegionNode
             base.Focus();
         }
     }
+
+    public void FireInsertOperator(string nodeName)
+    {
+        if (InsertOperator != null)
+        {
+            InsertOperator.Invoke(nodeName);
+        }
+    }
+
+    public void FireSetCurrentOperatorMayBeReplaced(bool currentOperatorMayBeReplaced)
+    {
+        if (SetCurrentOperatorMayBeReplaced != null)
+        {
+            SetCurrentOperatorMayBeReplaced.Invoke(currentOperatorMayBeReplaced);
+        }
+    }
+
+    public void FireInsertMatrix(System.Nullable<Quire.TableSize> matrixSize)
+    {
+        if (InsertMatrix != null)
+        {
+            InsertMatrix.Invoke(matrixSize);
+        }
+    }
+
+    public void FireInsertValue(string value)
+    {
+        if (InsertValue != null)
+        {
+            InsertValue.Invoke(value);
+        }
+    }
+
+    public void FireInsertId(Quire.EquationEditor.Tree.FormattedString value, System.Nullable<Quire.Controls.Core.IdLabels> label)
+    {
+        if (InsertId != null)
+        {
+            InsertId.Invoke(value, label);
+        }
+    }
+
+    public void FireInsertString(string str)
+    {
+        if (InsertString != null)
+        {
+            InsertString.Invoke(str);
+        }
+    }
+
+    public void FireInsertRow(Quire.Direction direction)
+    {
+        if (InsertRow != null)
+        {
+            InsertRow.Invoke(direction);
+        }
+    }
+
+    public void FireInsertMatrixColumn(Quire.Direction direction)
+    {
+        if (InsertMatrixColumn != null)
+        {
+            InsertMatrixColumn.Invoke(direction);
+        }
+    }
+
+    public void FireDeleteRow()
+    {
+        if (DeleteRow != null)
+        {
+            DeleteRow.Invoke();
+        }
+    }
+
+    public void FireDeleteMatrixColumn()
+    {
+        if (DeleteMatrixColumn != null)
+        {
+            DeleteMatrixColumn.Invoke();
+        }
+    }
+
+    public void FireDeleteMatrixContents(Quire.EquationEditor.Tree.MathNode mathNode)
+    {
+        if (DeleteMatrixContents != null)
+        {
+            DeleteMatrixContents.Invoke(mathNode);
+        }
+    }
+
+    public void FireClearCells()
+    {
+        if (ClearCells != null)
+        {
+            ClearCells.Invoke();
+        }
+    }
+
+    private void FireRootNodeChanged()
+    {
+        if (RootNodeChanged != null)
+        {
+            RootNodeChanged.Invoke();
+        }
+    }
+
+    internal void FireDeleteLeft()
+    {
+        if (DeleteLeft != null)
+        {
+            DeleteLeft.Invoke();
+        }
+    }
+
+    internal void FireDeleteRight()
+    {
+        if (DeleteRight != null)
+        {
+            DeleteRight.Invoke();
+        }
+    }
+
+    internal void FireReplace(Quire.Controls.Core.FindReplaceQuery findReplaceQuery)
+    {
+        if (Replace != null)
+        {
+            Replace.Invoke(findReplaceQuery);
+        }
+    }
+
+    public void FireNavigateUp()
+    {
+        if (MoveUp != null)
+        {
+            MoveUp.Invoke();
+        }
+    }
+
+    public void FireNavigateDown()
+    {
+        if (MoveDown != null)
+        {
+            MoveDown.Invoke();
+        }
+    }
+
+    public void FireLabeledIdFormatChanged()
+    {
+        if (LabeledIdFormatChanged != null)
+        {
+            LabeledIdFormatChanged.Invoke();
+        }
+    }
+
+    public void FireSplitLinearNaryLine()
+    {
+        if (SplitLinearNaryLine != null)
+        {
+            SplitLinearNaryLine.Invoke();
+        }
+    }
+
+    public void FireInputTagChanged(bool isInput)
+    {
+        if (InputTagChanged != null)
+        {
+            InputTagChanged.Invoke(isInput);
+        }
+    }
+
+    public void FireInsertUnitMonomial(System.Collections.Generic.IEnumerable<Quire.Calculation.Core.Unit> unitMonomial)
+    {
+        if (InsertUnitMonomial != null)
+        {
+            InsertUnitMonomial.Invoke(unitMonomial);
+        }
+    }
+
+    public void FireToggleUnitIdLabel()
+    {
+        if (ToggleUnitIdLabel != null)
+        {
+            ToggleUnitIdLabel.Invoke();
+        }
+    }
+
+    public void FireToggleIdLabel()
+    {
+        if (ToggleIdLabel != null)
+        {
+            ToggleIdLabel.Invoke();
+        }
+    }
+
+    public void FireUnsetIdLabel()
+    {
+        if (UnsetIdLabel != null)
+        {
+            UnsetIdLabel.Invoke();
+        }
+    }
+
+    public void FireSetIdLabel(Quire.Controls.Core.IdLabels idLabels)
+    {
+        if (SetIdLabel != null)
+        {
+            SetIdLabel.Invoke(idLabels);
+        }
+    }
 }
