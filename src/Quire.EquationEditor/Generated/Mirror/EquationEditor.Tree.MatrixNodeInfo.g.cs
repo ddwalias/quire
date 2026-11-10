@@ -26,14 +26,6 @@ public partial class MatrixNodeInfo : global::Quire.EquationEditor.Tree.INodeInf
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.MatrixFormat MatrixFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public MatrixNodeInfo() { }
-    [global::Quire.Mirror.MirrorStub]
-    public MatrixNodeInfo(global::Quire.EquationEditor.Tree.MatrixNodeInfo other) { }
-    [global::Quire.Mirror.MirrorStub]
-    public MatrixNodeInfo(global::Quire.TableSize size, int origin, global::Quire.TableCoordinate offset) { }
-    [global::Quire.Mirror.MirrorStub]
-    public MatrixNodeInfo(global::Quire.TableSize size, int origin, global::Quire.TableCoordinate offset, global::Quire.TableSize totalSize, bool isInResult, bool showResultMatrixIndices) { }
-    [global::Quire.Mirror.MirrorStub]
     private void a(string A_0, object A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
