@@ -1582,4 +1582,61 @@ public partial class RichTextWithEmbeddedItem
 
         CaretShouldLeaveTextRegionInDirection(CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection.Right);
     }
+
+private static void RequestNavigateHandler(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+{
+    RichTextWithEmbeddedItem richText = sender as RichTextWithEmbeddedItem;
+    Hyperlink hyperlink = e.Source as Hyperlink;
+    bool openedFile = false;
+    string fileName = string.Empty;
+    DebugTools.DevAssert(hyperlink != null && hyperlink.NavigateUri == e.Uri);
+    if (DebugTools.AssertNotNull(richText).Passed)
+    {
+        bool handled = false;
+        if (hyperlink.NavigateUri.ToString().StartsWith("#"))
+        {
+            if (FunctionalityService.Instance.IsFunctionalityEnabled((EnumFunctionalityKey)14))
+            {
+                handled = true;
+                e.Handled = false;
+            }
+        }
+        else
+        {
+            string target = e.Uri.OriginalString;
+            if (!e.Uri.IsAbsoluteUri)
+            {
+                target = string.Concat((hyperlink.DataContext as RichTextWithEmbeddedItem)?.BaseRelativeDirectory, "\\", target);
+            }
+
+            string filePathWithoutTag;
+            string tagName;
+            if (UrlUtils.HasTag(target, out filePathWithoutTag, out tagName) && FunctionalityService.Instance.IsFunctionalityEnabled((EnumFunctionalityKey)14))
+            {
+                openedFile = true;
+                OpenFileCommand.Execute(target, null);
+                e.Handled = true;
+            }
+
+            fileName = filePathWithoutTag;
+        }
+
+        if (!openedFile && !handled)
+        {
+            if (fileName.IsNotEmpty())
+            {
+                hyperlink.NavigateUri = new Uri(fileName);
+            }
+
+            richText.NavigateToHyperLink(hyperlink);
+            e.Handled = true;
+        }
+
+        Hyperlink originalHyperlink = e.OriginalSource as Hyperlink;
+        if (originalHyperlink != null)
+        {
+            HyperlinkProperties.SetLinkVisited(originalHyperlink, true);
+        }
+    }
+}
 }

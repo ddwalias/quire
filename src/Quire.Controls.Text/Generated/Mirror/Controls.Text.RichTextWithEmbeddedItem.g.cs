@@ -104,8 +104,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     private bool CanModifyHyperlink() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void RequestNavigateHandler(object sender, global::System.Windows.Navigation.RequestNavigateEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OpenHyperlinkUrl(global::System.Uri path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Nullable<global::Quire.IO.NavigateUrlErrorWarningKeys> ValidateURL(global::System.Uri absolutePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

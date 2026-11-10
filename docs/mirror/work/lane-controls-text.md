@@ -796,4 +796,8 @@ Remaining stub declarations in the lane: 134 (72 plain IL, 20 closure ordinal be
 ## Rejected in this run (no member landed)
 
 - `RichTextBase.ContextMenuOpened` (static): the `foreach` over the non-generic `Enum.GetValues(...)` array matches except for the local slots. Roslyn allocates the iteration variable before the hidden enumerator (key in slot 2, enumerator in slot 3), while Mathcad keeps the enumerator in slot 2 and the key in slot 3. Reverted.
-- Still not attempted (complex IL, not yet analysed): `RichTextBase.ReplaceTextInHyperlink`, `HandleReplace`, `AddBlockedSelectDirectionForNextElement`, `RichTextBase.OnPreviewBackspace`, `RichTextWithEmbeddedItem.RequestNavigateHandler`, `EditLinkUndoableCommand`, `InlayXamlWithEmbeddedItems`, `RichTextBase.GetTextBoundary` (3-argument overload: instance method with a nested boundary loop; the 4-argument static overload uses `Enum.HasFlag` with boxing).
+## Batch 121-122 (controls-text, attempt of last eight)
+
+- `RichTextWithEmbeddedItem.RequestNavigateHandler` (static): landed. `handled` is initialised inside the `AssertNotNull(...).Passed` block, as the Mathcad IL does.
+- `RichTextBase.OnPreviewBackspace`: rejected. Mathcad calls `TextElement::get_ContentStart` non-virtually (`call`) on a local `Run` receiver; Roslyn emits `callvirt` for that receiver. Reverted.
+- Still not attempted: `RichTextBase.ReplaceTextInHyperlink`, `HandleReplace`, `AddBlockedSelectDirectionForNextElement` (previously rejected, see above), `RichTextWithEmbeddedItem.EditLinkUndoableCommand`, `InlayXamlWithEmbeddedItems`, `RichTextBase.GetTextBoundary` (3-argument overload: instance method with a nested boundary loop; the 4-argument static overload uses `Enum.HasFlag` with boxing).
