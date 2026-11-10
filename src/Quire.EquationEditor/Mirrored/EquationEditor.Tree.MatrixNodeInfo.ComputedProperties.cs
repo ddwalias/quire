@@ -2,6 +2,21 @@ namespace Quire.EquationEditor.Tree;
 
 public partial class MatrixNodeInfo
 {
+    private bool a(INodeInfo other)
+    {
+        if (!(other is MatrixNodeInfo))
+        {
+            return false;
+        }
+
+        return IsEquivalentTo((MatrixNodeInfo)other);
+    }
+
+    bool INodeInfo.IsEquivalentTo(INodeInfo other)
+    {
+        return a(other);
+    }
+
     public virtual MatrixNodeInfo Clone()
     {
         return new MatrixNodeInfo(ViewportSize, Origin, ViewportOffset, FullSize, IsInResult, ShowIndices);
