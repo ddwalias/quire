@@ -6,6 +6,14 @@ internal partial class SolverAggregate
 {
     private readonly List<global::Quire.Calculation.Core.ICalculatable> _calculatableChildren;
 
+    public string DefinedRl { get; private set; }
+    public string DefinedParams { get; private set; }
+    private string SolverName { get; set; }
+    private string SolverTag { get; set; }
+    private string[] SolverArgs { get; set; }
+    private string LeftOfSolverApply { get; set; }
+    private string RightOfSolverApply { get; set; }
+
     public global::Quire.Calculation.Core.ICalculatable LastChild
     {
         get
