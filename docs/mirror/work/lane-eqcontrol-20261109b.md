@@ -203,3 +203,5 @@
 - Batch: `Controls.InputControls.InputControlEditorViewModel` (`ValidationError` property, `HandleModelPropertyChanged` (empty), `Init`, `InitInfoMessages`, `InitScriptingProperties`, `FullExceptionErrorFormat`, `HandlePythonIsUnavailable`, `OnPreviewKeyDown`). `CapitalizeFirstLetter` stays generated (see below).
 - Shapes tried: `CapitalizeFirstLetter` with `new ReadOnlySpan<char>(ref c)` and the explicit span conversion FAILED: Mathcad calls `String.op_Implicit(string)` for the substring, while Roslyn lowers the same conversion to `MemoryExtensions.AsSpan`. Restored as a throwing stub; the other members match.
 - Release IL: PASS, 1032 checked (`.mirror-cache/release-il-85bfe8e40199/release-il.json`). Earlier candidates: FAIL at `91a18b09706c` and `7635b064371a` (the span shape).
+- Batch: `Controls.InputControls.InputControlEditorViewModel.CancelScript` (restores the last-known-good engine type and script when a validation error is present).
+- Release IL: PASS, 1033 checked (`.mirror-cache/release-il-3ccd852a71f6/release-il.json`).

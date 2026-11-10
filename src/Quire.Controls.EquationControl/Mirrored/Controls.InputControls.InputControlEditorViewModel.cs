@@ -258,4 +258,17 @@ public partial class InputControlEditorViewModel
             ColNumber = colIndex;
         }
     }
+
+    public virtual void CancelScript()
+    {
+        if (ValidationError != null)
+        {
+            _model.EngineType = _engineTypeLastKnownGood;
+            IInputControlEditorScriptableModel scriptable = _model as IInputControlEditorScriptableModel;
+            if (scriptable != null)
+            {
+                scriptable.Script = _scriptLastKnownGood;
+            }
+        }
+    }
 }
