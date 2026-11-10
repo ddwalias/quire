@@ -89,4 +89,35 @@ public abstract partial class OleBaseComponentControl
     {
         _oleBaseViewModel.RestoreResizeData(resizeData);
     }
+
+    private static void OnOleComponentLoaded(object sender, RoutedEventArgs e)
+    {
+        OleBaseComponentControl oleBaseComponentControl = sender as OleBaseComponentControl;
+        if (DebugTools.AssertNotNull(oleBaseComponentControl, null).Failed)
+        {
+            return;
+        }
+        oleBaseComponentControl.SizeChanged += oleBaseComponentControl._oleBaseViewModel.OnSizeChanged;
+        oleBaseComponentControl.Loaded -= OnOleComponentLoaded;
+    }
+
+    private static void IsResizingChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
+    {
+        OleBaseComponentControl oleBaseComponentControl = sender as OleBaseComponentControl;
+        if (DebugTools.AssertNotNull(oleBaseComponentControl, null).Failed)
+        {
+            return;
+        }
+        oleBaseComponentControl._oleBaseViewModel.IsResizing = (bool)args.NewValue;
+    }
+
+    private static void ErrorChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+    {
+        OleBaseComponentControl oleBaseComponentControl = obj as OleBaseComponentControl;
+        if (DebugTools.AssertNotNull(oleBaseComponentControl, null).Failed)
+        {
+            return;
+        }
+        oleBaseComponentControl.ErrorChanged();
+    }
 }
