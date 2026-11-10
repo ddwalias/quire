@@ -27,7 +27,6 @@ internal partial class SolveBlockModel : global::Quire.Controls.Mathboard.Aggreg
     public override string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildrenAboveSolver { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action ChildCalcErrorChanged;
     [global::Quire.Mirror.MirrorStub]
     private void UpdateWhichItemIsSolver() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
