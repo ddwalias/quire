@@ -11,5 +11,6 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.SolveBlockChildManager, Ptc.Controls.SolveBlock")]
 internal partial class SolveBlockChildManager : global::Quire.Controls.Mathboard.WrappedChildManager
 {
+    [global::Quire.Mirror.MirrorStub]
     public void Rewrap(params global::Quire.Controls.ISolveBlockCalculatable[] wrappersToRewrap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
