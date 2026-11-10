@@ -2,6 +2,42 @@ namespace Quire.EquationEditor.Tree.Navigation;
 
 public partial struct NavigatorState
 {
+    public static CaretInsertionTypes DefaultCaretInsertionType(MathNode idNode, int caretPosition)
+    {
+        if (idNode.NodeInfo is not IdentifierNodeInfo identifierNodeInfo)
+        {
+            return CaretInsertionTypes.Normal;
+        }
+
+        if (caretPosition == 0)
+        {
+            return a(identifierNodeInfo.Value, caretPosition, global::Quire.Direction.Right);
+        }
+
+        return a(identifierNodeInfo.Value, caretPosition, global::Quire.Direction.Left);
+    }
+
+    private static CaretInsertionTypes a(FormattedString value, int caretPosition, global::Quire.Direction side)
+    {
+        if ((side == global::Quire.Direction.Left && caretPosition == 0) || caretPosition < 0)
+        {
+            throw new global::System.IndexOutOfRangeException("Logic Error: character specified is before the first character.");
+        }
+
+        if ((side == global::Quire.Direction.Right && caretPosition == value.Length) || caretPosition > value.Length)
+        {
+            throw new global::System.IndexOutOfRangeException("Logic Error: character specified is after the last character.");
+        }
+
+        int position = caretPosition - (side == global::Quire.Direction.Left ? 1 : 0);
+        if (value.GetSubscriptDepthAtPosition(position) != 0)
+        {
+            return CaretInsertionTypes.Subscript;
+        }
+
+        return CaretInsertionTypes.Normal;
+    }
+
     public global::Quire.Direction WhatSideOfTheNodeIsTheCaret()
     {
         if (CaretSide != global::Quire.Direction.Indeterminate)
