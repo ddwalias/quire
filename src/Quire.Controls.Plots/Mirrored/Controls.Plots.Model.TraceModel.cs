@@ -773,4 +773,105 @@ internal partial class TraceModel
         FireAnalyzedDataChanged();
         ResultValid = true;
     }
+
+    private bool CreateAllPointsByTraceType(IVectorListResultNode xResult, IVectorListResultNode yResult)
+    {
+        IList<IList<double>> list = TraceResultAnalyzer.ToDoubleDataList(xResult);
+        IList<IList<double>> list2 = TraceResultAnalyzer.ToDoubleDataList(yResult);
+        IList<Point> pointsCollection = _analyzedData.PointsCollection;
+        if (list.IsNullOrEmpty() || list2.IsNullOrEmpty())
+        {
+            return false;
+        }
+        bool result = false;
+        switch (Type)
+        {
+            case TraceType.Lines:
+            case TraceType.Columns:
+            case TraceType.Bars:
+            case TraceType.Stems:
+                result = TraceResultAnalyzer.AddOneDataSegment(pointsCollection, list.First(), list2.First(), ensureTrailingNaN: false);
+                break;
+            case TraceType.Waterfall:
+                result = TraceResultAnalyzer.BuildPointsForWaterfall(pointsCollection, list, list2);
+                break;
+            case TraceType.Boxes:
+                result = TraceResultAnalyzer.BuildPointsForBoxes(pointsCollection, list.First(), list2);
+                break;
+            case TraceType.Errors:
+                result = TraceResultAnalyzer.BuildTuplesOfPoints(pointsCollection, list.First(), list2.Take(2).ToArray());
+                break;
+            case TraceType.Effects:
+                result = TraceResultAnalyzer.BuildTuplesOfPoints(pointsCollection, list.First(), list2.Take(2).ToArray(), new double[2] { -0.25, 0.25 });
+                break;
+        }
+        return result;
+    }
+
+    private bool AnalyzeResult(IMatrixResultNode matrix)
+    {
+        string errorMessageCode;
+        ITrace2DResultNode plotResult = _converter.ConvertToVectorsForm(matrix, out errorMessageCode);
+        if (errorMessageCode.IsNotEmpty())
+        {
+            throw new PlotInvalidResultException(errorMessageCode);
+        }
+        AnalyzeVectors(plotResult);
+        return true;
+    }
+
+    private bool AnalyzeResult(ITrace2DResultNode traceReducedResult)
+    {
+        AnalyzeVectors(traceReducedResult);
+        return true;
+    }
+
+    private void AnalyzeVectors(ITrace2DResultNode plotResult)
+    {
+        PlotInvalidResultException ex = null;
+        try
+        {
+            if (plotResult.TraceResultType == Trace2DResultType.Parametric)
+            {
+                Interval parameterRange = GetParameterRange();
+                if (parameterRange.Upper < parameterRange.Lower)
+                {
+                    ClearPoints();
+                    EngineResultForSerialization = new EngineResult(null, new EngineErrorCollection
+                    {
+                        new EngineError
+                        {
+                            Message = "PlotControl.Error.NotValidParameterRangeForParametric"
+                        }
+                    }, EngineResult.SynchronizationStatus);
+                    ex = new PlotInvalidResultException("PlotControl.Error.NotValidParameterRangeForParametric");
+                }
+            }
+            if (ex == null && (!plotResult.DataPoints.IsEmpty || !ImageRendererModel.HasCachedBitmap))
+            {
+                IVectorListResultNode rangePoints = plotResult.DataPoints.RangePoints;
+                IVectorListResultNode resultPoints = plotResult.DataPoints.ResultPoints;
+                if (NumberOfPointsInResult == 0)
+                {
+                    NumberOfPointsInResult = Math.Max(rangePoints.ElementsCount, resultPoints.ElementsCount);
+                }
+                if (!AnalyzeResultData(rangePoints, resultPoints))
+                {
+                    ex = new PlotInvalidResultException("PlotControl.Error.OnlyNaNsAndComplex");
+                }
+            }
+            AnalyzeAxisAndTypeData(plotResult);
+        }
+        catch (Exception ex2)
+        {
+            DebugTools.FailAssertion(ex2.Message);
+            ex = new PlotInvalidResultException("PlotControl.Error.ResultIsNotAMatrix", ex2);
+        }
+        if (ex == null)
+        {
+            EngineResultForSerialization = new EngineResult(plotResult, null, EngineResult.SynchronizationStatus);
+            return;
+        }
+        throw ex;
+    }
 }

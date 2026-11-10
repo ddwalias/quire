@@ -331,3 +331,9 @@
 - Shapes: both matched first time.
 - Left in TraceModel: `SetResult` (captures `result` in a `WpfUtils.DoWork` lambda; needs the closure pass), `DoSetResult`, `AnalyzeResultData`, `CreateAllPointsByTraceType`, `AnalyzeResult` x2, `AnalyzeVectors`; `Rl` (string-format with an inline array); `UpdatePlottingPointsForDisplay` and `MinPositiveX`/`MinPositiveY` (closures); `CopyMinMaxAndUnitsResults`; nested `PlottingPointsForDisplay` (generated class, not partial).
 - Release IL: PASS — 621 checked, 621 exact, 0 failures.
+
+## Batch 48 — TraceModel result-analysis core
+
+- Members: `CreateAllPointsByTraceType` (trace-type switch over the `TraceResultAnalyzer` builders), `AnalyzeResult(IMatrixResultNode)`, `AnalyzeResult(ITrace2DResultNode)`, `AnalyzeVectors` (parametric range check, data-point analysis, engine result). Hand-written: appended to `Mirrored/Controls.Plots.Model.TraceModel.cs`; their stubs removed from the `.g.cs`.
+- Shapes: `AnalyzeResult(IMatrixResultNode)` first differed in local-slot order. Mathcad's error code is slot 0 and `plotResult` slot 1, so the error string is declared before the call (`string errorMessageCode;` then `out errorMessageCode`); `out var` in the initializer did not change the order.
+- Release IL: PASS — 625 checked, 625 exact, 0 failures.
