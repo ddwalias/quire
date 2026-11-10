@@ -1,6 +1,8 @@
 #nullable disable
 using System.Drawing;
 using Quire.ComponentModel;
+using Quire.Controls.EquationProperties;
+using Quire.EquationEditor;
 using Quire.Mirror;
 
 namespace Quire.Controls;
@@ -418,5 +420,250 @@ public partial class MathcadSettings
         {
             e.Value = _instance.ComboBoxColor;
         }
+    }
+
+    [MirrorVerified("Release IL")]
+    public Color TypeoverColor
+    {
+        get => Settings.Default.TypeoverColor;
+        set
+        {
+            Settings.Default.TypeoverColor = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(TypeoverColor));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public Color CaretColor
+    {
+        get => Settings.Default.CaretColor;
+        set
+        {
+            Settings.Default.CaretColor = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(CaretColor));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public Color ReadOnlyCaretColor
+    {
+        get => Settings.Default.ReadOnlyCaretColor;
+        set
+        {
+            Settings.Default.ReadOnlyCaretColor = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(ReadOnlyCaretColor));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public bool CaretBlink
+    {
+        get => Settings.Default.CaretBlink;
+        set
+        {
+            Settings.Default.CaretBlink = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(CaretBlink));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public int CaretBlinkPeriod
+    {
+        get => Settings.Default.CaretBlinkPeriod;
+        set
+        {
+            Settings.Default.CaretBlinkPeriod = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(CaretBlinkPeriod));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public double CaretHighlightOpacity
+    {
+        get => Settings.Default.CaretHighlightOpacity;
+        set
+        {
+            Settings.Default.CaretHighlightOpacity = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(CaretHighlightOpacity));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public Color ScopeColor
+    {
+        get => Settings.Default.ScopeColor;
+        set
+        {
+            Settings.Default.ScopeColor = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(ScopeColor));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public double ScopeOpacity
+    {
+        get => Settings.Default.ScopeOpacity;
+        set
+        {
+            Settings.Default.ScopeOpacity = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(ScopeOpacity));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public Color NearestNeighborColor
+    {
+        get => Settings.Default.NearestNeighborColor;
+        set
+        {
+            Settings.Default.NearestNeighborColor = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(NearestNeighborColor));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public double NearestNeighborOpacity
+    {
+        get => Settings.Default.NearestNeighborOpacity;
+        set
+        {
+            Settings.Default.NearestNeighborOpacity = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(NearestNeighborOpacity));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public bool HighlightOperands
+    {
+        get => Settings.Default.HighlightOperands;
+        set
+        {
+            Settings.Default.HighlightOperands = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(HighlightOperands));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public bool ParenthesizeOperands
+    {
+        get => Settings.Default.ParenthesizeOperands;
+        set
+        {
+            Settings.Default.ParenthesizeOperands = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(ParenthesizeOperands));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public TableSize ResultMatrixMaxDisplaySize
+    {
+        get => Settings.Default.ResultMatrixMaxDisplaySize;
+        set
+        {
+            Settings.Default.ResultMatrixMaxDisplaySize = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(ResultMatrixMaxDisplaySize));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public double FractionBarVerticalMargin
+    {
+        get => Settings.Default.FractionBarVerticalMargin;
+        set
+        {
+            Settings.Default.FractionBarVerticalMargin = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(FractionBarVerticalMargin));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public string EvalPlaceholder
+    {
+        get => Settings.Default.EvalPlaceholder;
+        set
+        {
+            Settings.Default.EvalPlaceholder = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(EvalPlaceholder));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public string LineWrappingSign
+    {
+        get => Settings.Default.LineWrappingSign;
+        set
+        {
+            Settings.Default.LineWrappingSign = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(LineWrappingSign));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public double LineWrappingSignOffset
+    {
+        get => Settings.Default.LineWrappingSignOffset;
+        set
+        {
+            Settings.Default.LineWrappingSignOffset = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(LineWrappingSignOffset));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public bool ShowResultMatrixFormatIndices
+    {
+        get => Settings.Default.ShowResultMatrixFormatIndices;
+        set
+        {
+            Settings.Default.ShowResultMatrixFormatIndices = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(ShowResultMatrixFormatIndices));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public Color ComboBoxColor
+    {
+        get => Settings.Default.ComboBoxColor;
+        set
+        {
+            Settings.Default.ComboBoxColor = value;
+            Settings.Default.Save();
+            FirePropertyChanged(nameof(ComboBoxColor));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public bool AutoLabelIds
+    {
+        get => MathNodeSettings.Instance.AutoLabelIds;
+        set
+        {
+            MathNodeSettings.Instance.AutoLabelIds = value;
+            FirePropertyChanged(nameof(AutoLabelIds));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    private void FirePropertyChanged(string name = default)
+    {
+        PropertyChanged?.Invoke(this, new global::System.ComponentModel.PropertyChangedEventArgs(name));
     }
 }
