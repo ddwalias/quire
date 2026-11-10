@@ -32,28 +32,6 @@ public partial class RadioButtonViewModel : global::Quire.Controls.InputControls
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Controls.InputControls.RadioButtonEventAggregator _radioButtonEventAggregator;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.InputControls.RadioButtonModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsDataSourceChanged { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double SelectedIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.InputControls.DataListItem> DataSourceItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.Orientation Orientation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.PropertyInfo BackgroundColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsChecked { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string RadioButtons { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string GroupID { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ImagePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.FlowDirection FlowDirection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public RadioButtonViewModel(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue data, global::Quire.Controls.InputControls.RadioButtonEventAggregator radioButtonEventAggregator = default) : base(default(global::Quire.Controls.InputControls.IInputScriptableControlModelWithInputs)) { }
     [global::Quire.Mirror.MirrorStub]
     public virtual void CommitEditorChanges() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
