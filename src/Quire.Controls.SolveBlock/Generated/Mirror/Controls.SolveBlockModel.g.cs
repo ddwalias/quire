@@ -34,12 +34,6 @@ internal partial class SolveBlockModel : global::Quire.Controls.Mathboard.Aggreg
     [global::Quire.Mirror.MirrorStub]
     protected override void MoveItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => base.MoveItems(items);
     [global::Quire.Mirror.MirrorStub]
-    protected override void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) => base.FireCalculatableAdded(calculatable);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable) => base.FireCalculatableRemoved(calculatable);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void FireCalculatableMoved(global::Quire.Calculation.Core.ICalculatable calculatable) => base.FireCalculatableMoved(calculatable);
-    [global::Quire.Mirror.MirrorStub]
     private void ListenForErrorChanges(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void StopListeningForErrorChanges(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

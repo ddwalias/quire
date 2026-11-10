@@ -64,6 +64,47 @@ internal partial class SolveBlockModel
         UpdateWhichItemIsSolver();
     }
 
+    protected override void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable)
+    {
+        ListenForErrorChanges(calculatable);
+        base.FireCalculatableAdded(calculatable);
+        global::System.Windows.Threading.Dispatcher.CurrentDispatcher.BeginInvoke(
+            (global::System.Windows.Threading.DispatcherPriority)4,
+            (global::System.Delegate)new global::System.Action(FireSectionsMaybeChanged));
+        if (calculatable == Solver)
+            Solver.CommitAllChildren();
+
+        global::Quire.Calculation.Core.ICalculatable calculatableToAddToSolverAggregate =
+            GetCalculatableToAddToSolverAggregate(calculatable);
+        // Release IL branches to mirroring when a target exists, then falls through to return.
+        if (calculatableToAddToSolverAggregate != null)
+            goto MirrorChild;
+        return;
+
+    MirrorChild:
+        MirrorChildInSolverAggregate(calculatableToAddToSolverAggregate);
+    }
+
+    protected override void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable)
+    {
+        if (calculatable == null)
+            throw new global::System.InvalidOperationException(
+                "Logic error: attempting to remove 'null' calculatable should never happen.");
+        StopListeningForErrorChanges(calculatable);
+        base.FireCalculatableRemoved(calculatable);
+        if (Solver != null)
+            Solver.RemoveChild(GetWrappedCalculatable(calculatable));
+        FireSectionsMaybeChanged();
+    }
+
+    protected override void FireCalculatableMoved(global::Quire.Calculation.Core.ICalculatable calculatable)
+    {
+        base.FireCalculatableMoved(calculatable);
+        if (Solver != null)
+            UpdateTheSolverIfNeededToReflectMovedCalculatable(calculatable);
+        FireSectionsMaybeChanged();
+    }
+
     public override int BlockSectionCount => SectionCount;
 
     public override IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetBlockSectionItems(uint sectionIdx)
