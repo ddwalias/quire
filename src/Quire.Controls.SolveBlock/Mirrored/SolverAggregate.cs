@@ -76,6 +76,54 @@ internal partial class SolverAggregate
         EquationType = SolveBlockEquationTypes.Solver;
     }
 
+    private void ParseWrappedRl()
+    {
+        string input;
+        global::System.Collections.Generic.IList<string> aggregateRl = null;
+        var calculatableAggregate = WrappedCalculatable as global::Quire.Calculation.Core.ICalculatableAggregate;
+        bool containsSymbolicEvaluation = calculatableAggregate?.ContainsSymbolicEvaluation ?? false;
+        if (calculatableAggregate == null ||
+            global::Quire.EnumerableExtensions.IsNullOrEmpty<global::Quire.Calculation.Core.ICalculatable>(
+                calculatableAggregate.CalculatableChildren))
+        {
+            input = WrappedCalculatable.Rl;
+        }
+        else
+        {
+            aggregateRl = global::Quire.Calculation.Core.CalculatableAggregateExtensions.GetAggregateRl(
+                calculatableAggregate);
+            input = SolveBlockCalculatableAggregate.ComposeSolveblockChildRlFromEquationControl(aggregateRl);
+        }
+
+        var match = SolveBlockCalculatable._solverMatch.Match(input);
+        DefinedParams = string.Empty;
+        DefinedRl = match.Groups["defined"].Value;
+        if ((aggregateRl != null) & containsSymbolicEvaluation)
+        {
+            var defineRegex = new global::System.Text.RegularExpressions.Regex("\\((?<operator>define)(?<operatorTag>(?::0x[0-9a-fA-F]{8})?)\\s+(?<defined>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-defined))\\s+(?<expression>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-expression))\\s*\\)");
+            var defineMatch = defineRegex.Match(aggregateRl[0]);
+            if (defineMatch.Success)
+                DefinedRl = SolveBlockCalculatableAggregate.GetDefinedVariable(defineMatch);
+
+            string expression = defineMatch.Groups["expression"].Value;
+            if (expression.Contains("lambda"))
+            {
+                var symbolicRegex = new global::System.Text.RegularExpressions.Regex("\\((?<operator>define-symeval)(?<operatorTag>(?::0x[0-9a-fA-F]{8})?)\\s+(?<resultId>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-resultId))\\s+(?<expression>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-expression))\\s*(?:\\s(?<keywords>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-keywords)))?\\s*\\)");
+                if (symbolicRegex.Match(input).Success)
+                    DefinedParams = expression;
+            }
+        }
+
+        SolverName = match.Groups["solver_name"].Value;
+        SolverTag = match.Groups["solver_tag"].Value;
+        SolverArgs = new string[match.Groups["solver_arg"].Captures.Count];
+        int index = 0;
+        foreach (global::System.Text.RegularExpressions.Capture capture in match.Groups["solver_arg"].Captures)
+            SolverArgs[index++] = capture.Value;
+        LeftOfSolverApply = match.Groups["left_of_solver"].Value;
+        RightOfSolverApply = match.Groups["right_of_solver"].Value;
+    }
+
     public bool IsSolverOfSymbolicContainsFind(string rl)
     {
         var regex = new global::System.Text.RegularExpressions.Regex("\\((?<operator>define-only-symbolic)(?<operatorTag>(?::0x[0-9a-fA-F]{8})?)\\s+(?<resultId>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-resultId))\\s+(?<expression>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-expression))\\s*(?:\\s(?<keywords>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-keywords)))?\\s*\\)");

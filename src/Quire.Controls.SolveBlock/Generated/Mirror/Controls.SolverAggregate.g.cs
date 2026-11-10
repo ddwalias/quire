@@ -30,8 +30,6 @@ internal partial class SolverAggregate : global::Quire.Controls.SolveBlockCalcul
     [global::Quire.Mirror.MirrorStub]
     private void ClearError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void ParseWrappedRl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override bool ContainsError(global::Quire.Calculation.Core.EngineError error) => base.ContainsError(error);
     [global::Quire.Mirror.MirrorStub]
     public override void ShowError(global::Quire.Calculation.Core.EngineError error) => base.ShowError(error);
