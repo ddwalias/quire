@@ -1826,12 +1826,19 @@ public partial class WhiteboardViewModel
         private global::Quire.Controls.Core.IResizeData _oldData;
         [global::Quire.Mirror.MirrorStub]
         public ResizeItemCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Size oldSize, global::System.Windows.Size newSize, bool widthIsAuto, bool heightIsAuto, global::Quire.Controls.Core.DragMode dragMode) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override bool Do()
+        {
+            DoRedo(true);
+            return true;
+        }
+
         [global::Quire.Mirror.MirrorStub]
         public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override void Redo()
+        {
+            DoRedo(false);
+        }
+
         [global::Quire.Mirror.MirrorStub]
         private void DoRedo(bool doAction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
@@ -1910,8 +1917,11 @@ public partial class WhiteboardViewModel
         protected override bool DoWithResize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override void Redo()
+        {
+            Do();
+        }
+
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+InsertSpaceCommand, Ptc.Controls.Whiteboard")]
@@ -1933,8 +1943,11 @@ public partial class WhiteboardViewModel
         protected override bool DoWithResize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override void Redo()
+        {
+            Do();
+        }
+
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+DeleteSpaceCommand, Ptc.Controls.Whiteboard")]
@@ -1956,8 +1969,11 @@ public partial class WhiteboardViewModel
         public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override void Redo()
+        {
+            Do();
+        }
+
         [global::Quire.Mirror.MirrorStub]
         private double LimitOffsetBasedOnMinimumHeight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
@@ -1969,12 +1985,26 @@ public partial class WhiteboardViewModel
         private readonly global::Quire.Controls.Whiteboard.WhiteboardViewModel.MoveItemsCommand _moveItemsCommand;
         [global::Quire.Mirror.MirrorStub]
         public SeparateOverlappedItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToSeparate, global::Quire.Dimension dimension, bool allowGrowthDownOrRight = false, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager itemManager = default) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override bool Do()
+        {
+            if (_moveItemsCommand == null)
+            {
+                return false;
+            }
+
+            return _moveItemsCommand.Do();
+        }
+
+        public override void Undo()
+        {
+            _moveItemsCommand.Undo();
+        }
+
+        public override void Redo()
+        {
+            _moveItemsCommand.Redo();
+        }
+
     }
 
 }
