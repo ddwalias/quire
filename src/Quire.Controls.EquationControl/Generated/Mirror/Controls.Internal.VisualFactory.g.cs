@@ -34,59 +34,5 @@ internal partial class VisualFactory : global::Quire.EquationEditor.View.IVisual
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.View.IVisualUnaryOperatorNode CreateReturnNode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualIdNodeEditor CreateIdentifierEditor(global::Quire.EquationEditor.View.IVisualIdNode visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualTextNodeEditor CreateTextEditor(global::Quire.EquationEditor.View.IVisualTextNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualUnaryEditor CreateProgramEditor(global::Quire.EquationEditor.View.IVisualMathNode visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualBinaryOperatorNodeEditor CreateLoopEditor(global::Quire.EquationEditor.View.IVisualMathNode visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualOutfixNodeEditor CreateForLoopEditor(global::Quire.EquationEditor.View.IVisualMathNode visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualLeafOperatorEditor CreateLeafOperatorEditor(global::Quire.EquationEditor.View.IVisualLeafOperatorNode visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualOutfixNodeEditor CreateTryEditor(global::Quire.EquationEditor.View.IVisualMathNode visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualPairNaryNodeEditor CreatePairNaryEditor(global::Quire.EquationEditor.View.IVisualPairNaryNode visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualPlaceholderNodeEditor CreatePlaceholderEditor(global::Quire.EquationEditor.View.IVisualPlaceholderNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualVariantLineBinaryOperatorNodeEditor CreateBinaryOperatorEditor(global::Quire.EquationEditor.View.IVisualBinaryOperatorNode node, bool isEditable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualMultiLineWrappingBinaryOperatorNodeEditor CreateBinaryWrappingOperatorEditor(global::Quire.EquationEditor.View.IVisualBinaryOperatorNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.View.IVisualInputControlEditor CreateInputControlEditor(global::Quire.EquationEditor.View.IVisualInputControlNode visualInputControlNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualOutfixNodeEditor CreateOutfixEditor(global::Quire.EquationEditor.View.IVisualOutfixNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualOutfixNodeEditor CreateMatrixEditor(global::Quire.EquationEditor.View.IVisualOutfixNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualInputControlEditor CreateInputControlInputFieldEditor(global::Quire.EquationEditor.View.IVisualMathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualAtomicTextLeafEditor CreateAtomicTextEditor(global::Quire.EquationEditor.View.IVisualAtomicTextLeafNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualUnaryEditor CreateRangedPrefixNodeEditor(global::Quire.EquationEditor.View.IVisualMathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualSymbolicEvaluationNodeEditor CreateSymbolicEvaluationEditor(global::Quire.EquationEditor.View.IVisualMathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualUnaryEditor CreateUnaryEditor(global::Quire.EquationEditor.View.IVisualUnaryOperatorNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualOutfixNodeEditor CreateIntegralEditor(global::Quire.EquationEditor.View.IVisualMathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualUnaryEditor CreateDerivativeEditor(global::Quire.EquationEditor.View.IVisualMathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualOutfixNodeEditor CreateStepRangeEditor(global::Quire.EquationEditor.View.IVisualMathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualUnaryEditor CreateVectorizationEditor(global::Quire.EquationEditor.View.IVisualMathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualUnaryEditor CreateConjugateEditor(global::Quire.EquationEditor.View.IVisualMathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualBinaryOperatorNodeEditor CreateNthRootEditor(global::Quire.EquationEditor.View.IVisualMathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualMathNodeEditor CreateLimitSideEditor(global::Quire.EquationEditor.View.IVisualLimitSideNode visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualUnaryEditor CreateLimitEditor(global::Quire.EquationEditor.View.IVisualMathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualUnaryEditor CreateGradientEditor(global::Quire.EquationEditor.View.IVisualMathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

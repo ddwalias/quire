@@ -239,3 +239,5 @@
 - Release IL: PASS, 1242 checked (`.mirror-cache/release-il-3d6855d990b0/release-il.json`).
 - Batch: `Controls.Internal.VisualFactory` static-call factories (`CreateMatrixRowContentNode`, `CreateMatrixColContentNode`, `CreateGroupingNode`, `CreateAbsoluteValueNode`, `CreateDeterminate`, `CreateWhileLoopNode`, `CreateBreakNode`, `CreateContinueNode`).
 - Release IL: PASS, 1250 checked (`.mirror-cache/release-il-14783bce6474/release-il.json`).
+- Batch: `Controls.Internal.VisualFactory` editor factories (27 `Create*Editor` methods: region and node arguments forwarded with `castclass`). `CreateBinaryOperatorEditor` passes `false` to the `bool` parameter (`ldc.i4.0`).
+- Release IL: PASS, 1277 checked (`.mirror-cache/release-il-94dc4152c2d0/release-il.json`).

@@ -227,4 +227,139 @@ internal partial class VisualFactory
     {
         return new VisualLeafOperatorNode("continue");
     }
+
+    public Quire.EquationEditor.View.IVisualIdNodeEditor CreateIdentifierEditor(Quire.EquationEditor.View.IVisualIdNode visual)
+    {
+        return new VisualIdentifierNodeEditor((VisualIdNode)visual, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualTextNodeEditor CreateTextEditor(Quire.EquationEditor.View.IVisualTextNode node)
+    {
+        return new VisualTextNodeEditor(_region, (VisualTextNodeForEditor)node);
+    }
+
+    public Quire.EquationEditor.View.IVisualUnaryEditor CreateProgramEditor(Quire.EquationEditor.View.IVisualMathNode visual)
+    {
+        return new VisualProgramNodeEditor((VisualProgramNode)visual, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualBinaryOperatorNodeEditor CreateLoopEditor(Quire.EquationEditor.View.IVisualMathNode visual)
+    {
+        return new VisualLoopNodeEditor((VisualLoopNode)visual, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualOutfixNodeEditor CreateForLoopEditor(Quire.EquationEditor.View.IVisualMathNode visual)
+    {
+        return new VisualForLoopNodeEditor((VisualForLoopNode)visual, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualLeafOperatorEditor CreateLeafOperatorEditor(Quire.EquationEditor.View.IVisualLeafOperatorNode visual)
+    {
+        return new VisualLeafOperatorEditor((VisualLeafOperatorNode)visual, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualOutfixNodeEditor CreateTryEditor(Quire.EquationEditor.View.IVisualMathNode visual)
+    {
+        return new VisualTryNodeEditor((VisualTryNode)visual, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualPairNaryNodeEditor CreatePairNaryEditor(Quire.EquationEditor.View.IVisualPairNaryNode visual)
+    {
+        return new VisualPairNaryNodeEditor((VisualPairNaryNode)visual, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualPlaceholderNodeEditor CreatePlaceholderEditor(Quire.EquationEditor.View.IVisualPlaceholderNode node)
+    {
+        return new VisualPlaceholderNodeEditor((VisualMathNode)node, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualVariantLineBinaryOperatorNodeEditor CreateBinaryOperatorEditor(Quire.EquationEditor.View.IVisualBinaryOperatorNode node, bool isEditable)
+    {
+        return new VisualBinaryOperatorNodeEditor((VisualBinaryOperatorNode)node, _region, isEditable, false);
+    }
+
+    public Quire.EquationEditor.View.IVisualMultiLineWrappingBinaryOperatorNodeEditor CreateBinaryWrappingOperatorEditor(Quire.EquationEditor.View.IVisualBinaryOperatorNode node)
+    {
+        return new VisualBinaryWrappOperatorNodeEditor((VisualMultiLineWrappingBinaryOperatorNode)node, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualOutfixNodeEditor CreateOutfixEditor(Quire.EquationEditor.View.IVisualOutfixNode node)
+    {
+        return new VisualOutfixNodeEditor((VisualOutfixNode)node, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualOutfixNodeEditor CreateMatrixEditor(Quire.EquationEditor.View.IVisualOutfixNode node)
+    {
+        return new VisualMatrixNodeEditor((VisualOutfixNode)node, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualInputControlEditor CreateInputControlInputFieldEditor(Quire.EquationEditor.View.IVisualMathNode node)
+    {
+        return new VisualInputScriptableControlNodeEditor((VisualMathNode)node, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualAtomicTextLeafEditor CreateAtomicTextEditor(Quire.EquationEditor.View.IVisualAtomicTextLeafNode node)
+    {
+        return new VisualAtomicTextLeafEditor((VisualAtomicTextLeafNode)node, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualUnaryEditor CreateRangedPrefixNodeEditor(Quire.EquationEditor.View.IVisualMathNode node)
+    {
+        return new VisualRangedPrefixOperatorNodeEditor((VisualRangedPrefixNode)node, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualSymbolicEvaluationNodeEditor CreateSymbolicEvaluationEditor(Quire.EquationEditor.View.IVisualMathNode node)
+    {
+        return new VisualSymbolicEvaluationNodeEditor((VisualSymbolicEvaluationNode)node, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualUnaryEditor CreateUnaryEditor(Quire.EquationEditor.View.IVisualUnaryOperatorNode node)
+    {
+        return new VisualLinearUnaryEditor((VisualUnaryOperatorNodeForEditor)node, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualOutfixNodeEditor CreateIntegralEditor(Quire.EquationEditor.View.IVisualMathNode node)
+    {
+        return new VisualIntegralNodeEditor((VisualIntegralOperatorNode)node, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualUnaryEditor CreateDerivativeEditor(Quire.EquationEditor.View.IVisualMathNode node)
+    {
+        return new VisualDerivativeNodeEditor((VisualDerivativeOperatorNodeBase)node, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualOutfixNodeEditor CreateStepRangeEditor(Quire.EquationEditor.View.IVisualMathNode node)
+    {
+        return new VisualStepRangeOperatorNodeEditor((VisualStepRangeOperatorNode)node, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualUnaryEditor CreateVectorizationEditor(Quire.EquationEditor.View.IVisualMathNode node)
+    {
+        return new VisualVectorizationNodeEditor((VisualVectorizationOperatorNode)node, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualUnaryEditor CreateConjugateEditor(Quire.EquationEditor.View.IVisualMathNode node)
+    {
+        return new VisualConjugateNodeEditor((VisualConjugateOperatorNode)node, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualBinaryOperatorNodeEditor CreateNthRootEditor(Quire.EquationEditor.View.IVisualMathNode node)
+    {
+        return new VisualNthRootNodeEditor((VisualNthRootOperatorNode)node, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualMathNodeEditor CreateLimitSideEditor(Quire.EquationEditor.View.IVisualLimitSideNode visual)
+    {
+        return new VisualLimitSideNodeEditor((VisualLimitSideNode)visual, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualUnaryEditor CreateLimitEditor(Quire.EquationEditor.View.IVisualMathNode node)
+    {
+        return new VisualLimitNodeEditor((VisualLimitOperatorNode)node, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualUnaryEditor CreateGradientEditor(Quire.EquationEditor.View.IVisualMathNode node)
+    {
+        return new VisualGradientNodeEditor((VisualGradientOperatorNode)node, _region);
+    }
 }
