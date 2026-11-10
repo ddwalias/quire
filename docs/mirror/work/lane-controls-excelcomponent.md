@@ -26,4 +26,5 @@
 - Batch 22: `OleBaseComponentControl` attached-property accessors (`GetItemHeight`, `SetItemHeight`, `GetOleComponentLocationLeft`, `SetOleComponentLocationLeft`), `CoerceNewSize`, and `GetBlockEquationTypeAttributeName`; Release IL PASS (`533 checked`; `.mirror-cache/release-il-1246cfb4ff21/release-il.json`).
 - Batch 23: `OleBaseComponentControl` attached width and top accessors (`GetItemWidth`, `SetItemWidth`, `GetOleComponentLocationTop`, `SetOleComponentLocationTop`); Release IL PASS (`537 checked`; `.mirror-cache/release-il-d8fdf466b930/release-il.json`).
 - Batch 24: `OleBaseComponentControl` location-changed handlers (`HandleOleComponentLocationTopChanged`, `HandleOleComponentLocationLeftChanged`); Release IL PASS (`539 checked`; `.mirror-cache/release-il-b24f2d3e0a93/release-il.json`).
-- Remaining: 640 unfinished methods in Quire.Controls.ExcelComponent (Release IL report batch 24).
+- Batch 25: `ExcelContainerViewModel.GetExcelVersionInstalled` and `Select` (forwarders to `Model`); Release IL PASS (`541 checked`; `.mirror-cache/release-il-e1d2905b8124/release-il.json`).
+- Remaining: 638 unfinished methods in Quire.Controls.ExcelComponent (Release IL report batch 25).

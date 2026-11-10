@@ -41,8 +41,4 @@ public partial class ExcelContainerViewModel : global::Quire.Controls.ExcelCompo
     protected override void OnOleSavedAsync() => base.OnOleSavedAsync();
     [global::Quire.Mirror.MirrorStub]
     public string GetExcelSelectionOrDefault(bool isInput) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Select(string rangeAddress, bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<bool> GetExcelVersionInstalled(bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
