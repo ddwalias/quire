@@ -12,8 +12,6 @@ namespace Quire;
 public partial class SystemUnitEditDialogViewModel : global::Quire.Controls.Core.ViewModelBase
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Input.RoutedUICommand RbCustomCommand;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.UnitSystems _currentUnitSystem;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.UnitSystemsDataSource _customBaseUnitSystem;
@@ -24,65 +22,5 @@ public partial class SystemUnitEditDialogViewModel : global::Quire.Controls.Core
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.UnitDescriptor _derivedDimSelectedItem;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.Dictionary<string, global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor>> _categories;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.Dictionary<global::Quire.Calculation.Core.UnitSystems, global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor>> _systemUnitsBaseDim;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.Dictionary<global::Quire.Calculation.Core.UnitSystems, global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor>> _systemUnitsDerivedDim;
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsFunctionalityEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string DiscardMessage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.UnitSystemsDataSource CustomBaseUnitSystem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.ListBox DerivedListBox { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCustom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCustomExpress { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsInsert { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsRemove { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsChange { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.UnitDescriptor BaseDimSelectedItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int BaseDimSelectedIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int DerivedDimSelectedIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.UnitDescriptor DerivedDimSelectedItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor> BaseDimDataSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor> DerivedDimDataSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.UnitSystems CurrentUnitSystem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public SystemUnitEditDialogViewModel(global::System.ComponentModel.ICollectionView visualUnitDescriptorTable, global::System.Collections.IDictionary visualCGSUnitDescriptorTable, global::System.Collections.Generic.Dictionary<string, global::Quire.Calculation.Core.UnitDescriptor> calculatorUnitDescriptors, global::Quire.SpiritMainWindow owner) { }
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsCustomEqualsBase() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void HandleDialogAction(object obj, global::System.Nullable<global::Quire.DialogAction> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleRbCustomClicked(global::System.Windows.FrameworkElement fe) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<string> BuildDerivedInsertDataSource() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void BuildDefaultViewLists(global::System.Collections.Generic.Dictionary<string, global::Quire.Calculation.Core.UnitDescriptor> calculatorUnitDescriptors, global::System.Collections.IDictionary visualUnitDescriptorTable, global::System.Collections.IDictionary visualCgaUnitDescriptorTable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void BuildCustomViewLists(global::Quire.Controls.Worksheet.WorksheetControl worksheet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CustomBaseChange(global::Quire.Calculation.Core.UnitSystems newUnitSystem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShowDimEditDialog(global::Quire.DimensionEditDialogViewModel vm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsUserDiscardChanges() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HandlePostCustomBaseOnSelectionChanged(global::System.Windows.Controls.ComboBox comboBox) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
