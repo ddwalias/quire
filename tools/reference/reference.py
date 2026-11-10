@@ -14,7 +14,7 @@ DEFAULT_INSTALL = (r"C:\Program Files\PTC\Mathcad Prime 12.0.1.0" if os.name == 
 
 
 def run(command, **kwargs):
-    result = subprocess.run(command, capture_output=True, text=True, **kwargs)
+    result = subprocess.run(command, capture_output=True, text=True, encoding="utf-8", errors="replace", **kwargs)
     if result.returncode:
         sys.exit(f"{' '.join(map(str, command))} failed:\n{result.stdout}{result.stderr}")
     return result.stdout
