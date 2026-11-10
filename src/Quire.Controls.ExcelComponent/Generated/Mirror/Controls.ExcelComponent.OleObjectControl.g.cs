@@ -28,8 +28,6 @@ public partial class OleObjectControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     public double VerticalAlignmentOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsEmpty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool IsOleOpen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool OleObjectAutoResize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -39,8 +37,6 @@ public partial class OleObjectControl : global::System.Windows.Controls.ContentC
     public bool CanUpdateLink { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool CanToggleAutoResize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool PreserveAspectRatio { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.SubElementToResizeData SubElementToResizeData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -112,8 +108,6 @@ public partial class OleObjectControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     private void HandleViewModelRequestResizeToFit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.FrameworkElement GetAdornedElement() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OnViewVisualParentChanged(global::System.Windows.DependencyObject oldParent, global::System.Windows.DependencyObject newParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IResizeData StoreResizeData(global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -123,6 +117,4 @@ public partial class OleObjectControl : global::System.Windows.Controls.ContentC
     public global::System.Windows.Size CoerceNewSize(global::System.Windows.Size newSize, global::Quire.Controls.Core.IResizeData resizeData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual string GetHelpContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

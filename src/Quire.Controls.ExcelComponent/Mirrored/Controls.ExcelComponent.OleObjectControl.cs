@@ -7,6 +7,20 @@ namespace Quire.Controls.ExcelComponent;
 
 public partial class OleObjectControl
 {
+    public bool IsEmpty => false;
+
+    public bool PreserveAspectRatio => OleObjectAutoResize;
+
+    public FrameworkElement GetAdornedElement()
+    {
+        return View;
+    }
+
+    public virtual string GetHelpContext()
+    {
+        return "OleObjectControl";
+    }
+
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.OleObjectControl+SnapToPixelHelper, Ptc.Controls.ExcelComponent")]
     private partial class SnapToPixelHelper : ISnapToPixelHelper
     {
