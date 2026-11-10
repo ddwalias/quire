@@ -90,3 +90,5 @@ Not blocked by the listed reasons: no `LoadComponent`/XAML loads, no dynamic scr
 ## Blocked after batch 8
 
 - `OnInput`: the Mathcad IL stores `comboBox == null ? false : comboBox.IsDropDownOpen` through a `brtrue` to the value arm with the constant arm falling through. The current compiler lowers a ternary with a constant `false` arm to a short-circuit `&&` layout (`brfalse`), and the `if`/`else` and `&&` forms gave the same layout. No idiomatic source reproduced it, so the stub stays. Candidate reports: `.mirror-cache/release-il-59e20a90ec37`, `release-il-d1c747916cc7`, `release-il-e530725a4684`.
+- `SetError(IEngineError, IVisualMathNode)`: `node == null ? null : new[] { node }` is lowered by the current compiler to `node != null ? … : null` (branch sense reversed). A typed-null arm (`(IVisualMathNode[])null`) did not change the lowering either. Same blocker class as `OnInput`; stub kept. Candidate reports: `.mirror-cache/release-il-d5a73cdc6419`, `release-il-6e141efddd3a`.
+- Compiler-lowering class (ternary with a null or false arm): `OnInput`, `SetError(IEngineError, IVisualMathNode)`.
