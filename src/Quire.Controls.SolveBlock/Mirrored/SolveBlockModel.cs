@@ -39,6 +39,13 @@ internal partial class SolveBlockModel
     {
     }
 
+    static SolveBlockModel()
+    {
+        RlFormat = "{0} (subscript %0 mc_ORIGIN) {1}";
+        RlOdeFormat = "{0} %0 {1}";
+        SolverResultIdName = "ui_solver_result";
+    }
+
     private const uint GuessValuesSectionIndex = 0;
     private const uint ConstraintSectionIndex = 1;
     private const uint SolverSectionIndex = 2;

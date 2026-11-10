@@ -11,11 +11,8 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.SolveBlockModel, Ptc.Controls.SolveBlock")]
 internal partial class SolveBlockModel : global::Quire.Controls.Mathboard.AggregateMathboardModel, global::Quire.Controls.ISolveBlockModel, global::Quire.Controls.Mathboard.IAggregateMathboardModel, global::Quire.Controls.Mathboard.IMathboardModel, global::Quire.Controls.Whiteboard.IWhiteboardModel, global::System.ICloneable, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Controls.Mathboard.IVerticalWhiteboardSections
 {
-    [global::Quire.Mirror.MirrorStub]
     internal static string RlFormat;
-    [global::Quire.Mirror.MirrorStub]
     internal static string RlOdeFormat;
-    [global::Quire.Mirror.MirrorStub]
     internal static string SolverResultIdName;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GuessValueItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
