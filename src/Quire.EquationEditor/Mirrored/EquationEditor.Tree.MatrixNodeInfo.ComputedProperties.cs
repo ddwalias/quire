@@ -2,6 +2,11 @@ namespace Quire.EquationEditor.Tree;
 
 public partial class MatrixNodeInfo
 {
+    public virtual MatrixNodeInfo Clone()
+    {
+        return new MatrixNodeInfo(ViewportSize, Origin, ViewportOffset, FullSize, IsInResult, ShowIndices);
+    }
+
     public void MakeReadOnly()
     {
     }

@@ -30,7 +30,5 @@ public partial class MatrixNodeInfo : global::Quire.EquationEditor.Tree.INodeInf
     [global::Quire.Mirror.MirrorStub]
     object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.EquationEditor.Tree.MatrixNodeInfo Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     bool global::Quire.EquationEditor.Tree.INodeInfo.IsEquivalentTo(global::Quire.EquationEditor.Tree.INodeInfo A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
