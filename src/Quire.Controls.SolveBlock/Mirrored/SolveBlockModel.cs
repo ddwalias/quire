@@ -223,6 +223,60 @@ internal partial class SolveBlockModel
         return null;
     }
 
+    private void HandleChildCalcHiddenStateChanged(
+        global::Quire.Calculation.Core.ICalculatable calc,
+        bool hideFromCalculationContext)
+    {
+        if (calc is global::Quire.Controls.ISolveBlockCalculatable wrapper)
+        {
+            FireCalculatableHiddenStatusChanged(
+                wrapper.WrappedCalculatable as global::Quire.Calculation.Core.ICalculationHideableChild);
+            if (wrapper.EquationType == SolveBlockEquationTypes.Solver)
+                UpdateWhichItemIsSolver();
+        }
+    }
+
+    private void HandleContainerChildrenChanged()
+    {
+        UpdateWhichItemIsSolver();
+    }
+
+    private global::Quire.Calculation.Core.ICalculatable FindModelChildWhichMatchesSolverChild(
+        global::Quire.Calculation.Core.ICalculatable solverChild)
+    {
+        global::Quire.Controls.ISolveBlockCalculatable wrapper = LookupCalculatableWrapper(solverChild);
+        if (wrapper != null)
+            return wrapper;
+        if (CalculatableChildren.Contains(solverChild))
+            return solverChild;
+        return null;
+    }
+
+    private void FireSolverResultDefinitionEvaluation()
+    {
+        SolverResultDefinition.Commit();
+        FireRequestEvaluation();
+    }
+
+    private void SolverIsNotInADefinition()
+    {
+        // Release IL branches to the cleanup body when the result definition exists.
+        if (SolverResultDefinition != null)
+            goto RemoveResultDefinition;
+        return;
+
+    RemoveResultDefinition:
+        FireCalculatableRemoved(SolverResultDefinition);
+        SolverResultDefinition = null;
+        FireRequestEvaluation();
+    }
+
+    private void MirrorChildInSolverAggregate(global::Quire.Calculation.Core.ICalculatable newSolverChild)
+    {
+        global::Quire.Calculation.Core.ICalculatable insertBefore = FindSolverChildAfterModelChild(newSolverChild);
+        Solver.InsertChildBefore(insertBefore, GetWrappedCalculatable(newSolverChild));
+    }
+
     [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
     public global::Quire.Controls.ISolveBlockCalculatable UnitTest_GetSolveBlockCalculatableWrapper(
         global::Quire.Calculation.Core.ICalculatable calculatable)
