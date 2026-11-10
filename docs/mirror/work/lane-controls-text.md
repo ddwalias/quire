@@ -762,3 +762,13 @@ Remaining stub declarations in the lane: 134 (72 plain IL, 20 closure ordinal be
 - `RichTextWithEmbeddedItem.CopyHyperlink`: try/finally with the selection save/restore. The lookup inside the try, and a version with the lookup before the try, both differ: Mathcad's `brfalse` target sits 5 bytes earlier, so the `if` body is shorter than the candidate's. Reverted; stub stays.
 - Not expressible (value duplicated without a local): `RichTextBase.GetRangeIfMatch` (`GetPositionAtTextOffset` result duplicated into both the `TextRange` constructor and the second offset call).
 - Not attempted in this run: the rest of the list in batch 98's status note (`ReplaceTextInHyperlink`, `HandleReplace`, `AddBlockedSelectDirectionForNextElement`, `ConvertListToParagraphs`, `OnPreviewBackspace`, `ValidateURL`, `OpenHyperlinkUrl`, `ContextMenuOpened`, and the others), because each needs a long branch analysis.
+
+## Batch 111 — RichTextWithEmbeddedItem embedded item insert (1)
+
+- Exact: `AddEmbeddedItem(IWhiteboardItemInText item, TextPointer textPointer = default)` (FrameworkElement tag reset to `IOTagType.None`, clone-helper insert at the given or caret position, bookmark-manager copy when unset, caret after the container). The `(item, bool activate)` overload already existed in the hand-written file.
+- Release IL: PASS — 531 checked, 0 failures (`.mirror-cache/gate-b111`).
+
+## Batch 112 — RichTextWithEmbeddedItem embedded item at a caret offset (1)
+
+- Exact: `AddEmbeddedItem(IWhiteboardItemInText equation, int textCaretPosition)` forwards to the text-pointer overload with `textType.GetPositionAtOffset(Document, offset)`.
+- Release IL: PASS — 532 checked, 0 failures (`.mirror-cache/gate-b112`).

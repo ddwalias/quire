@@ -1462,4 +1462,26 @@ public partial class RichTextWithEmbeddedItem
         }
     }
 
+
+    public void AddEmbeddedItem(IWhiteboardItemInText item, TextPointer textPointer = default)
+    {
+        FrameworkElement element = item as FrameworkElement;
+        if (element != null)
+        {
+            global::Quire.Controls.Core.IORegions.IOTag.SetIOTag(element, global::Quire.Controls.Core.IORegions.IOTagType.None);
+        }
+
+        InlineUIContainer container = _richTextWithEmbededItemCloneHelper.Insert(item, textPointer ?? CaretPosition);
+        if (item.BookmarksManager == null)
+        {
+            item.BookmarksManager = BookmarksManager;
+        }
+
+        SetCaretPositionAndClearSuggestedX(container.ElementEnd.GetInsertionPosition(LogicalDirection.Forward));
+    }
+
+    public void AddEmbeddedItem(IWhiteboardItemInText equation, int textCaretPosition)
+    {
+        AddEmbeddedItem(equation, textType.GetPositionAtOffset(Document, textCaretPosition));
+    }
 }
