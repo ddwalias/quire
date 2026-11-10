@@ -410,7 +410,7 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
 
 
 CACHE = ROOT / '.mirror-cache' / 'inventory-cache'
-CACHE_FORMAT = 3
+CACHE_FORMAT = 4
 # A run's directory is older than this only if its run was killed: every step is bounded by --timeout.
 STALE_WORK = 12 * 3600
 PURGE = '''import os, shutil, stat, sys
@@ -524,9 +524,11 @@ def slice_keys(root, commit, judge, projects, install):
     """Cache key of each project's rows in an inventory of root (a clean tree of commit with committed bytes, RAW_BYTES)
     scanned with exactly these projects by judge (build_judge's key: the judge's sources, root files and SDK).
     MethodAudit derives a project's rows from its assembly and those it references (its ProjectReference closure), the
-    type map, the src directory names and the install, so the key is their content, not the commit: a lane's base hits
-    on rows another lane stored. Which closure members were scanned with it is keyed too: MethodAudit binds a scanned
-    reference's types through that assembly's own bindings and an unscanned one's through the type map. This file is
+    type map, the src directory names and the install, so the key is their content, not the commit or the other projects:
+    a lane's base hits on rows another lane stored for other projects. One exception is keyed: which mixed-mode (C++/CLI)
+    closure members were scanned with it. A reference the build only references is built in Debug (a solution build
+    unsets the configuration of projects outside the solution), where a mixed-mode project builds its IL-only C# stand-in
+    instead of the mixed DLL, and MethodAudit binds an audited mixed-mode assembly's C++ types by name. This file is
     keyed as the gate's build recipe. A project whose closure names a directory the commit lacks gets no key (None)."""
     src = [line.split(None, 3) for line in git('ls-tree', commit, 'src/', cwd=root).splitlines()]
     trees = {Path(path).name: sha for _, kind, sha, path in src if kind == 'tree'}
@@ -536,12 +538,14 @@ def slice_keys(root, commit, judge, projects, install):
               [path if kind == 'tree' else f'{path} {sha}' for _, kind, sha, path in src],
               git('rev-parse', f'{commit}:{TYPE_MAP}', cwd=root),
               str(install), dlls]  # every DLL's size and mtime: hashing the DLLs would cost more than it saves
-    references = {d.name: project_references(root, d) for d in build_closure(root, projects)}
+    dirs = build_closure(root, projects)
+    references = {d.name: project_references(root, d) for d in dirs}
+    mixed = {d.name for d in dirs if any(p.suffix.lower() == '.vcxproj' for p in build_files(d))}
     keys = {}
     for project in projects:
         closure = closure_names(references, project)
         payload = [common, project, sorted((name, trees[name]) for name in closure & trees.keys()),
-                   sorted(closure & set(projects) - {project})]
+                   sorted(closure & mixed & set(projects) - {project})]
         keys[project] = hashlib.sha256(json.dumps(payload).encode('utf-8')).hexdigest() if closure <= trees.keys() else None
     return keys
 

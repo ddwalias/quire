@@ -26,9 +26,10 @@ Base inventories are cached in `.mirror-cache/inventory-cache/` per project, key
 what MethodAudit reads for it: the Git trees of the project's `ProjectReference` closure, the root
 files other than `*.md`, the `src` directory names, the type map, the judge (its MethodAudit/MirrorGen
 trees, root files and SDK), `release_il.py` itself (the build recipe), the install's DLL listing, and
-which members of its closure were scanned with it (MethodAudit binds a scanned reference's types through
-that assembly's own bindings, an unscanned one's through the type map). A project's rows depend on
-nothing else scanned with it. A base whose projects all hit is assembled from those rows without
+which mixed-mode (C++/CLI) members of its closure were scanned with it. Otherwise a project's rows do not
+depend on what else is scanned with it. A mixed-mode reference is different because the build only
+references it: references outside the build's targets are built in Debug, where a mixed-mode project builds
+its IL-only C# stand-in. A base whose projects all hit is assembled from those rows without
 building, whichever commit or lane stored them; any miss builds and scans them all. Base and candidate
 trees hold the committed bytes (no EOL conversion or checkout filters, whatever `core.autocrlf` says),
 so a stored candidate's rows can serve a later base. The merge gate

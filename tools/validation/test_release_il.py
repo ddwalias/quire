@@ -498,14 +498,25 @@ class CheckTests(unittest.TestCase):
         base = json.loads((self.repo.root / '.mirror-cache' / f'r{self.runs}' / 'base-inventory.json').read_text())
         self.assertEqual([m['id'] for m in base['methods']], ['Q::T::M', 'P::T::M', 'R::T::M'])
 
-    def test_which_references_were_scanned_with_a_project_is_keyed(self):
-        """MethodAudit binds a scanned reference's types through its own bindings, an unscanned one's through the type map."""
+    def test_rows_are_reused_whether_or_not_their_references_were_scanned_with_them(self):
+        """MethodAudit binds a reference alike whether or not it audits it, so the scanned set is not keyed."""
         self.three_projects()
         self.check(projects=['P', 'Q'])
-        self.assertFalse(self.check(projects=['Q'])['base_cached'])
         self.assertTrue(self.check(projects=['Q'])['base_cached'])
+        self.assertTrue(self.check(projects=['Q', 'P'])['base_cached'])
         self.assertFalse(self.check(projects=['Q', 'R'])['base_cached'])  # R never scanned: a partial hit builds
-        self.assertTrue(self.check(projects=['P', 'Q', 'R'])['base_cached'])
+        self.assertTrue(self.check(projects=['R', 'Q'])['base_cached'])
+
+    def test_whether_a_mixed_mode_reference_was_scanned_is_keyed(self):
+        """Unscanned, a mixed-mode reference is built in Debug: its IL-only C# stand-in, not the mixed DLL."""
+        self.repo.project('U')
+        self.repo.write('src/U/MixedMode/U.vcxproj', '<Project />')
+        self.repo.project('E', 'U')
+        self.base = self.repo.commit()
+        self.assertFalse(self.check(projects=['E'])['base_cached'])
+        self.assertFalse(self.check(projects=['E', 'U'])['base_cached'])
+        self.assertTrue(self.check(projects=['E', 'U'])['base_cached'])
+        self.assertTrue(self.check(projects=['E'])['base_cached'])
 
     def test_a_changed_reference_misses_and_an_unrelated_change_hits(self):
         self.three_projects()
