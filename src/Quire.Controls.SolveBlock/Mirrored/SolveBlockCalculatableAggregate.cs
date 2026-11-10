@@ -56,6 +56,16 @@ internal partial class SolveBlockCalculatableAggregate
         return false;
     }
 
+    internal static string ComposeSolveblockChildRlFromEquationControl(
+        global::System.Collections.Generic.IList<string> aggregateRl)
+    {
+        if (IsRlForSymbolicEval(aggregateRl, out int symbolicEvalIndex))
+            return ComposeRlForSymEval(aggregateRl, symbolicEvalIndex);
+        if (aggregateRl.Count == 4 || aggregateRl.Count == 5)
+            return ComposeRlForEvalOrDefineEval(aggregateRl);
+        return null;
+    }
+
     public global::Quire.Calculation.Core.ICalculatableAggregate WrappedCalculatableAggregate =>
         (global::Quire.Calculation.Core.ICalculatableAggregate)WrappedCalculatable;
 
