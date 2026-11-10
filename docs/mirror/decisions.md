@@ -1,12 +1,12 @@
 # Current project decisions
 
-## D32: provisional mcdepman C++/CLI migration (2026-11-10)
+## D32: mcdepman C++/CLI migration (2026-11-10)
 
 The mcdepman members move from their C# host in `Quire.Mcd` to the C++/CLI project
 `Quire.Mcdepman`, following D20's original-language rule and D19's pinned MSVC 19.51.36246.
 C++ `long` handles require `modopt(IsLong)`, which cannot be written in C#.
 
-This decision is provisional pending the spike's Release IL result and the remaining migration.
+Confirmed by the maintainer on 2026-11-10. The spike's Release IL result passed (two members, candidate gate 83 checked; `Remove(long)` emits `modopt(IsLong)`), and batches 1 to 4 of the migration have landed.
 The two-member spike checks `depman.IDepman.SetAutoCalc(bool)` and `Remove(long)` with the strict
 candidate gate; see [the checkpoint](work/lane-mcdepman-cpp.md) for the result. Existing C# host
 members remain until subsequent migration batches replace them; this decision adds no exemption
