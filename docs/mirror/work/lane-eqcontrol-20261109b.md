@@ -146,3 +146,6 @@
 - Batch: `Controls.InputControls.InputCheckBoxEngineDefaultScript`, `InputSliderEngineDefaultScript`, `InputTextBoxEngineDefaultScript` (`.ctor` setting `DefaultScript`, `Apply`, `GetCalculatedValue`).
 - Shapes tried: each class's Apply literal (`"Check Me"`, null, `string.Empty`) and its `GetCalculatedValue` out-parameter stores matched on the first candidate.
 - Release IL: PASS, 854 checked (`.mirror-cache/release-il-c3f4bb5e9cd1/release-il.json`).
+- Batch: `Controls.ScaledEquationControl` (`.ctor()` chaining to `(true)`, `.ctor(bool)` with the spec-table model, `GetHelpContext`); `Controls.Internal.VisualUnaryOperatorNodeForEditor` (abstract `Child`, `OperatorElement`, protected `.ctor`).
+- Shapes tried: `GetHelpContext` as `if (x == placeholder) return a; return x;` FAILED (Mathcad branches on `brtrue` with the fallthrough return first); the conditional-expression return matched.
+- Release IL: PASS, 857 checked (`.mirror-cache/release-il-3d7c5e423aae/release-il.json`). Earlier candidate: FAIL at `1d0cb4464212`.

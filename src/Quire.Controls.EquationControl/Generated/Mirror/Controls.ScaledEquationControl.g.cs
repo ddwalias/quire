@@ -11,10 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ScaledEquationControl, Ptc.Controls.EquationControl")]
 public partial class ScaledEquationControl : global::Quire.Controls.EquationControl
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ScaledEquationControl() { }
-    [global::Quire.Mirror.MirrorStub]
-    public ScaledEquationControl(bool allowExpressionsOnly) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override string GetHelpContext() => base.GetHelpContext();
 }

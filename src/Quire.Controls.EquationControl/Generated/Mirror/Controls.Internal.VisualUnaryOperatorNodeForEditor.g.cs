@@ -11,10 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualUnaryOperatorNodeForEditor, Ptc.Controls.EquationControl")]
 internal abstract partial class VisualUnaryOperatorNodeForEditor : global::Quire.Controls.Internal.VisualMathNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.Controls.Internal.VisualMathNode Child { get; set; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.Controls.Internal.VisualMathNode OperatorElement { get; }
-    [global::Quire.Mirror.MirrorStub]
-    protected VisualUnaryOperatorNodeForEditor() { }
 }
