@@ -20,8 +20,6 @@ internal partial class CustomMarginsViewModel : global::Quire.Controls.Core.View
     [global::Quire.Mirror.MirrorStub]
     private global::System.Nullable<global::System.Windows.Thickness> _fixMargins;
     [global::Quire.Mirror.MirrorStub]
-    private readonly int _numOfDigitsForRound;
-    [global::Quire.Mirror.MirrorStub]
     private string _leftMarginText;
     [global::Quire.Mirror.MirrorStub]
     private double _leftMargin;
@@ -37,38 +35,4 @@ internal partial class CustomMarginsViewModel : global::Quire.Controls.Core.View
     private string _bottomMarginText;
     [global::Quire.Mirror.MirrorStub]
     private double _bottomMargin;
-    [global::Quire.Mirror.MirrorStub]
-    public string LeftMarginText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private double LeftMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string TopMarginText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private double TopMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string RightMarginText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private double RightMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string BottomMarginText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private double BottomMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.PageSizeUnits PageSizeUnits { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Thickness NewPageMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public CustomMarginsViewModel(global::Quire.Controls.Core.WorksheetPageLayout currentPageLayout) : base(default(global::System.Windows.ResourceDictionary)) { }
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsValidMargin(string strVal, out double doubleValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void FixPageMargins() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ValidateInput() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RemoveAllErrors() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetMarginsInDisplayUnits(global::System.Windows.Thickness margins) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Thickness DipsToDisplayUnitsMargins(global::System.Windows.Thickness margins) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

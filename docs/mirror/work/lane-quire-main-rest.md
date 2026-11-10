@@ -351,6 +351,10 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
 - **Batch 11 (ColumnViewModel, U; branch `mirror/quire-main-rest-pure-20261111`):** `ColumnViewModel` (CollectionProperty with its static initializer, Collection, ColumnDataName, CurrentDirection, PropertyChanged event, HandleCollectionSortOrderCleared, OnCollectionChanged, NotifySortOrderChanged, SortByNextOrder, GetNextSortDirection, FirePropertyChanged, ctor). `_isCollectionInitialized` stays generated.
   - Gate: PASS, 499 checked. Report: `.mirror-cache/release-il-20cc601339f8/release-il.json`.
   - Shapes: `OnCollectionChanged` tests each assertion in its own `if` (a combined `||` branches differently). `CurrentDirection` tests the name with `!=` and returns on the else path, with an empty then-block (the `==` form calls `op_Equality`). `GetNextSortDirection` falls to one trailing `return null` after the switch (the default section then reuses the subject's slot as Mathcad does).
+- **Batch 12 (CustomMarginsViewModel, U; branch `mirror/quire-main-rest-pure-20261111`):** `CustomMarginsViewModel` (`_numOfDigitsForRound` initializer, the four `*MarginText` and four `*Margin` properties, PageSizeUnits, NewPageMargin, ctor, IsValidMargin, FixPageMargins, ValidateInput, RemoveAllErrors, SetMarginsInDisplayUnits, DipsToDisplayUnitsMargins). Other fields stay generated.
+  - Gate: PASS, 524 checked. Report: `.mirror-cache/release-il-0a9180bd5399/release-il.json`.
+  - Shapes: setters are guard returns (`if (old == value || !IsValidMargin(...)) return;`, `if (Round(a) == Round(b)) return;`), because Release IL branches on the guard with `brtrue`. `FixPageMargins` is a guard return on `DevAssert(...).Failed`. `NewPageMargin` assigns one local on both branches (a ternary of two `new Thickness` emits `newobj` where Mathcad uses `ldloca` + `call .ctor`).
+
 
 ## Remaining (after batch 10)
 
