@@ -12,4 +12,8 @@ public partial class ComboBoxControlWidget
     {
         _editableComboBoxTableBorder.Refresh(cellsFontFormats, operatorFormat);
     }
+
+    public bool IsEditModeActive => _editableComboBoxTableBorder.IsEditModeActive;
+
+    public Quire.EquationEditor.View.IEditableComboBoxVisualTable EditableComboBoxVisualTable => _editableComboBoxTableBorder.EditableTable;
 }

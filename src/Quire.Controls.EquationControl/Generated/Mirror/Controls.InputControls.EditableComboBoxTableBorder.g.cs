@@ -32,10 +32,6 @@ public partial class EditableComboBoxTableBorder : global::System.Windows.Contro
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    public bool IsEditModeActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IEditableComboBoxVisualTable EditableTable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public EditableComboBoxTableBorder(global::Quire.Controls.InputControls.EditableComboBoxVisualTable editableComboBoxView) { }
     [global::Quire.Mirror.MirrorStub]
     private void OnDragDeltaResizeTable(object sender, global::System.Windows.Controls.Primitives.DragDeltaEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

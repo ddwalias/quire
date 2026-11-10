@@ -7,4 +7,8 @@ public partial class EditableComboBoxTableBorder
     {
         _editableComboBoxView.Refresh(cellsFontFormats, operatorFormat);
     }
+
+    public bool IsEditModeActive => _editableComboBoxView.IsActive;
+
+    public Quire.EquationEditor.View.IEditableComboBoxVisualTable EditableTable => _editableComboBoxView;
 }

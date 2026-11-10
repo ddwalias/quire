@@ -24,23 +24,11 @@ internal partial class VisualComboBoxControlNode : global::Quire.Controls.Intern
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Internal.VisualComboBoxControlNode.DelayedAction _delayedAction;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.InputControls.ComboBoxControl ComboBoxControl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     bool global::Quire.EquationEditor.View.ICanBlockFocus.IsAdornerFocused { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsDropDownOpen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.Tree.INodeInfo NodeInfo { get => base.NodeInfo; set => base.NodeInfo = value; }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.IComboBoxControlNodeInfo ComboBoxControlInfo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.ComboBoxInputControlData ComboBoxData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string GetSelectedDisplayedText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsEditModeActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IEditableComboBoxVisualTable EditableComboBoxTable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal VisualComboBoxControlNode() : base(default(string), default(global::Quire.EquationEditor.Tree.INodeInfo)) { }
     [global::Quire.Mirror.MirrorStub]
@@ -67,8 +55,6 @@ internal partial class VisualComboBoxControlNode : global::Quire.Controls.Intern
     protected override void OnPreviewKeyDown(global::System.Windows.Input.KeyEventArgs e) => base.OnPreviewKeyDown(e);
     [global::Quire.Mirror.MirrorStub]
     internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => base.GetNodeAtPoint(hitPoint);
-    [global::Quire.Mirror.MirrorStub]
-    public void SetSelectedIndex(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Controls.Core.ExtendedFont CreateOperatorExtendedFont(global::Quire.Controls.Core.IMathFormat mathFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

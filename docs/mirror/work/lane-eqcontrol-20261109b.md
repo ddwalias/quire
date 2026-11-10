@@ -261,3 +261,5 @@
 - Release IL: PASS, 1350 checked (`.mirror-cache/release-il-3537ea187231/release-il.json`).
 - Batch: `Controls.InputControls.ComboBoxControl`: `OnSelectionChanged` (override), `OnEditableComboBoxContentChanged` (raises the event, then refreshes when edit mode is off), properties `ViewModel`, `EditableComboBoxVisualTable`. `Controls.InputControls.ComboBoxViewModel`: properties `TableTitle`, `DataItems`, `RefreshInProgress` (private setters).
 - Release IL: PASS, 1359 checked (`.mirror-cache/release-il-a4d73a80d28b/release-il.json`).
+- Batch: `Controls.InputControls.ComboBoxControlWidget` (`IsEditModeActive`, `EditableComboBoxVisualTable`), `Controls.InputControls.EditableComboBoxTableBorder` (`IsEditModeActive`, `EditableTable`), `Controls.InputControls.EditableComboBoxTableCellsFontFormats.GetCellForeground`, `Controls.Internal.VisualComboBoxControlNode` (`ComboBoxControl`, `IsDropDownOpen`, `ComboBoxControlInfo`, `GetSelectedDisplayedText`, `IsEditModeActive`, `EditableComboBoxTable`, `SetSelectedIndex`).
+- Release IL: PASS, 1372 checked (`.mirror-cache/release-il-2a8ebc0ea0e7/release-il.json`).

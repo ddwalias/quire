@@ -29,6 +29,4 @@ public partial class EditableComboBoxTableCellsFontFormats
     public global::System.Windows.FontStyle UnitCellFontStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public EditableComboBoxTableCellsFontFormats(global::Quire.Controls.Core.IMathFormat mathFormat, global::Quire.Controls.Core.IMathFormat unitLabelFont) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush GetCellForeground(bool isUnitCell) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
