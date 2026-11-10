@@ -44,3 +44,4 @@ Batches are planned in dependency order:
 ## Results
 
 - Baseline: PASS, 1733 checked (`.mirror-cache/release-il-4c8b60c9212a/release-il.json`).
+- Batch 1 (VisualInputScriptableControlNodeEditor complete type): PASS, 1746 checked (`.mirror-cache/release-il-e849e1ef0e42/release-il.json`). Shapes: `OnPreviewKeyDown` uses `switch (e.Key)` with `Key.Up` and `Key.Down` which Roslyn lowers to branch and pop/pop matching Mathcad; `OnCaretStateChanged` visibility uses `CaretState == LeftMargin || CaretState == RightMargin ? Visible : Hidden`.

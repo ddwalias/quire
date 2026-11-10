@@ -11,34 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualInputScriptableControlNodeEditor, Ptc.Controls.EquationControl")]
 internal partial class VisualInputScriptableControlNodeEditor : global::Quire.Controls.Internal.VisualMathNodeEditor<global::Quire.Controls.Internal.VisualInputScriptableControlNode>, global::Quire.EquationEditor.View.IVisualInputControlEditor, global::Quire.EquationEditor.View.IVisualMathNodeEditor
 {
-    [global::Quire.Mirror.MirrorStub]
-    private double BORDER_THICKNESS;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Internal.Caret _caret;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Controls.Border _border;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty CaretStateProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.CaretStateValues CaretState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualInputScriptableControlNodeEditor(global::Quire.Controls.Internal.VisualMathNode editNode, global::Quire.Controls.Internal.VisualMathRegionNode region) : base(default(global::Quire.Controls.Internal.VisualMathNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnContextMenuOpening(global::System.Windows.Controls.ContextMenuEventArgs e) => base.OnContextMenuOpening(e);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnCaretColorChanged(global::System.Drawing.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void UpdateCaretBlinking() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnPreviewKeyDown(global::System.Windows.Input.KeyEventArgs e) => base.OnPreviewKeyDown(e);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Media.GeneralTransform GetDesiredTransform(global::System.Windows.Media.GeneralTransform transform) => base.GetDesiredTransform(transform);
-    [global::Quire.Mirror.MirrorStub]
-    protected static void HandleCaretPositionChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnCaretStateChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
