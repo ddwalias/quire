@@ -2,6 +2,32 @@ namespace Quire.EquationEditor.Tree.Scoping;
 
 public partial class LinearSegment
 {
+    public void Rebase(params int[] path)
+    {
+        global::Quire.Native.PtcEquationEditor.s[] segments = c;
+        foreach (global::Quire.Native.PtcEquationEditor.s segment in segments)
+        {
+            segment.a(path);
+        }
+    }
+
+    public static bool IsContinuousNaryChildren(MathNode leftNode, MathNode rightNode)
+    {
+        MathNode leftContainer = leftNode.ContainerRoot;
+        MathNode rightContainer = rightNode.ContainerRoot;
+        if (leftContainer != rightContainer)
+        {
+            MathNode leftParent = leftContainer.Parent;
+            MathNode rightParent = rightContainer.Parent;
+            if (leftParent == rightParent && leftParent.IsNary)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public MathNode GetNodeFromDirection(global::Quire.Direction side)
     {
         if (side == global::Quire.Direction.Indeterminate)

@@ -22,13 +22,9 @@ public partial class LinearSegment
     [global::Quire.Mirror.MirrorStub]
     public LinearSegment(global::Quire.EquationEditor.Tree.MathNode leftNode, global::Quire.EquationEditor.Tree.MathNode rightNode) { }
     [global::Quire.Mirror.MirrorStub]
-    public void Rebase(params int[] path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public bool IsInSegment(global::Quire.EquationEditor.Tree.MathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected bool a(global::Quire.EquationEditor.Tree.MathNode A_0, global::System.Collections.Generic.LinkedList<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Collections.Generic.LinkedList<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsContinuousNaryChildren(global::Quire.EquationEditor.Tree.MathNode leftNode, global::Quire.EquationEditor.Tree.MathNode rightNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
