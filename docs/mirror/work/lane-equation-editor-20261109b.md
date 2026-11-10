@@ -108,3 +108,4 @@
 - Batch 56: `Tree.MatrixNodeInfo.MakeReadOnly` and `MakeEditable`. Release IL PASS, 512 checked, 0 failures (`.mirror-cache/release-il-62eacffd7b29/release-il.json`); both empty methods matched first try.
 - Batch 57: five factories on `Tree.Transform.ParsedSExpressionToInlineTransform.a_` (`a` through `e`, Run/Bold/Italic/Underline/Subscript). Release IL PASS, 517 checked, 0 failures (`.mirror-cache/release-il-1d9a1bbabb8f/release-il.json`); each direct constructor matched first try.
 - Batch 58: `Tree.Transform.SExpressionToRlTransform.TransformIdSubNode`. Release IL PASS, 518 checked, 0 failures (`.mirror-cache/release-il-5466c1a45ef6/release-il.json`); helper parse and private `a(node)` calls matched first try.
+- Batch 59: `Tree.Transform.SExpressionToRlTransform` static initialization of `Default`. Release IL PASS, 519 checked, 0 failures (`.mirror-cache/release-il-397f5a6d6692/release-il.json`); direct construction from the two defaults matched first try.

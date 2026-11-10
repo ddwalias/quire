@@ -15,7 +15,6 @@ public partial class SExpressionToRlTransform
     private readonly global::Quire.EquationEditor.Tree.Transform.SExpressionToMathNodeTransform a__;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer b;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.EquationEditor.Tree.Transform.SExpressionToRlTransform Default;
     [global::Quire.Mirror.MirrorStub]
     private SExpressionToRlTransform(global::Quire.EquationEditor.Tree.Transform.SExpressionToMathNodeTransform A_0, global::Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer A_1) { }
