@@ -24,10 +24,6 @@ public partial class RichTextTitle : global::Quire.Controls.Text.RichTextBase
     [global::Quire.Mirror.MirrorStub]
     private void SanitizeUnsupportedFormatting() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void CollectUnsupportedBlocks(global::System.Windows.Documents.BlockCollection blocks, global::System.Collections.Generic.List<global::System.Windows.Documents.List> lists, global::System.Collections.Generic.List<global::System.Windows.Documents.Hyperlink> hyperlinks, global::System.Collections.Generic.List<global::System.Windows.Documents.InlineUIContainer> embeddedContent, global::System.Collections.Generic.List<global::System.Windows.Documents.BlockUIContainer> blockContainers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void CollectUnsupportedInlines(global::System.Windows.Documents.InlineCollection inlines, global::System.Collections.Generic.List<global::System.Windows.Documents.Hyperlink> hyperlinks, global::System.Collections.Generic.List<global::System.Windows.Documents.InlineUIContainer> embeddedContent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static void RemoveHyperlinkPreservingText(global::System.Windows.Documents.Hyperlink hyperlink) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ConvertListToParagraphs(global::System.Windows.Documents.List list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

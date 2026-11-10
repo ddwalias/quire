@@ -1520,4 +1520,22 @@ public partial class RichTextBase
             }
         }
     }
+
+    public string GetWordToAddToDictionary()
+    {
+        TextPointer pointer = GetPointerToAddDictionary();
+        if (pointer == null)
+        {
+            return null;
+        }
+
+        string word = null;
+        DocumentTextRange range = GetSpellingErrorRange(pointer);
+        if (DebugTools.AssertNotNull(range, null).Passed)
+        {
+            GetTextBoundary(LogicalDirection.Forward, out word, DictionaryHelper.DictionaryWordStopFlags, range);
+        }
+
+        return word;
+    }
 }

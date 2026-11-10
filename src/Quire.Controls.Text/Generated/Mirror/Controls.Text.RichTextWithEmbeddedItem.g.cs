@@ -72,8 +72,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     public override int CaretOffset { get => base.CaretOffset; set => base.CaretOffset = value; }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IWhiteboardItem ActiveItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool IsTabNavigatable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -85,8 +83,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     public global::Quire.Controls.Core.IMathFormat DeserializeMathFormat { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> DeserializeLabeledIdFormat { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> TargetLabeledIdFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Rect FlowDocumentRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -145,8 +141,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     protected override void PostPasting() => base.PostPasting();
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<object> EnumerateEmbeddedObjectsInRange(global::System.Windows.Documents.TextRange range) => base.EnumerateEmbeddedObjectsInRange(range);
-    [global::Quire.Mirror.MirrorStub]
-    private void AddItemToList(global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ExecuteAddItemToListCommand(global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

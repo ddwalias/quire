@@ -216,4 +216,55 @@ public partial class RichTextTitle
         title.ToggleOrientationRequest.Invoke();
         e.Handled = true;
     }
+
+    private static void CollectUnsupportedInlines(InlineCollection inlines, List<Hyperlink> hyperlinks, List<InlineUIContainer> inlineContainers)
+    {
+        foreach (Inline inline in inlines.ToList())
+        {
+            switch (inline)
+            {
+                case Hyperlink hyperlink:
+                    hyperlinks.Add(hyperlink);
+                    break;
+                case InlineUIContainer container:
+                    inlineContainers.Add(container);
+                    break;
+                case Span span:
+                    CollectUnsupportedInlines(span.Inlines, hyperlinks, inlineContainers);
+                    break;
+            }
+        }
+    }
+
+    private static void CollectUnsupportedBlocks(BlockCollection blocks, global::System.Collections.Generic.List<global::System.Windows.Documents.List> lists, List<Hyperlink> hyperlinks, List<InlineUIContainer> inlineContainers, List<BlockUIContainer> blockContainers)
+    {
+        foreach (Block block in blocks.ToList())
+        {
+            switch (block)
+            {
+                case global::System.Windows.Documents.List list:
+                    lists.Add(list);
+                    break;
+                case BlockUIContainer blockContainer:
+                    blockContainers.Add(blockContainer);
+                    break;
+                case Section section:
+                    CollectUnsupportedBlocks(section.Blocks, lists, hyperlinks, inlineContainers, blockContainers);
+                    break;
+                case global::System.Windows.Documents.Paragraph paragraph:
+                    if (paragraph.TextIndent != 0.0)
+                    {
+                        paragraph.TextIndent = 0.0;
+                    }
+
+                    if (paragraph.Margin != new Thickness(0.0))
+                    {
+                        paragraph.Margin = new Thickness(0.0);
+                    }
+
+                    CollectUnsupportedInlines(paragraph.Inlines, hyperlinks, inlineContainers);
+                    break;
+            }
+        }
+    }
 }

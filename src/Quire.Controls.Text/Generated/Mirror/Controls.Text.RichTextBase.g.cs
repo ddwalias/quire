@@ -158,8 +158,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     private void HandleSetCurrentProofingLanguage(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public string GetWordToAddToDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseMove(global::System.Windows.Input.MouseEventArgs args) => base.OnMouseMove(args);
     [global::Quire.Mirror.MirrorStub]
     private bool WasScriptElementDeletedOnChangeEvent(global::System.Windows.Controls.TextChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

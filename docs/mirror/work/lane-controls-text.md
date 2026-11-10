@@ -692,3 +692,25 @@ Remaining stub declarations in the lane: 134 (72 plain IL, 20 closure ordinal be
 - FindReplaceRichTextBox: private global::System.Collections.Generic.List<global::System.ValueTuple<bool, string>> ParseFormat
 - FindReplaceRichTextBox: private void PasteFormattedContent(string formattedText, string dataFormat) => throw global::Quire.M
 - FindReplaceRichTextBox: private void RemoveHyperlinksIfNeeded(global::System.Windows.Documents.TextRange range) => throw glo
+
+## Batch 98 — labeled-id format, insert plain text, dictionary word (3)
+
+- Exact: `RichTextWithEmbeddedItem.TargetLabeledIdFormat` (attached-property cast), `FindReplaceRichTextBox.InsertPlainText` (`Selection.Text = ""`, then a `Run` and caret at its end), `RichTextBase.GetWordToAddToDictionary` (virtual in Mathcad; the non-virtual stub still matched).
+- Rejected: `RichTextWithEmbeddedItem.LogDocumentContents`. Mathcad's body is a bare `ret` with unused locals and `.initlocals False`, the same artifact as `LogSizeChange`; kept as a stub.
+- Release IL: PASS — 521 checked, 0 failures (`.mirror-cache/gate-b98b`).
+
+## Batch 99 — RichTextWithEmbeddedItem active item (1)
+
+- Exact: `ActiveItem` get/set. The setter returns early on equality, throws `ArgumentException` for a non-child, deactivates the old item, stores, and when the new item is non-null clears saved state, activates it and calls `Activate(true)` inside that block (Mathcad keeps `Activate(true)` inside the `if`, the first attempt put it after).
+- Release IL: PASS — 523 checked, 0 failures (`.mirror-cache/gate-b99c`).
+
+## Batch 100 — RichTextWithEmbeddedItem add item to list (1)
+
+- Exact: `AddItemToList` (contains-guard, event hookups, container assertion, the `while` insertion point by `ElementStart.CompareTo`, then `SetItemContextMenuHandling` and `Add`).
+- Release IL: PASS — 524 checked, 0 failures (`.mirror-cache/gate-b100`).
+
+## Batch 101 — RichTextTitle collect unsupported inlines and blocks (2)
+
+- Exact: `CollectUnsupportedInlines`, `CollectUnsupportedBlocks` (recursive, with the `Paragraph` text-indent and margin reset).
+- Rejected: the `if (x != null) { ...; continue; }` chain. Roslyn emitted `brfalse`-based branches; Mathcad's layout is `brtrue` to out-of-line bodies with `br` to the loop condition, the layout of a type-pattern `switch`. The `switch (inline) { case Hyperlink h: ... break; }` form matched.
+- Release IL: PASS — 526 checked, 0 failures (`.mirror-cache/gate-b101b`).

@@ -41,4 +41,11 @@ public partial class FindReplaceRichTextBox
             }
         }
     }
+
+    private void InsertPlainText(string formattedText, TextPointer insertPosition)
+    {
+        Selection.Text = string.Empty;
+        Run run = new Run(formattedText, insertPosition);
+        CaretPosition = run.ContentEnd;
+    }
 }

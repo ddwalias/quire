@@ -1332,4 +1332,72 @@ public partial class RichTextWithEmbeddedItem
             ResetCaretPositionWhenNecessary(lineStart);
         }
     }
+
+    public IDictionary<IdLabels, ExtendedFont> TargetLabeledIdFormat => (IDictionary<IdLabels, ExtendedFont>)GetValue(AttachedProperties.LabeledIdFormatProperty);
+
+    public IWhiteboardItem ActiveItem
+    {
+        get => _activeItem;
+        set
+        {
+            if (_activeItem == value)
+            {
+                return;
+            }
+
+            if (value != null && !WhiteboardItems.Contains(value))
+            {
+                throw new ArgumentException("Only a child can be set as an ActiveItem");
+            }
+
+            if (_activeItem != null)
+            {
+                DeactivateActiveItem();
+            }
+
+            _activeItem = value;
+            if (_activeItem != null)
+            {
+                ClearSavedState();
+                ActivateActiveItem();
+                Activate(true);
+            }
+
+            UpdateCurrentFormats();
+            UpdateHideFromCalculationButton();
+            FirePropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(ActiveItem)));
+        }
+    }
+
+    private void AddItemToList(IWhiteboardItemInText item)
+    {
+        if (WhiteboardItems.Contains(item))
+        {
+            return;
+        }
+
+        item.OnGotFocusEvent += HandleChildItemGotFocus;
+        item.RequestRemove += HandleChildItemRequestRemove;
+        InlineUIContainer container = GetContainer(item);
+        if (DebugTools.AssertNotNull(container, "Adding an embedded item that is not hosted in the document.").Failed)
+        {
+            return;
+        }
+
+        int index = 0;
+        while (index < WhiteboardItems.Count)
+        {
+            InlineUIContainer other = GetContainer(WhiteboardItems[index] as IWhiteboardItemInText);
+            if (other != null && container.ElementStart.CompareTo(other.ElementStart) < 0)
+            {
+                WhiteboardItems.Insert(index, item);
+                return;
+            }
+
+            index++;
+        }
+
+        SetItemContextMenuHandling(item);
+        WhiteboardItems.Add(item);
+    }
 }

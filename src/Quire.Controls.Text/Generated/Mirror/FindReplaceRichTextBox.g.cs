@@ -34,8 +34,6 @@ public partial class FindReplaceRichTextBox : global::Quire.Controls.Text.RichTe
     [global::Quire.Mirror.MirrorStub]
     private void TruncateTextIfNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void InsertPlainText(string formattedText, global::System.Windows.Documents.TextPointer insertPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ConvertSExpressionAndPasteText(string formattedText, global::System.Windows.Documents.TextPointer insertPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.List<global::System.ValueTuple<bool, string>> ParseFormattedTextToTextSegments(string formattedText) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
