@@ -4,6 +4,9 @@ using System.Windows;
 using System.Windows.Input;
 using Quire.Controls.Core;
 using Quire.EquationEditor.View;
+using System.Linq;
+using Quire.Wpf;
+using Quire.Controls.InputControls;
 
 namespace Quire.Controls.Internal;
 
@@ -388,6 +391,137 @@ internal partial class VisualMathRegionNode
         if (InsertSymbolicEvaluation != null)
         {
             InsertSymbolicEvaluation.Invoke();
+        }
+    }
+
+    public void CloseEditingMode()
+    {
+        WpfUtils.ExecuteCommandIfFocusedElementIsDescendantOf(this, EditableComboBoxCommands.CloseEditingMode);
+    }
+
+    public void CloseComboBoxDropDown()
+    {
+        WpfUtils.ExecuteCommandIfFocusedElementIsDescendantOf(this, ComboBoxControl.CloseComboBoxDropDownCommand);
+    }
+
+    protected override void OnLostKeyboardFocus(System.Windows.Input.KeyboardFocusChangedEventArgs e)
+    {
+        base.OnLostKeyboardFocus(e);
+        ClearKeyStrokesCache();
+    }
+
+    protected override void OnLostMouseCapture(System.Windows.Input.MouseEventArgs e)
+    {
+        base.OnLostMouseCapture(e);
+        ClearKeyStrokesCache();
+    }
+
+    protected override void OnGotKeyboardFocus(System.Windows.Input.KeyboardFocusChangedEventArgs e)
+    {
+        base.OnGotKeyboardFocus(e);
+        if (e.NewFocus == this)
+        {
+            ImeHandler.HandleImeFocus();
+        }
+    }
+
+    public void FireInsertKeyword(string sExpression)
+    {
+        if (InsertKeyword != null)
+        {
+            InsertKeyword.Invoke(sExpression);
+        }
+    }
+
+    public void FireInsertModifier(string sExpression)
+    {
+        if (InsertModifier != null)
+        {
+            InsertModifier.Invoke(sExpression);
+        }
+    }
+
+    public void FireSwitchLineBreakOperator()
+    {
+        if (SwitchLineBreakOperator != null)
+        {
+            SwitchLineBreakOperator.Invoke();
+        }
+    }
+
+    internal void FireCanNavigateToOppositeOfScope(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        bool canNavigate = false;
+        if (CanNavigateToOppositeOfScope != null)
+        {
+            CanNavigateToOppositeOfScope.Invoke(ref canNavigate);
+        }
+
+        e.CanExecute = canNavigate;
+    }
+
+    public void FireCanInsertKeyword(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        bool canInsert = false;
+        if (CanInsertKeyword != null)
+        {
+            canInsert = CanInsertKeyword.Invoke();
+        }
+
+        e.CanExecute = canInsert;
+    }
+
+    public void OnDragCommitElement(System.Windows.Vector offset)
+    {
+        if (DropRegion != null)
+        {
+            DropRegion.Invoke(offset);
+        }
+    }
+
+    private static void OnRootNodePropertyChanged(System.Windows.DependencyObject d, System.Windows.DependencyPropertyChangedEventArgs e)
+    {
+        ((VisualMathRegionNode)d).OnRootNodeChanged(e);
+    }
+
+    private Quire.Controls.Internal.VisualDefinitionNode GetDefinitionNode()
+    {
+        return WpfUtils.GetVisualDescendantsBreadthFirstOfType<VisualDefinitionNode>(this).FirstOrDefault();
+    }
+
+    protected override void OnMouseUp(System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (Mouse.Captured == this)
+        {
+            Mouse.Capture(null);
+        }
+
+        base.OnMouseUp(e);
+    }
+
+    protected override void OnStylusDown(System.Windows.Input.StylusDownEventArgs e)
+    {
+        e.Handled = OnInput(e.GetPosition(this), e.TapCount, true);
+    }
+
+    private Quire.Controls.Internal.VisualMathNodeHitTestResult GetHitTestResult(System.Windows.Point position)
+    {
+        return GetNodeAtPoint(position) as VisualMathNodeHitTestResult;
+    }
+
+    private void HandleRequestRestoreInsertionPoint(object sender, System.Windows.RoutedEventArgs args)
+    {
+        if (IsLogicalFocusWithin)
+        {
+            args.Handled = true;
+        }
+    }
+
+    public void EnsureFocus()
+    {
+        if (DebugTools.DevAssert(IsLogicalFocusWithin, null).Passed && !IsFocused)
+        {
+            base.Focus();
         }
     }
 }

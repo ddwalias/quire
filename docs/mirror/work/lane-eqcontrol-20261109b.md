@@ -221,3 +221,5 @@
 - Release IL: PASS, 1077 checked (`.mirror-cache/release-il-82357712016d/release-il.json`).
 - Batch: `Controls.Internal.VisualMathRegionNode` event forwarders: 33 `Fire*` methods (`if (Handler != null) Handler.Invoke()` shape), `FireLoaded`, `FireKeypress`, `FireActivated`, `FireNodeClick`, `FireNodeDoubleClick`, `OnPiCommand`, `OnInfinityCommand`. `FireCanNavigateToOppositeOfScope`, `FireInsertKeyword`, `FireInsertModifier` and the closures stay open.
 - Release IL: PASS, 1110 checked (`.mirror-cache/release-il-6b94e722251f/release-il.json`).
+- Batch: `Controls.Internal.VisualMathRegionNode` second group: `CloseEditingMode`, `CloseComboBoxDropDown`, `OnLostKeyboardFocus`, `OnLostMouseCapture`, `OnGotKeyboardFocus`, `OnMouseUp`, `OnStylusDown` (overrides, pass-through stubs removed), `FireInsertKeyword`, `FireInsertModifier`, `FireSwitchLineBreakOperator`, `FireCanNavigateToOppositeOfScope`, `FireCanInsertKeyword`, `OnDragCommitElement`, `OnRootNodePropertyChanged`, `GetDefinitionNode`, `GetHitTestResult`, `HandleRequestRestoreInsertionPoint`, `EnsureFocus`.
+- Release IL: PASS, 1128 checked (`.mirror-cache/release-il-58db2285b44e/release-il.json`).
