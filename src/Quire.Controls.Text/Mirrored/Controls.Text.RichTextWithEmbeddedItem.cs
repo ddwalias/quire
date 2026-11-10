@@ -1207,4 +1207,129 @@ public partial class RichTextWithEmbeddedItem
     }
 
     protected global::Quire.Calculation.Core.Support.CalculatableChildHider InitializeChildManager() => new global::Quire.Calculation.Core.Support.CalculatableChildHider(WhiteboardItems, FireCalculatableAdded, FireCalculatableRemoved, FireCalculatableMoved, true);
+
+    private void OnPreviewMoveUpByPage(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (ActiveItem != null)
+        {
+            IWhiteboardItemInText item = ActiveItem as IWhiteboardItemInText;
+            if (!item.CanNavigate(Direction.Up))
+            {
+                ActiveItem = null;
+                Activate(true);
+                InlineUIContainer container = GetContainer(item);
+                if (DebugTools.AssertNotNull(container, "The active embedded item is not hosted in the document.").Passed)
+                {
+                    SetCaretPositionAndClearSuggestedX(container.ElementStart.GetInsertionPosition(LogicalDirection.Backward));
+                }
+
+                EditingCommands.MoveUpByPage.Execute(null, this);
+            }
+        }
+        else
+        {
+            CaretShouldLeaveTextRegionInDirection(CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection.Up);
+        }
+    }
+
+    public void OnPreviewMoveDownByPage(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (ActiveItem != null)
+        {
+            IWhiteboardItemInText item = ActiveItem as IWhiteboardItemInText;
+            if (!item.CanNavigate(Direction.Down))
+            {
+                ActiveItem = null;
+                Activate(true);
+                InlineUIContainer container = GetContainer(item);
+                if (DebugTools.AssertNotNull(container, "The active embedded item is not hosted in the document.").Passed)
+                {
+                    SetCaretPositionAndClearSuggestedX(container.ElementStart.GetInsertionPosition(LogicalDirection.Backward));
+                }
+
+                EditingCommands.MoveDownByPage.Execute(null, this);
+            }
+        }
+        else
+        {
+            CaretShouldLeaveTextRegionInDirection(CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection.Down);
+        }
+    }
+
+    private void OnPreviewMoveUpByLine(object sender, ExecutedRoutedEventArgs e)
+    {
+        TextPointer lineStart;
+        if (ActiveItem != null)
+        {
+            IWhiteboardItemInText item = ActiveItem as IWhiteboardItemInText;
+            if (!item.CanNavigate(Direction.Up))
+            {
+                e.Handled = true;
+                ActiveItem = null;
+                Activate(true);
+                InlineUIContainer container = GetContainer(item);
+                if (DebugTools.AssertNotNull(container, "The active embedded item is not hosted in the document.").Passed)
+                {
+                    SetCaretPositionAndClearSuggestedX(container.ElementStart.GetInsertionPosition(LogicalDirection.Backward));
+                }
+
+                EditingCommands.MoveUpByLine.Execute(null, this);
+            }
+
+            return;
+        }
+        else
+        {
+            if (CaretShouldLeaveTextRegionInDirection(CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection.Up))
+            {
+                return;
+            }
+
+            if (GetLineStartPosition(CaretPosition, -1) == null)
+            {
+                return;
+            }
+
+            lineStart = GetLineStartPosition(CaretPosition, 0);
+            ResetCaretPositionWhenNecessary(lineStart);
+        }
+    }
+
+    private void OnPreviewMoveDownByLine(object sender, ExecutedRoutedEventArgs e)
+    {
+        TextPointer lineStart;
+        if (ActiveItem != null)
+        {
+            IWhiteboardItemInText item = ActiveItem as IWhiteboardItemInText;
+            if (!item.CanNavigate(Direction.Down))
+            {
+                ActiveItem = null;
+                Activate(true);
+                InlineUIContainer container = GetContainer(item);
+                if (DebugTools.AssertNotNull(container, "The active embedded item is not hosted in the document.").Passed)
+                {
+                    SetCaretPositionAndClearSuggestedX(container.ElementStart.GetInsertionPosition(LogicalDirection.Backward));
+                }
+
+                EditingCommands.MoveDownByLine.Execute(null, this);
+            }
+
+            return;
+        }
+        else
+        {
+            if (CaretShouldLeaveTextRegionInDirection(CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection.Down))
+            {
+                return;
+            }
+
+            lineStart = GetLineStartPosition(CaretPosition, 2);
+            if (lineStart == null)
+            {
+                return;
+            }
+
+            ResetCaretPositionWhenNecessary(lineStart);
+        }
+    }
 }

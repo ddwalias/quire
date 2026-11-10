@@ -30,8 +30,6 @@ public partial class FindReplaceRichTextBox : global::Quire.Controls.Text.RichTe
     [global::Quire.Mirror.MirrorStub]
     private void AddCommandsHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void PreventTextWrapping() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void HandlePaste() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void TruncateTextIfNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -59,8 +57,4 @@ public partial class FindReplaceRichTextBox : global::Quire.Controls.Text.RichTe
     protected override void ExecuteToggleScriptUndoCommand(global::System.Windows.Documents.TextRange toggleRange, global::Quire.Controls.Text.ScriptState toggleToState) => base.ExecuteToggleScriptUndoCommand(toggleRange, toggleToState);
     [global::Quire.Mirror.MirrorStub]
     protected override void HandleReplace(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => base.HandleReplace(sender, e);
-    [global::Quire.Mirror.MirrorStub]
-    public void GetSubscriptPositions(global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RemoveAdditionalParagraphs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

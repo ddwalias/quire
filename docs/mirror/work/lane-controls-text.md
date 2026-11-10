@@ -588,3 +588,19 @@
 - Note: `SelectTo` needed both ternary arms reversed from the first attempt; the first two attempts differed at instruction 3 and then at 7.
 - Hand-written: `src/Quire.Controls.Text/Mirrored/Controls.Text.RichTextBase.cs`; stubs removed from `Generated/Mirror/Controls.Text.RichTextBase.g.cs`.
 - Release IL: PASS — 511 checked, 0 failures (`.mirror-cache/gate-b94d`).
+
+## Batch 95 — FindReplaceRichTextBox wrapping, subscript positions, and extra paragraphs (3)
+
+- New hand-written partial `src/Quire.Controls.Text/Mirrored/FindReplaceRichTextBox.cs` (namespace `Quire`, the type's own namespace). Exact: `PreventTextWrapping` (`Document.PageWidth = 1000`), `GetSubscriptPositions` (clear, then `BuildSubscriptPositions(TextRange, ...)`), `RemoveAdditionalParagraphs` (null-document and first-block-is-paragraph guards, then the `Skip(1).OfType<Paragraph>().ToList()` removal loop).
+- Release IL: PASS — 514 checked, 0 failures (`.mirror-cache/gate-b95`).
+
+## Batch 96 — RichTextWithEmbeddedItem page-up and page-down handlers (2)
+
+- Exact: `OnPreviewMoveUpByPage` (private) and `OnPreviewMoveDownByPage` (public). The active-item branch, `CanNavigate` guard, container caret placement, and `EditingCommands.Move*ByPage.Execute` follow the IL; the empty-active-item branch calls `CaretShouldLeaveTextRegionInDirection` with the leaving direction.
+- Release IL: PASS — 516 checked, 0 failures (`.mirror-cache/gate-b96`).
+
+## Batch 97 — RichTextWithEmbeddedItem line-up and line-down handlers (2)
+
+- Exact: `OnPreviewMoveUpByLine` (sets `Handled`), `OnPreviewMoveDownByLine` (no `Handled`).
+- Shapes that were needed: `TextPointer lineStart;` is hoisted to the method top, because Mathcad's local slot 0 is the else-branch line start and the item is slot 1. The `if (...)` body ends with an explicit `return;` so the `CanNavigate` path jumps to the shared `ret`, as Mathcad's layout does.
+- Release IL: PASS — 518 checked, 0 failures (`.mirror-cache/gate-b97c`).
