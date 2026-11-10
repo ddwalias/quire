@@ -26,29 +26,17 @@ public abstract partial class OleBaseComponentModel : global::Quire.Controls.Mat
     [global::Quire.Mirror.MirrorStub]
     protected internal static global::Quire.Controls.ExcelComponent.IOleBaseComponentItemManager OleComponentItemMgr { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.ResourceDictionary Resources { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override int BlockSectionCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal virtual global::Quire.Controls.ExcelComponent.View.IOleContainerItem OleContainerItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> Inputs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> Outputs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.EngineError Error { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool IsErrorFromChild { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected uint ComponentNodeHandle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected abstract global::System.Collections.Generic.IEnumerable<string> ComponentErrors { get; }
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Collections.Generic.IEnumerable<global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild> CalculatableFragments { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableWrapper> CalculatableWrappers { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int ComponentId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected virtual global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatablesConnectedToTheEngine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -119,8 +107,6 @@ public abstract partial class OleBaseComponentModel : global::Quire.Controls.Mat
     protected abstract void RemoveCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc);
     [global::Quire.Mirror.MirrorStub]
     private void HandleChildCalcHiddenStateChanged(global::Quire.Calculation.Core.ICalculatable calc, bool arg2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void HandleContainerChildrenChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Calculation.Core.Support.CalculatableChildHider InitializeChildManager() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

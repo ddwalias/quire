@@ -22,13 +22,7 @@ internal partial class ChartComponentCalculatableWrapper : global::Quire.Control
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.ExcelComponent.Model.ChartWrapperType _chartType;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.ExcelComponent.Model.BaseComponentEquationType ComponentEquationType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<uint> TraceId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.ExcelComponent.Model.ChartWrapperType ChartWrapperType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.ExcelComponent.Model.ChartWrapperType PreviousChartType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string RlIdWithLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
