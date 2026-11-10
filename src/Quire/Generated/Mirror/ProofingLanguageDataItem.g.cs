@@ -16,21 +16,5 @@ public partial class ProofingLanguageDataItem : global::Quire.IDropDownSelectorI
     [global::Quire.Mirror.MirrorStub]
     private bool _isChecked;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Globalization.CultureInfo Culture { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object Header { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsChecked { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public ProofingLanguageDataItem(global::System.Globalization.CultureInfo culture) { }
-    [global::Quire.Mirror.MirrorStub]
-    public ProofingLanguageDataItem() { }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
     internal static string GetCultureName(global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
