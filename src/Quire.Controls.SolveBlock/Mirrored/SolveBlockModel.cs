@@ -318,6 +318,33 @@ internal partial class SolveBlockModel
         Solver.InsertChildBefore(insertBefore, GetWrappedCalculatable(newSolverChild));
     }
 
+    private void UpdateTheSolverIfNeededToReflectMovedCalculatable(
+        global::Quire.Calculation.Core.ICalculatable movedCalc)
+    {
+        if (movedCalc == Solver)
+        {
+            TheSolverMoved();
+            return;
+        }
+
+        global::Quire.Calculation.Core.ICalculatable wrappedCalculatable = GetWrappedCalculatable(movedCalc);
+        if (!IsChildAboveSolver(movedCalc))
+        {
+            Solver.RemoveChild(wrappedCalculatable);
+        }
+        else if (Solver.IsChild(wrappedCalculatable))
+        {
+            global::Quire.Calculation.Core.ICalculatable moveBefore =
+                FindSolverChildAfterModelChild(wrappedCalculatable);
+            Solver.MoveChildBefore(moveBefore, wrappedCalculatable);
+        }
+        else if (IsSolverAggregateChildType(movedCalc))
+        {
+            MirrorChildInSolverAggregate(wrappedCalculatable);
+            return;
+        }
+    }
+
     [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
     public global::Quire.Controls.ISolveBlockCalculatable UnitTest_GetSolveBlockCalculatableWrapper(
         global::Quire.Calculation.Core.ICalculatable calculatable)

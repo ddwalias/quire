@@ -62,3 +62,13 @@
 - Batch 63 `SolveBlockModel` calculator events: PASS (`190 checked`; `.mirror-cache/release-il-7e05cb9c9a7d`). Initial addition guard had opposite branch direction; a direct branch to the addition body matched Release IL.
 - `GetEquationTypeOfRl` remains stubbed due enum/closure mismatch.
 - Remaining: 86 stub markers in generated types; known blockers: `GetDefinedVariable` call vs. callvirt mismatch, `GetEquationTypeOfRl` enum/closure mismatch, `MatchEquationType` local-slot order mismatch, deserialization strategy mapped type mismatch, `SolveBlockChildManager.Rewrap` anonymous helper without a Mathcad counterpart and `SolverAggregate.Children` closure ordinal mismatch.
+## Remaining stub classification (2026-11-10)
+
+The 86 generated stub markers are classified as follows; “unblocked” means no checkpointed IL/ownership obstacle or recorded closure-ordinal failure is known for that member.
+
+- Checkpointed blockers (8 markers): `SolveBlockCalculatable.GetEquationTypeOfRl`; `SolveBlockCalculatableAggregate.GetDefinedVariable`; `SolveBlockChildManager.Rewrap`; all four `SolveBlockDeserializationStrategy` markers (mapped-type mismatch); `SolveBlockModel.MatchEquationType`.
+- Closure-ordinal issues (7 markers): `SolverAggregate.Children` (recorded closure ordinal mismatch) and the six `SolveBlockControl` indicator properties (`GuessValuesIndicatorTop/Bottom`, `ConstraintsIndicatorTop/Bottom`, `SolverIndicatorTop/Bottom`), whose prior candidate shifted `get_EngineResults` closure from `b__62_0` to `b__50_0`.
+- Unblocked (71 markers): all remaining markers in `SolveBlockCalculatable`, `SolveBlockCalculatableAggregate`, `SolveBlockControl`, `SolveBlockModel`, and `SolverAggregate`, excluding the members listed in the two categories above. This includes fields/constants, constructors, simple accessors, overrides, and methods; each is eligible for a batch after its Release IL is read. No new closure blocker has yet been inferred for these members.
+
+No classification changes the generated files; this inventory records the current state before further implementation.
+- Batch 64 `SolveBlockModel.UpdateTheSolverIfNeededToReflectMovedCalculatable`: PASS (`191 checked`; `.mirror-cache/release-il-281b1938a523`). The explicit return after `MirrorChildInSolverAggregate` preserves the IL branch target followed by a separate method return.

@@ -48,8 +48,6 @@ internal partial class SolveBlockModel : global::Quire.Controls.Mathboard.Aggreg
     [global::Quire.Mirror.MirrorStub]
     private bool MatchEquationType(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.SolveBlockEquationTypes eqType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void UpdateTheSolverIfNeededToReflectMovedCalculatable(global::Quire.Calculation.Core.ICalculatable movedCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void TheSolverMoved() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.ICalculatable FindSolverChildAfterModelChild(global::Quire.Calculation.Core.ICalculatable modelChild) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
