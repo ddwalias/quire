@@ -247,6 +247,18 @@ internal partial class SolveBlockModel
         }
     }
 
+    public override string Rl
+    {
+        get
+        {
+            if (Solver == null || global::System.String.IsNullOrEmpty(Solver.DefinedRl))
+                return "nil";
+
+            return global::System.String.Format(
+                "(define {0} {1})", Solver.DefinedRl, SolverResultIdName);
+        }
+    }
+
     protected override global::Quire.Calculation.Core.Support.CalculatableChildHider InitializeChildManager()
     {
         return new SolveBlockChildManager(
