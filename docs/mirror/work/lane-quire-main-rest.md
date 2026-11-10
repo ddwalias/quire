@@ -348,3 +348,13 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
 - **Batch 10 (dimension edit view model, U):** `DimensionEditDialogViewModel` (DimensionDataSource, UnitDataSource with its lambda, Action, IsDimensionEnabled, DimensionSelectedItem, UnitSelectedItem, IsCustomDataChanged, ctor, HandlePostDimensionChanged). Fields stay generated.
   - Gate: PASS, 487 checked. Report: `.mirror-cache/release-il-4dc5c6e1905d/release-il.json`.
   - Shape: the lambda in `UnitDataSource` is `<get_UnitDataSource>b__10_0` in Mathcad. The ordinal counts the constructor, which comes first in Mathcad's source, so the constructor moved to the top of the hand-written members.
+
+## Remaining (after batch 10)
+
+- Markers left in `rest` (non-Controls): 3152 in 276 files before batch 10; recount after landing. Batches 1–10 removed 165 markers from 26 files.
+- **Blocked, not attempted:** COM/native class factories and registration (`IClassFactory*`, `ComNativeExternalApi`, `MathcadPrime*ClassFactory*`, `MathcadPrimeComServerManager`, `LICINFO`, `AddonsLoaderHelper` P/Invoke); settings and product literals (`Properties.Settings`, `ProductInfo.Constants`, `CultureHelper`).
+- **Blocked, type/surface decisions:** `WindowTabTupleData.Header` (type-map `DockWindow` → `AvalonDock.Layout.LayoutAnchorable` has no `Header`); `FontConstants` is not in Quire (`StyleFontFamilyConverter`, `MathFontSizeValidationRule`, `TextStyleProperties`, `MathSymbolMenuItemConverter`); `IPageNumberControl`, `ISavedDateControl`, `XmlLanguageHelper` are not in Quire (`PageNumberIsCheckedConverter`, `SavedDateIsCheckedConverter`, `XmlLanguageToCultureInfoConverter`); `TextStylePropertyInfoExt.IsInherited` is not in Quire.Core (`TextStyleInheritedFontWeight`).
+- **Mismatch kept as stub:** `UniqueTextStyleNameRule.Validate` (Mathcad uses `call` for `String.IndexOfAny`; Roslyn emits `callvirt`).
+- **XAML (78 files, 1336 markers):** `InitializeComponent`, `Connect`, `_contentLoaded` and XAML-named fields stay blocked. Code members in those types are not yet attempted.
+- **Automation (65 files, 834 markers):** not attempted; per-member work after the code batches.
+- **Pure code still to do (about 850 markers in about 110 files):** view models (`TextStyleEditDialogViewModel`, `SystemUnitEditDialogViewModel`, `CustomMarginsViewModel`, `ColumnViewModel`), `MruFiles`, `Behaviors`, `MessageBoxes`, `LocalizedFontNameConverter`, `ProofingLanguage*`, `AppCommands`, `IntegrationCommands`, and the WPF control classes.
