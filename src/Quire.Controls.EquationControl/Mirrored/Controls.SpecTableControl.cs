@@ -1,9 +1,14 @@
+#nullable disable
 using Quire.Calculation.Core;
 using Quire.Controls.Core;
+using Quire.EquationEditor.SpecTable;
 using Quire.Controls.Core.IORegions;
 using Quire.Matrices;
 using Quire.PersistentData;
 using System.Windows;
+using Quire.EquationEditor.SpecTable.Model;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Quire.Controls;
 
@@ -140,4 +145,49 @@ public partial class SpecTableControl
     public int Columns => Model.ColumnCount;
 
     public string RegionSExpression => Model.SExpression;
+
+    private static void HandleCalcIsDisabledChanged(System.Windows.DependencyObject d, System.Windows.DependencyPropertyChangedEventArgs e)
+    {
+        SpecTableControl table = d as SpecTableControl;
+        if (table != null)
+        {
+            table.FireContentAndRegionChangedEvents(IORegionChangeType.CalcIsDisabledStatus);
+        }
+    }
+
+    private void ExecuteClearMathFormat(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        MathFormat.ClearFormat();
+    }
+
+    private void ExecuteIncreaseFontSize(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        MathFormat.IncreaseFontSize();
+    }
+
+    private void ExecuteDecreaseFontSize(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        MathFormat.DecreaseFontSize();
+    }
+
+    private void ExecuteChangeFontColor(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        MathFormat.ChangeFontColor((Color)e.Parameter);
+    }
+
+    private void ExecuteChangeHighlightColor(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        MathFormat.ChangeHighlightColor((Color?)e.Parameter);
+    }
+
+    public static Quire.Controls.SpecTableControl DefinitionListToSpecTable(System.Collections.Generic.List<Quire.EquationEditor.Tree.MathNode> definionsList)
+    {
+        ISpecTableModel model = SpecTableModel.DefinitionsListToSpecTableModel(definionsList);
+        if (model == null)
+        {
+            return null;
+        }
+
+        return new SpecTableControl(model);
+    }
 }

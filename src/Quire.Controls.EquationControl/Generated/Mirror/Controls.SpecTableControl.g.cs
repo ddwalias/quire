@@ -100,8 +100,6 @@ public partial class SpecTableControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::System.Windows.DependencyObject, global::Quire.Controls.Core.IORegions.IORegionChangeType> IORegionChanged;
     [global::Quire.Mirror.MirrorStub]
-    private static void HandleCalcIsDisabledChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Activate(bool isActive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnTraversedFocusEvent(object sender, global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.FocusNavigationDirection> args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -120,21 +118,9 @@ public partial class SpecTableControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     public SpecTableControl(string[,] data) { }
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.SpecTableControl DefinitionListToSpecTable(global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> definionsList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal SpecTableControl(global::Quire.EquationEditor.SpecTable.ISpecTableModel model) { }
     [global::Quire.Mirror.MirrorStub]
     private void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ExecuteClearMathFormat(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ExecuteIncreaseFontSize(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ExecuteDecreaseFontSize(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ExecuteChangeFontColor(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ExecuteChangeHighlightColor(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleOnPreviewCommit(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
