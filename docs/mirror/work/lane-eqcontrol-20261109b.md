@@ -158,3 +158,6 @@
 - Batch: `Controls.InputControls.InputControlEngine` (`_engineType` field initializer, protected `.ctor`, `EngineType`, abstract `Dispose`); `Controls.InputControls.InputScriptableControlViewModel` (`.ctor` passing the model, `Model`); `Controls.InsertIdCommandParameter` (`.ctor`, `Name`, `Label`); `Controls.InsertFunctionCommandParameter` (three constructors, `ArgsCount`, `Args`).
 - Shapes tried: the engine type set in the constructor FAILED (Mathcad stores it before the base call, so it is a field initializer); the field initializer matched. The default-label constructors use `IdLabels.Function` (value 3).
 - Release IL: PASS, 889 checked (`.mirror-cache/release-il-3689cb700d70/release-il.json`). Earlier candidate: FAIL at `970b4dfb4605`.
+- Batch: `Controls.Internal.CaretAdorner.SetCaretType` (caret colour chosen by read-write flag).
+- Shapes tried: plain if/else assignment matched on the first candidate.
+- Release IL: PASS, 890 checked (`.mirror-cache/release-il-86f426de36f4/release-il.json`).

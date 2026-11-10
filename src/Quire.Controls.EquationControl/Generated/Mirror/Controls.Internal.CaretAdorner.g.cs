@@ -23,6 +23,4 @@ internal partial class CaretAdorner : global::Quire.Controls.Core.VisualAdorner
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
-    [global::Quire.Mirror.MirrorStub]
-    public void SetCaretType(bool isReadWrite) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
