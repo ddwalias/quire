@@ -288,15 +288,4 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
         [global::Quire.Mirror.MirrorStub]
         private double LimitOffsetBasedOnMinimumHeightAndCaretPosition() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+PasteOleComponentItemsCommand, Ptc.Controls.ExcelComponent")]
-    public partial class PasteOleComponentItemsCommand : global::Quire.Controls.Mathboard.MathboardViewModel.PasteMathboardItemsCommand
-    {
-        [global::Quire.Mirror.MirrorStub]
-        private global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel OleBaseComponentViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public PasteOleComponentItemsCommand(global::Quire.Controls.ExcelComponent.ViewModel.IOleBaseComponentViewModel viewModel, string commandName, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> pasteItemsAtLocation) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string), default(global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point>)) { }
-        [global::Quire.Mirror.MirrorStub]
-        protected override bool DoWithResize() => base.DoWithResize();
-    }
 }
