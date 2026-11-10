@@ -340,3 +340,5 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
 - **Batch 7 (text style commands, options, rule properties, U):** `ChangeTextStyleCommand` and `DeleteTextStyleCommand` (Name, ctor, Do, Undo, Redo, Execute), `SpiritOptions` (`_instance` initializer, const, Instance, EnableGettingStartedTab, PropertyChanged event, ctor), `UniqueTextStyleNameRule` (StyleNames, DependencyPropertyHelper). `UniqueTextStyleNameRule.Validate` stays a generated stub.
   - Gate: PASS, 432 checked. Report: `.mirror-cache/release-il-e03ddd5f2758/release-il.json`.
   - Blocked, stub kept: `UniqueTextStyleNameRule.Validate`. Mathcad calls `String.IndexOfAny` with `call`; Roslyn emits `callvirt` for the same receiver (the first attempt failed on that call alone).
+- **Batch 8 (converters, U):** `WorksheetPageLayoutToRowCountConverter` (Convert, ConvertBack), `NumberStyleEnablesRadixStyleMultiConverter` (Convert, ConvertBack), `ReadonlyOptionConverter` (SaveAndSync const, Instance, Convert, ConvertBack).
+  - Gate: PASS, 439 checked. Report: `.mirror-cache/release-il-d9283ec20269/release-il.json`.
