@@ -364,6 +364,8 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
   - Shapes: `(double)` casts where Mathcad emits `conv.r8` on `Nullable<double>.Value`; `textStyleData?.BaseOnKey != null` (Roslyn emits `call` for the property as Mathcad does; `!= null` after `&&` emits `callvirt`); a two-case enum `switch` written as `if`/`else if` (Mathcad lays out the first case body before the second test); `ResetValue` tests `is TextDecorationCollection textDecorations`. Unmarked placeholders keep the constructor's lambda ordinal (`<.ctor>b__20_0`) because a generated `UpdateMarkerStyle` stub counted before the constructor.
 - **Batch 15 (LocalizedFontNameConverter, U; branch `mirror/quire-main-rest-pure-20261111`):** `Instance`, `FontNames`, the two field initializers (`_collectedFontsDict`, `_missingFontsDict`), `ConvertBack`, `IsUniMathFontExist` and `DoesFontFamilyExist` (with their local functions). Blocked, stubs kept: the private constructor and `Convert` (they need `FontConstants` and `XmlLanguageHelper`, neither in Quire).
   - Gate: PASS, 626 checked. Report: `.mirror-cache/release-il-10dcac6b483c/release-il.json`.
+- **Batch 16 (MRU helpers, U; branch `mirror/quire-main-rest-pure-20261111`):** `MruFileExtensionComparer` (Equals, GetHashCode, IsMctxExtension, ctor) and `MruAccessKeyConverter` (Convert, ConvertBack, GetDisplayedName, ctor). Both use Mathcad's `string.Format("_{0}. ", n) + name` form for the access key; the interpolated string emits `DefaultInterpolatedStringHandler`.
+  - Gate: PASS, 632 checked. Report: `.mirror-cache/release-il-5416afeb2492/release-il.json`.
 
 ## Remaining (after batch 10)
 
