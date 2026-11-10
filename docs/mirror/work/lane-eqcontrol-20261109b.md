@@ -140,3 +140,6 @@
 - Batch: `Controls.Internal.VisualLoopNodeEditor` (`.ctor`, `ShowOperatorHighlight`); `Controls.Internal.VisualMatrixNodeEditor` (`.ctor`, `ArrangeOverride`).
 - Shapes tried: cast-to-loop base argument, the operator visibility ternary, and the fence arrangement with the running width matched on the first candidate.
 - Release IL: PASS, 841 checked (`.mirror-cache/release-il-29fee51c1f91/release-il.json`).
+- Batch: `Controls.InputControls.InputButtonEngineDefaultScript` (`.ctor` setting `DefaultScript`, `Apply`, `GetCalculatedValue`); `Controls.InputControls.InputScriptingControlCommands` (`_typeOfThis` of the base command type, `OpenEditingMode`, `.ctor`).
+- Shapes tried: the out-parameter stores in the Apply/GetCalculatedValue bodies and the `List<object>(new object[] { value })` shape matched on the first candidate; the static command matched with ordered initializers.
+- Release IL: PASS, 845 checked (`.mirror-cache/release-il-71c32f1d37ad/release-il.json`).
