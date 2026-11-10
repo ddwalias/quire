@@ -318,6 +318,32 @@ internal partial class SolveBlockModel
         Solver.InsertChildBefore(insertBefore, GetWrappedCalculatable(newSolverChild));
     }
 
+    private void HandleWrappedCalcPropertyChanged(
+        object sender, global::System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        string propertyName = e.PropertyName;
+        // Release IL branches directly to the selected event body.
+        if (propertyName == "Error")
+            goto ErrorChanged;
+
+        if (propertyName == "IsCommitted")
+            goto Committed;
+        return;
+
+    ErrorChanged:
+        FireChildCalcErrorChanged();
+        return;
+
+    Committed:
+        HandleEquationControlCommitted(sender as global::Quire.Calculation.Core.ICalculatable);
+    }
+
+    private void FireChildCalcErrorChanged()
+    {
+        if (ChildCalcErrorChanged != null)
+            ChildCalcErrorChanged();
+    }
+
     private void UpdateTheSolverIfNeededToReflectMovedCalculatable(
         global::Quire.Calculation.Core.ICalculatable movedCalc)
     {
