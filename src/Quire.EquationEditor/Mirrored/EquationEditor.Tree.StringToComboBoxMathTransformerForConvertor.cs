@@ -2,6 +2,15 @@ namespace Quire.EquationEditor.Tree;
 
 public partial class StringToComboBoxMathTransformerForConvertor
 {
+    // Mathcad's static initializer has .initlocals False.
+    [global::System.Runtime.CompilerServices.SkipLocalsInit]
+    static StringToComboBoxMathTransformerForConvertor()
+    {
+        l = "(?:[Ee]" + b + "?\\d+)?";
+        m = "\\d+(?:\\.\\d*)?" + l + "|\\.\\d+" + l;
+        n = "ImaginarySuffix";
+    }
+
     [global::System.Runtime.CompilerServices.SkipLocalsInit]
     public static string ExponentNotationToPrime(string value)
     {
