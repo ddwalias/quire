@@ -11,26 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Spirit.Controls.CustomColorPickerViewModel, MathcadPrime")]
 public partial class CustomColorPickerViewModel : global::Quire.Controls.Core.ViewModelBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.ColorInfo _newColorInfo;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Color _currentColor;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _okIsEnabled;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Color CurrentColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Color SelectedColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.ColorInfo NewColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool OkIsEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public void Init(object context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Refresh() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public CustomColorPickerViewModel() { }
 }

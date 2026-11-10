@@ -11,10 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Spirit.Controls.ColorPickerTypeDescriptor, MathcadPrime")]
 internal sealed partial class ColorPickerTypeDescriptor : global::System.ComponentModel.CustomTypeDescriptor
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ColorPickerTypeDescriptor(global::System.ComponentModel.ICustomTypeDescriptor parent) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.ComponentModel.PropertyDescriptorCollection GetProperties() => base.GetProperties();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.ComponentModel.PropertyDescriptorCollection GetProperties(global::System.Attribute[] attributes) => base.GetProperties(attributes);
 }
