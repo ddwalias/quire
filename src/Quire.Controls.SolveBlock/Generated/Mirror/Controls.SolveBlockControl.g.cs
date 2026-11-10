@@ -11,15 +11,10 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.SolveBlockControl, Ptc.Controls.SolveBlock")]
 public partial class SolveBlockControl : global::Quire.Controls.Mathboard.AggregateMathboardControl, global::Quire.Controls.ISolveBlockControl, global::Quire.Controls.Mathboard.IAggregateMathboardControl, global::Quire.Controls.Core.IMathboardControl, global::Quire.Controls.Core.Whiteboard.IWhiteboardControl, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer, global::Quire.Controls.Core.Serialization.IHasRegionsWithConverterAnnotations, global::Quire.Controls.Core.IMathFormatDeserializationProvider, global::Quire.Core.IMaybeHasPointThatSnapsToPixel, global::Quire.Controls.Core.IHasChildArrangeInfoProvider, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculationHideableChild, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Controls.Core.IORegions.IIORegionContainer, global::Quire.Controls.Core.IORegions.IIORegionBase, global::Quire.Controls.Core.Whiteboard.IHideFromCalculationButtonStatus, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Calculation.Core.ICalculatableInfo, global::Quire.Calculation.Core.ICalculatableResultOwner, global::System.ICloneable, global::Quire.Controls.Core.IDitaRegion, global::Quire.Serialization.IPersistentDataProvider
 {
-    [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Controls.SolveBlockModel _sbModel;
-    [global::Quire.Mirror.MirrorStub]
     private const uint GuessSectionIndex = 0u;
-    [global::Quire.Mirror.MirrorStub]
     private const uint ConstraintSectionIndex = 1u;
-    [global::Quire.Mirror.MirrorStub]
     private const uint SolverSectionIndex = 2u;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.EngineResult[] _engineResults;
     [global::Quire.Mirror.MirrorStub]
     public double GuessValuesIndicatorTop { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
