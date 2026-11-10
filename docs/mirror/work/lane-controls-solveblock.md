@@ -64,11 +64,11 @@
 - Remaining: 86 stub markers in generated types; known blockers: `GetDefinedVariable` call vs. callvirt mismatch, `GetEquationTypeOfRl` enum/closure mismatch, `MatchEquationType` local-slot order mismatch, deserialization strategy mapped type mismatch, `SolveBlockChildManager.Rewrap` anonymous helper without a Mathcad counterpart and `SolverAggregate.Children` closure ordinal mismatch.
 ## Remaining stub classification (2026-11-10)
 
-The 61 generated stub markers are classified as follows; “unblocked” means no checkpointed IL/ownership obstacle or recorded closure-ordinal failure is known for that member.
+The 60 generated stub markers are classified as follows; “unblocked” means no checkpointed IL/ownership obstacle or recorded closure-ordinal failure is known for that member.
 
 - Checkpointed blockers (10 markers): `SolveBlockCalculatable.GetEquationTypeOfRl`; `SolveBlockCalculatableAggregate.GetDefinedVariable`; `SolveBlockChildManager.Rewrap`; all four `SolveBlockDeserializationStrategy` markers (mapped-type mismatch); `SolveBlockModel.MatchEquationType`.
-- Closure-ordinal issues (12 markers): `SolverAggregate.Children` (recorded closure ordinal mismatch) `SolverAggregate.ClearError` (candidate lambda ordinal `b__88_0` vs. Mathcad `b__73_0`) and the six `SolveBlockControl` indicator properties (`GuessValuesIndicatorTop/Bottom`, `ConstraintsIndicatorTop/Bottom`, `SolverIndicatorTop/Bottom`), whose prior candidate shifted `get_EngineResults` closure from `b__62_0` to `b__50_0`.
-- Unblocked (39 markers): all remaining markers in `SolveBlockCalculatable`, `SolveBlockCalculatableAggregate`, `SolveBlockControl`, `SolveBlockModel`, and `SolverAggregate`, excluding the members listed in the two categories above. This includes fields/constants, constructors, simple accessors, overrides, and methods; each is eligible for a batch after its Release IL is read. No new closure blocker has yet been inferred for these members.
+- Closure-ordinal issues (13 markers): `SolverAggregate.Children` (recorded closure ordinal mismatch) `SolverAggregate.ClearError` (candidate lambda ordinal `b__88_0` vs. Mathcad `b__73_0`) and the six `SolveBlockControl` indicator properties (`GuessValuesIndicatorTop/Bottom`, `ConstraintsIndicatorTop/Bottom`, `SolverIndicatorTop/Bottom`), whose prior candidate shifted `get_EngineResults` closure from `b__62_0` to `b__50_0`.
+- Unblocked (37 markers): all remaining markers in `SolveBlockCalculatable`, `SolveBlockCalculatableAggregate`, `SolveBlockControl`, `SolveBlockModel`, and `SolverAggregate`, excluding the members listed in the two categories above. This includes fields/constants, constructors, simple accessors, overrides, and methods; each is eligible for a batch after its Release IL is read. No new closure blocker has yet been inferred for these members.
 
 No classification changes the generated files; this inventory records the current state before further implementation.
 - Batch 64 `SolveBlockModel.UpdateTheSolverIfNeededToReflectMovedCalculatable`: PASS (`191 checked`; `.mirror-cache/release-il-281b1938a523`). The explicit return after `MirrorChildInSolverAggregate` preserves the IL branch target followed by a separate method return.
@@ -162,7 +162,7 @@ No classification changes the generated files; this inventory records the curren
 - `UpdateSolverRL` — unblocked
 - `GetSolvingAlgorithmRl` — unblocked
 - `IsSolverOfSymbolicContainsFind` — unblocked
-- `GetSolverWrappedAggregate` — unblocked
+- `GetSolverWrappedAggregate` — closure-ordinal issue (candidate lambda `b__75_0` vs. Mathcad `b__56_0`; reverted)
 - `HandleRequestEvaluation` — unblocked
 - `IsChild` — unblocked
 - `GetIndexOfChild` — unblocked
@@ -199,4 +199,8 @@ No classification changes the generated files; this inventory records the curren
 - Batch 75 `SolveBlockCalculatable.PropertyChanged`: PASS (`211 checked`; `.mirror-cache/release-il-d5f58f177005`).
 
 - Batch 76 `SolveBlockModel.HandleWrappedCalcPropertyChanged` and `FireChildCalcErrorChanged`: PASS (`213 checked`; `.mirror-cache/release-il-ef003c9dd4df`). The initial positive branch emitted the error call before the test; the inverted branch then reversed the two calls. Direct gotos to ordered error and committed bodies reproduced the reference branch layout.
+
+
+- Rejected candidate: `SolverAggregate.GetSolverWrappedAggregate` gate failed at `b__75_0` vs. Mathcad `b__56_0` (`release-il-e74a3459abeb`, 215 checked); the method implementation was reverted and classified as a closure-ordinal issue.
+- Batch 77 `SolverAggregate.GetChildIndexForResult`: PASS (`214 checked`; `.mirror-cache/release-il-2c6434f5abbb`). Direct construction followed by `.Match` emitted `call`; a per-iteration local `Regex` is required for Mathcad's `callvirt` shape.
 
