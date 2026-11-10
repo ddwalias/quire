@@ -83,8 +83,4 @@ public partial struct NavigatorState
     private static global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes a(global::Quire.EquationEditor.Tree.FormattedString A_0, int A_1, global::Quire.Direction A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Nullable<int> a(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.Direction A_1, global::Quire.Direction A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsEquivalentTo(global::Quire.EquationEditor.Tree.Navigation.NavigatorState another) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsEquivalentTo(global::Quire.EquationEditor.Tree.Navigation.NavigatorState another, bool enterSideConsidered, bool caretInsertionTypeConsidered) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
