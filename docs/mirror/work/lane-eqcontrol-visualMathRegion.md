@@ -59,3 +59,9 @@ Not blocked by the listed reasons: no `LoadComponent`/XAML loads, no dynamic scr
 - Members: `HandleWarningDisplayFilterChanged` (static, `is` pattern and `?.Invoke()`), `GetNodeAtPoint` (internal override), `OnVisualParentChanged`, `GetTransformBasedOnNumericNodeHeight`, `HandleMathFormatChanged`, `HandleLabeledIdFormatDictionaryChanged`, `IsExtendedFontEqualsToBackUp`, `Dispose`.
 - Shapes tried: `IsExtendedFontEqualsToBackUp` with `if (!Equals) return true;` FAILED (branch sense inverted); `if (Equals) return revision != ...; return true;` matched.
 - Release IL: PASS, 1704 checked (`.mirror-cache/release-il-88f55d1324ce/release-il.json`).
+
+## Batch 5: text input, insert-function forwarders, adorners, root node, mouse click
+
+- Members: `OnTextInput` (override, `foreach` over `e.Text`), `FireInsertFunction` (both overloads, `?.Invoke`), `GetAdorners`, `OnRootNodeChanged`, `SimulateMouseClick`.
+- Shapes tried: `SimulateMouseClick` as `if (n == 1) … else if (n == 2) …` FAILED; Mathcad dispatches with two `beq` tests and a shared return, which a two-case `switch` with `break` matched.
+- Release IL: PASS, 1711 checked (`.mirror-cache/release-il-dcd69ce9f7f5/release-il.json`).

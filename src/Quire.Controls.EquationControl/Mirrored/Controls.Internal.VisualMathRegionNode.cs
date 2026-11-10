@@ -1272,4 +1272,65 @@ internal partial class VisualMathRegionNode
     {
         Disposed?.Invoke();
     }
+
+    protected override void OnTextInput(TextCompositionEventArgs e)
+    {
+        base.OnTextInput(e);
+        foreach (char c in e.Text)
+        {
+            AutomateKeypress(c);
+        }
+        e.Handled = true;
+    }
+
+    public void FireInsertFunction(Quire.EquationEditor.Tree.FormattedString funcName, int argsCount, System.Nullable<Quire.Controls.Core.IdLabels> label)
+    {
+        InsertFunction?.Invoke(funcName, argsCount, label);
+    }
+
+    public void FireInsertFunction(Quire.EquationEditor.Tree.FormattedString funcName, int argsCount, System.Nullable<Quire.Controls.Core.IdLabels> label, string[] args)
+    {
+        InsertFunctionWithArgs?.Invoke(funcName, argsCount, label, args);
+    }
+
+    private System.Windows.Documents.Adorner[] GetAdorners(UIElement visual)
+    {
+        var adornerLayer = System.Windows.Documents.AdornerLayer.GetAdornerLayer(visual);
+        if (adornerLayer != null)
+        {
+            return adornerLayer.GetAdorners(visual);
+        }
+        return null;
+    }
+
+    private void OnRootNodeChanged(DependencyPropertyChangedEventArgs args)
+    {
+        Children.Clear();
+        if (args.NewValue == null)
+        {
+            return;
+        }
+        var element = (UIElement)args.NewValue;
+        element.IsHitTestVisible = !AttachedProperties.GetProhibitMouseClick(this);
+        Children.Add(element);
+        TryFindDefinitionAndUpdateIsLhsVisible();
+        FireRootNodeChanged();
+    }
+
+    internal void SimulateMouseClick(Point location, int numberOfClicks)
+    {
+        var hit = GetHitTestResult(location);
+        if (hit != null)
+        {
+            switch (numberOfClicks)
+            {
+                case 1:
+                    FireNodeClick(hit.NodeHit, hit.CaretSideHit, hit.NodeSideHit, hit.OperatorPartIndexHit, hit.PointHit);
+                    break;
+                case 2:
+                    FireNodeDoubleClick(hit.NodeHit, hit.CaretSideHit, hit.NodeSideHit, hit.OperatorPartIndexHit, hit.PointHit);
+                    break;
+            }
+        }
+    }
 }
