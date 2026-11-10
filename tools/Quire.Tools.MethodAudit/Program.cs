@@ -144,21 +144,18 @@ foreach (var artifact in quire.Where(a => !a.IlOnly))
 string[]? GeneratedBinding(Artifact artifact, TypeModel type)
 {
     if (typeNames.TryGetValue((artifact.Name, type.FullName), out var own)) return own;
-    // Roslyn emits this assembly-level container without a source type to inherit from.
-    // When only one loaded Mathcad artifact has the matching synthesized container, bind
-    // it by its compiler-generated metadata identity just like a nested generated helper.
+    // Roslyn emits this assembly-level container without a source type to inherit from. It binds by its
+    // compiler-generated metadata identity, like a nested generated helper, to the one Mathcad assembly among those its
+    // own types bind that has the container; otherwise it stays unbound. Only its own: another audited project's
+    // original would make a project's rows depend on what else is audited with it (the gate caches them per project).
     if (type.CompilerGenerated && type.DeclaringType == null && type.FullName == "<PrivateImplementationDetails>")
     {
-        var candidates = originals.Values.Where(original => original.Model.Types.Any(t =>
-            t.FullName == type.FullName && t.CompilerGenerated)).ToList();
+        var mirrored = typeNames.Where(t => t.Key.Assembly == artifact.Name).Select(t => t.Value[1])
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var candidates = originals.Values.Where(original => mirrored.Contains(original.Name)
+            && original.Model.Types.Any(t => t.FullName == type.FullName && t.CompilerGenerated)).ToList();
         if (candidates.Count == 1)
             return typeNames[(artifact.Name, type.FullName)] = [type.FullName, candidates[0].Name];
-        // Several Mathcad assemblies carry a container of this name, each with its own inline-array helpers. The copy binds
-        // to the Mathcad assembly its own types map to, when that is exactly one of them; otherwise it stays unbound.
-        var mirrored = typeNames.Where(t => t.Key.Assembly == artifact.Name).Select(t => t.Value[1])
-            .Distinct(StringComparer.OrdinalIgnoreCase).ToList();
-        if (mirrored.Count == 1 && candidates.FirstOrDefault(c => string.Equals(c.Name, mirrored[0], StringComparison.OrdinalIgnoreCase)) is { } mirroredContainer)
-            return typeNames[(artifact.Name, type.FullName)] = [type.FullName, mirroredContainer.Name];
     }
     if (!type.CompilerGenerated || type.DeclaringType is not { } parentName) return null;
     var parent = artifact.Model.Types.SingleOrDefault(t => t.FullName == parentName);
