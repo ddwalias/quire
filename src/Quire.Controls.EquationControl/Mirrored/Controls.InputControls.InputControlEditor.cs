@@ -39,4 +39,44 @@ public partial class InputControlEditor
     {
         _viewModel.IsInfoMsgHide = true;
     }
+
+    protected void OnOkButtonClick(object sender, RoutedEventArgs e)
+    {
+        if (_viewModel.IsApplyEnabled)
+        {
+            _viewModel.InputScript = tbScript.Text;
+            _viewModel.ApplyScript();
+        }
+
+        if (_viewModel.ValidationError == null && IsVisible)
+        {
+            DialogResult = true;
+        }
+    }
+
+    private void OnApplyButtonClick(object sender, RoutedEventArgs e)
+    {
+        _viewModel.InputScript = tbScript.Text;
+        _viewModel.ApplyScript();
+        if (_viewModel.ValidationError == null)
+        {
+            _viewModel.IsApplyEnabled = false;
+        }
+    }
+
+    private void ButtonFontSizeIncrease_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (tbScript.FontSize < 25)
+        {
+            tbScript.FontSize += 1;
+        }
+    }
+
+    private void ButtonFontSizeDecrease_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (tbScript.FontSize > 5)
+        {
+            tbScript.FontSize -= 1;
+        }
+    }
 }
