@@ -32,7 +32,7 @@ import uuid
 import native_bytes
 import native_linked
 from native_bytes import anonymous
-from release_il import ROOT, git, mathcad_install, msbuild, msvc_mismatch, run
+from release_il import RAW_BYTES, ROOT, git, mathcad_install, msbuild, msvc_mismatch, run
 
 ASSEMBLY_MAP = Path('docs') / 'mirror' / 'assembly-map.json'
 MANIFEST = Path('docs') / 'mirror' / 'native' / 'internal-targets.json'
@@ -168,6 +168,9 @@ def check(base, projects, results, root=ROOT, install=None, timeout=1800):
             original_tree = work / 'base'
             if projects:
                 run(['git', 'clone', '--quiet', '--shared', '--no-checkout', root, original_tree], root, log, timeout)
+                # Committed bytes, as il_merge's candidate tree holds them, whatever core.autocrlf says.
+                (original_tree / '.git/info').mkdir(parents=True, exist_ok=True)
+                (original_tree / '.git/info/attributes').write_text(RAW_BYTES, encoding='utf-8')
                 run(['git', '-c', 'core.hooksPath=', 'checkout', '--quiet', '--detach', base], original_tree, log,
                     timeout)
             for project in projects:

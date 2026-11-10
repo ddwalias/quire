@@ -32,7 +32,14 @@ references it: references outside the build's targets are built in Debug, where 
 its IL-only C# stand-in. A base whose projects all hit is assembled from those rows without
 building, whichever commit or lane stored them; any miss builds and scans them all. Base and candidate
 trees hold the committed bytes (no EOL conversion or checkout filters, whatever `core.autocrlf` says),
-so a stored candidate's rows can serve a later base. The merge gate
+so a stored candidate's rows can serve a later base; a candidate tree not checked out that way is not
+stored. A project whose closure's build files read a file outside their directory other than through
+`ProjectReference` (an `Import`, a linked item, a path through a property other than the C++ toolset's
+`$(VCTargetsPath)`) is not cached. Accepted assumptions: a reference outside the build's targets is built in
+Debug, so an IL-only project's public surface must not depend on its configuration (`#if DEBUG`,
+`Configuration` conditions); a base assembled from cache does not repeat scan-wide checks (two projects
+claiming one binding), which the candidate scan still reports; and a lane's own worktree builds use its
+checked-out bytes (CRLF under `core.autocrlf`), while the gate uses committed bytes. The merge gate
 stores each committed candidate it passes (in the main checkout's cache, shared by every lane), so the
 next lane's base scan is usually a cache hit. Uncommitted candidates are never cached; a corrupt or
 locked entry is rebuilt. Delete the folder to force a rebuild. Each run's work directory (base

@@ -79,6 +79,7 @@ def gate(args):
             tree = Path(temp) / 'tree'
             git('clone', '--quiet', '--shared', '--no-checkout', ROOT, tree)
             # The bytes checkout_base gives the base: a passing candidate's rows are cached for the next lane's base.
+            (tree / '.git/info').mkdir(parents=True, exist_ok=True)
             (tree / '.git/info/attributes').write_text(release_il.RAW_BYTES, encoding='utf-8')
             git('-c', 'core.hooksPath=', 'checkout', '--quiet', '--detach', tip, cwd=tree)
             projects = release_il.affected_projects(base, tree)

@@ -556,6 +556,32 @@ class CheckTests(unittest.TestCase):
         self.assertFalse(self.check(projects=['Q'])['base_cached'])
         self.assertEqual(list(self.cache.glob('*.json')), [])
 
+    def test_a_build_input_outside_the_closure_fails_closed(self):
+        """A key covers the closure's directories; an Import or linked item elsewhere would go unseen."""
+        self.repo.project('R')
+        for case, text in (('linked source', '<Project><ItemGroup><Compile Include="..\\R\\F.cs" /></ItemGroup></Project>'),
+                           ('imported props', '<Project><Import Project="..\\..\\R\\X.props" /></Project>'),
+                           ('property path', '<Project><ItemGroup><None Include="$(SolutionDir)x.txt" /></ItemGroup></Project>')):
+            with self.subTest(case):
+                self.repo.write('src/P/Generated/Mirror.props', text)
+                self.base = self.repo.commit()
+                self.assertFalse(self.check()['base_cached'])
+                self.assertFalse(self.check()['base_cached'])
+        self.repo.write('src/P/Generated/Mirror.props', '<Project><ItemGroup><Compile Include="Local\\F.cs" />'
+                        '<Import Project="$(VCTargetsPath)\\Microsoft.Cpp.props" /></ItemGroup></Project>')
+        self.base = self.repo.commit()
+        self.check()
+        self.assertTrue(self.check()['base_cached'])
+
+    def test_a_project_reference_in_a_targets_file_is_in_the_closure(self):
+        self.repo.project('R')
+        self.repo.write('src/P/P.targets', '<Project><ItemGroup><ProjectReference Include="..\\R\\R.csproj" />'
+                        '</ItemGroup></Project>')
+        self.base = self.repo.commit()
+        self.check()
+        self.repo.write('src/R/U.cs', 'referenced through a .targets file')
+        self.assertFalse(self.check(self.repo.commit())['base_cached'])
+
     def test_rows_of_an_assembly_not_named_as_its_project_are_not_stored(self):
         self.rows = lambda project: self.row('Other')
         self.check()
@@ -569,6 +595,11 @@ class CheckTests(unittest.TestCase):
         (self.repo.root / 'src/P/Dirty.cs').unlink()
         self.check()
         self.assertEqual(entries(), 1)
+        # A clean tree that was not checked out with committed bytes (il_merge's RAW_BYTES) may hold converted EOLs.
+        self.check(store_candidate=True)
+        self.assertEqual(entries(), 1)
+        (self.repo.root / '.git/info').mkdir(exist_ok=True)
+        (self.repo.root / '.git/info/attributes').write_text(release_il.RAW_BYTES, encoding='utf-8')
         self.check(store_candidate=True)
         self.assertEqual(entries(), 2)
         # The next run whose base is that tip starts from the stored inventory.

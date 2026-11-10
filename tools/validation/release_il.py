@@ -309,10 +309,10 @@ def build_files(directory):
 
 
 def project_references(root, directory):
-    """Names of the src projects a project directory's .csproj and .props files reference (ProjectReference)."""
+    """Names of the src projects a project directory's .csproj, .props and .targets files reference (ProjectReference)."""
     names = []
     for p in build_files(directory):
-        if p.suffix.lower() in ('.csproj', '.props'):
+        if p.suffix.lower() in ('.csproj', '.props', '.targets'):
             for include in PROJECT_REFERENCE.findall(p.read_text(encoding='utf-8', errors='replace')):
                 # MSBuild resolves an imported .props' relative paths against the importing project.
                 target = (directory / include.replace('\\', os.sep)).resolve().parent
@@ -322,8 +322,9 @@ def project_references(root, directory):
 
 
 def build_closure(root, projects):
-    """The src projects the compared projects build: each one, plus the src projects its .csproj or .props
-    references, transitively. Utl's dependents build its mixed DLL through their Mirror.props reference (D19)."""
+    """The src projects the compared projects build: each one, plus the src projects its .csproj, .props or .targets
+    references, transitively. Utl's dependents build it through their Mirror.props reference (D19): its mixed DLL when
+    it is a build target, else (a reference built in Debug) its IL-only C# stand-in."""
     seen, resolved_seen, todo = [], set(), list(projects)
     while todo:
         directory = root / 'src' / todo.pop()
@@ -337,11 +338,37 @@ def build_closure(root, projects):
 
 
 PROJECT_REFERENCE = re.compile(r"""<ProjectReference\b[^>]*\bInclude=["']([^"']+)["']""", re.IGNORECASE)
+BUILD_PATH = re.compile(r"""<(\w+)\b[^>]*?\b(?:Include|Project)=["']([^"']+)["']""", re.IGNORECASE)
+# Elements whose Include/Project names a file the build reads (MirrorWholeType is compiled by Directory.Build.targets).
+BUILD_INPUTS = {'import', 'compile', 'none', 'content', 'embeddedresource', 'page', 'resource', 'applicationdefinition',
+                'additionalfiles', 'clcompile', 'clinclude', 'resourcecompile', 'mirrorwholetype'}
+
+
+def outside_inputs(directory):
+    """Whether a project directory's build files read a file outside it other than through ProjectReference (an Import or
+    a linked item), which its key would miss. The C++ toolset's own imports ($(VCTargetsPath), the pinned MSVC) are not
+    repository files; any other property in such a path could point anywhere, so it counts as outside."""
+    for p in build_files(directory):
+        if p.suffix.lower() in ('.csproj', '.props', '.targets', '.vcxproj'):
+            for element, value in BUILD_PATH.findall(p.read_text(encoding='utf-8', errors='replace')):
+                if element.lower() not in BUILD_INPUTS:
+                    continue
+                for path in filter(None, (part.strip() for part in value.split(';'))):
+                    if path.startswith('$(VCTargetsPath)'):
+                        continue
+                    if '$(' in path or '%(' in path or '@(' in path:
+                        return True
+                    # Import paths resolve against the importing file, item paths against the project.
+                    base = p.parent if element.lower() == 'import' else directory
+                    if not (base / path.replace('\\', os.sep)).resolve().is_relative_to(directory.resolve()):
+                        return True
+    return False
 
 
 def builds_cppcli(root, projects):
     """Whether building the projects builds a .vcxproj: one of them, or a src project they reference through
-    their .csproj/.props, holds one. Utl's dependents build its mixed DLL and need the pinned MSVC too."""
+    their .csproj/.props/.targets, holds one. Utl's dependents build Utl and need the pinned MSVC too (its mixed DLL
+    only when Utl is a build target; as a reference it is built in Debug, its IL-only C# stand-in)."""
     return any(p.suffix.lower() == '.vcxproj' for d in build_closure(root, projects) for p in build_files(d))
 
 
@@ -529,7 +556,8 @@ def slice_keys(root, commit, judge, projects, install):
     closure members were scanned with it. A reference the build only references is built in Debug (a solution build
     unsets the configuration of projects outside the solution), where a mixed-mode project builds its IL-only C# stand-in
     instead of the mixed DLL, and MethodAudit binds an audited mixed-mode assembly's C++ types by name. This file is
-    keyed as the gate's build recipe. A project whose closure names a directory the commit lacks gets no key (None)."""
+    keyed as the gate's build recipe. A project gets no key (None) when its closure names a directory the commit lacks or
+    a closure member's build files read a file outside their directory other than through ProjectReference."""
     src = [line.split(None, 3) for line in git('ls-tree', commit, 'src/', cwd=root).splitlines()]
     trees = {Path(path).name: sha for _, kind, sha, path in src if kind == 'tree'}
     install = Path(install)
@@ -541,12 +569,14 @@ def slice_keys(root, commit, judge, projects, install):
     dirs = build_closure(root, projects)
     references = {d.name: project_references(root, d) for d in dirs}
     mixed = {d.name for d in dirs if any(p.suffix.lower() == '.vcxproj' for p in build_files(d))}
+    unkeyable = {d.name for d in dirs if outside_inputs(d)}
     keys = {}
     for project in projects:
         closure = closure_names(references, project)
         payload = [common, project, sorted((name, trees[name]) for name in closure & trees.keys()),
                    sorted(closure & mixed & set(projects) - {project})]
-        keys[project] = hashlib.sha256(json.dumps(payload).encode('utf-8')).hexdigest() if closure <= trees.keys() else None
+        keyable = closure <= trees.keys() and not closure & unkeyable
+        keys[project] = hashlib.sha256(json.dumps(payload).encode('utf-8')).hexdigest() if keyable else None
     return keys
 
 
@@ -655,7 +685,10 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
             report.update(compare(before, after, types, methods))
             timings['compare'] = time.perf_counter() - compare_start
             report['originals'] = new_id
-            if store_candidate and report['passed'] and not vcxproj and not report['working_tree']:
+            # A clean status does not show EOL conversion: only a tree materialized with RAW_BYTES holds what its keys name.
+            attributes = root / '.git' / 'info' / 'attributes'
+            raw = attributes.is_file() and attributes.read_text(encoding='utf-8') == RAW_BYTES
+            if store_candidate and raw and report['passed'] and not vcxproj and not report['working_tree']:
                 # Judged by the base's tool, so keyed by it: if the candidate changes the tool, its keys never hit.
                 store_slices(cache, slice_keys(root, report['tip'], judge, projects, install), after)
             # Kept locally for exact signatures, tokens and artifact identities; no original IL.
