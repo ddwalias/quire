@@ -44,6 +44,7 @@
 - Batch 45 `SolveBlockModel` add/remove item solver refresh: PASS (`151 checked`; `.mirror-cache/release-il-80b2ae7d189d`); landed `2d5b4fd3`.
 - Batch 46 `SolveBlockModel.Clone`: PASS (`152 checked`; `.mirror-cache/release-il-0c7a3db54fcd`); landed `06fc4504`.
 - Batch 47 `SolveBlockModel.GetWrappedCalculatable`: PASS (`153 checked`; `.mirror-cache/release-il-219c7a052aea`); landed `1c4950bc`.
-- Batch 48 `SolveBlockModel` section constants and metadata: PASS (`157 checked`; `.mirror-cache/release-il-7ac5fb483945`). The switch expression shape differed; per-case returns matched Release IL.
+- Batch 48 `SolveBlockModel` section constants and metadata: PASS (`157 checked`; `.mirror-cache/release-il-7ac5fb483945`); landed `8891da66`. The switch expression shape differed; per-case returns matched Release IL.
+- Batch 49 `SolveBlockModel.IsSolverAggregateChildType` overloads and equation lookup: PASS (`160 checked`; `.mirror-cache/release-il-8d5c71dac741`).
 - `GetEquationTypeOfRl` remains stubbed due enum/closure mismatch.
-- Remaining: 147 stub markers in generated types; known blockers: `GetDefinedVariable` call vs. callvirt mismatch, `GetEquationTypeOfRl` enum/closure mismatch, deserialization strategy mapped type mismatch and `SolveBlockChildManager.Rewrap` anonymous type has no Mathcad counterpart.
+- Remaining: 144 stub markers in generated types; known blockers: `GetDefinedVariable` call vs. callvirt mismatch, `GetEquationTypeOfRl` enum/closure mismatch, deserialization strategy mapped type mismatch and `SolveBlockChildManager.Rewrap` anonymous type has no Mathcad counterpart.

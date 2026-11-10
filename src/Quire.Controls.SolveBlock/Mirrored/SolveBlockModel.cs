@@ -84,4 +84,34 @@ internal partial class SolveBlockModel
                 throw new global::System.IndexOutOfRangeException("solve block contains 3 sections");
         }
     }
+
+    private static bool IsSolverAggregateChildType(SolveBlockEquationTypes eqType)
+    {
+        if (eqType != SolveBlockEquationTypes.Definition)
+            return eqType == SolveBlockEquationTypes.Constraint;
+        return true;
+    }
+
+    private static bool IsSolverAggregateChildType(global::Quire.Calculation.Core.ICalculatable modelCalcChild)
+    {
+        global::Quire.Controls.ISolveBlockCalculatable wrapper =
+            modelCalcChild as global::Quire.Controls.ISolveBlockCalculatable;
+        SolveBlockEquationTypes equationType;
+        if (wrapper != null)
+            equationType = wrapper.EquationType;
+        else
+            equationType = SolveBlockCalculatable.GetEquationTypeOfCalc(modelCalcChild);
+        return IsSolverAggregateChildType(equationType);
+    }
+
+    public SolveBlockEquationTypes GetSolveBlockEquationType(global::Quire.Controls.Core.IWhiteboardItem item)
+    {
+        if (GuessValueItems.Contains(item))
+            return SolveBlockEquationTypes.Definition;
+        if (ConstraintItems.Contains(item))
+            return SolveBlockEquationTypes.Constraint;
+        if (SolverItem != null && SolverItem.Equals(item))
+            return SolveBlockEquationTypes.Solver;
+        return SolveBlockEquationTypes.Unknown;
+    }
 }
