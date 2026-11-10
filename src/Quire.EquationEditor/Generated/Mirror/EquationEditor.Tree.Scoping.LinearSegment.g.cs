@@ -22,10 +22,6 @@ public partial class LinearSegment
     [global::Quire.Mirror.MirrorStub]
     public LinearSegment(global::Quire.EquationEditor.Tree.MathNode leftNode, global::Quire.EquationEditor.Tree.MathNode rightNode) { }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.MathNode GetNodeFromDirection(global::Quire.Direction side) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetNode(global::Quire.Direction side, global::Quire.EquationEditor.Tree.MathNode newNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Rebase(params int[] path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool IsInSegment(global::Quire.EquationEditor.Tree.MathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
