@@ -11,10 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputCheckBoxEngineDefaultScript, Ptc.Controls.EquationControl")]
 internal partial class InputCheckBoxEngineDefaultScript : global::Quire.Controls.InputControls.InputCheckBoxEngineJScript
 {
-    [global::Quire.Mirror.MirrorStub]
-    public InputCheckBoxEngineDefaultScript() { }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Apply(string userScript, out object scriptObject, out string exception, object[] inputs, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.Apply(userScript, out scriptObject, out exception, inputs, engineParams);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IList<object> GetCalculatedValue(string userScript, ref object value, out object scriptControlObject, out string exception, object[] inputs, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.GetCalculatedValue(userScript, ref value, out scriptControlObject, out exception, inputs, engineParams);
 }

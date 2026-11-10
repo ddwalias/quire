@@ -11,10 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputSliderEngineDefaultScript, Ptc.Controls.EquationControl")]
 internal partial class InputSliderEngineDefaultScript : global::Quire.Controls.InputControls.InputSliderEngineJScript
 {
-    [global::Quire.Mirror.MirrorStub]
-    public InputSliderEngineDefaultScript() { }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Apply(string userScript, out object scriptObject, out string exception, object[] inputs, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.Apply(userScript, out scriptObject, out exception, inputs, engineParams);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IList<object> GetCalculatedValue(string script, ref object value, out object scriptObject, out string exception, object[] inputs, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.GetCalculatedValue(script, ref value, out scriptObject, out exception, inputs, engineParams);
 }

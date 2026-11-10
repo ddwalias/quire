@@ -143,3 +143,6 @@
 - Batch: `Controls.InputControls.InputButtonEngineDefaultScript` (`.ctor` setting `DefaultScript`, `Apply`, `GetCalculatedValue`); `Controls.InputControls.InputScriptingControlCommands` (`_typeOfThis` of the base command type, `OpenEditingMode`, `.ctor`).
 - Shapes tried: the out-parameter stores in the Apply/GetCalculatedValue bodies and the `List<object>(new object[] { value })` shape matched on the first candidate; the static command matched with ordered initializers.
 - Release IL: PASS, 845 checked (`.mirror-cache/release-il-71c32f1d37ad/release-il.json`).
+- Batch: `Controls.InputControls.InputCheckBoxEngineDefaultScript`, `InputSliderEngineDefaultScript`, `InputTextBoxEngineDefaultScript` (`.ctor` setting `DefaultScript`, `Apply`, `GetCalculatedValue`).
+- Shapes tried: each class's Apply literal (`"Check Me"`, null, `string.Empty`) and its `GetCalculatedValue` out-parameter stores matched on the first candidate.
+- Release IL: PASS, 854 checked (`.mirror-cache/release-il-c3f4bb5e9cd1/release-il.json`).
