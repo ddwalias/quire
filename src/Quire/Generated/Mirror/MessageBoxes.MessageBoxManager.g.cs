@@ -11,46 +11,4 @@ namespace Quire.MessageBoxes;
 [global::Quire.Mirror.MirrorOf("Spirit.MessageBoxes.MessageBoxManager, MathcadPrime")]
 public partial class MessageBoxManager : global::Quire.Wpf.IMessageBoxManager, global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsDisabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Action<string> ShowExceptionMessage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Func<global::System.Windows.Window, string, string, global::System.Windows.MessageBoxResult> ShowCriticalErrorMessage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Func<global::System.Windows.Window, string, string, global::System.Windows.MessageBoxResult> ShowCriticalWarningMessage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Func<global::System.Windows.Window, string, string, global::System.Windows.MessageBoxButton, global::System.Windows.MessageBoxResult> ShowCriticalQuestionMessage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsConnected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.MessageBoxResult Show(global::System.Windows.Window window, string format, string title, global::System.Windows.MessageBoxButton button, global::System.Windows.MessageBoxImage icon) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.MessageBoxResult Show(global::System.Windows.Window window, string format, string title, global::System.Windows.MessageBoxImage icon) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.MessageBoxResult Show(string format, string title, global::System.Windows.MessageBoxButton button, global::System.Windows.MessageBoxImage icon) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.MessageBoxResult Show(string format, string title, global::System.Windows.MessageBoxImage icon) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.MessageBoxResult ShowWarning(global::System.Windows.Window parent, string msg, string title) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.MessageBoxResult ShowQuestion(global::System.Windows.Window parent, string msg, string title, global::System.Windows.MessageBoxButton button) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.MessageBoxResult ShowError(global::System.Windows.Window parent, string msg, string title) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.MessageBoxResult ShowInfo(global::System.Windows.Window parent, string msg, string title) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.MessageBoxResult ShowWarning(string msg, string title) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.MessageBoxResult ShowQuestion(string msg, string title, global::System.Windows.MessageBoxButton button) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.MessageBoxResult ShowError(string msg, string title) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.MessageBoxResult ShowInfo(string msg, string title) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int ShowQuestionWithOptions(global::System.Windows.Window parent, string prompt, string title, global::System.Windows.MessageBoxImage imageName, global::Quire.Wpf.CheckBoxData[] checkBoxesData, string[] buttons, string defaultButtonIdx, string cancelButtonIdx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.MessageBoxResult ShowOkDialog(global::System.Windows.Window ownerWindow, string message, string caption, global::System.Windows.MessageBoxImage imageName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public MessageBoxManager() { }
 }

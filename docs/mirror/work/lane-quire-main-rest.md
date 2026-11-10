@@ -370,6 +370,7 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
   - Gate: PASS, 640 checked. Report: `.mirror-cache/release-il-1a79f4cec4c2/release-il.json`.
 - **Batch 18 (DialogManager, U; branch `mirror/quire-main-rest-pure-20261111`):** both `ShowDialog` overloads, `IsConnected`, `IsDialogOpen`, ctor. Gate: PASS, 646 checked. Report: `.mirror-cache/release-il-460a79782701/release-il.json`.
   - Blocked (not started): `MruUserConfigPersistance` (reads `Settings`, a settings class).
+- **Batch 19 (MessageBoxManager, U; branch `mirror/quire-main-rest-pure-20261111`):** the four private `Show` overloads, all `ShowWarning/Question/Error/Info` overloads, `ShowQuestionWithOptions`, `ShowOkDialog`, `IsDisabled`, the four delegate properties, `IsConnected`, ctor. Gate: PASS, 672 checked. Report: `.mirror-cache/release-il-7ea8d6de9d01/release-il.json`.
 
 ## Remaining (after batch 10)
 
