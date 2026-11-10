@@ -1,6 +1,6 @@
 # Equation Editor lane checkpoint (20261109b)
 
-- Owner: EquationEditor dispatched worker (task_6b037491df3f)
+- Owner: EquationEditor dispatched worker (task_7d0e9f4d7399)
 - Branch: `mirror/equation-editor-20261109b`
 - Assembly: `Quire.EquationEditor` (managed members, `src/Quire.EquationEditor`)
 
@@ -70,3 +70,6 @@
 
 - Batch 27: `Tree.StringToComboBoxMathTransformerForConvertor.ExponentNotationToPrime`. Release IL PASS, 473 checked, 0 failures (`.mirror-cache/release-il-1fb3dc8207cc/release-il.json`). First gate failed only because the method emitted `.initlocals True` while Mathcad uses `False` (`release-il-eae231f331e8`, confirmed by `il_diff` instruction #31); getter-level `[SkipLocalsInit]` matched.
 - Rejected candidate (not landed): `SpecTable.Model.ColumnMemento` properties plus `RestoreData`. The generated property accessors compile as `get_Column`/`set_Column`, while the original IL calls obfuscated accessors such as `d()` and `a(ISpecTableColumn)`; `RestoreData` failed at call #0 for the same reason. `DataCells` accessors had no Mathcad counterpart. Reverted this attempt (`release-il-5fa56232214b`).
+
+
+- Batch 28: `Tree.StringToComboBoxMathTransformerForConvertor` parameterless and Boolean constructors. Release IL PASS, 475 checked, 0 failures (`.mirror-cache/release-il-57d5e127d5ca/release-il.json`). Both idiomatic constructor shapes matched first try.
