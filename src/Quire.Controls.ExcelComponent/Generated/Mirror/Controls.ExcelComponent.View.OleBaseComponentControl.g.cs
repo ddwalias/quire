@@ -104,17 +104,9 @@ public abstract partial class OleBaseComponentControl : global::Quire.Controls.M
     [global::Quire.Mirror.MirrorStub]
     public static void SetOleComponentLocationTop(global::System.Windows.DependencyObject whiteboardItem, double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static double GetOleComponentLocationLeft(global::System.Windows.DependencyObject whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetOleComponentLocationLeft(global::System.Windows.DependencyObject whiteboardItem, double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void SetItemWidth(global::System.Windows.DependencyObject whiteboardItem, double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static double GetItemWidth(global::System.Windows.DependencyObject whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetItemHeight(global::System.Windows.DependencyObject whiteboardItem, double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static double GetItemHeight(global::System.Windows.DependencyObject whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus computingStatus) => base.SetCalculatingStatus(computingStatus);
     [global::Quire.Mirror.MirrorStub]
@@ -144,8 +136,6 @@ public abstract partial class OleBaseComponentControl : global::Quire.Controls.M
     [global::Quire.Mirror.MirrorStub]
     protected override void ViewModelPropertyChangedHandler(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => base.ViewModelPropertyChangedHandler(sender, e);
     [global::Quire.Mirror.MirrorStub]
-    public override string GetBlockEquationTypeAttributeName(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]
     private static void ErrorChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -167,8 +157,6 @@ public abstract partial class OleBaseComponentControl : global::Quire.Controls.M
     public global::Quire.Controls.Core.IResizeData StoreResizeData(global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RestoreResizeData(global::Quire.Controls.Core.IResizeData resizeData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size CoerceNewSize(global::System.Windows.Size newSize, global::Quire.Controls.Core.IResizeData resizeData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void CloseOle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

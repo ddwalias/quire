@@ -23,4 +23,5 @@
 - Batch 19: `ChartContainerModel.Commit` and `SetRegionPersistentData`; Release IL PASS (`518 checked`; `.mirror-cache/release-il-43c8cf24bd1c/release-il.json`).
 - Batch 20: `OleObjectControl` command-enable handlers (`CanExecuteOleObjectResetSize`, `CanExecuteUpdateOleObjectLink`, `CanToggleOleObjectAutoResize`) and `ExcelComponentControl.GetEquationType`/`GetError`; Release IL PASS (`523 checked`; `.mirror-cache/release-il-38935ab1f6f3/release-il.json`).
 - Batch 21: `ExcelComponentControl` (`CanInsertInputExpression`, `CanInsertOutputExpression`, `GetExcelSelectionOrDefault`) and `ChartComponentControl.CanInsertAxisExpression`; Release IL PASS (`527 checked`; `.mirror-cache/release-il-899f793d51c1/release-il.json`).
-- Remaining: 652 unfinished methods in Quire.Controls.ExcelComponent (Release IL report batch 21).
+- Batch 22: `OleBaseComponentControl` attached-property accessors (`GetItemHeight`, `SetItemHeight`, `GetOleComponentLocationLeft`, `SetOleComponentLocationLeft`), `CoerceNewSize`, and `GetBlockEquationTypeAttributeName`; Release IL PASS (`533 checked`; `.mirror-cache/release-il-1246cfb4ff21/release-il.json`).
+- Remaining: 646 unfinished methods in Quire.Controls.ExcelComponent (Release IL report batch 22).
