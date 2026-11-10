@@ -23,8 +23,6 @@ public partial class InlineToSExpressionTransform
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.Dictionary<global::System.Type, string> e;
     [global::Quire.Mirror.MirrorStub]
-    private string a(global::System.Windows.Documents.Inline A_0, ref int A_1, ref int A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private string a(global::System.Windows.Documents.Run A_0, ref int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string a(global::System.Windows.Documents.Span A_0, ref int A_1, ref int A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
