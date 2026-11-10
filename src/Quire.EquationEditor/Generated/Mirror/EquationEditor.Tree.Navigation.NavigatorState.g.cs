@@ -63,18 +63,6 @@ public partial struct NavigatorState
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState ChangeOperatorPartIndex(global::System.Nullable<int> operatorPartIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState ChangeEnterSide(global::Quire.Direction enterSide) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState ChangeValueRange(int caretPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState ChangeValueRange(int startPosition, int endPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState ChangeValueRange(global::System.Nullable<global::Quire.TextRange> range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState ChangeValueRangeAndInsertionType(int position, global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes insertionType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState ToggleCaretInsertionType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Direction WhatSideOfTheNodeIsTheCaret() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes DefaultCaretInsertionType(global::Quire.EquationEditor.Tree.MathNode idNode, int caretPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
