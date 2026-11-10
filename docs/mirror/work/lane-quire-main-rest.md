@@ -351,7 +351,7 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
 
 ## Remaining (after batch 10)
 
-- Markers left in `rest` (non-Controls): 3152 in 276 files before batch 10; recount after landing. Batches 1–10 removed 165 markers from 26 files.
+- Markers left in `rest` (non-Controls): 3152 in 276 files after batch 10 (3317 at classification). Batches 1–10 removed 165 markers.
 - **Blocked, not attempted:** COM/native class factories and registration (`IClassFactory*`, `ComNativeExternalApi`, `MathcadPrime*ClassFactory*`, `MathcadPrimeComServerManager`, `LICINFO`, `AddonsLoaderHelper` P/Invoke); settings and product literals (`Properties.Settings`, `ProductInfo.Constants`, `CultureHelper`).
 - **Blocked, type/surface decisions:** `WindowTabTupleData.Header` (type-map `DockWindow` → `AvalonDock.Layout.LayoutAnchorable` has no `Header`); `FontConstants` is not in Quire (`StyleFontFamilyConverter`, `MathFontSizeValidationRule`, `TextStyleProperties`, `MathSymbolMenuItemConverter`); `IPageNumberControl`, `ISavedDateControl`, `XmlLanguageHelper` are not in Quire (`PageNumberIsCheckedConverter`, `SavedDateIsCheckedConverter`, `XmlLanguageToCultureInfoConverter`); `TextStylePropertyInfoExt.IsInherited` is not in Quire.Core (`TextStyleInheritedFontWeight`).
 - **Mismatch kept as stub:** `UniqueTextStyleNameRule.Validate` (Mathcad uses `call` for `String.IndexOfAny`; Roslyn emits `callvirt`).
