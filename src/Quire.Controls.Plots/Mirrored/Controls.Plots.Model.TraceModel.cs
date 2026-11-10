@@ -531,4 +531,119 @@ internal partial class TraceModel
             ImageRendererModel.StopRendering();
         }
     }
+
+    public bool IsUsingDensityVisualization
+    {
+        get
+        {
+            if (AreDensityPointsSupported)
+            {
+                if (!ForcedToDensityVisualization)
+                {
+                    if (RestrictedToDensityPointsOrSolidLine)
+                    {
+                        return LineStyle == LineStyle.None;
+                    }
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public bool ResultValid
+    {
+        get
+        {
+            return _resultValid;
+        }
+        set
+        {
+            _resultValid = value;
+            FireResultValidChanged(_resultValid);
+        }
+    }
+
+    public bool IsTypeDefault
+    {
+        get
+        {
+            if (_isTypeDefault.HasValue)
+            {
+                return _isTypeDefault.Value;
+            }
+            return false;
+        }
+    }
+
+    public bool ContainsEmptyEquation
+    {
+        get
+        {
+            if (!GetEquation(AxesIndex.Range).IsPlotEquationEmpty)
+            {
+                return GetEquation(AxesIndex.Result).IsPlotEquationEmpty;
+            }
+            return true;
+        }
+    }
+
+    public Point TopLeft { get; private set; }
+
+    public Point BottomRight { get; private set; }
+
+    public Color Color
+    {
+        get
+        {
+            return _color;
+        }
+        set
+        {
+            _color = value;
+            ImageRendererModel.StyleOwner.Color = _color;
+        }
+    }
+
+    public LineStyle LineStyle
+    {
+        get
+        {
+            return _lineStyle;
+        }
+        set
+        {
+            if (value == _lineStyle)
+            {
+                return;
+            }
+            bool isUsingDensityVisualization = IsUsingDensityVisualization;
+            _lineStyle = value;
+            bool isUsingDensityVisualization2 = IsUsingDensityVisualization;
+            if (isUsingDensityVisualization != isUsingDensityVisualization2)
+            {
+                UpdateImageRendererModel();
+            }
+        }
+    }
+
+    public TraceType Type
+    {
+        get
+        {
+            return _type;
+        }
+        set
+        {
+            if (_type != value)
+            {
+                SetTypeImpl(value);
+                UpdateIsTypeDefault();
+                ClearPoints();
+                InvalidateEngineResult();
+                Commit();
+            }
+        }
+    }
 }

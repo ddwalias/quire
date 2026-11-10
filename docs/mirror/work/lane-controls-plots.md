@@ -291,3 +291,9 @@
 - Members: `GetGraphPointsForPlottingCoordinateOnRangeAxis`, `GetClosestPlottingCoordinateOnRangeAxis` (public forwarders with `DebugTools.AssertNotNull(...).Passed` guards), `OnPlottingPointsChanged`, `UpdateImageRendererModel` (density branch vs `StopRendering`). Hand-written: appended to `Mirrored/Controls.Plots.Model.TraceModel.cs`; their top-level stubs removed from the `.g.cs`. The nested `PlottingPointsForDisplay` stubs stay (they are not in this batch).
 - Left: `UpdatePlottingPointsForDisplay` (its `WpfUtils.DoWork` lambda captures `points`, so the closure shape needs its own pass) and the nested class members.
 - Release IL: PASS — 564 checked, 564 exact, 0 failures.
+
+## Batch 42 — TraceModel simple properties
+
+- Members: `IsUsingDensityVisualization` (get), `ResultValid` (get/set, fires `FireResultValidChanged`), `IsTypeDefault` (get), `ContainsEmptyEquation` (get), `TopLeft` and `BottomRight` (private-set auto-properties; Mathcad's compiler-generated backing fields), `Color` (get/set via `ImageRendererModel.StyleOwner`), `LineStyle` (get/set), `Type` (get/set). Hand-written: appended to `Mirrored/Controls.Plots.Model.TraceModel.cs`; their top-level property stubs removed from the `.g.cs`.
+- Shapes: `LineStyle.set` first failed on layout. Mathcad's `if (value != _lineStyle) { … }` is an early return (`if (value == _lineStyle) return;`); the early-return form matched.
+- Release IL: PASS — 579 checked, 579 exact, 0 failures.
