@@ -11,12 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputResizableControlViewModel, Ptc.Controls.EquationControl")]
 public partial class InputResizableControlViewModel : global::Quire.Controls.InputControls.InputControlViewModel, global::Quire.Controls.InputControls.IInputResizableControlViewModel, global::Quire.Controls.InputControls.IInputControlViewModel, global::Quire.EquationEditor.View.IInputControlViewModelBase, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.InputControls.IInputResizableControlModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual double Height { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual double Width { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public InputResizableControlViewModel(global::Quire.Controls.InputControls.IInputResizableControlModel model) : base(default(global::Quire.Controls.InputControls.IInputControlModel)) { }
 }
