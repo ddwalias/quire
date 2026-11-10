@@ -1,6 +1,7 @@
 using Quire.Controls.InputControls;
 using System.Collections.Generic;
 using System.Linq;
+using Quire.EquationEditor.View;
 
 namespace Quire.Controls.InputControls;
 
@@ -45,4 +46,23 @@ public partial class ComboBoxTableModel
     public System.Collections.Generic.IEnumerable<Quire.Controls.InputControls.ComboBoxRow> AllRows => _topRow.Yield<ComboBoxRow>().Concat<ComboBoxRow>(_nameValuesRows);
 
     public System.Collections.Generic.IEnumerable<Quire.EquationEditor.View.IReadonlyCellData> UnitsForValueColumns => _topRow.UnitCells;
+
+    private void UpdateShiftedCellsColumnPosition(IEnumerable<ICellData> rowCells, int numOfUnchangedColumns, System.Action<ICellData> updateCellColumnPosition)
+    {
+        EnumerableExtensions.Each(rowCells.Skip(numOfUnchangedColumns), updateCellColumnPosition);
+    }
+
+    public void ClearCellContent(IReadonlyCellData cellData)
+    {
+        if (DebugTools.AssertNotNull(cellData, null).Failed)
+        {
+            return;
+        }
+
+        ICellData cell = GetCellAt(cellData.Row, cellData.Column);
+        if (DebugTools.AssertNotNull(cell, null).Passed)
+        {
+            cell.Clear();
+        }
+    }
 }

@@ -54,8 +54,6 @@ public partial class ComboBoxTableModel : global::Quire.Controls.InputControls.I
     [global::Quire.Mirror.MirrorStub]
     public bool RemoveColumn(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void UpdateShiftedCellsColumnPosition(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData> rowCells, int numOfUnchangedColumns, global::System.Action<global::Quire.Controls.InputControls.ICellData> updateCellColumnPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void ClearSelectedCellsContent(global::Quire.DiscreteRect range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool AreAllSelectedCellsEmpty(global::Quire.DiscreteRect range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -65,8 +63,6 @@ public partial class ComboBoxTableModel : global::Quire.Controls.InputControls.I
     private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData> CellsInRange(global::Quire.DiscreteRect range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<T> TakeSubsequence<T>(global::System.Collections.Generic.IEnumerable<T> sequence, int fromIdx, int toIdx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ClearCellContent(global::Quire.EquationEditor.View.IReadonlyCellData cellData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void TrimWhitespacesInUnitCells() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

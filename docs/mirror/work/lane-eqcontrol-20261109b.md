@@ -265,3 +265,5 @@
 - Release IL: PASS, 1372 checked (`.mirror-cache/release-il-2a8ebc0ea0e7/release-il.json`).
 - Batch: `Controls.InputControls.ComboBoxRow`: `AddCell`, `RemoveLastCell`, `GetCellAt` (guard written `if (!(0 <= index && index < CellCount))`: the `&&` form compiles to `bge`, Mathcad uses `blt`), properties `AllCells`, `CellCount`, `FirstCell`. `AllButFirstCell`, `IsValid`, `InsertCell`, `RemoveCellAt` stay open.
 - Release IL: PASS, 1378 checked (`.mirror-cache/release-il-f396de3a74c7/release-il.json`).
+- Batch: `Controls.InputControls.ComboBoxTableModel`: `UpdateShiftedCellsColumnPosition`, `ClearCellContent`. The cached-lambda members (`ClearSelectedCellsContent`, `AreAllSelectedCellsEmpty`, `TrimWhitespacesInUnitCells`, `UpdateCellsPositionForShiftedNameValuesRows`) stay open: their compiler-generated `<>c` names depend on the compile order.
+- Release IL: PASS, 1380 checked (`.mirror-cache/release-il-d97159c0cc78/release-il.json`).
