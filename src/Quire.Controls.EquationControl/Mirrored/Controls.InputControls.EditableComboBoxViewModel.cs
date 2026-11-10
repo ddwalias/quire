@@ -1,5 +1,8 @@
 using Quire.Matrices;
 using Quire.EquationEditor.View;
+using System.Collections.Generic;
+using Quire.Core;
+using Quire.EquationEditor.Tree;
 namespace Quire.Controls.InputControls;
 
 public partial class EditableComboBoxViewModel
@@ -84,5 +87,60 @@ public partial class EditableComboBoxViewModel
             _selectedCells = value;
             OnPropertyChanged(nameof(SelectedCells));
         }
+    }
+
+    public bool InsertRow(Quire.EquationEditor.View.IReadonlyCellData cellData, Quire.Direction direction)
+    {
+        IEnumerable<ICellData> addedCells = TableModel.InsertRow(cellData.Row, direction);
+        bool isNotEmpty = addedCells.IsNotEmpty();
+        if (isNotEmpty)
+        {
+            CellsAdded?.Invoke(addedCells);
+        }
+
+        return isNotEmpty;
+    }
+
+    public bool InsertColumn(Quire.EquationEditor.View.IReadonlyCellData cellData, Quire.Direction direction)
+    {
+        IEnumerable<ICellData> addedCells = TableModel.InsertColumn(cellData.Column, direction);
+        bool isNotEmpty = addedCells.IsNotEmpty();
+        if (isNotEmpty)
+        {
+            CellsAdded?.Invoke(addedCells);
+        }
+
+        return isNotEmpty;
+    }
+
+    private static bool AreOnlyValuesSelected(Quire.DiscreteRect selectedRect)
+    {
+        if (selectedRect.Top >= 1)
+        {
+            return selectedRect.Left >= 1;
+        }
+
+        return false;
+    }
+
+    private void PasteEditModeBySelection()
+    {
+        if (!AreThereSelectedCells)
+        {
+            return;
+        }
+
+        PasteEditMode(GetTableRect(SelectedCells.Item1, SelectedCells.Item2));
+    }
+
+    private bool CanPasteEditMode()
+    {
+        MathNode mathNode = TryReadMathNodeFromClipboard();
+        if (mathNode?.DescriptorName == "MATRIX")
+        {
+            return TransformMathNodeToComboBoxValues.CanTransform(mathNode, default);
+        }
+
+        return false;
     }
 }

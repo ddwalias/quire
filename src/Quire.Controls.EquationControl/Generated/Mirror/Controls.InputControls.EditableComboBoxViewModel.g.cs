@@ -48,13 +48,7 @@ public partial class EditableComboBoxViewModel : global::Quire.Controls.InputCon
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.EquationEditor.Tree.MathNode TryReadMathNodeFromClipboard() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private bool CanPasteEditMode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool AreOnlyValuesSelected(global::Quire.DiscreteRect selectedRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void PasteEditMode(global::Quire.DiscreteRect sourceRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void PasteEditModeBySelection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void CopyEditMode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -65,10 +59,6 @@ public partial class EditableComboBoxViewModel : global::Quire.Controls.InputCon
     private void SetupCommandBindings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdatePlaceHolderBoxSize(global::System.Windows.DpiScale dpiScale) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool InsertRow(global::Quire.EquationEditor.View.IReadonlyCellData cellData, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool InsertColumn(global::Quire.EquationEditor.View.IReadonlyCellData cellData, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void DeleteRows(int fromIndex, int toIndex, bool assertIfCannotDelete, bool isFinishedEditingMode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

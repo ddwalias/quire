@@ -229,3 +229,5 @@
 - Release IL: PASS, 1172 checked (`.mirror-cache/release-il-79c73c61e5e4/release-il.json`).
 - Batch: `Controls.InputControls.EditableComboBoxViewModel`: `ClearSelection`, `GetCellAt` (cast to `IComboBoxTableModel`: the implicit upcast emits no `castclass`), `CanDeleteRow`, `CanDeleteColumn`, `GetTableRect`, `IsUnitCell`, `IsValueCell`, `IsTitleCell` (non-short-circuit `&`, as the Release IL `and`), `AreAllSelectedCellsEmpty`, `ClearCellContent`, `FinishEditing`; properties `Rows`, `Columns`, `CellCount`, `SelectedTableRowIndex`, `AreThereSelectedCells`, `SelectedCells`. `MidPointBetweenFirstAndSecond*` (DevAssert setters) and `TableSize`/`PlaceHolderBoxSize` setters stay open.
 - Release IL: PASS, 1191 checked (`.mirror-cache/release-il-311c8f6b4e95/release-il.json`).
+- Batch: `Controls.InputControls.EditableComboBoxViewModel`: `InsertRow`, `InsertColumn` (the `isNotEmpty` result stays on the stack in Release IL, the natural local form matches), `AreOnlyValuesSelected`, `PasteEditModeBySelection`, `CanPasteEditMode`.
+- Release IL: PASS, 1196 checked (`.mirror-cache/release-il-6c0862f7f6e8/release-il.json`).
