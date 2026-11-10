@@ -26,6 +26,18 @@ public partial class ChartContainerModel
 
     public bool IsImageFrozen => ImageFreezeSources != ImageFreezeSources.None;
 
+    public override void Commit()
+    {
+        AssertDispatcherAccess();
+        RemoveImageFreezeSource(ImageFreezeSources.AsynchronousCalculation);
+    }
+
+    public override global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, global::Quire.PersistentData.chartContainerType chartContainer)
+    {
+        Unpack(d11NProvider, chartContainer.itemidref);
+        return null;
+    }
+
     public override IValue GetValue(string place)
     {
         throw new NotImplementedException();
