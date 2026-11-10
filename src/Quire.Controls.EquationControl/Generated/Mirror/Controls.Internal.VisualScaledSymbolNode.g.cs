@@ -25,8 +25,4 @@ internal partial class VisualScaledSymbolNode : global::Quire.Controls.Internal.
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => base.MeasureStaticLayout(availableSize);
-    [global::Quire.Mirror.MirrorStub]
-    object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Internal.VisualScaledSymbolNode Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

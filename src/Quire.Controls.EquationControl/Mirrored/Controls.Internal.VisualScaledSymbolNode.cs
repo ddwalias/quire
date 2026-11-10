@@ -20,4 +20,17 @@ internal partial class VisualScaledSymbolNode
             _scaleFactor.ScaleX = _scaleFactor.ScaleY / 3.0;
         }
     }
+
+    public VisualScaledSymbolNode Clone()
+    {
+        VisualScaledSymbolNode clone = new VisualScaledSymbolNode(_symbol);
+        clone.MathFormat.SetPropertiesFrom(MathFormat, true);
+        clone._scaleFactor = _scaleFactor;
+        return clone;
+    }
+
+    object global::System.ICloneable.Clone()
+    {
+        return Clone();
+    }
 }

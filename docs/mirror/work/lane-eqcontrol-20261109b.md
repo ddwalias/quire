@@ -315,3 +315,6 @@
 - Batch: `Controls.Internal.Fence` (new `Mirrored/Controls.Internal.Fence.cs`): `ContentSize` (dependency property get/set), `IsComposable` (`_components[1] != null`), `First`/`Last`/`Middle`/`Single` (`_components[0]`, `[2]`, `[1]`, `[3]`), and the members whose Release IL is Mathcad's own `NotImplementedException` throw: `EffectiveBaselineY`, `EffectiveScriptBaselineY`, `Geometry`, `GetNodeAtPoint`, `Clone()`. The protected `Clone(Fence)`, `GenerateFenceComponents`, `UpdateGlyphGaps`, `ReformatComponents`, the `GlyphGap` members and the constructors stay open.
 - Shapes tried: the indexed getters and the `!= null` check matched on the first candidate; the NotImplemented throws matched too.
 - Release IL: PASS, 1649 checked (`.mirror-cache/release-il-5933235ac5fb/release-il.json`).
+- Batch: `Controls.Internal.VisualScaledSymbolNode`: `Clone()` (new node from `_symbol`, `MathFormat.SetPropertiesFrom(MathFormat, true)`, copies `_scaleFactor`) and the explicit `ICloneable.Clone()` forwarding to it. Added to the existing `Mirrored/Controls.Internal.VisualScaledSymbolNode.cs` partial.
+- Shapes tried: the local-then-return clone matched on the first candidate.
+- Release IL: PASS, 1651 checked (`.mirror-cache/release-il-d7b6abd6d0b5/release-il.json`).
