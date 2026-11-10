@@ -237,3 +237,5 @@
 - Release IL: PASS, 1205 checked (`.mirror-cache/release-il-84b396637492/release-il.json`).
 - Batch: `Controls.Internal.VisualFactory` straight-line factories (37 `Create*Node` / `Create*Node(...)` methods that only construct a node, with the region field and parameters forwarded). `CreateProgramNode` and `CreateBodyNode` pass `true`/`false` to the `bool` constructor parameter.
 - Release IL: PASS, 1242 checked (`.mirror-cache/release-il-3d6855d990b0/release-il.json`).
+- Batch: `Controls.Internal.VisualFactory` static-call factories (`CreateMatrixRowContentNode`, `CreateMatrixColContentNode`, `CreateGroupingNode`, `CreateAbsoluteValueNode`, `CreateDeterminate`, `CreateWhileLoopNode`, `CreateBreakNode`, `CreateContinueNode`).
+- Release IL: PASS, 1250 checked (`.mirror-cache/release-il-14783bce6474/release-il.json`).

@@ -187,4 +187,44 @@ internal partial class VisualFactory
     {
         return new VisualScoper(_region);
     }
+
+    public Quire.EquationEditor.View.IVisualOutfixNode CreateMatrixRowContentNode()
+    {
+        return VisualSuperscriptOutfixOperatorNode.CreateVerticalBrackets();
+    }
+
+    public Quire.EquationEditor.View.IVisualOutfixNode CreateMatrixColContentNode()
+    {
+        return VisualSuperscriptOutfixOperatorNode.CreateHorizontalBrackets();
+    }
+
+    public Quire.EquationEditor.View.IVisualOutfixNode CreateGroupingNode()
+    {
+        return VisualLinearOutfixNode.CreateParens();
+    }
+
+    public Quire.EquationEditor.View.IVisualOutfixNode CreateAbsoluteValueNode()
+    {
+        return VisualLinearOutfixNode.CreateAbsoluteValue();
+    }
+
+    public Quire.EquationEditor.View.IVisualOutfixNode CreateDeterminate()
+    {
+        return VisualLinearOutfixNode.CreateDeterminate();
+    }
+
+    public Quire.EquationEditor.View.IVisualBinaryOperatorNode CreateWhileLoopNode()
+    {
+        return new VisualLoopNode("while");
+    }
+
+    public Quire.EquationEditor.View.IVisualLeafOperatorNode CreateBreakNode()
+    {
+        return new VisualLeafOperatorNode("break");
+    }
+
+    public Quire.EquationEditor.View.IVisualLeafOperatorNode CreateContinueNode()
+    {
+        return new VisualLeafOperatorNode("continue");
+    }
 }
