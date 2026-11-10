@@ -44,4 +44,19 @@ public partial class ExcelComponentControl
     {
         return _exModel.GetError(item);
     }
+
+    private void CanInsertInputExpression(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = _exViewModel.CanInsertInputExpression;
+    }
+
+    private void CanInsertOutputExpression(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = _exViewModel.CanInsertOutputExpression;
+    }
+
+    private string GetExcelSelectionOrDefault(bool isInput)
+    {
+        return ExcelContainer.ViewModel.GetExcelSelectionOrDefault(isInput);
+    }
 }

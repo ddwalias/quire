@@ -38,8 +38,6 @@ public partial class ChartComponentControl : global::Quire.Controls.ExcelCompone
     [global::Quire.Mirror.MirrorStub]
     public override string GetHelpContext() => base.GetHelpContext();
     [global::Quire.Mirror.MirrorStub]
-    private void CanInsertAxisExpression(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OnInsertAxisExpression(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

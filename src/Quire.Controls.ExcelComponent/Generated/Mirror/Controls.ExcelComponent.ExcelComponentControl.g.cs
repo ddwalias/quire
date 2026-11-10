@@ -30,17 +30,11 @@ public partial class ExcelComponentControl : global::Quire.Controls.ExcelCompone
     [global::Quire.Mirror.MirrorStub]
     private ExcelComponentControl(global::Quire.Controls.ExcelComponent.ExcelComponentControl original) : base(default(global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel), default(global::System.Windows.ResourceDictionary)) { }
     [global::Quire.Mirror.MirrorStub]
-    private string GetExcelSelectionOrDefault(bool isInput) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override string GetHelpContext() => base.GetHelpContext();
     [global::Quire.Mirror.MirrorStub]
-    private void CanInsertOutputExpression(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OnInsertOutputExpression(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CanInsertInputExpression(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnInsertInputExpression(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

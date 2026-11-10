@@ -31,4 +31,9 @@ public partial class ChartComponentControl
     {
         return new ChartComponentControl(this);
     }
+
+    private void CanInsertAxisExpression(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args)
+    {
+        args.CanExecute = _chartViewModel.CanInsertInputExpression;
+    }
 }
