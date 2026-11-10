@@ -1538,4 +1538,31 @@ public partial class RichTextBase
 
         return word;
     }
+
+    public virtual void SetFormattedContent(string content, string dataFormat, XmlLanguage proofingLanguage, TextFormat textFormat = default)
+    {
+        TextRangeExtended range = TextRange;
+        _textFormatInitialization = textFormat;
+        using (MemoryStream stream = new MemoryStream())
+        {
+            using (StreamWriter writer = new StreamWriter(stream))
+            {
+                writer.Write(content ?? string.Empty);
+                writer.Flush();
+                stream.Seek(0, SeekOrigin.Begin);
+                range.Load(stream, dataFormat);
+                EnumerateEmbeddedObjectsInRange(range).OfType<global::System.Windows.Controls.Image>().Each(RemoveBaselineOffsetFromImage);
+            }
+        }
+
+        range.FixAndCleanImportedHyperlinksData(FixHyperlinkEmptyRuns);
+        if (DebugTools.AssertNotNull(proofingLanguage, null).Passed)
+        {
+            Document.Language = proofingLanguage;
+        }
+
+        UpdateCurrentProofingLanguage(Selection);
+        UpdateCurrentRuns(Selection, true, false);
+        CustomScriptRunBase.RecoverSubSuperscriptRunsInRange(TextRange);
+    }
 }

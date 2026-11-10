@@ -746,3 +746,19 @@ Remaining stub declarations in the lane: 134 (72 plain IL, 20 closure ordinal be
 - Attempted, rejected: `RichTextBase.ApplyTextFormatPropertyValueToControl` (ternary branch polarity), `FindReplaceRichTextBox.RemoveHyperlinksIfNeeded` (`call` vs `callvirt` on `Paragraph.Inlines`), `RichTextTitle.MeasureInlineWidth` (branch sense).
 - Not expressible: `ConvertSExpressionAndPasteText`, `ParseFormattedTextToTextSegments`, `VerticalAlignmentOffset`, `CreateTextChangedCommand`, `CloneParagraph`.
 - Not yet attempted (complex IL, nested try/finally or long branch graphs): `ConvertListToParagraphs`, `AddBlockedSelectDirectionForNextElement`, `SanitizeUnsupportedFormatting`, `ReplaceTextInHyperlink`, `GetRangeIfMatch`, `SetFormattedContent`, `OnPreviewBackspace`, `HandleReplace`, `ContextMenuOpened`, `HandleToggleSubSuperScriptCommand`, `OnCorrectSpellingError`, `OpenHyperlinkUrl`, `CopyHyperlink`, `RequestNavigateHandler`, `CloneContent`, `FlowDocumentRect`, `ReproduceRemovedHyperlinkColors`, `HandleLinkOpsOnPreviewKeyDown`, `OnPreviewMoveLeftByCharacter`, `OnPreviewMoveRightByCharacter`, `InlayXamlWithEmbeddedItems`, `EditLinkUndoableCommand`, `CanModifyHyperlink`, `ModifyHyperlink`, `BindHyperlinkCommands`, `RepairWrapperHosts`, `HandlePaste`, `ValidateURL`, `AddEmbeddedItem` (two overloads), `VerifyInsertionPositions`, `GetTextBoundary`, `SubscriptsMatch` (shared-return shape, checkpoint), `SearchWholeWordRuns` (ref ordering), `CalculateBaseline` (callvirt on new), `BuildSubscriptPositions` (ref ordering), `GetPointerToAddDictionary` (ref ordering), `GetEmbeddedObjectCaretOffset` (ref ordering), `EnumerateEmbeddedObjectsInRange` (iterator), `get_Lines` (iterator), `SetRegionPersistentData` (dup), `SelectionStart`/`SelectionEnd` (ref ordering), `DispatchCommandToItems` (interface base in another lane), `TruncateTextIfNeeded` (callvirt on new), `GetText`/`SetInitialTitleText` (callvirt on new), `RemoveHyperlinkPreservingText`, `TextStyleChangedHandler` x2, `LogSizeChange`, `CompareBaselineOffset` (checkpoint).
+
+## Batch 107 — RichTextBase formatted content (1)
+
+- Exact: `SetFormattedContent` (virtual; the text-range load through a `MemoryStream`/`StreamWriter` pair, embedded-image baseline cleanup via the cached static method group, hyperlink fix-up, the proofing-language assertion and document language, then the run and sub/superscript recovery). `Seek(0, ...)` takes a plain int literal; the `content ?? string.Empty` form matched.
+- Release IL: PASS — 529 checked, 0 failures (`.mirror-cache/gate-b107`).
+
+## Batch 108 — RichTextWithEmbeddedItem flow document rect (1)
+
+- Exact: `FlowDocumentRect` (template content-host lookup with `is`/`as` tests, the assertion early return, then `new Rect(transform.Transform(padding point), new Size(...))`). `Visual` is written as `global::System.Windows.Media.Visual`.
+- Release IL: PASS — 530 checked, 0 failures (`.mirror-cache/gate-b108b`).
+
+## Rejected in this run (no member landed)
+
+- `RichTextWithEmbeddedItem.CopyHyperlink`: try/finally with the selection save/restore. The lookup inside the try, and a version with the lookup before the try, both differ: Mathcad's `brfalse` target sits 5 bytes earlier, so the `if` body is shorter than the candidate's. Reverted; stub stays.
+- Not expressible (value duplicated without a local): `RichTextBase.GetRangeIfMatch` (`GetPositionAtTextOffset` result duplicated into both the `TextRange` constructor and the second offset call).
+- Not attempted in this run: the rest of the list in batch 98's status note (`ReplaceTextInHyperlink`, `HandleReplace`, `AddBlockedSelectDirectionForNextElement`, `ConvertListToParagraphs`, `OnPreviewBackspace`, `ValidateURL`, `OpenHyperlinkUrl`, `ContextMenuOpened`, and the others), because each needs a long branch analysis.

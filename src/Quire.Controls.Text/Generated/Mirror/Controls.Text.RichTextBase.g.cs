@@ -196,8 +196,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     private void ToggleRangeToState(global::System.Windows.Documents.TextPointer startPointer, int startOffset, int endOffset, global::Quire.Controls.Text.ScriptState state) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public virtual void SetFormattedContent(string content, string dataFormat, global::System.Windows.Markup.XmlLanguage proofingLanguage, global::Quire.Core.TextFormat textFormat = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private double CalculateBaseline() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void Activate(bool isActive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

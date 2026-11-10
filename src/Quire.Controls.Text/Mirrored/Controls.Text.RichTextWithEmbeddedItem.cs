@@ -1436,4 +1436,30 @@ public partial class RichTextWithEmbeddedItem
 
         RaiseEvent(new CustomRoutedEventArgs<FocusNavigationDirection>(TabOutOfTextEvent, FocusNavigationDirection.Previous));
     }
+
+    public Rect FlowDocumentRect
+    {
+        get
+        {
+            global::System.Windows.Media.Visual contentHost = null;
+            FrameworkElement element = Template.FindName("PART_ContentHost", this) as FrameworkElement;
+            if (element is ScrollViewer)
+            {
+                contentHost = (element as ScrollViewer).Template.FindName("PART_ScrollContentPresenter", element) as global::System.Windows.Media.Visual;
+            }
+            else if (element is AdornerDecorator)
+            {
+                contentHost = (element as AdornerDecorator).Child;
+            }
+
+            if (DebugTools.AssertNotNull(contentHost, null).Failed)
+            {
+                return new Rect(0.0, 0.0, 0.0, 0.0);
+            }
+
+            Thickness pagePadding = Document.PagePadding;
+            return new Rect(contentHost.TransformToAncestor(this).Transform(new Point(pagePadding.Left, pagePadding.Top)), new Size(ViewportWidth - pagePadding.Right - pagePadding.Left, ViewportHeight - pagePadding.Top - pagePadding.Bottom));
+        }
+    }
+
 }

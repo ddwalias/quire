@@ -84,8 +84,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> DeserializeLabeledIdFormat { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect FlowDocumentRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::System.Windows.Documents.TextPointer> Lines { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
