@@ -136,12 +136,6 @@ public abstract partial class OleBaseComponentControl : global::Quire.Controls.M
     [global::Quire.Mirror.MirrorStub]
     public override void SetError(global::Quire.Calculation.Core.EngineError error) => base.SetError(error);
     [global::Quire.Mirror.MirrorStub]
-    public void SetPrintingZoom(bool set, global::System.Nullable<double> newPrintingZoom) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IResizeData StoreResizeData(global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RestoreResizeData(global::Quire.Controls.Core.IResizeData resizeData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void CloseOle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int IncrementComponentCookieMultiThreaded(bool isAutoCalc = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

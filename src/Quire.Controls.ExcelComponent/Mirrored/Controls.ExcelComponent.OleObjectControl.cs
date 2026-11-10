@@ -144,4 +144,12 @@ public partial class OleObjectControl
     {
         View.ViewModel.UpdateLink();
     }
+
+    public void CloseOle()
+    {
+        if (IsOleOpen)
+        {
+            View.StartOleCloseOperation();
+        }
+    }
 }

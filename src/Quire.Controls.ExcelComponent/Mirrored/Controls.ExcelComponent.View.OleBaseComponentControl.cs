@@ -74,4 +74,19 @@ public abstract partial class OleBaseComponentControl
     {
         FirePropertyChanged(global::Quire.Calculation.Core.ErrorChangedEventArgs.GetArgs());
     }
+
+    public void SetPrintingZoom(bool set, global::System.Nullable<double> newPrintingZoom)
+    {
+        OleContainerItem.SetPrintingZoom(set, newPrintingZoom);
+    }
+
+    public global::Quire.Controls.Core.IResizeData StoreResizeData(global::System.Windows.Size oldSize, global::System.Windows.Size newSize)
+    {
+        return _oleBaseViewModel.StoreResizeData(oldSize, newSize);
+    }
+
+    public void RestoreResizeData(global::Quire.Controls.Core.IResizeData resizeData)
+    {
+        _oleBaseViewModel.RestoreResizeData(resizeData);
+    }
 }

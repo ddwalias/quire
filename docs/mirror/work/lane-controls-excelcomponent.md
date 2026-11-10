@@ -29,4 +29,5 @@
 - Batch 25: `ExcelContainerViewModel.GetExcelVersionInstalled` and `Select` (forwarders to `Model`); Release IL PASS (`541 checked`; `.mirror-cache/release-il-e1d2905b8124/release-il.json`).
 - Batch 26: `OleObjectControl.ExecutedOleObjectResetSize`, `ExecutedUpdateOleObjectLink`; `OleBaseComponentControl.UpdateAllErrors`, `FireCalcErrorChanged`; Release IL PASS (`545 checked`; `.mirror-cache/release-il-f59ef9e01495/release-il.json`).
 - Batch 27: `OleContainerItem<…>.Activate` and `GetHelpContext` (both assert-only bodies); Release IL PASS (`547 checked`; `.mirror-cache/release-il-bde1d48e2f44/release-il.json`).
-- Remaining: 632 unfinished methods in Quire.Controls.ExcelComponent (Release IL report batch 27).
+- Batch 28: `OleBaseComponentControl.SetPrintingZoom`, `StoreResizeData`, `RestoreResizeData` (forwarders) and `OleObjectControl.CloseOle`; Release IL PASS (`551 checked`; `.mirror-cache/release-il-ba9baf102880/release-il.json`).
+- Remaining: 628 unfinished methods in Quire.Controls.ExcelComponent (Release IL report batch 28).

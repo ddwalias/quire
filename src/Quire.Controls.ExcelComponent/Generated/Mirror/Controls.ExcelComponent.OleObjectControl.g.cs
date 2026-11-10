@@ -84,8 +84,6 @@ public partial class OleObjectControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     public void SimulateMouseClick(global::System.Windows.Point location, int numberOfClicks) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void CloseOle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseLeftButtonDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnMouseLeftButtonDown(e);
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
