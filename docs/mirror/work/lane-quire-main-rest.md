@@ -389,6 +389,9 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
 - **Batch 27 (StatusBarControls, U; branch `feature/quire-main-pure-agy`):** `GotoPageValidationRule` (`_helper`, `TotalPages`, `Helper`, `Validate`), `GotoPageValidatorHelper` (`TotalPagesProperty`, `TotalPages`, `Validator`, `SetValidator`, `OnTotalPagesChanged`, `CreateInstanceCore`).
   - Gate: PASS, 739 checked. Report: `.mirror-cache/release-il-c9963ceb71c5/release-il.json`.
   - Shapes: `Validate` places `return validResult;` outside `try/catch` block matching Mathcad's `leave.s` layout.
+- **Batch 28 (converters and license properties, U; branch `feature/quire-main-pure-agy`):** `SubscriptStateToCheckedConverter` (Instance, Convert, ConvertBack, ctor, .cctor), `Freemium.HideIfNullConverter` (ctor), `ZoomControlWidthToVisibilityMultiConverter` (ctor), `License.LicenseOptionsPage` (LicenseURITypeProperty, LicenseServerAddressProperty, LicenseServerPortProperty, LicenseFilePathProperty, LicenseSourceListProperty, .cctor), `ReadonlyOptionConverter` (_instance, Instance, Convert, ConvertBack, ctor).
+  - Gate: PASS, 742 checked. Report: `.mirror-cache/release-il-243ac5671b46/release-il.json`.
+  - Shapes: `SubscriptStateToCheckedConverter.Convert` uses `values[1] is bool flag && flag` pattern to match local slot allocation (slot 0/1/3 bool, slot 2 object).
 
 ## Remaining (after batch 10)
 

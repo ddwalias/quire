@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.ZoomControlWidthToVisibilityMultiConverter, MathcadPrime")]
 internal partial class ZoomControlWidthToVisibilityMultiConverter : global::System.Windows.Data.IMultiValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ZoomControlWidthToVisibilityMultiConverter() { }
 }

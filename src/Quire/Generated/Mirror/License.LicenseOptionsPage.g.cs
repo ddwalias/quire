@@ -12,16 +12,6 @@ namespace Quire.License;
 public partial class LicenseOptionsPage : global::System.Windows.Controls.UserControl, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty LicenseURITypeProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty LicenseServerAddressProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty LicenseServerPortProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty LicenseFilePathProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty LicenseSourceListProperty;
-    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.License.LicenseOptionsPage _this;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Grid licenseInfoAndStatus;

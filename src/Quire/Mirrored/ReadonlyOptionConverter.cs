@@ -11,6 +11,8 @@ public partial class ReadonlyOptionConverter
 {
     public const string SaveAndSync = "SaveAndSync";
 
+    private static ReadonlyOptionConverter _instance;
+
     public static ReadonlyOptionConverter Instance => _instance ?? (_instance = new ReadonlyOptionConverter());
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -33,5 +35,9 @@ public partial class ReadonlyOptionConverter
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
+    }
+
+    public ReadonlyOptionConverter()
+    {
     }
 }

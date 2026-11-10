@@ -22,4 +22,8 @@ internal partial class HideIfNullConverter
     {
         throw new NotImplementedException();
     }
+
+    public HideIfNullConverter()
+    {
+    }
 }

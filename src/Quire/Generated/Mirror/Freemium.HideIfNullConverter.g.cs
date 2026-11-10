@@ -11,6 +11,4 @@ namespace Quire.Freemium;
 [global::Quire.Mirror.MirrorOf("Spirit.Freemium.HideIfNullConverter, MathcadPrime")]
 internal partial class HideIfNullConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public HideIfNullConverter() { }
 }

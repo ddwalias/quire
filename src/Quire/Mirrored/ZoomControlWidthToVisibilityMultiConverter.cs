@@ -27,4 +27,8 @@ internal partial class ZoomControlWidthToVisibilityMultiConverter
     {
         throw new NotImplementedException();
     }
+
+    public ZoomControlWidthToVisibilityMultiConverter()
+    {
+    }
 }

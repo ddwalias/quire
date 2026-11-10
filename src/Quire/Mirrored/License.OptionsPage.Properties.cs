@@ -4,6 +4,12 @@ namespace Quire.License;
 
 public partial class LicenseOptionsPage
 {
+    public static readonly global::System.Windows.DependencyProperty LicenseURITypeProperty;
+    public static readonly global::System.Windows.DependencyProperty LicenseServerAddressProperty;
+    public static readonly global::System.Windows.DependencyProperty LicenseServerPortProperty;
+    public static readonly global::System.Windows.DependencyProperty LicenseFilePathProperty;
+    public static readonly global::System.Windows.DependencyProperty LicenseSourceListProperty;
+
     public global::System.Windows.Window ParentOwner { get; set; }
 
     public global::Quire.License.LicenseUriType LicenseURIType

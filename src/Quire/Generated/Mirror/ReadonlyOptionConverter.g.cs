@@ -11,8 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.ReadonlyOptionConverter, MathcadPrime")]
 public partial class ReadonlyOptionConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.ReadonlyOptionConverter _instance;
-    [global::Quire.Mirror.MirrorStub]
-    public ReadonlyOptionConverter() { }
 }
