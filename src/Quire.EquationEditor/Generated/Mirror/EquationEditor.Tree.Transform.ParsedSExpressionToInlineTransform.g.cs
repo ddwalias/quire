@@ -18,8 +18,6 @@ public partial class ParsedSExpressionToInlineTransform
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.Dictionary<string, global::System.Func<global::System.Windows.Documents.Inline>> a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Documents.Span d(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Documents.Inline a(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public ParsedSExpressionToInlineTransform() { }

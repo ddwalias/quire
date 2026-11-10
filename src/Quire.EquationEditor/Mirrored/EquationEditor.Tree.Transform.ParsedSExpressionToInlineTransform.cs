@@ -2,6 +2,30 @@ namespace Quire.EquationEditor.Tree.Transform;
 
 public partial class ParsedSExpressionToInlineTransform
 {
+    private global::System.Windows.Documents.Span d(ParsedSExpression parsed)
+    {
+        var span = new global::System.Windows.Documents.Span();
+        global::System.Collections.Generic.List<ParsedSExpression> items = parsed.SExpList;
+        if (parsed.HasValue)
+        {
+            span.Inlines.Add(c(parsed));
+        }
+        else
+        {
+            if (!items[0].HasValue || items[0].Value != "@ID")
+            {
+                throw new InvalidSExpression(string.Format(
+                    "Inline s-expressions must either be a simple string or the 1st atom must be {0} : {1}",
+                    "@ID",
+                    SExpressionParser.UnParse(parsed)));
+            }
+
+            span.Inlines.AddRange(a(items.GetRange(1, items.Count - 1)));
+        }
+
+        return span;
+    }
+
     private global::System.Collections.Generic.IList<global::System.Windows.Documents.Inline> a(
         global::System.Collections.Generic.List<ParsedSExpression> parsed)
     {
