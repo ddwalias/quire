@@ -299,27 +299,4 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
         [global::Quire.Mirror.MirrorStub]
         protected override bool DoWithResize() => base.DoWithResize();
     }
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+ToggleSectionVisibilityCommand, Ptc.Controls.ExcelComponent")]
-    public partial class ToggleSectionVisibilityCommand : global::Quire.Undo.IUndoableCommand
-    {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel _oleBaseComponentViewModel;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.Action<bool> _setVisibility;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly bool _originalVisibility;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly string _name;
-        [global::Quire.Mirror.MirrorStub]
-        public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public ToggleSectionVisibilityCommand(global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel oleBaseComponentViewModel, bool isInputSection) { }
-        [global::Quire.Mirror.MirrorStub]
-        public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    }
 }
