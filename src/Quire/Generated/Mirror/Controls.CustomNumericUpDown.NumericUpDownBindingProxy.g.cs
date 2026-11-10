@@ -11,12 +11,4 @@ namespace Quire.Controls.CustomNumericUpDown;
 [global::Quire.Mirror.MirrorOf("Spirit.Controls.CustomNumericUpDown.NumericUpDownBindingProxy, MathcadPrime")]
 public partial class NumericUpDownBindingProxy : global::System.Windows.Freezable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty DataProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public object Data { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Freezable CreateInstanceCore() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public NumericUpDownBindingProxy() { }
 }

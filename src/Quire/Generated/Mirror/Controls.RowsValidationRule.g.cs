@@ -11,18 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Spirit.Controls.RowsValidationRule, MathcadPrime")]
 public partial class RowsValidationRule : global::Quire.Controls.ColumnsRowsValidationRule<int>
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Text.RegularExpressions.Regex _rowsFormat;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly string _errorStringRows;
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Text.RegularExpressions.Regex Format { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override string ErrorString { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool GetFirstLastRows(string value, out int firstRow, out int lastRow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool TryParseFirstLastRowsOrColumns(string firstArg, string lastArg, out int firstRow, out int lastRow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public RowsValidationRule() { }
 }

@@ -11,12 +11,4 @@ namespace Quire.Controls.CustomNumericUpDown;
 [global::Quire.Mirror.MirrorOf("Spirit.Controls.CustomNumericUpDown.NumericUpDownRangeRule, MathcadPrime")]
 public partial class NumericUpDownRangeRule : global::System.Windows.Controls.ValidationRule
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.CustomNumericUpDown.NumericUpDownValidationRuleWrapper Wrapper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Message { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Controls.ValidationResult Validate(object value, global::System.Globalization.CultureInfo cultureInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public NumericUpDownRangeRule() { }
 }

@@ -11,14 +11,4 @@ namespace Quire.Controls.CustomNumericUpDown;
 [global::Quire.Mirror.MirrorOf("Spirit.Controls.CustomNumericUpDown.NumericUpDownValidationRuleWrapper, MathcadPrime")]
 public partial class NumericUpDownValidationRuleWrapper : global::System.Windows.DependencyObject
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty MinValueProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty MaxValueProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public int MinValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int MaxValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public NumericUpDownValidationRuleWrapper() { }
 }
