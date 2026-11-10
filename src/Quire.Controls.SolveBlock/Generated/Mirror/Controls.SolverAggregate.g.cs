@@ -44,8 +44,6 @@ internal partial class SolverAggregate : global::Quire.Controls.SolveBlockCalcul
     [global::Quire.Mirror.MirrorStub]
     public override void SetResult(global::Quire.Calculation.Core.IResultNode result) => base.SetResult(result);
     [global::Quire.Mirror.MirrorStub]
-    public override void SetError(global::Quire.Calculation.Core.EngineError error) => base.SetError(error);
-    [global::Quire.Mirror.MirrorStub]
     private void ClearError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ParseWrappedRl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

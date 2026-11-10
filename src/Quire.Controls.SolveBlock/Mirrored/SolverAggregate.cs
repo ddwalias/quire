@@ -155,6 +155,27 @@ internal partial class SolverAggregate
         FireCalculatableMoved(wrapper);
     }
 
+    public override void SetError(global::Quire.Calculation.Core.EngineError error)
+    {
+        if (error == null)
+        {
+            ClearError();
+            return;
+        }
+
+        global::Quire.Calculation.Core.ICalculatable errorSource = error.ErrorSource;
+        if (errorSource == this || errorSource == null)
+        {
+            ClearError();
+            base.SetError(error);
+        }
+        else if (_calculatableChildren.Contains(errorSource))
+        {
+            ClearError();
+            errorSource.SetError(error);
+        }
+    }
+
     private void AddAlgorithmIfRequired(
         global::System.Text.StringBuilder solverRlBuilder,
         global::Quire.Calculation.Core.ICalculatable wrappedCalculatable,
