@@ -9,6 +9,8 @@ namespace Quire.Controls.Internal;
 internal partial class VisualInputControlEditor
 {
     private double BORDER_THICKNESS = 1;
+    private readonly Caret _caret;
+    private readonly Border _border;
 
     public VisualInputControlEditor(VisualInputControlNode editNode, VisualMathRegionNode region)
         : base(editNode, region)

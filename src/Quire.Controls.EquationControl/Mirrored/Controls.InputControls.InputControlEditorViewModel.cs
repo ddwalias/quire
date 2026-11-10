@@ -12,7 +12,22 @@ namespace Quire.Controls.InputControls;
 
 public partial class InputControlEditorViewModel
 {
+    protected IInputControlEditorModel _model;
+    protected string _scriptError;
+    protected string _scriptEditor;
+    protected string _scriptLastKnownGood;
+    protected bool _applyEnabled;
     protected bool _applyVisibility = true;
+    protected int _selectedTabIndex;
+    protected InputControlScriptingLanguageTypes _selectedScriptingLanguage;
+    protected InputControlEngineTypes _engineTypeLastKnownGood;
+    private int _lineNumber;
+    private int _colNumber;
+    private bool _canRedo;
+    private bool _canUndo;
+    private Visibility _infoMessageVisibility;
+    private string _infoMessageText;
+    private bool _isInfoMsgHide;
     private bool _scriptingEditorEnabled = true;
     private bool _isPythonIsUnavailable = true;
     protected Hashtable cachedInputScript = new Hashtable();

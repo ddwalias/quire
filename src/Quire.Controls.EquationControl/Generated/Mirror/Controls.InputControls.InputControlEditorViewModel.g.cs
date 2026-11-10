@@ -11,34 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputControlEditorViewModel, Ptc.Controls.EquationControl")]
 public partial class InputControlEditorViewModel : global::Quire.Controls.Core.ViewModelBaseWithDataErrors, global::Quire.Controls.InputControls.IInputControlEditorViewModel, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.Controls.InputControls.IInputControlEditorModel _model;
-    [global::Quire.Mirror.MirrorStub]
-    protected string _scriptError;
-    [global::Quire.Mirror.MirrorStub]
-    protected string _scriptEditor;
-    [global::Quire.Mirror.MirrorStub]
-    protected string _scriptLastKnownGood;
-    [global::Quire.Mirror.MirrorStub]
-    protected bool _applyEnabled;
-    [global::Quire.Mirror.MirrorStub]
-    protected int _selectedTabIndex;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.Controls.InputControls.InputControlScriptingLanguageTypes _selectedScriptingLanguage;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.EquationEditor.Tree.InputControlEngineTypes _engineTypeLastKnownGood;
-    [global::Quire.Mirror.MirrorStub]
-    private int _lineNumber;
-    [global::Quire.Mirror.MirrorStub]
-    private int _colNumber;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _canRedo;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _canUndo;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Visibility _infoMessageVisibility;
-    [global::Quire.Mirror.MirrorStub]
-    private string _infoMessageText;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isInfoMsgHide;
 }

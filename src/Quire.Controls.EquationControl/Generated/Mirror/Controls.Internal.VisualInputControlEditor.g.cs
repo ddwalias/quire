@@ -11,8 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualInputControlEditor, Ptc.Controls.EquationControl")]
 internal partial class VisualInputControlEditor : global::Quire.Controls.Internal.VisualMathNodeEditor<global::Quire.Controls.Internal.VisualInputControlNode>, global::Quire.EquationEditor.View.IVisualInputControlEditor, global::Quire.EquationEditor.View.IVisualMathNodeEditor
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Internal.Caret _caret;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Controls.Border _border;
 }
