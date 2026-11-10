@@ -59,6 +59,4 @@ internal partial class SolveBlockModel : global::Quire.Controls.Mathboard.Aggreg
     private bool IsChildAboveSolver(global::Quire.Calculation.Core.ICalculatable child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleChildWrapperPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleSolverRequestEvaluation(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

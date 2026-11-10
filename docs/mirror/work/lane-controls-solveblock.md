@@ -64,12 +64,116 @@
 - Remaining: 86 stub markers in generated types; known blockers: `GetDefinedVariable` call vs. callvirt mismatch, `GetEquationTypeOfRl` enum/closure mismatch, `MatchEquationType` local-slot order mismatch, deserialization strategy mapped type mismatch, `SolveBlockChildManager.Rewrap` anonymous helper without a Mathcad counterpart and `SolverAggregate.Children` closure ordinal mismatch.
 ## Remaining stub classification (2026-11-10)
 
-The 86 generated stub markers are classified as follows; “unblocked” means no checkpointed IL/ownership obstacle or recorded closure-ordinal failure is known for that member.
+The 83 generated stub markers are classified as follows; “unblocked” means no checkpointed IL/ownership obstacle or recorded closure-ordinal failure is known for that member.
 
 - Checkpointed blockers (8 markers): `SolveBlockCalculatable.GetEquationTypeOfRl`; `SolveBlockCalculatableAggregate.GetDefinedVariable`; `SolveBlockChildManager.Rewrap`; all four `SolveBlockDeserializationStrategy` markers (mapped-type mismatch); `SolveBlockModel.MatchEquationType`.
-- Closure-ordinal issues (7 markers): `SolverAggregate.Children` (recorded closure ordinal mismatch) and the six `SolveBlockControl` indicator properties (`GuessValuesIndicatorTop/Bottom`, `ConstraintsIndicatorTop/Bottom`, `SolverIndicatorTop/Bottom`), whose prior candidate shifted `get_EngineResults` closure from `b__62_0` to `b__50_0`.
-- Unblocked (71 markers): all remaining markers in `SolveBlockCalculatable`, `SolveBlockCalculatableAggregate`, `SolveBlockControl`, `SolveBlockModel`, and `SolverAggregate`, excluding the members listed in the two categories above. This includes fields/constants, constructors, simple accessors, overrides, and methods; each is eligible for a batch after its Release IL is read. No new closure blocker has yet been inferred for these members.
+- Closure-ordinal issues (8 markers): `SolverAggregate.Children` (recorded closure ordinal mismatch) `SolverAggregate.ClearError` (candidate lambda ordinal `b__88_0` vs. Mathcad `b__73_0`) and the six `SolveBlockControl` indicator properties (`GuessValuesIndicatorTop/Bottom`, `ConstraintsIndicatorTop/Bottom`, `SolverIndicatorTop/Bottom`), whose prior candidate shifted `get_EngineResults` closure from `b__62_0` to `b__50_0`.
+- Unblocked (67 markers): all remaining markers in `SolveBlockCalculatable`, `SolveBlockCalculatableAggregate`, `SolveBlockControl`, `SolveBlockModel`, and `SolverAggregate`, excluding the members listed in the two categories above. This includes fields/constants, constructors, simple accessors, overrides, and methods; each is eligible for a batch after its Release IL is read. No new closure blocker has yet been inferred for these members.
 
 No classification changes the generated files; this inventory records the current state before further implementation.
 - Batch 64 `SolveBlockModel.UpdateTheSolverIfNeededToReflectMovedCalculatable`: PASS (`191 checked`; `.mirror-cache/release-il-281b1938a523`). The explicit return after `MirrorChildInSolverAggregate` preserves the IL branch target followed by a separate method return.
 - Batch 65 `SolverAggregate.SetSynchronizationStatus` and `SetCalculatingStatus`: PASS (`191 checked`; `.mirror-cache/release-il-209bb1d0ae6e`). The first gate attempt failed compilation because the partial declaration used public accessibility; matching the generated internal declaration fixed it.
+
+## Per-member classification ledger
+
+### Controls.SolveBlockCalculatable
+- `PropertyChanged` — unblocked
+- `GetEquationTypeOfRl` — checkpointed blocker
+
+### Controls.SolveBlockCalculatableAggregate
+- `GetDefinedVariable` — checkpointed blocker
+- `ComposeRlForSymEval` — unblocked
+- `ComposeRlForEvalOrDefineEval` — unblocked
+
+### Controls.SolveBlockChildManager
+- `Rewrap` — checkpointed blocker
+
+### Controls.SolveBlockControl
+- `_sbModel` — unblocked
+- `GuessSectionIndex` — unblocked
+- `ConstraintSectionIndex` — unblocked
+- `SolverSectionIndex` — unblocked
+- `_engineResults` — unblocked
+- `IsSolveBlockLabelVisible` — unblocked
+- `GuessValues` — unblocked
+- `Constraints` — unblocked
+- `Solver` — unblocked
+- `GuessValuesIndicatorTop` — closure-ordinal issue
+- `GuessValuesIndicatorBottom` — closure-ordinal issue
+- `ConstraintsIndicatorTop` — closure-ordinal issue
+- `ConstraintsIndicatorBottom` — closure-ordinal issue
+- `SolverIndicatorTop` — closure-ordinal issue
+- `SolverIndicatorBottom` — closure-ordinal issue
+- `ErrorCount` — unblocked
+- `Error` — unblocked
+- `ResultOwners` — unblocked
+- `SolveBlockControl` — unblocked
+- `SolveBlockControl` — unblocked
+- `UpdateGridCellSizeIfNeeded` — unblocked
+- `SolveBlockControl` — unblocked
+- `Clone` — unblocked
+- `Clone` — unblocked
+- `HookupEvents` — unblocked
+- `HandleChildCalcErrorChanged` — unblocked
+- `SetRegionPersistentData` — unblocked
+- `GetRegionPersistentData` — unblocked
+- `GetSolveBlockEquationType` — unblocked
+- `GetBlockEquationTypeAttributeName` — unblocked
+- `GetInternalHelpContext` — unblocked
+- `ReplaceCalculatablesWithWrappersInResultManager` — unblocked
+- `ReplaceCalculatablesAndResultWithWrappersInResultManager` — unblocked
+- `EndInit` — unblocked
+
+### Controls.SolveBlockDeserializationStrategy
+- `_control` — checkpointed blocker (mapped type)
+- `RegionFactory` — checkpointed blocker (mapped type)
+- `SolveBlockDeserializationStrategy` — checkpointed blocker (mapped type)
+- `DeserializeRegionsEpilog` — checkpointed blocker (mapped type)
+
+### Controls.SolveBlockModel
+- `RlFormat` — unblocked
+- `RlOdeFormat` — unblocked
+- `SolverResultIdName` — unblocked
+- `GuessValueItems` — unblocked
+- `ConstraintItems` — unblocked
+- `CalculatableChildren` — unblocked
+- `ChildErrorCountTotal` — unblocked
+- `Rl` — unblocked
+- `CalculatableChildrenAboveSolver` — unblocked
+- `ChildCalcErrorChanged` — unblocked
+- `MoveItems` — unblocked
+- `ListenForErrorChanges` — unblocked
+- `StopListeningForErrorChanges` — unblocked
+- `HandleEquationControlCommitted` — unblocked
+- `HandleWrappedCalcPropertyChanged` — unblocked
+- `FireChildCalcErrorChanged` — unblocked
+- `UpdateWhichItemIsSolver` — unblocked
+- `MatchEquationType` — checkpointed blocker
+- `TheSolverMoved` — unblocked
+- `FindSolverChildAfterModelChild` — unblocked
+- `GetCalculatableToAddToSolverAggregate` — unblocked
+- `CreateCalculatableWrapper` — unblocked
+- `IsChildAboveSolver` — unblocked
+- `HandleChildWrapperPropertyChanged` — unblocked
+- `HandleSolverRequestEvaluation` — unblocked
+
+### Controls.SolverAggregate
+- `Children` — closure-ordinal issue
+- `UpdateSolverRL` — unblocked
+- `GetSolvingAlgorithmRl` — unblocked
+- `IsSolverOfSymbolicContainsFind` — unblocked
+- `GetSolverWrappedAggregate` — unblocked
+- `HandleRequestEvaluation` — unblocked
+- `IsChild` — unblocked
+- `GetIndexOfChild` — unblocked
+- `CommitAllChildren` — unblocked
+- `GetChildIndexForResult` — unblocked
+- `ClearError` — closure-ordinal issue (`b__88_0` vs Mathcad `b__73_0`; candidate reverted)
+- `ParseWrappedRl` — unblocked
+- `ContainsError` — unblocked
+- `ShowError` — unblocked
+
+
+- Rejected candidate: `SolverAggregate.ClearError` used the expected `Each` lambda shape but failed Release IL at `b__88_0` versus Mathcad `b__73_0`; its source and generated-stub changes were reverted, and it is now classified as a closure-ordinal issue.
+- Batch 66 `SolveBlockModel.HandleSolverRequestEvaluation`: PASS (`192 checked`; `.mirror-cache/release-il-4625aac2c439`). Rejected first candidate spelling `SimpleCalculatable` under `Quire.Calculation.Core` (actual type is under `.Support`); the next gate rejected interpolated-string IL, so `String.Format("(define {0} {1})", ...)` was used to match the literal format call.
+
