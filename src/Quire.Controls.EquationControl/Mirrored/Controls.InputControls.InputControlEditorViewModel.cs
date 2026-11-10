@@ -1,15 +1,30 @@
 using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Quire.EquationEditor.Tree;
+using Quire.Wpf;
 
 namespace Quire.Controls.InputControls;
 
 public partial class InputControlEditorViewModel
 {
+    protected bool _applyVisibility = true;
+    private bool _scriptingEditorEnabled = true;
+    private bool _isPythonIsUnavailable = true;
+    protected Hashtable cachedInputScript = new Hashtable();
+
+    public InputControlEditorViewModel(IInputControlEditorModel model)
+        : base(ResourceProvider<InputControlEditorResourceDirectory>.Instance)
+    {
+        _model = model;
+        _model.PropertyChanged += HandleModelPropertyChanged;
+        Init();
+    }
+
     public bool IsApplyEnabled
     {
         get => _applyEnabled;

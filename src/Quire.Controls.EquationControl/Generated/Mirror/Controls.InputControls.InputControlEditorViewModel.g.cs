@@ -22,8 +22,6 @@ public partial class InputControlEditorViewModel : global::Quire.Controls.Core.V
     [global::Quire.Mirror.MirrorStub]
     protected bool _applyEnabled;
     [global::Quire.Mirror.MirrorStub]
-    protected bool _applyVisibility;
-    [global::Quire.Mirror.MirrorStub]
     protected int _selectedTabIndex;
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Controls.InputControls.InputControlScriptingLanguageTypes _selectedScriptingLanguage;
@@ -43,12 +41,4 @@ public partial class InputControlEditorViewModel : global::Quire.Controls.Core.V
     private string _infoMessageText;
     [global::Quire.Mirror.MirrorStub]
     private bool _isInfoMsgHide;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _scriptingEditorEnabled;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isPythonIsUnavailable;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Collections.Hashtable cachedInputScript;
-    [global::Quire.Mirror.MirrorStub]
-    public InputControlEditorViewModel(global::Quire.Controls.InputControls.IInputControlEditorModel model) : base(default(global::System.Windows.ResourceDictionary)) { }
 }
