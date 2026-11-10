@@ -14,25 +14,11 @@ public partial class LocalizedFontNameConverter : global::System.Windows.Data.IV
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.LocalizedFontNameConverter _instance;
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.FontDataObject> _collectedFontsDict;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.FontDataObject> _missingFontsDict;
-    [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.List<global::Quire.FontDataObject> _collectedFonts;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Windows.Markup.XmlLanguage _lang;
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.LocalizedFontNameConverter Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.FontDataObject> FontNames { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private LocalizedFontNameConverter() { }
     [global::Quire.Mirror.MirrorStub]
     public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object ConvertBack(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsUniMathFontExist() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool DoesFontFamilyExist(global::System.Windows.Media.FontFamily fontFamily) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
