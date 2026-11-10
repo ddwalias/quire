@@ -15,8 +15,6 @@ public static partial class TransformMathNodeToComboBoxValues
     public static global::System.Collections.Generic.IList<string> TransformToViewStrings(global::Quire.EquationEditor.Tree.MathNode mathNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool CanTransform(global::Quire.EquationEditor.Tree.MathNode mathNode, global::System.Nullable<global::Quire.EquationEditor.Tree.ComboBoxCellDataType> dataType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.EquationEditor.Tree.MathNode SExpressionToMathNode(string expr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.TransformMathNodeToComboBoxValues+a, Ptc.EquationEditor")]
     private sealed partial class a
