@@ -40,3 +40,7 @@ Batches are listed in landing order; each gate result is recorded below as it la
 
 - Blocked: `InitializeComponent`, `Connect` (LoadComponent/XAML).
 - Results per batch are appended below.
+
+## Results
+
+- Batch 1 (IInputControlEditorViewModel declarations): 20 interface members checked, shapes: abstract declarations without bodies, matching the original. Release IL: PASS, 1691 checked (`.mirror-cache/release-il-d90324581b6f/release-il.json`).
