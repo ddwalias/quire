@@ -1,5 +1,10 @@
+using System;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
+using Quire.EquationEditor.Tree;
 
 namespace Quire.Controls.InputControls;
 
@@ -168,4 +173,89 @@ public partial class InputControlEditorViewModel
     }
 
     public Visibility ErrorMessageVisibility => _scriptError == null ? Visibility.Collapsed : Visibility.Visible;
+
+    public string ValidationError
+    {
+        get => _scriptError;
+        set
+        {
+            _scriptError = CapitalizeFirstLetter(value);
+            IInputControlEditorScriptableModel scriptable = _model as IInputControlEditorScriptableModel;
+            if (scriptable != null && value == null)
+            {
+                scriptable.HandlePostError(null);
+            }
+
+            OnPropertyChanged(nameof(ValidationError));
+            OnPropertyChanged(nameof(ErrorMessageVisibility));
+        }
+    }
+
+    protected virtual void HandleModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+    }
+
+    private void Init()
+    {
+        InitInfoMessages();
+        InitScriptingProperties();
+    }
+
+    private void InitInfoMessages()
+    {
+        _infoMessageVisibility = Visibility.Collapsed;
+        _infoMessageText = _errorsDictionary[InputControlEditorErrors.VBScriptDeprecated].ToString();
+    }
+
+    private void InitScriptingProperties()
+    {
+        IInputControlEditorScriptableModel scriptable = _model as IInputControlEditorScriptableModel;
+        if (scriptable != null)
+        {
+            _scriptEditor = scriptable.Script;
+            _scriptLastKnownGood = scriptable.Script;
+            _engineTypeLastKnownGood = scriptable.EngineType;
+            _scriptError = ShowUserFriendlyError(scriptable.EngineError);
+            if (scriptable.EngineType != InputControlEngineTypes.DefaultScript)
+            {
+                _selectedScriptingLanguage = (InputControlScriptingLanguageTypes)scriptable.EngineType;
+                if (_selectedScriptingLanguage == InputControlScriptingLanguageTypes.VBScript && !IsInfoMsgHide)
+                {
+                    _infoMessageVisibility = Visibility.Visible;
+                }
+
+                if (_selectedScriptingLanguage == InputControlScriptingLanguageTypes.Python && !InputControlEnginePython.IsPythonPathSet)
+                {
+                    HandlePythonIsUnavailable();
+                }
+            }
+        }
+    }
+
+    private string FullExceptionErrorFormat(string exception, string errorMessage)
+    {
+        return exception + Environment.NewLine + errorMessage;
+    }
+
+    private void HandlePythonIsUnavailable()
+    {
+        ScriptingEditorEnabled = false;
+        IsPythonIsUnavailable = false;
+        IsApplyEnabled = false;
+        InfoMessageText = _errorsDictionary[InputControlEditorErrors.PythonDetectionError].ToString();
+        InfoMessageVisibility = Visibility.Visible;
+    }
+
+    public void OnPreviewKeyDown(object sender, InputEventArgs e)
+    {
+        TextBox textBox = sender as TextBox;
+        if (textBox != null)
+        {
+            int caretIndex = textBox.CaretIndex;
+            int lineIndex = textBox.GetLineIndexFromCharacterIndex(caretIndex);
+            int colIndex = caretIndex - textBox.GetCharacterIndexFromLineIndex(lineIndex);
+            LineNumber = lineIndex + 1;
+            ColNumber = colIndex;
+        }
+    }
 }

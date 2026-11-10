@@ -52,29 +52,13 @@ public partial class InputControlEditorViewModel : global::Quire.Controls.Core.V
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.InputControls.InputControlScriptingLanguageTypes SelectedScriptingLanguage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public string ValidationError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public InputControlEditorViewModel(global::Quire.Controls.InputControls.IInputControlEditorModel model) : base(default(global::System.Windows.ResourceDictionary)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void HandleModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void Init() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void InitScriptingProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void InitInfoMessages() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void ApplyScript() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void CancelScript() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private string FullExceptionErrorFormat(string exception, string errorMessage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private string ShowUserFriendlyError(string exception) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandlePythonIsUnavailable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void OnPreviewKeyDown(object sender, global::System.Windows.Input.InputEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string CapitalizeFirstLetter(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
