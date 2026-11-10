@@ -134,3 +134,6 @@
 - Batch: `Controls.Internal.VisualEvalNode` (`EvaluationPlaceholderProperty` and its type initializer, `.ctor`, `EvaluationPlaceholderChanged`, `HandleEvaluationPlaceholderChanged`).
 - Shapes tried: an object-initializer metadata local FAILED in the static constructor (Mathcad assigns each metadata property with its own statement); an inline initializer passed into `Register` FAILED (Mathcad creates the metadata before the other arguments). The local assigned with `new` and then property statements matched.
 - Release IL: PASS, 835 checked (`.mirror-cache/release-il-e01f8d104d60/release-il.json`).
+- Batch: `Controls.Internal.VisualExponentSymbolNode` (`.ctor` passing `'^'`, `ArrangeStaticLayout`).
+- Shapes tried: `new Size(DesiredSize.Width - Margin.Left - Margin.Right, ...)` matched on the first candidate (Roslyn's struct temporaries account for the local slots).
+- Release IL: PASS, 837 checked (`.mirror-cache/release-il-ce8f741bc468/release-il.json`).

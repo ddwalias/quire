@@ -11,8 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualExponentSymbolNode, Ptc.Controls.EquationControl")]
 internal partial class VisualExponentSymbolNode : global::Quire.Controls.Internal.VisualSymbolNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    public VisualExponentSymbolNode() : base(default(char)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeStaticLayout(global::System.Windows.Size finalSize) => base.ArrangeStaticLayout(finalSize);
 }
