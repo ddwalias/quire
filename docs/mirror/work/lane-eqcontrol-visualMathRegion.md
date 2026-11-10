@@ -98,3 +98,11 @@ Not blocked by the listed reasons: no `LoadComponent`/XAML loads, no dynamic scr
 - Members: `CanConvertToTextRegion`, `IsTextRegionEnabled`.
 - Shapes tried: `IsTextRegionEnabled` as a sequence of guard `return false` statements FAILED (the Mathcad IL shares one `false` exit); a single `&&` chain with `(IDENTIFIER && HasNoLabel) || NUMERIC` matched. `CanConvertToTextRegion` as nested `is` patterns matched on the first candidate.
 - Release IL: PASS, 1733 checked (`.mirror-cache/release-il-4982fbd307ac/release-il.json`).
+
+## Remaining after batch 9 (not finished)
+
+- Static initializers and `.cctor` (`TypeOfThis`, `RootNodeProperty`, `LocationProperty`, `RootPaddingProperty`): blocked. The Mathcad `.cctor` starts with the `<>c` singleton, which exists only when the type has lambdas; the lambda-bearing members are in the blocked closure group.
+- Constructors (2), `RefreshView`, `SetupCommands`, `RemoveWarnings`, `BuildAndExecPasteCmd`, `BuildAndExecCutCmd`, `HandleGotFocus`, `BackUpLabeledIdDictionary`, `IsLabeledIdDictionaryEqualToBackUp`: blocked by closure/lambda ordinals (placeholder ordering not yet applied).
+- `FireCanSwitchToLineBreakOperator`: blocked by the missing `DevComponents.WpfRibbon` reference.
+- `OnInput`, `SetError(IEngineError, IVisualMathNode)`, `HandleLostFocus`: blocked by null-first/false-first ternary layout that the current compiler does not reproduce.
+- Not yet attempted (classified unblocked but large IL): `FireCanInsertInputControl`, `RecursiveRemoveOfEditors`, `SetWarnings`, `AutomateKeypress`, `OnKeyDown`, `OnRender`, `OnMouseMove`, `HandleMouseDown`, `SetError(IEngineError, IList<IVisualMathNode>)`.
