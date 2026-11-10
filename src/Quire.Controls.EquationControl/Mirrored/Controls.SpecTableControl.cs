@@ -10,6 +10,7 @@ using Quire.EquationEditor.SpecTable.Model;
 using System.Windows.Input;
 using System.Windows.Media;
 using System;
+using System.ComponentModel;
 
 namespace Quire.Controls;
 
@@ -227,5 +228,39 @@ public partial class SpecTableControl
     {
         get => MathFormat;
         set => throw new NotImplementedException();
+    }
+
+    private void HandleCellAddedEvent(IEquationControl arg)
+    {
+        EquationControl cell = arg as EquationControl;
+        if (cell == null)
+        {
+            return;
+        }
+
+        cell.GotKeyboardFocus += HandleCellGotKeyboardFocus;
+        cell.LostKeyboardFocus += HandleCellLostKeyboardFocus;
+        cell.RequestEvaluation += HandleRequestEvaluation;
+    }
+
+    public void HandleCellLostKeyboardFocus(object sender, RoutedEventArgs e)
+    {
+        ICurrentIdLabelProperty cell = sender as ICurrentIdLabelProperty;
+        if (cell != null)
+        {
+            cell.PropertyChanged -= CellPropertyChangedHandler;
+        }
+    }
+
+    public void HandleCellGotKeyboardFocus(object sender, RoutedEventArgs e)
+    {
+        ICurrentIdLabelProperty cell = sender as ICurrentIdLabelProperty;
+        if (cell != null)
+        {
+            cell.PropertyChanged += CellPropertyChangedHandler;
+        }
+
+        CellPropertyChangedHandler(sender, new PropertyChangedEventArgs(nameof(CurrentIdLabel)));
+        CellPropertyChangedHandler(sender, new PropertyChangedEventArgs(nameof(CurrentDisplayIdLabel)));
     }
 }

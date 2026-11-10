@@ -269,3 +269,5 @@
 - Release IL: PASS, 1380 checked (`.mirror-cache/release-il-d97159c0cc78/release-il.json`).
 - Batch: `Controls.SpecTableControl`: `HighlightAll`, `ShouldSerializeContent`, `FireCalculatableRemoved`, `OnMouseDown`; properties `FirstPropertyForXamlSerialization`, `IsCalculating` and `CurrentMathFormat` (the throwing accessors are written as `throw new NotImplementedException()`). `HideFromCalculationContext` stays a stub because its interface-required setter is not read yet.
 - Release IL: PASS, 1389 checked (`.mirror-cache/release-il-1aa3065f2d27/release-il.json`).
+- Batch: `Controls.SpecTableControl` cell event handlers `HandleCellAddedEvent`, `HandleCellGotKeyboardFocus`, `HandleCellLostKeyboardFocus` (method-group subscriptions).
+- Release IL: PASS, 1392 checked (`.mirror-cache/release-il-a284a1ff5ae5/release-il.json`).
