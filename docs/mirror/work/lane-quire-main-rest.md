@@ -377,6 +377,8 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
   - Gate: PASS, 680 checked. Report: `.mirror-cache/release-il-83fcf7e31b62/release-il.json`.
 - **Batch 22 (AppCommands static constructor, U; branch `mirror/quire-main-rest-pure-20261111`):** `.cctor` (one static constructor, no `beforefieldinit`, matching the Mathcad class). The 40 command fields and `_typeOfThis` stay generated, so their markers remain.
   - Gate: PASS, 681 checked. Report: `.mirror-cache/release-il-6cdd749c1368/release-il.json`.
+- **Batch 23 (IntegrationCommands, U; branch `mirror/quire-main-rest-pure-20261111`):** `PTCPlacesEnableProperty` (its static initializer), `_instance`, the ten `RoutedUICommand` statics, `PTCPlacesEnable`, `Instance`, `WcEnable`, the `PropertyChanged` event, the private constructor, and `PtcPlacesEnableChanged`. `_wcEnable` stays generated.
+  - Gate: PASS, 689 checked. Report: `.mirror-cache/release-il-a5bf65c9e039/release-il.json`.
 
 ## Remaining (after batch 10)
 
