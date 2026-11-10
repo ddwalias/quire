@@ -86,3 +86,7 @@ Not blocked by the listed reasons: no `LoadComponent`/XAML loads, no dynamic scr
 - Member: `MeasureStaticLayout` (empty case, child measure, padding added to desired height and width).
 - Shapes: the natural local-child form matched on the first candidate.
 - Release IL: PASS, 1726 checked (`.mirror-cache/release-il-a6a2ba60018a/release-il.json`).
+
+## Blocked after batch 8
+
+- `OnInput`: the Mathcad IL stores `comboBox == null ? false : comboBox.IsDropDownOpen` through a `brtrue` to the value arm with the constant arm falling through. The current compiler lowers a ternary with a constant `false` arm to a short-circuit `&&` layout (`brfalse`), and the `if`/`else` and `&&` forms gave the same layout. No idiomatic source reproduced it, so the stub stays. Candidate reports: `.mirror-cache/release-il-59e20a90ec37`, `release-il-d1c747916cc7`, `release-il-e530725a4684`.
