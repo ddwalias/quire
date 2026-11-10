@@ -18,10 +18,6 @@ public partial class ExcelComponentControl : global::Quire.Controls.ExcelCompone
     [global::Quire.Mirror.MirrorStub]
     internal const string ExcelIdentifier = "excel";
     [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.Controls.Core.Serialization.ISerializationStrategy SerializationStrategy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.Controls.Core.Serialization.IDeserializationStrategy DeserializationStrategy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.ExcelComponent.ExcelContainer ExcelContainer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatableResultOwner> ResultOwners { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -34,15 +30,9 @@ public partial class ExcelComponentControl : global::Quire.Controls.ExcelCompone
     [global::Quire.Mirror.MirrorStub]
     private ExcelComponentControl(global::Quire.Controls.ExcelComponent.ExcelComponentControl original) : base(default(global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel), default(global::System.Windows.ResourceDictionary)) { }
     [global::Quire.Mirror.MirrorStub]
-    private void ExcelInitialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.Controls.ExcelComponent.View.IOleContainerItem CreateOleContainerItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private string GetExcelSelectionOrDefault(bool isInput) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override string GetInternalHelpContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override string GetHelpContext() => base.GetHelpContext();
     [global::Quire.Mirror.MirrorStub]
@@ -67,8 +57,4 @@ public partial class ExcelComponentControl : global::Quire.Controls.ExcelCompone
     public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider deS11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.ExcelComponent.ExcelComponentControl Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
