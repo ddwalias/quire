@@ -45,6 +45,4 @@ public partial class StringToComboBoxMathTransformer : global::Quire.EquationEdi
     public global::Quire.EquationEditor.Tree.MathNode TransformStringToNumericMathTree(string value, bool parseNaNs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.EquationEditor.Tree.MathNode TransformStringMathNode(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public StringToComboBoxMathTransformer() { }
 }
