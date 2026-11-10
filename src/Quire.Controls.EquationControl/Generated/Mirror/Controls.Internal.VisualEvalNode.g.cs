@@ -11,12 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualEvalNode, Ptc.Controls.EquationControl")]
 internal partial class VisualEvalNode : global::Quire.Controls.Internal.VisualLinearBinaryOperatorNode, global::Quire.EquationEditor.View.IVisualEvalNode, global::Quire.EquationEditor.View.IVisualBinaryOperatorNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty EvaluationPlaceholderProperty;
-    [global::Quire.Mirror.MirrorStub]
-    protected static void EvaluationPlaceholderChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public VisualEvalNode() { }
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleEvaluationPlaceholderChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

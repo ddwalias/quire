@@ -131,3 +131,6 @@
 - Batch: `Controls.InputControls.ListBoxPropertiesEditor`, `SliderPropertiesEditor`, `TextBoxPropertiesEditor` (`.ctor`, `InitializeComponent`, `Connect`, `_contentLoaded`; the list box editor also keeps its `_viewModel` field).
 - Shapes tried: the same XAML editor pattern as the ButtonPropertiesEditor matched on the first candidate for all three.
 - Release IL: PASS, 831 checked (`.mirror-cache/release-il-ac82157a74c1/release-il.json`).
+- Batch: `Controls.Internal.VisualEvalNode` (`EvaluationPlaceholderProperty` and its type initializer, `.ctor`, `EvaluationPlaceholderChanged`, `HandleEvaluationPlaceholderChanged`).
+- Shapes tried: an object-initializer metadata local FAILED in the static constructor (Mathcad assigns each metadata property with its own statement); an inline initializer passed into `Register` FAILED (Mathcad creates the metadata before the other arguments). The local assigned with `new` and then property statements matched.
+- Release IL: PASS, 835 checked (`.mirror-cache/release-il-e01f8d104d60/release-il.json`).
