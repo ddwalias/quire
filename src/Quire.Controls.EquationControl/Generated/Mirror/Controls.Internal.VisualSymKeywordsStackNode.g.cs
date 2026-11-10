@@ -11,20 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualSymKeywordsStackNode, Ptc.Controls.EquationControl")]
 internal partial class VisualSymKeywordsStackNode : global::Quire.Controls.Internal.VisualMathNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Internal.VisualMathNode[] _nodeChildren;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Internal.VisualMatrixContents _operandsPanel;
-    [global::Quire.Mirror.MirrorStub]
-    public override double TextBaselineY { get => base.TextBaselineY; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => base[index]; set => base[index] = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualSymKeywordsStackNode(global::Quire.Controls.Internal.VisualMathRegionNode mathRegion) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void BuildChildren(global::Quire.EquationEditor.View.IVisualMathNode[] children) => base.BuildChildren(children);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
 }

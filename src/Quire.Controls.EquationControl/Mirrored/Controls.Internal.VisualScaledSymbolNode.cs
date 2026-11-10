@@ -1,9 +1,42 @@
+using System;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Quire.Controls.Internal;
 
 internal partial class VisualScaledSymbolNode
 {
+    private ScaleTransform _scaleFactor = new ScaleTransform();
+
+    public override double EffectiveBaselineY
+    {
+        get
+        {
+            Size desiredSize = DesiredSize;
+            return desiredSize.Height;
+        }
+    }
+
+    public override Geometry Geometry
+    {
+        get
+        {
+            Geometry geometry = base.Geometry;
+            geometry.Transform = _scaleFactor;
+            return geometry;
+        }
+    }
+
+    public VisualScaledSymbolNode(char symbol)
+        : base(symbol)
+    {
+    }
+
+    public VisualScaledSymbolNode(string symbol)
+        : base(symbol)
+    {
+    }
+
     public void ScaleToHeight(double height)
     {
         Size size = new Size(_inkBounds.Width, _inkBounds.Height);
@@ -19,6 +52,21 @@ internal partial class VisualScaledSymbolNode
         {
             _scaleFactor.ScaleX = _scaleFactor.ScaleY / 3.0;
         }
+    }
+
+    protected override void OnRender(DrawingContext dc)
+    {
+        dc.DrawGeometry(Font.Foreground, null, Geometry);
+    }
+
+    protected override Size MeasureStaticLayout(Size availableSize)
+    {
+        UpdateText(Font);
+        ScaleToHeight(availableSize.Height);
+        Rect bounds = Geometry.Bounds;
+        double width = bounds.Width;
+        bounds = Geometry.Bounds;
+        return new Size(width, bounds.Height);
     }
 
     public VisualScaledSymbolNode Clone()

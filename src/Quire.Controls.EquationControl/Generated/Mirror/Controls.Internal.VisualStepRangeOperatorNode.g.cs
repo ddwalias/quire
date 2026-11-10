@@ -11,18 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualStepRangeOperatorNode, Ptc.Controls.EquationControl")]
 internal partial class VisualStepRangeOperatorNode : global::Quire.Controls.Internal.VisualOperatorNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    private double _baseline;
-    [global::Quire.Mirror.MirrorStub]
-    private double _effectiveBaseline;
-    [global::Quire.Mirror.MirrorStub]
-    private double _effectiveScriptBaseline;
-    [global::Quire.Mirror.MirrorStub]
-    public override double TextBaselineY { get => base.TextBaselineY; }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualStepRangeOperatorNode() : base(default(string), default(global::Quire.Controls.Internal.VisualMathNode[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => base.MeasureStaticLayout(availableSize);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeStaticLayout(global::System.Windows.Size finalSize) => base.ArrangeStaticLayout(finalSize);
 }

@@ -11,16 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualTextNodeForEditor, Ptc.Controls.EquationControl")]
 internal abstract partial class VisualTextNodeForEditor : global::Quire.Controls.Internal.VisualMathNode, global::Quire.EquationEditor.View.IVisualTextNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract string Text { get; set; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::System.Windows.Media.FormattedText FormattedNodeText { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::System.Collections.Generic.IList<double> CharacterWidths { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::System.Collections.Generic.IList<double> ScreenCharacterWidths { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract event global::Quire.Delegate1<string> TextChanged;
-    [global::Quire.Mirror.MirrorStub]
-    protected VisualTextNodeForEditor() { }
 }

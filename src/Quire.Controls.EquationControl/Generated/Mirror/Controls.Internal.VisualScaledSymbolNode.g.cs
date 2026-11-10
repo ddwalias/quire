@@ -11,18 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualScaledSymbolNode, Ptc.Controls.EquationControl")]
 internal partial class VisualScaledSymbolNode : global::Quire.Controls.Internal.VisualSymbolNode, global::System.ICloneable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.ScaleTransform _scaleFactor;
-    [global::Quire.Mirror.MirrorStub]
-    public override double EffectiveBaselineY { get => base.EffectiveBaselineY; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Media.Geometry Geometry { get => base.Geometry; }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualScaledSymbolNode(char symbol) : base(default(char)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualScaledSymbolNode(string symbol) : base(default(char)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => base.MeasureStaticLayout(availableSize);
 }

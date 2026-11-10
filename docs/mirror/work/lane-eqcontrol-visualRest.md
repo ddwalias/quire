@@ -154,3 +154,18 @@ ef Point alignmentPoint matched Mathcad local variable index [2].
   - VisualExponentNode.GetNodeAtPoint: if (visualSymbolNode != null) { ... } else { ... } instead of ternary matched Mathcad's brfalse.s branching order.
   - VisualExponentNode.MeasureOverride: pre-declaring double height; ahead of ref Point alignmentPoint matched local variable slot indices [2] and [3].
 - Release IL: PASS; 1780 checked (.mirror-cache/release-il-0c0d9bf16d0c/release-il.json).
+
+## Batch 3: Operator, TextNodeForEditor, ScaledSymbol, StepRange, Transpose and SymKeywordsStack
+
+- Members: 42 members across 6 types:
+  - VisualOperatorNode: _descriptor, _operatorSymbols, _operands, NavigatableParts, this[int index], .ctor(name, operatorSymbols).
+  - VisualTextNodeForEditor: Text, FormattedNodeText, CharacterWidths, ScreenCharacterWidths, TextChanged event, .ctor().
+  - VisualScaledSymbolNode: _scaleFactor, EffectiveBaselineY, Geometry, .ctor(char), .ctor(string), OnRender, MeasureStaticLayout.
+  - VisualStepRangeOperatorNode: _baseline, _effectiveBaseline, _effectiveScriptBaseline, TextBaselineY, .ctor(), MeasureStaticLayout, ArrangeStaticLayout.
+  - VisualTransposeNode: _pushFirstOpDown, TextBaselineY, EffectiveBaselineY, EffectiveScriptBaselineY, .ctor(), MeasureOverride, ArrangeOverride, HandleMathFormatChanged.
+  - VisualSymKeywordsStackNode: _nodeChildren, _operandsPanel, TextBaselineY, this[int index], .ctor(VisualMathRegionNode), BuildChildren, MeasureOverride, ArrangeOverride.
+- Shapes tried:
+  - VisualTransposeNode.MeasureOverride: declaring double height; ahead of ref Point alignmentPoint matched local variable slots [2] and [3].
+  - VisualSymKeywordsStackNode.set_Item: Enumerable.Count() matched Linq call order.
+  - VisualOperatorNode.NavigatableParts: array covariance return matched local variable slot.
+- Release IL: PASS; 1808 checked (.mirror-cache/release-il-0b259966dcda/release-il.json).

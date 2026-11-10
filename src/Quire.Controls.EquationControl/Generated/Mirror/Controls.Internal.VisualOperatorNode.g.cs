@@ -11,16 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualOperatorNode, Ptc.Controls.EquationControl")]
 internal abstract partial class VisualOperatorNode : global::Quire.Controls.Internal.VisualMathNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.EquationEditor.Tree.MathNodeDescriptor _descriptor;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Internal.VisualMathNode[] _operatorSymbols;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Internal.VisualMathNode[] _operands;
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode[] NavigatableParts { get => base.NavigatableParts; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => base[index]; set => base[index] = value; }
-    [global::Quire.Mirror.MirrorStub]
-    protected VisualOperatorNode(string name, params global::Quire.Controls.Internal.VisualMathNode[] operatorSymbols) { }
 }
