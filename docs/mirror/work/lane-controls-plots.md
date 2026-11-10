@@ -285,3 +285,9 @@
 - Shapes: `SetRect` first failed on layout. Mathcad's `if (!I(top) && !I(left) && …) { assign }` compiles as `if (I(top) || I(left) || I(bottom) || I(right)) return;` followed by the assignments; the early-return form matched.
 - Blocked: `SetEquation` stays a stub. Its Mathcad IL compares `SynchronizationStatus` against 3 (`Ptc.Calculation.Core.SynchronizationStatus`: `Pending = 0, Synchronized = 3`), while Quire's enum (`src/Quire.Calculation.Core/ICalculatable.cs`) has `Pending, Synchronized` = 0, 1. Fixing the value (`Synchronized = 3`) is a change in `Quire.Calculation.Core`, owned by another lane.
 - Release IL: PASS — 560 checked, 560 exact, 0 failures.
+
+## Batch 41 — TraceModel range-axis lookups and image-renderer update
+
+- Members: `GetGraphPointsForPlottingCoordinateOnRangeAxis`, `GetClosestPlottingCoordinateOnRangeAxis` (public forwarders with `DebugTools.AssertNotNull(...).Passed` guards), `OnPlottingPointsChanged`, `UpdateImageRendererModel` (density branch vs `StopRendering`). Hand-written: appended to `Mirrored/Controls.Plots.Model.TraceModel.cs`; their top-level stubs removed from the `.g.cs`. The nested `PlottingPointsForDisplay` stubs stay (they are not in this batch).
+- Left: `UpdatePlottingPointsForDisplay` (its `WpfUtils.DoWork` lambda captures `points`, so the closure shape needs its own pass) and the nested class members.
+- Release IL: PASS — 564 checked, 564 exact, 0 failures.

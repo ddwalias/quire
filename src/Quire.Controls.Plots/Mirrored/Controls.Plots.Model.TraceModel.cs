@@ -488,4 +488,47 @@ internal partial class TraceModel
         }
         SetRect(min, min, max, max);
     }
+
+    public List<Point> GetGraphPointsForPlottingCoordinateOnRangeAxis(double rangeAxisValue)
+    {
+        if (!DebugTools.AssertNotNull(_plottingPointsForDisplay, null).Passed)
+        {
+            return new List<Point>();
+        }
+        return _plottingPointsForDisplay.GetGraphPointsForPlottingCoordinateOnRangeAxis(rangeAxisValue);
+    }
+
+    public double GetClosestPlottingCoordinateOnRangeAxis(double value, double threshold)
+    {
+        if (!DebugTools.AssertNotNull(_plottingPointsForDisplay, null).Passed)
+        {
+            return double.NaN;
+        }
+        return _plottingPointsForDisplay.GetClosestPlottingCoordinateOnRangeAxis(value, threshold);
+    }
+
+    private void OnPlottingPointsChanged()
+    {
+        UpdatePlottingPointsForDisplay();
+        UpdateImageRendererModel();
+        if (PlottingPointsChanged != null)
+        {
+            PlottingPointsChanged();
+        }
+    }
+
+    private void UpdateImageRendererModel()
+    {
+        if (IsUsingDensityVisualization)
+        {
+            ImageRendererModel.BeginInit();
+            ImageRendererModel.DataPoints = GetPlottingPointsForDisplay();
+            ImageRendererModel.DataRange = DataRange;
+            ImageRendererModel.EndInit();
+        }
+        else
+        {
+            ImageRendererModel.StopRendering();
+        }
+    }
 }

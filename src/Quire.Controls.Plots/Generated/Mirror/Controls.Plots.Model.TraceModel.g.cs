@@ -134,15 +134,7 @@ internal partial class TraceModel : global::Quire.Controls.Plots.Model.PlotCalcu
     [global::Quire.Mirror.MirrorStub]
     public void UpdatePlottingPointsForDisplay() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::System.Windows.Point> GetGraphPointsForPlottingCoordinateOnRangeAxis(double rangeAxisValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public double GetClosestPlottingCoordinateOnRangeAxis(double value, double threshold) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnPlotCalculatableError(global::Quire.Controls.Plots.Model.EngineErrorEventArgs args) => base.OnPlotCalculatableError(args);
-    [global::Quire.Mirror.MirrorStub]
-    private void OnPlottingPointsChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateImageRendererModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void SetResult(global::Quire.Calculation.Core.IResultNode result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
