@@ -247,3 +247,5 @@
 - Release IL: PASS, 1308 checked (`.mirror-cache/release-il-89f99c431ef9/release-il.json`).
 - Batch: `Controls.InputControls.EditableComboBoxVisualTable`: `FireContentChanged` (`?.Invoke()`), `CanTabNavigate`, `ForwardTabNavigate`, `BackwardTabNavigate` (`FocusNavigationDirection.Next` / `Previous`), properties `IsActive`, `SelectedCells`. The explicit `ICanBlockUndoRedo.BlockUndoRedo`, `CellCount`, `OnCloseEditMode` (try/finally) and the command setup stay open.
 - Release IL: PASS, 1314 checked (`.mirror-cache/release-il-891e7459da7c/release-il.json`).
+- Batch: `Controls.Internal.VisualMathRegionNode` `FireCan*` handlers that query a `DelegateRef1<bool>` and assign `CanExecute` (8: column, clear-cells, linear n-ary, row, id-label, copy, cut, show history).
+- Release IL: PASS, 1322 checked (`.mirror-cache/release-il-6880d376ebca/release-il.json`).

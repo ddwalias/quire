@@ -743,4 +743,92 @@ internal partial class VisualMathRegionNode
     {
         FireLabeledIdFormatChanged();
     }
+
+    internal void FireCanPerformColumnOperations(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        bool canExecute = false;
+        if (CanPerformColumnOperations != null)
+        {
+            CanPerformColumnOperations.Invoke(ref canExecute);
+        }
+
+        e.CanExecute = canExecute;
+    }
+
+    internal void FireCanPerformCearCellsOperation(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        bool canExecute = false;
+        if (CanPerformClearCellsOperation != null)
+        {
+            CanPerformClearCellsOperation.Invoke(ref canExecute);
+        }
+
+        e.CanExecute = canExecute;
+    }
+
+    public void FireCanCopy(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        bool canExecute = false;
+        if (CanCopy != null)
+        {
+            CanCopy.Invoke(ref canExecute);
+        }
+
+        e.CanExecute = canExecute;
+    }
+
+    public void FireCanCut(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        bool canExecute = false;
+        if (CanCut != null)
+        {
+            CanCut.Invoke(ref canExecute);
+        }
+
+        e.CanExecute = canExecute;
+    }
+
+    public void FireCanShowRegionHistory(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        bool canExecute = false;
+        if (CanShowRegionHistory != null)
+        {
+            CanShowRegionHistory.Invoke(ref canExecute);
+        }
+
+        e.CanExecute = canExecute;
+    }
+
+    public void FireCanPerformLinearNaryOperations(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        bool canExecute = false;
+        if (CanPerformLinearNaryOperations != null)
+        {
+            CanPerformLinearNaryOperations.Invoke(ref canExecute);
+        }
+
+        e.CanExecute = canExecute;
+    }
+
+    public void FireCanPerformRowOperations(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        bool canExecute = false;
+        if (CanPerformRowOperations != null)
+        {
+            CanPerformRowOperations.Invoke(ref canExecute);
+        }
+
+        e.CanExecute = canExecute;
+    }
+
+    public void FireCanPerformIdLabelOperations(object sender, System.Windows.Input.CanExecuteRoutedEventArgs eventArgs)
+    {
+        bool canExecute = false;
+        if (CanPerformIdLabelOperations != null)
+        {
+            CanPerformIdLabelOperations.Invoke(ref canExecute);
+        }
+
+        eventArgs.CanExecute = canExecute;
+    }
 }
