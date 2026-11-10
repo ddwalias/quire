@@ -22,8 +22,6 @@ public abstract partial class ValueNodeInfo : global::Quire.EquationEditor.Tree.
     [global::Quire.Mirror.MirrorStub]
     protected ValueNodeInfo(global::Quire.EquationEditor.Tree.ValueNodeInfo A_0) { }
     [global::Quire.Mirror.MirrorStub]
-    public object Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected abstract object bk();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.ValueNodeInfo+a, Ptc.EquationEditor")]
