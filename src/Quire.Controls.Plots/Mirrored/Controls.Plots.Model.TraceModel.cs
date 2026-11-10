@@ -743,4 +743,34 @@ internal partial class TraceModel
     public bool XIsDiscrete { get; private set; }
 
     public bool YIsDiscrete { get; private set; }
+
+    private void AnalyzeAxisAndTypeData(ITrace2DResultNode plotResult)
+    {
+        _analyzedData.RectPoints.Left = plotResult.RangeAxisInfo.Min;
+        _analyzedData.RectPoints.Right = plotResult.RangeAxisInfo.Max;
+        _analyzedData.RangeUnits = plotResult.RangeAxisInfo.Units;
+        _analyzedData.RectPoints.Top = plotResult.ResultAxisInfo.Min;
+        _analyzedData.RectPoints.Bottom = plotResult.ResultAxisInfo.Max;
+        _analyzedData.ResultUnits = plotResult.ResultAxisInfo.Units;
+        IsNumOfPointsMutable = plotResult.TraceResultType == Trace2DResultType.Parametric;
+        _equations[0].Equation.Units = _analyzedData.RangeUnits;
+        _equations[1].Equation.Units = _analyzedData.ResultUnits;
+    }
+
+    private void SetAnalyzedData()
+    {
+        SetPlottingPoints(_analyzedData.PointsCollection == null ? null : new PointCollection(_analyzedData.PointsCollection));
+        SetAnalyzedDataForAxis(GetAxis(AxesIndex.Result), _analyzedData.YLabels, SetAnalyzedDataForResultAxis);
+        SetAnalyzedDataForAxis(GetAxis(AxesIndex.Range), _analyzedData.XLabels, SetAnalyzedDataForRangeAxis);
+        if (PlotType.Polar == PlotType)
+        {
+            SetPolarPlotRect(_analyzedData.PointsCollection);
+        }
+        else
+        {
+            SetRect(_analyzedData.RectPoints.Top, _analyzedData.RectPoints.Left, _analyzedData.RectPoints.Bottom, _analyzedData.RectPoints.Right);
+        }
+        FireAnalyzedDataChanged();
+        ResultValid = true;
+    }
 }

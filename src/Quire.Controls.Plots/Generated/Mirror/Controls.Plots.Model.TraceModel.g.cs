@@ -92,10 +92,6 @@ internal partial class TraceModel : global::Quire.Controls.Plots.Model.PlotCalcu
     [global::Quire.Mirror.MirrorStub]
     private void AnalyzeVectors(global::Quire.Calculation.Core.ITrace2DResultNode plotResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void AnalyzeAxisAndTypeData(global::Quire.Calculation.Core.ITrace2DResultNode plotResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetAnalyzedData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Calculation.Core.EngineResult CopyMinMaxAndUnitsResults(global::Quire.Calculation.Core.EngineResult source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.TraceModel+TraceAnalyzedData, Ptc.Controls.Plots")]

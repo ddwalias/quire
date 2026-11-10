@@ -324,3 +324,10 @@
 - Shapes: all three matched first time. `Presenter.TraceSymbol` is qualified for the same reason as batch 45.
 - Left: `SetColorStyle` and `SetMinGap` (WPF `Style`/`Setter` and `DependencyPropertyKey` use).
 - Release IL: PASS — 619 checked, 619 exact, 0 failures.
+
+## Batch 47 — TraceModel analysed-data helpers
+
+- Members: `AnalyzeAxisAndTypeData` (range/result rect, units, `IsNumOfPointsMutable` from the parametric result type, equation units), `SetAnalyzedData` (plotting points copy, axis labels, polar or linear rect, `ResultValid = true`). Hand-written: appended to `Mirrored/Controls.Plots.Model.TraceModel.cs`; their stubs removed from the `.g.cs`.
+- Shapes: both matched first time.
+- Left in TraceModel: `SetResult` (captures `result` in a `WpfUtils.DoWork` lambda; needs the closure pass), `DoSetResult`, `AnalyzeResultData`, `CreateAllPointsByTraceType`, `AnalyzeResult` x2, `AnalyzeVectors`; `Rl` (string-format with an inline array); `UpdatePlottingPointsForDisplay` and `MinPositiveX`/`MinPositiveY` (closures); `CopyMinMaxAndUnitsResults`; nested `PlottingPointsForDisplay` (generated class, not partial).
+- Release IL: PASS — 621 checked, 621 exact, 0 failures.
