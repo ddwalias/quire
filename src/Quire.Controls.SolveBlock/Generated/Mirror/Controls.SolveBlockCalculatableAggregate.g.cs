@@ -18,7 +18,5 @@ internal partial class SolveBlockCalculatableAggregate : global::Quire.Controls.
     [global::Quire.Mirror.MirrorStub]
     private static string ComposeRlForEvalOrDefineEval(global::System.Collections.Generic.IList<string> aggregateRl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal static bool IsRlForSymbolicEval(global::System.Collections.Generic.IList<string> aggregateRl, out int symbolicEvalIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal static string ComposeSolveblockChildRlFromEquationControl(global::System.Collections.Generic.IList<string> aggregateRl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

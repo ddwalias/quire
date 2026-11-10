@@ -32,6 +32,30 @@ internal partial class SolveBlockCalculatableAggregate
         return expression;
     }
 
+    internal static bool IsRlForSymbolicEval(
+        global::System.Collections.Generic.IList<string> aggregateRl,
+        out int symbolicEvalIndex)
+    {
+        symbolicEvalIndex = SymbolicEvalIndices[0];
+        if (aggregateRl == null)
+            return false;
+
+        var regex = new global::System.Text.RegularExpressions.Regex(
+            "\\((?<operator>define-only-symbolic)(?<operatorTag>(?::0x[0-9a-fA-F]{8})?)\\s+(?<resultId>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-resultId))\\s+(?<expression>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-expression))\\s*(?:\\s(?<keywords>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-keywords)))?\\s*\\)");
+        foreach (int item in global::System.Linq.Enumerable.Range(symbolicEvalIndex, SymbolicEvalIndices[1]))
+        {
+            if (item >= aggregateRl.Count)
+                return false;
+            if (regex.Match(aggregateRl[item]).Success)
+            {
+                symbolicEvalIndex = item;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public global::Quire.Calculation.Core.ICalculatableAggregate WrappedCalculatableAggregate =>
         (global::Quire.Calculation.Core.ICalculatableAggregate)WrappedCalculatable;
 
