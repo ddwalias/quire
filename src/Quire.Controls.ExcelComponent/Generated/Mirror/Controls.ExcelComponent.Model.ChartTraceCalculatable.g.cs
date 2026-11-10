@@ -48,14 +48,6 @@ internal partial class ChartTraceCalculatable : global::Quire.Controls.ExcelComp
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.EngineError _currentError;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper XCalculatable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper YCalculatable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.SynchronizationStatus SyncStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.CalculatingStatus CalcStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper> ErrorOwners { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public uint TraceId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
