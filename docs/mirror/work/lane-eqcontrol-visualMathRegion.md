@@ -47,3 +47,9 @@ Not blocked by the listed reasons: no `LoadComponent`/XAML loads, no dynamic scr
 - Members: `Size` (get), `TextBaselineY` (override get), `Register_EQUATION_WRAPPING_DEBUG_Handlers` (`[Conditional]`, empty), `WriteImageTo`, `IVisualMathRegionNode.Focus`, `HandleProhibitMouseClickPropertyChanged`.
 - Shapes tried: `Size` reads `ActualHeight` into a local before `ActualWidth` (Mathcad order); other members matched on the first candidate.
 - Release IL: PASS, 1676 checked (`.mirror-cache/release-il-83e439d1b902/release-il.json`).
+
+## Batch 3: event forwarders
+
+- Members: `FireCopy`, `FirePaste`, `FireCut` (both overloads each), `FireShowRegionHistory`, `FireCanPaste`, `FireRequestRestoreInsertionPoint`, `FireSetIsReplacingPreviouseOperator(bool, out bool)`, `FireCanTraverse`, `FireTraversalRequest`, `FireCanPerformReplace`, `FireRestoreFromHistory`.
+- Shapes tried: the first candidate put `e.Handled = true` after the `if` for `FireCopy`/`FirePaste`/`FireCut`/`FireShowRegionHistory` and FAILED; Mathcad sets `Handled` inside the null-checked block. Traversal checks written as `direction == X && Event != null` (Mathcad branches on the null test with the direction test in one chain) matched.
+- Release IL: PASS, 1690 checked (`.mirror-cache/release-il-fc2924bfe416/release-il.json`). Earlier candidate: FAIL (6 members) at `.mirror-cache/release-il-6f7e66c8517d`.

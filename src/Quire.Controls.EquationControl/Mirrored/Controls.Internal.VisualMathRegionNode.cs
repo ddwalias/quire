@@ -1061,4 +1061,146 @@ internal partial class VisualMathRegionNode
             children[i].IsHitTestVisible = isHitTestVisible;
         }
     }
+
+    public void FirePaste(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (Paste != null)
+        {
+            BuildAndExecPasteCmd();
+            e.Handled = true;
+        }
+    }
+
+    public void FirePaste()
+    {
+        if (Paste != null)
+        {
+            BuildAndExecPasteCmd();
+        }
+    }
+
+    public void FireCut(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (Cut != null)
+        {
+            BuildAndExecCutCmd();
+            e.Handled = true;
+        }
+    }
+
+    public void FireCut()
+    {
+        if (Cut != null)
+        {
+            BuildAndExecCutCmd();
+        }
+    }
+
+    public void FireCopy(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (Copy != null)
+        {
+            Copy.Invoke();
+            e.Handled = true;
+        }
+    }
+
+    public void FireCopy()
+    {
+        if (Copy != null)
+        {
+            Copy.Invoke();
+        }
+    }
+
+    public void FireShowRegionHistory(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (RequestShowRegionHistory != null)
+        {
+            RequestShowRegionHistory.Invoke();
+            e.Handled = true;
+        }
+    }
+
+    public void FireCanPaste(object sender, CanExecuteRoutedEventArgs e)
+    {
+        bool canPaste = false;
+        if (CanPaste != null)
+        {
+            CanPaste.Invoke(ref canPaste);
+        }
+        e.CanExecute = canPaste;
+        if (!e.CanExecute)
+        {
+            e.Handled = true;
+        }
+    }
+
+    public void FireRequestRestoreInsertionPoint(Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs requestRestoreInsertionPointEventArgs)
+    {
+        var routedEventArgs = new RoutedEventArgs(CommonRoutedEvents.RequestRestoreInsertionPointEvent);
+        RaiseEvent(routedEventArgs);
+        requestRestoreInsertionPointEventArgs.RequestHandled = routedEventArgs.Handled;
+    }
+
+    public void FireSetIsReplacingPreviouseOperator(bool isReplacingPreviouseOperator, out bool success)
+    {
+        success = false;
+        if (SetIsReplacingPreviouseOperator != null)
+        {
+            success = SetIsReplacingPreviouseOperator.Invoke(isReplacingPreviouseOperator);
+        }
+    }
+
+    public void FireCanTraverse(CanExecuteRoutedEventArgs e, FocusNavigationDirection direction)
+    {
+        bool canTraverse = false;
+        if (direction == FocusNavigationDirection.Next && OnCanTraverseForward != null)
+        {
+            OnCanTraverseForward.Invoke(ref canTraverse);
+        }
+        else if (direction == FocusNavigationDirection.Previous && OnCanTraverseBackward != null)
+        {
+            OnCanTraverseBackward.Invoke(ref canTraverse);
+        }
+        e.CanExecute = canTraverse;
+    }
+
+    public void FireTraversalRequest(ExecutedRoutedEventArgs e, Direction direction)
+    {
+        bool handled = false;
+        if (direction == Direction.Right && OnTraverseForward != null)
+        {
+            OnTraverseForward.Invoke(ref handled);
+        }
+        else if (direction == Direction.Left && OnTraverseBackward != null)
+        {
+            OnTraverseBackward.Invoke(ref handled);
+        }
+        e.Handled = handled;
+    }
+
+    public bool FireCanPerformReplace(FindReplaceQuery findReplaceQuery)
+    {
+        if (CanPerformReplace != null)
+        {
+            return CanPerformReplace.Invoke(findReplaceQuery);
+        }
+        return false;
+    }
+
+    public void FireRestoreFromHistory(int index)
+    {
+        if (_historyPopup != null)
+        {
+            _historyPopup.Hide();
+            _historyPopup.HistoryItemSelected -= FireRestoreFromHistory;
+            Children.Remove(_historyPopup);
+            _historyPopup = null;
+        }
+        if (RestoreFromHistory != null)
+        {
+            RestoreFromHistory.Invoke(index);
+        }
+    }
 }
