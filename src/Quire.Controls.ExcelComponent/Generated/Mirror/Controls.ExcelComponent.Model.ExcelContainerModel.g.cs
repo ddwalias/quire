@@ -36,25 +36,7 @@ public partial class ExcelContainerModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Microsoft.Office.Interop.Excel.AppEvents_Event _appEvents;
     [global::Quire.Mirror.MirrorStub]
-    protected override bool CheckOleActiveState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.ExcelComponent.Model.QueryAttachedInputsOrOutputsHandler QueryAttachedInputsOrOutputs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool ShouldCommitAtLeastOnce { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool ShouldCommitIfDirty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<bool> IsAsIcon { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool NeedRecalculateOnClose { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ProgId { get => base.ProgId; }
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Microsoft.Office.Interop.Excel.AppEvents_Event AppEvents { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey ToggleActivateStateFunctionalityKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsDeactivateInitiatedFromMathcad { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override bool IsDisconnected { get => base.IsDisconnected; }
     [global::Quire.Mirror.MirrorStub]
@@ -115,8 +97,6 @@ public partial class ExcelContainerModel : global::Quire.Controls.ExcelComponent
     protected override void OnStartRunning() => base.OnStartRunning();
     [global::Quire.Mirror.MirrorStub]
     private void RegisterOnActivateHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnWorkbookOpen(global::Quire.Microsoft.Office.Interop.Excel.Workbook wb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnWorkbookActivate(global::Quire.Microsoft.Office.Interop.Excel.Workbook activeWb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
