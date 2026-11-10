@@ -297,3 +297,9 @@
 - Members: `IsUsingDensityVisualization` (get), `ResultValid` (get/set, fires `FireResultValidChanged`), `IsTypeDefault` (get), `ContainsEmptyEquation` (get), `TopLeft` and `BottomRight` (private-set auto-properties; Mathcad's compiler-generated backing fields), `Color` (get/set via `ImageRendererModel.StyleOwner`), `LineStyle` (get/set), `Type` (get/set). Hand-written: appended to `Mirrored/Controls.Plots.Model.TraceModel.cs`; their top-level property stubs removed from the `.g.cs`.
 - Shapes: `LineStyle.set` first failed on layout. Mathcad's `if (value != _lineStyle) { … }` is an early return (`if (value == _lineStyle) return;`); the early-return form matched.
 - Release IL: PASS — 579 checked, 579 exact, 0 failures.
+
+## Batch 43 — TraceModel point-count, density and serialization properties
+
+- Members: private `PlottingPointsCount` and `FinalNumberOfDataPointsToRender` (null-guarded counts of the filter), `ForcedToDensityVisualization` (`ControlSettings.Instance.MinPointsForForceDensity`), `EngineResultForSerialization` (get with `CopyMinMaxAndUnitsResults`, private set), `RangeAxisModel` and `ResultAxisModel` (expression-bodied `_axes[0]`/`_axes[1]`), `NumberOfPointsInResult` and `ShouldNotCopyFullResults` (auto-properties), `IsCommitted` (override, expression-bodied). Hand-written: appended to `Mirrored/Controls.Plots.Model.TraceModel.cs` (adds `using Quire.Controls.Core;`); their stubs removed from the `.g.cs`.
+- Shapes: all nine matched first time.
+- Release IL: PASS — 591 checked, 591 exact, 0 failures.

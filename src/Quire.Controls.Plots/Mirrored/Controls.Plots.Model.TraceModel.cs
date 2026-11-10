@@ -9,6 +9,7 @@ using System.Windows.Media;
 using Quire;
 using Quire.Calculation.Core;
 using Quire.Calculation.Core.Trace2DResults;
+using Quire.Controls.Core;
 using Quire.Controls.Plots.Presenter;
 using Quire.Wpf;
 
@@ -646,4 +647,67 @@ internal partial class TraceModel
             }
         }
     }
+
+    private int PlottingPointsCount
+    {
+        get
+        {
+            if (_plottingPointsFilter == null || _plottingPointsFilter.FilteredPointsCollection == null)
+            {
+                return 0;
+            }
+            return _plottingPointsFilter.FilteredPointsCollection.Count;
+        }
+    }
+
+    private int FinalNumberOfDataPointsToRender
+    {
+        get
+        {
+            if (_plottingPointsFilter == null || _plottingPointsFilter.FilteredPointsCollection == null)
+            {
+                return 0;
+            }
+            return _plottingPointsFilter.NotNullPointsCount;
+        }
+    }
+
+    public bool ForcedToDensityVisualization
+    {
+        get
+        {
+            if (!ImageRendererModel.HasCachedBitmap)
+            {
+                return FinalNumberOfDataPointsToRender >= ControlSettings.Instance.MinPointsForForceDensity;
+            }
+            return true;
+        }
+    }
+
+    public EngineResult EngineResultForSerialization
+    {
+        get
+        {
+            EngineResult engineResult = _engineResultForSerialization ?? EngineResult;
+            if (!ShouldNotCopyFullResults)
+            {
+                return engineResult;
+            }
+            return CopyMinMaxAndUnitsResults(engineResult);
+        }
+        private set
+        {
+            _engineResultForSerialization = value;
+        }
+    }
+
+    private IAxisModel RangeAxisModel => _axes[0];
+
+    private IAxisModel ResultAxisModel => _axes[1];
+
+    private int NumberOfPointsInResult { get; set; }
+
+    public override bool IsCommitted => _isCommitted;
+
+    public bool ShouldNotCopyFullResults { get; set; }
 }
