@@ -72,3 +72,4 @@ The 86 generated stub markers are classified as follows; “unblocked” means n
 
 No classification changes the generated files; this inventory records the current state before further implementation.
 - Batch 64 `SolveBlockModel.UpdateTheSolverIfNeededToReflectMovedCalculatable`: PASS (`191 checked`; `.mirror-cache/release-il-281b1938a523`). The explicit return after `MirrorChildInSolverAggregate` preserves the IL branch target followed by a separate method return.
+- Batch 65 `SolverAggregate.SetSynchronizationStatus` and `SetCalculatingStatus`: PASS (`191 checked`; `.mirror-cache/release-il-209bb1d0ae6e`). The first gate attempt failed compilation because the partial declaration used public accessibility; matching the generated internal declaration fixed it.

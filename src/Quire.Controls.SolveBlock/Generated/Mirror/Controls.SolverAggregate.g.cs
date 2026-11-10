@@ -30,10 +30,6 @@ internal partial class SolverAggregate : global::Quire.Controls.SolveBlockCalcul
     [global::Quire.Mirror.MirrorStub]
     public void CommitAllChildren() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public override void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus) => base.SetSynchronizationStatus(syncStatus);
-    [global::Quire.Mirror.MirrorStub]
-    public override void SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus computingStatus) => base.SetCalculatingStatus(computingStatus);
-    [global::Quire.Mirror.MirrorStub]
     private static int GetChildIndexForResult(global::Quire.Calculation.Core.ICalculatableContainer aggregate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ClearError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
