@@ -7,6 +7,14 @@ namespace Quire { namespace depman {
     [Quire::Mirror::MirrorOfAttribute("depman.IDepman, mcdepman")]
     public interface class IDepman : System::IDisposable
     {
+        void AddNodeCallback(Quire::utl_mgd::Function^ f);
+        void AddBusyCallback(Quire::utl_mgd::Function^ f);
+        void AddBusyCallback(Quire::Engine::BooleanCallback^ b);
+        void RemoveBusyCallback(Quire::Engine::BooleanCallback^ b);
+        void AddUpToDateCallback(Quire::utl_mgd::Function^ f);
+        void AddUpToDateCallback(Quire::Engine::BooleanCallback^ b);
+        void RemoveUpToDateCallback(Quire::Engine::BooleanCallback^ b);
+        Quire::Mcd::RuntimeOptions^ GetRuntimeOptions();
         property bool IsBusy { bool get(); }
         property bool IsUpToDate { bool get(); }
         void BeginMove();

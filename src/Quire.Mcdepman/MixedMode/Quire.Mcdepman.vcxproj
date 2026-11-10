@@ -51,19 +51,27 @@
   <ItemGroup>
     <ClCompile Include="DepmanPort.cpp" />
   </ItemGroup>
-  <!-- The Build Tools MSBuild cannot evaluate SDK-style projects, so Quire.Mirror is forced in with /FU. The production
-       .csproj passes the DLL it already built (QuireMirrorPath); a direct build of this project builds it with dotnet. -->
+  <!-- The Build Tools MSBuild cannot evaluate SDK-style projects, so managed references are forced in with /FU. The production
+       .csproj passes the DLLs it already built; a direct build builds their project closure with dotnet. -->
   <PropertyGroup>
     <_BuildQuireMirrorHere Condition="'$(QuireMirrorPath)' == ''">true</_BuildQuireMirrorHere>
     <QuireMirrorOutDir>$(IntDir)Quire.Mirror\</QuireMirrorOutDir>
+    <_BuildQuireEngineHere Condition="'$(QuireEnginePath)' == ''">true</_BuildQuireEngineHere>
+    <QuireDependenciesOutDir>$(IntDir)Quire.Dependencies\</QuireDependenciesOutDir>
+    <QuireEnginePath Condition="'$(QuireEnginePath)' == ''">$(QuireDependenciesOutDir)Quire.Engine.dll</QuireEnginePath>
+    <QuireEngineUtlPath Condition="'$(QuireEngineUtlPath)' == ''">$(QuireDependenciesOutDir)Quire.Engine.Utl.dll</QuireEngineUtlPath>
+    <QuireMplPath Condition="'$(QuireMplPath)' == ''">$(QuireDependenciesOutDir)Quire.Mpl.dll</QuireMplPath>
     <QuireMirrorPath Condition="'$(QuireMirrorPath)' == ''">$(QuireMirrorOutDir)Quire.Mirror.dll</QuireMirrorPath>
   </PropertyGroup>
   <Target Name="BuildQuireMirrorReference" BeforeTargets="ClCompile" Condition="'$(Configuration)|$(Platform)'=='Release|x64' and '$(_BuildQuireMirrorHere)' == 'true'">
     <Exec Command="dotnet build &quot;$(MSBuildThisFileDirectory)..\..\Quire.Mirror\Quire.Mirror.csproj&quot; --configuration Release --output &quot;$(QuireMirrorOutDir.TrimEnd('\'))&quot; --nologo" />
   </Target>
+  <Target Name="BuildQuireEngineReference" BeforeTargets="ClCompile" Condition="'$(Configuration)|$(Platform)'=='Release|x64' and '$(_BuildQuireEngineHere)' == 'true'">
+    <Exec Command="dotnet build &quot;$(MSBuildThisFileDirectory)..\..\Quire.Engine\Quire.Engine.csproj&quot; --configuration Release --output &quot;$(QuireDependenciesOutDir.TrimEnd('\'))&quot; --nologo" />
+  </Target>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <ForcedUsingFiles>$(QuireMirrorPath);%(ForcedUsingFiles)</ForcedUsingFiles>
+      <ForcedUsingFiles>$(QuireMirrorPath);$(QuireEnginePath);$(QuireEngineUtlPath);$(QuireMplPath);%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

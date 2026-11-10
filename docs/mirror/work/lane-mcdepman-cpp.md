@@ -35,3 +35,10 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
 - Scope: retain the 35 C++ IDepman scalar/collection declarations (33 new and 2 spike declarations); restore both C# IDepman files byte-for-byte from main. Remaining IDepman declarations: 19 requiring depman/engine/utl/mpl types; Action (4), BooleanMediator (4), Environment (4), SEnvironment (3) and other mcdepman members remain unfinished.
 - Revised foreground C++ candidate gate: PASS, 114 checked; `.mirror-cache/release-il-0a8a4aa17647/release-il.json`. No rejected C++ source shapes or remaining mismatches in this batch.
 - Revised foreground Quire.Mcd gate: PASS, 0 checked; `.mirror-cache/release-il-5d5d08a68d0d/release-il.json`. Quire.Mcd still builds; all its C# declarations remain in place.
+
+## Batch 2 — IDepman engine callbacks and runtime options
+
+- Owner: Codex, Orca task `task_2be85ce3d345`; branch `feature/mcdepman-migration-resume`.
+- Members: seven callback overloads using utl-mgd/iengine types and `GetRuntimeOptions`, bringing IDepman to 43/54 declarations. The C++ and production projects now reference Quire.Engine, Quire.Engine.Utl and Quire.Mpl; C# hosts are unchanged.
+- Foreground candidate gate PASS, 89 checked; `.mirror-cache/release-il-372bbb4bc411/release-il.json`. No rejected shapes. Eleven IDepman declarations still need depman types; subsequent interface groups remain unfinished.
+- Foreground Quire.Mcd gate PASS, 0 checked; `.mirror-cache/release-il-068c328c06b7/release-il.json`; Quire.Mcd still builds with unchanged declarations.
