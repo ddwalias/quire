@@ -12,13 +12,5 @@ namespace Quire.StatusBarControls;
 public partial class GotoPageValidationRule : global::System.Windows.Controls.ValidationRule
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.StatusBarControls.GotoPageValidatorHelper _helper;
-    [global::Quire.Mirror.MirrorStub]
-    public int TotalPages { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.StatusBarControls.GotoPageValidatorHelper Helper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Controls.ValidationResult Validate(object value, global::System.Globalization.CultureInfo cultureInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public GotoPageValidationRule() { }
 }

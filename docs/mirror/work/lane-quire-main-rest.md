@@ -386,6 +386,9 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
 - **Batch 26 (converters and MRU interface, U; branch `feature/quire-main-pure-agy`):** `DocNameToTabHeaderConverter` (Convert, ConvertBack), `MarginConverter` (Instance, ctor, Convert, ConvertBack), `ObjectToBoolConverter` (Instance, both Convert, both ConvertBack), `PageMarginSelectorTypeValueConverter` (Instance, ctor, Convert, ConvertBack), `MruFiles.IMruFilePersistanceManager` (all 6 interface members).
   - Gate: PASS, 733 checked. Report: `.mirror-cache/release-il-57f7391e39fe/release-il.json`.
   - Shapes: `MarginConverter` pre-declares PageSize and PageMarginType locals so object temp takes local slot 2; `PageMarginSelectorTypeValueConverter` uses if/else structure matching Mathcad's brfalse/ret layout.
+- **Batch 27 (StatusBarControls, U; branch `feature/quire-main-pure-agy`):** `GotoPageValidationRule` (`_helper`, `TotalPages`, `Helper`, `Validate`), `GotoPageValidatorHelper` (`TotalPagesProperty`, `TotalPages`, `Validator`, `SetValidator`, `OnTotalPagesChanged`, `CreateInstanceCore`).
+  - Gate: PASS, 739 checked. Report: `.mirror-cache/release-il-c9963ceb71c5/release-il.json`.
+  - Shapes: `Validate` places `return validResult;` outside `try/catch` block matching Mathcad's `leave.s` layout.
 
 ## Remaining (after batch 10)
 
