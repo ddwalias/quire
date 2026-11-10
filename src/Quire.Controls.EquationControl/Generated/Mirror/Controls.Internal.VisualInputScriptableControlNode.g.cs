@@ -11,22 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualInputScriptableControlNode, Ptc.Controls.EquationControl")]
 internal partial class VisualInputScriptableControlNode : global::Quire.Controls.Internal.VisualInputScriptableControlNodeBase, global::Quire.Controls.Internal.IVisualInputScriptableControlNodeAutomation, global::Quire.Controls.Internal.IVisualResizableScriptableControlNode, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Type TypeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.Internal.VisualInputScriptableControlNode _visual;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Border xamlBorder;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Grid xamlGrid;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Primitives.ToggleButton xamlToggle;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.ScrollViewer xamlScrollViewer;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public VisualInputScriptableControlNode() { }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualInputScriptableControlNode(string mathNodeName, global::Quire.EquationEditor.Tree.MathNode mathNode, global::Quire.Controls.Internal.VisualMathRegionNode region) { }
 }
