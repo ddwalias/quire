@@ -176,6 +176,23 @@ internal partial class SolverAggregate
         }
     }
 
+    public override void SetResult(global::Quire.Calculation.Core.IResultNode result)
+    {
+        if (!(WrappedCalculatable is global::Quire.Calculation.Core.ICalculatableAggregate aggregate) ||
+            aggregate.CalculatableChildren.IsNullOrEmpty())
+        {
+            base.SetResult(result);
+            return;
+        }
+
+        int childIndex = GetChildIndexForResult(aggregate);
+        if (global::Quire.DebugTools.DevAssert(
+                childIndex >= 0 && childIndex < aggregate.CalculatableChildren.Count(), null).Passed)
+        {
+            aggregate.CalculatableChildren.ElementAt(childIndex).SetResult(result);
+        }
+    }
+
     private void AddAlgorithmIfRequired(
         global::System.Text.StringBuilder solverRlBuilder,
         global::Quire.Calculation.Core.ICalculatable wrappedCalculatable,
