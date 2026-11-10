@@ -17,16 +17,4 @@ internal partial class DeleteTextStyleCommand : global::Quire.Undo.IUndoableComm
     private readonly global::Quire.TextStyleData _deleteTextStyleData;
     [global::Quire.Mirror.MirrorStub]
     private readonly int _deleteTextStyleDataIndex;
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public DeleteTextStyleCommand(global::Quire.TextStyleData deleteTextStyleData, global::Quire.Controls.Core.ITextStylesManager textStyleManager) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Execute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
