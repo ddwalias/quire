@@ -11,8 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Spirit.Controls.ColorInfoToGreenGradientEndConverter, MathcadPrime")]
 public partial class ColorInfoToGreenGradientEndConverter : global::Quire.Controls.ColorInfoToRedGradientEndConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => base.Convert(value, targetType, parameter, culture);
-    [global::Quire.Mirror.MirrorStub]
-    public ColorInfoToGreenGradientEndConverter() { }
 }
