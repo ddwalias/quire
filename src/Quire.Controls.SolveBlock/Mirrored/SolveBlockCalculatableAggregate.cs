@@ -32,6 +32,58 @@ internal partial class SolveBlockCalculatableAggregate
         return expression;
     }
 
+    private static string ComposeRlForEvalOrDefineEval(
+        global::System.Collections.Generic.IList<string> aggregateRl)
+    {
+        var regex = new global::System.Text.RegularExpressions.Regex("\\((?<operator>eval)(?<operatorTag>(?::0x[0-9a-fA-F]{8})?)\\s+(?<expression>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-expression))\\s*(?:\\s(?<scaleFactor>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-scaleFactor)))?\\s*\\)");
+        var defineRegex = new global::System.Text.RegularExpressions.Regex("\\((?<operator>define)(?<operatorTag>(?::0x[0-9a-fA-F]{8})?)\\s+(?<defined>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-defined))\\s+(?<expression>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-expression))\\s*\\)");
+        var defineMatch = defineRegex.Match(aggregateRl[0]);
+        var defineMatchForEval = defineRegex.Match(aggregateRl[1]);
+        var defineMatchForScale = defineRegex.Match(aggregateRl[2]);
+        var evalMatch = regex.Match(aggregateRl[3]);
+        if ((!defineMatch.Success && aggregateRl[0] != "nil") || !defineMatchForEval.Success ||
+            (!defineMatchForScale.Success && aggregateRl[2] != "nil") || !evalMatch.Success)
+        {
+            return null;
+        }
+
+        var stringBuilder = new global::System.Text.StringBuilder();
+        stringBuilder.Append('(');
+        if (defineMatch.Success)
+        {
+            if (aggregateRl.Count != 5 || !regex.IsMatch(aggregateRl[4]))
+                return null;
+
+            string operatorTag = defineMatch.Groups["operatorTag"].Value;
+            string definedVariable = GetDefinedVariable(defineMatch);
+            stringBuilder.Append("define-eval").Append(operatorTag).Append(' ')
+                .Append(definedVariable);
+        }
+        else
+        {
+            if (aggregateRl.Count != 4)
+                return null;
+
+            string operatorTag = evalMatch.Groups["operatorTag"].Value;
+            stringBuilder.Append("eval").Append(operatorTag);
+        }
+
+        string expression = defineMatchForEval.Groups["expression"].Value;
+        stringBuilder.Append(' ').Append(expression);
+        if (defineMatchForScale.Success)
+        {
+            string defined = defineMatchForScale.Groups["defined"].Value;
+            string scaleExpression = defineMatchForScale.Groups["expression"].Value;
+            if (defined != "ui_scale")
+                return null;
+
+            stringBuilder.Append(' ').Append(scaleExpression);
+        }
+
+        stringBuilder.Append(')');
+        return stringBuilder.ToString();
+    }
+
     internal static bool IsRlForSymbolicEval(
         global::System.Collections.Generic.IList<string> aggregateRl,
         out int symbolicEvalIndex)
