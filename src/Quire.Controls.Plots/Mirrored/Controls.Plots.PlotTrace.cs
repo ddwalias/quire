@@ -114,4 +114,50 @@ public partial class PlotTrace
         }
         return num;
     }
+
+    public TraceStyleState? DoStyleChangeCommand()
+    {
+        if (_previousStyleStateSaved)
+        {
+            _previousStyleStateSaved = false;
+            return _savedStyleForSmallTrace;
+        }
+        return null;
+    }
+
+    public void UndoStyleChangeCommand(TraceStyleState? doData)
+    {
+        if (doData.HasValue)
+        {
+            _savedStyleForSmallTrace = doData.Value;
+            _previousStyleStateSaved = true;
+        }
+    }
+
+    private void ConformStyleToPointCount()
+    {
+        if (RestrictedToDensityPointsOrSolidLine || ForcedToDensityVisualization)
+        {
+            if (!_previousStyleStateSaved)
+            {
+                _savedStyleForSmallTrace = new TraceStyleState(Symbol, LineStyle, LineWeight);
+                if (LineStyle == LineStyle.None)
+                {
+                    Symbol = Presenter.TraceSymbol.point;
+                }
+                else
+                {
+                    LineStyle = LineStyle.Solid;
+                    Symbol = Presenter.TraceSymbol.none;
+                }
+                _previousStyleStateSaved = true;
+            }
+        }
+        else if (_previousStyleStateSaved)
+        {
+            LineStyle = _savedStyleForSmallTrace.LineStyle;
+            Symbol = _savedStyleForSmallTrace.TraceSymbol;
+            _previousStyleStateSaved = false;
+        }
+    }
 }

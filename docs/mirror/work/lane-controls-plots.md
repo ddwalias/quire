@@ -317,3 +317,10 @@
 - Shapes: all five matched first gate run after one compile fix. PlotTrace's `TraceSymbol` name resolves to the `string TraceSymbol` property, so the enum is written `Presenter.TraceSymbol.none` (Mathcad's IL uses the full enum name).
 - Left: `SetAxis` and `MoveFocusToEquation` (WPF event and focus types).
 - Release IL: PASS — 616 checked, 616 exact, 0 failures.
+
+## Batch 46 — PlotTrace style-change command and point-count conformance
+
+- Members: `DoStyleChangeCommand`, `UndoStyleChangeCommand` (saved-style round trip with `TraceStyleState?`), private `ConformStyleToPointCount` (saves style and switches symbol or line style for density visualisation, then restores it). Hand-written: appended to `Mirrored/Controls.Plots.PlotTrace.cs`; their stubs removed from `PlotTrace.g.cs`.
+- Shapes: all three matched first time. `Presenter.TraceSymbol` is qualified for the same reason as batch 45.
+- Left: `SetColorStyle` and `SetMinGap` (WPF `Style`/`Setter` and `DependencyPropertyKey` use).
+- Release IL: PASS — 619 checked, 619 exact, 0 failures.
