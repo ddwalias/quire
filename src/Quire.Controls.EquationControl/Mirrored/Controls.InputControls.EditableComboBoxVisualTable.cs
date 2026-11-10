@@ -5,6 +5,9 @@ using Quire.Matrices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using Quire.EquationEditor.Tree;
+using System;
+using System.ComponentModel;
 
 namespace Quire.Controls.InputControls;
 
@@ -106,5 +109,101 @@ public partial class EditableComboBoxVisualTable
     private Quire.EquationEditor.View.IReadonlyCellData GetCellDataAtRowColumnFromVisualTableChildren(int row, int column)
     {
         return GetCellDataFromTextBox(GetChildElemAtRowColumn(row, column), out _);
+    }
+
+    private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == "SelectedCells" && IsMeasureValid && IsArrangeValid)
+        {
+            UpdateAdornerLocationToSelectedCells();
+        }
+    }
+
+    private ComboBoxCellDataType GetCellDataType(ICellData cell)
+    {
+        int row = cell.Row;
+        int column = cell.Column;
+        if (EditableComboBoxViewModel.IsTitleCell(row, column))
+        {
+            return ComboBoxCellDataType.Titles;
+        }
+
+        if (EditableComboBoxViewModel.IsUnitCell(row, column))
+        {
+            return ComboBoxCellDataType.Units;
+        }
+
+        return ComboBoxCellDataType.Values;
+    }
+
+    private void EditModeLostFocus(object sender, RoutedEventArgs e)
+    {
+        DebugTools.DevAssert(!e.Handled, null);
+        if (IsKeyboardFocusWithin)
+        {
+            if (this == e.Source)
+            {
+                _viewModel.ClearSelection();
+                return;
+            }
+        }
+        else
+        {
+            FinishEditingAndFireRequestToCloseEditMode(false);
+        }
+    }
+
+    private void AddOrRemoveLostFocusHandler(bool add)
+    {
+        if (add)
+        {
+            AddHandler(UIElement.LostFocusEvent, new RoutedEventHandler(EditModeLostFocus), true);
+        }
+        else
+        {
+            RemoveHandler(UIElement.LostFocusEvent, new RoutedEventHandler(EditModeLostFocus));
+        }
+    }
+
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        base.OnKeyDown(e);
+        if (e.Key == Key.Escape)
+        {
+            OnCloseEditMode(null, e);
+        }
+
+        if (IsArrowKeyWhileCellsAreSelected(e.Key))
+        {
+            OnArrowKeyPressWhileThereAreSelectedCellsActivateFirstCellSelected(e);
+        }
+    }
+
+    private void OnPreviewMoveUpByLine(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (IsArrowKeyWhileCellsAreSelected(Key.Up))
+        {
+            OnArrowKeyPressWhileThereAreSelectedCellsActivateFirstCellSelected(e);
+            return;
+        }
+
+        MoveFocusedElement(FocusNavigationDirection.Up, GetCellDataFromTextBox(e.Source, out _));
+        e.Handled = true;
+    }
+
+    protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
+    {
+        base.OnPreviewMouseUp(e);
+        if (e.ChangedButton == MouseButton.Left)
+        {
+            _mouseDownPoint = null;
+            _lastPositionCellSelectionWasCreated = null;
+        }
+    }
+
+    private void GetStartEndCellIndices(Point currentCellIndexPoint, out int mouseDownCellIndex, out int currentCellIndex)
+    {
+        mouseDownCellIndex = _layoutManager.CellIndexFromPoint(_mouseDownPoint.GetValueOrDefault(currentCellIndexPoint));
+        currentCellIndex = _layoutManager.CellIndexFromPoint(currentCellIndexPoint);
     }
 }

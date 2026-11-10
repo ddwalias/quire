@@ -38,8 +38,6 @@ public partial class EditableComboBoxVisualTable : global::Quire.Controls.Core.V
     [global::Quire.Mirror.MirrorStub]
     internal EditableComboBoxVisualTable(global::Quire.Controls.InputControls.EditableComboBoxViewModel viewModel, global::Quire.Controls.InputControls.EditableComboBoxTableCellsFontFormats cellsFontFormats, global::Quire.Controls.Core.ExtendedFont operatorFormat) : base(default(global::Quire.Controls.Core.TableLayoutManager)) { }
     [global::Quire.Mirror.MirrorStub]
-    private void OnPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Refresh(global::Quire.Controls.InputControls.EditableComboBoxTableCellsFontFormats newCellsFontFormats, global::Quire.Controls.Core.ExtendedFont operatorFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
@@ -86,25 +84,15 @@ public partial class EditableComboBoxVisualTable : global::Quire.Controls.Core.V
     [global::Quire.Mirror.MirrorStub]
     private void SetTextBoxCellFontFormatProperties(global::Quire.EquationEditor.View.IReadonlyCellData cell, global::System.Windows.Controls.TextBox textBox) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.EquationEditor.Tree.ComboBoxCellDataType GetCellDataType(global::Quire.Controls.InputControls.ICellData cell) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Controls.TextBox BuildTextBoxControl(global::Quire.Controls.InputControls.ICellData cell) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void FinishEditingAndFireRequestToCloseEditMode(bool shouldKeepFocus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void EditModeLostFocus(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AddOrRemoveLostFocusHandler(bool add) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OnCloseEditMode(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnKeyDown(global::System.Windows.Input.KeyEventArgs e) => base.OnKeyDown(e);
     [global::Quire.Mirror.MirrorStub]
     private bool IsArrowKeyWhileCellsAreSelected(global::System.Windows.Input.Key key) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnArrowKeyPressWhileThereAreSelectedCellsActivateFirstCellSelected(global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnPreviewMoveUpByLine(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnPreviewMoveDownByLine(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -124,11 +112,7 @@ public partial class EditableComboBoxVisualTable : global::Quire.Controls.Core.V
     [global::Quire.Mirror.MirrorStub]
     protected override void OnPreviewMouseDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnPreviewMouseDown(e);
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnPreviewMouseUp(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnPreviewMouseUp(e);
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnPreviewMouseMove(global::System.Windows.Input.MouseEventArgs e) => base.OnPreviewMouseMove(e);
-    [global::Quire.Mirror.MirrorStub]
-    private void GetStartEndCellIndices(global::System.Windows.Point currentCellIndexPoint, out int mouseDownCellIndex, out int currentCellIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnIsVisibleChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
