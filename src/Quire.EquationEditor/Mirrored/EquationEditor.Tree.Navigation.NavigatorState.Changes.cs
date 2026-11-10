@@ -2,6 +2,39 @@ namespace Quire.EquationEditor.Tree.Navigation;
 
 public partial struct NavigatorState
 {
+    public global::Quire.Direction WhatSideOfTheNodeIsTheCaret()
+    {
+        if (CaretSide != global::Quire.Direction.Indeterminate)
+        {
+            return CaretSide;
+        }
+
+        if (Current != null && CaretPosition.HasValue && Current.CarriesValue && !Current.DistinctNodeEdges)
+        {
+            if (CaretPosition.Value == 0)
+            {
+                return global::Quire.Direction.Left;
+            }
+
+            if (CaretPosition.Value == Current.NodeInfoValueLength)
+            {
+                return global::Quire.Direction.Right;
+            }
+        }
+
+        if (Current != null && Current.DescriptorName == "RESULT")
+        {
+            if (EnterSide == global::Quire.Direction.Left)
+            {
+                return global::Quire.Direction.Left;
+            }
+
+            return global::Quire.Direction.Right;
+        }
+
+        return global::Quire.Direction.Indeterminate;
+    }
+
     public NavigatorState ChangeCurrentAndMakeValid(MathNode node)
     {
         if (node == null)
