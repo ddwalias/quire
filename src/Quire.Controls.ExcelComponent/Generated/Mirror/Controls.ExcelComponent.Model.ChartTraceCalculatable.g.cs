@@ -50,15 +50,7 @@ internal partial class ChartTraceCalculatable : global::Quire.Controls.ExcelComp
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper> ErrorOwners { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public uint TraceId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Pair<bool, bool> IsFragment { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsConnectedToTheEngine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.EngineError CurrentError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> RequestEvaluation;
     [global::Quire.Mirror.MirrorStub]
@@ -68,29 +60,9 @@ internal partial class ChartTraceCalculatable : global::Quire.Controls.ExcelComp
     [global::Quire.Mirror.MirrorStub]
     public ChartTraceCalculatable(global::Quire.Controls.ExcelComponent.Model.IChartMinMaxCalculatable minMax) { }
     [global::Quire.Mirror.MirrorStub]
-    public void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetStatusSynchronized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetResult(global::Quire.Calculation.Core.IResultNode result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void SetIdentifierLabels(global::System.Collections.Generic.IDictionary<global::Quire.Calculation.Core.ResolvedId, string[]> idLabelMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetRedefinitionWarnings(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> warnings) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void Dispose() { }
-    [global::Quire.Mirror.MirrorStub]
-    private void HookupChild(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UnHookupChild(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OnUpdateTraceWithDeserializedError(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapper, global::System.Collections.Generic.List<uint> traceIds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateChildren(global::Quire.Controls.ExcelComponent.Model.ChartTraceDataToUpdate dataToUpdate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
