@@ -51,6 +51,4 @@ public partial class InputControlEditorViewModel : global::Quire.Controls.Core.V
     protected global::System.Collections.Hashtable cachedInputScript;
     [global::Quire.Mirror.MirrorStub]
     public InputControlEditorViewModel(global::Quire.Controls.InputControls.IInputControlEditorModel model) : base(default(global::System.Windows.ResourceDictionary)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public string CapitalizeFirstLetter(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

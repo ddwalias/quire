@@ -366,4 +366,13 @@ public partial class InputControlEditorViewModel
 
         return exception;
     }
+    public string CapitalizeFirstLetter(string value)
+    {
+        if (!string.IsNullOrEmpty(value))
+        {
+            return char.ToUpper(value[0]) + value.Substring(1);
+        }
+
+        return value;
+    }
 }
