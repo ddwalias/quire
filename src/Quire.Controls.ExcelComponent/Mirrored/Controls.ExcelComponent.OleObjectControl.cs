@@ -152,4 +152,25 @@ public partial class OleObjectControl
             View.StartOleCloseOperation();
         }
     }
+
+    public global::System.Nullable<global::System.Windows.Vector> NavigateIntoItem(global::Quire.Direction direction)
+    {
+        Activate(isActive: true);
+        return null;
+    }
+
+    public global::Quire.Controls.Core.IResizeData StoreResizeData(global::System.Windows.Size oldSize, global::System.Windows.Size newSize)
+    {
+        return View.ViewModel.StoreResizeData(oldSize, newSize);
+    }
+
+    public void RestoreResizeData(global::Quire.Controls.Core.IResizeData resizeData)
+    {
+        View.ViewModel.RestoreResizeData(resizeData);
+    }
+
+    public global::System.Windows.Size CoerceNewSize(global::System.Windows.Size newSize, global::Quire.Controls.Core.IResizeData resizeData)
+    {
+        return View.ViewModel.CoerceNewSize(newSize, resizeData);
+    }
 }

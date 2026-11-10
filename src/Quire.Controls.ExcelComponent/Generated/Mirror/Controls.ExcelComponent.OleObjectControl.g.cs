@@ -80,8 +80,6 @@ public partial class OleObjectControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     public void Activate(bool isActive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::System.Windows.Vector> NavigateIntoItem(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void SimulateMouseClick(global::System.Windows.Point location, int numberOfClicks) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseLeftButtonDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnMouseLeftButtonDown(e);
@@ -97,12 +95,6 @@ public partial class OleObjectControl : global::System.Windows.Controls.ContentC
     private void HandleViewModelRequestResizeToFit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnViewVisualParentChanged(global::System.Windows.DependencyObject oldParent, global::System.Windows.DependencyObject newParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IResizeData StoreResizeData(global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RestoreResizeData(global::Quire.Controls.Core.IResizeData resizeData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size CoerceNewSize(global::System.Windows.Size newSize, global::Quire.Controls.Core.IResizeData resizeData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
 }
