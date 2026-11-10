@@ -2,6 +2,18 @@ namespace Quire.EquationEditor.Tree.Transform;
 
 public partial class InlineToSExpressionTransform
 {
+    private string a(global::System.Windows.Documents.Run run, ref int inlineCount)
+    {
+        inlineCount++;
+        e.TryGetValue(run.GetType(), out string value);
+        if (global::System.String.IsNullOrEmpty(value))
+        {
+            return SExpressionUtility.EscapeIdValue(run.Text);
+        }
+
+        return "(" + value + " " + SExpressionUtility.EscapeIdValue(run.Text) + ")";
+    }
+
     private string a(
         global::System.Windows.Documents.Inline inline,
         ref int inlineCount,
