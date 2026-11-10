@@ -1949,8 +1949,18 @@ public partial class WhiteboardViewModel
         public PushItemsDownCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, int numberOfLines, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToMove) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
         [global::Quire.Mirror.MirrorStub]
         protected override bool DoWithResize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override void Undo()
+        {
+            if (_moveCommand != null)
+            {
+                _moveCommand.Undo();
+            }
+
+            Size size = _viewModel.ContentSize;
+            UndoResize();
+            ViewModel.FireChildCausedResize(size, _viewModel.ContentSize);
+        }
+
         public override void Redo()
         {
             Do();
@@ -2001,8 +2011,20 @@ public partial class WhiteboardViewModel
         public DeleteSpaceCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, int numberOfLines, global::Quire.Direction direction) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
         [global::Quire.Mirror.MirrorStub]
         public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override void Undo()
+        {
+            _viewModel.ContentHeight = _oldHeight;
+            if (_moveCommand != null)
+            {
+                _moveCommand.Undo();
+            }
+
+            if (_direction == Direction.Above)
+            {
+                _viewModel.InsertionPoint = _insertionPoint;
+            }
+        }
+
         public override void Redo()
         {
             Do();

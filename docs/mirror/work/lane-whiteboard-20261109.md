@@ -473,3 +473,9 @@
 - Members: `RemoveSelectedItemsCommand.Do` (`bool result; using (var scope = new CommandScope(_nestedCommand)) { result = _viewModel.GetRemoveItemsCommand(...).Execute(); }` then the focus/crosshair block when `result`); `PasteItemsCommand.DoWithResize` (`if (!_addItemsCommand.Do()) return false;`, then `BlockUntilLoaded`, `ClearSelectedItems`, activate-or-select).
 - Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; stubs and `[MirrorStub]` attributes removed.
 - Release IL: PASS — 895 checked, 0 failures (`release-il-0244e2ea00a8`).
+
+## Batch 35 — PushItemsDownCommand.Undo, DeleteSpaceCommand.Undo
+
+- Members: `PushItemsDownCommand.Undo` (null-guarded `_moveCommand.Undo()`, then the size captured before `UndoResize()` and `FireChildCausedResize`); `DeleteSpaceCommand.Undo` (`ContentHeight = _oldHeight`, null-guarded `_moveCommand.Undo()`, then `InsertionPoint = _insertionPoint` when `_direction == Direction.Above`, which is value 2).
+- Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; stubs and `[MirrorStub]` attributes removed.
+- Release IL: PASS — 897 checked, 0 failures (`release-il-f5cf7ce9c14c`).
