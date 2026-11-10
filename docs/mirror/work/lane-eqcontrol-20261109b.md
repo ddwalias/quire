@@ -294,3 +294,6 @@
 - Shapes tried: the `Header` null-coalesce and `IsNullOrEmpty` branch and the `Category*` `if (Count > n)` shapes matched on the first candidate.
 - Blocked (C# cannot express it): the constructor. Mathcad's IL stores `_categories = new List<string>()` and `_command = EquationCommands.InsertValue` before calling `Object::.ctor`; C# always calls the base constructor first. Its gate report was `FAIL: calls differ at #0` (`newobj List` vs `Object::.ctor`). The constructor stub is restored and stays open.
 - Release IL: PASS, 1544 checked (`.mirror-cache/release-il-afe63dd5c74b/release-il.json`).
+- Batch: `Controls.InputControls.InputControlViewModel`: constructor (`_model` assignment, then `PropertyChanged += HandleModelPropertyChanged`), `Model`, `IsDirty`, `IsEnabled` (notify), `IsInitializeComponent`, `IsFunctionalityEnabled`, `HasKeyboard` (auto), `State` (`Model is IInputScriptableControlModelWithInputs` pattern, then `SetState(value)`), `FontSize` (notify), `InitializeComponent` and `HandleModelPropertyChanged` (empty bodies). The `_model` field stub stays.
+- Shapes tried: the pattern-match `is` for `State` and the `+=` method-group subscription matched on the first candidate.
+- Release IL: PASS, 1561 checked (`.mirror-cache/release-il-220be13e2a4c/release-il.json`).
