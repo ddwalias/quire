@@ -12,21 +12,11 @@ namespace Quire.Controls.Internal;
 internal partial class VisualPlaceholderNodeEditor : global::Quire.Controls.Internal.VisualMathNodeEditor<global::Quire.Controls.Internal.VisualPlaceholderNode>, global::Quire.EquationEditor.View.IVisualPlaceholderNodeEditor, global::Quire.EquationEditor.View.IVisualMathNodeEditor
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty DirectionProperty;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Internal.RubberBandHighlighter _highlighter;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Internal.Caret _caret;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Direction Direction { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public VisualPlaceholderNodeEditor(global::Quire.Controls.Internal.VisualMathNode node, global::Quire.Controls.Internal.VisualMathRegionNode region) : base(default(global::Quire.Controls.Internal.VisualMathNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void Remove() => base.Remove();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnCaretColorChanged(global::System.Drawing.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void UpdateCaretBlinking() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]

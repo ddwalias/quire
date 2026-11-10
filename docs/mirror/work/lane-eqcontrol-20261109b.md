@@ -191,3 +191,6 @@
 - Batch: `Controls.Internal.VisualSymKeywordsStackNode` (`EffectiveBaselineY`, `EffectiveScriptBaselineY`, `GetNodeAtPoint` through the operands panel) and `Controls.Internal.VisualStepRangeOperatorNode` (`EffectiveBaselineY`, `EffectiveScriptBaselineY`).
 - Shapes tried: the hit-test chain through the panel cell matched on the first candidate. Left open: `VisualStepRangeOperatorNode.GetNodeAtPoint` (the enumerator loop; not in this batch).
 - Release IL: PASS, 979 checked (`.mirror-cache/release-il-40ce8a800af6/release-il.json`).
+- Batch: `Controls.Internal.VisualPlaceholderNodeEditor` (`DirectionProperty` with its type initializer, `Direction`, `Remove`, `OnCaretColorChanged`, `UpdateCaretBlinking`). Left generated: the constructor, `MeasureOverride`, and `ArrangeOverride` (their IL keeps a value on the stack across the caret-line call, which needs a shape not yet found).
+- Shapes tried: `Remove` with the parent in a separate local FAILED (Mathcad reads `EditNode` as the setter receiver before it reads the parent); the pattern-match form inside the assignment matched.
+- Release IL: PASS, 985 checked (`.mirror-cache/release-il-44c97711d9be/release-il.json`). Earlier candidates: FAIL at `4dfb1336e5f3` and `782e846d04d0`.
