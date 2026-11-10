@@ -34,8 +34,6 @@ public partial class ChartContainerModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     public double[,] DataLimits { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsImageFrozen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.ExcelComponent.Model.ImageFreezeSources ImageFreezeSources { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.ChartAppLib.ChartAppOLE ChartObject { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

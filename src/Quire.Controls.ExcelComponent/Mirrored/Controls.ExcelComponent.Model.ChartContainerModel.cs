@@ -21,4 +21,6 @@ public partial class ChartContainerModel
     public override bool ShouldCommitIfDirty => true;
 
     protected override bool CheckOleActiveState => false;
+
+    public bool IsImageFrozen => ImageFreezeSources != ImageFreezeSources.None;
 }

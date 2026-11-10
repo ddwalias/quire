@@ -26,19 +26,11 @@ internal partial class ChartComponentCalculatableWrapper : global::Quire.Control
     [global::Quire.Mirror.MirrorStub]
     public string RlIdWithLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public override bool IsInputEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsUnknownEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Calculation.Core.EngineResult EngineResult { get => base.EngineResult; set => base.EngineResult = value; }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Calculation.Core.EngineResult EngineResultForSerialization { get => base.EngineResultForSerialization; }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Pair<bool, bool> IsFragment { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsOutputEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsInvalidEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override string Rl { get => base.Rl; }
     [global::Quire.Mirror.MirrorStub]
