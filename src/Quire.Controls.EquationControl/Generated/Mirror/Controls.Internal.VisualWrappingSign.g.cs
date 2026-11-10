@@ -16,7 +16,5 @@ internal partial class VisualWrappingSign : global::Quire.Controls.Internal.Visu
     [global::Quire.Mirror.MirrorStub]
     public override string Text { get => base.Text; }
     [global::Quire.Mirror.MirrorStub]
-    public double YOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public VisualWrappingSign() { }
 }

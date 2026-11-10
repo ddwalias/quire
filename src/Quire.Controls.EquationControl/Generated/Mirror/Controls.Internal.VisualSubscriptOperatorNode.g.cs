@@ -30,8 +30,6 @@ internal partial class VisualSubscriptOperatorNode : global::Quire.Controls.Inte
     [global::Quire.Mirror.MirrorStub]
     public VisualSubscriptOperatorNode() { }
     [global::Quire.Mirror.MirrorStub]
-    private void SetOperatorSymbolFontSize(global::Quire.Controls.Core.IMathFormat mathFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void ModifyChildMathFormat(int childIndex, global::Quire.Controls.Core.MathFormatValues childMathFormat) => base.ModifyChildMathFormat(childIndex, childMathFormat);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnSecondOperandChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => base.OnSecondOperandChanged(e);

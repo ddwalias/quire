@@ -14,7 +14,5 @@ internal partial class VisualNode : global::System.Windows.Controls.Panel, globa
     [global::Quire.Mirror.MirrorStub]
     public VisualNode() { }
     [global::Quire.Mirror.MirrorStub]
-    public void GetObjectData(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public VisualNode(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) { }
 }

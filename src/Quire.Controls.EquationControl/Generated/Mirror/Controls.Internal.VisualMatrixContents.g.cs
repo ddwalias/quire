@@ -15,6 +15,4 @@ internal partial class VisualMatrixContents : global::Quire.Controls.Core.Visual
     public static double GeneralRowSpacing;
     [global::Quire.Mirror.MirrorStub]
     public VisualMatrixContents() : base(default(global::Quire.Controls.Core.TableLayoutManager)) { }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.Internal.VisualMathNode CellFromPoint(global::System.Windows.Point p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

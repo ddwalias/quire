@@ -20,7 +20,5 @@ internal partial class VisualBinaryWrappOperatorNodeEditor : global::Quire.Contr
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
     [global::Quire.Mirror.MirrorStub]
-    private void DrawSymbolGeometry(global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.UIElement signElement, global::System.Windows.Media.Geometry signGeometry) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnOperatorSelectedChanged(bool selected) => base.OnOperatorSelectedChanged(selected);
 }

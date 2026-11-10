@@ -22,8 +22,6 @@ internal partial class VisualTransposeNode : global::Quire.Controls.Internal.Vis
     [global::Quire.Mirror.MirrorStub]
     public VisualTransposeNode() : base(default(global::Quire.Controls.Internal.VisualSymbolNode), default(bool)) { }
     [global::Quire.Mirror.MirrorStub]
-    private void SetOperatorElementFontSize(global::Quire.Controls.Core.IMathFormat mathFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
