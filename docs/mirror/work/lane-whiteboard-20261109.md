@@ -486,3 +486,10 @@
 - Shapes Release IL requires: `DoWithResize` keeps the `MoveItems()` result on the stack (`dup; brfalse`), which is the shape a `bool` local followed by `if (moved)` produces (verified by a scratch Roslyn compile). `CheckPotentialMove` uses the negated guard (`brtrue` to the growth branch). Callee `CheckMovementWithoutGrowth` is a closure member and stays a stub; calling it does not change this member's IL.
 - Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; stubs and `[MirrorStub]` attributes removed.
 - Release IL: PASS — 902 checked, 0 failures (`release-il-f78dcbd78f09`).
+
+## Batch 37 — InsertSpaceCommand/PushItemsDownCommand DoWithResize, DeleteSpaceCommand Do and LimitOffsetBasedOnMinimumHeight, ResizeItemCommand.Undo
+
+- Members: `InsertSpaceCommand.DoWithResize`, `PushItemsDownCommand.DoWithResize` (captured `Size` before the height change), `DeleteSpaceCommand.Do` (guard `if (_insertionPoint.Y < GridCellSize.Height && _direction == Direction.Above) return false;`), `DeleteSpaceCommand.LimitOffsetBasedOnMinimumHeight` (`-(Floor(... , double.NaN) * gridHeight)`), `ResizeItemCommand.Undo` (pattern `_item is IResizableElementWithDataStore`).
+- Shapes Release IL requires: `LimitOffsetBasedOnMinimumHeight` has only one `double` local (no extra temp), so the expression is written inline and the negation wraps the product; `DeleteSpaceCommand.Do` leaves the `_moveCommand == null` check after the insertion-point move.
+- Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; stubs and `[MirrorStub]` attributes removed.
+- Release IL: PASS — 907 checked, 0 failures (`release-il-ea91314919b8`).
