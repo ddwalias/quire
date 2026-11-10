@@ -42,13 +42,9 @@ internal abstract partial class OleBaseComponentCalculatableWrapper : global::Qu
     [global::Quire.Mirror.MirrorStub]
     public bool IsCommitted { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.EngineError Error { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.SynchronizationStatus SynchronizationStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.CalculatingStatus CalculatingStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int ErrorCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string ErrorSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -78,11 +74,7 @@ internal abstract partial class OleBaseComponentCalculatableWrapper : global::Qu
     [global::Quire.Mirror.MirrorStub]
     public void SetCustomError(string errorMessage, global::Quire.Calculation.Core.EngineError originalError = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected void ClearAllErrors() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void RestoreResult() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -101,6 +93,4 @@ internal abstract partial class OleBaseComponentCalculatableWrapper : global::Qu
     private void UnhookCalculatableEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnEquationChanged(object sender, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void WrappedCalculatablePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
