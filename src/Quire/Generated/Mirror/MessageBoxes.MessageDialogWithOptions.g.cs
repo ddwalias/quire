@@ -24,17 +24,7 @@ public partial class MessageDialogWithOptions : global::Quire.Controls.Core.Dial
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Controls.TextBlock Message { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Controls.Image Image { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Controls.ItemsControl Buttons { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private MessageDialogWithOptions(global::System.Windows.Window ownerWindow, string caption, global::System.Collections.Generic.IEnumerable<global::Quire.Wpf.CheckBoxData> checkBoxesData) : base(default(global::System.Windows.Window), default(string)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static int Show(global::System.Windows.Window ownerWindow, string message, string caption, global::System.Windows.MessageBoxImage imageName, global::Quire.Wpf.CheckBoxData[] checkBoxesData, string[] buttonsKey, string defaultButtonKey, string cancelButtonKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.MessageBoxResult ShowOkDialog(global::System.Windows.Window ownerWindow, string message, string caption, global::System.Windows.MessageBoxImage imageName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
