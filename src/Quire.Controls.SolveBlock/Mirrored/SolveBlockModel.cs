@@ -114,4 +114,19 @@ internal partial class SolveBlockModel
             return SolveBlockEquationTypes.Solver;
         return SolveBlockEquationTypes.Unknown;
     }
+
+    public string GetBlockEquationTypeAttributeName(global::Quire.Controls.Core.IWhiteboardItem item)
+    {
+        switch (GetSolveBlockEquationType(item))
+        {
+            case SolveBlockEquationTypes.Constraint:
+                return global::Quire.PersistentDataObjects.solveBlockRegionTypeSolveblockcategory.constraint.ToString();
+            case SolveBlockEquationTypes.Definition:
+                return global::Quire.PersistentDataObjects.solveBlockRegionTypeSolveblockcategory.guessvalue.ToString();
+            case SolveBlockEquationTypes.Solver:
+                return global::Quire.PersistentDataObjects.solveBlockRegionTypeSolveblockcategory.solver.ToString();
+            default:
+                return null;
+        }
+    }
 }
