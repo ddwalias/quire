@@ -16,9 +16,5 @@ internal partial class VisualSuperscriptOutfixOperatorNode : global::Quire.Contr
     [global::Quire.Mirror.MirrorStub]
     public VisualSuperscriptOutfixOperatorNode(bool horizontal, global::Quire.DelegateFunction0<global::Quire.Controls.Internal.Fence> leftFenceFactory, global::Quire.DelegateFunction0<global::Quire.Controls.Internal.Fence> rightFenceFactory) { }
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Internal.VisualSuperscriptOutfixOperatorNode CreateHorizontalBrackets() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Internal.VisualSuperscriptOutfixOperatorNode CreateVerticalBrackets() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => base.GetNodeAtPoint(hitPoint);
 }

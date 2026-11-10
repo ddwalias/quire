@@ -12,9 +12,5 @@ namespace Quire.Controls.Internal;
 internal partial class VisualDefinitionNode : global::Quire.Controls.Internal.VisualLinearBinaryOperatorNode, global::Quire.Controls.Internal.IVisualBinaryOperatorNodeWithCustomVisibility, global::Quire.EquationEditor.View.IVisualBinaryOperatorNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Visibility CustomOperatorVisibility { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public VisualDefinitionNode(global::Quire.Controls.Internal.VisualSymbolNode opSymbol) { }
-    [global::Quire.Mirror.MirrorStub]
-    internal void UpdateVisibility(global::System.Windows.Visibility lhsOfDefinitionVisibility) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
