@@ -26,8 +26,6 @@ public partial class RichTextTitle : global::Quire.Controls.Text.RichTextBase
     [global::Quire.Mirror.MirrorStub]
     private static void RemoveHyperlinkPreservingText(global::System.Windows.Documents.Hyperlink hyperlink) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void ConvertListToParagraphs(global::System.Windows.Documents.List list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public RichTextTitle(string initialTitleText) { }
     [global::Quire.Mirror.MirrorStub]
     public string GetText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -267,4 +267,50 @@ public partial class RichTextTitle
             }
         }
     }
+
+    private void ConvertListToParagraphs(global::System.Windows.Documents.List list)
+    {
+        Block nextBlock = list.NextBlock;
+        FlowDocument document = list.Parent as FlowDocument;
+        if (document == null)
+        {
+            return;
+        }
+
+        List<global::System.Windows.Documents.Paragraph> paragraphs = new List<global::System.Windows.Documents.Paragraph>();
+        foreach (ListItem listItem in list.ListItems.ToList())
+        {
+            foreach (Block block in listItem.Blocks.ToList())
+            {
+                global::System.Windows.Documents.Paragraph paragraph = block as global::System.Windows.Documents.Paragraph;
+                if (paragraph == null)
+                {
+                    continue;
+                }
+
+                global::System.Windows.Documents.Paragraph newParagraph = new global::System.Windows.Documents.Paragraph { Margin = new Thickness(0.0) };
+                while (paragraph.Inlines.FirstInline != null)
+                {
+                    Inline inline = paragraph.Inlines.FirstInline;
+                    paragraph.Inlines.Remove(inline);
+                    newParagraph.Inlines.Add(inline);
+                }
+
+                paragraphs.Add(newParagraph);
+            }
+        }
+
+        document.Blocks.Remove(list);
+        foreach (global::System.Windows.Documents.Paragraph paragraph in paragraphs)
+        {
+            if (nextBlock != null)
+            {
+                document.Blocks.InsertBefore(nextBlock, paragraph);
+            }
+            else
+            {
+                document.Blocks.Add(paragraph);
+            }
+        }
+    }
 }

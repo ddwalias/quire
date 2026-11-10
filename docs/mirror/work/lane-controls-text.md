@@ -772,3 +772,8 @@ Remaining stub declarations in the lane: 134 (72 plain IL, 20 closure ordinal be
 
 - Exact: `AddEmbeddedItem(IWhiteboardItemInText equation, int textCaretPosition)` forwards to the text-pointer overload with `textType.GetPositionAtOffset(Document, offset)`.
 - Release IL: PASS — 532 checked, 0 failures (`.mirror-cache/gate-b112`).
+
+## Batch 113 — RichTextTitle convert list to paragraphs (1)
+
+- Exact: `ConvertListToParagraphs` (next-block and document guards, nested foreach over list items and blocks, the paragraph copy with the `Margin` object initializer and the inline-moving `while`, then removal of the list and reinsertion of the new paragraphs before the saved next block or at the end).
+- Release IL: PASS — 533 checked, 0 failures (`.mirror-cache/gate-b113`).
