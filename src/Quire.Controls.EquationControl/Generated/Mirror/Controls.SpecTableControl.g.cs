@@ -40,8 +40,6 @@ public partial class SpecTableControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     private global::System.Nullable<global::Quire.Controls.Core.IdLabels> _currentDisplayIdLabel;
     [global::Quire.Mirror.MirrorStub]
-    public double VerticalAlignmentOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     global::Quire.Controls.Core.IUIElementArrangeInfoProvider global::Quire.Controls.Core.IHasChildArrangeInfoProvider.ChildArrangeInfoProvider { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Controls.Core.IEquationControl global::Quire.Controls.ISpecTableControl.ActiveCell { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -51,8 +49,6 @@ public partial class SpecTableControl : global::System.Windows.Controls.ContentC
     public global::Quire.TableCoordinate ActiveCellCoordinate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string ActiveCellSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int NumberOfColumns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool FirstPropertyForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -67,10 +63,6 @@ public partial class SpecTableControl : global::System.Windows.Controls.ContentC
     public bool IsCalculating { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int DataRows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Columns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string RegionSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

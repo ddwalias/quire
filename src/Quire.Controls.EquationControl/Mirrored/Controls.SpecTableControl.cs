@@ -132,4 +132,12 @@ public partial class SpecTableControl
     {
         return View.GetCellAt(row, column);
     }
+
+    public double VerticalAlignmentOffset => View.VerticalAlignmentOffset;
+
+    public int NumberOfColumns => Model.ColumnCount;
+
+    public int Columns => Model.ColumnCount;
+
+    public string RegionSExpression => Model.SExpression;
 }
