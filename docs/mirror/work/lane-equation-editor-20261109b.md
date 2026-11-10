@@ -73,3 +73,4 @@
 
 
 - Batch 28: `Tree.StringToComboBoxMathTransformerForConvertor` parameterless and Boolean constructors. Release IL PASS, 475 checked, 0 failures (`.mirror-cache/release-il-57d5e127d5ca/release-il.json`). Both idiomatic constructor shapes matched first try.
+- Batch 29: `Tree.StringToComboBoxMathTransformerForConvertor.TransformStringMathNode`. Release IL PASS, 476 checked, 0 failures (`.mirror-cache/release-il-f2b0f3f91b6b/release-il.json`); idiomatic quote branches and base call matched first try.
