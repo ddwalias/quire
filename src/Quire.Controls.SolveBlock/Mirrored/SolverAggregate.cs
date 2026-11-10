@@ -155,6 +155,22 @@ internal partial class SolverAggregate
         FireCalculatableMoved(wrapper);
     }
 
+    protected override bool UpdateEquationType(global::Quire.Calculation.Core.ICalculatable calc)
+    {
+        if (!(WrappedCalculatable is global::Quire.Calculation.Core.ICalculatableAggregate aggregate) ||
+            aggregate.CalculatableChildren.IsNullOrEmpty())
+            return base.UpdateEquationType(calc);
+        return UpdateEquationTypeOfAggregateCalculatable(aggregate);
+    }
+
+    protected bool UpdateEquationTypeOfAggregateCalculatable(
+        global::Quire.Calculation.Core.ICalculatableAggregate calc)
+    {
+        SolveBlockEquationTypes oldEquationType = EquationType;
+        EquationType = SolveBlockCalculatable.GetEquationTypeOfCalc(calc);
+        return EquationType != oldEquationType;
+    }
+
     private void FireCalculatableAdded(
         global::Quire.Controls.SolverAggregateChildWrapper wrapper,
         global::Quire.Calculation.Core.ICalculatableContainer container)

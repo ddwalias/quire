@@ -32,10 +32,6 @@ internal partial class SolverAggregate : global::Quire.Controls.SolveBlockCalcul
     [global::Quire.Mirror.MirrorStub]
     protected override void HandleRequestEvaluation(global::Quire.Calculation.Core.ICalculatable calc) => base.HandleRequestEvaluation(calc);
     [global::Quire.Mirror.MirrorStub]
-    protected override bool UpdateEquationType(global::Quire.Calculation.Core.ICalculatable calc) => base.UpdateEquationType(calc);
-    [global::Quire.Mirror.MirrorStub]
-    protected bool UpdateEquationTypeOfAggregateCalculatable(global::Quire.Calculation.Core.ICalculatableAggregate calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public bool IsChild(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int GetIndexOfChild(global::Quire.Calculation.Core.ICalculatable child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

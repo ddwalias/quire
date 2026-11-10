@@ -36,6 +36,7 @@
 - Batch 37 `SolverAggregate` child mutation methods: PASS (`138 checked`; `.mirror-cache/release-il-1e314b488ba6`); landed `31364399`. Initial `RemoveChild` conditional reversed the branch layout; an explicit branch to the removal body matched Release IL.
 - Batch 38 `SolverAggregate` child event forwarding: PASS (`141 checked`; `.mirror-cache/release-il-934544828a00`); landed `af0afa75`.
 - Batch 39 `SolverAggregate.Rl` and `CalculatableChildren`: PASS (`143 checked`; `.mirror-cache/release-il-b23c4da260a1`); landed `5c1e261f`.
-- Batch 40 `SolverAggregate` algorithm tables and constants: PASS (`144 checked`; `.mirror-cache/release-il-2b0e013795b7`).
+- Batch 40 `SolverAggregate` algorithm tables and constants: PASS (`144 checked`; `.mirror-cache/release-il-2b0e013795b7`); landed `5175aaf2`.
+- Batch 41 `SolverAggregate` equation-type updates: PASS (`146 checked`; `.mirror-cache/release-il-9c898d8c699d`).
 - `GetEquationTypeOfRl` remains stubbed due enum/closure mismatch.
-- Remaining: 164 stub markers in generated types; known blockers: `GetDefinedVariable` call vs. callvirt mismatch, `GetEquationTypeOfRl` enum/closure mismatch, deserialization strategy mapped type mismatch and `SolveBlockChildManager.Rewrap` anonymous type has no Mathcad counterpart.
+- Remaining: 162 stub markers in generated types; known blockers: `GetDefinedVariable` call vs. callvirt mismatch, `GetEquationTypeOfRl` enum/closure mismatch, deserialization strategy mapped type mismatch and `SolveBlockChildManager.Rewrap` anonymous type has no Mathcad counterpart.
