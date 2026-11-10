@@ -13,6 +13,4 @@ internal partial class SolveBlockCalculatableAggregate : global::Quire.Controls.
 {
     [global::Quire.Mirror.MirrorStub]
     internal static string GetDefinedVariable(global::System.Text.RegularExpressions.Match topDefineMatch) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string ComposeRlForSymEval(global::System.Collections.Generic.IList<string> aggregateRl, int symbolicEvalIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

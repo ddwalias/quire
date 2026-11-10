@@ -32,6 +32,53 @@ internal partial class SolveBlockCalculatableAggregate
         return expression;
     }
 
+    private static string ComposeRlForSymEval(
+        global::System.Collections.Generic.IList<string> aggregateRl, int symbolicEvalIndex)
+    {
+        var symbolicRegex = new global::System.Text.RegularExpressions.Regex("\\((?<operator>define-only-symbolic)(?<operatorTag>(?::0x[0-9a-fA-F]{8})?)\\s+(?<resultId>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-resultId))\\s+(?<expression>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-expression))\\s*(?:\\s(?<keywords>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-keywords)))?\\s*\\)");
+        var symbolicMatch = symbolicRegex.Match(aggregateRl[symbolicEvalIndex]);
+        var defineRegex = new global::System.Text.RegularExpressions.Regex("\\((?<operator>define)(?<operatorTag>(?::0x[0-9a-fA-F]{8})?)\\s+(?<defined>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-defined))\\s+(?<expression>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-expression))\\s*\\)");
+        var defineMatch = defineRegex.Match(aggregateRl[0]);
+        if (defineMatch.Success && aggregateRl.Count == 3)
+        {
+            string definedVariable = GetDefinedVariable(defineMatch);
+            string expression = GetSymbolicEvalExpression(symbolicMatch);
+            string operatorTag = defineMatch.Groups["operatorTag"].Value;
+            string keywords = symbolicMatch.Groups["keywords"].Value;
+            if (global::Quire.EnumerableExtensions.IsNotEmpty<char>(definedVariable) &&
+                global::Quire.EnumerableExtensions.IsNotEmpty<char>(expression) &&
+                global::Quire.EnumerableExtensions.IsNotEmpty<char>(operatorTag) &&
+                global::Quire.EnumerableExtensions.IsNotEmpty<char>(keywords))
+            {
+                var builder = new global::System.Text.StringBuilder();
+                builder.Append('(').Append("define-symeval").Append(operatorTag).Append(' ')
+                    .Append(definedVariable).Append(' ').Append(expression).Append(' ').Append(keywords).Append(')');
+                return builder.ToString();
+            }
+        }
+        else if (symbolicMatch.Success)
+        {
+            string expression = GetSymbolicEvalExpression(symbolicMatch);
+            string operatorTag = symbolicMatch.Groups["operatorTag"].Value;
+            string operatorName = symbolicMatch.Groups["operator"].Value;
+            string resultId = symbolicMatch.Groups["resultId"].Value;
+            string keywords = symbolicMatch.Groups["keywords"].Value;
+            if (global::Quire.EnumerableExtensions.IsNotEmpty<char>(operatorName) &&
+                global::Quire.EnumerableExtensions.IsNotEmpty<char>(expression) &&
+                global::Quire.EnumerableExtensions.IsNotEmpty<char>(operatorTag) &&
+                global::Quire.EnumerableExtensions.IsNotEmpty<char>(resultId) &&
+                global::Quire.EnumerableExtensions.IsNotEmpty<char>(keywords))
+            {
+                var builder = new global::System.Text.StringBuilder();
+                builder.Append('(').Append(operatorName).Append(operatorTag).Append(' ')
+                    .Append(resultId).Append(' ').Append(expression).Append(' ').Append(keywords).Append(')');
+                return builder.ToString();
+            }
+        }
+
+        return null;
+    }
+
     private static string ComposeRlForEvalOrDefineEval(
         global::System.Collections.Generic.IList<string> aggregateRl)
     {
@@ -178,3 +225,5 @@ internal partial class SolveBlockCalculatableAggregate
             CalculatableMoved(movedCalc);
     }
 }
+
+
