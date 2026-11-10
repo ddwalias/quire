@@ -41,6 +41,10 @@ internal partial class SolverAggregate
     private string _rl;
     private readonly List<global::Quire.Calculation.Core.ICalculatable> _calculatableChildren;
 
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableRemoved;
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableMoved;
+
     public string DefinedRl { get; private set; }
     public string DefinedParams { get; private set; }
     private string SolverName { get; set; }

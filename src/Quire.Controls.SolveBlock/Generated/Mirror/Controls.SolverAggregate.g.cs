@@ -14,12 +14,6 @@ internal partial class SolverAggregate : global::Quire.Controls.SolveBlockCalcul
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> Children { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableRemoved;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableMoved;
-    [global::Quire.Mirror.MirrorStub]
     public void UpdateSolverRL() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static string GetSolvingAlgorithmRl(string algorithmString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
