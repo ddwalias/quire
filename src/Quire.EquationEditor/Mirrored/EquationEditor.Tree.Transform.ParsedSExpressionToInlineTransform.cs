@@ -2,6 +2,12 @@ namespace Quire.EquationEditor.Tree.Transform;
 
 public partial class ParsedSExpressionToInlineTransform
 {
+    private global::System.Collections.Generic.IList<global::System.Windows.Documents.Inline> a(
+        global::System.Collections.Generic.List<ParsedSExpression> parsed)
+    {
+        return parsed.ConvertAll<global::System.Windows.Documents.Inline>(c);
+    }
+
     private global::System.Windows.Documents.Inline c(ParsedSExpression parsed)
     {
         if (!parsed.IsValid)
