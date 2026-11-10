@@ -1389,4 +1389,18 @@ internal partial class VisualMathRegionNode
         child.Arrange(new Rect(new Point(RootPadding.Left, RootPadding.Top), child.DesiredSize));
         return finalSize;
     }
+
+    protected override Size MeasureStaticLayout(Size availableSize)
+    {
+        if (Children.Count == 0)
+        {
+            return new Size(0.0, 0.0);
+        }
+        var child = (FrameworkElement)Children[0];
+        child.Measure(WpfUtils.SizeInfinity);
+        Size desiredSize = child.DesiredSize;
+        desiredSize.Height += RootPadding.Top + RootPadding.Bottom;
+        desiredSize.Width += RootPadding.Left + RootPadding.Right;
+        return desiredSize;
+    }
 }

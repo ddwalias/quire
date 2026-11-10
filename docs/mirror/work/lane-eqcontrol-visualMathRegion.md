@@ -80,3 +80,9 @@ Not blocked by the listed reasons: no `LoadComponent`/XAML loads, no dynamic scr
 - Members: `MeasureResizableChildNode` (both resizable children under `resizeInProgress`), `ArrangeStaticLayout` (empty and single-child arrange).
 - Shapes: first candidates matched.
 - Release IL: PASS, 1725 checked (`.mirror-cache/release-il-e8e6775cdd7a/release-il.json`).
+
+## Batch 8: MeasureStaticLayout
+
+- Member: `MeasureStaticLayout` (empty case, child measure, padding added to desired height and width).
+- Shapes: the natural local-child form matched on the first candidate.
+- Release IL: PASS, 1726 checked (`.mirror-cache/release-il-a6a2ba60018a/release-il.json`).
