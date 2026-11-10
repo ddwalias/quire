@@ -60,6 +60,17 @@ public partial class SolveBlockControl
         }
     }
 
+    private void HookupEvents()
+    {
+        if (_sbModel != null)
+            _sbModel.ChildCalcErrorChanged += HandleChildCalcErrorChanged;
+    }
+
+    private void HandleChildCalcErrorChanged()
+    {
+        FirePropertyChanged(global::Quire.Calculation.Core.ErrorChangedEventArgs.GetArgs());
+    }
+
     public EngineResult[] EngineResults
     {
         get
