@@ -4,6 +4,11 @@ namespace Quire.Controls;
 
 internal partial class SolveBlockModel
 {
+    private const uint GuessValuesSectionIndex = 0;
+    private const uint ConstraintSectionIndex = 1;
+    private const uint SolverSectionIndex = 2;
+    private const int SectionCount = 3;
+
     public override object Clone()
     {
         var clone = new SolveBlockModel();
@@ -29,5 +34,54 @@ internal partial class SolveBlockModel
     {
         base.RemoveItems(items);
         UpdateWhichItemIsSolver();
+    }
+
+    public override int BlockSectionCount => SectionCount;
+
+    public override IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetBlockSectionItems(uint sectionIdx)
+    {
+        switch (sectionIdx)
+        {
+            case GuessValuesSectionIndex:
+                return GuessValueItems;
+            case ConstraintSectionIndex:
+                return ConstraintItems;
+            case SolverSectionIndex:
+                if (SolverItem != null)
+                    return new global::Quire.Controls.Core.IWhiteboardItem[] { SolverItem };
+                return null;
+            default:
+                throw new global::System.IndexOutOfRangeException("solve block contains 3 sections");
+        }
+    }
+
+    public override string GetBlockSectionName(uint sectionIdx)
+    {
+        // Release IL returns directly from each case rather than sharing a switch-expression return.
+        switch (sectionIdx)
+        {
+            case GuessValuesSectionIndex:
+                return (string)Resources["SolveBlock.GuessValues.Text.Key"];
+            case ConstraintSectionIndex:
+                return (string)Resources["SolveBlock.Constraints.Text.Key"];
+            case SolverSectionIndex:
+                return (string)Resources["SolveBlock.Solver.Text.Key"];
+            default:
+                throw new global::System.IndexOutOfRangeException("solve block contains 3 sections");
+        }
+    }
+
+    public override double GetBlockSectionMinHeightRatio(uint sectionIdx)
+    {
+        switch (sectionIdx)
+        {
+            case GuessValuesSectionIndex:
+            case ConstraintSectionIndex:
+                return 0.36;
+            case SolverSectionIndex:
+                return 0.18;
+            default:
+                throw new global::System.IndexOutOfRangeException("solve block contains 3 sections");
+        }
     }
 }

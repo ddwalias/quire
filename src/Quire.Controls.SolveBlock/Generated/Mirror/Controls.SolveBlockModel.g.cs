@@ -12,14 +12,6 @@ namespace Quire.Controls;
 internal partial class SolveBlockModel : global::Quire.Controls.Mathboard.AggregateMathboardModel, global::Quire.Controls.ISolveBlockModel, global::Quire.Controls.Mathboard.IAggregateMathboardModel, global::Quire.Controls.Mathboard.IMathboardModel, global::Quire.Controls.Whiteboard.IWhiteboardModel, global::System.ICloneable, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Controls.Mathboard.IVerticalWhiteboardSections
 {
     [global::Quire.Mirror.MirrorStub]
-    private const uint GuessValuesSectionIndex = 0u;
-    [global::Quire.Mirror.MirrorStub]
-    private const uint ConstraintSectionIndex = 1u;
-    [global::Quire.Mirror.MirrorStub]
-    private const uint SolverSectionIndex = 2u;
-    [global::Quire.Mirror.MirrorStub]
-    private const int SectionCount = 3;
-    [global::Quire.Mirror.MirrorStub]
     internal static string RlFormat;
     [global::Quire.Mirror.MirrorStub]
     internal static string RlOdeFormat;
@@ -52,8 +44,6 @@ internal partial class SolveBlockModel : global::Quire.Controls.Mathboard.Aggreg
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.ISolveBlockCalculatable> AllCalculatables { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public override int BlockSectionCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.ResourceDictionary Resources { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action ChildCalcErrorChanged;
@@ -63,12 +53,6 @@ internal partial class SolveBlockModel : global::Quire.Controls.Mathboard.Aggreg
     protected override void MoveItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => base.MoveItems(items);
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.IWhiteboardItem GetWhiteboardItemThatOwnsCalculatable(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetBlockSectionItems(uint sectionIdx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string GetBlockSectionName(uint sectionIdx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override double GetBlockSectionMinHeightRatio(uint sectionIdx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) => base.FireCalculatableAdded(calculatable);
     [global::Quire.Mirror.MirrorStub]
