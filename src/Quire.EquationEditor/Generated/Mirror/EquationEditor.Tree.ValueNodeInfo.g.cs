@@ -25,12 +25,6 @@ public abstract partial class ValueNodeInfo : global::Quire.EquationEditor.Tree.
     public object Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected abstract object bk();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual bool IsEquivalentTo(global::Quire.EquationEditor.Tree.INodeInfo other) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void MakeReadOnly() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void MakeEditable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.ValueNodeInfo+a, Ptc.EquationEditor")]
     private sealed partial class a_
