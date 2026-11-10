@@ -303,3 +303,10 @@
 - Members: private `PlottingPointsCount` and `FinalNumberOfDataPointsToRender` (null-guarded counts of the filter), `ForcedToDensityVisualization` (`ControlSettings.Instance.MinPointsForForceDensity`), `EngineResultForSerialization` (get with `CopyMinMaxAndUnitsResults`, private set), `RangeAxisModel` and `ResultAxisModel` (expression-bodied `_axes[0]`/`_axes[1]`), `NumberOfPointsInResult` and `ShouldNotCopyFullResults` (auto-properties), `IsCommitted` (override, expression-bodied). Hand-written: appended to `Mirrored/Controls.Plots.Model.TraceModel.cs` (adds `using Quire.Controls.Core;`); their stubs removed from the `.g.cs`.
 - Shapes: all nine matched first time.
 - Release IL: PASS — 591 checked, 591 exact, 0 failures.
+
+## Batch 44 — TraceModel style and discrete-axis properties
+
+- Members: `RestrictedToDensityPointsOrSolidLine` (get), `AreDensityPointsSupported` (expression-bodied, `PlotType != PlotType.Polar`), auto-properties `ImageRendererModel` and `PlotType` (private set), `Symbol`, `SymbolWeight`, `SymbolFrequency`, `LineWeight`, `Label`, and `XIsDiscrete`/`YIsDiscrete` (private set). Hand-written: appended to `Mirrored/Controls.Plots.Model.TraceModel.cs`; their top-level stubs removed from the `.g.cs`.
+- Left: `MinPositiveX`/`MinPositiveY` (lambda passed to `MinPlottingPointCoordinate`; the compiler-generated closure class and its ordinal need their own pass).
+- Shapes: all matched first time, 20 accessors counting getters and setters.
+- Release IL: PASS — 611 checked, 611 exact, 0 failures.

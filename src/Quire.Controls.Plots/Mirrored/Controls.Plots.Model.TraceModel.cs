@@ -710,4 +710,37 @@ internal partial class TraceModel
     public override bool IsCommitted => _isCommitted;
 
     public bool ShouldNotCopyFullResults { get; set; }
+
+    public bool RestrictedToDensityPointsOrSolidLine
+    {
+        get
+        {
+            int finalNumberOfDataPointsToRender = FinalNumberOfDataPointsToRender;
+            if (ControlSettings.Instance.MinPointsForDensity <= finalNumberOfDataPointsToRender)
+            {
+                return finalNumberOfDataPointsToRender < ControlSettings.Instance.MinPointsForForceDensity;
+            }
+            return false;
+        }
+    }
+
+    public bool AreDensityPointsSupported => PlotType != PlotType.Polar;
+
+    public ITraceImageRendererModel ImageRendererModel { get; private set; }
+
+    public PlotType PlotType { get; private set; }
+
+    public TraceSymbol Symbol { get; set; }
+
+    public double SymbolWeight { get; set; }
+
+    public double SymbolFrequency { get; set; }
+
+    public double LineWeight { get; set; }
+
+    public string Label { get; set; }
+
+    public bool XIsDiscrete { get; private set; }
+
+    public bool YIsDiscrete { get; private set; }
 }
