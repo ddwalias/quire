@@ -19,10 +19,6 @@ public static partial class ParsedSExpressionToComboBoxInputControlData
     private static bool a(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0, int A_1, string A_2, out global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool a(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0, int A_1, string A_2, out global::System.Collections.Generic.List<string> A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool a(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0, int A_1, out string A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool a(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0, int A_1, out int A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Transform.ParsedSExpressionToComboBoxInputControlData+a, Ptc.EquationEditor")]
     private static partial class a_
