@@ -140,3 +140,17 @@ ef Point alignmentPoint matched Mathcad local variable index [2].
   - VisualMatrixSuperscriptBinaryNode.GetNodeAtPoint: declaring both GeneralTransform locals before branching matched Mathcad local indexing.
   - VisualSuperscriptOutfixOperatorNode.GetNodeAtPoint: caching (LeftFence as Fence).ActualWidth into a local before comparison matched the call order.
 - Release IL: PASS, 1750 checked (.mirror-cache/release-il-9b6fc1cf3171/release-il.json).
+
+## Batch 2: ComboBox, Exponent, LinearBinaryOperator, BinaryWrapp and Placeholder editors
+
+- Members: 20 members across 5 types:
+  - VisualComboBoxControlEditor: 2 constructors ((VisualComboBoxControlNode, VisualMathRegionNode), (VisualComboBoxControlNode, FrameworkElement, VisualMathRegionNode)).
+  - VisualLinearBinaryOperatorNode<TOperator>: _operator field, .ctor().
+  - VisualBinaryWrappOperatorNodeEditor: _wrappingOperatorNode field, .ctor(), ShowOperatorHighlight, OnRender, OnOperatorSelectedChanged.
+  - VisualPlaceholderNodeEditor: _highlighter field, _caret field, .ctor(), MeasureOverride, ArrangeOverride.
+  - VisualExponentNode: VerticalAdjustProperty, PAD, .ctor(), .cctor(), MeasureOverride, ArrangeOverride, GetNodeAtPoint.
+- Shapes tried:
+  - VisualBinaryWrappOperatorNodeEditor.OnRender: idiomatic early guard if (!_showOperatorHighlight) return; matched Mathcad's brtrue.s + immediate ret.
+  - VisualExponentNode.GetNodeAtPoint: if (visualSymbolNode != null) { ... } else { ... } instead of ternary matched Mathcad's brfalse.s branching order.
+  - VisualExponentNode.MeasureOverride: pre-declaring double height; ahead of ref Point alignmentPoint matched local variable slot indices [2] and [3].
+- Release IL: PASS; 1780 checked (.mirror-cache/release-il-0c0d9bf16d0c/release-il.json).

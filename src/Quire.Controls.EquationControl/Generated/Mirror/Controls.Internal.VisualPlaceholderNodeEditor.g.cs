@@ -11,14 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualPlaceholderNodeEditor, Ptc.Controls.EquationControl")]
 internal partial class VisualPlaceholderNodeEditor : global::Quire.Controls.Internal.VisualMathNodeEditor<global::Quire.Controls.Internal.VisualPlaceholderNode>, global::Quire.EquationEditor.View.IVisualPlaceholderNodeEditor, global::Quire.EquationEditor.View.IVisualMathNodeEditor
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Internal.RubberBandHighlighter _highlighter;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Internal.Caret _caret;
-    [global::Quire.Mirror.MirrorStub]
-    public VisualPlaceholderNodeEditor(global::Quire.Controls.Internal.VisualMathNode node, global::Quire.Controls.Internal.VisualMathRegionNode region) : base(default(global::Quire.Controls.Internal.VisualMathNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
 }

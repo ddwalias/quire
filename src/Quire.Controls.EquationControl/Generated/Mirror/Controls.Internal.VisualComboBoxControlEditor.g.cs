@@ -11,8 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualComboBoxControlEditor, Ptc.Controls.EquationControl")]
 internal partial class VisualComboBoxControlEditor : global::Quire.Controls.Internal.VisualInputControlEditor, global::Quire.EquationEditor.View.IVisualComboBoxControlEditor, global::Quire.EquationEditor.View.IVisualInputControlEditor, global::Quire.EquationEditor.View.IVisualMathNodeEditor
 {
-    [global::Quire.Mirror.MirrorStub]
-    public VisualComboBoxControlEditor(global::Quire.Controls.Internal.VisualComboBoxControlNode editNode, global::Quire.Controls.Internal.VisualMathRegionNode region) : base(default(global::Quire.Controls.Internal.VisualInputControlNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualComboBoxControlEditor(global::Quire.Controls.Internal.VisualComboBoxControlNode editNode, global::System.Windows.FrameworkElement adornedElement, global::Quire.Controls.Internal.VisualMathRegionNode region) : base(default(global::Quire.Controls.Internal.VisualInputControlNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
 }

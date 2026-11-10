@@ -11,8 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualLinearBinaryOperatorNode`1, Ptc.Controls.EquationControl")]
 internal partial class VisualLinearBinaryOperatorNode<TOperator> : global::Quire.Controls.Internal.VisualLinearBinaryOperatorNode where TOperator : global::Quire.Controls.Internal.VisualSymbolNode, new()
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly TOperator _operator;
-    [global::Quire.Mirror.MirrorStub]
-    public VisualLinearBinaryOperatorNode() { }
 }
