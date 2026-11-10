@@ -273,3 +273,5 @@
 - Release IL: PASS, 1392 checked (`.mirror-cache/release-il-a284a1ff5ae5/release-il.json`).
 - Batch: `Controls.InputControls.EditableComboBoxVisualTable`: `OnPropertyChanged`, `GetCellDataType`, `EditModeLostFocus` (the focus-within branch is an `if`/`else`; Release IL runs the finish call only from the `else`), `AddOrRemoveLostFocusHandler`, `OnKeyDown`, `OnPreviewMoveUpByLine`, `OnPreviewMouseUp`, `GetStartEndCellIndices`. `IsArrowKeyWhileCellsAreSelected` stays a stub: the last `||` operand compiles to `bne.un` with a separate `ldc.i4.1` block, Release IL shares one block with `beq`.
 - Release IL: PASS, 1400 checked (`.mirror-cache/release-il-38591af0c63e/release-il.json`).
+- Batch: `Controls.InputControls.ComboBoxRow`: `RemoveCellAt`, `InsertCell`. `IsValid` (its `foreach` return uses the inverted `beq` layout) and `AllButFirstCell` (Release IL keeps a local that Roslyn drops in a return-only pattern) stay open.
+- Release IL: PASS, 1402 checked (`.mirror-cache/release-il-f493314c5bc2/release-il.json`).

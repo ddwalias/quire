@@ -19,8 +19,4 @@ public abstract partial class ComboBoxRow : global::Quire.Controls.InputControls
     protected ComboBoxRow(int rowIndex, int count) { }
     [global::Quire.Mirror.MirrorStub]
     public bool IsValid(int rowIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void RemoveCellAt(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void InsertCell(int index, global::Quire.Controls.InputControls.CellData cellData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
