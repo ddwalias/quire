@@ -39,15 +39,5 @@ public partial class ParsedSExpressionToInlineTransform
         public static global::System.Func<global::System.Windows.Documents.Inline> f;
         [global::Quire.Mirror.MirrorStub]
         public a_() { }
-        [global::Quire.Mirror.MirrorStub]
-        internal global::System.Windows.Documents.Inline e() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        internal global::System.Windows.Documents.Inline d() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        internal global::System.Windows.Documents.Inline c() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        internal global::System.Windows.Documents.Inline b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        internal global::System.Windows.Documents.Inline a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }
