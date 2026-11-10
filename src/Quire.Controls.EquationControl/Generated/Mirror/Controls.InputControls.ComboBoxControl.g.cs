@@ -40,8 +40,6 @@ public partial class ComboBoxControl : global::System.Windows.Controls.ComboBox,
     [global::Quire.Mirror.MirrorStub]
     public ComboBoxControl() { }
     [global::Quire.Mirror.MirrorStub]
-    private void OnCloseComboBoxDropDown(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnSelectionChanged(global::System.Windows.Controls.SelectionChangedEventArgs e) => base.OnSelectionChanged(e);
     [global::Quire.Mirror.MirrorStub]
     public void OpenEditingMode(global::Quire.Controls.InputControls.EditableComboBoxTableCellsFontFormats cellsFontFormats, global::Quire.Controls.Core.ExtendedFont operatorFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -51,8 +49,6 @@ public partial class ComboBoxControl : global::System.Windows.Controls.ComboBox,
     public void OnEditableComboBoxContentChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void SetSelectedIndex(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.InputControls.EditableComboBoxViewModel CreatedEditableViewModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnGotKeyboardFocus(global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => base.OnGotKeyboardFocus(e);
     [global::Quire.Mirror.MirrorStub]

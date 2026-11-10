@@ -38,8 +38,6 @@ public partial class EditableComboBoxTableBorder : global::System.Windows.Contro
     [global::Quire.Mirror.MirrorStub]
     public EditableComboBoxTableBorder(global::Quire.Controls.InputControls.EditableComboBoxVisualTable editableComboBoxView) { }
     [global::Quire.Mirror.MirrorStub]
-    public void Refresh(global::Quire.Controls.InputControls.EditableComboBoxTableCellsFontFormats cellsFontFormats, global::Quire.Controls.Core.ExtendedFont operatorFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OnDragDeltaResizeTable(object sender, global::System.Windows.Controls.Primitives.DragDeltaEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnMouseDown(e);

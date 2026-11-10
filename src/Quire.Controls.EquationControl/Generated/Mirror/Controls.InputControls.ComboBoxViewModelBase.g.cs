@@ -15,8 +15,6 @@ public abstract partial class ComboBoxViewModelBase : global::Quire.Controls.Cor
     protected global::Quire.Controls.InputControls.ComboBoxTableModel TableModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected ComboBoxViewModelBase(global::Quire.Controls.InputControls.ComboBoxTableModel tableModel) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.IComboBoxInputControlDataAdapter CreateDataAdapter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.ComboBoxViewModelBase+ComboBoxTableModelAdapter, Ptc.Controls.EquationControl")]
     private partial class ComboBoxTableModelAdapter : global::Quire.EquationEditor.Tree.IComboBoxInputControlDataAdapter

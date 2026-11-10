@@ -31,6 +31,4 @@ public partial class ComboBoxViewModel : global::Quire.Controls.InputControls.Co
     public void LoadFrom(global::Quire.EquationEditor.Tree.IComboBoxInputControlDataAdapter data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RefreshDataItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.InputControls.EditableComboBoxViewModel CreatedEditableViewModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

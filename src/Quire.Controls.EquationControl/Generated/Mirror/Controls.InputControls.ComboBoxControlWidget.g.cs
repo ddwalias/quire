@@ -22,10 +22,6 @@ public partial class ComboBoxControlWidget : global::Quire.Controls.Core.VisualA
     [global::Quire.Mirror.MirrorStub]
     public ComboBoxControlWidget(global::Quire.Controls.InputControls.ComboBoxControl comboBox, global::Quire.Controls.InputControls.EditableComboBoxTableCellsFontFormats cellsFontFormats, global::Quire.Controls.Core.ExtendedFont operatorFormat) : base(default(global::System.Windows.UIElement)) { }
     [global::Quire.Mirror.MirrorStub]
-    private void OnEditableComboBoxContentChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Refresh(global::Quire.Controls.InputControls.EditableComboBoxTableCellsFontFormats cellsFontFormats, global::Quire.Controls.Core.ExtendedFont operatorFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void OpenEditingMode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void CloseEditingMode(bool shouldKeepFocus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
