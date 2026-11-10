@@ -2,6 +2,21 @@ namespace Quire.Controls;
 
 internal partial class SolveBlockCalculatableAggregate
 {
+    private static readonly int[] SymbolicEvalIndices = new int[2] { 1, 2 };
+    private const int DefineSymEvalAggregateCount = 3;
+
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableRemoved;
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableMoved;
+
+    public SolveBlockCalculatableAggregate(
+        global::Quire.Calculation.Core.ICalculatableAggregate wrappedCalculatableAggregate)
+        : base(wrappedCalculatableAggregate)
+    {
+        UpdateEquationTypeOfAggregateCalculatable(wrappedCalculatableAggregate);
+        HookupAggregateContainerEvents(wrappedCalculatableAggregate);
+    }
+
     private static string GetSymbolicEvalExpression(global::System.Text.RegularExpressions.Match symbolicEvalMatch)
     {
         if (symbolicEvalMatch == null || !symbolicEvalMatch.Success)

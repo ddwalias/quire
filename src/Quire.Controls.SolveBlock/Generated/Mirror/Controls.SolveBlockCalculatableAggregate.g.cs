@@ -12,18 +12,6 @@ namespace Quire.Controls;
 internal partial class SolveBlockCalculatableAggregate : global::Quire.Controls.SolveBlockCalculatable, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICanContainSymbolicCalculation
 {
     [global::Quire.Mirror.MirrorStub]
-    private static readonly int[] SymbolicEvalIndices;
-    [global::Quire.Mirror.MirrorStub]
-    private const int DefineSymEvalAggregateCount = 3;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableRemoved;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableMoved;
-    [global::Quire.Mirror.MirrorStub]
-    public SolveBlockCalculatableAggregate(global::Quire.Calculation.Core.ICalculatableAggregate wrappedCalculatableAggregate) : base(default(global::Quire.Calculation.Core.ICalculatable)) { }
-    [global::Quire.Mirror.MirrorStub]
     internal static string GetDefinedVariable(global::System.Text.RegularExpressions.Match topDefineMatch) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static string ComposeRlForSymEval(global::System.Collections.Generic.IList<string> aggregateRl, int symbolicEvalIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
