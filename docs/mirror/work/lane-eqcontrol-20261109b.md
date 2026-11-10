@@ -211,3 +211,5 @@
 - Batch: `Controls.Internal.ConjugateLayoutManager` and `Controls.Internal.VectorizationLayoutManager`: the constant, `OperatorSymbolRect`, `ConjugatedExprRect` / `VectorizedExprRect`, the constructor (descriptor count checks), and `Arrange`.
 - Shapes tried: `FindClosestChild` (both managers) has the same instructions as Mathcad but `.maxstack` 2 versus Mathcad's 3, and `.maxstack` is part of the exact comparison. No source form changes that, so the method stays the generated pass-through stub.
 - Release IL: PASS, 1042 checked (`.mirror-cache/release-il-5769f4177c2b/release-il.json`). Earlier candidates: FAIL at the `FindClosestChild` maxstack.
+- Batch: `Controls.InputControls.InputControlEditorViewModel.ApplyScript`, `ShowUserFriendlyError`, and the `SelectedScriptingLanguage` property (getter and setter).
+- Release IL: PASS, 1046 checked (`.mirror-cache/release-il-563195f659b1/release-il.json`).

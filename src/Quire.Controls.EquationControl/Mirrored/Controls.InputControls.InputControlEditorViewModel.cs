@@ -73,6 +73,43 @@ public partial class InputControlEditorViewModel
         }
     }
 
+    public InputControlScriptingLanguageTypes SelectedScriptingLanguage
+    {
+        get => _selectedScriptingLanguage;
+        set
+        {
+            cachedInputScript[_selectedScriptingLanguage] = InputScript;
+            _selectedScriptingLanguage = value;
+            if (cachedInputScript.ContainsKey(_selectedScriptingLanguage))
+            {
+                InputScript = (string)cachedInputScript[_selectedScriptingLanguage];
+            }
+            else
+            {
+                InputScript = ((IInputControlEditorScriptableModel)_model).DefaultScript((InputControlEngineTypes)_selectedScriptingLanguage);
+            }
+
+            if (_selectedScriptingLanguage == InputControlScriptingLanguageTypes.VBScript && !IsInfoMsgHide)
+            {
+                InfoMessageText = _errorsDictionary[InputControlEditorErrors.VBScriptDeprecated].ToString();
+                InfoMessageVisibility = Visibility.Visible;
+            }
+            else
+            {
+                InfoMessageVisibility = Visibility.Collapsed;
+            }
+
+            if (_selectedScriptingLanguage == InputControlScriptingLanguageTypes.Python && !InputControlEnginePython.IsPythonPathSet)
+            {
+                HandlePythonIsUnavailable();
+                return;
+            }
+
+            ScriptingEditorEnabled = true;
+            IsPythonIsUnavailable = true;
+        }
+    }
+
     public bool CanUndo
     {
         get => _canUndo;
@@ -270,5 +307,63 @@ public partial class InputControlEditorViewModel
                 scriptable.Script = _scriptLastKnownGood;
             }
         }
+    }
+
+    public virtual void ApplyScript()
+    {
+        _model.EngineType = (InputControlEngineTypes)_selectedScriptingLanguage;
+        bool applied = ((IInputControlEditorScriptableModel)_model).Apply(_scriptEditor, out _, out string error, null, null);
+        if (error != null)
+        {
+            ValidationError = ShowUserFriendlyError(error);
+        }
+        else
+        {
+            if (ValidationError != null)
+            {
+                ValidationError = null;
+            }
+
+            _scriptLastKnownGood = _scriptEditor;
+            _engineTypeLastKnownGood = _model.EngineType;
+        }
+
+        if (applied)
+        {
+            IsApplyEnabled = false;
+        }
+    }
+
+    private string ShowUserFriendlyError(string exception)
+    {
+        if (!exception.IsNullOrEmpty())
+        {
+            if (exception.Contains("Object required: 'Worksheet'"))
+            {
+                return FullExceptionErrorFormat(exception, _errorsDictionary[InputControlEditorErrors.WorksheetNotSupported].ToString());
+            }
+
+            if (exception.Contains("Type mismatch: 'Inputs'") || exception.Contains("Object required: 'Inputs(...)'"))
+            {
+                return FullExceptionErrorFormat(exception, _errorsDictionary[InputControlEditorErrors.InputsMissing].ToString());
+            }
+
+            if (exception.Contains("is null or not an object") || exception.Contains("'NoneType' object is not"))
+            {
+                return FullExceptionErrorFormat(exception, _errorsDictionary[InputControlEditorErrors.ObjectMissing].ToString());
+            }
+
+            if (exception.Contains("Subscript out of range: '[number"))
+            {
+                return FullExceptionErrorFormat(exception, _errorsDictionary[InputControlEditorErrors.OutputsSizeNotMatch].ToString());
+            }
+
+            if (exception.Contains("Type mismatch: 'UBound'"))
+            {
+                return FullExceptionErrorFormat(exception, _errorsDictionary[InputControlEditorErrors.InputsUBound].ToString());
+            }
+        }
+
+        return exception;
     }
 }

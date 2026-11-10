@@ -50,13 +50,7 @@ public partial class InputControlEditorViewModel : global::Quire.Controls.Core.V
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Collections.Hashtable cachedInputScript;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.InputControls.InputControlScriptingLanguageTypes SelectedScriptingLanguage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public InputControlEditorViewModel(global::Quire.Controls.InputControls.IInputControlEditorModel model) : base(default(global::System.Windows.ResourceDictionary)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void ApplyScript() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string ShowUserFriendlyError(string exception) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string CapitalizeFirstLetter(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
