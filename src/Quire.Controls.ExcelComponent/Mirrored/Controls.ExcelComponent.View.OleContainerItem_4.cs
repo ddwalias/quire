@@ -57,4 +57,15 @@ public abstract partial class OleContainerItem<TViewModel, TModel, TIPublicModel
             return value;
         }
     }
+
+    public void Activate(bool isActive)
+    {
+        DebugTools.FailAssertion("Should not be called.");
+    }
+
+    public string GetHelpContext()
+    {
+        DebugTools.FailAssertion("OleContainer help context shouldn't be exposed.");
+        return null;
+    }
 }

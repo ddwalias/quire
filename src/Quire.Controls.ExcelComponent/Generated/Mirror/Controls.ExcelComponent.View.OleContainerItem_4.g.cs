@@ -30,8 +30,6 @@ public abstract partial class OleContainerItem<TViewModel, TModel, TIPublicModel
     [global::Quire.Mirror.MirrorStub]
     protected OleContainerItem(TViewModel viewModel, global::System.Windows.ResourceDictionary dictionary) : base(default(TViewModel), default(global::System.Windows.ResourceDictionary)) { }
     [global::Quire.Mirror.MirrorStub]
-    public void Activate(bool isActive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void SimulateMouseClick(global::System.Windows.Point location, int numberOfClicks) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnViewModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => base.OnViewModelPropertyChanged(sender, args);
@@ -41,6 +39,4 @@ public abstract partial class OleContainerItem<TViewModel, TModel, TIPublicModel
     protected global::System.Windows.Size ArrangeOverrideAux(global::System.Windows.Size arrangeBounds, bool updateOleSizeIfNeeded) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRenderSizeChanged(global::System.Windows.SizeChangedInfo sizeInfo) => base.OnRenderSizeChanged(sizeInfo);
-    [global::Quire.Mirror.MirrorStub]
-    public string GetHelpContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
