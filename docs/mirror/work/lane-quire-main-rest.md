@@ -329,3 +329,6 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
   - Gate: PASS, 310 checked. Report: `.mirror-cache/release-il-fe748ebc2197/release-il.json`.
   - Shape: `Order` setter is `if (_order == value) return;` then store and notify (the `!=` block form branches the other way).
   - Blocked, stub kept: `WindowTabTupleData.Header`. Mathcad's `Wnd` is `DockWindow` and its `Header` getter is a DockWindow member; the type-map maps `Wnd` to `AvalonDock.Layout.LayoutAnchorable`, which has no `Header` (`Title`/`Content` differ). Needs a type-map decision.
+- **Batch 4 (constants and converters, U):** `IOWindowConstants` (three consts, `AliasPath`, `IdNamePath` initializers), `PropertyNames` (const, `CurrentDirectionPath`), `TextDecorationCollectionToBooleanConverter` (Convert, ConvertBack), `FlowDocumentFamilyConverter` (Convert, ConvertBack).
+  - Gate: PASS, 329 checked. Report: `.mirror-cache/release-il-0143022a3562/release-il.json`.
+  - Shape: `FlowDocumentFamilyConverter.Convert` joins the pack-URI path with an explicit `string.Concat`; a literal `+` literal is folded by the compiler, and Mathcad's IL keeps the call. Keeps the Mathcad literal `Ptc.Controls.Core;component/...` (the holding assembly is Quire, so it is not `<self>`).

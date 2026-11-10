@@ -11,14 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.IOWindowConstants, MathcadPrime")]
 public static partial class IOWindowConstants
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string Alias = "Alias";
-    [global::Quire.Mirror.MirrorStub]
-    public const string IdName = "IdName";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Region = "Region";
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.PropertyPath AliasPath;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.PropertyPath IdNamePath;
 }

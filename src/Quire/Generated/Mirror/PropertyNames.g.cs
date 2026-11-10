@@ -11,8 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.PropertyNames, MathcadPrime")]
 public static partial class PropertyNames
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string CurrentDirection = "CurrentDirection";
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.PropertyPath CurrentDirectionPath;
 }
