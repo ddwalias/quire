@@ -18,24 +18,12 @@ public partial class ProofingLanguageDropDownSelector : global::Quire.DropDownSe
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.ProofingLanguageDropDownSelector.CultureItemsManager _itemsManager;
     [global::Quire.Mirror.MirrorStub]
-    public override void BeginInit() => base.BeginInit();
-    [global::Quire.Mirror.MirrorStub]
     protected override void EnsureItemHeader(object newValue) => base.EnsureItemHeader(newValue);
-    [global::Quire.Mirror.MirrorStub]
-    public ProofingLanguageDropDownSelector() { }
 
     [global::Quire.Mirror.MirrorOf("Spirit.ProofingLanguageDropDownSelector+CultureItemsManager, MathcadPrime")]
     private partial class CultureItemsManager
     {
         [global::Quire.Mirror.MirrorStub]
-        private static readonly global::System.Collections.Generic.Comparer<global::System.Globalization.CultureInfo> CulturesComparer;
-        [global::Quire.Mirror.MirrorStub]
         private readonly global::System.Collections.Generic.List<global::System.Globalization.CultureInfo> _sortedCultures;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Wpf.ObservableRangeCollection<global::Quire.ProofingLanguageDataItem> CulturesDataItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public CultureItemsManager() { }
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.ProofingLanguageDataItem Insert(global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }
