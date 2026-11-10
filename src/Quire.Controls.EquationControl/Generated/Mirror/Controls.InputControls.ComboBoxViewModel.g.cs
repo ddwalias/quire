@@ -18,13 +18,7 @@ public partial class ComboBoxViewModel : global::Quire.Controls.InputControls.Co
     [global::Quire.Mirror.MirrorStub]
     private bool _refreshInProgress;
     [global::Quire.Mirror.MirrorStub]
-    public string TableTitle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.INameValuesRow> DataItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public int SelectedRowIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool RefreshInProgress { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ComboBoxViewModel() : base(default(global::Quire.Controls.InputControls.ComboBoxTableModel)) { }
     [global::Quire.Mirror.MirrorStub]

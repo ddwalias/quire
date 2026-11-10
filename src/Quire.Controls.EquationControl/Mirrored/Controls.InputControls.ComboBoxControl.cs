@@ -13,4 +13,23 @@ public partial class ComboBoxControl
     {
         return _viewModel.CreatedEditableViewModel();
     }
+
+    protected override void OnSelectionChanged(System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+        e.Handled = true;
+        base.OnSelectionChanged(e);
+    }
+
+    public void OnEditableComboBoxContentChanged()
+    {
+        RaiseEvent(new RoutedEventArgs(ContentChangedEvent));
+        if (!IsEditModeActive)
+        {
+            RefreshItems(false);
+        }
+    }
+
+    public Quire.Controls.InputControls.ComboBoxViewModel ViewModel => _viewModel;
+
+    public Quire.EquationEditor.View.IEditableComboBoxVisualTable EditableComboBoxVisualTable => _comboBoxWidget.EditableComboBoxVisualTable;
 }

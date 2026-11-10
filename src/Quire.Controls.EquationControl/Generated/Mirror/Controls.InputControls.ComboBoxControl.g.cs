@@ -28,25 +28,17 @@ public partial class ComboBoxControl : global::System.Windows.Controls.ComboBox,
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.InputControls.ComboBoxViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public string SelectedItemValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsEditModeActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IEditableComboBoxVisualTable EditableComboBoxVisualTable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private bool IsChangeSelectionFunctionalityEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ComboBoxControl() { }
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnSelectionChanged(global::System.Windows.Controls.SelectionChangedEventArgs e) => base.OnSelectionChanged(e);
-    [global::Quire.Mirror.MirrorStub]
     public void OpenEditingMode(global::Quire.Controls.InputControls.EditableComboBoxTableCellsFontFormats cellsFontFormats, global::Quire.Controls.Core.ExtendedFont operatorFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void EditingCompleted(bool shouldKeepFocus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void OnEditableComboBoxContentChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void SetSelectedIndex(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

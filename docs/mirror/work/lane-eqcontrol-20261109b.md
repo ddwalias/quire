@@ -259,3 +259,5 @@
 - Release IL: PASS, 1343 checked (`.mirror-cache/release-il-262b60b6bff4/release-il.json`).
 - Batch: `Controls.SpecTableControl`: `HandleCalcIsDisabledChanged`, the font and colour commands (`ExecuteClearMathFormat`, `ExecuteIncreaseFontSize`, `ExecuteDecreaseFontSize`, `ExecuteChangeFontColor`, `ExecuteChangeHighlightColor`), `DefinitionListToSpecTable` (local typed as `ISpecTableModel`; the partial starts with `#nullable disable`).
 - Release IL: PASS, 1350 checked (`.mirror-cache/release-il-3537ea187231/release-il.json`).
+- Batch: `Controls.InputControls.ComboBoxControl`: `OnSelectionChanged` (override), `OnEditableComboBoxContentChanged` (raises the event, then refreshes when edit mode is off), properties `ViewModel`, `EditableComboBoxVisualTable`. `Controls.InputControls.ComboBoxViewModel`: properties `TableTitle`, `DataItems`, `RefreshInProgress` (private setters).
+- Release IL: PASS, 1359 checked (`.mirror-cache/release-il-a4d73a80d28b/release-il.json`).
