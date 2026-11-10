@@ -235,3 +235,5 @@
 - Release IL: PASS, 1198 checked (`.mirror-cache/release-il-eb4e5e71d693/release-il.json`).
 - Batch: `Controls.InputControls.ComboBoxTableModel`: `CanRemoveRow`, `CanRemoveColumn` (the lower bound is written `0 < index`: `bge`, not `index > 0`), properties `Rows`, `Columns` (private setter with `DevAssert(value > 0)`), `AllRows`, `UnitsForValueColumns`. `TableTitle`, `SelectedNameValuesRowIndex` and the cell-range members stay open.
 - Release IL: PASS, 1205 checked (`.mirror-cache/release-il-84b396637492/release-il.json`).
+- Batch: `Controls.Internal.VisualFactory` straight-line factories (37 `Create*Node` / `Create*Node(...)` methods that only construct a node, with the region field and parameters forwarded). `CreateProgramNode` and `CreateBodyNode` pass `true`/`false` to the `bool` constructor parameter.
+- Release IL: PASS, 1242 checked (`.mirror-cache/release-il-3d6855d990b0/release-il.json`).
