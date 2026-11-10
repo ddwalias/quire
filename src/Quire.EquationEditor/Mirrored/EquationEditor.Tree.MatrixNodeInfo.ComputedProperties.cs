@@ -2,6 +2,20 @@ namespace Quire.EquationEditor.Tree;
 
 public partial class MatrixNodeInfo
 {
+    public bool IsResized
+    {
+        get
+        {
+            // Mathcad branches to the true return when the offset differs from zero.
+            if (!(ViewportOffset != new TableCoordinate(0, 0)))
+            {
+                return ViewportSize != FullSize;
+            }
+
+            return true;
+        }
+    }
+
     public TableSize Remainder
     {
         get
