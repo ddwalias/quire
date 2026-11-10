@@ -652,6 +652,27 @@ class CheckTests(unittest.TestCase):
         self.assertNotEqual(own, killed)
         self.assertTrue(killed.is_dir())
 
+    def test_unused_entries_are_evicted_and_a_hit_keeps_its_entries(self):
+        self.assertFalse(self.check()['base_cached'])
+        stored = sorted(self.cache.glob('*.json'))
+        self.assertTrue(stored)
+        expired = time.time() - release_il.CACHE_TTL - 60
+        nearly = time.time() - release_il.CACHE_TTL + 600
+        for name in ('old.json', 'killed.tmp'):
+            (self.cache / name).write_text('{}')
+            os.utime(self.cache / name, (expired, expired))
+        (self.cache / 'fresh.json').write_text('{}')
+        for entry in stored:
+            os.utime(entry, (nearly, nearly))
+        self.assertTrue(self.check()['base_cached'])
+        names = {p.name for p in self.cache.iterdir()}
+        self.assertNotIn('old.json', names)
+        self.assertNotIn('killed.tmp', names)
+        self.assertIn('fresh.json', names)
+        self.assertIn('judges', names)
+        for entry in stored:  # read by the hit, so refreshed rather than expiring
+            self.assertGreater(entry.stat().st_mtime, nearly + 60)
+
     def test_a_failed_scan_keeps_its_inventory_and_reports_errors(self):
         mock.patch.stopall()
         work = self.repo.root / 'work'

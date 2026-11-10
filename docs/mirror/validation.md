@@ -42,7 +42,8 @@ claiming one binding), which the candidate scan still reports; and a lane's own 
 checked-out bytes (CRLF under `core.autocrlf`), while the gate uses committed bytes. The merge gate
 stores each committed candidate it passes (in the main checkout's cache, shared by every lane), so the
 next lane's base scan is usually a cache hit. Uncommitted candidates are never cached; a corrupt or
-locked entry is rebuilt. Delete the folder to force a rebuild. Each run's work directory (base
+locked entry is rebuilt. Delete the folder to force a rebuild. Each run deletes entries no run has
+read or written for three days (a hit refreshes an entry). Each run's work directory (base
 checkout and both builds) in `.mirror-cache/gate-work/` is moved to `gate-work/.trash/` when the run
 ends and deleted by a background process; a killed run's directory goes after 12 hours. Scope diffs list both sides of a
 renamed file, so moving a file out of a project affects that project too.

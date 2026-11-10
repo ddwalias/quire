@@ -604,12 +604,32 @@ def store_slices(cache, keys, data):
 
 
 def cached_inventory(cache, key):
-    """A stored inventory, or None when it is missing or unreadable (the caller then builds)."""
+    """A stored inventory, or None when it is missing or unreadable (the caller then builds). A read refreshes the
+    entry's time, so evict only removes entries no run has used for CACHE_TTL."""
+    path = cache / f'{key}.json'
     try:
-        data = json.loads((cache / f'{key}.json').read_text(encoding='utf-8'))
+        data = json.loads(path.read_text(encoding='utf-8'))
     except (OSError, ValueError):
         return None
+    with contextlib.suppress(OSError):
+        os.utime(path)
     return data if isinstance(data, dict) and isinstance(data.get('methods'), list) and not data.get('errors') else None
+
+
+# Entries are content-keyed and never superseded in place, so unused ones only take space (several MB per project).
+CACHE_TTL = 3 * 24 * 3600
+
+
+def evict(cache):
+    """Delete stored inventories (and temporaries a killed run left) unused for CACHE_TTL. Best effort: an entry another
+    run has open stays (Windows refuses to delete it) and goes next time; one deleted under a reader is a miss."""
+    now = time.time()
+    with contextlib.suppress(OSError):
+        for entry in os.scandir(cache):
+            with contextlib.suppress(OSError):
+                if entry.name.endswith(('.json', '.tmp')) and entry.is_file() \
+                        and now - entry.stat().st_mtime > CACHE_TTL:
+                    os.unlink(entry.path)
 
 
 def store_inventory(cache, key, data):
@@ -635,6 +655,7 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
                              'candidate_build', 'candidate_scan', 'compare', 'total'), 0.0)
     install = Path(install or mathcad_install())
     cache = cache or CACHE
+    evict(cache)
     results.mkdir(parents=True, exist_ok=False)
     log = results / 'build.log'
     base = git('rev-parse', '--verify', f'{base}^{{commit}}', cwd=root)
