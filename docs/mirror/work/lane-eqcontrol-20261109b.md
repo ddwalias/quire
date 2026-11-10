@@ -306,3 +306,6 @@
 - Batch: `Controls.InputControls.InputControlEditorViewModel.CapitalizeFirstLetter` (added to the existing `Mirrored/Controls.InputControls.InputControlEditorViewModel.cs` partial).
 - Shapes tried: `if (!IsNullOrEmpty) return ToUpper(v[0]) + Substring(1); return value;` matched on the first candidate.
 - Release IL: PASS, 1627 checked (`.mirror-cache/release-il-962c42e5662b/release-il.json`).
+- Batch: `Controls.InputControls.InputControlEditor`: `OnCancelButtonClick`, `ButtonUndo_OnClick`, `ButtonRedo_OnClick`, `TbScript_OnTextChanged`, `TbScript_OnPreviewKeyDown`, `InfoMsgHide` (new `Mirrored/Controls.InputControls.InputControlEditor.cs`). `InitializeComponent` and `Connect` (the XAML `IComponentConnector` switch) stay generated stubs, so the LoadComponent wiring is untouched; the remaining handlers (`OnOkButtonClick`, `OnApplyButtonClick`, font size, file open/save, `OnClosing`) and the constructor stay open.
+- Shapes tried: `DialogResult = false`, the `CanRedo` guard and the discarded `Undo()` result matched on the first candidate.
+- Release IL: PASS, 1633 checked (`.mirror-cache/release-il-0f8da626c74e/release-il.json`).
