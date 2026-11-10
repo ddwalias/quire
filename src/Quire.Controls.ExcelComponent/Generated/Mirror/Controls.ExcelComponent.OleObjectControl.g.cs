@@ -76,10 +76,6 @@ public partial class OleObjectControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     private void ExecutedToggleOleObjectAutoResize(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void ExecutedOleObjectResetSize(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ExecutedUpdateOleObjectLink(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnGotFocus(global::System.Windows.RoutedEventArgs e) => base.OnGotFocus(e);
     [global::Quire.Mirror.MirrorStub]
     public void Activate(bool isActive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

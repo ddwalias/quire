@@ -134,4 +134,14 @@ public partial class OleObjectControl
     {
         e.CanExecute = CanToggleAutoResize;
     }
+
+    private void ExecutedOleObjectResetSize(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        View.ViewModel.ExecutedOleResetSize();
+    }
+
+    private void ExecutedUpdateOleObjectLink(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        View.ViewModel.UpdateLink();
+    }
 }

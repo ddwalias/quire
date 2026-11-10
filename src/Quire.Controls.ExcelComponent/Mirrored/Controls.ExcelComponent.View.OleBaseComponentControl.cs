@@ -64,4 +64,14 @@ public abstract partial class OleBaseComponentControl
     {
         obj.SetValue(AttachedProperties.PreviousLocationLeftProperty, args.NewValue);
     }
+
+    public void UpdateAllErrors()
+    {
+        _oleBaseModel.UpdateAllErrors();
+    }
+
+    private void FireCalcErrorChanged()
+    {
+        FirePropertyChanged(global::Quire.Calculation.Core.ErrorChangedEventArgs.GetArgs());
+    }
 }
