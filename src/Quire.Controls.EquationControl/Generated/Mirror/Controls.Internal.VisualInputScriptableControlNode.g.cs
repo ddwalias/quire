@@ -29,8 +29,4 @@ internal partial class VisualInputScriptableControlNode : global::Quire.Controls
     public VisualInputScriptableControlNode() { }
     [global::Quire.Mirror.MirrorStub]
     public VisualInputScriptableControlNode(string mathNodeName, global::Quire.EquationEditor.Tree.MathNode mathNode, global::Quire.Controls.Internal.VisualMathRegionNode region) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

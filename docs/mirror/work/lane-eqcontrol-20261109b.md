@@ -171,3 +171,6 @@
 - Batch: `Controls.InputControls.VisualInputControlFactory` (`CreateVisualInputControl`, `CreateInputControlEditor`).
 - Shapes tried: a two-label string `switch` on the node name FAILED as an if-chain (Mathcad compares both names before the bodies); the switch matched. The enum switches use Roslyn's `value - 1` table layout; section order follows the IL block order. The node contract exposes `InputControlType` where Mathcad calls `InputControl`; that name mapping resolved in the gate.
 - Release IL: PASS, 899 checked (`.mirror-cache/release-il-4ff7edb6c7a7/release-il.json`). Earlier candidate: FAIL at `17022801454e`.
+- Batch: `Controls.Internal.VisualInputScriptableControlNode` (`InitializeComponent`, `IComponentConnector.Connect` with the five-case switch on the connection id).
+- Shapes tried: the switch with `return` in each section matched on the first candidate. This adds the XAML URI `/Quire.Controls.EquationControl;component/internal/visualinputscriptablecontrolnode.xaml`, which is not in the repository.
+- Release IL: PASS, 901 checked (`.mirror-cache/release-il-97c4244ecb0a/release-il.json`).
