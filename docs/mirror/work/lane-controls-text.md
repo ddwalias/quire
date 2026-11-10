@@ -792,3 +792,8 @@ Remaining stub declarations in the lane: 134 (72 plain IL, 20 closure ordinal be
 - `FindReplaceRichTextBox.HandlePaste`: the clipboard reference is duplicated and kept on the stack across selection and caret statements.
 - `RichTextBase.GetRangeIfMatch`: a computed `TextPointer` is duplicated into both the `TextRange` constructor and the second offset call (no local).
 - `RichTextBase.ConvertSExpressionAndPasteText`, `ParseFormattedTextToTextSegments`: stack-held values across statements (see batch 106).
+
+## Rejected in this run (no member landed)
+
+- `RichTextBase.ContextMenuOpened` (static): the `foreach` over the non-generic `Enum.GetValues(...)` array matches except for the local slots. Roslyn allocates the iteration variable before the hidden enumerator (key in slot 2, enumerator in slot 3), while Mathcad keeps the enumerator in slot 2 and the key in slot 3. Reverted.
+- Still not attempted (complex IL, not yet analysed): `RichTextBase.ReplaceTextInHyperlink`, `HandleReplace`, `AddBlockedSelectDirectionForNextElement`, `RichTextBase.OnPreviewBackspace`, `RichTextWithEmbeddedItem.RequestNavigateHandler`, `EditLinkUndoableCommand`, `InlayXamlWithEmbeddedItems`, `RichTextBase.GetTextBoundary` (3-argument overload: instance method with a nested boundary loop; the 4-argument static overload uses `Enum.HasFlag` with boxing).
