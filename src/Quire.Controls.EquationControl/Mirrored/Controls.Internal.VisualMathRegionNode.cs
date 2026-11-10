@@ -846,4 +846,51 @@ internal partial class VisualMathRegionNode
     {
         InsertInputControl?.Invoke(inputControlType);
     }
+
+    public void ClearKeyStrokesCache()
+    {
+        _previouseKeys = string.Empty;
+    }
+
+    public void UseDefaultGestures()
+    {
+        _activeGestureManager = _defaultGestureManager;
+    }
+
+    public void DisableGestures()
+    {
+        _activeGestureManager = _emptyGestureManager;
+    }
+
+    public void UseGesturesForLimitSideNode()
+    {
+        _activeGestureManager = _limitSideGestureManager;
+    }
+
+    public void RemoveError()
+    {
+        ErrorMessage = null;
+        ErrorHighlighter = null;
+    }
+
+    public void GetContent(System.IO.Stream stream)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void FireCanInsertFunction(object sender, System.Windows.Input.CanExecuteRoutedEventArgs eArgs)
+    {
+        bool canExecute = false;
+        CanInsertFunction?.Invoke(ref canExecute);
+
+        eArgs.CanExecute = canExecute;
+    }
+
+    public void FireSetIsReplacingPreviouseOperator(bool isReplacingPreviouseOperator)
+    {
+        if (SetIsReplacingPreviouseOperator != null)
+        {
+            SetIsReplacingPreviouseOperator.Invoke(isReplacingPreviouseOperator);
+        }
+    }
 }

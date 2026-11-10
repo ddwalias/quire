@@ -310,13 +310,9 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     private bool IsTextRegionEnabled(global::Quire.Controls.EquationControl equationControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void FireSetIsReplacingPreviouseOperator(bool isReplacingPreviouseOperator) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void FireSetIsReplacingPreviouseOperator(bool isReplacingPreviouseOperator, out bool success) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void FireCanInsertInputControl(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs canExecuteRoutedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void FireCanInsertFunction(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void FireInsertFunction(global::Quire.EquationEditor.Tree.FormattedString funcName, int argsCount, global::System.Nullable<global::Quire.Controls.Core.IdLabels> label) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -342,8 +338,6 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     public void FireShowRegionHistory(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void GetContent(global::System.IO.Stream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OnRootNodeChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetError(global::Quire.Calculation.Core.IEngineError error, global::Quire.EquationEditor.View.IVisualMathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -351,8 +345,6 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     private static void HandleWarningDisplayFilterChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetError(global::Quire.Calculation.Core.IEngineError error, global::System.Collections.Generic.IList<global::Quire.EquationEditor.View.IVisualMathNode> nodes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RemoveError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RemoveWarnings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -374,15 +366,7 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     public bool FireCanPerformReplace(global::Quire.Controls.Core.FindReplaceQuery findReplaceQuery) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void ClearKeyStrokesCache() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.ScaleTransform GetTransformBasedOnNumericNodeHeight(double desiredHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UseDefaultGestures() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void DisableGestures() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UseGesturesForLimitSideNode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void SimulateMouseClick(global::System.Windows.Point location, int numberOfClicks) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
