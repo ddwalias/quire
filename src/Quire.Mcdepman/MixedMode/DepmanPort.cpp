@@ -1,6 +1,7 @@
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <sdkddkver.h>
+#include "DepmanContracts.h"
 
 namespace Quire { namespace depman {
 
@@ -8,6 +9,7 @@ namespace Quire { namespace depman {
     public interface class IDepman : System::IDisposable
     {
         void AddNodeCallback(Quire::utl_mgd::Function^ f);
+        void AddNodeCallback(DepNodeCallback^ c);
         void AddBusyCallback(Quire::utl_mgd::Function^ f);
         void AddBusyCallback(Quire::Engine::BooleanCallback^ b);
         void RemoveBusyCallback(Quire::Engine::BooleanCallback^ b);
@@ -15,6 +17,14 @@ namespace Quire { namespace depman {
         void AddUpToDateCallback(Quire::Engine::BooleanCallback^ b);
         void RemoveUpToDateCallback(Quire::Engine::BooleanCallback^ b);
         Quire::Mcd::RuntimeOptions^ GetRuntimeOptions();
+        long AddAfter(long h, Scope^ s, Action^ a, System::Collections::ICollection^ static_deps, int priority, long client_handle);
+        long AddAfterWithDef(long h, Scope^ s, Action^ a, System::Collections::ICollection^ static_deps, System::Collections::ICollection^ static_defs, int priority, long client_handle);
+        long AddBefore(long h, Scope^ s, Action^ a, System::Collections::ICollection^ static_deps, int priority, long client_handle);
+        void MoveAfter(long h1, long h2, Scope^ s);
+        void MoveBefore(long h1, long h2, Scope^ s);
+        void Update(long h, Action^ a, System::Collections::ICollection^ static_deps, int priority);
+        void SetEnvScope(long h, Scope^ s);
+        System::Collections::IDictionary^ GetValueAt(long h, System::String^ name, bool bSync, ResolveMode mode, System::Collections::IDictionary^ pending_value);
         property bool IsBusy { bool get(); }
         property bool IsUpToDate { bool get(); }
         void BeginMove();

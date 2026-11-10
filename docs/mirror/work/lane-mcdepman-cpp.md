@@ -42,3 +42,10 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
 - Members: seven callback overloads using utl-mgd/iengine types and `GetRuntimeOptions`, bringing IDepman to 43/54 declarations. The C++ and production projects now reference Quire.Engine, Quire.Engine.Utl and Quire.Mpl; C# hosts are unchanged.
 - Foreground candidate gate PASS, 89 checked; `.mirror-cache/release-il-372bbb4bc411/release-il.json`. No rejected shapes. Eleven IDepman declarations still need depman types; subsequent interface groups remain unfinished.
 - Foreground Quire.Mcd gate PASS, 0 checked; `.mirror-cache/release-il-068c328c06b7/release-il.json`; Quire.Mcd still builds with unchanged declarations.
+
+## Batch 3 — depman contracts and their IDepman consumers
+
+- Owner: Codex, task `task_2be85ce3d345`; branch `feature/mcdepman-migration-resume`. Batch 2 landed as `325df3b0a7210525e75ff22663412e0ba9c38970`, confirmed ancestor of main; lane report `C:/Projects/Quire/.mirror-cache/gate-il-5eb97a6c26fc/gate.json` (PASS, 89 checked).
+- Members: complete Action, ActionResult, BooleanMediator, Environment, Scope, DepNodeCallback, ScopingMode and ResolveMode; nine IDepman declarations consuming those types; SEnvironment.GetRegionId. IDepman is now 52/54 declarations, SEnvironment 1/3. C# hosts remain unchanged.
+- Foreground candidate gate PASS, 116 checked; `.mirror-cache/release-il-e77c56457560/release-il.json`. Scope and ActionResult bodies match without rejected source shapes.
+- Foreground Quire.Mcd gate PASS, 0 checked; `.mirror-cache/release-il-a0cf0829695b/release-il.json`; Quire.Mcd still builds. Remaining selected declarations need Position, DSym, SharedThreadContext and NodeTimer.
