@@ -1913,20 +1913,98 @@ public partial class WhiteboardViewModel
         public MoveItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, global::System.Windows.Vector offset, params global::Quire.Controls.Core.IWhiteboardItem[] elements) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
         [global::Quire.Mirror.MirrorStub]
         public MoveItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Vector> elements) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
-        [global::Quire.Mirror.MirrorStub]
-        protected override bool DoWithResize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private bool CheckPotentialMove(global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> newLocations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private bool CheckMovementWithGrowth(global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> newLocations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        protected override bool DoWithResize()
+        {
+            _selectedItems = _viewModel.SelectedItems.ToArray();
+            _activeItem = _viewModel.ActiveItem;
+            if (!CheckPotentialMove(_finalLocations))
+            {
+                return false;
+            }
+
+            bool moved = MoveItems();
+            if (moved)
+            {
+                _viewModel.ResizeAndNotify(_list, _viewModel.ContentSize);
+            }
+
+            return moved;
+        }
+
+        private bool CheckPotentialMove(IDictionary<IWhiteboardItem, Point> newLocations)
+        {
+            if (!_allowGrowthDownOrRight)
+            {
+                return CheckMovementWithoutGrowth(newLocations);
+            }
+
+            return CheckMovementWithGrowth(newLocations);
+        }
+
+        private bool CheckMovementWithGrowth(IDictionary<IWhiteboardItem, Point> newLocations)
+        {
+            _viewModel.FireRequestMaximumSize();
+            foreach (IWhiteboardItem item in _list)
+            {
+                bool ignoreHorizontal = _viewModel.GetItemIgnoreForHorizontalMovementAndWidth(item);
+                if (!_viewModel.IsValidLocation(item, newLocations, true))
+                {
+                    return false;
+                }
+
+                Direction[] directions = new Direction[2] { Direction.Right, Direction.Down };
+                double limit = _viewModel.ForbidGrowingMovementRight ? _viewModel.ContentWidth : _viewModel.MaximumSize.Width;
+                if (!ignoreHorizontal)
+                {
+                    Point point = _viewModel.Grid.GetNearestIntersectionPointDisregardingBounds(newLocations[item], GridRestriction.Ignore, directions);
+                    if (point.X + _viewModel.GetItemDesiredSize(item).Width > limit)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
         [global::Quire.Mirror.MirrorStub]
         private bool CheckMovementWithoutGrowth(global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> newLocations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private bool MoveItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        private bool MoveItems()
+        {
+            bool moved = false;
+            foreach (IWhiteboardItem item in _list)
+            {
+                if (_allowGrowthDownOrRight)
+                {
+                    _viewModel.SetItemLocation(item, _finalLocations[item]);
+                }
+                else
+                {
+                    _viewModel.SetItemLocationToNearestGridIntersection(item, _finalLocations[item]);
+                }
+
+                if (_viewModel.GetItemLocation(item) != _initialLocations[item])
+                {
+                    moved = true;
+                }
+            }
+
+            return moved;
+        }
+
         [global::Quire.Mirror.MirrorStub]
         public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override void Redo()
+        {
+            BackupTheSize();
+            if (MoveItems())
+            {
+                _viewModel.ResizeAndNotify(_list, _viewModel.ContentSize);
+            }
+
+            _viewModel.SelectItems(_selectedItems);
+        }
+
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+MoveItemsCommandWithSideEffects, Ptc.Controls.Whiteboard")]

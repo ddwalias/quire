@@ -479,3 +479,10 @@
 - Members: `PushItemsDownCommand.Undo` (null-guarded `_moveCommand.Undo()`, then the size captured before `UndoResize()` and `FireChildCausedResize`); `DeleteSpaceCommand.Undo` (`ContentHeight = _oldHeight`, null-guarded `_moveCommand.Undo()`, then `InsertionPoint = _insertionPoint` when `_direction == Direction.Above`, which is value 2).
 - Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; stubs and `[MirrorStub]` attributes removed.
 - Release IL: PASS — 897 checked, 0 failures (`release-il-f5cf7ce9c14c`).
+
+## Batch 36 — MoveItemsCommand: DoWithResize, CheckPotentialMove, CheckMovementWithGrowth, MoveItems, Redo
+
+- Members: `DoWithResize` (`bool moved = MoveItems();` then `if (moved) ResizeAndNotify(...)`, `return moved;`), `CheckPotentialMove` (`if (!_allowGrowthDownOrRight) return CheckMovementWithoutGrowth(...)`), `CheckMovementWithGrowth` (foreach with `return false` inside the loop, `Direction.Right`/`Direction.Down` array, `GridRestriction.Ignore`), `MoveItems` (foreach with `moved` set when the location changes), `Redo`.
+- Shapes Release IL requires: `DoWithResize` keeps the `MoveItems()` result on the stack (`dup; brfalse`), which is the shape a `bool` local followed by `if (moved)` produces (verified by a scratch Roslyn compile). `CheckPotentialMove` uses the negated guard (`brtrue` to the growth branch). Callee `CheckMovementWithoutGrowth` is a closure member and stays a stub; calling it does not change this member's IL.
+- Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; stubs and `[MirrorStub]` attributes removed.
+- Release IL: PASS — 902 checked, 0 failures (`release-il-f78dcbd78f09`).
