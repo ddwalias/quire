@@ -74,3 +74,9 @@ Not blocked by the listed reasons: no `LoadComponent`/XAML loads, no dynamic scr
 ## Blocked after batch 6
 
 - `FireCanSwitchToLineBreakOperator`: Mathcad IL uses `[DevComponents.WpfRibbon]DevComponents.WpfRibbon.IButtonCommandParameter`. `Quire.Controls.EquationControl` does not reference that assembly, so the type cannot be named. Needs a project reference (outside this lane; maintainer). Stub kept.
+
+## Batch 7: layout members
+
+- Members: `MeasureResizableChildNode` (both resizable children under `resizeInProgress`), `ArrangeStaticLayout` (empty and single-child arrange).
+- Shapes: first candidates matched.
+- Release IL: PASS, 1725 checked (`.mirror-cache/release-il-e8e6775cdd7a/release-il.json`).

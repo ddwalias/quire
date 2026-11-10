@@ -34,10 +34,6 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => base.MeasureStaticLayout(availableSize);
     [global::Quire.Mirror.MirrorStub]
-    public void MeasureResizableChildNode(global::System.Windows.Vector offset, bool changeWidth, bool changeHeight, bool resizeInProgress) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeStaticLayout(global::System.Windows.Size finalSize) => base.ArrangeStaticLayout(finalSize);
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
     [global::Quire.Mirror.MirrorStub]
     private void HandleMouseDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

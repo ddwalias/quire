@@ -1358,4 +1358,35 @@ internal partial class VisualMathRegionNode
         _historyPopup.Show();
     }
 
+    public void MeasureResizableChildNode(Vector offset, bool changeWidth, bool changeHeight, bool resizeInProgress)
+    {
+        if (resizeInProgress)
+        {
+            var resizableChild = Children[0] as IVisualResizableScriptableControlNode;
+            if (resizableChild != null)
+            {
+                resizableChild.UpdateOnBorderResize(offset, changeWidth, changeHeight, null);
+            }
+            var definitionNode = Children[0] as VisualDefinitionNode;
+            if (definitionNode != null && definitionNode.Children.Count == 3)
+            {
+                var lhsChild = definitionNode.Children[2] as IVisualResizableScriptableControlNode;
+                if (lhsChild != null)
+                {
+                    lhsChild.UpdateOnBorderResize(offset, changeWidth, changeHeight, null);
+                }
+            }
+        }
+    }
+
+    protected override Size ArrangeStaticLayout(Size finalSize)
+    {
+        if (Children.Count == 0)
+        {
+            return new Size(0.0, 0.0);
+        }
+        var child = (FrameworkElement)Children[0];
+        child.Arrange(new Rect(new Point(RootPadding.Left, RootPadding.Top), child.DesiredSize));
+        return finalSize;
+    }
 }
