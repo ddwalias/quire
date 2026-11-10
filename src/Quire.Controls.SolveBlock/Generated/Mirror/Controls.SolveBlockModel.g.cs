@@ -106,7 +106,5 @@ internal partial class SolveBlockModel : global::Quire.Controls.Mathboard.Aggreg
     [global::Quire.Mirror.MirrorStub]
     private void MirrorChildInSolverAggregate(global::Quire.Calculation.Core.ICalculatable newSolverChild) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.Calculation.Core.Support.CalculatableChildHider InitializeChildManager() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.ISolveBlockCalculatable UnitTest_GetSolveBlockCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -129,4 +129,18 @@ internal partial class SolveBlockModel
                 return null;
         }
     }
+
+    protected override global::Quire.Calculation.Core.Support.CalculatableChildHider InitializeChildManager()
+    {
+        return new SolveBlockChildManager(
+            WhiteboardItems,
+            FireCalculatableAdded,
+            FireCalculatableRemoved,
+            FireCalculatableMoved,
+            CreateCalculatableWrapper,
+            LookupCalculatableWrapper,
+            RemoveCalculatableWrapper,
+            HandleChildCalcHiddenStateChanged,
+            HandleContainerChildrenChanged);
+    }
 }
