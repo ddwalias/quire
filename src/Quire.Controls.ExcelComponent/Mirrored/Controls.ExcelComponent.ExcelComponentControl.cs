@@ -34,4 +34,14 @@ public partial class ExcelComponentControl
     {
         return new ExcelComponentControl(this);
     }
+
+    public global::Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType GetEquationType(global::Quire.Controls.Core.IEquationControl equation)
+    {
+        return _exModel.GetEquationType(equation);
+    }
+
+    public global::Quire.Calculation.Core.EngineError GetError(global::Quire.Controls.EquationControl item)
+    {
+        return _exModel.GetError(item);
+    }
 }

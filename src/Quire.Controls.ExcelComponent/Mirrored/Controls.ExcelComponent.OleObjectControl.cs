@@ -119,4 +119,19 @@ public partial class OleObjectControl
             return control.Accept(this, oleContainerPath);
         }
     }
+
+    private void CanExecuteOleObjectResetSize(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = CanResetSize;
+    }
+
+    private void CanExecuteUpdateOleObjectLink(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = CanUpdateLink;
+    }
+
+    private void CanToggleOleObjectAutoResize(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = CanToggleAutoResize;
+    }
 }

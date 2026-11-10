@@ -46,10 +46,6 @@ public partial class ExcelComponentControl : global::Quire.Controls.ExcelCompone
     [global::Quire.Mirror.MirrorStub]
     public void CollapseToIconicIfUnsetState(bool forceIfSet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.EngineError GetError(global::Quire.Controls.EquationControl item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType GetEquationType(global::Quire.Controls.Core.IEquationControl equation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public bool SetValuesIntoExcelTable(global::System.Collections.Generic.IEnumerable<global::Quire.Pair<string, object>> valuesToSet, bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object[] GetValuesFromExcelTable(string[] cellIdxs, bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
