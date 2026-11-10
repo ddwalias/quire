@@ -14,6 +14,14 @@ public partial class SolveBlockControl
     protected override IDeserializationStrategy DeserializationStrategy { get; set; }
     public ITextStyleChangedHandler TextStyleChangedHandler { get; set; }
 
+    public global::Quire.Controls.SolveBlockEquationTypes GetSolveBlockEquationType(
+        global::Quire.Controls.Core.IWhiteboardItem item) => _sbModel.GetSolveBlockEquationType(item);
+
+    public override string GetBlockEquationTypeAttributeName(
+        global::Quire.Controls.Core.IWhiteboardItem item) => _sbModel.GetBlockEquationTypeAttributeName(item);
+
+    protected override string GetInternalHelpContext() => "SolveBlockControl";
+
     public EngineResult[] EngineResults
     {
         get
