@@ -222,4 +222,13 @@ internal partial class SolveBlockModel
             return wrapper;
         return null;
     }
+
+    [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+    public global::Quire.Controls.ISolveBlockCalculatable UnitTest_GetSolveBlockCalculatableWrapper(
+        global::Quire.Calculation.Core.ICalculatable calculatable)
+    {
+        if (_solveBlockCalculatableMap.TryGetValue(calculatable, out var wrapper))
+            return wrapper;
+        return null;
+    }
 }
