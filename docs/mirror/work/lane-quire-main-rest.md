@@ -315,3 +315,10 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
 
 **Automation (deferred per member):** 65 files, listed in the table above.
 
+
+## Batches
+
+- **Batch 1 (converters, U):** `BooleanToMultiThreadingValueConverter` (Convert x2, ConvertBack), `CalculationStatusConverter`, `CaretInsertionTypeToBooleanConverter`, `ComplexNumberStyleToStringConverter`, `FontSizeToStringConverter`, `FontStyleToBooleanConverter`, `FontVariantsToBooleanConverter`, `FontWeightToBooleanConverter`, `IntToStringConverter`, `IncrementDecimalPlaces`, `IsCalcNowEnabledConverter`, `SplitCamelCase`, `StringToTextIndent`, `NumberStyleToStringConverter`, `RadixStyleToStringConverter`, `NumberStyleEnablesExponentialThresholdConverter`, `TextStyleNameToVisibility`, `FormatPlotValueVisiblityConverter`, `FormatPlotValuesColumnConverter`, `FormatPlotValuesRowConverter`, `ZoomControlWidthToVisibilityMultiConverter`, `Freemium.HideIfNullConverter` (Convert and ConvertBack of each). Default constructors stay as generated.
+  - Gate: PASS, 270 checked. Report: `.mirror-cache/release-il-2aea9c31781d/release-il.json`.
+  - Shapes: the bool-then-`ToString` `ConvertBack` family keeps the bool on the stack (Roslyn does this in Release); the `switch` statement with `case` returns matches Mathcad's brtrue-to-case layout. `RadixStyleToStringConverter.ConvertBack` is a switch expression with a named string subject (slot order string, object) and a `(object)` first arm. `ZoomControlWidthToVisibilityMultiConverter.Convert` stores the nullable width in a named `double?` local.
+  - Mismatches found on the way and fixed before landing: CaretInsertion (local instead of switch shape), Radix (slot order), Zoom (inline nullable compare).

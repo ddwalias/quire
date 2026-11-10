@@ -12,7 +12,5 @@ namespace Quire;
 public partial class FontSizeToStringConverter : global::Quire.Wpf.NumberToStringConverter
 {
     [global::Quire.Mirror.MirrorStub]
-    public override object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => base.Convert(value, targetType, parameter, culture);
-    [global::Quire.Mirror.MirrorStub]
     public FontSizeToStringConverter() { }
 }
