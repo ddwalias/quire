@@ -253,3 +253,5 @@
 - Release IL: PASS, 1325 checked (`.mirror-cache/release-il-6006e06da4e1/release-il.json`).
 - Batch: `Controls.SpecTableControl` forwarding getters `VerticalAlignmentOffset`, `NumberOfColumns`, `Columns`, `RegionSExpression`. `ActiveCell` (two stubs, one explicit) stays open.
 - Release IL: PASS, 1329 checked (`.mirror-cache/release-il-8177e6df7276/release-il.json`).
+- Batch: `Controls.InputControls.EditableComboBoxVisualTable`: `UpdateRowsColumnsIndex`, `IsCellCountValid`, `GetChildAt`, `OnDpiChanged`, `IsTextBoxDataContextIsCellData`, `GetCellDataAtRowColumnFromVisualTableChildren`.
+- Release IL: PASS, 1335 checked (`.mirror-cache/release-il-b87223b8b31b/release-il.json`).

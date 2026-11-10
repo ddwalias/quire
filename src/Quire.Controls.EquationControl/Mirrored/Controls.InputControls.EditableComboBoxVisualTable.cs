@@ -4,6 +4,7 @@ using Quire.EquationEditor.View;
 using Quire.Matrices;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace Quire.Controls.InputControls;
 
@@ -68,4 +69,42 @@ public partial class EditableComboBoxVisualTable
     public bool IsActive => IsVisible;
 
     public System.Tuple<int, int> SelectedCells => _viewModel.SelectedCells;
+
+    private void UpdateRowsColumnsIndex()
+    {
+        _rows = _viewModel.Rows;
+        Columns = _viewModel.Columns;
+    }
+
+    private bool IsCellCountValid()
+    {
+        return Rows == _viewModel.Rows && Columns == _viewModel.Columns && Children.Count == Rows * Columns;
+    }
+
+    private System.Windows.UIElement GetChildAt(int index)
+    {
+        if (!DebugTools.DevAssert(0 <= index && index < Children.Count, null).Passed)
+        {
+            return null;
+        }
+
+        return Children[index];
+    }
+
+    protected override void OnDpiChanged(System.Windows.DpiScale oldDpi, System.Windows.DpiScale newDpi)
+    {
+        base.OnDpiChanged(oldDpi, newDpi);
+        _viewModel.UpdatePlaceHolderBoxSize(newDpi);
+    }
+
+    private static bool IsTextBoxDataContextIsCellData(object element, out Quire.EquationEditor.View.IReadonlyCellData cellData, out System.Windows.Controls.TextBox textBox)
+    {
+        cellData = GetCellDataFromTextBox(element, out textBox);
+        return cellData != null;
+    }
+
+    private Quire.EquationEditor.View.IReadonlyCellData GetCellDataAtRowColumnFromVisualTableChildren(int row, int column)
+    {
+        return GetCellDataFromTextBox(GetChildElemAtRowColumn(row, column), out _);
+    }
 }

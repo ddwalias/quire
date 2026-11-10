@@ -46,10 +46,6 @@ public partial class EditableComboBoxVisualTable : global::Quire.Controls.Core.V
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
     [global::Quire.Mirror.MirrorStub]
-    private bool IsCellCountValid() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateRowsColumnsIndex() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AddGivenCommandKeyGesturesToInstanceInputBinding(global::System.Windows.Input.RoutedCommand command) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -136,15 +132,7 @@ public partial class EditableComboBoxVisualTable : global::Quire.Controls.Core.V
     [global::Quire.Mirror.MirrorStub]
     private void OnIsVisibleChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnDpiChanged(global::System.Windows.DpiScale oldDpi, global::System.Windows.DpiScale newDpi) => base.OnDpiChanged(oldDpi, newDpi);
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.EquationEditor.View.IReadonlyCellData GetCellDataFromTextBox(object element, out global::System.Windows.Controls.TextBox textBox) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsTextBoxDataContextIsCellData(object element, out global::Quire.EquationEditor.View.IReadonlyCellData cellData, out global::System.Windows.Controls.TextBox textBox) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.EquationEditor.View.IReadonlyCellData GetCellDataAtRowColumnFromVisualTableChildren(int row, int column) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.UIElement GetChildAt(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool IsVisualDataEqualsViewModelTableData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
