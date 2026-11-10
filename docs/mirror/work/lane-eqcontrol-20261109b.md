@@ -263,3 +263,5 @@
 - Release IL: PASS, 1359 checked (`.mirror-cache/release-il-a4d73a80d28b/release-il.json`).
 - Batch: `Controls.InputControls.ComboBoxControlWidget` (`IsEditModeActive`, `EditableComboBoxVisualTable`), `Controls.InputControls.EditableComboBoxTableBorder` (`IsEditModeActive`, `EditableTable`), `Controls.InputControls.EditableComboBoxTableCellsFontFormats.GetCellForeground`, `Controls.Internal.VisualComboBoxControlNode` (`ComboBoxControl`, `IsDropDownOpen`, `ComboBoxControlInfo`, `GetSelectedDisplayedText`, `IsEditModeActive`, `EditableComboBoxTable`, `SetSelectedIndex`).
 - Release IL: PASS, 1372 checked (`.mirror-cache/release-il-2a8ebc0ea0e7/release-il.json`).
+- Batch: `Controls.InputControls.ComboBoxRow`: `AddCell`, `RemoveLastCell`, `GetCellAt` (guard written `if (!(0 <= index && index < CellCount))`: the `&&` form compiles to `bge`, Mathcad uses `blt`), properties `AllCells`, `CellCount`, `FirstCell`. `AllButFirstCell`, `IsValid`, `InsertCell`, `RemoveCellAt` stay open.
+- Release IL: PASS, 1378 checked (`.mirror-cache/release-il-f396de3a74c7/release-il.json`).

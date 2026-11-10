@@ -14,25 +14,13 @@ public abstract partial class ComboBoxRow : global::Quire.Controls.InputControls
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.List<global::Quire.Controls.InputControls.CellData> _cells;
     [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.Controls.InputControls.ICellData FirstCell { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData> AllCells { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData> AllButFirstCell { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int CellCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected ComboBoxRow(int rowIndex, int count) { }
     [global::Quire.Mirror.MirrorStub]
     public bool IsValid(int rowIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal void RemoveLastCell() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal void RemoveCellAt(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal void AddCell(global::Quire.Controls.InputControls.CellData cellData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal void InsertCell(int index, global::Quire.Controls.InputControls.CellData cellData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.InputControls.ICellData GetCellAt(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
