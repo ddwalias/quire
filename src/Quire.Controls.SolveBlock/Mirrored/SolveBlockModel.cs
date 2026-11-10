@@ -188,4 +188,38 @@ internal partial class SolveBlockModel
 
         return null;
     }
+
+    private void RemoveCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calculatable)
+    {
+        global::Quire.Controls.ISolveBlockCalculatable wrapper = _solveBlockCalculatableMap[calculatable];
+        wrapper.PropertyChanged -= HandleChildWrapperPropertyChanged;
+        if (wrapper == Solver)
+        {
+            if (calculatable.Equals(Solver?.WrappedCalculatable) &&
+                calculatable is global::Quire.Controls.EquationControl equationControl)
+            {
+                equationControl.IsWithinSolveBlock = false;
+                if (equationControl.ContainsSymbolicEvaluation && equationControl.CalculatableChildren.Count() > 1)
+                    HandleEquationControlCommitted(calculatable);
+            }
+
+            Solver.RequestEvaluation -= HandleSolverRequestEvaluation;
+            Solver = null;
+            SolverIsNotInADefinition();
+        }
+
+        FireSectionsMaybeChanged();
+        wrapper.Dispose();
+        _solveBlockCalculatableMap.Remove(calculatable);
+    }
+
+    private global::Quire.Controls.ISolveBlockCalculatable LookupCalculatableWrapper(
+        global::Quire.Calculation.Core.ICalculatable calculatable)
+    {
+        if (calculatable == null)
+            return null;
+        if (_solveBlockCalculatableMap.TryGetValue(calculatable, out var wrapper))
+            return wrapper;
+        return null;
+    }
 }

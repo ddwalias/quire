@@ -64,10 +64,6 @@ internal partial class SolveBlockModel : global::Quire.Controls.Mathboard.Aggreg
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.ISolveBlockCalculatable CreateCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc, bool forceNotHideable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void RemoveCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.ISolveBlockCalculatable LookupCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void HandleChildCalcHiddenStateChanged(global::Quire.Calculation.Core.ICalculatable calc, bool hideFromCalculationContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleContainerChildrenChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
