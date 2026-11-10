@@ -1,5 +1,15 @@
 #pragma once
 
+void __cdecl operator delete(void* ptr, unsigned __int64 size) noexcept;
+
+namespace Quire { namespace utl {
+    struct InterruptControl
+    {
+        bool interrupted;
+        void RequestInterrupt(bool requested);
+    };
+}}
+
 namespace Quire { namespace depman {
 
     [Quire::Mirror::MirrorOfAttribute("depman.ScopingMode, mcdepman")]
@@ -144,6 +154,57 @@ namespace Quire { namespace depman {
         }
     };
 
+    [Quire::Mirror::MirrorOfAttribute("depman.DepException, mcdepman")]
+    public ref class DepException abstract : System::Exception
+    {
+    public:
+        DepException() {}
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("depman.SafeAbortException, mcdepman")]
+    public ref class SafeAbortException : DepException
+    {
+    private:
+        SafeAbortException() {}
+
+    public:
+        static SafeAbortException^ Instance()
+        {
+            return gcnew SafeAbortException();
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("depman.ThreadData, mcdepman")]
+    ref class ThreadData
+    {
+    public:
+        System::Threading::Thread^ interruptible_task;
+        bool coop_interrupt_only;
+        Quire::utl_mgd::InterruptControl^ interrupt_control;
+        Quire::utl::InterruptControl* interrupt_control_umgd;
+        bool interrupt_requested;
+        Quire::utl_mgd::SafeMutex^ interrupt_mutex;
+
+        ThreadData()
+            : interrupt_control(gcnew Quire::utl_mgd::InterruptControl()),
+              interrupt_control_umgd(new Quire::utl::InterruptControl()),
+              interrupt_mutex(gcnew Quire::utl_mgd::SafeMutex("ThreadData::interrupt_mutex"))
+        {
+        }
+
+        ~ThreadData()
+        {
+            ::operator delete(interrupt_control_umgd, sizeof(Quire::utl::InterruptControl));
+            System::GC::KeepAlive(this);
+        }
+
+        !ThreadData()
+        {
+            ::operator delete(interrupt_control_umgd, sizeof(Quire::utl::InterruptControl));
+            System::GC::KeepAlive(this);
+        }
+    };
+
     [Quire::Mirror::MirrorOfAttribute("depman.SharedThreadContext, mcdepman")]
     ref class SharedThreadContext
     {
@@ -156,6 +217,50 @@ namespace Quire { namespace depman {
         int m_worker_stack_size;
 
         SharedThreadContext^ GetSharedThreadContext() { return this; }
+
+        void check_interrupt()
+        {
+            ThreadData^ threadData = get_thread_data(System::Threading::Thread::CurrentThread->ManagedThreadId);
+            System::GC::KeepAlive(this);
+            if (threadData->interrupt_requested)
+                throw SafeAbortException::Instance();
+
+            System::GC::KeepAlive(this);
+        }
+
+        ThreadData^ get_thread_data()
+        {
+            ThreadData^ result = get_thread_data(System::Threading::Thread::CurrentThread->ManagedThreadId);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+
+        ThreadData^ get_thread_data(int threadId)
+        {
+            m_data_mutex->WaitOne();
+            try
+            {
+                return dynamic_cast<ThreadData^>(m_thread_map[threadId]);
+            }
+            finally
+            {
+                m_data_mutex->ReleaseMutex();
+            }
+        }
+
+        void clear_thread_data(int threadId)
+        {
+            m_data_mutex->WaitOne();
+            try
+            {
+                m_thread_map->Remove(threadId);
+            }
+            finally
+            {
+                m_data_mutex->ReleaseMutex();
+            }
+            System::GC::KeepAlive(this);
+        }
 
     public:
         SharedThreadContext(int workerStackSize)
@@ -176,6 +281,49 @@ namespace Quire { namespace depman {
         property Quire::Mcd::RuntimeOptions^ RuntimeOptions
         {
             Quire::Mcd::RuntimeOptions^ get() { return m_runtime_options; }
+        }
+
+        void ObtainMutex(bool bCheckInterrupt)
+        {
+            m_mutex->WaitOne();
+            if (bCheckInterrupt)
+                check_interrupt();
+        }
+
+        void ReleaseMutex(bool bCheckInterrupt)
+        {
+            m_mutex->EnsureReleased(1);
+            if (bCheckInterrupt)
+                check_interrupt();
+        }
+
+        void CheckInterrupt()
+        {
+            check_interrupt();
+        }
+
+        void RegisterThread(int threadId)
+        {
+            ThreadData^ value = gcnew ThreadData();
+            m_thread_map[threadId] = value;
+            System::GC::KeepAlive(this);
+        }
+
+        void UnregisterThread(int threadId)
+        {
+            clear_thread_data(threadId);
+        }
+
+        void SyncToThread()
+        {
+            m_runtime_options->SyncToThread();
+            System::GC::KeepAlive(this);
+        }
+
+        void RemoveUnitSystem()
+        {
+            m_runtime_options->RemoveUnitSystem();
+            System::GC::KeepAlive(this);
         }
     };
 

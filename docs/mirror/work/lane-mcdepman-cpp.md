@@ -60,3 +60,14 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
 - Whole-type cleanup probe (BooleanMediator is complete in C++): removing both C# files and adding a project reference fails before comparison with CS0234 for BooleanMediator; `.mirror-cache/release-il-9d9def6f6a99/release-il.json`. An intermediate-assembly copy did not fix consumption (`.mirror-cache/release-il-a314c4c2241b/release-il.json`); suppressing parent-configuration unsetting instead failed with missing Quire.Engine.Utl metadata (`.mirror-cache/release-il-74646446b1e7/release-il.json`). No mixed-mode Quire.Mcdepman build ran in those dependency logs. All C# removals, project-reference/configuration changes and the ineffective copy were reverted. Mixed-mode project-reference integration needs the maintainer; no tools or gate changes were made.
 - Final foreground candidate gate (explicitly selecting DSym and SharedThreadContext) PASS, 98 checked; `.mirror-cache/release-il-388b7847fb29/release-il.json`. Both helper types are present in the emitted inventory, with all nine implemented bodies exact; SEnvironment is absent and is not counted complete.
 - Final restored-state foreground Quire.Mcd gate PASS, 0 checked, 658 declarations and 0 inspection errors; `.mirror-cache/release-il-cebe8f1f50d1/release-il.json`. Quire.Mcd still builds and all C# host declarations are retained.
+
+## Batch 5 — SharedThreadContext thread map, exception and data contracts
+
+- Owner: Codex / AGY, Orca task `task_641f4a973cd0`; branch `feature/mcdepman-threads`.
+- Members: `depman.DepException` (1/1), `depman.SafeAbortException` (2/2), `depman.ThreadData` (6/6), and eleven `depman.SharedThreadContext` members (`check_interrupt`, `get_thread_data()`, `get_thread_data(int32)`, `clear_thread_data(int32)`, `ObtainMutex`, `ReleaseMutex`, `CheckInterrupt`, `RegisterThread`, `UnregisterThread`, `SyncToThread`, `RemoveUnitSystem`), bringing SharedThreadContext to 15/19 members. C# hosts remain unchanged.
+- Configuration: enabled `/Zc:sizedDealloc` in `Quire.Mcdepman.vcxproj` and declared sized `operator delete` to match Mathcad's sized deallocation in `ThreadData` destructor without `<new>`'s array unwind filter.
+- Foreground candidate gate PASS, 120 checked; `.mirror-cache/release-il-3a30c6ae00fa/release-il.json`. All 20 newly implemented methods match Mathcad Release IL exactly.
+- Foreground unchanged Quire.Mcd gate PASS, 0 checked; `.mirror-cache/release-il-29db0311b092/release-il.json`.
+- Remaining SharedThreadContext members (4): `Abort(int32)`, `ClearInterrupt(int32)`, `interrupt(int32)`, `ExecuteInterruptibly(ThreadStart, bool)` (require `Efi.Symbolics` / `Aborter` / `SafeRun` and native `InterruptControl.RequestInterrupt`).
+- Remaining other members: IDepman.UnLockP (needs Position), IDepman.SetTimer (needs NodeTimer/PerformanceTimer Stop), SEnvironment (0/3; omitted until native Position consumer exists).
+
