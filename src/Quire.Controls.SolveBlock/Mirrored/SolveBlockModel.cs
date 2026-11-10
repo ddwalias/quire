@@ -4,6 +4,34 @@ namespace Quire.Controls;
 
 internal partial class SolveBlockModel
 {
+    private readonly global::System.Collections.Generic.IDictionary<global::Quire.Calculation.Core.ICalculatable, global::Quire.Controls.ISolveBlockCalculatable> _solveBlockCalculatableMap =
+        new global::System.Collections.Generic.Dictionary<global::Quire.Calculation.Core.ICalculatable, global::Quire.Controls.ISolveBlockCalculatable>();
+    private global::Quire.Controls.ISolverAggregate _solver;
+
+    private global::Quire.Controls.SolveBlockChildManager SBChildManager =>
+        (global::Quire.Controls.SolveBlockChildManager)_childManager;
+
+    public global::Quire.Controls.Core.IWhiteboardItem SolverItem { get; private set; }
+    private global::Quire.Calculation.Core.Support.SimpleCalculatable SolverResultDefinition { get; set; }
+    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.ISolveBlockCalculatable> AllCalculatables =>
+        _solveBlockCalculatableMap.Values;
+    public global::System.Windows.ResourceDictionary Resources { get; set; }
+
+    internal global::Quire.Controls.ISolverAggregate Solver
+    {
+        get => _solver;
+        private set
+        {
+            _solver = value;
+            SolverItem = _solver != null ? GetWhiteboardItemThatOwnsCalculatable(Solver) : null;
+        }
+    }
+
+    public SolveBlockModel()
+        : base(null)
+    {
+    }
+
     private const uint GuessValuesSectionIndex = 0;
     private const uint ConstraintSectionIndex = 1;
     private const uint SolverSectionIndex = 2;
