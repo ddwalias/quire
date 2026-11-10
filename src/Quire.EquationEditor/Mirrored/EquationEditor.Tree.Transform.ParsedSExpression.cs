@@ -46,9 +46,14 @@ public partial class ParsedSExpression
             {
                 return Value != null;
             }
+
             return !string.IsNullOrEmpty(Value);
         }
     }
 
     public bool IsValid => HasList ^ HasValue;
+
+    public ParsedSExpression()
+    {
+    }
 }

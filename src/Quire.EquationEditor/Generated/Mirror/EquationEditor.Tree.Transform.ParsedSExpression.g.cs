@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.Tree.Transform;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Transform.ParsedSExpression, Ptc.EquationEditor")]
 public partial class ParsedSExpression
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ParsedSExpression() { }
 }
