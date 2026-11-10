@@ -11,14 +11,4 @@ namespace Quire.MessageBoxes;
 [global::Quire.Mirror.MirrorOf("Spirit.MessageBoxes.DialogManager, MathcadPrime")]
 public partial class DialogManager : global::Quire.Wpf.IDialogManager, global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsConnected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsDialogOpen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Forms.DialogResult ShowDialog(global::System.Windows.Forms.FileDialog fileDialog) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<bool> ShowDialog(global::Microsoft.Win32.FileDialog fileDialog) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public DialogManager() { }
 }

@@ -368,6 +368,8 @@ Totals: U 127 files / 1021 markers; P 78 / 1336; B 16 / 126; D 65 / 834; all 286
   - Gate: PASS, 632 checked. Report: `.mirror-cache/release-il-5416afeb2492/release-il.json`.
 - **Batch 17 (ProofingLanguageDataItem, U; branch `mirror/quire-main-rest-pure-20261111`):** constructors, ToString, Culture, Value, Header, IsChecked, PropertyChanged event. Fields stay generated. Blocked, stub kept: `GetCultureName` (reads `Settings.Default.ShowNativeProofingLanguage`, a settings value).
   - Gate: PASS, 640 checked. Report: `.mirror-cache/release-il-1a79f4cec4c2/release-il.json`.
+- **Batch 18 (DialogManager, U; branch `mirror/quire-main-rest-pure-20261111`):** both `ShowDialog` overloads, `IsConnected`, `IsDialogOpen`, ctor. Gate: PASS, 646 checked. Report: `.mirror-cache/release-il-460a79782701/release-il.json`.
+  - Blocked (not started): `MruUserConfigPersistance` (reads `Settings`, a settings class).
 
 ## Remaining (after batch 10)
 
