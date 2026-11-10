@@ -182,3 +182,6 @@
 - Batch: `Controls.InputControls.InputResizableControlModel` (constructor storing data then factory, `Data`, `Height`, `Width`, `Dispose`); `Controls.InputControls.InputResizableControlViewModel` (constructor raising `Height`/`Width` changes, `Model`, `Height` with the change-only guard, `Width`); `Controls.InputControls.ListBoxEditorViewModel` (constructor, `Model`, `IsSort`, `RightToLeft`, `HandleModelPropertyChanged` as a string switch).
 - Shapes tried: the `!=` guard on `Height` and the string switch on property names matched on the first candidate.
 - Release IL: PASS, 955 checked (`.mirror-cache/release-il-26c1488de2a0/release-il.json`).
+- Batch: `Controls.VisualOperatorDescriptor` (constructor setting the insert-operator command, `CanonicalName`, `MultiKeyStrokesBinding`, `CommandParameter`, `GeneratedKeybindingToDisplay`, `OperatorOrdinal`); `Controls.Internal.VisualScaledSymbolNode.ScaleToHeight`.
+- Shapes tried: the keybinding fallback `base ?? (string)converter.ConvertTo(...)` and the scale-to-height guards matched on the first candidate. Left open in this class: `Clone` (both overloads, the chained `dup` shape has no statement equivalent yet), and the constructors and `Geometry` override that are still generated pass-throughs.
+- Release IL: PASS, 965 checked (`.mirror-cache/release-il-a06c0e8fb353/release-il.json`).

@@ -11,20 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.VisualOperatorDescriptor, Ptc.Controls.EquationControl")]
 public partial class VisualOperatorDescriptor : global::Quire.Controls.SymbolDescriptor
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string _canonicalName;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Wpf.EditorGesture _multiKeyStrokesBinding;
-    [global::Quire.Mirror.MirrorStub]
-    public string CanonicalName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Wpf.EditorGesture MultiKeyStrokesBinding { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override object CommandParameter { get => base.CommandParameter; }
-    [global::Quire.Mirror.MirrorStub]
-    public override string GeneratedKeybindingToDisplay { get => base.GeneratedKeybindingToDisplay; }
-    [global::Quire.Mirror.MirrorStub]
-    public int OperatorOrdinal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualOperatorDescriptor() { }
 }
