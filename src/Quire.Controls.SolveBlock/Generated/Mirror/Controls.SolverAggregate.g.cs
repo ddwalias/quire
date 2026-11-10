@@ -76,16 +76,6 @@ internal partial class SolverAggregate : global::Quire.Controls.SolveBlockCalcul
     [global::Quire.Mirror.MirrorStub]
     public void CommitAllChildren() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void AddChild(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddChildAggregate(global::Quire.Calculation.Core.ICalculatable calculatable, global::Quire.Calculation.Core.ICalculatableContainer container) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void InsertChildBefore(global::Quire.Calculation.Core.ICalculatable insertBefore, global::Quire.Calculation.Core.ICalculatable calcToInsert) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RemoveChild(global::Quire.Calculation.Core.ICalculatable calcToRemove) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void MoveChildBefore(global::Quire.Calculation.Core.ICalculatable moveBefore, global::Quire.Calculation.Core.ICalculatable calcToMove) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus) => base.SetSynchronizationStatus(syncStatus);
     [global::Quire.Mirror.MirrorStub]
     public override void SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus computingStatus) => base.SetCalculatingStatus(computingStatus);
