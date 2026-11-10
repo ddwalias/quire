@@ -42,19 +42,9 @@ internal partial class ChartComponentCalculatableWrapper : global::Quire.Control
     [global::Quire.Mirror.MirrorStub]
     public ChartComponentCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable wrappedCalculatable) : base(default(global::Quire.Calculation.Core.ICalculatable)) { }
     [global::Quire.Mirror.MirrorStub]
-    public static string ConstructRl(global::Quire.Controls.ExcelComponent.Model.ChartWrapperType type, string rhsExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string ConstructAxisExpression(global::Quire.Controls.ExcelComponent.Model.ChartWrapperType chartType, global::System.Nullable<uint> index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void UpdateIdentifierLabelsIfNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.ExcelComponent.Model.ChartWrapperType ResetChartWrapperType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddAssociatedTrace(global::Quire.Controls.ExcelComponent.Model.IChartTraceCalculatable trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasAssociatedTraces() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RemoveAssociatedTrace(global::Quire.Controls.ExcelComponent.Model.IChartTraceCalculatable trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateAssociatedTraceData(global::Quire.Controls.ExcelComponent.Model.ChartTraceDataToUpdate dataToUpdate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -70,13 +60,9 @@ internal partial class ChartComponentCalculatableWrapper : global::Quire.Control
     [global::Quire.Mirror.MirrorStub]
     private void SetIdentifierLabelsAux(global::System.Collections.Generic.IDictionary<global::Quire.Calculation.Core.ResolvedId, string[]> idLabelMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal static string ChartTypeToIdentifier(global::Quire.Controls.ExcelComponent.Model.ChartWrapperType chartType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal static global::Quire.Controls.ExcelComponent.Model.ChartWrapperType IdentifierToChartType(string identifier, global::System.Nullable<uint> index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal bool TraceAffectsCalcData(global::Quire.Controls.ExcelComponent.Model.IChartTraceCalculatable trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string GetRlIdWithLabel(global::Quire.Controls.ExcelComponent.Model.ChartWrapperType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateEquationAndChartWrapperType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
