@@ -267,6 +267,17 @@ ef Point alignmentPoint matched Mathcad local variable index [2].
   - VisualProgramNodeEditor.UpdateOperatorSymbol: passing array covariance directly into `CreateNodeHighlighter` matched Mathcad IL local slot and argument evaluation order.
 - Release IL: PASS; 2246 checked (.mirror-cache/release-il-6c495d2e88c1/release-il.json).
 
+## Batch 13: VisualPairNaryNode and VisualPairNaryNodeEditor
+
+- Members: 49 members across 2 types:
+  - VisualPairNaryNode: OPERATOR_PAD, BODY_LEFT_PAD, _operatorRightMinorPart, _operatorRightMinorPartTopLeft, _verticalOffset, _nodeChildren, _operatorParts, _operatorPartsTopLeft, _operandsTopLeft, _firstOperatorPartSymbol, _middleOperatorPartsSymbol, _lastOperatorPartSymbol, _hasLastSymbol, EffectiveBaselineY, EffectiveScriptBaselineY, TextBaselineY, NodeChildren, OperatorParts, OperatorPartstopLeft, this[int index], NavigatableParts, .ctor(firstOperatorPartSymbol, middleOperatorPartsSymbol, lastOperatorPartSymbol), BuildChildren, PrepareVisualChildren, MeasureOverride, ArrangeOverride, GetNodeAtPoint, SetVisibilityOfOperatorSymbol.
+  - VisualPairNaryNodeEditor: OperatorPartIndexProperty, CaretOpacityProperty, _operatorParts, _operandHighlighters, OperatorPartIndex, CaretOpacity, OnCaretOpacityPropertyChanged, OnOperatorPartIndexPropertyChanged, .cctor(), OnOperatorPartIndexChanged, OnCaretColorChanged, OnCaretOpacityChanged, .ctor(editNode, region), GetFocus, Remove, MeasureOverride, ArrangeOverride, BindToSettings, UpdateOperatorSymbols, RemoveHighlighters, UpdateCaretBlinking, SetVisibilityOfEditorSymbols.
+- Shapes tried:
+  - VisualPairNaryNode.PrepareVisualChildren: declaring `VisualSymbolNode visualSymbolNode` ahead of loop counter `i` matched Mathcad IL local slots [1] and [2].
+  - VisualPairNaryNode.MeasureOverride: declaring intermediate layout locals at the top of the method and initializing `contentSize = new Size(0.0, 0.0)` after child Measure loops matched Mathcad IL local variable table [0..15] and evaluation stack order.
+  - VisualPairNaryNode.GetNodeAtPoint: structured `if (i == 0) ... else if (i == num2 - 1 && _hasLastSymbol) ... else ...` matched Mathcad IL branching without inverted condition branches.
+- Release IL: PASS; 2281 checked (.mirror-cache/release-il-ee817411bd25/release-il.json).
+
 
 
 

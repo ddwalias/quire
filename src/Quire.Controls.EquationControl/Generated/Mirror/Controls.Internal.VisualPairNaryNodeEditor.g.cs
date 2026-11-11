@@ -11,46 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualPairNaryNodeEditor, Ptc.Controls.EquationControl")]
 internal partial class VisualPairNaryNodeEditor : global::Quire.Controls.Internal.VisualMathNodeEditor<global::Quire.Controls.Internal.VisualPairNaryNode>, global::Quire.EquationEditor.View.IVisualPairNaryNodeEditor, global::Quire.EquationEditor.View.IVisualMathNodeEditor
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty OperatorPartIndexProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty CaretOpacityProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Internal.VisualSymbolNode[] _operatorParts;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.List<global::Quire.Controls.Internal.RubberBandHighlighter> _operandHighlighters;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<int> OperatorPartIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private double CaretOpacity { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnCaretOpacityPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnOperatorPartIndexPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnOperatorPartIndexChanged(global::System.Nullable<int> operatorPartIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnCaretColorChanged(global::System.Drawing.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnCaretOpacityChanged(double d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public VisualPairNaryNodeEditor(global::Quire.Controls.Internal.VisualPairNaryNode editNode, global::Quire.Controls.Internal.VisualMathRegionNode region) : base(default(global::Quire.Controls.Internal.VisualMathNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void GetFocus() => base.GetFocus();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Remove() => base.Remove();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
-    [global::Quire.Mirror.MirrorStub]
-    private void BindToSettings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateOperatorSymbols() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RemoveHighlighters() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void UpdateCaretBlinking() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetVisibilityOfEditorSymbols(global::System.Windows.Visibility visibility) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
