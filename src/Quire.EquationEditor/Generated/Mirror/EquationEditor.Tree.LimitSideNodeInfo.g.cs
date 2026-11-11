@@ -11,30 +11,6 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.LimitSideNodeInfo, Ptc.EquationEditor")]
 public partial class LimitSideNodeInfo : global::Quire.EquationEditor.Tree.ValueNodeInfo
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Collections.Generic.IDictionary<global::Quire.EquationEditor.Tree.LimitSideNodeInfo.LimitSide, string> b;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IDictionary<string, global::Quire.EquationEditor.Tree.LimitSideNodeInfo.LimitSide> c;
-    [global::Quire.Mirror.MirrorStub]
-    public override string ValueSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.LimitSideNodeInfo.LimitSide Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsSExpressionOf(string sexp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsValidInitializerString(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public LimitSideNodeInfo() { }
-    [global::Quire.Mirror.MirrorStub]
-    public LimitSideNodeInfo(string limitSide) { }
-    [global::Quire.Mirror.MirrorStub]
-    public LimitSideNodeInfo(global::Quire.EquationEditor.Tree.LimitSideNodeInfo other) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override object bk() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsEquivalentTo(global::Quire.EquationEditor.Tree.INodeInfo other) => base.IsEquivalentTo(other);
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsEquivalentTo(global::Quire.EquationEditor.Tree.LimitSideNodeInfo other) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.LimitSideNodeInfo+LimitSide, Ptc.EquationEditor")]
     public enum LimitSide
@@ -49,8 +25,6 @@ public partial class LimitSideNodeInfo : global::Quire.EquationEditor.Tree.Value
     {
         [global::Quire.Mirror.MirrorStub]
         public static readonly global::Quire.EquationEditor.Tree.LimitSideNodeInfo.a a_;
-        [global::Quire.Mirror.MirrorStub]
-        public a() { }
         [global::Quire.Mirror.MirrorStub]
         internal void a__(global::System.Collections.Generic.KeyValuePair<global::Quire.EquationEditor.Tree.LimitSideNodeInfo.LimitSide, string> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

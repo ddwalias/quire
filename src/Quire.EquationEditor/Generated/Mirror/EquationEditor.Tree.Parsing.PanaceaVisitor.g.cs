@@ -11,32 +11,4 @@ namespace Quire.EquationEditor.Tree.Parsing;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Parsing.PanaceaVisitor, Ptc.EquationEditor")]
 public partial class PanaceaVisitor
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Delegate1<global::Quire.EquationEditor.Tree.Parsing.Panacea> PanaceaHandler;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Delegate1<global::Quire.EquationEditor.Tree.Parsing.Panceaux.ReparentChild> ReparentChildHandler;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Delegate1<global::Quire.EquationEditor.Tree.Parsing.Panceaux.ReparentNode> ReparentNodeHandler;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Delegate1<global::Quire.EquationEditor.Tree.Parsing.Panceaux.ReplaceChildDescriptor> ReplaceChildDescriptorHandler;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Delegate1<global::Quire.EquationEditor.Tree.Parsing.Panceaux.TransformTo> TransformToHandler;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Delegate1<global::Quire.EquationEditor.Tree.Parsing.Panceaux.BinaryMergeValueChildren> BinaryMergeValueChildrenHandler;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Delegate1<global::Quire.EquationEditor.Tree.Parsing.Panceaux.ReplaceWithDefaultNode> ReplaceWithDefaultNodeHandler;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Delegate1<global::Quire.EquationEditor.Tree.Parsing.Panceaux.ReplaceWithChild> ReplaceWithChildHandler;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Delegate1<global::Quire.EquationEditor.Tree.Parsing.Panceaux.ReplaceWith> ReplaceWithHandler;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Delegate1<global::Quire.EquationEditor.Tree.Parsing.Panceaux.AutoLabelIdDescendant> AutoLabelIdDescendantHandler;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Delegate1<global::Quire.EquationEditor.Tree.Parsing.Panceaux.AutoLabelIdChild> AutoLabelIdChildHandler;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Delegate1<global::Quire.EquationEditor.Tree.Parsing.Panceaux.ReparentNodeAndPullOutChild> ReparentNodeAndPullOutChildHandler;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Delegate1<global::Quire.EquationEditor.Tree.Parsing.Panceaux.PullOutAdjacentDescendantFromChild> PullOutAdjacentDescendantFromChildHandler;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Delegate1<global::Quire.EquationEditor.Tree.Parsing.Panceaux.InsertChildrenIntoParent> InsertChildrenIntoParentHandler;
 }

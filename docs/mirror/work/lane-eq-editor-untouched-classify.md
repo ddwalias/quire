@@ -933,3 +933,27 @@ Names are the Quire (generated) names; `name()` is a method, `+Nested.name` a me
 ### `Native.z`
 - **unblocked** (6): `Accept(…)`, `Value`, `a`, `bo(…)`, `bp()`, `z()`
 - **needs manual IL match** (1): `Quire.Calculation.Core.IResultNode.ValueType`
+
+## Addendum: second pass after batches 1-5
+
+The first pass checked only a member's own type. Gate failures showed two cross-type blockers, so every IL body was rescanned for them (counts after batches 1-5, 4330 stubs left):
+
+| Class | Members |
+|---|---:|
+| field/method name clash (now includes members that read another type's renamed field) | 1876 |
+| unblocked | 1149 |
+| closure/lambda/iterator | 608 |
+| const (no IL) | 317 |
+| accessor pairing (new) | 178 |
+| `.initlocals` header | 67 |
+| needs manual IL match | 53 |
+| ctor stores before base call | 38 |
+| blocked in checkpoint | 38 |
+| XAML | 5 |
+| Settings pairing | 1 |
+
+- **Accessor pairing** (new, blocked): a property whose Mathcad accessors are obfuscated (`TreeList` is `g()`, `TreeListWithoutResultNodes` is `f()`, `HasUnitOverride` is `a()`) is called as `get_X` from Quire. Every caller fails with `calls differ`. Seen in `MathNode.Utilities.c`/`b(MathNode, int)` and `MathTransformer.ResultNode`.
+- **Missing overload in the generated stubs** (blocked): Mathcad `ax` has `bool b(ref MathNode, aq)` and `MathNode b(MathNode, aq)`; MirrorGen emitted only the `ref` overload, so `MathTransformer.MathNode` (calls the second) cannot compile idiomatically.
+- **Old-compiler `?.`** (blocked): `MathNode.Utilities.IsMiddleOfSubscript` calls `get_Children` with `call` and goes through a `Nullable<int>` local; the current compiler emits `callvirt` and no local.
+- **`ctor stores before base call` overcounts**: it flags constructors with field initializers, which C# expresses (batch 1 `MathNodeDescriptor`, `RadioButtonScriptableControlData`). Only explicit pre-base stores are real blockers.
+- Static constructors have no stub, so members whose static fields initialize through `ax.a`, `r.a` or a lambda cache (`MathTransformer` a-d, `LimitSideNodeInfo` b/c) keep those fields or the cctor out of the batch.
