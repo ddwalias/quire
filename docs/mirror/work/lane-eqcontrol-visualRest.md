@@ -247,6 +247,17 @@ ef Point alignmentPoint matched Mathcad local variable index [2].
   - VisualIntegralOperatorNode.MeasureStaticLayout: `foreach` loop over `_nodeChildren` followed by assigning intermediate `VisualMathNode` to a local before accessing `DesiredSize` and casting with `as` matched Mathcad IL locals and evaluation stack order.
 - Release IL: PASS; 2170 checked (.mirror-cache/release-il-a224b1b4b4b7/release-il.json).
 
+## Batch 11: VisualDerivativeSymbolNode and VisualDerivativeNodeEditor
+
+- Members: 45 members across 2 types:
+  - VisualDerivativeSymbolNode: FRACTIONBAR_VERTICAL_PADDING, FRACTIONBAR_SIDE_OVERHANG, _baseline, _fractionBar, _upperDerivativeSymbol, _lowerDerivativeSymbol, _orderSymbol, EffectiveBaselineY, EffectiveScriptBaselineY, TextBaselineY, DerivativeSymbolVerticalOffset, BaseOperandsSize, BaseOperandsOffset, Geometry, .ctor(derivativeSymbol), GetNodeAtPoint, InitializeChildren, SetOrderSymbolFontSize, SetOrderSymbolShowOperatorOnlyWhenActive, MeasureStaticLayout, ArrangeStaticLayout, CopyToOrderSymbol, HandleMathFormatChanged.
+  - VisualDerivativeNodeEditor: CaretOpacityProperty, OperatorSelectedProperty, _caretBrush, _operatorGeometry, _operandHighlighters, OperatorSelected, OnOperatorSelectedPropertyChanged, OnCaretOpacityPropertyChanged, .cctor(), OnCaretColorChanged, OnOperatorSelectedChanged, OnCaretOpacityChanged, .ctor(editNode, region), SelectOperator, GetFocus, Remove, UpdateOperatorSymbol, MeasureOverride, OnRender, BindToSettings, RemoveHighlighters, UpdateCaretBlinking, SetVisibilityOfEditorSymbols.
+- Shapes tried:
+  - VisualDerivativeNodeEditor.cctor: combining delegates with `+=` on `PropertyChangedCallback` matched Mathcad IL `Delegate.Combine` pattern.
+  - VisualDerivativeSymbolNode.ctor: ternary `DebugTools.DevAssert(...).Passed ? derivativeSymbol.Value : 'd'` directly matched Mathcad IL `brtrue.s` branching without negation.
+- Release IL: PASS; 2208 checked (.mirror-cache/release-il-50f89dbde482/release-il.json).
+
+
 
 
 
