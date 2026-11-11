@@ -11,20 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualOutfixNode, Ptc.Controls.EquationControl")]
 internal abstract partial class VisualOutfixNode : global::Quire.Controls.Internal.VisualMathNode, global::Quire.EquationEditor.View.IVisualOutfixNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.EquationEditor.View.IVisualMathNode LeftFence { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.EquationEditor.View.IVisualMathNode RightFence { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode[] NavigatableParts { get => base.NavigatableParts; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.Controls.Internal.VisualMathNode[] NodeChildren { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::System.Windows.Size DesiredSizeWithoutFences { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract bool Horizontal { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void SetParensVisibility(global::System.Windows.Visibility visibility);
-    [global::Quire.Mirror.MirrorStub]
-    protected VisualOutfixNode() { }
 }

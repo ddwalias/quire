@@ -72,7 +72,7 @@
 | VisualMathNode | 54 | 49 | 5 | public virtual global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> CoreElements (closure ordinal (iterator)), public virtual global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> CoreElementsTopLine (closure ordinal (iterator)), protected VisualMathNode() (closure ordinal (lambda)), protected virtual global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) (closure ordinal (lambda)), protected override void OnRender(global::System.Windows.Media.DrawingContext dc) (closure ordinal (lambda)) |
 | VisualMathNodeEditor | 39 | 39 | 0 | None |
 | VisualMathNodeHitTestResult | 8 | 8 | 0 | None |
-| VisualMatrixContents | 2 | 1 | 1 | public VisualMatrixContents() : base(default(global::Quire.Controls.Core.TableLayoutManager)) (closure ordinal (lambda)) |
+| VisualMatrixContents | 2 | 2 | 0 | None |
 | VisualMatrixNode | 69 | 68 | 1 | private void SetupResizeIndicatorBehaviour(global::Quire.Controls.Internal.VisualTextNode resizeIndicator) (closure ordinal (lambda)) |
 | VisualMatrixSuperscriptBinaryNode | 4 | 4 | 0 | None |
 | VisualMultiLineAligningBinaryOperatorNode | 20 | 20 | 0 | None |
@@ -169,3 +169,15 @@ ef Point alignmentPoint matched Mathcad local variable index [2].
   - VisualSymKeywordsStackNode.set_Item: Enumerable.Count() matched Linq call order.
   - VisualOperatorNode.NavigatableParts: array covariance return matched local variable slot.
 - Release IL: PASS; 1808 checked (.mirror-cache/release-il-0b259966dcda/release-il.json).
+
+## Batch 4: Outfix, AtomicTextLeafEditor, LeafOperatorEditor, and MatrixContents
+
+- Members: 32 members across 4 types:
+  - VisualOutfixNode: LeftFence, RightFence, NavigatableParts, NodeChildren, DesiredSizeWithoutFences, Horizontal, SetParensVisibility, .ctor.
+  - VisualAtomicTextLeafEditor: SelectedProperty, _caretBrush, Selected, .cctor, OnSelectedChanged(d, e), .ctor(editNode, region), OnSelectedChanged(bool), Remove, MeasureOverride, OnRender, OnCaretColorChanged, UpdateCaretBlinking.
+  - VisualLeafOperatorEditor: OperatorSelectedProperty, _caretBrush, .cctor, OnOperatorSelectedChanged(d, e), .ctor(editNode, region), OnOperatorSelectedChanged(bool), SelectOperator, Remove, MeasureOverride, OnRender, OnCaretColorChanged, UpdateCaretBlinking.
+  - VisualMatrixContents: GeneralRowSpacing, .ctor(), .cctor().
+- Shapes tried:
+  - VisualAtomicTextLeafEditor.cctor and VisualLeafOperatorEditor.cctor: non-object initializer syntax (`frameworkPropertyMetadata = new FrameworkPropertyMetadata(); frameworkPropertyMetadata.AffectsMeasure = true; ...`) matched Mathcad's sequential `stloc.0` + `ldloc.0` IL rather than `dup`.
+  - VisualOutfixNode: omitted explicit `IVisualNode.Loaded` in partial class to let C# compiler synthesize interface bridge methods consistently across base and derived types (`VisualMatrixNode`).
+- Release IL: PASS; 1928 checked (.mirror-cache/release-il-48245a53c75e/release-il.json).

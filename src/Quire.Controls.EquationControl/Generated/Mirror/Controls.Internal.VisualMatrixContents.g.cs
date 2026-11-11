@@ -11,8 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualMatrixContents, Ptc.Controls.EquationControl")]
 internal partial class VisualMatrixContents : global::Quire.Controls.Core.VisualTableContents
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static double GeneralRowSpacing;
-    [global::Quire.Mirror.MirrorStub]
-    public VisualMatrixContents() : base(default(global::Quire.Controls.Core.TableLayoutManager)) { }
 }
