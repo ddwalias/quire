@@ -11,28 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualFactory, Ptc.Controls.EquationControl")]
 internal partial class VisualFactory : global::Quire.EquationEditor.View.IVisualFactory
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Internal.VisualMathRegionNode _region;
-    [global::Quire.Mirror.MirrorStub]
-    public VisualFactory(global::Quire.Controls.Internal.VisualMathRegionNode region) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualMathNode CreateSingleLineBinaryBase(global::Quire.EquationEditor.Tree.MathNodeDescriptor descriptor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualBinaryOperatorNode CreateBiLinearBinaryNode(global::Quire.EquationEditor.Tree.MathNode biLinearNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualMathNode CreateSummationNode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualMathNode CreateProductNode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualBinaryOperatorNode CreateArgSeparatorNode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualMathNode CreateDefinitionNode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualPairNaryNode CreateIfNode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualPairNaryNode CreateIfNode(global::Quire.EquationEditor.Tree.MathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualUnaryOperatorNode CreateReturnNode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualInputControlEditor CreateInputControlEditor(global::Quire.EquationEditor.View.IVisualInputControlNode visualInputControlNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -2,6 +2,12 @@ namespace Quire.Controls.Internal;
 
 internal partial class VisualFactory
 {
+    private readonly VisualMathRegionNode _region;
+
+    public VisualFactory(VisualMathRegionNode region)
+    {
+        _region = region;
+    }
 
     public Quire.EquationEditor.View.IVisualMathNode CreateEmptyEvalResult()
     {
@@ -43,9 +49,21 @@ internal partial class VisualFactory
         return new VisualInputScriptableControlNode(mathNode.DescriptorName, mathNode, _region);
     }
 
+    public Quire.EquationEditor.View.IVisualMathNode CreateSingleLineBinaryBase(Quire.EquationEditor.Tree.MathNodeDescriptor descriptor)
+    {
+        return new VisualLinearBinaryOperatorNode(new VisualSymbolNode(descriptor.OperatorSymbol.Value, descriptor.OperatorSymbolMargin));
+    }
+
     public Quire.EquationEditor.View.IVisualBinaryOperatorNode CreateInlineBinaryNode(char symbol, Quire.EquationEditor.Tree.SymbolMargin margin)
     {
         return new VisualMultiLineAligningBinaryOperatorNode(new VisualSymbolNode(symbol, margin));
+    }
+
+    public Quire.EquationEditor.View.IVisualBinaryOperatorNode CreateBiLinearBinaryNode(Quire.EquationEditor.Tree.MathNode biLinearNode)
+    {
+        string text = biLinearNode.OperatorSymbol.HasValue ? biLinearNode.OperatorSymbol.Value.ToString() : null;
+        DebugTools.AssertNotNull(text, null);
+        return new VisualMultiLineWrappingBinaryOperatorNode(new VisualSymbolNode(text, biLinearNode.OperatorSymbolMargin));
     }
 
     public Quire.EquationEditor.View.IVisualUnaryOperatorNode CreateInlineUnaryNode(char symbol, Quire.EquationEditor.Tree.SymbolMargin margin, bool isPrefix)
@@ -98,6 +116,16 @@ internal partial class VisualFactory
         return new VisualPartialDerivativeOperatorNode();
     }
 
+    public Quire.EquationEditor.View.IVisualMathNode CreateSummationNode()
+    {
+        return new VisualRangedPrefixNode(Quire.EquationEditor.Tree.DefaultDescriptorTable.Default["SUMMATION"]);
+    }
+
+    public Quire.EquationEditor.View.IVisualMathNode CreateProductNode()
+    {
+        return new VisualRangedPrefixNode(Quire.EquationEditor.Tree.DefaultDescriptorTable.Default["PRODUCT"]);
+    }
+
     public Quire.EquationEditor.View.IVisualMathNode CreateStepRangeNode()
     {
         return new VisualStepRangeOperatorNode();
@@ -113,9 +141,20 @@ internal partial class VisualFactory
         return new VisualConjugateOperatorNode();
     }
 
+    public Quire.EquationEditor.View.IVisualBinaryOperatorNode CreateArgSeparatorNode()
+    {
+        return new VisualLinearBinaryOperatorNode<VisualArgSeparatorSymbolNode>();
+    }
+
     public Quire.EquationEditor.View.IVisualMathNode CreateEvaluationNode()
     {
         return new VisualEvalNode();
+    }
+
+    public Quire.EquationEditor.View.IVisualMathNode CreateDefinitionNode()
+    {
+        Quire.EquationEditor.Tree.MathNodeDescriptor mathNodeDescriptor = Quire.EquationEditor.Tree.DefaultDescriptorTable.Default["DEFINITION"];
+        return new VisualDefinitionNode(new VisualSymbolNode(mathNodeDescriptor.OperatorSymbol.Value, mathNodeDescriptor.OperatorSymbolMargin));
     }
 
     public Quire.EquationEditor.View.IVisualMathNode CreateSymbolicEvaluationNode()
@@ -218,6 +257,17 @@ internal partial class VisualFactory
         return new VisualLoopNode("while");
     }
 
+    public Quire.EquationEditor.View.IVisualPairNaryNode CreateIfNode()
+    {
+        return new VisualPairNaryNode("if", "else if", "else");
+    }
+
+    public Quire.EquationEditor.View.IVisualPairNaryNode CreateIfNode(Quire.EquationEditor.Tree.MathNode node)
+    {
+        string middleOperatorPartsSymbol = (node.IsAlternateFormPairNary ? "also if" : "else if");
+        return new VisualPairNaryNode("if", middleOperatorPartsSymbol, "else");
+    }
+
     public Quire.EquationEditor.View.IVisualLeafOperatorNode CreateBreakNode()
     {
         return new VisualLeafOperatorNode("break");
@@ -226,6 +276,15 @@ internal partial class VisualFactory
     public Quire.EquationEditor.View.IVisualLeafOperatorNode CreateContinueNode()
     {
         return new VisualLeafOperatorNode("continue");
+    }
+
+    public Quire.EquationEditor.View.IVisualUnaryOperatorNode CreateReturnNode()
+    {
+        return new VisualLinearUnaryNode(new VisualSymbolNode("return", new Quire.EquationEditor.Tree.SymbolMargin
+        {
+            Left = 0.0,
+            Right = 4.0
+        }), isPrefix: true);
     }
 
     public Quire.EquationEditor.View.IVisualIdNodeEditor CreateIdentifierEditor(Quire.EquationEditor.View.IVisualIdNode visual)
@@ -281,6 +340,15 @@ internal partial class VisualFactory
     public Quire.EquationEditor.View.IVisualMultiLineWrappingBinaryOperatorNodeEditor CreateBinaryWrappingOperatorEditor(Quire.EquationEditor.View.IVisualBinaryOperatorNode node)
     {
         return new VisualBinaryWrappOperatorNodeEditor((VisualMultiLineWrappingBinaryOperatorNode)node, _region);
+    }
+
+    public Quire.EquationEditor.View.IVisualInputControlEditor CreateInputControlEditor(Quire.EquationEditor.View.IVisualInputControlNode visualInputControlNode)
+    {
+        if (visualInputControlNode is VisualComboBoxControlNode editNode)
+        {
+            return new VisualComboBoxControlEditor(editNode, _region);
+        }
+        return new VisualInputControlEditor((VisualInputControlNode)visualInputControlNode, _region);
     }
 
     public Quire.EquationEditor.View.IVisualOutfixNodeEditor CreateOutfixEditor(Quire.EquationEditor.View.IVisualOutfixNode node)

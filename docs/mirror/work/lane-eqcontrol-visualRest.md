@@ -181,3 +181,15 @@ ef Point alignmentPoint matched Mathcad local variable index [2].
   - VisualAtomicTextLeafEditor.cctor and VisualLeafOperatorEditor.cctor: non-object initializer syntax (`frameworkPropertyMetadata = new FrameworkPropertyMetadata(); frameworkPropertyMetadata.AffectsMeasure = true; ...`) matched Mathcad's sequential `stloc.0` + `ldloc.0` IL rather than `dup`.
   - VisualOutfixNode: omitted explicit `IVisualNode.Loaded` in partial class to let C# compiler synthesize interface bridge methods consistently across base and derived types (`VisualMatrixNode`).
 - Release IL: PASS; 1928 checked (.mirror-cache/release-il-48245a53c75e/release-il.json).
+
+## Batch 5: VisualFactory, VisualLimitSideNode, VisualLimitSideNodeEditor, and VisualLayoutManager
+
+- Members: 50 members across 4 types:
+  - VisualFactory: _region, .ctor(VisualMathRegionNode), CreateSingleLineBinaryBase, CreateBiLinearBinaryNode, CreateSummationNode, CreateProductNode, CreateArgSeparatorNode, CreateDefinitionNode, CreateIfNode(), CreateIfNode(MathNode), CreateReturnNode, CreateInputControlEditor.
+  - VisualLimitSideNode: NodeInfo, Child, IsPlaceholder, EffectiveBaselineY, EffectiveScriptBaselineY, TextBaselineY, CreateVisualChildren, GetNodeAtPoint, OnShowOperatorOnlyWhenActiveChanged, MeasureStaticLayout, ArrangeStaticLayout, .ctor().
+  - VisualLimitSideNodeEditor: CaretOpacityProperty, _highlighter, _caret, _limitSideSymbol, OnCaretOpacityPropertyChanged, .cctor, UpdateCaretBlinking, OnCaretColorChanged, OnCaretOpacityChanged, UpdateSymbols, BindToSettings, .ctor(VisualMathNode, VisualMathRegionNode), Remove, MeasureOverride, ArrangeOverride.
+  - VisualLayoutManager: _childItems, _operatorPartItems, _baseline, ChildItems, OperatorPartItems, TextBaselineOffset, DesiredSize, .ctor(LayoutItem[], LayoutItem[]), Arrange, FindClosestChild, AlignItemAdjacentTo, ToString.
+- Shapes tried:
+  - VisualLimitSideNodeEditor.cctor: non-object initializer syntax for FrameworkPropertyMetadata matched Mathcad IL without dup.
+  - VisualLimitSideNode: omitted explicit IVisualNode.Loaded in partial declaration to let C# compiler synthesize interface bridge methods consistently.
+- Release IL: PASS; 1969 checked (.mirror-cache/release-il-ab025e313e4e/release-il.json).
