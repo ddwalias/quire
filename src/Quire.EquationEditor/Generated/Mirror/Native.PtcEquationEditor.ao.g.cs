@@ -13,24 +13,4 @@ internal partial class ao
 {
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState a_;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState b;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Direction c;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState d;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.EquationEditor.Tree.Scoping.TypeoverState e;
-    [global::Quire.Mirror.MirrorStub]
-    public bool f;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.MathNode g;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Native.PtcEquationEditor.ay h;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Scoping.TypeoverState a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void a(global::Quire.EquationEditor.Tree.Scoping.TypeoverState A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public ao() { }
 }

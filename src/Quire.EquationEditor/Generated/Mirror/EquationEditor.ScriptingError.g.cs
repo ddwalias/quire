@@ -12,51 +12,5 @@ namespace Quire.EquationEditor;
 public partial class ScriptingError : global::Quire.Calculation.Core.IEngineError, global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly string a;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Calculation.Core.StringCollection b;
-    [global::Quire.Mirror.MirrorStub]
-    private uint c;
-    [global::Quire.Mirror.MirrorStub]
-    private uint d;
-    [global::Quire.Mirror.MirrorStub]
-    private string e;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Calculation.Core.ICalculatable f;
-    [global::Quire.Mirror.MirrorStub]
-    private string g;
-    [global::Quire.Mirror.MirrorStub]
-    private bool h;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Calculation.Core.EngineError i;
-    [global::Quire.Mirror.MirrorStub]
-    public string ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.StringCollection ErrorMessageArguments { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public uint NodeHandle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public uint Argument { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Message { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.ICalculatable ErrorSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ResourceString { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsRuntime { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.EngineError OriginalError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ScriptingError(string error) { }
-    [global::Quire.Mirror.MirrorStub]
-    public object Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsEquivalentTo(global::Quire.Calculation.Core.EngineError error, bool checkNodeHandle = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.EngineError FindNextError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsAncestorOf(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     string global::Quire.Calculation.Core.IEngineError.Symbol { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
