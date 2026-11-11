@@ -236,6 +236,18 @@ ef Point alignmentPoint matched Mathcad local variable index [2].
   - VisualTryNode.MeasureOverride: intermediate double locals and Math.Max call chains matched Mathcad's evaluation stack ordering and local slots.
 - Release IL: PASS; 2126 checked (.mirror-cache/release-il-31dd0929d65a/release-il.json).
 
+## Batch 10: VisualIntegralOperatorNode and VisualIntegralNodeEditor
+
+- Members: 48 members across 2 types:
+  - VisualIntegralOperatorNode: _integralDescriptor, _nodeChildren, _integralSymbol, _variableOfIntegrationPrefix, _layout, AdjacentUpperLimitHeightProperty, AdjacentLowerLimitHeightProperty, AdjacentUpperLimitHeight, AdjacentLowerLimitHeight, this[int index], NodeChildren, IntegralSymbol, VariableOfIntegrationPrefix, TextBaselineY, EffectiveBaselineY, EffectiveScriptBaselineY, OperatorElement, Operator, NavigatableParts, .ctor(), SetVisibilityOfOperatorSymbol, GetNodeAtPoint, MeasureStaticLayout, ArrangeStaticLayout, LimitsAndIntegralSymbolWidth.
+  - VisualIntegralNodeEditor: OperatorSelectedProperty, CaretOpacityProperty, _integralSymbol, _variableOfIntegrationPrefix, _operandHighlighters, OperatorSelected, CaretOpacity, OnOperatorSelectedPropertyChanged, OnCaretOpacityPropertyChanged, .cctor(), OnOperatorSelectedChanged, OnCaretColorChanged, OnCaretOpacityChanged, .ctor(editNode, region), SelectOperator, GetFocus, Remove, MeasureOverride, ArrangeOverride, UpdateOperatorSymbols, BindToSettings, RemoveHighlighters, UpdateCaretBlinking, SetVisibilityOfEditorSymbols.
+- Shapes tried:
+  - VisualIntegralNodeEditor.cctor: sequential initialization of FrameworkPropertyMetadata matched Mathcad IL without dup.
+  - VisualIntegralOperatorNode.GetNodeAtPoint: ternary condition `(childIndex == 0) ? Direction.Left : Direction.Right` matched Mathcad IL `brfalse.s` branching.
+  - VisualIntegralOperatorNode.MeasureStaticLayout: `foreach` loop over `_nodeChildren` followed by assigning intermediate `VisualMathNode` to a local before accessing `DesiredSize` and casting with `as` matched Mathcad IL locals and evaluation stack order.
+- Release IL: PASS; 2170 checked (.mirror-cache/release-il-a224b1b4b4b7/release-il.json).
+
+
 
 
 
