@@ -12,58 +12,6 @@ namespace Quire.Controls.Core;
 public partial class NumberFormat : global::Quire.Controls.Core.IPropertyAggregate, global::System.ComponentModel.INotifyPropertyChanged, global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<int> _decimalPlaces;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _showTrailingDecimalZeros;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<global::Quire.Controls.Core.NumberFormat.NumberStyles> _numberStyle;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<global::Quire.Controls.Core.NumberFormat.ExponentStyles> _exponentStyle;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<global::Quire.Controls.Core.NumberFormat.ComplexStyles> _complexStyle;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<int> _zeroThreshold;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<int> _exponentialThreshold;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<int> _complexThreshold;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<global::Quire.Controls.Core.NumberFormat.RadixStyles> _radixStyle;
-    [global::Quire.Mirror.MirrorStub]
-    public const int DefaultComplexThresholdValue = 10;
-    [global::Quire.Mirror.MirrorStub]
-    public const int MinComplexThresholdAllowed = 0;
-    [global::Quire.Mirror.MirrorStub]
-    public const int MaxComplexThresholdAllowed = 307;
-    [global::Quire.Mirror.MirrorStub]
-    public const int DefaultZeroThresholdValue = 15;
-    [global::Quire.Mirror.MirrorStub]
-    public const int MinZeroThresholdAllowed = 0;
-    [global::Quire.Mirror.MirrorStub]
-    public const int MaxZeroThresholdAllowed = 307;
-    [global::Quire.Mirror.MirrorStub]
-    public const int DefaultExponentialThresholdValue = 3;
-    [global::Quire.Mirror.MirrorStub]
-    public const int MinExponentialThresholdAllowed = 0;
-    [global::Quire.Mirror.MirrorStub]
-    public const int MaxExponentialThresholdAllowed = 15;
-    [global::Quire.Mirror.MirrorStub]
-    public const int MinDecimalPlacesAllowed = 0;
-    [global::Quire.Mirror.MirrorStub]
-    public const int MaxDecimalPlacesAllowed = 15;
-    [global::Quire.Mirror.MirrorStub]
-    public const int DefaultDecimalPlacesValue = 3;
-    [global::Quire.Mirror.MirrorStub]
-    public const int RoundTripDecimalPlaces = -1;
-    [global::Quire.Mirror.MirrorStub]
-    public const int DecimalBase = 10;
-    [global::Quire.Mirror.MirrorStub]
-    public const int BinaryBase = 2;
-    [global::Quire.Mirror.MirrorStub]
-    public const int OctalBase = 8;
-    [global::Quire.Mirror.MirrorStub]
-    public const int HexadecimalBase = 16;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedCommand SetNumberFormatFieldCommand;
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Input.RoutedCommand SetNumberFormatExponentialThresholdCommand;
