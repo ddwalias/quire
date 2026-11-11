@@ -17,8 +17,4 @@ internal partial class f
     private readonly global::System.Collections.Generic.Dictionary<char, char> b;
     [global::Quire.Mirror.MirrorStub]
     private f() { }
-    [global::Quire.Mirror.MirrorStub]
-    public char a(char A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void a(char A_0, char A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
