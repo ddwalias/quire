@@ -12,39 +12,5 @@ namespace Quire.Controls.Internal;
 internal partial class VisualGradientOperatorNode : global::Quire.Controls.Internal.VisualMathNode
 {
     [global::Quire.Mirror.MirrorStub]
-    private static readonly global::Quire.EquationEditor.Tree.MathNodeDescriptor GradientDescriptor;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Internal.GradientLayoutManager _layout;
-    [global::Quire.Mirror.MirrorStub]
-    private const int VariableListOperandIndex = 0;
-    [global::Quire.Mirror.MirrorStub]
-    private const int FunctionOperandIndex = 1;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.Internal.VisualSymbolNode GradientSymbol { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.Internal.VisualMathNode[] NodeChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode[] NavigatableParts { get => base.NavigatableParts; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> CoreElements { get => base.CoreElements; }
-    [global::Quire.Mirror.MirrorStub]
-    public override double TextBaselineY { get => base.TextBaselineY; }
-    [global::Quire.Mirror.MirrorStub]
-    public override double EffectiveBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override double EffectiveScriptBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => base[index]; set => base[index] = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualGradientOperatorNode() { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void ModifyChildMathFormat(int childIndex, global::Quire.Controls.Core.MathFormatValues childMathFormat) => base.ModifyChildMathFormat(childIndex, childMathFormat);
-    [global::Quire.Mirror.MirrorStub]
-    public void SetVisibilityOfOperatorSymbol(global::System.Windows.Visibility visibility) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => base.MeasureStaticLayout(availableSize);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeStaticLayout(global::System.Windows.Size finalSize) => base.ArrangeStaticLayout(finalSize);
-    [global::Quire.Mirror.MirrorStub]
-    internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

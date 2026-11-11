@@ -291,12 +291,22 @@ ef Point alignmentPoint matched Mathcad local variable index [2].
 ## Batch 15: VisualLimitOperatorNode and VisualLimitNodeEditor
 
 - Members: 36 members across 2 types:
-  - VisualLimitOperatorNode (17 members): _limitDescriptor, _nodeChildren, _limitSymbol, _limitArrow, OperatorPartCount, _layout, LimitVariableOperandIndex, LimitVariableExpressionOperandIndex, LimitSideOperandIndex, LimitExpressionOperandIndex, this[int index], NavigatableParts, LimitSymbol, LimitArrow, NodeChildren, LimitSymbolTopLeft, LimitArrowTopLeft, TextBaselineY, EffectiveBaselineY, EffectiveScriptBaselineY, .ctor(), ModifyChildMathFormat, MeasureStaticLayout, ArrangeStaticLayout, GetNodeAtPoint. (Blocked: CoreElements iterator).
+  - VisualLimitOperatorNode (17 members): _limitDescriptor, _nodeChildren, _limitSymbol, _limitArrow, OperatorPartCount, _layout, LimitVariableOperandIndex, LimitVariableExpressionOperandIndex, LimitSideOperandIndex, LimitExpressionOperandIndex, this[int index], NavigatableParts, LimitSymbol, LimitArrow, NodeChildren, LimitSymbolTopLeft, LimitArrowTopLeft, TextBaselineY, EffectiveBaselineY, EffectiveScriptBaselineY, .ctor(), ModifyChildMathFormat, ArrangeStaticLayout, GetNodeAtPoint. (Blocked: CoreElements iterator).
   - VisualLimitNodeEditor (19 members): CaretOpacityProperty, OperatorSelectedProperty, _operandHighlighters, _limitSymbol, _limitArrow, OperatorSelected, OnOperatorSelectedPropertyChanged, OnCaretOpacityPropertyChanged, .cctor(), OnCaretColorChanged, OnOperatorSelectedChanged, OnCaretOpacityChanged, .ctor(editNode, region), SelectOperator, GetFocus, Remove, UpdateOperatorSymbol, MeasureOverride, ArrangeOverride, BindToSettings, RemoveHighlighters, UpdateCaretBlinking, SetVisibilityOfEditorSymbols.
 - Shapes tried:
   - VisualLimitOperatorNode.set_Item: using `string.Format("Index cannot be greater than {0}...", Length - 1)` matched Mathcad IL string.Format call. Storing `scaledFontSize` into a local variable before `DevAssert` preserved local variable slots [0..3].
   - VisualLimitOperatorNode.GetNodeAtPoint: declaring `Direction caretSideHit` ahead of `if (childType == LayoutChildType.Child)` and testing `childSideHit == Direction.Left ? Direction.Left : Direction.Indeterminate` matched Mathcad IL local slot 3 and `brfalse.s` branch shape.
 - Release IL: PASS; 2353 checked (.mirror-cache/release-il-02b9711384f4/release-il.json).
+
+## Batch 16: VisualGradientOperatorNode and VisualGradientNodeEditor
+
+- Members: 35 members across 2 types:
+  - VisualGradientOperatorNode (14 members): GradientDescriptor, _layout, VariableListOperandIndex, FunctionOperandIndex, GradientSymbol, NodeChildren, NavigatableParts, CoreElements, TextBaselineY, EffectiveBaselineY, EffectiveScriptBaselineY, this[int index], .ctor(), ModifyChildMathFormat, SetVisibilityOfOperatorSymbol, ArrangeStaticLayout, GetNodeAtPoint. (Blocked: MeasureStaticLayout closure lambda).
+  - VisualGradientNodeEditor (21 members): OperatorSelectedProperty, CaretOpacityProperty, OperatorSymbol, _operandHighlighters, OperatorSelected, OnOperatorSelectedPropertyChanged, OnCaretOpacityPropertyChanged, .cctor(), OnOperatorSelectedChanged, OnCaretColorChanged, OnCaretOpacityChanged, .ctor(editNode, region), SelectOperator, GetFocus, Remove, MeasureOverride, ArrangeOverride, UpdateOperatorSymbol, BindToSettings, RemoveHighlighters, UpdateCaretBlinking, SetVisibilityOfEditorSymbols.
+- Shapes tried:
+  - VisualGradientOperatorNode.ctor: assigning ternary result `opSymbol` to a local `char` variable before calling `new VisualSymbolNode(opSymbol)` matched Mathcad IL evaluation order (ternary evaluated before `ldarg.0` for field store).
+  - VisualGradientOperatorNode.GetNodeAtPoint: declaring `HitTestResult result` before branching and returning single exit variable matched local slot 3 and `br.s` control flow.
+- Release IL: PASS; 2388 checked (.mirror-cache/release-il-d489fdd7c024/release-il.json).
 
 
 
