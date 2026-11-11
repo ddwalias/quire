@@ -216,4 +216,15 @@ ef Point alignmentPoint matched Mathcad local variable index [2].
   - VisualConjugateOperatorNode.MeasureStaticLayout: pre-declaring double width; LayoutItem[] childItems; LayoutItem[] operatorPartItems; ahead of array iteration loop matched Mathcad local variable slots [0], [1], and [2].
 - Release IL: PASS; 2050 checked (.mirror-cache/release-il-4510de5e4729/release-il.json).
 
+## Batch 8: VisualVectorizationOperatorNode and VisualVectorizationNodeEditor
+
+- Members: 42 members across 2 types:
+  - VisualVectorizationOperatorNode: _vectorizationDescriptor, _nodeChildren, _operatorSymbol, _layout, this[int index], NodeChildren, OperatorSymbol, VectorizationSymbolTopLeft, TextBaselineY, EffectiveBaselineY, EffectiveScriptBaselineY, Child, OperatorElement, Operator, IVisualUnaryOperatorNode.Child, NavigatableParts, .ctor(), SetVisibilityOfOperatorSymbol, GetNodeAtPoint, MeasureStaticLayout, ArrangeStaticLayout, .cctor().
+  - VisualVectorizationNodeEditor: OperatorSelectedProperty, CaretOpacityProperty, _operatorSymbol, _operandHighlighters, OperatorSelected, OnOperatorSelectedPropertyChanged, OnCaretOpacityPropertyChanged, .cctor(), OnOperatorSelectedChanged, OnCaretColorChanged, OnCaretOpacityChanged, .ctor(editNode, region), SelectOperator, GetFocus, Remove, MeasureOverride, ArrangeOverride, UpdateOperatorSymbol, BindToSettings, RemoveHighlighters, UpdateCaretBlinking, SetVisibilityOfEditorSymbols.
+- Shapes tried:
+  - VisualVectorizationNodeEditor.cctor: sequential initialization of FrameworkPropertyMetadata matched Mathcad IL without dup.
+  - VisualVectorizationOperatorNode.MeasureStaticLayout: pre-declaring double width; LayoutItem[] childItems; LayoutItem[] operatorPartItems; ahead of array iteration loop matched Mathcad local variable slots [0], [1], and [2].
+- Release IL: PASS; 2090 checked (.mirror-cache/release-il-499627bbd9a5/release-il.json).
+
+
 

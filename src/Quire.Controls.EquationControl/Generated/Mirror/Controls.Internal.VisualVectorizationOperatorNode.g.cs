@@ -11,46 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualVectorizationOperatorNode, Ptc.Controls.EquationControl")]
 internal partial class VisualVectorizationOperatorNode : global::Quire.Controls.Internal.VisualUnaryOperatorNodeForEditor, global::Quire.EquationEditor.View.IVisualUnaryOperatorNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::Quire.EquationEditor.Tree.MathNodeDescriptor _vectorizationDescriptor;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Internal.VisualMathNode[] _nodeChildren;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Internal.Fence _operatorSymbol;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Internal.VectorizationLayoutManager _layout;
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => base[index]; set => base[index] = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Internal.VisualMathNode[] NodeChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Internal.Fence OperatorSymbol { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point VectorizationSymbolTopLeft { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override double TextBaselineY { get => base.TextBaselineY; }
-    [global::Quire.Mirror.MirrorStub]
-    public override double EffectiveBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override double EffectiveScriptBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Controls.Internal.VisualMathNode Child { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Controls.Internal.VisualMathNode OperatorElement { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualMathNode Operator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.View.IVisualMathNode global::Quire.EquationEditor.View.IVisualUnaryOperatorNode.Child { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode[] NavigatableParts { get => base.NavigatableParts; }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualVectorizationOperatorNode() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void SetVisibilityOfOperatorSymbol(global::System.Windows.Visibility visibility) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => base.MeasureStaticLayout(availableSize);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeStaticLayout(global::System.Windows.Size finalSize) => base.ArrangeStaticLayout(finalSize);
 }
