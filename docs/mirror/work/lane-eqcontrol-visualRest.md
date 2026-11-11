@@ -308,8 +308,14 @@ ef Point alignmentPoint matched Mathcad local variable index [2].
   - VisualGradientOperatorNode.GetNodeAtPoint: declaring `HitTestResult result` before branching and returning single exit variable matched local slot 3 and `br.s` control flow.
 - Release IL: PASS; 2388 checked (.mirror-cache/release-il-d489fdd7c024/release-il.json).
 
+## Batch 17: VisualRangedPrefixNode and VisualRangedPrefixOperatorNodeEditor
 
-
-
-
+- Members: 44 members across 2 types:
+  - VisualRangedPrefixNode (23 members): _rangedPrefixDescriptor, _nodeChildren, _operatorSymbol, _layout, OperatorSymbol, NodeChildren, NavigatableParts, LowerRangeBoundOperandIndex, UpperRangeBoundOperandIndex, PrincipalOperandIndex, this[int index], TextBaselineY, EffectiveBaselineY, EffectiveScriptBaselineY, .ctor(), ModifyChildMathFormat, UpdateRangeBoundsInactiveVisibility, SetVisibilityOfOperatorSymbol, GetNodeAtPoint, MeasureStaticLayout, ArrangeStaticLayout, IVisualNode.Loaded, IVisualNode.IsLoaded. (Blocked: CoreElements iterator).
+  - VisualRangedPrefixOperatorNodeEditor (21 members): OperatorSelectedProperty, CaretOpacityProperty, OperatorSymbol, _operandHighlighters, OperatorSelected, OnOperatorSelectedPropertyChanged, OnCaretOpacityPropertyChanged, .cctor(), OnOperatorSelectedChanged, OnCaretColorChanged, OnCaretOpacityChanged, .ctor(editNode, region), SelectOperator, GetFocus, Remove, MeasureOverride, ArrangeOverride, UpdateOperatorSymbol, BindToSettings, RemoveHighlighters, UpdateCaretBlinking, SetVisibilityOfEditorSymbols.
+- Shapes tried:
+  - VisualRangedPrefixNode.MeasureStaticLayout: declaring LayoutItem[] childItems; LayoutItem[] operatorPartItems; at the beginning of the method before the loop placed them in local variable slots [0] and [1], matching Mathcad IL local variable table.
+  - VisualRangedPrefixNode.GetNodeAtPoint: testing (childIndex == 0) ? Direction.Left : Direction.Right emitted rfalse.s matching Mathcad IL branching opcode.
+  - VisualRangedPrefixOperatorNodeEditor.cctor: property metadata creation using direct statement property assignments (meta.AffectsMeasure = true;) emitted stloc.0; ldloc.0 sequence matching target IL.
+- Release IL: PASS; 2429 checked (.mirror-cache/release-il-bfec6ba27643/release-il.json).
 
