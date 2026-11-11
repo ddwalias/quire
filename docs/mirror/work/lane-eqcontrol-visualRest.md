@@ -206,3 +206,14 @@ ef Point alignmentPoint matched Mathcad local variable index [2].
   - VisualFractionOperatorNode.GetNodeAtPoint: structured `if ... else ...` scoping for `GeneralTransform` variables matched local variable slot indices [1] and [2].
 - Release IL: PASS; 2010 checked (.mirror-cache/release-il-0b44db8728c8/release-il.json).
 
+## Batch 7: VisualConjugateOperatorNode and VisualConjugateNodeEditor
+
+- Members: 42 members across 2 types:
+  - VisualConjugateOperatorNode: _conjugateDescriptor, _nodeChildren, _operatorSymbol, _layout, this[int index], NodeChildren, OperatorSymbol, ConjugateSymbolTopLeft, TextBaselineY, EffectiveBaselineY, EffectiveScriptBaselineY, Child, OperatorElement, Operator, IVisualUnaryOperatorNode.Child, NavigatableParts, .ctor(), SetVisibilityOfOperatorSymbol, GetNodeAtPoint, MeasureStaticLayout, ArrangeStaticLayout, .cctor().
+  - VisualConjugateNodeEditor: OperatorSelectedProperty, CaretOpacityProperty, _operatorSymbol, _operandHighlighters, OperatorSelected, OnOperatorSelectedPropertyChanged, OnCaretOpacityPropertyChanged, .cctor(), OnOperatorSelectedChanged, OnCaretColorChanged, OnCaretOpacityChanged, .ctor(editNode, region), SelectOperator, GetFocus, Remove, MeasureOverride, ArrangeOverride, UpdateOperatorSymbol, BindToSettings, RemoveHighlighters, UpdateCaretBlinking, SetVisibilityOfEditorSymbols.
+- Shapes tried:
+  - VisualConjugateNodeEditor.cctor: sequential initialization of FrameworkPropertyMetadata matched Mathcad IL without dup.
+  - VisualConjugateOperatorNode.MeasureStaticLayout: pre-declaring double width; LayoutItem[] childItems; LayoutItem[] operatorPartItems; ahead of array iteration loop matched Mathcad local variable slots [0], [1], and [2].
+- Release IL: PASS; 2050 checked (.mirror-cache/release-il-4510de5e4729/release-il.json).
+
+
