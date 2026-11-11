@@ -2,16 +2,34 @@
 
 namespace utl {
 
+namespace {
+
+// Holds a critical section for the lifetime of the object.
+class CriticalSectionLock {
+public:
+    explicit CriticalSectionLock(CRITICAL_SECTION &section) : section(&section) { EnterCriticalSection(&section); }
+    ~CriticalSectionLock() { LeaveCriticalSection(section); }
+
+private:
+    CRITICAL_SECTION *section;
+};
+
+}  // namespace
+
 PerformanceTimer::PerformanceTimer()
-    : samples_begin(nullptr), samples_end(nullptr), samples_capacity(nullptr), started(0), current(0), total(0), count(0), depth(0) {
+    : started(0), current(0), total(0), frequency(0), count(0), depth(0) {
     LARGE_INTEGER ticks;
     QueryPerformanceFrequency(&ticks);
     frequency = (double)ticks.QuadPart;
     InitializeCriticalSection(&lock);
 }
 
+PerformanceTimer::~PerformanceTimer() {
+    DeleteCriticalSection(&lock);
+}
+
 void PerformanceTimer::Start() {
-    EnterCriticalSection(&lock);
+    CriticalSectionLock guard(lock);
     if (++depth <= 1) {
         current = 0;
         ++count;
@@ -19,7 +37,24 @@ void PerformanceTimer::Start() {
         QueryPerformanceCounter(&ticks);
         started = (double)ticks.QuadPart;
     }
-    LeaveCriticalSection(&lock);
+}
+
+void PerformanceTimer::Stop() {
+    CriticalSectionLock guard(lock);
+    if (--depth <= 0) {
+        LARGE_INTEGER ticks;
+        QueryPerformanceCounter(&ticks);
+        double elapsed = (double)ticks.QuadPart - started;
+        started = 0;
+        current += elapsed;
+        total += elapsed;
+        if (current > (frequency * 1e7) / 1e3) {
+            --count;
+            total -= current;
+        } else {
+            samples.push_back(current);
+        }
+    }
 }
 
 void PerformanceTimer::Pause() {
@@ -42,9 +77,7 @@ void PerformanceTimer::Reset() {
     started = 0;
     current = 0;
     count = 0;
-    if (samples_begin != samples_end) {
-        samples_end = samples_begin;
-    }
+    samples.clear();
 }
 
 long PerformanceTimer::GetCount() const {

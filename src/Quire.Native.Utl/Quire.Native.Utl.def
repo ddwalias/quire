@@ -11,6 +11,8 @@ EXPORTS
     ?Pause@PerformanceTimer@utl@@QEAAXXZ
     ?Resume@PerformanceTimer@utl@@QEAAXXZ
     ?Reset@PerformanceTimer@utl@@QEAAXXZ
+    ?Stop@PerformanceTimer@utl@@QEAAXXZ
+    ??1PerformanceTimer@utl@@QEAA@XZ
     ?GetCount@PerformanceTimer@utl@@QEBAJXZ
     ?GetLast@PerformanceTimer@utl@@QEBANXZ
     ?GetElapsed@PerformanceTimer@utl@@QEBANXZ

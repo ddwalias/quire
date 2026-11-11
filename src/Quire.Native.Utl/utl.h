@@ -3,6 +3,7 @@
 #include <Windows.h>
 
 #include <cstddef>
+#include <vector>
 
 // Class layouts for utl.dll's exports. Each member is declared at the offset its machine code uses; the
 // layouts of members that no exported function touches yet are not inferred.
@@ -56,7 +57,9 @@ private:
 class PerformanceTimer {
 public:
     PerformanceTimer();
+    ~PerformanceTimer();
     void Start();
+    void Stop();
     void Pause();
     void Resume();
     void Reset();
@@ -66,9 +69,7 @@ public:
     double GetAverage() const;
 
 private:
-    double *samples_begin;
-    double *samples_end;
-    double *samples_capacity;
+    std::vector<double> samples;
     double started;
     double current;
     double total;

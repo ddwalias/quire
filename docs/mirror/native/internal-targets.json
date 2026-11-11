@@ -2,6 +2,14 @@
   "utl.dll": {
     "sha256": "490ce48c81c3dc7bccdf545e88cbde8a9150ff750699fdbdcac308314414ff6c",
     "targets": {
+      "??$_Emplace_reallocate@AEBN@?$vector@NV?$allocator@N@std@@@std@@AEAAPEANQEANAEBN@Z": {
+        "rva": "0xbe10",
+        "parked": true
+      },
+      "??3@YAXPEAX_K@Z": {
+        "rva": "0x11c00",
+        "toolchain": true
+      },
       "??_C@_1BM@GDEAKNHC@?$AAE?$AAn?$AAg?$AAi?$AAn?$AAe?$AAL?$AAo?$AAg?$AAg?$AAi?$AAn?$AAg@": {
         "rva": "0x190d0",
         "size": 28
@@ -19,6 +27,10 @@
       },
       "__real@408f400000000000": {
         "rva": "0x194a8",
+        "size": 8
+      },
+      "__real@416312d000000000": {
+        "rva": "0x194b0",
         "size": 8
       }
     }

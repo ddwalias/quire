@@ -57,7 +57,11 @@
     <ClCompile Include="utl_logging.cpp" />
     <ClCompile Include="utl_string.cpp" />
     <ClCompile Include="utl_system.cpp" />
-    <ClCompile Include="utl_timer.cpp" />
+    <ClCompile Include="utl_timer.cpp">
+      <ExceptionHandling>Async</ExceptionHandling>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/Ob3 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
     <ClCompile Include="utl_word.cpp" />
   </ItemGroup>
   <ItemGroup>
