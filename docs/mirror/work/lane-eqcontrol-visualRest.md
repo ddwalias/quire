@@ -193,3 +193,16 @@ ef Point alignmentPoint matched Mathcad local variable index [2].
   - VisualLimitSideNodeEditor.cctor: non-object initializer syntax for FrameworkPropertyMetadata matched Mathcad IL without dup.
   - VisualLimitSideNode: omitted explicit IVisualNode.Loaded in partial declaration to let C# compiler synthesize interface bridge methods consistently.
 - Release IL: PASS; 1969 checked (.mirror-cache/release-il-ab025e313e4e/release-il.json).
+
+## Batch 6: VisualLinearUnaryEditor, VisualBinaryOperatorNode, and VisualFractionOperatorNode
+
+- Members: 48 members across 3 types:
+  - VisualLinearUnaryEditor: OperatorSelectedProperty, _caretBrush, _operatorGeometry, _operandHighlighter, .cctor, OnOperatorSelectedChanged(d, e), .ctor(editNode, region), OnOperatorSelectedChanged(bool), SelectOperator, Remove, MeasureOverride, OnRender, OnCaretColorChanged, SetCaretType, UpdateCaretBlinking.
+  - VisualBinaryOperatorNode: FirstOperandProperty, SecondOperandProperty, this[int index], FirstOperand, SecondOperand, Operator, OperatorElement, FirstMathNode, SecondMathNode, NavigatableParts, OnFirstOperandPropertyChanged, OnSecondOperandPropertyChanged, OnFirstOperandChanged, OnSecondOperandChanged, .ctor().
+  - VisualFractionOperatorNode: DEFAULT_SIDE_OVERHANG, DEFAULT_FRACTION_BAR_VERTICAL_PAD, StaticFractionOverhangProperty, StaticFractionBarVerticalPadProperty, _fractionBar, _textBaselineY, Operator, OperatorElement, TextBaselineY, EffectiveBaselineY, EffectiveScriptBaselineY, FractionOverhang, FractionBarVerticalPad, ScreenInkBounds, .ctor(), MeasureStaticLayout, ArrangeStaticLayout, DenominatorY, GetNodeAtPoint.
+- Shapes tried:
+  - VisualLinearUnaryEditor.OnOperatorSelectedChanged: using `selected ? Visibility.Visible : Visibility.Hidden` instead of `!selected ? ...` matched `brtrue.s` test on `selected`.
+  - VisualFractionOperatorNode.DenominatorY: evaluating `double height = _fractionBar.DesiredSize.Height` as a local statement before `visualMathNode.DesiredSize.Height + height` matched stack caching of `visualMathNode` across statement execution.
+  - VisualFractionOperatorNode.GetNodeAtPoint: structured `if ... else ...` scoping for `GeneralTransform` variables matched local variable slot indices [1] and [2].
+- Release IL: PASS; 2010 checked (.mirror-cache/release-il-0b44db8728c8/release-il.json).
+
