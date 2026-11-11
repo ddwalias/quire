@@ -697,4 +697,308 @@ public partial class MathNodeDescriptor
     {
         PrimalChildTypeoverExtendDirections = directions;
     }
+
+    public void SetAlternates(params string[] alternates)
+    {
+        Alternates = alternates;
+    }
+
+    public void RestrictChild(Rule restriction)
+    {
+        aj.Add(restriction);
+    }
+
+    public void RestrictChild(Rule restriction, Panacea quickFix)
+    {
+        RestrictChild(restriction);
+        ar[restriction] = quickFix;
+    }
+
+    public void ProhibitChild(Rule restriction, Panacea quickFix)
+    {
+        an.Add(restriction);
+        ar[restriction] = quickFix;
+    }
+
+    public void RestrictParent(Rule restriction)
+    {
+        ai.Add(restriction);
+    }
+
+    public void RestrictParent(Rule restriction, Panacea quickFix)
+    {
+        RestrictParent(restriction);
+        ar[restriction] = quickFix;
+    }
+
+    public void RestrictDescendant(Rule restriction)
+    {
+        ak.Add(restriction);
+    }
+
+    public void RestrictAncestor(Rule restriction)
+    {
+        al.Add(restriction);
+    }
+
+    public void RestrictAncestor(Rule restriction, Panacea quickFix)
+    {
+        RestrictAncestor(restriction);
+        ar[restriction] = quickFix;
+    }
+
+    public void ProhibitChild(Rule prohibition)
+    {
+        an.Add(prohibition);
+    }
+
+    public void ProhibitParent(Rule prohibition)
+    {
+        am.Add(prohibition);
+    }
+
+    public void ProhibitParent(Rule rule, Panacea panacea)
+    {
+        am.Add(rule);
+        ar[rule] = panacea;
+    }
+
+    public void ProhibitDescendant(Rule prohibition)
+    {
+        ao.Add(prohibition);
+    }
+
+    public void ProhibitDescendant(Rule prohibition, Panacea panacea)
+    {
+        ao.Add(prohibition);
+        ar[prohibition] = panacea;
+    }
+
+    public void ProhibitNonLabeledIdDescendant(Rule prohibition, Panacea panacea)
+    {
+        ap.Add(prohibition);
+        ar[prohibition] = panacea;
+    }
+
+    public void ProhibitNonLabeledIdChild(Rule prohibition, Panacea panacea)
+    {
+        aq.Add(prohibition);
+        ar[prohibition] = panacea;
+    }
+
+    public bool IsParentAllowed(string parentName, int indexInParent)
+    {
+        bool allowed = true;
+        if (ai.Count > 0)
+        {
+            allowed &= ai.c(parentName, indexInParent);
+        }
+
+        if (am.a(indexInParent))
+        {
+            allowed &= !am.c(parentName, indexInParent);
+        }
+
+        return allowed;
+    }
+
+    public Panacea MediateChildInsertionDispute(string childName, int childIndex)
+    {
+        if (an.a(childIndex))
+        {
+            Rule? rule = an.a(childName, childIndex);
+            if (rule.HasValue && ar.ContainsKey(rule.Value))
+            {
+                return ar[rule.Value];
+            }
+        }
+
+        foreach (Rule item in aj.b(childName, childIndex))
+        {
+            if (ar.ContainsKey(item))
+            {
+                return ar[item];
+            }
+        }
+
+        return null;
+    }
+
+    public Panacea MediateParentRestriction(string parentName, int indexInParent)
+    {
+        if (am.a(indexInParent))
+        {
+            Rule? rule = am.a(parentName, indexInParent);
+            if (rule.HasValue && ar.ContainsKey(rule.Value))
+            {
+                return ar[rule.Value];
+            }
+        }
+
+        if (ai.a(indexInParent))
+        {
+            foreach (Rule item in ai.b(parentName, indexInParent))
+            {
+                if (ar.ContainsKey(item))
+                {
+                    return ar[item];
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public bool IsDescendentAllowed(string descendantName, int childIndex)
+    {
+        if (ak.a(childIndex))
+        {
+            return ak.c(descendantName, childIndex);
+        }
+
+        if (ao.a(childIndex))
+        {
+            return !ao.c(descendantName, childIndex);
+        }
+
+        return true;
+    }
+
+    public bool IsAncestorTreeAllowed(IEnumerable<Pair<string, int>> ancestors)
+    {
+        bool allowed = !RestrictsAncestors;
+        foreach (Pair<string, int> ancestor in ancestors)
+        {
+            if (allowed)
+            {
+                break;
+            }
+
+            allowed |= al.c(ancestor.First, ancestor.Second);
+        }
+
+        return allowed;
+    }
+
+    public Panacea MediateAncestorRestriction(IEnumerable<Pair<string, int>> ancestors)
+    {
+        foreach (Rule item in al)
+        {
+            if (ar.ContainsKey(item))
+            {
+                return ar[item];
+            }
+        }
+
+        return null;
+    }
+
+    public Panacea MediateNonLabeledIdDescendantProhibition(int childIndex)
+    {
+        foreach (Rule item in ap)
+        {
+            if ((item.ApplyToAllSlots || item.Slots.Contains(childIndex)) && ar.ContainsKey(item))
+            {
+                return ar[item];
+            }
+        }
+
+        return null;
+    }
+
+    public bool IsNonLabeledIdDescendantAllowed(int childIndex)
+    {
+        if (ap.a(childIndex))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public Panacea MediateNonLabeledIdChildProhibition(int childIndex)
+    {
+        foreach (Rule item in aq)
+        {
+            if ((item.ApplyToAllSlots || item.Slots.Contains(childIndex)) && ar.ContainsKey(item))
+            {
+                return ar[item];
+            }
+        }
+
+        return null;
+    }
+
+    public bool IsNonLabeledIdChildAllowed(int childIndex)
+    {
+        if (aq.a(childIndex))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public override string ToString()
+    {
+        return DescriptorName;
+    }
+
+    public void ProhibitChildren(Panacea panacea, params Rule[] rules)
+    {
+        av.Add(new DirectionalPair<Panacea, az>(panacea, new az(rules)));
+    }
+
+    public Panacea MitigateChildPatternProhibition(IList<string> children)
+    {
+        foreach (DirectionalPair<Panacea, az> item in av)
+        {
+            bool matches = true;
+            for (int i = 0; i < children.Count; i++)
+            {
+                if (!item.Right.c(children[i], i))
+                {
+                    matches = false;
+                    break;
+                }
+            }
+
+            if (matches)
+            {
+                return item.Left;
+            }
+        }
+
+        return null;
+    }
+
+    public void AddDefaultNodeOverride(int childIndex, string defaultNodeName)
+    {
+        ay[childIndex] = defaultNodeName;
+    }
+
+    public void SetNavigablePartPositions(params int[] positions)
+    {
+        NavigablePartPositions = positions;
+    }
+
+    public void SetInherentChildren(params int[] children)
+    {
+        InherentChildren = children;
+    }
+
+    public void SetNavigatablePartRows(params int[] rows)
+    {
+        NavigatablePartRows = rows;
+    }
+
+    public void SetChildrenRows(params int[] rows)
+    {
+        ChildrenRows = rows;
+    }
+
+    public void SetProhibitedAutoLabelIdDescendants(params int[] childrenIndexes)
+    {
+        bj = childrenIndexes ?? a;
+    }
 }
