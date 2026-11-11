@@ -278,6 +278,16 @@ ef Point alignmentPoint matched Mathcad local variable index [2].
   - VisualPairNaryNode.GetNodeAtPoint: structured `if (i == 0) ... else if (i == num2 - 1 && _hasLastSymbol) ... else ...` matched Mathcad IL branching without inverted condition branches.
 - Release IL: PASS; 2281 checked (.mirror-cache/release-il-ee817411bd25/release-il.json).
 
+## Batch 14: VisualForLoopNode and VisualForLoopNodeEditor
+
+- Members: 51 members across 2 types:
+  - VisualForLoopNode: OPERATOR_PAD, BODY_LEFT_PAD, _forOperator, _inOperator, _operatorRightMinorPart, _verticalOffset, _nodeChildren, _forOperatorTopLeft, _inOperatorTopLeft, _firstChildTopLeft, _secondChildTopLeft, _thirdChildTopLeft, _operatorRightMinorPartTopLeft, NodeChildren, ForOperator, InOperator, NavigatableParts, EffectiveBaselineY, EffectiveScriptBaselineY, TextBaselineY, this[int index], ForOperatorTopLeft, InOperatorTopLeft, .ctor(), MeasureOverride, ArrangeOverride, GetNodeAtPoint, SetVisibilityOfOperatorSymbol.
+  - VisualForLoopNodeEditor: NodeSideProperty, CaretOpacityProperty, _forOperator, _inOperator, _operandHighlighters, NodeSide, CaretOpacity, OnCaretOpacityPropertyChanged, OnNodeSidePropertyChanged, .cctor(), OnNodeSideChanged, OnCaretColorChanged, OnCaretOpacityChanged, .ctor(editNode, region), GetFocus, Remove, MeasureOverride, ArrangeOverride, BindToSettings, UpdateOperatorSymbols, RemoveHighlighters, GetVisualSymbolNode, UpdateCaretBlinking, SetVisibilityOfEditorSymbols.
+- Shapes tried:
+  - VisualForLoopNodeEditor.cctor: non-object initializer syntax for FrameworkPropertyMetadata with `+=` on `PropertyChangedCallback` matched Mathcad IL delegate combination.
+  - VisualForLoopNode.MeasureOverride: assigning `_operatorRightMinorPart.ContentSize.Width` and `0.0` to local coordinates `num4` and `num5` before constructing `Point` matched Mathcad IL evaluation pattern.
+- Release IL: PASS; 2317 checked (.mirror-cache/release-il-494a62467c98/release-il.json).
+
 
 
 
