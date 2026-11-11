@@ -11,36 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.UIElementFacade, Ptc.Controls.Core")]
 public partial class UIElementFacade : global::Quire.Controls.Core.IUIElementFacade, global::Quire.Services.IService, global::Quire.Controls.Core.IUIElementArrangeInfoProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool SetFocus(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Measure(object obj, global::System.Windows.Size availableSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Arrange(object obj, global::System.Windows.Rect finalRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size GetRenderSize(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size GetDesiredSize(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::System.Windows.Rect GetDescendantBounds(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsItemMeasureValid(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsItemArrangeValid(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsRectEmpty(global::System.Windows.Rect rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetRenderTransform(object obj, global::System.Windows.Media.Transform transform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point TranslatePoint(object source, object target, global::System.Windows.Point sourcePoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect TransformBoundsToAncestor(object descendant, object ancestor, global::System.Windows.Rect bounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void BlockUntilLoaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void BlockUntilInput() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected static global::System.Windows.UIElement GetUIElement(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ExecuteOnLayoutUpdated(object control, global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
