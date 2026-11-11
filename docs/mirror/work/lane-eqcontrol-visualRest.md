@@ -226,5 +226,16 @@ ef Point alignmentPoint matched Mathcad local variable index [2].
   - VisualVectorizationOperatorNode.MeasureStaticLayout: pre-declaring double width; LayoutItem[] childItems; LayoutItem[] operatorPartItems; ahead of array iteration loop matched Mathcad local variable slots [0], [1], and [2].
 - Release IL: PASS; 2090 checked (.mirror-cache/release-il-499627bbd9a5/release-il.json).
 
+## Batch 9: VisualTryNode and VisualTryNodeEditor
+
+- Members: 49 members across 2 types:
+  - VisualTryNode: BODY_LEFT_PAD, _tryOperator, _onErrorOperator, _operatorRightMinorPart, _verticalOffset, _nodeChildren, _tryOperatorTopLeft, _onErrorOperatorTopLeft, _firstChildTopLeft, _secondChildTopLeft, _operatorRightMinorPartTopLeft, NodeChildren, TryOperator, OnErrorOperator, NavigatableParts, EffectiveBaselineY, EffectiveScriptBaselineY, TextBaselineY, this[int index], TryOperatorTopLeft, OnErrorOperatorTopLeft, .ctor(), MeasureOverride, ArrangeOverride, GetNodeAtPoint, SetVisibilityOfOperatorSymbol.
+  - VisualTryNodeEditor: NodeSideProperty, CaretOpacityProperty, _tryOperator, _onErrorOperator, _operandHighlighters, NodeSide, CaretOpacity, OnCaretOpacityPropertyChanged, OnNodeSidePropertyChanged, .cctor(), OnNodeSideChanged, OnCaretColorChanged, OnCaretOpacityChanged, .ctor(editNode, region), GetFocus, Remove, MeasureOverride, ArrangeOverride, BindToSettings, UpdateOperatorSymbols, RemoveHighlighters, GetSymbolNode, UpdateCaretBlinking, SetVisibilityOfEditorSymbols.
+- Shapes tried:
+  - VisualTryNodeEditor.cctor: sequential initialization of FrameworkPropertyMetadata matched Mathcad IL without dup.
+  - VisualTryNode.MeasureOverride: intermediate double locals and Math.Max call chains matched Mathcad's evaluation stack ordering and local slots.
+- Release IL: PASS; 2126 checked (.mirror-cache/release-il-31dd0929d65a/release-il.json).
+
+
 
 
