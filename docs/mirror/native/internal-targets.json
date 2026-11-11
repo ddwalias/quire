@@ -2,13 +2,24 @@
   "utl.dll": {
     "sha256": "490ce48c81c3dc7bccdf545e88cbde8a9150ff750699fdbdcac308314414ff6c",
     "targets": {
+      "??$_Assign_unchecked@V?$_List_unchecked_const_iterator@V?$_List_val@U?$_List_simple_types@PEAVWordDatum@utl@@@std@@@std@@U_Iterator_base0@2@@std@@V12@@?$list@PEAVWordDatum@utl@@V?$allocator@PEAVWordDatum@utl@@@std@@@std@@AEAAXV?$_List_unchecked_const_iterator@V?$_List_val@U?$_List_simple_types@PEAVWordDatum@utl@@@std@@@std@@U_Iterator_base0@2@@1@V21@@Z": {
+        "rva": "0xddc0"
+      },
       "??$_Emplace_reallocate@AEBN@?$vector@NV?$allocator@N@std@@@std@@AEAAPEANQEANAEBN@Z": {
         "rva": "0xbe10",
         "parked": true
       },
+      "??2@YAPEAX_K@Z": {
+        "rva": "0x11c50",
+        "toolchain": true
+      },
       "??3@YAXPEAX_K@Z": {
         "rva": "0x11c00",
         "toolchain": true
+      },
+      "??_C@_0O@NKNMEGII@list?5too?5long@": {
+        "rva": "0x18e28",
+        "size": 14
       },
       "??_C@_1BM@GDEAKNHC@?$AAE?$AAn?$AAg?$AAi?$AAn?$AAe?$AAL?$AAo?$AAg?$AAg?$AAi?$AAn?$AAg@": {
         "rva": "0x190d0",

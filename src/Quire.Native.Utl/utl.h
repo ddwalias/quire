@@ -3,6 +3,8 @@
 #include <Windows.h>
 
 #include <cstddef>
+#include <list>
+#include <string>
 #include <vector>
 
 // Class layouts for utl.dll's exports. Each member is declared at the offset its machine code uses; the
@@ -41,15 +43,44 @@ private:
 class WordChoice {
 public:
     WordChoice(WordDatum *datum, double score);
+    WordChoice(const WordChoice &other) = default;
     WordChoice &operator=(const WordChoice &other);
     WordChoice &operator=(WordChoice &&other);
     WordDatum *Datum();
     double Score();
     static bool CompareScores(WordChoice a, WordChoice b);
+    // GetScore, GetSuggestions and BestGuess(es) are declared for their callers; no body matches yet.
+    static double GetScore(const char *word, const char *candidate);
+    static std::list<WordChoice> GetSuggestions(const char *word, std::list<WordDatum *> data);
+    static const char *BestGuess(const char *word, std::list<WordDatum *> data, double threshold);
+    static std::list<const char *> BestGuesses(int count, const char *word, std::list<WordDatum *> data,
+                                               double threshold);
+
+protected:
+    static bool MatchChar(char c, std::string text, int index);
 
 private:
     WordDatum *datum;
     double score;
+};
+
+class WordData {
+public:
+    WordData();
+    WordData(const WordData &other);
+    WordData(WordData &&other);
+    ~WordData();
+    WordData &operator=(const WordData &other);
+    WordData &operator=(WordData &&other);
+    void Add(WordDatum *datum);
+    int Count();
+    // The copy constructor and the three queries are declared only; no body matches yet.
+    const char *BestGuess(const char *word, double threshold);
+    std::list<const char *> BestGuesses(int count, const char *word, double threshold);
+    std::list<WordChoice> GetSuggestions(const char *word);
+
+private:
+    std::list<WordDatum *> data;
 };
 
 // Layout inferred from the machine code. The first three words are the begin, end and capacity of a vector of samples

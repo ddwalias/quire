@@ -62,7 +62,18 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/Ob3 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
-    <ClCompile Include="utl_word.cpp" />
+    <ClCompile Include="utl_word.cpp">
+      <ExceptionHandling>Async</ExceptionHandling>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <AdditionalOptions>/Ob3 /D"_CRTIMP2=__declspec(dllimport)" %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <ClCompile Include="utl_worddata.cpp">
+      <ExceptionHandling>Async</ExceptionHandling>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <AdditionalOptions>/Ob3 /D"_CRTIMP2=__declspec(dllimport)" %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Quire.Native.Utl.def" />

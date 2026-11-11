@@ -1,5 +1,7 @@
 #include <string.h>
 
+#include <string>
+
 #include "utl.h"
 
 namespace utl {
@@ -45,6 +47,10 @@ double WordChoice::Score() {
 
 bool WordChoice::CompareScores(WordChoice a, WordChoice b) {
     return a.score > b.score;
+}
+
+bool WordChoice::MatchChar(char c, std::string text, int index) {
+    return index >= 0 && index < static_cast<int>(text.size()) && text[index] == c;
 }
 
 with_purecall_handler &with_purecall_handler::operator=(const with_purecall_handler &other) {

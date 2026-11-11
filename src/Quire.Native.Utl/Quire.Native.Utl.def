@@ -31,3 +31,11 @@ EXPORTS
     ??4WordChoice@utl@@QEAAAEAV01@AEBV01@@Z
     ??4WordChoice@utl@@QEAAAEAV01@$$QEAV01@@Z
     ??4with_purecall_handler@utl@@QEAAAEAV01@AEBV01@@Z
+    ??0WordData@utl@@QEAA@XZ
+    ??0WordData@utl@@QEAA@$$QEAV01@@Z
+    ??1WordData@utl@@QEAA@XZ
+    ??4WordData@utl@@QEAAAEAV01@AEBV01@@Z
+    ??4WordData@utl@@QEAAAEAV01@$$QEAV01@@Z
+    ?Add@WordData@utl@@QEAAXPEAVWordDatum@2@@Z
+    ?Count@WordData@utl@@QEAAHXZ
+    ?MatchChar@WordChoice@utl@@KA_NDV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z
