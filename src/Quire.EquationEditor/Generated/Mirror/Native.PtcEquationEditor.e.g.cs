@@ -11,12 +11,8 @@ namespace Quire.Native.PtcEquationEditor;
 [global::Quire.Mirror.MirrorOf("e, Ptc.EquationEditor")]
 internal static partial class e
 {
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Text.RegularExpressions.Regex a;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Text.RegularExpressions.Regex b;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Text.RegularExpressions.Regex c;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Text.RegularExpressions.Regex d;
 }
