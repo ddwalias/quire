@@ -12,13 +12,7 @@ namespace Quire.Controls.Core;
 public partial class FrameworkElementFacade : global::Quire.Controls.Core.UIElementFacade, global::Quire.Controls.Core.IFrameworkElementFacade, global::Quire.Controls.Core.IUIElementFacade, global::Quire.Services.IService, global::Quire.Controls.Core.IUIElementArrangeInfoProvider
 {
     [global::Quire.Mirror.MirrorStub]
-    public bool IsItemLoaded(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void SetSize(object obj, global::System.Windows.Size size, global::Quire.Controls.Core.DragMode dragMode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.FrameworkElement GetResizableElement(object obj, global::Quire.Controls.Core.DragMode dragMode = (global::Quire.Controls.Core.DragMode)(0)) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size GetSize(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetHeight(object obj, double height) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -28,31 +22,7 @@ public partial class FrameworkElementFacade : global::Quire.Controls.Core.UIElem
     [global::Quire.Mirror.MirrorStub]
     public void ClearMaxSize(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void SetItemName(object item, string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetItemName(object item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ExecuteOnLoad(object obj, global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void ExecuteOnUnload(object obj, global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void ExecuteInBackground(global::System.Action action, bool asynch = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected static global::System.Windows.FrameworkElement GetFrameworkElement(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object GetParent(object control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetHandleChangesEnabled(object item, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ClearHandleChangesEnabled(object item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.FrameworkElement GetResizableElement(global::System.Windows.FrameworkElement elem, global::Quire.Controls.Core.DragMode dragMode, out bool preserveAspectRatio) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetOverrideLabelColor(object item, bool overideLabelColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetLabeledIdFormatProperty(object item, object labelIdFormatDictionary) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool GetOverrideLabelColor(object equationVisualElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> GetLabeledIdFormatProperty(object equationVisualElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
