@@ -257,6 +257,16 @@ ef Point alignmentPoint matched Mathcad local variable index [2].
   - VisualDerivativeSymbolNode.ctor: ternary `DebugTools.DevAssert(...).Passed ? derivativeSymbol.Value : 'd'` directly matched Mathcad IL `brtrue.s` branching without negation.
 - Release IL: PASS; 2208 checked (.mirror-cache/release-il-50f89dbde482/release-il.json).
 
+## Batch 12: VisualProgramNode and VisualProgramNodeEditor
+
+- Members: 43 members across 2 types:
+  - VisualProgramNode: _operator, _nodeChildren, _operandsPanel, NodeChildren, Operator, OperatorFence, NavigatableParts, EffectiveBaselineY, EffectiveScriptBaselineY, TextBaselineY, this[int index], .ctor(showFence), MeasureOverride, ArrangeOverride, GetNodeAtPoint, SetVisibilityOfOperatorSymbol, SetOperatorFontColor, SetOperatorOpacity, IVisualMathNode.this[int index].
+  - VisualProgramNodeEditor: OperatorSelectedProperty, CaretOpacityProperty, _operatorSymbol, _operandHighlighter, OperatorSelected, CaretOpacity, OnOperatorSelectedPropertyChanged, OnCaretOpacityPropertyChanged, .cctor(), OnOperatorSelectedChanged, OnCaretColorChanged, OnCaretOpacityChanged, .ctor(editNode, region), SelectOperator, GetFocus, Remove, MeasureOverride, ArrangeOverride, UpdateOperatorSymbol, BindToSettings, RemoveHighlighter, UpdateCaretBlinking, SetVisibilityOfEditorSymbols.
+- Shapes tried:
+  - VisualProgramNode.TextBaselineY: expression-bodied calculation matched Mathcad IL evaluation stack without intermediate local variables.
+  - VisualProgramNodeEditor.UpdateOperatorSymbol: passing array covariance directly into `CreateNodeHighlighter` matched Mathcad IL local slot and argument evaluation order.
+- Release IL: PASS; 2246 checked (.mirror-cache/release-il-6c495d2e88c1/release-il.json).
+
 
 
 
