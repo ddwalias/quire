@@ -13,8 +13,8 @@
 
 ## Status against the original
 
-- Exports: 95 of 380 matched on `main` before this batch; 97 now (`Library` ctors + vtable). The remaining exports
-  are not checked by the gate because they are absent from the candidate.
+- Exports: 95 of 380 matched on `main` before this batch; 99 now (the three `Library` constructors and its vtable).
+  The other 281 exports are absent from the candidate, so the gate does not check them.
 
 ## Remaining mismatches and blockers
 
