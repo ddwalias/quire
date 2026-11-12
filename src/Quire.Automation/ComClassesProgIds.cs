@@ -23,4 +23,5 @@ internal static partial class ComClassesProgIds
     internal const string ValuesSetter = "Quire.ValuesSetter";
     internal const string SetValueResults = "Quire.SetValueResults";
     internal const string InputsOutputsConflicts = "Quire.InputsOutputsConflicts";
+    internal const string GetValueResult = "Quire.GetValueResult";
 }

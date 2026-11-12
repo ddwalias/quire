@@ -9,4 +9,5 @@ internal static partial class ComEnumerationsGuides
     internal const string WorksheetReadonlyOptionNames = "A07B4F49-17EB-4908-AB8F-C78478154541";
     internal const string MathcadPrimeEvents = "A180AE70-6351-44F2-B483-DE42FFCA297B";
     internal const string WorksheetOperations = "A6F2972D-1063-4BA4-BCEF-8BE357759897";
+    internal const string ValueResultTypes = "AF5935B2-9625-4639-8E46-6B9127CEA00D";
 }

@@ -23,4 +23,5 @@ internal static partial class ComClassesGuides
     internal const string ValuesSetter = "A666719D-79F4-449B-A4C1-8DEECD5FA18A";
     internal const string SetValueResults = "AFCA092C-04CB-44B4-8FCF-90E6F746B056";
     internal const string InputsOutputsConflicts = "A2FEB23B-CDAE-4A1A-BFFE-30194E4C618D";
+    internal const string GetValueResult = "AFFC9F46-5CB1-43F6-A477-F4B9A91BD24A";
 }
