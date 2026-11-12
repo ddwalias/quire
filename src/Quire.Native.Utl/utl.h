@@ -13,8 +13,12 @@
 namespace utl {
 
 int GetNumberOfProcessors();
+bool IsTimingEnabled();
 bool BoostThreadPriority();
 wchar_t *toBSTR(unsigned int codePage, const char *source, size_t length);
+wchar_t *toBSTR(unsigned int codePage, const char *source);
+unsigned char *FromHex(const char *text);
+void die(const wchar_t *message);
 
 class InterruptControl {
 public:
@@ -84,7 +88,7 @@ private:
 };
 
 // Layout inferred from the machine code. The first three words are the begin, end and capacity of a vector of samples
-// (GetStdDev reads them as such); the doubles' roles are inferred from the getters.
+// (the original's GetStdDev reads them as such; it is not ported yet); the doubles' roles are inferred from the getters.
 class PerformanceTimer {
 public:
     PerformanceTimer();

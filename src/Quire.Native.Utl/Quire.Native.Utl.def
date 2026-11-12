@@ -39,3 +39,7 @@ EXPORTS
     ?Add@WordData@utl@@QEAAXPEAVWordDatum@2@@Z
     ?Count@WordData@utl@@QEAAHXZ
     ?MatchChar@WordChoice@utl@@KA_NDV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z
+    ?FromHex@utl@@YAPEAEPEBD@Z
+    ?toBSTR@utl@@YAPEA_WIPEBD@Z
+    ?die@utl@@YAXPEB_W@Z
+    ?IsTimingEnabled@utl@@YA_NXZ

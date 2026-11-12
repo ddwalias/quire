@@ -37,6 +37,16 @@ __declspec(noinline) bool ReadRegistryFlag(const wchar_t *name) {
 
 }  // namespace
 
+bool IsTimingEnabled() {
+    static bool enabled = false;
+    static bool initialized = false;
+    if (!initialized) {
+        enabled = ReadRegistryFlag(L"EngineTiming");
+        initialized = true;
+    }
+    return enabled;
+}
+
 bool IsLoggingEnabled() {
     static bool initialized = false;
     static bool enabled = false;

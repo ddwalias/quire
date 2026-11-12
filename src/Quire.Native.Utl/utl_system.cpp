@@ -1,6 +1,13 @@
 #include "utl.h"
 
+#include <stdlib.h>
+
 namespace utl {
+
+void die(const wchar_t *message) {
+    MessageBoxW(nullptr, message, L"Fatal Error", 0);
+    exit(1);
+}
 
 int GetNumberOfProcessors() {
     SYSTEM_INFO info;

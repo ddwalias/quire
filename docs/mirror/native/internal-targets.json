@@ -21,6 +21,14 @@
         "rva": "0x18e28",
         "size": 14
       },
+      "??_C@_1BI@MJAKHGIJ@?$AAF?$AAa?$AAt?$AAa?$AAl?$AA?5?$AAE?$AAr?$AAr?$AAo?$AAr@": {
+        "rva": "0x19288",
+        "size": 24
+      },
+      "??_C@_1BK@FKNKODLM@?$AAE?$AAn?$AAg?$AAi?$AAn?$AAe?$AAT?$AAi?$AAm?$AAi?$AAn?$AAg@": {
+        "rva": "0x19150",
+        "size": 26
+      },
       "??_C@_1BM@GDEAKNHC@?$AAE?$AAn?$AAg?$AAi?$AAn?$AAe?$AAL?$AAo?$AAg?$AAg?$AAi?$AAn?$AAg@": {
         "rva": "0x190d0",
         "size": 28
@@ -33,8 +41,20 @@
         "rva": "0x191a0",
         "size": 110
       },
+      "??_U@YAPEAX_K@Z": {
+        "rva": "0x12180",
+        "toolchain": true
+      },
       "?ReadRegistryFlag@?A0x377d720e@utl@@YA_NPEB_W@Z": {
         "rva": "0x88e0"
+      },
+      "?enabled@?1??IsTimingEnabled@utl@@YA_NXZ@4_NA": {
+        "rva": "0x229d1",
+        "size": 1
+      },
+      "?initialized@?1??IsTimingEnabled@utl@@YA_NXZ@4_NA": {
+        "rva": "0x229d2",
+        "size": 1
       },
       "__real@408f400000000000": {
         "rva": "0x194a8",
