@@ -203,6 +203,30 @@ public partial class ExtendedFont
         return new ExtendedFont(FontFamily, FontSize, FontStyle, FontWeight, FontStretch, TextDecorations, brush);
     }
 
+    public ExtendedFont(FontFamily fontFamily, double fontSize, FontStyle fontStyle, FontWeight fontWeight, FontStretch fontStretch, TextDecorationCollection textDecorations, Brush foreground)
+    {
+        FontFamily = fontFamily;
+        FontSize = fontSize;
+        FontStyle = fontStyle;
+        FontWeight = fontWeight;
+        FontStretch = fontStretch;
+        TextDecorations = textDecorations;
+        if (foreground is SolidColorBrush solidColorBrush && solidColorBrush.Color == Colors.Black)
+        {
+            Foreground = Brushes.Black;
+        }
+        else
+        {
+            Foreground = foreground;
+        }
+        CalculateTypeface();
+    }
+
+    public ExtendedFont(Typeface typeface, double fontSize)
+        : this(typeface.FontFamily, fontSize, typeface.Style, typeface.Weight, typeface.Stretch, new TextDecorationCollection(), Brushes.Black)
+    {
+    }
+
     private void CalculateTypeface()
     {
         WritePreamble();

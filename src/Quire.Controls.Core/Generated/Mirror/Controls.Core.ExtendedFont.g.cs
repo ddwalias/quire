@@ -41,8 +41,4 @@ public partial class ExtendedFont : global::System.Windows.Freezable, global::Sy
     private static readonly global::System.Collections.Generic.IDictionary<string, global::System.Windows.Media.GlyphRun> GlyphRunCache;
     [global::Quire.Mirror.MirrorStub]
     private static object CoerceFontFamily(global::System.Windows.DependencyObject d, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public ExtendedFont(global::System.Windows.Media.FontFamily fontFamily, double fontSize, global::System.Windows.FontStyle fontStyle, global::System.Windows.FontWeight fontWeight, global::System.Windows.FontStretch fontStretch, global::System.Windows.TextDecorationCollection textDecorations, global::System.Windows.Media.Brush foreground) : this() { }
-    [global::Quire.Mirror.MirrorStub]
-    public ExtendedFont(global::System.Windows.Media.Typeface typeface, double fontSize) : this() { }
 }
