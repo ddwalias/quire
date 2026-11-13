@@ -24,16 +24,6 @@ public partial class AlignmentGrid : global::System.Windows.DependencyObject, gl
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.IAlignmentGrid Default;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect GridArea { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size GridCellSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected double HighestValidY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected double HighestValidX { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public AlignmentGrid(global::System.Windows.Rect rect) { }
-    [global::Quire.Mirror.MirrorStub]
     public AlignmentGrid(global::System.Nullable<global::System.Windows.Size> gridSize) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Pair<global::System.Windows.Point, global::System.Windows.Point>[] GetHorizontalLines() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
