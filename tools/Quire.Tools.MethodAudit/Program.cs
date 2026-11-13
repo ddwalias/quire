@@ -186,13 +186,13 @@ string[]? Binding(string assembly, string name)
     if (typeNames.TryGetValue((assembly, name), out var own)) return [own[0], CanonicalAssembly(own[1])];
     if (!reviewed.TryGetValue(name, out var bound))
     {
-        // C++ artefacts are keyed by their Quire map name, while a call-site signature can name the original
-        // namespace directly (for example utl.PerformanceTimer in a native <Module> thunk).
+        // A local or call-site signature may name a native type directly even when the Quire map records
+        // it under a project-specific name (for example EHExceptionRecord in Mcdepman's C++/CLI body).
         var projectAssemblies = typeNames.Where(t => t.Key.Assembly.Equals(assembly, StringComparison.OrdinalIgnoreCase))
             .Select(t => t.Value[1]).ToHashSet(StringComparer.OrdinalIgnoreCase);
         var candidates = reviewed.Values.SelectMany(v => v).Where(b => b[0] == name
-            && cppArtifacts.Contains((b[1].ToLowerInvariant(), b[0])) && projectAssemblies.Contains(b[1])
-            && originals.ContainsKey(b[1]))
+            && projectAssemblies.Contains(b[1]) && originals.TryGetValue(b[1], out var original)
+            && original.Model.Types.Any(t => t.FullName == name))
             .DistinctBy(b => (b[0], b[1]))
             .ToList();
         return candidates.Count == 1 ? [name, CanonicalAssembly(candidates[0][1])] : null;

@@ -34,11 +34,9 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         self.assertIn('typeNames.TryGetValue((assembly, name)', binding)
         self.assertIn('typeNames.Where(t => t.Key.Name == name)', binding)
         self.assertLess(binding.index('typeNames.Where(t => t.Key.Name == name)'), binding.index('referenced.TryGetValue(assembly'))
-        self.assertIn('cppArtifacts.Contains((b[1].ToLowerInvariant(), b[0]))', binding)
         self.assertIn('projectAssemblies.Contains(b[1])', binding)
-        self.assertIn('C++ artefacts are keyed by their Quire map name', binding)
         self.assertIn('"duplicate (shared native header)"', source)
-        self.assertIn('cppArtifacts.Contains((b[1].ToLowerInvariant(), b[0]))', binding)
+        self.assertIn('EHExceptionRecord', source)
         self.assertIn('return candidates.Count == 1 ? [name, CanonicalAssembly(candidates[0][1])] : null;', binding)
 
     def test_changed_body_must_match_even_when_it_was_unfinished(self):
