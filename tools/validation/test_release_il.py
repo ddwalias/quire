@@ -105,6 +105,13 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         self.assertFalse(compare(inventory(removed), inventory(dict(moved, exact_match=False)))['passed'])
         self.assertFalse(compare(inventory(removed), inventory(dict(declaration, shape_matches=False)))['passed'])
 
+    def test_moved_member_whose_signature_names_its_assembly_still_moves(self):
+        # A moved member's signature names the assembly of each type it uses, which the move changes.
+        removed = method('M', project='Quire.Mcd', signature='M([Quire.Mcd]E)')
+        moved = method('M', project='Quire.Mcdepman', signature='M([Quire.Mcdepman]E)')
+        self.assertTrue(compare(inventory(removed), inventory(moved))['passed'])
+        self.assertFalse(compare(inventory(removed), inventory())['passed'])
+
     def test_renumbered_generated_members_without_counterpart_may_be_removed(self):
         stale = method('MoveNext', exact=False)
         stale.update(id='P::T+<Get>d__13::MoveNext', type='T+<Get>d__13', original=None)

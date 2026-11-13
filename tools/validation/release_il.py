@@ -341,9 +341,10 @@ def compare(before, after, types=(), methods=(), everything=False):
         if old[key].get('original') is None and old[key].get('exact_match') is not True:
             continue
         removed = old[key]
+        # The same member in another project: compared as `place` does, so a signature that names the old
+        # project's assembly ([Quire.Mcd]) still matches the new one ([Quire.Mcdepman]).
         if any(row.get('project') != removed.get('project')
-               and row.get('type') == removed.get('type')
-               and row.get('signature') == removed.get('signature')
+               and place(row) == place(removed)
                and row.get('shape_matches') is True
                and (row.get('exact_match') is True or row.get('declaration_only') is True)
                for row in new.values()):
