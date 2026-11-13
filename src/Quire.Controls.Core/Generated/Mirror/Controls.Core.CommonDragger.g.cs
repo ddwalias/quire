@@ -48,27 +48,9 @@ public partial class CommonDragger
     [global::Quire.Mirror.MirrorStub]
     private void MouseMove(object sender, global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void NotifyDragStart() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void NotifyDragEnd(global::System.Windows.Point pt) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void NotifyDragProgress(global::System.Windows.Point pt) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void BringIntoViewCallback(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void CacheOriginalWidths() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void CacheOriginalHeights() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void MouseMove_ResizeRightMode(global::System.Windows.Vector offset, global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void MouseMove_ResizeBottomMode(global::System.Windows.Vector offset, global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected double ResizeLeft(global::System.Windows.Vector offset, global::System.Windows.FrameworkElement fe) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void MouseMove_ResizeLeftMode(global::System.Windows.Vector offset, global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected static void SetMouseCursor(global::Quire.Controls.Core.DragMode mode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.CommonDragger+DragEndHandler, Ptc.Controls.Core")]
     public delegate void DragEndHandler(global::System.Windows.Point endPoint);
