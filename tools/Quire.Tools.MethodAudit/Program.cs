@@ -66,7 +66,8 @@ using (var csv = new TextFieldParser(Path.Combine(repo, "docs/mirror/type-map.cs
             bound.Add([fields[1], Path.GetFileNameWithoutExtension(fields[0])]);
         }
         if (fields[5] != "c++ artefact") listed.Add((Path.GetFileNameWithoutExtension(fields[0]).ToLowerInvariant(), fields[1]));
-        else cppArtifacts.Add((Path.GetFileNameWithoutExtension(fields[0]).ToLowerInvariant(), fields[1]));
+        if (fields[5] is "c++ artefact" or "duplicate (shared native header)")
+            cppArtifacts.Add((Path.GetFileNameWithoutExtension(fields[0]).ToLowerInvariant(), fields[1]));
         mathcadAssemblies.Add(Path.GetFileNameWithoutExtension(fields[0]).ToLowerInvariant());
     }
 }
