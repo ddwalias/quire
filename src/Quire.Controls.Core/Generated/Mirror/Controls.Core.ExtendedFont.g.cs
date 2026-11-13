@@ -42,25 +42,15 @@ public partial class ExtendedFont : global::System.Windows.Freezable, global::Sy
     [global::Quire.Mirror.MirrorStub]
     private static object CoerceFontFamily(global::System.Windows.DependencyObject d, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Rect SafeComputeInkBoundingBox(global::System.Windows.Media.GlyphRun glyphRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public ExtendedFont(global::System.Windows.Media.FontFamily fontFamily, double fontSize, global::System.Windows.FontStyle fontStyle, global::System.Windows.FontWeight fontWeight, global::System.Windows.FontStretch fontStretch, global::System.Windows.TextDecorationCollection textDecorations, global::System.Windows.Media.Brush foreground) : this() { }
     [global::Quire.Mirror.MirrorStub]
     public ExtendedFont(global::System.Windows.Media.Typeface typeface, double fontSize) : this() { }
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.GlyphRun GenerateGlyphRun(string text, global::System.Uri fontUri, double fontSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.Media.GlyphRun CreateGlyphRun(string text, global::System.Uri fontUri, double fontSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Media.GlyphRun GenerateGlyphRun(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void CalculateTypeface() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void HandleExtendedFontPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.ExtendedFont Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CopyTo(global::Quire.Controls.Core.ExtendedFont target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
