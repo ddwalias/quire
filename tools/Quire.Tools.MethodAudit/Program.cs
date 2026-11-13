@@ -305,6 +305,25 @@ foreach (var artifact in quire)
                 && OriginalKey(original, m) == ComparisonKey(method, true, type))], ref problem);
         matched.Add((artifact, raw, type, method, original, counterpart, problem));
     }
+// Mathcad members no member of the audited assembly pairs with: those of each type the assembly binds, and the globals of
+// the mixed-mode original its <Module> pairs with. A C# project carries a generated stub for every member, so a missing
+// one is a row; a C++/CLI build has no stubs, and a member it lacks is in no row. Listed per audited assembly.
+var missing = new List<object>();
+foreach (var artifact in quire)
+{
+    var paired = matched.Where(m => m.Artifact == artifact && m.Counterpart != null && m.Problem == null)
+        .Select(m => (m.Original!, m.Counterpart!.Token)).ToHashSet();
+    var owners = typeNames.Where(t => t.Key.Assembly == artifact.Name)
+        .Select(t => (Quire: t.Key.Name, Mathcad: t.Value[0].Trim(), Original: originals.GetValueOrDefault(t.Value[1].Trim()))).ToList();
+    if (ModuleOriginal(artifact) is { } module) owners.Add(("<Module>", "<Module>", module));
+    foreach (var (quireType, mathcadType, original) in owners.OrderBy(o => o.Quire, StringComparer.Ordinal))
+    {
+        if (original == null || selectedTypes.Count > 0 && !selectedTypes.Contains(quireType)) continue;
+        foreach (var m in original.Methods.Where(m => m.Owner == mathcadType && !paired.Contains((original, m.Token))))
+            missing.Add(new { project = artifact.Name, type = quireType, original = new { assembly = original.Name, type = m.Owner,
+                signature = m.Key, token = m.Token, token_hex = $"0x{m.Token:x8}", native_code = m.NativeCode } });
+    }
+}
 // Keys omit custom modifiers, so C++/CLI global overloads can share one: those add their modifiers to their identity,
 // and the token only where that still leaves a tie.
 var globalIds = new Dictionary<(Artifact, int), string>();
@@ -457,6 +476,6 @@ if (output == null)
 // The inventory may be a temporary file its reader deletes; the errors that fail the run must outlive it.
 foreach (var error in errors) Console.Error.WriteLine(error);
 Directory.CreateDirectory(Path.GetDirectoryName(output)!);
-File.WriteAllText(output, JsonSerializer.Serialize(new { schema = 2, projects, errors, methods = rows }, new JsonSerializerOptions { WriteIndented = true }) + "\n");
+File.WriteAllText(output, JsonSerializer.Serialize(new { schema = 2, projects, errors, methods = rows, missing }, new JsonSerializerOptions { WriteIndented = true }) + "\n");
 Console.WriteLine($"Method inventory: {rows.Count} declarations, {errors.Count} inspection errors; {output}");
 return errors.Count == 0 && rows.Count > 0 ? 0 : 1;

@@ -98,7 +98,10 @@ def gate(args):
                 raise RuntimeError('member selection requires --project')
             else:
                 report = {'passed': True, 'checked': [], 'reason': 'no production project changed'}
-            record['validation'] = report
+            # The receipt keeps the counts of unverified members; run/release-il.json names them.
+            record['validation'] = {key: value for key, value in report.items() if key != 'skipped'}
+            for line in release_il.unverified(report):
+                print(line, flush=True)
             if report['passed'] and natives:
                 if module is None:  # fail closed: affected native code never lands unchecked
                     report = {'passed': False, 'failures': [], 'error':

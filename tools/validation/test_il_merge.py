@@ -86,6 +86,19 @@ class IlMergeTests(GateRepo):
             self.assertEqual(il_merge.gate(self.args()), 1)
         self.assertEqual(seen, {'bytes': b'first\nsecond\n', 'status': '', 'projects': ['P']})
 
+    def test_the_receipt_counts_unverified_members_and_the_run_report_names_them(self):
+        self.candidate(runtime=True)
+        report = {'passed': True, 'checked': [], 'exact': 0, 'missing': 0,
+                  'skipped': {'generated stub, not implemented': ['P::T::M']},
+                  'skipped_counts': {'generated stub, not implemented': 1}}
+        with mock.patch.object(il_merge.release_il, 'check', return_value=report), \
+                mock.patch('builtins.print') as printed:
+            self.assertEqual(il_merge.gate(self.args()), 0)
+        record = json.loads((self.root / '.mirror-cache/result/gate.json').read_text())
+        self.assertNotIn('skipped', record['validation'])
+        self.assertEqual(record['validation']['skipped_counts'], report['skipped_counts'])
+        self.assertIn('  not verified: 1 x generated stub, not implemented', [call.args[0] for call in printed.call_args_list])
+
     def test_a_moved_candidate_is_not_landed(self):
         self.candidate(runtime=True)
         def move_candidate(*args, **kwargs):

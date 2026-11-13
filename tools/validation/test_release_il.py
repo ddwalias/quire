@@ -296,6 +296,73 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         row.update(body_sha256=None, declaration_only=True)
         self.assertTrue(compare(inventory(), inventory(row))['passed'])
 
+    def test_every_unverified_member_is_named_with_its_reason(self):
+        def row(name, **extra):
+            return dict(method(name, **dict(dict(exact=False), **extra)), id=f'P::T::{name}')
+        native = dict(unsupported='native code body has no IL to compare', mixed_mode=True, exact=None,
+                      original={'assembly': 'utl-mgd', 'native_code': True})
+        rows = {
+            release_il.NEVER_MATCHED: row('Differs'),
+            release_il.STUB: row('Stub', stub_body=True),
+            release_il.PRODUCT_ONLY: row('Helper', original=None),
+            release_il.PAIRING_MISS: row('Overload', original=None, mixed_mode=True, original_name_taken=True),
+            release_il.ENGINE_NATIVE: row('Engine', engine_native=True),
+            release_il.NATIVE_UNMATCHED: row('Body', native_exact=False, **native),
+            release_il.NATIVE_UNCOMPARED: row('Unread', **native),
+        }
+        verified = [row('Exact', exact=True), row('Thunk', native_exact=True, **native),
+                    dict(row('Abstract', exact=None), declaration_only=True)]
+        result = compare(inventory(*rows.values(), *verified), inventory(*rows.values(), *verified))
+        self.assertTrue(result['passed'])
+        self.assertEqual(result['skipped'], {reason: [r['id']] for reason, r in rows.items()})
+        self.assertEqual(result['skipped_counts'], dict.fromkeys(rows, 1))
+        # Unchanged, so only the native rows (always inspected), the exact one and the native pair that matched were checked.
+        self.assertNotIn('P::T::Differs', result['checked'])
+        self.assertIsNone(result['missing'])  # this inventory's judge lists no Mathcad members
+
+    def test_a_member_an_exemption_lets_change_is_named_too(self):
+        product = method('Helper', body='new', exact=False, original=None)
+        result = compare(inventory(method('Helper', body='old', exact=False, original=None)), inventory(product))
+        self.assertTrue(result['passed'])
+        self.assertEqual(result['skipped'], {release_il.PRODUCT_ONLY: ['P::T::Helper']})
+        support = method('std.endl`0()->Void|True', exact=None, original=None, mixed_mode=True, original_name_taken=False,
+                         unsupported='global <Module> method has no reviewed Mathcad binding')
+        support.update(id='P::<Module>::std.endl', type='<Module>')
+        self.assertEqual(compare(inventory(), inventory(support))['skipped'], {release_il.TOOLSET: ['P::<Module>::std.endl']})
+        # A failure is a failure, not a skip.
+        failed = compare(inventory(), inventory(method(exact=False)))
+        self.assertEqual((failed['passed'], failed['skipped']), (False, {}))
+
+    def test_a_mathcad_member_without_a_quire_member_is_listed_and_fails_only_a_completeness_audit(self):
+        absent = {'project': 'P', 'type': 'T', 'original': {'assembly': 'msclr', 'type': 'Mpl.T', 'token_hex': '0x06000007',
+                                                            'signature': 'GetRegion`0()->Void|False'}}
+        after = dict(inventory(method()), missing=[absent])
+        key = 'P::T::GetRegion`0()->Void|False (Mathcad msclr 0x06000007)'
+        result = compare(inventory(method()), after)
+        self.assertTrue(result['passed'])
+        self.assertEqual((result['missing'], result['skipped']), (1, {release_il.MISSING: [key]}))
+        audit = compare(inventory(method()), after, everything=True)
+        self.assertEqual(audit['failures'], [{'method': key, 'reason': release_il.MISSING}])
+        self.assertEqual(compare(inventory(method()), dict(inventory(method()), missing=[]))['missing'], 0)
+
+    def test_a_completeness_audit_selects_every_member(self):
+        rows = inventory(method(), method('Stub', exact=False, stub_body=True))
+        rows['methods'][1]['id'] = 'P::T::Stub'
+        self.assertTrue(compare(rows, rows)['passed'])
+        audit = compare(rows, rows, everything=True)
+        self.assertEqual([f['method'] for f in audit['failures']], ['P::T::Stub'])
+        self.assertEqual(audit['skipped'], {})
+        self.assertTrue(compare(inventory(method()), inventory(method()), everything=True)['passed'])
+
+    def test_the_console_says_what_a_pass_did_not_verify(self):
+        report = compare(inventory(method(exact=False)), dict(inventory(method(exact=False)), missing=[]))
+        self.assertEqual(release_il.unverified(report), [f'  not verified: 1 x {release_il.NEVER_MATCHED}',
+                                                         '  each is named under "skipped" in the report'])
+        old_judge = compare(inventory(method()), inventory(method()))
+        self.assertEqual(len(release_il.unverified(old_judge)), 1)
+        self.assertIn('not listed: Mathcad members without a Quire member', release_il.unverified(old_judge)[0])
+        self.assertEqual(release_il.unverified({'passed': False, 'error': 'build failed'}), [])
+
 
 def native_row(name='N', sha='body', **extra):
     """MethodAudit's row of a native body paired with a native counterpart, as native_bodies annotates it."""

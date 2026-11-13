@@ -54,6 +54,18 @@ block. Existing methods without a Mathcad counterpart may change or be removed; 
 ([D21](decisions.md)). Use `--type` or exact `--method 'Type::signature'` selections when checking members
 whose IL was already unchanged; selections must exist. Selecting a type includes its stubs.
 
+A pass covers what was checked. Every member the run neither verified nor failed is named in the
+report under `skipped`, grouped by reason, with `skipped_counts` beside it and one console line per
+reason: a generated stub; an unchanged member that never matched; a member without a Mathcad
+counterpart (product-only, or a pairing miss when Mathcad has a member of that name and arity); MSVC
+toolset support; a native body that never matched or was not compared; an engine-native body; and a
+Mathcad member no Quire member pairs with. MethodAudit lists the last kind in the inventory's
+`missing` for each type an audited assembly binds and for the globals of a mixed-mode original: a C#
+project has a generated stub for such a member, a C++/CLI build has none, so no row would show it.
+`missing` in the report is their count, or `null` when the judge predates the list. `--all` is the
+completeness audit: it selects every member of the projects and also fails on those Mathcad members,
+so a project is complete when `--all` passes. The merge gate's receipt keeps the counts only.
+
 The report is `.mirror-cache/release-il-<id>/release-il.json`, with base/candidate inventories
 and a build log alongside it. `--results <new directory>` selects another local location.
 Exit 0 means pass; exit 1 means mismatch or inspection/build failure. When MethodAudit reports

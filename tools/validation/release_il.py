@@ -5,7 +5,9 @@
 No test host, test execution, coverage, mutation, status gate or stored baseline is used.
 The base is built from a temporary checkout; the candidate is the current working tree.
 Reports contain identities and verdicts, never original IL. --method selects additional
-Type::signature keys; --type selects all methods declared on a type (including stubs).
+Type::signature keys; --type selects all methods declared on a type (including stubs); --all selects every
+member of the projects and also fails on a Mathcad member no Quire member pairs with (a completeness audit).
+The report's "skipped" names every member the run did not verify against Mathcad, by reason.
 
     python tools/validation/release_il.py --base main --project Quire.Engine.Utl --candidate-vcxproj PATH
 
@@ -133,7 +135,41 @@ def stub(row):
     return bool(row.get('stub_body') or row.get('mirror_stub'))
 
 
-def compare(before, after, types=(), methods=()):
+# Why a member is in the report's "skipped": it was not verified against Mathcad, and the run did not fail on it.
+MISSING = 'no Quire member pairs with this Mathcad member'
+STUB = 'generated stub, not implemented'
+NEVER_MATCHED = 'unchanged and never matched Mathcad (Release IL or declaration differs)'
+PRODUCT_ONLY = 'no Mathcad counterpart: product-only member (D21)'
+PAIRING_MISS = 'no Mathcad counterpart, though Mathcad has a member of this name and arity (pairing miss)'
+TOOLSET = "MSVC toolset support member Mathcad's build lacks (D19)"
+NATIVE_UNMATCHED = 'native body unchanged and never matched Mathcad'
+NATIVE_UNCOMPARED = 'native body not compared with Mathcad'
+ENGINE_NATIVE = 'engine-native body (D10)'
+
+
+def verified(row):
+    """Whether a row matches Mathcad: its declaration and its IL, or for a native pair its machine code."""
+    if native_pair(row):
+        return row.get('native_exact') is True and row.get('exact_match') is not False
+    return row.get('shape_matches') is True and (row.get('exact_match') is True or row.get('declaration_only') is True)
+
+
+def skip_reason(row):
+    """Why a row the run neither verified nor failed is unverified."""
+    if toolset_support(row):
+        return TOOLSET
+    if native_pair(row):
+        return NATIVE_UNCOMPARED if row.get('native_exact') is None else NATIVE_UNMATCHED
+    if stub(row):
+        return STUB
+    if row.get('engine_native') is True:
+        return ENGINE_NATIVE
+    if row.get('original') is None:
+        return PAIRING_MISS if row.get('original_name_taken') is True else PRODUCT_ONLY
+    return NEVER_MATCHED
+
+
+def compare(before, after, types=(), methods=(), everything=False):
     """Changed bodies/declarations and every previously exact method must match.
 
     Unmapped changed methods are blockers, including generated helpers. Unchanged
@@ -148,6 +184,10 @@ def compare(before, after, types=(), methods=()):
     existing product-only member (D21); a new member without a counterpart still fails.
     A native pair has no IL. Where its machine code was compared (native_bodies), a new or
     changed body, and one that matched before, must match the Mathcad body.
+    Every member the run neither verified nor failed is named in "skipped" under its reason: an unchanged
+    member that never matched, a member one of the rules above exempts, and a Mathcad member no Quire member
+    pairs with (after["missing"], which MethodAudit lists). `everything` selects every member and fails on
+    those Mathcad members too.
     """
     old = {m['id']: m for m in before['methods']}
     new = {m['id']: m for m in after['methods']}
@@ -161,7 +201,12 @@ def compare(before, after, types=(), methods=()):
     place = lambda m: (m['type'], re.sub(r'\[Quire(\.[\w.]+)?\]', '[Quire]', m['signature']))
     moved = {place(m): m for k, m in old.items() if k not in new}
     mirrored = {m['type'].split('+')[0] for m in (*old.values(), *new.values()) if m.get('original') is not None}
-    failures, checked = [], []
+    failures, checked, skipped = [], [], {}
+    chosen = lambda row: everything or selected(row, types, methods)
+
+    def skip(key, row):
+        if not verified(row):
+            skipped.setdefault(skip_reason(row), []).append(key)
     for key, row in new.items():
         previous = old.get(key)
         origin = moved.get(place(row))
@@ -182,13 +227,14 @@ def compare(before, after, types=(), methods=()):
         if changed and previous is None and stub(row) and row.get('original') is not None \
                 and row.get('shape_matches') is True:
             changed = False
-        if not (changed or row.get('unsupported') or selected(row, types, methods)
+        if not (changed or row.get('unsupported') or chosen(row)
                 or previous and previous.get('exact_match') is True):
+            skip(key, row)
             continue
         checked.append(key)
         # A native pair's machine code follows the rule for IL: an unchanged body that never matched stays out.
         if native_pair(row) and row.get('native_exact') is False and (
-                changed or selected(row, types, methods) or previous.get('native_exact') is True):
+                changed or chosen(row) or previous.get('native_exact') is True):
             failures.append({'method': key, 'reason': 'native body differs: ' + row.get('native_reason', 'not compared')})
             continue
         # A member that was exact, or that lost its counterpart, keeps its obligations.
@@ -198,6 +244,7 @@ def compare(before, after, types=(), methods=()):
                 previous and (previous.get('exact_match') is True
                               and not (native_pair(previous) and row.get('exact_match') is True)
                               or previous.get('original') is not None and row.get('original') is None)):
+            skip(key, row)
             continue
         if row.get('unsupported'):
             # An unpaired native body: native_bodies says how it compares with Mathcad's member of the same name.
@@ -208,12 +255,14 @@ def compare(before, after, types=(), methods=()):
         # D10 exempts an engine-native body, not a member that was exact, nor a new one without a counterpart.
         if row.get('engine_native') is True and not (previous and previous.get('exact_match') is True) \
                 and not (previous is None and row.get('original') is None):
+            skip(key, row)
             continue
         # D21: an existing product-only member (no Mathcad counterpart before or after) may change; new ones still fail.
         # Not a compiler-generated helper of a mirrored type (a closure whose ordinal missed), nor a selected member.
         if row.get('original') is None and previous is not None and previous.get('original') is None \
                 and not ('<' in row['type'] + row['signature'] and row['type'].split('+')[0] in mirrored) \
-                and not selected(row, types, methods):
+                and not chosen(row):
+            skip(key, row)
             continue
         if row.get('shape_matches') is not True or not (row.get('exact_match') is True or row.get('declaration_only') is True):
             # MethodAudit records why it could not pair or read a row (an ambiguous modifier tie) in structure_differences.
@@ -244,6 +293,15 @@ def compare(before, after, types=(), methods=()):
                for row in new.values()):
             continue
         failures.append({'method': key, 'reason': 'method removed'})
+    # A Mathcad member without a Quire member is unfinished, like a stub: only a completeness audit fails on it.
+    absent = after.get('missing')
+    for m in absent or []:
+        original = m['original']
+        key = f"{m['project']}::{m['type']}::{original['signature']} (Mathcad {original['assembly']} {original['token_hex']})"
+        if everything:
+            failures.append({'method': key, 'reason': MISSING})
+        else:
+            skipped.setdefault(MISSING, []).append(key)
     for name in types:
         if not any(m['type'] == name for m in new.values()):
             failures.append({'method': name, 'reason': 'selected type not found'})
@@ -251,6 +309,9 @@ def compare(before, after, types=(), methods=()):
         if not any(selected(m, (), (name,)) for m in new.values()):
             failures.append({'method': name, 'reason': 'selected method not found'})
     return {'passed': not failures, 'checked': checked, 'failures': failures,
+            'skipped': skipped, 'skipped_counts': {reason: len(keys) for reason, keys in skipped.items()},
+            # None: the judge that scanned the candidate does not list Mathcad members without a Quire member.
+            'missing': None if absent is None else len(absent),
             'exact': sum(m.get('exact_match') is True for m in new.values()),
             'engine_native': sum(m.get('engine_native') is True for m in new.values()),
             'toolset_support': sum(toolset_support(m) for m in new.values()),
@@ -864,7 +925,7 @@ def store_inventory(cache, key, data):
 
 
 def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeout=1800,
-          root=ROOT, install=None, vcxproj=None, cache=None, store_candidate=False):
+          root=ROOT, install=None, vcxproj=None, cache=None, store_candidate=False, everything=False):
     """Compare base and candidate (root's working tree). The judge, MethodAudit, is built from the base commit so a
     candidate cannot change what judges it. Base inventories are cached per project by slice_keys; store_candidate also
     caches a passing candidate's, for a root whose tree is exactly its HEAD commit (il_merge's clean clone)."""
@@ -879,13 +940,14 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
     base = git('rev-parse', '--verify', f'{base}^{{commit}}', cwd=root)
     report = {'base': base, 'tip': git('rev-parse', 'HEAD', cwd=root),
               'working_tree': git('status', '--porcelain', cwd=root), 'projects': projects,
-              'types': list(types), 'methods': list(methods), 'passed': False,
+              'types': list(types), 'methods': list(methods), 'all': everything, 'passed': False,
               'candidate': str(vcxproj) if vcxproj else 'csproj', 'timings': timings}
     try:
         if not projects:
-            if types or methods:
+            if types or methods or everything:
                 raise RuntimeError('member selection requires a production project')
-            report.update(passed=True, checked=[], failures=[], reason='no production project changed')
+            report.update(passed=True, checked=[], failures=[], skipped={}, skipped_counts={}, missing=None,
+                          reason='no production project changed')
             return report
         with work_directory(cache.parent / 'gate-work') as work:
             original = work / 'base'
@@ -921,7 +983,7 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
             # A .vcxproj candidate may pair nothing with the C# base's original; its methods then fail on their own.
             if any((vcxproj is None or name in new_id) and new_id.get(name) != identity for name, identity in old_id.items()):
                 raise RuntimeError('Mathcad reference identity changed between scans')
-            report.update(compare(before, after, types, methods))
+            report.update(compare(before, after, types, methods, everything))
             timings['compare'] = time.perf_counter() - compare_start
             report['originals'] = new_id
             # A clean status does not show EOL conversion: only a tree materialized with RAW_BYTES holds what its keys name.
@@ -941,12 +1003,25 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
     return report
 
 
+def unverified(report):
+    """Console lines for what a run did not verify: a pass covers what was checked, not these."""
+    counts = report.get('skipped_counts') or {}
+    lines = [f'  not verified: {count} x {reason}' for reason, count in sorted(counts.items())]
+    if lines:
+        lines.append('  each is named under "skipped" in the report')
+    if report.get('missing') is None and 'exact' in report:
+        lines.append('  not listed: Mathcad members without a Quire member (the judge, MethodAudit of the base, predates it)')
+    return lines
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--base', default='main')
     parser.add_argument('--project', action='append', default=[])
     parser.add_argument('--type', action='append', default=[])
     parser.add_argument('--method', action='append', default=[])
+    parser.add_argument('--all', action='store_true', dest='everything',
+                        help='select every member of the projects; also fail on Mathcad members without a Quire member')
     parser.add_argument('--results', type=Path)
     parser.add_argument('--dotnet', default='dotnet')
     parser.add_argument('--timeout', type=int, default=1800)
@@ -962,13 +1037,16 @@ def main(argv=None):
     if unknown:
         parser.error(f'unknown production projects: {sorted(unknown)}')
     results = args.results or ROOT / '.mirror-cache' / ('release-il-' + uuid.uuid4().hex[:12])
-    report = check(args.base, projects, results, args.type, args.method, args.dotnet, args.timeout, vcxproj=vcxproj)
+    report = check(args.base, projects, results, args.type, args.method, args.dotnet, args.timeout, vcxproj=vcxproj,
+                   everything=args.everything)
     for failure in report.get('failures', [])[:20]:
         print(f"  {failure['method']}: {failure['reason']}")
     if len(report.get('failures', [])) > 20:
         print(f"  {len(report['failures']) - 20} more mismatches in the report")
     if report.get('error'):
         print(report['error'], file=sys.stderr)
+    for line in unverified(report):
+        print(line)
     print(f"Release IL: {'PASS' if report['passed'] else 'FAIL'}; {len(report.get('checked', []))} checked; {results / 'release-il.json'}")
     return 0 if report['passed'] else 1
 
