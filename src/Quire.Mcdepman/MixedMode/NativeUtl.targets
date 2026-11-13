@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Quire.Native.Utl exports utl::PerformanceTimer (DepmanNodeTimer.h). Its import library is built from the .def,
+       as Quire.Engine.Utl builds UTLLogging.lib. The DLL is not copied here; loading it at run time is a deployment step. -->
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Link>
+      <AdditionalDependencies>$(IntDir)Quire.Native.Utl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Target Name="BuildQuireNativeUtlImportLibrary" BeforeTargets="Link" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Exec Command="&quot;$(VCToolsInstallDir)bin\HostX64\x64\lib.exe&quot; /nologo /def:&quot;$(MSBuildThisFileDirectory)..\..\Quire.Native.Utl\Quire.Native.Utl.def&quot; /name:Quire.Native.Utl.dll /machine:x64 /out:&quot;$(IntDir)Quire.Native.Utl.lib&quot;" />
+  </Target>
+</Project>

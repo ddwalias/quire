@@ -2,6 +2,7 @@
 #define NOMINMAX
 #include <sdkddkver.h>
 #include "DepmanContracts.h"
+#include "DepmanNodeTimer.h"
 
 namespace Quire { namespace depman {
 
@@ -38,6 +39,7 @@ namespace Quire { namespace depman {
         int GetPriority(long h);
         void TreatAsReady(long h);
         void SetNotifyComputing(long h, bool b);
+        void SetTimer(long h, NodeTimer^ timer);
         void SetAutoCalc(bool b);
         bool GetAutoCalc();
         void SetCalcNow(bool b);
