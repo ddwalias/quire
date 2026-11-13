@@ -191,7 +191,8 @@ string[]? Binding(string assembly, string name)
             .Select(t => t.Value[1]).ToHashSet(StringComparer.OrdinalIgnoreCase);
         var candidates = reviewed.Values.SelectMany(v => v).Where(b => b[0] == name
             && cppArtifacts.Contains((b[1].ToLowerInvariant(), b[0])) && projectAssemblies.Contains(b[1])
-            && originals.TryGetValue(b[1], out var original) && original.Model.Types.Any(t => t.FullName == name))
+            && originals.ContainsKey(b[1]))
+            .DistinctBy(b => (b[0], b[1]))
             .ToList();
         return candidates.Count == 1 ? [name, CanonicalAssembly(candidates[0][1])] : null;
     }
