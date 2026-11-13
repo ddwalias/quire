@@ -138,5 +138,22 @@
         "size": 16
       }
     }
+  },
+  "mspcons.dll": {
+    "sha256": "ef63f9ecf5ceec3585ff890d1905ed7df9ba06f77fe0ce5f876d8260eed33990",
+    "targets": {
+      "notag_object": {
+        "rva": "0x50b0",
+        "size": 16,
+        "parked": true,
+        "reason": "static instance of abstract alloc class"
+      },
+      "??_7alloc@Unmanaged@Engine@@6B@": {
+        "rva": "0x3250",
+        "size": 16,
+        "parked": true,
+        "reason": "abstract class vtable and its static instance"
+      }
+    }
   }
 }

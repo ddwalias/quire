@@ -1,0 +1,23 @@
+LIBRARY Quire.Native.Mspcons.dll
+EXPORTS
+    ??0alloc@Unmanaged@Engine@@QEAA@AEBV012@@Z
+    ??0alloc@Unmanaged@Engine@@QEAA@XZ
+    ??0anyval@Unmanaged@Engine@@QEAA@$$QEAV012@@Z
+    ??0anyval@Unmanaged@Engine@@QEAA@AEBV012@@Z
+    ??0anyval@Unmanaged@Engine@@QEAA@XZ
+    ??0untagged@Unmanaged@Engine@@QEAA@$$QEAV012@@Z
+    ??0untagged@Unmanaged@Engine@@QEAA@AEBV012@@Z
+    ??0untagged@Unmanaged@Engine@@QEAA@XZ
+    ??1alloc@Unmanaged@Engine@@UEAA@XZ
+    ??2alloced@Unmanaged@Engine@@SAPEAX_KPEAValloc@12@@Z
+    ??3alloced@Unmanaged@Engine@@SAXPEAX@Z
+    ??4alloc@Unmanaged@Engine@@QEAAAEAV012@AEBV012@@Z
+    ??4alloced@Unmanaged@Engine@@QEAAAEAV012@$$QEAV012@@Z
+    ??4alloced@Unmanaged@Engine@@QEAAAEAV012@AEBV012@@Z
+    ??4anyval@Unmanaged@Engine@@QEAAAEAV012@$$QEAV012@@Z
+    ??4anyval@Unmanaged@Engine@@QEAAAEAV012@AEBV012@@Z
+    ??4untagged@Unmanaged@Engine@@QEAAAEAV012@$$QEAV012@@Z
+    ??4untagged@Unmanaged@Engine@@QEAAAEAV012@AEBV012@@Z
+    ?clone@untagged@Unmanaged@Engine@@UEBAPEAVanyval@23@PEAValloc@23@PEAV423@@Z
+    ?equals@anyval@Unmanaged@Engine@@QEBA_NPEBV123@@Z
+    ?write_raw@anyval@Unmanaged@Engine@@UEBAXAEAV?$basic_ostream@DU?$char_traits@D@std@@@std@@@Z
