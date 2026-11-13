@@ -71,3 +71,13 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
 - Remaining SharedThreadContext members (4): `Abort(int32)`, `ClearInterrupt(int32)`, `interrupt(int32)`, `ExecuteInterruptibly(ThreadStart, bool)` (require `Efi.Symbolics` / `Aborter` / `SafeRun` and native `InterruptControl.RequestInterrupt`).
 - Remaining other members: IDepman.UnLockP (needs Position), IDepman.SetTimer (needs NodeTimer/PerformanceTimer Stop), SEnvironment (0/3; omitted until native Position consumer exists).
 
+## Batch 6 — Aborter constructor and SafeRun
+
+- Owner: AGY, Orca task `task_b162481f4f2e`; branch `feature/mcdepman-aborter-agy-20261116`.
+- Members: `depman.SafeRun` (3/3: `.ctor`, `Run`, `CheckErrors`) and `depman.Aborter` constructor (1/3: `.ctor`).
+- Release IL report: `.mirror-cache/release-il-5ad759097839/release-il.json` (PASS, 154 checked).
+- Foreground unchanged Quire.Mcd gate PASS, 0 checked; `.mirror-cache/release-il-6dfa7796bc17/release-il.json`.
+- Remaining Aborter members (2): `Do()` and `Abort()` require `Efi.Symbolics` (`RequestInterrupt` and `UnRequestInterrupt`), which is missing.
+- Remaining SharedThreadContext members (4): `Abort(int32)`, `ClearInterrupt(int32)`, `interrupt(int32)` (require `Efi.Symbolics` / `Aborter`), `ExecuteInterruptibly(ThreadStart, bool)` (requires `SharedThreadContext` interrupt management wiring).
+
+

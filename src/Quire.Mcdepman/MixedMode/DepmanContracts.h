@@ -2,12 +2,10 @@
 
 void __cdecl operator delete(void* ptr, unsigned __int64 size) noexcept;
 
+#include "../../Quire.Native.Utl/utl.h"
+
 namespace Quire { namespace utl {
-    struct InterruptControl
-    {
-        bool interrupted;
-        void RequestInterrupt(bool requested);
-    };
+    using ::utl::InterruptControl;
 }}
 
 namespace Quire { namespace depman {

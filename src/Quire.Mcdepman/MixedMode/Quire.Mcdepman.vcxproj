@@ -52,6 +52,7 @@
   <ItemGroup>
     <ClCompile Include="DepmanPort.cpp" />
     <ClCompile Include="DepmanNodeTimer.cpp" />
+    <ClCompile Include="DepmanAborter.cpp" />
   </ItemGroup>
   <Import Project="NativeUtl.targets" />
   <!-- The Build Tools MSBuild cannot evaluate SDK-style projects, so managed references are forced in with /FU. The production
