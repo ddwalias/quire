@@ -3,8 +3,8 @@
 namespace Quire { namespace depman {
 
     NodeTimer::NodeTimer()
+        : m_timer(new ::utl::PerformanceTimer())
     {
-        m_timer = new ::utl::PerformanceTimer();
     }
 
     NodeTimer::~NodeTimer()
