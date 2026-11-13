@@ -287,6 +287,8 @@ public sealed class CSharpWriter(Mapper mapper, Planner plan)
             modifier = modifier == Modifier.Abstract ? Modifier.Virtual : Modifier.Override;
         }
         string mods = (m.Static ? (t.Kind == TypeKind.Interface && m.Abstract ? "static abstract " : "static ") : "") + ModifierText(modifier, t);
+        if (t.Kind == TypeKind.Interface && m.ReturnMarshalU1 && m.Return is NamedSig { Name: "System.Boolean" })
+            sb.AppendLine($"{pad}[return: global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.U1)]");
         // Generated interface members get throwing default bodies: hand-written classes that implement a mirrored
         // interface then keep compiling until a phase implements the member for real.
         bool hasBody = !(modifier is Modifier.Abstract or Modifier.AbstractOverride) || t.Kind == TypeKind.Interface && !m.Static;

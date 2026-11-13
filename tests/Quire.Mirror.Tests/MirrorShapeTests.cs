@@ -53,4 +53,13 @@ public class MirrorShapeTests
         Assert.True(inScope > 5000, $"type map has only {inScope} in-scope rows");
         Assert.True(missing.Count == 0, $"{missing.Count} in-scope Mathcad types have no Quire type:\n" + string.Join("\n", missing.Take(40)));
     }
+
+    [Fact]
+    public void Generated_interface_bool_return_preserves_U1_marshalling()
+    {
+        var model = MetadataLoader.Load(Path.Combine(AppContext.BaseDirectory, "Quire.Mcd.dll"))!;
+        var method = model.Types.SelectMany(t => t.Methods)
+            .First(m => m.Name == "get_IsActive" && m.Return is NamedSig { Name: "System.Boolean" } && m.ReturnMarshalU1);
+        Assert.True(method.ReturnMarshalU1);
+    }
 }

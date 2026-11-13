@@ -288,6 +288,17 @@ public sealed class MetadataLoader
         }
 
         var methodAttrs = AttributeNames(m.GetCustomAttributes());
+        bool returnMarshalU1 = false;
+        foreach (var ph in m.GetParameters())
+        {
+            var p = _md.GetParameter(ph);
+            if (p.SequenceNumber == 0 && (p.Attributes & ParameterAttributes.HasFieldMarshal) != 0)
+            {
+                var descriptor = _md.GetBlobReader(p.GetMarshallingDescriptor());
+                returnMarshalU1 = descriptor.ReadByte() == 0x04; // UnmanagedType.U1
+                break;
+            }
+        }
         return new MethodModel(
             _md.GetString(m.Name), MethodAccess(a),
             (a & MethodAttributes.Static) != 0, (a & MethodAttributes.Abstract) != 0, (a & MethodAttributes.Virtual) != 0,
@@ -296,7 +307,7 @@ public sealed class MetadataLoader
             impls.TryGetValue(mh, out var list) ? [.. list] : [],
             (a & MethodAttributes.PinvokeImpl) != 0 || (m.ImplAttributes & MethodImplAttributes.InternalCall) != 0,
             methodAttrs.Contains("System.Runtime.CompilerServices.ExtensionAttribute"),
-            initOnly) { Status = Bodiless((a & MethodAttributes.Abstract) != 0, Status(m.GetCustomAttributes(), out var me)), Evidence = me };
+            initOnly) { ReturnMarshalU1 = returnMarshalU1, Status = Bodiless((a & MethodAttributes.Abstract) != 0, Status(m.GetCustomAttributes(), out var me)), Evidence = me };
     }
 
     /// <summary>An abstract member without a status attribute has no body to analyze: its declaration is all there is.</summary>

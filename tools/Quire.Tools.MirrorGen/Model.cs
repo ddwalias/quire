@@ -60,6 +60,7 @@ public sealed record MethodModel(
     ImmutableArray<(TypeSig Interface, string Method)> Implements, bool Extern, bool Extension, bool InitOnly) : IHasStatus
 {
     public bool IsConstructor => Name is ".ctor" or ".cctor";
+    public bool ReturnMarshalU1 { get; init; }
     public MemberStatus Status { get; init; }
     public string? Evidence { get; init; }
     public bool Stub => Status == MemberStatus.Stub;
