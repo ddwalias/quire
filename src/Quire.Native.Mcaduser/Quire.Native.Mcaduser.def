@@ -1,0 +1,6 @@
+EXPORTS
+    MathcadAllocate
+    MathcadFree
+    MathcadArrayAllocate
+    MathcadArrayFree
+    isUserInterrupted
