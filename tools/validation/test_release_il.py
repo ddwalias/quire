@@ -4,13 +4,16 @@ import hashlib
 import os
 from pathlib import Path
 import stat
+import struct
 import subprocess
 import sys
 import tempfile
 import time
+from types import SimpleNamespace
 import unittest
 from unittest import mock
 import release_il
+from test_native_linked import ADDRESS, BASE, Image, at, encode
 from release_il import (LINKER_PRODUCT, MSVC_BUILD, builds_cppcli, compare, msvc_mismatch, ordinalless)
 
 
@@ -294,6 +297,182 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         self.assertTrue(compare(inventory(), inventory(row))['passed'])
 
 
+def native_row(name='N', sha='body', **extra):
+    """MethodAudit's row of a native body paired with a native counterpart, as native_bodies annotates it."""
+    return method(name, body=None, exact=None, **dict(dict(
+        mixed_mode=True, unsupported='native code body has no IL to compare', native_sha256=sha,
+        original={'assembly': 'A', 'native_code': True, 'token': 0x06000001}), **extra))
+
+
+def managed_image(methods, module_methods, wide_strings=False):
+    """Stands in for PeImage: CLI metadata alone, with Module, the TypeDefs <Module> and T, and the MethodDef rows
+    (RVA, implementation flags, name), the first `module_methods` of them <Module>'s. RVAs are file offsets."""
+    strings, index = bytearray(b'\0'), '<I' if wide_strings else '<H'
+    def string(text):
+        strings.extend(text.encode() + b'\0')
+        return struct.pack(index, len(strings) - len(text) - 1)
+    rows = bytes(2) + string('m') + bytes(6)
+    for name, first in (('<Module>', 1), ('T', module_methods + 1)):
+        rows += bytes(4) + string(name) + string('') + struct.pack('<HHH', 0, 1, first)
+    for rva, implementation, name in methods:
+        rows += struct.pack('<IHH', rva, implementation, 0) + string(name) + struct.pack('<HH', 0, 1)
+    # Module, TypeDef and MethodDef are present (bits 0, 2 and 6), with their row counts.
+    tables = struct.pack('<IBBBBQQIII', 0, 2, 0, int(wide_strings), 1, 0x45, 0, 1, 2, len(methods)) + rows
+    root = b'BSJB' + struct.pack('<HHII', 1, 1, 0, 4) + b'v4\0\0' + struct.pack('<HH', 0, 2)
+    tables_at = len(root) + 12 + 20
+    root += struct.pack('<II', tables_at, len(tables)) + b'#~\0\0'
+    root += struct.pack('<II', tables_at + len(tables), len(strings)) + b'#Strings\0\0\0\0'
+    data = bytearray(0x240) + root + tables + strings
+    struct.pack_into('<I', data, 0x3C, 0x40)
+    struct.pack_into('<I', data, 0x40 + 24 + 112 + 14 * 8, 0x200)  # the CLI header directory
+    struct.pack_into('<I', data, 0x208, 0x240)  # its metadata RVA
+    return SimpleNamespace(name='image.dll', data=bytes(data), sections=[(0, len(data), 0, len(data))])
+
+
+class NativeBodyTests(unittest.TestCase):
+    """Native bodies of a mixed-mode assembly: the method table, the byte comparison and the gate's rule."""
+
+    def image(self, instructions, functions, methods, module_methods=None, imports=None):
+        """A NativeImage over synthetic code: `instructions` and function extents as test_native_linked builds them."""
+        from native_linked import Linked
+        memory = encode(bytearray(0x3000), {rva: ins for rva, ins in instructions.items() if ins[0] != 'jmp'})
+        for rva, (mnemonic, operands) in instructions.items():
+            if mnemonic == 'jmp':  # an import thunk is recognized by its bytes: jmp [rip+disp32]
+                slot = int(ADDRESS.search(operands).group(1), 16) - BASE
+                memory[rva:rva + 6] = b'\xff\x25' + struct.pack('<i', slot - rva - 6)
+        image = release_il.NativeImage.__new__(release_il.NativeImage)
+        image.linked = Linked(Image(functions, {}, imports, memory), instructions, {}, set())
+        image.linked.image.name = 'image.dll'
+        image.methods = methods
+        image.globals = len(methods) if module_methods is None else module_methods
+        image.starts = sorted(rva for rva, _, _ in methods)
+        return image
+
+    def annotate(self, rows, original, candidate):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / 'install').mkdir()
+            (root / 'install' / 'A.DLL').write_bytes(b'')
+            (root / 'out').mkdir()
+            (root / 'out' / 'P.dll').write_bytes(bytes(0x200))
+            (root / 'out' / 'P.map').write_text('map')
+            self.loaded = []
+            def load(dll, map_text):
+                self.loaded.append((Path(dll).relative_to(root).as_posix(), map_text))
+                if isinstance(candidate, Exception) and Path(dll).name == 'P.dll':
+                    raise candidate
+                return candidate if Path(dll).name == 'P.dll' else original
+            data = inventory(*rows)
+            release_il.native_bodies(data, root / 'out', root / 'install', root / 'work', load)
+            return data['methods']
+
+    def test_the_method_table_gives_each_tokens_body_and_the_globals(self):
+        methods = [(0x1000, 0x85, 'Hex.Module.GetState'), (0x2000, 0, 'main'), (0, 0x85, 'Import'), (0x3000, 0, 'M')]
+        for wide in (False, True):
+            self.assertEqual(release_il.method_defs(managed_image(methods, 3, wide)), (
+                [(0x1000, True, 'Hex.Module.GetState'), (0x2000, False, 'main'), (0, False, 'Import'), (0x3000, False, 'M')], 3))
+        with self.assertRaisesRegex(ValueError, 'not a managed image'):
+            release_il.method_defs(SimpleNamespace(name='native.dll', data=bytes(0x400), sections=[(0, 0x400, 0, 0x400)]))
+
+    def test_paired_bodies_are_compared_by_instructions_and_import_names(self):
+        slot = f'qword ptr [{at(0x2000)}h]'
+        code = {0x1000: ('mov', 'r10,rcx'), 0x1003: ('ret', ''), 0x1100: ('jmp', slot), 0x1200: ('jmp', slot)}
+        functions = {0x1000: 0x1004}
+        methods = [(0x1000, True, 'f'), (0x1100, True, 'GetState'), (0x1200, True, 'Other')]
+        original = self.image(code, functions, methods, imports={0x2000: '?GetState@Module@Hex@@QEBAPEAUState@12@XZ'})
+        # The candidate's methods are in another order and its code elsewhere: tokens pair them, not places.
+        moved = {0x1000: ('jmp', slot), 0x1100: ('mov', 'r9,rcx'), 0x1103: ('ret', ''), 0x1200: ('jmp', slot)}
+        candidate = self.image(moved, {0x1100: 0x1104}, [(0x1000, True, 'GetState'), (0x1100, True, 'f'), (0x1200, True, 'Other')],
+                               imports={0x2000: '?GetState@Module@Hex@@QEBAPEAUState@12@XZ'})
+        def row(name, token, original_token):
+            return native_row(name, None, project='P', token=token,
+                              original={'assembly': 'a', 'native_code': True, 'token': original_token})
+        thunk, function, missing = self.annotate(
+            [row('GetState', 0x06000001, 0x06000002), row('f', 0x06000002, 0x06000001), row('g', 0x06000009, 0x06000001)],
+            original, candidate)
+        self.assertEqual((thunk['native_exact'], thunk['native_reason']),
+                         (True, 'import ?GetState@Module@Hex@@QEBAPEAUState@12@XZ'))
+        self.assertEqual(function['native_exact'], False)
+        self.assertIn('mov r9,rcx != original mov r10,rcx', function['native_reason'])
+        self.assertEqual((missing['native_exact'], missing['native_reason']), (False, 'not compared: image.dll has no method 0x06000009'))
+        # A body's hash sets image addresses aside: the two thunks of one import are the same body.
+        self.assertEqual(thunk['native_sha256'], candidate.fingerprint(0x1200))
+        self.assertNotEqual(thunk['native_sha256'], function['native_sha256'])
+        # The candidate is read from a symbol-free copy with its linker map; the original where it is, in any case.
+        self.assertEqual(self.loaded, [('work/native/P.dll', 'map'), ('install/A.DLL', None)])
+        # Against the same code, the function matches; a thunk never matches code.
+        same = self.annotate([row('f', 0x06000001, 0x06000001), row('t', 0x06000002, 0x06000001)], original, original)
+        self.assertEqual([(m['native_exact'], m['native_reason']) for m in same], [
+            (True, 'instructions and targets match'),
+            (False, 'import ?GetState@Module@Hex@@QEBAPEAUState@12@XZ != original None')])
+
+    def test_an_unpaired_global_is_compared_with_the_mathcad_member_of_its_name(self):
+        code = {rva: ('jmp', f'qword ptr [{at(slot)}h]') for rva, slot in ((0x1000, 0x2000), (0x1100, 0x2008), (0x1200, 0x2010))}
+        imports = {0x2000: 'GetState', 0x2008: 'SetState', 0x2010: 'Other'}
+        # Mathcad has two globals of the name (overloads); its SetDatum is a type's method, not a global.
+        original = self.image(code, {}, [(0x1100, True, 'Hex.Module.GetState'), (0x1000, True, 'Hex.Module.GetState'),
+                                         (0x1100, True, 'Hex.Module.SetDatum')], 2, imports)
+        candidate = self.image(code, {}, [(0x1000, True, 'Hex.Module.GetState'), (0x1100, True, 'Hex.Module.SetDatum'),
+                                          (0x1200, True, 'Hex.Module.GetState')], imports=imports)
+        paired = dict(native_row('SetState', project='P', token=0x06000002), type='<Module>')
+        def unpaired(token, **extra):
+            return dict(native_row('GetState', project='P', token=token, original=None, original_name_taken=True),
+                        **dict({'type': '<Module>'}, **extra))
+        same, unnamed, other = self.annotate([paired, unpaired(0x06000001), unpaired(0x06000002), unpaired(0x06000003)],
+                                             original, candidate)[1:]
+        self.assertEqual(same['native_reason'], 'no Mathcad counterpart paired; the body equals A 0x06000002 (import GetState)')
+        self.assertNotIn('native_exact', same)
+        self.assertEqual(other['native_reason'], 'no Mathcad counterpart paired; the body differs from A 0x06000001 '
+                                                 '(import Other != original SetState)')
+        self.assertNotIn('native_reason', unnamed)
+        # It stays a failure: only MethodAudit pairs. The reason says whether the body or the pairing is missing.
+        result = compare(inventory(), inventory(paired, same))
+        self.assertEqual([f['reason'] for f in result['failures']], [same['native_reason']])
+        self.assertEqual(compare(inventory(), inventory(paired, unnamed))['failures'][0]['reason'],
+                         'native code body has no IL to compare')
+        # Only a global whose name Mathcad has, in the one assembly the project's globals pair with, is looked up.
+        for change in ({'original_name_taken': False}, {'type': 'T'}):
+            self.assertNotIn('native_reason', self.annotate([paired, unpaired(0x06000001, **change)], original, candidate)[1])
+        self.assertNotIn('native_reason', self.annotate([unpaired(0x06000001)], original, candidate)[0])
+
+    def test_a_body_that_cannot_be_read_is_not_exact(self):
+        row = self.annotate([native_row(project='P', token=0x06000001)], None, ValueError('no code'))[0]
+        self.assertEqual((row['native_exact'], row['native_reason']), (False, 'not compared: P.dll unreadable: no code'))
+        self.assertFalse(compare(inventory(), inventory(row))['passed'])
+        # An inventory without native bodies loads nothing.
+        self.assertEqual(self.annotate([method(project='P')], None, ValueError('unused')), [method(project='P')])
+        self.assertEqual(self.loaded, [])
+
+    def test_a_native_pair_follows_the_rule_for_il(self):
+        exact, differs = native_row(native_exact=True, native_reason='import Sleep'), \
+            native_row(native_exact=False, native_reason='+0x4: bytes differ')
+        result = compare(inventory(), inventory(exact))
+        self.assertTrue(result['passed'])
+        self.assertEqual((result['native_pairs'], result['native_exact']), (1, 1))
+        # A new or changed body must match.
+        result = compare(inventory(), inventory(differs))
+        self.assertEqual(result['failures'], [{'method': 'P::T::N', 'reason': 'native body differs: +0x4: bytes differ'}])
+        self.assertEqual(result['native_exact'], 0)
+        self.assertFalse(compare(inventory(dict(differs, native_sha256='old')), inventory(differs))['passed'])
+        # An unchanged body that never matched stays out of the batch, unless it is selected.
+        self.assertTrue(compare(inventory(differs), inventory(dict(differs)))['passed'])
+        self.assertFalse(compare(inventory(differs), inventory(dict(differs)), methods=['T::N'])['passed'])
+        # A body that matched must still match, even when its own instructions did not change (a callee did).
+        self.assertFalse(compare(inventory(exact), inventory(differs))['passed'])
+        self.assertTrue(compare(inventory(exact), inventory(dict(exact)))['passed'])
+
+    def test_a_candidate_is_disassembled_without_its_debug_directory(self):
+        with tempfile.TemporaryDirectory() as temp:
+            data = bytearray(range(256)) * 2
+            struct.pack_into('<I', data, 0x3C, 0x40)
+            dll = Path(temp, 'P.dll')
+            dll.write_bytes(data)
+            copy = release_il.symbol_free(dll, Path(temp, 'work', 'native'))
+            entry = 0x40 + 24 + 112 + 6 * 8
+            self.assertEqual(copy.read_bytes(), bytes(data[:entry]) + bytes(8) + bytes(data[entry + 8:]))
+            self.assertEqual(dll.read_bytes(), bytes(data))
+
+
 class ClonePairingTests(unittest.TestCase):
     def test_abstract_clone_methodimpl_identity_is_narrow(self):
         root = Path(__file__).resolve().parents[2]
@@ -558,6 +737,34 @@ class CheckTests(unittest.TestCase):
         with mock.patch.object(release_il, '__file__', str(changed)):
             self.assertFalse(self.check()['base_cached'])
             self.assertTrue(self.check()['base_cached'])
+
+    def test_the_native_comparison_rules_are_keyed(self):
+        """Stored rows carry the verdicts of their native bodies, which the comparison's rules decide."""
+        self.check()
+        self.assertTrue(self.check()['base_cached'])
+        changed = self.repo.root / 'native_linked_changed.py'
+        changed.write_bytes(b'# other rules\n')
+        with mock.patch.object(release_il, 'NATIVE_RULES', [changed]):
+            self.assertFalse(self.check()['base_cached'])
+            self.assertTrue(self.check()['base_cached'])
+
+    def test_a_cppcli_build_writes_linker_maps_and_its_native_bodies_are_compared(self):
+        mock.patch.stopall()
+        work, environments, compared = self.repo.root / 'work', [], []
+        def run(command, cwd, log, timeout, env=None):
+            environments.append(env)
+            if '--output' in map(str, command):
+                Path(command[command.index('--output') + 1]).write_text(json.dumps({'methods': [method()]}))
+        for mixed in (True, False):
+            with mock.patch.object(release_il, 'run', run), mock.patch.object(release_il, 'msvc_mismatch', return_value=None), \
+                    mock.patch.object(release_il, 'builds_cppcli', return_value=mixed), \
+                    mock.patch.object(release_il, 'msvc_instance', return_value=Path('msvc')), \
+                    mock.patch.object(release_il, 'native_bodies', lambda *args: compared.append(args)), \
+                    mock.patch.dict(os.environ, {'_LINK_': '/DEBUG'}):
+                data = release_il.build_and_scan(self.repo.root, ['P'], 'tool.dll', work, self.install, 'dotnet', work / 'log', 20)
+            self.assertEqual(compared.pop(), (data, work / 'assemblies', self.install, work))
+        # The build, then the scan, of each run: only a C++/CLI build asks for maps, beside the caller's linker options.
+        self.assertEqual([env and env.get('_LINK_') for env in environments], ['/DEBUG /MAP', None, '/DEBUG', None])
 
     def test_a_reference_the_commit_lacks_fails_closed(self):
         self.repo.project('Q', 'Gone')

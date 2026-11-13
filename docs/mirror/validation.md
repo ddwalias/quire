@@ -111,7 +111,14 @@ mixed-mode Quire assembly it pairs what the C++/CLI compiler emits as follows:
   instantiations of Mathcad's own templates, fail; so does a member that was exact or that lost its
   counterpart.
 - methods whose RVA holds native code have no IL. Against a native Mathcad counterpart with a matching
-  declaration they are reported as `native_pairs`; otherwise they are `unsupported` and fail.
+  declaration they are reported as `native_pairs`, and the gate compares their machine code with the
+  counterpart's under `native_linked.py`'s rules ([D30](decisions.md)): an import thunk must import the
+  same name, and any other body must pair instruction by instruction, with each address checked by what
+  it refers to. The build writes a linker map (`_LINK_=/MAP`) to name the data those bodies refer to.
+  A new or changed body, and one that matched before, must match (`native body differs: …`); an
+  unchanged body that never matched stays out, as for IL. `native_exact` counts the matching pairs.
+  Other native bodies are `unsupported` and fail. For an unpaired global whose name Mathcad has, the
+  reason says whether its body equals that member's, which tells a missing pairing from a wrong body.
 - removing a C# stand-in with no Mathcad counterpart (such as `_tildeSafeMutex`) passes once the
   project is mixed-mode.
 - the D10 `engine_native` exemption applies only to IL-only Quire assemblies; a mixed candidate

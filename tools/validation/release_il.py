@@ -12,7 +12,7 @@ Type::signature keys; --type selects all methods declared on a type (including s
 builds the candidate from a Windows C++/CLI .vcxproj (MSBuild, Release|x64) instead of
 src/<project>/<project>.csproj; the base is still the C# Release build. In a mixed-mode candidate
 (D19), compiler-support methods without a Mathcad counterpart and native bodies whose counterpart
-is native are reported but do not fail; every other method follows the usual rules.
+is native are compared by their machine code (native_bodies); every other method follows the usual rules.
 """
 import argparse
 import contextlib
@@ -22,6 +22,7 @@ import os
 from pathlib import Path
 import re
 import shutil
+import struct
 import subprocess
 import sys
 import tarfile
@@ -116,10 +117,15 @@ def toolset_support(row):
     return row['type'].startswith(TOOLSET_TYPES)
 
 
+def native_body(row):
+    """A mixed-mode member whose RVA holds machine code, which MethodAudit reports as having no IL to compare."""
+    return bool(row.get('mixed_mode') and (row.get('unsupported') or '').startswith('native code'))
+
+
 def native_pair(row):
     """A mixed-mode native body whose Mathcad counterpart is native too: no IL on either side (D10)."""
-    return bool(row.get('mixed_mode') and (row.get('unsupported') or '').startswith('native code')
-                and (row.get('original') or {}).get('native_code') is True and row.get('shape_matches') is True)
+    return bool(native_body(row) and (row.get('original') or {}).get('native_code') is True
+                and row.get('shape_matches') is True)
 
 
 def stub(row):
@@ -140,6 +146,8 @@ def compare(before, after, types=(), methods=()):
     Removing a compiler-generated member with no Mathcad counterpart (a renumbered
     closure or state machine) does not fail the gate. Nor does changing or removing an
     existing product-only member (D21); a new member without a counterpart still fails.
+    A native pair has no IL. Where its machine code was compared (native_bodies), a new or
+    changed body, and one that matched before, must match the Mathcad body.
     """
     old = {m['id']: m for m in before['methods']}
     new = {m['id']: m for m in after['methods']}
@@ -163,7 +171,7 @@ def compare(before, after, types=(), methods=()):
             same = [m for m in renumbered.get(ordinalless(key), []) if m.get('body_sha256') == row.get('body_sha256')]
             previous = same[0] if same else None  # identical bodies: any of them is the same member
         changed = previous is None or any(previous.get(k) != row.get(k) for k in
-                                         ('body_sha256', 'shape_matches', 'declaration_only'))
+                                         ('body_sha256', 'shape_matches', 'declaration_only', 'native_sha256'))
         # A generated stub is unfinished wherever it sits and however MirrorGen spells it (the file a
         # MirrorStub throw records, a constructor stub's chaining); replacing one stub with another is not a change.
         # [MirrorStub] counts: MirrorGen re-spells a constructor stub's chaining, and only generated code carries it.
@@ -178,6 +186,11 @@ def compare(before, after, types=(), methods=()):
                 or previous and previous.get('exact_match') is True):
             continue
         checked.append(key)
+        # A native pair's machine code follows the rule for IL: an unchanged body that never matched stays out.
+        if native_pair(row) and row.get('native_exact') is False and (
+                changed or selected(row, types, methods) or previous.get('native_exact') is True):
+            failures.append({'method': key, 'reason': 'native body differs: ' + row.get('native_reason', 'not compared')})
+            continue
         # A member that was exact, or that lost its counterpart, keeps its obligations.
         # A native pair that was exact in a mixed-mode base keeps the obligation only if it stopped being exact: its
         # exact_match covers the import record, which is what a native pair has in place of an IL body.
@@ -187,7 +200,8 @@ def compare(before, after, types=(), methods=()):
                               or previous.get('original') is not None and row.get('original') is None)):
             continue
         if row.get('unsupported'):
-            reason = (row['unsupported'] if not native_pair(row)
+            # An unpaired native body: native_bodies says how it compares with Mathcad's member of the same name.
+            reason = (row.get('native_reason') or row['unsupported'] if not native_pair(row)
                       else '; '.join(row.get('structure_differences', [])[:2]) or 'native import record differs')
             failures.append({'method': key, 'reason': reason})
             continue
@@ -241,9 +255,195 @@ def compare(before, after, types=(), methods=()):
             'engine_native': sum(m.get('engine_native') is True for m in new.values()),
             'toolset_support': sum(toolset_support(m) for m in new.values()),
             'native_pairs': sum(native_pair(m) for m in new.values()),
+            'native_exact': sum(native_pair(m) and m.get('native_exact') is True for m in new.values()),
             'unfinished': sum(m.get('exact_match') is not True and not m.get('declaration_only')
                               and not m.get('engine_native') and not toolset_support(m) and not native_pair(m)
                               for m in new.values())}
+
+
+# Native bodies of a mixed-mode assembly (D19). MethodAudit pairs them and compares their declarations and import
+# records. Their machine code is compared here, as native_linked.py compares the exports of a linked native DLL (D30).
+NATIVE_RULES = [Path(__file__).with_name(name) for name in ('native_bytes.py', 'native_linked.py')]
+
+
+def method_defs(image):
+    """([(RVA, holds native code, name)] of a managed image's MethodDef rows, how many of the first rows are <Module>'s).
+    Row n is token 0x06000001 + n. `image` is a native_bytes.PeImage; only the tables up to MethodDef are sized
+    (ECMA-335 II.22 and II.24)."""
+    from native_bytes import _rva_offset
+    d = image.data
+    u16, u32 = (lambda at: struct.unpack_from('<H', d, at)[0]), (lambda at: struct.unpack_from('<I', d, at)[0])
+    cli = u32(u32(0x3C) + 24 + 112 + 14 * 8)
+    if not cli:
+        raise ValueError(f'{image.name}: not a managed image')
+    root = _rva_offset(image.sections, u32(_rva_offset(image.sections, cli) + 8))
+    header = root + 16 + u32(root + 12)
+    streams, entry = {}, header + 4
+    for _ in range(u16(header + 2)):
+        end = d.index(b'\0', entry + 8)
+        streams[d[entry + 8:end]] = root + u32(entry)
+        entry += 8 + ((end - entry - 8 + 4) & ~3)  # the name is padded to four bytes
+    if b'#~' not in streams or b'#Strings' not in streams:
+        raise ValueError(f'{image.name}: no optimized metadata tables')
+    tables, strings = streams[b'#~'], streams[b'#Strings']
+    rows, cursor = {}, tables + 24
+    for table in range(64):
+        if struct.unpack_from('<Q', d, tables + 8)[0] >> table & 1:
+            rows[table] = u32(cursor)
+            cursor += 4
+    # An index is four bytes wide once a table it can name has too many rows for two (less the tag bits of a coded one).
+    wide = lambda tag_bits, *named: 4 if max(rows.get(t, 0) for t in named) >= 1 << (16 - tag_bits) else 2
+    string, guid, blob = (4 if d[tables + 6] & bit else 2 for bit in (1, 2, 4))
+    # Module, TypeRef, TypeDef, FieldPtr, Field, MethodPtr: the tables before MethodDef.
+    sizes = [2 + string + 3 * guid, wide(2, 0, 0x1A, 0x23, 1) + 2 * string,
+             4 + 2 * string + wide(2, 2, 1, 0x1B) + wide(0, 4) + wide(0, 6), wide(0, 4), 2 + string + blob, wide(0, 6)]
+    starts = [cursor + sum(size * rows.get(table, 0) for table, size in enumerate(sizes[:n])) for n in range(7)]
+    index = lambda at, width: u32(at) if width == 4 else u16(at)
+    methods = []
+    for row in range(rows.get(6, 0)):
+        at = starts[6] + row * (8 + string + blob + wide(0, 8))
+        rva, implementation = u32(at), u16(at + 4)
+        name = strings + index(at + 8, string)
+        # Code type other than IL, or unmanaged (MethodImplAttributes), as MethodAudit decides NativeCode.
+        methods.append((rva, bool(rva and implementation & 7), d[name:d.index(b'\0', name)].decode('utf-8', 'replace')))
+    # <Module> is the first TypeDef; its methods end where the second type's MethodList begins.
+    second = starts[2] + 2 * sizes[2] - wide(0, 6)
+    return methods, index(second, wide(0, 6)) - 1 if rows.get(2, 0) > 1 else len(methods)
+
+
+def symbol_free(dll, directory):
+    """A copy of a candidate DLL with its debug directory entry cleared. dumpbin loads the PDB that entry names and then
+    prints symbols where the comparison reads addresses. Only a candidate is copied, never an original (D15)."""
+    data = bytearray(Path(dll).read_bytes())
+    entry = struct.unpack_from('<I', data, 0x3C)[0] + 24 + 112 + 6 * 8
+    data[entry:entry + 8] = bytes(8)
+    directory.mkdir(parents=True, exist_ok=True)
+    copy = directory / Path(dll).name
+    copy.write_bytes(data)
+    return copy
+
+
+class NativeImage:
+    """A mixed-mode image as the native comparison reads it: its linked code and its method table."""
+
+    def __init__(self, dll, map_text=None, tool=None):
+        from native_linked import Linked
+        self.linked = Linked.load(dll, map_text, tool)
+        self.methods, self.globals = method_defs(self.linked.image)
+        # A leaf function (one without .pdata) ends where the next known thing starts: a method's native or IL body, or a
+        # symbol of the linker map.
+        self.starts = sorted({rva for rva, _, _ in self.methods if rva} | set(self.linked.names))
+
+    def rva(self, token):
+        if token >> 24 != 6 or not 0 < token & 0xFFFFFF <= len(self.methods):
+            raise ValueError(f'{self.linked.image.name} has no method {token:#010x}')
+        return self.methods[(token & 0xFFFFFF) - 1][0]
+
+    def extent(self, rva):
+        return self.linked.image.function_extent(rva, self.starts)
+
+    def fingerprint(self, rva):
+        """SHA-256 of the body at `rva` with each image address replaced by what it names (a place in the body, an
+        import, or anything else), so a rebuild that only moves code keeps it."""
+        from native_linked import ADDRESS, Comparison
+        text = Comparison.imported(self.linked, rva)
+        if text is None:
+            extent = self.extent(rva)
+            body = extent and self.linked.body(*extent)
+            if body is None:
+                raise ValueError(f'RVA {rva:#x} of {self.linked.image.name} does not start a function')
+
+            def named(match):
+                address = self.linked.address(match.group(1))
+                if address is None:
+                    return match.group(0)
+                return f'+{address - extent[0]:#x}' if extent[0] <= address < extent[1] \
+                    else Comparison.imported(self.linked, address) or 'X'
+            text = '\n'.join(f'{mnemonic} {ADDRESS.sub(named, operands)}' for _, _, mnemonic, operands in body)
+        return hashlib.sha256(text.encode('utf-8')).hexdigest()
+
+
+def compare_native(original, candidate, original_rva, rva):
+    """(exact, reason) of a candidate's native body against the original's, under native_linked.py's rules. A body that
+    is an import thunk (`jmp [slot]`) matches a thunk of the same imported name. Any other body pairs instruction by
+    instruction, and each address is checked by what it refers to. An unverified target is not a match."""
+    from native_linked import Comparison
+    imported = Comparison.imported(original.linked, original_rva), Comparison.imported(candidate.linked, rva)
+    if any(imported):
+        same = imported[0] == imported[1]
+        return same, f'import {imported[1]}' if same else f'import {imported[1]} != original {imported[0]}'
+    extents = original.extent(original_rva), candidate.extent(rva)
+    if None in extents:
+        return False, f"the {'original' if extents[0] is None else 'candidate'} body does not start a function"
+    status, reason, _ = Comparison(original.linked, candidate.linked, {}).instructions(*extents)
+    return status == 'ok', reason or 'instructions and targets match'
+
+
+def install_file(install, assembly):
+    """The one DLL of the install named `assembly`, in any case, as MethodAudit finds an original."""
+    found = [p for p in Path(install).glob('*.dll') if p.stem.lower() == assembly.lower()]
+    if len(found) != 1:
+        raise ValueError(f"{'several' if found else 'no'} {assembly}.dll in {install}")
+    return found[0]
+
+
+def native_bodies(data, assemblies, install, work, load=None):
+    """Compare the machine code of an inventory's native bodies with Mathcad's and record the verdict on each row:
+    native_exact and native_reason for a body MethodAudit paired with a native counterpart, and native_sha256
+    (NativeImage.fingerprint), which tells a changed body from an unchanged one. A row that cannot be compared is not
+    exact, with the reason. A global function MethodAudit left unpaired although Mathcad has one of its name gets only a
+    native_reason: how its body compares with that member's, which tells a wrong body from a missing pairing.
+    `load` reads a DLL as a NativeImage. A candidate is read from a symbol-free copy under `work`, with the linker map
+    beside it (<name>.map), which names the data its bodies refer to; without one such a target is unverified."""
+    rows = [m for m in data['methods'] if native_body(m)]
+    if not rows:
+        return
+    if load is None:
+        from native_linked import dumpbin
+        tool = dumpbin()
+        load = lambda dll, map_text: NativeImage(dll, map_text, tool)
+    failures = (OSError, ValueError, struct.error, RuntimeError, subprocess.SubprocessError)
+    images = {}
+
+    def image(path, candidate=False):
+        if path not in images:
+            try:
+                listing = path.with_suffix('.map')
+                images[path] = load(symbol_free(path, Path(work) / 'native'),
+                                    listing.read_text(encoding='utf-8', errors='replace') if listing.is_file() else None) \
+                    if candidate else load(path, None)
+            except failures as error:
+                images[path] = ValueError(f'{path.name} unreadable: {error}')
+        if isinstance(images[path], Exception):
+            raise images[path]
+        return images[path]
+    # <Module> has no binding of its own: its functions pair with the Mathcad assembly the project's other globals name.
+    globals_of = {}
+    for m in data['methods']:
+        if m['type'] == '<Module>' and m.get('original'):
+            globals_of.setdefault(m.get('project'), set()).add(m['original']['assembly'])
+    for row in rows:
+        try:
+            candidate = image(Path(assemblies) / f"{row['project']}.dll", candidate=True)
+            rva = candidate.rva(row['token'])
+            row['native_sha256'] = candidate.fingerprint(rva)
+            counterpart, named = row.get('original'), globals_of.get(row['project'], ())
+            if counterpart and counterpart.get('native_code'):
+                original = image(install_file(install, counterpart['assembly']))
+                row['native_exact'], row['native_reason'] = compare_native(
+                    original, candidate, original.rva(counterpart['token']), rva)
+            elif counterpart is None and row['type'] == '<Module>' and row.get('original_name_taken') and len(named) == 1:
+                assembly, name = next(iter(named)), candidate.methods[(row['token'] & 0xFFFFFF) - 1][2]
+                original = image(install_file(install, assembly))
+                same_name = [(token, other) for token, (other, native, other_name)
+                             in enumerate(original.methods[:original.globals], 0x06000001) if native and other_name == name]
+                verdicts = [(token, *compare_native(original, candidate, other, rva)) for token, other in same_name]
+                # Overloads share the name: the one the body equals, else the first.
+                for token, exact, reason in sorted(verdicts, key=lambda verdict: not verdict[1])[:1]:
+                    relation = 'equals' if exact else 'differs from'
+                    row['native_reason'] = f'no Mathcad counterpart paired; the body {relation} {assembly} {token:#010x} ({reason})'
+        except failures as error:
+            row['native_exact'], row['native_reason'] = False, f'not compared: {error}'
 
 
 def run(command, cwd, log, timeout, env=None):
@@ -400,6 +600,8 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
         # C++/CLI builds use the pinned MSVC; the production .csproj receives it as QuireMsvcInstallDir.
         if vcxproj or builds_cppcli(root, projects):
             env['QuireMsvcInstallDir'] = f'{msvc_instance()}{os.sep}'
+            # A linker map beside each linked DLL (<name>.map) names the data its native bodies refer to (native_bodies).
+            env['_LINK_'] = f"{env.get('_LINK_', '')} /MAP".strip()
         if vcxproj:
             # OutDir/IntDir keep outputs out of the tree; MethodAudit then requires <project>.dll there (the TargetName).
             run([msbuild(), vcxproj, '-t:Rebuild', '-p:Configuration=Release', '-p:Platform=x64',
@@ -441,6 +643,7 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
         detail = '; '.join(errors[:20]) + (f'; {len(errors) - 20} more in {keep}' if len(errors) > 20 else '')
         raise RuntimeError('MethodAudit failed: ' + '\n'.join(map(str, filter(None, (detail, failure))))
                            if detail or failure else 'MethodAudit wrote no inventory')
+    native_bodies(data, assemblies, install, work)
     return data
 
 
@@ -570,7 +773,9 @@ def slice_keys(root, commit, judge, projects, install):
     trees = {Path(path).name: sha for _, kind, sha, path in src if kind == 'tree'}
     install = Path(install)
     dlls = sorted((str(p.relative_to(install)), s.st_size, s.st_mtime_ns) for p in install.rglob('*.dll') for s in [p.stat()])
-    common = [CACHE_FORMAT, hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), judge, root_files(root, commit),
+    # The native comparison's rules decide the native_* fields of the stored rows.
+    recipe = [hashlib.sha256(p.read_bytes()).hexdigest() for p in (Path(__file__), *NATIVE_RULES)]
+    common = [CACHE_FORMAT, recipe, judge, root_files(root, commit),
               [path if kind == 'tree' else f'{path} {sha}' for _, kind, sha, path in src],
               git('rev-parse', f'{commit}:{TYPE_MAP}', cwd=root),
               str(install), dlls]  # every DLL's size and mtime: hashing the DLLs would cost more than it saves
