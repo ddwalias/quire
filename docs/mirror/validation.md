@@ -256,6 +256,24 @@ A rebase conflict is aborted and its files listed. There are no stored validatio
 commits, protected-list approvals or two-stage validation records. Changes without production
 inputs skip compilation. Each round's receipt is `.mirror-cache/gate-il-<id>/gate.json`; the console names the landing one.
 
+A `gate-il-<id>` folder also holds that run's inventories and build log, so it is disposable. The record
+of a round that landed is therefore copied to `.mirror-cache/receipts/gate-il-<id>.json` in the main
+checkout (with `landed_at`), and so is the revalidation run of a `revalidated` landing and a
+`merge_gate.py --apply` landing. Nothing in the repository deletes `receipts/`. To free space, use the
+repository's cleanup and nothing else:
+
+```powershell
+python tools/validation/cache_prune.py            # lists what it would do
+python tools/validation/cache_prune.py --apply    # --hours N: age limit for run folders, default 24
+```
+
+It first copies the receipt of every landed `gate-il-*` folder that is not yet in `receipts/`, whatever
+its age, then removes `gate-il-*`, `release-il-*` and `native-gate-*` folders whose newest file is older
+than the limit, and the temporary trees a killed gate left in the system temp directory
+(`quire-il-gate-*`, `quire-release-il-*`) once older than 12 hours. It never touches `receipts/`,
+`inventory-cache/`, `gate-work/` or the reference caches. Do not delete `gate-il-*` folders by hand or
+from a session script: that is how landing receipts were lost.
+
 Native projects (`src/<P>/` with `<P>.vcxproj` and no `<P>.csproj`) the branch affects are checked by
 `native_gate.py` after the IL check; both must pass. A change to `docs/mirror/native/internal-targets.json`,
 the assembly map, `native_bytes.py` or `native_gate.py` selects every native project. Native work no

@@ -10,7 +10,9 @@ rebased branch affects no more projects than were validated, and B..main touches
 Otherwise the lock is released and the branch is validated again against the new origin/main (path "retry"); only
 the last of ROUNDS rounds revalidates under the lock, so a lane still lands while main keeps moving, and the lock is
 otherwise held just to land. Each round's receipt .mirror-cache/gate-il-<id>/gate.json records the path taken, the
-round and the seconds spent waiting for and holding the lock under "landing". A failed rebase is aborted and its
+round and the seconds spent waiting for and holding the lock under "landing". The round that lands is also copied to
+.mirror-cache/receipts/gate-il-<id>.json: the gate-il folders hold a run's inventories and logs and are disposable
+(cache_prune.py removes old ones), the receipts folder is the durable record. A failed rebase is aborted and its
 conflicts reported.
 """
 import argparse
@@ -169,6 +171,13 @@ def attempt(args, main_dir, lane, number):
     finally:
         record['landing'] = landing
         (receipt / 'gate.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
+        if landing.get('pushed'):
+            kept = il_merge.keep_receipt(record, receipt.name)
+            # The last round's revalidation is a second run with its own record: the landing rests on both.
+            revalidation = Path(landing['receipt']) if landing.get('receipt') else None
+            if revalidation and revalidation.is_file():
+                il_merge.keep_receipt(json.loads(revalidation.read_text(encoding='utf-8')), revalidation.parent.name)
+            print(f'Landing receipt: {kept}', flush=True)
 
 
 def land_under_lock(args, main_dir, lane, record, base, tip, number, landing):
@@ -198,7 +207,7 @@ def land_under_lock(args, main_dir, lane, record, base, tip, number, landing):
             landing['path'] = 'retry'
             return None
         else:
-            args.base, args.apply = 'main', True
+            args.base, args.apply, args.keep = 'main', True, False  # kept with this round's, once pushed
             args.results = il_merge.ROOT / '.mirror-cache' / f'gate-il-{uuid.uuid4().hex[:12]}'
             landing.update(path='revalidated', tip=rebased, receipt=str(args.results / 'gate.json'))
             code = il_merge.gate(args)

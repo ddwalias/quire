@@ -3,6 +3,7 @@ local bare origin."""
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -88,6 +89,46 @@ class LaneMergeTests(unittest.TestCase):
         self.assertEqual(self.checks, [['P']])
         self.assertEqual(landing['path'], 'validated')
         self.assertEqual(git(self.origin, 'rev-parse', 'main'), git(self.lane, 'rev-parse', 'work'))
+
+    def kept(self):
+        """The durable receipts, by run folder name."""
+        return {path.stem: json.loads(path.read_text()) for path in (self.main / '.mirror-cache/receipts').glob('*.json')}
+
+    def test_the_round_that_lands_keeps_its_receipt_outside_the_run_folders(self):
+        code, landing = self.land(during=['src/P/Other.cs'])
+        self.assertEqual(code, 0)
+        runs = {path.parent.name: json.loads(path.read_text())
+                for path in (self.main / '.mirror-cache').glob('gate-il-*/gate.json')}
+        self.assertEqual(len(runs), 2)  # the retried round and the one that landed
+        kept = self.kept()
+        self.assertEqual(len(kept), 1)
+        (name, receipt), = kept.items()
+        self.assertEqual(runs[name]['landing'], landing)
+        self.assertEqual({key: receipt[key] for key in runs[name]}, runs[name])  # the whole record
+        self.assertTrue(receipt['landing']['pushed'])
+        self.assertEqual(receipt['landing']['tip'], git(self.origin, 'rev-parse', 'main'))
+        self.assertRegex(receipt['landed_at'], r'^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$')
+        # Removing every run folder, as an ad hoc cleanup did, leaves the receipt.
+        for folder in (self.main / '.mirror-cache').glob('gate-il-*'):
+            shutil.rmtree(folder)
+        self.assertEqual(self.kept(), kept)
+
+    def test_a_revalidated_landing_keeps_both_records(self):
+        code, landing = self.land(during=['src/P/Other.cs'] * lane_merge.ROUNDS)
+        self.assertEqual((code, landing['path']), (0, 'revalidated'))
+        kept = self.kept()
+        self.assertEqual(len(kept), 2)
+        revalidation = kept[Path(landing['receipt']).parent.name]
+        self.assertTrue(revalidation['applied'])
+        self.assertEqual(revalidation['tip'], landing['tip'])
+
+    def test_a_round_that_does_not_land_keeps_no_receipt(self):
+        def check(*args, **kwargs):
+            return {'passed': False, 'checked': [], 'failures': []}
+        with mock.patch.object(il_merge.release_il, 'check', side_effect=check):
+            self.assertEqual(lane_merge.main(['work', '--main', str(self.main)]), 1)
+        self.assertEqual(len(list((self.main / '.mirror-cache').glob('gate-il-*/gate.json'))), 1)
+        self.assertEqual(self.kept(), {})
 
     def test_an_unrelated_upstream_change_lands_without_building_again(self):
         code, landing = self.land(during=['README.md'])

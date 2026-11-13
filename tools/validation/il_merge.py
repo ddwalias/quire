@@ -6,6 +6,9 @@ the current base, validates that exact committed tip, then fast-forwards main.
 Native projects (src/<P>/ with a .vcxproj and no .csproj) the branch affects are
 checked by native_gate after the IL check; both must pass. Without --apply, --base
 may name a full ref (refs/remotes/origin/main).
+The record of a run is <results>/gate.json, beside the run's inventories and logs. A run that
+landed is also copied to .mirror-cache/receipts/<results folder name>.json (keep_receipt), the
+durable record: run folders are disposable, and cache_prune.py removes them but never a receipt.
 """
 import argparse
 import importlib
@@ -14,6 +17,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import time
 import uuid
 
 from merge_lock import held
@@ -41,6 +45,27 @@ def affected_native(changed, natives):
     if any(p in NATIVE_SHARED for p in changed):
         return sorted(natives)
     return sorted({parts[1] for p in changed if len(parts := p.split('/')) >= 3 and parts[0] == 'src'} & set(natives))
+
+
+# Landing receipts, in the main checkout's .mirror-cache. Nothing in this repository deletes them.
+RECEIPTS = 'receipts'
+
+
+def landed(record):
+    """Whether a gate record is a landing: applied to main by this gate, or pushed by lane_merge."""
+    return bool(record.get('applied') or (record.get('landing') or {}).get('pushed'))
+
+
+def keep_receipt(record, name, cache=None, landed_at=None):
+    """Copy a landing's record to <cache>/receipts/<name>.json and return the path. `name` is the run folder's
+    (gate-il-<id>), which the console named when it landed; keeping one twice rewrites the same file."""
+    directory = (cache or ROOT / '.mirror-cache') / RECEIPTS
+    directory.mkdir(parents=True, exist_ok=True)
+    stamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(landed_at))
+    path = directory / f'{name}.json'
+    path.write_text(json.dumps({**record, 'landed_at': record.get('landed_at') or stamp}, indent=2) + '\n',
+                    encoding='utf-8')
+    return path
 
 
 def native_gate():
@@ -134,6 +159,9 @@ def gate(args):
     finally:
         (results / 'gate.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
         print(f"Release IL gate: {'PASS' if record['passed'] else 'FAIL'}; {results / 'gate.json'}", flush=True)
+        # lane_merge keeps its own receipts, once the landing is pushed (keep=False).
+        if record['applied'] and getattr(args, 'keep', True):
+            print(f'Landing receipt: {keep_receipt(record, results.name)}', flush=True)
 
 
 def main(argv=None):

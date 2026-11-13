@@ -106,6 +106,22 @@ class IlMergeTests(GateRepo):
         self.assertNotIn('judge', check.call_args.kwargs)
         self.assertEqual(il_merge.release_il.check.__kwdefaults__ or {}, {})
         self.assertEqual(il_merge.release_il.check.__defaults__[-1], 'base')
+    def test_an_applied_gate_keeps_its_receipt_and_a_check_does_not(self):
+        tip = self.candidate(runtime=True)
+        receipts = self.root / '.mirror-cache/receipts'
+        args = self.args()
+        args.apply, args.results = False, self.root / '.mirror-cache/gate-il-check'
+        with mock.patch.object(il_merge.release_il, 'check', return_value={'passed': True, 'checked': []}):
+            self.assertEqual(il_merge.gate(args), 0)
+            self.assertFalse(receipts.exists())
+            args.apply, args.results = True, self.root / '.mirror-cache/gate-il-landed'
+            self.assertEqual(il_merge.gate(args), 0)
+        record = json.loads((receipts / 'gate-il-landed.json').read_text())
+        self.assertEqual((record['applied'], record['tip'], record['branch']), (True, tip, 'work'))
+        self.assertEqual([path.name for path in receipts.iterdir()], ['gate-il-landed.json'])
+        self.assertTrue(il_merge.landed(record))
+        self.assertFalse(il_merge.landed({'passed': True, 'applied': False, 'landing': {'path': 'retry'}}))
+        self.assertTrue(il_merge.landed({'applied': False, 'landing': {'pushed': True}}))
 
     def test_a_moved_candidate_is_not_landed(self):
         self.candidate(runtime=True)
