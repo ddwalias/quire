@@ -36,6 +36,8 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         self.assertLess(binding.index('typeNames.Where(t => t.Key.Name == name)'), binding.index('referenced.TryGetValue(assembly'))
         self.assertIn('cppArtifacts.Contains((b[1].ToLowerInvariant(), b[0]))', binding)
         self.assertIn('projectAssemblies.Contains(b[1])', binding)
+        self.assertIn('C++ artefacts are keyed by their Quire map name', binding)
+        self.assertIn('cppArtifacts.Contains((b[1].ToLowerInvariant(), b[0]))', binding)
 
     def test_changed_body_must_match_even_when_it_was_unfinished(self):
         result = compare(inventory(method(body='old', exact=False)), inventory(method(body='new', exact=False)))

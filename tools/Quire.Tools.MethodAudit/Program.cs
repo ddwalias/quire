@@ -183,7 +183,18 @@ string[]? Binding(string assembly, string name)
     // An audited assembly's [MirrorOf] names the Mathcad assembly as written; it is named canonically, as an unaudited
     // one's binding is below, so the name does not depend on what else is audited.
     if (typeNames.TryGetValue((assembly, name), out var own)) return [own[0], CanonicalAssembly(own[1])];
-    if (!reviewed.TryGetValue(name, out var bound)) return null;
+    if (!reviewed.TryGetValue(name, out var bound))
+    {
+        // C++ artefacts are keyed by their Quire map name, while a call-site signature can name the original
+        // namespace directly (for example utl.PerformanceTimer in a native <Module> thunk).
+        var projectAssemblies = typeNames.Where(t => t.Key.Assembly.Equals(assembly, StringComparison.OrdinalIgnoreCase))
+            .Select(t => t.Value[1]).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var candidates = reviewed.Values.SelectMany(v => v).Where(b => b[0] == name
+            && cppArtifacts.Contains((b[1].ToLowerInvariant(), b[0])) && projectAssemblies.Contains(b[1])
+            && originals.TryGetValue(b[1], out var original) && original.Model.Types.Any(t => t.FullName == name))
+            .ToList();
+        return candidates.Count == 1 ? [name, CanonicalAssembly(candidates[0][1])] : null;
+    }
     // References can name a facade/consumer assembly even when the defining Quire type lives in another project.
     // Prefer the defining project's reviewed binding so the consumer's reference identity cannot change the verdict.
     var definitions = typeNames.Where(t => t.Key.Name == name).Select(t => t.Value).DistinctBy(t => (t[0], t[1])).ToList();
