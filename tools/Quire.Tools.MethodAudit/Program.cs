@@ -363,6 +363,36 @@ bool? OriginalNameTaken(Artifact artifact, RawMethod raw, TypeModel? type, Artif
     int arity = raw.Signature.ParameterTypes.Length;
     return mixed.Methods.Any(m => m.Owner == owner && m.Name == raw.Name && m.Signature.ParameterTypes.Length == arity);
 }
+// Why an unpaired method has no counterpart, naming what Mathcad has under that name so the differing part of the
+// signature shows (a parameter type that did not map, a different return type). Null where there is nothing to name.
+string? PairingMiss(Artifact artifact, RawMethod raw, TypeModel? type, MethodModel? method)
+{
+    Artifact mathcad;
+    string owner, mine;
+    List<string> sameName;
+    if (type == null)
+    {
+        if (raw.Owner != "<Module>" || ModuleOriginal(artifact) is not { } module) return null;
+        (mathcad, owner) = (module, raw.Owner);
+        mine = Signatures.Method(raw.Name, raw.Signature.GenericParameterCount, raw.Signature.ParameterTypes.Select(Map),
+            Map(raw.Signature.ReturnType), raw.Static);
+        sameName = [.. module.Methods.Where(m => m.Owner == owner && m.Name == raw.Name).Select(m => Signatures.Method(m.Name,
+            m.Signature.GenericParameterCount, m.Signature.ParameterTypes.Select(Corlib), Corlib(m.Signature.ReturnType), m.Static))];
+    }
+    else
+    {
+        if (method == null) return null;
+        if (!typeNames.TryGetValue((artifact.Name, type.FullName), out var fields)) return $"{type.FullName} is not bound to a Mathcad type";
+        if (!originals.TryGetValue(fields[1].Trim(), out var bound)) return null;
+        (mathcad, owner) = (bound, fields[0].Trim());
+        mine = ComparisonKey(method, true, type);
+        string name = KeyName(mine);
+        sameName = [.. bound.Methods.Where(m => m.Owner == owner).Select(m => OriginalKey(bound, m)).Where(k => KeyName(k) == name)];
+    }
+    return sameName.Count == 0 ? $"{mathcad.Name} {owner} has no member named {KeyName(mine)}"
+        : $"this member is {mine}; {mathcad.Name} {owner} has {string.Join(" | ", sameName.Take(3))}"
+            + (sameName.Count > 3 ? $" and {sameName.Count - 3} more" : "");
+}
 foreach (var (artifact, raw, type, method, original, paired, pairing) in matched)
 {
     if (selectedTypes.Count > 0 && !selectedTypes.Contains(raw.Owner)) continue;
@@ -379,6 +409,7 @@ foreach (var (artifact, raw, type, method, original, paired, pairing) in matched
     catch (Exception e) { problem ??= $"IL unreadable: {e.Message}"; }
     List<string>? differences = null, diff = null;
     bool exact = false;
+    string? firstDifference = null;
     if (problem != null)
     {
         counterpart = null;
@@ -392,6 +423,7 @@ foreach (var (artifact, raw, type, method, original, paired, pairing) in matched
             var theirs = Reader(original!, false).Read(MetadataTokens.MethodDefinitionHandle(counterpart.Token), true);
             differences = mine.Compare(theirs);
             exact = differences.Count == 0 && mine.Exact(theirs);
+            firstDifference = mine.FirstDifference(theirs);
             if (wanted) diff = mine.Diff(theirs, 3, offset => artifact.Line(raw.Token, offset) is { } line ? Path.GetRelativePath(repo, line) : null);
         }
         catch (Exception e)
@@ -446,6 +478,13 @@ foreach (var (artifact, raw, type, method, original, paired, pairing) in matched
                 || raw.RuntimeProvided is { } quireFlags && counterpart.RuntimeProvided is { } mathcadFlags
                     && (quireFlags & ~System.Reflection.MethodImplAttributes.CodeTypeMask) == (mathcadFlags & ~System.Reflection.MethodImplAttributes.CodeTypeMask)),
         shape_matches = counterpart != null && (method?.Access.ToString() ?? raw.Access) == counterpart.Access && raw.Modifiers == counterpart.Modifiers,
+        // The parts of a declaration shape_matches compares that differ, each with both sides; empty when it matches.
+        declaration_differences = counterpart == null ? []
+            : DeclarationDifferences(method?.Access.ToString() ?? raw.Access, raw.Modifiers, counterpart).ToArray(),
+        // The first differing instruction of a paired body, both sides; null when exact or not compared.
+        first_difference = firstDifference,
+        // Why no counterpart was paired, with Mathcad's members of that name; null for a paired or unreadable method.
+        pairing_miss = counterpart == null && problem == null ? PairingMiss(artifact, raw, type, method) : null,
         structure_matches = differences == null ? (bool?)null : differences.Count == 0,
         structure_differences = differences ?? [],
         // Same instructions in the same order (Structure.Exact); null where the structure is not compared.
@@ -462,6 +501,25 @@ foreach (var (artifact, raw, type, method, original, paired, pairing) in matched
             || type.Properties.Any(p => p.Stub && (Same(p.Getter, method) || Same(p.Setter, method)))
             || type.Events.Any(e => e.Stub && (Same(e.Adder, method) || Same(e.Remover, method))))
     });
+}
+// The name of a method key (Signatures.Method): what precedes its arity and parameter list.
+static string KeyName(string key)
+{
+    int parameters = key.IndexOf('(');
+    return parameters < 0 ? key : key[..Math.Max(0, key.LastIndexOf('`', parameters))];
+}
+// RawMethod.Modifiers holds the custom modifiers of the return type, then of each parameter, separated by ';'.
+static IEnumerable<string> DeclarationDifferences(string access, string modifiers, RawMethod counterpart)
+{
+    if (access != counterpart.Access) yield return $"access: Quire {access}, Mathcad {counterpart.Access}";
+    string[] quire = modifiers.Split(';'), mathcad = counterpart.Modifiers.Split(';');
+    for (int i = 0; i < Math.Max(quire.Length, mathcad.Length); i++)
+    {
+        string mine = i < quire.Length ? quire[i] : "", theirs = i < mathcad.Length ? mathcad[i] : "";
+        if (mine != theirs)
+            yield return $"custom modifiers of {(i == 0 ? "the return type" : $"parameter {i}")}: "
+                + $"Quire {(mine.Length > 0 ? mine : "none")}, Mathcad {(theirs.Length > 0 ? theirs : "none")}";
+    }
 }
 static bool Same(MethodModel? accessor, MethodModel method) =>
     accessor != null && accessor.Name == method.Name && accessor.Params.Length == method.Params.Length

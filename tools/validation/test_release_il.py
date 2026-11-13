@@ -308,6 +308,30 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
                                              inventory(same, *(new for _, new, *_ in pairs), method('New')))
         self.assertEqual(changes, [{'method': new['id'], 'before': before, 'after': after, 'judge_only': judge_only}
                                    for _, new, before, after, judge_only in pairs])
+    def test_a_failure_reason_shows_the_part_that_differs(self):
+        def reason(**row):
+            return compare(inventory(), inventory(method(**dict(dict(exact=False), **row))))['failures'][0]['reason']
+        first = 'first difference at #4 (Quire has 9 entries, Mathcad 9): Quire ldc.i4.2, Mathcad ldc.i4.3'
+        # Without the detail (an older judge's inventory) the reasons are the bare ones.
+        self.assertEqual(reason(), 'Release IL differs')
+        self.assertEqual(reason(shape_matches=False), 'declaration differs')
+        self.assertEqual(reason(original=None), 'no Mathcad counterpart')
+        self.assertEqual(reason(first_difference=first), 'Release IL differs: ' + first)
+        self.assertEqual(reason(structure_differences=['calls differ at #0: Quire A, Mathcad B'], first_difference=first),
+                         'calls differ at #0: Quire A, Mathcad B; ' + first)
+        modifier = 'custom modifiers of parameter 1: Quire none, Mathcad modopt(System.Runtime.CompilerServices.IsConst)'
+        self.assertEqual(reason(shape_matches=False, declaration_differences=['access: Quire Public, Mathcad Internal', modifier]),
+                         'declaration differs: access: Quire Public, Mathcad Internal; ' + modifier)
+        # A declaration that differs is reported with its body's difference, so one run shows both.
+        self.assertEqual(reason(shape_matches=False, declaration_differences=[modifier], first_difference=first),
+                         f'declaration differs: {modifier}; {first}')
+        self.assertEqual(reason(shape_matches=False, exact=True, declaration_differences=[modifier]),
+                         'declaration differs: ' + modifier)
+        miss = 'this member is M`0(Int64)->Void|False; msclr Mpl.T has M`0(Int32)->Void|False'
+        self.assertEqual(reason(original=None, pairing_miss=miss), 'no Mathcad counterpart: ' + miss)
+        # What MethodAudit recorded for a row it could not pair or read comes first.
+        self.assertEqual(reason(original=None, pairing_miss=miss, structure_differences=['2 methods of msclr match']),
+                         '2 methods of msclr match')
 
     def test_matching_declaration_needs_no_body(self):
         row = method(exact=None)

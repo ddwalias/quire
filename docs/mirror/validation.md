@@ -91,6 +91,17 @@ method that cannot be paired or read (an ambiguous custom-modifier tie, an unrea
 own row with the reason in `structure_differences`; it no longer aborts the scan. Reports contain artifact
 identities, signatures and verdicts, not original IL. No committed validation baseline is used.
 
+A failure reason quotes the part that differs, both sides. `declaration differs: ...` names the access
+or the custom modifiers of the return type or of parameter *n* (`declaration_differences` in the
+inventory). A body's reason gives the differing call target, field, type, constant or exception region
+and then `first difference at #n`: the first differing entry of the instruction sequence
+(`first_difference`); `Release IL differs: first difference ...` is a body whose calls, fields, types
+and constants all agree. `no Mathcad counterpart: ...` says whether the type is unbound, Mathcad has
+no member of that name, or which signatures Mathcad has under the name beside the one this member
+maps to, so the parameter that did not map shows (`pairing_miss`). Only that one entry of an original
+body is quoted; `MethodAudit --diff` prints the surrounding instructions. A run whose judge predates
+these fields prints the bare reasons.
+
 ## C++/CLI candidate
 
 ```powershell

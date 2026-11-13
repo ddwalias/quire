@@ -48,6 +48,19 @@ sealed record Structure(string[] Calls, string[] Fields, string[] Types, string[
         return differences;
     }
 
+    /// <summary>The first entry of <see cref="Code"/> that differs from <paramref name="original"/>'s, both sides on one
+    /// line (an instruction, an exception region, or the max stack, local initialization or locals that follow them);
+    /// null when <see cref="Exact"/>. It is what a failure reason quotes; <see cref="Diff"/> gives the context.</summary>
+    public string? FirstDifference(Structure original)
+    {
+        if (Exact(original)) return null;
+        int at = 0;
+        while (at < Code.Length && at < original.Code.Length && Code[at] == original.Code[at]) at++;
+        static string Side(string[] code, int i) => i < code.Length ? code[i] : "(end)";
+        return $"first difference at #{at} (Quire has {Code.Length} entries, Mathcad {original.Code.Length}): " +
+            $"Quire {Side(Code, at)}, Mathcad {Side(original.Code, at)}";
+    }
+
     /// <summary>Where <see cref="Code"/> first differs from <paramref name="original"/>'s: that instruction and
     /// <paramref name="context"/> on either side, Quire's then Mathcad's, each Quire instruction with the source line
     /// <paramref name="where"/> gives its IL offset. Empty when <see cref="Exact"/>.</summary>
