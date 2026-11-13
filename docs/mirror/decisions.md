@@ -50,8 +50,9 @@ it to C++/CLI so that MSVC emits Mathcad's IL from Quire's own source. (The buil
 decision first set were lifted by D27.)
 
 For a mixed-mode candidate the gate reports, without failing, methods that MSVC emits for its own
-support and Mathcad's build lacked (`std`, CRT, exception/startup helpers, `vc.cppcli` types) and
-native bodies whose Mathcad counterpart is native too. Removing the C# stand-ins that had no
+support and Mathcad's build lacked (`std`, CRT, exception/startup helpers, `vc.cppcli` types). Native bodies
+that pair with a native Mathcad body are compared byte for byte; one that was not exact before and is
+unchanged is reported without failing. Removing the C# stand-ins that had no
 counterpart is allowed. Every method with a counterpart must match exactly, as before.
 `mcmisc.dll` is plain C# and moves to its own project, `Quire.Engine.Misc`.
 
