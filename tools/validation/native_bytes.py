@@ -546,8 +546,8 @@ def targets_from(doc, image, path="manifest"):
                 raise TypeError(entry.toolchain, entry.parked)
         except (KeyError, TypeError, ValueError) as e:
             raise ManifestError(f"{path}: {name}: malformed entry {raw!r}") from e
-        if entry.parked and (entry.toolchain or entry.size is not None):
-            raise ManifestError(f"{path}: {name}: a parked entry is a function: no size, and not a toolchain entry")
+        if entry.parked and entry.toolchain:
+            raise ManifestError(f"{path}: {name}: a parked entry cannot be a toolchain entry")
         if entry.toolchain:
             if entry.size is not None or not image.contains(entry.rva, 1):
                 raise ManifestError(f"{path}: {name}: a toolchain entry takes an RVA in a section and no size")
@@ -593,7 +593,16 @@ class InternalTargets:
                 verdict = (("mismatch", "the candidate objects define a toolchain entry") if defn is not None
                            else ("ok", None))
             elif entry.parked:
-                verdict = ("ok", None)  # D29: the RVA is checked at each site; the bytes are not compared
+                if entry.size is None:
+                    verdict = ("ok", None)  # D29: parked functions are not reproducible per object
+                elif defn is None:
+                    verdict = ("unverified", "not defined by the candidate objects")
+                elif not defn.data:
+                    verdict = ("mismatch", "manifest entry is data, candidate defines a function")
+                elif len(defn.code) != entry.size:
+                    verdict = ("mismatch", f"size {len(defn.code)} != manifest {entry.size}")
+                else:
+                    verdict = ("ok", None)  # parked data is verified by name and size only
             elif defn is None:
                 verdict = ("unverified", "not defined by the candidate objects")
             elif defn.data != (entry.size is not None):
@@ -702,7 +711,30 @@ def classify_targets(image, begin, function, internal=None):
             if internal is None or name not in internal.entries:
                 found.unverified += 1
                 continue
-            expected = internal.entries[name].rva + addend
+            entry = internal.entries[name]
+            if entry.parked and entry.size is not None:
+                status, reason = internal.reference(name)
+                if status == "ok":
+                    found.verified += 1
+                elif status == "mismatch":
+                    found.mismatches.append(f"{name} at +{r.offset:#x}: manifest entry does not match: {reason}")
+                    found.entries[name] = (status, reason)
+                else:
+                    found.unverified += 1
+                    found.entries[name] = (status, reason)
+                continue
+            if entry.parked:
+                status, reason = internal.reference(name)
+                if status == "ok":
+                    found.verified += 1
+                elif status == "mismatch":
+                    found.mismatches.append(f"{name} at +{r.offset:#x}: manifest entry does not match: {reason}")
+                    found.entries[name] = (status, reason)
+                else:
+                    found.unverified += 1
+                    found.entries[name] = (status, reason)
+                continue
+            expected = entry.rva + addend
             if resolved != expected:
                 mismatches.append(f"{name} at +{r.offset:#x}: original resolves to RVA {resolved:#x}, "
                                   f"manifest entry gives {expected:#x}")

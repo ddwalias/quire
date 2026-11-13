@@ -95,6 +95,37 @@ class ScanTests(unittest.TestCase):
         self.assertEqual((rows['caller']['ok'], rows['caller']['reason']), (False, '1 unverified call/address targets'))
         self.assertNotEqual(rows['caller']['sha256'], retargeted['caller']['sha256'])
 
+    def test_export_targets_still_require_the_original_address(self):
+        memory = bytearray(0x2000)
+        memory[0x1000:0x1006] = b'\xe8\0\0\0\0\xc3'
+        struct.pack_into('<i', memory, 0x1001, 0x1200 - (0x1001 + 4))
+        image = ManifestImage(memory, {0x1000: 0x1006, 0x1100: 0x1103, 0x1200: 0x1203},
+                              {'caller': 0x1000, 'exported': 0x1100})
+        with tempfile.TemporaryDirectory() as tmp, mock.patch('native_bytes.PeImage', lambda path: image):
+            obj = Path(tmp) / 'caller.obj'
+            obj.write_bytes(coff([('caller', b'\xe8\0\0\0\0\xc3', [(1, 0x0004, 1)])],
+                                 externals=['exported']))
+            rows = scan('fake.dll', [obj], None)
+        self.assertFalse(rows['caller']['ok'])
+        self.assertIn('call target differs', rows['caller']['reason'])
+
+    def test_parked_nonexport_target_passes_by_name_and_size(self):
+        memory = bytearray(0x2000)
+        memory[0x1000:0x1006] = b'\xe8\0\0\0\0\xc3'
+        # The original address deliberately differs from the parked entry's RVA.
+        struct.pack_into('<i', memory, 0x1001, 0x1200 - (0x1001 + 4))
+        image = ManifestImage(memory, {0x1000: 0x1006, 0x1100: 0x1103, 0x1200: 0x1203}, {'caller': 0x1000})
+        manifest = {'fake.dll': {'sha256': image.sha256, 'targets': {
+            'parked_data': {'rva': '0x1100', 'size': 3, 'parked': True}}}}
+        with tempfile.TemporaryDirectory() as tmp, mock.patch('native_bytes.PeImage', lambda path: image):
+            obj = Path(tmp) / 'caller.obj'
+            obj.write_bytes(coff([('caller', b'\xe8\0\0\0\0\xc3', [(1, 0x0004, 1)]),
+                                  ('parked_data', b'abc', [])], externals=['parked_data'], data=['parked_data']))
+            manifest_path = Path(tmp) / 'targets.json'
+            manifest_path.write_text(json.dumps(manifest), encoding='utf-8')
+            rows = scan('fake.dll', [obj], manifest_path)
+        self.assertTrue(rows['caller']['ok'], rows['caller']['reason'])
+
     def test_anonymous_namespace_tags_do_not_count_as_a_change(self):
         # MSVC tags an anonymous namespace with a hash of the source path, which differs between base and candidate.
         call = lambda tag: Function('f', b'\xe8\0\0\0\0\xc3', [Reloc(1, 4, 0)], {1: None}, {1: f'?g@?A0x{tag}@u@@YAXXZ'})
