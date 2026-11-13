@@ -261,6 +261,7 @@ public sealed class MetadataLoader
         var defaults = new object?[sig.ParameterTypes.Length];
         var hasDefault = new bool[sig.ParameterTypes.Length];
         var isParams = new bool[sig.ParameterTypes.Length];
+        var marshalU1 = new bool[sig.ParameterTypes.Length];
         foreach (var ph in m.GetParameters())
         {
             var p = _md.GetParameter(ph);
@@ -268,6 +269,8 @@ public sealed class MetadataLoader
             int i = p.SequenceNumber - 1;
             names[i] = _md.GetString(p.Name);
             flags[i] = p.Attributes;
+            if ((p.Attributes & ParameterAttributes.HasFieldMarshal) != 0)
+                marshalU1[i] = _md.GetBlobReader(p.GetMarshallingDescriptor()).ReadByte() == 0x04; // UnmanagedType.U1
             if ((p.Attributes & ParameterAttributes.HasDefault) != 0)
             {
                 hasDefault[i] = true;
@@ -284,7 +287,7 @@ public sealed class MetadataLoader
             var t = sig.ParameterTypes[i];
             bool isIn = t is ByRefSig { ReadOnly: true };
             bool isOut = t is ByRefSig && !isIn && (flags[i] & ParameterAttributes.Out) != 0 && (flags[i] & ParameterAttributes.In) == 0;
-            ps.Add(new ParamModel(string.IsNullOrEmpty(names[i]) ? $"arg{i}" : names[i], t, isIn, isOut, isParams[i], hasDefault[i], defaults[i]));
+            ps.Add(new ParamModel(string.IsNullOrEmpty(names[i]) ? $"arg{i}" : names[i], t, isIn, isOut, isParams[i], hasDefault[i], defaults[i]) { MarshalU1 = marshalU1[i] });
         }
 
         var methodAttrs = AttributeNames(m.GetCustomAttributes());

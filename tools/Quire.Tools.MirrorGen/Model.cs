@@ -31,7 +31,11 @@ public enum Access { Private, PrivateProtected, Internal, Protected, ProtectedIn
 
 public sealed record GenericParam(string Name, int Variance, bool Class, bool Struct, bool New, ImmutableArray<TypeSig> Constraints);
 
-public sealed record ParamModel(string Name, TypeSig Type, bool In, bool Out, bool Params, bool HasDefault, object? Default);
+public sealed record ParamModel(string Name, TypeSig Type, bool In, bool Out, bool Params, bool HasDefault, object? Default)
+{
+    /// <summary>The original marshals this parameter as U1 (a bool passed as one byte).</summary>
+    public bool MarshalU1 { get; init; }
+}
 
 /// <summary>
 /// Source annotation metadata retained for compatibility. Completion is determined by Release IL reports;

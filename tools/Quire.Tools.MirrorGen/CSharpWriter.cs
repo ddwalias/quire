@@ -287,7 +287,7 @@ public sealed class CSharpWriter(Mapper mapper, Planner plan)
             modifier = modifier == Modifier.Abstract ? Modifier.Virtual : Modifier.Override;
         }
         string mods = (m.Static ? (t.Kind == TypeKind.Interface && m.Abstract ? "static abstract " : "static ") : "") + ModifierText(modifier, t);
-        if (t.Kind == TypeKind.Interface && m.ReturnMarshalU1 && m.Return is NamedSig { Name: "System.Boolean" })
+        if (m.ReturnMarshalU1 && m.Return is NamedSig { Name: "System.Boolean" })
             sb.AppendLine($"{pad}[return: global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.U1)]");
         // Generated interface members get throwing default bodies: hand-written classes that implement a mirrored
         // interface then keep compiling until a phase implements the member for real.
@@ -343,6 +343,7 @@ public sealed class CSharpWriter(Mapper mapper, Planner plan)
             return;
         }
 
+        var getter = p.Getter;
         var getAccess = p.Getter == null ? (Access?)null : plan.AccessOverrides.GetValueOrDefault(p.Getter, p.Getter.Access);
         var setAccess = p.Setter == null ? (Access?)null : plan.AccessOverrides.GetValueOrDefault(p.Setter, p.Setter.Access);
         var propAccess = getAccess == null ? setAccess!.Value : setAccess == null ? getAccess.Value : Max(getAccess.Value, setAccess.Value);
@@ -362,9 +363,12 @@ public sealed class CSharpWriter(Mapper mapper, Planner plan)
         {
             if (a == null) return "";
             string am = a.Value != propAccess && getAccess != null && setAccess != null && t.Kind != TypeKind.Interface ? AccessText(a.Value) + " " : "";
-            if (abstractish) return $"{am}{kw}; ";
+            // The original marshals a bool getter result as U1; the attribute goes on the accessor's return.
+            string u1 = kw == "get" && getter is { ReturnMarshalU1: true } && p.Type is NamedSig { Name: "System.Boolean" }
+                ? "[return: global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.U1)] " : "";
+            if (abstractish) return $"{am}{u1}{kw}; ";
             string body = !callsBase ? Throw : kw == "get" ? target : $"{target} = value";
-            return $"{am}{kw} => {body}; ";
+            return $"{am}{u1}{kw} => {body}; ";
         }
         sb.AppendLine($"{pad}{StubAttr}");
         sb.AppendLine($"{pad}{access}{mods}{unsafeMod}{type} {name}{index} {{ {Accessor("get", getAccess)}{Accessor(p.Setter?.InitOnly == true ? "init" : "set", setAccess)}}}");
@@ -551,7 +555,10 @@ public sealed class CSharpWriter(Mapper mapper, Planner plan)
             string name = Identifier.Source(p.Name);
             while (!names.Add(name)) name += "_";
             string def = p.HasDefault && i > lastRequired && p.Type is not ByRefSig && !explicitImpl ? " = " + Literal(p.Default, type, ctx, parameter: true) : "";
-            parts.Add($"{mod}{T(type, ctx)} {name}{def}");
+            // A by-value bool the original marshals as U1 keeps that marshalling on the parameter.
+            string u1 = p.MarshalU1 && p.Type is NamedSig { Name: "System.Boolean" }
+                ? "[global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.U1)] " : "";
+            parts.Add($"{u1}{mod}{T(type, ctx)} {name}{def}");
         }
         return string.Join(", ", parts);
     }
