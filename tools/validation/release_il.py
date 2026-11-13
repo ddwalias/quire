@@ -505,6 +505,38 @@ def install_file(install, assembly):
     return found[0]
 
 
+TOOLCHAIN_MANIFEST = Path(__file__).resolve().parents[2] / 'docs' / 'mirror' / 'native' / 'internal-targets.json'
+
+
+def toolchain_verdict(dll, original, token):
+    """(exact, reason) for a mixed-mode original's method that the manifest lists as a toolchain entry (D23), else None.
+    The entry lives under the file's "managed" section and binds to its SHA-256 (another build fails the row). The toolset
+    supplies the method, so the candidate's compiler-emitted body is not compared: the original's method name and body
+    size must match the entry."""
+    if not TOOLCHAIN_MANIFEST.is_file():
+        return None
+    manifest = json.loads(TOOLCHAIN_MANIFEST.read_text(encoding='utf-8'))
+    listed = [key for key in manifest if key.lower() == dll.name.lower()]
+    if not listed:
+        return None
+    bound = manifest[listed[0]]
+    if str(bound.get('sha256', '')).lower() != hashlib.sha256(Path(dll).read_bytes()).hexdigest():
+        raise ValueError(f'{listed[0]} manifest entries bind to another build')
+    name = original.methods[(token & 0xFFFFFF) - 1][2]
+    entry = bound.get('managed', {}).get(name)
+    if entry is None:
+        return None
+    if type(entry.get('size')) is not int or entry.get('toolchain') is not True:
+        raise ValueError(f'{listed[0]}: {name} is not a toolchain entry with a size')
+    extent = original.extent(original.rva(token))
+    if extent is None:
+        raise ValueError(f'{name} does not start a function in {listed[0]}')
+    size = extent[1] - extent[0]
+    if size != entry['size']:
+        return False, f'toolchain entry {name}: the original body is {size} bytes, the manifest says {entry["size"]}'
+    return True, f'toolchain entry (D23): name and size verified ({size} bytes); the candidate body is not compared'
+
+
 def native_bodies(data, assemblies, install, work, load=None):
     """Compare the machine code of an inventory's native bodies with Mathcad's and record the verdict on each row:
     native_exact and native_reason for a body MethodAudit paired with a native counterpart, and native_sha256
@@ -547,9 +579,13 @@ def native_bodies(data, assemblies, install, work, load=None):
             row['native_sha256'] = candidate.fingerprint(rva)
             counterpart, named = row.get('original'), globals_of.get(row['project'], ())
             if counterpart and counterpart.get('native_code'):
-                original = image(install_file(install, counterpart['assembly']))
+                dll = install_file(install, counterpart['assembly'])
+                original = image(dll)
                 row['native_exact'], row['native_reason'] = compare_native(
                     original, candidate, original.rva(counterpart['token']), rva)
+                toolchain = None if row['native_exact'] else toolchain_verdict(dll, original, counterpart['token'])
+                if toolchain and toolchain[0]:
+                    row['native_exact'], row['native_reason'] = toolchain
             elif counterpart is None and row['type'] == '<Module>' and row.get('original_name_taken') and len(named) == 1:
                 assembly, name = next(iter(named)), candidate.methods[(row['token'] & 0xFFFFFF) - 1][2]
                 original = image(install_file(install, assembly))

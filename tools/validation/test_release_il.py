@@ -493,6 +493,37 @@ class NativeBodyTests(unittest.TestCase):
             release_il.native_bodies(data, root / 'out', root / 'install', root / 'work', load)
             return data['methods']
 
+    def test_mixed_mode_toolchain_entry_verifies_the_original_name_and_size(self):
+        original = SimpleNamespace(methods=[(0x1000, True, 'delete[]`0')], rva=lambda token: 0x1000,
+                                   extent=lambda rva: (0x1000, 0x1020))
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            dll = root / 'Mcd.DLL'
+            dll.write_bytes(b'original')
+            manifest = root / 'internal-targets.json'
+
+            def write(sha=hashlib.sha256(b'original').hexdigest(), **managed):
+                manifest.write_text(json.dumps({'mcd.dll': {'sha256': sha, 'targets': {}, 'managed': managed}}))
+            with mock.patch.object(release_il, 'TOOLCHAIN_MANIFEST', manifest):
+                write()  # no entry for the method: nothing to verify
+                self.assertIsNone(release_il.toolchain_verdict(dll, original, 0x06000001))
+                write(**{'delete[]`0': {'size': 32, 'toolchain': True}})
+                exact, reason = release_il.toolchain_verdict(dll, original, 0x06000001)
+                self.assertTrue(exact)
+                self.assertIn('name and size verified (32 bytes)', reason)
+                write(**{'delete[]`0': {'size': 31, 'toolchain': True}})  # the original's body is 32 bytes
+                exact, reason = release_il.toolchain_verdict(dll, original, 0x06000001)
+                self.assertFalse(exact)
+                self.assertIn('the original body is 32 bytes', reason)
+                write(**{'delete[]`0': {'size': 32}})  # without the toolchain flag the entry is malformed
+                with self.assertRaisesRegex(ValueError, 'not a toolchain entry with a size'):
+                    release_il.toolchain_verdict(dll, original, 0x06000001)
+                write(sha='f' * 64, **{'delete[]`0': {'size': 32, 'toolchain': True}})  # another build of the DLL
+                with self.assertRaisesRegex(ValueError, 'another build'):
+                    release_il.toolchain_verdict(dll, original, 0x06000001)
+                manifest.write_text(json.dumps({'other.dll': {'sha256': 'f' * 64, 'targets': {}, 'managed': {}}}))
+                self.assertIsNone(release_il.toolchain_verdict(dll, original, 0x06000001))  # DLL not listed
+
     def test_the_method_table_gives_each_tokens_body_and_the_globals(self):
         methods = [(0x1000, 0x85, 'Hex.Module.GetState'), (0x2000, 0, 'main'), (0, 0x85, 'Import'), (0x3000, 0, 'M')]
         for wide in (False, True):
