@@ -98,6 +98,14 @@ class IlMergeTests(GateRepo):
         self.assertNotIn('skipped', record['validation'])
         self.assertEqual(record['validation']['skipped_counts'], report['skipped_counts'])
         self.assertIn('  not verified: 1 x generated stub, not implemented', [call.args[0] for call in printed.call_args_list])
+    def test_landing_is_always_judged_by_the_base(self):
+        """--judge candidate is release_il.py's, for testing a judge change; the merge gate never asks for it."""
+        self.candidate(runtime=True)
+        with mock.patch.object(il_merge.release_il, 'check', return_value={'passed': True, 'checked': []}) as check:
+            self.assertEqual(il_merge.gate(self.args()), 0)
+        self.assertNotIn('judge', check.call_args.kwargs)
+        self.assertEqual(il_merge.release_il.check.__kwdefaults__ or {}, {})
+        self.assertEqual(il_merge.release_il.check.__defaults__[-1], 'base')
 
     def test_a_moved_candidate_is_not_landed(self):
         self.candidate(runtime=True)

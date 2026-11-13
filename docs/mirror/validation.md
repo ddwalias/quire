@@ -22,6 +22,23 @@ own copy re-runs main's), so a branch cannot change the tool or the rules that j
 MethodAudit, MirrorGen or `tools/validation` takes effect for the runs after it lands. It reads production assemblies directly, without a
 test host, and never runs tests.
 
+A run of a tree that changes MethodAudit or MirrorGen says that the base's judge judged it, and the
+report's `judge` lists the changed tool paths. To test such a change before it lands, name the
+projects and pass `--judge candidate`:
+
+```powershell
+python tools/validation/release_il.py --base main --project Quire.Msclr --judge candidate
+```
+
+The base is still scanned by the base commit's MethodAudit; the candidate is scanned by MethodAudit
+built from a copy of the working tree's tool sources (uncommitted changes included; nothing is built
+inside the tree). The usual rules then apply across the two judges: a member the base's judge called
+exact must still be exact, and a member the new judge pairs for the first time must match. The report's
+`verdict_changes` lists every member whose verdict differs between the two scans, and the console
+prints those whose body did not change, which is what the judge's change did. Rows a candidate judge
+wrote are never cached. `--judge candidate` exists only in `release_il.py`: `merge_gate.py` and
+`lane_merge.py` always land with the base's judge ([D24](decisions.md)).
+
 Base inventories are cached in `.mirror-cache/inventory-cache/` per project, keyed by the content of
 what MethodAudit reads for it: the Git trees of the project's `ProjectReference` closure, the root
 files other than `*.md`, the `src` directory names, the type map, the judge (its MethodAudit/MirrorGen

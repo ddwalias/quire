@@ -291,6 +291,24 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         misc = dict(row('Misc'), signature='M`0()->[Quire.Engine.Misc]T|True')
         self.assertTrue(compare(inventory(utl), inventory(misc))['passed'])
 
+    def test_verdict_changes_name_members_whose_verdict_differs(self):
+        native = dict(unsupported='native code body has no IL to compare', mixed_mode=True, exact=None,
+                      original={'assembly': 'utl-mgd', 'native_code': True})
+        pairs = [(method('A', exact=False), method('A'), 'Release IL differs', 'exact', True),
+                 (method('B', body='old', exact=False, stub_body=True), method('B', body='new'), 'generated stub', 'exact', False),
+                 (method('C'), method('C', shape_matches=False), 'exact', 'declaration differs', True),
+                 (method('D', exact=False, original=None), method('D', exact=None, declaration_only=True),
+                  'no Mathcad counterpart', 'declaration matches', True),
+                 (method('E', native_exact=False, **native), method('E', native_exact=True, **native),
+                  'native body differs', 'native body matches', True)]
+        for old, new, *_ in pairs:
+            old['id'] = new['id'] = f"P::T::{old['signature']}"
+        same = method('Same')
+        changes = release_il.verdict_changes(inventory(same, *(old for old, *_ in pairs)),
+                                             inventory(same, *(new for _, new, *_ in pairs), method('New')))
+        self.assertEqual(changes, [{'method': new['id'], 'before': before, 'after': after, 'judge_only': judge_only}
+                                   for _, new, before, after, judge_only in pairs])
+
     def test_matching_declaration_needs_no_body(self):
         row = method(exact=None)
         row.update(body_sha256=None, declaration_only=True)
@@ -666,15 +684,21 @@ class CheckTests(unittest.TestCase):
         (self.install / 'sub' / 'Ptc.dll').write_bytes(b'x')
         self.cache = self.repo.root / '.mirror-cache' / 'inventory-cache'
         self.runs, self.dotnet, self.scans, self.scanned = 0, [], [], []
+        self.judges, self.tools, self.tool = [], [], None
         self.rows = self.row
         real_run = release_il.run
         def run(command, cwd, log, timeout, env=None):
             if command[0] in ('git', 'tar'):
                 return real_run(command, cwd, log, timeout, env)
             self.dotnet.append((list(map(str, command)), Path(cwd)))
+            # The Program.cs a judge is built from, read now: the run discards its work directory.
+            program = Path(str(command[2])).with_name('Program.cs')
+            self.judges.append(program.read_text() if program.is_file() else None)
         def scan(root, projects, tool, work, *args, **kwargs):
             self.scans.append(Path(root))
             self.scanned.append(list(projects))
+            self.tool = Path(tool)  # the judge of this scan, for rows that depend on it
+            self.tools.append(self.tool)
             return {'methods': [row for project in projects for row in self.rows(project)]}
         self.purged = []
         for target, value in (('run', run), ('build_and_scan', scan), ('purge', lambda *paths: self.purged.append(paths))):
@@ -715,6 +739,83 @@ class CheckTests(unittest.TestCase):
         self.assertTrue(command[2].endswith('Quire.Tools.MethodAudit.csproj'))
         self.assertTrue(Path(command[2]).is_relative_to(self.cache.parent / 'gate-work'))
         self.assertNotEqual(cwd, self.repo.root)
+
+    def test_a_tree_that_changes_the_judge_is_told_the_base_judged_it(self):
+        self.assertEqual(self.check()['judge']['changed'], [])
+        self.assertEqual(release_il.judge_notes(self.check()), [])
+        self.repo.write('tools/Quire.Tools.MethodAudit/Program.cs', 'proposed')  # untracked
+        self.repo.write('tools/Quire.Tools.MirrorGen/Model.cs', 'proposed')  # modified
+        self.judges.clear()
+        self.tools.clear()
+        report = self.check()
+        self.assertEqual(report['judge']['source'], 'base')
+        self.assertEqual(report['judge']['changed'], ['tools/Quire.Tools.MethodAudit/Program.cs',
+                                                      'tools/Quire.Tools.MirrorGen/Model.cs'])
+        self.assertEqual(report['judge']['base'], report['judge']['candidate'])
+        # One judge, the base's, scanned the candidate too.
+        self.assertEqual({tool.parent.parent.name for tool in self.tools}, {report['judge']['base']})
+        self.assertEqual(self.judges, [None])  # built once, from the base checkout, which has no Program.cs
+        notes = release_il.judge_notes(report)
+        self.assertEqual(len(notes), 1)
+        self.assertIn('the change had no effect', notes[0])
+        self.assertIn('--judge candidate', notes[0])
+
+    def test_the_candidate_judge_is_built_from_the_working_tree_and_scans_only_the_candidate(self):
+        self.repo.write('tools/Quire.Tools.MethodAudit/Program.cs', 'proposed')  # not committed
+        report = self.check(judge='candidate')
+        self.assertTrue(report['passed'], report)
+        self.assertEqual(self.judges, [None, 'proposed'])  # the base's, then the working tree's
+        self.assertEqual(self.scans[1], self.repo.root)
+        base_tool, candidate_tool = self.tools
+        self.assertNotEqual(base_tool, candidate_tool)
+        self.assertEqual(report['judge'], {'source': 'candidate', 'changed': ['tools/Quire.Tools.MethodAudit/Program.cs'],
+                                           'base': base_tool.parent.parent.name,
+                                           'candidate': candidate_tool.parent.parent.name})
+        self.assertTrue(report['judge']['candidate'].startswith('tree-'))
+        # Built from a copy in the run's work directory: nothing is written into the tree's tools.
+        command, cwd = self.dotnet[1]
+        self.assertTrue(Path(command[2]).is_relative_to(self.cache.parent / 'gate-work'))
+        self.assertFalse((self.repo.root / 'tools/Quire.Tools.MethodAudit/obj').exists())
+        # Its key is the content of the judge's sources: the same tree asks for the same judge, a changed one for another.
+        self.assertEqual(self.check(judge='candidate')['judge']['candidate'], report['judge']['candidate'])
+        self.repo.write('tools/Quire.Tools.MethodAudit/Program.cs', 'proposed again')
+        self.assertNotEqual(self.check(judge='candidate')['judge']['candidate'], report['judge']['candidate'])
+        with self.assertRaisesRegex(ValueError, 'base or candidate'):
+            self.check(judge='tip')
+
+    def test_the_candidate_judge_shows_which_verdicts_it_changes(self):
+        self.repo.write('tools/Quire.Tools.MethodAudit/Program.cs', 'proposed')
+        self.rows = lambda project: self.row(project, exact='tree-' in self.tool.parent.parent.name)
+        report = self.check(judge='candidate')
+        self.assertTrue(report['passed'], report)
+        self.assertEqual(report['verdict_changes'], [{'method': 'P::T::M', 'before': 'Release IL differs',
+                                                      'after': 'exact', 'judge_only': True}])
+        notes = release_il.judge_notes(report)
+        self.assertIn('1 members with an unchanged body changed verdict', notes[0])
+        self.assertEqual(notes[1], '    P::T::M: Release IL differs -> exact')
+        # The base's judge sees no change: the same tree, judged as landing judges it.
+        self.assertEqual(self.check()['verdict_changes'], [])
+
+    def test_a_candidate_judge_that_loses_an_exact_member_fails(self):
+        self.repo.write('tools/Quire.Tools.MethodAudit/Program.cs', 'proposed')
+        self.rows = lambda project: self.row(project, exact='tree-' not in self.tool.parent.parent.name)
+        report = self.check(judge='candidate')
+        self.assertFalse(report['passed'])
+        self.assertEqual(report['verdict_changes'][0]['after'], 'Release IL differs')
+        self.assertTrue(self.check()['passed'])
+
+    def test_rows_of_a_candidate_judge_are_never_stored(self):
+        entries = lambda: len(list(self.cache.glob('*.json')))
+        (self.repo.root / '.git/info').mkdir(exist_ok=True)
+        (self.repo.root / '.git/info/attributes').write_text(release_il.RAW_BYTES, encoding='utf-8')
+        self.check(store_candidate=True, judge='candidate')
+        self.assertEqual(entries(), 1)  # the base's, which the base's judge wrote
+        self.check(store_candidate=True)
+        self.assertEqual(entries(), 2)
+
+    def test_the_candidate_judge_needs_named_projects(self):
+        with mock.patch.object(sys, 'stderr'), self.assertRaises(SystemExit):
+            release_il.main(['--judge', 'candidate'])
 
     def test_a_base_without_the_judge_fails_closed(self):
         self.repo.git('rm', '-rq', 'tools/Quire.Tools.MethodAudit')
