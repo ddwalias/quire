@@ -3,6 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using Quire.Mirror;
 
 namespace Quire.Controls.Core;
@@ -35,6 +36,70 @@ public partial class CommonDragger
         {
             onDragEnd(pt);
         }
+    }
+
+    public void StartCaptureEvents(Point startPoint)
+    {
+        if (_started)
+        {
+            return;
+        }
+        _started = true;
+        _startPoint = startPoint;
+        NotifyDragStart();
+        _container.MouseMove += MouseMove;
+        _container.MouseUp += MouseUp;
+        Mouse.Capture(_container, CaptureMode.Element);
+    }
+
+    public void EndCaptureEvents()
+    {
+        if (!_started)
+        {
+            return;
+        }
+        _started = false;
+        Mouse.Capture(null);
+        _container.MouseMove -= MouseMove;
+        _container.MouseUp -= MouseUp;
+        NotifyDragEnd(_currentPoint);
+    }
+
+    private void MouseUp(object sender, MouseButtonEventArgs e)
+    {
+        _currentPoint = e.GetPosition(_container);
+        EndCaptureEvents();
+    }
+
+    private void MouseMove(object sender, MouseEventArgs e)
+    {
+        _currentPoint = e.GetPosition(_container);
+        NotifyDragProgress(_currentPoint);
+    }
+
+    private void NotifyDragProgress(Point pt)
+    {
+        if (bringIntoViewDispatcherTimer == null)
+        {
+            bringIntoViewDispatcherTimer = new DispatcherTimer(new TimeSpan(0, 0, 0, 0, 25), DispatcherPriority.Background, BringIntoViewCallback, _container.Dispatcher);
+            _pt = pt;
+            bringIntoViewDispatcherTimer.Start();
+        }
+        else if (!bringIntoViewDispatcherTimer.IsEnabled)
+        {
+            _pt = pt;
+            bringIntoViewDispatcherTimer.Start();
+        }
+        if (onDragProgress != null)
+        {
+            onDragProgress(pt);
+        }
+    }
+
+    private void BringIntoViewCallback(object sender, EventArgs e)
+    {
+        _container.BringIntoView(new Rect(_pt, new Size(0.0, 0.0)));
+        bringIntoViewDispatcherTimer.Stop();
     }
 
     protected void CacheOriginalWidths()

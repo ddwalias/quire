@@ -39,18 +39,6 @@ public partial class CommonDragger
     private global::System.Windows.Point _pt;
     [global::Quire.Mirror.MirrorStub]
     public CommonDragger(global::System.Windows.FrameworkElement container, global::System.Windows.Point startPosition, bool bAutoStart, global::Quire.Controls.Core.DragMode mode, params global::System.Windows.UIElement[] elementsToDrag) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void StartCaptureEvents(global::System.Windows.Point startPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void EndCaptureEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void MouseUp(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void MouseMove(object sender, global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void NotifyDragProgress(global::System.Windows.Point pt) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void BringIntoViewCallback(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.CommonDragger+DragEndHandler, Ptc.Controls.Core")]
     public delegate void DragEndHandler(global::System.Windows.Point endPoint);
