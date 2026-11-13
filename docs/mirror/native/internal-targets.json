@@ -160,7 +160,7 @@
     "sha256": "7c510fadb0d735ecae5a564efc0a572de21119825188d124dfd040519248a87a",
     "targets": {},
     "managed": {
-      "delete[]`0": {
+      "delete[]": {
         "size": 32,
         "toolchain": true
       }
