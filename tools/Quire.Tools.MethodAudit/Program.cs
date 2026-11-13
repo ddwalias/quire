@@ -49,6 +49,7 @@ var reviewed = new Dictionary<string, List<string[]>>();
 // (Mathcad assembly, Mathcad type) of every row the type map lists other than as a C++ artefact: those types are
 // mirrored, or excluded for a reason a C++/CLI build cannot share (see the same-name binding below).
 var listed = new HashSet<(string Assembly, string Type)>();
+var cppArtifacts = new HashSet<(string Assembly, string Type)>();
 var mathcadAssemblies = new HashSet<string>();  // lower-case, every assembly the type map lists
 using (var csv = new TextFieldParser(Path.Combine(repo, "docs/mirror/type-map.csv")))
 {
@@ -65,6 +66,7 @@ using (var csv = new TextFieldParser(Path.Combine(repo, "docs/mirror/type-map.cs
             bound.Add([fields[1], Path.GetFileNameWithoutExtension(fields[0])]);
         }
         if (fields[5] != "c++ artefact") listed.Add((Path.GetFileNameWithoutExtension(fields[0]).ToLowerInvariant(), fields[1]));
+        else cppArtifacts.Add((Path.GetFileNameWithoutExtension(fields[0]).ToLowerInvariant(), fields[1]));
         mathcadAssemblies.Add(Path.GetFileNameWithoutExtension(fields[0]).ToLowerInvariant());
     }
 }
@@ -187,6 +189,17 @@ string[]? Binding(string assembly, string name)
     var definitions = typeNames.Where(t => t.Key.Name == name).Select(t => t.Value).DistinctBy(t => (t[0], t[1])).ToList();
     if (definitions.Count == 1) return [definitions[0][0], CanonicalAssembly(definitions[0][1])];
     string[]? binding = bound.Count == 1 ? bound[0] : null;
+    if (binding == null && bound.Any(b => cppArtifacts.Contains((b[1].ToLowerInvariant(), b[0]))))
+    {
+        // A reviewed C++ artefact may be shared by several Mathcad assemblies. Bind the reference to
+        // the same-named original in the Mathcad assembly this Quire project itself mirrors.
+        var projectAssemblies = typeNames.Where(t => t.Key.Assembly.Equals(assembly, StringComparison.OrdinalIgnoreCase))
+            .Select(t => t.Value[1]).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var candidates = bound.Where(b => projectAssemblies.Contains(b[1])
+            && originals.TryGetValue(b[1], out var original) && original.Model.Types.Any(t => t.FullName == b[0]))
+            .ToList();
+        if (candidates.Count == 1) binding = candidates[0];
+    }
     if (binding == null)
     {
         if (!referenced.TryGetValue(assembly, out var model))
