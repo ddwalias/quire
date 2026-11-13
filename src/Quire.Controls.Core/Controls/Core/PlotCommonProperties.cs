@@ -7,7 +7,7 @@ namespace Quire.Controls.Core;
 
 public partial class PlotCommonProperties : DependencyObject
 {
-    public static class PropertyNames
+    public static partial class PropertyNames
     {
         public const string ShowTicks = "ShowTicks";
 
