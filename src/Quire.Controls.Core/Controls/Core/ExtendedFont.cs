@@ -192,4 +192,53 @@ public partial class ExtendedFont
     }
 
     object ICloneable.Clone() => Clone();
+
+    public ExtendedFont Clone()
+    {
+        Brush brush = Foreground;
+        if (DebugTools.DevAssert(brush.IsFrozen, null).Failed)
+        {
+            brush = brush.Clone();
+        }
+        return new ExtendedFont(FontFamily, FontSize, FontStyle, FontWeight, FontStretch, TextDecorations, brush);
+    }
+
+    private void CalculateTypeface()
+    {
+        WritePreamble();
+        _fontTypeface = new Typeface(FontFamily, FontStyle, FontWeight, FontStretch);
+        if (!FontTypeface.TryGetGlyphTypeface(out _glyphTypeface))
+        {
+            _glyphTypeface = new GlyphTypeface(new Uri("pack://application:,,,/Quire.Controls.Core;component/Fonts/mathcadunimathprime.otf"));
+        }
+        _M_Run = GenerateGlyphRun("M");
+        _n_Run = GenerateGlyphRun("n");
+        _j_Run = GenerateGlyphRun("j");
+        GlyphRun glyphRun = GenerateGlyphRun('-'.ToString());
+        _baselineAdjustment = SafeComputeInkBoundingBox(glyphRun).Bottom;
+        WritePostscript();
+    }
+
+    public static GlyphRun GenerateGlyphRun(string text, Uri fontUri, double fontSize)
+    {
+        if (!ControlSettings.Instance.EnableFontCaching)
+        {
+            return CreateGlyphRun(text, fontUri, fontSize);
+        }
+        string key = string.Format("{0}{1}{2}", text, fontUri, fontSize);
+        if (!GlyphRunCache.TryGetValue(key, out var value))
+        {
+            value = CreateGlyphRun(text, fontUri, fontSize);
+            if (value != null)
+            {
+                GlyphRunCache.Add(key, value);
+            }
+        }
+        return value;
+    }
+
+    private GlyphRun GenerateGlyphRun(string text)
+    {
+        return GenerateGlyphRun(text, GlyphTypeface.FontUri, FontSize);
+    }
 }
