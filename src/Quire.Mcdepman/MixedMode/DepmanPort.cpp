@@ -3,6 +3,7 @@
 #include <sdkddkver.h>
 #include "DepmanContracts.h"
 #include "DepmanNodeTimer.h"
+#include "DepmanPosition.h"
 
 namespace Quire { namespace depman {
 
@@ -34,6 +35,7 @@ namespace Quire { namespace depman {
         void Lock(long h);
         void LockInvalid(long h);
         void UnLock(long h);
+        void UnLockP(::depman::Position* p);
         void UnLockAll();
         void SetPriority(long h, int priority);
         int GetPriority(long h);

@@ -4,6 +4,10 @@ void __cdecl operator delete(void* ptr, unsigned __int64 size) noexcept;
 
 #include "../../Quire.Native.Utl/utl.h"
 
+namespace depman {
+    class Position;
+}
+
 namespace Quire { namespace utl {
     using ::utl::InterruptControl;
 }}
@@ -323,6 +327,14 @@ namespace Quire { namespace depman {
             m_runtime_options->RemoveUnitSystem();
             System::GC::KeepAlive(this);
         }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("depman.SEnvironment, mcdepman")]
+    interface class SEnvironment
+    {
+        ::depman::Position* Lookup(Scope^ s, DSym sym);
+        SharedThreadContext^ GetSharedThreadContext();
+        int GetRegionId();
     };
 
 }}
