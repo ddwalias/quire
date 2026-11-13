@@ -104,6 +104,9 @@ public static class Emit
             if (Signatures(t, plan).Any(s => s.ToString().Contains('*'))) d.Unsafe = true;
         }
 
+        foreach (var (project, d) in deps)
+            foreach (var pkg in HandWrittenPackages(repo, project)) d.Packages[pkg.Id] = pkg;
+
         // Hand-written code may need projects the generated signatures no longer mention (a stub implemented by hand
         // can be the last generated use of another project's type): keep what the built assembly references, the
         // WPF and WinForms frameworks included.
@@ -148,6 +151,30 @@ public static class Emit
 
         DetectCycles(repo, deps.ToDictionary(kv => kv.Key, kv => (IEnumerable<string>)kv.Value.Projects));
         return deps;
+    }
+
+    /// <summary>Packages used by using directives in hand-written source, outside generated mirror output.</summary>
+    public static IEnumerable<Package> HandWrittenPackages(string repo, string project)
+    {
+        string dir = Path.Combine(repo, "src", project);
+        if (!Directory.Exists(dir)) yield break;
+        var namespaces = Externals.Packages.Keys.Distinct(StringComparer.Ordinal)
+            .ToDictionary(name => name, name => name, StringComparer.Ordinal);
+        var found = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var file in Directory.EnumerateFiles(dir, "*.cs", SearchOption.AllDirectories))
+        {
+            string relative = Path.GetRelativePath(dir, file);
+            if (relative.Split(Path.DirectorySeparatorChar).Any(part => part is "Generated" or "Mirrored" or "obj" or "bin")) continue;
+            string text = File.ReadAllText(file);
+            foreach (Match match in Regex.Matches(text, @"^\s*using\s+([\w.]+)\s*;", RegexOptions.Multiline))
+            {
+                string ns = match.Groups[1].Value;
+                foreach (var prefix in namespaces.Keys)
+                    if (ns == prefix || ns.StartsWith(prefix + ".", StringComparison.Ordinal)) found.Add(prefix);
+            }
+        }
+        foreach (string assembly in found)
+            if (Externals.Packages.TryGetValue(assembly, out var package)) yield return package;
     }
 
     /// <summary>Project → the projects it grants InternalsVisibleTo, as Mathcad's assemblies declare it.</summary>
