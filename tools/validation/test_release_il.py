@@ -28,6 +28,13 @@ def inventory(*rows):
 
 
 class ReleaseIlAcceptanceTests(unittest.TestCase):
+    def test_cross_project_reference_uses_the_defining_quire_types_mathcad_binding(self):
+        source = (Path(__file__).resolve().parents[1] / 'Quire.Tools.MethodAudit' / 'Program.cs').read_text()
+        binding = source.split('string[]? Binding(string assembly, string name)', 1)[1].split('\nstring CanonicalAssembly', 1)[0]
+        self.assertIn('typeNames.TryGetValue((assembly, name)', binding)
+        self.assertIn('typeNames.Where(t => t.Key.Name == name)', binding)
+        self.assertLess(binding.index('typeNames.Where(t => t.Key.Name == name)'), binding.index('referenced.TryGetValue(assembly'))
+
     def test_changed_body_must_match_even_when_it_was_unfinished(self):
         result = compare(inventory(method(body='old', exact=False)), inventory(method(body='new', exact=False)))
         self.assertFalse(result['passed'])

@@ -182,6 +182,10 @@ string[]? Binding(string assembly, string name)
     // one's binding is below, so the name does not depend on what else is audited.
     if (typeNames.TryGetValue((assembly, name), out var own)) return [own[0], CanonicalAssembly(own[1])];
     if (!reviewed.TryGetValue(name, out var bound)) return null;
+    // References can name a facade/consumer assembly even when the defining Quire type lives in another project.
+    // Prefer the defining project's reviewed binding so the consumer's reference identity cannot change the verdict.
+    var definitions = typeNames.Where(t => t.Key.Name == name).Select(t => t.Value).DistinctBy(t => (t[0], t[1])).ToList();
+    if (definitions.Count == 1) return [definitions[0][0], CanonicalAssembly(definitions[0][1])];
     string[]? binding = bound.Count == 1 ? bound[0] : null;
     if (binding == null)
     {
