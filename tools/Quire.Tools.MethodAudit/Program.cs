@@ -126,6 +126,29 @@ var typeNames = new Dictionary<(string Assembly, string Name), string[]>();
 foreach (var artifact in quire)
     foreach (var t in artifact.Model.Types.Where(t => t.MirrorOf != null))
         typeNames.TryAdd((artifact.Name, t.FullName), t.MirrorOf!.Split(',').Select(s => s.Trim()).ToArray());
+// Generated assemblies have no source [MirrorOf]. Their reviewed project-to-install binding is opt-in and
+// isolated in docs/mirror/generated-assemblies.json; within it, type identity is the full metadata name.
+var generatedBindings = JsonSerializer.Deserialize<Dictionary<string, GeneratedAssemblyBinding>>(
+    File.ReadAllText(Path.Combine(repo, "docs/mirror/generated-assemblies.json")),
+    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? [];
+foreach (var artifact in quire.Where(a => generatedBindings.ContainsKey(a.Name)))
+{
+    var generatedBinding = generatedBindings[artifact.Name];
+    string assembly = generatedBinding.Assembly;
+    if (!originals.TryGetValue(assembly, out var original))
+    {
+        try { originals[assembly] = original = new Artifact(InstallFile(assembly)); }
+        catch (Exception e) { errors.Add($"{artifact.Name}: generated binding {assembly} unavailable: {e.Message}"); continue; }
+    }
+    var candidateTypes = artifact.Model.Types.Select(t => t.FullName).ToHashSet(StringComparer.Ordinal);
+    var originalTypes = original.Model.Types.Select(t => t.FullName).ToHashSet(StringComparer.Ordinal);
+    foreach (var name in candidateTypes.Except(originalTypes)) errors.Add($"{artifact.Name}: unpaired generated type {name}");
+    var allowedMissing = generatedBinding.AllowedMissingTypes.ToHashSet(StringComparer.Ordinal);
+    foreach (var name in allowedMissing.Except(originalTypes)) errors.Add($"{artifact.Name}: allowed missing type is absent from original: {name}");
+    foreach (var name in originalTypes.Except(candidateTypes).Except(allowedMissing)) errors.Add($"{artifact.Name}: missing generated type {name}");
+    foreach (var name in candidateTypes.Intersect(originalTypes))
+        typeNames[(artifact.Name, name)] = [name, assembly];
+}
 // A C++/CLI build emits the C++ types it uses (Windows SDK records, STL, CRT and template instances) under their C++
 // names, where no [MirrorOf] can be written. In a mixed-mode Quire assembly such a type is the type of the same name, kind
 // and native size in a Mathcad assembly the Quire assembly binds, when the type map lists that original as a C++ artefact
@@ -245,8 +268,9 @@ TypeSig Map(TypeSig sig) => sig switch
     _ => sig
 };
 string Key(MethodModel m, bool map) => Signatures.Method(m.Name, m.GenericParams.Length, m.Params.Select(p => map ? Map(p.Type) : p.Type), map ? Map(m.Return) : m.Return, m.Static);
-string ComparisonKey(MethodModel m, bool map, TypeModel type) => Signatures.Method(Canonical.MethodName(m, map ? Map : null, type),
-    m.GenericParams.Length, m.Params.Select(p => map ? Map(p.Type) : p.Type), map ? Map(m.Return) : m.Return, m.Static);
+string ComparisonKey(MethodModel m, bool map, TypeModel type, Func<TypeSig, TypeSig>? normalize = null) => Signatures.Method(Canonical.MethodName(m, map ? Map : null, type),
+    m.GenericParams.Length, m.Params.Select(p => normalize?.Invoke(map ? Map(p.Type) : p.Type) ?? (map ? Map(p.Type) : p.Type)),
+    normalize?.Invoke(map ? Map(m.Return) : m.Return) ?? (map ? Map(m.Return) : m.Return), m.Static);
 // A .NET Framework original (the TlbImp interop assemblies) names BCL types in mscorlib, where the Quire build's
 // reference assemblies name System.Runtime. Only that spelling is unified; a type .NET moved elsewhere still differs.
 TypeSig Corlib(TypeSig sig) => sig switch
@@ -332,7 +356,8 @@ foreach (var artifact in quire)
         Artifact? original = null;
         if (typeNames.TryGetValue((artifact.Name, type.FullName), out var fields) && originals.TryGetValue(fields[1].Trim(), out original))
             counterpart = Counterpart(raw, original, [.. original.Methods.Where(m => m.Owner == fields[0].Trim()
-                && OriginalKey(original, m) == ComparisonKey(method, true, type))], ref problem);
+                && OriginalKey(original, m) == ComparisonKey(method, true, type,
+                    generatedBindings.ContainsKey(artifact.Name) ? Corlib : null))], ref problem);
         matched.Add((artifact, raw, type, method, original, counterpart, problem));
     }
 // Mathcad members no member of the audited assembly pairs with: those of each type the assembly binds, and the globals of
@@ -554,6 +579,7 @@ static IEnumerable<string> DeclarationDifferences(string access, string modifier
 static bool Same(MethodModel? accessor, MethodModel method) =>
     accessor != null && accessor.Name == method.Name && accessor.Params.Length == method.Params.Length
     && accessor.Params.Zip(method.Params).All(p => p.First.Type.ToString() == p.Second.Type.ToString());
+
 
 if (output == null)
 {

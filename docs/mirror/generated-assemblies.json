@@ -1,0 +1,15 @@
+{
+  "Quire.Interop.Mathcad": {
+    "assembly": "interop.mathcad",
+    "allowed_missing_types": [
+      "Mathcad.__MIDL___MIDL_itf_automation_0001_0066_0001",
+      "Mathcad.__MIDL___MIDL_itf_automation_0001_0066_0002",
+      "Mathcad.__MIDL___MIDL_itf_automation_0001_0066_0003",
+      "Mathcad.__MIDL___MIDL_itf_automation_0001_0066_0004",
+      "Mathcad.__MIDL___MIDL_itf_automation_0001_0066_0005",
+      "Mathcad.__MIDL___MIDL_itf_automation_0001_0066_0006",
+      "Mathcad.__MIDL___MIDL_itf_automation_0001_0066_0007"
+    ],
+    "allowed_missing_reason": "TlbImp omits these anonymous MIDL enum aliases because each duplicates a named enum with identical values."
+  }
+}

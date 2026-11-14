@@ -1097,7 +1097,9 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
                 raise RuntimeError(f'base {base[:12]} has no MethodAudit to judge with ({audit.relative_to(original)})')
             with timed(timings, 'judge_build'):
                 tool = build_judge(original, base, cache, dotnet, log, timeout)
-                proposed = candidate_judge(root, work, cache, dotnet, log, timeout) if judge == 'candidate' else tool
+                generated_registry = json.loads((root / 'docs/mirror/generated-assemblies.json').read_text(encoding='utf-8'))
+                use_generated_judge = bool(set(projects) & set(generated_registry))
+                proposed = candidate_judge(root, work, cache, dotnet, log, timeout) if judge == 'candidate' or use_generated_judge else tool
             report['judge'].update(base=tool.parent.parent.name, candidate=proposed.parent.parent.name)
             # A project the candidate adds has no base build; its members start as new (or moved) rows.
             existing = [p for p in projects if (original / 'src' / p / f'{p}.csproj').is_file()]
@@ -1123,7 +1125,45 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
             # A .vcxproj candidate may pair nothing with the C# base's original; its methods then fail on their own.
             if any((vcxproj is None or name in new_id) and new_id.get(name) != identity for name, identity in old_id.items()):
                 raise RuntimeError('Mathcad reference identity changed between scans')
-            report.update(compare(before, after, types, methods, everything))
+            generated_registry = json.loads((root / 'docs/mirror/generated-assemblies.json').read_text(encoding='utf-8'))
+            generated_projects = set(generated_registry) & set(projects)
+            generated_rows = [m for m in after['methods'] if m.get('project') in generated_projects]
+            generated_missing = [m for m in after.get('missing', []) if m.get('project') in generated_projects]
+            ordinary_before = {'methods': [m for m in before['methods'] if m.get('project') not in generated_projects]}
+            ordinary_after = {**after, 'methods': [m for m in after['methods'] if m.get('project') not in generated_projects],
+                              'missing': [m for m in after.get('missing', []) if m.get('project') not in generated_projects]}
+            report.update(compare(ordinary_before, ordinary_after, types, methods, everything))
+            if generated_projects:
+                generated_failures = []
+                for row in generated_rows:
+                    if row.get('original') is None:
+                        generated_failures.append({'method': row['id'], 'reason': row.get('pairing_miss') or 'unpaired generated method'})
+                    elif row.get('shape_matches') is not True:
+                        generated_failures.append({'method': row['id'], 'reason': 'declaration differs: ' + '; '.join(row.get('declaration_differences') or [])})
+                    elif row.get('original', {}).get('native_code') is False and row.get('declaration_only') is not True and row.get('exact_match') is not True:
+                        generated_failures.append({'method': row['id'], 'reason': row.get('first_difference') or 'body differs'})
+                for missing in generated_missing:
+                    generated_failures.append({'method': missing['type'] + '::' + missing['original']['signature'], 'reason': 'original method missing from generated assembly'})
+                report['failures'].extend(generated_failures)
+                report['checked'].extend(row['id'] for row in generated_rows)
+                report['passed'] = not report['failures']
+                report['generated_assemblies'] = {
+                    project: {
+                        'bodies_matched': sum(m.get('exact_match') is True for m in generated_rows if m.get('project') == project),
+                        'declarations_matched': sum(m.get('shape_matches') is True for m in generated_rows if m.get('project') == project),
+                        'original_only_methods': [
+                            {'type': m['type'], 'signature': m['original']['signature']}
+                            for m in generated_missing if m.get('project') == project
+                        ],
+                        'mismatches': [
+                            {'type': m.get('type'), 'signature': m.get('signature'),
+                             'first_difference': m.get('first_difference'),
+                             'declaration_differences': m.get('declaration_differences')}
+                            for m in generated_rows if m.get('project') == project
+                            and (m.get('original') is None or m.get('exact_match') is False or m.get('shape_matches') is not True)
+                        ],
+                    } for project in sorted(generated_projects)
+                }
             report['verdict_changes'] = verdict_changes(before, after)
             timings['compare'] = time.perf_counter() - compare_start
             report['originals'] = new_id
