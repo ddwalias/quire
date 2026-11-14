@@ -28,6 +28,14 @@ public partial class NodeMessageAdorner
     [MirrorVerified("PtcControlsCoreNodeMessageAdornerMechanicalDifferentialTests")]
     public NodeMessageAdornerType Type => _type;
 
+    public System.Windows.Point RelativeLocation
+    {
+        get
+        {
+            return _messageBorder.TranslatePoint(new System.Windows.Point(0.0, 0.0), this);
+        }
+    }
+
     public System.Windows.Size Size
     {
         get

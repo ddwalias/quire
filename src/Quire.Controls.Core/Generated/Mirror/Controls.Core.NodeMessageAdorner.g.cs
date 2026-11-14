@@ -16,8 +16,6 @@ public partial class NodeMessageAdorner : global::Quire.Controls.Core.VisualAdor
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Windows.Controls.Border _messageBorder;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point RelativeLocation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public NodeMessageAdorner(global::System.Windows.FrameworkElement adornedElement, string error, global::Quire.Controls.Core.NodeMessageAdornerType type) : base(default(global::System.Windows.UIElement)) { }
     [global::Quire.Mirror.MirrorStub]
     private void Setup() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
