@@ -39,4 +39,40 @@ public partial class ContainerItemManager
         }
         depObj.ClearValue(WhiteboardItemSizeChangedHandlerProperty);
     }
+
+    public void SelectItem(IWhiteboardItem item) => SetIsSelectedProperty(item, true);
+
+    public void DeselectItem(IWhiteboardItem item) => SetIsSelectedProperty(item, null);
+
+    public bool IsItemSelected(IWhiteboardItem item)
+    {
+        if (item is DependencyObject dependencyObject)
+        {
+            bool? isSelected = dependencyObject.GetValue(WhiteboardDependencyProperties.IsSelectedProperty) as bool?;
+            if (!isSelected.HasValue)
+            {
+                return false;
+            }
+            return isSelected.Value;
+        }
+        return false;
+    }
+
+    public void ActivateItem(IWhiteboardItem item) => SetActiveItemProperty(item, true);
+
+    public void DeactivateItem(IWhiteboardItem item) => SetActiveItemProperty(item, false);
+
+    public bool IsItemActivated(IWhiteboardItem item)
+    {
+        if (item is DependencyObject dependencyObject)
+        {
+            bool? isActive = dependencyObject.GetValue(WhiteboardDependencyProperties.IsActiveProperty) as bool?;
+            if (!isActive.HasValue)
+            {
+                return false;
+            }
+            return isActive.Value;
+        }
+        return false;
+    }
 }
