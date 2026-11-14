@@ -129,6 +129,31 @@ public class PropertySpec
     {
     }
 
+    public PropertySpec(string name, string type)
+        : this(name, type, null, null, null)
+    {
+    }
+
+    public PropertySpec(string name, string type, string category)
+        : this(name, type, category, null, null)
+    {
+    }
+
+    public PropertySpec(string name, Type type, string category)
+        : this(name, type.AssemblyQualifiedName, category, null, null)
+    {
+    }
+
+    public PropertySpec(string name, string type, string category, string description)
+        : this(name, type, category, description, null)
+    {
+    }
+
+    public PropertySpec(string name, Type type, string category, string description)
+        : this(name, type.AssemblyQualifiedName, category, description, null)
+    {
+    }
+
     public PropertySpec(string name, Type type, string category, string description, object defaultValue)
         : this(name, type.AssemblyQualifiedName, category, description, defaultValue)
     {
@@ -142,6 +167,48 @@ public class PropertySpec
         this.description = description;
         this.defaultValue = defaultValue;
         attributes = null;
+    }
+
+    public PropertySpec(string name, string type, string category, string description, object defaultValue, string editor, string typeConverter)
+        : this(name, type, category, description, defaultValue)
+    {
+        this.editor = editor;
+        this.typeConverter = typeConverter;
+    }
+
+    public PropertySpec(string name, string type, string category, string description, object defaultValue, Type editor, string typeConverter)
+        : this(name, type, category, description, defaultValue, editor.AssemblyQualifiedName, typeConverter)
+    {
+    }
+
+    public PropertySpec(string name, string type, string category, string description, object defaultValue, string editor, Type typeConverter)
+        : this(name, type, category, description, defaultValue, editor, typeConverter.AssemblyQualifiedName)
+    {
+    }
+
+    public PropertySpec(string name, string type, string category, string description, object defaultValue, Type editor, Type typeConverter)
+        : this(name, type, category, description, defaultValue, editor.AssemblyQualifiedName, typeConverter.AssemblyQualifiedName)
+    {
+    }
+
+    public PropertySpec(string name, Type type, string category, string description, object defaultValue, string editor, string typeConverter)
+        : this(name, type.AssemblyQualifiedName, category, description, defaultValue, editor, typeConverter)
+    {
+    }
+
+    public PropertySpec(string name, Type type, string category, string description, object defaultValue, Type editor, string typeConverter)
+        : this(name, type.AssemblyQualifiedName, category, description, defaultValue, editor.AssemblyQualifiedName, typeConverter)
+    {
+    }
+
+    public PropertySpec(string name, Type type, string category, string description, object defaultValue, string editor, Type typeConverter)
+        : this(name, type.AssemblyQualifiedName, category, description, defaultValue, editor, typeConverter.AssemblyQualifiedName)
+    {
+    }
+
+    public PropertySpec(string name, Type type, string category, string description, object defaultValue, Type editor, Type typeConverter)
+        : this(name, type.AssemblyQualifiedName, category, description, defaultValue, editor.AssemblyQualifiedName, typeConverter.AssemblyQualifiedName)
+    {
     }
 }
 
