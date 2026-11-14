@@ -31,6 +31,12 @@ public partial class VisualDragger
         private set => SetValue(IsDraggingPropertyKey, value);
     }
 
+    public DraggingDirection Direction
+    {
+        get => (DraggingDirection)GetValue(DirectionProperty);
+        set => SetValue(DirectionProperty, value);
+    }
+
 
     [MirrorVerified("PtcControlsCoreVisualDraggerMechanicalDifferentialTests")]
     protected override void OnContextMenuOpening(ContextMenuEventArgs e) => e.Handled = true;
