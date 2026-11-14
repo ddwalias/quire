@@ -28,6 +28,23 @@ public partial class NodeMessageAdorner
     [MirrorVerified("PtcControlsCoreNodeMessageAdornerMechanicalDifferentialTests")]
     public NodeMessageAdornerType Type => _type;
 
+    public System.Windows.Size Size
+    {
+        get
+        {
+            return new System.Windows.Size(ActualWidth, ActualHeight);
+        }
+    }
+
+    private System.Windows.Size AdornedElementDesiredSize
+    {
+        get
+        {
+            System.Windows.FrameworkElement frameworkElement = (System.Windows.FrameworkElement)AdornedElement;
+            return (System.Windows.Size)frameworkElement.LayoutTransform.Transform((System.Windows.Point)frameworkElement.DesiredSize);
+        }
+    }
+
     public override void Remove()
     {
         base.Remove();
