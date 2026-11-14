@@ -102,4 +102,10 @@ public partial class ContainerItemManager
         }
         return GetIsTabNavigatable(item);
     }
+
+    public void SetIsBringToView(IWhiteboardItem item, bool value) => AttachedProperties.SetIsBringToView(item as DependencyObject, value);
+
+    public bool GetIsBringToView(IWhiteboardItem item) => AttachedProperties.GetIsBringToView(item as DependencyObject);
+
+    public bool IsSuppressBringIntoView(IWhiteboardItem item) => !GetIsBringToView(item);
 }
