@@ -28,6 +28,31 @@ public partial class NodeMessageAdorner
     [MirrorVerified("PtcControlsCoreNodeMessageAdornerMechanicalDifferentialTests")]
     public NodeMessageAdornerType Type => _type;
 
+    private void HandleAdornedElementWasMeasured(object sender, System.Windows.RoutedEventArgs routedEventArgs)
+    {
+        if (_messageBorder.Width != CalculateDesiredMessageBorderWidth())
+        {
+            InvalidateMeasure();
+        }
+    }
+
+    protected override System.Windows.Size MeasureOverride(System.Windows.Size constraint)
+    {
+        constraint.Width = CalculateDesiredMessageBorderWidth();
+        _messageBorder.Width = constraint.Width;
+        _messageBorder.Measure(constraint);
+        return new System.Windows.Size(constraint.Width, _messageBorder.DesiredSize.Height);
+    }
+
+    protected override System.Windows.Size ArrangeOverride(System.Windows.Size finalSize)
+    {
+        double offset = GetOffset(this);
+        System.Windows.Point location = new System.Windows.Point(0.0, AdornedElementDesiredSize.Height + offset);
+        System.Windows.Rect finalRect = new System.Windows.Rect(location, finalSize);
+        _messageBorder.Arrange(finalRect);
+        return finalSize;
+    }
+
     public System.Windows.Point RelativeLocation
     {
         get
@@ -51,6 +76,11 @@ public partial class NodeMessageAdorner
             System.Windows.FrameworkElement frameworkElement = (System.Windows.FrameworkElement)AdornedElement;
             return (System.Windows.Size)frameworkElement.LayoutTransform.Transform((System.Windows.Point)frameworkElement.DesiredSize);
         }
+    }
+
+    private double CalculateDesiredMessageBorderWidth()
+    {
+        return System.Math.Max(100.0, AdornedElementDesiredSize.Width);
     }
 
     public override void Remove()

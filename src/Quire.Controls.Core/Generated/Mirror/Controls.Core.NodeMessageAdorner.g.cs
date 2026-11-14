@@ -19,12 +19,4 @@ public partial class NodeMessageAdorner : global::Quire.Controls.Core.VisualAdor
     public NodeMessageAdorner(global::System.Windows.FrameworkElement adornedElement, string error, global::Quire.Controls.Core.NodeMessageAdornerType type) : base(default(global::System.Windows.UIElement)) { }
     [global::Quire.Mirror.MirrorStub]
     private void Setup() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleAdornedElementWasMeasured(object sender, global::System.Windows.RoutedEventArgs routedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
-    [global::Quire.Mirror.MirrorStub]
-    private double CalculateDesiredMessageBorderWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
