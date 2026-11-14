@@ -14,9 +14,9 @@ public static partial class WpfUtils
     public const double PointsPerInch = 72d;
     public const double HimetricPerCm = 1000d;
     public const double OneScrollLineSize = 16d;
-    public static readonly int MouseWheelScrollDelta;
-    public static readonly int MouseScrollDeltaForTouchPad;
-    public static readonly Size SizeInfinity;
+    public static readonly int MouseWheelScrollDelta = 120;
+    public static readonly int MouseScrollDeltaForTouchPad = 40;
+    public static readonly Size SizeInfinity = new Size(double.PositiveInfinity, double.PositiveInfinity);
     private static global::System.Nullable<bool> _eastAsianLanguagesInstalled;
     public const string ApplicationAcademicNameResourceKey = "Application.AcademicNameAndVersion";
 
