@@ -12,23 +12,7 @@ namespace Quire.Controls.Core;
 public partial class VisualDragger : global::System.Windows.Controls.ContentControl
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty DraggedElementProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyPropertyKey IsDraggingPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsDraggingProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty DirectionProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ModeProperty;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.IInputElement _referenceElement;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.RoutedEvent DragEndEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.RoutedEvent DragStartEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.RoutedEvent DragEvent;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Thickness _originalMargin;
     [global::Quire.Mirror.MirrorStub]

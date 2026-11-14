@@ -1,12 +1,25 @@
 #nullable disable
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using Quire.Controls.Core;
 using Quire.Mirror;
 
 namespace Quire.Controls.Core;
 
 public partial class VisualDragger
 {
+    public static readonly DependencyProperty DraggedElementProperty = DependencyProperty.Register("DraggedElement", typeof(FrameworkElement), typeof(VisualDragger));
+    private static readonly DependencyPropertyKey IsDraggingPropertyKey = DependencyProperty.RegisterReadOnly("IsDragging", typeof(bool), typeof(VisualDragger), new PropertyMetadata(false));
+    public static readonly DependencyProperty IsDraggingProperty = IsDraggingPropertyKey.DependencyProperty;
+    public static readonly DependencyProperty DirectionProperty = DependencyProperty.Register("Direction", typeof(DraggingDirection), typeof(VisualDragger), new PropertyMetadata(DirectionPropertyChanged));
+    public static readonly DependencyProperty ModeProperty = DependencyProperty.Register("Mode", typeof(DraggingMode), typeof(VisualDragger), new PropertyMetadata(DraggingMode.Margin));
+    public static readonly RoutedEvent DragEndEvent = EventManager.RegisterRoutedEvent("DragEnd", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(VisualDragger));
+    public static readonly RoutedEvent DragStartEvent = EventManager.RegisterRoutedEvent("DragStart", RoutingStrategy.Bubble, typeof(MouseEventHandler), typeof(VisualDragger));
+    public static readonly RoutedEvent DragEvent = EventManager.RegisterRoutedEvent("Drag", RoutingStrategy.Bubble, typeof(DragHandler), typeof(VisualDragger));
+    static VisualDragger() => FrameworkElement.DefaultStyleKeyProperty.OverrideMetadata(typeof(VisualDragger), new FrameworkPropertyMetadata(typeof(VisualDragger)));
+
+
     [MirrorVerified("PtcControlsCoreVisualDraggerMechanicalDifferentialTests")]
     protected override void OnContextMenuOpening(ContextMenuEventArgs e) => e.Handled = true;
 
