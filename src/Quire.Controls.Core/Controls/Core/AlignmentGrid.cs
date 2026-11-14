@@ -1,6 +1,7 @@
 #nullable disable
 using System.Windows;
 using Quire.Mirror;
+using Quire.Wpf;
 
 namespace Quire.Controls.Core;
 
@@ -169,5 +170,17 @@ public partial class AlignmentGrid
             result.Y = Math.Max(result.Y, 0.0);
         }
         return result;
+    }
+
+    public AlignmentGrid(Size? gridSize)
+        : this()
+    {
+        if (gridSize.HasValue)
+        {
+            GridCellSize = gridSize.Value;
+            return;
+        }
+        double num = WpfUtils.InchesToDips(0.2);
+        GridCellSize = new Size(num, num);
     }
 }
