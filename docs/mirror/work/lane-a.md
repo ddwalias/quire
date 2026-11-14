@@ -26,3 +26,4 @@
 - Latest batch: `ChunkedMemoryStream` static initialization sets `ChunkSize` to `DefaultChunkSize`. Core Release gate PASS: 4,068 exact, 11 missing, 0 unfinished (`.mirror-cache/release-il-9a1918c16cc3/release-il.json`).
 - Latest batch: `AppServiceRegistry` static constructor instantiates `ServiceRegistry`. Core gate PASS: 4,069 exact, 10 missing, 0 unfinished (`.mirror-cache/release-il-dce2655b4e0e/release-il.json`).
 - Latest batch: `WeakMultiCastDelegate<TDelegate>` static constructor enforces the delegate-type constraint from Mathcad IL; positioned after existing methods to preserve their closure ordinals. Core Release gate PASS: 4,070 exact, 9 missing, 0 unfinished (`.mirror-cache/release-il-8a64e396a156/release-il.json`).
+- Latest batch: `UrlUtils.UriProtocols` static HashSet initializer copied as an idiomatic collection initializer. Core Release gate PASS: 4,071 exact, 8 missing, 0 unfinished (`.mirror-cache/release-il-5d291445dde1/release-il.json`).

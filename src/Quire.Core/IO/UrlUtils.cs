@@ -275,7 +275,12 @@ public static partial class UrlUtils
     partial class UriProtocols
     {
         [MirrorVerified("PtcIOUrlUtilsMechanicalDifferentialTests")]
-        private static readonly HashSet<string> Protocols;
+        private static readonly HashSet<string> Protocols = new HashSet<string>
+        {
+            "about", "blob", "callto", "ed2k", "file", "ftp", "git", "http", "https", "mailto",
+            "ms-help", "news", "nntp", "res", "sftp", "sip", "sips", "skype", "snmp", "spotify",
+            "ssh", "svn", "tag", "tel", "telnet", "tftp", "urn"
+        };
 
         [MirrorVerified("PtcIOUrlUtilsMechanicalDifferentialTests")]
         public static bool Contains(string element) => Protocols.Contains(element);
