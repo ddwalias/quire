@@ -110,7 +110,7 @@ def main(argv=None):
         il_merge.ROOT = Path(main_dir)
         # One cache for every lane: the next lane's base is the tip this one lands.
         release_il.CACHE = Path(main_dir) / '.mirror-cache' / 'inventory-cache'
-        args.dotnet, args.timeout = 'dotnet', 1800
+        args.dotnet, args.timeout = 'dotnet', int(os.environ.get('QUIRE_LANE_TIMEOUT', '3600'))
         for number in range(1, ROUNDS + 1):
             code = attempt(args, main_dir, lane, number)
             if code is not None:
