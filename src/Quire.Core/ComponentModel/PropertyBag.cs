@@ -181,13 +181,21 @@ public class PropertyBag : ICustomTypeDescriptor
 {
     [Serializable]
     [MirrorOf("Flobbster.Windows.Forms.PropertyBag+PropertySpecCollection, Ptc.Core")]
-    public class PropertySpecCollection : IEnumerable
+    public class PropertySpecCollection : IList, ICollection, IEnumerable
     {
         private ArrayList innerArray;
 
         public int Count => innerArray.Count;
 
-        public PropertySpec this[int index]
+        public bool IsFixedSize => false;
+
+        public bool IsReadOnly => false;
+
+        public bool IsSynchronized => false;
+
+        object ICollection.SyncRoot => null;
+
+        public virtual PropertySpec this[int index]
         {
             get
             {
@@ -199,6 +207,12 @@ public class PropertyBag : ICustomTypeDescriptor
             }
         }
 
+        object IList.this[int index]
+        {
+            get => this[index];
+            set => this[index] = (PropertySpec)value;
+        }
+
         public PropertySpecCollection()
         {
             innerArray = new ArrayList();
@@ -208,6 +222,44 @@ public class PropertyBag : ICustomTypeDescriptor
         {
             return innerArray.Add(value);
         }
+
+        public void AddRange(PropertySpec[] array) => innerArray.AddRange(array);
+
+        public void Clear() => innerArray.Clear();
+
+        public bool Contains(PropertySpec item) => innerArray.Contains(item);
+
+        public void CopyTo(PropertySpec[] array) => innerArray.CopyTo(array);
+
+        public void CopyTo(PropertySpec[] array, int index) => innerArray.CopyTo(array, index);
+
+        public int IndexOf(PropertySpec value) => innerArray.IndexOf(value);
+
+        public void Insert(int index, PropertySpec value) => innerArray.Insert(index, value);
+
+        public void Remove(PropertySpec value) => innerArray.Remove(value);
+
+        public void Remove(string name)
+        {
+            int index = IndexOf(name);
+            RemoveAt(index);
+        }
+
+        public void RemoveAt(int index) => innerArray.RemoveAt(index);
+
+        public PropertySpec[] ToArray() => (PropertySpec[])innerArray.ToArray(typeof(PropertySpec));
+
+        void ICollection.CopyTo(Array array, int index) => CopyTo((PropertySpec[])array, index);
+
+        int IList.Add(object value) => Add((PropertySpec)value);
+
+        bool IList.Contains(object value) => Contains((PropertySpec)value);
+
+        int IList.IndexOf(object value) => IndexOf((PropertySpec)value);
+
+        void IList.Insert(int index, object value) => Insert(index, (PropertySpec)value);
+
+        void IList.Remove(object value) => Remove((PropertySpec)value);
 
         public int IndexOf(string name)
         {
