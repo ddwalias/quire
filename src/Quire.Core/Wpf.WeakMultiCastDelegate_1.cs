@@ -65,4 +65,12 @@ public partial class WeakMultiCastDelegate<TDelegate> where TDelegate : class
             _weakDelegates.Remove(weakDelegate);
         }
     }
+
+    static WeakMultiCastDelegate()
+    {
+        if (!typeof(TDelegate).IsSubclassOf(typeof(System.Delegate)))
+        {
+            throw new System.InvalidOperationException("TDelegate must be a delegate type.");
+        }
+    }
 }
