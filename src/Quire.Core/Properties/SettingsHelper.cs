@@ -77,4 +77,26 @@ public static partial class SettingsHelper
         return path;
     }
 
+    public static bool GetMathcadPrimeLicenseUriTypeAndPath(out global::Quire.License.LicenseUriType licenseUriType, out string licensePath)
+    {
+        System.Collections.Generic.IDictionary<string, string> values = GetMathcadPrimeLicenseConfigValues("LicensePath", "LicensePathForm");
+        if (global::Quire.DebugTools.AssertNotNull(values, null).Failed)
+        {
+            licenseUriType = global::Quire.License.LicenseUriType.None;
+            licensePath = null;
+            return false;
+        }
+
+        licensePath = values["LicensePath"];
+        if (global::System.Enum.TryParse(values["LicensePathForm"], out licenseUriType))
+        {
+            if (licenseUriType != global::Quire.License.LicenseUriType.None && licenseUriType != global::Quire.License.LicenseUriType.Unset)
+            {
+                return global::Quire.EnumerableExtensions.IsNotEmpty<char>(licensePath);
+            }
+            return true;
+        }
+        return false;
+    }
+
 }
