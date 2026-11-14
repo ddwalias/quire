@@ -29,3 +29,4 @@
 - Latest batch: `UrlUtils.UriProtocols` static HashSet initializer copied as an idiomatic collection initializer. Core Release gate PASS: 4,071 exact, 8 missing, 0 unfinished (`.mirror-cache/release-il-5d291445dde1/release-il.json`).
 - Latest batch: `Properties.Settings` static constructor synchronizes and stores its default instance. Core gate PASS: 4,072 exact, 7 missing, 0 unfinished (`.mirror-cache/release-il-513057ce949f/release-il.json`).
 - Latest batch: `SettingsHelper.GetMathcadPrimeLicenseUriTypeAndPath` parsed mapped config values, including the `None` failure default and the Mathcad enum branch shape. Core Release gate PASS: 4,073 exact, 6 missing, 0 unfinished (`.mirror-cache/release-il-2045e3bec83a/release-il.json`).
+- Latest batch: `Subscript` static constructor overrides the shared search-scope metadata to true. Core Release gate PASS: 4,074 exact, 5 missing, 0 unfinished (`.mirror-cache/release-il-fa98d17ddd07/release-il.json`).
