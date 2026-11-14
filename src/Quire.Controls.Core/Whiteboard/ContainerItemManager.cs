@@ -108,4 +108,7 @@ public partial class ContainerItemManager
     public bool GetIsBringToView(IWhiteboardItem item) => AttachedProperties.GetIsBringToView(item as DependencyObject);
 
     public bool IsSuppressBringIntoView(IWhiteboardItem item) => !GetIsBringToView(item);
+
+    public void SuppressBringIntoViewIfNeededAndExecute(IWhiteboardItem item, Action action, bool suppressBringToView) =>
+        AttachedProperties.SuppressBringIntoViewIfNeededAndExecute(item as DependencyObject, action, suppressBringToView);
 }

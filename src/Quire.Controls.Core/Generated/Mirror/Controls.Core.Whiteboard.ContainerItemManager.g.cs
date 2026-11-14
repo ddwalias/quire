@@ -16,8 +16,6 @@ public partial class ContainerItemManager : global::Quire.Controls.Core.Framewor
     [global::Quire.Mirror.MirrorStub]
     public void BringIntoView(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Rect areaOfInterest) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void SuppressBringIntoViewIfNeededAndExecute(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Action action, bool suppressBringToView) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventHandler HookupSizeChanged(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Action<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Size> sizeChangedHandler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventHandler HookupSizeChanged(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Action<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Size, global::System.Windows.Size> sizeChangedHandler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
