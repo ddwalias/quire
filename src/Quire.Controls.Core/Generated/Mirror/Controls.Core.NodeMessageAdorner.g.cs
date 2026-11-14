@@ -22,8 +22,6 @@ public partial class NodeMessageAdorner : global::Quire.Controls.Core.VisualAdor
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size AdornedElementDesiredSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private void NodeMessageAdorner_SizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public NodeMessageAdorner(global::System.Windows.FrameworkElement adornedElement, string error, global::Quire.Controls.Core.NodeMessageAdornerType type) : base(default(global::System.Windows.UIElement)) { }
     [global::Quire.Mirror.MirrorStub]
     private void Setup() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -36,15 +34,7 @@ public partial class NodeMessageAdorner : global::Quire.Controls.Core.VisualAdor
     [global::Quire.Mirror.MirrorStub]
     private double CalculateDesiredMessageBorderWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public override void Remove() => base.Remove();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.NodeMessageAdorner> GetAllNodeMessageAdorners() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void InvalidateArrangeForAllNodeMessageAdornersExcludingSelf() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private double GetOffset(global::Quire.Controls.Core.NodeMessageAdorner current) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static double CalculateOffset(global::System.Collections.Generic.IList<global::Quire.Controls.Core.NodeMessageAdorner> adorners, int idx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.FrameworkElement GetAdornedElement(global::System.Windows.FrameworkElement control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
