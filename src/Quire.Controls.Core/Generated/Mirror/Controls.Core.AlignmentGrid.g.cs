@@ -11,16 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.AlignmentGrid, Ptc.Controls.Core")]
 public partial class AlignmentGrid : global::System.Windows.DependencyObject, global::Quire.Controls.Core.IAlignmentGrid, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type TypeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Size DefaultGridCellSize;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty GridCellSizeProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty GridAreaProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private const double ZeroThreshold = 1E-06d;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.IAlignmentGrid Default;
 }

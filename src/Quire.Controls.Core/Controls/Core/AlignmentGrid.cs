@@ -1,4 +1,5 @@
 #nullable disable
+using System;
 using System.Windows;
 using Quire.Mirror;
 using Quire.Wpf;
@@ -7,8 +8,14 @@ namespace Quire.Controls.Core;
 
 public partial class AlignmentGrid
 {
+    private static readonly Type TypeOfThis = typeof(AlignmentGrid);
+    public static readonly Size DefaultGridCellSize = WorksheetPageLayout.BuiltInPageSizes[WorksheetPageLayout.GetDefaultPageSizeForLocale()].GridCellSize;
     [MirrorVerified("PtcControlsCoreAlignmentGridMechanicalDifferentialTests")]
-    public static Rect DefaultGridArea;
+    public static Rect DefaultGridArea = new Rect(new Size(WpfUtils.InchesToDips(8.5), WpfUtils.InchesToDips(11.0)));
+    public static readonly DependencyProperty GridCellSizeProperty = DependencyProperty.Register("GridCellSize", typeof(Size), TypeOfThis, new FrameworkPropertyMetadata(DefaultGridCellSize));
+    public static readonly DependencyProperty GridAreaProperty = DependencyProperty.Register("GridArea", typeof(Rect), TypeOfThis, new PropertyMetadata(DefaultGridArea));
+    private const double ZeroThreshold = 1E-06;
+    public static IAlignmentGrid Default = new AlignmentGrid();
 
     [MirrorVerified("PtcControlsCoreAlignmentGridMechanicalDifferentialTests")]
     public AlignmentGrid() : this(DefaultGridArea) { }
