@@ -83,6 +83,20 @@ public partial class AlignmentGrid
         return GetNearestIntersectionPointDisregardingBounds(startPoint, GridRestriction.Skip);
     }
 
+    public Pair<Point, Point>[] GetHorizontalLines()
+    {
+        int count = (int)Math.Round(GridArea.Height / GridCellSize.Height + 1.0);
+        Pair<Point, Point>[] lines = new Pair<Point, Point>[count];
+        for (int i = 0; i < count; i++)
+        {
+            double y = GridArea.Top + i * GridCellSize.Height;
+            Point first = new Point(GridArea.Left, y);
+            Point second = new Point(GridArea.Right, y);
+            lines[i] = new Pair<Point, Point>(first, second);
+        }
+        return lines;
+    }
+
     private Point GetCandidateIntersectionPoint(Point startPoint, double cellWidth, double cellHeight)
     {
         double remainderX = startPoint.X % cellWidth;
