@@ -19,6 +19,12 @@ public partial class VisualDragger
     public static readonly RoutedEvent DragEvent = EventManager.RegisterRoutedEvent("Drag", RoutingStrategy.Bubble, typeof(DragHandler), typeof(VisualDragger));
     static VisualDragger() => FrameworkElement.DefaultStyleKeyProperty.OverrideMetadata(typeof(VisualDragger), new FrameworkPropertyMetadata(typeof(VisualDragger)));
 
+    public FrameworkElement DraggedElement
+    {
+        get => (FrameworkElement)GetValue(DraggedElementProperty);
+        set => SetValue(DraggedElementProperty, value);
+    }
+
 
     [MirrorVerified("PtcControlsCoreVisualDraggerMechanicalDifferentialTests")]
     protected override void OnContextMenuOpening(ContextMenuEventArgs e) => e.Handled = true;
