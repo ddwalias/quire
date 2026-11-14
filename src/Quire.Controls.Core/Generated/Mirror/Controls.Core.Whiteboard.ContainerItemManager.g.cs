@@ -12,20 +12,6 @@ namespace Quire.Controls.Core.Whiteboard;
 public partial class ContainerItemManager : global::Quire.Controls.Core.FrameworkElementFacade, global::Quire.Controls.Core.Whiteboard.IContainerItemManager, global::Quire.Controls.Core.IFrameworkElementFacade, global::Quire.Controls.Core.IUIElementFacade, global::Quire.Services.IService, global::Quire.Controls.Core.IUIElementArrangeInfoProvider
 {
     [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty MouseEnterHandlerProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty DragEnterHandlerProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty WhiteboardItemSizeChangedHandlerProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventHandler GetWhiteboardItemSizeChangedHandler(global::System.Windows.DependencyObject depObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetWhiteboardItemSizeChangedHandler(global::System.Windows.DependencyObject depObj, global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventHandler handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ClearWhiteboardItemSizeChangedHandler(global::System.Windows.DependencyObject depObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void SelectItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void DeselectItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
