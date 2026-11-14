@@ -97,6 +97,20 @@ public partial class AlignmentGrid
         return lines;
     }
 
+    public Pair<Point, Point>[] GetVerticalLines()
+    {
+        int count = (int)(GridArea.Width / GridCellSize.Width) + 1;
+        Pair<Point, Point>[] lines = new Pair<Point, Point>[count];
+        for (int i = 0; i < count; i++)
+        {
+            double x = GridArea.Left + i * GridCellSize.Width;
+            Point first = new Point(x, GridArea.Top);
+            Point second = new Point(x, GridArea.Bottom);
+            lines[i] = new Pair<Point, Point>(first, second);
+        }
+        return lines;
+    }
+
     private Point GetCandidateIntersectionPoint(Point startPoint, double cellWidth, double cellHeight)
     {
         double remainderX = startPoint.X % cellWidth;

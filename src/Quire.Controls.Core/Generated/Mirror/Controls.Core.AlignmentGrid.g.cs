@@ -23,6 +23,4 @@ public partial class AlignmentGrid : global::System.Windows.DependencyObject, gl
     private const double ZeroThreshold = 1E-06d;
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.IAlignmentGrid Default;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Pair<global::System.Windows.Point, global::System.Windows.Point>[] GetVerticalLines() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
