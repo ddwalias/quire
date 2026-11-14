@@ -5,6 +5,11 @@ namespace Quire.Properties;
 
 internal partial class Settings
 {
+    static Settings()
+    {
+        defaultInstance = (Settings)global::System.Configuration.SettingsBase.Synchronized(new Settings());
+    }
+
     [MirrorVerified("Release IL")]
     public Settings() { }
 
