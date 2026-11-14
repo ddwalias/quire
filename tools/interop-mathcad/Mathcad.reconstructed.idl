@@ -1,0 +1,535 @@
+import "oaidl.idl";
+[uuid(6B1F3B11-1111-4A2B-9C3D-0000000000AA), version(1.0)]
+library Mathcad
+{
+    importlib("stdole2.tlb");
+    typedef enum MCSaveOption {
+        mcSaveChanges = 0,
+        mcPromptToSaveChanges = 1,
+        mcDiscardChanges = 2
+    } MCSaveOption;
+    typedef enum MCWorksheetOption {
+        mcAutocalc = 0
+    } MCWorksheetOption;
+    typedef enum MCFileFormat {
+        mcDefaultFormat = 0,
+        mcPromptUser = 1,
+        mcMathML = 2,
+        mcHtml = 3,
+        mcMcad6 = 4,
+        mcMcad7 = 5,
+        mcMcad8 = 6,
+        mcMcad2000 = 7,
+        mcMcad2001 = 8,
+        mcMcadCurrentVersion = 9,
+        mcTemplate = 10,
+        mcMcad2001i = 11,
+        mcMcad12 = 12,
+        mcXMCD12 = 13,
+        mcXMCDZ12 = 14,
+        mcXMCT = 15,
+        mcRTF = 16,
+        mcMcad11 = 17,
+        mcXMCD13 = 18,
+        mcXMCDZ13 = 19,
+        mcXMCD14 = 20,
+        mcXMCDZ14 = 21,
+        mcXMCD15 = 22,
+        mcXMCDZ15 = 23,
+        mcPDF = 24,
+        mcXMCD = 22,
+        mcXMCDZ = 23
+    } MCFileFormat;
+    typedef enum MCWindowState {
+        mcMaximized = 0,
+        mcMinimized = 1,
+        mcNormal = 2
+    } MCWindowState;
+    typedef enum MCRegionType {
+        mcTextRegion = 0,
+        mcMathRegion = 1,
+        mcBitmapRegion = 2,
+        mcMetafileRegion = 3,
+        mcOLERegion = 4,
+        mcIncludeRegion = 5
+    } MCRegionType;
+    typedef enum MCCustomMetadataType {
+        mcCMTText = 0,
+        mcCMTDate = 1,
+        mcCMTNumber = 2,
+        mcCMTYesNo = 3
+    } MCCustomMetadataType;
+    typedef enum MCAppOption {
+        mcShowMessageBoxes = 0
+    } MCAppOption;
+    interface IValue;
+    interface INumericValue;
+    interface IStringValue;
+    interface IMatrixValue;
+    interface IMathcadWorksheet;
+    interface IMathcadApplication;
+    interface IMathcadWorksheets;
+    interface IMathcadWindows;
+    interface IMathcadWindow;
+    interface IMathcadRegions;
+    interface IMathcadRegion;
+    interface IMathInterface;
+    interface IMathcad;
+    interface ICustomMetadataItem;
+    interface ICustomMetadataCollection;
+    interface IMetadata;
+    interface IWorksheetMetadata;
+    interface IRegionMetadata;
+    interface IMathcadApplication2;
+    interface IMathcadWorksheets2;
+    interface IMathcadWorksheet2;
+    interface IMathcadRegion2;
+    interface IMathcadRegion3;
+    interface IMathInterface2;
+    [uuid(7BDD09C2-0A1A-11E0-83DD-11F8E2A8C36C)]
+    dispinterface _IWorksheetEvents
+    {
+        properties:
+        methods:
+        [id(1)] HRESULT Changed();
+        [id(2)] HRESULT Recalculated();
+    };
+    [uuid(7BDD09C3-0A1A-11E0-A0AE-11F8E2A8C36C)]
+    dispinterface _IApplicationEvents
+    {
+        properties:
+        methods:
+        [id(1)] HRESULT Quit();
+        [id(2)] HRESULT WorksheetClosing(IMathcadWorksheet* pWorksheet);
+        [id(3)] HRESULT WorksheetOpened(IMathcadWorksheet* pWorksheet);
+        [id(4)] HRESULT WindowActivated(IMathcadWindow* pWindow);
+        [id(5)] HRESULT WindowDeactivated(IMathcadWindow* pWindow);
+        [id(6)] HRESULT WorksheetSaving(IMathcadWorksheet* pWorksheet);
+        [id(7)] HRESULT WorksheetSaved(IMathcadWorksheet* pWorksheet);
+        [id(8)] HRESULT WorksheetClosed(IMathcadWorksheet* pWorksheet);
+        [id(9)] HRESULT Idle();
+    };
+    [uuid(7BDE6955-0A1A-11E0-91D4-11F8E2A8C36C), dual, oleautomation]
+    interface IValue : IDispatch
+    {
+        [propget, id(1)] HRESULT Type([out, retval] BSTR *pVal);
+        [propget, id(2)] HRESULT AsString([out, retval] BSTR *pVal);
+    };
+    [uuid(7BDE6956-0A1A-11E0-8F53-11F8E2A8C36C), dual, oleautomation]
+    interface INumericValue : IDispatch
+    {
+        [propget, id(1)] HRESULT Type([out, retval] BSTR *pVal);
+        [propget, id(2)] HRESULT AsString([out, retval] BSTR *pVal);
+        [propget, id(0)] HRESULT Real([out, retval] double *pVal);
+        [propput, id(0)] HRESULT Real([in] double pVal);
+        [propget, id(3)] HRESULT Imag([out, retval] double *pVal);
+        [propput, id(3)] HRESULT Imag([in] double pVal);
+        [propget, id(4)] HRESULT Integer([out, retval] long *pVal);
+        [propput, id(4)] HRESULT Integer([in] long pVal);
+    };
+    [uuid(7BDE6957-0A1A-11E0-9F09-11F8E2A8C36C), dual, oleautomation]
+    interface IStringValue : IDispatch
+    {
+        [propget, id(1)] HRESULT Type([out, retval] BSTR *pVal);
+        [propget, id(2)] HRESULT AsString([out, retval] BSTR *pVal);
+        [propget, id(0)] HRESULT Value([out, retval] BSTR *pVal);
+        [propput, id(0)] HRESULT Value([in] BSTR pVal);
+    };
+    [uuid(7BDE9063-0A1A-11E0-BA2A-11F8E2A8C36C), dual, oleautomation]
+    interface IMatrixValue : IDispatch
+    {
+        [propget, id(1)] HRESULT Type([out, retval] BSTR *pVal);
+        [propget, id(2)] HRESULT AsString([out, retval] BSTR *pVal);
+        [propget, id(3)] HRESULT Rows([out, retval] long *pVal);
+        [propget, id(4)] HRESULT Cols([out, retval] long *pVal);
+        [id(5)] HRESULT GetElement([in] long row, [in] long col, [out, retval] VARIANT *pRet);
+        [id(6)] HRESULT SetElement([in] long row, [in] long col, [in] VARIANT val);
+    };
+    [uuid(7BDDF425-0A1A-11E0-AD8E-11F8E2A8C36C), dual, oleautomation]
+    interface IMathcadWorksheet : IDispatch
+    {
+        [propget, id(1)] HRESULT Application([out, retval] IMathcadApplication* *pVal);
+        [propget, id(2)] HRESULT FullName([out, retval] BSTR *pVal);
+        [propget, id(3)] HRESULT Name([out, retval] BSTR *pVal);
+        [propget, id(4)] HRESULT NeedsSave([out, retval] VARIANT_BOOL *pVal);
+        [propget, id(5)] HRESULT Parent([out, retval] IMathcadApplication* *pVal);
+        [propget, id(6)] HRESULT Path([out, retval] BSTR *pVal);
+        [propget, id(7)] HRESULT Regions([out, retval] IMathcadRegions* *pVal);
+        [propget, id(8)] HRESULT Windows([out, retval] IMathcadWindows* *pVal);
+        [id(9)] HRESULT Close([in] MCSaveOption SaveOption);
+        [id(10)] HRESULT GetOption([in] MCWorksheetOption option, [out, retval] VARIANT *pRet);
+        [id(11)] HRESULT GetValue([in] BSTR bstrName, [out, retval] VARIANT *pRet);
+        [id(12)] HRESULT PrintAll();
+        [id(13)] HRESULT Recalculate();
+        [id(14)] HRESULT Save();
+        [id(15)] HRESULT SaveAs([in] BSTR filespec, [in] MCFileFormat Format);
+        [id(16)] HRESULT SetOption([in] MCWorksheetOption option, [in] VARIANT vValue);
+        [id(17)] HRESULT SetValue([in] BSTR bstrName, [in] VARIANT vValue);
+    };
+    [uuid(7BDE4247-0A1A-11E0-A89F-11F8E2A8C36C), dual, oleautomation]
+    interface IMathcadApplication : IDispatch
+    {
+        [propget, id(0)] HRESULT Name([out, retval] BSTR *pVal);
+        [propget, id(1)] HRESULT Application([out, retval] IMathcadApplication* *pVal);
+        [propget, id(2)] HRESULT Parent([out, retval] IMathcadApplication* *pVal);
+        [propget, id(3)] HRESULT ActiveWorksheet([out, retval] IMathcadWorksheet* *pVal);
+        [propget, id(4)] HRESULT ActiveWindow([out, retval] IMathcadWindow* *pVal);
+        [propget, id(5)] HRESULT Worksheets([out, retval] IMathcadWorksheets* *pVal);
+        [propget, id(6)] HRESULT FullName([out, retval] BSTR *pVal);
+        [propget, id(7)] HRESULT Path([out, retval] BSTR *pVal);
+        [propput, id(8)] HRESULT DefaultFilePath([in] BSTR caption);
+        [propget, id(8)] HRESULT DefaultFilePath([out, retval] BSTR *pVal);
+        [propput, id(9)] HRESULT Height([in] long hVal);
+        [propget, id(9)] HRESULT Height([out, retval] long *pVal);
+        [propput, id(10)] HRESULT Width([in] long hVal);
+        [propget, id(10)] HRESULT Width([out, retval] long *pVal);
+        [propput, id(11)] HRESULT Left([in] long hVal);
+        [propget, id(11)] HRESULT Left([out, retval] long *pVal);
+        [propput, id(12)] HRESULT Top([in] long hVal);
+        [propget, id(12)] HRESULT Top([out, retval] long *pVal);
+        [propget, id(13)] HRESULT Version([out, retval] BSTR *pVal);
+        [propput, id(14)] HRESULT Visible([in] VARIANT_BOOL bVal);
+        [propget, id(14)] HRESULT Visible([out, retval] VARIANT_BOOL *pVal);
+        [propget, id(15)] HRESULT Windows([out, retval] IMathcadWindows* *pVal);
+        [id(16)] HRESULT Quit([in] MCSaveOption SaveOption);
+        [id(17)] HRESULT CloseAll([in] MCSaveOption SaveOption);
+    };
+    [uuid(7BDDF427-0A1A-11E0-8724-11F8E2A8C36C), dual, oleautomation]
+    interface IMathcadWorksheets : IDispatch
+    {
+        [propget, id(1)] HRESULT Application([out, retval] IMathcadApplication* *pVal);
+        [propget, id(2)] HRESULT Count([out, retval] long *pVal);
+        [id(-4)] HRESULT GetEnumerator([out, retval] IUnknown* *pRet);
+        [propget, id(3)] HRESULT Parent([out, retval] IMathcadApplication* *pVal);
+        [id(4)] HRESULT Add([out, retval] IMathcadWorksheet* *pRet);
+        [id(0)] HRESULT Item([in] VARIANT index, [out, retval] IMathcadWorksheet* *pRet);
+        [id(5)] HRESULT Open([in] BSTR pFileName, [out, retval] IMathcadWorksheet* *pRet);
+        [id(6)] HRESULT Remove([in] VARIANT index);
+    };
+    [uuid(7BDEB775-0A1A-11E0-AC76-11F8E2A8C36C), dual, oleautomation]
+    interface IMathcadWindows : IDispatch
+    {
+        [propget, id(1)] HRESULT Application([out, retval] IMathcadApplication* *pVal);
+        [propget, id(2)] HRESULT Parent([out, retval] VARIANT *pVal);
+        [propget, id(3)] HRESULT Item([in] VARIANT index, [out, retval] IMathcadWindow* *pVal);
+        [propget, id(4)] HRESULT Count([out, retval] long *pVal);
+        [id(-4)] HRESULT GetEnumerator([out, retval] IUnknown* *pRet);
+    };
+    [uuid(7BDE9064-0A1A-11E0-9E91-11F8E2A8C36C), dual, oleautomation]
+    interface IMathcadWindow : IDispatch
+    {
+        [propget, id(1)] HRESULT Application([out, retval] IMathcadApplication* *pVal);
+        [propget, id(2)] HRESULT Height([out, retval] long *pVal);
+        [propput, id(2)] HRESULT Height([in] long pVal);
+        [propget, id(3)] HRESULT Left([out, retval] long *pVal);
+        [propput, id(3)] HRESULT Left([in] long pVal);
+        [propget, id(4)] HRESULT Parent([out, retval] IMathcadApplication* *pVal);
+        [propget, id(5)] HRESULT Top([out, retval] long *pVal);
+        [propput, id(5)] HRESULT Top([in] long pVal);
+        [propget, id(6)] HRESULT Width([out, retval] long *pVal);
+        [propput, id(6)] HRESULT Width([in] long pVal);
+        [propget, id(7)] HRESULT WindowState([out, retval] MCWindowState *pVal);
+        [propput, id(7)] HRESULT WindowState([in] MCWindowState pVal);
+        [propget, id(8)] HRESULT Worksheet([out, retval] IMathcadWorksheet* *pVal);
+        [propget, id(9)] HRESULT Zoom([out, retval] short *pVal);
+        [propput, id(9)] HRESULT Zoom([in] short pct);
+        [id(10)] HRESULT Activate();
+        [id(11)] HRESULT ScrollTo([in] long X, [in] long Y);
+        [id(12)] HRESULT ScrollToRegion([in] IMathcadRegion* pRegion);
+    };
+    [uuid(7BDE4246-0A1A-11E0-99B7-11F8E2A8C36C), dual, oleautomation]
+    interface IMathcadRegions : IDispatch
+    {
+        [id(0)] HRESULT Item([in] VARIANT index, [out, retval] IMathcadRegion* *pRet);
+        [propget, id(1)] HRESULT Count([out, retval] long *pVal);
+        [id(-4)] HRESULT GetEnumerator([out, retval] IUnknown* *pRet);
+    };
+    [uuid(7BDE1B34-0A1A-11E0-A16D-11F8E2A8C36C), dual, oleautomation]
+    interface IMathcadRegion : IDispatch
+    {
+        [propget, id(1)] HRESULT Application([out, retval] IMathcadApplication* *pVal);
+        [propget, id(2)] HRESULT Parent([out, retval] IMathcadWorksheet* *pVal);
+        [propget, id(3)] HRESULT Type([out, retval] MCRegionType *pVal);
+        [propget, id(4)] HRESULT Tag([out, retval] BSTR *pVal);
+        [propget, id(5)] HRESULT X([out, retval] long *pVal);
+        [propget, id(6)] HRESULT Y([out, retval] long *pVal);
+    };
+    [uuid(7BDE1B35-0A1A-11E0-9EAB-11F8E2A8C36C), dual, oleautomation]
+    interface IMathInterface : IDispatch
+    {
+        [propget, id(1)] HRESULT XML([out, retval] BSTR *pVal);
+        [propput, id(1)] HRESULT XML([in] BSTR pbstrXML);
+        [propget, id(2)] HRESULT UnitsXML([out, retval] BSTR *pVal);
+        [propget, id(3)] HRESULT HasError([out, retval] VARIANT_BOOL *pVal);
+        [propget, id(4)] HRESULT ErrorMsg([out, retval] BSTR *pVal);
+    };
+    [uuid(7BDEB776-0A1A-11E0-882B-11F8E2A8C36C), dual, oleautomation]
+    interface IMathcad : IDispatch
+    {
+        [id(1)] HRESULT Recalculate([out, retval] long *pRet);
+        [id(2)] HRESULT GetComplex([in] BSTR Name, [in] VARIANT* RealPart, [in] VARIANT* ImagPart, [out, retval] long *pRet);
+        [id(3)] HRESULT SetComplex([in] BSTR Name, [in] VARIANT RealPart, [in] VARIANT ImagPart, [out, retval] long *pRet);
+        [id(4)] HRESULT SaveAs([in] VARIANT Name, [out, retval] long *pRet);
+        [propget, id(5)] HRESULT Worksheet([out, retval] IMathcadWorksheet* *pVal);
+    };
+    [uuid(7BDDCD14-0A1A-11E0-B5AA-11F8E2A8C36C), dual, oleautomation]
+    interface ICustomMetadataItem : IDispatch
+    {
+        [propget, id(1)] HRESULT Name([out, retval] BSTR *pVal);
+        [propput, id(1)] HRESULT Name([in] BSTR pbstrNameVal);
+        [propget, id(2)] HRESULT Type([out, retval] MCCustomMetadataType *pVal);
+        [propput, id(2)] HRESULT Type([in] MCCustomMetadataType peType);
+        [propget, id(0)] HRESULT Value([out, retval] VARIANT *pVal);
+        [propput, id(0)] HRESULT Value([in] VARIANT pVal);
+    };
+    [uuid(7BDDCD15-0A1A-11E0-9195-11F8E2A8C36C), dual, oleautomation]
+    interface ICustomMetadataCollection : IDispatch
+    {
+        [propget, id(1)] HRESULT Application([out, retval] IMathcadApplication2* *pVal);
+        [propget, id(2)] HRESULT Count([out, retval] long *pVal);
+        [id(0)] HRESULT Item([in] VARIANT index, [out, retval] ICustomMetadataItem* *pRet);
+        [id(-4)] HRESULT GetEnumerator([out, retval] IUnknown* *pRet);
+    };
+    [uuid(7BDDCD16-0A1A-11E0-9F6B-11F8E2A8C36C), dual, oleautomation]
+    interface IMetadata : IDispatch
+    {
+        [propget, id(1)] HRESULT Application([out, retval] IMathcadApplication2* *pVal);
+        [propget, id(2)] HRESULT Parent([out, retval] VARIANT *pVal);
+        [propget, id(3)] HRESULT CustomItems([out, retval] ICustomMetadataCollection* *pVal);
+        [id(4)] HRESULT AddCustomItem([in] ICustomMetadataItem* pItem);
+        [id(5)] HRESULT RemoveCustomItem([in] VARIANT vItem);
+    };
+    [uuid(7BDDF423-0A1A-11E0-9E84-11F8E2A8C36C), dual, oleautomation]
+    interface IWorksheetMetadata : IDispatch
+    {
+        [propget, id(1)] HRESULT Application([out, retval] IMathcadApplication2* *pVal);
+        [propget, id(2)] HRESULT Parent([out, retval] VARIANT *pVal);
+        [propget, id(3)] HRESULT CustomItems([out, retval] ICustomMetadataCollection* *pVal);
+        [id(4)] HRESULT AddCustomItem([in] ICustomMetadataItem* pItem);
+        [id(5)] HRESULT RemoveCustomItem([in] VARIANT vItem);
+        [propget, id(10)] HRESULT Author([out, retval] BSTR *pVal);
+        [propput, id(10)] HRESULT Author([in] BSTR pbstrAuthorVal);
+        [propget, id(11)] HRESULT Company([out, retval] BSTR *pVal);
+        [propput, id(11)] HRESULT Company([in] BSTR pbstrCompanyVal);
+        [propget, id(12)] HRESULT Description([out, retval] BSTR *pVal);
+        [propput, id(12)] HRESULT Description([in] BSTR pbstrDescriptionVal);
+        [propget, id(13)] HRESULT DocumentID([out, retval] BSTR *pVal);
+        [propget, id(14)] HRESULT Keywords([out, retval] BSTR *pVal);
+        [propput, id(14)] HRESULT Keywords([in] BSTR pbstrKeywordsVal);
+        [propget, id(15)] HRESULT RevisedBy([out, retval] BSTR *pVal);
+        [propput, id(15)] HRESULT RevisedBy([in] BSTR pbstrRevisedByVal);
+        [propget, id(16)] HRESULT Revision([out, retval] long *pVal);
+        [propget, id(17)] HRESULT Title([out, retval] BSTR *pVal);
+        [propput, id(17)] HRESULT Title([in] BSTR pbstrTitleVal);
+        [propget, id(18)] HRESULT VersionID([out, retval] BSTR *pVal);
+        [propget, id(19)] HRESULT ParentVersionID([out, retval] BSTR *pVal);
+        [propget, id(20)] HRESULT BranchID([out, retval] BSTR *pVal);
+    };
+    [uuid(7BDDF424-0A1A-11E0-AD90-11F8E2A8C36C), dual, oleautomation]
+    interface IRegionMetadata : IDispatch
+    {
+        [propget, id(1)] HRESULT Application([out, retval] IMathcadApplication2* *pVal);
+        [propget, id(2)] HRESULT Parent([out, retval] VARIANT *pVal);
+        [propget, id(3)] HRESULT CustomItems([out, retval] ICustomMetadataCollection* *pVal);
+        [id(4)] HRESULT AddCustomItem([in] ICustomMetadataItem* pItem);
+        [id(5)] HRESULT RemoveCustomItem([in] VARIANT vItem);
+    };
+    [uuid(7BDE6954-0A1A-11E0-A7F6-11F8E2A8C36C), dual, oleautomation]
+    interface IMathcadApplication2 : IDispatch
+    {
+        [propget, id(0)] HRESULT Name([out, retval] BSTR *pVal);
+        [propget, id(1)] HRESULT Application([out, retval] IMathcadApplication* *pVal);
+        [propget, id(2)] HRESULT Parent([out, retval] IMathcadApplication* *pVal);
+        [propget, id(3)] HRESULT ActiveWorksheet([out, retval] IMathcadWorksheet* *pVal);
+        [propget, id(4)] HRESULT ActiveWindow([out, retval] IMathcadWindow* *pVal);
+        [propget, id(5)] HRESULT Worksheets([out, retval] IMathcadWorksheets* *pVal);
+        [propget, id(6)] HRESULT FullName([out, retval] BSTR *pVal);
+        [propget, id(7)] HRESULT Path([out, retval] BSTR *pVal);
+        [propput, id(8)] HRESULT DefaultFilePath([in] BSTR caption);
+        [propget, id(8)] HRESULT DefaultFilePath([out, retval] BSTR *pVal);
+        [propput, id(9)] HRESULT Height([in] long hVal);
+        [propget, id(9)] HRESULT Height([out, retval] long *pVal);
+        [propput, id(10)] HRESULT Width([in] long hVal);
+        [propget, id(10)] HRESULT Width([out, retval] long *pVal);
+        [propput, id(11)] HRESULT Left([in] long hVal);
+        [propget, id(11)] HRESULT Left([out, retval] long *pVal);
+        [propput, id(12)] HRESULT Top([in] long hVal);
+        [propget, id(12)] HRESULT Top([out, retval] long *pVal);
+        [propget, id(13)] HRESULT Version([out, retval] BSTR *pVal);
+        [propput, id(14)] HRESULT Visible([in] VARIANT_BOOL bVal);
+        [propget, id(14)] HRESULT Visible([out, retval] VARIANT_BOOL *pVal);
+        [propget, id(15)] HRESULT Windows([out, retval] IMathcadWindows* *pVal);
+        [id(16)] HRESULT Quit([in] MCSaveOption SaveOption);
+        [id(17)] HRESULT CloseAll([in] MCSaveOption SaveOption);
+        [id(18)] HRESULT SetOption([in] MCAppOption option, [in] VARIANT val);
+        [id(19)] HRESULT GetOption([in] MCAppOption option, [out, retval] VARIANT *pRet);
+        [propget, id(20)] HRESULT Active([out, retval] VARIANT_BOOL *pVal);
+        [propput, id(20)] HRESULT Active([in] VARIANT_BOOL pBVal);
+        [propget, id(21)] HRESULT HWND([out, retval] long *pVal);
+    };
+    [uuid(7BDE1B33-0A1A-11E0-BEEA-11F8E2A8C36C), dual, oleautomation]
+    interface IMathcadWorksheets2 : IDispatch
+    {
+        [propget, id(1)] HRESULT Application([out, retval] IMathcadApplication* *pVal);
+        [propget, id(2)] HRESULT Count([out, retval] long *pVal);
+        [id(-4)] HRESULT GetEnumerator([out, retval] IUnknown* *pRet);
+        [propget, id(3)] HRESULT Parent([out, retval] IMathcadApplication* *pVal);
+        [id(4)] HRESULT Add([out, retval] IMathcadWorksheet* *pRet);
+        [id(0)] HRESULT Item([in] VARIANT index, [out, retval] IMathcadWorksheet* *pRet);
+        [id(5)] HRESULT Open([in] BSTR pFileName, [out, retval] IMathcadWorksheet* *pRet);
+        [id(6)] HRESULT Remove([in] VARIANT index);
+        [id(7)] HRESULT AddFromTemplate([in] BSTR pTemplateFileName, [out, retval] IMathcadWorksheet* *pRet);
+    };
+    [uuid(7BDDF426-0A1A-11E0-A466-11F8E2A8C36C), dual, oleautomation]
+    interface IMathcadWorksheet2 : IDispatch
+    {
+        [propget, id(1)] HRESULT Application([out, retval] IMathcadApplication* *pVal);
+        [propget, id(2)] HRESULT FullName([out, retval] BSTR *pVal);
+        [propget, id(3)] HRESULT Name([out, retval] BSTR *pVal);
+        [propget, id(4)] HRESULT NeedsSave([out, retval] VARIANT_BOOL *pVal);
+        [propget, id(5)] HRESULT Parent([out, retval] IMathcadApplication* *pVal);
+        [propget, id(6)] HRESULT Path([out, retval] BSTR *pVal);
+        [propget, id(7)] HRESULT Regions([out, retval] IMathcadRegions* *pVal);
+        [propget, id(8)] HRESULT Windows([out, retval] IMathcadWindows* *pVal);
+        [id(9)] HRESULT Close([in] MCSaveOption SaveOption);
+        [id(10)] HRESULT GetOption([in] MCWorksheetOption option, [out, retval] VARIANT *pRet);
+        [id(11)] HRESULT GetValue([in] BSTR bstrName, [out, retval] VARIANT *pRet);
+        [id(12)] HRESULT PrintAll();
+        [id(13)] HRESULT Recalculate();
+        [id(14)] HRESULT Save();
+        [id(15)] HRESULT SaveAs([in] BSTR filespec, [in] MCFileFormat Format);
+        [id(16)] HRESULT SetOption([in] MCWorksheetOption option, [in] VARIANT vValue);
+        [id(17)] HRESULT SetValue([in] BSTR bstrName, [in] VARIANT vValue);
+        [propget, id(18)] HRESULT Metadata([out, retval] IWorksheetMetadata* *pVal);
+        [propget, id(19)] HRESULT IsOpen([out, retval] VARIANT_BOOL *pVal);
+        [propget, id(20)] HRESULT SelectedRegion([out, retval] IMathcadRegion2* *pVal);
+    };
+    [uuid(7BDE1B37-0A1A-11E0-AC99-11F8E2A8C36C), dual, oleautomation]
+    interface IMathcadRegion2 : IDispatch
+    {
+        [propget, id(1)] HRESULT Application([out, retval] IMathcadApplication* *pVal);
+        [propget, id(2)] HRESULT Parent([out, retval] IMathcadWorksheet* *pVal);
+        [propget, id(3)] HRESULT Type([out, retval] MCRegionType *pVal);
+        [propget, id(4)] HRESULT Tag([out, retval] BSTR *pVal);
+        [propget, id(5)] HRESULT X([out, retval] long *pVal);
+        [propget, id(6)] HRESULT Y([out, retval] long *pVal);
+        [propget, id(7)] HRESULT Metadata([out, retval] IRegionMetadata* *pVal);
+        [propget, id(8)] HRESULT MathInterface([out, retval] IMathInterface* *pVal);
+    };
+    [uuid(7BDE4245-0A1A-11E0-96E8-11F8E2A8C36C), dual, oleautomation]
+    interface IMathcadRegion3 : IDispatch
+    {
+        [propget, id(1)] HRESULT Application([out, retval] IMathcadApplication* *pVal);
+        [propget, id(2)] HRESULT Parent([out, retval] IMathcadWorksheet* *pVal);
+        [propget, id(3)] HRESULT Type([out, retval] MCRegionType *pVal);
+        [propget, id(4)] HRESULT Tag([out, retval] BSTR *pVal);
+        [propget, id(5)] HRESULT X([out, retval] long *pVal);
+        [propget, id(6)] HRESULT Y([out, retval] long *pVal);
+        [propget, id(7)] HRESULT Metadata([out, retval] IRegionMetadata* *pVal);
+        [propget, id(8)] HRESULT MathInterface([out, retval] IMathInterface* *pVal);
+        [id(1008)] HRESULT ToString([out, retval] BSTR *pRet);
+    };
+    [uuid(7BDE1B36-0A1A-11E0-B16A-11F8E2A8C36C), dual, oleautomation]
+    interface IMathInterface2 : IDispatch
+    {
+        [propget, id(1)] HRESULT XML([out, retval] BSTR *pVal);
+        [propput, id(1)] HRESULT XML([in] BSTR pbstrXML);
+        [propget, id(2)] HRESULT UnitsXML([out, retval] BSTR *pVal);
+        [propget, id(3)] HRESULT HasError([out, retval] VARIANT_BOOL *pVal);
+        [propget, id(4)] HRESULT ErrorMsg([out, retval] BSTR *pVal);
+        [propget, id(5)] HRESULT Result([out, retval] IValue* *pVal);
+    };
+    [noncreatable, uuid(7BDD30D4-0A1A-11E0-BBB9-11F8E2A8C36C)]
+    coclass Value
+    {
+        [default] interface IValue;
+    };
+    [uuid(7673D863-0A1A-11E0-A87E-11F8E2A8C36C)]
+    coclass NumericValue
+    {
+        [default] interface INumericValue;
+        interface IValue;
+    };
+    [uuid(7673FF73-0A1A-11E0-8F80-11F8E2A8C36C)]
+    coclass StringValue
+    {
+        [default] interface IStringValue;
+        interface IValue;
+    };
+    [uuid(7673B155-0A1A-11E0-9116-11F8E2A8C36C)]
+    coclass MatrixValue
+    {
+        [default] interface IMatrixValue;
+        interface IValue;
+    };
+    [uuid(786EE514-0A1A-11E0-8337-11F8E2A8C36C)]
+    coclass Worksheet
+    {
+        [default] interface IMathcadWorksheet;
+        [default, source] dispinterface _IWorksheetEvents;
+    };
+    [uuid(766C1033-0A1A-11E0-BAF3-11F8E2A8C36C)]
+    coclass Application
+    {
+        [default] interface IMathcadApplication;
+        [default, source] dispinterface _IApplicationEvents;
+    };
+    [noncreatable, uuid(7BDD57E3-0A1A-11E0-8520-11F8E2A8C36C)]
+    coclass Worksheets
+    {
+        [default] interface IMathcadWorksheets;
+        [default, source] dispinterface _IWorksheetEvents;
+    };
+    [noncreatable, uuid(7BDD57E4-0A1A-11E0-AA11-11F8E2A8C36C)]
+    coclass Windows
+    {
+        [default] interface IMathcadWindows;
+    };
+    [noncreatable, uuid(7BDD57E5-0A1A-11E0-8895-11F8E2A8C36C)]
+    coclass Window
+    {
+        [default] interface IMathcadWindow;
+    };
+    [noncreatable, uuid(7BDD57E6-0A1A-11E0-83E6-11F8E2A8C36C)]
+    coclass Regions
+    {
+        [default] interface IMathcadRegions;
+    };
+    [noncreatable, uuid(7BDD57E7-0A1A-11E0-AA93-11F8E2A8C36C)]
+    coclass Region
+    {
+        [default] interface IMathcadRegion;
+    };
+    [noncreatable, uuid(7BDD7EF3-0A1A-11E0-A42F-11F8E2A8C36C)]
+    coclass MathInterface
+    {
+        [default] interface IMathInterface;
+    };
+    [uuid(7BDD7EF4-0A1A-11E0-9AE1-11F8E2A8C36C)]
+    coclass MathcadOld
+    {
+        [default] interface IMathcad;
+    };
+    [uuid(784C9002-0A1A-11E0-B397-11F8E2A8C36C)]
+    coclass CustomMetadataItem
+    {
+        [default] interface ICustomMetadataItem;
+    };
+    [noncreatable, uuid(7BDD7EF5-0A1A-11E0-8797-11F8E2A8C36C)]
+    coclass CustomMetadataCollection
+    {
+        [default] interface ICustomMetadataCollection;
+    };
+    [noncreatable, uuid(7BDD7EF6-0A1A-11E0-84A4-11F8E2A8C36C)]
+    coclass WorksheetMetadata
+    {
+        [default] interface IWorksheetMetadata;
+        interface IMetadata;
+    };
+    [noncreatable, uuid(7BDD7EF7-0A1A-11E0-A1DF-11F8E2A8C36C)]
+    coclass RegionMetadata
+    {
+        [default] interface IRegionMetadata;
+        interface IMetadata;
+    };
+};
