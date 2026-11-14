@@ -334,6 +334,11 @@ library Mathcad
         [id(4)] HRESULT AddCustomItem([in] ICustomMetadataItem* pItem);
         [id(5)] HRESULT RemoveCustomItem([in] VARIANT vItem);
     };
+    [noncreatable, uuid(7BDD30D4-0A1A-11E0-BBB9-11F8E2A8C36C)]
+    coclass Value
+    {
+        [default] interface IValue;
+    };
     [uuid(7BDE6954-0A1A-11E0-A7F6-11F8E2A8C36C), dual, oleautomation]
     interface IMathcadApplication2 : IDispatch
     {
@@ -437,30 +442,22 @@ library Mathcad
         [propget, id(2)] HRESULT UnitsXML([out, retval] BSTR *pVal);
         [propget, id(3)] HRESULT HasError([out, retval] VARIANT_BOOL *pVal);
         [propget, id(4)] HRESULT ErrorMsg([out, retval] BSTR *pVal);
-        [propget, id(5)] HRESULT Result([out, retval] IValue* *pVal);
-    };
-    [noncreatable, uuid(7BDD30D4-0A1A-11E0-BBB9-11F8E2A8C36C)]
-    coclass Value
-    {
-        [default] interface IValue;
+        [propget, id(5)] HRESULT Result([out, retval] Value* *pVal);
     };
     [uuid(7673D863-0A1A-11E0-A87E-11F8E2A8C36C)]
     coclass NumericValue
     {
         [default] interface INumericValue;
-        interface IValue;
     };
     [uuid(7673FF73-0A1A-11E0-8F80-11F8E2A8C36C)]
     coclass StringValue
     {
         [default] interface IStringValue;
-        interface IValue;
     };
     [uuid(7673B155-0A1A-11E0-9116-11F8E2A8C36C)]
     coclass MatrixValue
     {
         [default] interface IMatrixValue;
-        interface IValue;
     };
     [uuid(786EE514-0A1A-11E0-8337-11F8E2A8C36C)]
     coclass Worksheet
@@ -524,12 +521,10 @@ library Mathcad
     coclass WorksheetMetadata
     {
         [default] interface IWorksheetMetadata;
-        interface IMetadata;
     };
     [noncreatable, uuid(7BDD7EF7-0A1A-11E0-A1DF-11F8E2A8C36C)]
     coclass RegionMetadata
     {
         [default] interface IRegionMetadata;
-        interface IMetadata;
     };
 };

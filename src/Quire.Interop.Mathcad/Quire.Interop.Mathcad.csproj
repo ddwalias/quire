@@ -1,9 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <MathcadMidl Condition="'$(MathcadMidl)' == ''">C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\midl.exe</MathcadMidl>
+    <MathcadCl Condition="'$(MathcadCl)' == ''">C:\BuildTools\VS17.8-msvc\VC\Tools\MSVC\14.38.33130\bin\Hostx64\x64\cl.exe</MathcadCl>
+    <MathcadTlbImp Condition="'$(MathcadTlbImp)' == ''">C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\TlbImp.exe</MathcadTlbImp>
+    <MathcadWindowsKitsInclude>C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\um</MathcadWindowsKitsInclude>
+    <MathcadWindowsSharedInclude>C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\shared</MathcadWindowsSharedInclude>
+    <MathcadInteropIntermediate>$(MSBuildProjectDirectory)\.mirror-cache</MathcadInteropIntermediate>
+    <MathcadInteropTlb>$(MathcadInteropIntermediate)\Mathcad.tlb</MathcadInteropTlb>
+    <MathcadInteropDll>$(MathcadInteropIntermediate)\Quire.Interop.Mathcad.dll</MathcadInteropDll>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Quire.Mirror\Quire.Mirror.csproj" />
   </ItemGroup>
   <Import Project="Generated\Mirror.props" />
+  <Target Name="GenerateMathcadInterop" BeforeTargets="CoreCompile">
+    <MakeDir Directories="$(MathcadInteropIntermediate)" />
+    <Exec Command="&quot;$(MathcadMidl)&quot; /nologo /cpp_cmd &quot;$(MathcadCl)&quot; /tlb &quot;$(MathcadInteropTlb)&quot; /h &quot;$(MathcadInteropIntermediate)\Mathcad.h&quot; /iid &quot;$(MathcadInteropIntermediate)\Mathcad_i.c&quot; /I &quot;$(MathcadWindowsKitsInclude)&quot; /I &quot;$(MathcadWindowsSharedInclude)&quot; &quot;$(MSBuildProjectDirectory)\..\..\tools\interop-mathcad\Mathcad.reconstructed.idl&quot;" />
+    <Exec Command="&quot;$(MathcadTlbImp)&quot; &quot;$(MathcadInteropTlb)&quot; /out:&quot;$(MathcadInteropDll)&quot; /namespace:Mathcad" />
+  </Target>
+  <Target Name="CopyGeneratedMathcadInterop" AfterTargets="Build">
+    <Copy SourceFiles="$(MathcadInteropDll)" DestinationFiles="$(TargetPath)" />
+    <Delete Files="$(TargetDir)$(AssemblyName).pdb" />
+  </Target>
 </Project>
