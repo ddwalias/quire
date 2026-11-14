@@ -11,24 +11,4 @@ namespace Quire.Controls.Core.Ole;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Ole.IPublicOleContainerModel`1, Ptc.Controls.Core")]
 public partial interface IPublicOleContainerModel<TPersistentData>
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsStorageEmpty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string ProgId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Guid ClassId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string Save(global::System.Action onServerBusy) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool Load(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void CleanStorage(bool deleteFile) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string SaveBitmap(global::System.Func<global::System.Windows.Media.Imaging.BitmapSource> getImageSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.Imaging.BitmapSource LoadBitmap(string filename) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, TPersistentData data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    TPersistentData GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider, string uniqueId, global::System.Action onServerBusy) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
