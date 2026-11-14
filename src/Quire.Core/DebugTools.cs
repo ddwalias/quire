@@ -13,7 +13,7 @@ public static partial class DebugTools
     public const string DEBUG = "DEBUG";
 
     [MirrorVerified("Release IL")]
-    private static readonly object _loggingLockObj;
+    private static readonly object _loggingLockObj = null;
 
     [MirrorVerified("Release IL")]
     private static List<string> _loggingData;
@@ -62,7 +62,7 @@ public static partial class DebugTools
     public static AssertionResult DevAssert(bool condition, string message = default, params object[] messageArgs) => DevAssert(condition, 1, AssertionModifiers.None, message, messageArgs);
 
     [MirrorVerified("PtcDebugToolsMechanicalDifferentialTests")]
-    private static readonly Action<bool, string> _assertDelegate;
+    private static readonly Action<bool, string> _assertDelegate = (bool condition, string message) => { };
 
     [MirrorVerified("PtcDebugToolsMechanicalDifferentialTests")]
     private static void ReportAssertionFailureOnAnotherThread(string formattedMessageWithStack) => _assertDelegate.Invoke(false, formattedMessageWithStack);
@@ -80,7 +80,7 @@ public static partial class DebugTools
     public static bool IsDebug => false;
 
     [MirrorVerified("PtcDebugToolsMechanicalDifferentialTests")]
-    public static bool DebugVerificationsAllowed { get; private set; }
+    public static bool DebugVerificationsAllowed { get; private set; } = IsDebug;
 
     [MirrorVerified("Release IL")]
     private static void FailAssertion(int framesToSkip, DebugTools.AssertionModifiers modifiers, string message = default, params object[] messageArgs) => DevAssert(false, framesToSkip + 1, modifiers, message, messageArgs);
