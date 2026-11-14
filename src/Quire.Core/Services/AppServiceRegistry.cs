@@ -5,6 +5,11 @@ namespace Quire.Services;
 
 public static partial class AppServiceRegistry
 {
+    static AppServiceRegistry()
+    {
+        _serviceProvider = new ServiceRegistry();
+    }
+
     [MirrorVerified("PtcServicesAppServiceRegistryMechanicalDifferentialTests")]
     private static readonly ServiceRegistry _serviceProvider;
 
