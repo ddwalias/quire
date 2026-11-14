@@ -224,8 +224,8 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         {
             sequence.Add($".maxstack {body.MaxStack}");
             sequence.Add($".initlocals {body.LocalVariablesInitialized}");
-            sequence.Add(".locals " + (body.LocalSignature.IsNil ? "" : string.Join(",", md.GetStandaloneSignature(body.LocalSignature)
-                .DecodeLocalSignature(decoder, null).Select(Render))));
+            sequence.Add(".locals " + (HasLocals(body.LocalSignature) ? string.Join(",", md.GetStandaloneSignature(body.LocalSignature)
+                .DecodeLocalSignature(decoder, null).Select(Render)) : ""));
         }
         var handlers = regions
             .Select(r => r.Kind == ExceptionRegionKind.Catch ? "catch " + Type(r.CatchType) : r.Kind.ToString().ToLowerInvariant())
@@ -251,6 +251,16 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
     public sealed record BodyFacts(string Hash, int[] Calls, string[] VirtualCalls, string[] Reads, string[] Writes,
         string[] ReferenceReads, bool Stub = false);
 
+    // A local signature that declares no locals (`.locals init ()`, which Mathcad's TlbImp-era bodies carry) is the
+    // same as none; DecodeLocalSignature rejects it ("Signature type sequence must have at least one element").
+    bool HasLocals(StandaloneSignatureHandle handle)
+    {
+        if (handle.IsNil) return false;
+        var reader = md.GetBlobReader(md.GetStandaloneSignature(handle).Signature);
+        reader.ReadByte(); // LOCAL_SIG
+        return reader.ReadCompressedInteger() > 0;
+    }
+
     /// <summary>
     /// A SHA-256 of everything in the body that decides what it does, independent of metadata token numbering: each
     /// instruction with its operand (tokens resolved to the member, type or string they denote; fields with their type,
@@ -269,7 +279,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         var body = pe.GetMethodBody(definition.RelativeVirtualAddress);
         var il = body.GetILReader();
         var text = new System.Text.StringBuilder($"{definition.Attributes} {definition.ImplAttributes} {body.LocalVariablesInitialized}\n");
-        if (!body.LocalSignature.IsNil)
+        if (HasLocals(body.LocalSignature))
             text.Append("locals ").Append(Ordinalless(string.Join(",", md.GetStandaloneSignature(body.LocalSignature)
                 .DecodeLocalSignature(decoder, null).Select(Render)))).Append('\n');
         foreach (var r in body.ExceptionRegions)
