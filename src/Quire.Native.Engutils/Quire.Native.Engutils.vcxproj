@@ -37,10 +37,11 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExceptionHandling>Async</ExceptionHandling>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <PreprocessorDefinitions>_CRTIMP2=__declspec(dllimport);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
@@ -52,7 +53,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="engutils_output.h" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="engutils_parse.cpp" />
+    <ClCompile Include="engutils_output.cpp" />
+    <ClCompile Include="engutils_output_data.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Quire.Native.Engutils.def" />

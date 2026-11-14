@@ -165,5 +165,14 @@
         "toolchain": true
       }
     }
+  },
+  "engutils.dll": {
+    "sha256": "90d1a0754271942118cbddf58442cc0c3a8aedd62b767f4021631abb736d3c0c",
+    "targets": {
+      "??_C@_07GHIAJMBC@?5?5?5?5?5?5?5@": {
+        "rva": "0x7120",
+        "size": 8
+      }
+    }
   }
 }

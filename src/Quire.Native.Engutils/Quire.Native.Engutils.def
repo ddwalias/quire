@@ -1,2 +1,8 @@
 EXPORTS
     ?parse_int@@YA_NPEBDIAEAH@Z
+    ?s_log@Output@Engine@@0_NB DATA
+    ?GetStream@Output@Engine@@QEAAAEAV?$basic_ostream@DU?$char_traits@D@std@@@std@@XZ
+    ?IndentDown@Output@Engine@@QEAAXXZ
+    ?Linesep@Output@Engine@@QEAAX_N@Z
+    ?Put@Output@Engine@@QEAAXV?$Substring@$$CBD@@@Z
+    ?indent@Output@Engine@@AEAAXXZ
