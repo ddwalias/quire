@@ -911,3 +911,9 @@
   - AttachedProperties `SetRegisterCommandBindings`, `GetRegisterCommandBindings`, `SetIsBringToView`, `GetIsBringToView`: candidate A (direct receiver, early return) FAIL with `callvirt` vs Mathcad `call`; candidate B (cast receiver, early return, and the ternary form for the getter) FAIL with the same call difference.
   - AttachedProperties `GetPrintView`: candidate A (local helper, early return) FAIL; candidate B (local helper, `(IWhiteboardItem)(helper?.GetPrintView(...))`) FAIL.
   - OleContainer `AcquireBitmapSource`, candidate B (`num` local with two `RenderSize` reads) FAIL, which is the shape that was two bytes off before.
+
+## Batch 120 — parked small-file blockers
+
+- Parked `RtfHelper.FixHyperlinksRtfSerialization`: the reference body requires `nrtftree-library`/NRtfTree APIs and additional helper members not present in the current hand-written partial. A linked reference to the Mathcad install is available under D27, but the member is deferred as a larger dependency batch.
+- Parked `Excel.ExcelReader.GetSharedString` and `LoadExcelBook`: Mathcad's DocumentFormat.OpenXml 2.17.1.0 body accesses `SpreadsheetDocument.Package` and `PackagePart`; the current project uses OpenXml 3.5.1, where that public package API is absent. A `GetStream()` substitution compiles but fails exact Release IL at the Uri/PackagePart call sequence.
+- Current project Release IL stub count after landed batches: 1,532.
