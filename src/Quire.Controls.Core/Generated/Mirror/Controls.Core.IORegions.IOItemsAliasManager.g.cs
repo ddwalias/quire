@@ -12,5 +12,7 @@ namespace Quire.Controls.Core.IORegions;
 public partial class IOItemsAliasManager
 {
     [global::Quire.Mirror.MirrorStub]
+    internal static global::System.Collections.Generic.IList<string> DistinctIds(global::System.Collections.Generic.IEnumerable<string> ids) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IList<string> GetSExpressionsList(global::System.Windows.DependencyObject region, global::Quire.Controls.Core.IORegions.ItemOptions itemOptions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

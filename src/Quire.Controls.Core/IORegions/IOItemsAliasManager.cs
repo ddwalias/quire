@@ -27,13 +27,6 @@ public partial class IOItemsAliasManager
         _aliasesToItemsMap = new Dictionary<string, IIOItem>();
     }
 
-    internal static IList<string> DistinctIds(IEnumerable<string> ids)
-    {
-        return (from id in ids
-                group id by id into gr
-                select gr.First()).ToList();
-    }
-
     public static DependencyProperty InAliasMapProperty = DependencyProperty.RegisterAttached("InAliasMap", typeof(Dictionary<string, string>), _typeOfThis, new PropertyMetadata((object)null, HandleInAliassesPropertyChanged));
 
     public static DependencyProperty OutAliasMapProperty = DependencyProperty.RegisterAttached("OutAliasMap", typeof(Dictionary<string, string>), _typeOfThis, new PropertyMetadata((object)null, HandleOutAliassesPropertyChanged));
