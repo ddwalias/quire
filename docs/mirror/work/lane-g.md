@@ -67,3 +67,12 @@ Only 43 of the 97 have an IL body to compare. The other 54 fail on declaration o
 ## Quire-only members
 
 `BeginInvoke`/`EndInvoke` (22) and the `(object, native int)` delegate constructors (11) are compiler-generated for the delegate types. They have no Mathcad counterpart and are not implemented.
+
+## Follow-up: opcode encoding experiment (2026-11-14)
+
+- Owner: Lane G. Branch `feature/interop-mathcad-longform-20261114`.
+- The original `interop.mathcad` IL has 272 argument loads, all encoded as long `ldarg N` (zero short forms). It also has zero `ldc.i4.s` instructions. The `ldarg` post-build rewrite is present on this branch only and must not be merged to `main`.
+- `Init` locals in Mathcad are slot 0 `IConnectionPoint`, slot 1 `Guid`, slot 2 `uint8[]`. The C# declaration order was changed to match; the resulting method still differs elsewhere, so this is not an exact match.
+- Integer zero encoding is mixed across accessors: each of the nine application-event `add_*` methods uses short `ldc.i4.0` at IL offset `IL_0028` (for example `add_Quit`); corresponding `remove_*` methods use long `ldc.i4 0` at `IL_0028` and `IL_002e`, and at `IL_0074` for the delegate comparison. `Init` also uses long `ldc.i4 0` at `IL_000e`. The worksheet event family has the same add/remove pattern. A blanket rewrite cannot preserve both forms.
+- Latest project gate: `Release IL: FAIL; 43 checked`; zero exact methods. The latest `Init` report first differs at instruction #6 (`Quire ldc.i4.0`, `Mathcad ldc.i4 0`).
+- Keep the post-build rewrite and implementation edits on the feature branch; only this checkpoint update is to be landed.
