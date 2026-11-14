@@ -33,6 +33,4 @@ public partial class NodeMessageAdorner : global::Quire.Controls.Core.VisualAdor
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
     [global::Quire.Mirror.MirrorStub]
     private double CalculateDesiredMessageBorderWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private double GetOffset(global::Quire.Controls.Core.NodeMessageAdorner current) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -60,6 +60,48 @@ public partial class NodeMessageAdorner
         }
     }
 
+    private double GetOffset(NodeMessageAdorner current)
+    {
+        System.Collections.Generic.IEnumerable<NodeMessageAdorner> allNodeMessageAdorners = GetAllNodeMessageAdorners();
+        System.Collections.Generic.List<NodeMessageAdorner> list = new System.Collections.Generic.List<NodeMessageAdorner>();
+        System.Collections.Generic.List<NodeMessageAdorner> list2 = new System.Collections.Generic.List<NodeMessageAdorner>();
+        System.Collections.Generic.List<NodeMessageAdorner> list3 = new System.Collections.Generic.List<NodeMessageAdorner>();
+        if (allNodeMessageAdorners != null)
+        {
+            foreach (NodeMessageAdorner item in allNodeMessageAdorners)
+            {
+                if (item._type == NodeMessageAdornerType.Error)
+                {
+                    list.Add(item);
+                }
+                if (item._type == NodeMessageAdornerType.Warning)
+                {
+                    list2.Add(item);
+                }
+                if (item._type == NodeMessageAdornerType.Notification)
+                {
+                    list3.Add(item);
+                }
+            }
+            if (current._type == NodeMessageAdornerType.Error)
+            {
+                int idx = list.IndexOf(current);
+                return CalculateOffset(list, idx);
+            }
+            if (current._type == NodeMessageAdornerType.Warning)
+            {
+                int idx2 = list2.IndexOf(current);
+                return CalculateOffset(list, list.Count) + CalculateOffset(list2, idx2);
+            }
+            if (current._type == NodeMessageAdornerType.Notification)
+            {
+                int idx3 = list3.IndexOf(current);
+                return CalculateOffset(list, list.Count) + CalculateOffset(list2, list2.Count) + CalculateOffset(list3, idx3);
+            }
+        }
+        return 0.0;
+    }
+
     private static double CalculateOffset(System.Collections.Generic.IList<NodeMessageAdorner> adorners, int idx)
     {
         double num = 0.0;
