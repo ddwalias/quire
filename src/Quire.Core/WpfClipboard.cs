@@ -8,6 +8,16 @@ namespace Quire;
 
 public partial class WpfClipboard
 {
+    static WpfClipboard()
+    {
+        Default = new WpfClipboard();
+        _xmlSpreadsheetDataType = DataFormats.GetDataFormat("XML Spreadsheet").Name;
+        _primeXamlStreamCompressed = DataFormats.GetDataFormat("PrimeXamlStreamCompressed").Name;
+        _mathNodeSExpression = DataFormats.GetDataFormat("MathNodeSExpression").Name;
+        _richTextEmbeddedItemsInfo = DataFormats.GetDataFormat("RichTextEmbeddedItemsInfoDataFormat").Name;
+        _canPasteIntoTextRegion = DataFormats.GetDataFormat("CanPasteIntoTextRegion").Name;
+    }
+
     [MirrorVerified("PtcWpfClipboardMechanicalDifferentialTests")]
     private static readonly string _mathNodeSExpression;
 
