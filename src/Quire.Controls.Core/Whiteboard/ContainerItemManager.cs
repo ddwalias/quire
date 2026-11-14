@@ -1,6 +1,7 @@
 #nullable disable
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Quire.Controls.Core;
 
@@ -74,5 +75,31 @@ public partial class ContainerItemManager
             return isActive.Value;
         }
         return false;
+    }
+
+    public void SetIsTabNavigatable(IWhiteboardItem item, bool isTabStop)
+    {
+        if (item is DependencyObject dependencyObject)
+        {
+            dependencyObject.SetValue(Control.IsTabStopProperty, isTabStop);
+        }
+    }
+
+    public bool GetIsTabNavigatable(IWhiteboardItem item)
+    {
+        if (item is DependencyObject dependencyObject)
+        {
+            return (bool)dependencyObject.GetValue(Control.IsTabStopProperty);
+        }
+        return false;
+    }
+
+    public bool IsTabNavigatable(IWhiteboardItem item)
+    {
+        if (item is IWhiteboardItemContainer container)
+        {
+            return container.IsTabNavigatable;
+        }
+        return GetIsTabNavigatable(item);
     }
 }
