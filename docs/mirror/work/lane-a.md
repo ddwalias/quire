@@ -22,3 +22,4 @@
 - Latest batch: `PropertySpec` overload constructors mapped from Mathcad Release IL, including type-name, category/description, editor and converter overloads. Core gate PASS: 4,064 exact, 15 missing, 0 unfinished (`.mirror-cache/release-il-a2ffcb0626bf/release-il.json`).
 - Latest batch: added mapped `PropertySpec.set_Name`. Core Release IL gate PASS: 4,065 exact, 14 missing, 0 unfinished (`.mirror-cache/release-il-5875770cc85a/release-il.json`).
 - Latest batch: `ApplicationSettingsSafe` static initializer creates its mapped `FallbackValues` dictionary. Core Release IL gate PASS: 4,066 exact, 13 missing, 0 unfinished (`.mirror-cache/release-il-ca534d443a80/release-il.json`).
+- Latest batch: `Discrete2DCoordinate` empty static constructor from Mathcad Release IL. Core gate PASS: 4,067 exact, 12 missing, 0 unfinished (`.mirror-cache/release-il-2cf06f2ef5f9/release-il.json`).

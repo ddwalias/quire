@@ -5,6 +5,9 @@ namespace Quire;
 
 public partial struct Discrete2DCoordinate
 {
+    static Discrete2DCoordinate()
+    {
+    }
     [MirrorVerified("Release IL")]
     public static Discrete2DCoordinate Origin;
 
