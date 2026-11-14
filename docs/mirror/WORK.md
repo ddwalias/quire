@@ -15,6 +15,10 @@ acceptance rule. Never inspect Debug IL.
 | [G](work/lane-g.md) | `Quire.AutomationPrivate`, `Quire.Interop.Mathcad`, `Quire.Interop.MathcadOld`, `Quire.Interop.VSInterfacesLib` ([D22](decisions.md)) | `mirror/g-interop-20261024-0238` | `C:/Projects/Quire-wt/lane-g-interop` |
 | [M](work/lane-m.md) | `Quire.Calculation.Core`, `Quire.Media3D` (moved from C) | `mirror/m-calc-core-<unique>` | `C:/Projects/Quire-wt/lane-m-calc-core` |
 | [N](work/lane-n.md) | `Quire.Controls.Core` | `mirror/n-controls-core-<unique>` | `C:/Projects/Quire-wt/lane-n-controls-core` |
+| [Engine misc](work/lane-engine-misc.md) | `Quire.Engine.Misc` | `mirror/engine-misc-<unique>` | `C:/Projects/Quire-wt/engine-misc` |
+| [Utils](work/quire-utils.md) | `Quire.Utils` | `mirror/utils-<unique>` | `C:/Projects/Quire-wt/utils` |
+| Msclr | `Quire.Msclr` | `mirror/msclr-<unique>` | `C:/Projects/Quire-wt/msclr` |
+| Msgen | `Quire.Msgen` (project not yet created; create it in its original language before members) | `mirror/msgen-<unique>` | `C:/Projects/Quire-wt/msgen` |
 
 The user launches these agents in separate Codex/AGY/Claude threads using the
 [copyable prompts](work/agent-prompts.md). No worker is currently running. Worktree paths
