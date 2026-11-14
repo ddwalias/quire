@@ -8,6 +8,7 @@ namespace Quire.Controls.Core;
 
 public partial interface IEquationControl
 {
+    event RoutedEventHandler Changed;
     string EquationSExpression { get; set; }
     string TypeoverSExpression { get; }
     string EquationSExpressionWithResolvedLabels { get; }
