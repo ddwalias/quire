@@ -1,9 +1,110 @@
 # Msgen lane checkpoint
 
-- Owner: Codex, Orca task `task_5e56f2e0b7c4`.
+- Owner: Codex, Orca task `task_0244daf49d01`.
 - Branch: `feature/msgen-project-20261115`.
 - Members: no Msgen members landed; the project split remains unlanded.
-- Release IL report: `.mirror-cache/release-il-28c285ca390c/release-il.json` (candidate judge).
-- Gate line: `Release IL: FAIL; 81 checked; C:\Users\DuyDang\orca\workspaces\Quire\msgen-project-20261115\.mirror-cache\release-il-28c285ca390c\release-il.json`.
-- Remaining mismatches: 61 global `<Module>` methods have no reviewed Mathcad binding; 14 CRT/`ThisPointer` members have no bound Mathcad type/counterpart; 6 native bodies have no IL to compare.
-- Open question: should `release_il.py`'s mixed-mode compiler-support rule (`native_bodies`) apply to these candidate methods, particularly the 61 generated global module methods?
+- Candidate Release IL report: `.mirror-cache/release-il-75074527861f/release-il.json` (diagnostic byte comparison used the experimental D2 global-assembly pairing; the gate change has been reverted).
+- Gate line: `Release IL: FAIL; 81 checked; C:\Users\DuyDang\orca\workspaces\Quire\msgen-project-20261115\.mirror-cache\release-il-75074527861f\release-il.json`.
+- Classification: the 81 candidate methods are compiler-generated support methods, not authored Quire methods.
+- Global module methods: 0 byte-matched, 61 failed. They have no reviewed/original Mathcad binding, so a first differing byte offset is not available (no original native counterpart).
+- Unbound CRT/ThisPointer members: 0 byte-matched, 14 failed. They have no bound original native body, so a first differing byte offset is not available.
+- Native bodies without IL: 6 byte-matched, 0 failed. All six found original native counterparts in `msgen` and matched exactly through `native_bodies`.
+- Rule result: diagnostic same-name lookup in the explicitly mapped `msgen` original found six native bodies and all six byte comparisons were exact. This lookup was not retained in `release_il.py`; no name-only exemption is used. The existing gate still rejects all 81 without reviewed bindings.
+- Exact MirrorGen changes: `Rules.cs` maps `msgen` to `Quire.Msgen`; `IsCppProject` accepts a C# host with a mixed-mode vcxproj. The assembly map points the split target at `Quire.Msgen`.
+- Gate code: the experimental `tools/validation/release_il.py` change that paired global methods by the split mapping was reverted in this task.
+- Landing: none; the gate still fails.
+
+Blocked global module methods (61; first differing offset: n/a, no original native counterpart):
+
+```text
+<CrtImplementationDetails>.ThrowNestedModuleLoadException`0([System.Runtime]System.Exception,[System.Runtime]System.Exception)->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.ThrowModuleLoadException`0([System.Runtime]System.String)->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.ThrowModuleLoadException`0([System.Runtime]System.String,[System.Runtime]System.Exception)->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.RegisterModuleUninitializer`0([System.Runtime]System.EventHandler)->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.DoCallBackInDefaultDomain`0(fnptr,[System.Runtime]System.Void*)->[System.Runtime]System.Void|True
+__scrt_is_safe_for_managed_code`0()->[System.Runtime]System.Boolean|True
+<CrtImplementationDetails>.DefaultDomain.DoNothing`0([System.Runtime]System.Void*)->[System.Runtime]System.Int32|True
+<CrtImplementationDetails>.DefaultDomain.HasPerProcess`0()->[System.Runtime]System.Boolean|True
+<CrtImplementationDetails>.DefaultDomain.HasNative`0()->[System.Runtime]System.Boolean|True
+<CrtImplementationDetails>.DefaultDomain.NeedsInitialization`0()->[System.Runtime]System.Boolean|True
+<CrtImplementationDetails>.DefaultDomain.NeedsUninitialization`0()->[System.Runtime]System.Boolean|True
+<CrtImplementationDetails>.DefaultDomain.Initialize`0()->[System.Runtime]System.Void|True
+?A0xeb4f7d22.??__E?Initialized@CurrentDomain@<CrtImplementationDetails>@@$$Q2HA@@YMXXZ`0()->[System.Runtime]System.Void|True
+?A0xeb4f7d22.??__E?Uninitialized@CurrentDomain@<CrtImplementationDetails>@@$$Q2HA@@YMXXZ`0()->[System.Runtime]System.Void|True
+?A0xeb4f7d22.??__E?IsDefaultDomain@CurrentDomain@<CrtImplementationDetails>@@$$Q2_NA@@YMXXZ`0()->[System.Runtime]System.Void|True
+?A0xeb4f7d22.??__E?InitializedVtables@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4Progress@2@A@@YMXXZ`0()->[System.Runtime]System.Void|True
+?A0xeb4f7d22.??__E?InitializedNative@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4Progress@2@A@@YMXXZ`0()->[System.Runtime]System.Void|True
+?A0xeb4f7d22.??__E?InitializedPerProcess@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4Progress@2@A@@YMXXZ`0()->[System.Runtime]System.Void|True
+?A0xeb4f7d22.??__E?InitializedPerAppDomain@CurrentDomain@<CrtImplementationDetails>@@$$Q2W4Progress@2@A@@YMXXZ`0()->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.LanguageSupport.InitializeVtables`0([Quire.Msgen]<CrtImplementationDetails>.LanguageSupport*)->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.LanguageSupport.InitializeDefaultAppDomain`0([Quire.Msgen]<CrtImplementationDetails>.LanguageSupport*)->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.LanguageSupport.InitializeNative`0([Quire.Msgen]<CrtImplementationDetails>.LanguageSupport*)->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.LanguageSupport.InitializePerProcess`0([Quire.Msgen]<CrtImplementationDetails>.LanguageSupport*)->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.LanguageSupport.InitializePerAppDomain`0([Quire.Msgen]<CrtImplementationDetails>.LanguageSupport*)->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.LanguageSupport.InitializeUninitializer`0([Quire.Msgen]<CrtImplementationDetails>.LanguageSupport*)->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.LanguageSupport._Initialize`0([Quire.Msgen]<CrtImplementationDetails>.LanguageSupport*)->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.LanguageSupport.UninitializeAppDomain`0()->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.LanguageSupport._UninitializeDefaultDomain`0([System.Runtime]System.Void*)->[System.Runtime]System.Int32|True
+<CrtImplementationDetails>.LanguageSupport.UninitializeDefaultDomain`0()->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.LanguageSupport.DomainUnload`0([System.Runtime]System.Object,[System.Runtime]System.EventArgs)->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.LanguageSupport.Cleanup`0([Quire.Msgen]<CrtImplementationDetails>.LanguageSupport*,[System.Runtime]System.Exception)->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.LanguageSupport.{ctor}`0([Quire.Msgen]<CrtImplementationDetails>.LanguageSupport*)->[Quire.Msgen]<CrtImplementationDetails>.LanguageSupport*|True
+<CrtImplementationDetails>.LanguageSupport.{dtor}`0([Quire.Msgen]<CrtImplementationDetails>.LanguageSupport*)->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.LanguageSupport.Initialize`0([Quire.Msgen]<CrtImplementationDetails>.LanguageSupport*)->[System.Runtime]System.Void|True
+.cctor`0()->[System.Runtime]System.Void|True
+gcroot<System::String ^>..PE$AAVString@System@@`0([Quire.Msgen]gcroot<System::String ^>*)->[System.Runtime]System.String|True
+gcroot<System::String ^>.=`0([Quire.Msgen]gcroot<System::String ^>*,[System.Runtime]System.String)->[Quire.Msgen]gcroot<System::String ^>*|True
+gcroot<System::String ^>.{dtor}`0([Quire.Msgen]gcroot<System::String ^>*)->[System.Runtime]System.Void|True
+gcroot<System::String ^>.{ctor}`0([Quire.Msgen]gcroot<System::String ^>*)->[Quire.Msgen]gcroot<System::String ^>*|True
+_CPPCLI_IMPL_DETAILS.AtExitLock._handle`0()->[System.Runtime]System.ValueType|True
+_CPPCLI_IMPL_DETAILS.AtExitLock._lock_Construct`0([System.Runtime]System.Object)->[System.Runtime]System.Void|True
+_CPPCLI_IMPL_DETAILS.AtExitLock._lock_Set`0([System.Runtime]System.Object)->[System.Runtime]System.Void|True
+_CPPCLI_IMPL_DETAILS.AtExitLock._lock_Get`0()->[System.Runtime]System.Object|True
+_CPPCLI_IMPL_DETAILS.AtExitLock._lock_Destruct`0()->[System.Runtime]System.Void|True
+_CPPCLI_IMPL_DETAILS.AtExitLock.IsInitialized`0()->[System.Runtime]System.Boolean|True
+_CPPCLI_IMPL_DETAILS.AtExitLock.AddRef`0()->[System.Runtime]System.Void|True
+_CPPCLI_IMPL_DETAILS.AtExitLock.RemoveRef`0()->[System.Runtime]System.Void|True
+?A0xdf32f105.__alloc_global_lock`0()->[System.Runtime]System.Boolean|True
+?A0xdf32f105.__dealloc_global_lock`0()->[System.Runtime]System.Void|True
+_exit_callback`0()->[System.Runtime]System.Void|True
+_initatexit_m`0()->[System.Runtime]System.Int32|True
+_initatexit_app_domain`0()->[System.Runtime]System.Int32|True
+_app_exit_callback`0()->[System.Runtime]System.Void|True
+DecodePointer`0([System.Runtime]System.Void*)->[System.Runtime]System.Void*|True
+EncodePointer`0([System.Runtime]System.Void*)->[System.Runtime]System.Void*|True
+_initterm_e`0(fnptr*,fnptr*)->[System.Runtime]System.Int32|True
+_initterm`0(fnptr*,fnptr*)->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.ThisModule.Handle`0()->[System.Runtime]System.ModuleHandle|True
+_initterm_m`0(fnptr*,fnptr*)->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.ThisModule.ResolveMethod<void const * __clrcall(void)>`0(fnptr)->fnptr|True
+___CxxCallUnwindDtor`0(fnptr,[System.Runtime]System.Void*)->[System.Runtime]System.Void|True
+```
+
+Blocked unbound CRT/ThisPointer members (14; first differing offset: n/a, no bound original native counterpart):
+
+```text
+vc.cppcli.modopts.ThisPointer::.ctor`0()->[System.Runtime]System.Void|False
+<CrtImplementationDetails>.ModuleLoadException::.ctor`0([System.Runtime]System.Runtime.Serialization.SerializationInfo,[System.Runtime]System.Runtime.Serialization.StreamingContext)->[System.Runtime]System.Void|False
+<CrtImplementationDetails>.ModuleLoadException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception)->[System.Runtime]System.Void|False
+<CrtImplementationDetails>.ModuleLoadException::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False
+<CrtImplementationDetails>.ModuleLoadExceptionHandlerException::.ctor`0([System.Runtime]System.Runtime.Serialization.SerializationInfo,[System.Runtime]System.Runtime.Serialization.StreamingContext)->[System.Runtime]System.Void|False
+<CrtImplementationDetails>.ModuleLoadExceptionHandlerException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception,[System.Runtime]System.Exception)->[System.Runtime]System.Void|False
+<CrtImplementationDetails>.ModuleLoadExceptionHandlerException::get_NestedException`0()->[System.Runtime]System.Exception|False
+<CrtImplementationDetails>.ModuleLoadExceptionHandlerException::set_NestedException`0([System.Runtime]System.Exception)->[System.Runtime]System.Void|False
+<CrtImplementationDetails>.ModuleLoadExceptionHandlerException::ToString`0()->[System.Runtime]System.String|False
+<CrtImplementationDetails>.ModuleLoadExceptionHandlerException::GetObjectData`0([System.Runtime]System.Runtime.Serialization.SerializationInfo,[System.Runtime]System.Runtime.Serialization.StreamingContext)->[System.Runtime]System.Void|False
+<CrtImplementationDetails>.ModuleUninitializer::AddHandler`0([System.Runtime]System.EventHandler)->[System.Runtime]System.Void|False
+<CrtImplementationDetails>.ModuleUninitializer::.cctor`0()->[System.Runtime]System.Void|True
+<CrtImplementationDetails>.ModuleUninitializer::.ctor`0()->[System.Runtime]System.Void|False
+<CrtImplementationDetails>.ModuleUninitializer::SingletonDomainUnload`0([System.Runtime]System.Object,[System.Runtime]System.EventArgs)->[System.Runtime]System.Void|False
+
+Matched native bodies (6):
+
+```text
+_getFiberPtrId`0()->[System.Runtime]System.Void*|True — no Mathcad counterpart paired; the body equals msgen 0x060000b8 (instructions and targets match)
+_cexit`0()->[System.Runtime]System.Void|True — no Mathcad counterpart paired; the body equals msgen 0x060000b9 (import _cexit)
+Sleep`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|True — no Mathcad counterpart paired; the body equals msgen 0x060000ba (import Sleep)
+abort`0()->[System.Runtime]System.Void|True — no Mathcad counterpart paired; the body equals msgen 0x060000bb (import abort)
+__security_init_cookie`0()->[System.Runtime]System.Void|True — no Mathcad counterpart paired; the body equals msgen 0x060000bc (instructions and targets match)
+__FrameUnwindFilter`0([Quire.Msgen]_EXCEPTION_POINTERS*)->[System.Runtime]System.Int32|True — no Mathcad counterpart paired; the body equals msgen 0x060000b7 (import __FrameUnwindFilter)
+```
