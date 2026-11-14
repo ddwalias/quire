@@ -8,6 +8,24 @@ namespace Quire.Controls.Core;
 
 public partial class ExtendedFont
 {
+    private static object CoerceFontFamily(DependencyObject d, object basevalue)
+    {
+        var extendedFont = d as ExtendedFont;
+        var fontFamily = basevalue as FontFamily;
+        if (extendedFont == null || fontFamily == null)
+        {
+            return basevalue;
+        }
+
+        var typeface = new Typeface(fontFamily, extendedFont.FontStyle, extendedFont.FontWeight, extendedFont.FontStretch);
+        typeface.TryGetGlyphTypeface(out GlyphTypeface glyphTypeface);
+        if (glyphTypeface == null)
+        {
+            return FontConstants.DefaultMathFontFamily;
+        }
+        return basevalue;
+    }
+
     [MirrorVerified("PtcControlsCoreExtendedFontMechanicalDifferentialTests")]
     public ExtendedFont() { }
 

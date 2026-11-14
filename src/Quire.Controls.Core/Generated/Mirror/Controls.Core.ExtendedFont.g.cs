@@ -39,6 +39,4 @@ public partial class ExtendedFont : global::System.Windows.Freezable, global::Sy
     public static readonly global::System.Windows.DependencyProperty FontStretchProperty;
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Collections.Generic.IDictionary<string, global::System.Windows.Media.GlyphRun> GlyphRunCache;
-    [global::Quire.Mirror.MirrorStub]
-    private static object CoerceFontFamily(global::System.Windows.DependencyObject d, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
