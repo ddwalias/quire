@@ -16,8 +16,6 @@ public static partial class AttachedProperties
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Input.CommandBindingCollection GetRegisterCommandBindings(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.IWhiteboardItem GetPrintView(global::System.Windows.UIElement uiElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static void OnCanActivateChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetIsBringToView(global::System.Windows.DependencyObject depObj, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

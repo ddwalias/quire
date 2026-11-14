@@ -198,6 +198,12 @@ public static partial class AttachedProperties
         depObj.ClearValue(ProhibitSizeChangedEventHandlerProperty);
     }
 
+    public static IWhiteboardItem GetPrintView(UIElement uiElement)
+    {
+        IPageElementXamlHelper pageElementXamlHelper = GetPageElementXamlHelper(uiElement);
+        return (IWhiteboardItem)((pageElementXamlHelper != null) ? pageElementXamlHelper.GetPrintView(uiElement) : null);
+    }
+
     private static object CanActivateCoerceValue(DependencyObject d, object value)
     {
         if (d is IProtectableControl protectableControl && protectableControl.ProtectionLevel.IsActivationProtected())
