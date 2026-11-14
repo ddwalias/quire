@@ -25,6 +25,12 @@ public partial class VisualDragger
         set => SetValue(DraggedElementProperty, value);
     }
 
+    public bool IsDragging
+    {
+        get => (bool)GetValue(IsDraggingProperty);
+        private set => SetValue(IsDraggingPropertyKey, value);
+    }
+
 
     [MirrorVerified("PtcControlsCoreVisualDraggerMechanicalDifferentialTests")]
     protected override void OnContextMenuOpening(ContextMenuEventArgs e) => e.Handled = true;
