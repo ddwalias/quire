@@ -1,5 +1,6 @@
 #nullable disable
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -10,6 +11,9 @@ namespace Quire.Controls.Core;
 
 public partial class CommonDragger
 {
+    protected readonly Dictionary<UIElement, double> _originalWidthCache = new Dictionary<UIElement, double>();
+    protected readonly Dictionary<UIElement, double> _originalHeightCache = new Dictionary<UIElement, double>();
+
     [MirrorVerified("PtcControlsCoreCommonDraggerMechanicalDifferentialTests")]
     protected Point _startPoint;
 
@@ -204,5 +208,23 @@ public partial class CommonDragger
                 break;
         }
         Mouse.SetCursor(cursor);
+    }
+
+    public CommonDragger(FrameworkElement container, Point startPosition, bool bAutoStart, DragMode mode, params UIElement[] elementsToDrag)
+    {
+        _container = container;
+        _mode = mode;
+        _elementsToDrag = elementsToDrag;
+        if (_mode != DragMode.Move && elementsToDrag.Length > 1)
+        {
+            _mode = DragMode.Move;
+        }
+        _startPoint = startPosition;
+        _currentPoint = startPosition;
+        _started = false;
+        if (bAutoStart)
+        {
+            StartCaptureEvents(_startPoint);
+        }
     }
 }

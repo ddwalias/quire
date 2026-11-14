@@ -16,10 +16,6 @@ public partial class CommonDragger
     [global::Quire.Mirror.MirrorStub]
     protected readonly global::Quire.Controls.Core.DragMode _mode;
     [global::Quire.Mirror.MirrorStub]
-    protected readonly global::System.Collections.Generic.Dictionary<global::System.Windows.UIElement, double> _originalWidthCache;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::System.Collections.Generic.Dictionary<global::System.Windows.UIElement, double> _originalHeightCache;
-    [global::Quire.Mirror.MirrorStub]
     protected readonly global::System.Windows.FrameworkElement _container;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Point _currentPoint;
@@ -37,8 +33,6 @@ public partial class CommonDragger
     private global::System.Windows.Threading.DispatcherTimer bringIntoViewDispatcherTimer;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Point _pt;
-    [global::Quire.Mirror.MirrorStub]
-    public CommonDragger(global::System.Windows.FrameworkElement container, global::System.Windows.Point startPosition, bool bAutoStart, global::Quire.Controls.Core.DragMode mode, params global::System.Windows.UIElement[] elementsToDrag) { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.CommonDragger+DragEndHandler, Ptc.Controls.Core")]
     public delegate void DragEndHandler(global::System.Windows.Point endPoint);
