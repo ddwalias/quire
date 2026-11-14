@@ -34,7 +34,5 @@ public partial class NodeMessageAdorner : global::Quire.Controls.Core.VisualAdor
     [global::Quire.Mirror.MirrorStub]
     private double CalculateDesiredMessageBorderWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.NodeMessageAdorner> GetAllNodeMessageAdorners() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private double GetOffset(global::Quire.Controls.Core.NodeMessageAdorner current) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

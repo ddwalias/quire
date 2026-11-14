@@ -35,6 +35,16 @@ public partial class NodeMessageAdorner
         InvalidateArrangeForAllNodeMessageAdornersExcludingSelf();
     }
 
+    private System.Collections.Generic.IEnumerable<NodeMessageAdorner> GetAllNodeMessageAdorners()
+    {
+        System.Windows.Documents.Adorner[] adorners = (ParentAdornerLayer != null) ? ParentAdornerLayer.GetAdorners(AdornedElement) : null;
+        if (adorners == null)
+        {
+            return null;
+        }
+        return System.Linq.Enumerable.OfType<NodeMessageAdorner>(adorners);
+    }
+
     private void InvalidateArrangeForAllNodeMessageAdornersExcludingSelf()
     {
         System.Collections.Generic.IEnumerable<NodeMessageAdorner> allNodeMessageAdorners = GetAllNodeMessageAdorners();
