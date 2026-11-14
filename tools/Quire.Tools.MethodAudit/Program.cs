@@ -131,7 +131,8 @@ foreach (var artifact in quire)
 var generatedBindings = JsonSerializer.Deserialize<Dictionary<string, GeneratedAssemblyBinding>>(
     File.ReadAllText(Path.Combine(repo, "docs/mirror/generated-assemblies.json")),
     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? [];
-foreach (var artifact in quire.Where(a => generatedBindings.ContainsKey(a.Name)))
+foreach (var artifact in quire.Where(a => generatedBindings.ContainsKey(a.Name)
+    && a.Model.Types.Any(t => t.FullName.StartsWith("Mathcad.", StringComparison.Ordinal))))
 {
     var generatedBinding = generatedBindings[artifact.Name];
     string assembly = generatedBinding.Assembly;
