@@ -76,3 +76,9 @@ Only 43 of the 97 have an IL body to compare. The other 54 fail on declaration o
 - Integer zero encoding is mixed across accessors: each of the nine application-event `add_*` methods uses short `ldc.i4.0` at IL offset `IL_0028` (for example `add_Quit`); corresponding `remove_*` methods use long `ldc.i4 0` at `IL_0028` and `IL_002e`, and at `IL_0074` for the delegate comparison. `Init` also uses long `ldc.i4 0` at `IL_000e`. The worksheet event family has the same add/remove pattern. A blanket rewrite cannot preserve both forms.
 - Latest project gate: `Release IL: FAIL; 43 checked`; zero exact methods. The latest `Init` report first differs at instruction #6 (`Quire ldc.i4.0`, `Mathcad ldc.i4 0`).
 - Keep the post-build rewrite and implementation edits on the feature branch; only this checkpoint update is to be landed.
+
+## Follow-up: IDL build pairing diagnosis (2026-11-15)
+
+- `Quire.Tools.MethodAudit/Program.cs:101` and `:127` only pair types carrying `MirrorOf`; a TlbImp-generated assembly has no `MirrorOf` attributes, so the candidate scan pairs no types with the original `interop.mathcad` assembly.
+- `tools/validation/release_il.py:1120-1125` compares original assembly SHA256/MVID identities across scans and raises `Mathcad reference identity changed between scans` when the base original is absent from the candidate identity map. Renaming or relocating the generated assembly cannot repair missing `MirrorOf` pairing.
+- The IDL build branch remains unlanded; resolving pairing requires a gate/MethodAudit change outside Lane G's assembly ownership.
