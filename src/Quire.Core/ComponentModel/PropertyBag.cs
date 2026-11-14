@@ -110,6 +110,10 @@ public class PropertySpec
         {
             return name;
         }
+        set
+        {
+            name = value;
+        }
     }
 
     public string TypeName
