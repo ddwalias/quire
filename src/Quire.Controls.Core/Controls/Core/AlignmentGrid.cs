@@ -139,6 +139,38 @@ public partial class AlignmentGrid
         return FixRoundingError(pt);
     }
 
+    public virtual Point GetNearestIntersectionInDirection(Point startPoint, Direction direction)
+    {
+        Point point = startPoint;
+        double offsetX = 0.0;
+        double offsetY = 0.0;
+        switch (direction)
+        {
+            case Direction.Up:
+                offsetY = IsModZero(startPoint.Y, GridCellSize.Height)
+                    ? -GridCellSize.Height
+                    : -Math.Abs(startPoint.Y % GridCellSize.Height);
+                break;
+            case Direction.Down:
+                offsetY = IsModZero(startPoint.Y, GridCellSize.Height)
+                    ? GridCellSize.Height
+                    : GridCellSize.Height - Math.Abs(startPoint.Y % GridCellSize.Height);
+                break;
+            case Direction.Left:
+                offsetX = IsModZero(startPoint.X, GridCellSize.Width)
+                    ? -GridCellSize.Width
+                    : -Math.Abs(startPoint.X % GridCellSize.Width);
+                break;
+            case Direction.Right:
+                offsetX = IsModZero(startPoint.X, GridCellSize.Width)
+                    ? GridCellSize.Width
+                    : GridCellSize.Width - Math.Abs(startPoint.X % GridCellSize.Width);
+                break;
+        }
+        point.Offset(offsetX, offsetY);
+        return FixRoundingError(point);
+    }
+
     public virtual Point GetNearestIntersectionPointDisregardingBounds(Point startPoint, GridRestriction restriction, params Direction[] directionsToIgnore)
     {
         return Clip(GetCandidateIntersectionPoint(startPoint, GridCellSize.Width, GridCellSize.Height), directionsToIgnore);

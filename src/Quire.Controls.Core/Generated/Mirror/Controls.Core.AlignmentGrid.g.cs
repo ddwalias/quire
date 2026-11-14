@@ -27,6 +27,4 @@ public partial class AlignmentGrid : global::System.Windows.DependencyObject, gl
     public global::Quire.Pair<global::System.Windows.Point, global::System.Windows.Point>[] GetHorizontalLines() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Pair<global::System.Windows.Point, global::System.Windows.Point>[] GetVerticalLines() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::System.Windows.Point GetNearestIntersectionInDirection(global::System.Windows.Point startPoint, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
