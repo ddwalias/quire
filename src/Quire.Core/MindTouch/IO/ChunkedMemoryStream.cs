@@ -6,6 +6,11 @@ namespace Quire.MindTouch.IO;
 
 public partial class ChunkedMemoryStream
 {
+    static ChunkedMemoryStream()
+    {
+        ChunkSize = DefaultChunkSize;
+    }
+
     public ChunkedMemoryStream(int capacity)
     {
         if (capacity < 0)
