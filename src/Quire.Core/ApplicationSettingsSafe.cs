@@ -9,7 +9,7 @@ public partial class ApplicationSettingsSafe
     protected ApplicationSettingsSafe() { }
 
     [MirrorVerified("PtcApplicationSettingsSafeMechanicalDifferentialTests")]
-    private static Dictionary<string, object> FallbackValues { get; }
+    private static Dictionary<string, object> FallbackValues { get; } = new Dictionary<string, object>();
 
     public new void Reset()
     {
