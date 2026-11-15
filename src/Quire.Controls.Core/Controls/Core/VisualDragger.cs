@@ -156,6 +156,16 @@ public partial class VisualDragger
         e.Handled = true;
     }
 
+    protected override void OnLostMouseCapture(MouseEventArgs e)
+    {
+        base.OnLostMouseCapture(e);
+        if (IsDragging)
+        {
+            IsDragging = false;
+            RaiseEvent(new RoutedEventArgs(DragEndEvent));
+        }
+    }
+
     protected override void OnMouseMove(MouseEventArgs e)
     {
         if (IsDragging)

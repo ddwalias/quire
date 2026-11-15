@@ -20,8 +20,6 @@ public partial class VisualDragger : global::System.Windows.Controls.ContentCont
     [global::Quire.Mirror.MirrorStub]
     private void DragInDirection(global::System.Windows.Vector vector) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnLostMouseCapture(global::System.Windows.Input.MouseEventArgs e) => base.OnLostMouseCapture(e);
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnKeyDown(global::System.Windows.Input.KeyEventArgs e) => base.OnKeyDown(e);
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.VisualDragger+DragHandler, Ptc.Controls.Core")]
