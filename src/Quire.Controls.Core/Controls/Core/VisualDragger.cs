@@ -170,4 +170,9 @@ public partial class VisualDragger
                 break;
         }
     }
+
+    private void CustomDrag(Vector vector)
+    {
+        RaiseEvent(new DragEventArgs(DragEvent, vector));
+    }
 }
