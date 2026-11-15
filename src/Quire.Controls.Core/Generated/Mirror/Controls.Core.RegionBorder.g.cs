@@ -11,45 +11,6 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RegionBorder, Ptc.Controls.Core")]
 public sealed partial class RegionBorder : global::System.Windows.Controls.ContentControl
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.Grid _borderGrid;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.BorderShape _border;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::Quire.Controls.Core.BorderDragger> _draggers;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.BusyClock _busyClock;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Shapes.Rectangle _marchingAnts;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Shapes.Rectangle _background;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Shapes.Rectangle _foreground;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.TextBlock _header;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action _regionBorderBrushChanged;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action _rightEdgeVisibilityChanged;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action _bottomEdgeVisibilityChanged;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action _cornerRadiusChanged;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _areDraggersShown;
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateBackgroundAndForeground() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetBorderLook() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateBorderVisibilityState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ShowDraggers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HideDraggers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateDraggersLook() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RegionBorder+RequestMoveAndResizeHandler, Ptc.Controls.Core")]
     public delegate void RequestMoveAndResizeHandler(object sender, global::Quire.Controls.Core.ResizeEventMouseArgs e);
 

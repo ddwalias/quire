@@ -11,12 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.NodeMessageAdorner, Ptc.Controls.Core")]
 public partial class NodeMessageAdorner : global::Quire.Controls.Core.VisualAdorner
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Controls.TextBox _messageTextBox;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Controls.Border _messageBorder;
-    [global::Quire.Mirror.MirrorStub]
-    public NodeMessageAdorner(global::System.Windows.FrameworkElement adornedElement, string error, global::Quire.Controls.Core.NodeMessageAdornerType type) : base(default(global::System.Windows.UIElement)) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void Setup() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

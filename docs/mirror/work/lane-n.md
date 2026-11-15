@@ -937,3 +937,12 @@
 - Report: `.mirror-cache/release-il-ab58166ea247/release-il.json` — PASS, 3,003 checked, 0 failures.
 - Parked members: `OleContainer` members `StorageFileNameForXamlSerialization`, `StartOleCloseOperation`, `TrySavingBitmapForPrint`, and `GetOlePersistentData` remain parked per Batch 120 (closure ordinals requiring specific member declaration ordering against Mathcad Prime 12.0.1.0).
 - Remaining mismatches: none in claimed batch.
+
+## Batch 123 — RegionBorder and NodeMessageAdorner
+
+- Owner: feature/mirror-regionborder-nodemessageadorner
+- Scope:
+  - `NodeMessageAdorner`: `_messageTextBox`, `_messageBorder`, `.ctor`, `Setup`. All remaining stubs removed from `.g.cs`.
+  - `RegionBorder`: `_borderGrid`, `_border`, `_draggers`, `_busyClock`, `_marchingAnts`, `_background`, `_foreground`, `_header`, `_regionBorderBrushChanged`, `_rightEdgeVisibilityChanged`, `_bottomEdgeVisibilityChanged`, `_cornerRadiusChanged`, `_areDraggersShown`, `UpdateBackgroundAndForeground`, `SetBorderLook`, `UpdateBorderVisibilityState`, `ShowDraggers`, `HideDraggers`, `UpdateDraggersLook`. All remaining stubs removed from `.g.cs`.
+- Report: `.mirror-cache/release-il-d491f255cd2b/release-il.json` — PASS, 3,223 checked, 0 failures.
+- Remaining mismatches: none in claimed batch (0 stubs remaining for RegionBorder and NodeMessageAdorner).

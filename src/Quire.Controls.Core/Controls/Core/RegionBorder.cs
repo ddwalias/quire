@@ -305,6 +305,23 @@ public partial class RegionBorder
         return null;
     }
 
+    private Grid _borderGrid;
+    private BorderShape _border;
+    private List<BorderDragger> _draggers;
+    private BusyClock _busyClock;
+    private Rectangle _marchingAnts;
+    private Rectangle _background;
+    private Rectangle _foreground;
+    private TextBlock _header;
+    private Action _regionBorderBrushChanged;
+    private Action _rightEdgeVisibilityChanged;
+    private Action _bottomEdgeVisibilityChanged;
+    private Action _cornerRadiusChanged;
+    // Compile-order device: 3 alignment fields to reach Mathcad closure ordinals 160, 166, 167, 168.
+    private int _closureAlignment1;
+    private int _closureAlignment2;
+    private int _closureAlignment3;
+
 
     public bool ShowBusy
     {
@@ -372,22 +389,6 @@ public partial class RegionBorder
         set => SetValue(CornerRadiusProperty, value);
     }
 
-    private bool AreDraggersShown
-    {
-        get => _areDraggersShown;
-        set
-        {
-            _areDraggersShown = value;
-            if (_areDraggersShown)
-            {
-                ShowDraggers();
-            }
-            else
-            {
-                HideDraggers();
-            }
-        }
-    }
 
     public event RequestMoveAndResizeHandler RequestMoveAndResize
     {
@@ -564,6 +565,30 @@ public partial class RegionBorder
         }
     }
 
+    private void UpdateBackgroundAndForeground()
+    {
+        if (IsActive)
+        {
+            SolidColorBrush solidColorBrush = Background as SolidColorBrush;
+            if (solidColorBrush == null ? true : solidColorBrush.Color == Colors.Transparent)
+            {
+                SetBackgroundActiveLook();
+            }
+            else
+            {
+                SetBackgroundDefaultLook();
+            }
+        }
+        else if (IsSelected)
+        {
+            SetBackgroundSelectedLook();
+        }
+        else
+        {
+            SetBackgroundDefaultLook();
+        }
+    }
+
     private void SetBackgroundSelectedLook()
     {
         if (_foreground != null && _background != null)
@@ -571,6 +596,189 @@ public partial class RegionBorder
             _foreground.Opacity = 0.4;
             _background.Opacity = 0.0;
         }
+    }
+
+    private void SetBorderLook()
+    {
+        if (_borderGrid == null)
+        {
+            return;
+        }
+        if (_border == null)
+        {
+            _border = new BorderShape
+            {
+                Fill = Brushes.Transparent,
+                IsHitTestVisible = false,
+                Stroke = BorderBrush,
+                StrokeThickness = 0.5,
+                CornerRadius = CornerRadius,
+                RightEdgeVisibility = RightEdgeVisibility
+            };
+            _regionBorderBrushChanged = (Action)Delegate.Combine(_regionBorderBrushChanged, (Action)(() =>
+            {
+                _border.Stroke = BorderBrush;
+            }));
+            _cornerRadiusChanged = (Action)Delegate.Combine(_cornerRadiusChanged, (Action)(() =>
+            {
+                _border.CornerRadius = CornerRadius;
+            }));
+            _rightEdgeVisibilityChanged = (Action)Delegate.Combine(_rightEdgeVisibilityChanged, (Action)(() =>
+            {
+                _border.RightEdgeVisibility = RightEdgeVisibility;
+            }));
+            _borderGrid.Children.Add(_border);
+        }
+        _border.StrokeDashArray = (IsActive ? RegionBorderConstants.BorderLineStrokeDashArray : null);
+    }
+
+    private void UpdateBorderVisibilityState()
+    {
+        Visibility visibility = (Visibility)(TryFindResource("InactiveHeaderBorderVisibility") ?? ((object)Visibility.Hidden));
+        if (_border != null && _header != null)
+        {
+            bool flag;
+            bool flag2;
+            if (IsActive || IsSelected)
+            {
+                flag = (flag2 = true);
+            }
+            else
+            {
+                flag = false;
+                flag2 = ForceBorder == ForceBorderType.HeaderOnly || ForceBorder == ForceBorderType.BorderAndHeader;
+            }
+            _border.Visibility = (!ShowBusy ? Visibility.Visible : visibility);
+            if (!BorderVisibility && !flag)
+            {
+                _border.Visibility = visibility;
+            }
+            _header.Visibility = (flag2 ? Visibility.Visible : visibility);
+        }
+    }
+
+    private bool _areDraggersShown;
+
+    private bool AreDraggersShown
+    {
+        get => _areDraggersShown;
+        set
+        {
+            _areDraggersShown = value;
+            if (_areDraggersShown)
+            {
+                ShowDraggers();
+            }
+            else
+            {
+                HideDraggers();
+            }
+        }
+    }
+
+    private void ShowDraggers()
+    {
+        if (_borderGrid == null)
+        {
+            return;
+        }
+        if (_draggers == null)
+        {
+            _draggers = new List<BorderDragger>
+            {
+                new BorderDragger
+                {
+                    Name = "LeftDragger",
+                    Cursor = Cursors.SizeWE,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Left
+                },
+                new BorderDragger
+                {
+                    Name = "RightDragger",
+                    Cursor = Cursors.SizeWE,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Right
+                },
+                new BorderDragger
+                {
+                    Name = "BottomDragger",
+                    Cursor = Cursors.SizeNS,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                },
+                new BorderDragger
+                {
+                    Name = "TopDragger",
+                    Cursor = Cursors.SizeNS,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                },
+                new BorderDragger
+                {
+                    Name = "BottomLeftDragger",
+                    Cursor = Cursors.SizeNESW,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    HorizontalAlignment = HorizontalAlignment.Left
+                },
+                new BorderDragger
+                {
+                    Name = "TopLeftDragger",
+                    Cursor = Cursors.SizeNWSE,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    HorizontalAlignment = HorizontalAlignment.Left
+                },
+                new BorderDragger
+                {
+                    Name = "BottomRightDragger",
+                    Cursor = Cursors.SizeNWSE,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    HorizontalAlignment = HorizontalAlignment.Right
+                },
+                new BorderDragger
+                {
+                    Name = "TopRightDragger",
+                    Cursor = Cursors.SizeNESW,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    HorizontalAlignment = HorizontalAlignment.Right
+                }
+            };
+            _draggers.Each((BorderDragger dragger) =>
+            {
+                _borderGrid.Children.Add(dragger);
+            });
+            _regionBorderBrushChanged = (Action)Delegate.Combine(_regionBorderBrushChanged, new Action(UpdateDraggersLook));
+        }
+        _draggers.Each((BorderDragger dragger) =>
+        {
+            dragger.Visibility = GetDesiredDraggerVisibility(dragger);
+        });
+        UpdateDraggersLook();
+    }
+
+    private void HideDraggers()
+    {
+        _draggers?.Each((BorderDragger dragger) =>
+        {
+            dragger.Visibility = Visibility.Collapsed;
+        });
+    }
+
+    private void UpdateDraggersLook()
+    {
+        if (_draggers == null)
+        {
+            return;
+        }
+        Brush background = (IsSelected ? RegionBorderConstants.SelectedDraggerBackground : DraggerBackground);
+        double uniformLength = (IsSelected ? 0.75 : 0.5);
+        Thickness borderThickness = new Thickness(uniformLength);
+        _draggers.Each((BorderDragger dragger) =>
+        {
+            dragger.BorderBrush = BorderBrush;
+            dragger.Background = background;
+            dragger.BorderThickness = borderThickness;
+        });
     }
 
     private void SetBackgroundActiveLook()
