@@ -175,4 +175,12 @@ public partial class VisualDragger
     {
         RaiseEvent(new DragEventArgs(DragEvent, vector));
     }
+
+    private void CustomDragHorizontal(Vector vector)
+    {
+        // The IL zeroes Y on a copy and still raises the original vector; keep that shape for the Release IL.
+        var horizontal = vector;
+        horizontal.Y = 0;
+        CustomDrag(vector);
+    }
 }
