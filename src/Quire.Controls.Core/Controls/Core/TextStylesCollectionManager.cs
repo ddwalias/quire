@@ -111,9 +111,57 @@ public partial class TextStylesCollectionManager
         StylesCollection = new ObservableCollection<TextStyleData>(list);
     }
 
-    // Parked: the Mathcad literal "Ptc.Controls.Core;component/Fonts/#" has no leading slash, so the own-assembly
-    // rule (D21) does not apply and the Quire literal cannot match.
-    protected void LoadWorkSheetStylesFromFile(SortedList<string, TextStyleData> stylesCollection, IReadOnlyDictionary<string, ITextStyleObject> textStyles) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void LoadWorkSheetStylesFromFile(SortedList<string, TextStyleData> stylesCollection, IReadOnlyDictionary<string, ITextStyleObject> textStyles)
+    {
+        foreach (KeyValuePair<string, ITextStyleObject> item in textStyles)
+        {
+            if (item.Key.StartsWith("Legacy"))
+            {
+                break;
+            }
+
+            TextStyle textStyle = item.Value as TextStyle;
+            if (textStyle != null && textStyle.FontFamily != null)
+            {
+                if (textStyle.FontFamily.Source.Contains(FontConstants.EmbedFontDelimiter))
+                {
+                    textStyle.FontFamily = new FontFamily(new Uri("pack://application:,,,"), textStyle.FontFamily.Source);
+                }
+
+                if (textStyle.FontFamily.Source.Equals("Mathcad UniMath Prime") && !Fonts.SystemFontFamilies.Contains(new FontFamily("Mathcad UniMath Prime")))
+                {
+                    textStyle.FontFamily = new FontFamily(new Uri("pack://application:,,,"), string.Concat("Ptc.Controls.Core;component/Fonts/#", "Mathcad UniMath Prime"));
+                }
+
+                if (textStyle.FontFamily.Source.Equals("Mathcad UniMath") && !Fonts.SystemFontFamilies.Contains(new FontFamily("Mathcad UniMath")))
+                {
+                    textStyle.FontFamily = new FontFamily(new Uri("pack://application:,,,"), string.Concat("Ptc.Controls.Core;component/Fonts/#", "Mathcad UniMath"));
+                }
+
+                if (textStyle.Margin.HasValue && (textStyle.Margin.Value.Top < 0.0 || textStyle.Margin.Value.Right < 0.0 || textStyle.Margin.Value.Bottom < 0.0 || textStyle.Margin.Value.Left < 0.0))
+                {
+                    textStyle.Margin = new Thickness(Math.Max(0.0, textStyle.Margin.Value.Left), Math.Max(0.0, textStyle.Margin.Value.Top), Math.Max(0.0, textStyle.Margin.Value.Right), Math.Max(0.0, textStyle.Margin.Value.Bottom));
+                }
+            }
+
+            string text = item.Value.Name ?? item.Key;
+            if (item.Key != "areaLayoutStyle" && item.Key != "headerLayoutStyle" && item.Key != "footerLayoutStyle")
+            {
+                string baseOnKey = null;
+                if (item.Value.BasedOnKey.IsNotEmpty())
+                {
+                    baseOnKey = item.Value.BasedOnKey;
+                }
+
+                if (item.Value.TextDecorations == null && item.Value.BasedOnKey.IsNullOrEmpty())
+                {
+                    item.Value.TextDecorations = new TextDecorationCollection();
+                }
+
+                stylesCollection.Add(text, new TextStyleData(text, item.Key, ((TextStyle)item.Value).Style, baseOnKey));
+            }
+        }
+    }
 
     protected void LoadWorkSheetLegacyStyles(IList<TextStyleData> stylesCollection, IReadOnlyDictionary<string, ITextStyleObject> textStyles)
     {
