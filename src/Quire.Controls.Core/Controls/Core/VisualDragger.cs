@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using Quire.Controls.Core;
 using Quire.Mirror;
 
@@ -41,6 +42,12 @@ public partial class VisualDragger
     {
         get => (DraggingMode)GetValue(ModeProperty);
         set => SetValue(ModeProperty, value);
+    }
+
+    public IInputElement ReferenceElement
+    {
+        get => _referenceElement ?? VisualTreeHelper.GetParent(DraggedElement) as IInputElement;
+        set => _referenceElement = value;
     }
 
 

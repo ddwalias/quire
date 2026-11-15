@@ -18,8 +18,6 @@ public partial class VisualDragger : global::System.Windows.Controls.ContentCont
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size _originalSize;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.IInputElement ReferenceElement { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Windows.RoutedEventHandler DragEnd;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Windows.Input.MouseEventHandler DragStart;
