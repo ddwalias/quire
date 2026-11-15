@@ -4,7 +4,7 @@
 - **Branch:** `feature/native-engutils-20261114`, worktree `C:/Users/DuyDang/orca/workspaces/Quire/native-engutils-20261114`.
 - **Base commit:** `25e8d9d2023a44b516f131357a4b36d6c0da79ce` (landed on `main`).
 - **Gate:** `PYTHONUTF8=1 python tools/validation/native_gate.py --base main --project Quire.Native.Engutils`.
-- **Status:** PASS; 8 exports/targets fully matched and landed on `main`. 10 remaining exports parked per coordinator decision due to build-level differences (LTCG inlining, COMDAT switch jump table placement, and unexported internal helpers).
+- **Status:** PASS; 8 exports/targets fully matched and landed on `main`. 10 remaining exports parked (see section 3): none passed in the 2026-11-15 retry, and the lane is parked pending two build decisions (section 4).
 
 ---
 
@@ -116,3 +116,40 @@ The remaining 10 exports of `engutils.dll` are parked rather than changing the b
   1. *Form 1:* Defaulted operations (`= default;`). Emitted out-of-line library calls.
   2. *Form 2:* Memberwise copy constructor and empty destructor body. Emitted 70 bytes (copy ctor) and 47 bytes (dtor).
   3. *Form 3:* Explicit iteration over `m_indents` elements. Emitted 95 bytes (copy ctor) and 60 bytes (dtor).
+
+---
+
+## 3. Retry on 2026-11-15 (task `task_8a362502b87d`, then `task_975c6d38c09f`)
+
+Each export was gated under `native_gate.py --base main --project Quire.Native.Engutils` (Release, per-object). Three forms per export; `parse_number` and `insert_html_entity_refs` got extra forms. Lengths are candidate bytes against the original extent. "offset not recorded" means the gate reported a length mismatch, which stops the byte comparison before an offset is reached. No form passed, so nothing landed.
+
+| Export | Form 1 | Form 2 | Form 3 | First differing offset |
+| --- | --- | --- | --- | --- |
+| `Output(ostream&)` `??0...AEAV?$basic_ostream...` (249) | member init + `if (s_log)` push 125 | member init + `emplace_back`, body fills 241 | zero-init members + `if (s_log)` push: differs at `+0x2` (original `5c`, candidate `4c`), then `s_log` target at `+0x50` | F1/F2 offset not recorded; F3 `+0x2` |
+| `Output(const Output&)` (75) | member init copy 70 | body assignment 155 | `= default` 70 | not recorded (length) |
+| `Output(Output&&)` (208) | member init + `std::move` 203 | `= default` 203 | `= default` 203 | not recorded (length) |
+| `~Output()` (52) | `= default` 47 | `{}` 22 | `= default` 47 | not recorded (length) |
+| `IndentUp(size_t)` (246) | `push_back` 81 | `emplace_back`, `m_col` set first 296 | local `top`, `push_back` 81 | not recorded (length) |
+| `IndentToCol(size_t)` (206) | `push_back` 41 | `emplace_back` 41 | local `value`, `push_back` 41 | not recorded (length) |
+| `GetEnv(const wchar_t*)` (221) | `_alloca`, unchecked 2nd call, `wstring(buf, wcslen)` 502 | checked 2nd call, `wstring(buf)` 273 | `wstring value(size)` + `resize` 789 | not recorded (length) |
+| `Throw(const char*, ...)` (80) | `format_message` helper (unexported 0x4840 not in manifest) 97 | `char buf[1024]`, `vsnprintf` 99 | `std::string(1024)` + `strlen` 182 | not recorded (length) |
+| `insert_html_entity_refs` (1218) | recursive `substr` + `+` 1194 | iterative `switch`, `append` 494 | `find_first_of`, recursive 1230 | not recorded (length) |
+| `parse_number` (938) | hand-written DFA over `isdigit` 187 | `isdigit` if-ladder 280 | `strtod` + `f`/`F` suffix 81 | not recorded (length) |
+| `ErrorToString` (1761) | not gated | not gated | not gated | not gated: the candidate needs a link input for `mshex.dll` (`Hex::operator<<`, `Hex::Error::GetDetails`), and the original inlines `std::basic_ostringstream` |
+
+Forms are saved in the scratchpad (`engutils-forms/`), not committed.
+
+### Why none passed
+
+- **`Output` special members, `IndentUp`, `IndentToCol`:** The original inlines the `std::deque<size_t>` operations (proxy setup, `push_back` fast path, `_Tidy`) into each caller. The pinned toolset is the same MSVC 19.51.36246 as Mathcad's, so the difference is `/GL` inlining, not STL version. A per-object build calls these out of line, which shows as the length gaps above.
+- **`GetEnv`:** The original's string construction calls the `basic_string` `_Construct` helper at `0x2D40` and inlines the `_alloca` path. None of the three forms reproduced the stack-allocation or construction shape.
+- **`Throw`:** It needs the unexported format helper at `0x4840` (144 bytes) as its own ported function, plus the `std::runtime_error` construction thunks. Form 1 is the only form that calls the helper, and the helper is not yet ported or recorded.
+- **`insert_html_entity_refs`:** The original is a loop over four special characters that recurses on the remainder: `prefix + "&" + name + ";" + recurse(rest)`. The name strings are `quot`, `amp`, `lt` and `gt`, read from `.rdata` at `0x7148`, `0x7158`, `0x7160` and `0x7168`. The recursive form is close (1194 and 1230 against 1218), but the string-growth codegen differs.
+- **`parse_number`:** A table-driven DFA over the sign, digits, `.`, exponent and suffix states. Its jump tables sit inline in `.text` after the function body (`0x41E4`, `0x4204`, `0x42B0`, `0x4318`), and per-object compilation moves switch tables out of line. The three forms are approximations of the accepted syntax, not recovered from the DFA. None reproduces the table placement.
+- **`ErrorToString`:** Needs a link input that the project does not have, which is a build-configuration change.
+
+## 4. Next port and open decisions
+
+- **Next port: the `0x4840` helper.** It is the format helper called by `Throw` (`format(out, format, va_list, 1024)`, 144 bytes, prologue `mov [rsp+10h],rbx`). It has its own body, so it is ported as file-local C++ and recorded in `docs/mirror/native/internal-targets.json` with `native_targets.py` once its bytes match. Porting it unblocks `Throw` and probably the `basic_string` helper calls in `GetEnv`. It is not yet attempted.
+- **Open decision 1: WholeProgramOptimization.** The original was built with `/GL`. Setting `<WholeProgramOptimization>true</WholeProgramOptimization>` in `Quire.Native.Engutils.vcxproj` switches the gate to linked mode (D30), which compares exports of the linked DLL. That changes the build configuration, so it needs a maintainer decision. It is not applied here.
+- **Open decision 2: mshex link input.** `ErrorToString` needs `mshex.dll`'s import library. No other native project links mshex, so this is a new link dependency in `Quire.Native.Engutils.vcxproj`. It also depends on D25, which parks `Hex::operator<<` and `Hex::Error::GetDetails`. It is not applied here.
