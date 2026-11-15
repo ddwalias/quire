@@ -20,8 +20,6 @@ public partial class VisualDragger : global::System.Windows.Controls.ContentCont
     [global::Quire.Mirror.MirrorStub]
     private void StartDrag(global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void DragInternal(global::System.Windows.Vector vector) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void CustomDrag(global::System.Windows.Vector vector) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void CustomDragHorizontal(global::System.Windows.Vector vector) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

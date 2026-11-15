@@ -134,4 +134,40 @@ public partial class VisualDragger
             StopDrag();
         }
     }
+
+    private void DragInternal(Vector vector)
+    {
+        switch (Mode)
+        {
+            case DraggingMode.Margin:
+                if (Direction == DraggingDirection.Move)
+                {
+                    DragMoveMargin(vector);
+                }
+                else
+                {
+                    DragInDirection(vector);
+                }
+                break;
+            case DraggingMode.Custom:
+                switch (Direction)
+                {
+                    case DraggingDirection.Left:
+                    case DraggingDirection.Right:
+                        CustomDragHorizontal(vector);
+                        break;
+                    case DraggingDirection.Up:
+                    case DraggingDirection.Down:
+                        CustomDragVertical(vector);
+                        break;
+                    default:
+                        CustomDrag(vector);
+                        break;
+                }
+                break;
+            default:
+                DebugTools.DevAssert(false, null);
+                break;
+        }
+    }
 }
