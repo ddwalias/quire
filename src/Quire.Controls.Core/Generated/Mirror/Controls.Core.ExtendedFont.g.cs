@@ -11,32 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.ExtendedFont, Ptc.Controls.Core")]
 public partial class ExtendedFont : global::System.Windows.Freezable, global::System.ICloneable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Typeface _fontTypeface;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.GlyphRun _M_Run;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.GlyphRun _n_Run;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.GlyphRun _j_Run;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.GlyphTypeface _glyphTypeface;
-    [global::Quire.Mirror.MirrorStub]
-    private double _baselineAdjustment;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FontFamilyProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FontSizeProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FontWeightProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FontStyleProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty TextDecorationsProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ForegroundProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FontStretchProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Collections.Generic.IDictionary<string, global::System.Windows.Media.GlyphRun> GlyphRunCache;
 }

@@ -1,5 +1,8 @@
 #nullable disable
+using System;
+using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Quire.Mirror;
@@ -8,35 +11,24 @@ namespace Quire.Controls.Core;
 
 public partial class ExtendedFont
 {
-    private static object CoerceFontFamily(DependencyObject d, object basevalue)
-    {
-        var extendedFont = d as ExtendedFont;
-        var fontFamily = basevalue as FontFamily;
-        if (extendedFont == null || fontFamily == null)
-        {
-            return basevalue;
-        }
+    private Typeface _fontTypeface;
+    private GlyphRun _M_Run;
+    private GlyphRun _n_Run;
+    private GlyphRun _j_Run;
+    private GlyphTypeface _glyphTypeface;
+    private double _baselineAdjustment;
 
-        var typeface = new Typeface(fontFamily, extendedFont.FontStyle, extendedFont.FontWeight, extendedFont.FontStretch);
-        typeface.TryGetGlyphTypeface(out GlyphTypeface glyphTypeface);
-        if (glyphTypeface == null)
-        {
-            return FontConstants.DefaultMathFontFamily;
-        }
-        return basevalue;
-    }
-
-    [MirrorVerified("PtcControlsCoreExtendedFontMechanicalDifferentialTests")]
-    public ExtendedFont() { }
-
-    [MirrorVerified("PtcControlsCoreExtendedFontMechanicalDifferentialTests")]
-    protected override Freezable CreateInstanceCore() => new ExtendedFont();
+    public static readonly DependencyProperty FontFamilyProperty;
+    public static readonly DependencyProperty FontSizeProperty;
+    public static readonly DependencyProperty FontWeightProperty;
+    public static readonly DependencyProperty FontStyleProperty;
+    public static readonly DependencyProperty TextDecorationsProperty;
+    public static readonly DependencyProperty ForegroundProperty;
+    public static readonly DependencyProperty FontStretchProperty;
+    private static readonly IDictionary<string, GlyphRun> GlyphRunCache;
 
     [MirrorVerified("PtcControlsCoreExtendedFontMechanicalDifferentialTests")]
     public int RevisionNumber { get; private set; }
-
-    [MirrorVerified("PtcControlsCoreExtendedFontMechanicalDifferentialTests")]
-    public event Delegate1<DependencyPropertyChangedEventArgs> FormatChanged;
 
     public FontFamily FontFamily
     {
@@ -125,6 +117,39 @@ public partial class ExtendedFont
         }
     }
 
+    [MirrorVerified("PtcControlsCoreExtendedFontMechanicalDifferentialTests")]
+    public event Delegate1<DependencyPropertyChangedEventArgs> FormatChanged;
+
+    static ExtendedFont()
+    {
+        GlyphRunCache = new Dictionary<string, GlyphRun>();
+        FontFamilyProperty = TextElement.FontFamilyProperty.AddOwner(typeof(ExtendedFont), new FrameworkPropertyMetadata(HandleExtendedFontPropertyChanged, CoerceFontFamily));
+        FontSizeProperty = TextElement.FontSizeProperty.AddOwner(typeof(ExtendedFont), new FrameworkPropertyMetadata(HandleExtendedFontPropertyChanged));
+        FontWeightProperty = TextElement.FontWeightProperty.AddOwner(typeof(ExtendedFont), new FrameworkPropertyMetadata(HandleExtendedFontPropertyChanged));
+        FontStyleProperty = TextElement.FontStyleProperty.AddOwner(typeof(ExtendedFont), new FrameworkPropertyMetadata(HandleExtendedFontPropertyChanged));
+        TextDecorationsProperty = Inline.TextDecorationsProperty.AddOwner(typeof(ExtendedFont), new FrameworkPropertyMetadata(HandleExtendedFontPropertyChanged));
+        ForegroundProperty = TextElement.ForegroundProperty.AddOwner(typeof(ExtendedFont), new FrameworkPropertyMetadata(HandleExtendedFontPropertyChanged));
+        FontStretchProperty = TextElement.FontStretchProperty.AddOwner(typeof(ExtendedFont), new FrameworkPropertyMetadata(HandleExtendedFontPropertyChanged));
+    }
+
+    private static object CoerceFontFamily(DependencyObject d, object basevalue)
+    {
+        var extendedFont = d as ExtendedFont;
+        var fontFamily = basevalue as FontFamily;
+        if (extendedFont == null || fontFamily == null)
+        {
+            return basevalue;
+        }
+
+        var typeface = new Typeface(fontFamily, extendedFont.FontStyle, extendedFont.FontWeight, extendedFont.FontStretch);
+        typeface.TryGetGlyphTypeface(out GlyphTypeface glyphTypeface);
+        if (glyphTypeface == null)
+        {
+            return FontConstants.DefaultMathFontFamily;
+        }
+        return basevalue;
+    }
+
     public static Rect SafeComputeInkBoundingBox(GlyphRun glyphRun)
     {
         Rect inkBox = glyphRun.ComputeInkBoundingBox();
@@ -140,6 +165,51 @@ public partial class ExtendedFont
         return new Rect(new Point(0.0, 0.0), new Point(advanceWidth, glyphRun.BaselineOrigin.Y));
     }
 
+    [MirrorVerified("PtcControlsCoreExtendedFontMechanicalDifferentialTests")]
+    public ExtendedFont() { }
+
+    public ExtendedFont(FontFamily fontFamily, double fontSize, FontStyle fontStyle, FontWeight fontWeight, FontStretch fontStretch, TextDecorationCollection textDecorations, Brush foreground)
+    {
+        FontFamily = fontFamily;
+        FontSize = fontSize;
+        FontStyle = fontStyle;
+        FontWeight = fontWeight;
+        FontStretch = fontStretch;
+        TextDecorations = textDecorations;
+        if (foreground is SolidColorBrush solidColorBrush && solidColorBrush.Color == Colors.Black)
+        {
+            Foreground = Brushes.Black;
+        }
+        else
+        {
+            Foreground = foreground;
+        }
+        CalculateTypeface();
+    }
+
+    public ExtendedFont(Typeface typeface, double fontSize)
+        : this(typeface.FontFamily, fontSize, typeface.Style, typeface.Weight, typeface.Stretch, new TextDecorationCollection(), Brushes.Black)
+    {
+    }
+
+    public static GlyphRun GenerateGlyphRun(string text, Uri fontUri, double fontSize)
+    {
+        if (!ControlSettings.Instance.EnableFontCaching)
+        {
+            return CreateGlyphRun(text, fontUri, fontSize);
+        }
+        string key = string.Format("{0}{1}{2}", text, fontUri, fontSize);
+        if (!GlyphRunCache.TryGetValue(key, out var value))
+        {
+            value = CreateGlyphRun(text, fontUri, fontSize);
+            if (value != null)
+            {
+                GlyphRunCache.Add(key, value);
+            }
+        }
+        return value;
+    }
+
     private static GlyphRun CreateGlyphRun(string text, Uri fontUri, double fontSize)
     {
         return new Glyphs
@@ -148,6 +218,27 @@ public partial class ExtendedFont
             FontUri = fontUri,
             UnicodeString = text
         }.ToGlyphRun();
+    }
+
+    private GlyphRun GenerateGlyphRun(string text)
+    {
+        return GenerateGlyphRun(text, GlyphTypeface.FontUri, FontSize);
+    }
+
+    private void CalculateTypeface()
+    {
+        WritePreamble();
+        _fontTypeface = new Typeface(FontFamily, FontStyle, FontWeight, FontStretch);
+        if (!FontTypeface.TryGetGlyphTypeface(out _glyphTypeface))
+        {
+            _glyphTypeface = new GlyphTypeface(new Uri("pack://application:,,,/Quire.Controls.Core;component/Fonts/mathcadunimathprime.otf"));
+        }
+        _M_Run = GenerateGlyphRun("M");
+        _n_Run = GenerateGlyphRun("n");
+        _j_Run = GenerateGlyphRun("j");
+        GlyphRun glyphRun = GenerateGlyphRun('-'.ToString());
+        _baselineAdjustment = SafeComputeInkBoundingBox(glyphRun).Bottom;
+        WritePostscript();
     }
 
     private static void HandleExtendedFontPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -172,6 +263,18 @@ public partial class ExtendedFont
             extendedFont.FormatChanged(e);
         }
     }
+
+    public ExtendedFont Clone()
+    {
+        Brush brush = Foreground;
+        if (DebugTools.DevAssert(brush.IsFrozen, null).Failed)
+        {
+            brush = brush.Clone();
+        }
+        return new ExtendedFont(FontFamily, FontSize, FontStyle, FontWeight, FontStretch, TextDecorations, brush);
+    }
+
+    object ICloneable.Clone() => Clone();
 
     public void CopyTo(ExtendedFont target)
     {
@@ -209,78 +312,6 @@ public partial class ExtendedFont
         }
     }
 
-    object ICloneable.Clone() => Clone();
-
-    public ExtendedFont Clone()
-    {
-        Brush brush = Foreground;
-        if (DebugTools.DevAssert(brush.IsFrozen, null).Failed)
-        {
-            brush = brush.Clone();
-        }
-        return new ExtendedFont(FontFamily, FontSize, FontStyle, FontWeight, FontStretch, TextDecorations, brush);
-    }
-
-    public ExtendedFont(FontFamily fontFamily, double fontSize, FontStyle fontStyle, FontWeight fontWeight, FontStretch fontStretch, TextDecorationCollection textDecorations, Brush foreground)
-    {
-        FontFamily = fontFamily;
-        FontSize = fontSize;
-        FontStyle = fontStyle;
-        FontWeight = fontWeight;
-        FontStretch = fontStretch;
-        TextDecorations = textDecorations;
-        if (foreground is SolidColorBrush solidColorBrush && solidColorBrush.Color == Colors.Black)
-        {
-            Foreground = Brushes.Black;
-        }
-        else
-        {
-            Foreground = foreground;
-        }
-        CalculateTypeface();
-    }
-
-    public ExtendedFont(Typeface typeface, double fontSize)
-        : this(typeface.FontFamily, fontSize, typeface.Style, typeface.Weight, typeface.Stretch, new TextDecorationCollection(), Brushes.Black)
-    {
-    }
-
-    private void CalculateTypeface()
-    {
-        WritePreamble();
-        _fontTypeface = new Typeface(FontFamily, FontStyle, FontWeight, FontStretch);
-        if (!FontTypeface.TryGetGlyphTypeface(out _glyphTypeface))
-        {
-            _glyphTypeface = new GlyphTypeface(new Uri("pack://application:,,,/Quire.Controls.Core;component/Fonts/mathcadunimathprime.otf"));
-        }
-        _M_Run = GenerateGlyphRun("M");
-        _n_Run = GenerateGlyphRun("n");
-        _j_Run = GenerateGlyphRun("j");
-        GlyphRun glyphRun = GenerateGlyphRun('-'.ToString());
-        _baselineAdjustment = SafeComputeInkBoundingBox(glyphRun).Bottom;
-        WritePostscript();
-    }
-
-    public static GlyphRun GenerateGlyphRun(string text, Uri fontUri, double fontSize)
-    {
-        if (!ControlSettings.Instance.EnableFontCaching)
-        {
-            return CreateGlyphRun(text, fontUri, fontSize);
-        }
-        string key = string.Format("{0}{1}{2}", text, fontUri, fontSize);
-        if (!GlyphRunCache.TryGetValue(key, out var value))
-        {
-            value = CreateGlyphRun(text, fontUri, fontSize);
-            if (value != null)
-            {
-                GlyphRunCache.Add(key, value);
-            }
-        }
-        return value;
-    }
-
-    private GlyphRun GenerateGlyphRun(string text)
-    {
-        return GenerateGlyphRun(text, GlyphTypeface.FontUri, FontSize);
-    }
+    [MirrorVerified("PtcControlsCoreExtendedFontMechanicalDifferentialTests")]
+    protected override Freezable CreateInstanceCore() => new ExtendedFont();
 }

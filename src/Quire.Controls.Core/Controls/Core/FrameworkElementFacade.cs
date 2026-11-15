@@ -10,12 +10,17 @@ namespace Quire.Controls.Core;
 
 public partial class FrameworkElementFacade
 {
-    [MirrorVerified("PtcControlsCoreFrameworkElementFacadeMechanicalDifferentialTests")]
-    public FrameworkElementFacade() { }
-
     public bool IsItemLoaded(object obj)
     {
         return GetFrameworkElement(obj).IsLoaded;
+    }
+
+    public void SetSize(object obj, Size size, DragMode dragMode)
+    {
+        FrameworkElement resizableElement = GetResizableElement(obj, dragMode);
+        resizableElement.Width = size.Width;
+        resizableElement.Height = size.Height;
+        resizableElement.RaiseEvent(new RoutedEventArgs(CommonRoutedEvents.ContentChangedEvent));
     }
 
     private FrameworkElement GetResizableElement(object obj, DragMode dragMode = DragMode.None)
@@ -30,9 +35,66 @@ public partial class FrameworkElementFacade
         return new Size(element.Width, element.Height);
     }
 
+    public void SetHeight(object obj, double height)
+    {
+        FrameworkElement resizableElement = GetResizableElement(obj);
+        resizableElement.Height = height;
+        resizableElement.RaiseEvent(new RoutedEventArgs(CommonRoutedEvents.ContentChangedEvent));
+    }
+
+    public void SetWidth(object obj, double width)
+    {
+        FrameworkElement resizableElement = GetResizableElement(obj);
+        resizableElement.Width = width;
+        resizableElement.RaiseEvent(new RoutedEventArgs(CommonRoutedEvents.ContentChangedEvent));
+    }
+
+    public void SetMaxSize(object obj, Size maxSize)
+    {
+        FrameworkElement resizableElement = GetResizableElement(obj);
+        resizableElement.MaxWidth = maxSize.Width;
+        resizableElement.MaxHeight = maxSize.Height;
+    }
+
+    public void ClearMaxSize(object obj)
+    {
+        FrameworkElement resizableElement = GetResizableElement(obj);
+        WpfUtils.ClearValuePreserveBinding(resizableElement, FrameworkElement.MaxWidthProperty, double.PositiveInfinity);
+        WpfUtils.ClearValuePreserveBinding(resizableElement, FrameworkElement.MaxHeightProperty, double.PositiveInfinity);
+    }
+
+    public void SetItemName(object item, string name)
+    {
+        GetFrameworkElement(item).Name = name;
+    }
+
+    public string GetItemName(object item)
+    {
+        return GetFrameworkElement(item).Name;
+    }
+
     public void ExecuteOnLoad(object obj, Action action)
     {
         WpfUtils.ExecuteOnLoad(GetFrameworkElement(obj), action, false);
+    }
+
+    public void ExecuteOnUnload(object obj, Action action)
+    {
+        FrameworkElement element = GetFrameworkElement(obj);
+        RoutedEventHandler handler = null;
+        handler = delegate
+        {
+            action();
+            element.Unloaded -= handler;
+        };
+        if (element.IsLoaded)
+        {
+            element.Unloaded += handler;
+        }
+        else
+        {
+            action();
+        }
     }
 
     public void ExecuteInBackground(Action action, bool asynch = false)
@@ -48,6 +110,16 @@ public partial class FrameworkElementFacade
             return;
         }
         Application.Current.Dispatcher.Invoke(DispatcherPriority.Background, action);
+    }
+
+    protected static FrameworkElement GetFrameworkElement(object obj)
+    {
+        var element = obj as FrameworkElement;
+        if (element == null)
+        {
+            throw new ApplicationException("Logic error! Item should be a framework element!");
+        }
+        return element;
     }
 
     public object GetParent(object control)
@@ -118,13 +190,6 @@ public partial class FrameworkElementFacade
         return (IDictionary<IdLabels, ExtendedFont>)GetFrameworkElement(equationVisualElement).GetValue(AttachedProperties.LabeledIdFormatProperty);
     }
 
-    public void SetItemName(object item, string name)
-    {
-        GetFrameworkElement(item).Name = name;
-    }
-
-    public string GetItemName(object item)
-    {
-        return GetFrameworkElement(item).Name;
-    }
+    [MirrorVerified("PtcControlsCoreFrameworkElementFacadeMechanicalDifferentialTests")]
+    public FrameworkElementFacade() { }
 }

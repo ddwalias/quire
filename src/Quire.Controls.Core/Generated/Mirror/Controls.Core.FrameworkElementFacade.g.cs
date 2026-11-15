@@ -11,18 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.FrameworkElementFacade, Ptc.Controls.Core")]
 public partial class FrameworkElementFacade : global::Quire.Controls.Core.UIElementFacade, global::Quire.Controls.Core.IFrameworkElementFacade, global::Quire.Controls.Core.IUIElementFacade, global::Quire.Services.IService, global::Quire.Controls.Core.IUIElementArrangeInfoProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    public void SetSize(object obj, global::System.Windows.Size size, global::Quire.Controls.Core.DragMode dragMode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetHeight(object obj, double height) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetWidth(object obj, double width) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetMaxSize(object obj, global::System.Windows.Size maxSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ClearMaxSize(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ExecuteOnUnload(object obj, global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected static global::System.Windows.FrameworkElement GetFrameworkElement(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

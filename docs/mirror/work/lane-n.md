@@ -918,3 +918,12 @@
 - Parked `Excel.ExcelReader.GetSharedString` and `LoadExcelBook`: Mathcad's DocumentFormat.OpenXml 2.17.1.0 body accesses `SpreadsheetDocument.Package` and `PackagePart`; the current project uses OpenXml 3.5.1, where that public package API is absent. A `GetStream()` substitution compiles but fails exact Release IL at the Uri/PackagePart call sequence.
 - Parked `Ole.OleContainer<TViewModel,TModel,TIPublicModel,TPersistentData>` members `StorageFileNameForXamlSerialization`, `StartOleCloseOperation`, `TrySavingBitmapForPrint`, and `GetOlePersistentData`: the current source placement assigns closure ordinals 50, 75, 87 and 88, while Mathcad requires 55, 31, 69 and 84. The Release IL gate reports generated callback names and ordinals differ; the attempted bodies were reverted.
 - Current project Release IL stub count after landed batches: 1,532.
+
+## Batch 121 — FrameworkElementFacade and ExtendedFont stubs
+
+- Owner: feature/ole-smalltypes-agy-20261116
+- Scope:
+  - `FrameworkElementFacade`: `SetSize`, `SetHeight`, `SetWidth`, `SetMaxSize`, `ClearMaxSize`, `ExecuteOnUnload`, `GetFrameworkElement`. All 14 stubs removed from `.g.cs`.
+  - `ExtendedFont`: `_fontTypeface`, `_M_Run`, `_n_Run`, `_j_Run`, `_glyphTypeface`, `_baselineAdjustment`, `FontFamilyProperty`, `FontSizeProperty`, `FontWeightProperty`, `FontStyleProperty`, `TextDecorationsProperty`, `ForegroundProperty`, `FontStretchProperty`, `GlyphRunCache`, `.cctor`. All 14 stubs removed from `.g.cs`.
+- Report: `.mirror-cache/release-il-27cbda357867/release-il.json` — PASS, 2,974 checked, 0 failures.
+- Remaining mismatches: none in claimed batch.
