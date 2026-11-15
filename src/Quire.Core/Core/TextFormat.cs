@@ -391,6 +391,18 @@ public partial class TextFormat
     }
 
     [MirrorVerified("Release IL")]
+    public static DependencyProperty[] ClearFormatPropsList;
+
+    [MirrorVerified("Release IL")]
+    public static readonly DependencyProperty StyleKeyProperty;
+
+    [MirrorVerified("Release IL")]
+    public static readonly DependencyProperty TextFormatProperty;
+
+    [MirrorVerified("Release IL")]
+    public static readonly TextFormat DefaultTextFormat;
+
+    [MirrorVerified("Release IL")]
     private static TextMarkerStyle GetMarkerStyleForRange(System.Windows.Documents.TextRange textRange, out bool mixed)
     {
         mixed = false;

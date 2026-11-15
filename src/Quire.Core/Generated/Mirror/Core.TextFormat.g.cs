@@ -12,15 +12,7 @@ namespace Quire.Core;
 public partial class TextFormat : global::System.Windows.DependencyObject, global::System.ICloneable, global::Quire.ITextStyleObject, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty[] ClearFormatPropsList;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty StyleKeyProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Core.TextFormat DefaultTextFormat;
-    [global::Quire.Mirror.MirrorStub]
     private bool _mixedFontSize;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty TextFormatProperty;
 
     [global::Quire.Mirror.MirrorOf("Ptc.Core.TextFormat+PropertyNames, Ptc.Core")]
     public static partial class PropertyNames
