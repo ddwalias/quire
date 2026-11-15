@@ -12,12 +12,6 @@ namespace Quire.Services;
 public partial class ApplicationLogger : global::Quire.Services.IApplicationLogger, global::Quire.Services.IService
 {
     [global::Quire.Mirror.MirrorStub]
-    private static readonly string _defaultApplicationLogFolderPath;
-    [global::Quire.Mirror.MirrorStub]
-    protected static readonly string _product;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::Quire.IO.IFileOperationsProvider _fileOperationsProvider;
-    [global::Quire.Mirror.MirrorStub]
     private const string DatePattern = "yyyyMMdd_HHmmss";
     [global::Quire.Mirror.MirrorStub]
     private const string UnknownBuildId = "Unknown";

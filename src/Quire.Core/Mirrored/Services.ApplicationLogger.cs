@@ -5,6 +5,10 @@ namespace Quire.Services;
 
 partial class ApplicationLogger
 {
+    private static readonly string _defaultApplicationLogFolderPath;
+    protected static readonly string _product;
+    private static readonly global::Quire.IO.IFileOperationsProvider _fileOperationsProvider;
+
     private static string GetExceptionLogLocation(string appConfigFolderPath)
     {
         string text = global::System.IO.Path.Combine(appConfigFolderPath, "Logs");

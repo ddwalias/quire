@@ -145,4 +145,15 @@ public partial class ApplicationLogger
         textWriter.WriteLine();
     }
 
+    // Kept as the last member: earlier in compile order this constructor shifts the closure ordinals of the
+    // lambda-holding methods above (WriteToLog, GetEnvironmentVariablesAndCommandLineArgumentsData, GetListOfLoadedModulesData).
+    static ApplicationLogger()
+    {
+        string appConfigFolderPath = global::Quire.License.LicenseManager.Instance != null && global::Quire.Services.ApplicationVariant.IsEngNbPlus == true
+            ? global::Quire.IO.FileUtils.GetLocalConfigFolderPath()
+            : global::Quire.IO.FileUtils.GetCommonConfigFolderPath();
+        _product = (global::System.Reflection.Assembly.GetEntryAssembly() ?? global::System.Reflection.Assembly.GetExecutingAssembly()).GetName().Name;
+        _fileOperationsProvider = global::Quire.Services.AppServiceRegistry.GetService<global::Quire.IO.IFileOperationsProvider>() ?? new global::Quire.IO.FileOperationsProvider();
+        _defaultApplicationLogFolderPath = GetExceptionLogLocation(appConfigFolderPath);
+    }
 }
