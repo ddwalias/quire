@@ -150,6 +150,12 @@ public partial class VisualDragger
         e.Handled = true;
     }
 
+    protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+    {
+        StopDrag();
+        e.Handled = true;
+    }
+
     private void DragMoveMargin(Vector vector)
     {
         Thickness margin = _originalMargin;
