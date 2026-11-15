@@ -12,12 +12,6 @@ namespace Quire.Controls.Core;
 public partial class VisualDragger : global::System.Windows.Controls.ContentControl
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.IInputElement _referenceElement;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Thickness _originalMargin;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Size _originalSize;
-    [global::Quire.Mirror.MirrorStub]
     private void DragInDirection(global::System.Windows.Vector vector) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.VisualDragger+DragHandler, Ptc.Controls.Core")]

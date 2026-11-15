@@ -15,6 +15,9 @@ public partial class VisualDragger
     public static readonly DependencyProperty IsDraggingProperty = IsDraggingPropertyKey.DependencyProperty;
     public static readonly DependencyProperty DirectionProperty = DependencyProperty.Register("Direction", typeof(DraggingDirection), typeof(VisualDragger), new PropertyMetadata(DirectionPropertyChanged));
     public static readonly DependencyProperty ModeProperty = DependencyProperty.Register("Mode", typeof(DraggingMode), typeof(VisualDragger), new PropertyMetadata(DraggingMode.Margin));
+    private IInputElement _referenceElement;
+    private Thickness _originalMargin;
+    private Size _originalSize;
     public static readonly RoutedEvent DragEndEvent = EventManager.RegisterRoutedEvent("DragEnd", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(VisualDragger));
     public static readonly RoutedEvent DragStartEvent = EventManager.RegisterRoutedEvent("DragStart", RoutingStrategy.Bubble, typeof(MouseEventHandler), typeof(VisualDragger));
     public static readonly RoutedEvent DragEvent = EventManager.RegisterRoutedEvent("Drag", RoutingStrategy.Bubble, typeof(DragHandler), typeof(VisualDragger));
