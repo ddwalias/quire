@@ -24,3 +24,9 @@
   - `Serialization.McdxDeserializer`: all 16 stubs (`_deserializationStrategy`, `_regionCollectionSerializer`, `_worksheetNodeName`, ctor, `Deserialize(Stream)`, `RepairXmlDocument`, `RepairNumberFormatPrecision`, `RepairPictureElements`, `RepairPictureElementIfNeed`, `ThrowIncorrectSerializationFormatException`, `Deserialize(XmlDocument)`, `UnpackExternalObject`, `UnpackProtectedPart`, `UnpackFlowDocument`, `ThrowFirstRegionDeserializationExceptionIfExists`, `Dispose`).
 - Report: `--type` gate PASS; full `--project Quire.Controls.Core` gate PASS, 3100 checked, 0 failures.
 - Stub count left in these types: 0 in CommonDragger, 0 in Serialization.McdxDeserializer.
+
+## Batch 4 — ImageControl
+
+- Landed members: all 51 members: ctor, .cctor, `_typeOfThis`, `_dictionary`, `_originalImageUri`, `SourceProperty`, `ChangedEvent`, `BrowseForImageCommand`, `_boundTo`, `OriginalStreamHash` (get/set), `Source` (get/set), `OriginalImageUri` (get/set), `BitmapImage`, `BoundTo` (get/set), `VerticalAlignmentOffset`, `IsEmpty`, `PreserveAspectRatio`, `SubElementToResizeData`, `ResizeState`, `PropertyChanged`, `OnGotFocusEvent`, `RequestRemove`, `RequestResizeToFitOrClearRestriction`, `HandleSourcePropertyChanged`, `FireRequestResizeToFit`, `FireChanged`, `CreateImageControl`, `GetBitmapSourceFromUri`, `GetImageExtension(Uri)`, `GetImageExtension()`, `ShouldSerializeSource`, `SourceIsBitmapImage`, `OnMouseLeftButtonDown`, `OnGotFocus`, `BrowseForImage(object, ExecutedRoutedEventArgs)`, `BrowseForImage()`, `Activate`, `NavigateIntoItem`, `SimulateMouseClick`, `Clone`, `SetRegionPersistentData`, `GetImageRelationshipId`, `GetRegionPersistentData`, `GetHelpContext`, and compiler-generated closures `<.ctor>b__14_0`, `<>c__DisplayClass22_0`, `<Activate>b__50_0`.
+- Report: full `--project Quire.Controls.Core` gate PASS, 3174 checked, 0 failures.
+- Stub count left in this type: 0.
