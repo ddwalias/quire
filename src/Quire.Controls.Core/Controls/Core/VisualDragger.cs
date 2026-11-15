@@ -166,6 +166,15 @@ public partial class VisualDragger
         }
     }
 
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        if (e.Key == Key.Escape)
+        {
+            CancelDrag();
+            e.Handled = true;
+        }
+    }
+
     protected override void OnMouseMove(MouseEventArgs e)
     {
         if (IsDragging)
