@@ -7,7 +7,8 @@ import unittest
 from unittest import mock
 
 from native_bytes import Function, Reloc
-from native_gate import anonymous, compare, fingerprint, linked, native_projects, original_dll, scan
+from native_gate import (anonymous, compare, fingerprint, linked, native_projects, object_fingerprints, original_dll,
+                         scan)
 from test_native_bytes import ManifestImage, coff
 
 
@@ -34,13 +35,34 @@ class CompareTests(unittest.TestCase):
         self.assertEqual(compare({'f': row()}, {})['failures'], [{'method': 'f', 'reason': 'function removed'}])
         self.assertTrue(compare({'f': row(ok=False)}, {})['passed'])
 
-    def test_linked_mode_reports_an_unchanged_regression_without_failing(self):
+    def test_linked_mode_regression_of_an_unchanged_export_fails_and_is_listed(self):
         result = compare({'f': row(), 'g': row()}, {'f': row(ok=False), 'g': row()}, linked_mode=True)
-        self.assertTrue(result['passed'])
+        self.assertFalse(result['passed'])
         self.assertEqual([r['method'] for r in result['regressions']], ['f'])
+        self.assertEqual([f['method'] for f in result['failures']], ['f'])
         # A changed export must still pass, and removing a passing one still fails.
         self.assertFalse(compare({'f': row()}, {'f': row(ok=False, sha='b')}, linked_mode=True)['passed'])
         self.assertFalse(compare({'f': row()}, {}, linked_mode=True)['passed'])
+
+    def test_per_object_regression_of_an_unchanged_export_fails_without_a_regressions_list(self):
+        result = compare({'f': row()}, {'f': row(ok=False)})
+        self.assertFalse(result['passed'])
+        self.assertEqual(result['regressions'], [])
+
+    def test_a_first_switch_to_gl_fails_when_a_passing_export_stops_passing(self):
+        # The base is per object, so both sides carry per-object fingerprints (native_gate.check): same bytes, unchanged.
+        result = compare({'f': row(sha='p')}, {'f': row(ok=False, sha='p')}, linked_mode=True)
+        self.assertFalse(result['passed'])
+        self.assertEqual(result['regressions'], [{'method': 'f', 'reason': 'passed in base: length 3 != original 4'}])
+        self.assertFalse(compare({'f': row(sha='p')}, {'f': row(ok=False, sha=None)}, linked_mode=True)['passed'])
+
+    def test_object_fingerprints_name_each_function_by_its_anonymous_name(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            obj = Path(tmp) / 'f.obj'
+            obj.write_bytes(coff([('?f@@YAXXZ', b'\xc3', [])]))
+            fingerprints = object_fingerprints([obj])
+        self.assertEqual(set(fingerprints), {'?f@@YAXXZ'})
+        self.assertEqual(len(fingerprints['?f@@YAXXZ']), 64)
 
 
 class ProjectTests(unittest.TestCase):

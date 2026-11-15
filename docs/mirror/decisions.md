@@ -320,9 +320,13 @@ mode, which supersedes D25's parking for functions that a `/GL` build reproduces
 - **Gate:** a new or changed export must pass, and removing a passing one fails. An export counts as changed when
   anything it reaches changed: its instructions, or an internal function or datum it calls or reads, with addresses
   and pointers taken by what they name so that a layout shift alone changes nothing (user decision, after review).
-  Link-time code generation sees the whole program, so an export whose reach is unchanged can still move; one that
-  stops passing is reported under `regressions` and does not block (user decision). When a project first switches to
-  `/GL`, the base's per-object rows are limited to the original's exports.
+  Link-time code generation sees the whole program, so an export whose reach is unchanged can still move. One that
+  stops passing is a failure and blocks, and is also listed under `regressions`. Reason: the gate's purpose is exact
+  parity with Mathcad, so no export that matched may silently stop matching; a linked export that moves is a real
+  mismatch to fix or decide on, not noise (approved 2026-11-15, superseding the earlier non-blocking
+  rule). When a project first switches to `/GL`, the base's per-object rows are limited to the original's exports,
+  and "changed" is decided on the candidate's per-object fingerprints, since a per-object base cannot be compared
+  with a linked one.
 - **Known limits:** 32-bit image-relative fields in data (RTTI locators, exception tables) are compared as numbers,
   not followed; unwind data is not compared, as in per-object mode.
 - **Running it:** `python tools/validation/native_linked.py --original <dll> --candidate-dll <built dll> --map <map>`,

@@ -16,8 +16,8 @@ build is new: all of its functions are new. Reports hold names and verdicts, nev
 A project whose vcxproj sets WholeProgramOptimization is built with /GL, so its objects hold no machine code. It is
 compared in linked mode (D30, native_linked.py): the gate links it with a /MAP and compares each export of the DLL
 with the original's. Link-time code generation sees the whole program, so adding code can change an export nobody
-touched: in linked mode such a regression is reported under "regressions" and does not block. A new or changed export
-must still pass, and removing a passing one fails.
+touched: in linked mode such a regression is listed under "regressions" and blocks like any other failure, so no export
+that matched stops matching silently. A new or changed export must still pass, and removing a passing one fails.
 """
 import argparse
 import hashlib
@@ -59,13 +59,14 @@ def linked(root, project):
     return '<WholeProgramOptimization>true</WholeProgramOptimization>' in text
 
 
-def build(root, project, work, log, timeout, link_map=False):
+def build(root, project, work, log, timeout, link_map=False, whole_program=None):
     """The .obj files of `project` built from `root` with the pinned MSVC, Release|x64, outputs under `work`; with
-    `link_map`, (DLL, linker map) instead."""
+    `link_map`, (DLL, linker map) instead. `whole_program` overrides the vcxproj's WholeProgramOptimization."""
     out, obj = work / 'bin', work / 'obj'
     env = {**os.environ, '_LINK_': f'/MAP:{out / "candidate.map"}'} if link_map else None
+    override = [] if whole_program is None else [f'-p:WholeProgramOptimization={str(whole_program).lower()}']
     run([msbuild(), root / 'src' / project / f'{project}.vcxproj', '-t:Rebuild', '-p:Configuration=Release',
-         '-p:Platform=x64', f'-p:OutDir={out}{os.sep}', f'-p:IntDir={obj}{os.sep}', '-nologo', '-v:m'],
+         '-p:Platform=x64', f'-p:OutDir={out}{os.sep}', f'-p:IntDir={obj}{os.sep}', '-nologo', '-v:m', *override],
         root, log, timeout, env)
     dlls = sorted(out.glob('*.dll'))
     for dll in dlls:
@@ -86,6 +87,11 @@ def fingerprint(function):
     key = (function.code.hex(), [(r.offset, r.kind) for r in function.relocs], sorted(function.targets.items(),
            key=str), sorted(function.statics.items()), function.data)
     return hashlib.sha256(anonymous(repr(key)).encode()).hexdigest()
+
+
+def object_fingerprints(objects):
+    """Function name -> fingerprint of its per-object definition, as scan() computes them for a base built per object."""
+    return {name: fingerprint(d) for name, d in native_bytes.definitions_in_objects(objects).items()}
 
 
 def scan(original, objects, manifest):
@@ -120,21 +126,21 @@ def scan_linked(original, dll, link_map, manifest):
 
 def compare(before, after, linked_mode=False):
     """Functions that passed must still pass; new or changed functions must pass; removing a passing one fails. In
-    linked mode (D30) an unchanged function that stops passing is a regression, reported without failing."""
+    linked mode (D30) an unchanged export that stops passing is a failure too, and also listed under regressions."""
     failures, checked, regressions = [], [], []
     for name, row in sorted(after.items()):
         previous = before.get(name)
-        changed = previous is None or previous['sha256'] != row['sha256']
+        changed = previous is None or None in (previous['sha256'], row['sha256']) or previous['sha256'] != row['sha256']
         if not (changed or previous['ok']):
             continue
         checked.append(name)
         if not row['ok']:
             if changed:
                 failures.append({'method': name, 'reason': row['reason']})
-            elif linked_mode:
-                regressions.append({'method': name, 'reason': f'passed in base: {row["reason"]}'})
             else:
                 failures.append({'method': name, 'reason': f'passed in base: {row["reason"]}'})
+                if linked_mode:  # listed apart too, so the report shows which exports link-time codegen moved
+                    regressions.append({'method': name, 'reason': f'passed in base: {row["reason"]}'})
     for name in sorted(before.keys() - after.keys()):
         if before[name]['ok']:
             failures.append({'method': name, 'reason': 'function removed'})
@@ -184,6 +190,14 @@ def check(base, projects, results, root=ROOT, install=None, timeout=1800):
                                       manifest) if existing else {}
                 linked_mode = linked(root, project)
                 after = scan_project(dll, root, project, work / project / 'after', log, timeout, manifest)
+                if linked_mode and existing and not linked(original_tree, project):
+                    # A per-object base's fingerprints cannot match linked ones, so every export would count as changed
+                    # and none as a regression (D30). Decide "changed" on the candidate's per-object fingerprints
+                    # instead; its linked rows still decide what passes.
+                    per_object = object_fingerprints(build(root, project, work / project / 'objects', log, timeout,
+                                                           whole_program=False))
+                    for name, row in after.items():
+                        row['sha256'] = per_object.get(name)
                 if linked_mode:  # a linked scan lists exports only; compare the base's exports with them
                     exports = native_bytes.PeImage(dll).exports
                     before = {n: r for n, r in before.items() if n in {anonymous(e) for e in exports}}
@@ -213,8 +227,6 @@ def main(argv=None):
         print(f"  {failure['method']}: {failure['reason']}")
     if len(report['failures']) > 20:
         print(f"  {len(report['failures']) - 20} more failures in the report")
-    for regression in report.get('regressions', []):
-        print(f"  regression (linked mode, not blocking): {regression['method']}: {regression['reason']}")
     if report.get('error'):
         print(report['error'], file=sys.stderr)
     print(f"Native bytes: {'PASS' if report['passed'] else 'FAIL'}; {len(report['checked'])} checked; "
