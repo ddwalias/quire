@@ -151,5 +151,20 @@ Forms are saved in the scratchpad (`engutils-forms/`), not committed.
 ## 4. Next port and open decisions
 
 - **Next port: the `0x4840` helper.** It is the format helper called by `Throw` (`format(out, format, va_list, 1024)`, 144 bytes, prologue `mov [rsp+10h],rbx`). It has its own body, so it is ported as file-local C++ and recorded in `docs/mirror/native/internal-targets.json` with `native_targets.py` once its bytes match. Porting it unblocks `Throw` and probably the `basic_string` helper calls in `GetEnv`. It is not yet attempted.
-- **Open decision 1: WholeProgramOptimization.** The original was built with `/GL`. Setting `<WholeProgramOptimization>true</WholeProgramOptimization>` in `Quire.Native.Engutils.vcxproj` switches the gate to linked mode (D30), which compares exports of the linked DLL. That changes the build configuration, so it needs a maintainer decision. It is not applied here.
+- **Open decision 1: WholeProgramOptimization.** Tested on 2026-11-15 and not applied; see section 5. The original was built with `/GL`. Setting `<WholeProgramOptimization>true</WholeProgramOptimization>` in `Quire.Native.Engutils.vcxproj` switches the gate to linked mode (D30). In that test six of the eight exports that matched per object failed. Do not retry WPO for this project.
 - **Open decision 2: mshex link input.** `ErrorToString` needs `mshex.dll`'s import library. No other native project links mshex, so this is a new link dependency in `Quire.Native.Engutils.vcxproj`. It also depends on D25, which parks `Hex::operator<<` and `Hex::Error::GetDetails`. It is not applied here.
+
+## 5. WholeProgramOptimization test (2026-11-15, not applied)
+
+- **Test:** `<WholeProgramOptimization>` set to `true` in the Release configuration of `Quire.Native.Engutils.vcxproj` only (line 22, previously `false`). Gate run: `PYTHONUTF8=1 python tools/validation/native_gate.py --base main --project Quire.Native.Engutils`, linked mode (D30). Result: `Native bytes: FAIL; 7 checked`, exit 1. Reverted; nothing landed.
+- **Checked exports (7):**
+  - `parse_int`: passed (not in the failure list).
+  - `GetStream`: length 4, original 23. Regressed.
+  - `IndentDown`: length 3, original 25. Regressed.
+  - `Linesep`: length 12, original 166. Regressed.
+  - `Put`: length 48, original 80. Regressed.
+  - `indent`: length 3, original 208. Regressed.
+  - `s_log`: `16 bytes at original RVA 0xa404 are not in a section`. Regressed.
+- **Result:** six of the eight exports that matched per object (section 1) regressed. Only `parse_int` still passes among the checked exports. The eighth, the manifest target `0x7120`, was not in the gate's checked list.
+- **Parked exports (section 2) were not checked.** None of the 10 appears in the gate's checked list or failures, so the test gives no match result for them. WPO is therefore not shown to be the cause of their failures, and it is not a fix for them.
+- **Gate defect for the maintainer:** the gate's JSON report had `"regressions": []` while six previously passing exports failed. Those failures were reported under `failures` only. Linked mode is meant to report such changes under `regressions`, so the gate's regression reporting does not cover this case.
