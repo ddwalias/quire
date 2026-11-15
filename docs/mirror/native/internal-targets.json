@@ -179,7 +179,8 @@
     "sha256": "61d18c365f45af61d92c8f84fc758339e782a007c4d73aaec209cc17787e05f7",
     "targets": {
       "?sub_9390@Efi@@YA_NPEA_W0PEAPEA_WW4MuPadFilter@1@KK_N@Z": {
-        "rva": "0x9390"
+        "rva": "0x9390",
+        "parked": true
       }
     }
   }
