@@ -141,6 +141,32 @@ public partial class VisualDragger
         }
     }
 
+    private void DragMoveMargin(Vector vector)
+    {
+        Thickness margin = _originalMargin;
+        margin.Top += vector.Y;
+        margin.Bottom -= vector.Y;
+        if (margin.Top < 0)
+        {
+            margin.Bottom = _originalMargin.Bottom + _originalMargin.Top;
+        }
+        else if (margin.Bottom < 0)
+        {
+            margin.Top = _originalMargin.Top + _originalMargin.Bottom;
+        }
+        margin.Left += vector.X;
+        margin.Right -= vector.X;
+        if (margin.Left < 0)
+        {
+            margin.Right = _originalMargin.Right + _originalMargin.Left;
+        }
+        else if (margin.Right < 0)
+        {
+            margin.Left = _originalMargin.Left + _originalMargin.Right;
+        }
+        SetMargin(margin);
+    }
+
     private void SetMargin(Thickness newMargin)
     {
         if (newMargin.Top < 0)
