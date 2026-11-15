@@ -141,6 +141,27 @@ public partial class VisualDragger
         }
     }
 
+    private void SetMargin(Thickness newMargin)
+    {
+        if (newMargin.Top < 0)
+        {
+            newMargin.Top = 0;
+        }
+        if (newMargin.Bottom < 0)
+        {
+            newMargin.Bottom = 0;
+        }
+        if (newMargin.Left < 0)
+        {
+            newMargin.Left = 0;
+        }
+        if (newMargin.Right < 0)
+        {
+            newMargin.Right = 0;
+        }
+        DraggedElement.Margin = newMargin;
+    }
+
     private void CancelDrag()
     {
         // Guard clause: the IL tests DraggedElement first and returns early, not with a combined condition.
