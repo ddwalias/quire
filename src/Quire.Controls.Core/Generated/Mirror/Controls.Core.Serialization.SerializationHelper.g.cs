@@ -11,57 +11,6 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.SerializationHelper, Ptc.Controls.Core")]
 public partial class SerializationHelper : global::Quire.Serialization.ISerializationHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ConvertedFromProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.Dictionary<global::Quire.Xml.SchemasManager.SchemaNameEnum, global::System.Version> _serializedSchemaVersions;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty RegionIdProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private long _regionId;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<string, global::System.Collections.Generic.Dictionary<byte[], global::Quire.Pair<string, global::System.Uri>>> _imagesHashTable;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::Quire.Controls.Core.Serialization.SerializationHelper.BytesComparer _byteArraysComparer;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Pair<string, global::System.DateTime>, global::Quire.Pair<string, global::System.Uri>> _cachedWorksheetsTable;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IDictionary<global::Quire.Xml.SchemasManager.SchemaNameEnum, global::System.Version> SerializedSchemaVersions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ErrorsOccurredWhenLoadingRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public long GetRegionId(global::System.Windows.UIElement region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AssignNextRegionId(global::System.Windows.UIElement region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public long GetNextRegionId() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetRegionId(global::System.Windows.UIElement region, long regionId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.UIElement GetRegionById(global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> regions, long value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CleanSerializerTempData(global::System.Collections.Generic.IList<global::System.Windows.UIElement> regions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeForWrite(string appName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddImagePath(string imageType, byte[] imageHash, global::Quire.Pair<string, global::System.Uri> imagePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Pair<string, global::System.Uri> GetImagePath(string imageType, byte[] imageHash) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Pair<string, global::System.Uri> GetCachedWorksheetPath(global::Quire.Pair<string, global::System.DateTime> fullFilePathAndTimeStamp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddCachedPartPath(global::Quire.Pair<string, global::System.DateTime> fullFilePathAndTimeStamp, global::Quire.Pair<string, global::System.Uri> includePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool OptionalPartHasErrors(global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> elements) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool CompulsoryPartHasErrors(global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> elements) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CleanupRegions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public SerializationHelper() { }
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.SerializationHelper+BytesComparer, Ptc.Controls.Core")]
     public partial class BytesComparer : global::System.Collections.Generic.IEqualityComparer<byte[]>
     {
