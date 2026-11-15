@@ -68,6 +68,11 @@ public partial class VisualDragger
         remove => RemoveHandler(DragEvent, value);
     }
 
+    public VisualDragger()
+    {
+        DirectionPropertyChanged(this, new DependencyPropertyChangedEventArgs(DirectionProperty, null, DraggingDirection.Left));
+    }
+
     private static void DirectionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var dragger = (VisualDragger)d;
