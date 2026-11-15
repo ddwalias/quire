@@ -183,4 +183,12 @@ public partial class VisualDragger
         horizontal.Y = 0;
         CustomDrag(vector);
     }
+
+    private void CustomDragVertical(Vector vector)
+    {
+        // The IL zeroes X on a copy and still raises the original vector; keep that shape for the Release IL.
+        var vertical = vector;
+        vertical.X = 0;
+        CustomDrag(vector);
+    }
 }
