@@ -62,6 +62,12 @@ public partial class VisualDragger
         remove => RemoveHandler(DragStartEvent, value);
     }
 
+    public event DragHandler Drag
+    {
+        add => AddHandler(DragEvent, value);
+        remove => RemoveHandler(DragEvent, value);
+    }
+
 
     [MirrorVerified("PtcControlsCoreVisualDraggerMechanicalDifferentialTests")]
     protected override void OnContextMenuOpening(ContextMenuEventArgs e) => e.Handled = true;

@@ -18,8 +18,6 @@ public partial class VisualDragger : global::System.Windows.Controls.ContentCont
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size _originalSize;
     [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Controls.Core.VisualDragger.DragHandler Drag;
-    [global::Quire.Mirror.MirrorStub]
     public VisualDragger() { }
     [global::Quire.Mirror.MirrorStub]
     private static void DirectionPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
