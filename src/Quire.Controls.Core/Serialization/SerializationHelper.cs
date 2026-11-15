@@ -59,6 +59,20 @@ public partial class SerializationHelper
         _regionId++;
     }
 
+    // Compile-order device: placed here to align the lambda closure ordinal with Mathcad's <>c.<InitializeForWrite>b__33_0.
+    public void InitializeForWrite(string appName)
+    {
+        ApplicationName = appName;
+        AppVersion = XmlWorksheetData.CurrentAppVersion;
+        FormatVersion = XmlWorksheetData.CurrentFormatVersion;
+        SerializedSchemaVersions.Clear();
+        Dictionary<SchemasManager.SchemaNameEnum, SchemasManager.SchemaData> constantSchemaDatas = SchemasManager.ConstantSchemaDatas;
+        foreach (SchemasManager.SchemaNameEnum item in constantSchemaDatas.Keys.OrderBy(key => key.ToString()))
+        {
+            SerializedSchemaVersions.Add(item, new Version(constantSchemaDatas[item].Schema.Version));
+        }
+    }
+
     public long GetNextRegionId()
     {
         long regionId = _regionId;
@@ -125,9 +139,7 @@ public partial class SerializationHelper
         CleanupRegions();
     }
 
-    // Parked: Roslyn counts four members per auto-property where Mathcad counts three, so the lambda's
-    // closure ordinal here is 38 and Mathcad's is 33.
-    public void InitializeForWrite(string appName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
 
     public void AddImagePath(string imageType, byte[] imageHash, Pair<string, Uri> imagePath)
     {
