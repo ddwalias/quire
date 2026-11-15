@@ -11,38 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.McdxSerializer, Ptc.Controls.Core")]
 public partial class McdxSerializer : global::Quire.Serialization.IS11NProvider, global::Quire.Serialization.IBaseS11NProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Action<global::System.Xml.Schema.XmlSchemaException> _onWriteValidationFailed;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.Serialization.ISerializationStrategy _serializationStrategy;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.PersistentData.IRegionCollectionSerializer _regionCollectionSerializer;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string _worksheetNodeName;
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsConverterApplication { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public McdxSerializer(global::System.IO.Packaging.PackagePart part, global::Quire.Controls.Core.Serialization.ISerializationStrategy serializationStrategy, global::Quire.Serialization.ISerializationHelper helper, global::Quire.PersistentData.IRegionCollectionSerializer regionCollectionSerializer, global::System.Action<global::System.Xml.Schema.XmlSchemaException> onWriteValidationFailed, bool useOverrides, global::Quire.ITextStyleChangedHandler textStyleChangedHandler = default) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Serialize(global::System.IO.Packaging.PackagePart part, bool useTempFile = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnWriteValidationFailedHandler(object sender, global::System.Xml.Schema.ValidationEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string PackImage(global::System.IO.Packaging.PackagePart sourcePackagePart, global::Quire.Serialization.ISerializationHelper serializationHelper, global::System.Uri imageSourceUri, byte[] imageSourceStreamHash, global::System.Windows.Media.Imaging.BitmapSource image, string uniqueImageName, string imageExtension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string PackFile(global::System.IO.Packaging.PackagePart sourcePackagePart, string sourceFileName, string pathInPackage, string relationshipUri, string mimeType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string PackImage(global::Quire.Wpf.ImagePackagingInformation pictureInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string PackExternalObject(string sourceFileName, string objectUniqueId, global::Quire.Serialization.ExternalObjectType objectType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string PackIncludedWorksheet(string fullFilePath, global::System.DateTime lastSavedDate, string uniqueId, global::System.Func<global::System.IO.Packaging.Package, string, global::System.IO.Packaging.PackagePart> writePartToPackage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string PackFlowDocument(global::System.Windows.Documents.FlowDocument flowDocument, string regionId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string PackProtectedPart(global::System.IO.Stream content, string uniqueId, string regionType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void InitializeDocument(global::System.Xml.XmlDocument xmlContentDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void BuildDocumentXml(global::Quire.PersistentData.IRegionCollectionSerializer regionCollectionSerializer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
