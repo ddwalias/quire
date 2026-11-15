@@ -616,8 +616,25 @@ MSVC_BUILD = 36246
 LINKER_PRODUCT = 258  # Rich-header product id of the MSVC 14.x linker
 
 
+def pinned_instance(path):
+    """The instance at `path` when its x64 compiler is build MSVC_BUILD, else None."""
+    for cl in Path(path).glob('VC/Tools/MSVC/*/bin/Hostx64/x64/cl.exe'):
+        banner = subprocess.run([cl], capture_output=True, text=True).stderr
+        if f'Version 19.51.{MSVC_BUILD} ' in banner:
+            return Path(path)
+    return None
+
+
 def msvc_instance(environ=os.environ):
-    """The Visual Studio instance with C++/CLI support whose x64 compiler is build MSVC_BUILD; fails closed."""
+    """The Visual Studio instance with C++/CLI support whose x64 compiler is build MSVC_BUILD; fails closed.
+    QUIRE_MSVC_INSTANCE names an explicit instance (for example a Build Tools folder that vswhere does not list); it is
+    used only if its compiler is build MSVC_BUILD, otherwise the search fails closed as before."""
+    explicit = environ.get('QUIRE_MSVC_INSTANCE')
+    if explicit:
+        found = pinned_instance(explicit)
+        if found is None:
+            raise RuntimeError(f'QUIRE_MSVC_INSTANCE {explicit} has no MSVC 19.51.{MSVC_BUILD} compiler')
+        return found
     vswhere = Path(environ.get('ProgramFiles(x86)', r'C:\Program Files (x86)'), 'Microsoft Visual Studio', 'Installer', 'vswhere.exe')
     if not vswhere.is_file():
         raise RuntimeError(f'a C++/CLI candidate needs Visual Studio on Windows; {vswhere} not found')
