@@ -68,6 +68,33 @@ public partial class VisualDragger
         remove => RemoveHandler(DragEvent, value);
     }
 
+    private static void DirectionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        var dragger = (VisualDragger)d;
+        switch (dragger.Direction)
+        {
+            case DraggingDirection.Left:
+            case DraggingDirection.Right:
+                dragger.Cursor = Cursors.SizeWE;
+                break;
+            case DraggingDirection.Up:
+            case DraggingDirection.Down:
+                dragger.Cursor = Cursors.SizeNS;
+                break;
+            case DraggingDirection.UpLeft:
+            case DraggingDirection.DownRight:
+                dragger.Cursor = Cursors.SizeNWSE;
+                break;
+            case DraggingDirection.UpRight:
+            case DraggingDirection.DownLeft:
+                dragger.Cursor = Cursors.SizeNESW;
+                break;
+            case DraggingDirection.Move:
+                dragger.Cursor = Cursors.SizeAll;
+                break;
+        }
+    }
+
 
     [MirrorVerified("PtcControlsCoreVisualDraggerMechanicalDifferentialTests")]
     protected override void OnContextMenuOpening(ContextMenuEventArgs e) => e.Handled = true;
