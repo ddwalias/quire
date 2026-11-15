@@ -117,4 +117,21 @@ public partial class VisualDragger
             ReleaseMouseCapture();
         }
     }
+
+    private void CancelDrag()
+    {
+        // Guard clause: the IL tests DraggedElement first and returns early, not with a combined condition.
+        if (DraggedElement == null)
+        {
+            return;
+        }
+        if (IsDragging)
+        {
+            if (Mode == DraggingMode.Margin)
+            {
+                DraggedElement.Margin = _originalMargin;
+            }
+            StopDrag();
+        }
+    }
 }
