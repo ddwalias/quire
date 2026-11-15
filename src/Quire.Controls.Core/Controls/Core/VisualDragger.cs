@@ -110,6 +110,29 @@ public partial class VisualDragger
     [MirrorVerified("PtcControlsCoreVisualDraggerMechanicalDifferentialTests")]
     public Point DragStartPoint { get; private set; }
 
+    private void StartDrag(MouseEventArgs e)
+    {
+        if (DraggedElement == null)
+        {
+            return;
+        }
+        IInputElement referenceElement = ReferenceElement;
+        DebugTools.DevAssert(referenceElement != null, null);
+        Point position = e.GetPosition(referenceElement);
+        DragStartPoint = position;
+        IsDragging = CaptureMouse();
+        if (Mode == DraggingMode.Margin)
+        {
+            _originalMargin = DraggedElement.Margin;
+            _originalSize = new Size(DraggedElement.ActualWidth, DraggedElement.ActualHeight);
+        }
+        RaiseEvent(new MouseEventArgs(e.MouseDevice, e.Timestamp)
+        {
+            RoutedEvent = DragStartEvent,
+            Source = this,
+        });
+    }
+
     private void StopDrag()
     {
         if (IsMouseCaptured)
