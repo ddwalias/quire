@@ -109,4 +109,12 @@ public partial class VisualDragger
 
     [MirrorVerified("PtcControlsCoreVisualDraggerMechanicalDifferentialTests")]
     public Point DragStartPoint { get; private set; }
+
+    private void StopDrag()
+    {
+        if (IsMouseCaptured)
+        {
+            ReleaseMouseCapture();
+        }
+    }
 }
