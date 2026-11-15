@@ -156,6 +156,18 @@ public partial class VisualDragger
         e.Handled = true;
     }
 
+    protected override void OnMouseMove(MouseEventArgs e)
+    {
+        if (IsDragging)
+        {
+            IInputElement referenceElement = ReferenceElement;
+            DebugTools.DevAssert(referenceElement != null, null);
+            Point position = e.GetPosition(referenceElement);
+            DragInternal(position - DragStartPoint);
+            e.Handled = true;
+        }
+    }
+
     private void DragMoveMargin(Vector vector)
     {
         Thickness margin = _originalMargin;
