@@ -356,9 +356,12 @@ foreach (var artifact in quire)
         RawMethod? counterpart = null;
         Artifact? original = null;
         if (typeNames.TryGetValue((artifact.Name, type.FullName), out var fields) && originals.TryGetValue(fields[1].Trim(), out original))
+        {
+            // The method's key is the same for every original candidate: compute it once, not per candidate.
+            var key = ComparisonKey(method, true, type, generatedBindings.ContainsKey(artifact.Name) ? Corlib : null);
             counterpart = Counterpart(raw, original, [.. original.Methods.Where(m => m.Owner == fields[0].Trim()
-                && OriginalKey(original, m) == ComparisonKey(method, true, type,
-                    generatedBindings.ContainsKey(artifact.Name) ? Corlib : null))], ref problem);
+                && OriginalKey(original, m) == key)], ref problem);
+        }
         matched.Add((artifact, raw, type, method, original, counterpart, problem));
     }
 // Mathcad members no member of the audited assembly pairs with: those of each type the assembly binds, and the globals of
