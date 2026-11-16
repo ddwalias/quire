@@ -18,6 +18,8 @@ public partial class SparseMatrix<TItem>
     [MirrorVerified("PtcMatricesSparseMatrix1MechanicalDifferentialTests")]
     protected Dictionary<TableCoordinate, TItem> _itemMap = new Dictionary<TableCoordinate, TItem>();
 
+    private TItem _emptyPosition;
+
     private EqualityComparer<TItem> _itemEqualityComparer = EqualityComparer<TItem>.Default;
 
     [MirrorVerified("PtcMatricesSparseMatrix1MechanicalDifferentialTests")]

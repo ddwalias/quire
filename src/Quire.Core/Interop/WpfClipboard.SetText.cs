@@ -5,6 +5,11 @@ namespace Quire;
 
 public partial class WpfClipboard
 {
+    // Fields placed here to preserve closure ordinals for SetText (DisplayClass12_0) and SetDataObjectToClipboard (DisplayClass14_0).
+    public static readonly WpfClipboard Default;
+    private static IClipboard _current;
+    private static readonly string _canPasteIntoTextRegion;
+
     [MirrorVerified("Release IL")]
     public static bool CopyPrimeXamlToDataObject(System.Windows.IDataObject dataObject, object item, int itemsCount)
     {

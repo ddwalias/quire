@@ -15,6 +15,10 @@ public partial class ApplicationLogger
     [MirrorVerified("PtcServicesApplicationLoggerMechanicalDifferentialTests")]
     protected string _applicationLogFilePath;
 
+    private const string DatePattern = "yyyyMMdd_HHmmss";
+    private const string UnknownBuildId = "Unknown";
+    private string _subProduct;
+
     public string GetSystemInfoIfAvailable()
     {
         StringBuilder stringBuilder = new StringBuilder();

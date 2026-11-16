@@ -11,10 +11,4 @@ namespace Quire.Services;
 [global::Quire.Mirror.MirrorOf("Ptc.Services.ApplicationLogger, Ptc.Core")]
 public partial class ApplicationLogger : global::Quire.Services.IApplicationLogger, global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string DatePattern = "yyyyMMdd_HHmmss";
-    [global::Quire.Mirror.MirrorStub]
-    private const string UnknownBuildId = "Unknown";
-    [global::Quire.Mirror.MirrorStub]
-    private string _subProduct;
 }

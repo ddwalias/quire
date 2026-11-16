@@ -614,6 +614,8 @@ public partial class TextFormat
     [MirrorVerified("PtcCoreTextFormatMechanicalDifferentialTests")]
     public bool MixedFontFamily { get; set; }
 
+    private bool _mixedFontSize;
+
     [MirrorVerified("PtcCoreTextFormatMechanicalDifferentialTests")]
     public bool MixedFontWeight { get; set; }
 

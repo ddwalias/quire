@@ -11,9 +11,6 @@ namespace Quire.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Core.TextFormat, Ptc.Core")]
 public partial class TextFormat : global::System.Windows.DependencyObject, global::System.ICloneable, global::Quire.ITextStyleObject, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    private bool _mixedFontSize;
-
     [global::Quire.Mirror.MirrorOf("Ptc.Core.TextFormat+PropertyNames, Ptc.Core")]
     public static partial class PropertyNames
     {

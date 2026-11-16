@@ -11,13 +11,6 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.WpfClipboard, Ptc.Core")]
 public partial class WpfClipboard : global::Quire.IClipboard
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.WpfClipboard Default;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.IClipboard _current;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly string _canPasteIntoTextRegion;
-
     [global::Quire.Mirror.MirrorOf("Ptc.WpfClipboard+ClipboardOverride, Ptc.Core")]
     private partial class ClipboardOverride : global::System.IDisposable
     {

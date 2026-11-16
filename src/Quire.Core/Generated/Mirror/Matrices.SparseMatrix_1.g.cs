@@ -11,9 +11,6 @@ namespace Quire.Matrices;
 [global::Quire.Mirror.MirrorOf("Ptc.Matrices.SparseMatrix`1, Ptc.Core")]
 public partial class SparseMatrix<TItem> : global::Quire.Matrices.IMatrix<TItem>
 {
-    [global::Quire.Mirror.MirrorStub]
-    private TItem _emptyPosition;
-
     [global::Quire.Mirror.MirrorOf("Ptc.Matrices.SparseMatrix`1+SparseMatrixChangedEventHandler, Ptc.Core")]
     public delegate void SparseMatrixChangedEventHandler(object sender, global::Quire.Matrices.SparseMatrix<TItem>.SparseMatrixItemChangedEventArgs e);
 
