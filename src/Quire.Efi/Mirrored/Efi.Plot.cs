@@ -1,0 +1,110 @@
+#nullable disable
+#pragma warning disable
+
+using System;
+using Quire.EfiMatrix;
+using Quire.Mcd;
+using Quire.Mpl.Run;
+
+namespace Quire.Efi;
+
+public static partial class Plot
+{
+    public static object cplot(int origin, int ioptions, int ixopt, int iyopt, int iy2opt, int[] yParams, int[] y2Params, object[] yTraces, object[] y2Traces, object[] _xlimits, object[] _ylimits, object[] _y2limits)
+    {
+        Engine engine = new Engine(new PlotOptions(ioptions), new AxisOptions(ixopt), new AxisOptions(iyopt), origin);
+        bool flag = engine.Run(yTraces, yParams, _xlimits, _ylimits);
+        Engine engine2 = new Engine(new PlotOptions(ioptions), new AxisOptions(ixopt), new AxisOptions(iy2opt), origin);
+        if (y2Traces.Length != 0)
+        {
+            flag |= engine2.Run(y2Traces, y2Params, _xlimits, _y2limits);
+        }
+        if (!flag)
+        {
+            AppException.Raise("NoPointsToPlot");
+        }
+        return Engine.CreateOutput(engine, engine2);
+    }
+
+    public static object maketrace(int type, object x, Function lambdax, Function lambday, int xtag, int ytag)
+    {
+        return new Trace.Spec((Trace.Spec.TraceType)type, x, lambdax, lambday, xtag, ytag);
+    }
+
+    public static object logspace(object min, object max, object n)
+    {
+        double d = Utl.as_preal(min, 1u);
+        double d2 = Utl.as_preal(max, 2u);
+        DimVal obj = min as DimVal;
+        DimVal dimVal = max as DimVal;
+        Dim dim = Dim.Eq(obj.m_dim, dimVal.m_dim);
+        uint num = Utl.as_pint(n, 3u);
+        MatVal matVal = new MatVal((int)num);
+        double num2 = Math.Log10(d);
+        double num3 = (Math.Log10(d2) - num2) / (double)(num - 1);
+        for (int i = 0; i < num; i++)
+        {
+            matVal.set_1(i, Math.Pow(10.0, (double)i * num3 + num2));
+        }
+        matVal.m_dim = dim;
+        return matVal;
+    }
+
+    public static object logpts(object min, object decades, object n)
+    {
+        double num = Utl.as_real(min, 1u);
+        uint num2 = Utl.as_pint(decades, 2u);
+        uint num3 = Utl.as_pint(n, 3u);
+        MatVal matVal = new MatVal((int)(num3 * num2));
+        for (int i = 0; i < num2; i++)
+        {
+            double num4 = Math.Pow(10.0, num + (double)i);
+            double num5 = num4 * 9.0 / (double)num3;
+            for (int j = 0; j < num3; j++)
+            {
+                matVal.set_1((int)(j + i * num3), num4 + (double)j * num5);
+            }
+        }
+        matVal.m_dim = Dim.identity;
+        return matVal;
+    }
+
+    public static object OpScaleInverse(object x, object y)
+    {
+        return values.op_scale_inverse(x, y);
+    }
+
+    public static Function InverseScaleFunction(Function f, object scale)
+    {
+        return values.inverse_scale_function(f, scale) as Function;
+    }
+
+    public static object plot3d(int origin, object exp, object scale, object limits, object gridn, object param)
+    {
+        object[] array = null;
+        if (param != null)
+        {
+            MatVal matVal = param as MatVal;
+            array = new object[matVal.Rows];
+            for (int i = 0; i < matVal.Rows; i++)
+            {
+                array[i] = matVal.get_1(i);
+            }
+        }
+        return plot3d_(origin, exp, scale, limits, gridn, array);
+    }
+
+    public static object ReduceData(object X, object Y, object P, object N)
+    {
+        MatVal xs = X as MatVal;
+        MatVal ys = Y as MatVal;
+        double num = Utl.as_nnreal(P, 3u);
+        PlotTools plotTools = new PlotTools();
+        if (N != null)
+        {
+            uint ncycles = Utl.as_pint(N, 4u);
+            return plotTools.EliminateCollinearPoints(ref xs, ref ys, num, ncycles);
+        }
+        return plotTools.EliminateNearPoints(ref xs, ref ys, num);
+    }
+}

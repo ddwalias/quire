@@ -20,25 +20,9 @@ public static partial class Plot
     [global::Quire.Mirror.MirrorStub]
     public static object range_eval(global::Quire.Mpl.Run.Function f, object args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static object cplot(int origin, int ioptions, int ixopt, int iyopt, int iy2opt, int[] yParams, int[] y2Params, object[] yTraces, object[] y2Traces, object[] _xlimits, object[] _ylimits, object[] _y2limits) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object maketrace(int type, object x, global::Quire.Mpl.Run.Function lambdax, global::Quire.Mpl.Run.Function lambday, int xtag, int ytag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object logspace(object min, object max, object n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object logpts(object min, object decades, object n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object OpScaleInverse(object x, object y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Function InverseScaleFunction(global::Quire.Mpl.Run.Function f, object scale) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static object contour(int origin, object data, object scale, object grid, object limits, object levels, object[] param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object plot3d_(int origin, object exp, object scale, object limits, object gridn, object[] param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object plot3d(int origin, object exp, object scale, object limits, object gridn, object param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object ReduceData(object X, object Y, object P, object N) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object validate_plot_limit(global::Quire.Mcd.DimVal x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
