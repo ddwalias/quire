@@ -11,6 +11,4 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.ItemToImagesRichTextWithEmbededItemCloneHelper, Ptc.Controls.Text")]
 public partial class ItemToImagesRichTextWithEmbededItemCloneHelper : global::Quire.Controls.Text.IRichTextWithEmbededItemCloneHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ItemToImagesRichTextWithEmbededItemCloneHelper(global::Quire.Controls.Core.IEngineeringDocument engDoc) { }
 }

@@ -4,6 +4,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System;
 using Quire.Controls.Core;
 using Quire.Wpf;
 
@@ -12,7 +13,15 @@ namespace Quire.Controls.Text;
 public partial class ItemToImagesRichTextWithEmbededItemCloneHelper
 {
     private readonly IEngineeringDocument _engineeringDocument;
-    private readonly ResourceDictionary _resourceDict;
+    private readonly ResourceDictionary _resourceDict = new ResourceDictionary
+    {
+        Source = new Uri(string.Format("pack://application:,,,/Quire.Controls.Text;component/TextDictionary.xaml", default(ReadOnlySpan<object>))),
+    };
+
+    public ItemToImagesRichTextWithEmbededItemCloneHelper(IEngineeringDocument engDoc)
+    {
+        _engineeringDocument = engDoc;
+    }
 
     public CopyWidgetBase CreatePopup() => _engineeringDocument.CreateCopyWidget();
 
