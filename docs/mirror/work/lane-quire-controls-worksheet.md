@@ -25,4 +25,5 @@
   - `Quire.Controls.Worksheet.FileNameControl`: `GetRegionPersistentData`, `.ctor`
   - `Quire.Controls.Worksheet.FilePathControl`: `GetRegionPersistentData`, `.ctor`
 - Release IL: PASS; 199 checked; 0 failures.
+- Landed commit: `35b689c41f75bf1c98fbd4b96a9b0547bf1c0236`
 - Remaining mismatches: none in this batch (3040 stubs remaining in Quire.Controls.Worksheet).
