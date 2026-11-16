@@ -3,11 +3,36 @@
 
 using System.Windows;
 using System.Windows.Documents;
+using System;
+using System.Windows.Markup;
 
 namespace Quire.Controls.Text;
 
 public partial class TextRegion
 {
+    private bool _contentLoaded;
+
+    public override object Clone() => CloneTextRegion();
+
+    public void InitializeComponent()
+    {
+        if (_contentLoaded)
+        {
+            return;
+        }
+
+        _contentLoaded = true;
+        Uri resourceLocator = new Uri("/Quire.Controls.Text;component/textregion.xaml", UriKind.Relative);
+        Application.LoadComponent(this, resourceLocator);
+    }
+
+    internal Delegate _CreateDelegate(Type delegateType, string handler) => Delegate.CreateDelegate(delegateType, this, handler);
+
+    void IComponentConnector.Connect(int connectionId, object target)
+    {
+        _contentLoaded = true;
+    }
+
     protected override bool ShouldLeaveTextRegionOnCaretMove(
         Quire.Controls.Core.CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection direction)
     {
