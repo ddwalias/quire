@@ -11,14 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.AttachedProperties, Ptc.Controls.Core")]
 public static partial class AttachedProperties
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetRegisterCommandBindings(global::System.Windows.UIElement element, global::System.Windows.Input.CommandBindingCollection value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Input.CommandBindingCollection GetRegisterCommandBindings(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnCanActivateChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetIsBringToView(global::System.Windows.DependencyObject depObj, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool GetIsBringToView(global::System.Windows.DependencyObject depObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

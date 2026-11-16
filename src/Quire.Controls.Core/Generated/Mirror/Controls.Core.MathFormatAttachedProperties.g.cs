@@ -11,22 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.MathFormatAttachedProperties, Ptc.Controls.Core")]
 public partial class MathFormatAttachedProperties
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FontSizeProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty BoldProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ItalicProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty UnderlineProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FontColorProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty HighlightColorProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static void HandleMathFormatChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static object CoerceFontFamily(global::System.Windows.DependencyObject d, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static object CoerceFontSize(global::System.Windows.DependencyObject d, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

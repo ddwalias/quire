@@ -1,5 +1,6 @@
 #nullable disable
 using System.Windows;
+using System.Windows.Media;
 using Quire.Mirror;
 
 namespace Quire.Controls.Core;
@@ -8,6 +9,31 @@ public partial class MathFormatAttachedProperties
 {
     [MirrorVerified("PtcControlsCoreMathFormatAttachedPropertiesMechanicalDifferentialTests")]
     public static DependencyProperty FontFamilyNameProperty;
+
+    public static readonly DependencyProperty FontSizeProperty;
+
+    public static readonly DependencyProperty BoldProperty;
+
+    public static readonly DependencyProperty ItalicProperty;
+
+    public static readonly DependencyProperty UnderlineProperty;
+
+    public static readonly DependencyProperty FontColorProperty;
+
+    public static readonly DependencyProperty HighlightColorProperty;
+
+    static MathFormatAttachedProperties()
+    {
+        FontFamilyNameProperty = DependencyProperty.RegisterAttached("FontFamilyName", typeof(string), typeof(MathFormatAttachedProperties), new FrameworkPropertyMetadata(FontConstants.DefaultMathFormat.FontFamilyName, FrameworkPropertyMetadataOptions.Inherits, HandleMathFormatChanged, CoerceFontFamily));
+        FontSizeProperty = DependencyProperty.RegisterAttached("FontSize", typeof(double), typeof(MathFormatAttachedProperties), new FrameworkPropertyMetadata(FontConstants.DefaultMathFormat.FontSize, FrameworkPropertyMetadataOptions.Inherits, HandleMathFormatChanged, CoerceFontSize));
+        BoldProperty = DependencyProperty.RegisterAttached("Bold", typeof(bool), typeof(MathFormatAttachedProperties), new FrameworkPropertyMetadata(FontConstants.DefaultMathFormat.IsBold, FrameworkPropertyMetadataOptions.Inherits, HandleMathFormatChanged));
+        ItalicProperty = DependencyProperty.RegisterAttached("Italic", typeof(bool), typeof(MathFormatAttachedProperties), new FrameworkPropertyMetadata(FontConstants.DefaultMathFormat.IsItalic, FrameworkPropertyMetadataOptions.Inherits, HandleMathFormatChanged));
+        UnderlineProperty = DependencyProperty.RegisterAttached("Underline", typeof(bool), typeof(MathFormatAttachedProperties), new FrameworkPropertyMetadata(FontConstants.DefaultMathFormat.IsUnderline, FrameworkPropertyMetadataOptions.Inherits, HandleMathFormatChanged));
+        FontColorProperty = DependencyProperty.RegisterAttached("FontColor", typeof(Color), typeof(MathFormatAttachedProperties), new FrameworkPropertyMetadata(FontConstants.DefaultMathFormat.FontColor, FrameworkPropertyMetadataOptions.Inherits, HandleMathFormatChanged));
+        HighlightColorProperty = DependencyProperty.RegisterAttached("HighlightColor", typeof(Color), typeof(MathFormatAttachedProperties), new FrameworkPropertyMetadata(FontConstants.DefaultMathFormat.HighlightColor, FrameworkPropertyMetadataOptions.Inherits, HandleMathFormatChanged));
+        OverrideLabelColorProperty = DependencyProperty.RegisterAttached("OverrideLabelColor", typeof(bool), typeof(MathFormatAttachedProperties), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits, HandleMathFormatChanged));
+        HandleChangesEnabledProperty = DependencyProperty.RegisterAttached("HandleChangesEnabled", typeof(bool), typeof(MathFormatAttachedProperties), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits));
+    }
 
     [MirrorVerified("PtcControlsCoreMathFormatAttachedPropertiesMechanicalDifferentialTests")]
     public static string GetFontFamilyName(DependencyObject depObj) => (string)depObj.GetValue(FontFamilyNameProperty);
@@ -88,6 +114,24 @@ public partial class MathFormatAttachedProperties
     public static void ClearHandleChangesEnabled(DependencyObject obj) => obj.ClearValue(HandleChangesEnabledProperty);
 
 
+
+    private static void HandleMathFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        IMathFormatOwner mathFormatOwner = d as IMathFormatOwner;
+        if (mathFormatOwner == null || !GetHandleChangesEnabled(d))
+        {
+            return;
+        }
+        mathFormatOwner.HandleMathFormatChanged(e);
+    }
+
+    // Parked: Mathcad calls Typeface.TryGetGlyphTypeface with `callvirt` on the new Typeface; Roslyn emits `call` for an object-creation receiver.
+    [MirrorStub]
+    private static object CoerceFontFamily(DependencyObject d, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    // Parked: Mathcad branches with `blt` (jump when less than the minimum); the idiomatic `if`/ternary forms compile to `bge.un`.
+    [MirrorStub]
+    private static object CoerceFontSize(DependencyObject d, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [MirrorVerified("PtcControlsCoreMathFormatAttachedPropertiesMechanicalDifferentialTests")]
     public MathFormatAttachedProperties() { }

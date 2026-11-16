@@ -45,25 +45,6 @@ public static partial class AttachedProperties
     [MirrorVerified("PtcControlsCoreAttachedPropertiesMechanicalDifferentialTests")]
     public static readonly DependencyProperty CanActivateProperty;
 
-    [MirrorVerified("PtcControlsCoreAttachedPropertiesMechanicalDifferentialTests")]
-    public static readonly DependencyProperty HandlesContextMenuProperty;
-
-    public static readonly DependencyProperty SupportsInputsOutputsProperty;
-
-    public static readonly DependencyProperty IsOnVisiblePageProperty;
-
-    public static readonly DependencyProperty ShouldAssertOnLocationProperty;
-
-    public static readonly DependencyProperty PreviousLocationLeftProperty;
-
-    public static readonly DependencyProperty PreviousLocationTopProperty;
-
-    public static readonly DependencyProperty ContainedInCollapsedWhiteboardProperty;
-
-    public static DependencyProperty IsBringToViewProperty;
-
-    public static DependencyProperty WarningDisplayFilterProperty;
-
     static AttachedProperties()
     {
         _typeOfThis = typeof(AttachedProperties);
@@ -89,6 +70,13 @@ public static partial class AttachedProperties
         WarningDisplayFilterProperty = DependencyProperty.RegisterAttached("WarningDisplayFilter", typeof(WarningsTypesToShow), _typeOfThis, new FrameworkPropertyMetadata(WarningsTypesToShow.All, FrameworkPropertyMetadataOptions.Inherits));
         PageElementXamlHelperProperty.OverrideMetadata(typeof(FrameworkElement), new PropertyMetadata(new FrameworkElementXamlHelper()));
     }
+
+    // Parked: Mathcad calls DependencyObject.SetValue/GetValue with `call` on the guarded parameter; Roslyn emits `callvirt`.
+    [MirrorStub]
+    public static void SetRegisterCommandBindings(UIElement element, CommandBindingCollection value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    [MirrorStub]
+    public static CommandBindingCollection GetRegisterCommandBindings(UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private static void OnRegisterCommandBindingChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
     {
@@ -212,6 +200,42 @@ public static partial class AttachedProperties
         }
         return value;
     }
+
+    private static void OnCanActivateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        // Declared at method scope so the closure object is created on entry, as Release IL requires.
+        bool newValue;
+        IWhiteboardItemContainer whiteboardItemContainer = d as IWhiteboardItemContainer;
+        if (whiteboardItemContainer == null || !(e.NewValue is bool))
+        {
+            return;
+        }
+        newValue = (bool)e.NewValue;
+        whiteboardItemContainer.WhiteboardItems.OfType<DependencyObject>().Each((DependencyObject whiteboardItem) =>
+        {
+            SetCanActivate(whiteboardItem, newValue);
+        });
+    }
+
+    // Declared after OnCanActivateChanged: its closure ordinal counts the members ahead of it.
+    public static readonly DependencyProperty SupportsInputsOutputsProperty;
+
+    public static readonly DependencyProperty IsOnVisiblePageProperty;
+
+    public static readonly DependencyProperty ShouldAssertOnLocationProperty;
+
+    public static readonly DependencyProperty PreviousLocationLeftProperty;
+
+    public static readonly DependencyProperty PreviousLocationTopProperty;
+
+    public static readonly DependencyProperty ContainedInCollapsedWhiteboardProperty;
+
+    [MirrorVerified("PtcControlsCoreAttachedPropertiesMechanicalDifferentialTests")]
+    public static readonly DependencyProperty HandlesContextMenuProperty;
+
+    public static DependencyProperty IsBringToViewProperty;
+
+    public static DependencyProperty WarningDisplayFilterProperty;
 
     public static bool GetCanActivate(DependencyObject dObj)
     {
@@ -413,6 +437,13 @@ public static partial class AttachedProperties
             whiteboardItemContainer.WhiteboardItems.ContainedInCollapsedWhiteboard = (bool)args.NewValue;
         }
     }
+
+    // Parked: same `call`-versus-`callvirt` difference as SetRegisterCommandBindings.
+    [MirrorStub]
+    public static void SetIsBringToView(DependencyObject depObj, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    [MirrorStub]
+    public static bool GetIsBringToView(DependencyObject depObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public static void SuppressBringIntoViewIfNeededAndExecute(DependencyObject depObj, Action action, bool suppressBringToView)
     {
