@@ -1,6 +1,6 @@
 # Lane Quire.Controls.Worksheet
 
-- Owner: task_dd83619a6812
+- Owner: task_5c274463d1c9
 - Branch: feature/controls-worksheet-stubs-agy-20261116
 - Worktree: C:/Users/DuyDang/orca/workspaces/Quire/lane-quire-controls-worksheet
 
@@ -66,7 +66,30 @@
   - `Quire.Controls.Worksheet.FilePathConverter`: `Convert`, `ConvertBack`, `.ctor`
   - `Quire.Controls.Worksheet.HeaderFooterSelectorConverter`: `Convert`, `ConvertBack`, `.ctor`
 - Release IL: PASS; 233 checked; 0 failures.
-- Landed commit: (in-progress)
+- Landed commit: `bd19c06e68b8587b04dd58ffce07b1006bd0fc1f`
 - Parked members:
   - `Quire.Controls.Worksheet.CollapsibleAreaHeightConverter`: blocked by missing project reference to `Quire.Controls.CollapsibleArea` in `Quire.Controls.Worksheet.csproj`.
 - Remaining mismatches: none in this batch (3007 stubs remaining in Quire.Controls.Worksheet).
+
+## Batch 6 — RtfItemImage, RegionCollectionWithPropertyCreator, ItemLocationInWhiteboardStrategyOnePage, HeaderFooterSearchRestrictor, and Worksheet Interfaces (IHeaderFooter, IPageNumberControl, IWorksheetControlDebugger, IWorksheetPageSection, IWorksheetItemCopyVisitor, ITemplatedTextBox, IPageSnapshot, IWorksheetPageBody, IWorksheetSection, IWorksheetPasteHandler)
+
+- Members:
+  - `Quire.Controls.Worksheet.RtfItemImage`: `Image`, `.ctor`
+  - `Quire.Controls.Worksheet.IHeaderFooter`: `PageNumber`
+  - `Quire.Controls.Worksheet.IPageNumberControl`: `TemplateKey`
+  - `Quire.Controls.Worksheet.IWorksheetControlDebugger`: `OnModeChanged`
+  - `Quire.Controls.Worksheet.IWorksheetPageSection`: `IsAssociatedWithPage`
+  - `Quire.Controls.Worksheet.IWorksheetItemCopyVisitor`: `GenericImageSettings`, `VisitAll`
+  - `Quire.Controls.Worksheet.ITemplatedTextBox`: `TemplateFormat`, `IsUnregisterWithCommand`, `Text`
+  - `Quire.Controls.Worksheet.Printing.IPageSnapshot`: `PageBody`, `Header`, `Footer`
+  - `Quire.Controls.Worksheet.IWorksheetPageBody`: `WaterMark`, `Zombies`, `Clip`, `GetItemHeight`
+  - `Quire.Controls.Worksheet.IWorksheetSection`: `HandleDirectionalMove`, `UpdateItemLocationsAfterGridSizeChanged`, `HandleDelete`, `MoveItemsBy`
+  - `Quire.Controls.Worksheet.IWorksheetPasteHandler`: `WorksheetMessages`, `ClipboardContainsRecognizedFormat`, `ClipboardContainsSingleEmbeddableItemForText`, `ProcessClipboardContents`, `ProcessSingleEmbeddableItemForTextInClipboard`
+  - `Quire.Controls.Core.RegionCollectionWithPropertyCreator`: `IsConnected`, `CreateRegionCollection`, `.ctor`
+  - `Quire.Controls.Worksheet.ItemLocationInWhiteboardStrategyOnePage`: `GetPageIndex`, `GetItemClipping`, `.ctor`
+  - `Quire.Controls.Worksheet.HeaderFooterSearchRestrictor`: `_searchableRegion`, `CanSearch`, `SearchableRegion`, `CreateFindRestrictor`, `.ctor`
+- Release IL: PASS; 278 checked; 0 failures.
+- Landed commit: (in-progress)
+- Parked members:
+  - `Quire.Controls.Worksheet.CollapsibleAreaHeightConverter`: blocked by missing project reference to `Quire.Controls.CollapsibleArea` in `Quire.Controls.Worksheet.csproj`.
+- Remaining mismatches: none in this batch (2962 stubs remaining in Quire.Controls.Worksheet).

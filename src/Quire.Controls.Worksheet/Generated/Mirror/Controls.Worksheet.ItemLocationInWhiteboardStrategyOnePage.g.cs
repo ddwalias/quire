@@ -11,10 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.ItemLocationInWhiteboardStrategyOnePage, Ptc.Controls.Worksheet")]
 public partial class ItemLocationInWhiteboardStrategyOnePage : global::Quire.Controls.Worksheet.ItemLocationInWhiteboardStrategyBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ItemLocationInWhiteboardStrategyOnePage(global::Quire.Controls.Worksheet.IWorksheetPageManager worksheetPageManager) : base(default(global::Quire.Controls.Worksheet.IWorksheetPageManager)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override int GetPageIndex(global::System.Windows.Point topLeft) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Nullable<global::System.Windows.Rect> GetItemClipping(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem, global::System.Windows.Rect contentBounds, out global::System.Nullable<global::System.Windows.Rect> stickingPartRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

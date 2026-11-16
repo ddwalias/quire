@@ -11,6 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.IHeaderFooter, Ptc.Controls.Worksheet")]
 public partial interface IHeaderFooter : global::Quire.Controls.Worksheet.IWorksheetPageSection, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    int PageNumber { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

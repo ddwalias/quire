@@ -11,10 +11,5 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RegionCollectionWithPropertyCreator, Ptc.Controls.Worksheet")]
 public partial class RegionCollectionWithPropertyCreator : global::Quire.Controls.Core.IRegionCollectionWithPropertyCreator, global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsConnected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IRegionCollectionWithProperty CreateRegionCollection(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> regions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public RegionCollectionWithPropertyCreator() { }
 }

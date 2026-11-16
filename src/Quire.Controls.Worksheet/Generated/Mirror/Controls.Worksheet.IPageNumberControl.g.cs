@@ -11,6 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.IPageNumberControl, Ptc.Controls.Worksheet")]
 public partial interface IPageNumberControl : global::Quire.Controls.Worksheet.ITemplatedTextBox, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Core.ITextFormatOwner, global::Quire.Core.ICurrentTextFormatProperty, global::Quire.Core.ITextFormatCreation
 {
-    [global::Quire.Mirror.MirrorStub]
-    string TemplateKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

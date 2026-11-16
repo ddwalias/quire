@@ -11,8 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.RtfItemImage, Ptc.Controls.Worksheet")]
 public partial class RtfItemImage : global::Quire.Controls.Worksheet.RtfItemBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Imaging.BitmapSource Image { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public RtfItemImage(global::System.Windows.Media.Imaging.BitmapSource image, bool noLeftOffset = false) { }
 }

@@ -11,8 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.IWorksheetItemCopyVisitor, Ptc.Controls.Worksheet")]
 public partial interface IWorksheetItemCopyVisitor : global::Quire.ISpecialCopyVisitor
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.RegionImageSettings GenericImageSettings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void VisitAll(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

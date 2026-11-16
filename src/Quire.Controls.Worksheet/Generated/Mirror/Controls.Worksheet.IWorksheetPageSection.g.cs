@@ -11,6 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.IWorksheetPageSection, Ptc.Controls.Worksheet")]
 public partial interface IWorksheetPageSection : global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsAssociatedWithPage(global::Quire.Controls.Worksheet.IWorksheetPage worksheetPage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

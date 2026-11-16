@@ -11,10 +11,4 @@ namespace Quire.Controls.Worksheet.Printing;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.Printing.IPageSnapshot, Ptc.Controls.Worksheet")]
 public partial interface IPageSnapshot : global::Quire.Wpf.IAlignedRoot, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Worksheet.IWorksheetPageBody PageBody { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Worksheet.IHeaderFooterControl Header { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Worksheet.IHeaderFooterControl Footer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

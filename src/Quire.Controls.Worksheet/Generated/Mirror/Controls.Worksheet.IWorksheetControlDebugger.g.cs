@@ -11,6 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.IWorksheetControlDebugger, Ptc.Controls.Worksheet")]
 public partial interface IWorksheetControlDebugger
 {
-    [global::Quire.Mirror.MirrorStub]
-    void OnModeChanged(object spiritMainWindow, global::System.Windows.DependencyProperty activeDocumentProperty, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
