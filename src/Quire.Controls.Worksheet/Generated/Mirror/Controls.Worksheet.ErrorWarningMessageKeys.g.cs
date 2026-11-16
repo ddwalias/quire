@@ -11,26 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.ErrorWarningMessageKeys, Ptc.Controls.Worksheet")]
 public static partial class ErrorWarningMessageKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string ErrorWarningMessageResourceDictionaryName = "WorksheetMessages";
-    [global::Quire.Mirror.MirrorStub]
-    public const string CantPrint = "WorksheetMessages.CantPrint";
-    [global::Quire.Mirror.MirrorStub]
-    public const string CantPaste = "WorksheetMessages.CantPaste";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ClipboardTypePrimeObject = "WorksheetMessages.PrimeObject";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ClipboardTypeSExpression = "WorksheetMessages.SExpression";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ClipboardTypeXMLSpreadsheet = "WorksheetMessages.XMLSpreadsheet";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ClipboardTypeText = "WorksheetMessages.Text";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ClipboardTypeImage = "WorksheetMessages.Image";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ClipboardTypeGeneral = "WorksheetMessages.General";
-    [global::Quire.Mirror.MirrorStub]
-    public const string NetworkDriveDisconnected = "WorksheetMessages.NetworkDriveDisconnected";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ContainsScriptableObjects = "WorksheetMessages.ContainsScriptableObjects";
 }

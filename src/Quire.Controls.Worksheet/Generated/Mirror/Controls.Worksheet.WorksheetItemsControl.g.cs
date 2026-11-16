@@ -11,14 +11,5 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetItemsControl, Ptc.Controls.Worksheet")]
 internal partial class WorksheetItemsControl : global::System.Windows.Controls.ItemsControl
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.DependencyObject GetContainerForItemOverride() => base.GetContainerForItemOverride();
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool IsItemItsOwnContainerOverride(object item) => base.IsItemItsOwnContainerOverride(item);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void PrepareContainerForItemOverride(global::System.Windows.DependencyObject element, object item) => base.PrepareContainerForItemOverride(element, item);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void ClearContainerForItemOverride(global::System.Windows.DependencyObject element, object item) => base.ClearContainerForItemOverride(element, item);
-    [global::Quire.Mirror.MirrorStub]
     public WorksheetItemsControl() { }
 }

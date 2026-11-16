@@ -11,18 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.SizeChangeNotificationDebugData, Ptc.Controls.Worksheet")]
 internal partial struct SizeChangeNotificationDebugData
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int AddedItemsCount;
-    [global::Quire.Mirror.MirrorStub]
-    public int RemovedItemsCount;
-    [global::Quire.Mirror.MirrorStub]
-    public int DeadItemsCount;
-    [global::Quire.Mirror.MirrorStub]
-    public int NotifyAttemptsCount;
-    [global::Quire.Mirror.MirrorStub]
-    public int UnexpectedNotifyAttemptsCount;
-    [global::Quire.Mirror.MirrorStub]
-    public int AbortedOperations;
-    [global::Quire.Mirror.MirrorStub]
-    public int SkippedOperations;
 }

@@ -11,16 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.IHeaderFooterZombie, Ptc.Controls.Worksheet")]
 public partial interface IHeaderFooterZombie : global::Quire.Controls.Worksheet.IHeaderFooter, global::Quire.Controls.Worksheet.IWorksheetPageSection, global::System.IDisposable, global::Quire.Controls.Core.IZombie, global::Quire.Core.IMaybeHasPointThatSnapsToPixel
 {
-    [global::Quire.Mirror.MirrorStub]
-    void ResetVisualBrush() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void RestoreVisualBrush() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Show() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Collapse() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SubscribeToZombieIsInitialized(global::System.Action handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void UnsubscribeFromZombieIsInitialized(global::System.Action handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

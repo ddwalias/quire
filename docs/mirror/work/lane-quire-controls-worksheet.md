@@ -1,6 +1,6 @@
 # Lane Quire.Controls.Worksheet
 
-- Owner: task_5c274463d1c9
+- Owner: task_a8740e60aa64
 - Branch: feature/controls-worksheet-stubs-agy-20261116
 - Worktree: C:/Users/DuyDang/orca/workspaces/Quire/lane-quire-controls-worksheet
 
@@ -89,7 +89,32 @@
   - `Quire.Controls.Worksheet.ItemLocationInWhiteboardStrategyOnePage`: `GetPageIndex`, `GetItemClipping`, `.ctor`
   - `Quire.Controls.Worksheet.HeaderFooterSearchRestrictor`: `_searchableRegion`, `CanSearch`, `SearchableRegion`, `CreateFindRestrictor`, `.ctor`
 - Release IL: PASS; 278 checked; 0 failures.
+- Landed commit: `e5ccefc7a886aff48fffb96aad2f93a3b966bd59`
+- Parked members:
+  - `Quire.Controls.Worksheet.CollapsibleAreaHeightConverter`: blocked by missing project reference to `Quire.Controls.CollapsibleArea` in `Quire.Controls.Worksheet.csproj`.
+- Remaining mismatches: none in this batch (2993 stubs remaining in Quire.Controls.Worksheet).
+
+## Batch 7 — IHeaderFooterZombie, IHeaderFooterZombieViewModel, IItemLocationStrategy, PageNumberConverter, SizeChangeNotificationDebugData, WorksheetItemsControl, IHeaderFooterViewModel, IWhiteboardItemZombie, IHeaderFooterControl, IWorksheetItemSplitter, ErrorWarningMessageKeys, Printing.PageSnapshot, IWorksheetVisiblePages, IVisitorFuncOfRegionPersistentData, IWorksheetPageViewModel, IWorksheetPage
+
+- Members:
+  - `Quire.Controls.Worksheet.IHeaderFooterZombie`: `ResetVisualBrush`, `RestoreVisualBrush`, `Show`, `Collapse`, `SubscribeToZombieIsInitialized`, `UnsubscribeFromZombieIsInitialized`
+  - `Quire.Controls.Worksheet.IHeaderFooterZombieViewModel`: `ZombieBackground`, `ZombieItems`, `SnapsToPixelItem`, `ItemToZombieTransform`, `zombieIsInitialized`, `ResetVisualBrush`, `RestoreVisualBrush`
+  - `Quire.Controls.Worksheet.IItemLocationStrategy`: `GetPageBodySize`, `GetItemRectLocationInWhiteboard`, `GetPageIndex`, `PrePrintUpdateWorksheetLayout`, `PostPrintUpdateWorksheetLayout`, `GetItemClipping`
+  - `Quire.Controls.Worksheet.PageNumberConverter`: `_fallbackValue`, `FallbackValue`, `Convert`, `ConvertBack`, `.ctor`
+  - `Quire.Controls.Worksheet.SizeChangeNotificationDebugData`: `AddedItemsCount`, `RemovedItemsCount`, `DeadItemsCount`, `NotifyAttemptsCount`, `UnexpectedNotifyAttemptsCount`, `AbortedOperations`, `SkippedOperations`
+  - `Quire.Controls.Worksheet.WorksheetItemsControl`: `GetContainerForItemOverride`, `IsItemItsOwnContainerOverride`, `PrepareContainerForItemOverride`, `ClearContainerForItemOverride`, `.ctor`
+  - `Quire.Controls.Worksheet.IHeaderFooterViewModel`: `CommonItems`, `UniqueItems`, `Margin`, `PageNumberControlMoved`, `NavigateOutOfHeaderFooter`, `PageNumberControlActivated`, `UpdateItemLocationsAfterGridSizeChanged`, `WorksheetHandleDelete`
+  - `Quire.Controls.Worksheet.IWhiteboardItemZombie`: `Item`, `ItemSize`, `ItemBounds`, `ItemVerticalAlignmentOffset`, `UpdateZombieRect`, `ResetVisualBrush`, `Hide`, `Show`
+  - `Quire.Controls.Worksheet.IHeaderFooterControl`: `CommonContents`, `TextFormat`, `Margin`, `BodySize`, `IsHeader`, `IsFooter`, `Role`, `PageNumberControlActivated`, `NavigateOutOfHeaderFooter`, `PageNumberControlMoved`
+  - `Quire.Controls.Worksheet.IWorksheetItemSplitter`: `GetItemParts`, `Split`, `IsItemSplit`, `RemoveZombies`, `ReplaceZombieWithRealItem`, `GetCollectiveSplitOffsetDiff`, `GetItemZombieOnPage`, `HideZombies`, `ShowZombies`, `GetMatchingPart`, `TranslateToRepresentMatchingPartLocation`
+  - `Quire.Controls.Worksheet.ErrorWarningMessageKeys`: `ErrorWarningMessageResourceDictionaryName`, `CantPrint`, `CantPaste`, `ClipboardTypePrimeObject`, `ClipboardTypeSExpression`, `ClipboardTypeXMLSpreadsheet`, `ClipboardTypeText`, `ClipboardTypeImage`, `ClipboardTypeGeneral`, `NetworkDriveDisconnected`, `ContainsScriptableObjects`
+  - `Quire.Controls.Worksheet.Printing.PageSnapshot`: `Header`, `Footer`, `Visual`, `.ctor()`, `.ctor(Size?)`, `Dispose`
+  - `Quire.Controls.Worksheet.IWorksheetVisiblePages`: `VisiblePages`, `FirstVisiblePageIndex`, `LastVisiblePageIndex`, `IsVisiblePagesLoaded`, `IsPageIndexVisible`, `IsAnyPageIndexVisible`, `UpdateVisiblePagesOnScrollChanged`, `UpdateVisiblePagesOnPageAddedIfNeeded`, `UpdateVisiblePagesOnPageRemovedIfNeeded`, `RemoveAllPages`, `SetVisiblePages`
+  - `Quire.Controls.Worksheet.IVisitorFuncOfRegionPersistentData`: 13 `Visit` overloads
+  - `Quire.Controls.Worksheet.IWorksheetPageViewModel`: `PageBody`, `HeaderZombie`, `FooterZombie`, `FirstPageHeaderZombie`, `FirstPageFooterZombie`, `Header`, `Footer`, `PageNumber`, `HasPageBreak`, `ShowNonPrintableSpaceIndicator`, `NonPrintableSpaceButtonPosition`, `NonPrintableSpaceIndicatorHeight`, `GetNavigateOutLocation`, `AddItemAtLocation`, `RemoveItem`, `RemoveItems`, `UpdateNonPrintableSpaceIndicator`
+  - `Quire.Controls.Worksheet.IWorksheetPage`: `WhiteboardItems`, `NonOwnedWhiteboardItems`, `InsertionPoint`, `ActiveItem`, `PageBody`, `Header`, `Footer`, `HeaderZombie`, `FooterZombie`, `FirstPageHeaderZombie`, `FirstPageFooterZombie`, `PageNumber`, `HasPageBreak`, `RequestScrollTo`, `PageBodyActivated`, `AddItemAtLocation`, `RemoveItem`, `RemoveItems`, `GetNavigateOutLocation`, `Activate`, `UpdateNonPrintableSpaceIndicator`
+- Release IL: PASS; 414 checked; 0 failures.
 - Landed commit: (in-progress)
 - Parked members:
   - `Quire.Controls.Worksheet.CollapsibleAreaHeightConverter`: blocked by missing project reference to `Quire.Controls.CollapsibleArea` in `Quire.Controls.Worksheet.csproj`.
-- Remaining mismatches: none in this batch (2962 stubs remaining in Quire.Controls.Worksheet).
+- Remaining mismatches: none in this batch (2841 stubs remaining in Quire.Controls.Worksheet).
