@@ -12,43 +12,7 @@ namespace Quire.Controls.ExcelComponent.View;
 public partial class ChartContainer : global::Quire.Controls.ExcelComponent.View.OleContainerItem<global::Quire.Controls.ExcelComponent.ViewModel.ChartContainerViewModel, global::Quire.Controls.ExcelComponent.Model.ChartContainerModel, global::Quire.Controls.ExcelComponent.Model.IPublicChartContainerModel, global::Quire.PersistentData.chartContainerType>, global::Quire.Controls.ExcelComponent.View.IChartContainer, global::Quire.Controls.ExcelComponent.View.IOleContainerItem, global::Quire.Controls.Core.Ole.IOleContainer, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Serialization.IPersistentDataProvider
 {
     [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Int32Rect _renderRectInPixels;
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.ExcelComponent.ViewModel.IChartContainerViewModel global::Quire.Controls.ExcelComponent.View.IChartContainer.ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.ExcelComponent.Model.IPublicChartContainerModel global::Quire.Controls.ExcelComponent.View.IChartContainer.Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsResizing { get => base.IsResizing; set => base.IsResizing = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Calculation.ICalculationComponent Component { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Int32Rect RenderRectInPixels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ChartContainer() : base(default(global::Quire.Controls.ExcelComponent.ViewModel.ChartContainerViewModel), default(global::System.Windows.ResourceDictionary)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public ChartContainer(global::Quire.Controls.ExcelComponent.ViewModel.ChartContainerViewModel viewModel) : base(default(global::Quire.Controls.ExcelComponent.ViewModel.ChartContainerViewModel), default(global::System.Windows.ResourceDictionary)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnIsInPrintingPropertyChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => base.OnIsInPrintingPropertyChanged(e);
-    [global::Quire.Mirror.MirrorStub]
-    public override void OnEngineError(global::Quire.Calculation.Core.EngineError error) => base.OnEngineError(error);
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetOlePersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, global::Quire.PersistentData.chartContainerType data) => base.SetOlePersistentData(d11NProvider, data);
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.PersistentData.chartContainerType GetOlePersistentData(global::Quire.Serialization.IS11NProvider s11NProvider, string uniqueId) => base.GetOlePersistentData(s11NProvider, uniqueId);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void ApplyPrintingZoom(global::System.Nullable<double> zoom) => base.ApplyPrintingZoom(zoom);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnZoomChanged() => base.OnZoomChanged();
-    [global::Quire.Mirror.MirrorStub]
-    public void ForceUnfreezeImage(bool force) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size arrangeBounds) => base.ArrangeOverride(arrangeBounds);
     [global::Quire.Mirror.MirrorStub]
     private void ApplyRect(global::System.Windows.Size size, bool allowEmpty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
