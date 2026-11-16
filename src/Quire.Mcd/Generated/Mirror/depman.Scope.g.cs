@@ -12,10 +12,6 @@ namespace Quire.depman;
 public abstract partial class Scope
 {
     [global::Quire.Mirror.MirrorStub]
-    public abstract int Id { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.depman.Scope Parent { get; }
-    [global::Quire.Mirror.MirrorStub]
     public override int GetHashCode() => base.GetHashCode();
     [global::Quire.Mirror.MirrorStub]
     public override bool Equals(object o) => base.Equals(o);
