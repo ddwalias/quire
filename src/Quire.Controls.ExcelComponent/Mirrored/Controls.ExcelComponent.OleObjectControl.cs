@@ -3,6 +3,23 @@ using System.Windows;
 using System.Windows.Media;
 using Quire.Core;
 
+using System;
+using Quire.Wpf;
+using System.ComponentModel;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Interop;
+using Quire.Controls.Core;
+using Quire.Controls.Core.AttachedBehavior;
+using Quire.Controls.Core.Ole;
+using Quire.Controls.ExcelComponent.View;
+using Quire.Controls.ExcelComponent.ViewModel;
+using Quire.Serialization;
+using Quire.PersistentData;
+using Quire.Controls.ExcelComponent;
+using Quire.Controls.Whiteboard;
+using Quire.Calculation.Core;
+using Quire.Calculation;
 namespace Quire.Controls.ExcelComponent;
 
 public partial class OleObjectControl
@@ -172,5 +189,238 @@ public partial class OleObjectControl
     public global::System.Windows.Size CoerceNewSize(global::System.Windows.Size newSize, global::Quire.Controls.Core.IResizeData resizeData)
     {
         return View.ViewModel.CoerceNewSize(newSize, resizeData);
+    }
+
+    private OleObject _view;
+
+    private ISnapToPixelHelper _snappingHelper;
+
+    public OleObject View
+    {
+        get
+        {
+            return _view;
+        }
+        private set
+        {
+            if (_view == value)
+            {
+                return;
+            }
+            if (_view != null)
+            {
+                _view.VisualParentChanged -= OnViewVisualParentChanged;
+                _view.ViewModel.PropertyChanged -= HandleViewModelPropertyChanged;
+                _view.ViewModel.RequestResizeToFit -= HandleViewModelRequestResizeToFit;
+                BindingOperations.ClearBinding(_view, AttachedProperties.IsOnVisiblePageProperty);
+            }
+            _view = value;
+            if (_view != null)
+            {
+                _view.VisualParentChanged += OnViewVisualParentChanged;
+                _view.ViewModel.PropertyChanged += HandleViewModelPropertyChanged;
+                _view.ViewModel.RequestResizeToFit += HandleViewModelRequestResizeToFit;
+                BindingOperations.SetBinding(_view, AttachedProperties.IsOnVisiblePageProperty, new Binding
+                {
+                    Source = this,
+                    Path = new PropertyPath(AttachedProperties.IsOnVisiblePageProperty)
+                });
+            }
+        }
+    }
+
+    public double VerticalAlignmentOffset => 0.0;
+
+    public bool IsOleOpen => View.IsOutOfPlaceActive;
+
+    public bool OleObjectAutoResize => View.ViewModel.AutoResize;
+
+    public bool CanResetSize => View.ViewModel.CanResetSize;
+
+    public bool CanUpdateLink => View.ViewModel.CanUpdateLink;
+
+    public bool CanToggleAutoResize => View.ViewModel.CanToggleAutoResize;
+
+    public SubElementToResizeData SubElementToResizeData => new SubElementToResizeData(View, serializeDimensions: true, isFullSize: true);
+
+    public ResizeToFitState ResizeState
+    {
+        get
+        {
+            if (!PreserveAspectRatio)
+            {
+                return ResizeToFitState.ResizingDisabled;
+            }
+            return ResizeToFitState.ResizingEnabled;
+        }
+    }
+
+    public bool IsAdornedElementReady
+    {
+        get
+        {
+            UIElement view = View;
+            if (view != null)
+            {
+                return view.GetVisualParent() != null;
+            }
+            return false;
+        }
+    }
+
+    public ISnapToPixelHelper SnappingHelper => _snappingHelper ?? (_snappingHelper = new SnapToPixelHelper(this));
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    public event Action<IWhiteboardItem, Direction> RequestRemove;
+
+    public event Action<IWhiteboardItem> OnGotFocusEvent;
+
+    public event Action<IResizeToFitWhiteboardItem> RequestResizeToFitOrClearRestriction;
+
+    public event Action<object, RoutedEventArgs> OnAdornedElementReady;
+
+    private OleObjectControl(bool autoResize)
+        : this(new OleObject(autoResize))
+    {
+    }
+
+    public OleObjectControl()
+        : this(new OleObject())
+    {
+    }
+
+    protected override void OnContentChanged(object oldContent, object newContent)
+    {
+        base.OnContentChanged(oldContent, newContent);
+        if (newContent is OleObject view)
+        {
+            View = view;
+        }
+    }
+
+    private void ExecutedToggleOleObjectAutoResize(object sender, ExecutedRoutedEventArgs e)
+    {
+        View.ViewModel.ExecutedToggleOleAutoResize(e.Parameter);
+    }
+
+    protected override void OnGotFocus(RoutedEventArgs e)
+    {
+        base.OnGotFocus(e);
+        if (OnGotFocusEvent != null)
+        {
+            OnGotFocusEvent(this);
+        }
+    }
+
+    public void SimulateMouseClick(Point location, int numberOfClicks)
+    {
+        if (numberOfClicks == 1)
+        {
+            Activate(isActive: true);
+        }
+        else if (numberOfClicks == 2)
+        {
+            DebugTools.FailAssertion("Not expected, should we toggle OutOfPlace activation here ?");
+        }
+    }
+
+    protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+    {
+        Activate(isActive: true);
+        e.Handled = true;
+    }
+
+    public IList<IRegionPersistentData> SetRegionPersistentData(IDeS11NProvider d11NProvider, object data)
+    {
+        return View.SetOlePersistentData(d11NProvider, (oleObjectRegionType)data);
+    }
+
+    public object GetRegionPersistentData(IS11NProvider s11NProvider)
+    {
+        return View.GetOlePersistentData(s11NProvider, s11NProvider.Helper.GetRegionId(this).ToString());
+    }
+
+    private void HandleViewModelPropertyChanged(object sender, PropertyChangedEventArgs args)
+    {
+        if (args.PropertyName == "AutoResize")
+        {
+            FirePropertyChanged("OleObjectAutoResize");
+        }
+    }
+
+    private void FirePropertyChanged(string propName)
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propName));
+        }
+    }
+
+    private void HandleViewModelRequestResizeToFit()
+    {
+        DebugTools.DevAssert(View.ViewModel.SiteCreated, null);
+        if (RequestResizeToFitOrClearRestriction != null)
+        {
+            RequestResizeToFitOrClearRestriction(this);
+        }
+    }
+
+    private void OnViewVisualParentChanged(DependencyObject oldParent, DependencyObject newParent)
+    {
+        if (newParent == null)
+        {
+            return;
+        }
+        if (OnAdornedElementReady != null)
+        {
+            OnAdornedElementReady(this, null);
+        }
+    }
+
+    private bool Accept(CreationMethodWithDialog creationMethod, string oleContainerPath)
+    {
+        View.CreateSiteWithDialog(new WindowInteropHelper(creationMethod.WinHandle).Handle, null, oleContainerPath);
+        return ValidateInstance(assertOnFailure: false);
+    }
+
+    private bool Accept(CreationMethodWithProgId creationMethod, string oleContainerPath)
+    {
+        View.CreateSiteWithProgId(creationMethod.ProgId, oleContainerPath);
+        return ValidateInstance(assertOnFailure: true);
+    }
+
+    private bool Accept(CreationMethodFromFile creationMethod, string oleContainerPath)
+    {
+        View.CreateSiteFromFile(creationMethod.FilePath, creationMethod.Link, oleContainerPath);
+        return ValidateInstance(assertOnFailure: true);
+    }
+
+    public static IOleObjectControl Create(OleObjectControlCreationOptions creationOptions, string oleContainerPath)
+    {
+        OleObjectControl oleObjectControl = new OleObjectControl(creationOptions.OleObjectAutoResize);
+        if (!creationOptions.OleObjectControlCreationMethod.Visit(oleObjectControl, oleContainerPath))
+        {
+            return null;
+        }
+        return oleObjectControl;
+    }
+
+    private bool ValidateInstance(bool assertOnFailure)
+    {
+        if (!View.ViewModel.SiteCreated)
+        {
+            if (assertOnFailure)
+            {
+                DebugTools.FailAssertion(null, Array.Empty<object>());
+            }
+            return false;
+        }
+        return true;
+    }
+
+    public void Dispose()
+    {
+        View.Dispose();
     }
 }
