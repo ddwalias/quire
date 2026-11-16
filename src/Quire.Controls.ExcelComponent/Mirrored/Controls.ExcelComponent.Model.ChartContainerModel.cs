@@ -1,4 +1,6 @@
 using System;
+using System.Windows;
+using Quire.Serialization;
 using Quire.Calculation;
 using Quire.FunctionalitiesLimitation;
 
@@ -164,5 +166,99 @@ public partial class ChartContainerModel
     {
         ChartContainerModelUtils.WaitForChartImagesReady(new ChartContainerModel[1] { this }, null);
         base.DoDeactivate();
+    }
+
+    public override chartContainerType GetRegionPersistentData(IS11NProvider s11NProvider, string uniqueId, Action onServerBusy)
+    {
+        return new chartContainerType(SizeData)
+        {
+            itemidref = Pack(s11NProvider, uniqueId, ExternalObjectType.Chart, onServerBusy)
+        };
+    }
+
+    public override void SetValue(string place, IValue value, IValueToIResultNodeTransform resultsTransform)
+    {
+        CheckInstalledAndAvailable(forceRun: true);
+        string type = value.Type;
+        if (!(type == "String"))
+        {
+            if (!(type == "Matrix"))
+            {
+                throw new Exception($"Unsupported type {value.Type}");
+            }
+            SetMatrix(place, value, resultsTransform);
+        }
+        else
+        {
+            SetString(place, value);
+        }
+    }
+
+    public Exception RemoveTrace(uint traceId)
+    {
+        lock (_dataLimitsLock)
+        {
+            if (_dataLimitsDict.IsNotEmpty())
+            {
+                _dataLimitsDict.Remove(traceId);
+            }
+        }
+        try
+        {
+            ChartObject.deleteTraceByTraceId(ChartTraceCalculatable.TraceIdForChartApp(traceId));
+            return null;
+        }
+        catch (Exception result)
+        {
+            return result;
+        }
+    }
+
+    public void ForceUnfreezeImage(bool force)
+    {
+        if (!IsOleSiteManagerRunning)
+        {
+            return;
+        }
+        ApplyImageFrozenState(force ? new bool?(false) : (bool?)null);
+    }
+
+    public override bool ShouldSkipUnchangedValueMultiThreaded(string place)
+    {
+        if (uint.TryParse(place, out var result))
+        {
+            lock (_dataLimitsLock)
+            {
+                return _dataLimitsDict.IsNotEmpty() && _dataLimitsDict.ContainsKey(result);
+            }
+        }
+        return false;
+    }
+
+    private static ChartMinMax CreateEmptyChartMinMax()
+    {
+        return new ChartMinMax
+        {
+            m_X = new MinMax
+            {
+                m_Min = double.NaN,
+                m_Max = double.NaN
+            },
+            m_Y = new MinMax
+            {
+                m_Min = double.NaN,
+                m_Max = double.NaN
+            },
+            m_Y2 = new MinMax
+            {
+                m_Min = double.NaN,
+                m_Max = double.NaN
+            },
+            m_Z = new MinMax
+            {
+                m_Min = double.NaN,
+                m_Max = double.NaN
+            }
+        };
     }
 }

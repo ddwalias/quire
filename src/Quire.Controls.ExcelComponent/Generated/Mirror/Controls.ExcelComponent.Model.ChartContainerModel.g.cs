@@ -24,12 +24,6 @@ public partial class ChartContainerModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     public ChartContainerModel() : base(default(global::Quire.OLE.IOleSiteManager), default(bool)) { }
     [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.PersistentData.chartContainerType GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider, string uniqueId, global::System.Action onServerBusy) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void SetValue(string place, global::Quire.IValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Exception RemoveTrace(uint traceId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void SetMatrix(string place, global::Quire.IValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetTrace(uint traceId, global::Quire.IMatrixValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -37,12 +31,6 @@ public partial class ChartContainerModel : global::Quire.Controls.ExcelComponent
     public void ClearTracesAndLimits() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetRect(global::System.Windows.Int32Rect rectInPixels) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ForceUnfreezeImage(bool force) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool ShouldSkipUnchangedValueMultiThreaded(string place) => base.ShouldSkipUnchangedValueMultiThreaded(place);
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.ChartAppLib.ChartMinMax CreateEmptyChartMinMax() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AddOrRemoveImageFreezeSource(global::Quire.Controls.ExcelComponent.Model.ImageFreezeSources source, bool add) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
