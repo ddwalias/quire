@@ -11,14 +11,4 @@ namespace Quire.Controls.Plots.Presenter;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Presenter.IValueToScreen, Ptc.Controls.Plots")]
 public partial interface IValueToScreen
 {
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<object> ValueToScreenChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    double ValueToScreen(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    double ScreenToValue(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    double CoerceScreenValue(double value, bool toEdges) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Presenter.EdgeBelongingStatus GetEdgeBelongingStatusForCoordinate(double d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

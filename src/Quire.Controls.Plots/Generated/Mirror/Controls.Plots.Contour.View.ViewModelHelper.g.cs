@@ -11,10 +11,4 @@ namespace Quire.Controls.Plots.Contour.View;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Contour.View.ViewModelHelper, Ptc.Controls.Plots")]
 internal partial class ViewModelHelper : global::Quire.Controls.Core.ViewModelBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal void HelperCreateCommandBinding(global::System.Windows.Input.ICommand command, global::System.Action<object> execute) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void HelperCreateCommandBinding(global::System.Windows.Input.ICommand command, global::System.Action<object> execute, global::System.Predicate<object> canExecute) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public ViewModelHelper() { }
 }

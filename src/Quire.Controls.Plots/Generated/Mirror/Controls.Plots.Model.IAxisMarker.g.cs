@@ -11,12 +11,4 @@ namespace Quire.Controls.Plots.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.IAxisMarker, Ptc.Controls.Plots")]
 public partial interface IAxisMarker : global::Quire.Controls.Plots.Model.IBaseMarker, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    double Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Presenter.LineStyle LineStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double LineWeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Model.RealNumberCalculatable RealNumberCalculatable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

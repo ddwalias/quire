@@ -11,14 +11,4 @@ namespace Quire.Controls.Plots.Presenter;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Presenter.IPlotLegend, Ptc.Controls.Plots")]
 public partial interface IPlotLegend
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.ViewModel.PlotLegendViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double LegendWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<double> LegendWidthChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Presenter.IPlotLegendItem AddNewItemToPlotLegend(int index, global::Quire.Controls.Plots.Presenter.IPlotTrace getViewTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Presenter.IPlotLegendItem RemoveTraceFromPlotLegend(global::Quire.Controls.Plots.Presenter.IPlotTrace getViewTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

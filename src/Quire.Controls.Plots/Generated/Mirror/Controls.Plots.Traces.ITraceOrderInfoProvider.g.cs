@@ -11,14 +11,4 @@ namespace Quire.Controls.Plots.Traces;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Traces.ITraceOrderInfoProvider, Ptc.Controls.Plots")]
 internal partial interface ITraceOrderInfoProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    double ClusterSpace { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int TraceCountByType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int TracePlaceByType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double PlotMinGap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsDiscrete { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

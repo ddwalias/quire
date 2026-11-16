@@ -11,12 +11,4 @@ namespace Quire.Controls.Plots.Presenter;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Presenter.IPlotLegendItem, Ptc.Controls.Plots")]
 public partial interface IPlotLegendItem
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Presenter.IPlotTrace SourceTrace { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Text.RichTextTitle LegendLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.PersistentDataObjects.textType GetDataObject(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetDataObject(global::Quire.Serialization.IDeS11NProvider d11NProvider, global::Quire.PersistentDataObjects.textType label) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

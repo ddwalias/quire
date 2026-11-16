@@ -11,14 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotLegendContents, Ptc.Controls.Plots")]
 public partial class PlotLegendContents : global::Quire.Controls.Core.VisualTableContents
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal const int DefaultColumns = 1;
-    [global::Quire.Mirror.MirrorStub]
-    internal const double DefaultColumnSpacing = 8d;
-    [global::Quire.Mirror.MirrorStub]
-    internal const double DefaultRowSpacing = 1d;
-    [global::Quire.Mirror.MirrorStub]
-    public PlotLegendContents() : base(default(global::Quire.Controls.Core.TableLayoutManager)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public int AdjustNumberOfColumnsToWidth(double newWidth) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

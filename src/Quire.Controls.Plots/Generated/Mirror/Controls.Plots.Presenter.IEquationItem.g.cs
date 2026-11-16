@@ -11,14 +11,4 @@ namespace Quire.Controls.Plots.Presenter;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Presenter.IEquationItem, Ptc.Controls.Plots")]
 public partial interface IEquationItem
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Presenter.IPlotEquation Equation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.ITraceModel> Traces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void AddTrace(global::Quire.Controls.Plots.Presenter.ITraceModel trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void RemoveTrace(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddTrace(global::Quire.Controls.Plots.Presenter.ITraceModel trace, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

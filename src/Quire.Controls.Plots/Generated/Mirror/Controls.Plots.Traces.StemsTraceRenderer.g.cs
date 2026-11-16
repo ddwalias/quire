@@ -11,10 +11,4 @@ namespace Quire.Controls.Plots.Traces;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Traces.StemsTraceRenderer, Ptc.Controls.Plots")]
 internal partial class StemsTraceRenderer : global::Quire.Controls.Plots.Traces.TraceRenderer
 {
-    [global::Quire.Mirror.MirrorStub]
-    public StemsTraceRenderer(global::Quire.Controls.Plots.Presenter.IPlotTrace ownerTrace) : base(default(global::Quire.Controls.Plots.Presenter.IPlotTrace)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DrawStems(global::System.Windows.Media.DrawingContext drawingcontext, global::System.Windows.Media.PointCollection pointcollection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

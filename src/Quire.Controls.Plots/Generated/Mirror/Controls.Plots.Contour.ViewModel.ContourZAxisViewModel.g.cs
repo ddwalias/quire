@@ -11,10 +11,4 @@ namespace Quire.Controls.Plots.Contour.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Contour.ViewModel.ContourZAxisViewModel, Ptc.Controls.Plots")]
 public partial class ContourZAxisViewModel : global::Quire.Controls.Plots.Base3D.ViewModel.Base3DAxisViewModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal ContourZAxisViewModel() : base(default(global::Quire.Controls.Plots.Presenter.AxesType), default(global::Quire.Controls.Plots.Presenter.PlotType)) { }
-    [global::Quire.Mirror.MirrorStub]
-    internal override void SetResultRange(global::System.Nullable<double> resultStart, global::System.Nullable<double> resultEnd) => base.SetResultRange(resultStart, resultEnd);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void LimitsExpressionValueChanged() => base.LimitsExpressionValueChanged();
 }

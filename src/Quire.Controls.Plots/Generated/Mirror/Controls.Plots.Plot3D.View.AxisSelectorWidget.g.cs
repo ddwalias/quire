@@ -11,14 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.View;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.View.AxisSelectorWidget, Ptc.Controls.Plots")]
 public partial class AxisSelectorWidget : global::Quire.Controls.Core.VisualAdorner, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.UIElement VisualChild { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public AxisSelectorWidget(global::System.Windows.UIElement adornedElement, global::System.Windows.UIElement visualChild) : base(default(global::System.Windows.UIElement)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
-    [global::Quire.Mirror.MirrorStub]
-    public void Dispose() { }
 }

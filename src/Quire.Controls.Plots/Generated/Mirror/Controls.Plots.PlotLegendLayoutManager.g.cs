@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotLegendLayoutManager, Ptc.Controls.Plots")]
 internal partial class PlotLegendLayoutManager : global::Quire.Controls.Core.TableLayoutManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int GetNumberOfColumnsFitWidth(double newWidth, global::System.Windows.Controls.UIElementCollection children, global::Quire.Controls.Core.ColumnAlignments columnAlignment) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

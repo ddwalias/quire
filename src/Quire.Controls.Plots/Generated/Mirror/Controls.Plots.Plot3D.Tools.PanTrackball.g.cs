@@ -11,10 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.Tools;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.Tools.PanTrackball, Ptc.Controls.Plots")]
 public partial class PanTrackball : global::Quire.Controls.Plots.Plot3D.Tools.BasePanZoomTrackball
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool Track(global::System.Windows.Point current) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override int GetNumTicksForScaleClick() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PanTrackball() { }
 }

@@ -11,14 +11,4 @@ namespace Quire.Controls.Plots.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.IPlotModelBase, Ptc.Controls.Plots")]
 public partial interface IPlotModelBase : global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action DeserializationEnded { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action Changed { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> GetHiddenAndVisibleCalculatables() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool SetDataObject(global::Quire.Serialization.IDeS11NProvider de11NProvider, global::Quire.PersistentDataObjects.plotType dataObject, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.PersistentDataObjects.plotType GetDataObject(global::Quire.Serialization.IS11NProvider s11NProvider, global::Quire.Calculation.Core.IResultManager resultManager, bool hideFromCalculationContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
