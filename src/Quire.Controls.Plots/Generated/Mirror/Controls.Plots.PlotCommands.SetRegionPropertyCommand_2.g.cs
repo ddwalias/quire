@@ -11,26 +11,4 @@ namespace Quire.Controls.Plots.PlotCommands;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotCommands.SetRegionPropertyCommand`2, Ptc.Controls.Plots")]
 internal partial class SetRegionPropertyCommand<TRegion, TProperty> : global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly TRegion _region;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly TProperty _newPropValue;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly TProperty _oldPropValue;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.DelegateFunction1<TProperty, TRegion> _getPropValue;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Delegate2<TRegion, TProperty> _setPropValue;
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public SetRegionPropertyCommand(TRegion region, TProperty newPropValue, string name, global::Quire.DelegateFunction1<TProperty, TRegion> getPropValue, global::Quire.Delegate2<TRegion, TProperty> setPropValue) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Execute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

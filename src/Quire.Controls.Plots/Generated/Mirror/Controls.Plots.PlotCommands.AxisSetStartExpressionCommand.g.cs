@@ -11,16 +11,4 @@ namespace Quire.Controls.Plots.PlotCommands;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotCommands.AxisSetStartExpressionCommand, Ptc.Controls.Plots")]
 internal partial class AxisSetStartExpressionCommand : global::Quire.Controls.Plots.PlotCommands.AxisCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string _startExpression;
-    [global::Quire.Mirror.MirrorStub]
-    private string _prevStartExpression;
-    [global::Quire.Mirror.MirrorStub]
-    public AxisSetStartExpressionCommand(global::Quire.Controls.Plots.PlotGraphAxis axis, string startExpression) : base(default(global::Quire.Controls.Plots.PlotGraphAxis), default(string)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

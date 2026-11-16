@@ -11,16 +11,4 @@ namespace Quire.Controls.Plots.PlotCommands;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotCommands.TraceColorCommand, Ptc.Controls.Plots")]
 internal partial class TraceColorCommand : global::Quire.Controls.Plots.PlotCommands.TraceCommands
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle, global::System.Windows.Media.Color> _oldColorMap;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Media.Color _newColor;
-    [global::Quire.Mirror.MirrorStub]
-    public TraceColorCommand(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle> traceList, global::System.Windows.Media.Color newColor) : base(default(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle>), default(string)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

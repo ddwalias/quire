@@ -11,20 +11,4 @@ namespace Quire.Controls.Plots.PlotCommands;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotCommands.PlotCommands, Ptc.Controls.Plots")]
 internal abstract partial class PlotCommands : global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::Quire.Controls.Plots.PlotControl _plot;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly string _name;
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected PlotCommands(global::Quire.Controls.Plots.PlotControl plot, string commandName) { }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract bool Do();
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void Undo();
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void Redo();
-    [global::Quire.Mirror.MirrorStub]
-    public void Execute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

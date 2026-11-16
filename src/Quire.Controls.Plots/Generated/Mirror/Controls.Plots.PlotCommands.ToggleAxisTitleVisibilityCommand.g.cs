@@ -11,22 +11,4 @@ namespace Quire.Controls.Plots.PlotCommands;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotCommands.ToggleAxisTitleVisibilityCommand, Ptc.Controls.Plots")]
 internal partial class ToggleAxisTitleVisibilityCommand : global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Plots.PlotTitle _axisTitle;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool _oldValue;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool _newValue;
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ToggleAxisTitleVisibilityCommand(global::Quire.Controls.Plots.PlotTitle axisTitle) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Execute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

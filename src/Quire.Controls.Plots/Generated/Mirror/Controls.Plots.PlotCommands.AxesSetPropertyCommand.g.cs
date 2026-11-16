@@ -11,20 +11,4 @@ namespace Quire.Controls.Plots.PlotCommands;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotCommands.AxesSetPropertyCommand, Ptc.Controls.Plots")]
 internal partial class AxesSetPropertyCommand : global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool _newValue;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Action<global::Quire.Controls.Plots.PlotGraphAxis, bool> _set;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Plots.PlotGraphAxis, bool> _oldValues;
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public AxesSetPropertyCommand(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.PlotGraphAxis> plotGraphAxes, bool newValue, global::System.Action<global::Quire.Controls.Plots.PlotGraphAxis, bool> set, global::System.Func<global::Quire.Controls.Plots.PlotGraphAxis, bool> get) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

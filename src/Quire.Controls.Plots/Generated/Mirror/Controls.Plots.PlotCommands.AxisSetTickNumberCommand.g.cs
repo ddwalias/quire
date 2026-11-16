@@ -11,20 +11,4 @@ namespace Quire.Controls.Plots.PlotCommands;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotCommands.AxisSetTickNumberCommand, Ptc.Controls.Plots")]
 internal partial class AxisSetTickNumberCommand : global::Quire.Controls.Plots.PlotCommands.AxisCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly int _oldTickNumber;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly int _newTickNumber;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool _hasOriginPositioningOld;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool _hasOriginPositioningNew;
-    [global::Quire.Mirror.MirrorStub]
-    public AxisSetTickNumberCommand(global::Quire.Controls.Plots.PlotGraphAxis axis, int newTickNumber, bool hasOriginPositioningNew) : base(default(global::Quire.Controls.Plots.PlotGraphAxis), default(string)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

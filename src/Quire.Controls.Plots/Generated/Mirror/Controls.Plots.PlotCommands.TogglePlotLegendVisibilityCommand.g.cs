@@ -11,22 +11,4 @@ namespace Quire.Controls.Plots.PlotCommands;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotCommands.TogglePlotLegendVisibilityCommand, Ptc.Controls.Plots")]
 internal sealed partial class TogglePlotLegendVisibilityCommand : global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Plots.PlotControl _plot;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _oldValue;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _newValue;
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public TogglePlotLegendVisibilityCommand(global::Quire.Controls.Plots.PlotControl plot) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Execute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

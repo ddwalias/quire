@@ -11,20 +11,4 @@ namespace Quire.Controls.Plots.PlotCommands;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotCommands.LegendCommands, Ptc.Controls.Plots")]
 internal abstract partial class LegendCommands : global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::Quire.Controls.Plots.EquationList _equationList;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly string _name;
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected LegendCommands(global::Quire.Controls.Plots.EquationList equationList, string commandName) { }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract bool Do();
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void Undo();
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void Redo();
-    [global::Quire.Mirror.MirrorStub]
-    public void Execute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

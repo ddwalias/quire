@@ -11,20 +11,4 @@ namespace Quire.Controls.Plots.PlotCommands;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotCommands.AxisCommand, Ptc.Controls.Plots")]
 internal abstract partial class AxisCommand : global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::Quire.Controls.Plots.PlotGraphAxis _axis;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly string _name;
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected AxisCommand(global::Quire.Controls.Plots.PlotGraphAxis axis, string commandName) { }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract bool Do();
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void Undo();
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void Redo();
-    [global::Quire.Mirror.MirrorStub]
-    public void Execute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

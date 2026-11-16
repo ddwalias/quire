@@ -11,14 +11,4 @@ namespace Quire.Controls.Plots.Traces;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Traces.ColumnsTraceRenderer, Ptc.Controls.Plots")]
 internal partial class ColumnsTraceRenderer : global::Quire.Controls.Plots.Traces.ClustersTraceRenderer
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected override double MaxSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ColumnsTraceRenderer(global::Quire.Controls.Plots.Presenter.IPlotTrace ownerTrace, global::Quire.Controls.Plots.Traces.HorizontalTraceOrderInfoProvider orderInfoProvider) : base(default(global::Quire.Controls.Plots.Presenter.IPlotTrace), default(global::Quire.Controls.Plots.Traces.ITraceOrderInfoProvider)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
-    [global::Quire.Mirror.MirrorStub]
-    private void CreateColumns(global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.Media.PointCollection pointCollection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Geometry GetColumnGeometry(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

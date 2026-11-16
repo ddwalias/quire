@@ -11,20 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ClearPlotEquationCommand, Ptc.Controls.Plots")]
 internal partial class ClearPlotEquationCommand : global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Plots.Presenter.IPlotEquation _plotEquation;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Undo.CompoundCommand _nestedCommand;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.EquationControl _lastFocusedEquation;
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ClearPlotEquationCommand(global::Quire.Controls.Plots.Presenter.IPlotEquation plotEquation) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

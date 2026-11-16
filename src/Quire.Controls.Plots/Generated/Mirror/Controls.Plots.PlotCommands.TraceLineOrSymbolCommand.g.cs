@@ -11,18 +11,4 @@ namespace Quire.Controls.Plots.PlotCommands;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotCommands.TraceLineOrSymbolCommand, Ptc.Controls.Plots")]
 internal abstract partial class TraceLineOrSymbolCommand : global::Quire.Controls.Plots.PlotCommands.TraceCommands
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle, global::Quire.Controls.Plots.Presenter.TraceStyleState> _previousStyle;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle, global::System.Nullable<global::Quire.Controls.Plots.Presenter.TraceStyleState>> _extraUndoData;
-    [global::Quire.Mirror.MirrorStub]
-    public TraceLineOrSymbolCommand(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle> traceList, string name) : base(default(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle>), default(string)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract bool DoTrace(global::Quire.Controls.Plots.Presenter.IPlotTraceStyle trace);
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
