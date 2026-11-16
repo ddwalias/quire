@@ -2,6 +2,15 @@ using System;
 using Quire.Calculation;
 using Quire.FunctionalitiesLimitation;
 
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Quire.Calculation.Core;
+using Quire.Controls.Core;
+using Quire.ChartAppLib;
+using Quire.PersistentData;
+using Quire.Core;
+using Quire.OLE;
 namespace Quire.Controls.ExcelComponent.Model;
 
 public partial class ChartContainerModel
@@ -60,5 +69,100 @@ public partial class ChartContainerModel
     public void RemoveImageFreezeSource(ImageFreezeSources source)
     {
         AddOrRemoveImageFreezeSource(source, add: false);
+    }
+
+    private string _helpServerPath;
+
+    private uint[] _traceIds;
+
+    private Dictionary<uint, double[,]> _dataLimitsDict;
+
+    public override Dictionary<Guid, Guid> GuidsConversionDict => OleUtils.ChartAppOleGuidsConversionDict;
+
+    public string HelpServerPath
+    {
+        get
+        {
+            return _helpServerPath;
+        }
+        set
+        {
+            _helpServerPath = value;
+            SetHelpServerPathIfRunning();
+        }
+    }
+
+    public double[,] DataLimits
+    {
+        get
+        {
+            if (_dataLimitsDict.IsNullOrEmpty())
+            {
+                return null;
+            }
+            double[,] array = new double[4, 2];
+            double[,] array2 = _dataLimitsDict.Values.First();
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    array[i, j] = array2[i, j];
+                }
+            }
+            foreach (double[,] item in _dataLimitsDict.Values.Skip(1))
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    array[k, 0] = Math.Min(array[k, 0], item[k, 0]);
+                    array[k, 1] = Math.Max(array[k, 1], item[k, 1]);
+                }
+            }
+            return array;
+        }
+    }
+
+    private ImageFreezeSources ImageFreezeSources { get; set; }
+
+    internal ChartAppOLE ChartObject => (ChartAppOLE)GetOleObject(forceRun: true);
+
+    public bool IsImageReady
+    {
+        get
+        {
+            try
+            {
+                bool isOleSiteManagerRunning = IsOleSiteManagerRunning;
+                bool flag = !isOleSiteManagerRunning || ChartObject.isImageReady() != 0;
+                if (flag)
+                {
+                    DebugTools.LogData(string.Format("ChartContainerModel.IsImageReady: IsOleSiteManagerRunning: {0}, returning {1}", isOleSiteManagerRunning, flag));
+                }
+                return flag;
+            }
+            catch (Exception ex)
+            {
+                DebugTools.LogData(string.Format("ChartContainerModel.IsImageReady: Exception {0}, returning true", ex.Message));
+                DebugTools.FailAssertion(ex);
+                return true;
+            }
+        }
+    }
+
+    public event Func<IResultNode, double[,], StringBuilder, double[,]> OnProcessMinMax;
+
+    protected override void OnStartRunning()
+    {
+        base.OnStartRunning();
+        if (IsImageFrozen)
+        {
+            ApplyImageFrozenState();
+        }
+        SetHelpServerPathIfRunning();
+    }
+
+    protected override void DoDeactivate()
+    {
+        ChartContainerModelUtils.WaitForChartImagesReady(new ChartContainerModel[1] { this }, null);
+        base.DoDeactivate();
     }
 }

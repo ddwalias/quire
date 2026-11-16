@@ -18,35 +18,11 @@ public partial class ChartContainerModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     private static readonly string[] _excludeElementsNames;
     [global::Quire.Mirror.MirrorStub]
-    private string _helpServerPath;
-    [global::Quire.Mirror.MirrorStub]
-    private uint[] _traceIds;
-    [global::Quire.Mirror.MirrorStub]
     private readonly object _dataLimitsLock;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.Dictionary<uint, double[,]> _dataLimitsDict;
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.Dictionary<global::System.Guid, global::System.Guid> GuidsConversionDict { get => base.GuidsConversionDict; }
-    [global::Quire.Mirror.MirrorStub]
-    public string HelpServerPath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<uint> CurrentTraceIds { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public double[,] DataLimits { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.ExcelComponent.Model.ImageFreezeSources ImageFreezeSources { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.ChartAppLib.ChartAppOLE ChartObject { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsImageReady { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Func<global::Quire.Calculation.Core.IResultNode, double[,], global::System.Text.StringBuilder, double[,]> OnProcessMinMax;
-    [global::Quire.Mirror.MirrorStub]
     public ChartContainerModel() : base(default(global::Quire.OLE.IOleSiteManager), default(bool)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnStartRunning() => base.OnStartRunning();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void DoDeactivate() => base.DoDeactivate();
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.PersistentData.chartContainerType GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider, string uniqueId, global::System.Action onServerBusy) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -73,6 +49,4 @@ public partial class ChartContainerModel : global::Quire.Controls.ExcelComponent
     private void ApplyImageFrozenState(global::System.Nullable<bool> frozenOverride = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetHelpServerPathIfRunning() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Calculation.Core.IDataExchangeModel.Unlock() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
