@@ -1,6 +1,16 @@
 using System.Windows;
 using Quire.Controls.Core;
 
+using System.Collections.Generic;
+using System.Linq;
+using System.ComponentModel;
+using Quire.Calculation.Core;
+using Quire.Controls.ExcelComponent.ViewModel;
+using Quire.Controls.ExcelComponent.Model;
+using Quire.Controls.ExcelComponent.View;
+using Quire.Controls.Mathboard;
+using Quire.Controls.Core.Ole;
+using Quire.Controls.Whiteboard;
 namespace Quire.Controls.ExcelComponent.View;
 
 public abstract partial class OleBaseComponentControl
@@ -119,5 +129,160 @@ public abstract partial class OleBaseComponentControl
             return;
         }
         oleBaseComponentControl.ErrorChanged();
+    }
+
+    protected abstract IOleContainerItem CreateOleContainerItem();
+
+    public IOleContainerItem OleContainerItem => _oleBaseViewModel.OleContainerItem;
+
+    public bool IsInputSectionVisible
+    {
+        get
+        {
+            return _oleBaseViewModel.IsInputSectionVisible;
+        }
+        set
+        {
+            _oleBaseViewModel.IsInputSectionVisible = value;
+        }
+    }
+
+    public bool IsOutputSectionVisible
+    {
+        get
+        {
+            return _oleBaseViewModel.IsOutputSectionVisible;
+        }
+        set
+        {
+            _oleBaseViewModel.IsOutputSectionVisible = value;
+        }
+    }
+
+    public Size ContentSizeForXamlSerialization
+    {
+        get
+        {
+            return ViewModel.ContentSize;
+        }
+        set
+        {
+            ViewModel.ContentSize = value;
+        }
+    }
+
+    public bool OutputSectionExists => _oleBaseViewModel.OutputSectionExists;
+
+    public double OleContainerItemHeight
+    {
+        get
+        {
+            Size oleContainerItemSize = _oleBaseViewModel.OleContainerItemSize;
+            return oleContainerItemSize.Height;
+        }
+    }
+
+    public double OleContainerItemWidth
+    {
+        get
+        {
+            Size oleContainerItemSize = _oleBaseViewModel.OleContainerItemSize;
+            return oleContainerItemSize.Width;
+        }
+    }
+
+    public double InputsIndicatorTop => _oleBaseViewModel.SectionIndicators[0].Top;
+
+    public double InputsIndicatorBottom => InputsIndicatorTop + _oleBaseViewModel.SectionIndicators[0].Height;
+
+    public double OutputsIndicatorTop => _oleBaseViewModel.SectionIndicators[1].Top;
+
+    public double OutputsIndicatorBottom => OutputsIndicatorTop + _oleBaseViewModel.SectionIndicators[1].Height;
+
+    public IEnumerable<EquationControl> Inputs => _oleBaseModel.Inputs.Cast<EquationControl>();
+
+    public IEnumerable<EquationControl> Outputs => _oleBaseModel.Outputs.Cast<EquationControl>();
+
+    public sealed override EngineResult EngineResult
+    {
+        get
+        {
+            return base.EngineResult;
+        }
+        set
+        {
+            base.EngineResult = value;
+        }
+    }
+
+    public EngineResult EngineResultForSerialization
+    {
+        get
+        {
+            EngineError error = null;
+            if (Error != null && Error.ErrorSource == this && !Error.IsRuntime)
+            {
+                error = Error.Clone();
+                ResultManager.ErrorHandlesToSerialNumber(error, Rl);
+            }
+            return new EngineResult(EngineResult, error);
+        }
+        set
+        {
+            EngineResult = value;
+        }
+    }
+
+    public override EngineError Error => (EngineError)((DependencyObject)this).GetValue(ErrorProperty);
+
+    public bool IsPrintingZoomSet => OleContainerItem.IsPrintingZoomSet;
+
+    public IEnumerable<NodeMessageAdorner> NodeMessageAdorners
+    {
+        get
+        {
+            List<NodeMessageAdorner> list = new List<NodeMessageAdorner>();
+            if (_errorAdorner != null)
+            {
+                list.Add(_errorAdorner);
+            }
+            return list;
+        }
+    }
+
+    public bool IsOleOpen => OleContainerItem.IsOutOfPlaceActive;
+
+    public IDataExchangeModel DataExchangeModel => OleContainerItem.Component;
+
+    public int? ComponentHandle
+    {
+        get
+        {
+            return _oleBaseModel.ComponentId;
+        }
+        set
+        {
+            if (!value.HasValue)
+            {
+                _oleBaseModel.ComponentId = 0;
+                OleContainerItem.StartOleCloseOperation();
+            }
+            else
+            {
+                _oleBaseModel.ComponentId = value.Value;
+                OleContainerItem.AbortOleCloseOperation();
+            }
+        }
+    }
+
+    public int ComponentCookieMultiThreaded
+    {
+        get
+        {
+            lock (_componentCookieLock)
+            {
+                return _componentCookie;
+            }
+        }
     }
 }

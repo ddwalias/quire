@@ -44,57 +44,13 @@ public abstract partial class OleBaseComponentControl : global::Quire.Controls.M
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Calculation.Core.SynchronizationStatus SynchronizationStatus { get => base.SynchronizationStatus; }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.ExcelComponent.View.IOleContainerItem OleContainerItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Mathboard.SectionIndicatorInfo InputSectionIndicator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Mathboard.SectionIndicatorInfo OutputSectionIndicator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsInputSectionVisible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsOutputSectionVisible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size ContentSizeForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool OutputSectionExists { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.EquationControl> Items { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public double OleContainerItemHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double OleContainerItemWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double InputsIndicatorTop { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double InputsIndicatorBottom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double OutputsIndicatorTop { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double OutputsIndicatorBottom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.EquationControl> Inputs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.EquationControl> Outputs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public sealed override global::Quire.Calculation.Core.EngineResult EngineResult { get => base.EngineResult; set => base.EngineResult = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.EngineResult EngineResultForSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Calculation.Core.EngineError Error { get => base.Error; }
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Core.IWhiteboardItem[] WhiteboardItemsForXamlSerialization { get => base.WhiteboardItemsForXamlSerialization; set => base.WhiteboardItemsForXamlSerialization = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsPrintingZoomSet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.NodeMessageAdorner> NodeMessageAdorners { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsOleOpen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IDataExchangeModel DataExchangeModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<int> ComponentHandle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int ComponentCookieMultiThreaded { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override void SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus computingStatus) => base.SetCalculatingStatus(computingStatus);
     [global::Quire.Mirror.MirrorStub]
@@ -107,8 +63,6 @@ public abstract partial class OleBaseComponentControl : global::Quire.Controls.M
     private void Init() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void InsertNewOleComponentExpression(string expression, bool navigateToEnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract global::Quire.Controls.ExcelComponent.View.IOleContainerItem CreateOleContainerItem();
     [global::Quire.Mirror.MirrorStub]
     protected void CreateAndInitOleContainerItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
