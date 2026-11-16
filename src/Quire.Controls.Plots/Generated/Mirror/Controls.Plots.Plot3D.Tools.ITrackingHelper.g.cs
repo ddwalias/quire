@@ -11,32 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.Tools;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.Tools.ITrackingHelper, Ptc.Controls.Plots")]
 internal partial interface ITrackingHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    void Attach() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Detach() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void TrackStart() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void TrackEnd() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelper SetTrackingPoint(global::System.Windows.Media.Media3D.Point3D point, int colorId = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelper AddTrackingPoint(global::System.Windows.Media.Media3D.Point3D point, int colorId = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelper SetTrackingLine(global::System.Windows.Media.Media3D.Point3D from, global::System.Windows.Media.Media3D.Point3D to, int colorId = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelper AddTrackingLine(global::System.Windows.Media.Media3D.Point3D from, global::System.Windows.Media.Media3D.Point3D to, int colorId = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelper SetTrackingPoint2D(global::System.Windows.Point point, int colorId = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelper AddTrackingPoint2D(global::System.Windows.Point point, int colorId = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelper SetTrackingLine2D(global::System.Windows.Point from, global::System.Windows.Point to, int colorId = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelper AddTrackingLine2D(global::System.Windows.Point from, global::System.Windows.Point to, int colorId = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void PerformHitTest(global::System.Windows.Point position, ref global::System.Nullable<global::System.Windows.Media.Media3D.Point3D> initialHit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

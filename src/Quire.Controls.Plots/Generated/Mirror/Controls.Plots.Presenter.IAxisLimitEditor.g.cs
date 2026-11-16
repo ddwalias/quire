@@ -11,32 +11,4 @@ namespace Quire.Controls.Plots.Presenter;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Presenter.IAxisLimitEditor, Ptc.Controls.Plots")]
 public partial interface IAxisLimitEditor : global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculationHideableChild, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatableInfo
 {
-    [global::Quire.Mirror.MirrorStub]
-    double CalculatedValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double PreCalculatedValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsDefaultValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsValueValid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Xml.XmlNode RegionXmlNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool HasErrors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsWaitingForEngineResponse { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action ValueChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action HasErrorsChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void SetPreCalculatedValue(double defaultValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetNonCalculationRelatedCustomError(string errorMessage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ClearNonCalculationRelatedCustomErrors() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.PersistentDataObjects.valueType GetDataObject(global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetDataObject(global::Quire.PersistentDataObjects.valueType dataObject, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

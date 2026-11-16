@@ -11,24 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.Model.IPlotEquationModel3D, Ptc.Controls.Plots")]
 public partial interface IPlotEquationModel3D : global::Quire.Controls.Plots.Model.IPlotEquationModelBase, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsCommitted { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IEquationControl Expression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Presenter.IPlotEquation EquationProxy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D Trace { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action RequestEvaluation { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action EquationProxyChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action EquationProxyChanging { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetDataObject(global::Quire.PersistentDataObjects.plotEquation value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.PersistentDataObjects.plotEquation GetDataObject() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

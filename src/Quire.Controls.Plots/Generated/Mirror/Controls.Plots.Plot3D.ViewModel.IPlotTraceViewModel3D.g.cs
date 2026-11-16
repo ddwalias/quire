@@ -11,24 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.ViewModel.IPlotTraceViewModel3D, Ptc.Controls.Plots")]
 public partial interface IPlotTraceViewModel3D : global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Plots.Presenter.IPlotTraceStyle, global::Quire.Controls.Plots.Traces.ISymbolProperties, global::Quire.Controls.Plots.Model.IHasNumberOfPoints
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Plot3D.Model.PlotTraceVisualData3D VisualData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.Media3D.Rect3D CommonRange { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.ICalculatableInfo CalculatableInfo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.Color RenderColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsStyleAutomatic { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<global::System.Windows.Media.Color> SurfaceFill { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Plot3D.Model.TraceType3D VisualDataTypeOrDefault { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsInPrinting { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsOwnModel(global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D model) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void UserChangedStyle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

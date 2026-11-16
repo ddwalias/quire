@@ -11,18 +11,4 @@ namespace Quire.Controls.Plots.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.IAxisViewModel, Ptc.Controls.Plots")]
 public partial interface IAxisViewModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.ViewModel.AxisRangeForXamlSerialization AxisRangeForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool ShowTicks { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool ShowNumbers { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Func<global::System.Windows.Input.FocusNavigationDirection, bool> CanTraverseEvent { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::System.Windows.Input.FocusNavigationDirection> HandleTraverseEvent { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void HookupView(global::Quire.Controls.Plots.Presenter.IPlotAxisView axisView) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void LimitEquationRequestFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

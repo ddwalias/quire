@@ -11,28 +11,4 @@ namespace Quire.Controls.Plots.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.ITraceImageRendererModel, Ptc.Controls.Plots")]
 public partial interface ITraceImageRendererModel : global::System.ComponentModel.INotifyPropertyChanged, global::System.ComponentModel.ISupportInitialize, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Model.IStyleOwner StyleOwner { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.Imaging.BitmapSource RenderingBitmap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool HasCachedBitmap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.PointCollection DataPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Rect DataRange { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Rect ViewPortRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Size ViewPortDpi { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Size TargetDpi { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void SetCachedBitmap(global::System.Windows.Media.Imaging.BitmapSource cachedBitmap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void StopRendering() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.Imaging.BitmapSource GetBitmapForPrint(global::System.Windows.Size printerTargetDpiScale) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.Imaging.BitmapSource CreateSinglePointBitmap() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
