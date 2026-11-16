@@ -1,5 +1,5 @@
-Owner: task_df583442459c
+Owner: task_19e3534a58fe
 Branch: feature/codex-text-solveblock-lane
-Members: HyperlinkDialog attempted; no batch landed.
-Release IL report: FAIL; constructor closure ordinal is b__7 in Quire but b__4 in Mathcad; report .mirror-cache/release-il-5a997f5d65b1/release-il.json.
-Remaining stubs: Text 390, SolveBlock 71. Parked: ContextMenuModifyHyperlinkCommandParameter.PropertyChanged; ToggleScriptUndoCommand constructor (evaluation-order mismatch at instruction #2); HyperlinkDialog constructor (closure ordinal mismatch).
+Members: RichTextTitle TextStyleChangedHandler and GetText attempted; no batch landed.
+Release IL report: FAIL; existing CanEnableSpellCheck differs from reference, and GetText getter call form differs; report .mirror-cache/release-il-1df083712f52/release-il.json.
+Remaining stubs: Text 390, SolveBlock 71. Parked: ContextMenuModifyHyperlinkCommandParameter.PropertyChanged; ToggleScriptUndoCommand constructor (evaluation-order mismatch at #2); HyperlinkDialog constructor (closure ordinal b__7 vs b__4). RichTextTitle remains unmodified.
