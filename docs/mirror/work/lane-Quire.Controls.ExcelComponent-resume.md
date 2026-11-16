@@ -14,3 +14,5 @@
 - Remaining (batch 34 report): 528 generated-stub members not verified.
 - Batch 35: `View.OleContainerItem<…>` remaining members (`_expectedSize`, abstract `Component`, explicit `IOleContainerItem.ViewModel`, `IsResizing`, `ExpectedSize`, three events, constructor, `SimulateMouseClick`, `OnViewModelPropertyChanged`, `ArrangeOverride`, `ArrangeOverrideAux`, `OnRenderSizeChanged` (reads `sizeInfo.NewSize` without a local)). Release IL PASS (`595 checked`, 0 failures; `.mirror-cache/release-il-d9b525c3a0bd/release-il.json`).
 - Remaining (batch 35 report): 518 generated-stub members not verified.
+- Batch 36: `Model.OleDataExchangeContainerModel<TPersistentData>` abstract members (`ShouldCommitAtLeastOnce`, `ShouldCommitIfDirty`, `CheckOleActiveState`, `SetValue`, `GetValue`, `Commit`), its constructor, and the nested `EngineValueTypes` constants (nested class declaration kept generated). Release IL PASS (`596 checked`, 0 failures; `.mirror-cache/release-il-9756bd1f0fb0/release-il.json`).
+- Remaining (batch 36 report): 515 generated-stub members not verified.

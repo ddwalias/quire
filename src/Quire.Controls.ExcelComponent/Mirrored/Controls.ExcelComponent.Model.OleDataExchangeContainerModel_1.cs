@@ -48,4 +48,30 @@ public abstract partial class OleDataExchangeContainerModel<TPersistentData>
     {
         Unlock();
     }
+
+    public abstract bool ShouldCommitAtLeastOnce { get; }
+
+    public abstract bool ShouldCommitIfDirty { get; }
+
+    protected abstract bool CheckOleActiveState { get; }
+
+    protected OleDataExchangeContainerModel(global::Quire.OLE.IOleSiteManager oleSiteManager, bool autoResize)
+        : base(oleSiteManager, autoResize)
+    {
+    }
+
+    public abstract void SetValue(string place, global::Quire.IValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform);
+
+    public abstract global::Quire.IValue GetValue(string place);
+
+    public abstract void Commit();
+
+    protected static partial class EngineValueTypes
+    {
+        public const string Numeric = "Numeric";
+
+        public const string String = "String";
+
+        public const string Matrix = "Matrix";
+    }
 }

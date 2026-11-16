@@ -11,29 +11,8 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.OleDataExchangeContainerModel`1, Ptc.Controls.ExcelComponent")]
 public abstract partial class OleDataExchangeContainerModel<TPersistentData> : global::Quire.Controls.Core.Ole.OleContainerModel<TPersistentData>, global::Quire.Calculation.ICalculationComponent, global::Quire.Calculation.IDataExchangeIValueModel, global::Quire.Calculation.Core.IDataExchangeModel where TPersistentData : global::Quire.PersistentData.IOleObjectPersistentData
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract bool ShouldCommitAtLeastOnce { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract bool ShouldCommitIfDirty { get; }
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract bool CheckOleActiveState { get; }
-    [global::Quire.Mirror.MirrorStub]
-    protected OleDataExchangeContainerModel(global::Quire.OLE.IOleSiteManager oleSiteManager, bool autoResize) : base(default(global::Quire.OLE.IOleSiteManager), default(bool)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void SetValue(string place, global::Quire.IValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform);
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.IValue GetValue(string place);
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void Commit();
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.OleDataExchangeContainerModel`1+EngineValueTypes, Ptc.Controls.ExcelComponent")]
     protected static partial class EngineValueTypes
     {
-        [global::Quire.Mirror.MirrorStub]
-        public const string Numeric = "Numeric";
-        [global::Quire.Mirror.MirrorStub]
-        public const string String = "String";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Matrix = "Matrix";
     }
 }
