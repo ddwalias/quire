@@ -1,5 +1,5 @@
-Owner: task_7ebf819c7fc5
+Owner: task_412b52110a1f
 Branch: feature/codex-text-solveblock-lane
-Members: ItemToImagesRichTextWithEmbededItemCloneHelper constructor.
-Release IL report: PASS, 537 checked; .mirror-cache/release-il-293e7055da6e/release-il.json.
-Remaining stubs: Text 403, SolveBlock 71. Parked: ContextMenuModifyHyperlinkCommandParameter.PropertyChanged (not attempted in this batch).
+Members: ToggleScriptUndoCommand constructor attempted; no batch landed.
+Release IL report: FAIL; constructor evaluation order differs at IL instruction #2; report .mirror-cache/release-il-b9113738ce12/release-il.json.
+Remaining stubs: Text 403, SolveBlock 71. Parked: ToggleScriptUndoCommand constructor; exact parity remains unresolved because GetInsertionPointAtPointer takes TextPointer by ref and the current idiomatic implementation differs in evaluation order.
