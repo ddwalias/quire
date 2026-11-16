@@ -12,31 +12,5 @@ namespace Quire.Efi;
 internal partial class AxisStats
 {
     [global::Quire.Mirror.MirrorStub]
-    public string[] labels;
-    [global::Quire.Mirror.MirrorStub]
-    public double lowerLimit;
-    [global::Quire.Mirror.MirrorStub]
-    public double upperLimit;
-    [global::Quire.Mirror.MirrorStub]
-    public double marker1;
-    [global::Quire.Mirror.MirrorStub]
-    public double marker2;
-    [global::Quire.Mirror.MirrorStub]
-    public double min;
-    [global::Quire.Mirror.MirrorStub]
-    public double max;
-    [global::Quire.Mirror.MirrorStub]
-    public double min1;
-    [global::Quire.Mirror.MirrorStub]
-    public double max1;
-    [global::Quire.Mirror.MirrorStub]
-    public double QPmin;
-    [global::Quire.Mirror.MirrorStub]
-    public double QPmax;
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Adjust(double x, double y, int nCurrentTrace, int nCurrentPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Efi.AxisStats Merge(global::Quire.Efi.AxisStats a, global::Quire.Efi.AxisStats b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public AxisStats() { }
 }
