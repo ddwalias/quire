@@ -11,12 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.FileNameConverter, Ptc.Controls.Worksheet")]
 public partial class FileNameConverter : global::System.Windows.Data.IMultiValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Controls.Worksheet.FileNameConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
-    private FileNameConverter() { }
-    [global::Quire.Mirror.MirrorStub]
-    public object Convert(object[] values, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object[] ConvertBack(object value, global::System.Type[] targetTypes, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

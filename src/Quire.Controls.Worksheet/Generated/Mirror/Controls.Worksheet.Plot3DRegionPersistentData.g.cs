@@ -11,8 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.Plot3DRegionPersistentData, Ptc.Controls.Worksheet")]
 public partial class Plot3DRegionPersistentData : global::Quire.Controls.Worksheet.PlotRegionPersistentData
 {
-    [global::Quire.Mirror.MirrorStub]
-    public Plot3DRegionPersistentData(global::Quire.Controls.Plots.Plot3D.View.PlotControl3D element) : base(default(global::Quire.Controls.Plots.View.PlotControlBase)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void DeserializeDimensions() => base.DeserializeDimensions();
 }
