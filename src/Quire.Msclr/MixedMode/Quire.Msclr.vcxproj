@@ -46,10 +46,15 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(IntDir)Quire.Msclr.pdb</ProgramDatabaseFile>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>$(IntDir)mshex.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MplLoaded.cpp" />
     <ClCompile Include="MsclrPort.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Msclr.h" />
   </ItemGroup>
   <!-- The Build Tools MSBuild cannot evaluate SDK-style projects, so the managed references are forced in with /FU. The production
        .csproj passes the DLLs it already built (QuireMirrorPath, QuireMplPath); a direct build of this project builds them with dotnet. -->
@@ -72,6 +77,11 @@
       <ForcedUsingFiles>$(QuireMirrorPath);$(QuireMplPath);%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
   </ItemDefinitionGroup>
+  <!-- mshex.dll exports the Hex members this assembly imports. Until Quire.Native.Mshex exports them, the import library
+       is built from the .def and Mathcad's DLL is loaded at run time (D20 stopgap). -->
+  <Target Name="BuildMshexImportLibrary" BeforeTargets="Link" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Exec Command="&quot;$(VCToolsInstallDir)bin\HostX64\x64\lib.exe&quot; /nologo /def:&quot;$(MSBuildThisFileDirectory)mshex.def&quot; /machine:x64 /out:&quot;$(IntDir)mshex.lib&quot;" />
+  </Target>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

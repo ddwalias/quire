@@ -1,0 +1,5 @@
+LIBRARY mshex
+EXPORTS
+    ?GetName@Signature@Hex@@QEBA?AV?$Substring@$$CBD@@XZ
+    ?GetType@Signature@Hex@@QEBA?AV?$Substring@$$CBD@@XZ
+    ?GetState@Module@Hex@@QEBAPEAUState@12@XZ
