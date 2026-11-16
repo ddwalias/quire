@@ -20,7 +20,6 @@ class IlDiffTests(unittest.TestCase):
         for build in builds:
             self.assertEqual(build[build.index('-c') + 1], 'Release')
         self.assertNotIn('Debug', str(calls))
-        self.assertIn('--release-il', scan)
         self.assertNotIn('--output', scan)
         self.assertEqual(scan[-4:], ['--diff', 'Quire.Mcd.MatDim', '--diff', 'Quire.Mcd.Dim::Div'])
         self.assertEqual(scan[scan.index('--project') + 1], 'Quire.Mpl')

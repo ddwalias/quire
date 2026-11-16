@@ -811,7 +811,7 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
     try:
         with timed(timings, prefix + '_scan'):
             run([dotnet, tool, '--repo', root, '--assemblies', assemblies, '--install', install,
-                 '--output', inventory, '--release-il',
+                 '--output', inventory,
                  *(arg for p in projects for arg in ('--project', p))], root, log, timeout)
         failure = None
     except RuntimeError as error:

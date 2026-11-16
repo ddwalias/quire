@@ -147,12 +147,6 @@
         "size": 16,
         "parked": true,
         "reason": "static instance of abstract alloc class"
-      },
-      "??_7alloc@Unmanaged@Engine@@6B@": {
-        "rva": "0x3250",
-        "size": 16,
-        "parked": true,
-        "reason": "abstract class vtable and its static instance"
       }
     }
   },

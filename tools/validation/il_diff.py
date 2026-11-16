@@ -33,7 +33,7 @@ def main(argv=None):
                 run([args.dotnet, 'build', ROOT / 'src' / project / f'{project}.csproj',
                      '-c', 'Release', '--no-incremental', '-o', work / 'assemblies', '-nologo', '-v:q'], ROOT, log, args.timeout)
             return subprocess.run([args.dotnet, str(work / 'tool/Quire.Tools.MethodAudit.dll'),
-                '--repo', str(ROOT), '--assemblies', str(work / 'assemblies'), '--install', install, '--release-il',
+                '--repo', str(ROOT), '--assemblies', str(work / 'assemblies'), '--install', install,
                 *(a for p in projects for a in ('--project', p)),
                 *(a for key in args.key for a in ('--diff', key))], cwd=ROOT, timeout=args.timeout).returncode
     except (OSError, RuntimeError, subprocess.SubprocessError) as error:

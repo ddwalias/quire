@@ -19,15 +19,8 @@ if (args is ["members", var assemblyPath, var typeName])
 var options = new Dictionary<string, List<string>>();
 for (int i = 0; i < args.Length; i += 2)
 {
-    // A no-op, still accepted: Release IL is the only comparison, and older callers pass it.
-    if (args[i] == "--release-il")
-    {
-        options[args[i]] = ["true"];
-        i--;
-        continue;
-    }
     if (i + 1 >= args.Length || args[i] is not ("--repo" or "--assemblies" or "--install" or "--output" or "--project" or "--diff"))
-        throw new ArgumentException("MethodAudit --repo DIR --assemblies RELEASE_DIR --install DIR (--output FILE | --diff KEY ...) [--project NAME ...] [--release-il]");
+        throw new ArgumentException("MethodAudit --repo DIR --assemblies RELEASE_DIR --install DIR (--output FILE | --diff KEY ...) [--project NAME ...]");
     if (!options.TryGetValue(args[i], out var list)) options[args[i]] = list = [];
     list.Add(args[i + 1]);
 }

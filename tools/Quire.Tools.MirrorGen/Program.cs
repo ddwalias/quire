@@ -2,7 +2,7 @@ using Quire.Tools.MirrorGen;
 
 if (args.Length < 1)
 {
-    Console.Error.WriteLine("usage: MirrorGen <emit|manifest|native-inventory|scope-diff|assembly-map|count-methods <dll>|shape <dll>>");
+    Console.Error.WriteLine("usage: MirrorGen <emit|manifest|native-inventory|scope-diff|assembly-map|shape <dll>>");
     return 2;
 }
 
@@ -30,11 +30,6 @@ switch (args[0])
         return 0;
     case "native-inventory":
         NativeInventory.Run(install, Path.Combine(repo, "docs", "mirror", "native"));
-        return 0;
-    case "count-methods":
-        // Non-private methods (accessors included) per type, for cross-checking the reader against other tools.
-        foreach (var t in MetadataLoader.Load(args[1])!.Types.OrderBy(t => t.FullName, StringComparer.Ordinal))
-            Console.WriteLine($"{t.FullName}\t{Planner.AllMethods(t).Count(m => m.Access != Access.Private)}\t{Planner.AllMethods(t).Count()}");
         return 0;
     case "manifest":
         return Shape.WriteManifest(repo, args.Contains("--accept-removals")) ? 0 : 1;

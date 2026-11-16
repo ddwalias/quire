@@ -88,7 +88,7 @@ class Case:
             encoding='utf-8')
         output = self.work / 'inventory.json'
         result = subprocess.run(['dotnet', str(self.tool), '--repo', str(self.repo), '--assemblies', str(self.assemblies),
-                                 '--install', str(self.install), '--output', str(output), '--release-il',
+                                 '--install', str(self.install), '--output', str(output),
                                  *(arg for project in self.projects for arg in ('--project', project))],
                                 capture_output=True, text=True)
         if not output.is_file():
