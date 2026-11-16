@@ -11,24 +11,4 @@ namespace Quire.Efi;
 [global::Quire.Mirror.MirrorOf("Efi.AxisOptions, efiplot_")]
 internal partial class AxisOptions : global::Quire.Efi.Options
 {
-    [global::Quire.Mirror.MirrorStub]
-    public double ll;
-    [global::Quire.Mirror.MirrorStub]
-    public double ul;
-    [global::Quire.Mirror.MirrorStub]
-    public AxisOptions(int bits) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool isULAuto() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool isLLAuto() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool isM1Auto() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool isM2Auto() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool isAutoscale() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool isLog() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool isCategory() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

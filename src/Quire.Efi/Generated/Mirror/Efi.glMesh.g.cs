@@ -11,24 +11,4 @@ namespace Quire.Efi;
 [global::Quire.Mirror.MirrorOf("Efi.glMesh, efiplot_")]
 public partial class glMesh
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Efi.LRect3 rect;
-    [global::Quire.Mirror.MirrorStub]
-    public int m_rows;
-    [global::Quire.Mirror.MirrorStub]
-    public int m_cols;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Efi.shpPoint3D[] m_vertices;
-    [global::Quire.Mirror.MirrorStub]
-    public glMesh(global::Quire.Efi.LRect3 rc, int rows, int cols, global::Quire.Efi.shpPoint3D[] vertices) { }
-    [global::Quire.Mirror.MirrorStub]
-    public double getZ(int row, int col) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void setZ(int row, int col, double z) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Efi.LRect3 Rect() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Efi.shpPoint3D Vertex(int row, int col) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Efi.shpPoint3D NormalizedVertex(int col, int row) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
