@@ -1,43 +1,60 @@
 # Quire.Msclr checkpoint
 
-- Owner: Msclr lane (WORK row `Msclr`). Branch `mirror/msclr-20261114` from `main` 8f43a887e. Worktree `C:/Users/DuyDang/orca/workspaces/Quire/msclr-20261114`.
-- Target: `src/Quire.Msclr` (C++/CLI `MixedMode/MsclrPort.cpp`, MSVC 19.51.36246, D19/D20). Predecessor checkpoint: [lane-i.md](lane-i.md).
-- Landed in this batch: no code change. `IRegion` (abstract members and ctor) stays as on main.
+- Owner: Msclr lane (WORK row `Msclr`). Branch `mirror/msclr-20261116b` from `main` fff67b092. Worktree `C:/Users/DuyDang/orca/workspaces/Quire/lane-msclr`.
+- Target: `src/Quire.Msclr` (C++/CLI under `MixedMode/`, MSVC 19.51.36246, D19/D20). C# stand-ins for the Debug build are in `Mirrored/`.
+
+## Landed in this batch
+
+- `Mpl.Region`: constructor, `GetImports`, `GetExports`, `Evaluate`, `NewSymbols`, fields `m_ldr`, `m_imp`, `m_exp`.
+- `Mpl.IRegion.GetRegion(Hex.Module*)`. The abstract members, constructor and `Symbol` were already in the C++ source; their generated stubs are now removed too.
+- `<Module>` `Mpl.GetModuleState`, and the `mshex.dll` imports `Hex.Module.GetState`, `Hex.Signature.GetName`, `Hex.Signature.GetType`.
+- Build: `MixedMode/mshex.def` makes the import library for those three exports (D20 stopgap; Mathcad's `mshex.dll` is loaded at run time). `GetModuleState` is in its own source file (`MplLoaded.cpp`) because the original does not inline it into `GetRegion`.
+- The earlier blocker "`Hex.*` types need a reviewed binding" no longer holds: the gate pairs the native `Hex.Module`, `Hex.Signature`, `Mpl.Loaded`, `ms.Range<…>` and `Substring<…>` types.
 
 ## Release IL report
 
-- `release_il.py --base main --project Quire.Msclr` on the base: PASS, 82 checked, 80 exact, 0 failures, 330 Mathcad members not paired (`no Quire member pairs with this Mathcad member`).
+- `release_il.py --base main --project Quire.Msclr`: PASS, 92 checked, 90 exact, 0 failures, 9 native pairs exact, 325 Mathcad members not paired. Base: 82 checked, 80 exact.
 
-## Attempted this batch: `Mpl.Reader`, `Mpl.LoadModule(string)`, `Mpl.Get<…>`
+## Parked: `Mpl.Reader` (`ReadAttribute`, constructor)
 
-Members (msclr Release IL): `Mpl.Reader.ReadAttribute(string, module_attribute)`, `Mpl.Reader..ctor`, `<Module>` `Mpl.LoadModule(string)` (105 bytes, managed only), `<Module>` `Mpl.Get<class Mpl::Run::ModuleTextAttribute>` and `Mpl.Get<class Mpl::Run::ModuleInterfaceAttribute>`. `module_attribute` is an enum with no enumerators in the original, only `value__`.
+`Mpl.Reader.g.cs` keeps its two stubs. A candidate for the whole group is saved, uncommitted, as
+`.mirror-cache/msclr-reader-candidate.patch` in the lane worktree (applies on this batch's commit).
 
-Four source forms were tried; forms 1, 2 and 4 reached the gate, form 3 failed to build (candidate source kept outside the repo, not committed):
+Exact with that candidate (gate run `release-il-481907d8212d` and a local IL diff):
+`Reader.ReadAttribute`, `Reader..ctor`, `Mpl.LoadModule(string)`, both `Mpl.Get<…>` instances,
+`Mpl.GetModuleAttribute(Substring<wchar_t const>, module_attribute, bool)`, `strutf8`, `Mpl.ToString(Substring<wchar_t const>)`,
+both `Mpl.ToStrng`, and the `Hex.Error` imports. 138 checked.
 
-1. `Reader` internal, `if`-chain: the candidate DLL contains none of the group. Mathcad's `Reader` is internal and reached only from `GetModuleAttribute`, and the vcxproj links with `OptimizeReferences`, so the linker drops unreferenced internal types and free functions. Gate PASS only because nothing was emitted (no new members checked).
-2. `Reader` public, `if`-chain: group emitted; gate FAIL (4): `LoadModule` calls `Module::op_Inequality` where Mathcad has `brfalse`, plus a `dup` vs `stloc.2` at #2; `Get<…>` instantiations have no counterpart; `ReadAttribute` branch shape differs (`brtrue.s` vs `brfalse.s`).
-3. `Reader` public, `switch` on the enum, `if (module)`, named `assembly_name` local, `"c:\io.sys"` escape typo: build failed (`C4063` case on an enumerator-less enum, `C4129` escape; warnings are errors). No gate result.
-4. Same as 3 with `switch (safe_cast<int>(attribute))` and the escape fixed: gate FAIL, 4 failures, 87 checked, 81 exact. Remaining mismatches:
-   - `Mpl.Get<class Mpl::Run::ModuleInterfaceAttribute>` and `Mpl.Get<class Mpl::Run::ModuleTextAttribute>` have no counterpart. MSVC spells the type argument of a mapped Quire type as `Quire::Mpl::Run::…`, and MethodAudit pairs `<Module>` globals by exact name (`tools/Quire.Tools.MethodAudit/Program.cs`, the `<Module>` branch of the pairing loop). No source shape can change the spelling.
-   - `LoadModule` and `ReadAttribute` call targets differ only by that spelling.
-   - `LoadModule`: Mathcad stores the `".values"` literal in local 4 before loading `ScopeName` (first shape difference at #17); the candidate does not yet reproduce that, and it cannot be verified until the spelling is fixed.
+Blockers (the gate fails on these three, so the group cannot land):
 
-Visibility: Mathcad keeps `Reader` internal. Internal lands nothing from this group, because the linker (`OptimizeReferences`) drops unreferenced internal types and free functions. Public emits the group, but exposes a type Mathcad keeps internal and fails the gate above, so neither is landed. The candidate source (form 4) is kept outside the repo, not committed.
+1. `<Module>` `strconv(std::string*, Substring<wchar_t const>, uint)` is native code in the original (RVA 0x78E0, 380 bytes).
+   The candidate is 173 bytes: MSVC calls `std::string(count, ch)` out of line where the original inlines it. Tried `/EHa`,
+   `/EHsc` and `/Ob3` on the native file with `std::string out(size, '\0')`; none inlines it. The original's source form or
+   flags for that file are not recovered.
+2. `<Module>` `new`: `native body differs: +0x38: +0x9: +0x0: data +0x10: a pointer on one side only` (CRT `operator new`,
+   reached once managed `std::string` code is instantiated). Not investigated.
+3. `<Module>` `delete[]`: `native body differs: +0x0: length 48 != original 176`. Not investigated.
 
-## Remaining (not attempted; blocked)
+`Reader` is internal in Mathcad and MSVC emits it only when something references it. Its only referrer is
+`GetModuleAttribute`, whose error paths call `strutf8` and so `strconv`; that is why the blockers above hold the type.
+A public `Reader` passes the gate without them (run `release-il-5607e2b2b118`, 97 checked) but exposes a type Mathcad keeps
+internal, so it was not landed.
 
-- `Mpl.Reader`, `Mpl.LoadModule`, `Mpl.Get<…>`: blocked on the MethodAudit template-instance naming above (maintainer, shared tool). After that, `Reader` must stay internal, so it needs a live referencing root; Mathcad's root is `GetModuleAttribute` (native `std::string`, `Substring`).
-- `<Module>` `Mpl.GetTypeName(Module)` (`ScopeName + ".values"`), `Mpl.pack`, `Mpl.free`: small managed bodies, but unreferenced in Quire, so the linker drops them. Their Mathcad callers are `Mpl.Loaded`, `Mpl.Region` and native code.
-- `Mpl.GetAssemblyPath`, `Mpl.SetAssemblyPath`, `Mpl.ToString(Substring<…>)`, `Mpl.ToStrng`, `Mpl.ToWStrng`, `Mpl.GetModuleStrng`: take `std::string`/`Substring<T>` (native template instances).
-- `Mpl.Heavyweight`, `Mpl.Lightweight`, `Mpl.Loaded`, `Mpl.Table`, `Mpl.GetModuleState`/`Heap`/`Table`/`Handle`, `Mpl.LoadModule(Hex.Module*, …)`, `Mpl.MakeModule`, `Mpl.SaveModule`, `Mpl.LoadDynamicModule`, `Mpl.NewTransientBuilder`, `Mpl.NewPersistentBuilder`: use `Hex.*` native types. Blocked by lane-i blocker 1 (`mshex.dll` binding; `Hex.Signature.GetName`/`GetType` pinvoke).
-- `Mpl.Region` and `IRegion.GetRegion(Hex.Module*)`: blocked on `Hex.Signature.GetName` (lane-i blocker 1).
-- `Hex.*`, `Attachment`, `Hex.Module`: native shared-header types (lane-i blocker 1).
-- No Quire-only members in this assembly were found that lack a Mathcad counterpart.
+For review: the candidate instantiates `Mpl::Get` on native tag classes `Mpl::Run::ModuleTextAttribute` and
+`Mpl::Run::ModuleInterfaceAttribute` that map to the mirrored attribute types. MSVC spells a template argument by its C++
+name, the mirrored types are `Quire::Mpl::Run::…`, and MethodAudit pairs `<Module>` globals by exact name; without the tags
+the instances have no counterpart. The original's `LoadModule(string)` failure path calls `Assembly.LoadFrom("c:\io.sys")`
+before throwing; the candidate reproduces it.
 
-## Observation for review
+## Remaining (not attempted)
 
-`<Module>` `Mpl.LoadModule(string)` in the original ends its failure path with `Assembly.LoadFrom("c:\\io.sys")` before throwing `BadImageFormatException("", path)`. A faithful port needs that call to match Release IL exactly; the maintainer should confirm it is intended behaviour of the original rather than a stray.
+- `Mpl.GetModuleAttribute(Substring<char const>, …)` and native `strconv(Substring<wchar_t>, Substring<char const>, uint)`.
+- `Mpl.GetTypeName`, `Mpl.pack`, `Mpl.free`, `Mpl.GetAssemblyPath`, `Mpl.SetAssemblyPath`, `Mpl.GetModuleHeap`/`Table`/`Handle`,
+  `Mpl.GetModuleStrng`/`String`, `Mpl.GetAssemblyName`.
+- `Mpl.Heavyweight`, `Mpl.Lightweight`, `Mpl.Loaded` members, `Mpl.MakeModule`, `Mpl.LoadModule(Hex.Module&, …)`,
+  `Mpl.SaveModule`, `Mpl.LoadDynamicModule`, `Mpl.NewTransientBuilder`, `Mpl.NewPersistentBuilder`, `Mpl.Set<…>`, `Mpl.unpack<…>`.
+- The other `mshex.dll` imports and the STL instantiations those bodies pull in.
 
 ## Remaining mismatches
 
-- Template-instance naming for mapped managed type arguments (see above). This is the only blocker for the `Reader`/`LoadModule`/`Get` group.
+- None in the landed members. The three native bodies above block `Mpl.Reader`.

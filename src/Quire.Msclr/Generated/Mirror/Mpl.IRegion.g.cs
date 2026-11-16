@@ -11,25 +11,9 @@ namespace Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("Mpl.IRegion, msclr")]
 public abstract partial class IRegion
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.Mpl.IRegion.Symbol[] GetImports();
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.Mpl.IRegion.Symbol[] GetExports();
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void Evaluate(object[] i, object[] e);
-    [global::Quire.Mirror.MirrorStub]
-    public static unsafe global::Quire.Mpl.IRegion GetRegion(global::Quire.Hex.Module* A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public IRegion() { }
 
     [global::Quire.Mirror.MirrorOf("Mpl.IRegion+Symbol, msclr")]
     public partial struct Symbol
     {
-        [global::Quire.Mirror.MirrorStub]
-        public string name;
-        [global::Quire.Mirror.MirrorStub]
-        public string type;
-        [global::Quire.Mirror.MirrorStub]
-        public ulong ordinal;
     }
 }
