@@ -1,5 +1,5 @@
-Owner: Codex worker task_2edc94355c3b
+Owner: Codex worker task_41501623514f
 Branch: lane/controls-whiteboard-calculation-20261117
-Members: Quire.Controls.LanguageUtils (attempted)
-Release IL report: `.mirror-cache/release-il-a14aa0228c00/release-il.json` — FAIL. SetChartAppL10N differs at IL instruction #5 (`Quire pop`, Mathcad `ldnull`); 351 generated stubs remain unimplemented.
-Remaining mismatches: LanguageUtils exact IL blocker at #5 after idiomatic implementation; remaining assigned types untouched. No commit landed.
+Members: Quire.Controls.IO.CollectionWithSyncStatus
+Release IL report: PASS; `.mirror-cache/release-il-12ed528111a2/release-il.json`
+Remaining mismatches: EngNoteContextData parked because GeneratedRegex adds unmatched generated methods/types and a plain Regex constructor differs from Mathcad's cached generated Regex instance. DimensionSelectorButton parked because mapped Fluent.DropDownButton lacks CommandParameter. Other assigned stubs remain.

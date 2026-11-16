@@ -11,8 +11,4 @@ namespace Quire.Controls.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.CollectionWithSyncStatus, Ptc.Controls")]
 internal partial class CollectionWithSyncStatus : global::Quire.Calculation.Core.Support.ICalcWithSyncStatus
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.SynchronizationStatus SynchronizationStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private void OnShadowSynchronized(global::Quire.Calculation.Core.Support.ICalcWithSyncStatus shadow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
