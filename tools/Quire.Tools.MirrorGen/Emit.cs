@@ -16,6 +16,14 @@ public static class Emit
         mapper.Build();
         var externals = Externals.Load();
         var projects = mapper.Types.Select(t => t.Project!).Distinct().OrderBy(p => p, StringComparer.Ordinal).ToList();
+        // Hand-written members are read from the Release build: without one they would read as missing and be
+        // regenerated as stubs.
+        var unbuilt = projects.Where(p => !rules.IsCppProject(p) && Shape.BuiltAssembly(repo, p) == null
+            && HandWritten.Sources(Path.Combine(repo, "src", p)).Any()).ToList();
+        if (unbuilt.Count > 0)
+            throw new InvalidOperationException("no Release build of " + string.Join(", ", unbuilt) + ", which have hand-written C# "
+                + "(src/<project>/bin/Release; for a mixed-mode project, its C# stand-in in obj/Release): "
+                + "run `dotnet build Quire.slnx -c Release` before emit");
         var handWritten = HandWritten.Load(repo, projects);
         var plan = new Planner(mapper, externals, handWritten, Friends(mathcad, rules, projects));
         plan.Run();

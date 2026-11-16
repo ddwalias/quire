@@ -37,12 +37,16 @@ exact must still be exact, and a member the new judge pairs for the first time m
 `verdict_changes` lists every member whose verdict differs between the two scans, and the console
 prints those whose body did not change, which is what the judge's change did. Rows a candidate judge
 wrote are never cached. `--judge candidate` exists only in `release_il.py`: `merge_gate.py` and
-`lane_merge.py` always land with the base's judge ([D24](decisions.md)).
+`lane_merge.py` always land with the base's judge ([D24](decisions.md)). A project that the registry of
+generated assemblies (`docs/mirror/generated-assemblies.json`) names, in the base commit or in the candidate,
+is judged by the generated rule (every method pairs and matches), still by the base's judge: a branch
+can register a project only once it passes that rule, and cannot leave the rule in its own landing.
 
-Base inventories are cached in `.mirror-cache/inventory-cache/` per project, keyed by the content of
+Base inventories are cached per project in the main checkout's `.mirror-cache/inventory-cache/`, which
+every linked worktree shares (a base one lane scanned serves the others), keyed by the content of
 what MethodAudit reads for it: the Git trees of the project's `ProjectReference` closure, the root
-files other than `*.md`, the `src` directory names, the type map, the judge (its MethodAudit/MirrorGen
-trees, root files and SDK), `release_il.py` itself (the build recipe), the install's DLL listing, and
+files other than `*.md`, the `src` directory names, the type map, the registry of generated assemblies,
+the judge (its MethodAudit/MirrorGen trees, root files and SDK), `release_il.py` itself (the build recipe), the install's DLL listing, and
 which mixed-mode (C++/CLI) members of its closure were scanned with it. Otherwise a project's rows do not
 depend on what else is scanned with it. A mixed-mode reference is different because the build only
 references it: references outside the build's targets are built in Debug, where a mixed-mode project builds
@@ -245,12 +249,17 @@ in that round's receipt with the round number and the seconds spent waiting for 
 - `rebased-unaffected`: `main` moved, the rebase is clean, the rebased branch affects no more
   projects than were validated, and the new `main` commits touch none of the candidate's inputs
   (compared projects and their forward reference closure, `src/` files outside project folders,
-  root files other than `*.md`, the type map, MethodAudit, MirrorGen, `tools/validation/`, and for
+  root files other than `*.md`, the type map, the registry of generated assemblies, MethodAudit,
+  MirrorGen, `tools/validation/`, and for
   native projects their folders, `docs/mirror/native/` and the assembly map). It lands without building.
 - `retry`: anything else releases the lock and starts another round against the new `origin/main`,
   so a revalidation does not hold the lock while other lanes wait to land.
 - `revalidated`: in the last of three rounds, anything else is validated again under the lock, so
   a lane still lands while `main` keeps moving.
+
+A branch that changes `tools/validation/` must also pass that folder's unit tests
+(`python -m unittest discover`, run in the branch's worktree before a tree whose rules were not tested yet
+is validated): the gate compares IL, so only those tests judge a change to its own rules.
 
 A rebase conflict is aborted and its files listed. There are no stored validation refs, baseline
 commits, protected-list approvals or two-stage validation records. Changes without production
@@ -276,7 +285,7 @@ from a session script: that is how landing receipts were lost.
 
 Native projects (`src/<P>/` with `<P>.vcxproj` and no `<P>.csproj`) the branch affects are checked by
 `native_gate.py` after the IL check; both must pass. A change to `docs/mirror/native/internal-targets.json`,
-the assembly map, `native_bytes.py` or `native_gate.py` selects every native project. Native work no
+the assembly map, `native_bytes.py`, `native_linked.py` or `native_gate.py` selects every native project. Native work no
 longer lands unchecked.
 
 Pass the same `--project`, `--type` or `--method` selectors to `lane_merge.py` when needed.

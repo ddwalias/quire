@@ -9,8 +9,9 @@ rebased branch affects no more projects than were validated, and B..main touches
 (inputs_untouched), the compared IL and its base are what was validated, so it lands without building again.
 Otherwise the lock is released and the branch is validated again against the new origin/main (path "retry"); only
 the last of ROUNDS rounds revalidates under the lock, so a lane still lands while main keeps moving, and the lock is
-otherwise held just to land. Each round's receipt .mirror-cache/gate-il-<id>/gate.json records the path taken, the
-round and the seconds spent waiting for and holding the lock under "landing". The round that lands is also copied to
+otherwise held just to land. A branch that changes tools/validation must also pass that folder's unit tests
+(tool_tests), which run before each validation of a tree whose rules were not tested yet. Each round's receipt
+.mirror-cache/gate-il-<id>/gate.json records the path taken, the round and the seconds spent waiting for and holding the lock under "landing". The round that lands is also copied to
 .mirror-cache/receipts/gate-il-<id>.json: the gate-il folders hold a run's inventories and logs and are disposable
 (cache_prune.py removes old ones), the receipts folder is the durable record. A failed rebase is aborted and its
 conflicts reported.
@@ -61,7 +62,8 @@ def rebase(branch, onto):
 def inputs_untouched(paths, root, projects, natives):
     """Whether none of paths (B..main) can change the compared Release IL, its base or its verdict: conservative.
     Inputs are each compared project and its forward ProjectReference closure, everything outside a project directory
-    under src/ and at the repository root (but *.md), the type map, the judge (MethodAudit, MirrorGen) and gate rules
+    under src/ and at the repository root (but *.md), the type map, the registry of generated assemblies (which rule
+    judges a project), the judge (MethodAudit, MirrorGen) and gate rules
     (tools/validation), and for affected native projects their directories and docs/mirror/native/."""
     dirs = {d.name for d in release_il.build_closure(root, projects)} | set(natives)
     prefixes = ['tools/Quire.Tools.MethodAudit/', 'tools/Quire.Tools.MirrorGen/', 'tools/validation/',
@@ -71,10 +73,37 @@ def inputs_untouched(paths, root, projects, natives):
     for path in paths:
         parts = path.split('/')
         if len(parts) == 1 and not path.endswith('.md') or parts[0] == 'src' and len(parts) < 3 \
-                or path == release_il.TYPE_MAP \
+                or path in (release_il.TYPE_MAP, release_il.GENERATED_ASSEMBLIES) \
                 or path.startswith(tuple(prefixes)):
             return False
     return True
+
+
+GATE_RULES = 'tools/validation/'
+# Trees of GATE_RULES whose tests passed in this run: a later round with the same rules does not repeat them.
+TESTED = set()
+
+
+def tool_tests(lane, base, timeout):
+    """Run the unit tests of tools/validation when the branch changes that folder: the gate's rules are not judged by
+    the gate (MethodAudit compares IL, not Python), so their own tests are what stands between a broken rule and main.
+    They are the branch's tests of the branch's rules, run in its worktree."""
+    if not any(path.startswith(GATE_RULES) for path in git('diff', '--name-only', base, 'HEAD', cwd=lane).splitlines()):
+        return
+    folder = Path(lane) / 'tools' / 'validation'
+    tree = git('rev-parse', f'HEAD:{GATE_RULES.rstrip("/")}', cwd=lane)
+    if tree in TESTED or not any(folder.glob('test_*.py')):
+        return
+    print(f'{GATE_RULES} changed: running its unit tests', flush=True)
+    try:
+        result = subprocess.run([sys.executable, '-m', 'unittest', 'discover', '-s', '.', '-p', 'test_*.py'], cwd=folder,
+                                capture_output=True, text=True, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        raise RuntimeError(f'the unit tests of {GATE_RULES} did not finish in {timeout}s') from None
+    if result.returncode:
+        raise RuntimeError(f"the unit tests of {GATE_RULES} fail on this branch; fix them and retry "
+                           f"(python -m unittest discover, in that folder)\n{(result.stdout + result.stderr)[-3000:]}")
+    TESTED.add(tree)
 
 
 def land(main_dir, tip):
@@ -142,6 +171,7 @@ def attempt(args, main_dir, lane, number):
     git('fetch', '-q', 'origin')
     git('update-ref', pin(args.branch), 'refs/remotes/origin/main')
     rebase(args.branch, pin(args.branch))
+    tool_tests(lane, pin(args.branch), args.timeout)
     receipt = il_merge.ROOT / '.mirror-cache' / f'gate-il-{uuid.uuid4().hex[:12]}'
     args.base, args.apply, args.results = pin(args.branch), False, receipt
     code = il_merge.gate(args)
@@ -210,6 +240,7 @@ def land_under_lock(args, main_dir, lane, record, base, tip, number, landing):
             args.base, args.apply, args.keep = 'main', True, False  # kept with this round's, once pushed
             args.results = il_merge.ROOT / '.mirror-cache' / f'gate-il-{uuid.uuid4().hex[:12]}'
             landing.update(path='revalidated', tip=rebased, receipt=str(args.results / 'gate.json'))
+            tool_tests(lane, current, args.timeout)  # main's rules and the branch's, together for the first time
             code = il_merge.gate(args)
             if code:
                 landing['path'] = 'revalidation-failed'

@@ -1,5 +1,17 @@
 import unittest
-from accept import owners
+from accept import il_rejection, owners
+
+
+class IlRejectionTests(unittest.TestCase):
+    def test_a_member_is_kept_only_when_its_instructions_and_declaration_match(self):
+        row = {'exact_match': True, 'shape_matches': True, 'structure_differences': [], 'declaration_differences': []}
+        self.assertIsNone(il_rejection(row))
+        self.assertEqual(il_rejection(None), 'absent from the inventory')
+        self.assertEqual(il_rejection({**row, 'exact_match': None}), 'no Mathcad counterpart')
+        self.assertEqual(il_rejection({**row, 'exact_match': False}), 'opcode sequence differs')
+        self.assertEqual(il_rejection({**row, 'shape_matches': False,
+                                       'declaration_differences': ['access: Quire Public, Mathcad Internal']}),
+                         'declaration differs: access: Quire Public, Mathcad Internal')
 
 
 class OwnersTests(unittest.TestCase):

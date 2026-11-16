@@ -890,6 +890,25 @@ class CheckTests(unittest.TestCase):
         with mock.patch.object(sys, 'stderr'), self.assertRaises(SystemExit):
             release_il.main(['--judge', 'candidate'])
 
+    def test_a_registered_generated_project_is_judged_by_the_base_judge_and_cannot_leave_the_rule(self):
+        """A project the base's or the candidate's registry names follows the generated rule; the judge is the base's."""
+        unpaired = lambda project: self.row(project, exact=True) + self.row(project, id=f'{project}::T::New', original=None)
+        self.repo.write(release_il.GENERATED_ASSEMBLIES, '{"P": {"assembly": "a"}}')
+        self.repo.write('tools/Quire.Tools.MethodAudit/Program.cs', 'proposed')
+        report = self.check()  # the candidate registers P and proposes another judge
+        self.assertIn('P', report['generated_assemblies'])
+        self.assertEqual(report['judge']['base'], report['judge']['candidate'])
+        self.assertEqual(self.judges, [None])  # only the base's judge was built
+        self.assertTrue(report['passed'], report)
+        self.rows = unpaired
+        self.assertFalse(self.check()['passed'])  # the generated rule: every method pairs
+        registered = self.repo.commit()
+        self.repo.git('rm', '-q', release_il.GENERATED_ASSEMBLIES)
+        self.repo.commit()
+        report = self.check(registered)  # the candidate unregisters P: still the generated rule
+        self.assertIn('P', report['generated_assemblies'])
+        self.assertFalse(report['passed'])
+
     def test_a_base_without_the_judge_fails_closed(self):
         self.repo.git('rm', '-rq', 'tools/Quire.Tools.MethodAudit')
         no_judge = self.repo.commit()

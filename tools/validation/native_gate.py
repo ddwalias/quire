@@ -6,7 +6,7 @@ The native analog of release_il.py. A native project is a directory src/<P>/ hol
 original DLL is the one docs/mirror/assembly-map.json maps <P> to, and a project the map does not list fails closed.
 The base is built from a temporary checkout and the candidate is the current working tree, each with the pinned MSVC
 (Release|x64, outputs in a temporary directory). native_bytes.py compares every object
-of each build with the original under the candidate tree's manifest of internal targets, strictly: a function passes
+of each build with the original under that tree's own manifest of internal targets, strictly: a function passes
 only when its bytes and every call/address target verify.
 
 A function that passed in the base must still pass. A new function, or one whose bytes, relocations or targets changed,
@@ -20,6 +20,7 @@ touched: in linked mode such a regression is listed under "regressions" and bloc
 that matched stops matching silently. A new or changed export must still pass, and removing a passing one fails.
 """
 import argparse
+import functools
 import hashlib
 import json
 import os
@@ -94,33 +95,42 @@ def object_fingerprints(objects):
     return {name: fingerprint(d) for name, d in native_bytes.definitions_in_objects(objects).items()}
 
 
+def strict(result):
+    """Whether a native_bytes or native_linked result passes the gate: it matches and no target is unverified."""
+    return result.ok and not result.unverified
+
+
+def code_of(candidate, name):
+    """What the gate fingerprints for the export `name` of a linked candidate (its instructions by name)."""
+    rva = candidate.image.exports[name]
+    return native_linked.fingerprint_text(candidate, name) if candidate.executable(rva) else name
+
+
 def scan(original, objects, manifest):
     """Function name -> {'ok', 'reason', 'sha256'} from a strict native_bytes run over `objects`."""
     definitions = native_bytes.definitions_in_objects(objects)
     rows = {}
     for r in native_bytes.compare_object(original, objects, None, manifest):
-        name = r.name.split(' (')[0]  # "f (at manifest RVA)", "f (manifest entry)" are f
-        ok = r.ok and not r.unverified
+        name = anonymous(r.name.split(' (')[0])  # "f (at manifest RVA)", "f (manifest entry)" are f
         reason = r.reason if not r.ok else f'{r.unverified} unverified call/address targets' if r.unverified else None
-        rows[anonymous(name)] = {'ok': ok, 'reason': reason,
-                                 'sha256': fingerprint(definitions[anonymous(name)])
-                                 if anonymous(name) in definitions else None}
+        if name not in rows or rows[name]['ok']:  # a later row of the same name never hides a failure
+            rows[name] = {'ok': strict(r), 'reason': reason,
+                          'sha256': fingerprint(definitions[name]) if name in definitions else None}
     return rows
 
 
 def scan_linked(original, dll, link_map, manifest):
-    """Export name -> {'ok', 'reason', 'sha256'} from a strict linked comparison (D30) of `dll` with the original."""
-    o = native_linked.Linked.load(original)
+    """Export name -> {'ok', 'reason', 'sha256'} from a strict linked comparison (D30) of `dll` with the original's
+    Linked (native_linked.Linked.load)."""
     c = native_linked.Linked.load(dll, Path(link_map).read_text(encoding='utf-8', errors='replace'))
-    entries = native_bytes.load_targets(manifest, o.image) if manifest else {}
-    comparison = native_linked.Comparison(o, c, entries)
+    entries = native_bytes.load_targets(manifest, original.image) if manifest else {}
+    comparison = native_linked.Comparison(original, c, entries)
     rows = {}
     for name in sorted(c.image.exports):
         r = comparison.export(name)
-        ok = r.ok and not r.unverified
         reason = r.reason if not r.ok else f'{r.unverified} unverified call/address targets' if r.unverified else None
-        text = native_linked.fingerprint_text(c, name) if c.executable(c.image.exports[name]) else name
-        rows[anonymous(name)] = {'ok': ok, 'reason': reason, 'sha256': hashlib.sha256(text.encode()).hexdigest()}
+        rows[anonymous(name)] = {'ok': strict(r), 'reason': reason,
+                                 'sha256': hashlib.sha256(code_of(c, name).encode()).hexdigest()}
     return rows
 
 
@@ -149,11 +159,12 @@ def compare(before, after, linked_mode=False):
             'unfinished': sum(not row['ok'] for row in after.values())}
 
 
-def scan_project(original, root, project, work, log, timeout, manifest):
-    """Rows of `project` built from `root`: per object, or from the linked DLL when it builds with /GL (D30)."""
+def scan_project(original, root, project, work, log, timeout, manifest, linked_original):
+    """Rows of `project` built from `root`: per object against the `original` DLL, or from the linked DLL when it builds
+    with /GL (D30) against `linked_original()`, the original's Linked."""
     if linked(root, project):
         dll, link_map = build(root, project, work, log, timeout, link_map=True)
-        return scan_linked(original, dll, link_map, manifest)
+        return scan_linked(linked_original(), dll, link_map, manifest)
     return scan(original, build(root, project, work, log, timeout), manifest)
 
 
@@ -169,7 +180,7 @@ def check(base, projects, results, root=ROOT, install=None, timeout=1800):
         if unknown := set(projects) - native_projects(root):
             raise RuntimeError(f'not native projects: {sorted(unknown)}')
         manifest = root / MANIFEST if (root / MANIFEST).is_file() else None
-        with tempfile.TemporaryDirectory(prefix='quire-native-') as temp:
+        with tempfile.TemporaryDirectory(prefix='quire-native-', ignore_cleanup_errors=True) as temp:
             work = Path(temp)
             original_tree = work / 'base'
             if projects:
@@ -179,17 +190,23 @@ def check(base, projects, results, root=ROOT, install=None, timeout=1800):
                 (original_tree / '.git/info/attributes').write_text(RAW_BYTES, encoding='utf-8')
                 run(['git', '-c', 'core.hooksPath=', 'checkout', '--quiet', '--detach', base], original_tree, log,
                     timeout)
+            # The base is scanned under its own manifest: under the candidate's, an entry the candidate removes or
+            # alters would fail its callers on both sides, and compare() would skip them as unchanged.
+            base_manifest = original_tree / MANIFEST if (original_tree / MANIFEST).is_file() else None
             for project in projects:
                 dll = install / original_dll(root, project)
                 if not dll.is_file():
                     raise RuntimeError(f'{project}: original {dll} not found')
-                report['originals'][project] = native_bytes.PeImage(dll).sha256
+                image = native_bytes.PeImage(dll)
+                report['originals'][project] = image.sha256
+                linked_original = functools.cache(functools.partial(native_linked.Linked.load, dll))
                 print(f'Building {project} (base and candidate)', flush=True)
                 existing = (original_tree / 'src' / project / f'{project}.vcxproj').is_file()
                 before = scan_project(dll, original_tree, project, work / project / 'before', log, timeout,
-                                      manifest) if existing else {}
+                                      base_manifest, linked_original) if existing else {}
                 linked_mode = linked(root, project)
-                after = scan_project(dll, root, project, work / project / 'after', log, timeout, manifest)
+                after = scan_project(dll, root, project, work / project / 'after', log, timeout, manifest,
+                                     linked_original)
                 if linked_mode and existing and not linked(original_tree, project):
                     # A per-object base's fingerprints cannot match linked ones, so every export would count as changed
                     # and none as a regression (D30). Decide "changed" on the candidate's per-object fingerprints
@@ -199,8 +216,7 @@ def check(base, projects, results, root=ROOT, install=None, timeout=1800):
                     for name, row in after.items():
                         row['sha256'] = per_object.get(name)
                 if linked_mode:  # a linked scan lists exports only; compare the base's exports with them
-                    exports = native_bytes.PeImage(dll).exports
-                    before = {n: r for n, r in before.items() if n in {anonymous(e) for e in exports}}
+                    before = {n: r for n, r in before.items() if n in {anonymous(e) for e in image.exports}}
                 result = compare(before, after, linked_mode)
                 report['checked'] += [f'{project}::{name}' for name in result['checked']]
                 report['failures'] += [{**f, 'method': f"{project}::{f['method']}"} for f in result['failures']]

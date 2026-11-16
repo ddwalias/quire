@@ -229,7 +229,7 @@ class Comparison:
         ao, ac = self.o.image.exports[name], self.c.image.exports[name]
         self.memo = {}  # a result assumed while a cycle was open must not reach another export
         if not self.o.executable(ao):
-            status, reason, unverified = self.data(ao, ac, self.c.symbol_extent(ac))
+            status, reason, unverified = self.data(ao, ac, self.data_extent(ao, ac))
         else:
             status, reason, unverified = self.function(ao, ac)
         return Result(name, status != "mismatch", reason or "instructions and targets match", unverified)
@@ -321,9 +321,14 @@ class Comparison:
                 return self.function(ao, ac)
             return "unverified", None, 1
         if not o.executable(ao) and not c.executable(ac) and ac in c.names:
-            begin, end = c.symbol_extent(ac)
-            return self.data(ao, ac, (begin, max(end, begin + o.object_end(ao) - ao)))
+            return self.data(ao, ac, self.data_extent(ao, ac))
         return "unverified", None, 1
+
+    def data_extent(self, ao, ac):
+        """The extent compared for the candidate's data at `ac`: its map symbol's, or the original object's at `ao` when
+        that is longer, so a candidate shorter than the original fails."""
+        begin, end = self.c.symbol_extent(ac)
+        return begin, max(end, begin + self.o.object_end(ao) - ao)
 
     @staticmethod
     def imported(image, rva):

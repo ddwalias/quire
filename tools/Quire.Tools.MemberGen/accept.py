@@ -63,6 +63,20 @@ def owners(report):
     return lines
 
 
+def il_rejection(row):
+    """Why an inventory row does not pass the gate's IL check (exact instructions and a matching declaration); None
+    when it does."""
+    if row is None:
+        return 'absent from the inventory'
+    if row['exact_match'] is None:
+        return 'no Mathcad counterpart'
+    if row['exact_match'] is not True:
+        return '; '.join(row['structure_differences'][:1]) or 'opcode sequence differs'
+    if row.get('shape_matches') is not True:
+        return 'declaration differs: ' + ('; '.join(row.get('declaration_differences') or []) or 'shape does not match')
+    return None
+
+
 def repo_relpath(p):
     p = p.strip().replace('\\', '/')
     if not (p.startswith('/') or re.match(r'^[a-zA-Z]:', p)):
@@ -119,11 +133,7 @@ def accept(args, work, log):
             audited = {m['id']: m for m in json.loads(inventory.read_text())['methods']}
             for m in report['members']:
                 for method in m['methods']:
-                    row = audited.get(method)
-                    if row is None or row['exact_match'] is not True:
-                        why = ('absent from the inventory' if row is None
-                               else 'no Mathcad counterpart' if row['exact_match'] is None
-                               else '; '.join(row['structure_differences'][:1]) or 'opcode sequence differs')
+                    if (why := il_rejection(audited.get(method))) is not None:
                         rejected.setdefault(m['id'], f'IL: {why}')
         if not rejected:
             break

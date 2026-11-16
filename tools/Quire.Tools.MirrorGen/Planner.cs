@@ -470,16 +470,23 @@ public sealed class HandWritten
         return hw;
     }
 
+    /// <summary>A project's hand-written C#: its .cs files outside Generated/, bin and obj; none without a directory.</summary>
+    public static IEnumerable<string> Sources(string projectDir)
+    {
+        if (!Directory.Exists(projectDir)) return [];
+        var generated = Path.Combine(projectDir, Emit.GeneratedDir) + Path.DirectorySeparatorChar;
+        return Directory.EnumerateFiles(projectDir, "*.cs", SearchOption.AllDirectories)
+            .Where(file => !file.StartsWith(generated, StringComparison.OrdinalIgnoreCase)
+                && !file.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}")
+                && !file.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}"));
+    }
+
     /// <summary>[MirrorOf] arguments written in hand-written sources (outside Generated/), which metadata can't tell
     /// apart from the generator's.</summary>
     private void ScanSourceBindings(string projectDir)
     {
-        var generated = Path.Combine(projectDir, Emit.GeneratedDir) + Path.DirectorySeparatorChar;
-        foreach (var file in Directory.EnumerateFiles(projectDir, "*.cs", SearchOption.AllDirectories))
+        foreach (var file in Sources(projectDir))
         {
-            if (file.StartsWith(generated, StringComparison.OrdinalIgnoreCase)) continue;
-            if (file.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}")
-                || file.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}")) continue;
             // Code only the stub-free build compiles (-p:MirrorStubs=false) is not part of the normal build read here.
             string text = System.Text.RegularExpressions.Regex.Replace(File.ReadAllText(file),
                 @"#if\s+QUIRE_MIRROR_STUB_FREE\b.*?#endif", "", System.Text.RegularExpressions.RegexOptions.Singleline);

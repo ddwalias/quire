@@ -19,14 +19,15 @@ if (args is ["members", var assemblyPath, var typeName])
 var options = new Dictionary<string, List<string>>();
 for (int i = 0; i < args.Length; i += 2)
 {
+    // A no-op, still accepted: Release IL is the only comparison, and older callers pass it.
     if (args[i] == "--release-il")
     {
         options[args[i]] = ["true"];
         i--;
         continue;
     }
-    if (i + 1 >= args.Length || args[i] is not ("--repo" or "--assemblies" or "--install" or "--output" or "--project" or "--type" or "--diff"))
-        throw new ArgumentException("MethodAudit --repo DIR --assemblies RELEASE_DIR --install DIR (--output FILE | --diff KEY ...) [--project NAME ...] [--type TYPE ...] [--release-il]");
+    if (i + 1 >= args.Length || args[i] is not ("--repo" or "--assemblies" or "--install" or "--output" or "--project" or "--diff"))
+        throw new ArgumentException("MethodAudit --repo DIR --assemblies RELEASE_DIR --install DIR (--output FILE | --diff KEY ...) [--project NAME ...] [--release-il]");
     if (!options.TryGetValue(args[i], out var list)) options[args[i]] = list = [];
     list.Add(args[i + 1]);
 }
@@ -40,7 +41,6 @@ string? output = diffs == null ? One("--output") : null;
 int shown = 0;
 var projects = options.GetValueOrDefault("--project") ?? Directory.GetFiles(Path.Combine(repo, "docs/mirror/manifest"), "*.txt")
     .Select(Path.GetFileNameWithoutExtension).OfType<string>().ToList();
-var selectedTypes = options.GetValueOrDefault("--type")?.ToHashSet(StringComparer.Ordinal) ?? [];
 var rows = new List<object>();
 var errors = new List<string>();
 // Quire type -> every (Mathcad type, Mathcad assembly) the type map binds it to: one Quire name stands for one type per
@@ -127,10 +127,11 @@ foreach (var artifact in quire)
     foreach (var t in artifact.Model.Types.Where(t => t.MirrorOf != null))
         typeNames.TryAdd((artifact.Name, t.FullName), t.MirrorOf!.Split(',').Select(s => s.Trim()).ToArray());
 // Generated assemblies have no source [MirrorOf]. Their reviewed project-to-install binding is opt-in and
-// isolated in docs/mirror/generated-assemblies.json; within it, type identity is the full metadata name.
-var generatedBindings = JsonSerializer.Deserialize<Dictionary<string, GeneratedAssemblyBinding>>(
-    File.ReadAllText(Path.Combine(repo, "docs/mirror/generated-assemblies.json")),
-    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? [];
+// isolated in docs/mirror/generated-assemblies.json; within it, type identity is the full metadata name. No file is an
+// empty registry; a malformed one still fails the run.
+string registry = Path.Combine(repo, "docs/mirror/generated-assemblies.json");
+Dictionary<string, GeneratedAssemblyBinding> generatedBindings = !File.Exists(registry) ? [] : JsonSerializer.Deserialize<Dictionary<string, GeneratedAssemblyBinding>>(
+    File.ReadAllText(registry), new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? [];
 foreach (var artifact in quire.Where(a => generatedBindings.ContainsKey(a.Name)
     && a.Model.Types.Any(t => t.FullName.StartsWith("Mathcad.", StringComparison.Ordinal))))
 {
@@ -203,7 +204,12 @@ var assemblyNames = new Dictionary<string, string>(StringComparer.OrdinalIgnoreC
 // own [MirrorOf] would; the audited projects' bindings were checked against it above. Where the type map binds the
 // name in several assemblies, the [MirrorOf] of the Quire assembly declaring it decides, if it is a reviewed binding.
 // The assembly is named as its metadata names it, which the type map's file name may not match in case.
-string[]? Binding(string assembly, string name)
+// Memoized: Map asks for every named type of every signature and body, and nothing Bind reads changes after the
+// GeneratedBinding pass above (typeNames, reviewed, cppArtifacts, originals are only written before it).
+var bindings = new Dictionary<(string Assembly, string Name), string[]?>();
+string[]? Binding(string assembly, string name) =>
+    bindings.TryGetValue((assembly, name), out var known) ? known : bindings[(assembly, name)] = Bind(assembly, name);
+string[]? Bind(string assembly, string name)
 {
     // An audited assembly's [MirrorOf] names the Mathcad assembly as written; it is named canonically, as an unaudited
     // one's binding is below, so the name does not depend on what else is audited.
@@ -300,6 +306,15 @@ Artifact? ModuleOriginal(Artifact artifact)
         .OfType<Artifact>().Where(o => !o.IlOnly).Distinct().ToList();
     return mixed.Count == 1 ? mixed[0] : null;
 }
+// Each artifact's methods by declaring type, in metadata order, so pairing does not scan every method per method.
+var owned = new Dictionary<Artifact, ILookup<string, RawMethod>>();
+ILookup<string, RawMethod> Owned(Artifact a) => owned.TryGetValue(a, out var byOwner) ? byOwner : owned[a] = a.Methods.ToLookup(m => m.Owner);
+// A mixed-mode original's globals by their key, its types unified as for type members (OriginalKey): mscorlib is
+// System.Runtime.
+var globalKeys = new Dictionary<Artifact, ILookup<string, RawMethod>>();
+ILookup<string, RawMethod> Globals(Artifact module) => globalKeys.TryGetValue(module, out var byKey) ? byKey
+    : globalKeys[module] = Owned(module)["<Module>"].ToLookup(m => Signatures.Method(m.Name, m.Signature.GenericParameterCount,
+        m.Signature.ParameterTypes.Select(Corlib), Corlib(m.Signature.ReturnType), m.Static));
 // Keys leave out custom modifiers, which C# cannot write (C++/CLI's IsLong, IsConst...). They only break a tie between
 // originals that differ in nothing else, for the one whose modifiers are the Quire method's. A tie they leave is that
 // method's failure (no counterpart), not the run's.
@@ -318,9 +333,11 @@ RawMethod? Counterpart(RawMethod raw, Artifact original, List<RawMethod> sameKey
 // Problem: why a method could not be paired or read; its row fails with it instead of the whole run.
 var matched = new List<(Artifact Artifact, RawMethod Raw, TypeModel? Type, MethodModel? Method, Artifact? Original, RawMethod? Counterpart, string? Problem)>();
 foreach (var artifact in quire)
+{
+    var types = artifact.Model.Types.ToLookup(t => t.FullName);
     foreach (var raw in artifact.Methods)
     {
-        var type = artifact.Model.Types.SingleOrDefault(t => t.FullName == raw.Owner);
+        var type = types[raw.Owner].SingleOrDefault();
         string? problem = null;
         // C++/CLI global functions and CRT support live on <Module>, which has no type model. A global function pairs
         // with the original's of the same mapped signature, and is compared like any other method.
@@ -334,10 +351,7 @@ foreach (var artifact in quire)
             var module = ModuleOriginal(artifact);
             string key = Signatures.Method(raw.Name, raw.Signature.GenericParameterCount, raw.Signature.ParameterTypes.Select(Map),
                 Map(raw.Signature.ReturnType), raw.Static);
-            // The original's types unified as for type members (OriginalKey): mscorlib is System.Runtime.
-            var global = module == null ? null : Counterpart(raw, module, [.. module.Methods.Where(m => m.Owner == raw.Owner
-                && Signatures.Method(m.Name, m.Signature.GenericParameterCount, m.Signature.ParameterTypes.Select(Corlib),
-                    Corlib(m.Signature.ReturnType), m.Static) == key)], ref problem);
+            var global = module == null ? null : Counterpart(raw, module, [.. Globals(module)[key]], ref problem);
             matched.Add((artifact, raw, null, null, module, global, problem));
             continue;
         }
@@ -346,8 +360,8 @@ foreach (var artifact in quire)
             .Where(m => Key(m, false) == raw.Key).Distinct().ToList();
         // C++/CLI overloads that differ only in custom modifiers share a key; models keep metadata order, so the n-th
         // method of the key is the n-th model.
-        var method = candidates.Count == 1 ? candidates[0] : candidates.ElementAtOrDefault(artifact.Methods
-            .Where(m => m.Owner == raw.Owner && m.Key == raw.Key).TakeWhile(m => !ReferenceEquals(m, raw)).Count());
+        var method = candidates.Count == 1 ? candidates[0] : candidates.ElementAtOrDefault(Owned(artifact)[raw.Owner]
+            .Where(m => m.Key == raw.Key).TakeWhile(m => !ReferenceEquals(m, raw)).Count());
         if (method == null)
         {
             matched.Add((artifact, raw, type, null, null, null, $"{candidates.Count} method models for {raw.Key}"));
@@ -359,11 +373,12 @@ foreach (var artifact in quire)
         {
             // The method's key is the same for every original candidate: compute it once, not per candidate.
             var key = ComparisonKey(method, true, type, generatedBindings.ContainsKey(artifact.Name) ? Corlib : null);
-            counterpart = Counterpart(raw, original, [.. original.Methods.Where(m => m.Owner == fields[0].Trim()
-                && OriginalKey(original, m) == key)], ref problem);
+            counterpart = Counterpart(raw, original, [.. Owned(original)[fields[0].Trim()].Where(m => OriginalKey(original, m) == key)],
+                ref problem);
         }
         matched.Add((artifact, raw, type, method, original, counterpart, problem));
     }
+}
 // Mathcad members no member of the audited assembly pairs with: those of each type the assembly binds, and the globals of
 // the mixed-mode original its <Module> pairs with. A C# project carries a generated stub for every member, so a missing
 // one is a row; a C++/CLI build has no stubs, and a member it lacks is in no row. Listed per audited assembly.
@@ -377,20 +392,28 @@ foreach (var artifact in quire)
     if (ModuleOriginal(artifact) is { } module) owners.Add(("<Module>", "<Module>", module));
     foreach (var (quireType, mathcadType, original) in owners.OrderBy(o => o.Quire, StringComparer.Ordinal))
     {
-        if (original == null || selectedTypes.Count > 0 && !selectedTypes.Contains(quireType)) continue;
-        foreach (var m in original.Methods.Where(m => m.Owner == mathcadType && !paired.Contains((original, m.Token))))
+        if (original == null) continue;
+        foreach (var m in Owned(original)[mathcadType].Where(m => !paired.Contains((original, m.Token))))
             missing.Add(new { project = artifact.Name, type = quireType, original = new { assembly = original.Name, type = m.Owner,
                 signature = m.Key, token = m.Token, token_hex = $"0x{m.Token:x8}", native_code = m.NativeCode } });
     }
 }
-// Keys omit custom modifiers, so C++/CLI global overloads can share one: those add their modifiers to their identity,
-// and the token only where that still leaves a tie.
-var globalIds = new Dictionary<(Artifact, int), string>();
-foreach (var group in matched.Where(m => m.Type == null).GroupBy(m => (m.Artifact, m.Raw.Key)))
-    foreach (var byModifiers in group.GroupBy(m => m.Raw.Modifiers))
-        foreach (var m in byModifiers)
-            globalIds[(m.Artifact, m.Raw.Token)] = m.Raw.Key + (group.Count() == 1 ? "" : $" [{m.Raw.Modifiers}]")
-                + (byModifiers.Count() == 1 ? "" : $"@0x{m.Raw.Token:x8}");
+// A row's identity: a type member's comparison key, stable across explicit-interface source qualifiers (its metadata
+// key when it has no model, or when the key is ambiguous, which fails the row); a global's metadata key.
+var keys = matched.Select((string Key, string? Problem) (m) =>
+{
+    if (m.Type == null || m.Method == null) return (m.Raw.Key, null);
+    try { return (m.Artifact.ComparisonKey(m.Raw), null); }
+    catch (BadImageFormatException e) { return (m.Raw.Key, e.Message); }
+}).ToList();
+// Keys omit custom modifiers, so C++/CLI overloads can share one, globals of a module and members of a type alike: those
+// add their modifiers to their identity, and the token only where that still leaves a tie.
+var ids = new Dictionary<(Artifact, int), (string Id, string? Problem)>();
+foreach (var group in matched.Zip(keys).GroupBy(p => (p.First.Artifact, Owner: p.First.Type == null ? null : p.First.Raw.Owner, p.Second.Key)))
+    foreach (var byModifiers in group.GroupBy(p => p.First.Raw.Modifiers))
+        foreach (var (m, (key, problem)) in byModifiers)
+            ids[(m.Artifact, m.Raw.Token)] = (key + (group.Count() == 1 ? "" : $" [{m.Raw.Modifiers}]")
+                + (byModifiers.Count() == 1 ? "" : $"@0x{m.Raw.Token:x8}"), problem);
 // Calls to Quire methods are named after their Mathcad counterparts; types after their MirrorOf binding.
 var originalNames = matched.Where(m => m.Counterpart != null)
     .ToDictionary(m => (m.Artifact.Name, m.Raw.Token), m => m.Counterpart!.Name);
@@ -404,12 +427,12 @@ var products = Directory.GetDirectories(Path.Combine(repo, "src")).Select(d => P
     .Concat(quire.Select(a => a.Name.ToLowerInvariant())).Concat(mathcadAssemblies).ToHashSet();
 var structures = new Dictionary<Artifact, StructureReader>();
 StructureReader Reader(Artifact a, bool isQuire) => structures.TryGetValue(a, out var reader) ? reader
-    : structures[a] = new StructureReader(a.Metadata, a.Pe, new StrictSigProvider(a.Name), name => name,
-        isQuire ? token => originalNames.GetValueOrDefault((a.Name, token)) : _ => null, exact: true,
+    : structures[a] = new StructureReader(a.Metadata, a.Pe, new StrictSigProvider(a.Name),
+        isQuire ? token => originalNames.GetValueOrDefault((a.Name, token)) : _ => null,
         bind: isQuire ? Binding : (_, _) => null,
         products: products);
 // Stable body hashes identify changed Release methods independently of metadata token numbering.
-var bodies = quire.ToDictionary(a => a, a => new StructureReader(a.Metadata, a.Pe, new SigProvider(a.Name), name => name, _ => null, exact: true, root: repo));
+var bodies = quire.ToDictionary(a => a, a => new StructureReader(a.Metadata, a.Pe, new SigProvider(a.Name), _ => null, root: repo));
 // D19: an unpaired mixed-mode member whose bound Mathcad assembly has a member of the same owner, name and arity is a
 // pairing miss, not compiler support Mathcad's build lacked.
 // Null when there is no single Mathcad assembly to look in, so the gate fails closed.
@@ -420,7 +443,7 @@ bool? OriginalNameTaken(Artifact artifact, RawMethod raw, TypeModel? type, Artif
     if (mixed == null) return null;
     string owner = type != null && typeNames.TryGetValue((artifact.Name, type.FullName), out var fields) ? fields[0].Trim() : raw.Owner;
     int arity = raw.Signature.ParameterTypes.Length;
-    return mixed.Methods.Any(m => m.Owner == owner && m.Name == raw.Name && m.Signature.ParameterTypes.Length == arity);
+    return Owned(mixed)[owner].Any(m => m.Name == raw.Name && m.Signature.ParameterTypes.Length == arity);
 }
 // Why an unpaired method has no counterpart, naming what Mathcad has under that name so the differing part of the
 // signature shows (a parameter type that did not map, a different return type). Null where there is nothing to name.
@@ -435,7 +458,7 @@ string? PairingMiss(Artifact artifact, RawMethod raw, TypeModel? type, MethodMod
         (mathcad, owner) = (module, raw.Owner);
         mine = Signatures.Method(raw.Name, raw.Signature.GenericParameterCount, raw.Signature.ParameterTypes.Select(Map),
             Map(raw.Signature.ReturnType), raw.Static);
-        sameName = [.. module.Methods.Where(m => m.Owner == owner && m.Name == raw.Name).Select(m => Signatures.Method(m.Name,
+        sameName = [.. Owned(module)[owner].Where(m => m.Name == raw.Name).Select(m => Signatures.Method(m.Name,
             m.Signature.GenericParameterCount, m.Signature.ParameterTypes.Select(Corlib), Corlib(m.Signature.ReturnType), m.Static))];
     }
     else
@@ -446,7 +469,7 @@ string? PairingMiss(Artifact artifact, RawMethod raw, TypeModel? type, MethodMod
         (mathcad, owner) = (bound, fields[0].Trim());
         mine = ComparisonKey(method, true, type);
         string name = KeyName(mine);
-        sameName = [.. bound.Methods.Where(m => m.Owner == owner).Select(m => OriginalKey(bound, m)).Where(k => KeyName(k) == name)];
+        sameName = [.. Owned(bound)[owner].Select(m => OriginalKey(bound, m)).Where(k => KeyName(k) == name)];
     }
     return sameName.Count == 0 ? $"{mathcad.Name} {owner} has no member named {KeyName(mine)}"
         : $"this member is {mine}; {mathcad.Name} {owner} has {string.Join(" | ", sameName.Take(3))}"
@@ -454,12 +477,10 @@ string? PairingMiss(Artifact artifact, RawMethod raw, TypeModel? type, MethodMod
 }
 foreach (var (artifact, raw, type, method, original, paired, pairing) in matched)
 {
-    if (selectedTypes.Count > 0 && !selectedTypes.Contains(raw.Owner)) continue;
     // A method that cannot be paired, keyed or read fails its own row, as one without a counterpart, with the reason.
     var (counterpart, problem) = (paired, pairing);
-    string identity = raw.Key;
-    try { identity = type == null ? globalIds[(artifact, raw.Token)] : method == null ? raw.Key : artifact.ComparisonKey(raw); }
-    catch (BadImageFormatException e) { problem ??= e.Message; }
+    var (identity, keyProblem) = ids[(artifact, raw.Token)];
+    problem ??= keyProblem;
     bool wanted = diffs != null && diffs.Any(d => d == raw.Owner || d == $"{raw.Owner}::{raw.Name}"
         || d == $"{raw.Owner}::{raw.Key}" || method != null && d == $"{raw.Owner}::{Canonical.MethodName(method)}" || d == $"{raw.Owner}::{identity}");
     if (diffs != null && !wanted) continue;
@@ -478,8 +499,8 @@ foreach (var (artifact, raw, type, method, original, paired, pairing) in matched
     {
         try
         {
-            var mine = Reader(artifact, true).Read(MetadataTokens.MethodDefinitionHandle(raw.Token), true);
-            var theirs = Reader(original!, false).Read(MetadataTokens.MethodDefinitionHandle(counterpart.Token), true);
+            var mine = Reader(artifact, true).Read(MetadataTokens.MethodDefinitionHandle(raw.Token));
+            var theirs = Reader(original!, false).Read(MetadataTokens.MethodDefinitionHandle(counterpart.Token));
             differences = mine.Compare(theirs);
             exact = differences.Count == 0 && mine.Exact(theirs);
             firstDifference = mine.FirstDifference(theirs);
@@ -529,7 +550,7 @@ foreach (var (artifact, raw, type, method, original, paired, pairing) in matched
             && nativeBinding[1].Equals("utl-mgd", StringComparison.OrdinalIgnoreCase)
             && raw.BodyRva != 0
             && (counterpart == null || original?.Name.Equals("utl-mgd", StringComparison.OrdinalIgnoreCase) == true
-                && original.Methods.Single(m => m.Token == counterpart.Token).MaxStack is >= 0 and <= 7),
+                && counterpart.MaxStack is >= 0 and <= 7),
         declaration_only = counterpart is { BodyRva: 0 } && raw.BodyRva == 0
             && (raw.Abstract && counterpart.Abstract || type?.Kind == TypeKind.Delegate
                 // A COM coclass member: the runtime supplies the body, so its implementation flags are the member. TlbImp

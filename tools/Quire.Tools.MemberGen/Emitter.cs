@@ -84,7 +84,7 @@ sealed partial class Emitter(string repo, World world, Artifact quire, string pr
             var report = new
             {
                 id = stub.Id, kind = stub.Kind, category = plan.Category, type = stub.Type.FullName, member = stub.Name,
-                methods = stub.Methods.Select(p => $"{project}::{stub.Type.FullName}::{p.Quire.Key}").ToArray(),
+                methods = stub.Methods.Select(p => $"{project}::{p.Quire.Owner}::{InventoryKey(p.Quire)}").ToArray(),
                 mathcad_tokens = stub.Methods.Select(p => $"0x{p.Mathcad!.Token:x8}").ToArray()
             };
             Add(members, top, site, [$"[MirrorVerified(\"{evidence}\")]", .. lines], report);
@@ -103,6 +103,14 @@ sealed partial class Emitter(string repo, World world, Artifact quire, string pr
         var written = Written();
         // D17: IL acceptance emits no test classes or per-type evidence documents.
         return JsonSerializer.Serialize(new { project, members = Emitted, files = written }, new JsonSerializerOptions { WriteIndented = true });
+    }
+
+    /// <summary>The key MethodAudit's inventory id names a type member by: its comparison key (explicit implementations
+    /// and nested interfaces canonical), the metadata key where that is ambiguous.</summary>
+    private string InventoryKey(RawMethod raw)
+    {
+        try { return quire.ComparisonKey(raw); }
+        catch (BadImageFormatException) { return raw.Key; }
     }
 
     private static void Add(Dictionary<string, List<(string[], string[], List<string>, object)>> members, string top, Site site, List<string> lines, object report)

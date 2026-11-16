@@ -22,7 +22,9 @@ symbol that the toolset's static libraries supply (such as `??_7type_info@@6B@` 
 can define it: every site must resolve to its RVA, and a candidate that defines it is a mismatch. A run without
 --symbol lists each toolchain entry, so the targets accepted without a byte comparison stay visible. An entry marked
 "parked" (D29) names an internal function that per-object compilation cannot reproduce (D25): every site must resolve
-to its RVA, its bytes are not compared and its own targets are not followed, and a candidate may define its attempt.
+to its RVA, its bytes are not compared and its own targets are not followed, and a candidate may define its attempt,
+which is not reported as a match. A parked entry with a size is data: every site must resolve to its RVA as well, and
+the candidates must define it with that size; its bytes are not compared and its own targets are not followed.
 A run without --symbol lists each parked entry too.
 
 A function entry may name a leaf function (one without .pdata, such as a vtable slot returning a constant) when its
@@ -117,7 +119,8 @@ class Entry:
     """A reviewed internal target: its RVA in the original, and its size when it is data (a function's is .pdata's).
 
     A toolchain entry has no size: the toolset supplies its definition, so only its RVA is checked. A parked entry (D29)
-    is a function whose bytes per-object compilation cannot reproduce; only its RVA is checked as well."""
+    is a function whose bytes per-object compilation cannot reproduce; only its RVA is checked as well. A parked entry
+    with a size is data, checked by its RVA and the size of the candidates' definition."""
     rva: int
     size: int = None
     toolchain: bool = False
@@ -418,11 +421,6 @@ def _spans(path):
                           sec.selection not in (0, IMAGE_COMDAT_SELECT_NODUPLICATES))
 
 
-def functions_in_object(path):
-    """Each external function symbol with the bytes of its section span, its relocations and their targets."""
-    return [f for s, f in _spans(path) if s.storage == 2 and not f.data]
-
-
 def definitions_in_object(path):
     """Every function and data symbol the object defines, external or static, by name (the first of duplicates)."""
     out = {}
@@ -711,30 +709,7 @@ def classify_targets(image, begin, function, internal=None):
             if internal is None or name not in internal.entries:
                 found.unverified += 1
                 continue
-            entry = internal.entries[name]
-            if entry.parked and entry.size is not None:
-                status, reason = internal.reference(name)
-                if status == "ok":
-                    found.verified += 1
-                elif status == "mismatch":
-                    found.mismatches.append(f"{name} at +{r.offset:#x}: manifest entry does not match: {reason}")
-                    found.entries[name] = (status, reason)
-                else:
-                    found.unverified += 1
-                    found.entries[name] = (status, reason)
-                continue
-            if entry.parked:
-                status, reason = internal.reference(name)
-                if status == "ok":
-                    found.verified += 1
-                elif status == "mismatch":
-                    found.mismatches.append(f"{name} at +{r.offset:#x}: manifest entry does not match: {reason}")
-                    found.entries[name] = (status, reason)
-                else:
-                    found.unverified += 1
-                    found.entries[name] = (status, reason)
-                continue
-            expected = entry.rva + addend
+            expected = internal.entries[name].rva + addend  # every entry, parked ones too (D29)
             if resolved != expected:
                 mismatches.append(f"{name} at +{r.offset:#x}: original resolves to RVA {resolved:#x}, "
                                   f"manifest entry gives {expected:#x}")
@@ -758,12 +733,6 @@ def _thunk_slot(image, rva):
         return None
     code = image.read(rva, 6)
     return rva + 6 + struct.unpack_from("<i", code, 2)[0] if code[:2] == b"\xff\x25" else None
-
-
-def check_targets(image, begin, function, internal=None):
-    """(mismatch messages, number of unverified relocations) from classify_targets."""
-    found = classify_targets(image, begin, function, internal)
-    return found.mismatches, found.unverified
 
 
 def compare_object(original_dll, candidate_obj, symbols=None, targets=None):
@@ -836,6 +805,8 @@ def compare_object(original_dll, candidate_obj, symbols=None, targets=None):
     if not symbols:
         compared = {anonymous(f.name) for f in funcs}
         for name in sorted(set(entries) & set(definitions) - compared):
+            if entries[name].parked and entries[name].size is None:
+                continue  # a parked function's attempt is not reported as a match (D29); its parked row follows
             status, reason = internal.reference(name)
             results.append(Result(f"{name} (manifest entry)", status != "mismatch", reason or "verified at manifest RVA",
                                   int(status == "unverified")))

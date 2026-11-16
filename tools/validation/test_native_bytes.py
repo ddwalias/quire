@@ -8,12 +8,11 @@ import tempfile
 import unittest
 from pathlib import Path
 from unittest import mock
-from native_bytes import (Entry, Function, InternalTargets, ManifestError, Reloc, PeImage, check_targets,
-                          classify_targets, compare_code, compare_object, definitions_in_object,
-                          definitions_in_objects, functions_in_object,
+from native_bytes import (Entry, Function, InternalTargets, ManifestError, Reloc, PeImage, classify_targets,
+                          compare_code, compare_object, definitions_in_object, definitions_in_objects,
                           load_targets, masked, read_coff, system_ordinal_names, targets_from, _thunk_slot)
 from native_bytes import main as native_bytes_main
-from native_targets import record
+from native_targets import main as native_targets_main, record
 
 MATHCAD_DLL = Path(os.environ.get("MATHCAD_DIR", r"C:\Program Files\PTC\Mathcad Prime 12.0.1.0")) / "efistatsci_.dll"
 MSHEX_DLL = MATHCAD_DLL.with_name("mshex.dll")
@@ -145,7 +144,7 @@ class CoffTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "t.obj"
             path.write_bytes(data)
-            funcs = {f.name: f for f in functions_in_object(path)}
+            funcs = definitions_in_object(path)
         self.assertEqual(set(funcs), {"add3", long_name})
         self.assertEqual(funcs["add3"].code, b"\x8d\x41\x03\xc3")
         self.assertEqual(funcs[long_name].relocs, [Reloc(0, 0x0004, 2)])
@@ -156,7 +155,7 @@ class CoffTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "t.obj"
             path.write_bytes(data)
-            (func,) = functions_in_object(path)
+            (func,) = definitions_in_object(path).values()
         self.assertEqual(func.targets, {3: None})
 
     def test_rejects_non_x64_objects(self):
@@ -185,9 +184,11 @@ class CallTargetTests(unittest.TestCase):
         struct.pack_into("<i", self.memory, 0x1001, 0x1100 - (0x1001 + 4))
         self.call = Function("caller", b"\xe8\0\0\0\0\xc3", [Reloc(1, 0x0004, 0)], {1: "callee"})
 
-    def check(self, exports, function=None, memory=None):
-        image = FakeImage(exports, memory if memory is not None else self.memory)
-        return check_targets(image, 0x1000, function or self.call)
+    def check(self, exports=None, function=None, memory=None, image=None):
+        """(mismatch messages, unverified count) of classify_targets for the call at 0x1000."""
+        image = image or FakeImage(exports, memory if memory is not None else self.memory)
+        found = classify_targets(image, 0x1000, function or self.call)
+        return found.mismatches, found.unverified
 
     def test_call_to_the_export_it_names_verifies(self):
         self.assertEqual(self.check({"callee": 0x1100}), ([], 0))
@@ -213,18 +214,18 @@ class CallTargetTests(unittest.TestCase):
     def test_call_through_the_import_slot_it_names_verifies(self):
         call_import = Function("caller", self.call.code, [Reloc(1, 0x0004, 0)], {1: "__imp_alloc"})
         image = FakeImage({}, self.memory, imports={0x1100: "alloc"})
-        self.assertEqual(check_targets(image, 0x1000, call_import), ([], 0))
+        self.assertEqual(self.check(function=call_import, image=image), ([], 0))
 
     def test_call_through_a_different_import_is_a_mismatch(self):
         call_import = Function("caller", self.call.code, [Reloc(1, 0x0004, 0)], {1: "__imp_free"})
         image = FakeImage({}, self.memory, imports={0x1100: "alloc"})
-        mismatches, _ = check_targets(image, 0x1000, call_import)
+        mismatches, _ = self.check(function=call_import, image=image)
         self.assertEqual(len(mismatches), 1)
         self.assertIn("alloc", mismatches[0])
 
     def test_call_through_a_non_import_slot_is_a_mismatch(self):
         call_import = Function("caller", self.call.code, [Reloc(1, 0x0004, 0)], {1: "__imp_alloc"})
-        mismatches, _ = check_targets(FakeImage({}, self.memory), 0x1000, call_import)
+        mismatches, _ = self.check({}, function=call_import)
         self.assertEqual(len(mismatches), 1)
         self.assertIn("not an import slot", mismatches[0])
 
@@ -235,18 +236,17 @@ class CallTargetTests(unittest.TestCase):
 
     def test_call_through_an_import_thunk_for_the_name_verifies(self):
         self.thunk(0x1800)
-        self.assertEqual(check_targets(FakeImage({}, self.memory, imports={0x1800: "callee"}), 0x1000, self.call),
-                         ([], 0))
+        self.assertEqual(self.check(image=FakeImage({}, self.memory, imports={0x1800: "callee"})), ([], 0))
 
     def test_call_through_an_import_thunk_for_another_name_is_a_mismatch(self):
         self.thunk(0x1800)
-        mismatches, _ = check_targets(FakeImage({}, self.memory, imports={0x1800: "strlen"}), 0x1000, self.call)
+        mismatches, _ = self.check(image=FakeImage({}, self.memory, imports={0x1800: "strlen"}))
         self.assertEqual(len(mismatches), 1)
         self.assertIn("import thunk for strlen", mismatches[0])
 
     def test_jump_through_a_slot_that_is_not_an_import_stays_unverified(self):
         self.thunk(0x1800)
-        self.assertEqual(check_targets(FakeImage({}, self.memory), 0x1000, self.call), ([], 1))
+        self.assertEqual(self.check({}), ([], 1))
 
     def test_absolute_address_resolves_against_the_image_base(self):
         # mov rax, imm64: the field holds the candidate's addend (0).
@@ -284,7 +284,7 @@ class CallTargetTests(unittest.TestCase):
         self.point(0x1100)
         load = self.load(8)
         load.targets = {3: "__imp_alloc"}
-        mismatches, _ = check_targets(FakeImage({}, self.memory, imports={0x1100: "alloc"}), 0x1000, load)
+        mismatches, _ = self.check(function=load, image=FakeImage({}, self.memory, imports={0x1100: "alloc"}))
         self.assertIn("not an import slot + 0x8", mismatches[0])
 
     def test_image_base_is_rva_zero(self):
@@ -403,7 +403,7 @@ class StrictRunTests(unittest.TestCase):
     def test_code_labels_do_not_end_a_function(self):
         labelled = self.obj("label.obj", [("caller", b"\xe8\0\0\0\0\xc3", [(1, 0x0004, 1)])], externals=["callee"],
                             labels=[("$LN3", 0, 5)])
-        (func,) = functions_in_object(labelled)
+        (func,) = definitions_in_object(labelled).values()
         self.assertEqual(func.code, b"\xe8\0\0\0\0\xc3")
 
     def test_internal_call_verified_by_the_manifest_passes_strict(self):
@@ -433,6 +433,15 @@ class StrictRunTests(unittest.TestCase):
         self.assertEqual(code, 0, out)
         self.assertIn("OK   callee (parked entry)", out)
         self.assertNotIn("callee (at manifest RVA)", out)
+
+    def test_a_static_attempt_at_a_parked_function_is_not_reported_as_a_match(self):
+        attempt = self.obj("attempt.obj", [("callee", b"\x31\xc0\xc3", [])], local=["callee"])
+        manifest = self.write("parked.json", {"fake.dll": {"sha256": ManifestImage.sha256,
+                                                           "targets": {"callee": {"rva": "0x1100", "parked": True}}}})
+        code, out = self.run_main("--candidate", self.caller, "--candidate", attempt, "--targets", manifest)
+        self.assertEqual(code, 0, out)
+        self.assertNotIn("callee (manifest entry)", out)
+        self.assertIn("OK   callee (parked entry)", out)
 
     def test_without_the_manifest_the_internal_call_is_unverified(self):
         code, out = self.run_main("--candidate", self.caller, "--candidate", self.callee, "--symbol", "caller",
@@ -547,12 +556,16 @@ class LoadTargetsTests(unittest.TestCase):
         with self.assertRaisesRegex(ManifestError, "malformed"):
             self.load(self.bound({"t": {"rva": "0x1800", "toolchain": "yes"}}))
 
-    def test_parked_entry_is_a_function_without_size(self):
+    def test_parked_entry_is_a_function_or_data_and_never_a_toolchain_entry(self):
         self.assertEqual(self.load(self.bound({"t": {"rva": "0x1100", "parked": True}})),
                          {"t": Entry(0x1100, None, False, True)})
-        for bad in ({"rva": "0x1800", "size": 8, "parked": True}, {"rva": "0x1100", "toolchain": True, "parked": True}):
-            with self.assertRaisesRegex(ManifestError, "parked entry"):
-                self.load(self.bound({"t": bad}))
+        # Parked data (5e56fcfcb) is checked like any data entry: its bytes must lie in a section.
+        self.assertEqual(self.load(self.bound({"t": {"rva": "0x1800", "size": 8, "parked": True}})),
+                         {"t": Entry(0x1800, 8, False, True)})
+        with self.assertRaisesRegex(ManifestError, "not in a section"):
+            self.load(self.bound({"t": {"rva": "0x1ffc", "size": 8, "parked": True}}))
+        with self.assertRaisesRegex(ManifestError, "parked entry cannot be a toolchain entry"):
+            self.load(self.bound({"t": {"rva": "0x1100", "toolchain": True, "parked": True}}))
         with self.assertRaisesRegex(ManifestError, "malformed"):
             self.load(self.bound({"t": {"rva": "0x1100", "parked": "yes"}}))
 
@@ -587,8 +600,8 @@ class InternalTargetTests(unittest.TestCase):
     def test_target_without_an_entry_stays_unverified(self):
         found = self.classify({})
         self.assertEqual((found.mismatches, found.unverified, found.verified), ([], 1, 0))
-        image = ManifestImage(self.memory, self.functions)
-        self.assertEqual(check_targets(image, 0x1000, self.call), ([], 1))
+        without = classify_targets(ManifestImage(self.memory, self.functions), 0x1000, self.call)
+        self.assertEqual((without.mismatches, without.unverified), ([], 1))
 
     def test_entry_at_another_rva_than_the_call_site_is_a_mismatch(self):
         found = self.classify({"callee": Entry(0x1200)})
@@ -793,6 +806,20 @@ class RecordTests(unittest.TestCase):
         doc = record(self.image, self.definitions, [], {}, parked=["callee"])
         self.assertEqual(doc["fake.dll"]["targets"], {"callee": {"rva": "0x1100", "parked": True}})
 
+    def test_the_command_line_records_parked_names(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            caller = Path(tmp) / "caller.obj"
+            caller.write_bytes(coff([("caller", b"\xe8\0\0\0\0\xc3", [(1, 0x0004, 1)])], externals=["callee"]))
+            manifest = Path(tmp) / "targets.json"
+            out = io.StringIO()
+            with mock.patch("native_targets.PeImage", lambda path: self.image), contextlib.redirect_stdout(out):
+                code = native_targets_main(["--original", "fake.dll", "--candidate", str(caller), "--parked", "callee",
+                                            "--targets", str(manifest)])
+            doc = json.loads(manifest.read_text())
+        self.assertEqual(code, 0, out.getvalue())
+        self.assertEqual(doc["fake.dll"]["targets"], {"callee": {"rva": "0x1100", "parked": True}})
+        self.assertIn("recorded callee: {'rva': '0x1100', 'parked': True}", out.getvalue())
+
     def test_an_entry_stored_under_another_anonymous_namespace_tag_keeps_its_name(self):
         here, there = "?callee@?A0x2@u@@YAXXZ", "?callee@?A0x1@u@@YAXXZ"
         self.definitions["caller"].targets = {1: here}
@@ -834,9 +861,7 @@ class DefinitionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "t.obj"
             path.write_bytes(data)
-            funcs = functions_in_object(path)
             defs = definitions_in_object(path)
-        self.assertEqual([f.name for f in funcs], ["f"])
         self.assertEqual(set(defs), {"f", "helper", "vt"})
         self.assertEqual((defs["f"].targets, defs["f"].statics), ({1: None}, {1: "helper"}))
         self.assertEqual((defs["helper"].data, defs["vt"].data), (False, True))
@@ -924,10 +949,6 @@ class LoadedSectionTests(unittest.TestCase):
         self.assertEqual(PeImage(UTL_DLL).imports[0x16430], "SysAllocStringLen")
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 @unittest.skipUnless(MSPCONS_DLL.exists(), "Mathcad install not found")
 class LeafExtentTests(unittest.TestCase):
     """Leaf functions of the installed mspcons.dll: pstring's vtable slots type (0x1260) and tagged::get_tag (0x1190)."""
@@ -948,3 +969,7 @@ class LeafExtentTests(unittest.TestCase):
 
     def test_a_known_start_ends_a_leaf(self):
         self.assertEqual(self.image.function_extent(0x1260, [0x1264]), (0x1260, 0x1264))
+
+
+if __name__ == "__main__":
+    unittest.main()

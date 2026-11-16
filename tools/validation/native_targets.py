@@ -27,8 +27,8 @@ from native_bytes import (DEFAULT_TARGETS, PeImage, _addend, _resolve, anonymous
 
 
 def record(image, definitions, names, doc, toolchain=(), parked=()):
-    """Record `names`, and `toolchain` as toolchain entries, for the original `image` in the manifest document `doc`
-    (changed in place, and returned).
+    """Record `names`, `toolchain` as toolchain entries and `parked` as parked entries, for the original `image` in the
+    manifest document `doc` (changed in place, and returned).
 
     `definitions` are the candidates' definitions by anonymous() name. Names match tag-insensitively (anonymous()): an
     entry already stored under another anonymous-namespace tag keeps its stored name. Raises ValueError when the names
@@ -114,21 +114,24 @@ def main(argv=None):
     parser.add_argument("--name", action="append", default=[], help="reviewed decorated target name (repeatable)")
     parser.add_argument("--toolchain", action="append", default=[],
                         help="reviewed decorated name the toolset supplies, recorded as a toolchain entry (repeatable)")
+    parser.add_argument("--parked", action="append", default=[],
+                        help="reviewed decorated name of a function parked under D25, recorded as a parked entry (D29; "
+                             "repeatable)")
     parser.add_argument("--targets", type=Path, default=DEFAULT_TARGETS, help="manifest to update")
     args = parser.parse_args(argv)
-    if not args.name and not args.toolchain:
-        parser.error("give --name, --toolchain or both")
+    if not args.name and not args.toolchain and not args.parked:
+        parser.error("give --name, --toolchain, --parked or a combination")
     image = PeImage(args.original)
     try:
         definitions = definitions_in_objects(args.candidate)
         doc = json.loads(args.targets.read_text(encoding="utf-8")) if args.targets.is_file() else {}
-        record(image, definitions, args.name, doc, args.toolchain)
+        record(image, definitions, args.name, doc, args.toolchain, args.parked)
     except ValueError as e:  # includes ManifestError and malformed JSON
         print(f"FAIL {e}")
         return 1
     args.targets.write_text(json.dumps(doc, indent=2) + "\n", encoding="utf-8")
     bound = next(doc[k] for k in doc if k.lower() == image.name.lower())
-    for name in sorted(set(args.name) | set(args.toolchain)):
+    for name in sorted(set(args.name) | set(args.toolchain) | set(args.parked)):
         stored = next(k for k in bound["targets"] if anonymous(k) == anonymous(name))
         print(f"recorded {stored}: {bound['targets'][stored]}")
     return 0

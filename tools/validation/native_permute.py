@@ -39,7 +39,7 @@ from pathlib import Path
 
 import native_linked
 from native_bytes import DEFAULT_TARGETS, PeImage, load_targets
-from native_gate import original_dll
+from native_gate import code_of, original_dll, strict
 from release_il import ROOT, mathcad_install, msbuild, msvc_mismatch
 
 OPERAND = r"(?:\((?:double|float|int|long|unsigned|short|char)\)\s*)?(?:[A-Za-z_]\w*(?:(?:->|\.)\w+)*(?:\[[^\[\]\n]+\])?|\d+(?:\.\d+)?)"
@@ -594,16 +594,6 @@ def resolve(names, original):
     return out
 
 
-def strict(result):
-    return result.ok and not result.unverified
-
-
-def code_of(candidate, name):
-    """What native_gate.py fingerprints for the export `name` of a linked candidate (its instructions by name)."""
-    rva = candidate.image.exports[name]
-    return native_linked.fingerprint_text(candidate, name) if candidate.executable(rva) else name
-
-
 class Scorer:
     """Scores builds against the original: (-exports broken, symbols matching, mean similarity), compared as a tuple.
     A symbol matches when nothing mismatches (an unverified target is reported at the end, not ranked). An export is
@@ -661,8 +651,13 @@ def search(args):
     scorer = Scorer(original, entries, resolve(args.symbol, original))
     symbols = scorer.symbols
     first = re.sub(r"\W+", "_", args.function[0].split(":")[-1])
-    out_dir = Path(args.out or ROOT / ".mirror-cache" / "permute" / f"{first}-{time.strftime('%Y%m%d-%H%M%S')}")
-    out_dir.mkdir(parents=True, exist_ok=True)
+    if args.out:
+        out_dir = Path(args.out)
+        out_dir.mkdir(parents=True, exist_ok=True)
+    else:  # unique, so two runs started in the same second do not share a folder
+        (ROOT / ".mirror-cache" / "permute").mkdir(parents=True, exist_ok=True)
+        out_dir = Path(tempfile.mkdtemp(prefix=f"{first}-{time.strftime('%Y%m%d-%H%M%S')}-",
+                                        dir=ROOT / ".mirror-cache" / "permute"))
     work = Path(tempfile.mkdtemp(prefix="permute-", dir=args.scratch))
     try:
         return search_in(args, source, scorer, out_dir, work, project_dir)

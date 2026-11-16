@@ -44,6 +44,7 @@ sealed record PInvoke(MethodAttributes Attributes, MethodImplAttributes ImplAttr
 sealed class Artifact
 {
     private readonly Dictionary<int, MethodModel[]> methodModels = [];
+    private ILookup<string, TypeModel>? typesByName;
 
     // PEReader.GetMethodBody rejects mixed-mode native entry points in C++/CLI images.
     // Read only the ECMA-335 header prefix and leave native/unknown headers unclassified.
@@ -66,15 +67,15 @@ sealed class Artifact
     /// of the compiler's spelling of their interface prefix.</summary>
     public string ComparisonKey(RawMethod raw, Func<TypeSig, TypeSig>? map = null)
     {
+        var type = (typesByName ??= Model.Types.ToLookup(t => t.FullName))[raw.Owner].Single();
         if (!methodModels.TryGetValue(raw.Token, out var models))
         {
-            var type = Model.Types.Single(t => t.FullName == raw.Owner);
             models = [.. type.Methods.Concat(type.Properties.SelectMany(p => new[] { p.Getter, p.Setter }))
                 .Concat(type.Events.SelectMany(e => new[] { e.Adder, e.Remover })).OfType<MethodModel>()
                 .Where(m => Signatures.Method(m.Name, m.GenericParams.Length, m.Params.Select(p => p.Type), m.Return, m.Static) == raw.Key)];
             methodModels[raw.Token] = models;
         }
-        var keys = models.Select(m => Signatures.Method(Canonical.MethodName(m, map, Model.Types.Single(t => t.FullName == raw.Owner)), m.GenericParams.Length,
+        var keys = models.Select(m => Signatures.Method(Canonical.MethodName(m, map, type), m.GenericParams.Length,
             m.Params.Select(p => map == null ? p.Type : map(p.Type)), map == null ? m.Return : map(m.Return), m.Static))
             .Distinct().ToArray();
         // C++/CLI overloads may share a key but differ in custom modifiers. Their common

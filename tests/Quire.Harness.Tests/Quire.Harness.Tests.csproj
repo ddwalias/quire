@@ -28,4 +28,8 @@
     <Compile Include="../../tools/Quire.Tools.MemberGen/Emitter.cs" Link="MemberGen/Emitter.cs" />
     <Compile Include="../../tools/Quire.Tools.MemberGen/Emitter.Files.cs" Link="MemberGen/Emitter.Files.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <!-- MethodAuditTests run the judge in-process; the alias keeps its own copies of the linked sources out of scope. -->
+    <ProjectReference Include="../../tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj" Aliases="MethodAudit" />
+  </ItemGroup>
 </Project>

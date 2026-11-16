@@ -28,7 +28,8 @@ ROOT = Path(__file__).resolve().parents[2]
 
 # Inputs of every native project's check (native_gate): a change to them selects all native projects.
 NATIVE_SHARED = ('docs/mirror/native/internal-targets.json', 'docs/mirror/assembly-map.json',
-                 'tools/validation/native_bytes.py', 'tools/validation/native_gate.py')
+                 'tools/validation/native_bytes.py', 'tools/validation/native_gate.py',
+                 'tools/validation/native_linked.py')
 
 
 def git(*args, cwd=None):

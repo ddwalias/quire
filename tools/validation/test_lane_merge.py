@@ -83,6 +83,29 @@ class LaneMergeTests(unittest.TestCase):
                          if 'landing' in record]
         return code, (self.landings[-1] if self.landings else None)
 
+    def test_a_branch_that_breaks_the_gate_rules_tests_does_not_land(self):
+        test = 'import unittest\nclass T(unittest.TestCase):\n    def test_rule(self):\n        self.assertTrue(%s)\n'
+        self.write(self.lane, 'tools/validation/test_rule.py', test % 'False')
+        self.commit(self.lane, 'a broken rule')
+        with mock.patch('sys.stderr') as stderr:
+            code, landing = self.land()
+        self.assertEqual(code, 1)
+        self.assertEqual(self.checks, [])  # stopped before the gate
+        self.assertIn('unit tests of tools/validation/ fail', stderr.write.call_args_list[0].args[0])
+        self.assertNotEqual(git(self.origin, 'rev-parse', 'main'), git(self.lane, 'rev-parse', 'work'))
+        self.write(self.lane, 'tools/validation/test_rule.py', test % 'True')
+        self.commit(self.lane, 'the rule holds')
+        self.assertEqual(self.land()[0], 0)
+        self.assertEqual(git(self.origin, 'rev-parse', 'main'), git(self.lane, 'rev-parse', 'work'))
+
+    def test_the_gate_rules_tests_run_only_for_a_branch_that_changes_them(self):
+        real = subprocess.run
+        def run(command, *args, **kwargs):
+            self.assertEqual(command[0], 'git', 'no tests expected')
+            return real(command, *args, **kwargs)
+        with mock.patch.object(lane_merge.subprocess, 'run', run):
+            lane_merge.tool_tests(self.lane, 'main', 60)
+
     def test_an_unmoved_main_lands_the_validated_tip(self):
         code, landing = self.land()
         self.assertEqual(code, 0)

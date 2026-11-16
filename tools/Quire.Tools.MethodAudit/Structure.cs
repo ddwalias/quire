@@ -6,16 +6,15 @@ using Quire.Tools.MirrorGen;
 
 /// <summary>
 /// The logic-bearing structure of one method body: what it calls, which fields it touches, which types it tests or
-/// creates, its constants, exception regions and branching. Locals, nops, stack shuffling and branch encoding are
-/// ignored by the legacy fingerprint. MethodAudit's Release mode preserves them in <see cref="Code"/>,
-/// along with local types, initialization and max stack. <see cref="Code"/> is the whole instruction sequence,
-/// for <see cref="Exact"/>; <see cref="Offsets"/> the IL offset of each of its instructions (the exception regions
-/// that follow them have none).
+/// creates, its constants, exception regions and branching, which ignore locals, nops, stack shuffling and branch
+/// encoding. <see cref="Code"/> is the whole instruction sequence as encoded, with local types, initialization and max
+/// stack, for <see cref="Exact"/>; <see cref="Offsets"/> the IL offset of each of its instructions (the exception
+/// regions that follow them have none).
 /// </summary>
 sealed record Structure(string[] Calls, string[] Fields, string[] Types, string[] Constants, string[] Handlers,
     int Branches, int SwitchTargets, int Throws, int Rethrows, string[] Code, int[] Offsets)
 {
-    /// <summary>Whether the instruction sequences are equal (<see cref="StructureReader.Folded"/>), branch targets and
+    /// <summary>Whether the instruction sequences are equal, branch targets and
     /// exception regions as instruction indices: unlike <see cref="Compare"/>, branch direction and block order count,
     /// so <c>if (c) return a; return b;</c> and <c>c ? a : b</c> differ.</summary>
     public bool Exact(Structure original) => Code.SequenceEqual(original.Code);
@@ -80,19 +79,21 @@ sealed record Structure(string[] Calls, string[] Fields, string[] Types, string[
     }
 }
 
-/// <summary>Reads <see cref="Structure"/> from method bodies, naming every referenced member as Mathcad would.
-/// <paramref name="exact"/> keeps compiler-generated names (for <see cref="Body"/>, which names members as declared).
+/// <summary>Reads <see cref="Structure"/> from method bodies, naming every referenced member as Mathcad would
+/// (<paramref name="methodName"/>: a method definition's Mathcad name, null to keep its own), compiler-generated
+/// names included.
 /// <paramref name="root"/>: the checkout the assembly was built from; <see cref="Body"/> hashes string literals with
 /// it replaced by <c>&lt;repo&gt;</c>, since <c>[CallerFilePath]</c> (every <c>MirrorStub.NotImplemented()</c>)
 /// compiles the absolute source path into the IL and the gate builds in a new clone each time.
 /// <paramref name="bind"/> and <paramref name="products"/> qualify type names with their assembly for the strict
 /// comparison: <paramref name="bind"/> maps (the assembly a type resolves to, its name) to Mathcad's [name, assembly], null
-/// when unbound (<paramref name="typeName"/> is then unused); an unbound type keeps its own assembly when
+/// when unbound; an unbound type keeps its own assembly when
 /// <paramref name="products"/> (lower-case Quire and Mathcad assembly names) lists it. Framework types stay unqualified:
 /// Mathcad and Quire name them in different reference assemblies (mscorlib, System.Runtime, System.Collections...).
-/// A <see cref="StrictSigProvider"/> decoder also renders what <see cref="SigProvider"/> erases.</summary>
+/// Without either, types keep their own names. A <see cref="StrictSigProvider"/> decoder also renders what
+/// <see cref="SigProvider"/> erases.</summary>
 sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecutable.PEReader pe, ISignatureTypeProvider<TypeSig, object?> decoder,
-    Func<string, string> typeName, Func<int, string?> methodName, bool exact = false, string? root = null,
+    Func<int, string?> methodName, string? root = null,
     Func<string, string, string[]?>? bind = null, IReadOnlySet<string>? products = null)
 {
     private readonly bool strict = decoder is StrictSigProvider;
@@ -104,16 +105,13 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         .Select(f => (OpCode)f.GetValue(null)!)
         .ToDictionary(o => unchecked((ushort)o.Value));
 
-    public Structure Read(MethodDefinitionHandle handle, bool releaseIl = false)
+    public Structure Read(MethodDefinitionHandle handle)
     {
         var body = pe.GetMethodBody(md.GetMethodDefinition(handle).RelativeVirtualAddress);
         var il = body.GetILReader();
         List<string> calls = [], fields = [], types = [], constants = [], sequence = [];
         List<int> starts = [];
         var jumps = new Dictionary<int, int[]>();  // instruction index -> branch target offsets
-        // Locals and compiler-generated names, numbered by first use: compilers number and name them differently.
-        Dictionary<string, int> locals = [], names = [];
-        generated = [];
         int branches = 0, switchTargets = 0, throws = 0, rethrows = 0;
         while (il.RemainingBytes > 0)
         {
@@ -159,12 +157,12 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                 case OperandType.ShortInlineR:
                     float single = il.ReadSingle();
                     constants.Add($"r8 {(double)single:R}");
-                    operand = releaseIl ? $"r4 0x{BitConverter.SingleToInt32Bits(single):x8}" : $"r8 {(double)single:R}";
+                    operand = $"r4 0x{BitConverter.SingleToInt32Bits(single):x8}";
                     break;
                 case OperandType.InlineR:
                     double number = il.ReadDouble();
                     constants.Add($"r8 {number:R}");
-                    operand = releaseIl ? $"r8 0x{BitConverter.DoubleToInt64Bits(number):x16}" : $"r8 {number:R}";
+                    operand = $"r8 0x{BitConverter.DoubleToInt64Bits(number):x16}";
                     break;
                 case OperandType.InlineString:
                     constants.Add(operand = "str " + OwnComponent(self, md.GetUserString(MetadataTokens.UserStringHandle(il.ReadInt32()))));
@@ -174,8 +172,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                     break;
                 case OperandType.InlineField:
                     var fieldToken = MetadataTokens.EntityHandle(il.ReadInt32());
-                    operand = Field(fieldToken);
-                    if (releaseIl) operand += $" : {Render(FieldType(fieldToken))}{InitialData(fieldToken)}";
+                    operand = $"{Field(fieldToken)} : {Render(FieldType(fieldToken))}{InitialData(fieldToken)}";
                     fields.Add($"{code.Name} {operand}");
                     break;
                 case OperandType.InlineType:
@@ -183,8 +180,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                     var token = MetadataTokens.EntityHandle(il.ReadInt32());
                     if (code == OpCodes.Ldtoken && IsField(token))
                     {
-                        operand = Field(token);
-                        if (releaseIl) operand += $" : {Render(FieldType(token))}{InitialData(token)}";
+                        operand = $"{Field(token)} : {Render(FieldType(token))}{InitialData(token)}";
                         fields.Add($"ldtoken {operand}");
                     }
                     else if (code == OpCodes.Ldtoken && token.Kind is HandleKind.MethodDefinition or HandleKind.MemberReference or HandleKind.MethodSpecification)
@@ -203,13 +199,8 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                 case OperandType.InlineVar: operand = $"{il.ReadUInt16()}"; break;
                 default: throw new BadImageFormatException($"Unknown operand type {code.OperandType}");
             }
-            string text = releaseIl ? code.Name + (operand.Length == 0 ? "" : " " + operand) : Folded(code, operand);
-            if (!releaseIl && text.Split(' ') is [("ldloc" or "ldloca" or "stloc") and var family, var slot]) text = $"{family} {Number(locals, slot)}";
-            if (generated.Count > 0) text += " #" + string.Join(",", generated.Select(g => Number(names, g)));
-            generated.Clear();
-            sequence.Add(text);
+            sequence.Add(code.Name + (operand.Length == 0 ? "" : " " + operand));
         }
-        generated = null;
         constants.Sort(StringComparer.Ordinal);
         // Branch targets and exception regions as instruction indices: relative for branches, so block order counts.
         var index = starts.Select((offset, i) => (offset, i)).ToDictionary(p => p.offset, p => p.i);
@@ -220,36 +211,18 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         var regions = body.ExceptionRegions.OrderBy(r => r.TryOffset).ThenByDescending(r => r.TryLength).ToList();
         sequence.AddRange(regions.Select(r => $".try {At(r.TryOffset)}-{At(r.TryOffset + r.TryLength)} " +
             $"{r.Kind} {(r.Kind == ExceptionRegionKind.Filter ? At(r.FilterOffset) + " " : "")}{At(r.HandlerOffset)}-{At(r.HandlerOffset + r.HandlerLength)}"));
-        if (releaseIl)
-        {
-            sequence.Add($".maxstack {body.MaxStack}");
-            sequence.Add($".initlocals {body.LocalVariablesInitialized}");
-            sequence.Add(".locals " + (HasLocals(body.LocalSignature) ? string.Join(",", md.GetStandaloneSignature(body.LocalSignature)
-                .DecodeLocalSignature(decoder, null).Select(Render)) : ""));
-        }
+        sequence.Add($".maxstack {body.MaxStack}");
+        sequence.Add($".initlocals {body.LocalVariablesInitialized}");
+        sequence.Add(".locals " + (HasLocals(body.LocalSignature) ? string.Join(",", md.GetStandaloneSignature(body.LocalSignature)
+            .DecodeLocalSignature(decoder, null).Select(Render)) : ""));
         var handlers = regions
             .Select(r => r.Kind == ExceptionRegionKind.Catch ? "catch " + Type(r.CatchType) : r.Kind.ToString().ToLowerInvariant())
             .ToArray();
         return new([.. calls], [.. fields], [.. types], [.. constants], handlers, branches, switchTargets, throws, rethrows, [.. sequence], [.. starts]);
     }
 
-    private static int Number(Dictionary<string, int> numbers, string key) =>
-        numbers.TryGetValue(key, out int n) ? n : numbers[key] = numbers.Count;
-
-    /// <summary>One instruction with its encoding folded: short forms (<c>br.s</c>, <c>ldc.i4.s</c>, <c>ldarg.s</c>) as
-    /// their long form, and macro forms (<c>ldarg.0</c>, <c>ldc.i4.m1</c>, <c>stloc.2</c>) as the long form with the
-    /// operand they imply. <see cref="Read"/> then renumbers local slots by first use.</summary>
-    internal static string Folded(OpCode op, string operand)
-    {
-        string name = op.Name!.EndsWith(".s") ? op.Name[..^2] : op.Name;
-        var macro = System.Text.RegularExpressions.Regex.Match(name, @"^(ldarg|starg|ldloc|stloc|ldc\.i4)\.(\d|m1)$");
-        if (macro.Success) (name, operand) = (macro.Groups[1].Value, macro.Groups[2].Value == "m1" ? "-1" : macro.Groups[2].Value);
-        return operand.Length == 0 ? name : $"{name} {operand}";
-    }
-
     /// <summary>What <see cref="Body"/> reports of one method body.</summary>
-    public sealed record BodyFacts(string Hash, int[] Calls, string[] VirtualCalls, string[] Reads, string[] Writes,
-        string[] ReferenceReads, bool Stub = false);
+    public sealed record BodyFacts(string Hash, bool Stub = false);
 
     // A local signature that declares no locals (`.locals init ()`, which Mathcad's TlbImp-era bodies carry) is the
     // same as none; DecodeLocalSignature rejects it ("Signature type sequence must have at least one element").
@@ -266,12 +239,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
     /// instruction with its operand (tokens resolved to the member, type or string they denote; fields with their type,
     /// and for fields with initial data (<c>&lt;PrivateImplementationDetails&gt;</c> arrays and spans) a hash of those
     /// bytes), the locals' types, exception regions and the method's flags. The Release checker uses this hash to
-    /// identify changed bodies. Additional metadata describes referenced methods (calls,
-    /// delegates, ldtoken; every same-named method of a local generic type reached through an instantiation), the
-    /// dispatch slots (<see cref="SlotOf"/>) of its virtual calls, and the fields it reads and writes (taking a field's
-    /// address counts as both), as <c>DeclaringType::name</c> with generic instantiations reduced to their definition;
-    /// and the fields it reads that hold a mutable reference (<see cref="HoldsReference"/>), through which it may change
-    /// what other readers see (an array or collection it fills) without storing to the field.
+    /// identify changed bodies; <see cref="BodyFacts.Stub"/> marks a generated MirrorStub body.
     /// </summary>
     public BodyFacts Body(MethodDefinitionHandle handle)
     {
@@ -285,11 +253,6 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         foreach (var r in body.ExceptionRegions)
             text.Append($"{r.Kind} {r.TryOffset} {r.TryLength} {r.HandlerOffset} {r.HandlerLength} {r.FilterOffset} "
                 + (r.Kind == ExceptionRegionKind.Catch ? Ordinalless(Type(r.CatchType)) : "") + "\n");
-        var calls = new SortedSet<int>();
-        var slots = new SortedSet<string>(StringComparer.Ordinal);
-        var reads = new SortedSet<string>(StringComparer.Ordinal);
-        var writes = new SortedSet<string>(StringComparer.Ordinal);
-        var referenceReads = new SortedSet<string>(StringComparer.Ordinal);
         var shape = new List<string>();  // opcodes, and the callee of calls, to recognise a MirrorStub body
         while (il.RemainingBytes > 0)
         {
@@ -324,24 +287,12 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                 case OperandType.InlineMethod or OperandType.InlineField or OperandType.InlineType or OperandType.InlineTok:
                     var token = MetadataTokens.EntityHandle(il.ReadInt32());
                     if (IsField(token))
-                    {
                         text.Append(Ordinalless($"{Field(token)} {Render(FieldType(token))}{InitialData(token)}"));
-                        string id = FieldId(token);
-                        if (code == OpCodes.Ldfld || code == OpCodes.Ldsfld || code == OpCodes.Ldflda || code == OpCodes.Ldsflda)
-                        {
-                            reads.Add(id);
-                            if (HoldsReference(token)) referenceReads.Add(id);
-                        }
-                        if (code == OpCodes.Stfld || code == OpCodes.Stsfld || code == OpCodes.Ldflda || code == OpCodes.Ldsflda)
-                            writes.Add(id);
-                    }
                     else if (token.Kind is HandleKind.MethodDefinition or HandleKind.MemberReference or HandleKind.MethodSpecification)
                     {
                         string callee = Method(token);
                         text.Append(Ordinalless(callee));
                         if (code == OpCodes.Call) shape[^1] = "call " + callee;
-                        Callees(token, calls);
-                        if (code == OpCodes.Callvirt || code == OpCodes.Ldvirtftn) slots.Add(Slot(token));
                     }
                     else text.Append(Ordinalless(Type(token)));
                     break;
@@ -354,7 +305,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         // Generated stubs throw MirrorStub.NotImplemented(file, member), the file from [CallerFilePath].
         bool stub = shape.Count == 4 && shape[0] == "ldstr" && shape[1] == "ldstr" && shape[3] == "throw"
             && shape[2].StartsWith("call ", StringComparison.Ordinal) && shape[2].Contains("Quire.Mirror.MirrorStub::NotImplemented", StringComparison.Ordinal);
-        return new(hash.ToLowerInvariant(), [.. calls], [.. slots], [.. reads], [.. writes], [.. referenceReads], stub);
+        return new(hash.ToLowerInvariant(), stub);
     }
 
     /// <summary>
@@ -397,52 +348,6 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         ? md.GetFieldDefinition((FieldDefinitionHandle)handle).DecodeSignature(decoder, null)
         : md.GetMemberReference((MemberReferenceHandle)handle).DecodeFieldSignature(decoder, null);
 
-    /// <summary>Whether a field's type may hold a mutable object: any reference type but <c>string</c>, and a type
-    /// parameter (it may be one).</summary>
-    private bool HoldsReference(EntityHandle handle)
-    {
-        var blob = md.GetBlobReader(handle.Kind == HandleKind.FieldDefinition
-            ? md.GetFieldDefinition((FieldDefinitionHandle)handle).Signature
-            : md.GetMemberReference((MemberReferenceHandle)handle).Signature);
-        blob.ReadSignatureHeader();
-        byte code = blob.ReadByte();
-        while (code is 0x1f or 0x20) // custom modifiers
-        {
-            blob.ReadTypeHandle();
-            code = blob.ReadByte();
-        }
-        return code switch
-        {
-            0x12 or 0x14 or 0x1c or 0x1d or 0x13 or 0x1e => true, // class, array, object, szarray, !n, !!n
-            0x15 => blob.ReadByte() == 0x12,                         // generic instance of a class
-            _ => false,                                              // primitives, string, value types, pointers
-        };
-    }
-
-    /// <summary>The type definition a generic instantiation (<c>Foo&lt;int&gt;</c>) is made from; nil otherwise.</summary>
-    private TypeDefinitionHandle GenericDefinition(EntityHandle parent)
-    {
-        if (parent.Kind != HandleKind.TypeSpecification) return default;
-        var blob = md.GetBlobReader(md.GetTypeSpecification((TypeSpecificationHandle)parent).Signature);
-        if (blob.ReadSignatureTypeCode() != SignatureTypeCode.GenericTypeInstance) return default;
-        blob.ReadCompressedInteger();  // CLASS or VALUETYPE
-        return blob.ReadTypeHandle() is { Kind: HandleKind.TypeDefinition } type ? (TypeDefinitionHandle)type : default;
-    }
-
-    /// <summary><c>DeclaringType::name</c> of a field operand, as declared (instantiations reduced to their
-    /// definition), so readers and writers of one field match whatever instantiation each names.</summary>
-    private string FieldId(EntityHandle handle)
-    {
-        if (handle.Kind == HandleKind.FieldDefinition)
-        {
-            var field = md.GetFieldDefinition((FieldDefinitionHandle)handle);
-            return $"{SigProvider.FullName(md, field.GetDeclaringType())}::{md.GetString(field.Name)}";
-        }
-        var reference = md.GetMemberReference((MemberReferenceHandle)handle);
-        var generic = GenericDefinition(reference.Parent);
-        return $"{(generic.IsNil ? Owner(reference.Parent) : SigProvider.FullName(md, generic))}::{md.GetString(reference.Name)}";
-    }
-
     /// <summary>For a field of this module with initial data (an RVA field), the SHA-256 of that data, whose size its
     /// type gives (a primitive, or a value type's class layout); empty for other fields. A size it cannot tell hashes
     /// nothing, and the field's name (a content hash for compiler-emitted data) still distinguishes it.</summary>
@@ -477,53 +382,6 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         return " data " + Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(data));
     }
 
-    /// <summary>Tokens of this module's method definitions a method operand can reach.</summary>
-    private void Callees(EntityHandle handle, SortedSet<int> calls)
-    {
-        switch (handle.Kind)
-        {
-            case HandleKind.MethodDefinition: calls.Add(MetadataTokens.GetToken(handle)); break;
-            case HandleKind.MethodSpecification: Callees(md.GetMethodSpecification((MethodSpecificationHandle)handle).Method, calls); break;
-            case HandleKind.MemberReference:
-                var reference = md.GetMemberReference((MemberReferenceHandle)handle);
-                // A method of a generic type of this module, through an instantiation: its same-named methods.
-                var type = GenericDefinition(reference.Parent);
-                if (!type.IsNil)
-                    foreach (var method in md.GetTypeDefinition(type).GetMethods())
-                        if (md.StringComparer.Equals(md.GetMethodDefinition(method).Name, md.GetString(reference.Name)))
-                            calls.Add(MetadataTokens.GetToken(method));
-                break;
-        }
-    }
-
-    /// <summary>
-    /// A dispatch slot: <c>name`arity/parameter count</c>, the name unqualified (an explicit implementation
-    /// <c>Ns.IFoo&lt;T&gt;.Bar</c> is <c>Bar</c>). Parameter types are left out on purpose: a call through
-    /// <c>Base&lt;int&gt;::M(!0)</c> must match the override <c>M(int)</c> and <c>D&lt;T&gt;::M(!0)</c> alike, so
-    /// this over-selects rather than misses. <c>validate.slot_of_key</c> derives the same text from an inventory key.
-    /// </summary>
-    public static string SlotOf(string name, int arity, int parameters) => $"{name.Split('.')[^1]}`{arity}/{parameters}";
-
-    /// <summary>The slot of a method definition (for the inventory's virtual methods).</summary>
-    public string Slot(MethodDefinitionHandle handle) => Slot((EntityHandle)handle);
-
-    private string Slot(EntityHandle handle)
-    {
-        switch (handle.Kind)
-        {
-            case HandleKind.MethodSpecification:
-                return Slot(md.GetMethodSpecification((MethodSpecificationHandle)handle).Method);
-            case HandleKind.MethodDefinition:
-                var definition = md.GetMethodDefinition((MethodDefinitionHandle)handle);
-                var sig = definition.DecodeSignature(decoder, null);
-                return SlotOf(md.GetString(definition.Name), sig.GenericParameterCount, sig.ParameterTypes.Length);
-            default:
-                var reference = md.GetMemberReference((MemberReferenceHandle)handle);
-                var refSig = reference.DecodeMethodSignature(decoder, null);
-                return SlotOf(md.GetString(reference.Name), refSig.GenericParameterCount, refSig.ParameterTypes.Length);
-        }
-    }
-
     private string Method(EntityHandle handle)
     {
         switch (handle.Kind)
@@ -550,10 +408,10 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         if (handle.Kind == HandleKind.FieldDefinition)
         {
             var field = md.GetFieldDefinition((FieldDefinitionHandle)handle);
-            return $"{Type(field.GetDeclaringType())}::{Member(md.GetString(field.Name))}";
+            return $"{Type(field.GetDeclaringType())}::{md.GetString(field.Name)}";
         }
         var reference = md.GetMemberReference((MemberReferenceHandle)handle);
-        return $"{Owner(reference.Parent)}::{Member(md.GetString(reference.Name))}";
+        return $"{Owner(reference.Parent)}::{md.GetString(reference.Name)}";
     }
 
     private string Owner(EntityHandle parent) => parent.Kind switch
@@ -574,7 +432,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
 
     /// <summary>Strict: with the calling convention and header flags (instance, explicit this) and the vararg sentinel.</summary>
     private string Signature(string name, MethodSignature<TypeSig> sig) =>
-        $"{(strict ? Header(sig.Header) : "")}{Member(name)}`{sig.GenericParameterCount}({Parameters(sig)})->{Render(sig.ReturnType)}";
+        $"{(strict ? Header(sig.Header) : "")}{name}`{sig.GenericParameterCount}({Parameters(sig)})->{Render(sig.ReturnType)}";
 
     private string Parameters(MethodSignature<TypeSig> sig) => string.Join(",", sig.ParameterTypes.Select(Render)
         .Select((p, i) => strict && i == sig.RequiredParameterCount ? "...," + p : p));
@@ -605,35 +463,18 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         _ => sig.ToString(),
     };
 
-    /// <summary>The compiler-generated names <see cref="Read"/>'s current instruction mentions; null outside it.</summary>
-    private List<string>? generated;
-
-    /// <summary>Compiler-generated names (closures, iterators, backing fields) differ between compilers.</summary>
-    private string Member(string name)
-    {
-        if (exact || !name.Contains('<')) return name;
-        generated?.Add(name);
-        return "<generated>";
-    }
-
     /// <summary>Mathcad's name for a type: mirrored types map whole, else their outermost mirrored declaring type;
     /// with <c>bind</c>, prefixed by its lower-case assembly unless that is a framework one.</summary>
     private string Name(string type, string assembly)
     {
-        int nest = type.IndexOf('+');
-        if (bind == null && products == null)
-        {
-            string mapped = typeName(type);
-            if (mapped == type && nest > 0) mapped = typeName(type[..nest]) + type[nest..];
-            return string.Join("+", mapped.Split('+').Select(Member));
-        }
+        if (bind == null && products == null) return type;
         // A module's own compiler types (<Module>, <PrivateImplementationDetails>...) are its own on either side.
-        if (type.StartsWith('<') && assembly == self) return "[<self>]" + string.Join("+", type.Split('+').Select(Member));
+        if (type.StartsWith('<') && assembly == self) return "[<self>]" + type;
+        int nest = type.IndexOf('+');
         var bound = bind?.Invoke(assembly, type)
             ?? (nest > 0 && bind?.Invoke(assembly, type[..nest]) is [var outer, var at] ? [outer + type[nest..], at] : null);
         string name = bound?[0] ?? type, scope = (bound?[1] ?? assembly).ToLowerInvariant();
-        return (bound != null || products?.Contains(scope) == true ? $"[{scope}]" : "")
-            + string.Join("+", name.Split('+').Select(Member));
+        return (bound != null || products?.Contains(scope) == true ? $"[{scope}]" : "") + name;
     }
 }
 
@@ -667,237 +508,4 @@ sealed class StrictSigProvider(string assembly) : ISignatureTypeProvider<TypeSig
     public TypeSig GetPinnedType(TypeSig elementType) => new PinnedSig(elementType);
     public TypeSig GetFunctionPointerType(MethodSignature<TypeSig> signature) => new MethodPointerSig(signature);
     public TypeSig GetModifiedType(TypeSig modifier, TypeSig unmodifiedType, bool isRequired) => new ModifiedSig(modifier, unmodifiedType, isRequired);
-}
-
-static class CompilerGenerated
-{
-    /// <summary>
-    /// The hand-written method a compiler-generated one implements: a lambda or local function <c>&lt;Name&gt;b__…</c> /
-    /// <c>&lt;Name&gt;g__…</c> (in the type or a <c>&lt;&gt;c…</c> closure class), or a method of an iterator or async
-    /// state machine <c>&lt;Name&gt;d__…</c>. Null for shared closure plumbing such as the constructors of <c>&lt;&gt;c</c>.
-    /// </summary>
-    public static (string Type, string Name)? Owner(string typeName, string methodName)
-    {
-        var parts = typeName.Split('+');
-        string type = string.Join('+', parts.TakeWhile(p => !p.StartsWith('<')));
-        // The text inside the leading <...>, brackets matched by depth (`<Ns.IFoo<T>.Bar>b__0_0`), unwrapped again when
-        // it is itself compiler-named (`<<Bar>g__Local|3_0>d` is the state machine of local function Local in Bar).
-        static string? Inner(string name)
-        {
-            if (!name.StartsWith('<')) return null;
-            int depth = 0;
-            for (int i = 0; i < name.Length; i++)
-            {
-                if (name[i] == '<') depth++;
-                else if (name[i] == '>' && --depth == 0)
-                    return i <= 1 ? null : name[1] == '<' ? Inner(name[1..i]) : name[1..i];
-            }
-            return null;
-        }
-        string? name = Inner(methodName) ?? parts.Select(Inner).LastOrDefault(n => n != null);
-        return type.Length == 0 || name == null ? null : (type, name);
-    }
-}
-
-/// <summary>Dependencies between the top-level types of a test assembly, read from IL: which decide what a change
-/// to one test file can affect (shared helpers, including extension methods a text search cannot attribute).</summary>
-static class TestTypes
-{
-    public static string Name(MetadataReader md, TypeDefinitionHandle handle) => SigProvider.FullName(md, handle);
-
-    /// <summary>The top-level type declaring <paramref name="handle"/> (itself when it is top-level).</summary>
-    static TypeDefinitionHandle TopLevel(MetadataReader md, TypeDefinitionHandle handle)
-    {
-        while (md.GetTypeDefinition(handle).GetDeclaringType() is { IsNil: false } outer) handle = outer;
-        return handle;
-    }
-
-    /// <summary>The reflection name (<c>Namespace.Outer+Nested</c>) of a type definition or reference, as
-    /// attribute blobs serialize types.</summary>
-    static string ReflectionName(MetadataReader md, EntityHandle handle)
-    {
-        if (handle.Kind == HandleKind.TypeDefinition)
-        {
-            var type = md.GetTypeDefinition((TypeDefinitionHandle)handle);
-            return type.GetDeclaringType() is { IsNil: false } outer ? ReflectionName(md, outer) + "+" + md.GetString(type.Name)
-                : md.GetString(type.Namespace) is { Length: > 0 } ns ? ns + "." + md.GetString(type.Name) : md.GetString(type.Name);
-        }
-        if (handle.Kind == HandleKind.TypeReference)
-        {
-            var type = md.GetTypeReference((TypeReferenceHandle)handle);
-            return type.ResolutionScope.Kind == HandleKind.TypeReference ? ReflectionName(md, type.ResolutionScope) + "+" + md.GetString(type.Name)
-                : md.GetString(type.Namespace) is { Length: > 0 } ns ? ns + "." + md.GetString(type.Name) : md.GetString(type.Name);
-        }
-        return "?";
-    }
-
-    /// <summary>Other top-level types of this assembly that <paramref name="top"/> or its nested types derive from or
-    /// implement, whose members or types their method bodies reference, or that the custom attributes on them, their
-    /// methods, fields, properties and parameters construct or name in a <c>System.Type</c> argument
-    /// (<c>[MemberData(..., MemberType = typeof(A))]</c>, <c>[ClassData(typeof(A.Data))]</c>, a data attribute A
-    /// declares).</summary>
-    public static SortedSet<TypeDefinitionHandle> References(MetadataReader md, System.Reflection.PortableExecutable.PEReader pe, TypeDefinitionHandle top)
-    {
-        var found = new HashSet<TypeDefinitionHandle>();
-        var byName = md.TypeDefinitions.ToDictionary(h => ReflectionName(md, h));
-        void Type(EntityHandle handle)
-        {
-            switch (handle.Kind)
-            {
-                case HandleKind.TypeDefinition: found.Add(TopLevel(md, (TypeDefinitionHandle)handle)); break;
-                case HandleKind.TypeSpecification:
-                    // A generic instantiation, array or pointer: every type definition of this assembly in it.
-                    md.GetTypeSpecification((TypeSpecificationHandle)handle).DecodeSignature(new Collector(md, found), null);
-                    break;
-            }
-        }
-        void Member(EntityHandle handle)
-        {
-            switch (handle.Kind)
-            {
-                case HandleKind.MethodDefinition:
-                    Type(md.GetMethodDefinition((MethodDefinitionHandle)handle).GetDeclaringType()); break;
-                case HandleKind.FieldDefinition:
-                    Type(md.GetFieldDefinition((FieldDefinitionHandle)handle).GetDeclaringType()); break;
-                case HandleKind.MethodSpecification:
-                    var specification = md.GetMethodSpecification((MethodSpecificationHandle)handle);
-                    Member(specification.Method);
-                    specification.DecodeSignature(new Collector(md, found), null);
-                    break;
-                case HandleKind.MemberReference:
-                    Type(md.GetMemberReference((MemberReferenceHandle)handle).Parent); break;
-                default: Type(handle); break;
-            }
-        }
-        // Every type name a serialized System.Type (`Ns.A+Data, Assembly, Version=...`, generic arguments in brackets)
-        // mentions; a name of another assembly that matches one of this assembly's types only over-approximates.
-        void Named(string? serialized)
-        {
-            foreach (var part in (serialized ?? "").Split(['[', ']', ',', ' '], StringSplitOptions.RemoveEmptyEntries))
-                if (byName.TryGetValue(part, out var handle)) found.Add(TopLevel(md, handle));
-        }
-        void Arguments(IEnumerable<CustomAttributeTypedArgument<string>> arguments)
-        {
-            foreach (var argument in arguments)
-            {
-                Named(argument.Type);  // an enum of this assembly
-                if (argument.Value is System.Collections.Immutable.ImmutableArray<CustomAttributeTypedArgument<string>> elements) Arguments(elements);
-                else if (argument.Type == AttributeTypes.SystemType) Named(argument.Value as string);
-            }
-        }
-        void Attributes(CustomAttributeHandleCollection attributes)
-        {
-            foreach (var handle in attributes)
-            {
-                var attribute = md.GetCustomAttribute(handle);
-                Member(attribute.Constructor);
-                try
-                {
-                    var value = attribute.DecodeValue(new AttributeTypes(md, byName));
-                    Arguments(value.FixedArguments);
-                    Arguments(value.NamedArguments.Select(a => new CustomAttributeTypedArgument<string>(a.Type, a.Value)));
-                }
-                catch (Exception e) when (e is BadImageFormatException or NotSupportedException)
-                {
-                    // An argument of an enum this assembly does not declare: its size is unknown, so the blob cannot
-                    // be decoded. Count every type of this assembly whose name the blob spells out.
-                    string blob = System.Text.Encoding.UTF8.GetString(md.GetBlobBytes(attribute.Value));
-                    foreach (var (name, type) in byName)
-                        if (blob.Contains(name, StringComparison.Ordinal)) found.Add(TopLevel(md, type));
-                }
-            }
-        }
-        var types = new Stack<TypeDefinitionHandle>([top]);
-        while (types.Count > 0)
-        {
-            var type = md.GetTypeDefinition(types.Pop());
-            if (!type.BaseType.IsNil) Type(type.BaseType);
-            foreach (var implementation in type.GetInterfaceImplementations())
-                Type(md.GetInterfaceImplementation(implementation).Interface);
-            Attributes(type.GetCustomAttributes());
-            foreach (var field in type.GetFields()) Attributes(md.GetFieldDefinition(field).GetCustomAttributes());
-            foreach (var property in type.GetProperties()) Attributes(md.GetPropertyDefinition(property).GetCustomAttributes());
-            foreach (var nested in type.GetNestedTypes()) types.Push(nested);
-            foreach (var handle in type.GetMethods())
-            {
-                var method = md.GetMethodDefinition(handle);
-                Attributes(method.GetCustomAttributes());
-                foreach (var parameter in method.GetParameters()) Attributes(md.GetParameter(parameter).GetCustomAttributes());
-                if (method.RelativeVirtualAddress == 0) continue;
-                var il = pe.GetMethodBody(method.RelativeVirtualAddress).GetILReader();
-                while (il.RemainingBytes > 0)
-                {
-                    byte first = il.ReadByte();
-                    var code = StructureReader.Codes[first == 0xFE ? (ushort)(0xFE00 | il.ReadByte()) : first];
-                    switch (code.OperandType)
-                    {
-                        case OperandType.InlineMethod or OperandType.InlineField or OperandType.InlineType or OperandType.InlineTok:
-                            Member(MetadataTokens.EntityHandle(il.ReadInt32())); break;
-                        // Read the count before taking the offset: `il.Offset += 4 * il.ReadInt32()` would drop the count's 4 bytes.
-                        case OperandType.InlineSwitch: { int targets = il.ReadInt32(); il.Offset += 4 * targets; break; }
-                        case OperandType.InlineNone: break;
-                        case OperandType.ShortInlineBrTarget or OperandType.ShortInlineI or OperandType.ShortInlineVar: il.Offset += 1; break;
-                        case OperandType.InlineVar: il.Offset += 2; break;
-                        case OperandType.InlineI8 or OperandType.InlineR: il.Offset += 8; break;
-                        default: il.Offset += 4; break;
-                    }
-                }
-            }
-        }
-        found.Remove(top);
-        return new SortedSet<TypeDefinitionHandle>(found, Comparer<TypeDefinitionHandle>.Create(
-            (a, b) => MetadataTokens.GetRowNumber(a).CompareTo(MetadataTokens.GetRowNumber(b))));
-    }
-
-    /// <summary>Attribute argument types by reflection name, enough to decode an attribute blob: an enum's size comes
-    /// from its definition in this assembly, and an enum declared elsewhere cannot be decoded.</summary>
-    sealed class AttributeTypes(MetadataReader md, Dictionary<string, TypeDefinitionHandle> byName) : ICustomAttributeTypeProvider<string>
-    {
-        public const string SystemType = "System.Type";
-        public string GetPrimitiveType(PrimitiveTypeCode typeCode) => typeCode.ToString();
-        public string GetSystemType() => SystemType;
-        public bool IsSystemType(string type) => type == SystemType;
-        public string GetTypeFromSerializedName(string name) => name;
-        public string GetTypeFromDefinition(MetadataReader reader, TypeDefinitionHandle handle, byte rawTypeKind) => ReflectionName(md, handle);
-        public string GetTypeFromReference(MetadataReader reader, TypeReferenceHandle handle, byte rawTypeKind) => ReflectionName(md, handle);
-        public string GetTypeFromSpecification(MetadataReader reader, object? context, TypeSpecificationHandle handle, byte rawTypeKind) => "?";
-        public string GetSZArrayType(string elementType) => elementType + "[]";
-        public PrimitiveTypeCode GetUnderlyingEnumType(string type)
-        {
-            // An enum's one instance field, `value__`, has the underlying primitive type.
-            if (byName.TryGetValue(type, out var handle))
-                foreach (var field in md.GetTypeDefinition(handle).GetFields().Select(md.GetFieldDefinition))
-                    if ((field.Attributes & FieldAttributes.Static) == 0)
-                    {
-                        var signature = md.GetBlobReader(field.Signature);
-                        signature.ReadSignatureHeader();
-                        return (PrimitiveTypeCode)signature.ReadSignatureTypeCode();
-                    }
-            throw new NotSupportedException($"enum {type} is not declared in this assembly");
-        }
-    }
-
-    /// <summary>Records each type definition of this assembly a signature names; the shape it builds is unused.</summary>
-    sealed class Collector(MetadataReader md, HashSet<TypeDefinitionHandle> found) : ISignatureTypeProvider<int, object?>
-    {
-        public int GetTypeFromDefinition(MetadataReader reader, TypeDefinitionHandle handle, byte rawTypeKind)
-        {
-            found.Add(TopLevel(md, handle));
-            return 0;
-        }
-        public int GetTypeFromReference(MetadataReader reader, TypeReferenceHandle handle, byte rawTypeKind) => 0;
-        public int GetTypeFromSpecification(MetadataReader reader, object? context, TypeSpecificationHandle handle, byte rawTypeKind) =>
-            reader.GetTypeSpecification(handle).DecodeSignature(this, context);
-        public int GetPrimitiveType(PrimitiveTypeCode typeCode) => 0;
-        public int GetSZArrayType(int elementType) => 0;
-        public int GetArrayType(int elementType, ArrayShape shape) => 0;
-        public int GetByReferenceType(int elementType) => 0;
-        public int GetPointerType(int elementType) => 0;
-        public int GetGenericInstantiation(int genericType, System.Collections.Immutable.ImmutableArray<int> typeArguments) => 0;
-        public int GetGenericTypeParameter(object? context, int index) => 0;
-        public int GetGenericMethodParameter(object? context, int index) => 0;
-        public int GetFunctionPointerType(MethodSignature<int> signature) => 0;
-        public int GetModifiedType(int modifier, int unmodifiedType, bool isRequired) => 0;
-        public int GetPinnedType(int elementType) => 0;
-    }
 }

@@ -1,4 +1,6 @@
 """Acceptance checks for the native gate's comparison and project mapping, on fabricated results (no MSVC needed)."""
+import contextlib
+import io
 import json
 from pathlib import Path
 import struct
@@ -7,8 +9,8 @@ import unittest
 from unittest import mock
 
 from native_bytes import Function, Reloc
-from native_gate import (anonymous, compare, fingerprint, linked, native_projects, object_fingerprints, original_dll,
-                         scan)
+from native_gate import (MANIFEST, anonymous, check, compare, fingerprint, linked, native_projects,
+                         object_fingerprints, original_dll, scan)
 from test_native_bytes import ManifestImage, coff
 
 
@@ -131,28 +133,82 @@ class ScanTests(unittest.TestCase):
         self.assertFalse(rows['caller']['ok'])
         self.assertIn('call target differs', rows['caller']['reason'])
 
-    def test_parked_nonexport_target_passes_by_name_and_size(self):
+    def parked_data_rows(self, target, data=b'abc'):
+        """scan() of `caller`, whose original call reaches `target`, under a parked data entry of 3 bytes at 0x1100 that
+        the candidate defines as `data`."""
         memory = bytearray(0x2000)
         memory[0x1000:0x1006] = b'\xe8\0\0\0\0\xc3'
-        # The original address deliberately differs from the parked entry's RVA.
-        struct.pack_into('<i', memory, 0x1001, 0x1200 - (0x1001 + 4))
+        struct.pack_into('<i', memory, 0x1001, target - (0x1001 + 4))
         image = ManifestImage(memory, {0x1000: 0x1006, 0x1100: 0x1103, 0x1200: 0x1203}, {'caller': 0x1000})
         manifest = {'fake.dll': {'sha256': image.sha256, 'targets': {
             'parked_data': {'rva': '0x1100', 'size': 3, 'parked': True}}}}
         with tempfile.TemporaryDirectory() as tmp, mock.patch('native_bytes.PeImage', lambda path: image):
             obj = Path(tmp) / 'caller.obj'
             obj.write_bytes(coff([('caller', b'\xe8\0\0\0\0\xc3', [(1, 0x0004, 1)]),
-                                  ('parked_data', b'abc', [])], externals=['parked_data'], data=['parked_data']))
+                                  ('parked_data', data, [])], externals=['parked_data'], data=['parked_data']))
             manifest_path = Path(tmp) / 'targets.json'
             manifest_path.write_text(json.dumps(manifest), encoding='utf-8')
-            rows = scan('fake.dll', [obj], manifest_path)
+            return scan('fake.dll', [obj], manifest_path)
+
+    def test_parked_data_target_verifies_by_its_rva_name_and_size(self):
+        rows = self.parked_data_rows(0x1100)
         self.assertTrue(rows['caller']['ok'], rows['caller']['reason'])
+        # D29: every site must resolve to the entry's RVA, parked data included.
+        elsewhere = self.parked_data_rows(0x1200)
+        self.assertFalse(elsewhere['caller']['ok'])
+        self.assertIn('manifest entry gives 0x1100', elsewhere['caller']['reason'])
+
+    def test_a_failing_row_is_not_replaced_by_a_later_passing_row_of_its_name(self):
+        # compare_object lists "parked_data (manifest entry)", failing on its size, then "parked_data (parked entry)", OK.
+        rows = self.parked_data_rows(0x1100, data=b'abcd')
+        self.assertFalse(rows['parked_data']['ok'])
+        self.assertIn('size 4 != manifest 3', rows['parked_data']['reason'])
 
     def test_anonymous_namespace_tags_do_not_count_as_a_change(self):
         # MSVC tags an anonymous namespace with a hash of the source path, which differs between base and candidate.
         call = lambda tag: Function('f', b'\xe8\0\0\0\0\xc3', [Reloc(1, 4, 0)], {1: None}, {1: f'?g@?A0x{tag}@u@@YAXXZ'})
         self.assertEqual(fingerprint(call('377d720e')), fingerprint(call('4b90f393')))
         self.assertEqual(anonymous('?g@?A0x377d720e@u@@YAXXZ'), '?g@?A0x@u@@YAXXZ')
+
+
+class CheckTests(unittest.TestCase):
+    """check() with git and the builds replaced: `caller` passes only under a manifest that lists `callee`."""
+
+    def run_check(self, base_targets, candidate_targets):
+        def tree(root, targets):
+            (root / 'src' / 'Quire.Native.A').mkdir(parents=True, exist_ok=True)
+            (root / 'src' / 'Quire.Native.A' / 'Quire.Native.A.vcxproj').write_text('<Project/>', encoding='utf-8')
+            (root / MANIFEST).parent.mkdir(parents=True, exist_ok=True)
+            (root / MANIFEST).write_text(json.dumps(targets), encoding='utf-8')
+
+        def run(command, cwd, *args):  # the base checkout writes the base tree
+            if 'checkout' in command:
+                tree(Path(cwd), base_targets)
+
+        def scan_project(original, root, project, work, log, timeout, manifest, *_):
+            ok = manifest is not None and 'callee' in json.loads(Path(manifest).read_text(encoding='utf-8'))
+            return {'caller': {'ok': ok, 'reason': None if ok else '1 unverified call/address targets', 'sha256': 's'}}
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root, install = Path(tmp) / 'root', Path(tmp) / 'install'
+            tree(root, candidate_targets)
+            install.mkdir()
+            (install / 'a.dll').write_bytes(b'')
+            with mock.patch('native_gate.git', return_value='0' * 40), mock.patch('native_gate.run', run), \
+                    mock.patch('native_gate.original_dll', return_value='a.dll'), \
+                    mock.patch('native_gate.linked', return_value=False), \
+                    mock.patch('native_gate.scan_project', scan_project), \
+                    mock.patch('native_bytes.PeImage', lambda path: mock.Mock(sha256='ab' * 32, exports={})), \
+                    contextlib.redirect_stdout(io.StringIO()):
+                return check('main', ['Quire.Native.A'], Path(tmp) / 'results', root=root, install=install)
+
+    def test_a_candidate_that_only_removes_a_manifest_entry_does_not_pass(self):
+        listed = {'callee': {'rva': '0x1100'}}
+        self.assertTrue(self.run_check(listed, listed)['passed'])
+        report = self.run_check(listed, {})
+        self.assertFalse(report['passed'], report)
+        self.assertEqual(report['failures'], [{'method': 'Quire.Native.A::caller',
+                                               'reason': 'passed in base: 1 unverified call/address targets'}])
 
 
 if __name__ == '__main__':

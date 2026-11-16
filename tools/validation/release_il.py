@@ -61,13 +61,15 @@ def production_projects(root=ROOT):
 
 # MethodAudit pairs every production type through the type map, so a change to it can change any verdict.
 TYPE_MAP = 'docs/mirror/type-map.csv'
+# Projects whose assembly is generated (no source [MirrorOf]); MethodAudit binds them through this registry.
+GENERATED_ASSEMBLIES = 'docs/mirror/generated-assemblies.json'
 
 
 def affected_projects(base, root=ROOT):
     """Production projects whose Release IL or verdicts the diff from base can change: those with a changed file under
     src/<P>/; every project whose ProjectReference closure (build_closure, through .csproj and imported .props) reaches
     a changed src directory, since a const, enum or default value is compiled into its users; and all of them for root
-    build configuration or the type map. MethodAudit/MirrorGen changes select nothing: check builds the judge from the
+    build configuration, the type map or the registry of generated assemblies. MethodAudit/MirrorGen changes select nothing: check builds the judge from the
     base commit, so they cannot change a verdict of their own branch, and both scans of later runs use the new judge.
     To see what such a change does, name the projects and pass judge='candidate' to check (--judge candidate)."""
     paths = git('diff', '--name-only', base, cwd=root).splitlines()
@@ -76,7 +78,8 @@ def affected_projects(base, root=ROOT):
     projects = present | {Path(p).stem for p in git('ls-tree', '-r', '--name-only', base, '--', 'src', cwd=root).splitlines()
                           if p.endswith('.csproj')}
     # Shared compiler inputs can change every output, so they require the full IL scan.
-    if any('/' not in p and p.endswith(('.props', '.targets', '.json', '.slnx')) or p == TYPE_MAP for p in paths):
+    if any('/' not in p and p.endswith(('.props', '.targets', '.json', '.slnx')) or p in (TYPE_MAP, GENERATED_ASSEMBLIES)
+           for p in paths):
         return sorted(projects)
     changed = {parts[1] for p in paths if len(parts := p.split('/')) >= 3 and parts[0] == 'src'}
     references = {name: project_references(root, root / 'src' / name) for name in present}
@@ -625,10 +628,23 @@ def pinned_instance(path):
     return None
 
 
+_INSTANCES = {}
+
+
 def msvc_instance(environ=os.environ):
     """The Visual Studio instance with C++/CLI support whose x64 compiler is build MSVC_BUILD; fails closed.
     QUIRE_MSVC_INSTANCE names an explicit instance (for example a Build Tools folder that vswhere does not list); it is
-    used only if its compiler is build MSVC_BUILD, otherwise the search fails closed as before."""
+    used only if its compiler is build MSVC_BUILD, otherwise the search fails closed as before. The search starts
+    vswhere and each compiler, so the process's own environment is searched once; a failure is not remembered."""
+    if environ is not os.environ:
+        return find_msvc_instance(environ)
+    key = environ.get('QUIRE_MSVC_INSTANCE')
+    if key not in _INSTANCES:
+        _INSTANCES[key] = find_msvc_instance(environ)
+    return _INSTANCES[key]
+
+
+def find_msvc_instance(environ):
     explicit = environ.get('QUIRE_MSVC_INSTANCE')
     if explicit:
         found = pinned_instance(explicit)
@@ -640,11 +656,9 @@ def msvc_instance(environ=os.environ):
         raise RuntimeError(f'a C++/CLI candidate needs Visual Studio on Windows; {vswhere} not found')
     paths = subprocess.run([vswhere, '-all', '-products', '*', '-requires', 'Microsoft.VisualStudio.Component.VC.CLI.Support',
                             '-property', 'installationPath'], capture_output=True, text=True, check=True).stdout.splitlines()
-    for path in map(Path, filter(None, paths)):
-        for cl in path.glob('VC/Tools/MSVC/*/bin/Hostx64/x64/cl.exe'):
-            banner = subprocess.run([cl], capture_output=True, text=True).stderr
-            if f'Version 19.51.{MSVC_BUILD} ' in banner:
-                return path
+    for path in filter(None, paths):
+        if found := pinned_instance(path):
+            return found
     raise RuntimeError(f'no Visual Studio with C++/CLI support has MSVC 19.51.{MSVC_BUILD} (install Build Tools 18.6.2)')
 
 
@@ -818,7 +832,18 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
     return data
 
 
-CACHE = ROOT / '.mirror-cache' / 'inventory-cache'
+def shared_cache(root=ROOT):
+    """The .mirror-cache of the main checkout (the one that holds the repository's .git directory), which every linked
+    worktree shares: entries are keyed by content, so a base one lane scanned serves every other lane. A checkout
+    that is not a worktree of such a repository uses its own."""
+    try:
+        common = Path(git('rev-parse', '--path-format=absolute', '--git-common-dir', cwd=root))
+    except (OSError, subprocess.SubprocessError):
+        return root / '.mirror-cache'
+    return (common.parent if common.name == '.git' else root) / '.mirror-cache'
+
+
+CACHE = shared_cache() / 'inventory-cache'
 CACHE_FORMAT = 4
 # A run's directory is older than this only if its run was killed: every step is bounded by --timeout.
 STALE_WORK = 12 * 3600
@@ -872,6 +897,8 @@ def work_directory(parent):
                     unmoved.append(entry)
         with contextlib.suppress(OSError):
             purge(trash, *unmoved)
+
+
 # The judge's sources: MethodAudit compiles MirrorGen's metadata model.
 TOOL_TREES = ('tools/Quire.Tools.MethodAudit', 'tools/Quire.Tools.MirrorGen')
 # A clone's .git/info/attributes that makes checkout and archive write committed bytes (no EOL conversion, filter or
@@ -986,6 +1013,7 @@ def slice_keys(root, commit, judge, projects, install):
     common = [CACHE_FORMAT, recipe, judge, root_files(root, commit),
               [path if kind == 'tree' else f'{path} {sha}' for _, kind, sha, path in src],
               git('rev-parse', f'{commit}:{TYPE_MAP}', cwd=root),
+              git('ls-tree', commit, '--', GENERATED_ASSEMBLIES, cwd=root),  # MethodAudit binds registered projects by it
               str(install), dlls]  # every DLL's size and mtime: hashing the DLLs would cost more than it saves
     dirs = build_closure(root, projects)
     references = {d.name: project_references(root, d) for d in dirs}
@@ -1114,9 +1142,7 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
                 raise RuntimeError(f'base {base[:12]} has no MethodAudit to judge with ({audit.relative_to(original)})')
             with timed(timings, 'judge_build'):
                 tool = build_judge(original, base, cache, dotnet, log, timeout)
-                generated_registry = json.loads((root / 'docs/mirror/generated-assemblies.json').read_text(encoding='utf-8'))
-                use_generated_judge = bool(set(projects) & set(generated_registry))
-                proposed = candidate_judge(root, work, cache, dotnet, log, timeout) if judge == 'candidate' or use_generated_judge else tool
+                proposed = candidate_judge(root, work, cache, dotnet, log, timeout) if judge == 'candidate' else tool
             report['judge'].update(base=tool.parent.parent.name, candidate=proposed.parent.parent.name)
             # A project the candidate adds has no base build; its members start as new (or moved) rows.
             existing = [p for p in projects if (original / 'src' / p / f'{p}.csproj').is_file()]
@@ -1142,8 +1168,13 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
             # A .vcxproj candidate may pair nothing with the C# base's original; its methods then fail on their own.
             if any((vcxproj is None or name in new_id) and new_id.get(name) != identity for name, identity in old_id.items()):
                 raise RuntimeError('Mathcad reference identity changed between scans')
-            generated_registry = json.loads((root / 'docs/mirror/generated-assemblies.json').read_text(encoding='utf-8'))
-            generated_projects = set(generated_registry) & set(projects)
+            # A project either registry names is judged by the generated rule (every method pairs and matches, with no
+            # unfinished members): the base's, so a candidate cannot leave the rule, and the candidate's, so a project
+            # is registered only once it passes it. The judge is the base's either way.
+            registered = set()
+            for registry in (original / GENERATED_ASSEMBLIES, root / GENERATED_ASSEMBLIES):
+                registered |= set(json.loads(registry.read_text(encoding='utf-8')) if registry.is_file() else ())
+            generated_projects = registered & set(projects)
             generated_rows = [m for m in after['methods'] if m.get('project') in generated_projects]
             generated_missing = [m for m in after.get('missing', []) if m.get('project') in generated_projects]
             ordinary_before = {'methods': [m for m in before['methods'] if m.get('project') not in generated_projects]}
@@ -1193,8 +1224,8 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
                 # Judged by the base's tool, so keyed by it: if the candidate changes the tool, its keys never hit.
                 store_slices(cache, slice_keys(root, report['tip'], judged, projects, install), after)
             # Kept locally for exact signatures, tokens and artifact identities; no original IL.
-            (results / 'base-inventory.json').write_text(json.dumps(before, indent=2) + '\n', encoding='utf-8')
-            (results / 'inventory.json').write_text(json.dumps(after, indent=2) + '\n', encoding='utf-8')
+            (results / 'base-inventory.json').write_text(json.dumps(before) + '\n', encoding='utf-8')
+            (results / 'inventory.json').write_text(json.dumps(after) + '\n', encoding='utf-8')
     except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as error:
         report['error'] = str(error)
     finally:
@@ -1212,6 +1243,8 @@ def unverified(report):
     if report.get('missing') is None and 'exact' in report:
         lines.append('  not listed: Mathcad members without a Quire member (the judge, MethodAudit of the base, predates it)')
     return lines
+
+
 def judge_notes(report):
     """Console lines about the judge: that a tree's own change to it had no effect on the run, or what it did."""
     judge = report.get('judge') or {}

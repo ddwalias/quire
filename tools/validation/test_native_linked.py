@@ -145,6 +145,19 @@ class LinkedTests(Pairing, unittest.TestCase):
                       c_names={0x2200: {"table"}, 0x2208: {"other"}}, o_memory=mo, c_memory=mc)
         self.assertIn("data +0x8: bytes differ", r.reason)
 
+    def test_exported_data_shorter_than_the_original_object_is_a_mismatch(self):
+        # The export `f` is data: 16 bytes in the original; the candidate's symbol holds the first 8, then another.
+        mo, mc = bytearray(0x3000), bytearray(0x3000)
+        mo[0x2100:0x2110] = bytes(range(1, 17))
+        mc[0x2200:0x2208] = bytes(range(1, 9))
+        r = self.pair({}, {}, {}, {}, o_names={0x2110: {"next"}}, c_names={0x2200: {"f"}, 0x2208: {"other"}},
+                      o_memory=mo, c_memory=mc, o_exports={"f": 0x2100}, c_exports={"f": 0x2200})
+        self.assertFalse(r.ok)
+        self.assertIn("data +0x8: bytes differ", r.reason)
+        mc[0x2208:0x2210] = bytes(range(9, 17))  # the same 16 bytes, across the candidate's two symbols
+        self.assertTrue(self.pair({}, {}, {}, {}, o_names={0x2110: {"next"}}, c_names={0x2200: {"f"}, 0x2208: {"other"}},
+                                  o_memory=mo, c_memory=mc, o_exports={"f": 0x2100}, c_exports={"f": 0x2200}).ok)
+
     def test_a_pointer_in_data_is_checked_as_a_target(self):
         o = {0x1000: ("lea", f"rcx,[{at(0x2100)}h]"), 0x1007: ("ret", ""), 0x1100: ("ret", "")}
         mo, mc = bytearray(0x3000), bytearray(0x3000)
