@@ -11,8 +11,4 @@ namespace Quire.Calculation;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.CalculationBinder, Ptc.Calculation")]
 public partial class CalculationBinder
 {
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void BindTo(global::Quire.Calculation.Core.ICalculatableContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public CalculationBinder() { }
 }
