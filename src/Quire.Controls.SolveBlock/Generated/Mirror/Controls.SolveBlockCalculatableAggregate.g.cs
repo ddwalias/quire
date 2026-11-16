@@ -11,6 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.SolveBlockCalculatableAggregate, Ptc.Controls.SolveBlock")]
 internal partial class SolveBlockCalculatableAggregate : global::Quire.Controls.SolveBlockCalculatable, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICanContainSymbolicCalculation
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal static string GetDefinedVariable(global::System.Text.RegularExpressions.Match topDefineMatch) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

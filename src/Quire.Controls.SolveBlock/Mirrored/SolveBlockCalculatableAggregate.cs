@@ -2,6 +2,26 @@ namespace Quire.Controls;
 
 internal partial class SolveBlockCalculatableAggregate
 {
+    internal static string GetDefinedVariable(global::System.Text.RegularExpressions.Match topDefineMatch)
+    {
+        if (topDefineMatch == null || !topDefineMatch.Success)
+        {
+            return null;
+        }
+        string definedVariable = topDefineMatch.Groups["defined"]?.Value;
+        if (definedVariable != null)
+        {
+            global::System.Text.RegularExpressions.Regex bindingsRegex =
+                new global::System.Text.RegularExpressions.Regex("\\(%bindings (?<defined>.+)\\)");
+            string bindingVariable = bindingsRegex.Match(definedVariable).Groups["defined"]?.Value;
+            if (global::Quire.EnumerableExtensions.IsNullOrEmpty<char>(bindingVariable))
+            {
+                bindingVariable = topDefineMatch.Groups["defined"]?.Value;
+            }
+            return bindingVariable;
+        }
+        return null;
+    }
     private static readonly int[] SymbolicEvalIndices = new int[2] { 1, 2 };
     private const int DefineSymEvalAggregateCount = 3;
 
