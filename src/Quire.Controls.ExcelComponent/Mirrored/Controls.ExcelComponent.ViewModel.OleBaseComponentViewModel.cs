@@ -311,4 +311,107 @@ public abstract partial class OleBaseComponentViewModel
             base.IsCrosshairVisible = value && (IsInputSectionVisible || IsOutputSectionVisible);
         }
     }
+
+    public override bool CanAddItems
+    {
+        get
+        {
+            if (base.CanAddItems)
+            {
+                return IsCrosshairVisible;
+            }
+            return false;
+        }
+    }
+
+    protected double DefaultSectionsMinimumHeight
+    {
+        get
+        {
+            Size gridCellSize = Grid.GridCellSize;
+            return gridCellSize.Height * 3.0;
+        }
+    }
+
+    protected Size OleContainerItemInitialSize
+    {
+        get
+        {
+            Size result = OleContainerItemViewModel.EstablishInitialSize();
+            result.Height = AlignHeightWithGridLines(result.Height, isOleContainerItem: true);
+            return result;
+        }
+    }
+
+    internal bool IsResizing
+    {
+        get
+        {
+            return OleContainerItem.IsResizing;
+        }
+        set
+        {
+            OleContainerItem.IsResizing = value;
+            if (value)
+            {
+                DebugTools.DevAssert(_previousResizeData == null, null);
+                return;
+            }
+            AdjustOleContainerItemSize(OleContainerItemSize);
+            ReconcileOutputItemsLocations();
+            MinimumSize = FindMinimumSize();
+            _previousResizeData = null;
+        }
+    }
+
+    public bool CanInsertOutputExpression
+    {
+        get
+        {
+            bool result = false;
+            if (IsCrosshairVisible)
+            {
+                result = new Rect(0.0, OutputSectionActualTop, OleContainerItemWidth, OutputSectionActualHeight).ContainsAccountingForMeasurementError(InsertionPoint);
+            }
+            return result;
+        }
+    }
+
+    public bool CanInsertInputExpression
+    {
+        get
+        {
+            bool result = false;
+            if (IsCrosshairVisible)
+            {
+                result = new Rect(0.0, InputSectionActualTop, OleContainerItemWidth, InputSectionActualHeight).ContainsAccountingForMeasurementError(InsertionPoint);
+            }
+            return result;
+        }
+    }
+
+    private void ClearRestrictedArea()
+    {
+        if (OleContainerItem != null)
+        {
+            ((IRestrictedAreaAlignmentGrid)_alignmentGrid).RestrictedAreas.Remove(OleContainerItem);
+        }
+    }
+
+    private void SetRestrictedArea()
+    {
+        if (OleContainerItem != null)
+        {
+            Pair<double, double> value = new Pair<double, double>(InputSectionActualHeight, InputSectionActualHeight + OleContainerItemHeight);
+            Dictionary<object, Pair<double, double>> restrictedAreas = ((IRestrictedAreaAlignmentGrid)_alignmentGrid).RestrictedAreas;
+            if (restrictedAreas.ContainsKey(OleContainerItem))
+            {
+                restrictedAreas[OleContainerItem] = value;
+            }
+            else
+            {
+                restrictedAreas.Add(OleContainerItem, value);
+            }
+        }
+    }
 }

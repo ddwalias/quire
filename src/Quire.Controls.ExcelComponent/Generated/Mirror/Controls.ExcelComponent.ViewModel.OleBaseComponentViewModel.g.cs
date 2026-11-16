@@ -40,18 +40,6 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     public abstract bool OutputSectionExists { get; }
     [global::Quire.Mirror.MirrorStub]
-    public override bool CanAddItems { get => base.CanAddItems; }
-    [global::Quire.Mirror.MirrorStub]
-    protected double DefaultSectionsMinimumHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Size OleContainerItemInitialSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal bool IsResizing { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool CanInsertOutputExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool CanInsertInputExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected OleBaseComponentViewModel(global::Quire.Controls.ExcelComponent.Model.OleBaseComponentModel model, global::System.Nullable<global::System.Windows.Size> gridCellSize) : base(default(global::Quire.Controls.Mathboard.AggregateMathboardViewModel)) { }
     [global::Quire.Mirror.MirrorStub]
     protected OleBaseComponentViewModel(global::Quire.Controls.ExcelComponent.Model.OleBaseComponentModel model, global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid grid) : base(default(global::Quire.Controls.Mathboard.AggregateMathboardViewModel)) { }
@@ -61,10 +49,6 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     private void Init() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private double AlignHeightWithGridLines(double height, bool isOleContainerItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ClearRestrictedArea() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetRestrictedArea() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void IndicateHiddenErrors() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
