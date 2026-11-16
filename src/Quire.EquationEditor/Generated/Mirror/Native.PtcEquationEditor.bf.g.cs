@@ -11,14 +11,4 @@ namespace Quire.Native.PtcEquationEditor;
 [global::Quire.Mirror.MirrorOf("bf, Ptc.EquationEditor")]
 internal abstract partial class bf : global::Quire.Native.PtcEquationEditor.a0
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected bf(global::Quire.Native.PtcEquationEditor.a5 A_0) : base(default(global::Quire.Native.PtcEquationEditor.a5)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool br() => base.br();
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract global::Quire.EquationEditor.Tree.Navigation.NavigatorState bq();
 }

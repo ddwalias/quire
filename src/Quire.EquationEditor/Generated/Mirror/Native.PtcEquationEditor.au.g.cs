@@ -11,10 +11,4 @@ namespace Quire.Native.PtcEquationEditor;
 [global::Quire.Mirror.MirrorOf("au, Ptc.EquationEditor")]
 internal partial struct au
 {
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.EquationEditor.Tree.MathNode a;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.EquationEditor.Tree.Parsing.Panacea b;
-    [global::Quire.Mirror.MirrorStub]
-    public au(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.EquationEditor.Tree.Parsing.Panacea A_1) { }
 }

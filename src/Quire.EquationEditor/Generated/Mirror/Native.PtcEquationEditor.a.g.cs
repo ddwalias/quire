@@ -15,6 +15,4 @@ internal partial class a
     public const string a_ = "WorksheetConverter";
     [global::Quire.Mirror.MirrorStub]
     public const string b = "WorksheetConverter.exe";
-    [global::Quire.Mirror.MirrorStub]
-    public a() { }
 }

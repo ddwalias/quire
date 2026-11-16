@@ -11,8 +11,4 @@ namespace Quire.Native.PtcEquationEditor;
 [global::Quire.Mirror.MirrorOf("a7, Ptc.EquationEditor")]
 internal partial class a7 : global::Quire.EquationEditor.Tree.Parsing.IValueCleaner
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string CleanValue(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public a7() { }
 }

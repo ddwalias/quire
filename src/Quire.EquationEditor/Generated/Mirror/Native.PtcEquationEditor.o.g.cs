@@ -11,8 +11,4 @@ namespace Quire.Native.PtcEquationEditor;
 [global::Quire.Mirror.MirrorOf("o, Ptc.EquationEditor")]
 internal static partial class o
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void a(this global::Quire.EquationEditor.Tree.AlgorithmOptions A_0, params string[] A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void a(this global::Quire.EquationEditor.Tree.MathNode A_0, string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

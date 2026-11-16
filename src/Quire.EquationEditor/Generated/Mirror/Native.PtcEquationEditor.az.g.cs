@@ -11,16 +11,4 @@ namespace Quire.Native.PtcEquationEditor;
 [global::Quire.Mirror.MirrorOf("az, Ptc.EquationEditor")]
 internal partial class az : global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.Parsing.Rule>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public az() { }
-    [global::Quire.Mirror.MirrorStub]
-    public az(global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.Parsing.Rule> A_0) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool c(string A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool a(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.Parsing.Rule> b(string A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::Quire.EquationEditor.Tree.Parsing.Rule> a(string A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
