@@ -6,7 +6,7 @@ Owner: dispatched worker, task `task_485dc1a8580c`; branch `mirror/quire-mcd-202
 - Scope: 14 bodyless interface method declarations on `depman.NodeQueue` (`StartWorkers`, `StopWorkers`, `GetRuntimeOptions`, `SetNumThreads`, `GetNumThreads`, `Interrupt`, `SetAutoCalc`, `GetAutoCalc`, `SetCalcNow`, `GetCalcNow`, `BeginTransaction`, `EndTransaction`, `GetUpToDateMediator`, `GetBusyMediator`) and 2 abstract property declarations on `depman.Scope` (`Id`, `Parent`).
 - Hand-written partials: `src/Quire.Mcd/Mirrored/depman.NodeQueue.cs` and `src/Quire.Mcd/Mirrored/depman.Scope.cs`. Removed corresponding stubs from `src/Quire.Mcd/Generated/Mirror/depman.NodeQueue.g.cs` and `depman.Scope.g.cs`.
 - Release IL: PASS; 16 checked (`.mirror-cache/release-il-a6291be4621b/release-il.json`, `.mirror-cache/release-il-6d1a2ebc6e16/release-il.json`).
-- Commit: pending landing.
+- Landed: `2d0670d50` (landing receipt: `C:\Projects\Quire\.mirror-cache\receipts\gate-il-d52f77f32596.json`).
 
 ## Remaining members and exact blockers
 All remaining 570 stubs in `Quire.Mcd` are blocked from matching Release IL when compiled as C# in `Quire.Mcd.csproj`:
