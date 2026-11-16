@@ -14,5 +14,6 @@
   - `Native.PtcEquationEditor.az`: `az()`, `az(IEnumerable<Rule>)`, `c(string, int)`, `a(int)`, `b(string, int)`, `a(string, int)` (0 stubs remaining).
   - `Native.PtcEquationEditor.d`: `a(IMathNodeToVisualNodeMap, IVisualMathNode, Direction, Direction, int?, double, double)`, `a(MathNode)`, `a(IVisualTextNode, MathNode, double)`, `a(IVisualIdNode, MathNode, double)`, `a(IList<double>, double)`, `.ctor()` (0 stubs remaining).
   - `Native.PtcEquationEditor.a`: `.ctor()` (const fields retain stubs per D15/rule).
+- Landed commit: `fa69d61d3fcdaa6010477a4842011fdf35f8628b`
 - Report: full `--project Quire.EquationEditor` gate PASS, 862 checked, 0 failures.
 - Remaining mismatches: 0 in completed types; remaining unbatched stubs in other types.
