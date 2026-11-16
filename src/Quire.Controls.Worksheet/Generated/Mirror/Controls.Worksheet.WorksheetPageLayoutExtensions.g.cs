@@ -11,6 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetPageLayoutExtensions, Ptc.Controls.Worksheet")]
 public static partial class WorksheetPageLayoutExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetGridSize(this global::Quire.Controls.Core.WorksheetPageLayout pageLayout, global::Quire.Controls.Core.GridSize gridSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,8 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.NonClippingStackPanel, Ptc.Controls.Worksheet")]
 public partial class NonClippingStackPanel : global::System.Windows.Controls.StackPanel
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.Geometry GetLayoutClip(global::System.Windows.Size layoutSlotSize) => base.GetLayoutClip(layoutSlotSize);
-    [global::Quire.Mirror.MirrorStub]
-    public NonClippingStackPanel() { }
 }

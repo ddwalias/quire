@@ -13,4 +13,16 @@
   - `Quire.Controls.Worksheet.DraftModeGutterWidthConverter`: `Convert`, `ConvertBack`, `.ctor`
   - `Quire.Controls.Worksheet.FileNameConverter`: `Instance`, `.ctor`, `Convert`, `ConvertBack`, `.cctor`
 - Release IL: PASS; 193 checked; 0 failures.
+- Landed commit: `ee29bbbbf2186c23d0355dbd9b77cddb382ef5a9`
 - Remaining mismatches: none in this batch (3046 stubs remaining in Quire.Controls.Worksheet).
+
+## Batch 2 — NonClippingStackPanel, WorksheetPageLayoutExtensions, SavedDateConverter, FileNameControl, FilePathControl
+
+- Members:
+  - `Quire.Controls.Worksheet.NonClippingStackPanel`: `.ctor`, `GetLayoutClip`
+  - `Quire.Controls.Worksheet.WorksheetPageLayoutExtensions`: `SetGridSize`
+  - `Quire.Controls.Worksheet.SavedDateConverter`: `Convert`, `ConvertBack`, `.ctor`
+  - `Quire.Controls.Worksheet.FileNameControl`: `GetRegionPersistentData`, `.ctor`
+  - `Quire.Controls.Worksheet.FilePathControl`: `GetRegionPersistentData`, `.ctor`
+- Release IL: PASS; 199 checked; 0 failures.
+- Remaining mismatches: none in this batch (3040 stubs remaining in Quire.Controls.Worksheet).
