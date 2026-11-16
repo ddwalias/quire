@@ -298,4 +298,42 @@ internal partial class ChartTraceCalculatable
             }
         }
     }
+
+    public const uint FirstTraceId = 1u;
+
+    private readonly IChartMinMaxCalculatable _minMax;
+
+    private uint _componentHandle;
+
+    private uint _subscriptHandle;
+
+    private uint _traceHandle;
+
+    private uint _xyplotHandle;
+
+    private uint _xMinScaleHandle;
+
+    private uint _xMaxScaleHandle;
+
+    private uint _xMinHandle;
+
+    private uint _xMaxHandle;
+
+    private IChartComponentCalculatableWrapper _xCalculatable;
+
+    private IChartComponentCalculatableWrapper _yCalculatable;
+
+    private SynchronizationStatus _syncStatus;
+
+    private CalculatingStatus _calcStatus;
+
+    private bool _isConnectedToTheEngine;
+
+    private EngineError _currentError;
+
+    public event Action<ICalculatable> RequestEvaluation;
+
+    public event Func<ICalculatable, string, IResultNode> GetValueOfIdentifierBefore;
+
+    public event Action<ICalculatable> TreatAsUpToDate;
 }

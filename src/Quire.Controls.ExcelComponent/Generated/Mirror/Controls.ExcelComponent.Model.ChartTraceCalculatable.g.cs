@@ -12,51 +12,13 @@ namespace Quire.Controls.ExcelComponent.Model;
 internal partial class ChartTraceCalculatable : global::Quire.Controls.ExcelComponent.Model.IChartTraceCalculatable, global::Quire.Controls.ExcelComponent.Model.IChartCalculatable, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculationErrorOwner, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
-    public const uint FirstTraceId = 1u;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.ExcelComponent.Model.IChartMinMaxCalculatable _minMax;
-    [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Controls.Core.NodeHandleMapper _nodeHandleMapper;
     [global::Quire.Mirror.MirrorStub]
-    private uint _componentHandle;
-    [global::Quire.Mirror.MirrorStub]
-    private uint _subscriptHandle;
-    [global::Quire.Mirror.MirrorStub]
-    private uint _traceHandle;
-    [global::Quire.Mirror.MirrorStub]
-    private uint _xyplotHandle;
-    [global::Quire.Mirror.MirrorStub]
-    private uint _xMinScaleHandle;
-    [global::Quire.Mirror.MirrorStub]
-    private uint _xMaxScaleHandle;
-    [global::Quire.Mirror.MirrorStub]
-    private uint _xMinHandle;
-    [global::Quire.Mirror.MirrorStub]
-    private uint _xMaxHandle;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly string ChartVariableWithLabel;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper _xCalculatable;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper _yCalculatable;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.SynchronizationStatus _syncStatus;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.CalculatingStatus _calcStatus;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isConnectedToTheEngine;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.EngineError _currentError;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper> ErrorOwners { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> RequestEvaluation;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Func<global::Quire.Calculation.Core.ICalculatable, string, global::Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> TreatAsUpToDate;
     [global::Quire.Mirror.MirrorStub]
     public ChartTraceCalculatable(global::Quire.Controls.ExcelComponent.Model.IChartMinMaxCalculatable minMax) { }
     [global::Quire.Mirror.MirrorStub]
