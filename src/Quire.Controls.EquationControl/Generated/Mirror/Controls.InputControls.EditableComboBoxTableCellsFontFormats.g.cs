@@ -11,22 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.EditableComboBoxTableCellsFontFormats, Ptc.Controls.EquationControl")]
 public partial class EditableComboBoxTableCellsFontFormats
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Media.Brush _unitCellForeground;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Media.Brush _normalCellForeground;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.MathFormatValues _mathFontFormat;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.MathFormatValues _unitFontFormat;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.FontFamily CellFontFamily { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.TextDecorationCollection UnitCellTextDecorations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.FontWeight UnitCellFontWeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.FontStyle UnitCellFontStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public EditableComboBoxTableCellsFontFormats(global::Quire.Controls.Core.IMathFormat mathFormat, global::Quire.Controls.Core.IMathFormat unitLabelFont) { }
 }

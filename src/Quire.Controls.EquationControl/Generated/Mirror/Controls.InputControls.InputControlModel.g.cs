@@ -11,18 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputControlModel, Ptc.Controls.EquationControl")]
 public abstract partial class InputControlModel : global::Quire.Controls.InputControls.IInputControlModel, global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable, global::Quire.Controls.InputControls.IInputControlEditorModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const double DefaultFontSize = 14d;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue _data;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.Controls.InputControls.IInputControlEngineFactory _engineFactory;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isDirty;
-    [global::Quire.Mirror.MirrorStub]
-    public const string SexpressionTagMatrix = "(:= (@MATRIX ";
-    [global::Quire.Mirror.MirrorStub]
-    public abstract bool AutoRecalculate { get; set; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void Dispose();
 }

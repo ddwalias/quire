@@ -9,8 +9,13 @@ namespace Quire.Controls.InputControls;
 
 public abstract partial class InputControlModel
 {
+    public const double DefaultFontSize = 14.0;
+    protected IInputControlDataCalculatedValue _data;
+    protected IInputControlEngineFactory _engineFactory;
     protected bool _isEnabled = true;
     protected bool _isAutoRecalculate = true;
+    private bool _isDirty;
+    public const string SexpressionTagMatrix = "(:= (@MATRIX ";
 
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -50,6 +55,8 @@ public abstract partial class InputControlModel
         }
     }
 
+    public abstract void Dispose();
+
     public Size OutputFieldSize
     {
         get => Data.OutputFieldSize;
@@ -79,6 +86,8 @@ public abstract partial class InputControlModel
         get => _isEnabled;
         set => _isEnabled = value;
     }
+
+    public abstract bool AutoRecalculate { get; set; }
 
     protected virtual void HandlePostInputFieldResultChanged(ref object valueIndex, object scriptObject, string errorException, bool isRecalculate = false)
     {
