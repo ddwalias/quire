@@ -6,6 +6,14 @@ using Quire.Controls.Whiteboard;
 using Quire.Core;
 using Quire.Undo;
 
+using System.Windows.Input;
+using Quire.Calculation.Core;
+using Quire.Controls.ExcelComponent.Model;
+using Quire.Controls.ExcelComponent.View;
+using Quire.Controls.Mathboard;
+using Quire.Wpf;
+using Quire.Calculation;
+using Quire;
 namespace Quire.Controls.ExcelComponent.ViewModel;
 
 public abstract partial class OleBaseComponentViewModel
@@ -107,6 +115,200 @@ public abstract partial class OleBaseComponentViewModel
                 }
             }
             return base.DoWithResize();
+        }
+    }
+
+    public EngineError Error => _model.Error;
+
+    public IOleContainerItem OleContainerItem => _model.OleContainerItem;
+
+    private IOleContainerItemViewModel OleContainerItemViewModel
+    {
+        get
+        {
+            if (!DebugTools.AssertNotNull(OleContainerItem, null).Failed)
+            {
+                return OleContainerItem.ViewModel;
+            }
+            return null;
+        }
+    }
+
+    internal double OleContainerItemTop
+    {
+        get
+        {
+            if (OleContainerItem != null)
+            {
+                Point itemOleComponentLocation = OleComponentItemMgr.GetItemOleComponentLocation(OleContainerItem);
+                return itemOleComponentLocation.Y;
+            }
+            return double.NaN;
+        }
+        set
+        {
+            if (OleContainerItem != null)
+            {
+                ClearRestrictedArea();
+                Point nearestIntersectionPointDisregardingBounds = _alignmentGrid.GetNearestIntersectionPointDisregardingBounds(new Point(0.0, value), GridRestriction.Assert, Direction.Down);
+                OleComponentItemMgr.SetItemOleComponentLocation(OleContainerItem, nearestIntersectionPointDisregardingBounds);
+                base.SetItemLocation(OleContainerItem, default);
+                SetRestrictedArea();
+            }
+        }
+    }
+
+    internal Size OleContainerItemSize
+    {
+        get
+        {
+            if (OleContainerItem != null)
+            {
+                return OleComponentItemMgr.GetSize(OleContainerItem);
+            }
+            return Size.Empty;
+        }
+    }
+
+    protected double OleContainerItemHeight
+    {
+        get
+        {
+            Size oleContainerItemSize = OleContainerItemSize;
+            return oleContainerItemSize.Height;
+        }
+    }
+
+    protected double OleContainerItemWidth
+    {
+        get
+        {
+            Size oleContainerItemSize = OleContainerItemSize;
+            return oleContainerItemSize.Width;
+        }
+    }
+
+    public bool IsInputSectionVisible
+    {
+        get
+        {
+            return _isInputSectionVisible;
+        }
+        set
+        {
+            SetInputSectionVisibilityState(value);
+        }
+    }
+
+    private double InputSectionActualTop
+    {
+        get
+        {
+            if (!IsInputSectionVisible)
+            {
+                return 0.0;
+            }
+            return InputSectionIndicator.Top;
+        }
+    }
+
+    public double InputSectionActualHeight
+    {
+        get
+        {
+            if (!IsInputSectionVisible)
+            {
+                return 0.0;
+            }
+            return InputSectionIndicator.Height;
+        }
+        set
+        {
+            if (IsInputSectionVisible || InputSectionIndicator.Height == 0.0)
+            {
+                InputSectionIndicator.Height = value;
+            }
+        }
+    }
+
+    public bool IsOutputSectionVisible
+    {
+        get
+        {
+            if (OutputSectionExists)
+            {
+                return _isOutputSectionVisible;
+            }
+            return false;
+        }
+        set
+        {
+            SetOutputSectionVisibilityState(value);
+        }
+    }
+
+    private double OutputSectionActualTop => InputSectionActualHeight + OleContainerItemHeight;
+
+    public double OutputSectionActualHeight
+    {
+        get
+        {
+            if (!IsOutputSectionVisible)
+            {
+                return 0.0;
+            }
+            return OutputSectionIndicator.Height;
+        }
+        set
+        {
+            if (IsOutputSectionVisible || OutputSectionIndicator.Height == 0.0)
+            {
+                OutputSectionIndicator.Height = value;
+            }
+        }
+    }
+
+    public SectionIndicatorInfo InputSectionIndicator
+    {
+        get
+        {
+            return _sectionIndicators[0];
+        }
+        set
+        {
+            _sectionIndicators[0] = value;
+        }
+    }
+
+    public SectionIndicatorInfo OutputSectionIndicator
+    {
+        get
+        {
+            return _sectionIndicators[1];
+        }
+        set
+        {
+            _sectionIndicators[1] = value;
+        }
+    }
+
+    public override bool IsCrosshairVisible
+    {
+        get
+        {
+            if (base.IsCrosshairVisible)
+            {
+                if (!IsInputSectionVisible)
+                {
+                    return IsOutputSectionVisible;
+                }
+                return true;
+            }
+            return false;
+        }
+        set
+        {
+            base.IsCrosshairVisible = value && (IsInputSectionVisible || IsOutputSectionVisible);
         }
     }
 }
