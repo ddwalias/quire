@@ -11,38 +11,4 @@ namespace Quire.DOE;
 [global::Quire.Mirror.MirrorOf("DOE.Permutations, efisixsigma_")]
 public partial class Permutations : global::Quire.DOE.DoeBase, global::System.Collections.IEnumerator
 {
-    [global::Quire.Mirror.MirrorStub]
-    private int[] m_currentPermut;
-    [global::Quire.Mirror.MirrorStub]
-    private bool[] m_init;
-    [global::Quire.Mirror.MirrorStub]
-    private int[] m_levels;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_mixed;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_2Level;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_keepOldOrder;
-    [global::Quire.Mirror.MirrorStub]
-    public int nruns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object Current { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public Permutations(int numfactors, bool keepOldOrder) { }
-    [global::Quire.Mirror.MirrorStub]
-    public Permutations(int numfactors, int[] levels, bool keepOldOrder) { }
-    [global::Quire.Mirror.MirrorStub]
-    private bool nextPermutation_2() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool nextPermutation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool MoveNext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public double[,] getAllPermutations() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal override double[,] getDesignMatrix() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private double[,] mixed_factorial_std() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
