@@ -18,4 +18,6 @@ public partial interface Range
     object Width { get; }
 
     Worksheet Worksheet { get; }
+
+    object get_Value(object RangeValueDataType);
 }
