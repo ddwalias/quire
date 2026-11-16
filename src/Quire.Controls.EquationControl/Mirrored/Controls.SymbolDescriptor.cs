@@ -7,6 +7,24 @@ namespace Quire.Controls;
 
 public partial class SymbolDescriptor
 {
+    private string _displayName;
+    private EditorGesture _keybinding;
+    private string _keybindingToDisplay;
+    private string _description;
+    private string _symbolicRepresentation;
+    private string _screenRepresentation;
+    private List<string> _categories = new List<string>();
+    private EnumFunctionalityKey _functionalityKey;
+    private EnumFunctionalityKey _categoryFunctionalityKey;
+    private EnumFunctionalityKey _category2FunctionalityKey;
+    private EnumFunctionalityKey _category3FunctionalityKey;
+    private int _categoryOrdinal;
+    protected RoutedCommand _command = EquationCommands.InsertValue;
+
+    public SymbolDescriptor()
+    {
+    }
+
     public virtual RoutedCommand Command
     {
         get => _command;

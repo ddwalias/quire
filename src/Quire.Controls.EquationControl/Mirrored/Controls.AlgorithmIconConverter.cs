@@ -13,6 +13,8 @@ public partial class AlgorithmIconConverter
     private static readonly BitmapImage SelectedIcon = new BitmapImage(
         new Uri("..\\Images\\active_list_selection16x16.png", UriKind.RelativeOrAbsolute));
 
+    private const string AutoSelect = "autoSelect";
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         string text = value?.ToString() ?? string.Empty;

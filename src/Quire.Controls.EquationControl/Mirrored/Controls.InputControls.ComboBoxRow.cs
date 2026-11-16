@@ -1,40 +1,26 @@
-using Quire.Controls.InputControls;
 using System.Collections.Generic;
 using System.Linq;
+using Quire.Core;
+
 namespace Quire.Controls.InputControls;
 
-public partial class ComboBoxRow
+public abstract partial class ComboBoxRow
 {
+    private readonly List<CellData> _cells;
 
-    internal void RemoveLastCell()
+    protected ComboBoxRow(int rowIndex, int count)
     {
-        if (DebugTools.DevAssert(CellCount > 2, null).Passed)
+        if (DebugTools.DevAssert(rowIndex >= 0 && count >= 2, null).Failed)
         {
-            EnumerableExtensions.RemoveLast(_cells);
-        }
-    }
-
-    internal void AddCell(CellData cellData)
-    {
-        if (DebugTools.AssertNotNull(cellData, null).Passed)
-        {
-            _cells.Add(cellData);
-        }
-    }
-
-    internal ICellData GetCellAt(int index)
-    {
-        if (!(0 <= index && index < CellCount))
-        {
-            return null;
+            return;
         }
 
-        return _cells[index];
+        _cells = new List<CellData>(count);
+        count.Times(colIndex =>
+        {
+            AddCell(new CellData(string.Empty, rowIndex, colIndex));
+        });
     }
-
-    public IEnumerable<ICellData> AllCells => _cells;
-
-    public int CellCount => _cells.Count;
 
     protected ICellData FirstCell
     {
@@ -49,6 +35,36 @@ public partial class ComboBoxRow
         }
     }
 
+    public IEnumerable<ICellData> AllCells => _cells;
+
+    // Parked compiler difference: Roslyn in Release mode eliminates the stloc.0/ldloc.0 return shape emitted by Mathcad's compiler.
+    protected IEnumerable<ICellData> AllButFirstCell => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public int CellCount => _cells.Count;
+
+    public bool IsValid(int rowIndex)
+    {
+        int num = 0;
+        foreach (CellData cell in _cells)
+        {
+            if (cell.Row != rowIndex || cell.Column != num)
+            {
+                return false;
+            }
+            num++;
+        }
+
+        return true;
+    }
+
+    internal void RemoveLastCell()
+    {
+        if (DebugTools.DevAssert(CellCount > 2, null).Passed)
+        {
+            _cells.RemoveLast();
+        }
+    }
+
     internal void RemoveCellAt(int index)
     {
         if (DebugTools.DevAssert(CellCount > 2 && 0 <= index && index < CellCount, null).Passed)
@@ -57,14 +73,29 @@ public partial class ComboBoxRow
         }
     }
 
-    internal void InsertCell(int index, CellData cellData)
+    internal void AddCell(CellData cellData)
     {
         if (DebugTools.AssertNotNull(cellData, null).Passed)
         {
-            if (DebugTools.DevAssert(0 <= index && index <= CellCount, null).Passed)
-            {
-                _cells.Insert(index, cellData);
-            }
+            _cells.Add(cellData);
         }
+    }
+
+    internal void InsertCell(int index, CellData cellData)
+    {
+        if (DebugTools.AssertNotNull(cellData, null).Passed && DebugTools.DevAssert(0 <= index && index <= CellCount, null).Passed)
+        {
+            _cells.Insert(index, cellData);
+        }
+    }
+
+    internal ICellData GetCellAt(int index)
+    {
+        if (0 > index || index >= CellCount)
+        {
+            return null;
+        }
+
+        return _cells[index];
     }
 }

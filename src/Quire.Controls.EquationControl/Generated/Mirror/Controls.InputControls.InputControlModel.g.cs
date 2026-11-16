@@ -18,21 +18,11 @@ public abstract partial class InputControlModel : global::Quire.Controls.InputCo
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Controls.InputControls.IInputControlEngineFactory _engineFactory;
     [global::Quire.Mirror.MirrorStub]
-    protected bool _isEnabled;
-    [global::Quire.Mirror.MirrorStub]
-    protected bool _isAutoRecalculate;
-    [global::Quire.Mirror.MirrorStub]
     private bool _isDirty;
     [global::Quire.Mirror.MirrorStub]
     public const string SexpressionTagMatrix = "(:= (@MATRIX ";
     [global::Quire.Mirror.MirrorStub]
     public abstract bool AutoRecalculate { get; set; }
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
     public abstract void Dispose();
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Size GetFieldSizeFormSExpression(string sexpression, string sexpressionTag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected InputControlModel() { }
 }

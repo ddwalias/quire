@@ -11,8 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.VisualIdDescriptor, Ptc.Controls.EquationControl")]
 public partial class VisualIdDescriptor : global::Quire.Controls.SymbolDescriptor
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Nullable<global::Quire.Controls.Core.IdLabels> _label;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.EquationEditor.Tree.FormattedString _idName;
 }

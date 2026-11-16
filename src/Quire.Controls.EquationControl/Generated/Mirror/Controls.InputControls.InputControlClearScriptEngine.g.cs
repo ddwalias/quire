@@ -41,11 +41,5 @@ public abstract partial class InputControlClearScriptEngine : global::Quire.Cont
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputControlClearScriptEngine+ClearScriptEngineWindow, Ptc.Controls.EquationControl")]
     internal partial class ClearScriptEngineWindow : global::Microsoft.ClearScript.Windows.IHostWindow
     {
-        [global::Quire.Mirror.MirrorStub]
-        public nint OwnerHandle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public void EnableModeless(bool enable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public ClearScriptEngineWindow() { }
     }
 }

@@ -11,6 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.AlgorithmIconConverter, Ptc.Controls.EquationControl")]
 public partial class AlgorithmIconConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string AutoSelect = "autoSelect";
 }

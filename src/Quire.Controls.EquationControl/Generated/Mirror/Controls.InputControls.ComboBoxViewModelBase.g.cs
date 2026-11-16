@@ -11,25 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.ComboBoxViewModelBase, Ptc.Controls.EquationControl")]
 public abstract partial class ComboBoxViewModelBase : global::Quire.Controls.Core.ViewModelBase, global::Quire.EquationEditor.View.IComboBoxViewModelBase, global::Quire.EquationEditor.View.IInputControlViewModelBase, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.Controls.InputControls.ComboBoxTableModel TableModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected ComboBoxViewModelBase(global::Quire.Controls.InputControls.ComboBoxTableModel tableModel) { }
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.ComboBoxViewModelBase+ComboBoxTableModelAdapter, Ptc.Controls.EquationControl")]
-    private partial class ComboBoxTableModelAdapter : global::Quire.EquationEditor.Tree.IComboBoxInputControlDataAdapter
-    {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::Quire.Controls.InputControls.IComboBoxTableModel _comboBoxTableModel;
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Collections.Generic.IList<string> Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Collections.Generic.IList<global::System.ValueTuple<string, global::System.Collections.Generic.IList<string>>> GroupByRows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public string TableTitle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public int SelectedValueRow { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public ComboBoxTableModelAdapter(global::Quire.Controls.InputControls.IComboBoxTableModel comboBoxTableModel) { }
-    }
 }

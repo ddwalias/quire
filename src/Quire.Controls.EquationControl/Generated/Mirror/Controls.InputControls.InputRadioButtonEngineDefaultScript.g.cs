@@ -11,12 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputRadioButtonEngineDefaultScript, Ptc.Controls.EquationControl")]
 internal partial class InputRadioButtonEngineDefaultScript : global::Quire.Controls.InputControls.InputRadioButtonEngineJScript
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string defaultScriptValues = "One\u000BTwo\u000BThree";
-    [global::Quire.Mirror.MirrorStub]
-    public InputRadioButtonEngineDefaultScript() { }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Apply(string userScript, out object scriptObject, out string exception, object[] inputs, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.Apply(userScript, out scriptObject, out exception, inputs, engineParams);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IList<object> GetCalculatedValue(string script, ref object value, out object scriptObject, out string exception, object[] inputs, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.GetCalculatedValue(script, ref value, out scriptObject, out exception, inputs, engineParams);
 }
