@@ -11,26 +11,4 @@ namespace Quire.Efi;
 [global::Quire.Mirror.MirrorOf("Efi.LRect3, efiplot_")]
 public partial class LRect3
 {
-    [global::Quire.Mirror.MirrorStub]
-    public double xmin;
-    [global::Quire.Mirror.MirrorStub]
-    public double xmax;
-    [global::Quire.Mirror.MirrorStub]
-    public double ymin;
-    [global::Quire.Mirror.MirrorStub]
-    public double ymax;
-    [global::Quire.Mirror.MirrorStub]
-    public double zmin;
-    [global::Quire.Mirror.MirrorStub]
-    public double zmax;
-    [global::Quire.Mirror.MirrorStub]
-    public double Dx;
-    [global::Quire.Mirror.MirrorStub]
-    public double Dy;
-    [global::Quire.Mirror.MirrorStub]
-    public double Dz;
-    [global::Quire.Mirror.MirrorStub]
-    public LRect3() { }
-    [global::Quire.Mirror.MirrorStub]
-    public LRect3(double xmin_, double xmax_, double ymin_, double ymax_, double zmin_, double zmax_) { }
 }

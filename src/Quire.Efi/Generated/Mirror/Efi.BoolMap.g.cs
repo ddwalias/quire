@@ -11,18 +11,4 @@ namespace Quire.Efi;
 [global::Quire.Mirror.MirrorOf("Efi.BoolMap, efiplot_")]
 internal partial class BoolMap
 {
-    [global::Quire.Mirror.MirrorStub]
-    private int myNcols;
-    [global::Quire.Mirror.MirrorStub]
-    private int myNrows;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.BitArray myBoolMap;
-    [global::Quire.Mirror.MirrorStub]
-    public BoolMap(int ncols, int nrows) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void zero() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void setBit(int col, int row) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool bitSet(int col, int row) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

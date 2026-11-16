@@ -11,20 +11,4 @@ namespace Quire.Efi;
 [global::Quire.Mirror.MirrorOf("Efi.LevelFormat, efiplot_")]
 internal partial class LevelFormat
 {
-    [global::Quire.Mirror.MirrorStub]
-    public LevelFormat() { }
-    [global::Quire.Mirror.MirrorStub]
-    internal void CalculateBetterTickmarks(ref double start, ref double end, ref int num_levels) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void CalculateBetterTickmarksWhenZeroIsNotInRange(ref double start, ref double end, ref int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void CalculateBetterTickmarksWithZeroInRange(ref double start, ref double end, ref int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static double OrderFunction(double step) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static double RoundWithOrder(double exp, double order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static double CeilingWithOrder(double exp, double order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static double FloorWithOrder(double exp, double order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

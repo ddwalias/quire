@@ -11,28 +11,4 @@ namespace Quire.Efi;
 [global::Quire.Mirror.MirrorOf("Efi.shpPoint3D, efiplot_")]
 public partial class shpPoint3D
 {
-    [global::Quire.Mirror.MirrorStub]
-    private double x;
-    [global::Quire.Mirror.MirrorStub]
-    private double y;
-    [global::Quire.Mirror.MirrorStub]
-    private double z;
-    [global::Quire.Mirror.MirrorStub]
-    public shpPoint3D() { }
-    [global::Quire.Mirror.MirrorStub]
-    public shpPoint3D(global::Quire.Efi.shpPoint3D p) { }
-    [global::Quire.Mirror.MirrorStub]
-    public shpPoint3D(double x, double y, double z) { }
-    [global::Quire.Mirror.MirrorStub]
-    public double X() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public double Y() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public double Z() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void X(double x_) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Y(double y_) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Z(double z_) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

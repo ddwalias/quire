@@ -11,14 +11,4 @@ namespace Quire.Efi;
 [global::Quire.Mirror.MirrorOf("Efi.Options, efiplot_")]
 internal partial class Options
 {
-    [global::Quire.Mirror.MirrorStub]
-    private int bits;
-    [global::Quire.Mirror.MirrorStub]
-    public Options(int bits) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void CheckIndex(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool GetBit(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetBit(int index, bool b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
