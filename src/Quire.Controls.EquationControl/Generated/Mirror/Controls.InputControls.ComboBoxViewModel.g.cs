@@ -11,18 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.ComboBoxViewModel, Ptc.Controls.EquationControl")]
 public partial class ComboBoxViewModel : global::Quire.Controls.InputControls.ComboBoxViewModelBase, global::Quire.Controls.InputControls.IComboBoxViewModel, global::Quire.EquationEditor.View.IComboBoxViewModelBase, global::Quire.EquationEditor.View.IInputControlViewModelBase, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    private int _selectedRowNumber;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.INameValuesRow> _dataItems;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _refreshInProgress;
-    [global::Quire.Mirror.MirrorStub]
-    public int SelectedRowIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ComboBoxViewModel() : base(default(global::Quire.Controls.InputControls.ComboBoxTableModel)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void LoadFrom(global::Quire.EquationEditor.Tree.IComboBoxInputControlDataAdapter data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RefreshDataItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

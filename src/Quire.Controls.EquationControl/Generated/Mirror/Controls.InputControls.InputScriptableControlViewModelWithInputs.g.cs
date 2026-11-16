@@ -11,26 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputScriptableControlViewModelWithInputs, Ptc.Controls.EquationControl")]
 public partial class InputScriptableControlViewModelWithInputs : global::Quire.Controls.InputControls.InputScriptableControlViewModel, global::Quire.Controls.InputControls.IInputScriptableControlViewModelWithInputs
 {
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isMathRegionActive;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.InputControls.IInputScriptableControlModelWithInputs Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.EquationEditor.Tree.IInputScriptableControlDataWithInputs Data { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsLhsLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Visibility ToggleVisibility { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsToggleChecked { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Visibility InputFieldVisibility { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsInputEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsMathRegionActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public InputScriptableControlViewModelWithInputs(global::Quire.Controls.InputControls.IInputScriptableControlModelWithInputs model) : base(default(global::Quire.Controls.InputControls.IInputScriptableControlModel)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleSExpressionChanged(global::Quire.Controls.Core.IEquationControl eq) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

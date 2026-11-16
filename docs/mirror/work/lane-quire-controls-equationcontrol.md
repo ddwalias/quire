@@ -8,14 +8,14 @@
   - `8fec9cd98`: SpecTableCellStyleKeys, EquationControlErrorMessages, Comparers, CaretAdorner, HorizontalRightArrow, Overline, and GestureManager (23 members, PASS; 2520 checked).
   - `63059677d`: ScriptEngineParams, InputControl interfaces, Node iterators, and Gradient operator (127 stubs, PASS; 2555 checked).
   - `25275996c`: SliderViewModel, SliderPropertiesEditorViewModel, SliderModel, SliderControl, InputScriptingControlWithInputCommands, and InputControl (26 members, PASS; 2581 checked).
+  - `981886f26`: PrimeControlClearScriptEngine, TextBoxPropertiesEditorViewModel, RadioButtonPropertiesEditor, RadioButtonPropertiesEditorViewModel, and RadioButtonControl (41 members, PASS; 2626 checked).
 - Selected members:
-  - `Controls.InputControls.PrimeControlClearScriptEngine`: `CanExecEvent`, `ExecuteScript`, `CanExecuteScript`, `RunEvent`, `RunEventWithInputsOutputs`, `.ctor()`
-  - `Controls.InputControls.TextBoxPropertiesEditorViewModel`: `Model`, `.ctor(IInputControlEditorModel)`, `HandleModelPropertyChanged`, `Text`, `AcceptsReturn`, `IsReadOnly`, `TextAlignment`
-  - `Controls.InputControls.RadioButtonPropertiesEditor`: `_contentLoaded`, `RadioButtonViewModel`, `.ctor(IInputControlEditorModel)`, `DataGrid_OnRowEditEnding`, `DataGrid_OnPreviewKeyDown`, `InitializeComponent`, `IComponentConnector.Connect`
-  - `Controls.InputControls.RadioButtonPropertiesEditorViewModel`: `_dataSourceItems`, `Model`, `.ctor(IInputControlEditorModel)`, `HandleModelPropertyChanged`, `HandleButtonsChanged`, `ApplyScript`, `Orientation`, `DataSourceItems`, `RightToLeft`, `Values`, and nested `<>c` closures
-  - `Controls.InputControls.RadioButtonControl`: `listView`, `_contentLoaded`, `.ctor(IInputControlDataCalculatedValue, RadioButtonEventAggregator)`, `ViewModel`, `ViewModelPropertyChanged`, `OnPreviewMouseRightButtonDown`, `OnSelectionChanged`, `InitializeComponent`, `IComponentConnector.Connect`
+  - `Controls.InputControls.ComboBoxViewModel`: `_selectedRowNumber`, `_dataItems`, `_refreshInProgress`, `SelectedRowIndex`, `.ctor()`, `LoadFrom`, `RefreshDataItems` (with `<RefreshDataItems>b__16_0` and `<>c__DisplayClass16_0::<RefreshDataItems>b__1`)
+  - `Controls.InputControls.ListBoxViewModel`: `ListBoxModel`, `FlowDirection`, `SelectedIndex`, `IsSort`, `DataSourceItems` (with `<get_DataSourceItems>b__16_0`), `.ctor(IInputControlDataCalculatedValue)`, `HandleModelPropertyChanged`, `CommitEditorChanges`, `OnDoubleClick`
+  - `Controls.InputControls.InputScriptableControlViewModelWithInputs`: `_isMathRegionActive`, `Model`, `Data`, `IsLhsLabel`, `ToggleVisibility`, `IsToggleChecked`, `InputFieldVisibility`, `IsInputEnabled`, `IsMathRegionActive`, `.ctor(IInputScriptableControlModelWithInputs)`, `HandleSExpressionChanged`
+  - `Controls.InputControls.RadioButtonModel`: `Data`, `.ctor`, `SelectedValue`, `Apply`, `SelectedIndex`, `DefaultScript`, `DataSourceItems`, `Orientation`, `ImagePath`, `Name`, `GroupID`, `ButtonID`, `FlowDirection`, `IsDataSourceChanged`, `HandleButtonsChanged`, `EditorDataSourceItems`, `HandlePostInputFieldResultChanged`
 - Parked members:
   - `Controls.Internal.ConjugateLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3` on identical 115 IL instructions.
   - `Controls.Internal.VectorizationLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3` on identical 115 IL instructions.
   - `Controls.InputControls.ComboBoxRow.AllButFirstCell`: parked due to Roslyn optimizer in Release mode eliminating `stloc.0/ldloc.0` return of local variable, whereas Mathcad's compiler emitted `stloc.0; ldloc.0; ret`.
-- Release IL: PASS; 2626 checked (0 failures, 2304 unfinished stubs remaining).
+- Release IL: PASS; 2671 checked (0 failures, 2267 unfinished stubs remaining).
