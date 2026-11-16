@@ -11,10 +11,4 @@ namespace Quire.DOE;
 [global::Quire.Mirror.MirrorOf("DOE.DoeLabel, efisixsigma_")]
 internal partial class DoeLabel : global::Quire.DOE.DoeAnlyz
 {
-    [global::Quire.Mirror.MirrorStub]
-    public DoeLabel(global::Quire.Mcd.MatVal A) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.MatVal coded2Real(global::Quire.Mcd.MatVal Vals) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void check_units(global::Quire.Mcd.MatVal Vals) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

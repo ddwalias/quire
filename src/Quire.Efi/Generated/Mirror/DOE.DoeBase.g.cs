@@ -11,20 +11,4 @@ namespace Quire.DOE;
 [global::Quire.Mirror.MirrorOf("DOE.DoeBase, efisixsigma_")]
 public abstract partial class DoeBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected int m_nfacts;
-    [global::Quire.Mirror.MirrorStub]
-    protected int m_nruns;
-    [global::Quire.Mirror.MirrorStub]
-    protected int m_nblocks;
-    [global::Quire.Mirror.MirrorStub]
-    protected int m_blocksz;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.DOE.Utils m_utils;
-    [global::Quire.Mirror.MirrorStub]
-    protected DoeBase() { }
-    [global::Quire.Mirror.MirrorStub]
-    internal abstract double[,] getDesignMatrix();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void getDesignMatrix(out global::Quire.Mcd.MatVal dmat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
