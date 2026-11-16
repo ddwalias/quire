@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.InputScriptableControlDataWithInputs, Ptc.EquationEditor")]
 public partial class InputScriptableControlDataWithInputs : global::Quire.EquationEditor.Tree.InputScriptableControlData, global::Quire.EquationEditor.Tree.IInputScriptableControlDataWithInputs, global::Quire.EquationEditor.Tree.IInputScriptableControlData, global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue, global::Quire.EquationEditor.Tree.IInputControlData, global::System.ICloneable, global::Quire.EquationEditor.Tree.IInputResizableControlData, global::Quire.EquationEditor.Tree.IInputControlDataWithValues
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override object Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

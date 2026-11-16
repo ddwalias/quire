@@ -1,7 +1,7 @@
 # Quire.EquationEditor lane checkpoint
 
-- Owner: EquationEditor dispatched worker (task_6e2a8b11b42b)
-- Branch: `feature/equation-editor-stubs-20261116`
+- Owner: EquationEditor dispatched worker (task_606ef2dcbd2f)
+- Branch: `feature/equation-editor-stubs-batch2`
 - Assembly: `Quire.EquationEditor` (managed members, `src/Quire.EquationEditor`)
 
 ## Batch 1 — Native.PtcEquationEditor members (a7, o, bf, au, az, d, a)
@@ -16,4 +16,18 @@
   - `Native.PtcEquationEditor.a`: `.ctor()` (const fields retain stubs per D15/rule).
 - Landed commit: `fa69d61d3fcdaa6010477a4842011fdf35f8628b`
 - Report: full `--project Quire.EquationEditor` gate PASS, 862 checked, 0 failures.
+- Remaining mismatches: 0 in completed types; remaining unbatched stubs in other types.
+
+## Batch 2 — Native.PtcEquationEditor.f and Tree ScriptableControlData types (Clone and .ctor)
+
+- Members:
+  - `Native.PtcEquationEditor.f`: `.ctor()` (b initialized, Greek character mapping, [SkipLocalsInit])
+  - `EquationEditor.Tree.ButtonScriptableControlData`: `Clone()` (base calls, [SkipLocalsInit])
+  - `EquationEditor.Tree.CheckBoxScriptableControlData`: `Clone()` (base calls, FlowDirection, [SkipLocalsInit])
+  - `EquationEditor.Tree.InputScriptableControlDataWithInputs`: `Clone()` (base and instance calls, [SkipLocalsInit])
+  - `EquationEditor.Tree.ListBoxScriptableControlData`: `Clone()` (base calls, Sort, FlowDirection, [SkipLocalsInit])
+  - `EquationEditor.Tree.RadioButtonScriptableControlData`: `Clone()` (base calls, Orientation, FlowDirection, [SkipLocalsInit])
+  - `EquationEditor.Tree.SliderScriptableControlData`: `.ctor()` (field initializers, [SkipLocalsInit]), `Clone()` (base calls, Orientation, TickPlacement, etc., [SkipLocalsInit])
+  - `EquationEditor.Tree.TextBoxScriptableControlData`: `Clone()` (base calls, AcceptsReturn, IsReadOnly, Border, TextAlignment, [SkipLocalsInit])
+- Report: full `--project Quire.EquationEditor` gate PASS, 871 checked, 0 failures.
 - Remaining mismatches: 0 in completed types; remaining unbatched stubs in other types.

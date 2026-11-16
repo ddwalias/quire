@@ -15,6 +15,4 @@ public partial class CheckBoxScriptableControlData : global::Quire.EquationEdito
     protected const int a = 30;
     [global::Quire.Mirror.MirrorStub]
     protected const int b = 100;
-    [global::Quire.Mirror.MirrorStub]
-    public override object Clone() => base.Clone();
 }

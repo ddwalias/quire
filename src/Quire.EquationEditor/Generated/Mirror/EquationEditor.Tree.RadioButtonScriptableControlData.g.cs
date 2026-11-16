@@ -15,6 +15,4 @@ public partial class RadioButtonScriptableControlData : global::Quire.EquationEd
     protected const int a = 72;
     [global::Quire.Mirror.MirrorStub]
     protected const int b = 80;
-    [global::Quire.Mirror.MirrorStub]
-    public override object Clone() => base.Clone();
 }

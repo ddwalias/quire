@@ -13,8 +13,4 @@ internal partial class f
 {
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Native.PtcEquationEditor.f a_;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<char, char> b;
-    [global::Quire.Mirror.MirrorStub]
-    private f() { }
 }

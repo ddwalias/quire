@@ -43,4 +43,28 @@ public partial class TextBoxScriptableControlData
         get => o;
         set => o = value;
     }
+
+    [global::System.Runtime.CompilerServices.SkipLocalsInit]
+    public override object Clone()
+    {
+        return new TextBoxScriptableControlData(base.MathNodeName, base.InputControlType)
+        {
+            SelectedValueIndex = base.SelectedValueIndex,
+            Script = base.Script,
+            EngineType = base.EngineType,
+            Width = base.Width,
+            Height = base.Height,
+            IsInputsExists = base.IsInputsExists,
+            IsInputsAreaShown = base.IsInputsAreaShown,
+            InputFieldSExpression = base.InputFieldSExpression,
+            InputsResultValue = base.InputsResultValue,
+            Values = base.Values,
+            EngineError = base.EngineError,
+            SelectedCalculatedValue = base.SelectedCalculatedValue,
+            AcceptsReturn = AcceptsReturn,
+            IsReadOnly = IsReadOnly,
+            Border = Border,
+            TextAlignment = TextAlignment
+        };
+    }
 }

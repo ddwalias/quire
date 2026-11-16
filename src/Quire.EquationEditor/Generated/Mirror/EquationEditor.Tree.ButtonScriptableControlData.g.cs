@@ -15,6 +15,4 @@ public partial class ButtonScriptableControlData : global::Quire.EquationEditor.
     protected const int a = 40;
     [global::Quire.Mirror.MirrorStub]
     protected const int b = 70;
-    [global::Quire.Mirror.MirrorStub]
-    public override object Clone() => base.Clone();
 }

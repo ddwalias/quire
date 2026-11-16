@@ -15,8 +15,4 @@ public partial class SliderScriptableControlData : global::Quire.EquationEditor.
     protected const int a = 37;
     [global::Quire.Mirror.MirrorStub]
     protected const int b = 100;
-    [global::Quire.Mirror.MirrorStub]
-    public SliderScriptableControlData(string mathNodeName, global::Quire.Controls.Core.InputControlTypes inputControlTypes) : base(default(string), default(global::Quire.Controls.Core.InputControlTypes)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override object Clone() => base.Clone();
 }

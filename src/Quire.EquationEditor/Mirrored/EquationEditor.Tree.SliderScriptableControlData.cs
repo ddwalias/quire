@@ -6,17 +6,25 @@ namespace Quire.EquationEditor.Tree;
 public partial class SliderScriptableControlData
 {
     private double c;
-    private double d;
+    private double d = 100.0;
     private bool n;
     private bool o;
-    private double p;
-    private double q;
-    private double r;
-    private bool s;
+    private double p = 1.0;
+    private double q = 1.0;
+    private double r = 10.0;
+    private bool s = true;
     private int t;
-    private bool u;
+    private bool u = true;
     private TickPlacement v;
     private Orientation w;
+
+    [global::System.Runtime.CompilerServices.SkipLocalsInit]
+    public SliderScriptableControlData(string mathNodeName, Quire.Controls.Core.InputControlTypes inputControlTypes)
+        : base(mathNodeName, inputControlTypes)
+    {
+        Height = a;
+        Width = b;
+    }
 
     public double Minimum
     {
@@ -88,5 +96,36 @@ public partial class SliderScriptableControlData
     {
         get => w;
         set => w = value;
+    }
+
+    [global::System.Runtime.CompilerServices.SkipLocalsInit]
+    public override object Clone()
+    {
+        return new SliderScriptableControlData(base.MathNodeName, base.InputControlType)
+        {
+            SelectedValueIndex = base.SelectedValueIndex,
+            Script = base.Script,
+            EngineType = base.EngineType,
+            Width = base.Width,
+            Height = base.Height,
+            IsInputsExists = base.IsInputsExists,
+            IsInputsAreaShown = base.IsInputsAreaShown,
+            InputFieldSExpression = base.InputFieldSExpression,
+            InputsResultValue = base.InputsResultValue,
+            Orientation = Orientation,
+            Values = base.Values,
+            EngineError = base.EngineError,
+            SelectedCalculatedValue = base.SelectedCalculatedValue,
+            TickPlacement = TickPlacement,
+            Border = Border,
+            Interval = Interval,
+            LargeChange = LargeChange,
+            SmallChange = SmallChange,
+            TickFrequency = TickFrequency,
+            Invert = Invert,
+            ShowMinMax = ShowMinMax,
+            Maximum = Maximum,
+            Minimum = Minimum
+        };
     }
 }

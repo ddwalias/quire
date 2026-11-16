@@ -95,4 +95,21 @@ public partial class InputScriptableControlDataWithInputs
         return control != null && ScriptHashCode.Equals(control.ScriptHashCode) &&
             Height == control.Height && Width == control.Width;
     }
+
+    [global::System.Runtime.CompilerServices.SkipLocalsInit]
+    public override object Clone()
+    {
+        return new InputScriptableControlDataWithInputs(base.MathNodeName, base.InputControlType)
+        {
+            Script = base.Script,
+            Width = Width,
+            Height = Height,
+            IsInputsExists = IsInputsExists,
+            IsInputsAreaShown = IsInputsAreaShown,
+            InputFieldSExpression = InputFieldSExpression,
+            InputsResultValue = InputsResultValue,
+            Values = base.Values,
+            SelectedCalculatedValue = base.SelectedCalculatedValue
+        };
+    }
 }

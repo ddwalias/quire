@@ -18,4 +18,25 @@ public partial class CheckBoxScriptableControlData
         get => c;
         set => c = value;
     }
+
+    [global::System.Runtime.CompilerServices.SkipLocalsInit]
+    public override object Clone()
+    {
+        return new CheckBoxScriptableControlData(base.MathNodeName, base.InputControlType)
+        {
+            SelectedValueIndex = base.SelectedValueIndex,
+            Script = base.Script,
+            EngineType = base.EngineType,
+            Width = base.Width,
+            Height = base.Height,
+            IsInputsExists = base.IsInputsExists,
+            IsInputsAreaShown = base.IsInputsAreaShown,
+            InputFieldSExpression = base.InputFieldSExpression,
+            InputsResultValue = base.InputsResultValue,
+            Values = base.Values,
+            EngineError = base.EngineError,
+            SelectedCalculatedValue = base.SelectedCalculatedValue,
+            FlowDirection = FlowDirection
+        };
+    }
 }
