@@ -1,7 +1,7 @@
 # Quire.EquationEditor lane checkpoint
 
-- Owner: EquationEditor dispatched worker (task_ba9357d5edf4)
-- Branch: `feature/equation-editor-stubs-batch7`
+- Owner: EquationEditor dispatched worker (task_7b21129efa08)
+- Branch: `feature/equation-editor-stubs-batch8`
 - Assembly: `Quire.EquationEditor` (managed members, `src/Quire.EquationEditor`)
 
 ## Batch 1 — Native.PtcEquationEditor members (a7, o, bf, au, az, d, a)
@@ -93,8 +93,42 @@
   - `EquationEditor.Tree.MathNode`: `InsertAsParent(MathNode, MathNode, int)` ([SkipLocalsInit])
   - `EquationEditor.Tree.MathNode`: `ReplaceNode(MathNode, MathNode)` ([SkipLocalsInit])
   - `EquationEditor.Tree.MathNode`: `IsMiddleOfSubscript(MathNode)` (using `node?.Children?.Count == 2` to match non-virtual `call` instruction)
+- Landed commit: `922ded087`
 - Report: full `--project Quire.EquationEditor` gate PASS, 912 checked, 0 failures.
 - Parked members (exact blockers):
   - `IResultTreeFormatter`: CS0535 compile error in `ResultFormatter` when methods lose stub defaults.
   - `LimitSideNodeInfo+a`, `MathNodeToStringTransformer`, `DotfuscatorAttribute`, `MathTransformer`, `SExpressionUtility`: Field/method name clashes (CS0102) or obfuscated getter names.
+- Remaining mismatches: 0 in completed types; remaining unbatched/parked stubs in other types.
+
+## Batch 8 — EquationEditor.Tree.RootMathNode (events, properties, methods, and constructors)
+
+- Members:
+  - `EquationEditor.Tree.RootMathNode`: `.cctor()`
+  - `EquationEditor.Tree.RootMathNode`: `.ctor(MathNode child)`
+  - `EquationEditor.Tree.RootMathNode`: `.ctor(RootMathNode source)` ([SkipLocalsInit])
+  - `EquationEditor.Tree.RootMathNode`: `SExpression` { get }
+  - `EquationEditor.Tree.RootMathNode`: `ScopeRoot` { get }
+  - `EquationEditor.Tree.RootMathNode`: `SubTreeNodeValueChanged` (custom add/remove matching Interlocked.CompareExchange)
+  - `EquationEditor.Tree.RootMathNode`: `RequestRestoreInsertionPoint` (custom add/remove)
+  - `EquationEditor.Tree.RootMathNode`: `RequestUndoableCommandExecution` (custom add/remove)
+  - `EquationEditor.Tree.RootMathNode`: `MatrixDescendantAdded` (custom add/remove)
+  - `EquationEditor.Tree.RootMathNode`: `RequestNotifySubTreeNodeValueChanged(MathNode)`
+  - `EquationEditor.Tree.RootMathNode`: `DelegateRequestRestoreInsertionPoint(RequestRestoreInsertionPointEventArgs)`
+  - `EquationEditor.Tree.RootMathNode`: `DispatchRequestUndoableCommandExecution(DelegateFunction0<bool>, string, MathNode)`
+  - `EquationEditor.Tree.RootMathNode`: `FindDescendant(string)`
+  - `EquationEditor.Tree.RootMathNode`: `b(MathNode, string)` (private recursive label search)
+  - `EquationEditor.Tree.RootMathNode`: `a(MathNode, string)` (private recursive SExpression search)
+  - `EquationEditor.Tree.RootMathNode`: `TryFindDescendant(string, out MathNode)` ([SkipLocalsInit])
+  - `EquationEditor.Tree.RootMathNode`: `FireMatrixDescendantAdded(MathNode)`
+- Report: full `--project Quire.EquationEditor` gate PASS, 933 checked, 0 failures.
+- Parked members (exact blockers):
+  - `RootMathNode.ctor()`: Constructor chaining calls `Native.PtcEquationEditor.r.a.c()`; `r.a` has a CS0102 field/method clash with `r::a(...)`.
+  - `AlgorithmOptions.ICloneable.Clone()`: Obfuscated method name `a()` in Mathcad vs `System.ICloneable.Clone` in Roslyn.
+  - `SpecTableColumnToRlTransform.Transform`: References `MathNodeToRlTransformer.e` which has a CS0102 clash (`e__`).
+  - `InputControlNodeCreator.Create`, `CreateInputField`: References `r.a` and `r.d` (CS0102).
+  - `ValueNodeInfo.Value`: Compiler-generated closure classes `a` and `b` have CS0102 clashes between fields `a`/`b` and methods `a()`.
+  - `TransformMathNodeToComboBoxValues`: Closure class `a` has CS0102 clash between field `a` and method `a()`.
+  - `NavigatorState.ToString()`: Calls internal helpers `bs.a` and `bs.b`.
+  - `Properties.Settings` and `MathNodeSettings`: Obfuscated property getters/setters `b()` and `a()`.
+  - `Native.PtcEquationEditor` obfuscated types (`a-z`, `a0`, `a8`, `a9`, `bk`, `bm`, `bn`, etc.) and dependent callers: CS0102 clashes.
 - Remaining mismatches: 0 in completed types; remaining unbatched/parked stubs in other types.
