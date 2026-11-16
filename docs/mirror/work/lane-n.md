@@ -927,3 +927,13 @@
   - `ExtendedFont`: `_fontTypeface`, `_M_Run`, `_n_Run`, `_j_Run`, `_glyphTypeface`, `_baselineAdjustment`, `FontFamilyProperty`, `FontSizeProperty`, `FontWeightProperty`, `FontStyleProperty`, `TextDecorationsProperty`, `ForegroundProperty`, `FontStretchProperty`, `GlyphRunCache`, `.cctor`. All 14 stubs removed from `.g.cs`.
 - Report: `.mirror-cache/release-il-27cbda357867/release-il.json` — PASS, 2,974 checked, 0 failures.
 - Remaining mismatches: none in claimed batch.
+
+## Batch 122 — CustomScriptRunBase and OleContainer stubs
+
+- Owner: feature/custom-script-run
+- Scope:
+  - `CustomScriptRunBase`: `TypeOfThis`, `StyleKeyProperty`, `WpfRecreateScriptsProperty`, `IsInSerializationProperty`, `RevertCoerceAfterSerializationProcessProperty`, `_deferInit`, `FontSizeForReportPropertyKey`, `FontSizeForReportProperty`, `WpfRecreateScripts`, `IsInSerialization`, `RevertCoerceAfterSerializationProcess`, `FontVariantsForCopy`, `FontSizeForReport`, `FontSizeToRestore`, `SetRevertCoerceAfterSerializationProcess`, `ClearRevertCoerceAfterSerializationProcess`, `.cctor`, `HandleAnySerializationChanged`, `.ctor()`, `.ctor(string)`, `.ctor(string, TextPointer)`, `CoerceVariantsProperty`, `CoerceCustomScriptFontSizeCallback`, `ScriptBaseRun_DataContextChanged`, `ToggleRangeText`, `RecoverSubSuperscriptRunsInRange`, `RecoverCustomScriptRunsInRange<T>`, `SetSpanPropToRunIfNeeded`. All 34 stubs removed from `.g.cs`.
+  - `OleContainer<TViewModel, TModel, TIPublicModel, TPersistentData>`: `_snappableHelper`, `_prePrintingZoom`. Stubs removed from `.g.cs`.
+- Report: `.mirror-cache/release-il-ab58166ea247/release-il.json` — PASS, 3,003 checked, 0 failures.
+- Parked members: `OleContainer` members `StorageFileNameForXamlSerialization`, `StartOleCloseOperation`, `TrySavingBitmapForPrint`, and `GetOlePersistentData` remain parked per Batch 120 (closure ordinals requiring specific member declaration ordering against Mathcad Prime 12.0.1.0).
+- Remaining mismatches: none in claimed batch.

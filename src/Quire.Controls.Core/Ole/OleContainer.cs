@@ -29,6 +29,8 @@ public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TP
 
     public static readonly DependencyProperty IsInCopyProperty;
 
+    private double? _prePrintingZoom;
+
     static OleContainer()
     {
         _typeOfThis = typeof(OleContainer<TViewModel, TModel, TIPublicModel, TPersistentData>);
@@ -48,6 +50,8 @@ public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TP
     {
         ((OleContainer<TViewModel, TModel, TIPublicModel, TPersistentData>)d).OnIsInCopyPropertyChanged(e);
     }
+
+    private SnappableItemHelper _snappableHelper;
 
     public TViewModel ViewModel { get; private set; }
 
