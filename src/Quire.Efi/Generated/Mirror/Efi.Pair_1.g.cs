@@ -11,10 +11,4 @@ namespace Quire.Efi;
 [global::Quire.Mirror.MirrorOf("Efi.Pair`1, efiplot_")]
 internal partial struct Pair<T>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public T x;
-    [global::Quire.Mirror.MirrorStub]
-    public T y;
-    [global::Quire.Mirror.MirrorStub]
-    public Pair(T xx, T yy) { }
 }

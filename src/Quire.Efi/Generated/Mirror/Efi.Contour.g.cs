@@ -11,10 +11,4 @@ namespace Quire.Efi;
 [global::Quire.Mirror.MirrorOf("Efi.Contour, efiplot_")]
 public partial class Contour : global::Quire.Efi.Plot3D
 {
-    [global::Quire.Mirror.MirrorStub]
-    private object m_levels;
-    [global::Quire.Mirror.MirrorStub]
-    public Contour(int origin, object exp, object scale, object limits, object gridn, object levels, object[] param) : base(default(int), default(object), default(object), default(object), default(object), default(object[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.MatVal plot_Contour() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
