@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.IPlotControl, Ptc.Controls.Plots")]
 public partial interface IPlotControl : global::Quire.Controls.Plots.IPlotControl<global::Quire.Controls.Plots.XyEquation>, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Presenter.IPlotEquation ActivePlotEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

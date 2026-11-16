@@ -11,10 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.IEquationProxy, Ptc.Controls.Plots")]
 public partial interface IEquationProxy : global::Quire.Controls.Plots.IEquationSerializationProxy
 {
-    [global::Quire.Mirror.MirrorStub]
-    string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsCommitted { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::Quire.Controls.Plots.IEquationProxy> RequestEvaluation { add { } remove { } }
 }

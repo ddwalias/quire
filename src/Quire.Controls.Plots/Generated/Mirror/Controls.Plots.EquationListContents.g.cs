@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.EquationListContents, Ptc.Controls.Plots")]
 internal partial class EquationListContents : global::Quire.Controls.Core.VisualTableContents
 {
-    [global::Quire.Mirror.MirrorStub]
-    public EquationListContents() : base(default(global::Quire.Controls.Core.TableLayoutManager)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public int AdjustNumberOfColumnsToWidth(double newWidth) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.Tools;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.Tools.VisualTrackballAdorner, Ptc.Controls.Plots")]
 public partial class VisualTrackballAdorner : global::Quire.Controls.Core.VisualAdorner
 {
-    [global::Quire.Mirror.MirrorStub]
-    public VisualTrackballAdorner(global::System.Windows.UIElement adornedElement) : base(default(global::System.Windows.UIElement)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
 }

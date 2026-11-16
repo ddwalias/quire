@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.IMarkerCalculatable, Ptc.Controls.Plots")]
 public partial interface IMarkerCalculatable : global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculatableInfo, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculationHideableChild
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool OverrideHideFromCalculation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

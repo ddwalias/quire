@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.PlotEquationViewModelBase, Ptc.Controls.Plots")]
 public partial class PlotEquationViewModelBase : global::Quire.Controls.Plots.ViewModel.PlotEquationViewModelBase<global::Quire.Controls.Plots.Model.IPlotEquationModelBase>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public PlotEquationViewModelBase() : base(default(global::Quire.Controls.Plots.Model.IPlotEquationModelBase)) { }
 }

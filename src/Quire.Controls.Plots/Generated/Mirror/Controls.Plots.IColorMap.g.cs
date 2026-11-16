@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.IColorMap, Ptc.Controls.Plots")]
 public partial interface IColorMap
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.Brush GetBrush(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots.Traces;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Traces.ISymbolProperties, Ptc.Controls.Plots")]
 public partial interface ISymbolProperties
 {
-    [global::Quire.Mirror.MirrorStub]
-    double SymbolWeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double LineWeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

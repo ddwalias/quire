@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.DummyChangeUnitsCommand, Ptc.Controls.Plots")]
 internal partial class DummyChangeUnitsCommand : global::Quire.Undo.UndoableCommand, global::Quire.Undo.IUndoableCommandWithSideEffects, global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    public DummyChangeUnitsCommand(global::Quire.DelegateFunction0<bool> doMethod, global::Quire.Delegate0 undoMethod) : base(default(string), default(global::Quire.DelegateFunction0<bool>), default(global::Quire.Delegate0)) { }
 }

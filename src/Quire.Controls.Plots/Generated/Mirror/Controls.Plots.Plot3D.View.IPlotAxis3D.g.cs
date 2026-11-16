@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.View;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.View.IPlotAxis3D, Ptc.Controls.Plots")]
 internal partial interface IPlotAxis3D : global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    string[] Labels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Base3D.ViewModel.IPlotAxisViewModel3D ViewModel { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

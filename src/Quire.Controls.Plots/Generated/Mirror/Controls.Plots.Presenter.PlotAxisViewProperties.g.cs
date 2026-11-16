@@ -11,14 +11,4 @@ namespace Quire.Controls.Plots.Presenter;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Presenter.PlotAxisViewProperties, Ptc.Controls.Plots")]
 public static partial class PlotAxisViewProperties
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string Offset = "Offset";
-    [global::Quire.Mirror.MirrorStub]
-    public const string StartValue = "StartValue";
-    [global::Quire.Mirror.MirrorStub]
-    public const string EndValue = "EndValue";
-    [global::Quire.Mirror.MirrorStub]
-    public const string PositionTickmark = "PositionTickmrak";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Scaling = "Scaling";
 }

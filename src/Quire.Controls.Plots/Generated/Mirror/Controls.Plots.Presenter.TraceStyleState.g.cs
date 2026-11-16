@@ -11,12 +11,4 @@ namespace Quire.Controls.Plots.Presenter;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Presenter.TraceStyleState, Ptc.Controls.Plots")]
 public partial struct TraceStyleState
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Presenter.TraceSymbol TraceSymbol;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Presenter.LineStyle LineStyle;
-    [global::Quire.Mirror.MirrorStub]
-    public double LineWeight;
-    [global::Quire.Mirror.MirrorStub]
-    public TraceStyleState(global::Quire.Controls.Plots.Presenter.TraceSymbol symbol, global::Quire.Controls.Plots.Presenter.LineStyle line, double weight) { }
 }

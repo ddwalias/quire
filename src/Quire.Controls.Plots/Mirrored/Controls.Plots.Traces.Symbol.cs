@@ -7,6 +7,8 @@ namespace Quire.Controls.Plots.Traces;
 
 public abstract partial class Symbol
 {
+    public abstract Geometry Create(System.Windows.Point point, ISymbolProperties properties);
+
     public virtual bool IsFilled => false;
 
     protected static Geometry CreatePathGeometryPointCollection(PointCollection pointCollection)

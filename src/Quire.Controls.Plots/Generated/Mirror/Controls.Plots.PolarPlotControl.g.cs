@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PolarPlotControl, Ptc.Controls.Plots")]
 public partial class PolarPlotControl : global::Quire.Controls.Plots.PlotControl
 {
-    [global::Quire.Mirror.MirrorStub]
-    public PolarPlotControl() { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void SetGraphSizeForXamlSerialization() => base.SetGraphSizeForXamlSerialization();
 }

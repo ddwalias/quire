@@ -11,12 +11,4 @@ namespace Quire.Controls.Plots.Presenter;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Presenter.IPlotEquationBase, Ptc.Controls.Plots")]
 public partial interface IPlotEquationBase : global::Quire.Controls.Core.ICurrentMathFormatProperty, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.IMathFormatOwner, global::Quire.Controls.Core.ISupportCustomInitialization, global::Quire.Controls.Core.IMathFormatForDeserialization
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsCommitted { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IEquationControl> ContainedEquationControls { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action SExpressionValueChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void ResetBeforeAdding() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

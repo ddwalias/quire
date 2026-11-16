@@ -11,12 +11,4 @@ namespace Quire.Controls.Plots.Traces;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Traces.HorizontalTraceOrderInfoProvider, Ptc.Controls.Plots")]
 internal partial class HorizontalTraceOrderInfoProvider : global::Quire.Controls.Plots.Traces.AbstractTraceOrderInfoProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override double ClusterSpace { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override double PlotMinGap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsDiscrete { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public HorizontalTraceOrderInfoProvider(global::Quire.Controls.Plots.PlotTrace plotTrace) : base(default(global::Quire.Controls.Plots.PlotTrace)) { }
 }

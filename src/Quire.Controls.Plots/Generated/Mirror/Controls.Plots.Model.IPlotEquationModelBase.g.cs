@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.IPlotEquationModelBase, Ptc.Controls.Plots")]
 public partial interface IPlotEquationModelBase : global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.EngineError PlotCalculatableError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

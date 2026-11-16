@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.IPlotCalculatable, Ptc.Controls.Plots")]
 public partial interface IPlotCalculatable : global::Quire.Calculation.Core.ICalculatableInfo, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculationHideableChild, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Controls.Plots.Model.IHasNumberOfPoints
 {
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.EventHandler<global::Quire.Controls.Plots.Model.EngineErrorEventArgs> PlotCalculatableError { add { } remove { } }
 }

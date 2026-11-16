@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.IEquationProxyOwner, Ptc.Controls.Plots")]
 public partial interface IEquationProxyOwner
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.IEquationProxy EquationProxy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

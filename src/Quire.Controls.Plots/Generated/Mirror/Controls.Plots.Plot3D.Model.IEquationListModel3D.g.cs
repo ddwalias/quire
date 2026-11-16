@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.Model.IEquationListModel3D, Ptc.Controls.Plots")]
 internal partial interface IEquationListModel3D : global::System.Collections.Generic.IList<global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D>, global::System.Collections.Generic.ICollection<global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D>, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D>, global::System.Collections.IEnumerable
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.PersistentDataObjects.plotEquation[] GetDataObject(global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

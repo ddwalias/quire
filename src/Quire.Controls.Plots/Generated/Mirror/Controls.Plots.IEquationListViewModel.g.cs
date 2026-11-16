@@ -11,10 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.IEquationListViewModel, Ptc.Controls.Plots")]
 public partial interface IEquationListViewModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool EquationListHasFocus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void HandleRequestAddEquation(int index, int previousIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void HandleEquationRemoved(global::Quire.Controls.Plots.Presenter.IPlotEquation plotEquation, int deletedItemIndex, int previousItemIndex, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

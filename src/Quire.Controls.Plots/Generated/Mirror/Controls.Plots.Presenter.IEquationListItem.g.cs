@@ -11,12 +11,4 @@ namespace Quire.Controls.Plots.Presenter;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Presenter.IEquationListItem, Ptc.Controls.Plots")]
 public partial interface IEquationListItem
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Presenter.IPlotEquation Equation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsItemActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::Quire.Controls.Plots.EquationListItem> ItemChange { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void ClearTraces() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.IPlotItemWithToggleableBorder, Ptc.Controls.Plots")]
 public partial interface IPlotItemWithToggleableBorder
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool ShowBorder { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

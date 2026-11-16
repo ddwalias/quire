@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.Tools;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.Tools.ITrackingHelperFactory, Ptc.Controls.Plots")]
 internal partial interface ITrackingHelperFactory : global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelper CreateHelper(global::Quire.Controls.Plots.Plot3D.Tools.IBaseTrackball trackball) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

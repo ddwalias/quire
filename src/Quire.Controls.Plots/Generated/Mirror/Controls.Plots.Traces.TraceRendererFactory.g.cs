@@ -11,10 +11,4 @@ namespace Quire.Controls.Plots.Traces;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Traces.TraceRendererFactory, Ptc.Controls.Plots")]
 internal partial class TraceRendererFactory
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Plots.PlotTrace _ownerTrace;
-    [global::Quire.Mirror.MirrorStub]
-    public TraceRendererFactory(global::Quire.Controls.Plots.PlotTrace ownerTrace) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Traces.TraceRenderer GetRenderer(global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

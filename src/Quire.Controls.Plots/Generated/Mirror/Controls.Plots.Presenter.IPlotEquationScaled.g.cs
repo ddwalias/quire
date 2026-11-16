@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots.Presenter;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Presenter.IPlotEquationScaled, Ptc.Controls.Plots")]
 public partial interface IPlotEquationScaled : global::Quire.Controls.Plots.Presenter.IPlotEquation, global::Quire.Controls.Core.IDelegateFocus, global::System.Windows.IInputElement, global::Quire.Controls.Plots.Presenter.IPlotEquationBase, global::Quire.Controls.Core.ICurrentMathFormatProperty, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.IMathFormatOwner, global::Quire.Controls.Core.ISupportCustomInitialization, global::Quire.Controls.Core.IMathFormatForDeserialization
 {
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::Quire.Controls.Plots.Presenter.IPlotEquationScaled> ScalingChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void ShowOrHideScaling(bool isEquationListKeyboardFocusWithin) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

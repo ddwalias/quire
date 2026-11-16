@@ -11,12 +11,4 @@ namespace Quire.Controls.Plots.Traces;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Traces.VerticalTraceOrderInfoProvider, Ptc.Controls.Plots")]
 internal partial class VerticalTraceOrderInfoProvider : global::Quire.Controls.Plots.Traces.AbstractTraceOrderInfoProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override double ClusterSpace { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override double PlotMinGap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsDiscrete { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public VerticalTraceOrderInfoProvider(global::Quire.Controls.Plots.PlotTrace plotTrace) : base(default(global::Quire.Controls.Plots.PlotTrace)) { }
 }

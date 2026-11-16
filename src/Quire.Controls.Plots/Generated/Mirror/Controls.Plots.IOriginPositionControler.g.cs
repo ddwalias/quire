@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.IOriginPositionControler, Ptc.Controls.Plots")]
 internal partial interface IOriginPositionControler
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool HasOriginPositioning { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

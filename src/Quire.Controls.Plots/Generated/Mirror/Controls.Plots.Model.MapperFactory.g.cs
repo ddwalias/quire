@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.MapperFactory, Ptc.Controls.Plots")]
 public partial class MapperFactory
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Plots.Model.IMapper CreateMapper(global::Quire.Controls.Plots.Model.StyleType styleType, global::Quire.Controls.Plots.Model.IMapper oldMapper = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public MapperFactory() { }
 }

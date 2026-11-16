@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots.Presenter;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Presenter.IPlotViewBase, Ptc.Controls.Plots")]
 public partial interface IPlotViewBase : global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Controls.Core.IHasChildArrangeInfoProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.BackgroundTypeE PlotBackgroundType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Delegate1<global::Quire.Controls.Core.BackgroundTypeE> BackgroundTypePropertyChanged { add { } remove { } }
 }

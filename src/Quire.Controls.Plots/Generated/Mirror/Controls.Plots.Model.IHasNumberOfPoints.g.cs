@@ -11,8 +11,4 @@ namespace Quire.Controls.Plots.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.IHasNumberOfPoints, Ptc.Controls.Plots")]
 public partial interface IHasNumberOfPoints
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsNumOfPointsMutable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int NumberOfPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

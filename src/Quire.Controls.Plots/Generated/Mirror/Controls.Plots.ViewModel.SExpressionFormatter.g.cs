@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.SExpressionFormatter, Ptc.Controls.Plots")]
 public partial class SExpressionFormatter : global::Quire.Controls.Core.RealNumberFormatter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public SExpressionFormatter(global::Quire.Controls.Core.NumberFormat numberFormat) : base(default(global::Quire.Controls.Core.NumberFormat), default(global::Quire.Controls.Core.IFormatterHelper)) { }
 }

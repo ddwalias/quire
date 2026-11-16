@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.VerticalMarkerViewModel, Ptc.Controls.Plots")]
 internal partial class VerticalMarkerViewModel : global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    public VerticalMarkerViewModel(global::Quire.Controls.Plots.Model.AxisMarker axisMarker) : base(default(global::Quire.Controls.Plots.Model.AxisMarker)) { }
 }

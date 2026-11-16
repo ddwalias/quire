@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots.Traces;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Traces.Symbol, Ptc.Controls.Plots")]
 public abstract partial class Symbol
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::System.Windows.Media.Geometry Create(global::System.Windows.Point point, global::Quire.Controls.Plots.Traces.ISymbolProperties properties);
 }
