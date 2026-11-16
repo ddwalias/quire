@@ -11,32 +11,4 @@ namespace Quire.Controls.ExcelComponent.View;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.View.OleContainerItem`4, Ptc.Controls.ExcelComponent")]
 public abstract partial class OleContainerItem<TViewModel, TModel, TIPublicModel, TPersistentData> : global::Quire.Controls.Core.Ole.OleContainer<TViewModel, TModel, TIPublicModel, TPersistentData>, global::Quire.Controls.ExcelComponent.View.IOleContainerItem, global::Quire.Controls.Core.Ole.IOleContainer, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged where TViewModel : global::Quire.Controls.ExcelComponent.ViewModel.OleContainerItemViewModel<TModel, TIPublicModel, TPersistentData> where TModel : global::Quire.Controls.Core.Ole.OleContainerModel<TPersistentData>, TIPublicModel where TIPublicModel : global::Quire.Controls.Core.Ole.IPublicOleContainerModel<TPersistentData> where TPersistentData : global::Quire.PersistentData.IOleObjectPersistentData
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Size _expectedSize;
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.Calculation.ICalculationComponent Component { get; }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.ExcelComponent.ViewModel.IOleContainerItemViewModel global::Quire.Controls.ExcelComponent.View.IOleContainerItem.ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual bool IsResizing { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Size ExpectedSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.Core.IWhiteboardItem> OnGotFocusEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Direction> RequestRemove;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    protected OleContainerItem(TViewModel viewModel, global::System.Windows.ResourceDictionary dictionary) : base(default(TViewModel), default(global::System.Windows.ResourceDictionary)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void SimulateMouseClick(global::System.Windows.Point location, int numberOfClicks) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnViewModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => base.OnViewModelPropertyChanged(sender, args);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size arrangeBounds) => base.ArrangeOverride(arrangeBounds);
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Size ArrangeOverrideAux(global::System.Windows.Size arrangeBounds, bool updateOleSizeIfNeeded) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnRenderSizeChanged(global::System.Windows.SizeChangedInfo sizeInfo) => base.OnRenderSizeChanged(sizeInfo);
 }

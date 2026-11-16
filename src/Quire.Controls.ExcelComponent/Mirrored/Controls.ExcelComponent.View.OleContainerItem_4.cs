@@ -1,6 +1,12 @@
 using System;
+using System.ComponentModel;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
+using Quire.Calculation;
+using Quire.Calculation.Core;
+using Quire.Controls.Core;
+using Quire.Controls.ExcelComponent.ViewModel;
 
 namespace Quire.Controls.ExcelComponent.View;
 
@@ -67,5 +73,87 @@ public abstract partial class OleContainerItem<TViewModel, TModel, TIPublicModel
     {
         DebugTools.FailAssertion("OleContainer help context shouldn't be exposed.");
         return null;
+    }
+
+    private Size _expectedSize;
+
+    public abstract ICalculationComponent Component { get; }
+
+    IOleContainerItemViewModel IOleContainerItem.ViewModel => ViewModel;
+
+    public virtual bool IsResizing
+    {
+        get
+        {
+            return ViewModel.IsResizing;
+        }
+        set
+        {
+            ViewModel.IsResizing = value;
+        }
+    }
+
+    protected Size ExpectedSize
+    {
+        get
+        {
+            if (DebugTools.DevAssert(ViewModel.Width.IsValid() && ViewModel.Width.IsGreaterThan(0.0) && ViewModel.Height.IsValid() && ViewModel.Height.IsGreaterThan(0.0), null).Failed)
+            {
+                return Size.Empty;
+            }
+            return new Size(ViewModel.Width, ViewModel.Height);
+        }
+    }
+
+    public event Action<IWhiteboardItem> OnGotFocusEvent;
+
+    public event Action<IWhiteboardItem, Direction> RequestRemove;
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected OleContainerItem(TViewModel viewModel, ResourceDictionary dictionary)
+        : base(viewModel, dictionary)
+    {
+        _expectedSize = new Size(Width, Height);
+    }
+
+    public void SimulateMouseClick(Point location, int numberOfClicks)
+    {
+        DebugTools.FailAssertion("Should not be called.");
+    }
+
+    protected override void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs args)
+    {
+        base.OnViewModelPropertyChanged(sender, args);
+        if (args.PropertyName == "Width" || args.PropertyName == "Height")
+        {
+            DebugTools.DevAssert(ViewModel.Width.IsEqualTo(_expectedSize.Width) && ViewModel.Height.IsEqualTo(_expectedSize.Height), "OLE Component doesn't support dimension change from ViewModel");
+        }
+    }
+
+    protected override Size ArrangeOverride(Size arrangeBounds)
+    {
+        return ArrangeOverrideAux(arrangeBounds, updateOleSizeIfNeeded: true);
+    }
+
+    protected Size ArrangeOverrideAux(Size arrangeBounds, bool updateOleSizeIfNeeded)
+    {
+        Size val = base.ArrangeOverride(arrangeBounds);
+        Size expectedSize = ExpectedSize;
+        if (!expectedSize.IsEmpty && DebugTools.DevAssert(expectedSize.IsEqualTo(val), null).Failed)
+        {
+            val = new Size(expectedSize.Width, expectedSize.Height);
+        }
+        if (updateOleSizeIfNeeded && !val.IsEqualTo(RenderSize))
+        {
+            ViewModel.UpdateOleSizeIfNeeded();
+        }
+        return val;
+    }
+
+    protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+    {
+        DebugTools.DevAssert(sizeInfo.NewSize.Width.IsEqualTo(ViewModel.Width) && sizeInfo.NewSize.Height.IsEqualTo(ViewModel.Height), null);
+        base.OnRenderSizeChanged(sizeInfo);
     }
 }
