@@ -11,8 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetRegionsInfo, Ptc.Controls.Worksheet")]
 public partial struct WorksheetRegionsInfo
 {
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isScriptableControlExists;
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsScriptableControlExists { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

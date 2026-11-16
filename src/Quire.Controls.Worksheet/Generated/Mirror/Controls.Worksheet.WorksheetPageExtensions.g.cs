@@ -11,8 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetPageExtensions, Ptc.Controls.Worksheet")]
 public static partial class WorksheetPageExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Worksheet.IWorksheetPageViewModel GetViewModel(this global::Quire.Controls.Worksheet.WorksheetPageControl control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Worksheet.IWorksheetPageSection GetPageBody(this global::Quire.Controls.Worksheet.WorksheetPageControl control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

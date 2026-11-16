@@ -11,8 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.PageBodyViewModel, Ptc.Controls.Worksheet")]
 public partial class PageBodyViewModel : global::Quire.Controls.Whiteboard.WhiteboardViewModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    public PageBodyViewModel(global::System.Nullable<global::System.Windows.Size> gridCellSize) : base(default(global::Quire.Controls.Whiteboard.WhiteboardViewModel)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.Controls.Core.IWhiteboardItem GetChildItemFromLocation(global::System.Windows.Point point) => base.GetChildItemFromLocation(point);
 }

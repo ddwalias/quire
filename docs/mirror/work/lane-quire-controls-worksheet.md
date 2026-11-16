@@ -36,5 +36,18 @@
   - `Quire.Controls.Worksheet.FirstPageHeaderFooterConditionConverter`: `Convert`, `ConvertBack`, `.ctor`
   - `Quire.Controls.Worksheet.WorksheetItemPresenter`: `Clip` (get, set), `HandleItemLocationChanged`, `.ctor`
 - Release IL: PASS; 208 checked; 0 failures.
-- Landed commit: (in-progress)
+- Landed commit: `340d0f97ce93ee490ee2f6b0c49c3185376b84ef`
 - Remaining mismatches: none in this batch (3031 stubs remaining in Quire.Controls.Worksheet).
+
+## Batch 4 — HeaderFooterItemsControl, WorksheetPageExtensions, WorksheetRegionsInfo, PageBodyViewModel
+
+- Members:
+  - `Quire.Controls.Worksheet.HeaderFooterItemsControl`: `.ctor`
+  - `Quire.Controls.Worksheet.WorksheetPageExtensions`: `GetViewModel`, `GetPageBody`
+  - `Quire.Controls.Worksheet.WorksheetRegionsInfo`: `_isScriptableControlExists`, `get_IsScriptableControlExists`, `set_IsScriptableControlExists`
+  - `Quire.Controls.Worksheet.PageBodyViewModel`: `.ctor`, `GetChildItemFromLocation`
+- Release IL: PASS; 214 checked; 0 failures.
+- Landed commit: (in-progress)
+- Parked members:
+  - `Quire.Controls.Worksheet.CollapsibleAreaHeightConverter`: blocked by missing project reference to `Quire.Controls.CollapsibleArea` in `Quire.Controls.Worksheet.csproj`.
+- Remaining mismatches: none in this batch (3025 stubs remaining in Quire.Controls.Worksheet).

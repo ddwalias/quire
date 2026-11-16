@@ -11,6 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.HeaderFooterItemsControl, Ptc.Controls.Worksheet")]
 public partial class HeaderFooterItemsControl : global::System.Windows.Controls.ItemsControl, global::Quire.Controls.Worksheet.ICommonContentsContainer
 {
-    [global::Quire.Mirror.MirrorStub]
-    public HeaderFooterItemsControl() { }
 }
