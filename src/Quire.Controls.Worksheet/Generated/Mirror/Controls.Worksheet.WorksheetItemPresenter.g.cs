@@ -11,10 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetItemPresenter, Ptc.Controls.Worksheet")]
 internal partial class WorksheetItemPresenter : global::System.Windows.Documents.AdornerDecorator, global::Quire.Controls.Core.IWhiteboardItemPresenter
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.Geometry global::Quire.Controls.Core.IWhiteboardItemPresenter.Clip { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleItemLocationChanged(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public WorksheetItemPresenter() { }
 }

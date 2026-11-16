@@ -11,8 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.HeaderFooterRoleExtensions, Ptc.Controls.Worksheet")]
 public static partial class HeaderFooterRoleExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsHeaderRole(this global::Quire.Controls.Worksheet.HeaderFooterRole role) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsFooterRole(this global::Quire.Controls.Worksheet.HeaderFooterRole role) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

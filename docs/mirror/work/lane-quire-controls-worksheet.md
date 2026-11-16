@@ -1,6 +1,6 @@
 # Lane Quire.Controls.Worksheet
 
-- Owner: task_0694313bb5a4
+- Owner: task_a715de0c8d0f
 - Branch: feature/controls-worksheet-stubs-agy-20261116
 - Worktree: C:/Users/DuyDang/orca/workspaces/Quire/lane-quire-controls-worksheet
 
@@ -27,3 +27,14 @@
 - Release IL: PASS; 199 checked; 0 failures.
 - Landed commit: `35b689c41f75bf1c98fbd4b96a9b0547bf1c0236`
 - Remaining mismatches: none in this batch (3040 stubs remaining in Quire.Controls.Worksheet).
+
+## Batch 3 — NonPrintableSpaceIndicatorPositionConverter, HeaderFooterRoleExtensions, FirstPageHeaderFooterConditionConverter, WorksheetItemPresenter
+
+- Members:
+  - `Quire.Controls.Worksheet.NonPrintableSpaceIndicatorPositionConverter`: `Convert`, `ConvertBack`, `.ctor`
+  - `Quire.Controls.Worksheet.HeaderFooterRoleExtensions`: `IsHeaderRole`, `IsFooterRole`
+  - `Quire.Controls.Worksheet.FirstPageHeaderFooterConditionConverter`: `Convert`, `ConvertBack`, `.ctor`
+  - `Quire.Controls.Worksheet.WorksheetItemPresenter`: `Clip` (get, set), `HandleItemLocationChanged`, `.ctor`
+- Release IL: PASS; 208 checked; 0 failures.
+- Landed commit: (in-progress)
+- Remaining mismatches: none in this batch (3031 stubs remaining in Quire.Controls.Worksheet).
