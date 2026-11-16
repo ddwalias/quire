@@ -21,6 +21,4 @@ internal abstract partial class t : IResultNode, IVisitable<IResultNodeVisitor>,
     protected t()
     {
     }
-
-    ResultValueType IResultNode.ValueType => ResultValueType.Empty;
 }

@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core.Trace2DResults;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.Trace2DResultNode, Ptc.Calculation.Core")]
 public partial class Trace2DResultNode : global::Quire.Calculation.Core.SimpleResultNode, global::Quire.Calculation.Core.ITrace2DResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IReadOnlyList<global::Quire.Calculation.Core.TraceData> global::Quire.Calculation.Core.ITrace2DResultNode.Traces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

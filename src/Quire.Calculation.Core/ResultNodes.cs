@@ -6,19 +6,10 @@ namespace Quire.Calculation.Core;
 public partial interface IEngineError
 {
     string Message { get; set; }
-
-    /// <summary>The identifier the error is about, if any; the editor highlights it.</summary>
-    string? Symbol { get; }
 }
 
 public sealed partial class EngineError : IEngineError
 {
-    public EngineError(string message, string? symbol = null)
-    {
-        _message = message;
-        Symbol = symbol;
-    }
-
     private string _message;
 
     [MirrorVerified("PtcCalculationCoreEngineErrorRelationsMechanicalDifferentialTests")]
@@ -41,7 +32,6 @@ public sealed partial class EngineError : IEngineError
             }
         }
     }
-    public string? Symbol { get; }
 
     [MirrorVerified("PtcCalculationCoreEngineErrorMechanicalDifferentialTests")]
     public EngineError() { }
@@ -77,9 +67,6 @@ public sealed partial class EngineError : IEngineError
     public ICalculatable ErrorSource { get; set; }
 }
 
-/// <summary>A unit factor in a displayed result, e.g. ("m", 1), ("s", -2).</summary>
-public sealed record UnitPower(string Name, double Exponent);
-
 public enum ResultValueType
 {
     Empty = 0,
@@ -96,7 +83,6 @@ public enum ResultValueType
 /// <summary>Display-ready result tree; values are already converted to their display units.</summary>
 public partial interface IResultNode
 {
-    ResultValueType ValueType { get; }
 }
 
 public partial interface IEmptyResultNode : IResultNode;
@@ -113,28 +99,12 @@ public partial interface IMatrixResultNode : IResultNode
     TableSize Size { get; }
     int Columns { get; }
     int Rows { get; }
-    int Cols { get; }
-
-    /// <summary>Row-major display values.</summary>
-    IReadOnlyList<double> DisplayValues { get; }
-
-    /// <summary>Units shared by every element (shown once after the matrix); empty when unitless or mixed.</summary>
-    IReadOnlyList<UnitPower> Units { get; }
-
-    /// <summary>Per-element units when elements have different units, else null.</summary>
-    IReadOnlyList<IReadOnlyList<UnitPower>>? ElementUnits { get; }
-
-    /// <summary>True when the result came from iterating a range variable (shown as a table).</summary>
-    bool IsRangeTable { get; }
 }
 
 public partial interface IFunctionResultNode : IResultNode
 {
     string Description { get; set; }
-    string Signature { get; }
 }
-
-public sealed record TraceData(string Label, double[] X, double[] Y, IReadOnlyList<UnitPower> XUnits, IReadOnlyList<UnitPower> YUnits);
 
 public partial interface ITrace2DResultNode : IResultNode
 {
@@ -142,62 +112,4 @@ public partial interface ITrace2DResultNode : IResultNode
     ITraceAxisInfo ResultAxisInfo { get; }
     ITraceDataPoints DataPoints { get; }
     Trace2DResultType TraceResultType { get; }
-    IReadOnlyList<TraceData> Traces { get; }
-}
-
-public sealed record EmptyResultNode : IEmptyResultNode
-{
-    public static readonly EmptyResultNode Instance = new();
-    public ResultValueType ValueType => ResultValueType.Empty;
-    public void Accept(IResultNodeVisitor visitor) => visitor.Visit(this);
-}
-
-/// <summary>A display-ready number. <see cref="Units"/> is the units to show after it, empty when unitless or when
-/// the user supplied a unit override. Product-only: it does not implement Mathcad's <see cref="IUnitedValueResultNode"/>
-/// (D21), and no visitor overload takes it.</summary>
-public sealed record UnitedValueResultNode(double DisplayValue, IReadOnlyList<UnitPower> Units) : IResultNode
-{
-    public ResultValueType ValueType => ResultValueType.UnitedValue;
-    public void Accept(IResultNodeVisitor visitor) { }
-}
-
-public sealed record StringResultNode(string Value) : IStringResultNode
-{
-    public string Value { get; set; } = Value;
-    public ResultValueType ValueType => ResultValueType.String;
-    public void Accept(IResultNodeVisitor visitor) => visitor.Visit(this);
-}
-
-public sealed record MatrixResultNode(int Rows, int Cols, IReadOnlyList<double> DisplayValues, IReadOnlyList<UnitPower> Units,
-    IReadOnlyList<IReadOnlyList<UnitPower>>? ElementUnits, bool IsRangeTable) : IResultNode
-{
-    public ResultValueType ValueType => ResultValueType.Matrix;
-    public void Accept(IResultNodeVisitor visitor) { }
-}
-
-public sealed record FunctionResultNode(string Signature) : IResultNode
-{
-    public ResultValueType ValueType => ResultValueType.Function;
-    public void Accept(IResultNodeVisitor visitor) { }
-}
-
-public sealed record Trace2DResultNode(IReadOnlyList<TraceData> Traces) : IResultNode
-{
-    public ResultValueType ValueType => ResultValueType.Trace2D;
-    public void Accept(IResultNodeVisitor visitor) { }
-}
-
-/// <summary>The engine's answer for one calculatable.</summary>
-public sealed class CalculationResult
-{
-    public IResultNode Value { get; init; } = EmptyResultNode.Instance;
-    public IEngineError? Error { get; init; }
-    public string? Warning { get; init; }
-
-    /// <summary>Per-child results for aggregates (solve blocks), in the order of their children.</summary>
-    public IReadOnlyList<CalculationResult>? Children { get; init; }
-
-    public bool HasError => Error != null || (Children?.Any(c => c.HasError) ?? false);
-
-    public static readonly CalculationResult Empty = new();
 }

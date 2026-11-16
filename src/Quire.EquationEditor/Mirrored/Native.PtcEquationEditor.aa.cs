@@ -32,8 +32,4 @@ internal partial class aa : t, IFunctionResultNode, IResultNode, IVisitable<IRes
     public aa()
     {
     }
-
-    string IFunctionResultNode.Signature => null;
-
-    ResultValueType IResultNode.ValueType => ResultValueType.Function;
 }

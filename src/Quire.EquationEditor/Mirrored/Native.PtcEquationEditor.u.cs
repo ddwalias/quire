@@ -24,6 +24,4 @@ internal partial class u : t, IEmptyResultNode, IResultNode, IVisitable<IResultN
     public u()
     {
     }
-
-    ResultValueType IResultNode.ValueType => ResultValueType.Empty;
 }

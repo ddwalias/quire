@@ -32,6 +32,4 @@ internal partial class z : t, IStringResultNode, IResultNode, IVisitable<IResult
     public z()
     {
     }
-
-    ResultValueType IResultNode.ValueType => ResultValueType.String;
 }

@@ -90,32 +90,6 @@ public class TransformTests
     [Fact]
     public void Trailing_zeros_can_be_shown() =>
         Assert.Equal("2.500", ResultFormatter.NumberText(2.5, ResultFormatOptions.Default with { ShowTrailingZeros = true }));
-
-    [Fact]
-    public void Units_render_with_denominator()
-    {
-        var u = ResultFormatter.UnitExpression([new UnitPower("m", 1), new UnitPower("s", -2)]);
-        Assert.Equal("m/s^2", MathNodeToLinearTransform.Write(u!));
-    }
-
-    /// <summary>Keyboard text → tree → Rl → engine → display tree, end to end.</summary>
-    [Theory]
-    [InlineData(new[] { "F := 2 kg * 3 m/s^2", "F =" }, "6 N")]
-    [InlineData(new[] { "v := 100 km/hr", "v = mph" }, "62.137")]
-    [InlineData(new[] { "a := 1 ft", "a =" }, "0.305 m")]
-    [InlineData(new[] { "x := [1; 2]", "x =" }, "[1; 2]")]
-    [InlineData(new[] { "P := 1 atm", "P =" }, "1.013·10^5 Pa")]
-    public void End_to_end_display(string[] lines, string expected)
-    {
-        using var engine = new Factory().NewFactory().NewEngine();
-        int h = 0;
-        foreach (var line in lines)
-            h = engine.AddAfter(h, MathNodeToRlTransform.Transform(LinearParser.ParseStatement(line)), 0, 0);
-        var result = ValueToIResultNodeTransform.Transform(engine.GetValueSync(h, 0), BuiltinUnits.SI);
-        Assert.Null(result.Error);
-        var tree = ResultFormatter.Instance.Format(result.Value, ResultFormatOptions.Default)!;
-        Assert.Equal(expected, MathNodeToLinearTransform.Write(tree).Replace("*10^", "·10^"));
-    }
 }
 
 public class ReviewRegressionTransformTests

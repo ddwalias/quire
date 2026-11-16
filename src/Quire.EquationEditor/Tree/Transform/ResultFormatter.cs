@@ -17,36 +17,61 @@ public sealed class ResultFormatter : IResultTreeFormatter
     /// <summary>The formatter is stateless, so a clone is the same instance.</summary>
     public object Clone() => this;
 
-    public MathExpr? Format(IResultNode result, ResultFormatOptions format) => result switch
+    /// <summary>Formats a display result with its units shown after it, as m·s⁻² becomes m / s^2.</summary>
+    public MathExpr? Format(IResultNode result, ResultFormatOptions format)
     {
-        UnitedValueResultNode u => WithUnits(Number(u.DisplayValue, format), u.Units),
-        IMatrixResultNode m => WithUnits(Matrix(m, format), m.Units),
-        IStringResultNode s => new StringNode(s.Value),
-        IFunctionResultNode f => new IdNode(f.Signature),
-        _ => null,
-    };
+        MathExpr? value;
+        IList<Unit>? units = null;
+        switch (result)
+        {
+            case IUnitedValueResultNode united:
+                value = Format(united.Value, format);
+                units = united.Units;
+                break;
+            case IMatrixResultNode matrix:
+                value = Matrix(matrix, format);
+                break;
+            case IRealResultNode real:
+                value = Number(real.Value, format);
+                break;
+            case IStringResultNode str:
+                value = new StringNode(str.Value);
+                break;
+            case IFunctionResultNode function:
+                value = new IdNode(function.Description);
+                break;
+            default:
+                return null;
+        }
+        if (value == null || units == null) return value;
 
-    private static MatrixNode Matrix(IMatrixResultNode m, ResultFormatOptions format) =>
-        new(m.Rows, m.Cols, m.DisplayValues.Select((v, i) =>
-            m.ElementUnits is { } eu ? WithUnits(Number(v, format), eu[i]) : Number(v, format)).ToArray());
-
-    public static MathExpr WithUnits(MathExpr value, IReadOnlyList<UnitPower> units)
-    {
-        var u = UnitExpression(units);
-        return u == null ? value : new BinaryNode("mult", value, u, Implicit: true);
+        // Positive powers multiply above the line, negative powers below it.
+        MathExpr? numerator = null, denominator = null;
+        foreach (var unit in units)
+        {
+            double exponent = (double)unit.PowerNumerator / unit.PowerDenominator;
+            if (exponent == 0) continue;
+            double magnitude = Math.Abs(exponent);
+            MathExpr factor = magnitude == 1 ? new IdNode(unit.Symbol) : new BinaryNode("pow", new IdNode(unit.Symbol), Exponent(magnitude));
+            if (exponent > 0) numerator = numerator == null ? factor : new BinaryNode("mult", numerator, factor);
+            else denominator = denominator == null ? factor : new BinaryNode("mult", denominator, factor);
+        }
+        MathExpr? unitExpression = denominator == null ? numerator : new BinaryNode("div", numerator ?? new NumberNode("1"), denominator);
+        return unitExpression == null ? value : new BinaryNode("mult", value, unitExpression, Implicit: true);
     }
 
-    /// <summary>m·s⁻² becomes m / s^2.</summary>
-    public static MathExpr? UnitExpression(IReadOnlyList<UnitPower> units)
+    /// <summary>Each element is formatted on its own; an element without a display form shows as "?".</summary>
+    private static MatrixNode Matrix(IMatrixResultNode m, ResultFormatOptions format)
     {
-        MathExpr? Product(IEnumerable<UnitPower> ps) => ps
-            .Select(p => p.Exponent == 1 ? (MathExpr)new IdNode(p.Name) : new BinaryNode("pow", new IdNode(p.Name), Exponent(p.Exponent)))
-            .Aggregate((MathExpr?)null, (acc, x) => acc == null ? x : new BinaryNode("mult", acc, x));
-
-        var num = Product(units.Where(p => p.Exponent > 0));
-        var den = Product(units.Where(p => p.Exponent < 0).Select(p => p with { Exponent = -p.Exponent }));
-        if (den == null) return num;
-        return new BinaryNode("div", num ?? new NumberNode("1"), den);
+        var elements = new MathExpr[m.Rows * m.Columns];
+        for (int r = 0; r < m.Rows; r++)
+        {
+            for (int c = 0; c < m.Columns; c++)
+            {
+                elements[r * m.Columns + c] = Instance.Format(m[r, c], format) ?? new IdNode("?");
+            }
+        }
+        return new MatrixNode(m.Rows, m.Columns, elements);
     }
 
     private static MathExpr Exponent(double e) =>

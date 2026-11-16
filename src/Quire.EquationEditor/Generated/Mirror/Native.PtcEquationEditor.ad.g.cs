@@ -51,16 +51,4 @@ internal partial class ad : global::Quire.Native.PtcEquationEditor.t, global::Qu
     public override void Accept(global::Quire.Calculation.Core.IResultNodeVisitor visitor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Calculation.Core.IResultNode global::Quire.Calculation.Core.IMatrixResultNode.this[int r, int c] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int global::Quire.Calculation.Core.IMatrixResultNode.Cols { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IReadOnlyList<double> global::Quire.Calculation.Core.IMatrixResultNode.DisplayValues { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IReadOnlyList<global::Quire.Calculation.Core.UnitPower> global::Quire.Calculation.Core.IMatrixResultNode.Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IReadOnlyList<global::System.Collections.Generic.IReadOnlyList<global::Quire.Calculation.Core.UnitPower>> global::Quire.Calculation.Core.IMatrixResultNode.ElementUnits { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool global::Quire.Calculation.Core.IMatrixResultNode.IsRangeTable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.ResultValueType global::Quire.Calculation.Core.IResultNode.ValueType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

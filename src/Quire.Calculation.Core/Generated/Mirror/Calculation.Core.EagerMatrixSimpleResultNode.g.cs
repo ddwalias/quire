@@ -11,14 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.EagerMatrixSimpleResultNode, Ptc.Calculation.Core")]
 public partial class EagerMatrixSimpleResultNode : global::Quire.Calculation.Core.SimpleResultNode, global::Quire.Calculation.Core.IEagerMatrixResultNode, global::Quire.Calculation.Core.IMatrixResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
-    [global::Quire.Mirror.MirrorStub]
-    int global::Quire.Calculation.Core.IMatrixResultNode.Cols { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IReadOnlyList<double> global::Quire.Calculation.Core.IMatrixResultNode.DisplayValues { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IReadOnlyList<global::Quire.Calculation.Core.UnitPower> global::Quire.Calculation.Core.IMatrixResultNode.Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IReadOnlyList<global::System.Collections.Generic.IReadOnlyList<global::Quire.Calculation.Core.UnitPower>> global::Quire.Calculation.Core.IMatrixResultNode.ElementUnits { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool global::Quire.Calculation.Core.IMatrixResultNode.IsRangeTable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

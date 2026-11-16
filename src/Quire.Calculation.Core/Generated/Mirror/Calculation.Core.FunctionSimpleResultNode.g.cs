@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.FunctionSimpleResultNode, Ptc.Calculation.Core")]
 public partial class FunctionSimpleResultNode : global::Quire.Calculation.Core.SimpleResultNode, global::Quire.Calculation.Core.IFunctionResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
-    [global::Quire.Mirror.MirrorStub]
-    string global::Quire.Calculation.Core.IFunctionResultNode.Signature { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

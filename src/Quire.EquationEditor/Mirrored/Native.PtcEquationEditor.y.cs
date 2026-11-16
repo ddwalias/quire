@@ -39,6 +39,4 @@ internal partial class y : t, IComplexResultNode, IResultNode, IVisitable<IResul
     public y()
     {
     }
-
-    ResultValueType IResultNode.ValueType => ResultValueType.Numeric;
 }
