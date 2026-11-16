@@ -1,6 +1,8 @@
 #nullable disable
 using System.Collections.Generic;
 using System.Globalization;
+using Microsoft.Win32;
+using Quire;
 using Quire.Mirror;
 
 namespace Quire.Controls;
@@ -49,5 +51,37 @@ public static partial class LanguageUtils
             return language;
         }
         return language.Replace('-', '_');
+    }
+
+    public static void SetChartAppL10N()
+    {
+        if (DebugTools.DevAssert(_mathcadToChartAppL10N.TryGetValue(GetCultureLanguage(false), out string language), null, Array.Empty<object>()).Failed)
+        {
+            language = _mathcadToChartAppL10N[FallbackLanguage];
+        }
+
+        RegistryKey registryKey = null;
+        try
+        {
+            try
+            {
+                registryKey = Registry.CurrentUser.CreateSubKey(ChartAppRegKey, RegistryKeyPermissionCheck.ReadWriteSubTree);
+                if (registryKey != null)
+                {
+                    registryKey.SetValue(ChartAppLangRegKeyName, language);
+                }
+            }
+            catch (System.Exception exception)
+            {
+                DebugTools.FailAssertionDoNotThrow(exception);
+            }
+        }
+        finally
+        {
+            if (registryKey != null)
+            {
+                registryKey.Close();
+            }
+        }
     }
 }

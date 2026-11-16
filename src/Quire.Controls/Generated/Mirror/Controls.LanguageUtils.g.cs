@@ -11,8 +11,5 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.LanguageUtils, Ptc.Controls")]
 public static partial class LanguageUtils
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string ChartAppRegKey = "Software\\Quire\\Quire\\ChartApp";
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetChartAppL10N() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private const string ChartAppRegKey = "Software\\PTC\\Mathcad Prime\\ChartApp";
 }
