@@ -5,6 +5,13 @@ namespace Quire.EquationEditor.SpecTable;
 
 public partial class SpecTableCellMap
 {
+    private readonly Dictionary<IEquationModel, IEquationControl> a = new Dictionary<IEquationModel, IEquationControl>();
+    private readonly Dictionary<IEquationControl, IEquationModel> b = new Dictionary<IEquationControl, IEquationModel>();
+
+    public SpecTableCellMap()
+    {
+    }
+
     public IEnumerable<IEquationControl> Views => b.Keys;
 
     public void Map(IEquationModel eqModel, IEquationControl eqView)

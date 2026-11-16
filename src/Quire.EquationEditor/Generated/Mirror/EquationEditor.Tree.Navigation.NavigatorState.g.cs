@@ -13,23 +13,5 @@ public partial struct NavigatorState
 {
     public static readonly global::Quire.EquationEditor.Tree.Navigation.NavigatorState Empty;
     [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.EquationEditor.Tree.MathNode Current;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.Direction CaretSide;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.Direction NodeSide;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::System.Nullable<int> OperatorPartIndex;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.Direction EnterSide;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::System.Nullable<global::Quire.TextRange> ValueRange;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes CaretInsertionType;
-    [global::Quire.Mirror.MirrorStub]
-    public NavigatorState(global::Quire.EquationEditor.Tree.MathNode current, global::Quire.Direction caretSide, global::Quire.Direction nodeSide, global::Quire.Direction enterSide, global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes insertionType, global::System.Nullable<global::Quire.TextRange> valueRange) { }
-    [global::Quire.Mirror.MirrorStub]
-    public NavigatorState(global::Quire.EquationEditor.Tree.MathNode current, global::Quire.Direction caretSide, global::System.Nullable<int> operatorPartIndex, global::Quire.Direction enterSide, global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes insertionType, global::System.Nullable<global::Quire.TextRange> valueRange) { }
-    [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
 }

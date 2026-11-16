@@ -20,8 +20,4 @@ public partial class InlineToSExpressionTransform
     private const char c = '\u0020';
     [global::Quire.Mirror.MirrorStub]
     private const char d = '\u0029';
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::System.Type, string> e;
-    [global::Quire.Mirror.MirrorStub]
-    public InlineToSExpressionTransform() { }
 }

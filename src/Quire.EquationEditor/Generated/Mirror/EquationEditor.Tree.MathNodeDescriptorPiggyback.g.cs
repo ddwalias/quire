@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.MathNodeDescriptorPiggyback, Ptc.EquationEditor")]
 public partial class MathNodeDescriptorPiggyback : global::Quire.EquationEditor.Tree.MathNodeDescriptor
 {
-    [global::Quire.Mirror.MirrorStub]
-    private bool b4;
 }

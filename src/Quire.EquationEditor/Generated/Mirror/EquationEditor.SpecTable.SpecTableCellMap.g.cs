@@ -11,10 +11,4 @@ namespace Quire.EquationEditor.SpecTable;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.SpecTable.SpecTableCellMap, Ptc.EquationEditor")]
 public partial class SpecTableCellMap : global::Quire.EquationEditor.SpecTable.ISpecTableCellMap
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::Quire.EquationEditor.IEquationModel, global::Quire.Controls.Core.IEquationControl> a;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IEquationControl, global::Quire.EquationEditor.IEquationModel> b;
-    [global::Quire.Mirror.MirrorStub]
-    public SpecTableCellMap() { }
 }

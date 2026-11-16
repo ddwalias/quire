@@ -2,6 +2,19 @@ namespace Quire.EquationEditor.Tree.Transform;
 
 public partial class InlineToSExpressionTransform
 {
+    private readonly global::System.Collections.Generic.Dictionary<global::System.Type, string> e = new global::System.Collections.Generic.Dictionary<global::System.Type, string>
+    {
+        { typeof(global::System.Windows.Documents.Bold), "@BOLD" },
+        { typeof(global::System.Windows.Documents.Italic), "@ITALIC" },
+        { typeof(global::System.Windows.Documents.Underline), "@UNDERLINE" },
+        { typeof(global::Quire.Wpf.Subscript), "@SUB" }
+    };
+
+    [global::System.Runtime.CompilerServices.SkipLocalsInit]
+    public InlineToSExpressionTransform()
+    {
+    }
+
     private string a(
         global::System.Windows.Documents.Span span,
         ref int inlineCount,
