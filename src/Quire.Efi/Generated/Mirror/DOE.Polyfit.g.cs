@@ -12,85 +12,21 @@ namespace Quire.DOE;
 public partial class Polyfit : global::Quire.DOE.DoeAnlyz
 {
     [global::Quire.Mirror.MirrorStub]
-    private int m_nterms;
-    [global::Quire.Mirror.MirrorStub]
-    private int m_hpwr;
-    [global::Quire.Mirror.MirrorStub]
-    private string[] m_TermLabel;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mcd.MatVal m_polymat;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mcd.MatVal m_RHS;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mcd.MatVal m_LHS;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mcd.MatVal m_LHS_ns;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mcd.Dim[] m_Adim;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_IsScaleOn;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_ConstTerm;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Array m_scale;
-    [global::Quire.Mirror.MirrorStub]
-    private double m_tol;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Threading.ThreadLocal<double[]> _threadLocalWork;
-    [global::Quire.Mirror.MirrorStub]
-    private double[] m_work { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.MatVal polyMat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool scaling { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double tol { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private void unscale_polymat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void CheckDmatType(global::Quire.Mcd.MatVal A, global::Quire.Mcd.MatVal Y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void dofitting(global::Quire.DOE.Polyfit.m_fittype ftyp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public Polyfit(global::Quire.Mcd.MatVal A, global::Quire.Mcd.MatVal Y) { }
     [global::Quire.Mirror.MirrorStub]
-    public void fituser(global::Quire.Mcd.MatVal P, global::Quire.DOE.Polyfit.m_fittype ftyp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void fituser(string polyterms, global::Quire.DOE.Polyfit.m_fittype ftyp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void verify_unique_gens() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void fitfull(int degree, global::Quire.DOE.Polyfit.m_fittype ftyp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private int NumCumulativeMonomials(int nVars, int degree) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private int CreateCumulativeMonomials(int row, int nVars, int degree) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void constructLHS() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void setDim(global::Quire.Mcd.MatVal coef) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.NumVal evalPoly(object arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void getScaling() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private int CoefIndex(int[] R, int[] S, int var_index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private double SumTail(int[] R, int[] S, int deg_remainder, int var_index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UnScale() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal Multidfit(global::Quire.Mcd.MatVal P, global::Quire.Mpl.Run.Function F) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void sortPolyMat(global::Quire.Mcd.MatVal P) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.MatVal getFitc(double cip, bool unscale) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal getFitStatistics(double cip, bool coeffOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void getResiduals(double[] y_pred, double[] res) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private double get_SS_PE(out int dof_pe) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("DOE.Polyfit+m_fittype, efisixsigma_")]
     public enum m_fittype
@@ -102,20 +38,10 @@ public partial class Polyfit : global::Quire.DOE.DoeAnlyz
     [global::Quire.Mirror.MirrorOf("DOE.Polyfit+TermInfo, efisixsigma_")]
     public partial class TermInfo
     {
-        [global::Quire.Mirror.MirrorStub]
-        public string label;
-        [global::Quire.Mirror.MirrorStub]
-        public int hi_pwr;
-        [global::Quire.Mirror.MirrorStub]
-        public TermInfo(string t, int n) { }
     }
 
     [global::Quire.Mirror.MirrorOf("DOE.Polyfit+StrngCompare, efisixsigma_")]
     public partial class StrngCompare : global::System.Collections.Generic.IComparer<global::Quire.DOE.Polyfit.TermInfo>
     {
-        [global::Quire.Mirror.MirrorStub]
-        public StrngCompare() { }
-        [global::Quire.Mirror.MirrorStub]
-        public int Compare(global::Quire.DOE.Polyfit.TermInfo x_, global::Quire.DOE.Polyfit.TermInfo y_) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }
