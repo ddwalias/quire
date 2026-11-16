@@ -11,6 +11,4 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.WhiteboardItemInTextWrapper, Ptc.Controls.Text")]
 public partial class WhiteboardItemInTextWrapper : global::System.Windows.Controls.UserControl, global::Quire.Controls.Text.IWhiteboardItemInTextWrapper
 {
-    [global::Quire.Mirror.MirrorStub]
-    private void CompareBaselineOffset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

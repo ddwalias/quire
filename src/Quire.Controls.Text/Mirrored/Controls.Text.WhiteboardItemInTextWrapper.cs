@@ -79,6 +79,17 @@ public partial class WhiteboardItemInTextWrapper
         }
     }
 
+    private void CompareBaselineOffset()
+    {
+        if (!IsMeasureValid)
+        {
+            return;
+        }
+        double baselineOffset = TextBlock.GetBaselineOffset(this);
+        double expectedOffset = -WrappedItem.VerticalAlignmentOffset;
+        DebugTools.DevAssert(baselineOffset == expectedOffset, null);
+    }
+
     private void HandleWrappedItemSizeChanged(IWhiteboardItem item, IList<WhiteboardItemSizeChangedEventArgs> argsList)
     {
         if (item is IEquationControl equationControl)
