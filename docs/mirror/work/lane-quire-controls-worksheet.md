@@ -1,6 +1,6 @@
 # Lane Quire.Controls.Worksheet
 
-- Owner: task_a8740e60aa64
+- Owner: task_98d833b58e17
 - Branch: feature/controls-worksheet-stubs-agy-20261116
 - Worktree: C:/Users/DuyDang/orca/workspaces/Quire/lane-quire-controls-worksheet
 
@@ -114,7 +114,26 @@
   - `Quire.Controls.Worksheet.IWorksheetPageViewModel`: `PageBody`, `HeaderZombie`, `FooterZombie`, `FirstPageHeaderZombie`, `FirstPageFooterZombie`, `Header`, `Footer`, `PageNumber`, `HasPageBreak`, `ShowNonPrintableSpaceIndicator`, `NonPrintableSpaceButtonPosition`, `NonPrintableSpaceIndicatorHeight`, `GetNavigateOutLocation`, `AddItemAtLocation`, `RemoveItem`, `RemoveItems`, `UpdateNonPrintableSpaceIndicator`
   - `Quire.Controls.Worksheet.IWorksheetPage`: `WhiteboardItems`, `NonOwnedWhiteboardItems`, `InsertionPoint`, `ActiveItem`, `PageBody`, `Header`, `Footer`, `HeaderZombie`, `FooterZombie`, `FirstPageHeaderZombie`, `FirstPageFooterZombie`, `PageNumber`, `HasPageBreak`, `RequestScrollTo`, `PageBodyActivated`, `AddItemAtLocation`, `RemoveItem`, `RemoveItems`, `GetNavigateOutLocation`, `Activate`, `UpdateNonPrintableSpaceIndicator`
 - Release IL: PASS; 414 checked; 0 failures.
-- Landed commit: (in-progress)
+- Landed commit: `b3ed44ba2d57057223e57caca4cbfb33e4f892a1`
 - Parked members:
   - `Quire.Controls.Worksheet.CollapsibleAreaHeightConverter`: blocked by missing project reference to `Quire.Controls.CollapsibleArea` in `Quire.Controls.Worksheet.csproj`.
 - Remaining mismatches: none in this batch (2841 stubs remaining in Quire.Controls.Worksheet).
+
+## Batch 8 — HeaderAndFooterResourcesKeys, ItemLocationInWhiteboardStrategyBase, IControlFactory, IWorksheetContent, IWorksheetItemManager, IWorksheetModel, IWorksheetPageManager, IWorksheetVisualHelper, IWorksheetControl, IWorksheetViewModel
+
+- Members:
+  - Quire.Controls.Worksheet.HeaderAndFooterResourcesKeys: PageNo, Page_PageNo, p_PageNo, PageNo_of_PagesTotal, Page_PageNo_of_PagesTotal, _PageNo_, OpenBracketPageNoCloseBracket, PageNo_OpenBracketPagesTotalCloseBracket, HFPageNumberNone, mm_dd_yyyy, mm_dd_yy, dd_mm_yyyy, dd_mm_yy, yyyy_mm_dd, System_Short, System_Long, HFLastSavedDateNone
+  - Quire.Controls.Worksheet.ItemLocationInWhiteboardStrategyBase: _pageBodySize, WhiteboardItemManager, WorksheetPageManager, GetPageBodySize, .ctor, GetItemRectLocationInWhiteboard, GetPageIndex, GetItemClipping, PrePrintUpdateWorksheetLayout, PostPrintUpdateWorksheetLayout
+  - Quire.Controls.Worksheet.IControlFactory: 28 contract factory methods
+  - Quire.Controls.Worksheet.IWorksheetContent: 23 contract members (properties, events, methods)
+  - Quire.Controls.Worksheet.IWorksheetItemManager: 19 contract methods
+  - Quire.Controls.Worksheet.IWorksheetModel: 33 contract members (properties, events, methods)
+  - Quire.Controls.Worksheet.IWorksheetPageManager: 42 contract members (properties, events, methods)
+  - Quire.Controls.Worksheet.IWorksheetVisualHelper: 34 contract members (properties, methods)
+  - Quire.Controls.Worksheet.IWorksheetControl: 78 contract members (properties, events, methods)
+  - Quire.Controls.Worksheet.IWorksheetViewModel: 162 contract members (properties, events, methods)
+- Release IL: PASS; 773 checked; 0 failures.
+- Landed commit: (in-progress)
+- Parked members:
+  - Quire.Controls.Worksheet.CollapsibleAreaHeightConverter: blocked by missing project reference to Quire.Controls.CollapsibleArea in Quire.Controls.Worksheet.csproj.
+- Remaining mismatches: none in this batch (2395 stubs remaining in Quire.Controls.Worksheet).

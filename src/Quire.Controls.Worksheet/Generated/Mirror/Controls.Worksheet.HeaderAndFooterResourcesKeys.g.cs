@@ -11,38 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.HeaderAndFooterResourcesKeys, Ptc.Controls.Worksheet")]
 public static partial class HeaderAndFooterResourcesKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string PageNo = "@PageNo";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Page_PageNo = "Page_@PageNo";
-    [global::Quire.Mirror.MirrorStub]
-    public const string p_PageNo = "p._@PageNo";
-    [global::Quire.Mirror.MirrorStub]
-    public const string PageNo_of_PagesTotal = "@PageNo_of_@PagesTotal";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Page_PageNo_of_PagesTotal = "Page_@PageNo_of_@PagesTotal";
-    [global::Quire.Mirror.MirrorStub]
-    public const string _PageNo_ = "-_@PageNo_-";
-    [global::Quire.Mirror.MirrorStub]
-    public const string OpenBracketPageNoCloseBracket = "(@PageNo)";
-    [global::Quire.Mirror.MirrorStub]
-    public const string PageNo_OpenBracketPagesTotalCloseBracket = "@PageNo_(@PagesTotal)";
-    [global::Quire.Mirror.MirrorStub]
-    public const string HFPageNumberNone = "HFPageNumberNone";
-    [global::Quire.Mirror.MirrorStub]
-    public const string mm_dd_yyyy = "mm_dd_yyyy";
-    [global::Quire.Mirror.MirrorStub]
-    public const string mm_dd_yy = "mm_dd_yy";
-    [global::Quire.Mirror.MirrorStub]
-    public const string dd_mm_yyyy = "dd_mm_yyyy";
-    [global::Quire.Mirror.MirrorStub]
-    public const string dd_mm_yy = "dd_mm_yy";
-    [global::Quire.Mirror.MirrorStub]
-    public const string yyyy_mm_dd = "yyyy_mm_dd";
-    [global::Quire.Mirror.MirrorStub]
-    public const string System_Short = "System_Short";
-    [global::Quire.Mirror.MirrorStub]
-    public const string System_Long = "System_Long";
-    [global::Quire.Mirror.MirrorStub]
-    public const string HFLastSavedDateNone = "HFLastSavedDateNone";
 }
