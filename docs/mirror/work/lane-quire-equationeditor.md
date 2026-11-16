@@ -1,7 +1,7 @@
 # Quire.EquationEditor lane checkpoint
 
-- Owner: EquationEditor dispatched worker (task_99253ec0bce3)
-- Branch: `feature/equation-editor-stubs-batch6`
+- Owner: EquationEditor dispatched worker (task_ba9357d5edf4)
+- Branch: `feature/equation-editor-stubs-batch7`
 - Assembly: `Quire.EquationEditor` (managed members, `src/Quire.EquationEditor`)
 
 ## Batch 1 — Native.PtcEquationEditor members (a7, o, bf, au, az, d, a)
@@ -80,8 +80,21 @@
   - `Native.PtcEquationEditor.z`: `Value` property and backing field `a`, `bo`, `bp`, `Accept`, `.ctor()`, product-only `IResultNode.ValueType` (0 stubs remaining).
   - `Native.PtcEquationEditor.aa`: `Description` property and backing field `a`, `bo`, `bp`, `Accept`, `.ctor()`, product-only `IFunctionResultNode.Signature`, `IResultNode.ValueType` (0 stubs remaining).
   - `Native.PtcEquationEditor.y`: `RValue` and `IValue` properties and backing fields `a`, `b`, `bo`, `bp`, `Accept`, `.ctor()`, product-only `IResultNode.ValueType` (0 stubs remaining).
+- Landed commit: `73ac163c0`
 - Report: full `--project Quire.EquationEditor` gate PASS, 915 checked, 0 failures.
 - Parked members (exact blockers):
   - `Native.PtcEquationEditor.w`, `x`: static method `a(w)` / `a(x)` vs field `a` clash (CS0102).
   - `Native.PtcEquationEditor` obfuscated types (`a-z`, `ao`, `ae`, `br`, `q`, `s`, `r`, `bs`, `a3`, `am`, `an`, `av`, `ba`, `bb`, `be`, `bg`, `bp`) and dependent callers: Field/method name clash blocker (CS0102).
+- Remaining mismatches: 0 in completed types; remaining unbatched/parked stubs in other types.
+
+## Batch 7 — EquationEditor.Tree.MathNode.Utilities (InsertAsParent, ReplaceNode, IsMiddleOfSubscript)
+
+- Members:
+  - `EquationEditor.Tree.MathNode`: `InsertAsParent(MathNode, MathNode, int)` ([SkipLocalsInit])
+  - `EquationEditor.Tree.MathNode`: `ReplaceNode(MathNode, MathNode)` ([SkipLocalsInit])
+  - `EquationEditor.Tree.MathNode`: `IsMiddleOfSubscript(MathNode)` (using `node?.Children?.Count == 2` to match non-virtual `call` instruction)
+- Report: full `--project Quire.EquationEditor` gate PASS, 912 checked, 0 failures.
+- Parked members (exact blockers):
+  - `IResultTreeFormatter`: CS0535 compile error in `ResultFormatter` when methods lose stub defaults.
+  - `LimitSideNodeInfo+a`, `MathNodeToStringTransformer`, `DotfuscatorAttribute`, `MathTransformer`, `SExpressionUtility`: Field/method name clashes (CS0102) or obfuscated getter names.
 - Remaining mismatches: 0 in completed types; remaining unbatched/parked stubs in other types.

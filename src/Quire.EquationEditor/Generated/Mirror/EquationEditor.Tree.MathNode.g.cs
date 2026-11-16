@@ -559,17 +559,11 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
         [global::Quire.Mirror.MirrorStub]
         private static readonly global::Quire.Native.PtcEquationEditor.r a_;
         [global::Quire.Mirror.MirrorStub]
-        public static void InsertAsParent(global::Quire.EquationEditor.Tree.MathNode existingNode, global::Quire.EquationEditor.Tree.MathNode newParentNode, int idxInNewParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public static void ReplaceNode(global::Quire.EquationEditor.Tree.MathNode oldNode, global::Quire.EquationEditor.Tree.MathNode newNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         internal static global::Quire.EquationEditor.Tree.MathNode c(global::Quire.EquationEditor.Tree.MathNode A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         internal static global::Quire.EquationEditor.Tree.MathNode b(global::Quire.EquationEditor.Tree.MathNode A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         internal static void a(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.Native.PtcEquationEditor.r A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public static bool IsMiddleOfSubscript(global::Quire.EquationEditor.Tree.MathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.MathNode+b, Ptc.EquationEditor")]

@@ -23,6 +23,49 @@ public partial class MathNode
             return "null";
         }
 
+        [System.Runtime.CompilerServices.SkipLocalsInit]
+        public static void InsertAsParent(MathNode existingNode, MathNode newParentNode, int idxInNewParent)
+        {
+            if (existingNode == null)
+            {
+                throw new ArgumentException("Node cannot be null", "existingNode");
+            }
+
+            if (newParentNode == null)
+            {
+                throw new ArgumentException("Node cannot be null", "newParentNode");
+            }
+
+            if (!newParentNode.IsNary && idxInNewParent >= newParentNode.Children.Count)
+            {
+                throw new IndexOutOfRangeException(string.Format("idxInNewParent:{0} exceeds parent node capacity:{1}.", idxInNewParent, newParentNode.Children.Count));
+            }
+
+            ReplaceNode(existingNode, newParentNode);
+            newParentNode.Children[idxInNewParent] = existingNode;
+        }
+
+        [System.Runtime.CompilerServices.SkipLocalsInit]
+        public static void ReplaceNode(MathNode oldNode, MathNode newNode)
+        {
+            if (oldNode == null)
+            {
+                throw new ArgumentException("oldNode cannot be null");
+            }
+
+            if (oldNode.Parent == null)
+            {
+                throw new ArgumentException("oldNode cannot be a root node");
+            }
+
+            if (oldNode.IndexInParent == -1)
+            {
+                throw new q(p.b);
+            }
+
+            oldNode.Parent.Children[oldNode.IndexInParent] = newNode;
+        }
+
         public static bool MoveChildren(MathNode srcNode, MathNode tgtNode)
         {
             Fixity fixity = tgtNode.Fixity;
@@ -434,6 +477,16 @@ public partial class MathNode
             if (!node[0].IsPlaceholder)
             {
                 return !node[1].IsPlaceholder;
+            }
+
+            return false;
+        }
+
+        public static bool IsMiddleOfSubscript(MathNode node)
+        {
+            if (node?.Children?.Count == 2 && node.Children[0].NodeInfo is IdentifierNodeInfo identifierNodeInfo && !identifierNodeInfo.Value.IsSimpleString && node.Children[1].NodeInfo is IdentifierNodeInfo identifierNodeInfo2)
+            {
+                return !identifierNodeInfo2.Value.IsSimpleString;
             }
 
             return false;
