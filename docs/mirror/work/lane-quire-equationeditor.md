@@ -1,7 +1,7 @@
 # Quire.EquationEditor lane checkpoint
 
-- Owner: EquationEditor dispatched worker (task_d2df5057aa44)
-- Branch: `feature/equation-editor-stubs-batch5`
+- Owner: EquationEditor dispatched worker (task_99253ec0bce3)
+- Branch: `feature/equation-editor-stubs-batch6`
 - Assembly: `Quire.EquationEditor` (managed members, `src/Quire.EquationEditor`)
 
 ## Batch 1 — Native.PtcEquationEditor members (a7, o, bf, au, az, d, a)
@@ -66,7 +66,22 @@
   - `Native.PtcEquationEditor.as`: all 8 static methods `a(Direction, Fixity)`, `a(Direction, LinkedListNode<MathNodeAnalysisHandle>)`, `b(LinkedListNode<MathNodeAnalysisHandle>)`, `b(Fixity)`, `b(IMathNodeDescriptor)`, `a(IMathNodeDescriptor)`, `a(LinkedListNode<MathNodeAnalysisHandle>)`, `a(Fixity)` (0 stubs remaining).
   - `EquationEditor.ScriptingError`: explicit interface implementation of `IEngineError.Symbol` (0 stubs remaining).
   - `EquationEditor.Tree.NearestNeighborSelector`: `.ctor()` and `SelectNeighbors(MathNode, out bool)` (resolved local variable slot ordering by pre-declaring locals before switch) (0 stubs remaining).
+- Landed commit: `1be4b4517`
 - Report: full `--project Quire.EquationEditor` gate PASS, 889 checked, 0 failures.
 - Parked members (exact blockers):
+  - `Native.PtcEquationEditor` obfuscated types (`a-z`, `ao`, `ae`, `br`, `q`, `s`, `r`, `bs`, `a3`, `am`, `an`, `av`, `ba`, `bb`, `be`, `bg`, `bp`) and dependent callers: Field/method name clash blocker (CS0102).
+- Remaining mismatches: 0 in completed types; remaining unbatched/parked stubs in other types.
+
+## Batch 6 — Native.PtcEquationEditor result node hierarchy (t, u, z, aa, y)
+
+- Members:
+  - `Native.PtcEquationEditor.t`: abstract methods `bo`, `bp`, `Accept`, explicit `ICloneable.Clone()`, `protected .ctor()`, product-only `IResultNode.ValueType` (0 stubs remaining).
+  - `Native.PtcEquationEditor.u`: `bo`, `bp`, `Accept`, `.ctor()`, product-only `IResultNode.ValueType` (0 stubs remaining).
+  - `Native.PtcEquationEditor.z`: `Value` property and backing field `a`, `bo`, `bp`, `Accept`, `.ctor()`, product-only `IResultNode.ValueType` (0 stubs remaining).
+  - `Native.PtcEquationEditor.aa`: `Description` property and backing field `a`, `bo`, `bp`, `Accept`, `.ctor()`, product-only `IFunctionResultNode.Signature`, `IResultNode.ValueType` (0 stubs remaining).
+  - `Native.PtcEquationEditor.y`: `RValue` and `IValue` properties and backing fields `a`, `b`, `bo`, `bp`, `Accept`, `.ctor()`, product-only `IResultNode.ValueType` (0 stubs remaining).
+- Report: full `--project Quire.EquationEditor` gate PASS, 915 checked, 0 failures.
+- Parked members (exact blockers):
+  - `Native.PtcEquationEditor.w`, `x`: static method `a(w)` / `a(x)` vs field `a` clash (CS0102).
   - `Native.PtcEquationEditor` obfuscated types (`a-z`, `ao`, `ae`, `br`, `q`, `s`, `r`, `bs`, `a3`, `am`, `an`, `av`, `ba`, `bb`, `be`, `bg`, `bp`) and dependent callers: Field/method name clash blocker (CS0102).
 - Remaining mismatches: 0 in completed types; remaining unbatched/parked stubs in other types.

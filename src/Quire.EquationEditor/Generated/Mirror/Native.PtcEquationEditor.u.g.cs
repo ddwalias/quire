@@ -11,14 +11,4 @@ namespace Quire.Native.PtcEquationEditor;
 [global::Quire.Mirror.MirrorOf("u, Ptc.EquationEditor")]
 internal partial class u : global::Quire.Native.PtcEquationEditor.t, global::Quire.Calculation.Core.IEmptyResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.Tree.MathNode bo(global::Quire.EquationEditor.Tree.Transform.IResultTreeFormatter A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Native.PtcEquationEditor.t bp() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Accept(global::Quire.Calculation.Core.IResultNodeVisitor visitor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public u() { }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.ResultValueType global::Quire.Calculation.Core.IResultNode.ValueType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

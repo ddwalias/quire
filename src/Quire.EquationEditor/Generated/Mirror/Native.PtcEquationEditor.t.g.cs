@@ -11,16 +11,4 @@ namespace Quire.Native.PtcEquationEditor;
 [global::Quire.Mirror.MirrorOf("t, Ptc.EquationEditor")]
 internal abstract partial class t : global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>, global::System.ICloneable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.EquationEditor.Tree.MathNode bo(global::Quire.EquationEditor.Tree.Transform.IResultTreeFormatter A_0);
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.Native.PtcEquationEditor.t bp();
-    [global::Quire.Mirror.MirrorStub]
-    object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void Accept(global::Quire.Calculation.Core.IResultNodeVisitor visitor);
-    [global::Quire.Mirror.MirrorStub]
-    protected t() { }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.ResultValueType global::Quire.Calculation.Core.IResultNode.ValueType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
