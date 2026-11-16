@@ -414,4 +414,104 @@ public abstract partial class OleBaseComponentViewModel
             }
         }
     }
+
+    protected void SetInputSectionVisibilityState(bool bVisible, bool bMoveInsertionPoint = true)
+    {
+        if (IsInputSectionVisible != bVisible)
+        {
+            _isInputSectionVisible = bVisible;
+            OnPropertyChanged("IsInputSectionVisible");
+            DeselectItems();
+            UpdateMinimumHeight();
+            if (IsInputSectionVisible)
+            {
+                ContentHeight += InputSectionIndicator.Height;
+            }
+            else
+            {
+                ContentHeight -= InputSectionIndicator.Height;
+            }
+            SetRestrictedArea();
+            if ((OleContainerItem != null && WhiteboardViewModel.WhiteboardItemMgr.IsItemLoaded(OleContainerItem)) & bMoveInsertionPoint)
+            {
+                if (IsInputSectionVisible)
+                {
+                    if (IsOutputSectionVisible)
+                    {
+                        Point insertionPoint = InsertionPoint;
+                        insertionPoint.Offset(0.0, InputSectionActualHeight - _alignmentGrid.GridCellSize.Height);
+                        InsertionPoint = _alignmentGrid.GetNearestIntersectionInDirection(insertionPoint, Direction.Down);
+                    }
+                    else
+                    {
+                        InsertionPoint = _alignmentGrid.GetNearestIntersectionInDirection(new Point(_alignmentGrid.GridCellSize.Width, InputSectionActualTop), Direction.Down);
+                    }
+                }
+                else if (IsOutputSectionVisible)
+                {
+                    Rect val = new Rect(0.0, OutputSectionIndicator.Top, OleContainerItemWidth, OutputSectionIndicator.Height);
+                    if (!val.Contains(InsertionPoint))
+                    {
+                        InsertionPoint = _alignmentGrid.GetNearestIntersectionInDirection(new Point(_alignmentGrid.GridCellSize.Width, OutputSectionActualTop), Direction.Down);
+                    }
+                    else
+                    {
+                        InsertionPoint = new Point(InsertionPoint.X, InsertionPoint.Y - InputSectionIndicator.Height);
+                    }
+                }
+                else
+                {
+                    IsCrosshairVisible = false;
+                }
+            }
+            IndicateHiddenErrors();
+        }
+    }
+
+    protected void SetOutputSectionVisibilityState(bool bVisible, bool bMoveInsertionPoint = true)
+    {
+        if (IsOutputSectionVisible != bVisible)
+        {
+            _isOutputSectionVisible = bVisible;
+            OnPropertyChanged("IsOutputSectionVisible");
+            UpdateMinimumHeight();
+            DeselectItems();
+            bool flag = (OleContainerItem != null && WhiteboardViewModel.WhiteboardItemMgr.IsItemLoaded(OleContainerItem)) & bMoveInsertionPoint;
+            if (IsOutputSectionVisible)
+            {
+                ContentHeight += OutputSectionIndicator.Height;
+                if (flag && !IsInputSectionVisible)
+                {
+                    InsertionPoint = _alignmentGrid.GetNearestIntersectionInDirection(new Point(_alignmentGrid.GridCellSize.Width, OutputSectionActualTop), Direction.Down);
+                }
+            }
+            else
+            {
+                if (flag)
+                {
+                    if (IsInputSectionVisible)
+                    {
+                        Rect val = new Rect(0.0, InputSectionIndicator.Top, OleContainerItemWidth, InputSectionIndicator.Height);
+                        if (!val.Contains(InsertionPoint))
+                        {
+                            InsertionPoint = _alignmentGrid.GetNearestIntersectionInDirection(new Point(_alignmentGrid.GridCellSize.Width, InputSectionActualTop), Direction.Down);
+                        }
+                    }
+                    else
+                    {
+                        IsCrosshairVisible = false;
+                    }
+                }
+                ContentHeight -= OutputSectionIndicator.Height;
+            }
+            IndicateHiddenErrors();
+        }
+    }
+
+    private void UpdateSectionHeights()
+    {
+        SetRestrictedArea();
+        SetIndicatorsDimensions();
+        OutputSectionActualHeight = ContentSize.Height - OutputSectionActualTop;
+    }
 }
