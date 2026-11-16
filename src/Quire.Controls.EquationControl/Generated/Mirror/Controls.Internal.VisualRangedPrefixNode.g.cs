@@ -11,6 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualRangedPrefixNode, Ptc.Controls.EquationControl")]
 internal partial class VisualRangedPrefixNode : global::Quire.Controls.Internal.VisualUnaryOperatorNodeForEditor, global::Quire.EquationEditor.View.IVisualUnaryOperatorNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> CoreElements { get => base.CoreElements; }
 }

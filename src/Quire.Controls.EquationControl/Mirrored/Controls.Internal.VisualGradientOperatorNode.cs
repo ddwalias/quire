@@ -109,6 +109,27 @@ internal partial class VisualGradientOperatorNode : VisualMathNode
         GradientSymbol.Visibility = visibility;
     }
 
+    protected override Size MeasureStaticLayout(Size availableSize)
+    {
+        NodeChildren.Each(delegate(VisualMathNode visualMathNode)
+        {
+            visualMathNode.Measure(availableSize);
+        });
+        GradientSymbol.Measure(availableSize);
+        LayoutItem[] childItems = new LayoutItem[2]
+        {
+            new LayoutItem(NodeChildren[0].DesiredSize, NodeChildren[0].TextBaselineY),
+            new LayoutItem(NodeChildren[1].DesiredSize, NodeChildren[1].TextBaselineY)
+        };
+        LayoutItem[] operatorPartItems = new LayoutItem[1]
+        {
+            new LayoutItem(GradientSymbol.DesiredSize, GradientSymbol.TextBaselineY)
+        };
+        _layout = new GradientLayoutManager(childItems, operatorPartItems);
+        _layout.Arrange();
+        return _layout.DesiredSize;
+    }
+
     protected override Size ArrangeStaticLayout(Size finalSize)
     {
         NodeChildren[0].ArrangeMathNode(_layout.VariableListRect);

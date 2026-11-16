@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using Quire.Controls.Core;
@@ -29,6 +30,22 @@ internal partial class VisualLimitOperatorNode : VisualMathNode
     private const int LimitSideOperandIndex = 2;
 
     private const int LimitExpressionOperandIndex = 3;
+
+    public VisualLimitOperatorNode()
+    {
+        _limitSymbol = new VisualSymbolNode("lim");
+        _limitArrow = new VisualSymbolNode('→');
+        Children.Add(_limitSymbol);
+        Children.Add(_limitArrow);
+    }
+
+    public override void ModifyChildMathFormat(int childIndex, MathFormatValues childMathFormat)
+    {
+        if (childIndex == 2)
+        {
+            childMathFormat.FontSize = FontManager.GetScaledFontSize(MathFormat, FontConstants.ScriptFontSizeRatio);
+        }
+    }
 
     public override IVisualMathNode this[int index]
     {
@@ -70,6 +87,18 @@ internal partial class VisualLimitOperatorNode : VisualMathNode
 
     public VisualMathNode[] NodeChildren => _nodeChildren;
 
+    public override IEnumerable<UIElement> CoreElements
+    {
+        get
+        {
+            yield return (UIElement)this[0];
+            yield return _limitSymbol;
+            yield return _limitArrow;
+            yield return (UIElement)this[1];
+            yield return (UIElement)this[2];
+        }
+    }
+
     public Point LimitSymbolTopLeft
     {
         get
@@ -85,49 +114,6 @@ internal partial class VisualLimitOperatorNode : VisualMathNode
         {
             Rect limitArrowRect = _layout.LimitArrowRect;
             return limitArrowRect.TopLeft;
-        }
-    }
-
-    public override double TextBaselineY
-    {
-        get
-        {
-            if (_layout == null)
-            {
-                return 0.0;
-            }
-            return _layout.TextBaselineOffset;
-        }
-    }
-
-    public override double EffectiveBaselineY
-    {
-        get
-        {
-            if (_layout == null)
-            {
-                return 0.0;
-            }
-            Size desiredSize = DesiredSize;
-            return desiredSize.Height;
-        }
-    }
-
-    public override double EffectiveScriptBaselineY => _nodeChildren[3].EffectiveScriptBaselineY;
-
-    public VisualLimitOperatorNode()
-    {
-        _limitSymbol = new VisualSymbolNode("lim");
-        _limitArrow = new VisualSymbolNode('→');
-        Children.Add(_limitSymbol);
-        Children.Add(_limitArrow);
-    }
-
-    public override void ModifyChildMathFormat(int childIndex, MathFormatValues childMathFormat)
-    {
-        if (childIndex == 2)
-        {
-            childMathFormat.FontSize = FontManager.GetScaledFontSize(MathFormat, FontConstants.ScriptFontSizeRatio);
         }
     }
 
@@ -169,6 +155,33 @@ internal partial class VisualLimitOperatorNode : VisualMathNode
         LimitArrow.ArrangeMathNode(_layout.LimitArrowRect);
         return DesiredSize;
     }
+
+    public override double TextBaselineY
+    {
+        get
+        {
+            if (_layout == null)
+            {
+                return 0.0;
+            }
+            return _layout.TextBaselineOffset;
+        }
+    }
+
+    public override double EffectiveBaselineY
+    {
+        get
+        {
+            if (_layout == null)
+            {
+                return 0.0;
+            }
+            Size desiredSize = DesiredSize;
+            return desiredSize.Height;
+        }
+    }
+
+    public override double EffectiveScriptBaselineY => _nodeChildren[3].EffectiveScriptBaselineY;
 
     internal override HitTestResult GetNodeAtPoint(Point hitPoint)
     {

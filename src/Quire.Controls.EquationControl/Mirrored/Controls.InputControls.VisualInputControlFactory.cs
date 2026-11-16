@@ -7,6 +7,8 @@ namespace Quire.Controls.InputControls;
 
 public static partial class VisualInputControlFactory
 {
+    private static RadioButtonEventAggregator _radioButtonEventAggregator = new RadioButtonEventAggregator();
+
     public static Control CreateVisualInputControl(string mathNodeName, INodeInfo nodeInfo)
     {
         switch (mathNodeName)

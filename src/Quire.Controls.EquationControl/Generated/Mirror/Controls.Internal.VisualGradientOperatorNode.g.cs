@@ -11,6 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualGradientOperatorNode, Ptc.Controls.EquationControl")]
 internal partial class VisualGradientOperatorNode : global::Quire.Controls.Internal.VisualMathNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => base.MeasureStaticLayout(availableSize);
 }

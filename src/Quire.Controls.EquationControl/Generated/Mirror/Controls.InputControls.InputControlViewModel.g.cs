@@ -11,6 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputControlViewModel, Ptc.Controls.EquationControl")]
 public partial class InputControlViewModel : global::Quire.Controls.Core.ViewModelBase, global::Quire.Controls.InputControls.IInputControlViewModel, global::Quire.EquationEditor.View.IInputControlViewModelBase, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.Controls.InputControls.IInputControlModel _model;
 }

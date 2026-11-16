@@ -5,18 +5,25 @@
 - Landed commits:
   - `c797dd70f`: ProductInfo.Constants, Algorithm converters, Symbol descriptors, InputControl engines/models, and ComboBox stubs (30 members, PASS; 2495 checked).
   - `ca11a8daa`: MatrixLayoutManager, LayoutItem, TextLayoutItem, VisualDescriptorTableBase, EditableComboBoxLayoutManager, EquationCommands, MathcadSettings, and TestHelper stubs (34 members, PASS; 2465 checked).
+  - `8fec9cd98`: SpecTableCellStyleKeys, EquationControlErrorMessages, Comparers, CaretAdorner, HorizontalRightArrow, Overline, and GestureManager (23 members, PASS; 2520 checked).
 - Selected members:
-  - `Controls.SpecTableCellStyleKeys`: `SpecTableScalingEqStyle`, `SpecTableCellEqStyle`
-  - `Controls.EquationControlErrorMessages`: `MaxRecursionDepthExceeded`, `_contentLoaded`
-  - `Controls.InsertFunctionCommandParameterComparer`: `.ctor()`
-  - `Controls.InsertIdCommandParameterComparer`: `.ctor()`
-  - `Controls.Internal.CaretAdorner`: `_adornedElement`, `CaretSide`, `_caret`, `.ctor(UIElement, Direction)`, `MeasureOverride(Size)`, `ArrangeOverride(Size)`
-  - `Controls.Internal.HorizontalRightArrow`: `_operatorChars`, `.ctor()`, `MeasureOverride(Size)`, `OnRender(DrawingContext)`, `Clone()`
-  - `Controls.Internal.Overline`: `_operatorChars`, `.ctor()`, `MeasureOverride(Size)`, `OnRender(DrawingContext)`, `Clone()`
-  - `Controls.Internal.GestureManager`: `empty`, `_frame`, `_parent`, `.ctor()`, `.ctor(IGestureManager)`, `Execute(KeyEventArgs)`, `Execute(string)`, `AddBinding(KeyGesture, EditorCommand)`, `AddBinding(string, EditorCommand)`, `AddBinding(EditorGesture, EditorCommand)`
-  - `Controls.Internal.GestureManager.NullManager`: `Execute(KeyEventArgs)`, `Execute(string)`, `AddBinding(KeyGesture, EditorCommand)`, `AddBinding(string, EditorCommand)`, `.ctor()`
+  - `Controls.InputControls.IScriptEngineParams`: `Data`, `IsApply`, `IsNewInputResults`, `IsInteractChanged`, `IsRecalculate`, `IsOutputsChanged`
+  - `Controls.InputControls.ScriptEngineParams`: `Data`, `IsApply`, `IsNewInputResults`, `IsInteractChanged`, `IsRecalculate`, `IsOutputsChanged`, `IsInputsExists`, `.ctor()`, `.ctor(IInputScriptableControlData)`
+  - `Controls.InputControls.ICellData`: `Text`, `Row`, `Column`, `Clear()`
+  - `Controls.InputControls.ITextBoxPropertiesEditorModel`: `Text`, `AcceptsReturn`, `IsReadOnly`, `TextAlignment`
+  - `Controls.InputControls.IRadioButtonPropertiesEditorModel`: `Orientation`, `DataSourceItems`, `FlowDirection`, `IsDataSourceChanged`, `EditorDataSourceItems`, `HandleButtonsChanged`
+  - `Controls.InputControls.ISliderPropertiesEditorModel`: `Orientation`, `TickPlacement`, `TickFrequency`, `Border`, `Minimum`, `Maximum`, `ShowMinMax`, `Invert`, `SmallChange`, `LargeChange`
+  - `Controls.InputControls.IInputControlBase`: `Background`, `IsVisible`, `IsHitTestVisible`, `IsFocused`, `IsEnabled`, `RenderSize`, `IsVisibleChanged`
+  - `Controls.InputControls.IInputControlViewModel`: `Model`, `IsDirty`, `IsEnabled`, `IsInitializeComponent`, `FontSize`, `IsFunctionalityEnabled`, `HasKeyboard`, `State`, `InitializeComponent()`
+  - `Controls.InputControls.IInputControlModel`: `EngineType`, `EngineError`, `InputEngine`, `Data`, `OutputFieldSize`, `IsDirty`, `IsEnabled`, `IsInitializeComponent`, `FontSize`, `IsFunctionalityEnabled`, `State`, `HandlePropertyChanged`
+  - `Controls.InputControls.IInputControlScriptingEngine`: `Script`, `ScriptClassObjectName`, `ScriptInternalInputs`, `GetCalculatedValue`, `Apply`, `CanExecEvent`, `RunEventStandalone`, `ConvertUserScript`, `GetUserScriptObjectName`, `GetResourceScriptDecrypt`, `ScriptInternalInputsInit`, `ScriptInternalInputOutputsInit`, `GetLabelsFromSExpresstion`
+  - `Controls.InputControls.InputControlViewModel`: `_model`
+  - `Controls.InputControls.VisualInputControlFactory`: `_radioButtonEventAggregator`
+  - `Controls.Internal.VisualLimitOperatorNode`: `CoreElements` (ordered to preserve `<get_CoreElements>d__24`)
+  - `Controls.Internal.VisualRangedPrefixNode`: `CoreElements` (ordered to preserve `<get_CoreElements>d__11`)
+  - `Controls.Internal.VisualGradientOperatorNode`: `MeasureStaticLayout` (including `<>c__DisplayClass26_0`)
 - Parked members:
   - `Controls.Internal.ConjugateLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3` on identical IL instructions.
   - `Controls.Internal.VectorizationLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3` on identical IL instructions.
   - `Controls.InputControls.ComboBoxRow.AllButFirstCell`: parked due to Roslyn optimizer in Release mode eliminating `stloc.0/ldloc.0` return of local variable, whereas Mathcad's compiler emitted `stloc.0; ldloc.0; ret`.
-- Release IL: PASS; 2520 checked (0 failures, 2497 unfinished stubs remaining).
+- Release IL: PASS; 2666 checked (0 failures, 2370 unfinished stubs remaining).

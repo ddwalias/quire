@@ -11,6 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualLimitOperatorNode, Ptc.Controls.EquationControl")]
 internal partial class VisualLimitOperatorNode : global::Quire.Controls.Internal.VisualMathNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> CoreElements { get => base.CoreElements; }
 }

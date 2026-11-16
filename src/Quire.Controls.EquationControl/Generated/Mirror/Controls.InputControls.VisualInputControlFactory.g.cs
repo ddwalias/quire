@@ -11,6 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.VisualInputControlFactory, Ptc.Controls.EquationControl")]
 public static partial class VisualInputControlFactory
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.InputControls.RadioButtonEventAggregator _radioButtonEventAggregator;
 }

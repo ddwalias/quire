@@ -5,6 +5,8 @@ namespace Quire.Controls.InputControls;
 
 public partial class InputControlViewModel
 {
+    protected IInputControlModel _model;
+
     public InputControlViewModel(IInputControlModel model)
     {
         _model = model;

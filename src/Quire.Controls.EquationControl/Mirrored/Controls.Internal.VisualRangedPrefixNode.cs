@@ -21,6 +21,26 @@ internal partial class VisualRangedPrefixNode : VisualUnaryOperatorNodeForEditor
 
     private RangedPrefixLayoutManager _layout;
 
+    public VisualRangedPrefixNode(MathNodeDescriptor operatorDescriptor)
+    {
+        if (operatorDescriptor.ChildCount != 3 || operatorDescriptor.ContainerSlots.Length != 2 || operatorDescriptor.IsContainerSlot(2))
+        {
+            throw new ArgumentException("logic error: operator does not meet requirements to be a ranged prefix operator", "operatorDescriptor");
+        }
+        _operatorDescriptor = operatorDescriptor;
+        _nodeChildren = new VisualMathNode[_operatorDescriptor.ChildCount];
+        _operatorSymbol = new VisualSymbolNode(_operatorDescriptor.OperatorSymbol.Value);
+        Children.Add(_operatorSymbol);
+    }
+
+    public override void ModifyChildMathFormat(int childIndex, MathFormatValues childMathFormat)
+    {
+        if (childIndex == 0 || childIndex == 1)
+        {
+            childMathFormat.FontSize = FontManager.GetScaledFontSize(MathFormat, FontConstants.ScriptFontSizeRatio);
+        }
+    }
+
     public override IVisualMathNode this[int index]
     {
         get => _nodeChildren[index];
@@ -51,6 +71,34 @@ internal partial class VisualRangedPrefixNode : VisualUnaryOperatorNodeForEditor
             {
                 UpdateRangeBoundsInactiveVisibility();
             }
+        }
+    }
+
+    private void UpdateRangeBoundsInactiveVisibility()
+    {
+        VisualPlaceholderNode visualPlaceholderNode = this[1] as VisualPlaceholderNode;
+        VisualPlaceholderNode visualPlaceholderNode2 = this[0] as VisualPlaceholderNode;
+        if (visualPlaceholderNode != null)
+        {
+            visualPlaceholderNode.ShowOperatorOnlyWhenActive = true;
+            if (visualPlaceholderNode2 != null)
+            {
+                visualPlaceholderNode2.ShowOperatorOnlyWhenActive = true;
+            }
+        }
+        else if (visualPlaceholderNode2 != null)
+        {
+            visualPlaceholderNode2.ShowOperatorOnlyWhenActive = false;
+        }
+    }
+
+    public override IEnumerable<UIElement> CoreElements
+    {
+        get
+        {
+            yield return OperatorElement;
+            yield return (UIElement)this[0];
+            yield return (UIElement)this[1];
         }
     }
 
@@ -102,70 +150,6 @@ internal partial class VisualRangedPrefixNode : VisualUnaryOperatorNodeForEditor
             }
             Rect principalOperandRect = _layout.PrincipalOperandRect;
             return principalOperandRect.Top + _nodeChildren[2].EffectiveScriptBaselineY;
-        }
-    }
-
-    public override VisualMathNode Child
-    {
-        get => _nodeChildren[2];
-        set => this[2] = value;
-    }
-
-    public override VisualMathNode OperatorElement => OperatorSymbol;
-
-    public IVisualMathNode Operator => OperatorSymbol;
-
-    IVisualMathNode IVisualUnaryOperatorNode.Child
-    {
-        get => Child;
-        set => Child = (VisualMathNode)value;
-    }
-
-    public override IVisualMathNode[] NavigatableParts => new IVisualMathNode[1] { OperatorElement };
-
-    event RoutedEventHandler IVisualNode.Loaded
-    {
-        add => Loaded += value;
-        remove => Loaded -= value;
-    }
-
-    bool IVisualNode.IsLoaded => IsLoaded;
-
-    public VisualRangedPrefixNode(MathNodeDescriptor operatorDescriptor)
-    {
-        if (operatorDescriptor.ChildCount != 3 || operatorDescriptor.ContainerSlots.Length != 2 || operatorDescriptor.IsContainerSlot(2))
-        {
-            throw new ArgumentException("logic error: operator does not meet requirements to be a ranged prefix operator", "operatorDescriptor");
-        }
-        _operatorDescriptor = operatorDescriptor;
-        _nodeChildren = new VisualMathNode[_operatorDescriptor.ChildCount];
-        _operatorSymbol = new VisualSymbolNode(_operatorDescriptor.OperatorSymbol.Value);
-        Children.Add(_operatorSymbol);
-    }
-
-    public override void ModifyChildMathFormat(int childIndex, MathFormatValues childMathFormat)
-    {
-        if (childIndex == 0 || childIndex == 1)
-        {
-            childMathFormat.FontSize = FontManager.GetScaledFontSize(MathFormat, FontConstants.ScriptFontSizeRatio);
-        }
-    }
-
-    private void UpdateRangeBoundsInactiveVisibility()
-    {
-        VisualPlaceholderNode visualPlaceholderNode = this[1] as VisualPlaceholderNode;
-        VisualPlaceholderNode visualPlaceholderNode2 = this[0] as VisualPlaceholderNode;
-        if (visualPlaceholderNode != null)
-        {
-            visualPlaceholderNode.ShowOperatorOnlyWhenActive = true;
-            if (visualPlaceholderNode2 != null)
-            {
-                visualPlaceholderNode2.ShowOperatorOnlyWhenActive = true;
-            }
-        }
-        else if (visualPlaceholderNode2 != null)
-        {
-            visualPlaceholderNode2.ShowOperatorOnlyWhenActive = false;
         }
     }
 
@@ -223,4 +207,30 @@ internal partial class VisualRangedPrefixNode : VisualUnaryOperatorNodeForEditor
         OperatorSymbol.ArrangeMathNode(_layout.OperatorSymbolRect);
         return DesiredSize;
     }
+
+    public override VisualMathNode Child
+    {
+        get => _nodeChildren[2];
+        set => this[2] = value;
+    }
+
+    public override VisualMathNode OperatorElement => OperatorSymbol;
+
+    public IVisualMathNode Operator => OperatorSymbol;
+
+    IVisualMathNode IVisualUnaryOperatorNode.Child
+    {
+        get => Child;
+        set => Child = (VisualMathNode)value;
+    }
+
+    public override IVisualMathNode[] NavigatableParts => new IVisualMathNode[1] { OperatorElement };
+
+    event RoutedEventHandler IVisualNode.Loaded
+    {
+        add => Loaded += value;
+        remove => Loaded -= value;
+    }
+
+    bool IVisualNode.IsLoaded => IsLoaded;
 }
