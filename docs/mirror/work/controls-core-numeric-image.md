@@ -16,3 +16,11 @@
 - Report: `--type` gate PASS (first form); full `--project Quire.Controls.Core` gate PASS, 2496 checked, 0 failures.
 - Note: the `.xaml` resource is not in the repo for this control; the gate compares IL only.
 - Stub count left in this type: 0.
+
+## Batch 3 — CommonDragger and Serialization.McdxDeserializer
+
+- Landed members:
+  - `CommonDragger`: all 11 fields (`_elementsToDrag`, `_mode`, `_container`, `_currentPoint`, `_started`, `_preserveDimensions`, `onDragStart`, `onDragEnd`, `onDragProgress`, `bringIntoViewDispatcherTimer`, `_pt`).
+  - `Serialization.McdxDeserializer`: all 16 stubs (`_deserializationStrategy`, `_regionCollectionSerializer`, `_worksheetNodeName`, ctor, `Deserialize(Stream)`, `RepairXmlDocument`, `RepairNumberFormatPrecision`, `RepairPictureElements`, `RepairPictureElementIfNeed`, `ThrowIncorrectSerializationFormatException`, `Deserialize(XmlDocument)`, `UnpackExternalObject`, `UnpackProtectedPart`, `UnpackFlowDocument`, `ThrowFirstRegionDeserializationExceptionIfExists`, `Dispose`).
+- Report: `--type` gate PASS; full `--project Quire.Controls.Core` gate PASS, 3100 checked, 0 failures.
+- Stub count left in these types: 0 in CommonDragger, 0 in Serialization.McdxDeserializer.

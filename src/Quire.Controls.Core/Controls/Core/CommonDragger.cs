@@ -11,11 +11,20 @@ namespace Quire.Controls.Core;
 
 public partial class CommonDragger
 {
+    protected readonly UIElement[] _elementsToDrag;
+    protected readonly DragMode _mode;
     protected readonly Dictionary<UIElement, double> _originalWidthCache = new Dictionary<UIElement, double>();
     protected readonly Dictionary<UIElement, double> _originalHeightCache = new Dictionary<UIElement, double>();
-
-    [MirrorVerified("PtcControlsCoreCommonDraggerMechanicalDifferentialTests")]
+    protected readonly FrameworkElement _container;
     protected Point _startPoint;
+    private Point _currentPoint;
+    private bool _started;
+    protected bool _preserveDimensions;
+    public DragStartHandler onDragStart;
+    public DragEndHandler onDragEnd;
+    public DragProgressHandler onDragProgress;
+    private DispatcherTimer bringIntoViewDispatcherTimer;
+    private Point _pt;
 
     [MirrorVerified("PtcControlsCoreCommonDraggerMechanicalDifferentialTests")]
     protected Vector OffsetTo(Point p) => p - _startPoint;

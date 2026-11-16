@@ -11,36 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.McdxDeserializer, Ptc.Controls.Core")]
 public partial class McdxDeserializer : global::Quire.Serialization.IDeS11NProvider, global::Quire.Serialization.IBaseS11NProvider, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.Serialization.IDeserializationStrategy _deserializationStrategy;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.PersistentData.IRegionCollectionSerializer _regionCollectionSerializer;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string _worksheetNodeName;
-    [global::Quire.Mirror.MirrorStub]
-    public void Deserialize(global::System.IO.Stream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RepairXmlDocument(global::System.Xml.XmlDocument xmlContentDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RepairNumberFormatPrecision(global::System.Xml.XmlDocument xmlContentDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RepairPictureElements(global::System.Xml.XmlDocument xmlContentDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void RepairPictureElementIfNeed(global::System.Xml.XmlNode region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void ThrowIncorrectSerializationFormatException(global::System.Exception ex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public McdxDeserializer(string filePath, global::System.IO.Packaging.PackagePart part, global::Quire.Controls.Core.Serialization.IDeserializationStrategy deserializationStrategy, global::Quire.Serialization.ISerializationHelper serializationHelper, global::Quire.PersistentData.IRegionCollectionSerializer regionCollectionSerializer, bool useOverrides, global::Quire.ITextStyleChangedHandler textStyleChangedHandler = default) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Deserialize(global::System.Xml.XmlDocument xmlContentDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string UnpackExternalObject(string itemIdRef) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Stream UnpackProtectedPart(string itemIdRef) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UnpackFlowDocument(ref global::System.Windows.Documents.FlowDocument flowDocument, string itemIdRef) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ThrowFirstRegionDeserializationExceptionIfExists() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Dispose() { }
 }

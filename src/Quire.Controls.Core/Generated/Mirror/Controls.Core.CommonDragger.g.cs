@@ -11,29 +11,6 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.CommonDragger, Ptc.Controls.Core")]
 public partial class CommonDragger
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::System.Windows.UIElement[] _elementsToDrag;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::Quire.Controls.Core.DragMode _mode;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::System.Windows.FrameworkElement _container;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Point _currentPoint;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _started;
-    [global::Quire.Mirror.MirrorStub]
-    protected bool _preserveDimensions;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.CommonDragger.DragStartHandler onDragStart;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.CommonDragger.DragEndHandler onDragEnd;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.CommonDragger.DragProgressHandler onDragProgress;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Threading.DispatcherTimer bringIntoViewDispatcherTimer;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Point _pt;
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.CommonDragger+DragEndHandler, Ptc.Controls.Core")]
     public delegate void DragEndHandler(global::System.Windows.Point endPoint);
 
