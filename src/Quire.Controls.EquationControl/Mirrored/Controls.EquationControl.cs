@@ -55,4 +55,16 @@ public partial class EquationControl
         IOTag.IOTagProperty.OverrideMetadata(_typeOfThis, new FrameworkPropertyMetadata(HandleIOTagPropertyChanged));
         ContentChangedEvent = CommonRoutedEvents.ContentChangedEvent.AddOwner(typeof(EquationControl));
     }
+
+    internal partial class TestHelper
+    {
+        public static void SetEquationXmlNode(EquationControl eq, global::System.Xml.XmlNode xmlNode)
+        {
+            eq.EquationXmlNode = xmlNode;
+        }
+
+        public TestHelper()
+        {
+        }
+    }
 }

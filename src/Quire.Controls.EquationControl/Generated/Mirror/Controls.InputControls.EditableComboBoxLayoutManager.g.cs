@@ -11,8 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.EditableComboBoxLayoutManager, Ptc.Controls.EquationControl")]
 internal partial class EditableComboBoxLayoutManager : global::Quire.Controls.Core.TableLayoutManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    public EditableComboBoxLayoutManager() { }
-    [global::Quire.Mirror.MirrorStub]
-    public EditableComboBoxLayoutManager(global::Quire.Controls.InputControls.EditableComboBoxLayoutManager other) { }
 }

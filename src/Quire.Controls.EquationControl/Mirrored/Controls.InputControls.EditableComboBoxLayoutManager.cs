@@ -6,6 +6,15 @@ namespace Quire.Controls.InputControls;
 
 internal partial class EditableComboBoxLayoutManager
 {
+    public EditableComboBoxLayoutManager()
+    {
+    }
+
+    public EditableComboBoxLayoutManager(EditableComboBoxLayoutManager other)
+        : base(other)
+    {
+    }
+
     public override object Clone()
     {
         return new EditableComboBoxLayoutManager(this);

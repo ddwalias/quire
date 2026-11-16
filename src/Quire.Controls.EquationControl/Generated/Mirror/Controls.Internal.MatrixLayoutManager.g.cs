@@ -11,10 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.MatrixLayoutManager, Ptc.Controls.EquationControl")]
 internal partial class MatrixLayoutManager : global::Quire.Controls.Core.TableLayoutManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    public MatrixLayoutManager() { }
-    [global::Quire.Mirror.MirrorStub]
-    private MatrixLayoutManager(global::Quire.Controls.Internal.MatrixLayoutManager other) { }
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Internal.VisualTextNode ExtractVisualTextWidth(global::Quire.Controls.Internal.VisualMathNode visualMathNodeCell, out double visualLinearOperatorWidth) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

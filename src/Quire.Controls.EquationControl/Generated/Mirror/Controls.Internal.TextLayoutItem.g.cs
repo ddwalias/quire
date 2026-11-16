@@ -11,23 +11,6 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.TextLayoutItem, Ptc.Controls.EquationControl")]
 public partial class TextLayoutItem
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect Rect;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Internal.TextLayoutItem.ItemTypes ItemType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size Size { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double TextBaselineOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double CapsHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double XHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    public TextLayoutItem() { }
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.TextLayoutItem+ItemTypes, Ptc.Controls.EquationControl")]
     public enum ItemTypes
     {

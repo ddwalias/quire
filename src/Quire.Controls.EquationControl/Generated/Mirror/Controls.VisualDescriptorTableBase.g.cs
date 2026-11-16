@@ -11,21 +11,8 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.VisualDescriptorTableBase, Ptc.Controls.EquationControl")]
 public partial class VisualDescriptorTableBase : global::System.Windows.ResourceDictionary
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected void PostInitializeComponent(global::Quire.Controls.VisualDescriptorTableBase.InitializationInfo initInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UpdateElementUids() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void UpdateFunctionalityDictionary(global::Quire.Controls.VisualDescriptorTableBase.InitializationInfo initInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public VisualDescriptorTableBase() { }
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.VisualDescriptorTableBase+InitializationInfo, Ptc.Controls.EquationControl")]
     protected partial class InitializationInfo
     {
-        [global::Quire.Mirror.MirrorStub]
-        public bool FunctionalityDictionaryInitialized { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public InitializationInfo() { }
     }
 }

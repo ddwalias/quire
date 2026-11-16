@@ -1086,9 +1086,5 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.EquationControl+TestHelper, Ptc.Controls.EquationControl")]
     internal partial class TestHelper
     {
-        [global::Quire.Mirror.MirrorStub]
-        public static void SetEquationXmlNode(global::Quire.Controls.EquationControl eq, global::System.Xml.XmlNode xmlNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public TestHelper() { }
     }
 }

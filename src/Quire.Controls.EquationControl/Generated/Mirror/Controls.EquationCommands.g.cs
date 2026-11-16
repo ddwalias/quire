@@ -133,23 +133,9 @@ public static partial class EquationCommands
     public static readonly global::System.Windows.Input.RoutedUICommand ConvertToOperator;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedCommand ShowDebugPropertyWindow;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IEnumerable<global::System.Windows.Input.KeyGesture> GetCommandKeyGestures(global::System.Windows.Input.RoutedCommand command) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Input.KeyGesture GetCommandFirstKeyGesture(global::System.Windows.Input.RoutedCommand command) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.EquationCommands+CommitCommandParameter, Ptc.Controls.EquationControl")]
     public partial class CommitCommandParameter
     {
-        [global::Quire.Mirror.MirrorStub]
-        public bool IsAsynchronous { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public bool IsForce { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public bool IsForceControlOnly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public CommitCommandParameter(bool isAsynchronous) { }
-        [global::Quire.Mirror.MirrorStub]
-        public CommitCommandParameter(bool isAsynchronous, bool force, bool isForceControlOnly) { }
     }
 }

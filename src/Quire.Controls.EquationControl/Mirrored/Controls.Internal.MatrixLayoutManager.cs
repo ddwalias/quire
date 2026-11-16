@@ -11,6 +11,15 @@ namespace Quire.Controls.Internal;
 
 internal partial class MatrixLayoutManager
 {
+    public MatrixLayoutManager()
+    {
+    }
+
+    private MatrixLayoutManager(MatrixLayoutManager other)
+        : base(other)
+    {
+    }
+
     public override object Clone()
     {
         return new MatrixLayoutManager(this);
@@ -67,5 +76,19 @@ internal partial class MatrixLayoutManager
         }
 
         return maxWidths;
+    }
+
+    private static VisualTextNode ExtractVisualTextWidth(VisualMathNode visualMathNodeCell, out double visualLinearOperatorWidth)
+    {
+        if (visualMathNodeCell is VisualLinearUnaryNode)
+        {
+            VisualLinearUnaryNode node = visualMathNodeCell as VisualLinearUnaryNode;
+            VisualSymbolNode visualSymbolNode = (VisualSymbolNode)node.Operator;
+            visualLinearOperatorWidth = visualSymbolNode.DesiredSize.Width;
+            return node.Child as VisualTextNode;
+        }
+
+        visualLinearOperatorWidth = 0.0;
+        return visualMathNodeCell as VisualTextNode;
     }
 }

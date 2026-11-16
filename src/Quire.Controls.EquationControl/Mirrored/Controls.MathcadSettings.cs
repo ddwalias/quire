@@ -662,6 +662,19 @@ public partial class MathcadSettings
     }
 
     [MirrorVerified("Release IL")]
+    public bool HandleFocusForIme
+    {
+        get => global::Quire.Controls.Core.ControlSettings.Instance.HandleFocusForIme;
+        set
+        {
+            global::Quire.Controls.Core.ControlSettings.Instance.HandleFocusForIme = value;
+            FirePropertyChanged(nameof(HandleFocusForIme));
+        }
+    }
+
+    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+    [MirrorVerified("Release IL")]
     private void FirePropertyChanged(string name = default)
     {
         PropertyChanged?.Invoke(this, new global::System.ComponentModel.PropertyChangedEventArgs(name));

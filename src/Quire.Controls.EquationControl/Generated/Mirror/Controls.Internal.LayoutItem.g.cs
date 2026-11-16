@@ -11,14 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.LayoutItem, Ptc.Controls.EquationControl")]
 public partial struct LayoutItem
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect Rect;
-    [global::Quire.Mirror.MirrorStub]
-    public double TextBaselineOffset;
-    [global::Quire.Mirror.MirrorStub]
-    public LayoutItem(global::System.Windows.Size itemSize) { }
-    [global::Quire.Mirror.MirrorStub]
-    public LayoutItem(global::System.Windows.Size itemSize, double textBaseline) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 }

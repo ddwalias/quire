@@ -11,8 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.MathcadSettings, Ptc.Controls.EquationControl")]
 public partial class MathcadSettings : global::System.ComponentModel.INotifyPropertyChanged, global::Quire.ComponentModel.IInspectable, global::Quire.EquationEditor.IEquationEditorSettings
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool HandleFocusForIme { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 }
