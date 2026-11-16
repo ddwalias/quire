@@ -12,11 +12,5 @@ namespace Quire.Controls.Worksheet;
 public partial class ImageRegionPersistentData : global::Quire.Controls.Worksheet.RegionPersistentData
 {
     [global::Quire.Mirror.MirrorStub]
-    public ImageRegionPersistentData(global::Quire.Controls.Core.ImageControl image) : base(default(global::System.Windows.UIElement)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void Deserialize() => base.Deserialize();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void DeserializeDimensions() => base.DeserializeDimensions();
-    [global::Quire.Mirror.MirrorStub]
     public override object Accept(global::Quire.IVisitor visitor) => base.Accept(visitor);
 }

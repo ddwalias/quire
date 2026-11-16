@@ -11,20 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.DragAdorner, Ptc.Controls.Worksheet")]
 internal partial class DragAdorner : global::System.Windows.Documents.Adorner
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.UIElement _child;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Vector _borderOffset;
-    [global::Quire.Mirror.MirrorStub]
-    protected override int VisualChildrenCount { get => base.VisualChildrenCount; }
-    [global::Quire.Mirror.MirrorStub]
-    public DragAdorner(global::System.Windows.UIElement owner, global::System.Windows.UIElement adornElement) : base(default(global::System.Windows.UIElement)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.Visual GetVisualChild(int index) => base.GetVisualChild(index);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size finalSize) => base.MeasureOverride(finalSize);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Media.GeneralTransform GetDesiredTransform(global::System.Windows.Media.GeneralTransform transform) => base.GetDesiredTransform(transform);
 }

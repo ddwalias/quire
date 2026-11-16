@@ -12,11 +12,5 @@ namespace Quire.Controls.Worksheet;
 public partial class RichTextBaseRegionPersistentData : global::Quire.Controls.Worksheet.RegionPersistentData
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.IRichTextWithEmbeddedItem _text;
-    [global::Quire.Mirror.MirrorStub]
-    public RichTextBaseRegionPersistentData(global::Quire.Controls.Text.RichTextWithEmbeddedItem text) : base(default(global::System.Windows.UIElement)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void Deserialize() => base.Deserialize();
-    [global::Quire.Mirror.MirrorStub]
     public override object Accept(global::Quire.IVisitor visitor) => base.Accept(visitor);
 }

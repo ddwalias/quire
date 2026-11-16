@@ -149,8 +149,31 @@
   - Quire.Controls.Worksheet.AreaItemLocationInWorksheetStrategy: 9 members (fields _worksheetItemManager, _areaRectLocation, .ctor, GetItemRectLocationInWhiteboard, GetPageIndex, GetItemClipping, CountItemParts, GetItemClippingInternal, CalculateVirtualClipping)
   - Quire.Controls.Worksheet.WorksheetPageBody: 13 members (WaterMarkProperty, LabeledIdFormatProperty, _canvas, WaterMark, Zombies, IWorksheetPageBody.Clip, PropertyChanged, static .cctor, HandleItemsCollectionChanged, SetupInputGestures, Dispose, HandleLabelIdChanged, SnapPointToPixel)
 - Release IL: PASS; 304 checked; 0 failures.
-- Landed commit: (in-progress)
+- Landed commit: 6d9190fe0fe26e8a695ab2283e3b4b712bf5fa4c
 - Parked members:
   - TemplatedTextBoxPersistentData.Accept, WorksheetPageBreakPersistentData.Accept: modern Roslyn emits stack-balancing pop prior to throw in null-coalescing expressions producing brtrue.s 5 instead of legacy Mathcad brtrue.s 4.
   - WorksheetPageBody..ctor: legacy csc assignment expression emitted stloc.0 ldloc.0 whereas modern Roslyn optimizes to dup stloc.0.
-- Remaining mismatches: none in this batch (2354 stubs remaining in Quire.Controls.Worksheet).
+- Remaining mismatches: none in this batch (2352 stubs remaining in Quire.Controls.Worksheet).
+
+### Batch 10 (Current)
+- Owner: task_517ae8bb098d
+- Branch: feature/controls-worksheet-stubs-agy-20261116
+- Members implemented:
+  - Quire.Controls.Worksheet.DragAdorner: 8 members (_child, _borderOffset, VisualChildrenCount, .ctor, GetVisualChild, MeasureOverride, ArrangeOverride, GetDesiredTransform)
+  - Quire.Controls.Worksheet.NameBuilderHelper: 16 members (PosPrefix, SizePrefix, DoublePairDelimiter, DoubleEmpty, DoubleNegativeSign, RegionNameSeparatorChar, _regionNameSeparator, _numberFormatForRegionName, DoubleToString, PositionToString, RectToString, SizeToString, DoublePairToString, StripDimensionsFromName, Combine, .ctor, .cctor)
+  - Quire.Controls.Worksheet.ChartComponentPersistentData: 3 members (_chartComponent, .ctor, DeserializeEpilog)
+  - Quire.Controls.Worksheet.ExcelComponentPersistentData: 3 members (_excelComponent, .ctor, DeserializeEpilog)
+  - Quire.Controls.Worksheet.SpecTableRegionPersistentData: 2 members (.ctor, Deserialize)
+  - Quire.Controls.Worksheet.ContainerRegionPersistentData: 2 members (.ctor, Deserialize)
+  - Quire.Controls.Worksheet.ChartContainerRegionPersistentData: 2 members (.ctor, Deserialize)
+  - Quire.Controls.Worksheet.ExcelContainerRegionPersistentData: 2 members (.ctor, Deserialize)
+  - Quire.Controls.Worksheet.OleObjectPersistentData: 2 members (.ctor, Deserialize)
+  - Quire.Controls.Worksheet.ImageRegionPersistentData: 3 members (.ctor, Deserialize, DeserializeDimensions)
+  - Quire.Controls.Worksheet.PlotRegionPersistentData: 3 members (.ctor, Deserialize, DeserializeEpilog)
+  - Quire.Controls.Worksheet.RichTextBaseRegionPersistentData: 3 members (_text, .ctor, Deserialize)
+  - Quire.Controls.Worksheet.MathRegionPersistentData: 4 members (_equationControl, .ctor, DeserializeEpilog, Deserialize)
+- Release IL: PASS; 346 checked; 0 failures.
+- Landed commit: (in-progress)
+- Parked members:
+  - Accept on persistent data types (SpecTableRegionPersistentData, ContainerRegionPersistentData, ChartContainerRegionPersistentData, ExcelContainerRegionPersistentData, OleObjectPersistentData, ImageRegionPersistentData, PlotRegionPersistentData, RichTextBaseRegionPersistentData, MathRegionPersistentData): modern Roslyn null-coalescing throw stack pop opcode divergence.
+- Remaining mismatches: none in this batch (2299 stubs remaining in Quire.Controls.Worksheet).

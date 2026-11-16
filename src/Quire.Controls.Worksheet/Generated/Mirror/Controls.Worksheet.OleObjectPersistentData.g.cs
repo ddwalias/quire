@@ -12,9 +12,5 @@ namespace Quire.Controls.Worksheet;
 public partial class OleObjectPersistentData : global::Quire.Controls.Worksheet.RegionPersistentData
 {
     [global::Quire.Mirror.MirrorStub]
-    public OleObjectPersistentData(global::Quire.Controls.ExcelComponent.OleObjectControl oleObject) : base(default(global::System.Windows.UIElement)) { }
-    [global::Quire.Mirror.MirrorStub]
     public override object Accept(global::Quire.IVisitor visitor) => base.Accept(visitor);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void Deserialize() => base.Deserialize();
 }

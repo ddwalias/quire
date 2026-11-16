@@ -12,11 +12,5 @@ namespace Quire.Controls.Worksheet;
 public partial class PlotRegionPersistentData : global::Quire.Controls.Worksheet.RegionPersistentData
 {
     [global::Quire.Mirror.MirrorStub]
-    public PlotRegionPersistentData(global::Quire.Controls.Plots.View.PlotControlBase element) : base(default(global::System.Windows.UIElement)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void Deserialize() => base.Deserialize();
-    [global::Quire.Mirror.MirrorStub]
-    public override void DeserializeEpilog() => base.DeserializeEpilog();
-    [global::Quire.Mirror.MirrorStub]
     public override object Accept(global::Quire.IVisitor visitor) => base.Accept(visitor);
 }

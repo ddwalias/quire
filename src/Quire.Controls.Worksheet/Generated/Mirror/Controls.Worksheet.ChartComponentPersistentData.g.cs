@@ -11,10 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.ChartComponentPersistentData, Ptc.Controls.Worksheet")]
 public partial class ChartComponentPersistentData : global::Quire.Controls.Worksheet.ContainerRegionPersistentData
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.ExcelComponent.View.ChartComponentControl _chartComponent;
-    [global::Quire.Mirror.MirrorStub]
-    public ChartComponentPersistentData(global::Quire.Controls.ExcelComponent.View.ChartComponentControl chartComponent) : base(default(global::Quire.Controls.Mathboard.MathboardControl)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void DeserializeEpilog() => base.DeserializeEpilog();
 }
