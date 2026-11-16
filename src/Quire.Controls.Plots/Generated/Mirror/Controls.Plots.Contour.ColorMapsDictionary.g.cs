@@ -11,14 +11,4 @@ namespace Quire.Controls.Plots.Contour;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Contour.ColorMapsDictionary, Ptc.Controls.Plots")]
 internal partial class ColorMapsDictionary : global::System.Windows.ResourceDictionary, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal static readonly global::Quire.Controls.Plots.Contour.ColorMapsDictionary Instance;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public ColorMapsDictionary() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

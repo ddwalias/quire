@@ -11,18 +11,4 @@ namespace Quire.Controls.Plots.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.PlotLegendViewModel, Ptc.Controls.Plots")]
 public partial class PlotLegendViewModel : global::Quire.Controls.Core.ViewModelBase, global::Quire.Controls.Plots.IPlotItemWithToggleableBorder
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Plots.Presenter.IPlotLegendModel _model;
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShowPlotLegend { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.LegendPositions.PlotLegendPosition Position { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShowBorder { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double LegendWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public PlotLegendViewModel(global::Quire.Controls.Plots.Presenter.IPlotLegendModel plotLegendModel) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,20 +11,4 @@ namespace Quire.Controls.Plots.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.PlotTitleViewModel, Ptc.Controls.Plots")]
 public partial class PlotTitleViewModel : global::Quire.Controls.Core.ViewModelBase, global::Quire.Controls.Plots.IPlotItemWithToggleableBorder
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.IPlotTitleModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.PlotTitleType TitleType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.LegendPositions.PlotTitlePosition Position { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShowTitle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShowBorder { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsVertical { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public PlotTitleViewModel(global::Quire.Controls.Plots.IPlotTitleModel model) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected void HandleModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

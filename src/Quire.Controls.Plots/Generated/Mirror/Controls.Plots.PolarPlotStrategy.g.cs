@@ -11,18 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PolarPlotStrategy, Ptc.Controls.Plots")]
 internal partial class PolarPlotStrategy : global::Quire.Controls.Plots.IPlotStrategy
 {
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeAxes(global::Quire.Controls.Plots.PlotTitle xAxisTitle, global::Quire.Controls.Plots.PlotTitle yAxisTitle, global::Quire.Controls.Plots.PlotTitle title, global::Quire.Controls.Plots.EquationList rangeEquations, global::Quire.Controls.Plots.EquationList primaryResultEquations, out global::Quire.Controls.Plots.PlotGraphAxis rangeAxis, out global::Quire.Controls.Plots.PlotGraphAxis primaryResultAxis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeLegendPositions(global::Quire.Controls.Plots.PlotControl plot, out global::Quire.Controls.Plots.PlotItemPlaceholder[] rangeLegendsPositions, out global::Quire.Controls.Plots.PlotItemPlaceholder[] resultLegendsPositions, out global::Quire.Controls.Plots.PlotItemPlaceholder[] titlePositions, out global::Quire.Controls.Plots.PlotItemPlaceholder[] plotLegendPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ApplyPlotTemplate(global::Quire.Controls.Plots.PlotControl plot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.Controls.EquationControl> BuildEditableAxisRelatedElements(global::Quire.Controls.Plots.PlotControl plot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetMinWidthHeight(global::Quire.Controls.Plots.PlotControl plot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void GetInitialPlaceholderIndices(global::Quire.Controls.Plots.PlotControl plot, out int xLegendIndex, out int yLegendIndex, out int plotTitleIndex, out int plotLegendIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PolarPlotStrategy() { }
 }
