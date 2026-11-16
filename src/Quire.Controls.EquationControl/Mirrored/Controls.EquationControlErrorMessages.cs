@@ -6,6 +6,10 @@ namespace Quire.Controls;
 
 public partial class EquationControlErrorMessages
 {
+    public const string MaxRecursionDepthExceeded = "EquationControl.Error.XmlParsing.MaxRecursionDepthExceeded";
+
+    private bool _contentLoaded;
+
     public EquationControlErrorMessages()
     {
         InitializeComponent();

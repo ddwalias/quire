@@ -3,22 +3,20 @@
 - Owner: dispatched EquationControl worker
 - Branch: `feature/equationcontrol-stubs-agy-20261116`
 - Landed commits:
+  - `c797dd70f`: ProductInfo.Constants, Algorithm converters, Symbol descriptors, InputControl engines/models, and ComboBox stubs (30 members, PASS; 2495 checked).
   - `ca11a8daa`: MatrixLayoutManager, LayoutItem, TextLayoutItem, VisualDescriptorTableBase, EditableComboBoxLayoutManager, EquationCommands, MathcadSettings, and TestHelper stubs (34 members, PASS; 2465 checked).
 - Selected members:
-  - `ProductInfo.Constants`: `ConverterProductName`, `ConverterExe`, `.ctor()`
-  - `Controls.AlgorithmIconConverter`: `AutoSelect`
-  - `Controls.AlgorithmOptionsIconConverter`: `CheckMarkIcon`, `Convert`, `ConvertBack`, `.ctor()`
-  - `Controls.VisualIdDescriptor`: `_label`, `_idName`
-  - `Controls.SymbolDescriptor`: `_displayName`, `_keybinding`, `_keybindingToDisplay`, `_description`, `_symbolicRepresentation`, `_screenRepresentation`, `_categories`, `_functionalityKey`, `_categoryFunctionalityKey`, `_category2FunctionalityKey`, `_category3FunctionalityKey`, `_categoryOrdinal`, `_command`, `.ctor()`
-  - `Controls.InputControls.InputControlClearScriptEngine.ClearScriptEngineWindow`: `OwnerHandle`, `EnableModeless`, `.ctor`
-  - `Controls.InputControls.InputListBoxEngineDefaultScript`: `defaultScriptValues`, `.ctor`, `Apply`, `GetCalculatedValue`
-  - `Controls.InputControls.InputRadioButtonEngineDefaultScript`: `defaultScriptValues`, `.ctor`, `Apply`, `GetCalculatedValue`
-  - `Controls.InputControls.InputControlModel`: `_isEnabled`, `_isAutoRecalculate`, `PropertyChanged`, `.ctor`, `GetFieldSizeFormSExpression`
-  - `Controls.InputControls.ComboBoxRow`: `_cells`, `.ctor(int, int)`, `IsValid(int)`, `<>c__DisplayClass1_0`
-  - `Controls.InputControls.ComboBoxViewModelBase`: `TableModel`, `.ctor(ComboBoxTableModel)`
-  - `Controls.InputControls.ComboBoxViewModelBase.ComboBoxTableModelAdapter`: `_comboBoxTableModel`, `Units`, `GroupByRows`, `TableTitle`, `SelectedValueRow`, `.ctor(IComboBoxTableModel)`, `<>c` compiler-generated class and lambdas
+  - `Controls.SpecTableCellStyleKeys`: `SpecTableScalingEqStyle`, `SpecTableCellEqStyle`
+  - `Controls.EquationControlErrorMessages`: `MaxRecursionDepthExceeded`, `_contentLoaded`
+  - `Controls.InsertFunctionCommandParameterComparer`: `.ctor()`
+  - `Controls.InsertIdCommandParameterComparer`: `.ctor()`
+  - `Controls.Internal.CaretAdorner`: `_adornedElement`, `CaretSide`, `_caret`, `.ctor(UIElement, Direction)`, `MeasureOverride(Size)`, `ArrangeOverride(Size)`
+  - `Controls.Internal.HorizontalRightArrow`: `_operatorChars`, `.ctor()`, `MeasureOverride(Size)`, `OnRender(DrawingContext)`, `Clone()`
+  - `Controls.Internal.Overline`: `_operatorChars`, `.ctor()`, `MeasureOverride(Size)`, `OnRender(DrawingContext)`, `Clone()`
+  - `Controls.Internal.GestureManager`: `empty`, `_frame`, `_parent`, `.ctor()`, `.ctor(IGestureManager)`, `Execute(KeyEventArgs)`, `Execute(string)`, `AddBinding(KeyGesture, EditorCommand)`, `AddBinding(string, EditorCommand)`, `AddBinding(EditorGesture, EditorCommand)`
+  - `Controls.Internal.GestureManager.NullManager`: `Execute(KeyEventArgs)`, `Execute(string)`, `AddBinding(KeyGesture, EditorCommand)`, `AddBinding(string, EditorCommand)`, `.ctor()`
 - Parked members:
   - `Controls.Internal.ConjugateLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3` on identical IL instructions.
   - `Controls.Internal.VectorizationLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3` on identical IL instructions.
   - `Controls.InputControls.ComboBoxRow.AllButFirstCell`: parked due to Roslyn optimizer in Release mode eliminating `stloc.0/ldloc.0` return of local variable, whereas Mathcad's compiler emitted `stloc.0; ldloc.0; ret`.
-- Release IL: PASS; 2495 checked (0 failures, 2519 unfinished stubs remaining).
+- Release IL: PASS; 2520 checked (0 failures, 2497 unfinished stubs remaining).

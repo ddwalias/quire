@@ -4,6 +4,8 @@ namespace Quire.Controls;
 
 public partial class InsertFunctionCommandParameterComparer
 {
+    public InsertFunctionCommandParameterComparer() { }
+
     public bool Equals(object x, object y)
     {
         return Equals(x as InsertFunctionCommandParameter, y as InsertFunctionCommandParameter);

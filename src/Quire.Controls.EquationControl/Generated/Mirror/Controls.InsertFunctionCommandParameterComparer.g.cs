@@ -11,6 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InsertFunctionCommandParameterComparer, Ptc.Controls.EquationControl")]
 public partial class InsertFunctionCommandParameterComparer : global::System.Collections.Generic.IEqualityComparer<object>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public InsertFunctionCommandParameterComparer() { }
 }

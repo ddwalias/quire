@@ -11,8 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.EquationControlErrorMessages, Ptc.Controls.EquationControl")]
 public partial class EquationControlErrorMessages : global::System.Windows.ResourceDictionary, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string MaxRecursionDepthExceeded = "EquationControl.Error.XmlParsing.MaxRecursionDepthExceeded";
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
 }

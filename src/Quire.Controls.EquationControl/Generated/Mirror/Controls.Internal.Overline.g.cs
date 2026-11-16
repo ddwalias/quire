@@ -11,14 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.Overline, Ptc.Controls.EquationControl")]
 internal partial class Overline : global::Quire.Controls.Internal.HorizontalFence
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly char[] _operatorChars;
-    [global::Quire.Mirror.MirrorStub]
-    public Overline() : base(default(char)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
-    [global::Quire.Mirror.MirrorStub]
-    public override object Clone() => base.Clone();
 }

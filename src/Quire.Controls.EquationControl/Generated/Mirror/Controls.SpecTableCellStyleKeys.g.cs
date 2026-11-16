@@ -11,8 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.SpecTableCellStyleKeys, Ptc.Controls.EquationControl")]
 public static partial class SpecTableCellStyleKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string SpecTableScalingEqStyle = "SpecTableScalingEqStyle";
-    [global::Quire.Mirror.MirrorStub]
-    public const string SpecTableCellEqStyle = "SpecTableCellEqStyle";
 }

@@ -11,39 +11,8 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.GestureManager, Ptc.Controls.EquationControl")]
 internal partial class GestureManager : global::Quire.Controls.Internal.IGestureManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::Quire.Controls.Internal.GestureManager.NullManager empty;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Wpf.EditorGesture, global::Quire.Controls.Internal.EditorCommand> _frame;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Internal.IGestureManager _parent;
-    [global::Quire.Mirror.MirrorStub]
-    public GestureManager() { }
-    [global::Quire.Mirror.MirrorStub]
-    public GestureManager(global::Quire.Controls.Internal.IGestureManager _parent) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Execute(global::System.Windows.Input.KeyEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Execute(string c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddBinding(global::System.Windows.Input.KeyGesture gesture, global::Quire.Controls.Internal.EditorCommand command) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddBinding(string key, global::Quire.Controls.Internal.EditorCommand command) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddBinding(global::Quire.Wpf.EditorGesture gesture, global::Quire.Controls.Internal.EditorCommand command) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.GestureManager+NullManager, Ptc.Controls.EquationControl")]
     private partial class NullManager : global::Quire.Controls.Internal.IGestureManager
     {
-        [global::Quire.Mirror.MirrorStub]
-        public bool Execute(global::System.Windows.Input.KeyEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public bool Execute(string c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public void AddBinding(global::System.Windows.Input.KeyGesture gesture, global::Quire.Controls.Internal.EditorCommand command) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public void AddBinding(string key, global::Quire.Controls.Internal.EditorCommand command) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public NullManager() { }
     }
 }

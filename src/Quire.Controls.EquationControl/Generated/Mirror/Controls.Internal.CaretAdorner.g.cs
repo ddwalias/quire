@@ -11,16 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.CaretAdorner, Ptc.Controls.EquationControl")]
 internal partial class CaretAdorner : global::Quire.Controls.Core.VisualAdorner
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.UIElement _adornedElement;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.Direction CaretSide;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.Controls.Internal.Caret _caret;
-    [global::Quire.Mirror.MirrorStub]
-    public CaretAdorner(global::System.Windows.UIElement adornedElement, global::Quire.Direction caretSide) : base(default(global::System.Windows.UIElement)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
 }
