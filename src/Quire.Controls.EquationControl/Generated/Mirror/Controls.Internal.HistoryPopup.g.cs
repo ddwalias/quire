@@ -11,20 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.HistoryPopup, Ptc.Controls.EquationControl")]
 internal partial class HistoryPopup : global::System.Windows.Controls.Primitives.Popup, global::Quire.Controls.Internal.IHistoryPopup
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.ListBox _listBox;
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsPopupOpen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate1<int> HistoryItemSelected;
-    [global::Quire.Mirror.MirrorStub]
-    public HistoryPopup(global::System.Collections.Generic.IList<global::Quire.EquationEditor.View.IVisualMathNode> historyList) { }
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IList<global::System.Windows.Controls.ListBoxItem> CreateListItems(global::System.Collections.Generic.IList<global::Quire.EquationEditor.View.IVisualMathNode> nodes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireHistoryItemSelected(object sender, global::System.Windows.Controls.SelectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Show() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Hide() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -10,13 +10,13 @@
   - `25275996c`: SliderViewModel, SliderPropertiesEditorViewModel, SliderModel, SliderControl, InputScriptingControlWithInputCommands, and InputControl (26 members, PASS; 2581 checked).
   - `981886f26`: PrimeControlClearScriptEngine, TextBoxPropertiesEditorViewModel, RadioButtonPropertiesEditor, RadioButtonPropertiesEditorViewModel, and RadioButtonControl (41 members, PASS; 2626 checked).
   - `6b353065b`: ComboBoxViewModel, ListBoxViewModel, InputScriptableControlViewModelWithInputs, and RadioButtonModel (45 members, PASS; 2671 checked).
+  - `3242d9ea3`: InputControlModel, EditableComboBoxTableCellsFontFormats, NameValuesRow, and TextBoxViewModel (31 members, PASS; 2702 checked).
 - Selected members:
-  - `Controls.InputControls.InputControlModel`: `DefaultFontSize`, `_data`, `_engineFactory`, `_isDirty`, `SexpressionTagMatrix`, `AutoRecalculate`, `Dispose`
-  - `Controls.InputControls.EditableComboBoxTableCellsFontFormats`: `_unitCellForeground`, `_normalCellForeground`, `_mathFontFormat`, `_unitFontFormat`, `CellFontFamily`, `UnitCellTextDecorations`, `UnitCellFontWeight`, `UnitCellFontStyle`, `.ctor(IMathFormat, IMathFormat)`
-  - `Controls.InputControls.NameValuesRow`: `DisplayNameValue`, `_displayName`, `DisplayName`, `NameCell`, `ValueCells`, `INameValuesRow.NameCell`, `INameValuesRow.ValueCells`, `PropertyChanged`, `OnPropertyChanged`, `.ctor(int, int)`
-  - `Controls.InputControls.TextBoxViewModel`: `_backgroundColor`, `Model`, `Foreground`, `Background`, `FontSize`, `IsReadOnly`, `AcceptsReturn`, `Text`, `TextAlignment`, `.ctor(IInputControlDataCalculatedValue)`, `HandleModelPropertyChanged`, `OnLostFocus`
+  - `Controls.InputControls.RadioButtonViewModel`: `_flowDirection`, `_isChecked`, `_backgroundColor`, `_imagePath`, `_groupID`, `_selectedValue`, `_dataItems`, `_dataSourceItems`, `_orientation`, `_radioButtonEventAggregator`, `.ctor(IInputControlDataCalculatedValue, RadioButtonEventAggregator)`, `CommitEditorChanges`, `HandleModelPropertyChanged` (with `<.ctor>b__12_0`, `<HandleModelPropertyChanged>b__24_0`, and `<>c` closures)
+  - `Controls.Internal.HistoryPopup`: `_listBox`, `HistoryItemSelected`, `.ctor(IList<IVisualMathNode>)`, `CreateListItems`, `FireHistoryItemSelected`, `IsPopupOpen`, `Show`, `Hide`
+  - `Controls.Internal.VisualSuperscriptBinaryNode<OperatorType>`: `_pushFirstOpDown`, `CoreElements` (with `<get_CoreElements>d__2`), `TextBaselineY`, `EffectiveBaselineY`, `EffectiveScriptBaselineY`, `ModifyChildMathFormat`, `OnSecondOperandChanged`, `.ctor()`
 - Parked members:
   - `Controls.Internal.ConjugateLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3` on identical 115 IL instructions.
   - `Controls.Internal.VectorizationLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3` on identical 115 IL instructions.
   - `Controls.InputControls.ComboBoxRow.AllButFirstCell`: parked due to Roslyn optimizer in Release mode eliminating `stloc.0/ldloc.0` return of local variable, whereas Mathcad's compiler emitted `stloc.0; ldloc.0; ret`.
-- Release IL: PASS; 2702 checked (0 failures, 2236 unfinished stubs remaining).
+- Release IL: PASS; 2731 checked (0 failures, 2221 unfinished stubs remaining).

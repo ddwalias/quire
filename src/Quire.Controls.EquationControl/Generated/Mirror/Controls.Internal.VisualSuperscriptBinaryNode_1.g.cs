@@ -11,20 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualSuperscriptBinaryNode`1, Ptc.Controls.EquationControl")]
 internal partial class VisualSuperscriptBinaryNode<OperatorType> : global::Quire.Controls.Internal.VisualLinearBinaryOperatorNode<OperatorType> where OperatorType : global::Quire.Controls.Internal.VisualSymbolNode, new()
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected double _pushFirstOpDown;
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> CoreElements { get => base.CoreElements; }
-    [global::Quire.Mirror.MirrorStub]
-    public override double TextBaselineY { get => base.TextBaselineY; }
-    [global::Quire.Mirror.MirrorStub]
-    public override double EffectiveBaselineY { get => base.EffectiveBaselineY; }
-    [global::Quire.Mirror.MirrorStub]
-    public override double EffectiveScriptBaselineY { get => base.EffectiveScriptBaselineY; }
-    [global::Quire.Mirror.MirrorStub]
-    public override void ModifyChildMathFormat(int childIndex, global::Quire.Controls.Core.MathFormatValues childMathFormat) => base.ModifyChildMathFormat(childIndex, childMathFormat);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnSecondOperandChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => base.OnSecondOperandChanged(e);
-    [global::Quire.Mirror.MirrorStub]
-    public VisualSuperscriptBinaryNode() { }
 }

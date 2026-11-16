@@ -11,30 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.RadioButtonViewModel, Ptc.Controls.EquationControl")]
 public partial class RadioButtonViewModel : global::Quire.Controls.InputControls.InputScriptableControlViewModelWithInputs, global::Quire.Controls.InputControls.IInputControlViewModelWithEditor
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.FlowDirection _flowDirection;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isChecked;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.PropertyInfo _backgroundColor;
-    [global::Quire.Mirror.MirrorStub]
-    private string _imagePath;
-    [global::Quire.Mirror.MirrorStub]
-    private string _groupID;
-    [global::Quire.Mirror.MirrorStub]
-    private double _selectedValue;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IList<string> _dataItems;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.InputControls.DataListItem> _dataSourceItems;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.Orientation _orientation;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.InputControls.RadioButtonEventAggregator _radioButtonEventAggregator;
-    [global::Quire.Mirror.MirrorStub]
-    public RadioButtonViewModel(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue data, global::Quire.Controls.InputControls.RadioButtonEventAggregator radioButtonEventAggregator = default) : base(default(global::Quire.Controls.InputControls.IInputScriptableControlModelWithInputs)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void CommitEditorChanges() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => base.HandleModelPropertyChanged(sender, e);
 }
