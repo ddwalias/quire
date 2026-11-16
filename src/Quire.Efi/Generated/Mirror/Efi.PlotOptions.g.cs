@@ -11,12 +11,4 @@ namespace Quire.Efi;
 [global::Quire.Mirror.MirrorOf("Efi.PlotOptions, efiplot_")]
 internal partial class PlotOptions : global::Quire.Efi.Options
 {
-    [global::Quire.Mirror.MirrorStub]
-    public PlotOptions(int bits) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool isPolar() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool equalScales() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool hasY2() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

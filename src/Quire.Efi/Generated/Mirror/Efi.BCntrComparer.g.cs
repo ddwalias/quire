@@ -11,8 +11,4 @@ namespace Quire.Efi;
 [global::Quire.Mirror.MirrorOf("Efi.BCntrComparer, efiplot_")]
 public partial class BCntrComparer : global::System.Collections.Generic.IComparer<double[]>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int Compare(double[] c1, double[] c2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public BCntrComparer() { }
 }

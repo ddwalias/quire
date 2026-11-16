@@ -11,8 +11,4 @@ namespace Quire.Efi;
 [global::Quire.Mirror.MirrorOf("Efi.CntrComparer, efiplot_")]
 public partial class CntrComparer : global::System.Collections.Generic.IComparer<global::System.Collections.Generic.List<global::Quire.Efi.shpPoint3D>>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int Compare(global::System.Collections.Generic.List<global::Quire.Efi.shpPoint3D> c1, global::System.Collections.Generic.List<global::Quire.Efi.shpPoint3D> c2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public CntrComparer() { }
 }
