@@ -11,10 +11,5 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetItemPositionComparer, Ptc.Controls.Worksheet")]
 public partial class WorksheetItemPositionComparer : global::Quire.Controls.Whiteboard.PositionComparer, global::Quire.Controls.Whiteboard.IWhiteboardItemPositionComparer, global::System.Collections.Generic.IComparer<global::Quire.Controls.Core.IWhiteboardItem>, global::System.Collections.Generic.IComparer<global::System.Windows.Point>
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Worksheet.IWorksheetItemManager ItemManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Compare(global::Quire.Controls.Core.IWhiteboardItem itemOne, global::Quire.Controls.Core.IWhiteboardItem itemTwo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public WorksheetItemPositionComparer() { }
+
 }

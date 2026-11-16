@@ -1,6 +1,6 @@
 # Lane Quire.Controls.Worksheet
 
-- Owner: task_a715de0c8d0f
+- Owner: task_dd83619a6812
 - Branch: feature/controls-worksheet-stubs-agy-20261116
 - Worktree: C:/Users/DuyDang/orca/workspaces/Quire/lane-quire-controls-worksheet
 
@@ -47,7 +47,26 @@
   - `Quire.Controls.Worksheet.WorksheetRegionsInfo`: `_isScriptableControlExists`, `get_IsScriptableControlExists`, `set_IsScriptableControlExists`
   - `Quire.Controls.Worksheet.PageBodyViewModel`: `.ctor`, `GetChildItemFromLocation`
 - Release IL: PASS; 214 checked; 0 failures.
-- Landed commit: (in-progress)
+- Landed commit: `43a42ae89cfd313d11b33215893a9d94944ca324`
 - Parked members:
   - `Quire.Controls.Worksheet.CollapsibleAreaHeightConverter`: blocked by missing project reference to `Quire.Controls.CollapsibleArea` in `Quire.Controls.Worksheet.csproj`.
 - Remaining mismatches: none in this batch (3025 stubs remaining in Quire.Controls.Worksheet).
+
+## Batch 5 — ItemLocationWorksheetStrategyHelper, PrintGridSettings, MouseUtilities, SwitchToDraftModeButtonAdorner, ZombieAdorner, DragZombieAdorner, WorksheetItemPositionComparer, SavedDateControl, FilePathConverter, HeaderFooterSelectorConverter
+
+- Members:
+  - `Quire.Controls.Worksheet.ItemLocationWorksheetStrategyHelper`: `GetItemContentClipping`
+  - `Quire.Controls.Worksheet.PrintGridSettings`: `MajorLinesThickness`, `MinorLinesThickness`, `MajorLinesColor`, `MinorLinesColor`, `FrameColor`
+  - `Quire.Controls.Worksheet.MouseUtilities`: `Win32Point.X`, `Win32Point.Y`, `GetCursorPos`, `GetMousePosition`, `.ctor`
+  - `Quire.Controls.Worksheet.SwitchToDraftModeButtonAdorner`: `_rect`, `.ctor`, `MeasureOverride`, `ArrangeOverride`
+  - `Quire.Controls.Worksheet.ZombieAdorner`: `Visual`, `_bounds`, `.ctor`, `OnRender`
+  - `Quire.Controls.Worksheet.DragZombieAdorner`: `_childBoundaries`, `_visual`, `.ctor`, `OnRender`
+  - `Quire.Controls.Worksheet.WorksheetItemPositionComparer`: `ItemManager`, `Compare`, `.ctor`
+  - `Quire.Controls.Worksheet.SavedDateControl`: `GetRegionPersistentData`, `SetRegionPersistentData`, `.ctor`
+  - `Quire.Controls.Worksheet.FilePathConverter`: `Convert`, `ConvertBack`, `.ctor`
+  - `Quire.Controls.Worksheet.HeaderFooterSelectorConverter`: `Convert`, `ConvertBack`, `.ctor`
+- Release IL: PASS; 233 checked; 0 failures.
+- Landed commit: (in-progress)
+- Parked members:
+  - `Quire.Controls.Worksheet.CollapsibleAreaHeightConverter`: blocked by missing project reference to `Quire.Controls.CollapsibleArea` in `Quire.Controls.Worksheet.csproj`.
+- Remaining mismatches: none in this batch (3007 stubs remaining in Quire.Controls.Worksheet).

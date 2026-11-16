@@ -11,10 +11,5 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.SavedDateControl, Ptc.Controls.Worksheet")]
 public partial class SavedDateControl : global::Quire.Controls.Worksheet.TemplatedTextBox, global::Quire.Controls.Worksheet.ISavedDateControl, global::Quire.Controls.Worksheet.ITemplatedTextBox, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Core.ITextFormatOwner, global::Quire.Core.ICurrentTextFormatProperty, global::Quire.Core.ITextFormatCreation
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => base.GetRegionPersistentData(s11NProvider);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => base.SetRegionPersistentData(d11NProvider, data);
-    [global::Quire.Mirror.MirrorStub]
-    public SavedDateControl() { }
+
 }

@@ -11,14 +11,5 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.PrintGridSettings, Ptc.Controls.Worksheet")]
 public static partial class PrintGridSettings
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static double MajorLinesThickness;
-    [global::Quire.Mirror.MirrorStub]
-    public static double MinorLinesThickness;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Color MajorLinesColor;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Color MinorLinesColor;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Color FrameColor;
+
 }

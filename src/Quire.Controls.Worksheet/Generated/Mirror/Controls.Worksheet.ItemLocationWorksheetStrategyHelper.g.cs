@@ -11,6 +11,5 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.ItemLocationWorksheetStrategyHelper, Ptc.Controls.Worksheet")]
 public static partial class ItemLocationWorksheetStrategyHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Nullable<global::System.Windows.Rect> GetItemContentClipping(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem, global::System.Windows.Rect contentPartRect, int partCount, out global::System.Nullable<global::System.Windows.Rect> stickingPartRect, global::System.Func<global::Quire.Controls.Core.IWhiteboardItem, int, global::System.Nullable<global::System.Windows.Rect>> getItemBoundsAndRelativePartLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
 }

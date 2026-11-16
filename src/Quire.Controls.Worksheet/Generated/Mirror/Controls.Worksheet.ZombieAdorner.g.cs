@@ -11,12 +11,5 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.ZombieAdorner, Ptc.Controls.Worksheet")]
 internal partial class ZombieAdorner : global::System.Windows.Documents.Adorner
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Media.VisualBrush Visual;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Rect _bounds;
-    [global::Quire.Mirror.MirrorStub]
-    public ZombieAdorner(global::System.Windows.UIElement adornedElement, global::System.Windows.Media.VisualBrush adornerContents, global::System.Windows.Rect bounds) : base(default(global::System.Windows.UIElement)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
+
 }

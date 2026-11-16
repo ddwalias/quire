@@ -11,19 +11,5 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.MouseUtilities, Ptc.Controls.Worksheet")]
 public partial class MouseUtilities
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static bool GetCursorPos(ref global::Quire.Controls.Worksheet.MouseUtilities.Win32Point pt) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Point GetMousePosition(global::System.Windows.Media.Visual relativeTo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public MouseUtilities() { }
 
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.MouseUtilities+Win32Point, Ptc.Controls.Worksheet")]
-    private partial struct Win32Point
-    {
-        [global::Quire.Mirror.MirrorStub]
-        public int X;
-        [global::Quire.Mirror.MirrorStub]
-        public int Y;
-    }
 }
