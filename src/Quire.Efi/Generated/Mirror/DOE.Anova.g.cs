@@ -12,53 +12,9 @@ namespace Quire.DOE;
 public partial class Anova : global::Quire.DOE.DoeAnlyz
 {
     [global::Quire.Mirror.MirrorStub]
-    private int m_blocks_df;
-    [global::Quire.Mirror.MirrorStub]
-    private double m_blocks_ssb;
-    [global::Quire.Mirror.MirrorStub]
-    private double m_blocks_msb;
-    [global::Quire.Mirror.MirrorStub]
-    private int m_dfe;
-    [global::Quire.Mirror.MirrorStub]
-    private double m_sse;
-    [global::Quire.Mirror.MirrorStub]
-    private double m_mse;
-    [global::Quire.Mirror.MirrorStub]
-    private int m_dft;
-    [global::Quire.Mirror.MirrorStub]
-    private double m_sst;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mcd.MatVal m_T;
-    [global::Quire.Mirror.MirrorStub]
-    private int m_neffects;
-    [global::Quire.Mirror.MirrorStub]
-    private int m_nYdups;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_is_2level;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_is_fullfact;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.Dictionary<int[], double> m_effectSS;
-    [global::Quire.Mirror.MirrorStub]
-    protected Anova() { }
-    [global::Quire.Mirror.MirrorStub]
-    public Anova(global::Quire.Mcd.MatVal A, global::Quire.Mcd.MatVal Y) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void setupMainFactors(bool doYstats) => base.setupMainFactors(doYstats);
-    [global::Quire.Mirror.MirrorStub]
     private void analizeDesignMarix() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void anovaTable(int key) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void doERROR() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool anovaTable(out global::Quire.Mcd.MatVal table, string effects) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool anovaTable(out global::Quire.Mcd.MatVal table, int order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void anovaMain() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void calcFactorAnova(global::Quire.DOE.Anova.FactorAnova effect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private int[] l2rmap(int[] f, int[] l) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -66,17 +22,9 @@ public partial class Anova : global::Quire.DOE.DoeAnlyz
     [global::Quire.Mirror.MirrorStub]
     private double effect_ssb(int[] f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private double[] anova_effect(int[] f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private double[] anovaEffect(int[] f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private int anova_interactions(int order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private int anova_interactions(string[] effects) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool doBLOCKS() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private double runsmean(int[] runs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private double anova_effectn(int[] f, int[] l) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -85,24 +33,10 @@ public partial class Anova : global::Quire.DOE.DoeAnlyz
     [global::Quire.Mirror.MirrorOf("DOE.Anova+FactorAnova, efisixsigma_")]
     private partial class FactorAnova : global::Quire.DOE.DoeAnlyz.FactorInfo
     {
-        [global::Quire.Mirror.MirrorStub]
-        public int m_df;
-        [global::Quire.Mirror.MirrorStub]
-        public double m_msb;
-        [global::Quire.Mirror.MirrorStub]
-        public double m_ssb;
-        [global::Quire.Mirror.MirrorStub]
-        public FactorAnova() { }
     }
 
     [global::Quire.Mirror.MirrorOf("DOE.Anova+vectorComparer, efisixsigma_")]
     public partial class vectorComparer : global::System.Collections.Generic.IEqualityComparer<int[]>
     {
-        [global::Quire.Mirror.MirrorStub]
-        public bool Equals(int[] x, int[] y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public int GetHashCode(int[] x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public vectorComparer() { }
     }
 }
