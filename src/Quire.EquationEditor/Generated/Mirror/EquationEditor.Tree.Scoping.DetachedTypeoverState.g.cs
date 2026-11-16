@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.Tree.Scoping;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Scoping.DetachedTypeoverState, Ptc.EquationEditor")]
 public partial class DetachedTypeoverState
 {
-    [global::Quire.Mirror.MirrorStub]
-    public DetachedTypeoverState(global::Quire.EquationEditor.Tree.Scoping.TypeoverState typeoverState) { }
 }

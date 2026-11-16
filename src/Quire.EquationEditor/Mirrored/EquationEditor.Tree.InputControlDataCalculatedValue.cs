@@ -12,52 +12,65 @@ public abstract partial class InputControlDataCalculatedValue
     private bool l;
     private string m;
 
-    public virtual InputControlEngineTypes EngineType
+    public InputControlEngineTypes EngineType
     {
         get => f;
         set => f = value;
     }
 
-    public virtual string EngineError
+    public string EngineError
     {
         get => g;
         set => g = value;
     }
 
-    public virtual ScriptErrorType ErrorType
+    public ScriptErrorType ErrorType
     {
         get => h;
         set => h = value;
     }
 
-    public virtual double SelectedValueIndex
+    public double SelectedValueIndex
     {
         get => i;
         set => i = value;
     }
 
-    public virtual System.Collections.Generic.IList<object> SelectedCalculatedValue
+    public System.Collections.Generic.IList<object> SelectedCalculatedValue
     {
         get => j;
         set => j = value;
     }
 
-    public virtual string RL
+    public string RL
     {
         get => k;
         set => k = value;
     }
 
-    public virtual bool IsNeedsCalculate
+    public bool IsNeedsCalculate
     {
         get => l;
         set => l = value;
     }
 
-    public virtual string MathNodeName
+    public string MathNodeName
     {
         get => m;
         set => m = value;
+    }
+
+    public bool HasCalculatedValue
+    {
+        get
+        {
+            System.Collections.Generic.IList<object> selectedCalculatedValue = SelectedCalculatedValue;
+            if (selectedCalculatedValue != null)
+            {
+                return selectedCalculatedValue.Count > 0;
+            }
+            return false;
+        }
     }
 
     protected InputControlDataCalculatedValue()

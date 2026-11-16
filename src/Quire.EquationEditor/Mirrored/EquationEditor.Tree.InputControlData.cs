@@ -5,9 +5,16 @@ public abstract partial class InputControlData
     // Obfuscated original field names: the Release IL keeps them.
     private Quire.Controls.Core.InputControlTypes a;
     private System.Windows.Size b;
-    private string c;
-    private string d;
-    private double e;
+    private string c = System.Windows.Media.Colors.Transparent.ToString();
+    private string d = System.Windows.Media.Colors.Black.ToString();
+    private double e = 14.0;
+
+    protected InputControlData()
+    {
+    }
+
+    public abstract object Clone();
+    public abstract bool IsEquivalentTo(IInputControlData other);
 
     public Quire.Controls.Core.InputControlTypes InputControlType
     {

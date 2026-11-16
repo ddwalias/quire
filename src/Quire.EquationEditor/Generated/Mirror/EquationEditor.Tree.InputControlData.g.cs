@@ -11,10 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.InputControlData, Ptc.EquationEditor")]
 public abstract partial class InputControlData : global::Quire.EquationEditor.Tree.IInputControlData, global::System.ICloneable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract object Clone();
-    [global::Quire.Mirror.MirrorStub]
-    public abstract bool IsEquivalentTo(global::Quire.EquationEditor.Tree.IInputControlData other);
-    [global::Quire.Mirror.MirrorStub]
-    protected InputControlData() { }
 }

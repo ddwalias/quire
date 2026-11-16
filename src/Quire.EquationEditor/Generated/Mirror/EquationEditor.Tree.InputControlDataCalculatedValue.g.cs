@@ -11,6 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.InputControlDataCalculatedValue, Ptc.EquationEditor")]
 public abstract partial class InputControlDataCalculatedValue : global::Quire.EquationEditor.Tree.InputControlData, global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue, global::Quire.EquationEditor.Tree.IInputControlData, global::System.ICloneable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasCalculatedValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

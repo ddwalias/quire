@@ -1,7 +1,7 @@
 # Quire.EquationEditor lane checkpoint
 
-- Owner: EquationEditor dispatched worker (task_606ef2dcbd2f)
-- Branch: `feature/equation-editor-stubs-batch2`
+- Owner: EquationEditor dispatched worker (task_bf545bfebca5)
+- Branch: `feature/equation-editor-stubs-batch3`
 - Assembly: `Quire.EquationEditor` (managed members, `src/Quire.EquationEditor`)
 
 ## Batch 1 — Native.PtcEquationEditor members (a7, o, bf, au, az, d, a)
@@ -29,5 +29,18 @@
   - `EquationEditor.Tree.RadioButtonScriptableControlData`: `Clone()` (base calls, Orientation, FlowDirection, [SkipLocalsInit])
   - `EquationEditor.Tree.SliderScriptableControlData`: `.ctor()` (field initializers, [SkipLocalsInit]), `Clone()` (base calls, Orientation, TickPlacement, etc., [SkipLocalsInit])
   - `EquationEditor.Tree.TextBoxScriptableControlData`: `Clone()` (base calls, AcceptsReturn, IsReadOnly, Border, TextAlignment, [SkipLocalsInit])
+- Landed commit: `fd411405927fc1c722571e760570b092e36c2c1c`
 - Report: full `--project Quire.EquationEditor` gate PASS, 871 checked, 0 failures.
 - Remaining mismatches: 0 in completed types; remaining unbatched stubs in other types.
+
+## Batch 3 — InputControlData, InputControlDataCalculatedValue, DetachedTypeoverState
+
+- Members:
+  - `EquationEditor.Tree.Scoping.DetachedTypeoverState`: `.ctor(TypeoverState)` ([SkipLocalsInit])
+  - `EquationEditor.Tree.InputControlDataCalculatedValue`: `HasCalculatedValue`, unvirtualized property implementations for non-virtual call dispatch matching Mathcad IL
+  - `EquationEditor.Tree.InputControlData`: `protected InputControlData()` constructor with color/size initializers and abstract `Clone()`, `IsEquivalentTo(IInputControlData)`
+- Report: full `--project Quire.EquationEditor` gate PASS, 874 checked, 0 failures.
+- Parked members (exact blockers):
+  - `Native.PtcEquationEditor` obfuscated types (`a-z`, `ao`, `ae`, `br`, `q`, `s`, `r`) and dependent callers (`ComboBoxMathCreator.CreateUnitMath`, `InputControlNodeCreator`): Field/method name clash blocker. MirrorGen emits `_` suffix on fields that share names with methods/properties in the same type to satisfy C# CS0102, causing token mismatch in MethodAudit IL comparison.
+  - `NearestNeighborSelector.SelectNeighbors`: Switch temporary local allocated at slot 0 in Roslyn vs slot 3 in Mathcad IL; parked pending maintainer local-ordering solution.
+- Remaining mismatches: 0 in completed types; remaining unbatched/parked stubs in other types.
