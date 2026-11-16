@@ -12,9 +12,5 @@ namespace Quire.Microsoft.Office.Interop.Excel;
 public partial interface AppEvents_Event
 {
     [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Microsoft.Office.Interop.Excel.AppEvents_WorkbookOpenEventHandler WorkbookOpen { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Microsoft.Office.Interop.Excel.AppEvents_WorkbookActivateEventHandler WorkbookActivate { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
     void _VtblGap1_16() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,7 +12,5 @@ namespace Quire.Microsoft.Office.Interop.Excel;
 public partial interface Areas : global::System.Collections.IEnumerable
 {
     [global::Quire.Mirror.MirrorStub]
-    int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     void _VtblGap1_3() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

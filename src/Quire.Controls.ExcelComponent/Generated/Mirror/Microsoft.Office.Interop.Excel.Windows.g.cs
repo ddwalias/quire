@@ -12,11 +12,6 @@ namespace Quire.Microsoft.Office.Interop.Excel;
 public partial interface Windows : global::System.Collections.IEnumerable
 {
     [global::Quire.Mirror.MirrorStub]
-    int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::System.Runtime.CompilerServices.IndexerName("_Default")]
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Microsoft.Office.Interop.Excel.Window this[object Index] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     void _VtblGap1_4() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void _VtblGap2_2() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -13,8 +13,4 @@ public partial interface AppEvents
 {
     [global::Quire.Mirror.MirrorStub]
     void _VtblGap1_8() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void WorkbookOpen(global::Quire.Microsoft.Office.Interop.Excel.Workbook Wb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void WorkbookActivate(global::Quire.Microsoft.Office.Interop.Excel.Workbook Wb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

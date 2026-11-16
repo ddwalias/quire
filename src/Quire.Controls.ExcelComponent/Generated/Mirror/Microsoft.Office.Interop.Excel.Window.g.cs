@@ -12,7 +12,5 @@ namespace Quire.Microsoft.Office.Interop.Excel;
 public partial interface Window
 {
     [global::Quire.Mirror.MirrorStub]
-    bool Visible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     void _VtblGap1_77() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

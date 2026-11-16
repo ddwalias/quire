@@ -11,13 +11,8 @@ namespace Quire.Microsoft.Office.Interop.Excel;
 [global::Quire.Mirror.MirrorOf("Microsoft.Office.Interop.Excel.Sheets, Ptc.Controls.ExcelComponent")]
 public partial interface Sheets : global::System.Collections.IEnumerable
 {
-    [global::System.Runtime.CompilerServices.IndexerName("_Default")]
-    [global::Quire.Mirror.MirrorStub]
-    object this[object Index] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     void _VtblGap1_10() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.IEnumerator GetEnumerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void _VtblGap2_7() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

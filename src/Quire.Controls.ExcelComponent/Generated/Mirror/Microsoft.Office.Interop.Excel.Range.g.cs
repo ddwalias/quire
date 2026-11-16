@@ -11,25 +11,6 @@ namespace Quire.Microsoft.Office.Interop.Excel;
 [global::Quire.Mirror.MirrorOf("Microsoft.Office.Interop.Excel.Range, Ptc.Controls.ExcelComponent")]
 public partial interface Range : global::System.Collections.IEnumerable
 {
-    [global::System.Runtime.CompilerServices.IndexerName("Address")]
-    [global::Quire.Mirror.MirrorStub]
-    string this[object RowAbsolute, object ColumnAbsolute, global::Quire.Microsoft.Office.Interop.Excel.XlReferenceStyle ReferenceStyle, object External, object RelativeTo] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Microsoft.Office.Interop.Excel.Areas Areas { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Microsoft.Office.Interop.Excel.Range Columns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    object Height { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Microsoft.Office.Interop.Excel.Range Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    object Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    object Width { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Microsoft.Office.Interop.Excel.Worksheet Worksheet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     void _VtblGap1_6() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -48,8 +29,6 @@ public partial interface Range : global::System.Collections.IEnumerable
     void _VtblGap8_4() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void _VtblGap9_1() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object Select() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void _VtblGap10_18() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
