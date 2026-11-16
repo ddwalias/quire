@@ -7,15 +7,15 @@
   - `ca11a8daa`: MatrixLayoutManager, LayoutItem, TextLayoutItem, VisualDescriptorTableBase, EditableComboBoxLayoutManager, EquationCommands, MathcadSettings, and TestHelper stubs (34 members, PASS; 2465 checked).
   - `8fec9cd98`: SpecTableCellStyleKeys, EquationControlErrorMessages, Comparers, CaretAdorner, HorizontalRightArrow, Overline, and GestureManager (23 members, PASS; 2520 checked).
   - `63059677d`: ScriptEngineParams, InputControl interfaces, Node iterators, and Gradient operator (127 stubs, PASS; 2555 checked).
+  - `25275996c`: SliderViewModel, SliderPropertiesEditorViewModel, SliderModel, SliderControl, InputScriptingControlWithInputCommands, and InputControl (26 members, PASS; 2581 checked).
 - Selected members:
-  - `Controls.InputControls.SliderViewModel`: `Model`, `.ctor(IInputControlDataCalculatedValue)`, `HandleModelPropertyChanged`, `SwapDimensions`, `InvertSliderChanged` event
-  - `Controls.InputControls.SliderPropertiesEditorViewModel`: `Model`, `_ticks`, `.ctor(IInputControlEditorModel)`, `HandleModelPropertyChanged`, `TickPlacement`, `Ticks`, `SmallChange`, `LargeChange`, `Border`, `Invert`, `ShowMinMax`, `Minimum`, `Maximum`, `TickFrequency`, `Orientation`
-  - `Controls.InputControls.SliderModel`: `_sliderValue`, `Data`, `.ctor(IInputControlDataCalculatedValue)`, `SelectedValue`, `Apply`, `HandlePostInputFieldResultChanged`, `DefaultScript`, `Position`, `Orientation`, `TickPlacement`, `TickFrequency`, `SmallChange`, `LargeChange`, `Minimum`, `Maximum`, `ShowMinMax`, `Invert`, `IsSnapToTickEnabled`, `Border`, `Interval`
-  - `Controls.InputControls.SliderControl`: `Slider`, `_contentLoaded`, `.ctor(IInputControlDataCalculatedValue)`, `ViewModel`, `OnPreviewMouseRightButtonDown`, `OnInvalidateVisuals`, `InitializeComponent`, `IComponentConnector.Connect`
-  - `Controls.InputControls.InputScriptingControlWithInputCommands`: `_typeOfThis`, `AddScriptingInputField`, `RemoveScriptingInputField`, `AddScriptingOutputField`, `.ctor()`
-  - `Controls.InputControls.InputControl`: `_viewModel`, `.ctor()`, `ViewModel`, `EditingCompleted`, `OnGotKeyboardFocus`, `OnPreviewMouseLeftButtonDown`, `OnPreviewKeyDown`, `Resize`
+  - `Controls.InputControls.PrimeControlClearScriptEngine`: `CanExecEvent`, `ExecuteScript`, `CanExecuteScript`, `RunEvent`, `RunEventWithInputsOutputs`, `.ctor()`
+  - `Controls.InputControls.TextBoxPropertiesEditorViewModel`: `Model`, `.ctor(IInputControlEditorModel)`, `HandleModelPropertyChanged`, `Text`, `AcceptsReturn`, `IsReadOnly`, `TextAlignment`
+  - `Controls.InputControls.RadioButtonPropertiesEditor`: `_contentLoaded`, `RadioButtonViewModel`, `.ctor(IInputControlEditorModel)`, `DataGrid_OnRowEditEnding`, `DataGrid_OnPreviewKeyDown`, `InitializeComponent`, `IComponentConnector.Connect`
+  - `Controls.InputControls.RadioButtonPropertiesEditorViewModel`: `_dataSourceItems`, `Model`, `.ctor(IInputControlEditorModel)`, `HandleModelPropertyChanged`, `HandleButtonsChanged`, `ApplyScript`, `Orientation`, `DataSourceItems`, `RightToLeft`, `Values`, and nested `<>c` closures
+  - `Controls.InputControls.RadioButtonControl`: `listView`, `_contentLoaded`, `.ctor(IInputControlDataCalculatedValue, RadioButtonEventAggregator)`, `ViewModel`, `ViewModelPropertyChanged`, `OnPreviewMouseRightButtonDown`, `OnSelectionChanged`, `InitializeComponent`, `IComponentConnector.Connect`
 - Parked members:
   - `Controls.Internal.ConjugateLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3` on identical 115 IL instructions.
   - `Controls.Internal.VectorizationLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3` on identical 115 IL instructions.
   - `Controls.InputControls.ComboBoxRow.AllButFirstCell`: parked due to Roslyn optimizer in Release mode eliminating `stloc.0/ldloc.0` return of local variable, whereas Mathcad's compiler emitted `stloc.0; ldloc.0; ret`.
-- Release IL: PASS; 2581 checked (0 failures, 2345 unfinished stubs remaining).
+- Release IL: PASS; 2626 checked (0 failures, 2304 unfinished stubs remaining).

@@ -11,24 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.RadioButtonPropertiesEditorViewModel, Ptc.Controls.EquationControl")]
 internal partial class RadioButtonPropertiesEditorViewModel : global::Quire.Controls.InputControls.InputControlEditorViewModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.InputControls.DataListItem> _dataSourceItems;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.InputControls.IRadioButtonPropertiesEditorModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.Orientation Orientation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.InputControls.DataListItem> DataSourceItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool RightToLeft { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.ObjectModel.Collection<string> Values { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public RadioButtonPropertiesEditorViewModel(global::Quire.Controls.InputControls.IInputControlEditorModel model) : base(default(global::Quire.Controls.InputControls.IInputControlEditorModel)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => base.HandleModelPropertyChanged(sender, e);
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleButtonsChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void ApplyScript() => base.ApplyScript();
 }

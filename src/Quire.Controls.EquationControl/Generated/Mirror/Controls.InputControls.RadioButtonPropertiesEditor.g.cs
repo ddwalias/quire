@@ -11,18 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.RadioButtonPropertiesEditor, Ptc.Controls.EquationControl")]
 public partial class RadioButtonPropertiesEditor : global::System.Windows.Controls.UserControl, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.InputControls.RadioButtonPropertiesEditorViewModel RadioButtonViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public RadioButtonPropertiesEditor(global::Quire.Controls.InputControls.IInputControlEditorModel controlModel) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void DataGrid_OnRowEditEnding(object sender, global::System.Windows.Controls.DataGridRowEditEndingEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DataGrid_OnPreviewKeyDown(object sender, global::System.Windows.Input.KeyEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

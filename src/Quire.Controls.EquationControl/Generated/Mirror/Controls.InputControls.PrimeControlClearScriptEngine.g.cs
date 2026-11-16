@@ -11,16 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.PrimeControlClearScriptEngine, Ptc.Controls.EquationControl")]
 public abstract partial class PrimeControlClearScriptEngine : global::Quire.Controls.InputControls.InputControlClearScriptEngine
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override bool CanExecEvent(string eventCommand) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool ExecuteScript(string script) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool CanExecuteScript(out string exception) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void RunEvent(string eventName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void RunEventWithInputsOutputs(string eventName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected PrimeControlClearScriptEngine() { }
 }
