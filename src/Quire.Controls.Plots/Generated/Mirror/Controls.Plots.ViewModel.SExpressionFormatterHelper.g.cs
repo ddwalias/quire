@@ -11,14 +11,4 @@ namespace Quire.Controls.Plots.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.SExpressionFormatterHelper, Ptc.Controls.Plots")]
 public partial class SExpressionFormatterHelper : global::Quire.Controls.Core.IFormatterHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string Mult(string left, string right) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string Exponent(string left, string right) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string Neg(string arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string Percent(string arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public SExpressionFormatterHelper() { }
 }

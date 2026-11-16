@@ -11,28 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.Tools;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.Tools.SpinTrackball, Ptc.Controls.Plots")]
 public partial class SpinTrackball : global::Quire.Controls.Plots.Plot3D.Tools.BaseTrackball
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Media3D.AxisAngleRotation3D _cameraRotation;
-    [global::Quire.Mirror.MirrorStub]
-    internal static readonly double Radius;
-    [global::Quire.Mirror.MirrorStub]
-    private const double RadiusSquared = 2d;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Media3D.Vector3D _lastCapturedPoint3D;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Media3D.Quaternion _rotationAtCaptureStart;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Media3D.AxisAngleRotation3D CameraRotation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.Media3D.Transform3D InitializeTransform() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool TrackStart(global::System.Windows.Point current, bool useTimer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool Track(global::System.Windows.Point current) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool TrackEnd(global::System.Windows.Point current) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool ViewportToTrackball(global::System.Windows.Point point, out global::System.Windows.Media.Media3D.Vector3D result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public SpinTrackball() { }
 }

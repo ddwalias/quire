@@ -11,16 +11,4 @@ namespace Quire.Controls.Plots.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.PlotConverterHelper, Ptc.Controls.Plots")]
 internal partial class PlotConverterHelper : global::Quire.Calculation.Core.Trace2DResults.Trace2DResultConverterHelperBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Plots.Model.TraceModel _plotTraceOwner;
-    [global::Quire.Mirror.MirrorStub]
-    public override bool DiscreteValuesAllowed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool RangeUnitsAllowed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override int MaxNumberOf2DPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public PlotConverterHelper(global::Quire.Controls.Plots.Model.TraceModel resultsOwner) : base(default(global::Quire.Calculation.Core.Trace2DResults.ITrace2DResultOwner)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ValidateNumberOfPointsLimit(int numberOfPointsInResult, global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => base.ValidateNumberOfPointsLimit(numberOfPointsInResult, traceType);
 }

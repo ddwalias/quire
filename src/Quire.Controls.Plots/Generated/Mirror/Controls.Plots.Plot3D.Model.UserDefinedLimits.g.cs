@@ -11,18 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.Model.UserDefinedLimits, Ptc.Controls.Plots")]
 internal partial class UserDefinedLimits
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Interval _xInterval;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Interval _yInterval;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Interval _zInterval;
-    [global::Quire.Mirror.MirrorStub]
-    internal string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Interval CreateUndefinedInterval() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void Set(double xStart, double xEnd, double yStart, double yEnd, double zStart, double zEnd, out bool xLimitsChanged, out bool yLimitsChanged, out bool zLimitsChanged) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public UserDefinedLimits() { }
 }

@@ -11,30 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotItemAdorner, Ptc.Controls.Plots")]
 internal partial class PlotItemAdorner : global::System.Windows.Documents.Adorner
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Controls.ContentPresenter _plotItemContentPresenter;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Documents.AdornerLayer _adornerLayer;
-    [global::Quire.Mirror.MirrorStub]
-    private double _left;
-    [global::Quire.Mirror.MirrorStub]
-    private double _top;
-    [global::Quire.Mirror.MirrorStub]
-    protected override int VisualChildrenCount { get => base.VisualChildrenCount; }
-    [global::Quire.Mirror.MirrorStub]
-    public double Left { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Top { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public PlotItemAdorner(global::System.Windows.UIElement PlotItemVisualBrushRectangle, global::System.Windows.UIElement _adorneredElement) : base(default(global::System.Windows.UIElement)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.Visual GetVisualChild(int index) => base.GetVisualChild(index);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdatePosition() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Media.GeneralTransform GetDesiredTransform(global::System.Windows.Media.GeneralTransform transform) => base.GetDesiredTransform(transform);
 }

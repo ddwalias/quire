@@ -11,24 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.Tools;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.Tools.BasePanZoomTrackball, Ptc.Controls.Plots")]
 public abstract partial class BasePanZoomTrackball : global::Quire.Controls.Plots.Plot3D.Tools.BaseTrackball
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Media.Media3D.TranslateTransform3D TranslateTransform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Media.Media3D.TranslateTransform3D TranslateTransformAtTrackStart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected void ScaleAndAddTranslation(global::System.Windows.Media.Media3D.Vector3D translation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.Media3D.Transform3D InitializeTransform() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool TrackStart(global::System.Windows.Point current, bool useTimer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract int GetNumTicksForScaleClick();
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool TrackEnd(global::System.Windows.Point current) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void ApplyScaleWithCenter(double requestedScale, global::System.Windows.Point screenAreaCenter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Nullable<global::System.Windows.Media.Media3D.Point3D> PerformHitTest(global::System.Windows.Point position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected BasePanZoomTrackball() { }
 }

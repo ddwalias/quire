@@ -59,6 +59,4 @@ public static partial class PlotErrorCodes
     public const string UnitsAreNotSupportedInRange = "PlotControl.Error.UnitsAreNotSupportedInRange";
     [global::Quire.Mirror.MirrorStub]
     public const string UnsupportedType = "PlotControl.Error.UnsupportedType";
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsLimitsCalculationRelatedCustomError(string errorCode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -49,8 +49,4 @@ internal static partial class PlotDataObjectCreator
     private static global::Quire.PersistentDataObjects.traceStyleEnumCommonType ConvertTraceType(global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.PersistentDataObjects.traceSymbolType ConvertSymbol(global::Quire.Controls.Plots.Presenter.TraceSymbol traceSymbol) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.PersistentDataObjects.traceLineStyle ConvertLineStyle(global::Quire.Controls.Plots.Presenter.LineStyle lineStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Plots.Presenter.LineStyle ConvertLineStyle(global::Quire.PersistentDataObjects.traceLineStyle lineStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
