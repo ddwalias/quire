@@ -54,18 +54,6 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     private void SetOleContainerItem(global::Quire.Controls.ExcelComponent.View.IOleContainerItem container) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private bool ExpandSectionIfNeeded(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool ExpandSectionIfNeeded(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DeselectItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void SetupCommandBindings() => base.SetupCommandBindings();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleChildItemGotFocus(global::Quire.Controls.Core.IWhiteboardItem item) => base.HandleChildItemGotFocus(item);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.Controls.Whiteboard.WhiteboardViewModel.SeparateOverlappedItemsCommand CreateSeparateOverlappedItemsCommand(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToSeparate, global::Quire.Dimension dimension) => base.CreateSeparateOverlappedItemsCommand(itemsToSeparate, dimension);
-    [global::Quire.Mirror.MirrorStub]
     protected override void ActivateItem(global::Quire.Controls.Core.IWhiteboardItem item) => base.ActivateItem(item);
     [global::Quire.Mirror.MirrorStub]
     protected override void SimulateItemClickAndFireActivated(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location, int numberOfClicks) => base.SimulateItemClickAndFireActivated(item, location, numberOfClicks);
@@ -73,8 +61,6 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     public override global::Quire.Controls.Whiteboard.WhiteboardViewModel.PasteItemsCommand GetPasteItemsCommand(string commandName, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> pasteItemsAtLocation) => base.GetPasteItemsCommand(commandName, pasteItemsAtLocation);
     [global::Quire.Mirror.MirrorStub]
     public override bool FindOncePrivate(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => base.FindOncePrivate(text, startFromCaret, direction, options, subscriptPositions);
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool IsValidInsertionPoint(global::System.Windows.Point pt) => base.IsValidInsertionPoint(pt);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Point GetNextIntersectionForMove(global::System.Windows.Point currentLocation, global::Quire.Direction direction) => base.GetNextIntersectionForMove(currentLocation, direction);
     [global::Quire.Mirror.MirrorStub]

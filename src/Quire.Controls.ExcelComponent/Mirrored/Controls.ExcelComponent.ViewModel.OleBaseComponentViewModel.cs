@@ -514,4 +514,81 @@ public abstract partial class OleBaseComponentViewModel
         SetIndicatorsDimensions();
         OutputSectionActualHeight = ContentSize.Height - OutputSectionActualTop;
     }
+
+    private bool ExpandSectionIfNeeded(IWhiteboardItem item)
+    {
+        return ExpandSectionIfNeeded(new IWhiteboardItem[1] { item });
+    }
+
+    private bool ExpandSectionIfNeeded(IEnumerable<IWhiteboardItem> items)
+    {
+        bool result = false;
+        if (!IsInputSectionVisible && InputItems.Any(items.Contains<IWhiteboardItem>))
+        {
+            SetInputSectionVisibilityState(bVisible: true, bMoveInsertionPoint: false);
+            result = true;
+        }
+        if (!IsOutputSectionVisible && OutputItems.Any(items.Contains<IWhiteboardItem>))
+        {
+            SetOutputSectionVisibilityState(bVisible: true, bMoveInsertionPoint: false);
+            result = true;
+        }
+        return result;
+    }
+
+    private void DeselectItems()
+    {
+        if (HasSelectedItems)
+        {
+            List<IWhiteboardItem> list = new List<IWhiteboardItem>();
+            IEnumerable<IWhiteboardItem> enumerable = InputItems.Intersect(SelectedItems);
+            IEnumerable<IWhiteboardItem> enumerable2 = OutputItems.Intersect(SelectedItems);
+            bool flag = !enumerable.IsNullOrEmpty();
+            bool flag2 = !enumerable2.IsNullOrEmpty();
+            bool flag3 = flag2 & flag;
+            if ((!IsInputSectionVisible & flag3) || (!IsOutputSectionVisible & flag3))
+            {
+                list.AddRange(SelectedItems);
+            }
+            else
+            {
+                if (!IsInputSectionVisible & flag)
+                {
+                    list.AddRange(enumerable);
+                }
+                if (!IsOutputSectionVisible & flag2)
+                {
+                    list.AddRange(enumerable2);
+                }
+            }
+            UnSelectItems(list);
+        }
+        if (ActiveItem != null && ((!IsInputSectionVisible && InputItems.Contains(ActiveItem)) || (!IsOutputSectionVisible && OutputItems.Contains(ActiveItem))))
+        {
+            ActiveItem = null;
+        }
+    }
+
+    protected override void SetupCommandBindings()
+    {
+        base.SetupCommandBindings();
+        CreateCommandBinding(ToggleInputSectionVisibility, ToggleInputSectionVisibilityCommand.Execute);
+        CreateCommandBinding(ToggleOutputSectionVisibility, ToggleOutputSectionVisibilityCommand.Execute);
+    }
+
+    protected override void HandleChildItemGotFocus(IWhiteboardItem item)
+    {
+        ExpandSectionIfNeeded(item);
+        base.HandleChildItemGotFocus(item);
+    }
+
+    protected override SeparateOverlappedItemsCommand CreateSeparateOverlappedItemsCommand(IEnumerable<IWhiteboardItem> itemsToSeparate, Dimension dimension)
+    {
+        return new SeparateOverlappedItemsCommand(this, itemsToSeparate, dimension, allowGrowthDownOrRight: true, OleComponentItemMgr);
+    }
+
+    protected override bool IsValidInsertionPoint(Point pt)
+    {
+        return !((IRestrictedAreaAlignmentGrid)_alignmentGrid).IsWithinRestrictedArea(pt);
+    }
 }
