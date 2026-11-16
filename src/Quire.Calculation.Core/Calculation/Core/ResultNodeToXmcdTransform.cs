@@ -128,11 +128,9 @@ public partial class ResultNodeToXmcdTransform
 
     private void WriteDisplayMatrixXml(IDisplayMatrixResultNode displayMatrix)
     {
-        if (!displayMatrix.Viewport.Size.Equals(displayMatrix.Size))
-        {
-            // Mathcad's Release IL branches on !Equals before writing the full matrix.
-        }
-        else
+        // The IL computes the negated comparison as a value before branching, so it is a local.
+        bool isPartial = !displayMatrix.Viewport.Size.Equals(displayMatrix.Size);
+        if (!isPartial)
         {
             WriteMatrixXml(displayMatrix);
             return;

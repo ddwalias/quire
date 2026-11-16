@@ -11,8 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.XmcdToIResultNodeTransform, Ptc.Calculation.Core")]
 public partial class XmcdToIResultNodeTransform : global::Quire.Calculation.Core.IStringToIResultNodeTransform
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Xml.Xsl.XslCompiledTransform _resultVectorUnescapingXslt;
-    [global::Quire.Mirror.MirrorStub]
-    private const string ErrorAttributeConversionToEnum = "Format error: The attribute '{0}' value:{1} in node '{2}' failed conversion.";
 }

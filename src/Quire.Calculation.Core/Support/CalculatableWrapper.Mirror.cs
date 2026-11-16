@@ -7,6 +7,8 @@ namespace Quire.Calculation.Core.Support;
 
 public partial class CalculatableWrapper
 {
+    private ICalculatable _wrappedCalculatable;
+
     [MirrorVerified("PtcCalculationCoreSupportCalculatableWrapperMechanicalDifferentialTests")]
     public virtual ICalculatable WrappedCalculatable
     {

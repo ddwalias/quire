@@ -7,4 +7,6 @@ public partial class SimpleResultNode
 {
     [MirrorVerified("PtcCalculationCoreSimpleResultNodeMechanicalDifferentialTests")]
     protected SimpleResultNode() { }
+
+    public abstract void Accept(IResultNodeVisitor visitor);
 }

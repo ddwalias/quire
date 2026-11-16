@@ -5,7 +5,7 @@ namespace Quire.Calculation.Core;
 
 public partial interface IEngineError
 {
-    string Message { get; }
+    string Message { get; set; }
 
     /// <summary>The identifier the error is about, if any; the editor highlights it.</summary>
     string? Symbol { get; }
@@ -103,7 +103,7 @@ public partial interface IEmptyResultNode : IResultNode;
 
 public partial interface IStringResultNode : IResultNode
 {
-    string Value { get; }
+    string Value { get; set; }
 }
 
 public partial interface IMatrixResultNode : IResultNode
@@ -163,6 +163,7 @@ public sealed record UnitedValueResultNode(double DisplayValue, IReadOnlyList<Un
 
 public sealed record StringResultNode(string Value) : IStringResultNode
 {
+    public string Value { get; set; } = Value;
     public ResultValueType ValueType => ResultValueType.String;
     public void Accept(IResultNodeVisitor visitor) => visitor.Visit(this);
 }

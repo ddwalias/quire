@@ -35,6 +35,11 @@ public partial class XmcdToIResultNodeTransform
     private readonly IResultNodeFactory _resultNodeFactory;
 
     [MirrorVerified("PtcCalculationCoreXmcdToIResultNodeTransformMechanicalDifferentialTests")]
+    private static readonly XslCompiledTransform _resultVectorUnescapingXslt;
+
+    private const string ErrorAttributeConversionToEnum = "Format error: The attribute '{0}' value:{1} in node '{2}' failed conversion.";
+
+    [MirrorVerified("PtcCalculationCoreXmcdToIResultNodeTransformMechanicalDifferentialTests")]
     public XmcdToIResultNodeTransform(IResultNodeFactory resultNodeFactory)
     {
         _resultNodeFactory = resultNodeFactory;

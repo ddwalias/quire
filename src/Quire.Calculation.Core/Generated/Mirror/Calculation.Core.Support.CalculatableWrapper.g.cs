@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core.Support;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Support.CalculatableWrapper, Ptc.Calculation.Core")]
 public partial class CalculatableWrapper : global::Quire.Calculation.Core.ICalcWithPriority, global::Quire.Calculation.Core.ICalculatable, global::System.IDisposable, global::Quire.Calculation.Core.Support.ICalculatableWrapper, global::Quire.Calculation.Core.ICanContainSymbolicCalculation
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.ICalculatable _wrappedCalculatable;
 }
