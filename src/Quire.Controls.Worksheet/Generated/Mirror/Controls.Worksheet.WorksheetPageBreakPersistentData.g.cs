@@ -12,7 +12,5 @@ namespace Quire.Controls.Worksheet;
 public partial class WorksheetPageBreakPersistentData : global::Quire.Controls.Worksheet.RegionPersistentData
 {
     [global::Quire.Mirror.MirrorStub]
-    public WorksheetPageBreakPersistentData(global::Quire.Controls.Core.IWorksheetPageBreak pageBreak) : base(default(global::System.Windows.UIElement)) { }
-    [global::Quire.Mirror.MirrorStub]
     public override object Accept(global::Quire.IVisitor visitor) => base.Accept(visitor);
 }

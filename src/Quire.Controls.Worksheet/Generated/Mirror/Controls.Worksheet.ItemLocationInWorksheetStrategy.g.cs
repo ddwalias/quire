@@ -11,26 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.ItemLocationInWorksheetStrategy, Ptc.Controls.Worksheet")]
 public partial class ItemLocationInWorksheetStrategy : global::Quire.Controls.Worksheet.IItemLocationStrategy
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Size _pageBodySize;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Worksheet.IWorksheetItemManager _worksheetItemManager;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Worksheet.IWorksheetPageManager _worksheetPageManager;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size GetPageBodySize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ItemLocationInWorksheetStrategy(global::Quire.Controls.Worksheet.IWorksheetPageManager worksheetPageManager) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point GetItemRectLocationInWhiteboard(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::System.Windows.Rect> GetItemClipping(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem, global::System.Windows.Rect contentBounds, out global::System.Nullable<global::System.Windows.Rect> stickingPartRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<global::System.Windows.Rect> GetItemClippingInternal(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem, int partIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual int GetPageIndex(global::System.Windows.Point topLeft) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void PrePrintUpdateWorksheetLayout(global::Quire.Controls.Worksheet.IWorksheetControl worksheet, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void PostPrintUpdateWorksheetLayout(global::Quire.Controls.Worksheet.IWorksheetControl worksheet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

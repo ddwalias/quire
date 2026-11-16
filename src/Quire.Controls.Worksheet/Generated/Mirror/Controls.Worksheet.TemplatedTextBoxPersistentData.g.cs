@@ -12,7 +12,5 @@ namespace Quire.Controls.Worksheet;
 public partial class TemplatedTextBoxPersistentData : global::Quire.Controls.Worksheet.RegionPersistentData
 {
     [global::Quire.Mirror.MirrorStub]
-    public TemplatedTextBoxPersistentData(global::Quire.Controls.Worksheet.TemplatedTextBox templatedTextBox) : base(default(global::System.Windows.UIElement)) { }
-    [global::Quire.Mirror.MirrorStub]
     public override object Accept(global::Quire.IVisitor visitor) => base.Accept(visitor);
 }
