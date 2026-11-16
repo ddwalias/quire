@@ -296,6 +296,9 @@ about 40 `Attachment`-derived constructors. The user chose to let parked functio
   is recorded with `native_targets.py --parked NAME` from a matching site, like any other entry.
 - **Checking:** every site must resolve to the entry's RVA. Its bytes are not compared and its own targets are not
   followed. A candidate may define its attempt, and the attempt is not reported as a match.
+- **Parked data (amended 2026-11-16):** a parked entry may instead be data, with a `size`. Every site must still
+  resolve to the entry's RVA, and the candidate must define the name as data of that size; its bytes are not compared.
+  Between 2026-11-14 and this amendment the RVA of a parked entry was not checked; that was a defect, not a rule.
 - **Visibility:** a run without `--symbol` lists each parked entry, as it lists toolchain entries. Record the source
   shape and flags tried for each one in the lane's checkpoint, as D25 requires before parking.
 - **Scope:** only a function D25 parks may be marked. Exported functions need no entry, because a reference to an
@@ -315,7 +318,7 @@ mode, which supersedes D25's parking for functions that a `/GL` build reproduces
   lengths, mnemonics and operand text once image addresses are set aside, and the same bytes where no image address is
   held. Each address is checked by what it refers to, with the per-object rules: local offsets, import names, export
   names, manifest entries by the candidate's map name (toolchain and parked entries by name alone), other functions
-  recursively, and other data by the content of the candidate's map symbol, with pointers in data followed through
+  recursively, and other data by the content of the candidate's map symbol (or of the original object, when that is longer), with pointers in data followed through
   both images' base relocations. Anything else is unverified and fails strictly.
 - **Gate:** a new or changed export must pass, and removing a passing one fails. An export counts as changed when
   anything it reaches changed: its instructions, or an internal function or datum it calls or reads, with addresses
