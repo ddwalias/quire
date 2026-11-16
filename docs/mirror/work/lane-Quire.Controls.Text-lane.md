@@ -1,5 +1,5 @@
-Owner: task_982d90c0d7cc
+Owner: task_df583442459c
 Branch: feature/codex-text-solveblock-lane
-Members: TextRegion content loader, delegate factory, connector, and Clone override.
-Release IL report: PASS; 546 checked; .mirror-cache/release-il-e224eee36e92/release-il.json.
-Remaining stubs: Text 390, SolveBlock 71. Parked: ContextMenuModifyHyperlinkCommandParameter.PropertyChanged; ToggleScriptUndoCommand constructor (evaluation-order mismatch at instruction #2).
+Members: HyperlinkDialog attempted; no batch landed.
+Release IL report: FAIL; constructor closure ordinal is b__7 in Quire but b__4 in Mathcad; report .mirror-cache/release-il-5a997f5d65b1/release-il.json.
+Remaining stubs: Text 390, SolveBlock 71. Parked: ContextMenuModifyHyperlinkCommandParameter.PropertyChanged; ToggleScriptUndoCommand constructor (evaluation-order mismatch at instruction #2); HyperlinkDialog constructor (closure ordinal mismatch).
