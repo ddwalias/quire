@@ -1,10 +1,43 @@
+using System.ComponentModel;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace Quire.Controls.InputControls;
 
-internal partial class SliderPropertiesEditorViewModel
+internal partial class SliderPropertiesEditorViewModel : InputControlEditorViewModel
 {
+    private bool _ticks;
+
     private ISliderPropertiesEditorModel Model => (ISliderPropertiesEditorModel)_model;
+
+    public SliderPropertiesEditorViewModel(IInputControlEditorModel model)
+        : base(model)
+    {
+        if (Model.TickPlacement != TickPlacement.None)
+        {
+            _ticks = true;
+        }
+    }
+
+    protected override void HandleModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case "Minimum":
+            case "Maximum":
+            case "ShowMinMax":
+            case "Invert":
+            case "Border":
+            case "SmallChange":
+            case "LargeChange":
+            case "Orientation":
+            case "TickPlacement":
+            case "TickFrequency":
+            case "Ticks":
+                OnPropertyChanged(e.PropertyName);
+                break;
+        }
+    }
 
     public Orientation Orientation
     {
@@ -28,6 +61,47 @@ internal partial class SliderPropertiesEditorViewModel
     {
         get => Model.LargeChange;
         set => Model.LargeChange = value;
+    }
+
+    public TickPlacement TickPlacement
+    {
+        get
+        {
+            if (Model.TickPlacement != TickPlacement.None && !_ticks)
+            {
+                _ticks = true;
+                OnPropertyChanged("Ticks");
+            }
+            return Model.TickPlacement;
+        }
+        set
+        {
+            Model.TickPlacement = value;
+            OnPropertyChanged("TickPlacement");
+            if (value == TickPlacement.None)
+            {
+                _ticks = false;
+                OnPropertyChanged("Ticks");
+            }
+        }
+    }
+
+    public bool Ticks
+    {
+        get => _ticks;
+        set
+        {
+            _ticks = value;
+            if (_ticks)
+            {
+                TickPlacement = TickPlacement.Both;
+            }
+            else
+            {
+                TickPlacement = TickPlacement.None;
+            }
+            OnPropertyChanged("Ticks");
+        }
     }
 
     public double TickFrequency

@@ -11,18 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.SliderModel, Ptc.Controls.EquationControl")]
 internal partial class SliderModel : global::Quire.Controls.InputControls.InputScriptableControlModelWithInputs, global::Quire.Controls.InputControls.ISliderPropertiesEditorModel, global::Quire.Controls.InputControls.IInputControlEditorScriptableModel, global::Quire.Controls.InputControls.IInputControlEditorModel, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    private double _sliderValue;
-    [global::Quire.Mirror.MirrorStub]
-    public override object SelectedValue { get => base.SelectedValue; }
-    [global::Quire.Mirror.MirrorStub]
-    public double Position { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public SliderModel(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue data) : base(default(global::Quire.Controls.InputControls.IInputControlEngineFactory), default(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Apply(string userScript, out object resultObject, out string exception, object[] inputs, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.Apply(userScript, out resultObject, out exception, inputs, engineParams);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandlePostInputFieldResultChanged(ref object valueIndex, object scriptObject, string errorException, bool isRecalculate = false) => base.HandlePostInputFieldResultChanged(ref valueIndex, scriptObject, errorException, isRecalculate);
-    [global::Quire.Mirror.MirrorStub]
-    public override string DefaultScript(global::Quire.EquationEditor.Tree.InputControlEngineTypes engineType) => base.DefaultScript(engineType);
 }

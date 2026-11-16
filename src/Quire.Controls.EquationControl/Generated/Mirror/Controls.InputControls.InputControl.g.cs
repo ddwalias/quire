@@ -11,14 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputControl, Ptc.Controls.EquationControl")]
 public partial class InputControl : global::System.Windows.Controls.UserControl, global::Quire.Controls.InputControls.IInputControl, global::Quire.Controls.InputControls.IInputControlBase, global::System.Windows.IFrameworkInputElement, global::System.Windows.IInputElement
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.Controls.InputControls.IInputControlViewModel _viewModel;
-    [global::Quire.Mirror.MirrorStub]
-    public InputControl() { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnGotKeyboardFocus(global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => base.OnGotKeyboardFocus(e);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnPreviewMouseLeftButtonDown(global::System.Windows.Input.MouseButtonEventArgs mouseEventArgs) => base.OnPreviewMouseLeftButtonDown(mouseEventArgs);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnPreviewKeyDown(global::System.Windows.Input.KeyEventArgs e) => base.OnPreviewKeyDown(e);
 }

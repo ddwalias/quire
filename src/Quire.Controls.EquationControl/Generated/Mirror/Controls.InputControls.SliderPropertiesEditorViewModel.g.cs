@@ -11,14 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.SliderPropertiesEditorViewModel, Ptc.Controls.EquationControl")]
 internal partial class SliderPropertiesEditorViewModel : global::Quire.Controls.InputControls.InputControlEditorViewModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    private bool _ticks;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.Primitives.TickPlacement TickPlacement { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Ticks { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public SliderPropertiesEditorViewModel(global::Quire.Controls.InputControls.IInputControlEditorModel model) : base(default(global::Quire.Controls.InputControls.IInputControlEditorModel)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => base.HandleModelPropertyChanged(sender, e);
 }

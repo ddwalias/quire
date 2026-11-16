@@ -11,12 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.SliderViewModel, Ptc.Controls.EquationControl")]
 internal partial class SliderViewModel : global::Quire.Controls.InputControls.InputScriptableControlViewModelWithInputs
 {
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler InvertSliderChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public SliderViewModel(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue data) : base(default(global::Quire.Controls.InputControls.IInputScriptableControlModelWithInputs)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => base.HandleModelPropertyChanged(sender, e);
-    [global::Quire.Mirror.MirrorStub]
-    protected void SwapDimensions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

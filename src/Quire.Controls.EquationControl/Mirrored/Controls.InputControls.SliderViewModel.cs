@@ -1,12 +1,55 @@
+using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using Quire.EquationEditor.Tree;
 
 namespace Quire.Controls.InputControls;
 
 internal partial class SliderViewModel
 {
+    public event EventHandler InvertSliderChanged;
+
+    public SliderViewModel(IInputControlDataCalculatedValue data)
+        : base(new SliderModel(data))
+    {
+    }
+
     private SliderModel Model => (SliderModel)_model;
+
+    protected override void HandleModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case "FlowDirection":
+            case "TickFrequency":
+            case "TickPlacement":
+            case "VerticalAlignment":
+            case "HorizontalAlignment":
+            case "Maximum":
+            case "Minimum":
+            case "ShowMinMax":
+            case "SmallChange":
+            case "LargeChange":
+            case "Position":
+                OnPropertyChanged(e.PropertyName);
+                break;
+            case "Border":
+                OnPropertyChanged("BorderThickness");
+                break;
+            case "Orientation":
+                OnPropertyChanged(e.PropertyName);
+                OnPropertyChanged("VerticalAlignment");
+                OnPropertyChanged("HorizontalAlignment");
+                SwapDimensions();
+                break;
+            case "Invert":
+                OnPropertyChanged(e.PropertyName);
+                InvertSliderChanged?.Invoke(this, EventArgs.Empty);
+                break;
+        }
+    }
 
     public double Position
     {
@@ -87,4 +130,16 @@ internal partial class SliderViewModel
     public bool IsSnapToTickEnabled => Model.IsSnapToTickEnabled;
 
     public int Interval => Model.Interval;
+
+    protected void SwapDimensions()
+    {
+        SliderModel model = Model;
+        SliderModel model2 = Model;
+        double width = Model.Width;
+        double height = Model.Height;
+        model.Height = width;
+        model2.Width = height;
+        OnPropertyChanged("Height");
+        OnPropertyChanged("Width");
+    }
 }

@@ -6,24 +6,16 @@
   - `c797dd70f`: ProductInfo.Constants, Algorithm converters, Symbol descriptors, InputControl engines/models, and ComboBox stubs (30 members, PASS; 2495 checked).
   - `ca11a8daa`: MatrixLayoutManager, LayoutItem, TextLayoutItem, VisualDescriptorTableBase, EditableComboBoxLayoutManager, EquationCommands, MathcadSettings, and TestHelper stubs (34 members, PASS; 2465 checked).
   - `8fec9cd98`: SpecTableCellStyleKeys, EquationControlErrorMessages, Comparers, CaretAdorner, HorizontalRightArrow, Overline, and GestureManager (23 members, PASS; 2520 checked).
+  - `63059677d`: ScriptEngineParams, InputControl interfaces, Node iterators, and Gradient operator (127 stubs, PASS; 2555 checked).
 - Selected members:
-  - `Controls.InputControls.IScriptEngineParams`: `Data`, `IsApply`, `IsNewInputResults`, `IsInteractChanged`, `IsRecalculate`, `IsOutputsChanged`
-  - `Controls.InputControls.ScriptEngineParams`: `Data`, `IsApply`, `IsNewInputResults`, `IsInteractChanged`, `IsRecalculate`, `IsOutputsChanged`, `IsInputsExists`, `.ctor()`, `.ctor(IInputScriptableControlData)`
-  - `Controls.InputControls.ICellData`: `Text`, `Row`, `Column`, `Clear()`
-  - `Controls.InputControls.ITextBoxPropertiesEditorModel`: `Text`, `AcceptsReturn`, `IsReadOnly`, `TextAlignment`
-  - `Controls.InputControls.IRadioButtonPropertiesEditorModel`: `Orientation`, `DataSourceItems`, `FlowDirection`, `IsDataSourceChanged`, `EditorDataSourceItems`, `HandleButtonsChanged`
-  - `Controls.InputControls.ISliderPropertiesEditorModel`: `Orientation`, `TickPlacement`, `TickFrequency`, `Border`, `Minimum`, `Maximum`, `ShowMinMax`, `Invert`, `SmallChange`, `LargeChange`
-  - `Controls.InputControls.IInputControlBase`: `Background`, `IsVisible`, `IsHitTestVisible`, `IsFocused`, `IsEnabled`, `RenderSize`, `IsVisibleChanged`
-  - `Controls.InputControls.IInputControlViewModel`: `Model`, `IsDirty`, `IsEnabled`, `IsInitializeComponent`, `FontSize`, `IsFunctionalityEnabled`, `HasKeyboard`, `State`, `InitializeComponent()`
-  - `Controls.InputControls.IInputControlModel`: `EngineType`, `EngineError`, `InputEngine`, `Data`, `OutputFieldSize`, `IsDirty`, `IsEnabled`, `IsInitializeComponent`, `FontSize`, `IsFunctionalityEnabled`, `State`, `HandlePropertyChanged`
-  - `Controls.InputControls.IInputControlScriptingEngine`: `Script`, `ScriptClassObjectName`, `ScriptInternalInputs`, `GetCalculatedValue`, `Apply`, `CanExecEvent`, `RunEventStandalone`, `ConvertUserScript`, `GetUserScriptObjectName`, `GetResourceScriptDecrypt`, `ScriptInternalInputsInit`, `ScriptInternalInputOutputsInit`, `GetLabelsFromSExpresstion`
-  - `Controls.InputControls.InputControlViewModel`: `_model`
-  - `Controls.InputControls.VisualInputControlFactory`: `_radioButtonEventAggregator`
-  - `Controls.Internal.VisualLimitOperatorNode`: `CoreElements` (ordered to preserve `<get_CoreElements>d__24`)
-  - `Controls.Internal.VisualRangedPrefixNode`: `CoreElements` (ordered to preserve `<get_CoreElements>d__11`)
-  - `Controls.Internal.VisualGradientOperatorNode`: `MeasureStaticLayout` (including `<>c__DisplayClass26_0`)
+  - `Controls.InputControls.SliderViewModel`: `Model`, `.ctor(IInputControlDataCalculatedValue)`, `HandleModelPropertyChanged`, `SwapDimensions`, `InvertSliderChanged` event
+  - `Controls.InputControls.SliderPropertiesEditorViewModel`: `Model`, `_ticks`, `.ctor(IInputControlEditorModel)`, `HandleModelPropertyChanged`, `TickPlacement`, `Ticks`, `SmallChange`, `LargeChange`, `Border`, `Invert`, `ShowMinMax`, `Minimum`, `Maximum`, `TickFrequency`, `Orientation`
+  - `Controls.InputControls.SliderModel`: `_sliderValue`, `Data`, `.ctor(IInputControlDataCalculatedValue)`, `SelectedValue`, `Apply`, `HandlePostInputFieldResultChanged`, `DefaultScript`, `Position`, `Orientation`, `TickPlacement`, `TickFrequency`, `SmallChange`, `LargeChange`, `Minimum`, `Maximum`, `ShowMinMax`, `Invert`, `IsSnapToTickEnabled`, `Border`, `Interval`
+  - `Controls.InputControls.SliderControl`: `Slider`, `_contentLoaded`, `.ctor(IInputControlDataCalculatedValue)`, `ViewModel`, `OnPreviewMouseRightButtonDown`, `OnInvalidateVisuals`, `InitializeComponent`, `IComponentConnector.Connect`
+  - `Controls.InputControls.InputScriptingControlWithInputCommands`: `_typeOfThis`, `AddScriptingInputField`, `RemoveScriptingInputField`, `AddScriptingOutputField`, `.ctor()`
+  - `Controls.InputControls.InputControl`: `_viewModel`, `.ctor()`, `ViewModel`, `EditingCompleted`, `OnGotKeyboardFocus`, `OnPreviewMouseLeftButtonDown`, `OnPreviewKeyDown`, `Resize`
 - Parked members:
-  - `Controls.Internal.ConjugateLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3` on identical IL instructions.
-  - `Controls.Internal.VectorizationLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3` on identical IL instructions.
+  - `Controls.Internal.ConjugateLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3` on identical 115 IL instructions.
+  - `Controls.Internal.VectorizationLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3` on identical 115 IL instructions.
   - `Controls.InputControls.ComboBoxRow.AllButFirstCell`: parked due to Roslyn optimizer in Release mode eliminating `stloc.0/ldloc.0` return of local variable, whereas Mathcad's compiler emitted `stloc.0; ldloc.0; ret`.
-- Release IL: PASS; 2666 checked (0 failures, 2370 unfinished stubs remaining).
+- Release IL: PASS; 2581 checked (0 failures, 2345 unfinished stubs remaining).

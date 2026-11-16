@@ -11,14 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputScriptingControlWithInputCommands, Ptc.Controls.EquationControl")]
 public partial class InputScriptingControlWithInputCommands : global::Quire.Controls.InputControls.InputControlCommands
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand AddScriptingInputField;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand RemoveScriptingInputField;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedUICommand AddScriptingOutputField;
-    [global::Quire.Mirror.MirrorStub]
-    public InputScriptingControlWithInputCommands() { }
 }
