@@ -2,6 +2,26 @@ namespace Quire.Controls;
 
 internal partial class SolveBlockCalculatable
 {
+    public static SolveBlockEquationTypes GetEquationTypeOfRl(string rl)
+    {
+        if (string.IsNullOrEmpty(rl))
+        {
+            return (SolveBlockEquationTypes)0;
+        }
+        if (_solverMatch.IsMatch(rl))
+        {
+            return (SolveBlockEquationTypes)3;
+        }
+        if (_definitionMatch.IsMatch(rl))
+        {
+            return (SolveBlockEquationTypes)1;
+        }
+        if (_constraintMatch.IsMatch(rl))
+        {
+            return (SolveBlockEquationTypes)2;
+        }
+        return (SolveBlockEquationTypes)0;
+    }
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 
     public SolveBlockCalculatable(global::Quire.Calculation.Core.ICalculatable wrappedCalculatable)

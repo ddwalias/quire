@@ -12,6 +12,4 @@ namespace Quire.Controls;
 internal partial class SolveBlockCalculatable : global::Quire.Calculation.Core.Support.CalculatableWrapper, global::Quire.Controls.ISolveBlockCalculatable, global::Quire.Calculation.Core.Support.ICalculatableWrapper, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatable, global::System.IDisposable, global::Quire.Calculation.Core.ICalculationErrorOwner
 {
     private global::Quire.Controls.SolveBlockEquationTypes _equationType;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.SolveBlockEquationTypes GetEquationTypeOfRl(string rl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
