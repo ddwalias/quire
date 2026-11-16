@@ -11,14 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.EquationListLayoutManager, Ptc.Controls.Plots")]
 internal partial class EquationListLayoutManager : global::Quire.Controls.Core.TableLayoutManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    public EquationListLayoutManager() { }
-    [global::Quire.Mirror.MirrorStub]
-    private EquationListLayoutManager(global::Quire.Controls.Plots.EquationListLayoutManager other) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.Controls.Core.MaxMatrixWidth[] CalcMaxDecimalPerColumn(global::System.Collections.Generic.IList<global::Quire.Controls.Core.LayoutMetrics> cellsInfo, global::System.Windows.Controls.UIElementCollection cellsContent, int rows) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override object Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int GetNumberOfColumnsFitWidth(double newWidth, global::System.Windows.Controls.UIElementCollection cellsContent, global::Quire.Controls.Core.ColumnAlignments alignment) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,12 +11,4 @@ namespace Quire.Controls.Plots.Contour.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Contour.Model.ContourLogicalData, Ptc.Controls.Plots")]
 public partial struct ContourLogicalData
 {
-    [global::Quire.Mirror.MirrorStub]
-    public double ZLevel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point[] Points { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double GradientSign { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 }
