@@ -12,59 +12,15 @@ namespace Quire.DOE;
 public partial class Utils
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.SortedDictionary<string, int> m_alphbetMap;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.SortedDictionary<int, string> m_ialphbetMap;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.SortedDictionary<int, global::System.Collections.Generic.SortedDictionary<int, global::Quire.DOE.Utils.Gens_level2>> m_fractDefaults;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.SortedDictionary<int, global::System.Collections.Generic.SortedDictionary<int, global::System.Collections.Generic.SortedDictionary<int, global::Quire.DOE.Utils.Gens_level2>>> m_blockDefaults;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.SortedDictionary<string, int> charMap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.SortedDictionary<int, string> icharMap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.SortedDictionary<int, global::System.Collections.Generic.SortedDictionary<int, global::Quire.DOE.Utils.Gens_level2>> fractDefaults { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.SortedDictionary<int, global::System.Collections.Generic.SortedDictionary<int, global::System.Collections.Generic.SortedDictionary<int, global::Quire.DOE.Utils.Gens_level2>>> blockDefaults { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public Utils() { }
-    [global::Quire.Mirror.MirrorStub]
-    private static int recProduct(int n, int len) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int factorial(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int combination(int n, int k) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool getGenIndices(string gen, out int[] findx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool getGenIndices(string[] gen, out int[] findx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool getGenName(int[] findx, out string gen) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string getName(string[] gen) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool verifyGens(int nfacts, string[] gens) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool verifyUniqueGens(int nfacts, string[] gens) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("DOE.Utils+Gens_level2, efisixsigma_")]
     public partial class Gens_level2
     {
-        [global::Quire.Mirror.MirrorStub]
-        public string[] m_gens;
-        [global::Quire.Mirror.MirrorStub]
-        public int m_resl;
-        [global::Quire.Mirror.MirrorStub]
-        public Gens_level2(string[] gens, int resl) { }
     }
 
     [global::Quire.Mirror.MirrorOf("DOE.Utils+StringComparer, efisixsigma_")]
     public partial class StringComparer : global::System.Collections.Generic.IComparer<string>
     {
-        [global::Quire.Mirror.MirrorStub]
-        public StringComparer() { }
-        [global::Quire.Mirror.MirrorStub]
-        public int Compare(string x, string y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }
