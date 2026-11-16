@@ -11,18 +11,4 @@ namespace Quire.Native.PtcEquationEditor;
 [global::Quire.Mirror.MirrorOf("aq, Ptc.EquationEditor")]
 internal partial class aq
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.MathNode a;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::Quire.Direction> b;
-    [global::Quire.Mirror.MirrorStub]
-    public bool c;
-    [global::Quire.Mirror.MirrorStub]
-    public bool d;
-    [global::Quire.Mirror.MirrorStub]
-    public bool e;
-    [global::Quire.Mirror.MirrorStub]
-    public bool f;
-    [global::Quire.Mirror.MirrorStub]
-    public aq() { }
 }

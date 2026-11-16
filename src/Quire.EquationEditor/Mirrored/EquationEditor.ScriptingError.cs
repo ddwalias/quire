@@ -77,4 +77,6 @@ public partial class ScriptingError
     {
         return false;
     }
+
+    string global::Quire.Calculation.Core.IEngineError.Symbol => null;
 }

@@ -11,6 +11,4 @@ namespace Quire.EquationEditor;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.ScriptingError, Ptc.EquationEditor")]
 public partial class ScriptingError : global::Quire.Calculation.Core.IEngineError, global::System.ICloneable
 {
-    [global::Quire.Mirror.MirrorStub]
-    string global::Quire.Calculation.Core.IEngineError.Symbol { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

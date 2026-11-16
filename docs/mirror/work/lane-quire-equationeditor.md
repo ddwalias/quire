@@ -1,7 +1,7 @@
 # Quire.EquationEditor lane checkpoint
 
-- Owner: EquationEditor dispatched worker (task_4a851705d6ac)
-- Branch: `feature/equation-editor-stubs-batch4`
+- Owner: EquationEditor dispatched worker (task_d2df5057aa44)
+- Branch: `feature/equation-editor-stubs-batch5`
 - Assembly: `Quire.EquationEditor` (managed members, `src/Quire.EquationEditor`)
 
 ## Batch 1 — Native.PtcEquationEditor members (a7, o, bf, au, az, d, a)
@@ -53,7 +53,20 @@
   - `EquationEditor.SpecTable.SpecTableCellMap`: `a`, `b` fields, `.ctor()` (0 stubs remaining).
   - `EquationEditor.Tree.Transform.InlineToSExpressionTransform`: `e` dictionary field, `.ctor()` with `[SkipLocalsInit]`.
   - `EquationEditor.Tree.Navigation.NavigatorState`: `Current`, `CaretSide`, `NodeSide`, `OperatorPartIndex`, `EnterSide`, `ValueRange`, `CaretInsertionType` fields, and the 2 `.ctor` overloads (with `valueRange` branch matching Mathcad IL).
+- Landed commit: `666535f5bae3f2034bb0deb49062dc005e464fe7`
 - Report: full `--project Quire.EquationEditor` gate PASS, 878 checked, 0 failures.
 - Parked members (exact blockers):
   - `Native.PtcEquationEditor` obfuscated types (`a-z`, `ao`, `ae`, `br`, `q`, `s`, `r`, `bs`) and dependent types/callers (`ComboBoxMathCreator`, `InputControlNodeCreator`, `MatrixNodeInfo`, `RedefinitionWarning`, `InputControlNodeInfo`, `AlgorithmOptions`, `SExpressionUtility`, `NavigatorState.ToString`): Field/method name clash blocker (C# CS0102) and internal helper mismatch.
+- Remaining mismatches: 0 in completed types; remaining unbatched/parked stubs in other types.
+
+## Batch 5 — Native.PtcEquationEditor (aq, as), ScriptingError, NearestNeighborSelector
+
+- Members:
+  - `Native.PtcEquationEditor.aq`: fields `a`, `b`, `c`, `d = true`, `e = true`, `f`, `.ctor()` (0 stubs remaining).
+  - `Native.PtcEquationEditor.as`: all 8 static methods `a(Direction, Fixity)`, `a(Direction, LinkedListNode<MathNodeAnalysisHandle>)`, `b(LinkedListNode<MathNodeAnalysisHandle>)`, `b(Fixity)`, `b(IMathNodeDescriptor)`, `a(IMathNodeDescriptor)`, `a(LinkedListNode<MathNodeAnalysisHandle>)`, `a(Fixity)` (0 stubs remaining).
+  - `EquationEditor.ScriptingError`: explicit interface implementation of `IEngineError.Symbol` (0 stubs remaining).
+  - `EquationEditor.Tree.NearestNeighborSelector`: `.ctor()` and `SelectNeighbors(MathNode, out bool)` (resolved local variable slot ordering by pre-declaring locals before switch) (0 stubs remaining).
+- Report: full `--project Quire.EquationEditor` gate PASS, 889 checked, 0 failures.
+- Parked members (exact blockers):
+  - `Native.PtcEquationEditor` obfuscated types (`a-z`, `ao`, `ae`, `br`, `q`, `s`, `r`, `bs`, `a3`, `am`, `an`, `av`, `ba`, `bb`, `be`, `bg`, `bp`) and dependent callers: Field/method name clash blocker (CS0102).
 - Remaining mismatches: 0 in completed types; remaining unbatched/parked stubs in other types.

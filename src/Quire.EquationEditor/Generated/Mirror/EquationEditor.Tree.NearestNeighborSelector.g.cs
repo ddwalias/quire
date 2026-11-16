@@ -11,8 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.NearestNeighborSelector, Ptc.EquationEditor")]
 public partial class NearestNeighborSelector
 {
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.EquationEditor.Tree.MathNode[] SelectNeighbors(global::Quire.EquationEditor.Tree.MathNode current, out bool neighborsShareParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public NearestNeighborSelector() { }
 }
