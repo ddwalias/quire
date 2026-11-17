@@ -217,3 +217,11 @@
 - Left as stubs: the constructor, `SingleEmbeddableItemForTextFromClipboard` (pattern and `as` branches not yet checked), `ProcessClipboardContents` (nested try/catch with a rethrow), `ProcessSingleEmbeddableItemForTextInClipboard`, the remaining processing helpers and the fields `_resourceDictionary`, `_textStyleChangedHandler`, `_clipboardPrimeObjectHash` and `_clipboardPrimeObject`.
 - Release IL: PASS; 994 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1729.
+
+## Batch 27 — ZombieCreator (partial: item accessors and location helpers)
+
+- Members (6 stubs removed): `ItemManager` (static accessor), `PageIndex` and `Item` (auto-properties), `PageBodyHeight`, and the static `RoundLocation` and `CompareLocation`.
+- Parked: `ItemBounds` and `ItemSize` (lazy cache accessors). Mathcad builds the `Nullable` with `newobj` on the value it just computed; every shape tried so far (named local, direct assignment, and the decompiled `(_itemBounds = ...)` form) differs. Stubs kept.
+- Left as stubs: the constructor, `CreateZombies` and the other zombie-building methods (the decompiled output of `CreateZombies` is incomplete, with uninitialized locals, so it cannot be transcribed from it), the nested `CreateZombiesData` class members, and the fields.
+- Release IL: PASS; 1002 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1723.

@@ -20,23 +20,11 @@ public partial class ZombieCreator
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Controls.Core.WorksheetPageLayout _pageLayout;
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Worksheet.IWorksheetItemManager ItemManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private int PageIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.IWhiteboardItem Item { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Rect ItemBounds { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size ItemSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private double PageBodyHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public ZombieCreator(global::Quire.Controls.Core.IWhiteboardItem item, int pageIndex, global::Quire.Controls.Core.WorksheetPageLayout pageLayout) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static double RoundLocation(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int CompareLocation(double value1, double value2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.ICollection<global::Quire.Controls.Worksheet.IWhiteboardItemZombie> CreateZombies(out global::Quire.Controls.Worksheet.IWhiteboardItemZombie activeZombie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
