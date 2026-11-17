@@ -11,28 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.ListBoxScriptableInputControl, Ptc.Controls.EquationControl")]
 public partial class ListBoxScriptableInputControl : global::System.Windows.Controls.UserControl, global::Quire.Controls.InputControls.IInputScriptableControl, global::Quire.Controls.InputControls.IInputScriptableControlBase, global::Quire.Controls.InputControls.IInputControl, global::Quire.Controls.InputControls.IInputControlBase, global::System.Windows.IFrameworkInputElement, global::System.Windows.IInputElement, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.ListBox internalListBox;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.InputControls.IInputControlViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ListBoxScriptableInputControl() { }
-    [global::Quire.Mirror.MirrorStub]
-    public ListBoxScriptableInputControl(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue data) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void ViewModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleToggleSort() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnPreviewMouseRightButtonDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnDoubleClick(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnSelectionChanged(object sender, global::System.Windows.Controls.SelectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

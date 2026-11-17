@@ -11,32 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.ListBoxModel, Ptc.Controls.EquationControl")]
 public partial class ListBoxModel : global::Quire.Controls.InputControls.InputScriptableControlModelWithInputs, global::Quire.Controls.InputControls.IListBoxPropertiesEditorModel, global::Quire.Controls.InputControls.IInputControlEditorScriptableModel, global::Quire.Controls.InputControls.IInputControlEditorModel, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string _itemsCache;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isSortChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public override object SelectedValue { get => base.SelectedValue; }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsSort { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double SelectedIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.ObjectModel.Collection<string> DataSourceItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.FlowDirection FlowDirection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ListBoxModel(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue data) : base(default(global::Quire.Controls.InputControls.IInputControlEngineFactory), default(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void OnDoubleClick(global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleObjectProperties(ref object valueIndex, object objectProperties, bool isRecalculate = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleSelectionChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandlePostInputFieldResultChanged(ref object valueIndex, object scriptObjectproperties, string errorException, bool isRecalculate = false) => base.HandlePostInputFieldResultChanged(ref valueIndex, scriptObjectproperties, errorException, isRecalculate);
-    [global::Quire.Mirror.MirrorStub]
-    public override string DefaultScript(global::Quire.EquationEditor.Tree.InputControlEngineTypes engineType) => base.DefaultScript(engineType);
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Apply(string userScript, out object resultObjectProperties, out string exception, object[] inputs, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.Apply(userScript, out resultObjectProperties, out exception, inputs, engineParams);
 }
