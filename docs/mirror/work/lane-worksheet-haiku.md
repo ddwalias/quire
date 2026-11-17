@@ -21,3 +21,17 @@
 - Members: auto-properties `HasScriptableControls`, `CurrentErrorChain`, `Header`, `Footer`, `FirstPageHeader`, `FirstPageFooter`, `IsSavedWorksheet`, `WorksheetContent`, `DisplayNumberFormat`, `ResultMatrixFormat`, `CurrentDragMode`; methods `CollapseIfPresent`, `ShowIfPresent`, `ResetVisualBrushIfPresent`, `OnStyleCollectionChanged`, `IsValidInsertionPoint`, `CanCreateOleObjectControl`, `CanCreateChartComponent`, `CreatePageBreakControl`, `HandleToggleAutoCalculation`, `CanReCalculateAll`, `CanRemoveSpace`, `CanCopySelection`, `CanCutSelection`, `GetItemRect`, `ItemsOverlapped`, `IsPageWideSizablePredicate`, `ImportData`, `GetDefaultLabeledIdFormat`, `GetInputRegions`, `GetOutputRegions`, `HandleSetCurrentProofingLanguage`, `OnRequestRestoreInsertionPoint`.
 - Release IL: PASS; 498 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 2152.
+
+## Batch 4 — WorksheetViewModel (backed properties)
+
+- Members: 30 properties backed by the existing field stubs, including `IsContentActive`, `IsHeaderActive`, `IsFooterActive`, `InsertionPoint`, `ActiveItem`, `ActiveDescendant`, `SelectedDescendants`, `PageCount`, `StartingPageNumber`, `TotalPagesOffset`, `WorksheetHeight`, `HeaderTop`, `FooterTop`, `WorksheetPageLayoutDisplayHeight`, `NonprintableSpaceButtonHeight`, the four `*TextFormat` properties, `WidthWithNonprintableSpace`, `HasSelection`, `IsInLimbo`, the two `HideFromCalculation*` properties, `WorksheetDragHandler`, `PreRecalculateAll`, `ContentMathFormat`, `EnableEditCurrentPageNumber`, `HeaderFooterZombiesReady`, `IsRegionBorderShown`.
+- Setter shape: `if (field == value) return;` guard clauses. The `if (field != value) { ... }` form differs from Mathcad (`beq.s` against `bne.un.s`), so the guard form is used.
+- Release IL: PASS; 552 checked; 0 failures.
+
+## Parked (blocked or differing shape)
+
+- `CombinedInvalidConverter.Convert`: idiomatic `is bool && bool` gives 3 conditional branches; Mathcad has 2 (`ldc.i4.1; br; ldc.i4.0; and` shape). Stub kept.
+- RtfTree/RtfItem members (`RtfItemModel` ctor, `Rtf`, `AddItemToDocumentInternal`; `SaveAsRtfWorksheetItemsVisitor.VisitAll`; `MultiWorksheetItemCopyVisitor`; `MultiWorksheetItemRtfCopyVisitorBase`; `RtfItemWrapperHelper.PrepareRtf` users): `NRtfTree` is not referenced by Quire and its licence is pending D7. Blocked.
+- `Accept` overrides on persistent-data types (`ContainerRegionPersistentData`, `ImageRegionPersistentData`, and the other `*PersistentData` types): Roslyn emits a stack `pop` before `throw` in `as ... ?? throw`, which Mathcad's legacy compiler omits. Not reshaped to match a compiler artifact; stubs kept.
+
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 2122.

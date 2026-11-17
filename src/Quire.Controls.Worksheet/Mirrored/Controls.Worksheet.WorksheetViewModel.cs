@@ -230,4 +230,420 @@ internal partial class WorksheetViewModel
         Activate(worksheetControl);
         eventArgs.Handled = true;
     }
+
+    public bool IsContentActive
+    {
+        get
+        {
+            return _isContentActive;
+        }
+        set
+        {
+            if (_isContentActive == value)
+            {
+                return;
+            }
+            _isContentActive = value;
+            OnPropertyChanged("IsContentActive");
+        }
+    }
+
+    public bool IsHeaderActive
+    {
+        get
+        {
+            if (ActiveSection != Header)
+            {
+                return ActiveSection == FirstPageHeader;
+            }
+            return true;
+        }
+    }
+
+    public bool IsFooterActive
+    {
+        get
+        {
+            if (ActiveSection != Footer)
+            {
+                return ActiveSection == FirstPageFooter;
+            }
+            return true;
+        }
+    }
+
+    public Point InsertionPoint
+    {
+        get
+        {
+            return ActiveSection.InsertionPoint;
+        }
+        set
+        {
+            ActiveSection.InsertionPoint = value;
+        }
+    }
+
+    public IWhiteboardItem ActiveItem
+    {
+        get
+        {
+            if (ActiveSection == null)
+            {
+                return null;
+            }
+            return ActiveSection.ActiveItem;
+        }
+    }
+
+    public IWhiteboardItem ActiveDescendant
+    {
+        get
+        {
+            if (ActiveSection == null)
+            {
+                return null;
+            }
+            return ActiveSection.ActiveDescendant;
+        }
+    }
+
+    public IList<IWhiteboardItem> SelectedDescendants
+    {
+        get
+        {
+            if (ActiveSection == null)
+            {
+                return null;
+            }
+            return ActiveSection.SelectedDescendants;
+        }
+    }
+
+    public int PageCount
+    {
+        get
+        {
+            return _pageCount;
+        }
+        private set
+        {
+            _pageCount = value;
+            OnPropertyChanged("PageCount");
+        }
+    }
+
+    public int StartingPageNumber
+    {
+        get
+        {
+            return _startingPageNumber;
+        }
+        set
+        {
+            _startingPageNumber = value;
+            OnPropertyChanged("StartingPageNumber");
+            FireStartingPageNumberChanged();
+            FireChanged();
+        }
+    }
+
+    public int TotalPagesOffset
+    {
+        get
+        {
+            return _offset;
+        }
+        set
+        {
+            _offset = value;
+            OnPropertyChanged("TotalPagesOffset");
+        }
+    }
+
+    public double WorksheetHeight
+    {
+        get
+        {
+            return _worksheetHeight;
+        }
+        private set
+        {
+            if (_worksheetHeight == value)
+            {
+                return;
+            }
+            _worksheetHeight = value;
+            OnPropertyChanged("WorksheetHeight");
+        }
+    }
+
+    public double HeaderTop
+    {
+        get
+        {
+            return _headerTop;
+        }
+        private set
+        {
+            if (_headerTop == value)
+            {
+                return;
+            }
+            _headerTop = value;
+            OnPropertyChanged("HeaderTop");
+        }
+    }
+
+    public double FooterTop
+    {
+        get
+        {
+            return _footerTop;
+        }
+        private set
+        {
+            if (_footerTop == value)
+            {
+                return;
+            }
+            _footerTop = value;
+            OnPropertyChanged("FooterTop");
+        }
+    }
+
+    public double WorksheetPageLayoutDisplayHeight
+    {
+        get
+        {
+            if (WorksheetPageLayoutMode != PageLayoutMode.PageMode)
+            {
+                return PageLayout.PageBodyHeight;
+            }
+            return PageLayout.DisplayHeight;
+        }
+    }
+
+    public double NonprintableSpaceButtonHeight
+    {
+        get
+        {
+            return _nonprintableSpaceButtonHeight;
+        }
+        private set
+        {
+            if (_nonprintableSpaceButtonHeight == value)
+            {
+                return;
+            }
+            _nonprintableSpaceButtonHeight = value;
+            OnPropertyChanged("NonprintableSpaceButtonHeight");
+        }
+    }
+
+    public TextFormat HeaderTextFormat
+    {
+        get
+        {
+            return Header.TextFormat;
+        }
+        set
+        {
+            Header.TextFormat = value;
+        }
+    }
+
+    public TextFormat FooterTextFormat
+    {
+        get
+        {
+            return Footer.TextFormat;
+        }
+        set
+        {
+            Footer.TextFormat = value;
+        }
+    }
+
+    public TextFormat FirstPageHeaderTextFormat
+    {
+        get
+        {
+            return FirstPageHeader.TextFormat;
+        }
+        set
+        {
+            FirstPageHeader.TextFormat = value;
+        }
+    }
+
+    public TextFormat FirstPageFooterTextFormat
+    {
+        get
+        {
+            return FirstPageFooter.TextFormat;
+        }
+        set
+        {
+            FirstPageFooter.TextFormat = value;
+        }
+    }
+
+    public double WidthWithNonprintableSpace
+    {
+        get
+        {
+            return _widthWithNonprintableSpace;
+        }
+        private set
+        {
+            if (_widthWithNonprintableSpace == value)
+            {
+                return;
+            }
+            _widthWithNonprintableSpace = value;
+            OnPropertyChanged("WidthWithNonprintableSpace");
+        }
+    }
+
+    public bool HasSelection
+    {
+        get
+        {
+            return _hasSelection;
+        }
+        set
+        {
+            if (_hasSelection == value)
+            {
+                return;
+            }
+            _hasSelection = value;
+            OnPropertyChanged("HasSelection");
+        }
+    }
+
+    public bool IsInLimbo
+    {
+        get
+        {
+            return _isInLimbo;
+        }
+        set
+        {
+            if (_isInLimbo == value)
+            {
+                return;
+            }
+            _isInLimbo = value;
+            OnPropertyChanged("IsInLimbo");
+        }
+    }
+
+    public bool HideFromCalculationButtonEnabled
+    {
+        get
+        {
+            return _hideFromCalculationButtonEnabled;
+        }
+        set
+        {
+            _hideFromCalculationButtonEnabled = value;
+            OnPropertyChanged("HideFromCalculationButtonEnabled");
+        }
+    }
+
+    public bool HideFromCalculationButtonChecked
+    {
+        get
+        {
+            return _hideFromCalculationButtonChecked;
+        }
+        set
+        {
+            _hideFromCalculationButtonChecked = value;
+            OnPropertyChanged("HideFromCalculationButtonChecked");
+        }
+    }
+
+    public WorksheetDragger WorksheetDragHandler
+    {
+        get
+        {
+            return _worksheetDragHandler;
+        }
+        set
+        {
+            _worksheetDragHandler = value;
+            OnPropertyChanged("WorksheetDragHandler");
+        }
+    }
+
+    public bool PreRecalculateAll
+    {
+        get
+        {
+            return _preRecalculateAll;
+        }
+        set
+        {
+            _preRecalculateAll = value;
+            OnPropertyChanged("PreRecalculateAll");
+        }
+    }
+
+    public StaticMathFormat ContentMathFormat
+    {
+        get
+        {
+            return WorksheetContent.MathFormat;
+        }
+        set
+        {
+            WorksheetContent.MathFormat = value;
+        }
+    }
+
+    public bool EnableEditCurrentPageNumber
+    {
+        get
+        {
+            return _enableEditCurrentPageNumber;
+        }
+        set
+        {
+            _enableEditCurrentPageNumber = value;
+            OnPropertyChanged("EnableEditCurrentPageNumber");
+        }
+    }
+
+    public bool HeaderFooterZombiesReady
+    {
+        get
+        {
+            return _headerFooterZombiesReady;
+        }
+        set
+        {
+            _headerFooterZombiesReady = value;
+            OnPropertyChanged("HeaderFooterZombiesReady");
+        }
+    }
+
+    public bool IsRegionBorderShown
+    {
+        get
+        {
+            return _isRegionBorderShown;
+        }
+        set
+        {
+            if (_isRegionBorderShown == value)
+            {
+                return;
+            }
+            _isRegionBorderShown = value;
+            OnPropertyChanged("IsRegionBorderShown");
+        }
+    }
 }
