@@ -11,12 +11,4 @@ namespace Quire.Efi.CalculationAssistant;
 [global::Quire.Mirror.MirrorOf("Efi.CalculationAssistant.Interval, efiplot_")]
 public partial class Interval
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int index_start { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int index_end { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.List<global::Quire.Efi.CalculationAssistant.Interval> splitRange(int startIndex, int numberOfElements, int numberOfIntervals) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public Interval() { }
 }
