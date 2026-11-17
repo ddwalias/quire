@@ -173,7 +173,23 @@
   - Quire.Controls.Worksheet.RichTextBaseRegionPersistentData: 3 members (_text, .ctor, Deserialize)
   - Quire.Controls.Worksheet.MathRegionPersistentData: 4 members (_equationControl, .ctor, DeserializeEpilog, Deserialize)
 - Release IL: PASS; 346 checked; 0 failures.
-- Landed commit: (in-progress)
+- Landed commit: 983b210662abb5dfde16a08f7371250507e46157
 - Parked members:
   - Accept on persistent data types (SpecTableRegionPersistentData, ContainerRegionPersistentData, ChartContainerRegionPersistentData, ExcelContainerRegionPersistentData, OleObjectPersistentData, ImageRegionPersistentData, PlotRegionPersistentData, RichTextBaseRegionPersistentData, MathRegionPersistentData): modern Roslyn null-coalescing throw stack pop opcode divergence.
 - Remaining mismatches: none in this batch (2299 stubs remaining in Quire.Controls.Worksheet).
+
+### Batch 11 (Current)
+- Owner: task_9fc594398ea6
+- Branch: feature/controls-worksheet-stubs-agy-20261116
+- Members implemented:
+  - Quire.Controls.Worksheet.IncludeRegionPersistentData: 5 members (_include, .ctor, HandleGetPackagePartByRefId, Deserialize, DeserializeEpilog)
+  - Quire.Controls.Worksheet.HeaderFooterOptionsViewModel: 14 members (_worksheetViewModel, _isUsingDefaultTotalPagesValue, IsFirstPageHeaderFooterDifferent, InvalidTotalPagesMessage, StartingPageNumber, TotalPagesNumber, .ctor, HandlePageNumberChanged, UpdateTotalPagesValidationMessage, hasInvalidTotalPageAsMessage, UpdateTotalPagesByStartingPage, UpdateWatermark, CalculateDefaultTotalPages, UpdateTotalPagesValue)
+  - Quire.Controls.Worksheet.PasteDeS11NProvider: 15 members (Instance, _helper, _xmlDocument, TextStyleChangedHandler, PackagePart, Helper, NameSpaceManager, XmlContentDocument, UseOverrides, FilePath, SkipRegionsNotAffectingCalculation, UnpackExternalObject, UnpackFlowDocument, UnpackProtectedPart, .ctor)
+  - Quire.Controls.Worksheet.InitializedRegionFactory: 15 members (Instance, 13 Visit methods, .ctor)
+  - Quire.Controls.Worksheet.WorksheetPageBody: 1 member (.ctor(Size?, bool))
+- Release IL: PASS; 395 checked; 0 failures.
+- Landed commit: (in-progress)
+- Parked members:
+  - Accept on IncludeRegionPersistentData: modern Roslyn null-coalescing throw stack pop opcode divergence (brtrue.s 5 vs legacy Mathcad brtrue.s 4).
+  - CombinedInvalidConverter: legacy csc boolean evaluation sequence (ldc.i4.1; br; ldc.i4.0; and) differs from modern Roslyn boolean pattern matching.
+- Remaining mismatches: none in this batch (2249 stubs remaining in Quire.Controls.Worksheet).

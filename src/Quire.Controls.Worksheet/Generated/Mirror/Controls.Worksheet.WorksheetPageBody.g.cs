@@ -11,6 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetPageBody, Ptc.Controls.Worksheet")]
 public partial class WorksheetPageBody : global::Quire.Controls.Whiteboard.WhiteboardControl, global::Quire.Controls.Worksheet.IWorksheetPageBody, global::Quire.Controls.Worksheet.IWorksheetPageSection, global::System.IDisposable, global::Quire.Controls.Core.Whiteboard.IWhiteboardControl, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer, global::Quire.Controls.Core.Serialization.IHasRegionsWithConverterAnnotations, global::Quire.Controls.Core.IMathFormatDeserializationProvider, global::Quire.Core.IMaybeHasPointThatSnapsToPixel, global::Quire.Controls.Core.IHasChildArrangeInfoProvider, global::Quire.Controls.Core.IMathFormatOwner, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    public WorksheetPageBody(global::System.Nullable<global::System.Windows.Size> gridCellSize, bool isPrinting) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel)) { }
 }

@@ -45,6 +45,26 @@ public partial class WorksheetPageBody : WhiteboardControl, IWorksheetPageBody, 
         LabeledIdFormatProperty = AttachedProperties.LabeledIdFormatProperty.AddOwner(typeof(WorksheetPageBody), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits, HandleLabelIdChanged));
     }
 
+    public WorksheetPageBody(Size? gridCellSize, bool isPrinting)
+        : base(new PageBodyViewModel(gridCellSize))
+    {
+        _canvas = new PageBodyCanvas();
+        if (isPrinting)
+        {
+            Content = new WhiteboardCanvas(DataContext as IWhiteboardViewModel);
+        }
+        else
+        {
+            Content = _canvas;
+        }
+        MathFormatDobjController mathFormatDobjController = new MathFormatDobjController((DependencyObject)Content);
+        MathFormatDobjController mathFormat = new MathFormatDobjController(this);
+        mathFormatDobjController.SetPropertiesFrom(mathFormat);
+        ((DependencyObject)Content).SetValue(LabeledIdFormatProperty, ((DependencyObject)this).GetValue(LabeledIdFormatProperty));
+        ViewModel.WhiteboardItems.RangeChanged += HandleItemsCollectionChanged;
+        SetupInputGestures();
+    }
+
 
     private void HandleItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
