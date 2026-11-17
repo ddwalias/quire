@@ -64,21 +64,15 @@ public partial class WorksheetControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Type TypeOfThis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.IWorksheetPageManager PageManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Worksheet.SymbolicEngine SymbolicEngine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.ITextStylesManager TextStylesManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasScriptableControls { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string DisplayFilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool OleObjectAutoResize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsSavedWorksheet { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double WorksheetPageLayoutDisplayHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsWorksheetContentScoped { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -110,33 +104,9 @@ public partial class WorksheetControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.MathFormat CurrentMathFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Markup.XmlLanguage CurrentProofingLanguage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool ContainsSymbolicEvaluation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.Worksheet.IWorksheetPage ActivePage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Worksheet.IWorksheetPage> WorksheetPages { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.IWorksheetSection ActiveSection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Core.IWhiteboardItem> ActiveSectionItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Core.IWhiteboardItem> WorksheetItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Wpf.INotifyCollectionRangeChanged<global::Quire.Controls.Core.IWhiteboardItem> SelectedItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IWhiteboardItem ActiveItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IWhiteboardItem ActiveDescendant { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.Controls.Core.IWhiteboardItem> SelectedDescendants { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.PageLayoutMode WorksheetPageLayoutMode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.WorksheetPageLayout PageLayout { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsContentActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsHeaderActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -146,13 +116,7 @@ public partial class WorksheetControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     public bool IsFirstPageFooterActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public int CurrentPageNumber { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool EnableEditCurrentPageNumber { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int PageCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double NonprintableSpaceButtonHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double NonprintableSpaceButtonPosition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -197,14 +161,6 @@ public partial class WorksheetControl : global::System.Windows.Controls.ContentC
     public bool IsAutoCalcChecked { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsAutoCalcOn { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.IHeaderFooterControl Header { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.IHeaderFooterControl Footer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.IHeaderFooterControl FirstPageHeader { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.IHeaderFooterControl FirstPageFooter { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsRegionBorderShown { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

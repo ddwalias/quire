@@ -225,3 +225,11 @@
 - Left as stubs: the constructor, `CreateZombies` and the other zombie-building methods (the decompiled output of `CreateZombies` is incomplete, with uninitialized locals, so it cannot be transcribed from it), the nested `CreateZombiesData` class members, and the fields.
 - Release IL: PASS; 1002 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1723.
+
+## Batch 28 — WorksheetControl (forwarders to the view model)
+
+- Members (22 stubs removed): `PageManager`, `HasScriptableControls`, `WorksheetPageLayoutDisplayHeight`, `CurrentProofingLanguage`, `ActivePage` (internal), `WorksheetPages`, `ActiveSection`, `ActiveSectionItems`, `WorksheetItems`, `SelectedItems`, `ActiveItem`, `ActiveDescendant`, `SelectedDescendants`, `PageLayout`, `IsContentActive`, `CurrentPageNumber`, `PageCount`, `NonprintableSpaceButtonHeight`, `Header`, `Footer`, `FirstPageHeader`, `FirstPageFooter`. Each is an expression-bodied forwarder `=> _viewModel.X` in the decompiled source.
+- Left out on purpose: `NonprintableSpaceButtonPosition`, whose decompiled form reads `.Top` on the view-model property (a type mismatch to resolve first), and `IsCalculating` and `InsertionPoint`, which were already in this partial.
+- Left as stubs: the constructor, the event forwarders, `OnContextMenuOpening`, the scripting and input/output members, the print and layout members, and the members with closures.
+- Release IL: PASS; 1024 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1701.
