@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Runtime.Loader;
 using System.Text.RegularExpressions;
 using System.Xml;
+using Quire.Efi;
 using Quire.Mcd;
 using Quire.Mpl.Run;
 
@@ -413,5 +414,46 @@ public partial class XL
     public static void EstablishWorksheetContext(Descriptor desc, Package xlPackage, out XmlDocument sheetDoc, out DocumentContext context)
     {
         EstablishWorksheetContext(desc, xlPackage, out sheetDoc, out context, for_write: false);
+    }
+
+    public static MatVal GetWorksheetContents(XmlDocument sheetDoc, DocumentContext context, Descriptor desc)
+    {
+        XmlNode[,] worksheetNodes = GetWorksheetNodes(desc.BlankRows == 2, sheetDoc, context, desc);
+        int left = desc.Left;
+        int right = desc.Right;
+        _ = desc.Fill;
+        int num = worksheetNodes.GetUpperBound(0) + 1;
+        int num2 = right - left + 1;
+        MatVal matVal = new MatVal(num, num2);
+        matVal.dv(Dim.identity);
+        for (int i = 0; i < num; i++)
+        {
+            for (int j = 0; j < num2; j++)
+            {
+                string text = cellNodeContent(worksheetNodes[i, j], ref context);
+                if (text != null && text.Length > 0)
+                {
+                    double result;
+                    NumVal A_ = null;
+                    if (double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out result))
+                    {
+                        matVal.set_2(i, j, result);
+                    }
+                    else if (Quire.Efi.Core.try_parse_complex(text, ref A_))
+                    {
+                        matVal.set_2(i, j, A_);
+                    }
+                    else
+                    {
+                        matVal.set_2(i, j, text);
+                    }
+                }
+                else
+                {
+                    matVal.set_2(i, j, desc.Fill);
+                }
+            }
+        }
+        return matVal;
     }
 }
