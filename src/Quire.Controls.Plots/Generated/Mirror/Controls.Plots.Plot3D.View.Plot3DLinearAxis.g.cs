@@ -11,30 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.View;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.View.Plot3DLinearAxis, Ptc.Controls.Plots")]
 public partial class Plot3DLinearAxis : global::Quire.Controls.Plots.PlotGraphLinearAxisBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    private const int DefaultTickMarks = 5;
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Controls.Plots.Presenter.Positions Position { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private Plot3DLinearAxis(global::Quire.Controls.Plots.EquationList equationList, int defaultTickMarks = 5, double defaultTickMagnitudeThreshold = 2d) : base(default(global::Quire.Controls.Plots.EquationList), default(int), default(double)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public Plot3DLinearAxis() : base(default(global::Quire.Controls.Plots.EquationList), default(int), default(double)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void PositionTickMarkChanged(int number) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void MouseMoveDraw(global::System.Windows.Media.DrawingContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void UpdateAxisOriginPositions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void MoveToValue(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void MoveByValue(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool FindClosestTickValueToZero(ref int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void ApplyTickNumber(int value, bool b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void TickMarksChanged() => base.TickMarksChanged();
 }
