@@ -237,4 +237,92 @@ public partial class XL
             }
         }
     }
+
+    private static XmlNode MakeRowNode(int row, XmlDocument sheetDoc)
+    {
+        XmlElement xmlElement = sheetDoc.CreateElement("row", "http://schemas.openxmlformats.org/spreadsheetml/2006/main");
+        XmlAttribute xmlAttribute = sheetDoc.CreateAttribute("r");
+        xmlAttribute.Value = row.ToString();
+        xmlElement.Attributes.Append(xmlAttribute);
+        return xmlElement;
+    }
+
+    private static XmlNode MakeCellNode(int row, int col, XmlDocument sheetDoc)
+    {
+        XmlElement xmlElement = sheetDoc.CreateElement("c", "http://schemas.openxmlformats.org/spreadsheetml/2006/main");
+        XmlAttribute xmlAttribute = sheetDoc.CreateAttribute("r");
+        xmlElement.Attributes.Append(xmlAttribute);
+        string value = Descriptor.MakeA1Reference(row, col);
+        xmlAttribute.Value = value;
+        XmlNode xmlNode = sheetDoc.CreateElement("v", "http://schemas.openxmlformats.org/spreadsheetml/2006/main");
+        xmlElement.AppendChild(xmlNode);
+        xmlNode.InnerText = "";
+        return xmlElement;
+    }
+
+    public static MatVal readExcel(string file, string descriptor, string cwd, object fill, object blank)
+    {
+        return readExcel(Path.Combine(cwd, file), descriptor, fill, blank);
+    }
+
+    public static MatVal readExcel(string fileName, string descriptor, object fill, object blank)
+    {
+        Descriptor desc = new Descriptor(descriptor, fill, blank);
+        using FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        using Package xlPackage = Package.Open(stream, FileMode.Open, FileAccess.Read);
+        return readExcel(xlPackage, desc);
+    }
+
+    public static MatVal readExcel(Package xlPackage, string descriptor, object fill, object blank)
+    {
+        return readExcel(xlPackage, new Descriptor(descriptor, fill, blank));
+    }
+
+    public static MatVal readExcel(string file, string cwd, int r, int c, int nr, int nc, object fill, object blank)
+    {
+        return readExcel(Path.Combine(cwd, file), r, c, nr, nc, fill, blank);
+    }
+
+    public static MatVal readExcel(string fileName, int r, int c, int nr, int nc, object fill, object blank)
+    {
+        using Package xlPackage = Package.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+        return readExcel(xlPackage, r, c, nr, nc, fill, blank);
+    }
+
+    public static MatVal readExcel(Package xlPackage, int r, int c, int nr, int nc, object fill, object blank)
+    {
+        return readExcel(xlPackage, new Descriptor(r, c, nr, nc, fill, blank));
+    }
+
+    public static MatVal readExcel(Package xlPackage, Descriptor desc)
+    {
+        EstablishWorksheetContext(desc, xlPackage, out var sheetDoc, out var context);
+        return GetWorksheetContents(sheetDoc, context, desc);
+    }
+
+    public static object writeExcel(string file, string descriptor, MatVal V, string cwd)
+    {
+        return writeExcel(file, descriptor, V, cwd, s_WriteExcelCreateDirectories, s_WriteExcelOverwritesFiles);
+    }
+
+    public static bool UsesIsolatedStorage(MatVal V)
+    {
+        return V.Rows * V.Cols > 10000;
+    }
+
+    public static object writeExcel(string file, string descriptor, MatVal V, string cwd, bool create_directories, bool overwrite_files)
+    {
+        if (UsesIsolatedStorage(V))
+        {
+            return writeExcelInIsolatedContext(file, descriptor, V, cwd, create_directories, overwrite_files);
+        }
+        try
+        {
+            return writeExcelInner(file, descriptor, V, cwd, create_directories, overwrite_files);
+        }
+        catch (IsolatedStorageException)
+        {
+            return writeExcelInIsolatedContext(file, descriptor, V, cwd, create_directories, overwrite_files);
+        }
+    }
 }

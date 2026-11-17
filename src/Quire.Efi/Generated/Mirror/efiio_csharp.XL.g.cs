@@ -18,37 +18,11 @@ public partial class XL : global::Quire.efiio_csharp.ExcelSupport
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.XmlNode[,] GetWorksheetNodes(bool doPadding, global::System.Xml.XmlDocument sheetDoc, global::Quire.efiio_csharp.XL.DocumentContext context, global::Quire.efiio_csharp.Descriptor desc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static global::System.Xml.XmlNode MakeRowNode(int row, global::System.Xml.XmlDocument sheetDoc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Xml.XmlNode MakeCellNode(int row, int col, global::System.Xml.XmlDocument sheetDoc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void EstablishWorksheetContext(global::Quire.efiio_csharp.Descriptor desc, global::System.IO.Packaging.Package xlPackage, out global::System.Xml.XmlDocument sheetDoc, out global::Quire.efiio_csharp.XL.DocumentContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void EstablishWorksheetContext(global::Quire.efiio_csharp.Descriptor desc, global::System.IO.Packaging.Package xlPackage, out global::System.Xml.XmlDocument sheetDoc, out global::Quire.efiio_csharp.XL.DocumentContext context, bool for_write) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.MatVal readExcel(string file, string descriptor, string cwd, object fill, object blank) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.MatVal readExcel(string fileName, string descriptor, object fill, object blank) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.MatVal readExcel(global::System.IO.Packaging.Package xlPackage, string descriptor, object fill, object blank) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.MatVal readExcel(string file, string cwd, int r, int c, int nr, int nc, object fill, object blank) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.MatVal readExcel(string fileName, int r, int c, int nr, int nc, object fill, object blank) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.MatVal readExcel(global::System.IO.Packaging.Package xlPackage, int r, int c, int nr, int nc, object fill, object blank) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.MatVal readExcel(global::System.IO.Packaging.Package xlPackage, global::Quire.efiio_csharp.Descriptor desc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object writeExcel(string file, string descriptor, global::Quire.Mcd.MatVal V, string cwd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool UsesIsolatedStorage(global::Quire.Mcd.MatVal V) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void writeExcelInnerFromInstance(string file, string descriptor, global::Quire.Mcd.MatVal V, string cwd, bool create_directories, bool overwrite_files) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object writeExcelInIsolatedContext(string file, string descriptor, global::Quire.Mcd.MatVal V, string cwd, bool create_directories, bool overwrite_files) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object writeExcel(string file, string descriptor, global::Quire.Mcd.MatVal V, string cwd, bool create_directories, bool overwrite_files) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object writeExcelInner(string file, string descriptor, global::Quire.Mcd.MatVal V, string cwd, bool create_directories, bool overwrite_files) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -77,4 +51,6 @@ public partial class XL : global::Quire.efiio_csharp.ExcelSupport
     public partial class IsolatedLoadContext : global::System.Runtime.Loader.AssemblyLoadContext
     {
     }
+    [global::Quire.Mirror.MirrorStub]
+    public static object writeExcelInIsolatedContext(string file, string descriptor, global::Quire.Mcd.MatVal V, string cwd, bool create_directories, bool overwrite_files) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
