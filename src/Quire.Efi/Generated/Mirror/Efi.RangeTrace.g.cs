@@ -12,38 +12,12 @@ namespace Quire.Efi;
 internal partial class RangeTrace : global::Quire.Efi.Trace
 {
     [global::Quire.Mirror.MirrorStub]
-    public RangeTrace(global::Quire.Efi.Trace.Spec spec, global::Quire.Mcd.Dim xDim, global::Quire.Mcd.Dim yDim) : base(default(global::Quire.Efi.Trace.Spec), default(global::Quire.Mcd.Dim), default(global::Quire.Mcd.Dim)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void Process(global::Quire.Efi.Engine engine, int currentTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private object[] BuildArguments(global::System.Collections.Generic.IEnumerator<double>[] arguments) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IEnumerator<object[]> MultiRangeEnumerator(global::System.Collections.Generic.IEnumerator<double>[] arguments) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IEnumerator<object[]> ArgumentEnumerator(object[] ranges) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IEnumerator<global::Quire.Efi.Pair<object>> PointEnumerator(object[] ranges) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Efi.RangeTrace+RangeEnumerator, efiplot_")]
     private partial class RangeEnumerator : global::System.Collections.Generic.IEnumerator<double>, global::System.Collections.IEnumerator, global::System.IDisposable
     {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::Quire.Mcd.RngVal m_range;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly int count;
-        [global::Quire.Mirror.MirrorStub]
-        private int step;
-        [global::Quire.Mirror.MirrorStub]
-        public double Current { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        object global::System.Collections.IEnumerator.Current { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public RangeEnumerator(global::Quire.Mcd.RngVal range) { }
-        [global::Quire.Mirror.MirrorStub]
-        public void Dispose() { }
-        [global::Quire.Mirror.MirrorStub]
-        public bool MoveNext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }
