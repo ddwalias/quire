@@ -143,3 +143,12 @@
 - Left as stubs: `BuildTileDrawingGeometry` (a `UpTo` lambda), the static constructor, the static `DependencyProperty` fields and `TypeOfThis`.
 - Release IL: PASS; 839 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1865.
+
+## Batch 18 — WorksheetItemManager (partial: attached properties and item location, clip and page members)
+
+- Members (20 stubs removed): the attached-property accessors for `WorksheetItemSizeChangedHandler`, `SizeChangedEventArgsList`, `AddMoveRemoveTimestamp` and `SplitCheckIsRequired`; `ItemHasPendingSizeChangedEvents`; both `GetItemWorksheetLocation` and both `SetItemWorksheetLocation` overloads; `SetItemWorksheetLocationForObject`; `SetContainingPage`, `GetContainingPage`, `SetItemClipGeometry`; `GetItemRect` (override).
+- Shape choices, each checked by the gate: the `if (!AssertNotNull(...).Failed) { ... }` setters use the guard form (Mathcad branches with `brfalse.s`); `SetContainingPage` uses an early return; `obj is DependencyObject ? obj : null` became `as`.
+- Parked: `GetItemClipGeometry`. Mathcad's second branch sits one instruction later than Quire's at the `itemPresenter != null` test; not diagnosed further. Stub kept.
+- Left as stubs: the static field declarations and the `_typeOfThis` static field, the private fields, and the members that use lambdas (`SortItemsByLocation`, the size-changed dispatch, and the others with closures). Also the static constructor, if present.
+- Release IL: PASS; 859 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1845 (includes the parked `GetItemClipGeometry`).
