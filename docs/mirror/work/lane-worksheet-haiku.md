@@ -42,3 +42,13 @@
 - Release IL: PASS; 582 checked; 0 failures.
 - Not taken, as they need nested command classes or closures that are not yet mirrored: `DeleteActiveItem`, `HandleRemoveAnnotations`, `OnZombieInitializationComplete` (lambda), `CreateFileNameControl`/`CreateFilePathControl`, `CanCreateExcelComponent`, `GoToLastError`.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 2092.
+
+## Batch 6 — WorksheetVisiblePages (one type; nested WorksheetVisiblePagesRange)
+
+- Members (32 stubs removed): `VisiblePages`, `FirstVisiblePageIndex`, `LastVisiblePageIndex`, `IsVisiblePagesLoaded`, the constructor and the `_pages`, `_visiblePagesRange`, `_visiblePages` fields, `IsPageIndexVisible`, `IsAnyPageIndexVisible`, `SetVisiblePages`, `UpdateVisiblePagesOnScrollChanged`, `UpdateVisiblePagesOnPageAddedIfNeeded`, `UpdateVisiblePagesOnPageRemovedIfNeeded`, `RemoveAllPages`, `Dispose`, `UpdateVisiblePages`, `AddToEnd`, `AddToBeginning`, `RemoveFromBeginning`, `RemoveFromEnd`, `PassFocusToAncestorIfNeeded`, `PassFocusToPagesAncestor`; nested `WorksheetVisiblePagesRange`: constants, `First`, `Last`, constructor, `Update`, `IsIndexInVisibleRange`, `IsAnyIndexOfRangeInVisibleRange`, `Reset`.
+- Shape changes: `UpdateVisiblePagesOnPageAddedIfNeeded` uses the positive condition (`IsVisiblePagesLoaded && !IsPageIndexVisible(...)`), since the early-return form differs; `PassFocusTo*` drop the `(DependencyObject)(object)` casts, which Mathcad does not emit.
+- Parked:
+  - `PageWhiteboardItemsCollectionChanged` (static, `foreach` over `IList`): the first difference is one instruction longer in Quire than Mathcad, at the `newItems != null` test's branch target. Not diagnosed further; stub kept.
+  - `UpdatePageItemsVisibility`: its body is built from lambdas (`Each(...)` over `ToList()`), which need compiler-generated closure classes matching Mathcad's ordinals. Stub kept.
+- Release IL: PASS; 612 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 2060.
