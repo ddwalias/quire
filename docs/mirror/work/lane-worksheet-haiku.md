@@ -52,3 +52,11 @@
   - `UpdatePageItemsVisibility`: its body is built from lambdas (`Each(...)` over `ToList()`), which need compiler-generated closure classes matching Mathcad's ordinals. Stub kept.
 - Release IL: PASS; 612 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 2060.
+
+## Batch 7 — WhiteboardItemZombie (one type)
+
+- Members (20 stubs removed): `ItemManager`, `Item`, `ItemSize`, `ItemBounds`, `ItemVerticalAlignmentOffset`, `VerticalAlignmentOffset`, `IsEmpty` (throws `NotImplementedException`, as in the original), `SnappingHelper`, `ItemToZombieTransform`, `SnapsToPixelItem`, `HandleZombieVisibilityChanged`, `ResetVisualBrush`, `Hide`, `Show`, `UpdateZombieRect`, `Activate`, `NavigateIntoItem`, `SimulateMouseClick`, `Dispose`, `GetHelpContext`.
+- Shape change: `UpdateZombieRect` reads `ItemBounds` directly instead of through a local `Rect itemBounds`/`Rectangle` local; the named locals gave different local slots from Mathcad's (AdornerLayer first, then the Rect temporaries).
+- Left as stubs (with the fields and the constructor, which are kept for the same reason): the constructor and `HandleZombieLoaded`, because both use lambdas (`Loaded += ...`, `ExecuteOnLayoutUpdated(..., () => ...)`) that need Mathcad's closure ordinals. The fields `_zombieRect`, `_zombieAdorner`, `_itemManager`, `_item`, `_itemElement`, `_snappableHelper`, `_isDisposed` stay as stub declarations.
+- Release IL: PASS; 636 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 2040.
