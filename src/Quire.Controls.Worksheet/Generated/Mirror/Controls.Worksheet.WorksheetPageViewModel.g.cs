@@ -26,49 +26,11 @@ public partial class WorksheetPageViewModel : global::Quire.Controls.Core.ViewMo
     [global::Quire.Mirror.MirrorStub]
     private double _nonPrintableSpaceIndicatorHeight;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.IWorksheetPageBody PageBody { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.IHeaderFooterZombie HeaderZombie { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.IHeaderFooterZombie FooterZombie { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.IHeaderFooterZombie FirstPageHeaderZombie { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.IHeaderFooterZombie FirstPageFooterZombie { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.IHeaderFooter Header { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.IHeaderFooter Footer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int PageNumber { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasPageBreak { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShowNonPrintableSpaceIndicator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double NonPrintableSpaceButtonPosition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double NonPrintableSpaceIndicatorHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Controls.Worksheet.IWorksheetPageSection, global::System.Windows.Rect> RequestScrollTo;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action PageBodyActivated;
     [global::Quire.Mirror.MirrorStub]
     public WorksheetPageViewModel(global::System.Nullable<global::System.Windows.Size> gridCellSize, bool isPrinting = false) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void OnRequestBringIntoView(object sender, global::System.Windows.RequestBringIntoViewEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point GetNavigateOutLocation(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnSectionRequestScrollTo(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl section, global::System.Windows.Rect rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnDispose() => base.OnDispose();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddItemAtLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RemoveItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RemoveItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateNonPrintableSpaceIndicator(double maxXLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -60,3 +60,11 @@
 - Left as stubs (with the fields and the constructor, which are kept for the same reason): the constructor and `HandleZombieLoaded`, because both use lambdas (`Loaded += ...`, `ExecuteOnLayoutUpdated(..., () => ...)`) that need Mathcad's closure ordinals. The fields `_zombieRect`, `_zombieAdorner`, `_itemManager`, `_item`, `_itemElement`, `_snappableHelper`, `_isDisposed` stay as stub declarations.
 - Release IL: PASS; 636 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 2040.
+
+## Batch 8 — WorksheetPageViewModel (one type)
+
+- Members (19 stubs removed): `PageBody`, `HeaderZombie`, `FooterZombie`, `FirstPageHeaderZombie`, `FirstPageFooterZombie`, `Header`, `Footer`, `PageNumber`, `HasPageBreak`, `ShowNonPrintableSpaceIndicator`, `NonPrintableSpaceButtonPosition`, `NonPrintableSpaceIndicatorHeight`, `OnRequestBringIntoView`, `GetNavigateOutLocation`, `OnSectionRequestScrollTo`, `OnDispose`, `AddItemAtLocation`, `RemoveItem`, `RemoveItems`.
+- Shape choices, each checked by the gate: `HasPageBreak` and `ShowNonPrintableSpaceIndicator` keep the `if (field != value) { ... }` form (Mathcad uses `beq.s` here, unlike `IsContentActive` in batch 4); `OnRequestBringIntoView` uses `as` plus an early return (Mathcad: `isinst`, `brtrue.s`, `ret`); `AddItemAtLocation` uses a trailing early return instead of `else if` (Mathcad's second half is `op_Equality; brfalse.s; ret`).
+- Left as stubs: the constructor, `UpdateNonPrintableSpaceIndicator` (lambdas), the fields `_pageNumber`, `_header`, `_footer`, `_hasPageBreak`, `_showNonPrintableSpaceIndicator`, `_nonPrintableSpaceButtonPosition`, `_nonPrintableSpaceIndicatorHeight` (stub declarations kept, as in earlier batches).
+- Release IL: PASS; 667 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 2021.
