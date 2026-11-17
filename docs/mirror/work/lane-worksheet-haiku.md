@@ -173,3 +173,11 @@
 ## Note — WorksheetModel is ordinal-locked
 
 - `WorksheetModel`'s hand-written partial has constructor closures (`ContextUnloaded`, `ItemMoved`). Their names (`<.ctor>b__121_0`, `b__154_0`) depend on the ordinal of the constructor among the class's methods, and generated stubs precede it. Removing any generated stub from `WorksheetModel.g.cs` shifts those ordinals, and the gate then fails on the constructor and `<>c` members. A trial of 11 property stubs (`DocCalculationOptions`, `SimplifyUnitSystem` and others) failed for that reason and for guard-shape differences; it was reverted. Placeholder stubs in Mathcad order are needed before any of these can land.
+
+## Batch 21 — HeaderFooterViewModel (partial: accessors and item-collection members)
+
+- Members (9 stubs removed): `CommonItems`, `UniqueItems`, `Margin`, `DefaultInsertionPoint` and `StrictMinimumSize` (overrides), `WorksheetHandleDelete`, `UpdateItemLocationsAfterGridSizeChanged`, `HandleItemRemoved` (override), `HandleRequestResizeToFitOrClearRestriction`.
+- Parked: `HandleItemAdded` (override). The first difference is a local slot: Mathcad assigns the `IResizeToFitWhiteboardItem` pattern variable to local 2, Quire to local 0. Neither the reordered pattern nor the `DependencyObject` pattern form changed it. Stub kept.
+- Left as stubs: the constructor and `Initialize` (lambda `CreateCommandBinding` callbacks), the `ActiveItem` override, `SetContentWidth` and `SetContentHeight` (lambdas), `ResizeItemToFit`, and the events and fields.
+- Release IL: PASS; 906 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1802 (includes the parked `HandleItemAdded`).

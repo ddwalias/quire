@@ -16,16 +16,6 @@ internal partial class HeaderFooterViewModel : global::Quire.Controls.Whiteboard
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size _strictMinimumSize;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.WhiteboardItemsCollection CommonItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.WhiteboardItemsCollection UniqueItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Thickness Margin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Point DefaultInsertionPoint { get => base.DefaultInsertionPoint; }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size StrictMinimumSize { get => base.StrictMinimumSize; }
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Core.IWhiteboardItem ActiveItem { get => base.ActiveItem; set => base.ActiveItem = value; }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Controls.Worksheet.IPageNumberControl> PageNumberControlMoved;
@@ -33,10 +23,6 @@ internal partial class HeaderFooterViewModel : global::Quire.Controls.Whiteboard
     public event global::System.Action<global::Quire.Direction, bool> NavigateOutOfHeaderFooter;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<bool> PageNumberControlActivated;
-    [global::Quire.Mirror.MirrorStub]
-    public void UpdateItemLocationsAfterGridSizeChanged(global::System.Windows.Size oldGridCellSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool WorksheetHandleDelete() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void SetContentWidth(double newWidth) => base.SetContentWidth(newWidth);
     [global::Quire.Mirror.MirrorStub]
@@ -47,10 +33,6 @@ internal partial class HeaderFooterViewModel : global::Quire.Controls.Whiteboard
     private void Initialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void HandleItemAdded(global::Quire.Controls.Core.IWhiteboardItem item) => base.HandleItemAdded(item);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleItemRemoved(global::Quire.Controls.Core.IWhiteboardItem item) => base.HandleItemRemoved(item);
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleRequestResizeToFitOrClearRestriction(global::Quire.Controls.Core.IResizeToFitWhiteboardItem element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ResizeItemToFit(global::Quire.Controls.Core.IResizeToFitWhiteboardItem item, bool assertIsNotReady) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
