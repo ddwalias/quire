@@ -68,3 +68,10 @@
 - Left as stubs: the constructor, `UpdateNonPrintableSpaceIndicator` (lambdas), the fields `_pageNumber`, `_header`, `_footer`, `_hasPageBreak`, `_showNonPrintableSpaceIndicator`, `_nonPrintableSpaceButtonPosition`, `_nonPrintableSpaceIndicatorHeight` (stub declarations kept, as in earlier batches).
 - Release IL: PASS; 667 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 2021.
+
+## Batch 9 — WorksheetControlExtensions (one static class)
+
+- Members (28 stubs removed): `GetViewModel`, `SetItemWorksheetLocation`, `SetItemWorksheetGridLocation`, `MoveItemGridLocation`, `MoveItemsByGridLocation`, both `GetWorksheetSectionItemLocation` and both `GetItemWorksheetGridLocation` overloads, `GetItemWorksheetPageIndex`, `SetLayoutMode`, `SetInsertionPoint`, `DiscreteSelectRegion`, `ContinuousSelectRegion`, `SelectRegion`, `ActivateRegion`, `GetInsertionPointInGridCoordinates`, `SetInsertionPointInGridCoordinates`, `ActivateHeader`, `ActivateFooter`, `ActivateContent`, `InsertPageBreak`, `GetWorksheetItemParts`, the four `WorksheetLocationToGridLocation`/`GridLocationToWorksheetLocation` overloads, and `GetLinesPerPage`.
+- Parked: `SeparateOverlappedItems`. It needs `WhiteboardCommands` (`Quire.Controls.Whiteboard`), which `Quire.Controls.Worksheet.csproj` does not reference. Confirmed by a build: CS0103 `WhiteboardCommands` does not exist. Stub kept.
+- Release IL: PASS; 695 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1993 (includes the parked `SeparateOverlappedItems`).
