@@ -21,6 +21,14 @@ namespace Quire.Controls.ExcelComponent.ViewModel;
 
 public abstract partial class OleBaseComponentViewModel
 {
+    private readonly IList<IWhiteboardItem> _itemsToBeAdded = new List<IWhiteboardItem>();
+
+    private static readonly Type _typeOfThis = typeof(OleBaseComponentViewModel);
+
+    public static readonly RoutedCommand ToggleInputSectionVisibility = new RoutedCommand("ToggleInputSectionVisibility", _typeOfThis);
+
+    public static readonly RoutedCommand ToggleOutputSectionVisibility = new RoutedCommand("ToggleOutputSectionVisibility", _typeOfThis);
+
     public WhiteboardItemsCollection InputItems { get; private set; }
 
     public WhiteboardItemsCollection OutputItems { get; private set; }
@@ -940,5 +948,30 @@ public abstract partial class OleBaseComponentViewModel
         {
             ForceOleComponentResizeDueToOleContainerItemResize(setExplicitMinHeight: false);
         }
+    }
+
+    protected OleBaseComponentViewModel(OleBaseComponentModel model, Size? gridCellSize)
+        : this(model, new RestrictedAreaAlignmentGrid(gridCellSize))
+    {
+    }
+
+    protected OleBaseComponentViewModel(OleBaseComponentModel model, IRestrictedAreaAlignmentGrid grid)
+        : base(model, grid)
+    {
+        _model = (OleBaseComponentModel)_mathboardModel;
+        Init();
+    }
+
+    protected OleBaseComponentViewModel(OleBaseComponentViewModel original)
+        : base(original)
+    {
+        _model = (OleBaseComponentModel)_mathboardModel;
+        _alignmentGrid = new RestrictedAreaAlignmentGrid(original._alignmentGrid.GridCellSize);
+        Init();
+        _isInputSectionVisible = original._isInputSectionVisible;
+        _isOutputSectionVisible = original._isOutputSectionVisible;
+        InputSectionActualHeight = original.InputSectionActualHeight;
+        OutputSectionActualHeight = original.OutputSectionActualHeight;
+        ContentSize = original.ContentSize;
     }
 }

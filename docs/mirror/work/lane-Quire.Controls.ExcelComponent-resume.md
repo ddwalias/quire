@@ -63,3 +63,5 @@
 - Remaining (batch 53 report): 254 generated-stub members not verified.
 - Batch 54: `ViewModel.OleBaseComponentViewModel`: `GetPasteItemsCommand`, the `FindMinimumSize()` override, `OleContainerMinSizeChanged` (one combined `OleContainerItemSize` test inside `if (allowResize)`). Release IL PASS (`855 checked`, 0 failures; `.mirror-cache/release-il-50a0256603f9/release-il.json`).
 - Remaining (batch 54 report): 251 generated-stub members not verified.
+- Batch 55: `ViewModel.OleBaseComponentViewModel`: the three constructors (the `(model, Size?)` one chains with `this(...)`; the others call the base and `Init()`), the `_itemsToBeAdded` field initializer (Mathcad runs it before the base call), and the static `_typeOfThis` and two `RoutedCommand` initializers. Release IL PASS (`859 checked`, 0 failures; `.mirror-cache/release-il-7a00d87fcf8c/release-il.json`). Parked: `Init`, `IndicateHiddenErrors`, `SetOleContainerItem` (lambdas), the `ToggleInput/OutputSectionVisibilityCommand` factories (lambda `RelayCommand` callbacks), `SetInitialSize`.
+- Remaining (batch 55 report): 248 generated-stub members not verified.

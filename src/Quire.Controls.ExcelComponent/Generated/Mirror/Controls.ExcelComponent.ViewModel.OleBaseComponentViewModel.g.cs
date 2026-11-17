@@ -16,19 +16,11 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.RelayCommand _toggleOutputSectionVisibilityCommand;
     [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedCommand ToggleInputSectionVisibility;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedCommand ToggleOutputSectionVisibility;
-    [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Controls.ExcelComponent.Model.OleBaseComponentModel _model;
     [global::Quire.Mirror.MirrorStub]
     private bool _isInputSectionVisible;
     [global::Quire.Mirror.MirrorStub]
     private bool _isOutputSectionVisible;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.IList<global::Quire.Controls.Core.IWhiteboardItem> _itemsToBeAdded;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size _strictMinimumSize;
     [global::Quire.Mirror.MirrorStub]
@@ -39,12 +31,6 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     public global::System.Windows.Input.ICommand ToggleOutputSectionVisibilityCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public abstract bool OutputSectionExists { get; }
-    [global::Quire.Mirror.MirrorStub]
-    protected OleBaseComponentViewModel(global::Quire.Controls.ExcelComponent.Model.OleBaseComponentModel model, global::System.Nullable<global::System.Windows.Size> gridCellSize) : base(default(global::Quire.Controls.Mathboard.AggregateMathboardViewModel)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected OleBaseComponentViewModel(global::Quire.Controls.ExcelComponent.Model.OleBaseComponentModel model, global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid grid) : base(default(global::Quire.Controls.Mathboard.AggregateMathboardViewModel)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected OleBaseComponentViewModel(global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel original) : base(default(global::Quire.Controls.Mathboard.AggregateMathboardViewModel)) { }
     [global::Quire.Mirror.MirrorStub]
     private void Init() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
