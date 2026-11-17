@@ -12,6 +12,7 @@ using Quire.Core;
 using Quire.PersistentData;
 using Quire.Serialization;
 using Quire.OLE;
+using System.Collections.Generic;
 namespace Quire.Controls.ExcelComponent.Model;
 
 public partial class ExcelContainerModel
@@ -233,5 +234,174 @@ public partial class ExcelContainerModel
         base.OnStartRunning();
         DisableWorkbookCalculation(disable: true);
         RegisterOnActivateHandler();
+    }
+
+    public bool? GetExcelVersionInstalled(bool forceRun)
+    {
+        if (!_excelVersionInstalled.HasValue && (forceRun || IsOleSiteManagerRunning))
+        {
+            _excelVersionInstalled = OleUtils.IsVersionInstalled(GetOleObject(forceRun));
+        }
+        return _excelVersionInstalled;
+    }
+
+    public void SetValue(string place, object value, bool forceRun)
+    {
+        Microsoft.Office.Interop.Excel.Range range = GetRange(place, forceRun);
+        try
+        {
+            if (value is Array)
+            {
+                if (range.Areas.Count > 1)
+                {
+                    throw new AddressErrorException(_nonContiguousRangeErrorFormat);
+                }
+                object[,] array = (object[,])value;
+                range.get_Resize((object)array.GetLength(0), (object)array.GetLength(1)).set_Value(Type.Missing, value);
+            }
+            else
+            {
+                range.set_Value(Type.Missing, value);
+            }
+        }
+        catch (COMException innerException)
+        {
+            throw new Exception(_comExceptionError, innerException);
+        }
+    }
+
+    public override void SetValue(string place, IValue value, IValueToIResultNodeTransform resultsTransform)
+    {
+        CheckInstalledAndAvailable(forceRun: true);
+        SetValue(place, ConvertFromIValue(value), forceRun: true);
+    }
+
+    public override IList<IRegionPersistentData> SetRegionPersistentData(IDeS11NProvider d11NProvider, excelContainerType excelContainer)
+    {
+        Unpack(d11NProvider, excelContainer.itemidref);
+        IsAsIcon = excelContainer.IsIcon;
+        return null;
+    }
+
+    public override excelContainerType GetRegionPersistentData(IS11NProvider s11NProvider, string uniqueId, Action onServerBusy)
+    {
+        DebugTools.DevAssert(IsAsIcon != true, null);
+        return new excelContainerType(SizeData)
+        {
+            itemidref = Pack(s11NProvider, uniqueId, ExternalObjectType.Excel, onServerBusy)
+        };
+    }
+
+    public bool Select(string rangeAddress, bool forceRun)
+    {
+        try
+        {
+            GetRange(rangeAddress, forceRun).Select();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private void PostOleClosed(object sender, EventArgs args)
+    {
+        _postOleClosedTimer.Stop();
+        if (IsOutOfPlaceActive)
+        {
+            return;
+        }
+        if (NeedRecalculateOnClose)
+        {
+            NeedRecalculateOnClose = false;
+            FireRequestEvaluation();
+        }
+        ClearMessage(MessageCategory.UnsynchronizedResults);
+    }
+
+    private void RegisterOnActivateHandler()
+    {
+        Application safeApplication = GetSafeApplication(forceRun: false);
+        if (DebugTools.AssertNotNull(safeApplication, null).Passed)
+        {
+            AppEvents = safeApplication;
+        }
+    }
+
+    private void OnWorkbookActivateAsync(string name)
+    {
+        if (IsOutOfPlaceActive)
+        {
+            return;
+        }
+        try
+        {
+            Workbook safeWorkBook = GetSafeWorkBook(forceRun: false);
+            Application safeApplication = GetSafeApplication(forceRun: false);
+            if (safeApplication != null && safeApplication.Visible && safeWorkBook != null && safeWorkBook.Name == name && HasVisibleWindow(safeWorkBook.Windows))
+            {
+                NeedRecalculateOnClose = true;
+                SetMessage(MessageCategory.UnsynchronizedResults, NodeMessageAdornerType.Warning, "excel_workbook_unhidden");
+            }
+        }
+        catch (Exception ex)
+        {
+            DebugTools.FailAssertion(ex.Message);
+        }
+    }
+
+    private void DisableWorkbookCalculation(bool disable)
+    {
+        Workbook safeWorkBook = GetSafeWorkBook(forceRun: false);
+        try
+        {
+            foreach (Worksheet worksheet in safeWorkBook.Worksheets)
+            {
+                worksheet.EnableCalculation = !disable;
+            }
+        }
+        catch (Exception ex)
+        {
+            if (IsOleSiteManagerRunning)
+            {
+                DebugTools.FailAssertion("unable to switch calculation mode due to {0}", ex.Message);
+            }
+        }
+    }
+
+    private void EnableWorksheetsCalculation(Sheets worksheets, bool enable)
+    {
+        try
+        {
+            foreach (Worksheet worksheet in worksheets)
+            {
+                worksheet.EnableCalculation = enable;
+            }
+        }
+        catch (Exception ex)
+        {
+            if (IsOleSiteManagerRunning)
+            {
+                DebugTools.FailAssertion("unable to switch calculation mode due to {0}", ex.Message);
+            }
+        }
+    }
+
+    private static bool? IsExcelCalculationManualModel(Application application)
+    {
+        try
+        {
+            return application.Calculation == XlCalculation.xlCalculationManual;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    void IDataExchangeModel.Unlock()
+    {
+        Unlock();
     }
 }

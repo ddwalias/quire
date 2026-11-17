@@ -20,4 +20,6 @@ public partial interface Range
     Worksheet Worksheet { get; }
 
     object get_Value(object RangeValueDataType);
+    void set_Value(object RangeValueDataType, object Value);
+    Range get_Resize(object RowSize, object ColumnSize);
 }
