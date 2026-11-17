@@ -11,12 +11,4 @@ namespace Quire.Efi.CalculationAssistant;
 [global::Quire.Mirror.MirrorOf("Efi.CalculationAssistant.TaskDefinition, efiplot_")]
 public partial class TaskDefinition
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Efi.CalculationAssistant.TaskAction taskAction { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object inData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object outData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public TaskDefinition() { }
 }
