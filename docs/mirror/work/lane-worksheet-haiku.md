@@ -94,3 +94,12 @@
   - Members with lambdas (`GetItemParts`, `Split`, `RemoveZombies`, `GetItemZombieOnPage`, `HideZombies`, `ShowZombies`, `DisposeEventHandlers`, `Dispose`): need Mathcad's closure ordinals. Also the constructor and the field stubs.
 - Release IL: PASS; 737 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1950.
+
+## Batch 12 — PageNumberControl (one type)
+
+- Members (8 stubs removed): `ClearTextForXamlSerialization`, `TemplateFormat` (override), `TemplateKey`, `HandleTagChanged`, `MeasureOverride`, `SetRegionPersistentData`, `GetPageNumberFormat`, `GetTemplateKeyFromGivenFormat`.
+- Shape choices, each checked by the gate: `HandleTagChanged` returns early when the value is null or the assertion fails (Mathcad's branch order differs from the `&&` form); `GetTemplateKeyFromGivenFormat` calls `AppendFormat` on a named `StringBuilder` (Mathcad uses `callvirt`; the `new` receiver form emits `call`).
+- Dropped: the `[DependsOn]` and `[UsedImplicitly]` attributes on `ClearTextForXamlSerialization`. They come from JetBrains.Annotations, which Quire does not reference. Attributes are not part of the IL compare.
+- Left as stubs (lambdas, closure ordinals): `GetRegionPersistentData`, `IsValidTemplateKey`; plus the static constructor and the field stub `_typeOfThis`.
+- Release IL: PASS; 747 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1942.
