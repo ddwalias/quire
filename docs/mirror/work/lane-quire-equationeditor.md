@@ -1,7 +1,7 @@
 # Quire.EquationEditor lane checkpoint
 
-- Owner: EquationEditor dispatched worker (task_7b21129efa08)
-- Branch: `feature/equation-editor-stubs-batch8`
+- Owner: EquationEditor dispatched worker (task_90a329f853ca)
+- Branch: `feature/equation-editor-stubs-batch9`
 - Assembly: `Quire.EquationEditor` (managed members, `src/Quire.EquationEditor`)
 
 ## Batch 1 — Native.PtcEquationEditor members (a7, o, bf, au, az, d, a)
@@ -132,3 +132,66 @@
   - `Properties.Settings` and `MathNodeSettings`: Obfuscated property getters/setters `b()` and `a()`.
   - `Native.PtcEquationEditor` obfuscated types (`a-z`, `a0`, `a8`, `a9`, `bk`, `bm`, `bn`, etc.) and dependent callers: CS0102 clashes.
 - Remaining mismatches: 0 in completed types; remaining unbatched/parked stubs in other types.
+
+## Batch 9 — EquationEditor.Tree.MathNode properties and tree traversal members
+
+- Landed members (42 stubs / 40 members):
+  - `EquationEditor.Tree.MathNode`: `g` (AlgorithmOptions field)
+  - `EquationEditor.Tree.MathNode`: `this[int index]` (get and set)
+  - `EquationEditor.Tree.MathNode`: `IsEquationRoot` { get }
+  - `EquationEditor.Tree.MathNode`: `IsRooted` { get }
+  - `EquationEditor.Tree.MathNode`: `IsScopeRoot` { get; virtual }
+  - `EquationEditor.Tree.MathNode`: `AlgorithmSExpression` { get }
+  - `EquationEditor.Tree.MathNode`: `AlgorithmOptions` { get; set; }
+  - `EquationEditor.Tree.MathNode`: `IsInContainerSlot` { get }
+  - `EquationEditor.Tree.MathNode`: `IsReadonly` { get }
+  - `EquationEditor.Tree.MathNode`: `IsAssociativeChildAContainerSlot` { get }
+  - `EquationEditor.Tree.MathNode`: `ContainerRoot` { get; virtual }
+  - `EquationEditor.Tree.MathNode`: `EquationRootNode` { get }
+  - `EquationEditor.Tree.MathNode`: `ScopeRoot` { get; virtual }
+  - `EquationEditor.Tree.MathNode`: `RootNode` { get }
+  - `EquationEditor.Tree.MathNode`: `HasContainerSlot` { get }
+  - `EquationEditor.Tree.MathNode`: `HasLastElement` { get }
+  - `EquationEditor.Tree.MathNode`: `ElementsCount` { get }
+  - `EquationEditor.Tree.MathNode`: `AdjacentSubexpressionRoot` { get }
+  - `EquationEditor.Tree.MathNode`: `AdjacentSubexpression(Direction)`
+  - `EquationEditor.Tree.MathNode`: `HasAdjacentSub(MathNode, Direction)`
+  - `EquationEditor.Tree.MathNode`: `IsDescendentOf(MathNode)`
+  - `EquationEditor.Tree.MathNode`: `GetNearestAncestor(Func<MathNode, bool>)`
+  - `EquationEditor.Tree.MathNode`: `GetNearestAncestor(string)`
+  - `EquationEditor.Tree.MathNode`: `GetNearestAncestor(OperatorFamily)`
+  - `EquationEditor.Tree.MathNode`: `GetNearestNaryAncestor()`
+  - `EquationEditor.Tree.MathNode`: `GetNearestLinearNaryAncestor()`
+  - `EquationEditor.Tree.MathNode`: `GetNearestVerticalNavigatableAncestor()`
+  - `EquationEditor.Tree.MathNode`: `GetNearestEvaluationAncestor()`
+  - `EquationEditor.Tree.MathNode`: `GetContainerRoot(bool)` ([SkipLocalsInit])
+  - `EquationEditor.Tree.MathNode`: `ChildNotPrimal(int)`
+  - `EquationEditor.Tree.MathNode`: `ElementIndexOfChild(int)`
+  - `EquationEditor.Tree.MathNode`: `AreAllChildrenEmpty()`
+  - `EquationEditor.Tree.MathNode`: `CopyAlgorithm(MathNode)`
+  - `EquationEditor.Tree.MathNode`: `IsInSameFamily(MathNode)`
+  - `EquationEditor.Tree.MathNode`: `MakeEditable()`
+  - `EquationEditor.Tree.MathNode`: `MakeReadOnly()`
+  - `EquationEditor.Tree.MathNode`: `DescendentFromPath(params int[])`
+  - `EquationEditor.Tree.MathNode`: `DescendentFromPath(IList<int>)`
+  - `EquationEditor.Tree.MathNode`: `NodeFromPath(IList<int>)`
+  - `EquationEditor.Tree.MathNode`: `PathFromEquationRoot()`
+  - `EquationEditor.Tree.MathNode`: `PathFromAncestor(MathNode)`
+- Report: full `--project Quire.EquationEditor` gate PASS, 975 checked, 0 failures. Remaining stubs: 2,769.
+- Parked members (exact blockers):
+  - `Native.PtcEquationEditor` obfuscated types (`a-z`, `a0`, `a8`, `a9`, `bk`, `bm`, `bn`, etc.) and dependent callers: CS0102 clashes between fields and methods (e.g. `r.a`, `aw.a`, `v.a`, `w.a`, `x.a`).
+  - `MathNode` remaining stubs touching clashed fields `a__`, `b__`, `c__`, `d__`, `e__`, `h__`, `i__`, `j_`: CS0102 field/method name clashes (e.g. `d` vs `d()`, `a` vs `a()`).
+  - `RootMathNode.ctor()`: Constructor chaining calls `Native.PtcEquationEditor.r.a.c()`; `r.a` has a CS0102 field/method clash with `r::a(...)`.
+  - `AlgorithmOptions.ICloneable.Clone()`: Obfuscated method name `a()` in Mathcad vs `System.ICloneable.Clone` in Roslyn.
+  - `SpecTableColumnToRlTransform.Transform`: References `MathNodeToRlTransformer.e` which has a CS0102 clash (`e__`).
+  - `InputControlNodeCreator.Create`, `CreateInputField`: References `r.a` and `r.d` (CS0102).
+  - `ValueNodeInfo.Value`: Compiler-generated closure classes `a` and `b` have CS0102 clashes between fields `a`/`b` and methods `a()`.
+  - `TransformMathNodeToComboBoxValues`: Closure class `a` has CS0102 clash between field `a` and method `a()`.
+  - `NavigatorState.ToString()`: Calls internal helpers `bs.a` and `bs.b`.
+  - `Properties.Settings` and `MathNodeSettings`: Obfuscated property getters/setters `b()` and `a()`.
+  - `MathNodeToVisualNodeMap`: Field `a` / `a_` vs method `a()`.
+  - `VisualOperatorDescriptorTable`: Field `a` / `a_` vs method `a()`.
+  - `SpecTableMemento` and `ColumnMemento`: Closure class and header memento CS0102 clashes.
+  - `StringToComboBoxMathTransformer`: Field `a` / `a_` vs method `a()`.
+  - `ScopedNodes.All`, `Any`, `FirstOrDefault`: Nested closure classes `a`/`b` CS0102 clashes.
+- Remaining mismatches: 0 in completed types; 2,769 remaining unbatched/parked stubs.
