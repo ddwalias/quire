@@ -12,19 +12,11 @@ namespace Quire.Efi;
 public partial class PlotTools
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.MatVal EliminateNearPoints(ref global::Quire.Mcd.MatVal xs, ref global::Quire.Mcd.MatVal ys, double dmax) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.MatVal EliminateCollinearPoints(ref global::Quire.Mcd.MatVal xs, ref global::Quire.Mcd.MatVal ys, double Max_Angle, uint ncycles) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Mcd.MatVal EliminateCollinearPoints(ref global::Quire.Mcd.MatVal xs, ref global::Quire.Mcd.MatVal ys, double Max_Angle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private int[] HeapSort(global::Quire.Mcd.MatVal A) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private object ev(global::Quire.Mpl.Run.Function f, global::Quire.Mcd.DimVal p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private int adaptiveSmoothing(global::Quire.Mpl.Run.Function F, ref global::Quire.Mcd.MatVal ys, ref global::Quire.Mcd.MatVal xs, double dmin, double dmax, int istart) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void dmin_dmax(global::Quire.Mcd.MatVal ys, out double dmin, out double dmax) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void adaptiveSmoothing(global::Quire.Mpl.Run.Function F, ref global::Quire.Mcd.MatVal ys, ref global::Quire.Mcd.MatVal xs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
