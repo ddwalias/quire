@@ -11,44 +11,4 @@ namespace Quire.efiio_csharp;
 [global::Quire.Mirror.MirrorOf("efiio_csharp.ExcelSupport, efiio-csharp")]
 public partial class ExcelSupport : global::System.MarshalByRefObject
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected const string s_DocumentRelationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
-    [global::Quire.Mirror.MirrorStub]
-    protected const string s_SharedStringsRelationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings";
-    [global::Quire.Mirror.MirrorStub]
-    protected const string s_SharedStringSchema = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
-    [global::Quire.Mirror.MirrorStub]
-    protected const string s_WorksheetSchema = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
-    [global::Quire.Mirror.MirrorStub]
-    protected static global::System.Text.RegularExpressions.Regex s_A1DimensionRegex;
-    [global::Quire.Mirror.MirrorStub]
-    protected static global::System.Text.RegularExpressions.Regex s_R1C1DimensionRegex;
-    [global::Quire.Mirror.MirrorStub]
-    protected static global::System.Text.RegularExpressions.Regex s_A1ReferenceRegex;
-    [global::Quire.Mirror.MirrorStub]
-    protected static global::System.Text.RegularExpressions.Regex s_R1C1ReferenceRegex;
-    [global::Quire.Mirror.MirrorStub]
-    protected static global::System.Text.RegularExpressions.Regex s_RowColRange;
-    [global::Quire.Mirror.MirrorStub]
-    public ExcelSupport() { }
-    [global::Quire.Mirror.MirrorStub]
-    protected void swap<T>(ref T var1, ref T var2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool ParseRowColRange(string s, out int start, out int end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string nextCol(string col) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string prevCol(string col) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int colToInt(string col) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int colToInt(string column_ref, int start, int end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string intToCol(int num) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Text.StringBuilder reverse(global::System.Text.StringBuilder sb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object testColumns() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object testColumns(int z) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

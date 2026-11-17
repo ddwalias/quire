@@ -11,6 +11,4 @@ namespace Quire.efiio_csharp;
 [global::Quire.Mirror.MirrorOf("efiio_csharp.ForcePackagingLoad, efiio-csharp")]
 internal static partial class ForcePackagingLoad
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void Touch() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
