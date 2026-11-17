@@ -62,37 +62,13 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     public override bool FindOncePrivate(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => base.FindOncePrivate(text, startFromCaret, direction, options, subscriptPositions);
     [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Point GetNextIntersectionForMove(global::System.Windows.Point currentLocation, global::Quire.Direction direction) => base.GetNextIntersectionForMove(currentLocation, direction);
-    [global::Quire.Mirror.MirrorStub]
-    public override void FireChildCausedResize(global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => base.FireChildCausedResize(oldSize, newSize);
-    [global::Quire.Mirror.MirrorStub]
     protected override void SelectedItemsAddNew(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => base.SelectedItemsAddNew(items);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleItemRemoved(global::Quire.Controls.Core.IWhiteboardItem item) => base.HandleItemRemoved(item);
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool CanTraverse(global::System.Windows.Input.FocusNavigationDirection direction) => base.CanTraverse(direction);
     [global::Quire.Mirror.MirrorStub]
     public override void TabInto(global::System.Windows.Input.FocusNavigationDirection dir) => base.TabInto(dir);
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Nullable<global::System.Windows.Vector> NavigateInto(global::Quire.Direction direction, global::System.Windows.Point point) => base.NavigateInto(direction, point);
     [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Point GetItemLocation(global::Quire.Controls.Core.IWhiteboardItem item) => base.GetItemLocation(item);
-    [global::Quire.Mirror.MirrorStub]
-    public override void SetItemLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => base.SetItemLocation(item, location);
-    [global::Quire.Mirror.MirrorStub]
-    public override void AddItemAtLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => base.AddItemAtLocation(item, location);
-    [global::Quire.Mirror.MirrorStub]
     protected override void HandleItemAdded(global::Quire.Controls.Core.IWhiteboardItem item) => base.HandleItemAdded(item);
-    [global::Quire.Mirror.MirrorStub]
-    private void AddItemToAppropriateSection(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> RecursivelyEnumerateDescendantItemssBypassWhiteboard() => base.RecursivelyEnumerateDescendantItemssBypassWhiteboard();
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool ItemsOverlapped(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => base.ItemsOverlapped(items);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Rect GetItemRect(global::Quire.Controls.Core.IWhiteboardItem item) => base.GetItemRect(item);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> SortItemsByLocation(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, bool descending) => base.SortItemsByLocation(items, descending);
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Controls.Core.IWhiteboardItem GetChildItemFromLocation(global::System.Windows.Point point) => base.GetChildItemFromLocation(point);
     [global::Quire.Mirror.MirrorStub]
@@ -100,33 +76,13 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     public override bool IsValidLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> newLocations, bool allowGrowthDownOrRight) => base.IsValidLocation(item, newLocations, allowGrowthDownOrRight);
     [global::Quire.Mirror.MirrorStub]
-    public override bool HandleMouseDown(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl sender, global::System.Windows.Point position, global::System.Windows.Input.MouseButton button) => base.HandleMouseDown(sender, position, button);
-    [global::Quire.Mirror.MirrorStub]
-    public override void RestoreSavedState() => base.RestoreSavedState();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Size Measure(global::System.Windows.Size availableSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Size GetOleContainerItemMinSize(bool useDefault = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OleContainerMinSizeChanged(bool allowResize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected void ForceOleComponentResizeDueToOleContainerItemResize(bool setExplicitMinHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private double GetMinimumContentHeight(double containerHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private double GetMinimumContentHeight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateMinimumHeight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size FindMinimumSize() => base.FindMinimumSize();
     [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Size FindMinimumSize(bool useDefault) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size FindMinimumSize(global::System.Windows.Size oleContainerItemMinimalSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Size AdjustOleContainerItemSize(global::System.Windows.Size oleContainerItemSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void UpdateSizeLimits(global::System.Windows.Size maximumSize) => base.UpdateSizeLimits(maximumSize);
     [global::Quire.Mirror.MirrorStub]
     internal void SetInitialSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

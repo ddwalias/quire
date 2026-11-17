@@ -14,6 +14,9 @@ using Quire.Controls.Mathboard;
 using Quire.Wpf;
 using Quire.Calculation;
 using Quire;
+using System.Linq;
+using System.Windows.Documents;
+using Quire.Controls.Core.Whiteboard;
 namespace Quire.Controls.ExcelComponent.ViewModel;
 
 public abstract partial class OleBaseComponentViewModel
@@ -590,5 +593,232 @@ public abstract partial class OleBaseComponentViewModel
     protected override bool IsValidInsertionPoint(Point pt)
     {
         return !((IRestrictedAreaAlignmentGrid)_alignmentGrid).IsWithinRestrictedArea(pt);
+    }
+
+    protected override Point GetNextIntersectionForMove(Point currentLocation, Direction direction)
+    {
+        return ((IRestrictedAreaAlignmentGrid)_alignmentGrid).GetNextIntersectionIgnoringRestrictedAreas(currentLocation, direction);
+    }
+
+    public override void FireChildCausedResize(Size oldSize, Size newSize)
+    {
+        base.FireChildCausedResize(oldSize, newSize);
+        UpdateSectionHeights();
+    }
+
+    protected override void HandleItemRemoved(IWhiteboardItem item)
+    {
+        if (InputItems.Contains(item))
+        {
+            InputItems.Remove(item);
+        }
+        else if (OutputItems.Contains(item))
+        {
+            OutputItems.Remove(item);
+        }
+        base.HandleItemRemoved(item);
+    }
+
+    protected override bool CanTraverse(FocusNavigationDirection direction)
+    {
+        bool result = false;
+        IWhiteboardItem whiteboardItem = PredictFocus(direction);
+        if (whiteboardItem != null)
+        {
+            result = !(whiteboardItem is FrameworkElement frameworkElement) || frameworkElement.IsVisible;
+        }
+        return result;
+    }
+
+    public override Point GetItemLocation(IWhiteboardItem item)
+    {
+        return OleComponentItemMgr.GetItemOleComponentLocation(item);
+    }
+
+    public override void SetItemLocation(IWhiteboardItem item, Point location)
+    {
+        Point location2 = location;
+        if (item == OleContainerItem)
+        {
+            OleComponentItemMgr.SetItemOleComponentLocation(item, location);
+            SetRestrictedArea();
+            return;
+        }
+        if (OutputItems.Contains(item))
+        {
+            location2.Offset(0.0, -(InputSectionIndicator.Height + OleContainerItemHeight));
+        }
+        if (location2.Y.IsGreaterThanOrEqual(0.0) && location2.X.IsGreaterThanOrEqual(0.0))
+        {
+            OleComponentItemMgr.SetItemOleComponentLocation(item, location);
+            base.SetItemLocation(item, location2);
+        }
+        _model.UpdateCustomErrorBasedOnPlacement(item);
+    }
+
+    public override void AddItemAtLocation(IWhiteboardItem item, Point location)
+    {
+        if (!IsInputSectionVisible)
+        {
+            location.Offset(0.0, InputSectionIndicator.Height);
+        }
+        base.AddItemAtLocation(item, location);
+    }
+
+    private void AddItemToAppropriateSection(IWhiteboardItem item)
+    {
+        Point itemOleComponentLocation = OleComponentItemMgr.GetItemOleComponentLocation(item);
+        Point itemOleComponentLocation2 = OleComponentItemMgr.GetItemOleComponentLocation(OleContainerItem);
+        double num = itemOleComponentLocation2.Y + OleContainerItemHeight;
+        if (itemOleComponentLocation.Y < num)
+        {
+            if (OutputItems.Contains(item))
+            {
+                OutputItems.Remove(item);
+            }
+            WhiteboardViewModel.WhiteboardItemMgr.SetItemLocation(item, itemOleComponentLocation);
+            if (!InputItems.Contains(item))
+            {
+                InputItems.Add(item);
+            }
+        }
+        else
+        {
+            Point point = itemOleComponentLocation;
+            point.Y -= num;
+            if (InputItems.Contains(item))
+            {
+                InputItems.Remove(item);
+            }
+            WhiteboardViewModel.WhiteboardItemMgr.SetItemLocation(item, point);
+            if (!OutputItems.Contains(item))
+            {
+                OutputItems.Add(item);
+            }
+        }
+        IndicateHiddenErrors();
+    }
+
+    public override IEnumerable<IWhiteboardItem> RecursivelyEnumerateDescendantItemssBypassWhiteboard()
+    {
+        return WhiteboardViewModel.RecursivelyEnumerateDescendantsIgnoringTypes(WhiteboardItems, typeof(IOleContainerItem));
+    }
+
+    protected override bool ItemsOverlapped(IEnumerable<IWhiteboardItem> items)
+    {
+        return OleComponentItemMgr.ItemsOverlapped(items);
+    }
+
+    public override Rect GetItemRect(IWhiteboardItem item)
+    {
+        Rect itemRect = OleComponentItemMgr.GetItemRect(item);
+        if (!IsInputSectionVisible)
+        {
+            itemRect.Offset(0.0, -InputSectionIndicator.Height);
+        }
+        return itemRect;
+    }
+
+    public override IEnumerable<IWhiteboardItem> SortItemsByLocation(IEnumerable<IWhiteboardItem> items, bool descending)
+    {
+        return OleComponentItemMgr.SortItemsByLocation(items, descending);
+    }
+
+    public override bool HandleMouseDown(IWhiteboardControl sender, Point position, MouseButton button)
+    {
+        if (button == MouseButton.Right && sender is IOleBaseComponentControl)
+        {
+            Rect itemRect = WhiteboardViewModel.WhiteboardItemMgr.GetItemRect(OleContainerItem);
+            itemRect.Offset(0.0, OleContainerItemTop);
+            if (itemRect.Contains(position))
+            {
+                return true;
+            }
+        }
+        return base.HandleMouseDown(sender, position, button);
+    }
+
+    public override void RestoreSavedState()
+    {
+        if (IsInputSectionVisible || IsOutputSectionVisible)
+        {
+            base.RestoreSavedState();
+        }
+    }
+
+    private Size GetOleContainerItemMinSize(bool useDefault = false)
+    {
+        Size result = useDefault ? OleContainerItemViewModel.DefaultMinSize : OleContainerItemViewModel.MinSize;
+        result.Height = AlignHeightWithGridLines(result.Height, isOleContainerItem: true);
+        return result;
+    }
+
+    protected void ForceOleComponentResizeDueToOleContainerItemResize(bool setExplicitMinHeight)
+    {
+        bool isInternalResizing = IsInternalResizing;
+        IsInternalResizing = true;
+        Size oleContainerItemMinSize = GetOleContainerItemMinSize();
+        Size oleContainerItemSize = OleContainerItemSize;
+        double num = Math.Max(oleContainerItemMinSize.Width, oleContainerItemSize.Width);
+        double num2 = setExplicitMinHeight ? oleContainerItemMinSize.Height : Math.Max(oleContainerItemMinSize.Height, oleContainerItemSize.Height);
+        Size newSize = new Size(num, num2);
+        SetItemSize(OleContainerItem, newSize);
+        OnResizeOleContainerItem();
+        IsInternalResizing = isInternalResizing;
+    }
+
+    private double GetMinimumContentHeight(double containerHeight)
+    {
+        double num = 0.0;
+        if (IsInputSectionVisible)
+        {
+            num = SectionsMinimumHeight;
+        }
+        if (IsOutputSectionVisible)
+        {
+            num += SectionsMinimumHeight;
+        }
+        return num + containerHeight;
+    }
+
+    private double GetMinimumContentHeight()
+    {
+        if (DebugTools.AssertNotNull(OleContainerItemViewModel, null).Passed)
+        {
+            return GetMinimumContentHeight(GetOleContainerItemMinSize().Height);
+        }
+        return 0.0;
+    }
+
+    private void UpdateMinimumHeight()
+    {
+        _strictMinimumSize.Height = GetMinimumContentHeight();
+        MinimumHeight = _strictMinimumSize.Height;
+    }
+
+    protected Size FindMinimumSize(bool useDefault)
+    {
+        if (DebugTools.AssertNotNull(OleContainerItemViewModel, null).Passed)
+        {
+            return _strictMinimumSize = FindMinimumSize(GetOleContainerItemMinSize(useDefault));
+        }
+        return default;
+    }
+
+    private Size AdjustOleContainerItemSize(Size oleContainerItemSize)
+    {
+        double num = AlignHeightWithGridLines(oleContainerItemSize.Height, isOleContainerItem: true);
+        double num2 = oleContainerItemSize.Height - num;
+        ContentSize = new Size(ContentSize.Width, ContentSize.Height - num2);
+        oleContainerItemSize.Height = num;
+        OleComponentItemMgr.SetSize(OleContainerItem, oleContainerItemSize);
+        OnResizeOleContainerItem();
+        return oleContainerItemSize;
+    }
+
+    public override void UpdateSizeLimits(Size maximumSize)
+    {
+        SectionsMinimumHeight = DefaultSectionsMinimumHeight;
+        base.UpdateSizeLimits(MaximumSize);
     }
 }
