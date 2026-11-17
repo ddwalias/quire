@@ -110,3 +110,10 @@
 - Left as stubs (lambdas, closure ordinals): `EnrichPagePart` (`EachWithIndex` lambda), `RecursiveSetItemsName` (lambdas), `ProcessAddorners` (`SelectMany` lambda). The static field `_whiteboardItemMgr` stays a stub declaration.
 - Release IL: PASS; 752 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1938.
+
+## Batch 14 — WorksheetDragResizer (one type)
+
+- Members (13 stubs removed): `StartPointInElementCoordinates`, `HandleResizeEnd` and `HandleResizeInProgress` (switches on `DragMode`), `HookupMouseEvents`, `UnhookMouseEvents`, `MouseUp`, `ResizeEnd`, `ResizeBy`, `TransformToElement`, both `MouseMove` overloads, `OffsetTo`, `HandleMouseUp`.
+- Left as stubs: the constructor (it calls the base constructor and initializes the `DragDone`/`DragProgress` event fields, with `delegate { }` initializers) and the readonly field stubs `_mode`, `_container`, `_startPoint`.
+- Release IL: PASS; 765 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1925.

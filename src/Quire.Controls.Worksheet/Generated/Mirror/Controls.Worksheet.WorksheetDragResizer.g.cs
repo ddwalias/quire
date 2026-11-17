@@ -18,35 +18,9 @@ internal partial class WorksheetDragResizer : global::Quire.Controls.Core.ItemRe
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Windows.Point _startPoint;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Point StartPointInElementCoordinates { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::System.Windows.Size, global::System.Windows.Size, global::Quire.Controls.Core.DragMode> DragDone;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::System.Windows.Point> DragProgress;
     [global::Quire.Mirror.MirrorStub]
     public WorksheetDragResizer(global::System.Windows.FrameworkElement container, global::System.Windows.Point startPosition, global::Quire.Controls.Core.DragMode mode, global::System.Windows.FrameworkElement elementToResize, bool preserveAspectRatio, bool automation) : base(default(global::System.Windows.FrameworkElement), default(bool)) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleResizeEnd(global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleResizeInProgress(global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HookupMouseEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UnhookMouseEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void MouseUp(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ResizeEnd(global::System.Windows.Point currentPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point ResizeBy(global::System.Windows.Vector offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Point TransformToElement(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void MouseMove(object sender, global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void MouseMove(global::System.Windows.Point currentPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Vector OffsetTo(global::System.Windows.Point p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleMouseUp(global::System.Windows.Vector offset, bool changeWidth, bool changeHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
