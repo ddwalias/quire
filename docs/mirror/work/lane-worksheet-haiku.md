@@ -196,3 +196,10 @@
 - Left as stubs: the constructor (it subscribes `OfType<...>().Each(AddPageNumberControl)` and sets `ZombieItems`; not attempted), `HandleHeaderFooterItemsChanged` (a `switch` on the collection action), `AddPageNumberControl` (its size-changed hookup is not yet checked), `ZombieItems`, `zombieIsInitialized`, `_itemResizeHandlerMap` and the field stubs.
 - Release IL: PASS; 938 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1774.
+
+## Batch 24 — WorksheetPageControl (partial: page-view-model forwarders and page members)
+
+- Members (21 stubs removed): `WhiteboardItems`, `NonOwnedWhiteboardItems`, `InsertionPoint`, `ActiveItem`, `PageBody`, the `Header`/`Footer` and four zombie properties, `PageNumber`, `HasPageBreak`, `AddItemAtLocation`, `RemoveItem`, `RemoveItems`, `GetNavigateOutLocation`, `Activate`, `UpdateNonPrintableSpaceIndicator`, `HandleMathFormatChanged`, and the static `HandleLabelIdChanged`.
+- Left as stubs: the constructors and the static constructor (the constructors call `InitializeComponent`, which is XAML-generated, and the static constructor registers the attached property), the `PageBodyActivated` and `RequestScrollTo` event accessors, `_viewModel`, `_nonOwnedWhiteboardItems`, `_contentLoaded` and `LabeledIdFormatProperty`.
+- Release IL: PASS; 968 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1753.
