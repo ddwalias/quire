@@ -472,6 +472,91 @@ public partial class XL
         return text;
     }
 
+    public void writeExcelInnerFromInstance(string file, string descriptor, MatVal V, string cwd, bool create_directories, bool overwrite_files)
+    {
+        writeExcelInner(file, descriptor, V, cwd, create_directories, overwrite_files);
+    }
+
+    public static object writeExcelInner(string file, string descriptor, MatVal V, string cwd, bool create_directories, bool overwrite_files)
+    {
+        if (file == null || file == string.Empty)
+        {
+            AppException.Raise("File to WRITEEXCEL may not be null.");
+        }
+        if (!s_WriteExcelEnabled)
+        {
+            AppException.Raise("The function WRITEEXCEL is not yet supported.");
+        }
+        Descriptor targetDesc = new Descriptor(descriptor, V.Rows, V.Cols);
+        string path = Path.Combine(cwd, file);
+        string directoryName = Path.GetDirectoryName(path);
+        if (create_directories && !Directory.Exists(directoryName))
+        {
+            Directory.CreateDirectory(directoryName);
+        }
+        string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(path);
+        string extension = Path.GetExtension(path);
+        if (!(extension == ".xlsx") && !(extension == ".xlsm"))
+        {
+            AppException.Raise(string.Format("File type \"{0}\" is not supported in WRITEEXCEL: {1}", extension, file));
+        }
+        string newPath = Path.Combine(directoryName, string.Format("{0}.xNEW", fileNameWithoutExtension));
+        string oldPath = Path.Combine(directoryName, string.Format("{0}.xOLD", fileNameWithoutExtension));
+        if (overwrite_files || !File.Exists(path))
+        {
+            using FileStream output = new FileStream(newPath, FileMode.Create);
+            new BinaryWriter(output).Write((extension == ".xlsx") ? Quire.efiio_csharp.Properties.Resources.template : Quire.efiio_csharp.Properties.Resources.template1);
+        }
+        else
+        {
+            File.Copy(path, newPath, overwrite: true);
+        }
+        bool succeeded = false;
+        try
+        {
+            using Package package = Package.Open(newPath, FileMode.Open, FileAccess.ReadWrite);
+            EstablishWorksheetContext(targetDesc, package, out var sheetDoc, out var context, for_write: true);
+            SetWorksheetContents(V, sheetDoc, context, targetDesc);
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = false;
+            using (Stream sheetStream = context.sheetPart.GetStream(FileMode.Create, FileAccess.Write))
+            {
+                using XmlWriter xmlWriter = XmlWriter.Create(sheetStream, settings);
+                sheetDoc.Save(xmlWriter);
+                xmlWriter.Flush();
+                xmlWriter.Close();
+            }
+            updateStringTable(context);
+            package.Close();
+            succeeded = true;
+            return V;
+        }
+        finally
+        {
+            if (succeeded)
+            {
+                bool targetExisted = File.Exists(path);
+                if (targetExisted)
+                {
+                    if (File.Exists(oldPath))
+                    {
+                        File.Delete(oldPath);
+                    }
+                    File.Move(path, oldPath);
+                }
+                File.Move(newPath, path);
+                if (targetExisted && !s_WriteExcelKeepOld)
+                {
+                    File.Delete(oldPath);
+                }
+            }
+            else if (File.Exists(newPath))
+            {
+                File.Delete(newPath);
+            }
+        }
+    }
+
     public static MatVal GetWorksheetContents(XmlDocument sheetDoc, DocumentContext context, Descriptor desc)
     {
         XmlNode[,] worksheetNodes = GetWorksheetNodes(desc.BlankRows == 2, sheetDoc, context, desc);
