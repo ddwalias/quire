@@ -10,8 +10,11 @@ using Quire.Controls.Core.IORegions;
 using Quire.Controls.ExcelComponent;
 using Quire.Controls.ExcelComponent.View;
 using Quire.Controls.Text;
+using Quire.Controls.Worksheet.Printing;
+using Quire.Controls.Core.Whiteboard;
 using Quire.Core;
 using Quire.Wpf;
+using Quire.Wpf.Printing;
 
 namespace Quire.Controls.Worksheet;
 
@@ -645,5 +648,201 @@ internal partial class WorksheetViewModel
             _isRegionBorderShown = value;
             OnPropertyChanged("IsRegionBorderShown");
         }
+    }
+
+    private void FireStartingPageNumberChanged()
+    {
+        StartingPageNumberChanged?.Invoke();
+    }
+
+    public void UpdateTotalPagesOffsetOnPageChange(int updatedPageNumberDifference)
+    {
+        if (TotalPagesOffset != 0)
+        {
+            TotalPagesOffset = Math.Max(0, TotalPagesOffset - updatedPageNumberDifference);
+        }
+    }
+
+    private void UpdateWorksheetHeight()
+    {
+        WorksheetHeight = WorksheetPageLayoutDisplayHeight * (double)Pages.Count;
+    }
+
+    public void SetCopyWhiteboardItemsDelegate(Func<IEnumerable<IWhiteboardItem>, bool> copyWhiteboardItems)
+    {
+        WorksheetContent.SetCopyWhiteboardItemsDelegate(copyWhiteboardItems);
+    }
+
+    public IPageSnapshot GetPageSnapshot(int pageIndex)
+    {
+        return VisualHelper.CreatePageSnapshot(this, pageIndex);
+    }
+
+    public PageIndexRange GetPagesContaining(IWhiteboardItem item)
+    {
+        return _pageManager.GetPagesContaining(item);
+    }
+
+    public IList<IWhiteboardItem> GetWorksheetItemParts(IWhiteboardItem item)
+    {
+        return _pageManager.GetWorksheetItemParts(item);
+    }
+
+    public bool IsCalculableHiddenFromCalculationContext(ICalculatable calc)
+    {
+        if (calc is ICalculationHideableChild calculationHideableChild)
+        {
+            return calculationHideableChild.HideFromCalculationContext;
+        }
+        return false;
+    }
+
+    public Point GetWorksheetSectionItemLocation(IWhiteboardItem item)
+    {
+        return ActiveSection.GetItemLocation(item);
+    }
+
+    public void SetWorksheetSectionItemLocation(IWhiteboardItem item, Point worksheetLocation)
+    {
+        ActiveSection.SetItemLocation(item, worksheetLocation);
+    }
+
+    public bool GetItemIgnoreForHorizontalMovementAndWidth(IWhiteboardItem item)
+    {
+        return ItemManager.GetIgnoreForHorizontalMovementAndWidth(item);
+    }
+
+    public bool CanInsertSpace()
+    {
+        if (!IsContentActive)
+        {
+            return false;
+        }
+        return ActiveOrSelectedItems.Count() == 0;
+    }
+
+    public int GetItemWorksheetPageIndex(IWhiteboardItem item)
+    {
+        return _pageManager.GetPageIndex(item);
+    }
+
+    public void ToggleInputRegions()
+    {
+        _model.InputOutputRegionManager.ToggleInputRegions(GetInputRegions());
+    }
+
+    public void ToggleOutputRegions()
+    {
+        _model.InputOutputRegionManager.ToggleOutputRegions(GetOutputRegions());
+    }
+
+    private bool CanDeleteSelectedItems()
+    {
+        return !SelectedItems.IsNullOrEmpty();
+    }
+
+    private bool CanDeleteActiveOrSelectedItems()
+    {
+        return !ActiveOrSelectedItems.IsNullOrEmpty();
+    }
+
+    private bool CanDeleteActiveItem()
+    {
+        if (IsContentActive)
+        {
+            return ActiveItem != null;
+        }
+        return false;
+    }
+
+    private bool CanToggleHideFromCalculationContext()
+    {
+        return HideFromCalculationButtonEnabled;
+    }
+
+    private bool CanBookmarkTag()
+    {
+        if (!IsHeaderActive && !IsFooterActive)
+        {
+            return ActiveOrSelectedItems.Count() == 1;
+        }
+        return false;
+    }
+
+    private bool ErrorCanTraceBackward()
+    {
+        if (CurrentError != null && CurrentError.OriginalError != null)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private bool ErrorCanTraceForward()
+    {
+        if (CurrentError != null && CurrentErrorChain != null && CurrentErrorChain.FindNextError(CurrentError) != null)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void UpdateHasSelectionProperty()
+    {
+        HasSelection = SelectedDescendants.Any();
+    }
+
+    private void UpdateIsInLimboProperty()
+    {
+        IsInLimbo = ActiveDescendant == null || ActiveDescendant is IWhiteboardControl;
+    }
+
+    private bool CanAddToDictionary()
+    {
+        if (ActiveDescendant is ISpellCheckRegion spellCheckRegion)
+        {
+            return spellCheckRegion.CanAddToDictionary();
+        }
+        return false;
+    }
+
+    internal bool AddWordToDictionary(string word)
+    {
+        if (!DictionaryHelper.AddWordToDictionary(word))
+        {
+            return false;
+        }
+        RefreshDictionary();
+        FireDictionaryUpdated();
+        return true;
+    }
+
+    internal void RemoveFromDictionary(string word)
+    {
+        if (!DictionaryHelper.RemoveFromDictionary(word))
+        {
+            return;
+        }
+        RefreshDictionary();
+        FireDictionaryUpdated();
+    }
+
+    private void FireDictionaryUpdated()
+    {
+        DictionaryUpdated?.Invoke();
+    }
+
+    private void HandleSelectedDescendantsChanged()
+    {
+        if (IsContentActive)
+        {
+            UpdateIsRegionBorderShownState();
+            OnPropertyChanged("SelectedDescendants");
+        }
+    }
+
+    protected void FireChanged()
+    {
+        Changed?.Invoke(this, EventArgs.Empty);
     }
 }

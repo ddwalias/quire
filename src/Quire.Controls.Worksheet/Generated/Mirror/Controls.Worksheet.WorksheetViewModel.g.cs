@@ -224,8 +224,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     private void HandleModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void FireStartingPageNumberChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void UpdateFirstPageHeaderFooter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void createFirstPageZombiesIfNeeded(global::Quire.Controls.Worksheet.IWorksheetPage page) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -236,13 +234,7 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     private void UpdateActiveSectionForDifferentFirstPage() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void UpdateTotalPagesOffsetOnPageChange(int updatedPageNumberDifference) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateWorksheetHeight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void UpdateHeaderFooterTops() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetCopyWhiteboardItemsDelegate(global::System.Func<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem>, bool> copyWhiteboardItems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HandleTabOutOfText(global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.FocusNavigationDirection> eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -258,17 +250,9 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     public void CreateTextRegionFromEquationControl(global::Quire.Controls.Core.IEquationControl sender) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.Printing.IPageSnapshot GetPageSnapshot(int pageIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Wpf.Printing.PageIndexRange GetPagesContaining(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.Controls.Core.IWhiteboardItem> GetWorksheetItemParts(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.ICalculatable GetLastVisibleCalculatable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.ICalculatable GetCalculatableFromVisibleWhiteBoardItem(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.Worksheet.IWorksheetControl wc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCalculableHiddenFromCalculationContext(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void AddItemAtLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -362,10 +346,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     public void HandleGoToPage(object pageNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void SetWorksheetSectionItemLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point worksheetLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point GetWorksheetSectionItemLocation(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnPropertyChanged(string propertyName) => base.OnPropertyChanged(propertyName);
     [global::Quire.Mirror.MirrorStub]
     public bool HandlePreviewMouseDown(object originalSource, global::System.Windows.Point position, bool mouseDoubleClicked, bool rightButton) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -381,8 +361,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     public void OnRequestMoveAndResize(global::Quire.Controls.Worksheet.IWorksheetControl worksheetControl, global::Quire.Controls.Core.ResizeEventMouseArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HandleCaretLeavesTextArea(global::Quire.Controls.Worksheet.IWorksheetControl worksheetControl, global::Quire.Controls.Core.CommonRoutedEvents.CaretLeavesTextRegionEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool GetItemIgnoreForHorizontalMovementAndWidth(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ActivateHeader() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -407,8 +385,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     public void MoveItem(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void MoveItemsBy(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, global::System.Windows.Vector offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool CanInsertSpace() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool CanGotopage(object pageNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -436,8 +412,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     private static void CommitActive(global::Quire.Controls.Core.IWhiteboardItem activeItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected void FireChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void GoToLastError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void GoToNextError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -450,15 +424,9 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     public void InsertFileName(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public int GetItemWorksheetPageIndex(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public bool FindOnce(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Point GetDescendantInsertionPoint() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ToggleInputRegions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ToggleOutputRegions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool CanToggleRegionsAsInput() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -466,13 +434,7 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     protected override void OnDispose() => base.OnDispose();
     [global::Quire.Mirror.MirrorStub]
-    private bool CanToggleHideFromCalculationContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool CanDeleteSelectedItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool DeleteSelectedItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool CanDeleteActiveOrSelectedItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool CanTogglePageLayout(object param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -521,8 +483,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     private bool CanPaste() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void Paste() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool CanDeleteActiveItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void ShowWaitCursor(global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -594,8 +554,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     private void HandleActiveDescendantChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HandleSelectedDescendantsChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void HandleActiveItemChanged(global::Quire.Controls.Core.IWhiteboardItem oldItem, global::Quire.Controls.Core.IWhiteboardItem newItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleActiveContainerPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -603,10 +561,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     private void HandleFooterPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleHeaderPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateHasSelectionProperty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateIsInLimboProperty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandlePagesCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -636,8 +590,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     public void Activate(global::Quire.Controls.Worksheet.IWorksheetControl worksheetControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private bool CanAddToDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void HandleAddToDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleCreateStyleFrom() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -645,12 +597,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     private bool CanCreateStyleFrom() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RefreshDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal bool AddWordToDictionary(string word) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void RemoveFromDictionary(string word) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireDictionaryUpdated() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool CanInsertOperator(object operatorName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -736,10 +682,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     private void UpdateCalculationButtonStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private bool ErrorCanTraceBackward() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool ErrorCanTraceForward() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool RemoveAnnotationsCanExecute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool CanImportData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -755,8 +697,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     private void HandleRequestResizeToFitOrClearRestriction(global::Quire.Controls.Core.IResizeToFitWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ResizeItemToFit(global::Quire.Controls.Core.IResizeToFitWhiteboardItem item, bool assertIsNotReady) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool CanBookmarkTag() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleBookmarkTag() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

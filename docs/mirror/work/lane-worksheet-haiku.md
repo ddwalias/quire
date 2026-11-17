@@ -35,3 +35,10 @@
 - `Accept` overrides on persistent-data types (`ContainerRegionPersistentData`, `ImageRegionPersistentData`, and the other `*PersistentData` types): Roslyn emits a stack `pop` before `throw` in `as ... ?? throw`, which Mathcad's legacy compiler omits. Not reshaped to match a compiler artifact; stubs kept.
 
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 2122.
+
+## Batch 5 — WorksheetViewModel (one-call members and flag helpers)
+
+- Members (30): `FireStartingPageNumberChanged`, `UpdateTotalPagesOffsetOnPageChange`, `UpdateWorksheetHeight`, `SetCopyWhiteboardItemsDelegate`, `GetPageSnapshot`, `GetPagesContaining`, `GetWorksheetItemParts`, `IsCalculableHiddenFromCalculationContext`, `GetWorksheetSectionItemLocation`, `SetWorksheetSectionItemLocation`, `GetItemIgnoreForHorizontalMovementAndWidth`, `CanInsertSpace`, `GetItemWorksheetPageIndex`, `ToggleInputRegions`, `ToggleOutputRegions`, `CanDeleteSelectedItems`, `CanDeleteActiveOrSelectedItems`, `CanDeleteActiveItem`, `CanToggleHideFromCalculationContext`, `CanBookmarkTag`, `ErrorCanTraceBackward`, `ErrorCanTraceForward`, `UpdateHasSelectionProperty`, `UpdateIsInLimboProperty`, `CanAddToDictionary`, `AddWordToDictionary`, `RemoveFromDictionary` (guard clause, matching Mathcad `brtrue.s`), `FireDictionaryUpdated`, `HandleSelectedDescendantsChanged`, `FireChanged`.
+- Release IL: PASS; 582 checked; 0 failures.
+- Not taken, as they need nested command classes or closures that are not yet mirrored: `DeleteActiveItem`, `HandleRemoveAnnotations`, `OnZombieInitializationComplete` (lambda), `CreateFileNameControl`/`CreateFilePathControl`, `CanCreateExcelComponent`, `GoToLastError`.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 2092.
