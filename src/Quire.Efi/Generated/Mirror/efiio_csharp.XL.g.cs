@@ -31,16 +31,6 @@ public partial class XL : global::Quire.efiio_csharp.ExcelSupport
     public static global::Quire.Mcd.MatVal GetWorksheetContents(global::System.Xml.XmlDocument sheetDoc, global::Quire.efiio_csharp.XL.DocumentContext context, global::Quire.efiio_csharp.Descriptor desc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetWorksheetContents(global::Quire.Mcd.MatVal V, global::System.Xml.XmlDocument sheetDoc, global::Quire.efiio_csharp.XL.DocumentContext context, global::Quire.efiio_csharp.Descriptor targetDesc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void setTypedCellContents(global::Quire.efiio_csharp.Descriptor desc, string cellType, string cellValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void setCellContents(global::Quire.efiio_csharp.Descriptor desc, string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void setCellContents(global::Quire.efiio_csharp.Descriptor desc, double cellValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetTypedXmlNodeValue(global::System.Xml.XmlNode cellNode, string type, string text, global::Quire.efiio_csharp.XL.DocumentContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void setXmlNodeValue(global::System.Xml.XmlNode cellNode, object val, global::Quire.efiio_csharp.XL.DocumentContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("efiio_csharp.XL+DocumentContext, efiio-csharp")]
     public partial class DocumentContext
@@ -53,4 +43,6 @@ public partial class XL : global::Quire.efiio_csharp.ExcelSupport
     }
     [global::Quire.Mirror.MirrorStub]
     public static object writeExcelInIsolatedContext(string file, string descriptor, global::Quire.Mcd.MatVal V, string cwd, bool create_directories, bool overwrite_files) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public static void setXmlNodeValue(global::System.Xml.XmlNode cellNode, object val, global::Quire.efiio_csharp.XL.DocumentContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

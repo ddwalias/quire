@@ -325,4 +325,88 @@ public partial class XL
             return writeExcelInIsolatedContext(file, descriptor, V, cwd, create_directories, overwrite_files);
         }
     }
+
+    public static void setTypedCellContents(Descriptor desc, string cellType, string cellValue)
+    {
+        AppException.Raise("Not yet implemented.");
+    }
+
+    public static void setCellContents(Descriptor desc, string text)
+    {
+        if (text == null)
+        {
+            setCellContents(desc, "");
+        }
+        else
+        {
+            setTypedCellContents(desc, "inlineStr", text);
+        }
+    }
+
+    public static void setCellContents(Descriptor desc, double cellValue)
+    {
+        if (double.IsNaN(cellValue))
+        {
+            setCellContents(desc, "");
+            return;
+        }
+        int num = (int)Math.Truncate(cellValue);
+        if (cellValue - (double)num == 0.0)
+        {
+            setTypedCellContents(desc, "n", num.ToString());
+        }
+        else
+        {
+            setTypedCellContents(desc, "n", cellValue.ToString());
+        }
+    }
+
+    public static void SetTypedXmlNodeValue(XmlNode cellNode, string type, string text, DocumentContext context)
+    {
+        if (cellNode == null)
+        {
+            AppException.Raise("Setting typed node null?");
+        }
+        if ((type == "n" || type == "") && text == "NaN")
+        {
+            SetTypedXmlNodeValue(cellNode, "", "", context);
+            return;
+        }
+        while (cellNode.LastChild != null)
+        {
+            cellNode.RemoveChild(cellNode.LastChild);
+        }
+        XmlAttribute xmlAttribute = cellNode.Attributes["t"];
+        if (type == "" || type == "n")
+        {
+            if (xmlAttribute != null)
+            {
+                cellNode.Attributes.Remove(xmlAttribute);
+            }
+        }
+        else
+        {
+            if (xmlAttribute == null)
+            {
+                xmlAttribute = context.sheetDoc.CreateAttribute("t");
+                cellNode.Attributes.Append(xmlAttribute);
+                xmlAttribute.Value = type;
+            }
+            xmlAttribute.Value = type;
+        }
+        if (type == "inlineStr")
+        {
+            XmlNode xmlNode = context.sheetDoc.CreateElement("is", "http://schemas.openxmlformats.org/spreadsheetml/2006/main");
+            cellNode.AppendChild(xmlNode);
+            XmlNode xmlNode2 = context.sheetDoc.CreateElement("t", "http://schemas.openxmlformats.org/spreadsheetml/2006/main");
+            xmlNode.AppendChild(xmlNode2);
+            xmlNode2.InnerText = text;
+        }
+        else
+        {
+            XmlNode xmlNode3 = context.sheetDoc.CreateElement("v", "http://schemas.openxmlformats.org/spreadsheetml/2006/main");
+            xmlNode3.InnerText = text;
+            cellNode.AppendChild(xmlNode3);
+        }
+    }
 }
