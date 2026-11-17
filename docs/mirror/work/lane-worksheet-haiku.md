@@ -75,3 +75,11 @@
 - Parked: `SeparateOverlappedItems`. It needs `WhiteboardCommands` (`Quire.Controls.Whiteboard`), which `Quire.Controls.Worksheet.csproj` does not reference. Confirmed by a build: CS0103 `WhiteboardCommands` does not exist. Stub kept.
 - Release IL: PASS; 695 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1993 (includes the parked `SeparateOverlappedItems`).
+
+## Batch 10 — ControlFactory (one type)
+
+- Members (31 stubs removed): `IsConnected`, the `DataFormatRichText` constant, the constructor, and 27 factory methods (every `Create*` except `CreateCollapsibleAreaControl`), plus the private `InitializeTextRegion`.
+- Shape choices, each checked by the gate: `textFormat?.Apply...` became `if (textFormat != null) { ... }` (Mathcad uses `callvirt` after an explicit null test; Roslyn's `?.` form emits `call`); `CreateIncludeControl` assigns `RegionFactory` through `IRegionFactoryOwner` (Mathcad calls the interface setter, and the object initializer binds to the class member instead).
+- Parked: `CreateCollapsibleAreaControl`. A build confirmed CS0246 `CollapsibleAreaControl`: `Quire.Controls.CollapsibleArea` is not referenced by `Quire.Controls.Worksheet.csproj`. Same blocker as `CollapsibleAreaHeightConverter`. Stub kept.
+- Release IL: PASS; 725 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1962 (includes the parked `SeparateOverlappedItems` and `CreateCollapsibleAreaControl`).
