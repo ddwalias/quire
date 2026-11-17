@@ -11,16 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.PageBodyCanvas, Ptc.Controls.Worksheet")]
 public partial class PageBodyCanvas : global::System.Windows.Controls.Canvas, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.Wpf.IObservableRangeCollection<global::Quire.Controls.Worksheet.IWhiteboardItemZombie> Zombies;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.ItemsControl _itemsControl;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public PageBodyCanvas() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

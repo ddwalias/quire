@@ -188,8 +188,22 @@
   - Quire.Controls.Worksheet.InitializedRegionFactory: 15 members (Instance, 13 Visit methods, .ctor)
   - Quire.Controls.Worksheet.WorksheetPageBody: 1 member (.ctor(Size?, bool))
 - Release IL: PASS; 395 checked; 0 failures.
-- Landed commit: (in-progress)
+- Landed commit: 822db4b0f6b70bdb5c2e43e0161ee49c5856e670
 - Parked members:
   - Accept on IncludeRegionPersistentData: modern Roslyn null-coalescing throw stack pop opcode divergence (brtrue.s 5 vs legacy Mathcad brtrue.s 4).
   - CombinedInvalidConverter: legacy csc boolean evaluation sequence (ldc.i4.1; br; ldc.i4.0; and) differs from modern Roslyn boolean pattern matching.
 - Remaining mismatches: none in this batch (2249 stubs remaining in Quire.Controls.Worksheet).
+
+### Batch 12 (Current)
+- Owner: task_9fc594398ea6
+- Branch: feature/controls-worksheet-stubs-agy-20261116
+- Members implemented:
+  - Quire.Controls.Worksheet.HeaderFooterCanvas: 6 members (CommonItemsCanvas, _contentLoaded, .ctor, InitializeComponent, _CreateDelegate, IComponentConnector.Connect)
+  - Quire.Controls.Worksheet.HeaderAndFooterResources: 6 members (KeysOwnerTypes, _contentLoaded, .ctor, UpdateElementSeparator, InitializeComponent, IComponentConnector.Connect)
+  - Quire.Controls.Worksheet.PageBodyCanvas: 6 members (Zombies, _itemsControl, _contentLoaded, .ctor, InitializeComponent, IComponentConnector.Connect)
+  - Quire.Controls.Worksheet.SwitchToDraftModeButton: 7 members (_adorner, _contentLoaded, .ctor, SwitchToDraftModeButtonLoaded, SwitchToDraftModeButtonUnloaded, InitializeComponent, IComponentConnector.Connect)
+  - Quire.Controls.Worksheet.WorksheetPageBreak: 10 members (_verticalPosition, PageBreakHeight, _contentLoaded, VerticalPosition, NextPage, .ctor, SetRegionPersistentData, GetRegionPersistentData, InitializeComponent, IComponentConnector.Connect)
+  - Quire.Controls.Worksheet.RtfItemBase: 9 members (PageIndex, TopRectClippingSize, FullSize, TopLeft, NoLeftOffset, AutoWidth, Init, GetLocationFlags, .ctor)
+- Release IL: PASS; 435 checked; 0 failures.
+- Landed commit: (in-progress)
+- Remaining mismatches: none in this batch (2205 stubs remaining in Quire.Controls.Worksheet).
