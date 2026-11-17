@@ -20,23 +20,11 @@ public partial class WorksheetPasteHandler : global::Quire.Controls.Worksheet.IW
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Controls.Core.IWhiteboardItemInText _clipboardPrimeObject;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.ResourceDictionary WorksheetMessages { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Worksheet.IWorksheetItemManager ItemManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Worksheet.IControlFactory ControlCreator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ClipboardContainsRecognizedFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.IWhiteboardItemInText SingleEmbeddableItemForTextFromClipboard { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ClipboardContainsSingleEmbeddableItemForText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public WorksheetPasteHandler(global::System.Windows.ResourceDictionary resourceDictionary, global::Quire.ITextStyleChangedHandler textStyleChangedHandler) { }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Vector> ProcessClipboardContents(global::System.Windows.Markup.XmlLanguage proofingLanguage, global::Quire.Core.TextFormat currentTextFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string ErrorResourceKeyToMessage(string errorResourceKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IWhiteboardItemInText ProcessSingleEmbeddableItemForTextInClipboard() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

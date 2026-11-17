@@ -210,3 +210,10 @@
 - Left as stubs: the constructors and static constructor, `Role` (its backing field is assigned in the constructor), `OnRequestBringIntoView` (not attempted), `InitializeComponent` and the `IComponentConnector.Connect` (XAML-generated), the event fields, and the internal `HeaderFooterContainer` and `_contentLoaded` fields.
 - Release IL: PASS; 988 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1735.
+
+## Batch 26 — WorksheetPasteHandler (partial: clipboard checks and message lookup)
+
+- Members (6 stubs removed): `WorksheetMessages`, `ItemManager` and `ControlCreator` (static accessors), `ClipboardContainsRecognizedFormat` (try/catch getter), `ClipboardContainsSingleEmbeddableItemForText`, `ErrorResourceKeyToMessage`.
+- Left as stubs: the constructor, `SingleEmbeddableItemForTextFromClipboard` (pattern and `as` branches not yet checked), `ProcessClipboardContents` (nested try/catch with a rethrow), `ProcessSingleEmbeddableItemForTextInClipboard`, the remaining processing helpers and the fields `_resourceDictionary`, `_textStyleChangedHandler`, `_clipboardPrimeObjectHash` and `_clipboardPrimeObject`.
+- Release IL: PASS; 994 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1729.
