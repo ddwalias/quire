@@ -240,3 +240,10 @@
 - Left as stubs: `WaitForCalculation(int, DispatcherPriority)` and the `ToggleInputRegion`/`ToggleOutputRegion` routed-event handlers (overloads not in this batch), `SetCurrentTextFormat` and `PreSave` (pattern-heavy, not checked), `ImportData`/`CanImportData` (file dialog), the constructor, the event forwarders, the context-menu, scripting, print and closure members.
 - Release IL: PASS; 1039 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1686.
+
+## Batch 30 — WorksheetControlContent (new partial: item, selection and command forwarders)
+
+- Members (29 stubs removed): `GetItemGridPosition`, `SetItemGridPosition`, `AddItem`, `TabInto`, `NavigateInto`, `UpdateSizeLimits`, `InsertVerticalSpace`, `DeleteVerticalSpaceAbove`, `DeleteVerticalSpaceBelow`, `GridCellSizeChangedHandler`, `CanSeparateOverlappedItems`, `GetDescendantInsertionPoint`, `MoveItemsBy`, `SetInsertionPointWhenLoaded` (these match Mathcad's `NotImplementedException` bodies), `AddItems`, `PasteItems`, `DeleteSelection` (command objects in named locals, since Mathcad uses `callvirt`), `RemoveItem`, `CommitItem`, `SelectAllItems`, `SelectItem`, `UnSelectItem`, `SetCopyWhiteboardItemsDelegate`, `ActivateWhiteboard`, `HandleItemGotFocus`, `FireActivated`, `ClearVisualState`, `UnSelectItems`, `ClearSelection`.
+- Left as stubs: the constructor, `SelectItems` (lambda), `SelectContiguous`, the `ItemsCollectionChanged` and check handlers, the visual-state and location helpers that have closures, `GetNavigationStartLocation`, `HandleDirectionalMove`, `CalculateItemWorksheetLocation`, `AddItemAtLocation`, `Dispose`, the nested command classes, and the field stubs.
+- Release IL: PASS; 1068 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1657.
