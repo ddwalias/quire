@@ -71,4 +71,96 @@ public partial class WorksheetControl
     public IHeaderFooterControl FirstPageHeader => _viewModel.FirstPageHeader;
 
     public IHeaderFooterControl FirstPageFooter => _viewModel.FirstPageFooter;
+
+    public void WaitForCalculation()
+    {
+        _model.FireWaitForCalculationIdle();
+    }
+
+    public void Activate()
+    {
+        if (!IsLoaded)
+        {
+            Loaded -= DoActivate;
+            Loaded += DoActivate;
+        }
+        else
+        {
+            DoActivate();
+        }
+    }
+
+    public void ActivateHeader()
+    {
+        _viewModel.ActivateHeader();
+    }
+
+    public void ActivateFooter()
+    {
+        _viewModel.ActivateFooter();
+    }
+
+    public void ActivateContent()
+    {
+        _viewModel.ActivateContent();
+    }
+
+    public void MoveItem(IWhiteboardItem item, Point point)
+    {
+        _viewModel.MoveItem(item, point);
+    }
+
+    public bool CanToggleInputRegion()
+    {
+        return _viewModel.CanToggleRegionsAsInput();
+    }
+
+    public bool CanToggleOutputRegion()
+    {
+        return _viewModel.CanToggleRegionsAsOutput();
+    }
+
+    public void ToggleInputRegion()
+    {
+        _viewModel.ToggleInputRegions();
+    }
+
+    public void ToggleOutputRegion()
+    {
+        _viewModel.ToggleOutputRegions();
+    }
+
+    public void RefreshDictionary()
+    {
+        if (SpellCheckEnabled)
+        {
+            _viewModel.RefreshDictionary();
+        }
+    }
+
+    public void UpdateWorksheetLayoutOnScrollChanged(double verticalOffset, double viewportHeight)
+    {
+        double paddingTopOffset = PageManager.UpdateVisiblePagesOnScrollChanged(verticalOffset, viewportHeight, _viewModel.WorksheetPageLayoutDisplayHeight);
+        UpdateVisiblePagesControlPaddingTop(paddingTopOffset);
+    }
+
+    private void UpdateVisiblePagesControlPaddingTop(double paddingTopOffset)
+    {
+        if (VisiblePagesControl.Padding.Top != paddingTopOffset)
+        {
+            VisiblePagesControl.Padding = new Thickness(0.0, paddingTopOffset, 0.0, 0.0);
+        }
+    }
+
+    private static void HandleShowInputOutputDesignation(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        ((WorksheetControl)d).FireChanged();
+    }
+
+    public void HandleMathFormatChanged(DependencyPropertyChangedEventArgs e)
+    {
+        FirePropertyChanged(e.Property.Name);
+        ContentMathFormat = ((MathFormat != null) ? new StaticMathFormat(MathFormat) : null);
+        FireChanged();
+    }
 }

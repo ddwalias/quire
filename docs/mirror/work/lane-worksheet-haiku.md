@@ -233,3 +233,10 @@
 - Left as stubs: the constructor, the event forwarders, `OnContextMenuOpening`, the scripting and input/output members, the print and layout members, and the members with closures.
 - Release IL: PASS; 1024 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1701.
+
+## Batch 29 — WorksheetControl (activation, region-toggle, dictionary and layout methods)
+
+- Members (15 stubs removed, parameterless overloads only): `WaitForCalculation()`, `Activate()`, `ActivateHeader`, `ActivateFooter`, `ActivateContent`, `MoveItem`, `CanToggleInputRegion`, `CanToggleOutputRegion`, `ToggleInputRegion()`, `ToggleOutputRegion()`, `RefreshDictionary`, `UpdateWorksheetLayoutOnScrollChanged`, the private `UpdateVisiblePagesControlPaddingTop`, the static `HandleShowInputOutputDesignation`, `HandleMathFormatChanged`.
+- Left as stubs: `WaitForCalculation(int, DispatcherPriority)` and the `ToggleInputRegion`/`ToggleOutputRegion` routed-event handlers (overloads not in this batch), `SetCurrentTextFormat` and `PreSave` (pattern-heavy, not checked), `ImportData`/`CanImportData` (file dialog), the constructor, the event forwarders, the context-menu, scripting, print and closure members.
+- Release IL: PASS; 1039 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1686.
