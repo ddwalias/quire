@@ -22,23 +22,7 @@ public partial class HeaderFooterControl : global::Quire.Controls.Whiteboard.Whi
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    public int PageNumber { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Worksheet.HeaderFooterRole Role { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsHeader { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsFooter { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Core.TextFormat TextFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Thickness global::Quire.Controls.Worksheet.IHeaderFooterControl.Margin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size BodySize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Worksheet.IHeaderFooterViewModel HFViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.ICommonContentsContainer CommonContents { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Controls.Worksheet.IPageNumberControl> PageNumberControlMoved;
     [global::Quire.Mirror.MirrorStub]
@@ -48,10 +32,6 @@ public partial class HeaderFooterControl : global::Quire.Controls.Whiteboard.Whi
     [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
-    private static void HandleMarginChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void HandleBodySizeChanged(global::System.Windows.DependencyObject depObj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public HeaderFooterControl(bool handleUserInput = true, global::Quire.Controls.Worksheet.HeaderFooterRole role = (global::Quire.Controls.Worksheet.HeaderFooterRole)(0)) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel)) { }
     [global::Quire.Mirror.MirrorStub]
     public HeaderFooterControl(global::System.Nullable<global::System.Windows.Size> gridCellSize, global::Quire.Controls.Worksheet.HeaderFooterRole role) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel)) { }
@@ -59,22 +39,6 @@ public partial class HeaderFooterControl : global::Quire.Controls.Whiteboard.Whi
     private HeaderFooterControl(global::Quire.Controls.Whiteboard.IWhiteboardModel model, bool handleUserInput, global::System.Nullable<global::System.Windows.Size> gridCellSize, global::Quire.Controls.Worksheet.HeaderFooterRole role) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel)) { }
     [global::Quire.Mirror.MirrorStub]
     private void OnRequestBringIntoView(object sender, global::System.Windows.RequestBringIntoViewEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleDirectionalMove(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void MoveItemsBy(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, global::System.Windows.Vector offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool HandleDelete() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UpdateItemLocationsAfterGridSizeChanged(global::System.Windows.Size oldGridCellSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void ViewModelPropertyChangedHandler(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => base.ViewModelPropertyChangedHandler(sender, e);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Dispose() => base.Dispose();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsAssociatedWithPage(global::Quire.Controls.Worksheet.IWorksheetPage worksheetPage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

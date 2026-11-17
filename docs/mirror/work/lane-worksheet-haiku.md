@@ -203,3 +203,10 @@
 - Left as stubs: the constructors and the static constructor (the constructors call `InitializeComponent`, which is XAML-generated, and the static constructor registers the attached property), the `PageBodyActivated` and `RequestScrollTo` event accessors, `_viewModel`, `_nonOwnedWhiteboardItems`, `_contentLoaded` and `LabeledIdFormatProperty`.
 - Release IL: PASS; 968 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1753.
+
+## Batch 25 — HeaderFooterControl (partial: dependency-property accessors, view-model forwarders, page and body members)
+
+- Members (18 stubs removed): `PageNumber` and `TextFormat` (dependency-property accessors), `IsHeader`, `IsFooter`, the explicit `IHeaderFooterControl.Margin`, `BodySize`, `HFViewModel`, `CommonContents`, `HandleMarginChanged` (guard form: Mathcad's branch order differs from the `is` pattern), `HandleBodySizeChanged`, `HandleDirectionalMove`, `MoveItemsBy` (the command is held in a named local, since Mathcad calls it with `callvirt`), `HandleDelete`, `UpdateItemLocationsAfterGridSizeChanged`, `FirePropertyChanged`, `ViewModelPropertyChangedHandler` (override), `Dispose` (override), `IsAssociatedWithPage`.
+- Left as stubs: the constructors and static constructor, `Role` (its backing field is assigned in the constructor), `OnRequestBringIntoView` (not attempted), `InitializeComponent` and the `IComponentConnector.Connect` (XAML-generated), the event fields, and the internal `HeaderFooterContainer` and `_contentLoaded` fields.
+- Release IL: PASS; 988 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1735.
