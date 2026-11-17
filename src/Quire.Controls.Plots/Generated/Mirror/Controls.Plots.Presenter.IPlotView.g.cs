@@ -11,44 +11,4 @@ namespace Quire.Controls.Plots.Presenter;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Presenter.IPlotView, Ptc.Controls.Plots")]
 public partial interface IPlotView : global::Quire.Controls.Plots.Presenter.IPlotViewBase, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Controls.Core.IHasChildArrangeInfoProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Presenter.IPlotAxisView RangeAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Presenter.IPlotAxisView PrimaryResultAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Presenter.IPlotLegend PlotLegend { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.List<global::Quire.Controls.Plots.Presenter.IPlotTrace> SelectedTraces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Presenter.PlotViewType Type { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int XLegendPositionIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int YLegendPositionIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int PlotTitlePositionIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int PlotLegendPositionIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Presenter.IPlotEquation ActivePlotEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Delegate1<bool> HasOriginPositioningChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Delegate1<int> YLegendPositionsIndexChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Delegate1<int> XLegendPositionsIndexChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Delegate1<global::Quire.Controls.Plots.LegendPositions.PlotTitlePosition> PlotTitlePositionsIndexChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Delegate1<int> PlotLegendPositionsIndexChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Plots.Presenter.IPlotTrace AddTrace() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void RemoveTrace(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void UpdateAxisOriginPositions(bool hasOriginPositioning) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
