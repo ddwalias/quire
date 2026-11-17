@@ -181,3 +181,11 @@
 - Left as stubs: the constructor and `Initialize` (lambda `CreateCommandBinding` callbacks), the `ActiveItem` override, `SetContentWidth` and `SetContentHeight` (lambdas), `ResizeItemToFit`, and the events and fields.
 - Release IL: PASS; 906 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1802 (includes the parked `HandleItemAdded`).
+
+## Batch 22 — TemplatedTextBox (partial: accessors, format and focus helpers)
+
+- Members (12 stubs removed): `IsUnregisterWithCommand`, the explicit `ITemplatedTextBox.Text`, `VerticalAlignmentOffset` (virtual), `IsEmpty`, `TemplateFormat` (virtual), `CurrentTextFormat`, `FirePropertyChanged`, `FireChanged`, `OnGotFocus` (override), `NavigateIntoItem`, `SimulateMouseClick`, `SetTextFormatPropertiesAccordingTo`.
+- Shape choices, each checked by the gate: the baseline assignment is written `-(...)` (Mathcad uses `neg`; `0.0 - (...)` emits a different constant order); `FirePropertyChanged` for the VerticalAlignmentOffset name uses the nested `PropertyNames` constant, which Mathcad also references.
+- Left as stubs: the constructor (it has `TextChanged` and `ExecuteOnLoad` lambdas and the `CommandBindings` closure), the static constructor, `Activate` (lambda), `HandleClearTextFormat` (lambdas), `GetRegionTextPersistentData`, `SetRegionPersistentData`, the `PropertyChanged`/`OnGotFocusEvent` event initializers and the fields.
+- Release IL: PASS; 921 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1790.
