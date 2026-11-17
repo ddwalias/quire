@@ -189,3 +189,10 @@
 - Left as stubs: the constructor (it has `TextChanged` and `ExecuteOnLoad` lambdas and the `CommandBindings` closure), the static constructor, `Activate` (lambda), `HandleClearTextFormat` (lambdas), `GetRegionTextPersistentData`, `SetRegionPersistentData`, the `PropertyChanged`/`OnGotFocusEvent` event initializers and the fields.
 - Release IL: PASS; 921 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1790.
+
+## Batch 23 — HeaderFooterZombieViewModel (partial: zombie accessors, body-size, visual-brush and page-number handlers)
+
+- Members (16 stubs removed): `ZombieBackground` (private setter), `ControlCreator`, `ItemManager`, `SnapsToPixelItem`, `ZombiePageNumberControl`, `ItemToZombieTransform`, `InitZombieBackground`, `OnHeaderFooterBodySizeChanged`, `ResetVisualBrush`, `RestoreVisualBrush`, `HookupHeaderFooterEvents`, `OnDispose` (override), `HandlePageNumberControlActivated` (guard form: Mathcad's branch order differs from the `&&` form), `HandlePageNumberControlResized`, `HandlePageNumberControlMoved`, `SetZombieLocationAccordingToOriginalControl`.
+- Left as stubs: the constructor (it subscribes `OfType<...>().Each(AddPageNumberControl)` and sets `ZombieItems`; not attempted), `HandleHeaderFooterItemsChanged` (a `switch` on the collection action), `AddPageNumberControl` (its size-changed hookup is not yet checked), `ZombieItems`, `zombieIsInitialized`, `_itemResizeHandlerMap` and the field stubs.
+- Release IL: PASS; 938 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1774.

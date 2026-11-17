@@ -22,43 +22,11 @@ public partial class HeaderFooterZombieViewModel : global::Quire.Controls.Core.V
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.Core.IWhiteboardItem> ZombieItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Core.IMaybeHasPointThatSnapsToPixel SnapsToPixelItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.VisualBrush ZombieBackground { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Worksheet.IControlFactory ControlCreator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager ItemManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Worksheet.IPageNumberControl ZombiePageNumberControl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.TranslateTransform ItemToZombieTransform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action zombieIsInitialized;
     [global::Quire.Mirror.MirrorStub]
     public HeaderFooterZombieViewModel(global::Quire.Controls.Worksheet.IHeaderFooterControl control) { }
     [global::Quire.Mirror.MirrorStub]
-    private bool InitZombieBackground() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnHeaderFooterBodySizeChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ResetVisualBrush() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RestoreVisualBrush() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HookupHeaderFooterEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnDispose() => base.OnDispose();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandlePageNumberControlActivated(bool isActive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandlePageNumberControlResized(global::Quire.Controls.Core.IWhiteboardItem pgNumControl, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandlePageNumberControlMoved(global::Quire.Controls.Worksheet.IPageNumberControl pgNumControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void HandleHeaderFooterItemsChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetZombieLocationAccordingToOriginalControl(global::Quire.Controls.Worksheet.IPageNumberControl zombieControl, global::Quire.Controls.Worksheet.IPageNumberControl originalItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AddPageNumberControl(global::Quire.Controls.Worksheet.IPageNumberControl item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
