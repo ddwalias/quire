@@ -66,8 +66,6 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     public override void TabInto(global::System.Windows.Input.FocusNavigationDirection dir) => base.TabInto(dir);
     [global::Quire.Mirror.MirrorStub]
-    public override global::System.Nullable<global::System.Windows.Vector> NavigateInto(global::Quire.Direction direction, global::System.Windows.Point point) => base.NavigateInto(direction, point);
-    [global::Quire.Mirror.MirrorStub]
     protected override void HandleItemAdded(global::Quire.Controls.Core.IWhiteboardItem item) => base.HandleItemAdded(item);
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Controls.Core.IWhiteboardItem GetChildItemFromLocation(global::System.Windows.Point point) => base.GetChildItemFromLocation(point);
@@ -82,8 +80,6 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size FindMinimumSize() => base.FindMinimumSize();
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Size FindMinimumSize(global::System.Windows.Size oleContainerItemMinimalSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal void SetInitialSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected abstract double GetSectionInitialHeight();
@@ -94,25 +90,13 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     protected override void HandleChildSizeChanged(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => base.HandleChildSizeChanged(item, oldSize, newSize);
     [global::Quire.Mirror.MirrorStub]
-    private bool IsPointInDeadArea(global::System.Windows.Point point, double oleContainerItemTop) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ReconcileOutputItemsLocations() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void InsertVerticalSpace(int numberOfLines, bool pushInsertionPoint, bool ignoreItemsOnCurrentLine) => base.InsertVerticalSpace(numberOfLines, pushInsertionPoint, ignoreItemsOnCurrentLine);
     [global::Quire.Mirror.MirrorStub]
     private bool CheckCanDeleteInInput() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool CheckCanDeleteInOutput(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override bool CanDeleteVerticalSpace(global::Quire.Direction direction) => base.CanDeleteVerticalSpace(direction);
-    [global::Quire.Mirror.MirrorStub]
-    public override void DeleteVerticalSpaceAbove(int numberOfLines) => base.DeleteVerticalSpaceAbove(numberOfLines);
-    [global::Quire.Mirror.MirrorStub]
-    public override void DeleteVerticalSpaceBelow(int numberOfLines) => base.DeleteVerticalSpaceBelow(numberOfLines);
-    [global::Quire.Mirror.MirrorStub]
     protected override void HandleCarriageReturn() => base.HandleCarriageReturn();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void SetIndicatorsDimensions() => base.SetIndicatorsDimensions();
     [global::Quire.Mirror.MirrorStub]
     public override void HandleGridCellSizeChanged(global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => base.HandleGridCellSizeChanged(oldSize, newSize);
     [global::Quire.Mirror.MirrorStub]

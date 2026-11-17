@@ -821,4 +821,104 @@ public abstract partial class OleBaseComponentViewModel
         SectionsMinimumHeight = DefaultSectionsMinimumHeight;
         base.UpdateSizeLimits(MaximumSize);
     }
+
+    public override Vector? NavigateInto(Direction direction, Point point)
+    {
+        Vector? val = null;
+        IOleContainerItem oleContainerItem = GetChildItemFromLocation(point) as IOleContainerItem;
+        switch (direction)
+        {
+            case Direction.Left:
+                if (oleContainerItem != null)
+                {
+                    val = new Vector(-OleContainerItemWidth - _alignmentGrid.GridCellSize.Width, 0.0);
+                }
+                break;
+            case Direction.Right:
+                if (oleContainerItem != null)
+                {
+                    val = new Vector(OleContainerItemWidth + _alignmentGrid.GridCellSize.Width, 0.0);
+                }
+                break;
+            case Direction.Up:
+                if (oleContainerItem != null || (!IsInputSectionVisible && !IsOutputSectionVisible))
+                {
+                    val = new Vector(0.0, -OleContainerItemHeight - _alignmentGrid.GridCellSize.Height);
+                }
+                break;
+            case Direction.Down:
+                if (oleContainerItem != null || (!IsInputSectionVisible && !IsOutputSectionVisible))
+                {
+                    val = new Vector(0.0, OleContainerItemHeight + _alignmentGrid.GridCellSize.Height);
+                }
+                break;
+        }
+        return val ?? base.NavigateInto(direction, point);
+    }
+
+    private Size FindMinimumSize(Size oleContainerItemMinimalSize)
+    {
+        double num;
+        double num2;
+        if (IsResizing || IsInternalResizing)
+        {
+            num = Math.Max(oleContainerItemMinimalSize.Width, GetRightMostItemEdge(InputItems.Union(OutputItems)));
+            num2 = AlignHeightWithGridLines(oleContainerItemMinimalSize.Height, isOleContainerItem: true);
+            if (IsInputSectionVisible)
+            {
+                num2 += Math.Max(InputSectionActualHeight, GetLowestItemEdge(InputItems));
+            }
+            if (IsOutputSectionVisible)
+            {
+                num2 += Math.Max(OutputSectionActualHeight, GetLowestItemEdge(OutputItems) - OutputSectionActualTop);
+            }
+        }
+        else
+        {
+            num = oleContainerItemMinimalSize.Width;
+            num2 = GetMinimumContentHeight(AlignHeightWithGridLines(oleContainerItemMinimalSize.Height, isOleContainerItem: true));
+        }
+        return new Size(num, num2);
+    }
+
+    private bool IsPointInDeadArea(Point point, double oleContainerItemTop)
+    {
+        Rect val = new Rect(new Point(0.0, oleContainerItemTop), OleContainerItemSize);
+        return val.Contains(point);
+    }
+
+    private void ReconcileOutputItemsLocations()
+    {
+        UpdateItemsLocation(isOutput: true);
+    }
+
+    protected override bool CanDeleteVerticalSpace(Direction direction)
+    {
+        Point insertionPoint = InsertionPoint;
+        if (insertionPoint.Y <= InputSectionActualHeight ? CheckCanDeleteInInput() : CheckCanDeleteInOutput(direction))
+        {
+            return base.CanDeleteVerticalSpace(direction);
+        }
+        return false;
+    }
+
+    public override void DeleteVerticalSpaceAbove(int numberOfLines)
+    {
+        DeleteSpaceCommandForOleComponent command = new DeleteSpaceCommandForOleComponent(this, numberOfLines, Direction.Up);
+        command.Execute();
+    }
+
+    public override void DeleteVerticalSpaceBelow(int numberOfLines)
+    {
+        DeleteSpaceCommandForOleComponent command = new DeleteSpaceCommandForOleComponent(this, numberOfLines, Direction.Down);
+        command.Execute();
+    }
+
+    protected override void SetIndicatorsDimensions()
+    {
+        if (OutputSectionActualTop.IsValid())
+        {
+            OutputSectionIndicator.Top = OutputSectionActualTop;
+        }
+    }
 }
