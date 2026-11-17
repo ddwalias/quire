@@ -103,3 +103,10 @@
 - Left as stubs (lambdas, closure ordinals): `GetRegionPersistentData`, `IsValidTemplateKey`; plus the static constructor and the field stub `_typeOfThis`.
 - Release IL: PASS; 747 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1942.
+
+## Batch 13 — PrintTreeXpsDecorator (one type)
+
+- Members (4 stubs removed): `ItemManager` (private static accessor), `CanEnrichPrintingTree`, `EnrichPrintingTree`, `GetItemRectForPrint`.
+- Left as stubs (lambdas, closure ordinals): `EnrichPagePart` (`EachWithIndex` lambda), `RecursiveSetItemsName` (lambdas), `ProcessAddorners` (`SelectMany` lambda). The static field `_whiteboardItemMgr` stays a stub declaration.
+- Release IL: PASS; 752 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1938.
