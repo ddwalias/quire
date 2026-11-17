@@ -11,21 +11,8 @@ namespace Quire.Controls.Plots.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.PlotEquationModelBase, Ptc.Controls.Plots")]
 internal partial class PlotEquationModelBase : global::Quire.Controls.Plots.Model.IPlotEquationModelBase, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.EngineError _plotCalculatableError;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.EngineError PlotCalculatableError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    private void FirePropertyChanged(global::System.ComponentModel.PropertyChangedEventArgs propertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PlotEquationModelBase() { }
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.PlotEquationModelBase+PropertyNames, Ptc.Controls.Plots")]
     internal static partial class PropertyNames
     {
-        [global::Quire.Mirror.MirrorStub]
-        internal const string PlotCalculatableError = "PlotCalculatableError";
     }
 }

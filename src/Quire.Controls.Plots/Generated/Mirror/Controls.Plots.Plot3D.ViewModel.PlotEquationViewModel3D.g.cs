@@ -11,10 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.ViewModel.PlotEquationViewModel3D, Ptc.Controls.Plots")]
 internal partial class PlotEquationViewModel3D : global::Quire.Controls.Plots.ViewModel.PlotEquationViewModelBase<global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D>, global::Quire.Controls.Plots.Plot3D.ViewModel.IPlotEquationViewModel3D, global::Quire.Controls.Plots.ViewModel.IPlotEquationViewModelBase, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D TraceModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Presenter.IPlotEquation EquationProxy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public PlotEquationViewModel3D(global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D equationModel) : base(default(global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D)) { }
 }
