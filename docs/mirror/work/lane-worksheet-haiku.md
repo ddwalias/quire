@@ -161,3 +161,15 @@
 - Left as stubs: `FindPageSectionContainingPoint`, `ScrollIntoView`, `AdjustScrollToOffset`, `GetDefaultLabeledIdFormat`, `BringIntoView(section, target)`, the remaining interface members, `BringItemsBoundingBoxIntoView` (lambdas), and the static `ItemManager` property and the constructor. These were not attempted in this batch.
 - Release IL: PASS; 880 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1824 (includes the parked `TransformBounds`).
+
+## Batch 20 — WorksheetPageManager (partial: accessors, page-break and split helpers)
+
+- Members (13 stubs removed): `ControlCreator`, `ItemManager` (static accessors), `RightEdgeOfPage`, `Pages`, `VisiblePages`, `PageLayout`, `VisualHelper`, `IsVisiblePagesLoaded`, `Pagebreaks` (private getter, setter with handler hookup), `Initialize`, `ValidateAndSplitItemIfNeeded`, `ItemSplitIsNeeded(IWhiteboardItem)`, `FireItemSplit`.
+- Parked: `ItemSplitIsNeeded(IWhiteboardItem, out int, out Rect)`. The first difference is at instruction 13 (Quire has 72 entries, Mathcad fewer); not diagnosed further. Stub kept.
+- Left as stubs: the constructor (its field initializers and the `ContentActivated` event initializer would introduce closures), the lambda members (`AddItemToAppropriatePage`, `SplitItemIfNeededAndRemoveEmptyPages`, and the others with closures), and the rest of the members not attempted here.
+- Release IL: PASS; 894 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1811 (includes the parked `ItemSplitIsNeeded` overload).
+
+## Note — WorksheetModel is ordinal-locked
+
+- `WorksheetModel`'s hand-written partial has constructor closures (`ContextUnloaded`, `ItemMoved`). Their names (`<.ctor>b__121_0`, `b__154_0`) depend on the ordinal of the constructor among the class's methods, and generated stubs precede it. Removing any generated stub from `WorksheetModel.g.cs` shifts those ordinals, and the gate then fails on the constructor and `<>c` members. A trial of 11 property stubs (`DocCalculationOptions`, `SimplifyUnitSystem` and others) failed for that reason and for guard-shape differences; it was reverted. Placeholder stubs in Mathcad order are needed before any of these can land.
