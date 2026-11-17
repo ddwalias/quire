@@ -40,51 +40,19 @@ public partial class WorksheetDragger
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty DropTargetHandlerProperty;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Worksheet.IWorksheetViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action OnNoDrag;
-    [global::Quire.Mirror.MirrorStub]
-    public void MouseDown(global::Quire.Controls.Worksheet.IWorksheetControl control, global::System.Windows.DependencyObject originalSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Worksheet.WorksheetDragger GetDragSourceHandler(global::System.Windows.DependencyObject obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetDragSourceHandler(global::System.Windows.DependencyObject obj, global::Quire.Controls.Worksheet.WorksheetDragger value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void DragSourceHandlerChanged(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Worksheet.WorksheetDragger GetDropTargetHandler(global::System.Windows.DependencyObject obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetDropTargetHandler(global::System.Windows.DependencyObject obj, global::Quire.Controls.Worksheet.WorksheetDragger value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void DropTargetHandlerChanged(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireOnNoDrag() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void EndDrag() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void DragSourceMouseLeftButtonDownAuxiliary(object sender, global::System.Windows.DependencyObject originalSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void DragSourceMouseLeftButtonUp(object sender, global::System.Windows.Input.MouseButtonEventArgs e1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void DragSourceMouseMove(object sender, global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void PrepareItemForDragging(global::System.Windows.UIElement item, global::System.Windows.Documents.AdornerLayer adornerLayer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void PrepareItemZombiesForDragging(global::System.Windows.UIElement item, global::System.Windows.Documents.AdornerLayer adornerLayer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void TopWindowQueryContinueDrag(object sender, global::System.Windows.QueryContinueDragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void GrowWorksheetIfAppropriate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void TopWindowDragEnter(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void TopWindowDragOver(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void TopWindowDragLeave(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void CleanupDrag(global::System.Windows.Documents.AdornerLayer adornerLayer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DoDrag(global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdatePositionsDuringDrag() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -95,18 +63,6 @@ public partial class WorksheetDragger
     private void DropTargetDragOver(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void DropTargetDragLeave(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HookupDragSourceEvents(global::System.Windows.UIElement dragSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnDragSourceOnPreviewMouseLeftButtonDown(object sender, global::System.Windows.Input.MouseButtonEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UnhookDragSourceEvents(global::System.Windows.UIElement dragSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HookupDropTargetEvents(global::System.Windows.UIElement dropTarget) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UnhookDropTargetEvents(global::System.Windows.UIElement dropTarget) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Point ConvertPageCoordinatesToWorksheetCoordinates(global::System.Windows.Point pagePoint, global::Quire.Controls.Worksheet.IWorksheetPage page) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public WorksheetDragger() { }
 }

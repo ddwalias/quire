@@ -117,3 +117,13 @@
 - Left as stubs: the constructor (it calls the base constructor and initializes the `DragDone`/`DragProgress` event fields, with `delegate { }` initializers) and the readonly field stubs `_mode`, `_container`, `_startPoint`.
 - Release IL: PASS; 765 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1925.
+
+## Batch 15 — WorksheetDragger (one type)
+
+- Members (22 stubs removed): the `ViewModel` accessor, `MouseDown`, the four `Get/Set{DragSource,DropTarget}Handler` accessors, `DragSourceHandlerChanged` and `DropTargetHandlerChanged` (`is not` guard, Mathcad's `brtrue.s` shape), `FireOnNoDrag`, `DragSourceMouseLeftButtonUp`, `PrepareItemForDragging`, `GrowWorksheetIfAppropriate`, `TopWindowDragEnter`, `TopWindowDragOver`, `TopWindowDragLeave`, `DoDrag` (`is not` guard), `HookupDragSourceEvents`, `OnDragSourceOnPreviewMouseLeftButtonDown` (`as` without a local), `UnhookDragSourceEvents`, `HookupDropTargetEvents`, `UnhookDropTargetEvents`, `ConvertPageCoordinatesToWorksheetCoordinates`.
+- Parked (stubs kept):
+  - `TopWindowQueryContinueDrag`: first difference at the `ViewModel != null && ...` branch (`brfalse.s` target differs); not diagnosed further.
+  - Members with lambdas (`DragSourceMouseLeftButtonDownAuxiliary`, `DragSourceMouseMove`, `PrepareItemZombiesForDragging`, `EndDrag`, `CleanupDrag`, `UpdatePositionsDuringDrag`, `DropTargetDrop`, `DropTargetDragEnter`, `DropTargetDragOver`, `DropTargetDragLeave`).
+  - The static constructor, the `OnDragDropEnd`/`OnDragDropMove` event fields, the dependency property fields, and the private fields.
+- Release IL: PASS; 788 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1903.
