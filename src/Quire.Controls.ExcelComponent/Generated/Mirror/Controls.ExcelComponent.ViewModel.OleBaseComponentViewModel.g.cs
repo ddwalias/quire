@@ -58,8 +58,6 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     protected override void SimulateItemClickAndFireActivated(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location, int numberOfClicks) => base.SimulateItemClickAndFireActivated(item, location, numberOfClicks);
     [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Controls.Whiteboard.WhiteboardViewModel.PasteItemsCommand GetPasteItemsCommand(string commandName, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> pasteItemsAtLocation) => base.GetPasteItemsCommand(commandName, pasteItemsAtLocation);
-    [global::Quire.Mirror.MirrorStub]
     public override bool FindOncePrivate(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => base.FindOncePrivate(text, startFromCaret, direction, options, subscriptPositions);
     [global::Quire.Mirror.MirrorStub]
     protected override void SelectedItemsAddNew(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => base.SelectedItemsAddNew(items);
@@ -75,10 +73,6 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     public override bool IsValidLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> newLocations, bool allowGrowthDownOrRight) => base.IsValidLocation(item, newLocations, allowGrowthDownOrRight);
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Size Measure(global::System.Windows.Size availableSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OleContainerMinSizeChanged(bool allowResize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size FindMinimumSize() => base.FindMinimumSize();
     [global::Quire.Mirror.MirrorStub]
     internal void SetInitialSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

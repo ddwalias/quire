@@ -921,4 +921,24 @@ public abstract partial class OleBaseComponentViewModel
             OutputSectionIndicator.Top = OutputSectionActualTop;
         }
     }
+
+    public override PasteItemsCommand GetPasteItemsCommand(string commandName, IDictionary<IWhiteboardItem, Point> pasteItemsAtLocation)
+    {
+        return new PasteOleComponentItemsCommand(this, commandName, pasteItemsAtLocation);
+    }
+
+    protected override Size FindMinimumSize()
+    {
+        return FindMinimumSize(useDefault: false);
+    }
+
+    private void OleContainerMinSizeChanged(bool allowResize)
+    {
+        MinimumSize = FindMinimumSize();
+        Size oleContainerItemMinSize = GetOleContainerItemMinSize();
+        if (allowResize && (OleContainerItemSize.Height < oleContainerItemMinSize.Height || OleContainerItemSize.Width < oleContainerItemMinSize.Width))
+        {
+            ForceOleComponentResizeDueToOleContainerItemResize(setExplicitMinHeight: false);
+        }
+    }
 }
