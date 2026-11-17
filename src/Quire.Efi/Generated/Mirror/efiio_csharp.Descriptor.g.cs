@@ -12,103 +12,11 @@ namespace Quire.efiio_csharp;
 public partial class Descriptor : global::Quire.efiio_csharp.ExcelSupport
 {
     [global::Quire.Mirror.MirrorStub]
-    protected int m_Left;
-    [global::Quire.Mirror.MirrorStub]
-    protected int m_Top;
-    [global::Quire.Mirror.MirrorStub]
-    protected int m_Right;
-    [global::Quire.Mirror.MirrorStub]
-    protected int m_Bottom;
-    [global::Quire.Mirror.MirrorStub]
-    protected object m_Fill;
-    [global::Quire.Mirror.MirrorStub]
-    protected int m_blank;
-    [global::Quire.Mirror.MirrorStub]
-    protected bool m_init_from_rowcol;
-    [global::Quire.Mirror.MirrorStub]
-    protected int m_r;
-    [global::Quire.Mirror.MirrorStub]
-    protected int m_nr;
-    [global::Quire.Mirror.MirrorStub]
-    protected int m_c;
-    [global::Quire.Mirror.MirrorStub]
-    protected int m_nc;
-    [global::Quire.Mirror.MirrorStub]
-    private int m_Width;
-    [global::Quire.Mirror.MirrorStub]
-    private int m_Height;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_IsRange;
-    [global::Quire.Mirror.MirrorStub]
-    protected string m_SheetName;
-    [global::Quire.Mirror.MirrorStub]
-    protected int m_SheetIndex;
-    [global::Quire.Mirror.MirrorStub]
-    protected string m_Dimension;
-    [global::Quire.Mirror.MirrorStub]
-    private string m_A1ref;
-    [global::Quire.Mirror.MirrorStub]
-    private string m_R1C1ref;
-    [global::Quire.Mirror.MirrorStub]
-    public int Left { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Top { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Right { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Bottom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object Fill { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int BlankRows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Width { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Height { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsRange { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string SheetName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasSheetName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasSheetIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int SheetIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasDimension { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string A1ref { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string R1C1ref { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public string Dimension { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public Descriptor(string descriptor) { }
-    [global::Quire.Mirror.MirrorStub]
-    public Descriptor(string descriptor, uint sheetarg) { }
-    [global::Quire.Mirror.MirrorStub]
-    private int ParseBlankParameter(object blank) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int SetBlank(object blank) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public Descriptor(string descriptor, object fill, object blank) { }
-    [global::Quire.Mirror.MirrorStub]
-    public Descriptor(string descriptor, object fill) { }
-    [global::Quire.Mirror.MirrorStub]
-    public Descriptor(string descriptor, int matrix_rows, int matrix_cols, object fill) { }
     [global::Quire.Mirror.MirrorStub]
     public Descriptor(string descriptor, int matrix_rows, int matrix_cols) { }
     [global::Quire.Mirror.MirrorStub]
-    public Descriptor(int r, int c, int matrix_rows, int matrix_cols, object fill) { }
-    [global::Quire.Mirror.MirrorStub]
-    public Descriptor(int r, int c, int matrix_rows, int matrix_cols, object fill, object blankrows) { }
-    [global::Quire.Mirror.MirrorStub]
     public Descriptor(int r, int c, int matrix_rows, int matrix_cols) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static string MakeA1Reference(int row, int col) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string MakeR1C1Reference(int row, int col) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string MakeA1Dimension(int top, int left, int bottom, int right) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
