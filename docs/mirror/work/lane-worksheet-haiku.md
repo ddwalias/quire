@@ -127,3 +127,11 @@
   - The static constructor, the `OnDragDropEnd`/`OnDragDropMove` event fields, the dependency property fields, and the private fields.
 - Release IL: PASS; 788 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1903.
+
+## Batch 16 — XmlSpreadsheetPasteHandler (one type)
+
+- Members (11 stubs removed): `ControlCreator`, `AddQuotationMarks`, both `FormatNumber` overloads, `CreateNumberFormatFromExcelFormat`, `FixExcelNumberFormat`, `GetExcelNumberFormat`, `IsNumberFormat`, `IsFloatFormat`, `IsPrecentNumberFormat`, `GetDecimalPlacesAndShowTralingZeros`.
+- Shape choices, each checked by the gate: string interpolation became `string.Format` (Mathcad calls `String.Format`); `new X(...).Method()` became a named local receiver (Mathcad uses `callvirt`); the regex and the `SelectSingleNode` result each use a named local; `GetDecimalPlacesAndShowTralingZeros` uses a `switch` statement, since the switch expression differed.
+- Parked: `ProcessXmlSpreadsheet`. The first difference is at instruction 84 of the candidate (the dictionary initializer or the `Vector` construction); not diagnosed further. Stub kept.
+- Release IL: PASS; 799 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1892 (includes the parked `ProcessXmlSpreadsheet`).
