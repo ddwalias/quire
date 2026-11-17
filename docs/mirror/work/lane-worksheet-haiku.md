@@ -135,3 +135,11 @@
 - Parked: `ProcessXmlSpreadsheet`. The first difference is at instruction 84 of the candidate (the dictionary initializer or the `Vector` construction); not diagnosed further. Stub kept.
 - Release IL: PASS; 799 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1892 (includes the parked `ProcessXmlSpreadsheet`).
+
+## Batch 17 — DirectRenderingAlignmentGridBorder (one type)
+
+- Members (27 stubs removed, including the constructor): the ten dependency-property accessors, `MinorLinePen` and `MajorLinePen` (guard-clause setters, since the `if (!Equals) { ... }` form differs from Mathcad), `ActualMajorLinePen`, the `DrawingBrush` auto-property, the five change handlers, `CreateMinorPen`, `CreateMajorPen`, `InvalidateGrid`, `CreatePen`, `DirectDcDrawing`, `MeasureOverride`, `OnRender`.
+- Receiver casts kept as in the original: `((DependencyObject)this).GetValue/SetValue` and `((Freezable)brush).Freeze()`, so the member references name the same base type as Mathcad.
+- Left as stubs: `BuildTileDrawingGeometry` (a `UpTo` lambda), the static constructor, the static `DependencyProperty` fields and `TypeOfThis`.
+- Release IL: PASS; 839 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1865.
