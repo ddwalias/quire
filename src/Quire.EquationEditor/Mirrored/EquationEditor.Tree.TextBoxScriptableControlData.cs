@@ -4,6 +4,9 @@ namespace Quire.EquationEditor.Tree;
 
 public partial class TextBoxScriptableControlData
 {
+    protected const int a = 30;
+    protected const int b = 100;
+
     private bool c;
 
     private bool d;

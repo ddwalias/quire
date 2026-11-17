@@ -5,6 +5,9 @@ namespace Quire.EquationEditor.Tree;
 
 public partial class SliderScriptableControlData
 {
+    protected const int a = 37;
+    protected const int b = 100;
+
     private double c;
     private double d = 100.0;
     private bool n;

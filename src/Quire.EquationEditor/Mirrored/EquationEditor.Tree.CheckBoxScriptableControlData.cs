@@ -4,6 +4,9 @@ namespace Quire.EquationEditor.Tree;
 
 public partial class CheckBoxScriptableControlData
 {
+    protected const int a = 30;
+    protected const int b = 100;
+
     public CheckBoxScriptableControlData(string mathNodeName, Quire.Controls.Core.InputControlTypes inputControlTypes)
         : base(mathNodeName, inputControlTypes)
     {

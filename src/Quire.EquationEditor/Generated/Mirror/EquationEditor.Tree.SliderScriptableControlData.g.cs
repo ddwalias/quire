@@ -11,8 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.SliderScriptableControlData, Ptc.EquationEditor")]
 public partial class SliderScriptableControlData : global::Quire.EquationEditor.Tree.InputScriptableControlDataWithInputs
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected const int a = 37;
-    [global::Quire.Mirror.MirrorStub]
-    protected const int b = 100;
 }

@@ -2,6 +2,9 @@ namespace Quire.EquationEditor.Tree;
 
 public partial class ButtonScriptableControlData
 {
+    protected const int a = 40;
+    protected const int b = 70;
+
     public ButtonScriptableControlData(string mathNodeName, Quire.Controls.Core.InputControlTypes inputControlTypes)
         : base(mathNodeName, inputControlTypes)
     {

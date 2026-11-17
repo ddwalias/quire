@@ -11,8 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.FunctionOperatorNames, Ptc.EquationEditor")]
 public partial class FunctionOperatorNames
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string Root = "root";
-    [global::Quire.Mirror.MirrorStub]
-    public const string If = "if";
 }

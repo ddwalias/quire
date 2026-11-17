@@ -2,6 +2,11 @@ namespace Quire.EquationEditor.Tree.Transform;
 
 public partial class InlineToSExpressionTransform
 {
+    private const string a_ = "(@ID {0})";
+    private const char b = '(';
+    private const char c = ' ';
+    private const char d = ')';
+
     private readonly global::System.Collections.Generic.Dictionary<global::System.Type, string> e = new global::System.Collections.Generic.Dictionary<global::System.Type, string>
     {
         { typeof(global::System.Windows.Documents.Bold), "@BOLD" },

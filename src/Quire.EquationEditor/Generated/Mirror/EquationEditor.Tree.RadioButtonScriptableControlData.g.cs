@@ -11,8 +11,4 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.RadioButtonScriptableControlData, Ptc.EquationEditor")]
 public partial class RadioButtonScriptableControlData : global::Quire.EquationEditor.Tree.InputScriptableControlDataWithInputs
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected const int a = 72;
-    [global::Quire.Mirror.MirrorStub]
-    protected const int b = 80;
 }

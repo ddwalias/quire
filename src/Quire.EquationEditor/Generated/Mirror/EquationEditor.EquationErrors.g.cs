@@ -11,6 +11,4 @@ namespace Quire.EquationEditor;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.EquationErrors, Ptc.EquationEditor")]
 public partial class EquationErrors
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string MaxRecursionDepthExceeded = "EquationControl.Error.XmlParsing.MaxRecursionDepthExceeded";
 }

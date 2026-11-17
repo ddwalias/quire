@@ -12,12 +12,4 @@ namespace Quire.EquationEditor.Tree.Transform;
 public partial class InlineToSExpressionTransform
 {
     public static readonly global::Quire.EquationEditor.Tree.Transform.InlineToSExpressionTransform Default;
-    [global::Quire.Mirror.MirrorStub]
-    private const string a_ = "(@ID {0})";
-    [global::Quire.Mirror.MirrorStub]
-    private const char b = '\u0028';
-    [global::Quire.Mirror.MirrorStub]
-    private const char c = '\u0020';
-    [global::Quire.Mirror.MirrorStub]
-    private const char d = '\u0029';
 }

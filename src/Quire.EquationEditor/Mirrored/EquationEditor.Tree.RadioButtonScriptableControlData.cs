@@ -5,6 +5,9 @@ namespace Quire.EquationEditor.Tree;
 
 public partial class RadioButtonScriptableControlData
 {
+    protected const int a = 72;
+    protected const int b = 80;
+
     private Orientation c = Orientation.Vertical;
 
     private FlowDirection d;
