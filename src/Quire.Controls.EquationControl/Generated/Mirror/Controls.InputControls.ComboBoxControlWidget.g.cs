@@ -11,24 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.ComboBoxControlWidget, Ptc.Controls.EquationControl")]
 public partial class ComboBoxControlWidget : global::Quire.Controls.Core.VisualAdorner
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.InputControls.EditableComboBoxTableBorder _editableComboBoxTableBorder;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.InputControls.ComboBoxControl _comboBox;
-    [global::Quire.Mirror.MirrorStub]
-    public ComboBoxControlWidget(global::Quire.Controls.InputControls.ComboBoxControl comboBox, global::Quire.Controls.InputControls.EditableComboBoxTableCellsFontFormats cellsFontFormats, global::Quire.Controls.Core.ExtendedFont operatorFormat) : base(default(global::System.Windows.UIElement)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void OpenEditingMode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CloseEditingMode(bool shouldKeepFocus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void EnableOrDisableComboBox(bool shouldEnable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void Add() => base.Add();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void AddToAdornerLayer() => base.AddToAdornerLayer();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
 }

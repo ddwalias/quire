@@ -11,34 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.EditableComboBoxTableBorder, Ptc.Controls.EquationControl")]
 public partial class EditableComboBoxTableBorder : global::System.Windows.Controls.Border, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Size MinimumVisibleEditableTableSize;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Media.Brush BorderBrushColor;
-    [global::Quire.Mirror.MirrorStub]
-    public const double TableValuesSeparatingLineThickness = 0.5d;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Thickness EditableComboBoxBorderThickness;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.InputControls.EditableComboBoxVisualTable _editableComboBoxView;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.ScrollViewer ECB_ScrollViewer;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Grid tableGrid;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Shapes.Line horizontalLine;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Shapes.Line verticalLine;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public EditableComboBoxTableBorder(global::Quire.Controls.InputControls.EditableComboBoxVisualTable editableComboBoxView) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void OnDragDeltaResizeTable(object sender, global::System.Windows.Controls.Primitives.DragDeltaEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnMouseDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnMouseDown(e);
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
