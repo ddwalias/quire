@@ -152,3 +152,12 @@
 - Left as stubs: the static field declarations and the `_typeOfThis` static field, the private fields, and the members that use lambdas (`SortItemsByLocation`, the size-changed dispatch, and the others with closures). Also the static constructor, if present.
 - Release IL: PASS; 859 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1845 (includes the parked `GetItemClipGeometry`).
+
+## Batch 19 — WorksheetVisualHelper (partial: selection flags, ancestor lookups, translation and bring-into-view)
+
+- Members (21 stubs removed): `ShouldToggleSelect`, `ShouldContiguousSelect` (the `ModifierKeys` flags are read as `int`), the three explicit `IWorksheetVisualHelper` forwarders with their static helpers (`FindWhiteboardItemAncestor`, `FindWhiteboardItemAncestorIncludingSelf`, `FindTopWhiteboardItemAncestorIncludingSelf`), `FindContainerAncestor`, `FindWorksheetPageAncestor`, `FindUIElementAncestorOrSelf`, `FindWorksheetControlAncestor`, `FindOneOfPageRelatedAncestorsIncludingSelf`, `TranslatePoint`, `IsSignificantDistance`, `BringIntoView` (item and item with target rect), `SuppressBringIntoViewAndExecute`, `GetScrollViewerRect`, `GetEngineeringDocumentZoomValue`, `GetVisualLocation`.
+- Shape choices: `child is DependencyObject ? child : null` became `child as DependencyObject` (Mathcad has no branch there).
+- Parked: `TransformBounds`. The first difference is at instruction 24 (Quire has 30 entries, Mathcad fewer); not diagnosed further. Stub kept.
+- Left as stubs: `FindPageSectionContainingPoint`, `ScrollIntoView`, `AdjustScrollToOffset`, `GetDefaultLabeledIdFormat`, `BringIntoView(section, target)`, the remaining interface members, `BringItemsBoundingBoxIntoView` (lambdas), and the static `ItemManager` property and the constructor. These were not attempted in this batch.
+- Release IL: PASS; 880 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1824 (includes the parked `TransformBounds`).

@@ -14,59 +14,17 @@ internal partial class WorksheetVisualHelper : global::Quire.Controls.Worksheet.
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Controls.Worksheet.IWorksheetItemManager ItemManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool ShouldToggleSelect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShouldContiguousSelect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IWhiteboardItem global::Quire.Controls.Worksheet.IWorksheetVisualHelper.FindWhiteboardItemAncestor(object child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static global::Quire.Controls.Core.IWhiteboardItem FindWhiteboardItemAncestor(object child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IWhiteboardItem global::Quire.Controls.Worksheet.IWorksheetVisualHelper.FindWhiteboardItemAncestorIncludingSelf(object child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static global::Quire.Controls.Core.IWhiteboardItem FindWhiteboardItemAncestorIncludingSelf(object child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.IWhiteboardItem global::Quire.Controls.Worksheet.IWorksheetVisualHelper.FindTopWhiteboardItemAncestorIncludingSelf(object source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static global::Quire.Controls.Core.IWhiteboardItem FindTopWhiteboardItemAncestorIncludingSelf(object source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer FindContainerAncestor(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.IWorksheetPage FindWorksheetPageAncestor(object child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.UIElement FindUIElementAncestorOrSelf(object element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Worksheet.IWorksheetPageSection FindPageSectionContainingPoint(global::System.Windows.Point location, global::Quire.Controls.Worksheet.IWorksheetControl worksheet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.IWorksheetControl FindWorksheetControlAncestor(object child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object FindOneOfPageRelatedAncestorsIncludingSelf(object child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point TranslatePoint(global::System.Windows.Point point, object transformFrom, object transformTo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Rect TransformBounds(global::Quire.Controls.Core.IWhiteboardItem transformFrom, object transformTo, global::System.Windows.Rect boxToTransform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool IsSignificantDistance(global::System.Windows.Vector vector) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void BringIntoView(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void BringIntoView(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Rect targetRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void BringIntoView(global::Quire.Controls.Worksheet.IWorksheetPageSection section, global::System.Windows.Rect target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SuppressBringIntoViewAndExecute(global::Quire.Controls.Worksheet.IWorksheetPageSection pageSection, global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ScrollIntoView(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Rect workingRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private double AdjustScrollToOffset(double offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.Primitives.IScrollInfo GetScrollViewerRect(object child, out global::System.Windows.Rect mainScrollViewerBounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private double GetEngineeringDocumentZoomValue(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> GetDefaultLabeledIdFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point GetVisualLocation(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void BringItemsBoundingBoxIntoView(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, global::Quire.Controls.Core.PageLayoutMode mode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
