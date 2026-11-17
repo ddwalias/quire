@@ -409,4 +409,9 @@ public partial class XL
             cellNode.AppendChild(xmlNode3);
         }
     }
+
+    public static void EstablishWorksheetContext(Descriptor desc, Package xlPackage, out XmlDocument sheetDoc, out DocumentContext context)
+    {
+        EstablishWorksheetContext(desc, xlPackage, out sheetDoc, out context, for_write: false);
+    }
 }

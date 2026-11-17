@@ -18,10 +18,6 @@ public partial class XL : global::Quire.efiio_csharp.ExcelSupport
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.XmlNode[,] GetWorksheetNodes(bool doPadding, global::System.Xml.XmlDocument sheetDoc, global::Quire.efiio_csharp.XL.DocumentContext context, global::Quire.efiio_csharp.Descriptor desc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void EstablishWorksheetContext(global::Quire.efiio_csharp.Descriptor desc, global::System.IO.Packaging.Package xlPackage, out global::System.Xml.XmlDocument sheetDoc, out global::Quire.efiio_csharp.XL.DocumentContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void EstablishWorksheetContext(global::Quire.efiio_csharp.Descriptor desc, global::System.IO.Packaging.Package xlPackage, out global::System.Xml.XmlDocument sheetDoc, out global::Quire.efiio_csharp.XL.DocumentContext context, bool for_write) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void writeExcelInnerFromInstance(string file, string descriptor, global::Quire.Mcd.MatVal V, string cwd, bool create_directories, bool overwrite_files) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object writeExcelInner(string file, string descriptor, global::Quire.Mcd.MatVal V, string cwd, bool create_directories, bool overwrite_files) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -45,4 +41,6 @@ public partial class XL : global::Quire.efiio_csharp.ExcelSupport
     public static object writeExcelInIsolatedContext(string file, string descriptor, global::Quire.Mcd.MatVal V, string cwd, bool create_directories, bool overwrite_files) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void setXmlNodeValue(global::System.Xml.XmlNode cellNode, object val, global::Quire.efiio_csharp.XL.DocumentContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public static void EstablishWorksheetContext(global::Quire.efiio_csharp.Descriptor desc, global::System.IO.Packaging.Package xlPackage, out global::System.Xml.XmlDocument sheetDoc, out global::Quire.efiio_csharp.XL.DocumentContext context, bool for_write) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
