@@ -14,8 +14,6 @@ public partial class XL : global::Quire.efiio_csharp.ExcelSupport
     [global::Quire.Mirror.MirrorStub]
     public XL() { }
     [global::Quire.Mirror.MirrorStub]
-    public static string cellNodeContent(global::System.Xml.XmlNode cellNode, ref global::Quire.efiio_csharp.XL.DocumentContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.XmlNode[,] GetWorksheetNodes(bool doPadding, global::System.Xml.XmlDocument sheetDoc, global::Quire.efiio_csharp.XL.DocumentContext context, global::Quire.efiio_csharp.Descriptor desc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void writeExcelInnerFromInstance(string file, string descriptor, global::Quire.Mcd.MatVal V, string cwd, bool create_directories, bool overwrite_files) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

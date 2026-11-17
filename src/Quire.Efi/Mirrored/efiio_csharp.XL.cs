@@ -416,6 +416,62 @@ public partial class XL
         EstablishWorksheetContext(desc, xlPackage, out sheetDoc, out context, for_write: false);
     }
 
+    public static string cellNodeContent(XmlNode cellNode, ref DocumentContext context)
+    {
+        if (cellNode == null)
+        {
+            return null;
+        }
+        string type = string.Empty;
+        XmlAttribute typeAttribute = cellNode.Attributes["t"];
+        if (typeAttribute != null)
+        {
+            type = typeAttribute.Value;
+        }
+        string text = null;
+        XmlNode xmlNode;
+        switch (type)
+        {
+            case "":
+            case "b":
+            case "e":
+            case "n":
+            case "str":
+            {
+                xmlNode = cellNode.SelectSingleNode("w:v", context.nsManager);
+                if (xmlNode != null)
+                {
+                    text = xmlNode.InnerText;
+                }
+                break;
+            }
+            case "s":
+            {
+                xmlNode = cellNode.SelectSingleNode("w:v", context.nsManager);
+                if (xmlNode != null)
+                {
+                    text = xmlNode.InnerText;
+                }
+                LoadStringDocIfNeeded(context);
+                text = GetSharedString(Convert.ToInt32(text), context);
+                break;
+            }
+            case "inlineStr":
+            {
+                xmlNode = cellNode.SelectSingleNode("w:is", context.nsManager);
+                if (xmlNode != null)
+                {
+                    text = xmlNode.InnerText;
+                }
+                break;
+            }
+            default:
+                AppException.Raise(string.Format("Unsupported cellType = '{0}'", type));
+                break;
+        }
+        return text;
+    }
+
     public static MatVal GetWorksheetContents(XmlDocument sheetDoc, DocumentContext context, Descriptor desc)
     {
         XmlNode[,] worksheetNodes = GetWorksheetNodes(desc.BlankRows == 2, sheetDoc, context, desc);
