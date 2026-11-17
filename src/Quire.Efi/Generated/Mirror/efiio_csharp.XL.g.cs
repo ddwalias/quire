@@ -12,43 +12,9 @@ namespace Quire.efiio_csharp;
 public partial class XL : global::Quire.efiio_csharp.ExcelSupport
 {
     [global::Quire.Mirror.MirrorStub]
-    public static bool s_UseSharedStrings;
-    [global::Quire.Mirror.MirrorStub]
-    private static bool s_WriteExcelCreateDirectories;
-    [global::Quire.Mirror.MirrorStub]
-    private static bool s_WriteExcelOverwritesFiles;
-    [global::Quire.Mirror.MirrorStub]
-    private static bool s_WriteExcelEnabled;
-    [global::Quire.Mirror.MirrorStub]
-    private static bool s_WriteExcelKeepOld;
-    [global::Quire.Mirror.MirrorStub]
-    public static bool WriteExcelCreateDirectories { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static bool WriteExcelOverwritesFiles { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static bool WriteExcelEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static bool WriteExcelKeepOld { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public XL() { }
     [global::Quire.Mirror.MirrorStub]
-    public static void LoadStringDocIfNeeded(global::Quire.efiio_csharp.XL.DocumentContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetSharedString(int n, global::Quire.efiio_csharp.XL.DocumentContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int GetSharedStringId(string s, global::Quire.efiio_csharp.XL.DocumentContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static string cellNodeContent(global::System.Xml.XmlNode cellNode, ref global::Quire.efiio_csharp.XL.DocumentContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static int rowNumber(global::System.Xml.XmlNode rowNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static int columnNumber(global::System.Xml.XmlNode cellNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Xml.XmlNode FindSheet(string sheetName, global::System.Xml.XmlDocument doc, global::Quire.efiio_csharp.XL.DocumentContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Xml.XmlNode FindSheet(int sheetIndex, global::System.Xml.XmlDocument doc, global::Quire.efiio_csharp.XL.DocumentContext context, bool for_write) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetDescriptorFromWorksheet(global::Quire.efiio_csharp.Descriptor desc, global::System.Xml.XmlDocument sheetDoc, global::Quire.efiio_csharp.XL.DocumentContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.XmlNode[,] GetWorksheetNodes(bool doPadding, global::System.Xml.XmlDocument sheetDoc, global::Quire.efiio_csharp.XL.DocumentContext context, global::Quire.efiio_csharp.Descriptor desc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -105,44 +71,10 @@ public partial class XL : global::Quire.efiio_csharp.ExcelSupport
     [global::Quire.Mirror.MirrorOf("efiio_csharp.XL+DocumentContext, efiio-csharp")]
     public partial class DocumentContext
     {
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Xml.XmlNamespaceManager nsManager;
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.IO.Packaging.PackagePart documentPart;
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Xml.XmlDocument sheetDoc;
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Uri documentUri;
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.IO.Packaging.Package xlPackage;
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Xml.XmlNameTable nt;
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Xml.XmlDocument stringDoc;
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.IO.Packaging.PackagePart stringPart;
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Xml.XmlNode stringTableNode;
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Collections.Generic.Dictionary<int, string> sharedStrings_IntToString;
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Collections.Generic.Dictionary<string, int> sharedStrings_StringToInt;
-        [global::Quire.Mirror.MirrorStub]
-        public int sharedStringInitialTotalCount;
-        [global::Quire.Mirror.MirrorStub]
-        public int sharedStringRunningTotalCount;
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.IO.Packaging.PackagePart sheetPart;
-        [global::Quire.Mirror.MirrorStub]
-        public DocumentContext(global::System.IO.Packaging.Package package) { }
     }
 
     [global::Quire.Mirror.MirrorOf("efiio_csharp.XL+IsolatedLoadContext, efiio-csharp")]
     public partial class IsolatedLoadContext : global::System.Runtime.Loader.AssemblyLoadContext
     {
-        [global::Quire.Mirror.MirrorStub]
-        public IsolatedLoadContext() { }
-        [global::Quire.Mirror.MirrorStub]
-        protected override global::System.Reflection.Assembly Load(global::System.Reflection.AssemblyName assemblyName) => base.Load(assemblyName);
     }
 }
