@@ -22,35 +22,19 @@ internal partial class WorksheetItemSplitter : global::Quire.Controls.Worksheet.
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Controls.Worksheet.IWorksheetPageManager _pageManager;
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Worksheet.IWorksheetItemManager ItemManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IList<global::Quire.Controls.Worksheet.IWorksheetPage> Pages { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.WorksheetPageLayout PageLayout { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public WorksheetItemSplitter(global::Quire.Controls.Worksheet.IWorksheetPageManager pageManager) { }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.Controls.Core.IWhiteboardItem> GetItemParts(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsItemSplit(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Split(global::Quire.Controls.Core.IWhiteboardItem item, int pageIndex, out global::Quire.Controls.Worksheet.IWhiteboardItemZombie activeZombie, global::Quire.Controls.Worksheet.IWorksheetPage prevItemContainingPage = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RemoveZombies(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void AddItemToPage(global::Quire.Controls.Core.IWhiteboardItem item, int pageIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IList<global::Quire.Controls.Worksheet.IWhiteboardItemZombie> GetZombiesForItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void RemoveItemFromContainingPage(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ReplaceZombieWithRealItem(global::Quire.Controls.Worksheet.IWhiteboardItemZombie zombie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public double GetCollectiveSplitOffsetDiff(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Rect itemBounds, double itemTopOnPage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IWhiteboardItem GetMatchingPart(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point pt) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool TranslateToRepresentMatchingPartLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point ptIn, out global::System.Windows.Point ptOut) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Worksheet.IWhiteboardItemZombie GetItemZombieOnPage(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.Worksheet.IWorksheetPage page) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -60,13 +44,5 @@ internal partial class WorksheetItemSplitter : global::Quire.Controls.Worksheet.
     [global::Quire.Mirror.MirrorStub]
     public void ShowZombies(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void AddZombieToPartsMap(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.Worksheet.IWhiteboardItemZombie zombie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AddSizeChangedHandlerToItemMap(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventHandler eventHandler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RemoveSizeChangedHandlerFromItemMap(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static void DisposeEventHandlers(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Collections.Generic.IList<global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventHandler> eventHandlers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void UnhookAndDispose(global::Quire.Controls.Worksheet.IWhiteboardItemZombie zombie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

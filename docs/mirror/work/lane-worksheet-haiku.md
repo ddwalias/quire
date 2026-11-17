@@ -83,3 +83,14 @@
 - Parked: `CreateCollapsibleAreaControl`. A build confirmed CS0246 `CollapsibleAreaControl`: `Quire.Controls.CollapsibleArea` is not referenced by `Quire.Controls.Worksheet.csproj`. Same blocker as `CollapsibleAreaHeightConverter`. Stub kept.
 - Release IL: PASS; 725 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1962 (includes the parked `SeparateOverlappedItems` and `CreateCollapsibleAreaControl`).
+
+## Batch 11 — WorksheetItemSplitter (one type)
+
+- Members (12 stubs removed): `ItemManager`, `Pages`, `PageLayout` (private accessors), `IsItemSplit`, `AddItemToPage`, `RemoveItemFromContainingPage`, `GetMatchingPart`, `TranslateToRepresentMatchingPartLocation`, `AddZombieToPartsMap`, `AddSizeChangedHandlerToItemMap`, `RemoveSizeChangedHandlerFromItemMap`, `UnhookAndDispose`.
+- Parked (stubs kept, each tried once or twice):
+  - `GetZombiesForItem`: Mathcad returns through a local (`stloc.0` before `ret`) that neither the early-return form nor the `??` form reproduces.
+  - `ReplaceZombieWithRealItem`: the `&&` form and the early-return form both differ from Mathcad's short `brtrue.s` shape at the first `AssertNotNull(...).Failed` test.
+  - `GetCollectiveSplitOffsetDiff`: the first difference is a constant operand (`r8 0` against Mathcad's `r8 2`); not diagnosed further.
+  - Members with lambdas (`GetItemParts`, `Split`, `RemoveZombies`, `GetItemZombieOnPage`, `HideZombies`, `ShowZombies`, `DisposeEventHandlers`, `Dispose`): need Mathcad's closure ordinals. Also the constructor and the field stubs.
+- Release IL: PASS; 737 checked; 0 failures.
+- Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1950.
