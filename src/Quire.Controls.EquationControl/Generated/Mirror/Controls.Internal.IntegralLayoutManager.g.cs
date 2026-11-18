@@ -12,39 +12,5 @@ namespace Quire.Controls.Internal;
 public partial class IntegralLayoutManager : global::Quire.Controls.Internal.VisualLayoutManager
 {
     [global::Quire.Mirror.MirrorStub]
-    private const double INTEGRAND_LEFT_PADDING = 2d;
-    [global::Quire.Mirror.MirrorStub]
-    private const double INTEGRAND_RIGHT_PADDING = 2d;
-    [global::Quire.Mirror.MirrorStub]
-    private const double LIMITBOUND_ADJACENT_HORIZONTAL_PADDING = 3d;
-    [global::Quire.Mirror.MirrorStub]
-    private const double LIMITBOUND_HORIZONTAL_PADDING = 1d;
-    [global::Quire.Mirror.MirrorStub]
-    private const double LIMITBOUND_VERTICAL_PADDING = 0.5d;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool _adjacentIntegral;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly double _adjacentUpperLimitHeight;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly double _adjacentLowerLimitHeight;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect LowerLimitRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect UpperLimitRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect IntegrandRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect VariableRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect IntegralSymbolRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect VariablePrefixRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public IntegralLayoutManager(global::Quire.Controls.Internal.LayoutItem[] childItems, global::Quire.Controls.Internal.LayoutItem[] operatorPartItems) : base(default(global::Quire.Controls.Internal.LayoutItem[]), default(global::Quire.Controls.Internal.LayoutItem[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    public IntegralLayoutManager(global::Quire.Controls.Internal.LayoutItem[] childItems, global::Quire.Controls.Internal.LayoutItem[] operatorPartItems, bool adjacentIntegral, double adjacentUpperLimitHeight, double adjacentLowerLimitHeight) : base(default(global::Quire.Controls.Internal.LayoutItem[]), default(global::Quire.Controls.Internal.LayoutItem[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void Arrange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void FindClosestChild(global::System.Windows.Point hitPoint, out global::Quire.Controls.Internal.LayoutChildType childType, out int childIndex, out global::Quire.Direction childSideHit) => base.FindClosestChild(hitPoint, out childType, out childIndex, out childSideHit);
 }
