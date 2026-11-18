@@ -6,6 +6,7 @@ namespace Quire.Controls.Worksheet;
 
 partial class WorksheetModel
 {
+    public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren => _childHider.CalculatableChildren;
     public event Action ContextUnloaded = () => { };
     private bool _simplifyUnitSystem = true;
     private bool _isAutoCalcOn = true;
