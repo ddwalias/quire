@@ -42,8 +42,6 @@ public partial class RegionCollectionWithProperty : global::System.Windows.Depen
     [global::Quire.Mirror.MirrorStub]
     public bool AreAllTextRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<bool> OleObjectAutoResize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public RegionCollectionWithProperty(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> regions) { }
     [global::Quire.Mirror.MirrorStub]
     private static void SetTextFormatPropertyValueWithCommand(global::System.Windows.DependencyPropertyChangedEventArgs e, global::Quire.Core.ITextFormatOwner owner, global::Quire.Controls.Core.RegionCollectionWithProperty collection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -95,4 +93,6 @@ public partial class RegionCollectionWithProperty : global::System.Windows.Depen
     private void ToggleSupportingRegionsBorder(global::System.Collections.Generic.ICollection<global::Quire.Controls.Core.IWhiteboardItem> supportingRegions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.ICollection<global::Quire.Controls.Core.IWhiteboardItem> GetSupportingRegionsBorder(global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Core.IWhiteboardItem> regions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public global::System.Nullable<bool> OleObjectAutoResize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

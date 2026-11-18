@@ -66,6 +66,8 @@ public partial class EngineeringPages
         Items.Add(page);
     }
 
+    public DocumentPaginator DocumentPaginator => _engPagesPaginator;
+
     private partial class EngPagesPaginator
     {
         public EngPagesPaginator(EngineeringPages engineeringPages)
