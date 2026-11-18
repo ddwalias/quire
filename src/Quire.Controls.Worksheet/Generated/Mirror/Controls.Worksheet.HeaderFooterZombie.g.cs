@@ -12,35 +12,19 @@ namespace Quire.Controls.Worksheet;
 public partial class HeaderFooterZombie : global::System.Windows.Controls.ItemsControl, global::Quire.Controls.Worksheet.IHeaderFooterZombie, global::Quire.Controls.Worksheet.IHeaderFooter, global::Quire.Controls.Worksheet.IWorksheetPageSection, global::System.IDisposable, global::Quire.Controls.Core.IZombie, global::Quire.Core.IMaybeHasPointThatSnapsToPixel, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Worksheet.IHeaderFooterZombieViewModel _viewModel;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.SnappableZombieItemHelper _snappableHelper;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty PageNumberProperty;
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    public int PageNumber { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.UIElement RenderTarget { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Core.ISnapToPixelHelper SnappingHelper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.GeneralTransform ItemToZombieTransform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Core.IMaybeHasPointThatSnapsToPixel SnapsToPixelItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public override void OnApplyTemplate() => base.OnApplyTemplate();
-    [global::Quire.Mirror.MirrorStub]
-    public HeaderFooterZombie(global::Quire.Controls.Worksheet.IHeaderFooterControl headerFooter) { }
-    [global::Quire.Mirror.MirrorStub]
     public void ResetVisualBrush() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RestoreVisualBrush() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Dispose() { }
     [global::Quire.Mirror.MirrorStub]
     public void Show() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
