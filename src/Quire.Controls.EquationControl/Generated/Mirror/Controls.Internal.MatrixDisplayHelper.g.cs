@@ -16,39 +16,11 @@ internal partial class MatrixDisplayHelper
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.TableSize _displaySize;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.TableSize DisplaySize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public MatrixDisplayHelper(global::Quire.EquationEditor.Tree.MatrixNodeInfo matrixNodeInfo) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static bool MatrixNodeIsInResult(global::Quire.EquationEditor.Tree.MathNode mathNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool ShowDownRightEllipsis(global::Quire.TableCoordinate cellPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool ShowVerticalEllipsis(global::Quire.TableCoordinate cellPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool ShowHorizontalEllipsis(global::Quire.TableCoordinate cellPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShowChildAsIs(global::Quire.TableCoordinate cellPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShowEmptyCell(global::Quire.TableCoordinate cellPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsChildInFirstDisplayRow(int childRow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsChildInFirstDisplayColumn(int childColumn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsChildInLastDisplayRow(int childRow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsChildInLastDisplayColumn(int childColumn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasRowOffset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasColumnOffset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool HasRowRemainder() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool HasColumnRemainder() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool HasTooManyRows() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool HasTooManyColumns() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
