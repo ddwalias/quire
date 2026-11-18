@@ -14,3 +14,9 @@
 
 - PlotItemPlaceholder.AdjustPadding(Size), GetMinLegendPlaceholderHeight: stubs, blockers above.
 - Other half-B types: not started.
+
+## Batch 2 — PlotItem
+
+- Exact (23): `_typeOfThis`/`DragBorder`/`_dragStarted`/`_border`, both DependencyProperty fields, `IsWidthExplicitlySet`, `MoveDraggerVisibility`, `IsBorderVisible`, `Header`, `RightDraggerVisibility`, `Border`, `VisualBrushRectangle`, `DragStarted`/`DragEnded` events, `OnIsMoveableChanged`, `FireDragStarted`, `FireDragEnded`, `OnApplyTemplate`, `BorderMouseUp`, `RequestMoveAndResize`, `BorderPreviewMouseMove`, static `.cctor`, `.ctor`.
+- Held stubs (one attempt each): `RegisterOrUnregisterFromBorderEvents` (Mathcad tests `register` first and checks `_border` once; two shapes tried, field-access order still differs at `_border`); `OnContentSizeChanged` (operand order of `!IsWidthExplicitlySet && e.WidthChanged` tried both ways; the `SizeChangedEventArgs.WidthChanged` call target differs); `Move` (its `PlotLegend.ViewModel`/`PlotTitle.ViewModel` call signature differs from Quire's stub types, not yet resolved).
+- Release IL (project gate, changed methods): PASS — 1330 checked, 0 failures.
