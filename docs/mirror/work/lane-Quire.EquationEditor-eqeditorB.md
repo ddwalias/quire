@@ -25,3 +25,9 @@
 ## Remaining
 
 - Half B still has about 1,920 generated stubs across 59 files. Of those files, 15 have no `_`-suffixed field (`a8`, `a9`, `ag`, `ai`, `aj`, `bh`, `bi`, `bk`, `bm`, `bn`, `bs`, `j`, `m`, `n`, `PersistentDataObjects.MathTransformer`). Most of their remaining stubs are method bodies that call the other half's obfuscated base members, so they need the `a0` resolution first.
+
+## Batch 2 (a8, bi constructors and fields)
+
+- `Native.PtcEquationEditor.a8`: field `a` and constructor moved to a hand-written partial. `bq()` stays a stub (reads base `a0.c`, blocked as above).
+- `Native.PtcEquationEditor.bi`: five fields and both constructors moved to a hand-written partial. `bq()` stays a stub (reads base `a0.c`/`a0.b`, blocked as above).
+- Release IL gate (`--project Quire.EquationEditor`): PASS, 979 checked, 0 failures.
