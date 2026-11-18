@@ -12,17 +12,5 @@ namespace Quire.Controls.Internal;
 public partial class NthRootLayoutManager : global::Quire.Controls.Internal.VisualLayoutManager
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect RootSymbolRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect OverbarRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect NthExprRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect RootExprRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public NthRootLayoutManager(global::Quire.Controls.Internal.LayoutItem[] childItems, global::Quire.Controls.Internal.LayoutItem[] operatorPartItems) : base(default(global::Quire.Controls.Internal.LayoutItem[]), default(global::Quire.Controls.Internal.LayoutItem[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void Arrange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void FindClosestChild(global::System.Windows.Point hitPoint, out global::Quire.Controls.Internal.LayoutChildType childType, out int childIndex, out global::Quire.Direction childSideHit) => base.FindClosestChild(hitPoint, out childType, out childIndex, out childSideHit);
 }
