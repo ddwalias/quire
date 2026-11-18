@@ -1,7 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Quire.Controls.Core.BookmarkTags;
+using Quire.Controls.Core.Serialization;
+using Quire.Controls.Core.Whiteboard;
 using System.IO.Packaging;
 using System.Windows;
+using System.Windows.Controls;
 using System.Xml;
 using Quire.Calculation.Core;
 using Quire.Core;
@@ -131,5 +135,75 @@ public partial class RegionPersistentData
 
     public virtual void DeserializeEpilog()
     {
+    }
+
+    protected virtual void Deserialize()
+    {
+        DeserializeLocation();
+        DeserializeCommonRegionProperties();
+        Children = ((IPersistentDataProvider)Control).SetRegionPersistentData(DeS11NProvider, RegionData.Item);
+    }
+
+    protected void DeserializeHeight()
+    {
+        FrameworkElement frameworkElement = GetFrameworkElementForDimensionsSerialization(Control);
+        if (DebugTools.AssertNotNull(frameworkElement, null).Passed && RegionData.heightSpecified)
+        {
+            frameworkElement.Height = RegionData.height;
+        }
+    }
+
+    protected void DeserializeWidth()
+    {
+        FrameworkElement frameworkElement = GetFrameworkElementForDimensionsSerialization(Control);
+        if (DebugTools.AssertNotNull(frameworkElement, null).Passed && RegionData.widthSpecified)
+        {
+            frameworkElement.Width = RegionData.width;
+        }
+    }
+
+    protected void DeserializeCommonRegionProperties()
+    {
+        if (long.TryParse(RegionData.regionid, out long regionId))
+        {
+            Helper.SetRegionId(Control, regionId);
+        }
+        if (RegionData.ConvertedFromMC14)
+        {
+            SerializationHelperUtils.SetConvertedFromMathcad14(Control);
+        }
+        if (RegionData.Tag.IsNotEmpty())
+        {
+            BookmarkTag.SetBookmarkTag(Control, RegionData.Tag);
+        }
+        DeserializeConversionLossAnotations(RegionData.mc14conversionlossannotations, RegionData.mc14conversionloss);
+        if (RegionData.ShowBorder)
+        {
+            DependencyObject control = Control;
+            if (control != null)
+            {
+                WhiteboardDependencyProperties.SetIsRegionBorderVisible(control, true);
+            }
+        }
+    }
+
+    private void DeserializeConversionLossAnotations(string[] annotations, bool isChangedByConversionFromMC14)
+    {
+        if (annotations != null && annotations.Length != 0)
+        {
+            AnnotationTypeList annotationTypes = new AnnotationTypeList();
+            foreach (string annotation in annotations)
+            {
+                if (EnumHelper.TryParse(annotation, out MC14ConversionAnnotationType annotationType, false))
+                {
+                    annotationTypes.AddOnce(annotationType);
+                }
+            }
+            MC14ConversionAnnotation.SetConversionAnnotations(Control, annotationTypes);
+        }
+        else if (isChangedByConversionFromMC14)
+        {
+            MC14ConversionAnnotation.SetOldConversionAnnotation(Control);
+        }
     }
 }

@@ -12,19 +12,9 @@ namespace Quire.Controls.Worksheet;
 public partial class RegionPersistentData : global::Quire.Serialization.IRegionPersistentData, global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider, global::Quire.Serialization.IDeS11NConsumer, global::Quire.IVisitableFunc<global::Quire.IVisitor, object>
 {
     [global::Quire.Mirror.MirrorStub]
-    public virtual global::System.Collections.Generic.IEnumerable<global::System.Exception> AllDeserializationExceptions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public virtual object Accept(global::Quire.IVisitor visitor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void DeserializeCommonRegionProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DeserializeConversionLossAnotations(string[] annotations, bool isChangedByConversionFromMC14) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void Deserialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.FrameworkElement GetFrameworkElementForDimensionsSerialization(global::System.Windows.UIElement control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected void DeserializeHeight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void DeserializeWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual global::System.Collections.Generic.IEnumerable<global::System.Exception> AllDeserializationExceptions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
