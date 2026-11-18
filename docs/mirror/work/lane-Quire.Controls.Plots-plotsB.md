@@ -41,3 +41,9 @@
 - Held lambda members (blocker, closure ordinal): `IPlotLegend.LegendWidth` (lambda in `ExecuteOnLoad`), `SetMinMaxWidth(double, double)` (lambda in `Max`), `FindByTrace` (lambda in `FirstOrDefault`).
 - Held XAML members (blocker): `InitializeComponent`, `_CreateDelegate`, `IComponentConnector.Connect`, `_contentLoaded`, `PlotLegendGrid` field's XAML connect.
 - Release IL (project gate, changed methods): PASS — 1374 checked, 0 failures.
+
+## Batch 6 — PlotEquationBase
+
+- Exact: `IsCommitted`, `ViewModel` (virtual get/internal set with `DevAssert(false)`), `MathFormat`, `MathFormatForSerialize`, `CurrentMathFormat`, `InCustomInitialization`, `DeserializeMathFormat` and `DeserializeLabeledIdFormat` (setters written with an early `return` on null; the `if (value != null)` nesting differed), the two events, `.ctor`, `ResetBeforeAdding`, `ResetIsCommitted`, `OnSubEquationExpressionChanged`, `FireExpressionValueChanged`, `AttachSExpressionValueChanged`, `DetachSExpressionValueChanged`, `HandleMathFormatChanged`, `FirePropertyChanged`, and the six command handlers (`OnChangeHighlightColorPreview` … `CanClearMathFormat`).
+- Abstract members (`ContainedEquationControls`, `Expression`, `ScalingEquation`) stay as generated declarations.
+- Release IL (project gate, changed methods, rebased onto main `07bd98389`): PASS — 1414 checked, 0 failures.
