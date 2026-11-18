@@ -12,35 +12,19 @@ namespace Quire.Controls.Internal;
 internal partial class VisualLinearBinaryOperatorNode : global::Quire.Controls.Internal.VisualBinaryOperatorNode
 {
     [global::Quire.Mirror.MirrorStub]
-    protected readonly global::Quire.Controls.Internal.VisualSymbolNode _operator;
-    [global::Quire.Mirror.MirrorStub]
-    protected double _topLineBaseline;
-    [global::Quire.Mirror.MirrorStub]
     private double _effectiveBaseline;
     [global::Quire.Mirror.MirrorStub]
     private double _effectiveScriptBaseline;
     [global::Quire.Mirror.MirrorStub]
     private double _currentSeparation;
     [global::Quire.Mirror.MirrorStub]
-    public override bool IsMonoLine { get => base.IsMonoLine; set => base.IsMonoLine = value; }
-    [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> CoreElements { get => base.CoreElements; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode Operator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Rect ScreenInkBounds { get => base.ScreenInkBounds; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Controls.Internal.VisualMathNode OperatorElement { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override double TextBaselineY { get => base.TextBaselineY; }
     [global::Quire.Mirror.MirrorStub]
     public override double EffectiveBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override double EffectiveScriptBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualLinearBinaryOperatorNode() { }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualLinearBinaryOperatorNode(global::Quire.Controls.Internal.VisualSymbolNode opSymbol) { }
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => base.MeasureStaticLayout(availableSize);
     [global::Quire.Mirror.MirrorStub]
