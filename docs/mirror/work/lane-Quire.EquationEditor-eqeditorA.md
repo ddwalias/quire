@@ -14,11 +14,11 @@
 
 ## Batch 2 — MathNodeNames constants and static constructor
 
-- Implemented members:
+- Landed members (commit `98a276c99e`):
   - `Quire.EquationEditor.Tree.MathNodeNames`: 98 `const string` fields and `.cctor()` (`AllLineBreakNodeNamesList` initialization).
   - 99 `[MirrorStub]` declarations removed.
-- Report: Release IL match for all changed members (`release-il-64f2f5ee8405`).
-- Remaining mismatches: 0 in changed members; remaining types in Half A parked with exact blockers below.
+- Report: Release IL match for all changed members (Receipt: `gate-il-bbf39250fa89.json`).
+- Remaining count: 2,795 stubs across 58 files in Half A; all have named blockers below.
 
 ## Parked members (exact blockers)
 - `Native.PtcEquationEditor` obfuscated types (`a-z`, `a0`, `a2`, etc.): CS0102 clashes between fields and methods (e.g. `a_` vs `a(...)`).
