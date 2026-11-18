@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Xml;
 using Quire.Calculation.Core;
+using Quire.Controls.Core;
 using Quire.Core;
 using Quire.PersistentDataObjects;
 using Quire.Serialization;
@@ -205,5 +206,18 @@ public partial class RegionPersistentData
         {
             MC14ConversionAnnotation.SetOldConversionAnnotation(Control);
         }
+    }
+
+    public static FrameworkElement GetFrameworkElementForDimensionsSerialization(UIElement control)
+    {
+        if (control is IResizableElementInfo)
+        {
+            SubElementToResizeData subElementToResize = (control as IResizableElementInfo).SubElementToResizeData;
+            if (subElementToResize != null && subElementToResize.SerializeDimensions)
+            {
+                return subElementToResize.Element;
+            }
+        }
+        return control as FrameworkElement;
     }
 }

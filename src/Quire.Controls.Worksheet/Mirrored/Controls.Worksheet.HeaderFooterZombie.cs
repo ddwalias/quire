@@ -1,5 +1,7 @@
+using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using Quire.Controls.Core;
 using Quire.Core;
 
@@ -43,5 +45,45 @@ public partial class HeaderFooterZombie
     {
         _snappableHelper.Dispose();
         _viewModel.Dispose();
+    }
+
+    public GeneralTransform ItemToZombieTransform => _viewModel.ItemToZombieTransform;
+
+    public IMaybeHasPointThatSnapsToPixel SnapsToPixelItem => _viewModel.SnapsToPixelItem;
+
+    public void ResetVisualBrush()
+    {
+        _viewModel.ResetVisualBrush();
+    }
+
+    public void RestoreVisualBrush()
+    {
+        _viewModel.RestoreVisualBrush();
+    }
+
+    public void Show()
+    {
+        Visibility = Visibility.Visible;
+    }
+
+    public void Collapse()
+    {
+        Visibility = Visibility.Collapsed;
+    }
+
+    public void SubscribeToZombieIsInitialized(Action handler)
+    {
+        if (_viewModel != null)
+        {
+            _viewModel.zombieIsInitialized += handler;
+        }
+    }
+
+    public void UnsubscribeFromZombieIsInitialized(Action handler)
+    {
+        if (_viewModel != null)
+        {
+            _viewModel.zombieIsInitialized -= handler;
+        }
     }
 }

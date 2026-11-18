@@ -18,25 +18,9 @@ public partial class HeaderFooterZombie : global::System.Windows.Controls.ItemsC
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.GeneralTransform ItemToZombieTransform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Core.IMaybeHasPointThatSnapsToPixel SnapsToPixelItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public void ResetVisualBrush() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RestoreVisualBrush() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Show() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Collapse() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SubscribeToZombieIsInitialized(global::System.Action handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UnsubscribeFromZombieIsInitialized(global::System.Action handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsAssociatedWithPage(global::Quire.Controls.Worksheet.IWorksheetPage worksheetPage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public bool IsAssociatedWithPage(global::Quire.Controls.Worksheet.IWorksheetPage worksheetPage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
