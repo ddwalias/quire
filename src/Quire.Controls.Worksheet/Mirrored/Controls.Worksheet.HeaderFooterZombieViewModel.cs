@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -13,6 +15,18 @@ namespace Quire.Controls.Worksheet;
 
 public partial class HeaderFooterZombieViewModel
 {
+    private VisualBrush _zombieBackground;
+
+    private readonly IHeaderFooterControl _headerFooter;
+
+    private readonly IDictionary<IWhiteboardItem, WhiteboardItemSizeChangedEventHandler> _itemResizeHandlerMap;
+
+    private Visual _visual;
+
+    public ObservableCollection<IWhiteboardItem> ZombieItems { get; private set; }
+
+    public event Action zombieIsInitialized;
+
     public VisualBrush ZombieBackground
     {
         get

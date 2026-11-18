@@ -12,18 +12,6 @@ namespace Quire.Controls.Worksheet;
 public partial class HeaderFooterZombieViewModel : global::Quire.Controls.Core.ViewModelBase, global::Quire.Controls.Worksheet.IHeaderFooterZombieViewModel, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.VisualBrush _zombieBackground;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Worksheet.IHeaderFooterControl _headerFooter;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventHandler> _itemResizeHandlerMap;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Visual _visual;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.Core.IWhiteboardItem> ZombieItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action zombieIsInitialized;
-    [global::Quire.Mirror.MirrorStub]
     public HeaderFooterZombieViewModel(global::Quire.Controls.Worksheet.IHeaderFooterControl control) { }
     [global::Quire.Mirror.MirrorStub]
     private void HandleHeaderFooterItemsChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
