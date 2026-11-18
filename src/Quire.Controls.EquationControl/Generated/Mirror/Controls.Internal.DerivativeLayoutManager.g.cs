@@ -12,23 +12,5 @@ namespace Quire.Controls.Internal;
 public partial class DerivativeLayoutManager : global::Quire.Controls.Internal.VisualLayoutManager
 {
     [global::Quire.Mirror.MirrorStub]
-    private const double EXPRESSION_LEFT_PADDING = 2d;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect OperatorSymbolRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect VariableOperandRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect OrderOperandRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect ExpressionOperandRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double DerivativeSymbolVerticalOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point BaseOperandsOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public DerivativeLayoutManager(global::Quire.Controls.Internal.LayoutItem[] childItems, global::Quire.Controls.Internal.LayoutItem[] operatorPartItems, global::Quire.EquationEditor.Tree.MathNodeDescriptor descriptor) : base(default(global::Quire.Controls.Internal.LayoutItem[]), default(global::Quire.Controls.Internal.LayoutItem[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void Arrange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void FindClosestChild(global::System.Windows.Point hitPoint, out global::Quire.Controls.Internal.LayoutChildType childType, out int childIndex, out global::Quire.Direction childSideHit) => base.FindClosestChild(hitPoint, out childType, out childIndex, out childSideHit);
 }
