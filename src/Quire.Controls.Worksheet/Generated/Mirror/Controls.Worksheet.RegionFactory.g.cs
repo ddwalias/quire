@@ -12,8 +12,6 @@ namespace Quire.Controls.Worksheet;
 public partial class RegionFactory : global::Quire.Controls.Core.IRegionFactory
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Controls.Core.IRegionFactory Instance;
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.IRegionType ConvertToIRegionType(global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> typeCreator, global::Quire.Serialization.IS11NProvider s11NProvider, global::System.Windows.UIElement control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Serialization.IRegionPersistentData ConvertFromIRegionType(global::Quire.Serialization.IDeS11NProvider deS11NProvider, global::System.Action<global::System.Windows.UIElement> deserializationPrologue, global::Quire.PersistentDataObjects.IRegionType regionData, global::System.Func<global::Quire.PersistentDataObjects.IRegionType, bool> skip) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -23,6 +21,4 @@ public partial class RegionFactory : global::Quire.Controls.Core.IRegionFactory
     private static global::Quire.Serialization.IRegionPersistentData CreateTemplatedTextBoxTypedPersistentData(global::Quire.PersistentData.fieldType fieldType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Serialization.IRegionPersistentData CreatePlotTypedPersistentData(global::Quire.PersistentDataObjects.plotType plotData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public RegionFactory() { }
 }
