@@ -12,16 +12,4 @@ namespace Quire.Native.PtcEquationEditor;
 [global::System.Runtime.InteropServices.StructLayout(global::System.Runtime.InteropServices.LayoutKind.Sequential, Size = 1)]
 internal partial struct aj
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const char a = '\u0028';
-    [global::Quire.Mirror.MirrorStub]
-    public const char b = '\u0029';
-    [global::Quire.Mirror.MirrorStub]
-    public const char c = '\u0022';
-    [global::Quire.Mirror.MirrorStub]
-    public const char d = '\u005C';
-    [global::Quire.Mirror.MirrorStub]
-    public const char e = '\u003A';
-    [global::Quire.Mirror.MirrorStub]
-    public const char f = '\u0020';
 }
