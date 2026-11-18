@@ -57,6 +57,15 @@ public partial class EngineeringPages
 
     public long MaxUpdateLayoutTimeMsec { get; set; }
 
+    public PageLayoutMode WorksheetPageLayoutMode => PageLayoutMode.PageMode;
+
+    public int PageCount => Items.Count;
+
+    public void AddPage(IPageSnapshot page)
+    {
+        Items.Add(page);
+    }
+
     private partial class EngPagesPaginator
     {
         public EngPagesPaginator(EngineeringPages engineeringPages)

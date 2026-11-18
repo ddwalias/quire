@@ -22,15 +22,9 @@ public partial class EngineeringPages : global::System.Windows.Controls.ListBox,
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.PageLayoutMode WorksheetPageLayoutMode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int PageCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Documents.DocumentPaginator DocumentPaginator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public EngineeringPages() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void AddPage(global::Quire.Controls.Worksheet.Printing.IPageSnapshot page) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void CreateVisualTreeForPrinting(bool shouldEnrichPrintingTree) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
