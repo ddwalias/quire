@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.BooleanToMultiThreadingValueConverter, MathcadPrime")]
 internal partial class BooleanToMultiThreadingValueConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public BooleanToMultiThreadingValueConverter() { }
 }
