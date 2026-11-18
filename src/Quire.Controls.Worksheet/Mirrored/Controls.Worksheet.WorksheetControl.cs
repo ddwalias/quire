@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Markup;
 using Quire.Controls.Core;
 using Quire.Controls.Core.Whiteboard;
+using Quire.Controls.Core.IORegions;
+using Quire.Calculation.Core;
 using Quire.Core;
 using Quire.Wpf;
 
@@ -75,6 +77,45 @@ public partial class WorksheetControl
     public void WaitForCalculation()
     {
         _model.FireWaitForCalculationIdle();
+    }
+
+    public void WaitForCalculation(int seconds, System.Windows.Threading.DispatcherPriority priority)
+    {
+        _model.FireWaitForCalculationIdle(seconds, priority);
+    }
+
+    public void SetCurrentTextFormat()
+    {
+        if (_oldTextFormat != null)
+        {
+            if (_viewModel.ContentTextFormat.StyleKey == "Normal")
+                _viewModel.SetStyleValues(_oldTextFormat, new TextStyle("Normal", _viewModel.ContentTextFormat, reset: true));
+            CurrentTextFormat.UpdateTextFormat(_oldTextFormat);
+            _oldTextFormat = null;
+        }
+    }
+
+    private void ToggleOutputRegion(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        if (e.OriginalSource is IOutputRegion outputRegion)
+        {
+            IEnumerable<IIORegion> outputRegions = new IIORegion[1] { outputRegion };
+            _model.InputOutputRegionManager.ToggleOutputRegions(outputRegions);
+        }
+    }
+
+    private void ToggleInputRegion(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        if (e.OriginalSource is IInputRegion inputRegion)
+        {
+            IEnumerable<IIORegion> inputRegions = new IIORegion[1] { inputRegion };
+            _model.InputOutputRegionManager.ToggleInputRegions(inputRegions);
+        }
+    }
+
+    private void CanImportData(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = _viewModel.CanImportData();
     }
 
     public void Activate()
