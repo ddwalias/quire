@@ -28,31 +28,9 @@ public partial class RegionCollectionWithProperty : global::System.Windows.Depen
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty PlotCameraTypeProperty;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.NumberFormat _currentNumberFormat;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.MatrixFormat _currentMatrixFormat;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Core.TextFormat _currentTextFormat;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Markup.XmlLanguage _currentProofingLanguage;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Core.IWhiteboardItem> _regions;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<bool> _oleObjectAutoResize;
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.BackgroundTypeE PlotBackgroundType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.CameraType3D PlotCameraType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.NumberFormat CurrentNumberFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.MatrixFormat CurrentMatrixFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Core.TextFormat CurrentTextFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Markup.XmlLanguage CurrentProofingLanguage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.MathFormat MathFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IPlotRegionCommonProperties> PlotRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -66,11 +44,7 @@ public partial class RegionCollectionWithProperty : global::System.Windows.Depen
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<bool> OleObjectAutoResize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
     public RegionCollectionWithProperty(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> regions) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleMathFormatChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void SetTextFormatPropertyValueWithCommand(global::System.Windows.DependencyPropertyChangedEventArgs e, global::Quire.Core.ITextFormatOwner owner, global::Quire.Controls.Core.RegionCollectionWithProperty collection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -121,6 +95,4 @@ public partial class RegionCollectionWithProperty : global::System.Windows.Depen
     private void ToggleSupportingRegionsBorder(global::System.Collections.Generic.ICollection<global::Quire.Controls.Core.IWhiteboardItem> supportingRegions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.ICollection<global::Quire.Controls.Core.IWhiteboardItem> GetSupportingRegionsBorder(global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Core.IWhiteboardItem> regions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FirePropertyChanged(global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

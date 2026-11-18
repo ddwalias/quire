@@ -1,7 +1,12 @@
 using System;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows;
+using System.Windows.Markup;
 using Quire.Core;
+using Quire.Wpf;
 
 namespace Quire.Controls.Core;
 
@@ -47,5 +52,73 @@ public partial class RegionCollectionWithProperty
     {
         get => MathFormat;
         set => throw new NotImplementedException();
+    }
+
+    private NumberFormat _currentNumberFormat;
+
+    private MatrixFormat _currentMatrixFormat;
+
+    private TextFormat _currentTextFormat;
+
+    private XmlLanguage _currentProofingLanguage;
+
+    private readonly ObservableRangeCollection<IWhiteboardItem> _regions;
+
+    private bool? _oleObjectAutoResize;
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    public MathFormat MathFormat { get; private set; }
+
+    public NumberFormat CurrentNumberFormat
+    {
+        get => _currentNumberFormat;
+        set
+        {
+            _currentNumberFormat = value;
+            FirePropertyChanged(new PropertyChangedEventArgs("CurrentNumberFormat"));
+        }
+    }
+
+    public MatrixFormat CurrentMatrixFormat
+    {
+        get => _currentMatrixFormat;
+        set
+        {
+            _currentMatrixFormat = value;
+            FirePropertyChanged(new PropertyChangedEventArgs("CurrentMatrixFormat"));
+        }
+    }
+
+    public TextFormat CurrentTextFormat
+    {
+        get => _currentTextFormat;
+        set
+        {
+            _currentTextFormat = value;
+            FirePropertyChanged(new PropertyChangedEventArgs("CurrentTextFormat"));
+        }
+    }
+
+    public XmlLanguage CurrentProofingLanguage
+    {
+        get => _currentProofingLanguage;
+        private set
+        {
+            _currentProofingLanguage = value;
+            FirePropertyChanged(new PropertyChangedEventArgs("CurrentProofingLanguage"));
+        }
+    }
+
+    public void HandleMathFormatChanged(DependencyPropertyChangedEventArgs e)
+    {
+    }
+
+    private void FirePropertyChanged(PropertyChangedEventArgs e)
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, e);
+        }
     }
 }
