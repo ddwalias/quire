@@ -8,6 +8,7 @@ using Quire.Controls.Core.IORegions;
 using Quire.Calculation.Core;
 using Quire.Core;
 using Quire.Wpf;
+using Microsoft.Win32;
 
 namespace Quire.Controls.Worksheet;
 
@@ -116,6 +117,18 @@ public partial class WorksheetControl
     private void CanImportData(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
     {
         e.CanExecute = _viewModel.CanImportData();
+    }
+
+    private void ImportData(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        OpenFileDialog dialog = new()
+        {
+            Title = Resources["DataImport.FileOpenDialog.Title"] as string,
+            Filter = Resources["DataImport.FileOpenDialog.FileFilter"] as string,
+            FilterIndex = 0
+        };
+        if (dialog.ShowDialog() == true)
+            _viewModel.ImportData(dialog.FileName);
     }
 
     public void Activate()
