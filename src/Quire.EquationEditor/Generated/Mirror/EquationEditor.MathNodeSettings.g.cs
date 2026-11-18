@@ -12,9 +12,5 @@ namespace Quire.EquationEditor;
 public partial class MathNodeSettings
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.EquationEditor.MathNodeSettings Instance;
-    [global::Quire.Mirror.MirrorStub]
     public bool AutoLabelIds { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private MathNodeSettings() { }
 }

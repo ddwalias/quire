@@ -4,6 +4,10 @@ namespace Quire.EquationEditor.Tree.Transform;
 
 public partial class SExpressionUtility
 {
+    public SExpressionUtility()
+    {
+    }
+
     public static string EscapeStringValue(string str)
     {
         str = str.Replace("\\", "\\\\");

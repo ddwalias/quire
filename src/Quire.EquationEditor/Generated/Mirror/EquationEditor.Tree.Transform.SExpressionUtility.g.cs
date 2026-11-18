@@ -19,6 +19,4 @@ public partial class SExpressionUtility
     public static string EscapeIdValue(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string CleanWhitespace(string unclean) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public SExpressionUtility() { }
 }
