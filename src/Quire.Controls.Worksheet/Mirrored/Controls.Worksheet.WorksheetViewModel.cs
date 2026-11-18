@@ -13,6 +13,7 @@ using Quire.Controls.Text;
 using Quire.Controls.Worksheet.Printing;
 using Quire.Controls.Core.Whiteboard;
 using Quire.Core;
+using Quire.IO;
 using Quire.Wpf;
 using Quire.Wpf.Printing;
 
@@ -844,5 +845,257 @@ internal partial class WorksheetViewModel
     protected void FireChanged()
     {
         Changed?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void ActivateContent()
+    {
+        MakeContentActive();
+        WorksheetContent.RestoreVisualState();
+    }
+
+    public void ToggleShowGrid()
+    {
+        if (IsContentActive)
+        {
+            DisplayGrid = !DisplayGrid;
+        }
+        else if (IsHeaderActive || IsFooterActive)
+        {
+            DisplayHFGrid = !DisplayHFGrid;
+        }
+        else
+        {
+            DebugTools.FailAssertion(null, Array.Empty<object>());
+        }
+    }
+
+    public void ToggleShowFrame()
+    {
+        if (IsContentActive)
+        {
+            DisplayFrame = !DisplayFrame;
+        }
+        else if (IsHeaderActive)
+        {
+            DisplayHeaderFrame = !DisplayHeaderFrame;
+        }
+        else if (IsFooterActive)
+        {
+            DisplayFooterFrame = !DisplayFooterFrame;
+        }
+        else
+        {
+            DebugTools.FailAssertion(null, Array.Empty<object>());
+        }
+    }
+
+    private void ToggleShowMajorGridlines()
+    {
+        if (IsContentActive)
+        {
+            UseMajorGridLines = !UseMajorGridLines;
+        }
+        else
+        {
+            UseHFMajorGridLines = !UseHFMajorGridLines;
+        }
+    }
+
+    private bool CanToggleIsSolveBlockLabelVisible()
+    {
+        return !SelectedDescendants.Any();
+    }
+
+    public void HandleStopRunningCalculations()
+    {
+        IsCalculationsEnabled = false;
+        FireChanged();
+        if (IsAutoCalcOn)
+        {
+            IsAutoCalcOn = false;
+        }
+        IsCalculationsEnabled = true;
+        FireChanged();
+    }
+
+    public void FireCalculateNow()
+    {
+        if (IsAutoCalcOn || IsCalculating)
+        {
+            return;
+        }
+        if (ActiveItem != null)
+        {
+            IWorksheetControl worksheetControl = VisualHelper.FindWorksheetControlAncestor(ActiveItem);
+            if (worksheetControl != null && VisualHelper.IsItemInView(ActiveItem, worksheetControl))
+            {
+                _model.FireCalculateRegionNow(ActiveItem);
+            }
+        }
+        _model.LastVisibleCalculatable = GetLastVisibleCalculatable();
+        _model.FireCalculateNow();
+    }
+
+    public void GoToNextError()
+    {
+        if (ErrorCanTraceForward())
+        {
+            for (EngineError engineError = CurrentErrorChain.FindNextError(CurrentError); engineError != null; engineError = CurrentErrorChain.FindNextError(engineError))
+            {
+                if (_model.ContainsError(engineError))
+                {
+                    _model.ShowError(engineError);
+                    break;
+                }
+            }
+        }
+    }
+
+    public void GoToFirstError()
+    {
+        if (ErrorCanTraceBackward())
+        {
+            if (CurrentErrorChain == null || !CurrentErrorChain.IsAncestorOf(CurrentError))
+            {
+                CurrentErrorChain = CurrentError;
+            }
+            EngineError engineError = CurrentError;
+            while (engineError.OriginalError != null)
+            {
+                engineError = engineError.OriginalError;
+            }
+            _model.ShowError(engineError);
+        }
+    }
+
+    public void GoToPreviousError()
+    {
+        if (ErrorCanTraceBackward())
+        {
+            if (CurrentErrorChain == null || !CurrentErrorChain.IsAncestorOf(CurrentError))
+            {
+                CurrentErrorChain = CurrentError;
+            }
+            for (EngineError originalError = CurrentError.OriginalError; originalError != null; originalError = originalError.OriginalError)
+            {
+                if (_model.ContainsError(originalError))
+                {
+                    _model.ShowError(originalError);
+                    break;
+                }
+            }
+        }
+    }
+
+    public void GoToLastError()
+    {
+        if (ErrorCanTraceForward() && CurrentErrorChain != null)
+        {
+            _model.ShowError(CurrentErrorChain);
+        }
+    }
+
+    public void MoveItem(IWhiteboardItem item, Point point)
+    {
+        Point worksheetSectionItemLocation = GetWorksheetSectionItemLocation(item);
+        Vector offset = point - worksheetSectionItemLocation;
+        MoveItemsBy(new[] { item }, offset);
+    }
+
+    public void InsertFileName(string fileName)
+    {
+        CalculationVariables docCalculationVariables = _model.DocCalculationVariables;
+        if (docCalculationVariables != null)
+        {
+            string parameter = FileUtils.EvaluateRelativePath(docCalculationVariables.CurrentWorkingDirectory, fileName, stripSingleLeadingDot: false);
+            if (ActiveOrSelectedItems.Count() == 0)
+            {
+                CreateNewEquation(EquationCommands.InsertString, parameter);
+            }
+            else if (ActiveDescendant != null)
+            {
+                EquationCommands.InsertString.Execute(parameter, ActiveDescendant as IInputElement);
+            }
+        }
+    }
+
+    public Point GetDescendantInsertionPoint()
+    {
+        if (SelectedItems.Any())
+        {
+            return default;
+        }
+        if (ActiveItem is IWhiteboardControl whiteboardControl)
+        {
+            Point descendantInsertionPoint = whiteboardControl.GetDescendantInsertionPoint();
+            Point itemWorksheetLocation = ItemManager.GetItemWorksheetLocation(ActiveItem);
+            return new Point(itemWorksheetLocation.X + descendantInsertionPoint.X, itemWorksheetLocation.Y + descendantInsertionPoint.Y);
+        }
+        if (ActiveItem != null)
+        {
+            return ItemManager.GetItemWorksheetLocation(ActiveItem);
+        }
+        return InsertionPoint;
+    }
+
+    public bool CanToggleRegionsAsInput()
+    {
+        if (!CanToggleIORegions<IInputRegion>())
+        {
+            return false;
+        }
+        IEnumerable<IIORegion> inputRegions = GetInputRegions();
+        if (inputRegions.Count() == 0)
+        {
+            return false;
+        }
+        return _model.InputOutputRegionManager.CanToggleRegionsAsInput(inputRegions);
+    }
+
+    public bool CanToggleRegionsAsOutput()
+    {
+        if (!CanToggleIORegions<IOutputRegion>())
+        {
+            return false;
+        }
+        IEnumerable<IIORegion> outputRegions = GetOutputRegions();
+        if (outputRegions.Count() == 0)
+        {
+            return false;
+        }
+        return _model.InputOutputRegionManager.CanToggleRegionsAsOutput(outputRegions);
+    }
+
+    private void ToggleHeaderActivation()
+    {
+        if (!IsHeaderActive)
+        {
+            ActivateHeader();
+        }
+        else
+        {
+            ActivateContent();
+        }
+    }
+
+    private void ToggleFooterActivation()
+    {
+        if (!IsFooterActive)
+        {
+            ActivateFooter();
+        }
+        else
+        {
+            ActivateContent();
+        }
+    }
+
+    public void PopulateZombies()
+    {
+        foreach (IWorksheetPage page in Pages)
+        {
+            DebugTools.AssertNotNull(page.HeaderZombie, null);
+            DebugTools.AssertNotNull(page.FooterZombie, null);
+        }
     }
 }
