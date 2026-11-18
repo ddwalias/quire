@@ -11,24 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.AxisLimitsErrorsDictionary, Ptc.Controls.Plots")]
 public partial class AxisLimitsErrorsDictionary : global::System.Windows.ResourceDictionary, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string ErrorMinToBeSmallerThanMax = "Quire.Plots.Axis.MIN_TO_BE_SMALLER_THAN_MAX";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ErrorMaxToBeGreaterThanMin = "Quire.Plots.Axis.MAX_TO_BE_GREATER_THAN_MIN";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ErrorSecondTickToBeGreaterThanMin = "Quire.Plots.Axis.SECOND_TICK_TO_BE_GREATER_THAN_MIN";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ErrorTooManyTickmarks = "Quire.Plots.Axis.TOO_MANY_TICKMARKS";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ErrorOneLimitMustBePositive = "Quire.Plots.Axis.ERROR_ONE_LIMIT_MUST_BE_POSITIVE";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ErrorAngularMaxToBeSmallerThan355 = "Quire.Plots.Axis.ANGULAR_MAX_TO_BE_SMALLER_THAN_355";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ResultNotRealNumber = "RESULT_NOT_REAL_NUMBER";
-    [global::Quire.Mirror.MirrorStub]
-    public const string MarkerOutOfRange = "Quire.Plots.MARKER_OUT_OF_RANGE";
-    [global::Quire.Mirror.MirrorStub]
-    public const string MarkersHasUnits = "Quire.Plots.MARKERS_HAS_UNITS";
-    [global::Quire.Mirror.MirrorStub]
-    public const string TickmarksHasUnits = "Quire.Plots.TICKMARKS_HAS_UNITS";
 }
