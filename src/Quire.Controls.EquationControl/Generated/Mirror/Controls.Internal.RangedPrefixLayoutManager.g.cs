@@ -12,23 +12,5 @@ namespace Quire.Controls.Internal;
 public partial class RangedPrefixLayoutManager : global::Quire.Controls.Internal.VisualLayoutManager
 {
     [global::Quire.Mirror.MirrorStub]
-    private const double PRINCIPAL_LEFT_PADDING = 2d;
-    [global::Quire.Mirror.MirrorStub]
-    private const double RANGEBOUND_VERTICAL_PADDING = 1d;
-    [global::Quire.Mirror.MirrorStub]
-    private const double RANGEBOUND_HORIZONTAL_PADDING = 3d;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect LowerRangeBoundRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect UpperRangeBoundRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect PrincipalOperandRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect OperatorSymbolRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public RangedPrefixLayoutManager(global::Quire.Controls.Internal.LayoutItem[] childItems, global::Quire.Controls.Internal.LayoutItem[] operatorPartItems) : base(default(global::Quire.Controls.Internal.LayoutItem[]), default(global::Quire.Controls.Internal.LayoutItem[])) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void Arrange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void FindClosestChild(global::System.Windows.Point hitPoint, out global::Quire.Controls.Internal.LayoutChildType childType, out int childIndex, out global::Quire.Direction childSideHit) => base.FindClosestChild(hitPoint, out childType, out childIndex, out childSideHit);
 }
