@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Quire.Core;
@@ -41,4 +42,10 @@ public partial class RegionCollectionWithProperty
     public IEnumerable<IRichTextBase> TextBlocks => Regions.OfType<IRichTextBase>();
 
     public IEnumerable<ICurrentMathFormatProperty> MathFormatElements => Regions.OfType<ICurrentMathFormatProperty>();
+
+    public MathFormat CurrentMathFormat
+    {
+        get => MathFormat;
+        set => throw new NotImplementedException();
+    }
 }

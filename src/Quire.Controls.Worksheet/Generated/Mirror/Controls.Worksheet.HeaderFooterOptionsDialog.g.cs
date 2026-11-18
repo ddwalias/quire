@@ -26,10 +26,6 @@ public partial class HeaderFooterOptionsDialog : global::Quire.Controls.Core.Con
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.HeaderFooterOptionsViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private HeaderFooterOptionsDialog(global::Quire.Controls.Worksheet.IWorksheetViewModel worksheetViewModel) { }
-    [global::Quire.Mirror.MirrorStub]
     private void BindNumericUpDownActions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool ShowHeaderFooterOptionsDialog(global::System.Windows.Window owner, global::Quire.Controls.Worksheet.IWorksheetViewModel worksheetViewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

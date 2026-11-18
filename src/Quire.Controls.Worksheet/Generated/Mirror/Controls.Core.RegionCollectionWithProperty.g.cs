@@ -54,8 +54,6 @@ public partial class RegionCollectionWithProperty : global::System.Windows.Depen
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.MathFormat MathFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.MathFormat CurrentMathFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IPlotRegionCommonProperties> PlotRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool HideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
