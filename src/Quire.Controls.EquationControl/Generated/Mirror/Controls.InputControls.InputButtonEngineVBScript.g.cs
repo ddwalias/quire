@@ -11,20 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputButtonEngineVBScript, Ptc.Controls.EquationControl")]
 internal partial class InputButtonEngineVBScript : global::Quire.Controls.InputControls.InputControlEngineVBScript
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected string scriptInternalClassResourceKey;
-    [global::Quire.Mirror.MirrorStub]
-    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableButton.VbButtonDefaultScript.vbs";
-    [global::Quire.Mirror.MirrorStub]
-    protected static string _defaultScript;
-    [global::Quire.Mirror.MirrorStub]
-    public override string Script { get => base.Script; }
-    [global::Quire.Mirror.MirrorStub]
-    public override string AddInternalScripts(string script, string controlObjectName, object[] inputs, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.AddInternalScripts(script, controlObjectName, inputs, engineParams);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void GetExistingEvents(string convertUserScript) => base.GetExistingEvents(convertUserScript);
-    [global::Quire.Mirror.MirrorStub]
-    protected override object GetScriptClassProperties(object scriptObjectProperties = default) => base.GetScriptClassProperties(scriptObjectProperties);
-    [global::Quire.Mirror.MirrorStub]
-    public InputButtonEngineVBScript() { }
 }
