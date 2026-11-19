@@ -16,7 +16,8 @@
   - `Controls.InputControls.InputSliderEngineVBScript`, `InputSliderEngineJScript`, `InputSliderEnginePython`: 22 exact methods + all fields/constants landed in commit `2516a83a2`.
   - `Controls.InputControls.InputListBoxEngineVBScript`, `InputListBoxEngineJScript`, `InputListBoxEnginePython`: 23 exact methods + all fields/constants landed in commit `a01e8bca1`.
   - `Controls.InputControls.InputControlClearScriptEngine`: 8 exact methods + nested class `ClearScriptEngineWindow` + fields/constants landed in commit `f46f739c0`.
-  - `Controls.Internal.DebugStyle`: 16 exact methods + nested class `PropertyNames` + fields/constants (Batch 12).
+  - `Controls.Internal.DebugStyle`: 16 exact methods + nested class `PropertyNames` + fields/constants landed in commit `269702b20`.
+  - `Controls.InputControls.TextBoxModel`: 16 exact methods/properties + field (Batch 13).
 - Release IL: PASS on changed members (3109 checked, 0 failures on changed members)
 - Parked members:
   - `Controls.Internal.DerivativeLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3`.
