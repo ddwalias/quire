@@ -189,3 +189,8 @@
 - Held (one attempt, first write): `UpdateLineStyle` and `UpdateSymbol` (the null-guard `Visual != null && ...` shape differs from Mathcad's branch layout). Their stubs remain.
 - Not written (stubs kept): `FireVisualChanged`, `UpdateSurfaceFill`, `CreateSolidMesh`, `UpdateVisualData` (not yet read in full), and the rest.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 2332 checked, 0 failures.
+
+## Batch 29 — PlotTrace3D (UpdateSurfaceFill held)
+
+- Held (one attempt, first write): `UpdateSurfaceFill` (the `DebugTools.AssertNotNull(...).Failed` and `&` branch order differs from Mathcad's; it needed `Quire.Controls.Plots.Plot3D.Model` and `Quire.Media3D` usings). Its generated stub remains; no source change landed.
+- No code change in this batch; this checkpoint records the held member.
