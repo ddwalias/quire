@@ -26,15 +26,24 @@
 ## Landed
 - `fbb7462ce` (on main; branch commit `16a2a6ae1`): VisualMathRegionNode OnKeyDown, OnRender, HandleMouseDown. Gate PASS, landing receipt `C:\Projects\Quire\.mirror-cacheeceipts\gate-il-f6c175bd5f66.json`.
 
+## Landed in the second dispatch (main, Release IL gate PASS per landing)
+- VisualSubscriptOperatorNode: ctor, ModifyChildMathFormat, OnSecondOperandChanged, TextBaselineY, EffectiveBaselineY, EffectiveScriptBaselineY, HandleMathFormatChanged; fields moved to hand-written.
+  Parked: CoreElements (iterator; state-machine ordinal), MeasureOverride (struct-temp local slot 4 vs 3), ArrangeOverride (dup/stack shape), GetNodeAtPoint (`new Rect` ternary as `call` on a local).
+- VisualTextSpan: ArrangeOverride, backing fields. Parked: MeasureOverride, UpdateChildren (closure `Each` and foreach/lambda).
+- VisualTextRun: ctor, MathFormat, Baseline, SuperscriptBaseline, CharacterWidths, Font, HandleMathFormatChanged, MeasureOverride, OnRender. Parked: Text and UpdateText (`!=`/`==` branch sense: Mathcad uses op_Equality with brfalse; ctor-free idioms tried, both mismatch).
+- VisualStringNode: Text, TextBaselineY, HighlightRect, TextPropertyChanged, FireTextChanged, MeasureStaticLayout, OnRender, ComputeAlignmentBox, GetNodeAtPoint. Parked: UpdateText (FormattedText argument load order, `Font.Foreground` position), ScreenInkBounds (not attempted), static ctor (DependencyProperty).
+- VisualMultiLineAligningBinaryOperatorNode: ctor, ComputeTopLineBaseLine, CurrentBaseLine, FirstNodeAndOperandWidth, HasFirstOperandAtLeft/Above. Parked: IsMultiline (bool? assignment-expression temp slot), GetSymbolRectangle (pattern-variable local slot), ComputeOperatorRectangle (struct local read via ldloca), ComputeCurrentValues, MeasureStaticLayout, ArrangeStaticLayout (use base `_operatorExtendedRectangle`, not yet mirrored), GetFirst/SecondChildRectangle (need base static `GetOffsetAndExcludeRectangles`, not yet mirrored).
+- VisualMultiLineWrappingBinaryOperatorNode: IsMultiline, WrappingSign, HasFirstOperandAbove/AtLeft, ComputeOperatorRectangle. Parked: ctor (base `.ctor` call differs at #0), ComputeWrappingSignRectangle (local slot), CoreElementsTopLine (iterator), MeasureStaticLayout, ArrangeStaticLayout, GetVisualMathNodeAtPoint, GetFirst/SecondChildRectangle (base static helper).
+- VisualSymbolicEvaluationNode: indexer (with string.Format for the exception message; the interpolated-string handler differs), Layout, NodeChildren, SymEvalSymbol, SymEvalSymbolTopLeft, TextBaselineY, EffectiveBaselineY, EffectiveScriptBaselineY, NavigatableParts, SetVisibilityOfOperatorSymbol, GetNodeAtPoint. Parked: ctor (field initializers with the static descriptor), CoreElements (iterator), MeasureStaticLayout and ArrangeStaticLayout (lambda `Each`/`EachWithIndex`).
+
+Blocker classes seen in this dispatch: lambda closure ordinals (`<>c`), iterator state machines, Roslyn temp/local slot ordering for struct member reads and pattern variables, `!=` vs `==` branch sense for string comparisons, and base helpers that are still stubs.
+Project reference: `DevComponents.WpfRibbon` is still not referenced (FireCanSwitchToLineBreakOperator, VisualMathRegionNode).
+
 ## Remaining
 
-- Not started (stub counts from `Generated/Mirror` at main 30d569a29): VisualMatrixNode 81, VisualOutfixNodeEditor 56,
-  VisualNthRootNodeEditor 48, VisualSymbolNode 49, VisualSymbolicEvaluationNodeEditor 45, VisualTextNodeEditor 69,
-  VisualTextNode 40, VisualNthRootOperatorNode 39, VisualStepRangeOperatorNodeEditor 37, VisualPlaceholderNode 33,
-  VisualSymbolicEvaluationNode 32, VisualMultiLineWrappingBinaryOperatorNode 32, VisualScoper 30,
-  VisualMultiLineAligningBinaryOperatorNode 30, VisualTextRun 26, VisualStringNode 26, VisualSubscriptOperatorNode 15,
-  VisualTextSpan 12, VisualVariantLineBinaryOperatorNode 105, SpecTableControl 155, SpecTableView 172.
-  VisualMathRegionNode: 42 stubs left (blockers above).
-- Total `MirrorStub` attributes left in the half at this checkpoint: 763 (counted in the 21 files, after the landing above). The lane stopped here; the rest is not claimed.
-- Observed pattern: most remaining members in VisualMatrixNode and the SpecTable views depend on lambdas, closures, or
-  `<>c` ordinals, so the lane needs the placeholder-ordinal step from AGENTS.md before those can match.
+- Stub attributes left in the 21 files at this checkpoint: 678 (was 763 before the second dispatch).
+- Not started: VisualVariantLineBinaryOperatorNode (70), VisualMatrixNode (56), VisualTextNodeEditor (41), VisualOutfixNodeEditor (35),
+  VisualSymbolNode (34), VisualNthRootOperatorNode (29), VisualNthRootNodeEditor (29), VisualSymbolicEvaluationNodeEditor (27),
+  VisualTextNode (26), VisualStepRangeOperatorNodeEditor (24), VisualPlaceholderNode (22), VisualScoper (20), SpecTableControl (92), SpecTableView (103).
+- The landed VisualMathRegionNode still has 24 stubs (lambda, `.ctor`, DP, and blocker-class members listed above).
+- The lane stopped here; the remaining members are not claimed.
