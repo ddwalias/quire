@@ -12,10 +12,9 @@
   - `Controls.InputControls.InputCheckBoxEngineVBScript`: 7 exact methods + fields/constants landed in commit `e4199a230`.
   - `Controls.InputControls.InputCheckBoxEngineJScript`: 6 exact methods + fields/constants landed in commit `e4199a230`.
   - `Controls.InputControls.InputCheckBoxEnginePython`: 6 exact methods + fields/constants landed in commit `e4199a230`.
-  - `Controls.InputControls.InputRadioButtonEngineVBScript`: 6 exact methods + fields/constants (`get_Script`, `AddInternalScripts`, `GetUserScriptObjectName`, `UpdateScriptableClassValues`, `GetExistingEvents`, `GetScriptClassProperties`, `.ctor`, `_scriptItemsAsString`, `scriptInternalClassResourceKey`, `defaultScriptResourceKey`, `Event_Click`, `_defaultScript`).
-  - `Controls.InputControls.InputRadioButtonEngineJScript`: 7 exact methods + fields/constants (`GetUserScriptObjectName`, `get_Script`, `AddInternalScripts`, `UpdateScriptableClassValues`, `GetScriptClassProperties`, `GetExistingEvents`, `.ctor`, `DefaultUserScriptObjectName`, `_defaultScript`, `Event_Click`, `orientation`, `leftText`, `scriptInternalClassResourceKey`, `defaultScriptResourceKey`).
-  - `Controls.InputControls.InputRadioButtonEnginePython`: 7 exact methods + fields/constants (`GetUserScriptObjectName`, `get_Script`, `AddInternalScripts`, `UpdateScriptableClassValues`, `GetScriptClassProperties`, `GetExistingEvents`, `.ctor`, `DefaultUserScriptObjectName`, `_defaultScript`, `Event_Click`, `leftText`, `orientation`, `defaultScriptResourceKey`, `scriptInternalClassResourceKey`).
-- Release IL: PASS on changed members (3035 checked, 0 failures on changed members)
+  - `Controls.InputControls.InputRadioButtonEngineVBScript`, `InputRadioButtonEngineJScript`, `InputRadioButtonEnginePython`: 20 exact methods + all fields/constants landed in commit `dca9f8c45`.
+  - `Controls.InputControls.InputSliderEngineVBScript`, `InputSliderEngineJScript`, `InputSliderEnginePython`: 22 exact methods + all fields/constants.
+- Release IL: PASS on changed members (3079 checked, 0 failures on changed members)
 - Parked members:
   - `Controls.Internal.DerivativeLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3`.
   - `Controls.Internal.ConjugateLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3` on identical 115 IL instructions.
