@@ -47,3 +47,10 @@
 - Exact: `IsCommitted`, `ViewModel` (virtual get/internal set with `DevAssert(false)`), `MathFormat`, `MathFormatForSerialize`, `CurrentMathFormat`, `InCustomInitialization`, `DeserializeMathFormat` and `DeserializeLabeledIdFormat` (setters written with an early `return` on null; the `if (value != null)` nesting differed), the two events, `.ctor`, `ResetBeforeAdding`, `ResetIsCommitted`, `OnSubEquationExpressionChanged`, `FireExpressionValueChanged`, `AttachSExpressionValueChanged`, `DetachSExpressionValueChanged`, `HandleMathFormatChanged`, `FirePropertyChanged`, and the six command handlers (`OnChangeHighlightColorPreview` … `CanClearMathFormat`).
 - Abstract members (`ContainedEquationControls`, `Expression`, `ScalingEquation`) stay as generated declarations.
 - Release IL (project gate, changed methods, rebased onto main `07bd98389`): PASS — 1414 checked, 0 failures.
+
+## Batch 7 — PlotGraphLinearAxisBase
+
+- Exact: `_typeOfThis`, `ShowArrowHeadProperty`, `EdgeTickMarkScale`, `MainTicksRangeScale`, `ScaleEdgeEvenlyProperty`, `ShowArrowHead`, `ScaleEdgeEvenly`, `.ctor`, `GetAxisStartPosition`, `GetAxisEndPosition`, `GetMinorTickPositionByTickNumber`, `GetMinorTickmarks`, `HandleOrientationChanged`, `GetTickmarksGeometry`, `GetTickPosition`, `GetTickRelativePosition(TickScale, int)`, `GetTickPositionByTickNumber`, `GetTickRelativePosition(int)`, `Draw`.
+- Held stubs (one attempt each, first write): `ArrowHeadGeometry` (`PathFigure` initializer's `Point` construction differs); `GetTickLine` (constants differ at the first `Point`); `GetTickValueTextAndPositionByTickNumber` (out-`start` local shape differs); `Length` (local slot order at `desiredSize`/`num`); `DrawNumbers` (`out var start` lowering differs in the loop).
+- Not yet attempted (still generated stubs, not parked): `GetRealOffset`, `GetRealRelaviveOffset`, `ArrangeOverride`, `GetPositions`, `MeasureOverride`, `OnRender`.
+- Release IL (project gate, changed methods, rebased onto main `c02f47e40`): PASS — 1436 checked, 0 failures.
