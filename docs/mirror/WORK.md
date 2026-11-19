@@ -1,49 +1,16 @@
 # Current work
 
-Use the [five-step Release IL workflow](PLAN.md). Exact Mathcad Release IL is the only
-acceptance rule. Never inspect Debug IL.
+Use the [assembly map](assembly-map.md) to delegate work by assembly and understand
+dependencies. Check active assignments before claiming members to avoid overlap.
+Historical lane names, reservations and fixed worktree paths are obsolete. Historical
+checkpoints remain available under [work](work/) as records of prior work and blockers.
 
-## Lane assignments — awaiting user launch
+Each agent works in a separate worktree and branch from current `main`, keeps the shared
+checkout on `main`, and edits only its delegated assembly and checkpoint. Assignments
+cover all managed members regardless of historical tier (D18). Shared tools, mappings
+and integration belong to the maintainer. Report concrete blockers and continue with
+independent members.
 
-| Lane | Exclusive assembly ownership | Branch | Worktree |
-|---|---|---|---|
-| [A](work/lane-a.md) | `Quire.Core` | `mirror/a-core-<unique>` | `C:/Projects/Quire-wt/lane-a-core` |
-| [B](work/lane-b.md) | `Quire.Mpl.Emit` | `mirror/b-mpl-emit-<unique>` | `C:/Projects/Quire-wt/lane-b-mpl-emit` |
-| [C](work/lane-c.md) | `Quire.Automation`, `Quire.EngNotebook.Automation`, `Quire.EngNotebookPlus.Automation` | `mirror/c-calc-core-20261021-c17` | `C:/Projects/Quire-wt/lane-c-automation` |
-| [D](work/lane-d.md) | `Quire.Engine.Utl` | `mirror/d-engine-utl-<unique>` | `C:/Projects/Quire-wt/lane-d-engine-utl` |
-| [F](work/lane-f.md) | `Quire.Mpl` | `mirror/f-mpl-<unique>` | `C:/Projects/Quire-wt/lane-f-mpl` |
-| [G](work/lane-g.md) | `Quire.AutomationPrivate`, `Quire.Interop.Mathcad`, `Quire.Interop.MathcadOld`, `Quire.Interop.VSInterfacesLib` ([D22](decisions.md)) | `mirror/g-interop-20261024-0238` | `C:/Projects/Quire-wt/lane-g-interop` |
-| [M](work/lane-m.md) | `Quire.Calculation.Core`, `Quire.Media3D` (moved from C) | `mirror/m-calc-core-<unique>` | `C:/Projects/Quire-wt/lane-m-calc-core` |
-| [N](work/lane-n.md) | `Quire.Controls.Core`: the members of the types in the generated files of the *Controls Core Ole and Visual* sub-lane below (split by type; see the sub-lanes) | `mirror/n-controls-core-<unique>` | `C:/Projects/Quire-wt/lane-n-controls-core` |
-| Controls Core, Ole and Visual | `Quire.Controls.Core`, only these types: `Controls.Core.Ole.OleContainerModel_1`, `VisualDragger`, `MatrixFormat`, `Controls.Text.CustomScriptRunBase`, `Controls.CalculationOptions`, `FrameworkElementFacade`, `ExtendedFont` (stubs only), `Ole.OleContainer_4` | `mirror/controls-core-ole-visual-<unique>` | `C:/Projects/Quire-wt/controls-core-ole-visual` |
-| Controls Core, Ole Mathcad14 and Layout | `Quire.Controls.Core`, only these types: `Ole.OleContainerViewModel_3`, `MC14Conversion.Mathcad14TextStyle`, `MathFormatAttachedProperties`, `WorksheetPropertiesManager`, `NodeMessageAdorner`, `RegionBorder`, `AttachedProperties`, `RtfHelper` (blocked, see its lane doc) | `mirror/controls-core-ole-mc14-<unique>` | `C:/Projects/Quire-wt/controls-core-ole-mc14` |
-| Controls Core, Whiteboard and Serialization | `Quire.Controls.Core`, only these types: `Whiteboard.ContainerItemManager`, `MathFormat`, `Serialization.ResultSerializer`, `TextStylesCollectionManager`, `Serialization.SerializationHelper`, `Serialization.McdxSerializer`, `Protection.ProtectDialog`, `RtfDocConstructor`, `Excel.ExcelReader` (blocked, see its lane doc) | `mirror/controls-core-whiteboard-ser-<unique>` | `C:/Projects/Quire-wt/controls-core-whiteboard-ser` |
-| Controls Core, Numeric and Image | `Quire.Controls.Core`, only these types: `WorksheetPageLayout`, `Serialization.NumberFormatSerializer`, `NumberFormat`, `ImageControl`, `NumericUpDown`, `IORegions.IOItemsAliasManager`, `Serialization.McdxDeserializer`, `CommonDragger` (stubs only) | `mirror/controls-core-numeric-image-<unique>` | `C:/Projects/Quire-wt/controls-core-numeric-image` |
-| [Engine misc](work/lane-engine-misc.md) | `Quire.Engine.Misc` | `mirror/engine-misc-<unique>` | `C:/Projects/Quire-wt/engine-misc` |
-| [Utils](work/quire-utils.md) | `Quire.Utils` | `mirror/utils-<unique>` | `C:/Projects/Quire-wt/utils` |
-| Msclr | `Quire.Msclr` | `mirror/msclr-<unique>` | `C:/Projects/Quire-wt/msclr` |
-| Msgen | `Quire.Msgen` (project not yet created; create it in its original language before members) | `mirror/msgen-<unique>` | `C:/Projects/Quire-wt/msgen` |
-
-The user launches these agents in separate Codex/AGY/Claude threads using the
-[copyable prompts](work/agent-prompts.md). No worker is currently running. Worktree paths
-above are reserved locations to create on launch, not pre-existing checkouts. Create a
-uniquely named branch from current `main`; use `C:/Projects/Quire` as the main checkout.
-Do not spawn additional agents or threads.
-
-All former A–E and Generator assignments and file reservations are released. Old
-conversations are archived. Retained branches and local backups grant no ownership.
-Do not resume their validation rules or merge their old receipts. Recovered implementations
-must pass the current Release IL comparison before landing.
-
-Each lane owns all managed members of its assembly, including members formerly deferred
-by tier classification ([D18](decisions.md)). Unreadable/native bodies remain incomplete;
-do not substitute behavior tests or claim an assembly is complete from stub counts.
-
-Work only in your assigned worktree and assembly, and update only your own lane checkpoint.
-Shared tools, mappings and integration belong to the maintainer; report concrete blockers
-there while continuing independent members. Merge through `lane_merge.py`, which serializes
-integration. Keep the lane worktree for subsequent batches; retire it when the lane finishes.
-
-Record only owner, branch, selected members, Release IL report and remaining mismatches.
-The [assembly map](assembly-map.md) shows dependencies and subsequent unlocks. Its historical
-tier labels do not override the assignments above.
+Use the [Release IL workflow](PLAN.md), continue through passing batches, and land via
+`lane_merge.py`. Keep a short checkpoint with owner, branch, members, Release IL report
+and remaining mismatches. Missing or unreadable counterparts remain incomplete.

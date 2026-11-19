@@ -4,12 +4,12 @@
 This workflow replaces the former behavior, differential, coverage, mutation and phase
 gates for all managed mirroring batches, including Tiers A, A2 and B (decision D17).
 Existing scope and name mappings remain in [scope.md](scope.md), [tiers/](tiers/)
-and [mapping.md](mapping.md). The assembly assignments in [WORK](WORK.md) supersede
-historical tier deferrals (D18). Native work does not acquire a managed IL counterpart.
+and [mapping.md](mapping.md). Assembly delegation supersedes historical tier deferrals
+(D18). Native work does not acquire a managed IL counterpart.
 
 ## Five steps
 
-1. **Claim.** Read [WORK](WORK.md) and the selected lane's active ownership. Use a separate
+1. **Claim.** Use the [assembly map](assembly-map.md) and check active ownership. Use a separate
    branch/worktree from current `main`; avoid another agent's files. Choose a coherent set
    of members. There is no minimum batch size or separate approval step.
 2. **Read the reference.** Use `python tools/reference/reference.py <Mathcad type> --il`
@@ -24,10 +24,10 @@ historical tier deferrals (D18). Native work does not acquire a managed IL count
    Add `--type <Quire type>` or `--method '<Type>::<signature>'` to check selected members
    even when their bodies were already unchanged. Fix mismatches and repeat this step.
 5. **Land.** Read the diff, record owner/branch/member scope/report/remaining mismatches
-   in the lane checkpoint, commit, then run `python tools/validation/lane_merge.py <branch>`.
+   in the assembly checkpoint, commit, then run `python tools/validation/lane_merge.py <branch>`.
    It refreshes `main`, rebases, validates the committed Release IL in a temporary clone,
-   fast-forwards and pushes under one merge lock. Reuse an active lane's worktree for
-   subsequent batches; remove it when that lane finishes.
+   fast-forwards and pushes under one merge lock. Reuse the worktree for subsequent batches;
+   remove it when the assignment finishes.
 
 ## Acceptance
 

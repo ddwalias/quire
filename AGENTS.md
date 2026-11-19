@@ -1,13 +1,13 @@
 # Agent workflow
 
 The goal is exact **Release IL** parity with Mathcad Prime 12.0.1.0. Read
-[the plan](docs/mirror/PLAN.md) and use [WORK](docs/mirror/WORK.md) for ownership.
-The [assembly map](docs/mirror/assembly-map.md) shows dependency order and what each completed assembly unlocks.
+[the plan](docs/mirror/PLAN.md). Use the [assembly map](docs/mirror/assembly-map.md)
+to delegate work by assembly and understand dependencies and unlocks.
 
-Only the lane assignments listed in [WORK](docs/mirror/WORK.md) exist. All former lane reservations are released. These assignments
-authorize every managed member in those assemblies regardless of historical tier (D18).
-Use the assigned worktrees and edit only your own assembly and checkpoint; the maintainer
-handles shared tools and integration. Continue through passing batches autonomously.
+Assignments authorize every managed member in the delegated assemblies regardless of
+historical tier (D18). Coordinate ownership to avoid overlapping active work. Edit only
+your assigned assembly and checkpoint; the maintainer handles shared tools and integration.
+Continue through passing batches autonomously.
 
 The user starts each agent in a separate Codex/AGY/Claude thread. Do not spawn agents
 or create agent threads. Each user-started agent creates its own worktree from current
@@ -18,7 +18,7 @@ or create agent threads. Each user-started agent creates its own worktree from c
 3. Implement the same members using the project's name mappings.
 4. Build Release and compare IL (`python tools/validation/release_il.py --base main --project <project>`).
 5. Commit and land using `python C:/Projects/Quire/tools/validation/lane_merge.py <branch>` (main's gate;
-   a lane's own copy re-runs main's). It validates outside the merge lock, so other lanes are not blocked.
+   a worktree's own copy re-runs main's). It validates outside the merge lock.
    Native projects (`src/Quire.Native.*`) are checked by `native_gate.py` in the same command.
 
 Release is the default for every IL operation. Never inspect or compare Debug IL.

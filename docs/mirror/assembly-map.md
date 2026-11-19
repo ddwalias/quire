@@ -12,7 +12,7 @@ stopgap import library does not make one available. They are outside the IL gate
 also depend on the Mpl compiler
 (`mplasb`, `mplrun`, `msgen`, `msclr`, and native ports of `msmpl` and `mshex`).
 
-“Ready” concerns dependencies, not ownership. Check [WORK](WORK.md) before claiming files.
+“Ready” concerns dependencies. Check active assignments before claiming files.
 
 ## Ready now
 

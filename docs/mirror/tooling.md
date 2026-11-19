@@ -20,8 +20,8 @@ MemberGen handles mechanical stubs: accessors, field-storing constructors, forwa
 constant returns and straight-line bodies. It moves reconstructed members and their fields
 out of `Generated/Mirror` into partial source files. It uses the existing tier lists and
 name mappings. `--include-tier-a` adds Tier A/A2 members owned by the agent.
-For the four assemblies assigned in [WORK](WORK.md), it considers every mapped mechanical
-stub automatically, including former C/D members (D18). Non-mechanical bodies still require
+For `Quire.Core`, `Quire.Mpl.Emit`, `Quire.Utils` and `Quire.Engine.Utl`, it considers every
+mapped mechanical stub automatically, including former C/D members (D18). Non-mechanical bodies still require
 manual reconstruction; unreadable native bodies remain incomplete.
 
 ```powershell
