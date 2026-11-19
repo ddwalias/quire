@@ -12,21 +12,7 @@ namespace Quire.Controls;
 public partial class ScrollViewerGrid : global::System.Windows.Controls.Grid
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.DocumentScrollViewer _scrollViewer;
-    [global::Quire.Mirror.MirrorStub]
     private const string ScrollViewerToolTipHeaderKey = "ScrollViewerToolTipHeader";
-    [global::Quire.Mirror.MirrorStub]
-    private string _scrollViewerToolTipHeader;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Shapes.Rectangle _clippingRectangle;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.EngineeringDocument EngineeringDocumentInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private string ScrollViewerToolTipHeader { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Worksheet.IWorksheetControl Worksheet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ScrollViewerGrid(global::Quire.Controls.EngineeringDocument engineeringDocument) { }
     [global::Quire.Mirror.MirrorStub]
     private void SetTooltipAndMinScrollbarThumbSize(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
