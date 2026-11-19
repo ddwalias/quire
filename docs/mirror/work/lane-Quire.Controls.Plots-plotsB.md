@@ -94,3 +94,10 @@
 - Held (one attempt, first write): `.ctor()`: the instance field initializers (`LineBrush`, `_firstLabel`/`_secondLabel`/`_lastLabel`, `GridLineBrush`) are written in the constructor body, and the base-constructor call sequence differs from Mathcad's (`callvirt` in place of Quire's `call FrameworkElement::.ctor`).
 - Not yet attempted (still generated stubs): `TickMarks` (lambda in `Dispatch`), `InitializeLimitEquation` (both overloads), `LimitEquationSExpressionChanging`, `LimitEditorLostFocus`, `ShowLimit`, `HideLimit`, the Show/Hide start/second/end methods, `ShowGridLinesChanged`, `GridLineColorChanged`, `TickmarksChanged`, `CreateTickmarksPropertyMetadata`, `Dispatch`, `InitializeLimitLabel`, and `TickMarksChanged`.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 1615 checked, 0 failures.
+
+## Batch 14 — PlotGraphLinearAxis (partial)
+
+- Exact: static `.cctor` (`_typeOfThis`, `PositionProperty`), `ColOrRowIndex1`/`ColOrRowIndex2`, `MouseMoveAdorner`, `IsEffectAxis`, `OtherLinearAxis`, `PositionValue`, `SizeFrozen`, `CalcPositionTickMarkNeeded`, the parameterless `.ctor()` (`this(null)`).
+- Held (one attempt, first write): `Splitter` setter (the `_splitter` event unhooking order differs from Mathcad) and `.ctor(EquationList, PlotTitle)` (the `_savedLength = double.NaN` field-initializer position and base-call form differ).
+- Not written (stubs kept, not parked): `Position` (lambda in `Dispatch`), the nested `MouseMoveRTDataAdorner` (kept as generated stubs; my nested partial collided with the generated `OnRender`), `InitializeColOrRowIndexProperties`, `Splitter_DragCompleted`/`Splitter_DragDelta`, and the remaining overrides and helpers.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 1646 checked, 0 failures.
