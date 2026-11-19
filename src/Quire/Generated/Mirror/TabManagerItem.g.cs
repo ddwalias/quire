@@ -13,12 +13,6 @@ public partial class TabManagerItem : global::System.Windows.Controls.ContentCon
 {
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent TabManagerItemClickedEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.WindowTabTupleData WrappedItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnMouseDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnMouseDown(e);
-    [global::Quire.Mirror.MirrorStub]
-    public TabManagerItem() { }
 
     [global::Quire.Mirror.MirrorOf("Spirit.TabManagerItem+TabManagerItemClickedHandler, MathcadPrime")]
     public delegate void TabManagerItemClickedHandler(object sender, global::Quire.TabManagerItemClickedEventArgs e);

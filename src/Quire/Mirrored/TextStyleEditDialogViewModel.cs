@@ -13,6 +13,16 @@ namespace Quire;
 
 public partial class TextStyleEditDialogViewModel
 {
+    public const string TextStyleNamesSeparator = ",";
+
+    public const string TextStyleName_None = "(none)";
+
+    private readonly ITextStyle _textStyle;
+
+    private readonly ITextStylesManager _textStyleManager;
+
+    private TextStyleData _bBasedOn;
+
     private bool _okIsEnabled = true;
 
     public string TextStyleBasedOnKeyNoneLocalized

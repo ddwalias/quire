@@ -13,14 +13,4 @@ public partial class UniqueTextStyleNameHelper : global::System.Windows.Freezabl
 {
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty TextStyleNamesProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public string TextStyleNames { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.UniqueTextStyleNameRule Validator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public void SetValidator(global::Quire.UniqueTextStyleNameRule validator) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Freezable CreateInstanceCore() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public UniqueTextStyleNameHelper() { }
 }

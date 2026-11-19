@@ -14,15 +14,7 @@ internal partial class StickyDropDownSelector : global::Quire.DropDownSelector
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty StickyValueProperty;
     [global::Quire.Mirror.MirrorStub]
-    public object StickyValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override void EndInit() => base.EndInit();
     [global::Quire.Mirror.MirrorStub]
-    protected override void UpdateHeaderFromChildItem(global::Quire.IDropDownSelectorItem item) => base.UpdateHeaderFromChildItem(item);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void SelectionChanged(object sender, global::System.Windows.RoutedEventArgs e) => base.SelectionChanged(sender, e);
-    [global::Quire.Mirror.MirrorStub]
     protected virtual void OnClick() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public StickyDropDownSelector() { }
 }

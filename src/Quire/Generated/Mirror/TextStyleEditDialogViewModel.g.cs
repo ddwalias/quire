@@ -11,14 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.TextStyleEditDialogViewModel, MathcadPrime")]
 public partial class TextStyleEditDialogViewModel : global::Quire.Controls.Core.ViewModelBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string TextStyleNamesSeparator = ",";
-    [global::Quire.Mirror.MirrorStub]
-    public const string TextStyleName_None = "(none)";
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.ITextStyle _textStyle;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.ITextStylesManager _textStyleManager;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.TextStyleData _bBasedOn;
 }

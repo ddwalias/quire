@@ -20,6 +20,16 @@ namespace Quire;
 
 public partial class SystemUnitEditDialogViewModel
 {
+    private UnitSystems _currentUnitSystem;
+
+    private UnitSystemsDataSource _customBaseUnitSystem;
+
+    private SpiritMainWindow _owner;
+
+    private bool _isCustomDataChanged;
+
+    private UnitDescriptor _derivedDimSelectedItem;
+
     public static RoutedUICommand RbCustomCommand = new RoutedUICommand();
 
     private Dictionary<string, List<UnitDescriptor>> _categories = new Dictionary<string, List<UnitDescriptor>>();

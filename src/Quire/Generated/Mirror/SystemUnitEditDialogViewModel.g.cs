@@ -12,15 +12,5 @@ namespace Quire;
 public partial class SystemUnitEditDialogViewModel : global::Quire.Controls.Core.ViewModelBase
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.UnitSystems _currentUnitSystem;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.UnitSystemsDataSource _customBaseUnitSystem;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.SpiritMainWindow _owner;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isCustomDataChanged;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.UnitDescriptor _derivedDimSelectedItem;
-    [global::Quire.Mirror.MirrorStub]
     public void HandleDialogAction(object obj, global::System.Nullable<global::Quire.DialogAction> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
