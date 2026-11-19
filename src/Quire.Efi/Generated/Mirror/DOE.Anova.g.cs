@@ -18,17 +18,7 @@ public partial class Anova : global::Quire.DOE.DoeAnlyz
     [global::Quire.Mirror.MirrorStub]
     private int[] l2rmap(int[] f, int[] l) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private double effect_ssb_subtotal(int[] f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private double effect_ssb(int[] f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private int anova_interactions(int order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private int anova_interactions(string[] effects) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private double anova_effectn(int[] f, int[] l) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private double[] anova_effect_(int[] f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("DOE.Anova+FactorAnova, efisixsigma_")]
     private partial class FactorAnova : global::Quire.DOE.DoeAnlyz.FactorInfo
@@ -39,4 +29,8 @@ public partial class Anova : global::Quire.DOE.DoeAnlyz
     public partial class vectorComparer : global::System.Collections.Generic.IEqualityComparer<int[]>
     {
     }
+    [global::Quire.Mirror.MirrorStub]
+    private int anova_interactions(int order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double effect_ssb_subtotal(int[] f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

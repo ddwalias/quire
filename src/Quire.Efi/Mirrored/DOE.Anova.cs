@@ -310,4 +310,122 @@ public partial class Anova
         return num / (double)runs.Length;
     }
 
+
+    private double effect_ssb(int[] f)
+    {
+        double num = effect_ssb_subtotal(f);
+        m_utils.getGenName(f, out var gen);
+        Combinations combinations = new Combinations(gen.GetEnumerator());
+        Array allCombinations = combinations.getAllCombinations();
+        for (int i = 0; i < allCombinations.Length - 1; i++)
+        {
+            IEnumerator enumerator = ((Array)allCombinations.GetValue(i)).GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                string[] gen2 = (string[])enumerator.Current;
+                m_utils.getGenIndices(gen2, out var findx);
+                if (!m_effectSS.TryGetValue(findx, out var value))
+                {
+                    value = effect_ssb(findx);
+                }
+                num -= value;
+            }
+        }
+        if (num < 0.0)
+        {
+            AppException.Raise("Anova can not be computed. Unsupported design or insufficient resolution", 3u);
+        }
+        if (!m_effectSS.ContainsKey(f))
+        {
+            m_effectSS.Add(f, num);
+        }
+        return num;
+    }
+
+    private double anova_effectn(int[] f, int[] l)
+    {
+        if (f.Length == 1)
+        {
+            return ((FactorAnova)m_factorInfo.GetValue(f[0])).m_avgRlev[l[0]] - m_gavg;
+        }
+        int[] array = l2rmap(f, l);
+        if (array == null)
+        {
+            AppException.Raise("Anova can not be computed. Unsupported design or insufficient resolution", 3u);
+        }
+        double num = runsmean(array) - m_gavg;
+        int[] array2 = new int[m_nfacts];
+        for (int i = 0; i < f.Length; i++)
+        {
+            array2[f[i]] = i;
+        }
+        m_utils.getGenName(f, out var gen);
+        Combinations combinations = new Combinations(gen.GetEnumerator());
+        Array allCombinations = combinations.getAllCombinations();
+        for (int j = 0; j < allCombinations.Length - 1; j++)
+        {
+            IEnumerator enumerator = ((Array)allCombinations.GetValue(j)).GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                string[] array3 = (string[])enumerator.Current;
+                for (int k = 0; k <= j; k++)
+                {
+                    m_utils.getGenIndices(array3[k], out var findx);
+                    int[] array4 = new int[findx.Length];
+                    for (int m = 0; m < findx.Length; m++)
+                    {
+                        array4[m] = l[array2[findx[m]]];
+                    }
+                    num -= anova_effectn(findx, array4);
+                }
+            }
+        }
+        return num;
+    }
+
+    private double[] anova_effect_(int[] f)
+    {
+        int[] array = new int[f.Length];
+        int num = 1;
+        for (int i = 0; i < f.Length; i++)
+        {
+            FactorAnova factorAnova = (FactorAnova)m_factorInfo.GetValue(f[i]);
+            array[i] = factorAnova.m_nlevels;
+            num *= factorAnova.m_nlevels - 1;
+        }
+        Permutations permutations = new Permutations(f.Length, array, keepOldOrder: true);
+        double[,] allPermutations = permutations.getAllPermutations();
+        double num2 = 0.0;
+        for (int j = 0; j < allPermutations.GetLength(0); j++)
+        {
+            for (int k = 0; k < f.Length; k++)
+            {
+                array[k] = (((int)allPermutations[j, k] == -1) ? 0 : ((int)allPermutations[j, k]));
+            }
+            double num3 = anova_effectn(f, array);
+            num2 += num3 * num3;
+        }
+        int[] array2 = new int[m_nfacts];
+        for (int l = 0; l < m_nfacts; l++)
+        {
+            array2[l] = 0;
+        }
+        for (int m = 0; m < f.Length; m++)
+        {
+            array2[f[m]] = 1;
+        }
+        int num4 = 1;
+        for (int n = 0; n < m_nfacts; n++)
+        {
+            if (array2[n] == 0)
+            {
+                FactorAnova factorAnova2 = (FactorAnova)m_factorInfo.GetValue(n);
+                num4 *= factorAnova2.m_nlevels;
+            }
+        }
+        num2 *= (double)(num4 * m_nYdups);
+        double num5 = num2 / (double)num;
+        return new double[5] { num2, num, num5, 0.0, 0.0 };
+    }
+
 }
