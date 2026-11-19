@@ -12,14 +12,6 @@ namespace Quire.Controls.Internal;
 internal partial class VerticalFence : global::Quire.Controls.Internal.Fence
 {
     [global::Quire.Mirror.MirrorStub]
-    protected double _glyphGap;
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => base[index]; set => base[index] = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.FormattedText Top { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.FormattedText Bottom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Rect ScreenBounds { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Rect ScreenInkBounds { get => base.ScreenInkBounds; }
@@ -37,20 +29,6 @@ internal partial class VerticalFence : global::Quire.Controls.Internal.Fence
     public override double TextBaselineY { get => base.TextBaselineY; }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Media.Geometry Geometry { get => base.Geometry; }
-    [global::Quire.Mirror.MirrorStub]
-    public VerticalFence(char fenceChar) { }
-    [global::Quire.Mirror.MirrorStub]
-    public VerticalFence(char[] componentChars) { }
-    [global::Quire.Mirror.MirrorStub]
-    private VerticalFence() { }
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateGlyphGap() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void ReformatComponents() => base.ReformatComponents();
-    [global::Quire.Mirror.MirrorStub]
-    public override object Clone() => base.Clone();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnContextMenuOpening(global::System.Windows.Controls.ContextMenuEventArgs e) => base.OnContextMenuOpening(e);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]
