@@ -150,3 +150,10 @@
 - Exact (10): `BaseLineThickness` (dependency property), `IsInPrinting`, `CanPrint`, `TraceViewsCount`, `BoxVisibility`, `XAxis`, `YAxis`, `ZAxis`, `Viewport`, `Camera`. Their generated declarations are removed from the `.g.cs` by hand.
 - Not written (stubs kept): the static constructor's registrations (their full text needs reading; the generated fields have no initializers), the constructor, `ImageSource`, `ImageFileNameForPrintXamlSerialization`, `IsCopyAsImageWithZoom` (uses DocumentAttachedProperties), the viewport and trace helpers, `CreateBitmapForPrint`, `Dispose`, and the XAML members (`InitializeComponent`, `_CreateDelegate`, `IComponentConnector.Connect`).
 - Release IL (project gate, changed methods, rebased onto main): PASS — 1912 checked, 0 failures.
+
+## Batch 23 — PlotAxis3D (partial)
+
+- Exact (5): `LabelsContainer`, `LabelsColor`, `ShowTicks`, `ShowNumbers` (dependency-property accessors), and `BaseModel` (the getter asserts the content is a GeometryModel3D). Their generated declarations are removed from the `.g.cs` by hand.
+- Held (one attempt, first write): `ViewModel` (the setter's unbinding and rebinding order differs from Mathcad's; the generated property is kept).
+- Not written (stubs kept): `AxisDirection`, `Labels`, `BaseLineEnd`, the constructor, the static field initializers, `FirePropertyChanged`, the binding helpers, the label, tick and arrowhead generation methods, and `Generate`/`Recalculate`.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 1921 checked, 0 failures.
