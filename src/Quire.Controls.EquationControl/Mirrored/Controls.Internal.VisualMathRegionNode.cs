@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using Quire.Controls.Core;
 using Quire.EquationEditor.View;
 using System.Linq;
@@ -1442,5 +1443,76 @@ internal partial class VisualMathRegionNode
             && (equationControl.CurrentNode?.DescriptorName == "IDENTIFIER"
                     && ((Quire.EquationEditor.Tree.IdentifierNodeInfo)equationControl.CurrentNode?.NodeInfo).HasNoLabel
                 || equationControl.CurrentNode?.DescriptorName == "NUMERIC");
+    }
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        base.OnKeyDown(e);
+        e.Handled = _activeGestureManager.Execute(e);
+        if (!e.Handled && Gestures.Space.Matches(null, e))
+        {
+            if (CanConvertToTextRegion())
+            {
+                FireRequestChangeToTextBox();
+            }
+            else
+            {
+                AutomateKeypress(' ');
+            }
+            e.Handled = true;
+        }
+        if ((int)e.Key != 116 && (int)e.Key != 117 && ((int)e.Key < 34 || (int)e.Key > 69) && ((int)e.Key < 140 || (int)e.Key > 154))
+        {
+            ClearKeyStrokesCache();
+        }
+    }
+    protected override void OnRender(DrawingContext dc)
+    {
+        base.OnRender(dc);
+        if (LhsOfDefinitionVisibility != Visibility.Visible)
+        {
+            VisualDefinitionNode definitionNode = GetDefinitionNode();
+            if (definitionNode != null && MathFormat.HighlightColor.HasValue)
+            {
+                VisualMathNode visualMathNode = (VisualMathNode)definitionNode.SecondOperand;
+                GeneralTransform generalTransform = visualMathNode.TransformToAncestor(this);
+                Rect rect = new Rect(new Point(0.0, 0.0), visualMathNode.RenderSize);
+                Rect val = generalTransform.TransformBounds(rect);
+                dc.DrawRectangle(new SolidColorBrush(MathFormat.HighlightColor.GetValueOrDefault()), null, val);
+                CombinedGeometry combinedGeometry = new CombinedGeometry(GeometryCombineMode.Exclude, new RectangleGeometry(new Rect(new Point(0.0, 0.0), RenderSize)), new RectangleGeometry(val));
+                combinedGeometry.Freeze();
+                dc.DrawGeometry(Brushes.Transparent, null, combinedGeometry);
+                return;
+            }
+        }
+        dc.DrawRectangle(Brushes.Transparent, null, new Rect(RenderSize));
+    }
+    private void HandleMouseDown(object sender, MouseButtonEventArgs e)
+    {
+        if (e.Handled && !IsLogicalFocusWithin)
+        {
+            ICanBlockFocus canBlockFocus = CanBlockFocusUtils.TryFindICanBlockFocusAncestorUntilGivenAncestorIsReached(e, this);
+            if (canBlockFocus?.BlockFocus == true)
+            {
+                return;
+            }
+        }
+        ClearKeyStrokesCache();
+        if (AttachedProperties.GetProhibitMouseClick(this) && e.ButtonState == MouseButtonState.Pressed && e.ClickCount == 1)
+        {
+            return;
+        }
+        if (Mouse.Captured is FrameworkElement frameworkElement && frameworkElement != this && e.Handled)
+        {
+            Point position = e.GetPosition(frameworkElement);
+            if (!new Rect(frameworkElement.RenderSize).ContainsAccountingForMeasurementError(position))
+            {
+                return;
+            }
+        }
+        _mouseDownPosition = e.GetPosition(this);
+        if (OnInput(_mouseDownPosition, e.ClickCount, !e.Handled))
+        {
+            e.Handled = true;
+        }
     }
 }

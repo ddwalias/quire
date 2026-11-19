@@ -30,12 +30,6 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     public void AutomateKeypress(char key) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnKeyDown(global::System.Windows.Input.KeyEventArgs e) => base.OnKeyDown(e);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleMouseDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseMove(global::System.Windows.Input.MouseEventArgs e) => base.OnMouseMove(e);
     [global::Quire.Mirror.MirrorStub]
     private bool OnInput(global::System.Windows.Point position, int count, bool capture = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
