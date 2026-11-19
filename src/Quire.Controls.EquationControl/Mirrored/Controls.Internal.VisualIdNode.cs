@@ -40,4 +40,32 @@ internal partial class VisualIdNode
             CreateVisualChildren();
         }
     }
+
+    public override double TextBaselineY
+    {
+        get
+        {
+            if (Children.Count == 0)
+            {
+                return 0.0;
+            }
+
+            return ((IVisualText)Children[0]).Baseline;
+        }
+    }
+
+    public override double EffectiveBaselineY => ((VisualMathNode)this).TextBaselineY;
+
+    public override double EffectiveScriptBaselineY
+    {
+        get
+        {
+            if (Children.Count == 0)
+            {
+                return 0.0;
+            }
+
+            return ((IVisualText)Children[0]).SuperscriptBaseline;
+        }
+    }
 }
