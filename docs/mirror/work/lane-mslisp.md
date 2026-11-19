@@ -8,13 +8,13 @@
 
 - `4698f51dc` (Batch 1): Established original-language C++/CLI project split for `Quire.Mslisp` (`Quire.Mslisp.csproj` and `MixedMode/Quire.Mslisp.vcxproj`); mirrored `mslisp.Stream`, `mslisp.ConsoleStream`, `mslisp.DebugStream`, `mslisp.Condition`, `mslisp.Symbol`.
 - `66f5478bc` (Batch 2): Mirrored `mslisp.Func0` .. `mslisp.Func6`, `mslisp.BuiltinDelegate`, `mslisp.GenCall`, `mslisp.FileStream`, `mslisp.TaggedSymbol`, `mslisp.SymbolImp`, `mslisp.Package`, `mslisp._fcomparer`.
-- `6c483b4dc` (Batch 3): Mirrored `Error::report(String^)`, `Error::report(String^, Object^)`, `is_true(Object^)`, `FindMethods(Type^, String^, short)`, `InterpreterState`, `Expression`, `Settable`, `StrcatFunction`, `SignalFunction`, `SingleMethod`, `DelegateFunction`, `CodeGen`, `Constructor`, `QuoteExpr`, `Env` (.ctor).
+- `0aa549913` (Batch 3): Mirrored `Error::report(String^)`, `Error::report(String^, Object^)`, `is_true(Object^)`, `FindMethods(Type^, String^, short)`, `InterpreterState`, `Expression`, `Settable`, `StrcatFunction`, `SignalFunction`, `SingleMethod`, `DelegateFunction`, `CodeGen`, `Constructor`, `QuoteExpr`, `Env` (.ctor).
 
 ## Release IL Report & Gates
 
 - Batch 1: PASS, 103 checked, 88 exact, 0 failures, 72 Mathcad `<Module>` members not paired (`.mirror-cache/release-il-1aba42d8ae27/release-il.json`). Merged via `lane_merge.py` (receipt: `gate-il-851996b0cdd6.json`).
 - Batch 2: PASS, 132 checked, 130 exact, 0 failures, 72 Mathcad `<Module>` members not paired (`.mirror-cache/release-il-fbee254d2310/release-il.json`). Merged via `lane_merge.py` (receipt: `gate-il-28dd53bdfe00.json`).
-- Batch 3: PASS, 187 checked, 187 exact, 0 failures, 75 Mathcad members not paired (`.mirror-cache/release-il-203781de17ec/release-il.json`).
+- Batch 3: PASS, 187 checked, 187 exact, 0 failures, 75 Mathcad members not paired (`.mirror-cache/release-il-203781de17ec/release-il.json`). Merged via `lane_merge.py` (receipt: `gate-il-6fc2507c6612.json`).
 
 ## Remaining Members and Actionable Blockers
 
