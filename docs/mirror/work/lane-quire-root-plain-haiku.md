@@ -48,3 +48,19 @@ Project-level blocker for Behaviors: `Behaviors.BaseUIFunctionalityAttachedBehav
 
 
 Not started: Controls.FlexingStackPanel, Behaviors.BaseUIFunctionalityAttachedBehavior, Behaviors.AllFunctionsBrowserTreeViewUIFunctionalityAttachedBehavior, App, AppCommands, AddonsProperties, AddonsControls, Addon, AddonsCollection, CMathcadPrimeApplication, CMathcadPrimeWorksheet.
+
+## Batch 7 — App (`73b064e07`), AddonsControls (`987443771`)
+
+- App: `OpenFileName` (static property over `Application.Current.Properties`), `RemoveDuplicatedEnvironmentVariables`, `LoadAppConfigurations`, `.ctor`. Gate PASS for these members (971 checked).
+- Parked in App: `PrimeStartup`, `ConnectToExistingAppOrInitializeNewWithMutex`, `ShowWindowAndInitializeComServer`, `SetupServiceProviders`, `SetupCultureInfo`, `ShowSplashScreen*` (closures and out parameter; not attempted this pass).
+- AddonsControls: constructor, `BindCommands`, all handler/can-execute methods. Gate PASS (983 checked, 0 failures).
+
+## Batch 8 — Addon (`fee6f8450`), ScrollViewerGrid StopUpdates (`567ea2630`)
+
+- Addon: `UnloadAddon`, `GetAddressOfFunction`, `CallAddonCleanup`, `CallAddonOnIdle`, `CallAddonWhenDocumentOpened/Closing/Saving/Saved`, `CallAddonOnCommand`. Gate: not in the failure list (1004 checked).
+- Parked in Addon: `.ctor` (Mathcad calls the `AddOnId` setter; a Roslyn auto-property assignment emits `stfld`), `AddOnId` getter/setter (the private setter; not attempted), `CallAddonToOpenFromWindchill`, `CallAddonToEnablePtcPlaces`, `CallAddonSaveToPtcServer` (Mathcad's export names `getPTCPlacesLocation`, `enablePTCPlaces`, `saveToPTCServerForPrime` differ from the Quire constants `getQuirePlacesLocation`, `enableQuirePlaces`, `saveToQuireServerForPrime`; the exported names must match), `CallAddonInitialize`, `CallAddonToGetResolvedFileNameForOpenAlloc`, `CallAddonToGetDefaultDirectory`, `CallAddonUpdateMenuItem`, `CallAddonToCheckIsAddOnActive` (not attempted; uint/bool conversions), `LoadAddon` (not attempted).
+- ScrollViewerGrid `StopUpdates` and `OnStartingPageNumberChanged`: not in the failure list (1008 checked). Still stubs: `SetTooltipAndMinScrollbarThumbSize` (DevComponents.WpfRibbon.SuperToolTip, not referenced by Quire), `UpdateEngineeringDocument`, `OnScrollChanged`, `UpdatePageNumbersTooltip`, `OnPagesCollectionChanged` (not attempted).
+
+## Remaining (set still incomplete)
+
+Not attempted: AddonsCollection (38 stubs), AllFunctionsBrowserTreeViewUIFunctionalityAttachedBehavior, BaseUIFunctionalityAttachedBehavior (its `.ctor` is blocked by the `Microsoft.Xaml.Behaviors.Behavior<T>` vs `System.Windows.Interactivity.Behavior<T>` mismatch), CMathcadPrimeApplication, CMathcadPrimeWorksheet (both reassigned to this worker), AppCommands (cctor only), and the App closures listed above, plus the Addon and ScrollViewerGrid items above.
