@@ -1,7 +1,7 @@
 # Lane Quire.Controls.Plots, half A Checkpoint
 
 - Owner: Antigravity worker (Orca task `task_1145e28e3ba2`)
-- Branch: `mirror/plots-a-batch10`
+- Branch: `mirror/plots-a-batch11`
 - Scope: Half A types up to and including `Controls.Plots.Plot3D.View.PlotAxesWidget3D.g.cs`
 
 ## Landed Commits
@@ -14,7 +14,8 @@
 - Batch 7: `073dd9159` — TrackingHelper (26 stubs removed, all 22 members + closures exact; receipt `gate-il-22aa45222cfb.json`)
 - Batch 8: `51c53aede` — PlotTitleModel (22 stubs removed), PlotLegendModel (25 stubs removed); 47 stubs removed, all members exact; receipt `gate-il-17e43d101d4f.json`
 - Batch 9: `a311f37fb` — ContourCalculatable (31 stubs removed), PlotModelBase (37 stubs removed); 68 stubs removed, all members exact; receipt `gate-il-c370586e1b90.json`
-- Batch 10 (pending landing): VisualData (32 stubs removed), ContourPlotViewModel (32 stubs removed); 64 stubs removed, all members exact; reports `release-il-04c976f4f2ea`, `release-il-e44143e951ce`
+- Batch 10: `1b78b8613` — VisualData (32 stubs removed), ContourPlotViewModel (32 stubs removed); 64 stubs removed, all members exact; receipt `gate-il-d5bfbcd34653.json`
+- Batch 11: in progress / landing — EngineTrace3DResultParser (including Undefined, Surface, Curve subclasses - 35 stubs removed, all members exact Release IL)
 
 ## Parked Members
 - `Quire.Controls.Plots.Plot3D.View.CameraControlWidget.OnApplyTemplate()`: Mathcad emits call to base.OnApplyTemplate() before GetTemplateChild calls; Roslyn orders base call after null checks or stack differences.
