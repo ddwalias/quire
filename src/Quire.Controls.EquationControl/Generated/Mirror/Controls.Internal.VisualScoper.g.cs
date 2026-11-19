@@ -34,27 +34,15 @@ internal partial class VisualScoper : global::Quire.Controls.Internal.VisualMath
     [global::Quire.Mirror.MirrorStub]
     public VisualScoper(global::Quire.Controls.Internal.VisualMathRegionNode mathRegion) : base(default(global::Quire.Controls.Internal.VisualMathNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnLostFocus(object sender, global::System.Windows.RoutedEventArgs eventArgs) => base.OnLostFocus(sender, eventArgs);
-    [global::Quire.Mirror.MirrorStub]
     public void Highlight(global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::Quire.EquationEditor.View.IVisualMathNode>> scopedNodes, global::System.Collections.Generic.IList<global::Quire.EquationEditor.View.IVisualMathNode> excludedNodes, global::Quire.Direction[] primalChildTypeoverExtendDirections, bool singleBlockHighlight = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public override void Remove() => base.Remove();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnCaretColorChanged(global::System.Drawing.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void UpdateCaretBlinking() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnLostFocus(global::System.Windows.RoutedEventArgs e) => base.OnLostFocus(e);
     [global::Quire.Mirror.MirrorStub]
     private void CreateHighlighter(global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::Quire.EquationEditor.View.IVisualMathNode>> scopedNodes, global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.View.IVisualMathNode> excludedNodes, global::Quire.Direction[] primalChildTypeoverExtendDirections, bool singleBlockHighlight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateHighlight(global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::Quire.EquationEditor.View.IVisualMathNode>> scopedNodes, global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.View.IVisualMathNode> excludedNodes, global::Quire.Direction[] primalChildTypeoverExtendDirections, bool singleBlockHighlight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void BindToScopeSettings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void BindToTypeover() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetCaret(bool isReadWrite) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]
