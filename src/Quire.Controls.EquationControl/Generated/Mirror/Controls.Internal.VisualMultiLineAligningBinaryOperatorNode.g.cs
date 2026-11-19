@@ -14,31 +14,9 @@ internal partial class VisualMultiLineAligningBinaryOperatorNode : global::Quire
     [global::Quire.Mirror.MirrorStub]
     private global::System.Nullable<bool> _isMultiline;
     [global::Quire.Mirror.MirrorStub]
-    private double _secondArgumentVOffsetForArrange;
-    [global::Quire.Mirror.MirrorStub]
-    private double _firstArgumentVOffsetForArrange;
-    [global::Quire.Mirror.MirrorStub]
-    private double _secondArgumentHOffsetForArrange;
-    [global::Quire.Mirror.MirrorStub]
-    private double _selfHoffsetForArrange;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Point _operatorTopLeft;
-    [global::Quire.Mirror.MirrorStub]
     public override bool IsMultiline { get => base.IsMultiline; }
     [global::Quire.Mirror.MirrorStub]
-    private double CurrentBaseLine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private double FirstNodeAndOperandWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool HasFirstOperandAtLeft { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool HasFirstOperandAbove { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualMultiLineAligningBinaryOperatorNode(global::Quire.Controls.Internal.VisualSymbolNode opSymbol) { }
-    [global::Quire.Mirror.MirrorStub]
     protected void ComputeCurrentValues(bool recreateZeroCache) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private double ComputeTopLineBaseLine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => base.MeasureStaticLayout(availableSize);
     [global::Quire.Mirror.MirrorStub]
