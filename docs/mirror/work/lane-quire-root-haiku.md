@@ -45,3 +45,9 @@
 - Members: fields `_errorCode`, `_realResult`, `_units`; getters `ErrorCodeInternal`, `ErrorCode`, `RealResult`, `Units`; `.ctor(IUnitedScalarState)`, for `AutomationSpiritResult`, `AutomationServiceEngNote.AutomationSpiritResult` and `AutomationServiceEngNotePlus.AutomationSpiritResult` (IL identical across the three).
 - Release IL: PASS (`--project Quire`), 768 checked, 0 failures; all 15 new members appear in the checked list.
 - Remaining mismatches in this batch: none.
+
+## Batch 7 — AutomationSpiritOutputResultAs (three variants)
+
+- Members: fields `_errorCode`, `_realResult`; `ErrorCodeInternal`; `.ctor(IUnitedScalarState)`.
+- Parked (stubs kept): `ErrorCode` and `RealResult` getters. Mathcad's IL is `try { stloc; leave } catch { pop; leave } ldc; ret` with the catch leaving to the default return. Two forms tried: `try { return x; } catch { return -1; }` and `try { return x; } catch { } return -1;`; both emit the fall-through `ldc.i4.m1` with no `leave` after the catch, so they differ at the catch exit.
+- Release IL: PASS (`--project Quire`), 779 checked, 0 failures.
