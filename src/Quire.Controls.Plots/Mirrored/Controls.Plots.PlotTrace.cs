@@ -458,4 +458,28 @@ public partial class PlotTrace
             return (bool)GetValue(IsInPrintingProperty);
         }
     }
+
+    public double XMinGap
+    {
+        get
+        {
+            return (double)GetValue(XMinGapProperty);
+        }
+        private set
+        {
+            SetValue(_xMinGapPropertyKey, value);
+        }
+    }
+
+    public double YMinGap
+    {
+        get
+        {
+            return (double)GetValue(YMinGapProperty);
+        }
+        private set
+        {
+            SetValue(_yMinGapPropertyKey, value);
+        }
+    }
 }
