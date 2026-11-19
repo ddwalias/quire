@@ -163,3 +163,10 @@
 - Exact (12): `ScalingHeaderVisibility` (private setter writes the read-only key), `ScalingRl`, `Exp` (obsolete attribute kept), `Expression`, `Scaling` (obsolete attribute kept), `ScalingItem`, `IsScalingEmpty`, `IsExpEmpty`, `IsPlotEquationEmpty`, `ScalingChangedByUser`, `UserScalingExpression`, `EmptyPlotEquationSExp`. Their generated declarations are removed from the `.g.cs` by hand.
 - Not written (stubs kept): `EquationSExpression` (getter and setter are one property; the setter is not yet written), `ContainedEquationControls` (an iterator), `AtLeftEdge` and the rest of the properties and handlers, the constructor, the static field registrations, and the event and command members.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 1938 checked, 0 failures.
+
+## Batch 25 — PlotTrace (XMinGap, YMinGap)
+
+- Exact (2): `XMinGap` and `YMinGap` (private setters write their read-only keys). They are appended to the committed `PlotTrace` hand-written file, and their generated declarations are removed from the `.g.cs`. The committed earlier work in that file is unchanged.
+- Recovery note: an earlier `Write` to this path replaced the committed file; it was restored from HEAD before this batch and the earlier work is intact.
+- Not written (stubs kept): `ViewModel` and `ViewPortRect` (both have logic beyond accessors) and the rest of the `PlotTrace` members.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 2129 checked, 0 failures.
