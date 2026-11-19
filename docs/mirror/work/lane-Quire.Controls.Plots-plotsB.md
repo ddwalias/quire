@@ -126,3 +126,9 @@
 - Exact (4): `ShowAxisExpressions`, `IsActive`, `SelectedTraces` (method-group `Each` calls), `SelectedColor`.
 - Not written (stubs kept): the constructor and instance field initializer (`_selectedTraces = new List`), the static `ActivateCommand` (`new RoutedCommand` with an `InputGestureCollection`) and `ShowAxisExpressionsCommand` initializers (both in the generated field declarations), the other `Selected*` properties (their full text was cut off in the source read), `Markers`, the `Activated` event, and the trace-aggregation helpers.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 1747 checked, 0 failures.
+
+## Batch 19 — MarkersViewModel (partial)
+
+- Exact (7): `VerticalValueToScreen`, `HorizontalValueToScreen` (private setters), `VerticalMarkers`, `HorizontalMarkers`, `AllMarkers`, `ActiveMarker` (private setter raises `ActiveMarker` change), `RoutedEventBindings`.
+- Not written (stubs kept): the constructor (lambdas over range and property-change events: closure ordinals), `InternalCalculatables` (lambda selector), the static commands (their initializers are in the generated declarations), the field initializers (`_verticalMarkers`, `_horizontalMarkers`, `_allMarkers`, `_routedEventBindings`, `_typeOfThis`), the events, and the marker add/delete/activate helpers, which were not yet read.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 1757 checked, 0 failures.
