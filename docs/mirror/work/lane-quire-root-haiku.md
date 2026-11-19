@@ -64,3 +64,9 @@
 - Moved the remaining field stubs into the hand-written partials (no initializers, no IL change).
 - Release IL: PASS (`--project Quire`), 782 checked, 0 failures.
 - Parked: DimensionEditDialogViewModel fields. Moving them into the hand-written partial made `get_UnitDataSource`'s lambda ordinals (`<get_UnitDataSource>b__4_0`, Mathcad `b__10_0`) differ; left as stubs for a compile-order pass.
+
+## Batch 10 — CMathcadPrimeWorksheetReadonlyOptions
+
+- Members: fields, `TryConvertToBool` (nested `value != null` shape; the guard-return form gave `brtrue`), `ConvertToDocumentReadonlyOptions`, `.ctor`.
+- Parked: `SetOptionValue` (switch with the empty-catch shape: `pop; leave` to a default return; the same named blocker as the Automation getters).
+- Release IL: PASS (`--project Quire`), 784 checked, 0 failures.
