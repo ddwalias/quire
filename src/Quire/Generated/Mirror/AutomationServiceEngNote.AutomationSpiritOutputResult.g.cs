@@ -17,6 +17,4 @@ public partial class AutomationSpiritOutputResult : global::Quire.AutomationServ
     double global::Quire.EngNotebook.Automation.IMathcadPrimeOutputResult.RealResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     string global::Quire.EngNotebook.Automation.IMathcadPrimeOutputResult.Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public AutomationSpiritOutputResult(global::Quire.Controls.Core.IORegions.IUnitedScalarState scalarState) : base(default(global::Quire.Controls.Core.IORegions.IUnitedScalarState)) { }
 }

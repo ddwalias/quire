@@ -17,6 +17,4 @@ public partial class AutomationSpiritOutputMatrixResult : global::Quire.Automati
     global::Quire.Automation.IMathcadPrimeMatrix global::Quire.Automation.IMathcadPrimeOutputMatrixResult.MatrixResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     string global::Quire.Automation.IMathcadPrimeOutputMatrixResult.Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public AutomationSpiritOutputMatrixResult(global::Quire.Controls.Core.IORegions.IUnitedMatrixState matrixState) : base(default(global::Quire.Controls.Core.IORegions.IUnitedMatrixState)) { }
 }

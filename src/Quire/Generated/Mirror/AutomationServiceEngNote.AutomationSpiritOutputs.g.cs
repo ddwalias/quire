@@ -14,9 +14,5 @@ public partial class AutomationSpiritOutputs : global::Quire.AutomationService.A
     [global::Quire.Mirror.MirrorStub]
     int global::Quire.EngNotebook.Automation.IMathcadPrimeOutputs.Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public AutomationSpiritOutputs(global::System.Collections.Generic.List<string> aliasesList) : base(default(global::System.Collections.Generic.List<string>)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public AutomationSpiritOutputs(global::Quire.Controls.Core.IORegions.IIOItemCollection inputs) : base(default(global::System.Collections.Generic.List<string>)) { }
-    [global::Quire.Mirror.MirrorStub]
     string global::Quire.EngNotebook.Automation.IMathcadPrimeOutputs.GetAliasByIndex(int indexArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
