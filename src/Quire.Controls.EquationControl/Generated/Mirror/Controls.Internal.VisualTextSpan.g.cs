@@ -20,37 +20,13 @@ internal partial class VisualTextSpan : global::System.Windows.Controls.Panel, g
     [global::Quire.Mirror.MirrorStub]
     private double _subscriptBaseline;
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.IList<double> _characterWidths;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.ExtendedFont _font;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Internal.ScriptedTextLayoutManager _layout;
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Controls.Core.IFontManager _fontManager;
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Core.IFontManager FontManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Documents.InlineCollection Inlines { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.MathFormatDobjController MathFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.ExtendedFont Font { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Baseline { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double SuperscriptBaseline { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double SubscriptBaseline { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<double> CharacterWidths { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public VisualTextSpan() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleMathFormatChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.ExtendedFont GetSubscriptFont() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
     [global::Quire.Mirror.MirrorStub]
