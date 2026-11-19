@@ -12,19 +12,7 @@ namespace Quire.Controls.Plots.ViewModel;
 public abstract partial class BaseMarkerViewModel : global::Quire.Controls.Core.ViewModelBase, global::Quire.Controls.Plots.Model.IBaseMarker, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.AttachedBehavior.IActivator
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Plots.Model.BaseMarker _baseMarker;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isActive;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.NumberFormat _displayNumberFormat;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedCommand ActivateCommand;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Color Color { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected BaseMarkerViewModel(global::Quire.Controls.Plots.Model.BaseMarker baseMarker) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void ChangeColor(global::System.Windows.Media.SolidColorBrush newColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.BaseMarkerViewModel+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames

@@ -2,6 +2,6 @@
 
 - Owner: Codex dispatched worker
 - Branch: `feature/plots-b4-codex`
-- Members: AxisMarkerViewModel implemented in Mathcad order (all 13 members); all Release methods exact.
-- Release IL report: `.mirror-cache/release-il-43a6790c7ea7/release-il.json` — PASS, 1942 checked.
-- Remaining assigned members: BaseMarkerViewModel, MarkersViewModel, PlotViewModel, PlotViewModelBase_1.
+- Members: AxisMarkerViewModel (all 13 members, landed as 9105e3650); BaseMarkerViewModel fields and constructor moved to hand-written partial in Mathcad order, with Color and ChangeColor implemented.
+- Release IL report: `.mirror-cache/release-il-75841d84433c/release-il.json` — project gate failed on unrelated TraceRenderer members; no BaseMarkerViewModel failures were reported.
+- Remaining assigned types: MarkersViewModel, PlotViewModel, PlotViewModelBase_1.
