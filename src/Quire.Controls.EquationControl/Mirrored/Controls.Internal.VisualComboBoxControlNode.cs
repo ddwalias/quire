@@ -31,4 +31,21 @@ internal partial class VisualComboBoxControlNode
     public bool IsEditModeActive => ComboBoxControl.IsEditModeActive;
 
     public Quire.EquationEditor.View.IEditableComboBoxVisualTable EditableComboBoxTable => ComboBoxControl.EditableComboBoxVisualTable;
+
+    protected override void OnContextMenuClosing(System.Windows.Controls.ContextMenuEventArgs e)
+    {
+        base.OnContextMenuClosing(e);
+        if (!IsDropDownOpen)
+        {
+            RequestRestoreInsertionPointOrActivateEquation();
+        }
+    }
+
+    protected override void HandleMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (e.OriginalSource != _border && DebugTools.DevAssert(e.Handled, null).Failed)
+        {
+            e.Handled = true;
+        }
+    }
 }

@@ -32,10 +32,6 @@ internal partial class VisualComboBoxControlNode : global::Quire.Controls.Intern
     [global::Quire.Mirror.MirrorStub]
     internal VisualComboBoxControlNode() : base(default(string), default(global::Quire.EquationEditor.Tree.INodeInfo)) { }
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnContextMenuClosing(global::System.Windows.Controls.ContextMenuEventArgs e) => base.OnContextMenuClosing(e);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleMouseDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => base.HandleMouseDown(sender, e);
-    [global::Quire.Mirror.MirrorStub]
     protected override void HandleGotFocusOrLostFocus(object sender, global::System.Windows.RoutedEventArgs e) => base.HandleGotFocusOrLostFocus(sender, e);
     [global::Quire.Mirror.MirrorStub]
     protected override void HandleOpenEditingMode(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs routedEventArgs) => base.HandleOpenEditingMode(sender, routedEventArgs);
