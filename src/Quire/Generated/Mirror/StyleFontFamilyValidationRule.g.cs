@@ -13,6 +13,4 @@ public partial class StyleFontFamilyValidationRule : global::System.Windows.Cont
 {
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Controls.ValidationResult Validate(object value, global::System.Globalization.CultureInfo cultureInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public StyleFontFamilyValidationRule() { }
 }

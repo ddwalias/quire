@@ -11,8 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.TwoParametersObject, MathcadPrime")]
 public partial class TwoParametersObject
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly object _parameterOne;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly object _parameterTwo;
 }

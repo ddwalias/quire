@@ -23,4 +23,7 @@ public partial class TwoParametersObject
     {
         return ParameterTwo as string;
     }
+
+    private readonly object _parameterOne;
+    private readonly object _parameterTwo;
 }

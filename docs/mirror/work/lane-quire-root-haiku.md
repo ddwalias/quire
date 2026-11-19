@@ -23,3 +23,12 @@
 - Shape note: `PageNumberIsCheckedConverter.Convert` tests `value as IPageNumberControl != null` and reads the property from `value as IPageNumberControl`; the ternary and `is`/cast forms gave `brtrue` / `castclass`, which Mathcad does not emit.
 - Release IL: PASS (`--project Quire`), 746 checked, 0 failures.
 - Remaining mismatches in this batch: none.
+
+## Batch 4 — six small types
+
+- MathFontSizeValidationRule: `get_MinFontSize` override and `.ctor` (`FontConstants.MinimumFontSizeInPoints`).
+- XmlLanguageToCultureInfoConverter: `Instance` (static initializer), private `.ctor`, `Convert`, `ConvertBack`.
+- OpenEngineeringDocumentParameter: `ReadonlyOptions` field, `.ctor`; TwoParametersObject: field declarations (`_parameterOne`, `_parameterTwo`).
+- SavedDateIsCheckedConverter: `Convert` (`value as ISavedDateControl != null` shape), `ConvertBack`, field `DateFormatsDictionary`. Parked: `.ctor` stays a stub; Mathcad stores the dictionary before the base `Object` constructor call, which C# cannot emit.
+- StyleFontFamilyValidationRule: `.ctor` only. Parked: `Validate` stays a stub; Mathcad shares one failure return and branches to the valid return with `brtrue` after a `FirstOrDefault` closure. The `if (found != null) return Valid` form and the ternary both produced `brfalse`.
+- Release IL: PASS (`--project Quire`), 752 checked, 0 failures.

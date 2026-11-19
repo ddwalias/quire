@@ -11,8 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.OpenEngineeringDocumentParameter, MathcadPrime")]
 public partial class OpenEngineeringDocumentParameter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.DocumentReadonlyOptions ReadonlyOptions;
-    [global::Quire.Mirror.MirrorStub]
-    public OpenEngineeringDocumentParameter() { }
 }
