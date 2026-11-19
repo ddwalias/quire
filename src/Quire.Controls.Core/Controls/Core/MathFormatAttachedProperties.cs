@@ -1,4 +1,5 @@
 #nullable disable
+using System;
 using System.Windows;
 using System.Windows.Media;
 using Quire.Mirror;
@@ -125,9 +126,22 @@ public partial class MathFormatAttachedProperties
         mathFormatOwner.HandleMathFormatChanged(e);
     }
 
-    // Parked: Mathcad calls Typeface.TryGetGlyphTypeface with `callvirt` on the new Typeface; Roslyn emits `call` for an object-creation receiver.
-    [MirrorStub]
-    private static object CoerceFontFamily(DependencyObject d, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static object CoerceFontFamily(DependencyObject d, object basevalue)
+    {
+        string text = basevalue as string;
+        if (string.IsNullOrEmpty(text))
+        {
+            return basevalue;
+        }
+        // Typed local: Roslyn emits `call` for an object-creation receiver, Release IL requires `callvirt`.
+        Typeface typeface = new Typeface(text.Contains(FontConstants.EmbedFontDelimiter) ? new FontFamily(new Uri("pack://application:,,,"), text) : new FontFamily(text), FontStyles.Normal, FontWeights.Normal, FontStretches.Normal);
+        typeface.TryGetGlyphTypeface(out var glyphTypeface);
+        if (glyphTypeface == null)
+        {
+            return "Mathcad UniMath Prime";
+        }
+        return basevalue;
+    }
 
     // Parked: Mathcad branches with `blt` (jump when less than the minimum); the idiomatic `if`/ternary forms compile to `bge.un`.
     [MirrorStub]
