@@ -71,6 +71,83 @@ class WaitTests(unittest.TestCase):
         self.assertLessEqual(len(messages), 3)
 
 
+class QueueTests(unittest.TestCase):
+    def ticket(self, directory, name, age=0.0):
+        """A waiter's ticket file as another process would leave it, `age` seconds since it last refreshed."""
+        path = Path(directory) / name
+        path.write_bytes(b'')
+        stamp = time.time() - age
+        os.utime(path, (stamp, stamp))
+        return path
+
+    def test_a_waiter_tries_only_when_nobody_earlier_is_waiting(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self.ticket(tmp, '00000000000000000001-111')  # arrived first, so it goes first
+            later = merge_lock.Queue(tmp)
+            later.join()
+            self.assertEqual(later.ahead(), ['00000000000000000001-111'])
+            (Path(tmp) / '00000000000000000001-111').unlink()
+            self.assertEqual(later.ahead(), [])
+
+    def test_later_arrivals_do_not_hold_a_waiter_back(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            first = merge_lock.Queue(tmp)
+            first.join()
+            self.ticket(tmp, '99999999999999999999-222')
+            self.assertEqual(first.ahead(), [])
+
+    def test_a_ticket_nobody_refreshes_is_dropped(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            stale = self.ticket(tmp, '00000000000000000001-111', age=merge_lock.STALE_TICKET + 30)
+            waiter = merge_lock.Queue(tmp)
+            waiter.join()
+            self.assertEqual(waiter.ahead(), [])
+            self.assertFalse(stale.exists())
+
+    def test_the_longest_waiter_gets_the_lock_first(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self.ticket(tmp, '00000000000000000001-111')  # older, still refreshing
+            order = []
+            tries = [0]
+
+            def sleep(seconds):
+                tries[0] += 1
+                if tries[0] == 3:  # the older waiter takes the lock and leaves its ticket
+                    (Path(tmp) / '00000000000000000001-111').unlink()
+
+            def try_lock():
+                order.append('locked')
+
+            queue = merge_lock.Queue(tmp)
+            merge_lock.wait_for_lock(try_lock, None, 100, clock=lambda: 0.0, sleep=sleep, queue=queue)
+            self.assertEqual(tries[0], 3)  # it slept while the older ticket was there, and did not try the lock
+            self.assertEqual(order, ['locked'])
+            self.assertFalse(queue.path.exists())  # and it leaves its own ticket on the way out
+
+    def test_a_timeout_leaves_no_ticket(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self.ticket(tmp, '00000000000000000001-111')
+            now = [0.0]
+
+            def clock():
+                return now[0]
+
+            def sleep(seconds):
+                now[0] += seconds
+
+            class Handle:
+                def seek(self, offset):
+                    pass
+
+                def read(self, n):
+                    return b'pid 5 since now'
+
+            queue = merge_lock.Queue(tmp)
+            with self.assertRaises(TimeoutError):
+                merge_lock.wait_for_lock(lambda: None, Handle(), 3, clock=clock, sleep=sleep, queue=queue)
+            self.assertFalse(queue.path.exists())
+
+
 class HeldTests(unittest.TestCase):
     def test_writes_the_holder_then_releases(self):
         with tempfile.TemporaryDirectory() as tmp:

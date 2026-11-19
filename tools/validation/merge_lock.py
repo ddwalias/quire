@@ -8,7 +8,12 @@ names another file.
 
 The holder writes its process id and start time into the file after the first byte, so a waiting landing can say who
 it is waiting for. A wait is reported every minute, and gives up with an error after QUIRE_MERGE_LOCK_TIMEOUT seconds
-(default 7200) instead of waiting forever."""
+(default 7200) instead of waiting forever.
+
+Waiters are served in the order they arrived. Each one files a ticket in a queue directory beside the lock file
+(`<lock>.queue`), keeps it fresh while it waits, and tries the lock only when no live ticket is older than its own, so
+a landing that has waited longest goes first instead of losing every race to a lane that happens to retry at the right
+second. A ticket not refreshed for STALE_TICKET seconds belongs to a killed or hung waiter and is dropped."""
 import contextlib
 import os
 import sys
@@ -18,6 +23,7 @@ from pathlib import Path
 
 DEFAULT_TIMEOUT = 7200
 REPORT_EVERY = 60
+STALE_TICKET = 60
 
 
 def lock_path(environ=os.environ):
@@ -48,23 +54,84 @@ def report(message):
     print(message, file=sys.stderr, flush=True)
 
 
-def wait_for_lock(try_lock, handle, timeout, clock=time.monotonic, sleep=time.sleep):
+def queue_dir(path):
+    return Path(f'{path}.queue')
+
+
+class Queue:
+    """First come, first served among the landings waiting for the lock: one ticket file per waiter, named by arrival
+    time so a sort puts the longest waiter first."""
+
+    def __init__(self, directory, wall_clock=time.time):
+        self.directory = Path(directory)
+        self.wall_clock = wall_clock
+        self.name = f'{time.time_ns():020d}-{os.getpid()}'
+        self.path = self.directory / self.name
+
+    def join(self):
+        self.directory.mkdir(parents=True, exist_ok=True)
+        self.path.write_bytes(b'')
+
+    def touch(self):
+        """Mark this waiter alive; recreates a ticket another waiter dropped as stale (the name, so the place in line,
+        is unchanged)."""
+        try:
+            os.utime(self.path)
+        except OSError:
+            self.join()
+
+    def leave(self):
+        self.path.unlink(missing_ok=True)
+
+    def ahead(self):
+        """The tickets of live waiters that arrived before this one. Tickets nobody has refreshed lately are dropped."""
+        now = self.wall_clock()
+        waiting = []
+        for ticket in sorted(self.directory.iterdir()):
+            if ticket.name >= self.name:
+                break
+            try:
+                age = now - ticket.stat().st_mtime
+            except OSError:
+                continue
+            if age > STALE_TICKET:
+                ticket.unlink(missing_ok=True)
+            else:
+                waiting.append(ticket.name)
+        return waiting
+
+
+def wait_for_lock(try_lock, handle, timeout, clock=time.monotonic, sleep=time.sleep, queue=None):
     """Retry try_lock until it succeeds, reporting the holder every REPORT_EVERY seconds; raise TimeoutError after
-    `timeout` seconds. Returns nothing; the lock is held when it returns."""
+    `timeout` seconds. With a queue, try only when no live waiter arrived earlier. Returns nothing; the lock is held
+    when it returns."""
     start = clock()
     last_report = start
-    while True:
-        try:
-            try_lock()
-            return
-        except OSError:
+    ahead = []
+    if queue:
+        queue.join()
+    try:
+        while True:
+            ahead = queue.ahead() if queue else []
+            if not ahead:
+                try:
+                    try_lock()
+                    return
+                except OSError:
+                    pass
             now = clock()
             if now - start >= timeout:
                 raise TimeoutError(f'merge lock still held after {timeout:.0f}s by {holder_text(handle)}')
             if now - last_report >= REPORT_EVERY:
-                report(f'waiting for the merge lock held by {holder_text(handle)} ({now - start:.0f}s so far)')
+                place = f', {len(ahead)} landing(s) ahead in the queue' if ahead else ''
+                report(f'waiting for the merge lock held by {holder_text(handle)} ({now - start:.0f}s so far{place})')
                 last_report = now
+            if queue:
+                queue.touch()
             sleep(1)
+    finally:
+        if queue:
+            queue.leave()
 
 
 @contextlib.contextmanager
@@ -72,7 +139,8 @@ def held(path=None, timeout=None):
     """Hold the merge lock for the `with` body. Waits while another holder keeps it, reporting who it is waiting for,
     and gives up after `timeout` seconds (default QUIRE_MERGE_LOCK_TIMEOUT)."""
     timeout = timeout_seconds() if timeout is None else timeout
-    with open(path or lock_path(), 'a+b') as handle:
+    path = path or lock_path()
+    with open(path, 'a+b') as handle:
         if os.name == 'nt':
             import msvcrt
             handle.seek(0)
@@ -81,7 +149,7 @@ def held(path=None, timeout=None):
                 handle.seek(0)
                 msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
 
-            wait_for_lock(try_lock, handle, timeout)
+            wait_for_lock(try_lock, handle, timeout, queue=Queue(queue_dir(path)))
             write_holder(handle)
             try:
                 yield
@@ -94,7 +162,7 @@ def held(path=None, timeout=None):
             def try_lock():
                 fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
 
-            wait_for_lock(try_lock, handle, timeout)
+            wait_for_lock(try_lock, handle, timeout, queue=Queue(queue_dir(path)))
             write_holder(handle)
             try:
                 yield
