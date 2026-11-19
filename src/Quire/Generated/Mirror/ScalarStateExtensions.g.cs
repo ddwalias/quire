@@ -11,8 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.ScalarStateExtensions, MathcadPrime")]
 internal static partial class ScalarStateExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.IORegions.IOManagerErrorCode GetOriginalScalarState(this global::Quire.Controls.Core.IORegions.IScalarItemWithOriginalState item, out double originalValue, out string originalUnits) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.IORegions.IOManagerErrorCode GetScalarState(this global::Quire.Controls.Core.IORegions.IScalarItem item, out double value, out string units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

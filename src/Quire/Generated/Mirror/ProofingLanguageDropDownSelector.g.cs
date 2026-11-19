@@ -11,19 +11,8 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.ProofingLanguageDropDownSelector, MathcadPrime")]
 public partial class ProofingLanguageDropDownSelector : global::Quire.DropDownSelector
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string NullLanguage = "MixedLanguages";
-    [global::Quire.Mirror.MirrorStub]
-    public const string EmptyLanguage = "NoLanguage";
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.ProofingLanguageDropDownSelector.CultureItemsManager _itemsManager;
-    [global::Quire.Mirror.MirrorStub]
-    protected override void EnsureItemHeader(object newValue) => base.EnsureItemHeader(newValue);
-
     [global::Quire.Mirror.MirrorOf("Spirit.ProofingLanguageDropDownSelector+CultureItemsManager, MathcadPrime")]
     private partial class CultureItemsManager
     {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.Collections.Generic.List<global::System.Globalization.CultureInfo> _sortedCultures;
     }
 }

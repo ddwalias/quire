@@ -12,6 +12,12 @@ namespace Quire;
 
 public partial class ProofingLanguageDropDownSelector
 {
+    public const string NullLanguage = "MixedLanguages";
+
+    public const string EmptyLanguage = "NoLanguage";
+
+    private CultureItemsManager _itemsManager;
+
     public override void BeginInit()
     {
         _itemsManager = new CultureItemsManager();
@@ -23,9 +29,41 @@ public partial class ProofingLanguageDropDownSelector
     {
     }
 
+    protected override void EnsureItemHeader(object newValue)
+    {
+        if (newValue == null || DebugTools.AssertNotNull(_itemsManager, null).Failed)
+        {
+            return;
+        }
+
+        CultureInfo cultureInfo = newValue as CultureInfo;
+        // Declared before the type check: Mathcad's IL gives this local the slot before the interpolation handler.
+        ProofingLanguageDataItem proofingLanguageDataItem;
+        if (cultureInfo == null)
+        {
+            DebugTools.FailAssertion($"{newValue}, {newValue.GetType().Name}");
+            return;
+        }
+
+        if (object.Equals(cultureInfo, CultureInfo.InvariantCulture))
+        {
+            return;
+        }
+
+        proofingLanguageDataItem = _itemsManager.Insert(cultureInfo);
+        if (proofingLanguageDataItem != null && UpdateHeader)
+        {
+            double maxWidth = (_headerDict?.Values.OfType<FrameworkElement>().FirstOrDefault()?.MinWidth).GetValueOrDefault();
+            AddMeasuredDuplicateElemToHeaderDict(proofingLanguageDataItem, ref maxWidth);
+            SetHeadersMinimumWidth(maxWidth);
+        }
+    }
+
     private partial class CultureItemsManager
     {
         private static readonly Comparer<CultureInfo> CulturesComparer = Comparer<CultureInfo>.Create((CultureInfo culture, CultureInfo culture2) => string.Compare(ProofingLanguageDataItem.GetCultureName(culture), ProofingLanguageDataItem.GetCultureName(culture2), StringComparison.OrdinalIgnoreCase));
+
+        private readonly List<CultureInfo> _sortedCultures;
 
         public ObservableRangeCollection<ProofingLanguageDataItem> CulturesDataItems { get; }
 

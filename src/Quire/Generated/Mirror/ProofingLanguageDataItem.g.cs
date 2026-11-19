@@ -11,10 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.ProofingLanguageDataItem, MathcadPrime")]
 public partial class ProofingLanguageDataItem : global::Quire.IDropDownSelectorItem, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Globalization.CultureInfo _culture;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isChecked;
-    [global::Quire.Mirror.MirrorStub]
-    internal static string GetCultureName(global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

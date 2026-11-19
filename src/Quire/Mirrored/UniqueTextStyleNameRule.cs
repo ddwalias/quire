@@ -4,6 +4,8 @@ namespace Quire;
 
 public partial class UniqueTextStyleNameRule
 {
+    private UniqueTextStyleNameHelper _helper;
+
     public string StyleNames { get; set; }
 
     public UniqueTextStyleNameHelper DependencyPropertyHelper

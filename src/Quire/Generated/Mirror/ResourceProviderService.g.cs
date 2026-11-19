@@ -11,10 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.ResourceProviderService, MathcadPrime")]
 public partial class ResourceProviderService : global::Quire.Controls.Core.IResourceProviderService, global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsConnected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.ResourceDictionary RichTextContextMenuItemsDictionary { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ResourceProviderService() { }
 }

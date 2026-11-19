@@ -7,6 +7,10 @@ namespace Quire;
 
 public partial class ProofingLanguageDataItem
 {
+    private CultureInfo _culture;
+
+    private bool _isChecked;
+
     public ProofingLanguageDataItem(CultureInfo culture)
     {
         _culture = culture;
@@ -55,4 +59,18 @@ public partial class ProofingLanguageDataItem
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
+
+    internal static string GetCultureName(CultureInfo culture)
+    {
+        if (global::Quire.DebugTools.AssertNotNull(culture, null).Failed)
+        {
+            return null;
+        }
+        string text = global::Quire.Properties.Settings.Default.ShowNativeProofingLanguage ? culture.NativeName : culture.DisplayName;
+        if (!text.IsNotEmpty())
+        {
+            return culture.EnglishName;
+        }
+        return text;
+    }
 }
