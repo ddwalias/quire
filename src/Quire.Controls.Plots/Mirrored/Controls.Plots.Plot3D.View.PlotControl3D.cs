@@ -2,6 +2,7 @@
 #pragma warning disable
 
 using System.Windows;
+using System.Windows.Media;
 using Quire.Controls.Core;
 
 namespace Quire.Controls.Plots.Plot3D.View;
@@ -41,6 +42,42 @@ public partial class PlotControl3D
         set
         {
             SetValue(TraceLineStyleProperty, value);
+        }
+    }
+
+    public SolidColorBrush TraceColor
+    {
+        get
+        {
+            return (SolidColorBrush)GetValue(TraceColorProperty);
+        }
+        set
+        {
+            SetValue(TraceColorProperty, value);
+        }
+    }
+
+    public double? TraceLineWeight
+    {
+        get
+        {
+            return (double?)GetValue(TraceLineWeightProperty);
+        }
+        set
+        {
+            SetValue(TraceLineWeightProperty, value);
+        }
+    }
+
+    public SolidColorBrush TraceSurfaceFillColor
+    {
+        get
+        {
+            return (SolidColorBrush)GetValue(TraceSurfaceFillColorProperty);
+        }
+        set
+        {
+            SetValue(TraceSurfaceFillColorProperty, value);
         }
     }
 }
