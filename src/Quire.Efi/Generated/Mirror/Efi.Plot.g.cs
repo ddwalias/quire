@@ -14,15 +14,5 @@ public static partial class Plot
     [global::Quire.Mirror.MirrorStub]
     public static object eval_xy_plot(int x_tag_signed, object x, object y, object[] free, object[] points) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static object format_xy_plot(global::Quire.Mcd.DimVal kind, global::Quire.Mcd.DimVal xs, global::Quire.Mcd.DimVal ys) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object parametric_plot(global::Quire.Mcd.DimVal xf, global::Quire.Mcd.DimVal yf, global::Quire.Mcd.DimVal points) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object range_eval(global::Quire.Mpl.Run.Function f, object args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object contour(int origin, object data, object scale, object grid, object limits, object levels, object[] param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object plot3d_(int origin, object exp, object scale, object limits, object gridn, object[] param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static object validate_plot_limit(global::Quire.Mcd.DimVal x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

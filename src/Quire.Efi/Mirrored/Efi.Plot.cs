@@ -107,4 +107,35 @@ public static partial class Plot
         }
         return plotTools.EliminateNearPoints(ref xs, ref ys, num);
     }
+
+    public static object format_xy_plot(DimVal kind, DimVal xs, DimVal ys)
+    {
+        Plot2D plot2D = new Plot2D();
+        return plot2D.format_xy_plot(kind, xs, ys);
+    }
+
+    public static object parametric_plot(DimVal xf, DimVal yf, DimVal points)
+    {
+        Plot2D plot2D = new Plot2D();
+        return plot2D.parametric_plot(xf, yf, points);
+    }
+
+    public static object range_eval(Function f, object args)
+    {
+        Plot2D plot2D = new Plot2D();
+        return plot2D.range_eval(f, args);
+    }
+
+    public static object contour(int origin, object data, object scale, object grid, object limits, object levels, object[] param)
+    {
+        Contour contourPlot = new Contour(origin, data, scale, limits, grid, levels, param);
+        return contourPlot.plot_Contour();
+    }
+
+    public static object plot3d_(int origin, object exp, object scale, object limits, object gridn, object[] param)
+    {
+        Plot3D plot3D = new Plot3D(origin, exp, scale, limits, gridn, param);
+        return plot3D.eval_3d_plot();
+    }
+
 }
