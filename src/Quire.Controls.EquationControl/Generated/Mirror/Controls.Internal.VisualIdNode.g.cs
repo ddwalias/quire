@@ -12,14 +12,6 @@ namespace Quire.Controls.Internal;
 internal partial class VisualIdNode : global::Quire.Controls.Internal.VisualMathNode, global::Quire.EquationEditor.View.IVisualIdNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.FormattedString Identifier { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::Quire.Controls.Core.IdLabels> IdLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<double> CharacterWidths { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.Tree.INodeInfo NodeInfo { get => base.NodeInfo; set => base.NodeInfo = value; }
-    [global::Quire.Mirror.MirrorStub]
     public override double TextBaselineY { get => base.TextBaselineY; }
     [global::Quire.Mirror.MirrorStub]
     public override double EffectiveBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
