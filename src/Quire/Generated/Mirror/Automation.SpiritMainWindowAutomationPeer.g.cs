@@ -11,6 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Spirit.Automation.SpiritMainWindowAutomationPeer, MathcadPrime")]
 public partial class SpiritMainWindowAutomationPeer : global::System.Windows.Automation.Peers.WindowAutomationPeer
 {
-    [global::Quire.Mirror.MirrorStub]
-    public SpiritMainWindowAutomationPeer(global::Quire.SpiritMainWindow owner) : base(default(global::System.Windows.Window)) { }
 }
