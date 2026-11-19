@@ -11,33 +11,6 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputControlClearScriptEngine, Ptc.Controls.EquationControl")]
 public abstract partial class InputControlClearScriptEngine : global::Quire.Controls.InputControls.InputControlScriptingEngine
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected const string ClearScriptError = "'Microsoft.ClearScript.Undefined'";
-    [global::Quire.Mirror.MirrorStub]
-    protected const string ClearScriptLineError = "[unknown]:";
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Microsoft.ClearScript.Windows.WindowsScriptEngine _scriptEngine;
-    [global::Quire.Mirror.MirrorStub]
-    protected int _linesCountErrorCurrection;
-    [global::Quire.Mirror.MirrorStub]
-    private const int MinPropertiesHashSize = 7;
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool ShouldEngineInit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override string ParseScriptEngineException(global::System.Exception ex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected string ParseClearScriptEngineGenericException(global::System.Exception ex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected string ParseClearScriptEngineException(global::Microsoft.ClearScript.ScriptEngineException ex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected bool IsScriptingItemExists(string item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void CreateScriptEngine(global::Quire.Controls.InputControls.ScriptEngines clearScriptEngine) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Dispose() { }
-    [global::Quire.Mirror.MirrorStub]
-    protected InputControlClearScriptEngine() { }
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputControlClearScriptEngine+ClearScriptEngineWindow, Ptc.Controls.EquationControl")]
     internal partial class ClearScriptEngineWindow : global::Microsoft.ClearScript.Windows.IHostWindow
     {
