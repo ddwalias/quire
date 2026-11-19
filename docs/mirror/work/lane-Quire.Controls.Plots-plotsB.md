@@ -176,3 +176,9 @@
 - Exact (3): `PlotCameraType`, `TraceSymbol`, `TraceLineStyle` (dependency-property accessors). Their generated declarations are removed from the generated file by hand. This file did not exist in HEAD, so nothing earlier was overwritten.
 - Not written (stubs kept): `TraceColor`, `TraceLineWeight`, `TraceSurfaceFillColor` (bodies not yet read), the constructor and static initializers, the trackball and widget members, and the rest of the type.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 2176 checked, 0 failures.
+
+## Batch 27 — PlotControl3D (trace style accessors)
+
+- Exact (3 more, 6 total in this type): `TraceColor`, `TraceLineWeight`, `TraceSurfaceFillColor`, appended to the hand-written PlotControl3D file, with their generated declarations removed by hand.
+- Not written (stubs kept): `Trackball` (uses the view model's mouse handlers and the graph viewport), `AxesWidget`, `GraphImageFileNameForPrintXamlSerialization`, `CalculatableChildren`, `RegionBorder`, `CameraControlState`, `AxesWidgetHost`, `ViewModel`, `HideFromCalculationContext`, `ErrorIsNotNull`, `ErrorMessage`, `AxesWidgetZAxis`, the constructor and static initializers, and the rest of the type.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 2331 checked, 0 failures.
