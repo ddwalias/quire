@@ -14,15 +14,7 @@ public partial class CalculationWarningRibbonBar : global::Fluent.RibbonGroupBox
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty WarningsTypesFilterProperty;
     [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Panel SystemRedefinitionWarningsGroup;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Panel UserRedefinitionWarningsGroup;
-    [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.WarningsTypesToShow WarningsTypesFilter { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
     public CalculationWarningRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
