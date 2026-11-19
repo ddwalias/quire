@@ -14,53 +14,20 @@ public partial class Zoom : global::System.Windows.Controls.UserControl, global:
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand ApplyZoomCommand;
     [global::Quire.Mirror.MirrorStub]
-    private const double DefaultZoomValue = 1.3d;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ZoomValueProperty;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TextBlock displayedValue;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Primitives.RepeatButton decreaseZoomButton;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Slider slider;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Primitives.RepeatButton increaseZoomButton;
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    public double ZoomValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private double MinZoomValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private double MaxZoomValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public Zoom() { }
-    [global::Quire.Mirror.MirrorStub]
-    private void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ChangeZoomBySteps(int steps) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ChangeZoom(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void slider_ValueChanged(object sender, global::System.Windows.RoutedPropertyChangedEventArgs<double> e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void slider_MouseDoubleClick(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void HandleZoomValueChange(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static double SliderValueToZoom(double sliderValue, double minSliderValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static double ZoomToSliderValue(double zoom, double minSliderValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DecreaseZoomLarge(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void IncreaseZoomLarge(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IStyleConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleZoomValueChange(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Spirit.Zoom+ZoomType, MathcadPrime")]
     public enum ZoomType
