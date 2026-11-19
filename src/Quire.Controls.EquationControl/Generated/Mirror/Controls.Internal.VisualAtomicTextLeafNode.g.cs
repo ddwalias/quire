@@ -22,21 +22,11 @@ internal partial class VisualAtomicTextLeafNode : global::Quire.Controls.Interna
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.Tree.INodeInfo NodeInfo { get => base.NodeInfo; set => base.NodeInfo = value; }
     [global::Quire.Mirror.MirrorStub]
-    protected string AtomicText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected double LeftMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected double RightMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public override double TextBaselineY { get => base.TextBaselineY; }
-    [global::Quire.Mirror.MirrorStub]
-    public override double EffectiveBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override double EffectiveScriptBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Rect ScreenInkBounds { get => base.ScreenInkBounds; }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Rect SymbolBounds { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Windows.Media.Geometry Geometry { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
