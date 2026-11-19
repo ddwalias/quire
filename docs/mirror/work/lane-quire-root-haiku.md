@@ -77,3 +77,8 @@
 - AboutWindow: `_spiritMainWindow` field, `EngineVersion` getter, `Hyperlink_RequestNavigate` (try/catch with a non-empty catch, matched). Parked: `.ctor` (calls XAML `InitializeComponent`), `InitializeComponent`, `Connect`, `_this`, `_contentLoaded` (XAML).
 - ButtonDropDownSelection: `EndInit`, `.ctor` (matched). Parked: `childButton_Checked` (uses `DevComponents.WpfRibbon.ButtonDropDown.IsChecked`; the Quire base is `Fluent.DropDownButton`, which has no such property).
 - Release IL: PASS (`--project Quire`), 786 checked, 0 failures.
+
+## Batch 12 — AddonsLoaderHelper
+
+- LoadLibrary, GetProcAddress, FreeLibrary: `[DllImport("kernel32.dll")] extern` declarations (the original is `pinvokeimpl("kernel32.dll" winapi)`); the gate passes with the default marshalling.
+- Release IL: PASS (`--project Quire`), 789 checked, 0 failures.

@@ -11,10 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.AddonsLoaderHelper, MathcadPrime")]
 internal static partial class AddonsLoaderHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static nint LoadLibrary(string dllToLoadPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static nint GetProcAddress(nint hModule, string procedureName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool FreeLibrary(nint hModule) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
