@@ -42,10 +42,6 @@ internal partial class VerticalFence : global::Quire.Controls.Internal.Fence
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Internal.VerticalFence CreateRightBracket() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Internal.VerticalFence CreateLeftAngleBracket() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Internal.VerticalFence CreateRightAngleBracket() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Internal.VerticalFence CreateVerticalLine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Internal.VerticalFence CreateDoubleVerticalLine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

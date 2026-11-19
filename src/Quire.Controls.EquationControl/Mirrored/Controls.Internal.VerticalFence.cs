@@ -66,4 +66,14 @@ internal partial class VerticalFence
     {
         e.Handled = true;
     }
+
+    public static VerticalFence CreateLeftAngleBracket()
+    {
+        return new VerticalFence((char)10216);
+    }
+
+    public static VerticalFence CreateRightAngleBracket()
+    {
+        return new VerticalFence((char)10217);
+    }
 }
