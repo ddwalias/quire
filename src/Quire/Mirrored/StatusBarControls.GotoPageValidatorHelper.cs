@@ -6,6 +6,8 @@ namespace Quire.StatusBarControls;
 
 public partial class GotoPageValidatorHelper
 {
+    public GotoPageValidatorHelper() { }
+
     public static readonly DependencyProperty TotalPagesProperty = DependencyProperty.Register(
         "TotalPages",
         typeof(int),

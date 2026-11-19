@@ -11,6 +11,4 @@ namespace Quire.StatusBarControls;
 [global::Quire.Mirror.MirrorOf("Spirit.StatusBarControls.GotoPageValidatorHelper, MathcadPrime")]
 public partial class GotoPageValidatorHelper : global::System.Windows.Freezable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public GotoPageValidatorHelper() { }
 }

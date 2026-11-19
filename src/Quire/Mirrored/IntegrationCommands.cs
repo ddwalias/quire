@@ -9,6 +9,8 @@ namespace Quire;
 
 public partial class IntegrationCommands
 {
+    private bool _wcEnable;
+
     public static readonly DependencyProperty PTCPlacesEnableProperty = DependencyProperty.Register("PTCPlacesEnable", typeof(bool), typeof(IntegrationCommands), new PropertyMetadata((object)false, (PropertyChangedCallback)PtcPlacesEnableChanged));
 
     private static readonly IntegrationCommands _instance = new IntegrationCommands();

@@ -8,6 +8,8 @@ namespace Quire;
 
 public partial class SpiritOptions
 {
+    private bool _EnableGettingStartedTab;
+
     private static readonly SpiritOptions _instance = new SpiritOptions();
 
     public const string EnableGettingStartedTabPropertyName = "EnableGettingStartedTab";

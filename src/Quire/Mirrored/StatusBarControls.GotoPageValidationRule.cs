@@ -8,6 +8,8 @@ namespace Quire.StatusBarControls;
 
 public partial class GotoPageValidationRule
 {
+    public GotoPageValidationRule() { }
+
     private GotoPageValidatorHelper _helper;
 
     public int TotalPages { get; set; }

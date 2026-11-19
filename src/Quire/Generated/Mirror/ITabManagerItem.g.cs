@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.ITabManagerItem, MathcadPrime")]
 public partial interface ITabManagerItem
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.WindowTabTupleData WrappedItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

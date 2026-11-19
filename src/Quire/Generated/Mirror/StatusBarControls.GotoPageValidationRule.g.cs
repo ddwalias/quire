@@ -11,6 +11,4 @@ namespace Quire.StatusBarControls;
 [global::Quire.Mirror.MirrorOf("Spirit.StatusBarControls.GotoPageValidationRule, MathcadPrime")]
 public partial class GotoPageValidationRule : global::System.Windows.Controls.ValidationRule
 {
-    [global::Quire.Mirror.MirrorStub]
-    public GotoPageValidationRule() { }
 }

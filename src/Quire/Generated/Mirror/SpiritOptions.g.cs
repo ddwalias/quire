@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.SpiritOptions, MathcadPrime")]
 public partial class SpiritOptions : global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    private bool _EnableGettingStartedTab;
 }

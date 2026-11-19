@@ -11,10 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.LICINFO, MathcadPrime")]
 public partial struct LICINFO
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int cbLicInfo;
-    [global::Quire.Mirror.MirrorStub]
-    public int fRuntimeKeyAvail;
-    [global::Quire.Mirror.MirrorStub]
-    public int fLicVerified;
 }

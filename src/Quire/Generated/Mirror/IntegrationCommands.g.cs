@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.IntegrationCommands, MathcadPrime")]
 public partial class IntegrationCommands : global::System.Windows.DependencyObject, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    private bool _wcEnable;
 }

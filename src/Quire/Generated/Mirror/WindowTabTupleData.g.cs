@@ -12,7 +12,5 @@ namespace Quire;
 public partial class WindowTabTupleData : global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
-    private int _order;
-    [global::Quire.Mirror.MirrorStub]
     public string Header { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

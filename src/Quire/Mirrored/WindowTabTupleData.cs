@@ -8,6 +8,8 @@ namespace Quire;
 
 public partial class WindowTabTupleData : INotifyPropertyChanged
 {
+    private int _order;
+
     public LayoutAnchorable Wnd { get; private set; }
 
     public int Order
