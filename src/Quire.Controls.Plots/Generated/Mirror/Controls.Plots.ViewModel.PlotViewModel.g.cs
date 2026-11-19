@@ -34,14 +34,6 @@ internal partial class PlotViewModel : global::Quire.Controls.Core.ViewModelBase
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.ViewModel.MarkersViewModel Markers { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool ShowAxisExpressions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.Controls.Plots.Presenter.IPlotTrace> SelectedTraces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::System.Windows.Media.Color> SelectedColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::Quire.Controls.Plots.Presenter.LineStyle> SelectedLineStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<double> SelectedLineWeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -83,19 +75,5 @@ internal partial class PlotViewModel : global::Quire.Controls.Core.ViewModelBase
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.PlotViewModel+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames
     {
-        [global::Quire.Mirror.MirrorStub]
-        public const string IsActive = "IsActive";
-        [global::Quire.Mirror.MirrorStub]
-        public const string SelectedTraces = "SelectedTraces";
-        [global::Quire.Mirror.MirrorStub]
-        public const string SelectedColor = "SelectedColor";
-        [global::Quire.Mirror.MirrorStub]
-        public const string SelectedLineStyle = "SelectedLineStyle";
-        [global::Quire.Mirror.MirrorStub]
-        public const string SelectedLineWeight = "SelectedLineWeight";
-        [global::Quire.Mirror.MirrorStub]
-        public const string SelectedTracesType = "SelectedTracesType";
-        [global::Quire.Mirror.MirrorStub]
-        public const string SelectedTracesSymbol = "SelectedTracesSymbol";
     }
 }
