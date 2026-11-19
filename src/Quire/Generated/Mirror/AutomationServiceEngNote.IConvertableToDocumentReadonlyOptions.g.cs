@@ -11,6 +11,4 @@ namespace Quire.AutomationServiceEngNote;
 [global::Quire.Mirror.MirrorOf("Spirit.AutomationServiceEngNote.IConvertableToDocumentReadonlyOptions, MathcadPrime")]
 internal partial interface IConvertableToDocumentReadonlyOptions
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Controls.Core.DocumentReadonlyOptions ConvertToDocumentReadonlyOptions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
