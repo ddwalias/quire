@@ -12,18 +12,6 @@ namespace Quire;
 public partial class AutomationSpiritValuesSetter : global::Quire.Automation.IMathcadPrimeValuesSetter
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.IORegions.IValuesSetter _collection;
-    [global::Quire.Mirror.MirrorStub]
-    public AutomationSpiritValuesSetter(global::Quire.Controls.Core.IORegions.IValuesSetter collection) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void AddScalarValue(string aliasArg, double valueArg, string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddMatrixValue(string aliasArg, object[,] valueArg, string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddStringValue(string aliasArg, string valueArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddSExprValue(string aliasArg, string sexpressionArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Automation.IMathcadPrimeSetValueResults SetValues(int secondsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.IORegions.ISetValueResults DoSetValues(int seconds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
