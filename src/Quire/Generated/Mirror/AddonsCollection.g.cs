@@ -40,11 +40,7 @@ public partial class AddonsCollection
     [global::Quire.Mirror.MirrorStub]
     private void ForcePtcPlacesEnableIfNeeds() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void CallAddonsOnDocumentModified(string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public string CallAddonsToGetResolvedFileNameForOpen(string openedFileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string CallAddonsToGetResolvedFileNameForSave(string savedFileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void CallAddonsOnOpenDialogOpening(ref global::Microsoft.Win32.OpenFileDialog ofd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -71,12 +67,6 @@ public partial class AddonsCollection
     public bool CallAddonsToGeneratePdfFile(global::Quire.Controls.Core.IEngineeringDocument doc, string pdfFile) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void CopyViewable(object tempPdfFile) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool CallAddonsToCheckIfCwdShouldBeUpdated(string directoryPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool CallAddonsSaveToPtcServer(string currentDocumentPath, string newDocumentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string GetActiveAddOnId() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void CallAddonsWhenDocumentOpened(global::Quire.Controls.Core.IEngineeringDocument doc, string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -1,3 +1,5 @@
+using System.IO;
+
 namespace Quire;
 
 public partial class AddonsCollection
@@ -81,5 +83,65 @@ public partial class AddonsCollection
         {
             addon.CallAddonWhenDocumentSaved(documentPath);
         }
+    }
+
+    public void CallAddonsOnDocumentModified(string documentPath)
+    {
+    }
+
+    public string CallAddonsToGetResolvedFileNameForSave(string savedFileName)
+    {
+        return savedFileName;
+    }
+
+    public bool CallAddonsSaveToPtcServer(string currentDocumentPath, string newDocumentPath)
+    {
+        bool saved = false;
+        foreach (Addon addon in _addonsCollection)
+        {
+            saved = addon.CallAddonSaveToPtcServer(currentDocumentPath, newDocumentPath);
+            if (saved)
+            {
+                break;
+            }
+        }
+
+        return saved;
+    }
+
+    public bool CallAddonsToCheckIfCwdShouldBeUpdated(string directoryPath)
+    {
+        bool shouldBeUpdated = true;
+        if (IsAddonsCollectionNotEmpty())
+        {
+            try
+            {
+                string defaultDirectory = CallAddonsToGetDefaultDirectory(0);
+                if (!string.IsNullOrEmpty(defaultDirectory))
+                {
+                    shouldBeUpdated = !Path.GetFullPath(defaultDirectory).TrimEnd('\\').Equals(Path.GetFullPath(directoryPath).TrimEnd('\\'), StringComparison.InvariantCultureIgnoreCase);
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        return shouldBeUpdated;
+    }
+
+    private string GetActiveAddOnId()
+    {
+        string addOnId = string.Empty;
+        foreach (Addon addon in _addonsCollection)
+        {
+            if (addon.CallAddonToCheckIsAddOnActive())
+            {
+                addOnId = addon.AddOnId;
+                break;
+            }
+        }
+
+        return addOnId;
     }
 }
