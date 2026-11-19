@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.CultureHelper, MathcadPrime")]
 public static partial class CultureHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Globalization.CultureInfo Invariant { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

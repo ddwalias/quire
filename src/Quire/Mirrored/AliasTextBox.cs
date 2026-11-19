@@ -19,4 +19,6 @@ public partial class AliasTextBox
 
         base.OnMouseDown(e);
     }
+
+    public AliasTextBox() { }
 }

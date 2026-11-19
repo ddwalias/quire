@@ -32,3 +32,10 @@
 - SavedDateIsCheckedConverter: `Convert` (`value as ISavedDateControl != null` shape), `ConvertBack`, field `DateFormatsDictionary`. Parked: `.ctor` stays a stub; Mathcad stores the dictionary before the base `Object` constructor call, which C# cannot emit.
 - StyleFontFamilyValidationRule: `.ctor` only. Parked: `Validate` stays a stub; Mathcad shares one failure return and branches to the valid return with `brtrue` after a `FirstOrDefault` closure. The `if (found != null) return Valid` form and the ternary both produced `brfalse`.
 - Release IL: PASS (`--project Quire`), 752 checked, 0 failures.
+
+## Batch 5 — AliasTextBox, CultureHelper (first half of the split)
+
+- Split: this worker keeps generated files from AboutWindow through DropDownSelector.g.cs; the second worker takes DropDownSelectorItem through Zoom.
+- AliasTextBox: `.ctor`. CultureHelper: `Invariant` getter (`CultureInfo.InvariantCulture`).
+- Parked, same file group: AliasTextBox `PreMouseDown` event (Interlocked add/remove) stays generated.
+- Release IL: PASS (`--project Quire`), 753 checked, 0 failures.

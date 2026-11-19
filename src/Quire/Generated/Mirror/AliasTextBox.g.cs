@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.AliasTextBox, MathcadPrime")]
 public partial class AliasTextBox : global::System.Windows.Controls.TextBox
 {
-    [global::Quire.Mirror.MirrorStub]
-    public AliasTextBox() { }
 }
