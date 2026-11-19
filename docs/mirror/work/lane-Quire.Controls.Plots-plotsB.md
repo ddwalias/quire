@@ -80,3 +80,10 @@
 - Exact (24): `RadiusRatio`, `Radius`, `TickOffset`, `RadiusWTickOffset`, `Position`, `IsDiscrete`, `Helper`, static `.cctor` (0 to 360 metadata), `.ctor`, `GetTickMarkElementPosition`, `ArrangeOverride`, `SetTicksExpressionsEqnVisibility`, `MeasureOverride`, `OnRender`, `SecondTickExpressionEqn_NavigateOffOfEquation`, `Draw`, `GetTickmarksGeometry`, `GetTickLine`, `AxisCircleGeometry`, `GetTickMarkPositionByAngle`, `GetTickMarkPositionByIndex`, `DrawNumbers`, `ShouldArrangeConvertedEquationsHorizontally`.
 - Not yet attempted (still generated stubs, not parked): `HitTestCore` and `CollectElementsForTraversal` (iterator), the nested `Point2ScreenHelperImpl`, `ClipBounds`, `GetAxisEffectiveStart`/`End`, `GetAxisStartPosition`/`EndPosition` overrides, `TickMarksChanged`, `HandleOrientationChanged`, `PositionTickMarkChanged`, `UpdateAxisOriginPositions`, `MouseMoveDraw`, `MoveToValue`, `MoveByValue`, `FindClosestTickValueToZero`, `ApplyTickNumber`.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 1553 checked, 0 failures.
+
+## Batch 12 — PlotTrace3D
+
+- Exact (16): static `.cctor` (`_emptyPoint3DCollection`, written as a static constructor because the generated field has no initializer), `BaseLineThickness`, `ShouldShowSymbols`, `ShouldShowLines`, `ViewModel`, `RenderThickness`, `RenderColor`, `Thickness`, `SurfaceFill`, `LineStyle`, `Symbol`, `Visual`, `VisualChanged`, `ViewModelPropertyChanged` (string switch), `UpdateLineWeight`, `UpdateColor`.
+- Held (one attempt, first write): `.ctor(IPlotTraceViewModel3D)`: the `_baseLineThickness = 1.0` initializer inside the constructor body and the field order differ from Mathcad's.
+- Not yet attempted (still generated stubs): `FireVisualChanged`, `AddOrRemoveFromVisual`, `UpdateLineStyle`, `UpdateSymbol`, `UpdateSurfaceFill`, `CreateSolidMesh`, `UpdateVisualData`. `Dispose` remains its generated `{ }` body.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 1575 checked, 0 failures.
