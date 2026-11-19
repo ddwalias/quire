@@ -14,36 +14,6 @@ internal partial class PlotTraceViewModel3D : global::Quire.Controls.Plots.Plot3
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D _model;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.ICalculatableInfo CalculatableInfo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Plot3D.Model.PlotTraceVisualData3D VisualData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Rect3D CommonRange { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Color Color { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Presenter.TraceSymbol Symbol { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double SymbolWeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double LineWeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::System.Windows.Media.Color> SurfaceFill { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Color RenderColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Presenter.LineStyle LineStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsStyleAutomatic { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int NumberOfPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsNumOfPointsMutable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Plot3D.Model.TraceType3D VisualDataTypeOrDefault { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsInPrinting { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
     public PlotTraceViewModel3D(global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D model) { }
@@ -68,25 +38,5 @@ internal partial class PlotTraceViewModel3D : global::Quire.Controls.Plots.Plot3
     [global::System.Runtime.InteropServices.StructLayout(global::System.Runtime.InteropServices.LayoutKind.Sequential, Size = 1)]
     public partial struct PropertyNames
     {
-        [global::Quire.Mirror.MirrorStub]
-        public const string Color = "Color";
-        [global::Quire.Mirror.MirrorStub]
-        public const string RenderColor = "RenderColor";
-        [global::Quire.Mirror.MirrorStub]
-        public const string LineWeight = "LineWeight";
-        [global::Quire.Mirror.MirrorStub]
-        public const string LineStyle = "LineStyle";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Symbol = "Symbol";
-        [global::Quire.Mirror.MirrorStub]
-        public const string VisualData = "VisualData";
-        [global::Quire.Mirror.MirrorStub]
-        public const string CommonRange = "CommonRange";
-        [global::Quire.Mirror.MirrorStub]
-        public const string SurfaceFill = "SurfaceFill";
-        [global::Quire.Mirror.MirrorStub]
-        public const string NumberOfPoints = "NumberOfPoints";
-        [global::Quire.Mirror.MirrorStub]
-        public const string IsNumOfPointsMutable = "IsNumOfPointsMutable";
     }
 }
