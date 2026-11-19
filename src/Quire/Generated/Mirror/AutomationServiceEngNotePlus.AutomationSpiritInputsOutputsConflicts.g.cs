@@ -11,16 +11,4 @@ namespace Quire.AutomationServiceEngNotePlus;
 [global::Quire.Mirror.MirrorOf("Spirit.AutomationServiceEngNotePlus.AutomationSpiritInputsOutputsConflicts, MathcadPrime")]
 public partial class AutomationSpiritInputsOutputsConflicts : global::Quire.EngNotebookPlus.Automation.IMathcadPrimeInputsOutputsConflicts
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.IO.IInputOutputItemsConflicts _conflicts;
-    [global::Quire.Mirror.MirrorStub]
-    public AutomationSpiritInputsOutputsConflicts(global::Quire.Controls.IO.IInputOutputItemsConflicts conflicts) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void AddGeneralWarning(string warningArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddGeneralError(string errorArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddItemWarning(string aliasArg, string warningArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddItemError(string aliasArg, string errorArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
