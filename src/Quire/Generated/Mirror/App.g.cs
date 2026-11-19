@@ -18,8 +18,6 @@ public partial class App : global::System.Windows.Application
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    public static string OpenFileName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private void PrimeStartup(object sender, global::System.Windows.StartupEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ConnectToExistingAppOrInitializeNewWithMutex(bool isEmbedding, bool isEmbeddingObsolete, bool isEmbeddingEngNote, bool isEmbeddingEngNotePlus, out bool shouldExit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -28,8 +26,6 @@ public partial class App : global::System.Windows.Application
     [global::Quire.Mirror.MirrorStub]
     private bool ShowWindowAndInitializeComServer(bool isEmbedding, bool isEmbeddingObsolete, bool isEmbeddingEngNote, bool isEmbeddingEngNotePlus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void RemoveDuplicatedEnvironmentVariables() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static void SetupServiceProviders() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ShowSplashScreenOnDispatcherThread(string imagename) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -37,8 +33,4 @@ public partial class App : global::System.Windows.Application
     private void ShowSplashScreen(string imagename) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void SetupCultureInfo(string culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void LoadAppConfigurations() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public App() { }
 }

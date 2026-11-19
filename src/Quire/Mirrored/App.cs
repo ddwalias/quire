@@ -21,4 +21,23 @@ public partial class App
         app.InitializeComponent();
         app.Run();
     }
+
+    public static string OpenFileName
+    {
+        get => Application.Current.Properties[openFileName] as string;
+        set => Application.Current.Properties[openFileName] = value;
+    }
+
+    private static void RemoveDuplicatedEnvironmentVariables()
+    {
+        new global::Quire.Xml.XmlSerializerCreationWrapper();
+    }
+
+    private void LoadAppConfigurations()
+    {
+        Properties["ShowPrintInProgressDialog"] = true;
+        Properties["CancelPrintInProgress"] = false;
+    }
+
+    public App() { }
 }
