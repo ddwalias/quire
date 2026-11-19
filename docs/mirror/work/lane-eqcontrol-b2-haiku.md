@@ -39,6 +39,12 @@
 Blocker classes seen in this dispatch: lambda closure ordinals (`<>c`), iterator state machines, Roslyn temp/local slot ordering for struct member reads and pattern variables, `!=` vs `==` branch sense for string comparisons, and base helpers that are still stubs.
 Project reference: `DevComponents.WpfRibbon` is still not referenced (FireCanSwitchToLineBreakOperator, VisualMathRegionNode).
 
+## Third dispatch: SpecTableView (placeholder device)
+- All 103 SpecTableView members moved into `Mirrored/Controls.SpecTableView.cs` in Mathcad order, with `[MirrorStub]` removed from the generated file (now an empty class body).
+- Exact (Release IL, not in the mismatch list): constructor, command binding and editing-command members, the cut/copy/clear/delete handlers, traversal and focus helpers, AddChild, Clear, ActiveCell/ActiveCells/SelectedCells/IsSelected, the visibility helpers, selection and mouse handlers, SelectCells, GetStartEndCellIndices, FireCellAdded, the event fire members.
+- Unmarked placeholders (blocker named): `CellCount` and `MathFormat`/`DeserializeLabeledIdFormat`/`DeserializeMathFormat` (auto-property backing fields and base call), `VerticalAlignmentOffset` (constant shape `2.0` vs `0.0` in the first comparison), `GetChildrenInRowMajorOrder` (iterator: Quire names the state machine `d__107`, Mathcad `d__89`; the placeholder device does not shift it, so the ordinal offset is 18 in the hand-written partial), `OnRender` (pen local slot 5 vs 1), `HandleDeleteCommand`, `HandleCellCommandWithDirectionParameter`, `HandleTraverseForward`, `HandleBackwardsTraverse` (`brtrue`/`brfalse` sense of the null-test), `UpdateAdornerLocationToSelectedCells` (local slot 7 vs 0), `ClearOvertypeAdorner` (`callvirt` vs `call` on AdornerLayer.Remove), `SetDeserializedMathFormatData` (branch sense of the null test).
+- SpecTableControl: not started in the third dispatch (92 stubs; decompile is 1299 lines, with closures in `HideFromCalculationContext` and `SearchableRegions`; needs the placeholder device).
+
 ## Remaining
 
 - Stub attributes left in the 21 files at this checkpoint: 678 (was 763 before the second dispatch).
