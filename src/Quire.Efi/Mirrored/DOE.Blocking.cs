@@ -79,6 +79,44 @@ public partial class Blocking
         return m_dmat;
     }
 
+    public int[] getBlocking()
+    {
+        Permutations permutations = new Permutations(m_bgens.Length, keepOldOrder: true);
+        double[,] allPermutations = permutations.getAllPermutations();
+        int[] array = new int[m_dmat.GetLength(0)];
+        for (int i = 0; i < m_dmat.GetLength(0); i++)
+        {
+            int[] array2 = new int[m_bgens.Length];
+            for (int j = 0; j < m_bgens.Length; j++)
+            {
+                m_utils.getGenIndices(m_bgens[j], out var findx);
+                int num = 1;
+                for (int k = 0; k < findx.Length; k++)
+                {
+                    num *= (int)m_dmat[i, findx[k]];
+                }
+                array2[j] = num;
+            }
+            for (int l = 0; l < allPermutations.GetLength(0); l++)
+            {
+                int num2 = 1;
+                for (int m = 0; m < allPermutations.GetLength(1); m++)
+                {
+                    if (allPermutations[l, m] != (double)array2[m])
+                    {
+                        num2 = 0;
+                        break;
+                    }
+                }
+                if (num2 == 1)
+                {
+                    array[i] = l;
+                }
+            }
+        }
+        return array;
+    }
+
     public void getBlockMatrix(out MatVal dmat)
     {
         int[] blocking = getBlocking();

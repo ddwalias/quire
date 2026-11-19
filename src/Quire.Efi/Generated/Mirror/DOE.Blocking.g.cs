@@ -11,6 +11,4 @@ namespace Quire.DOE;
 [global::Quire.Mirror.MirrorOf("DOE.Blocking, efisixsigma_")]
 public partial class Blocking : global::Quire.DOE.DoeBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int[] getBlocking() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
