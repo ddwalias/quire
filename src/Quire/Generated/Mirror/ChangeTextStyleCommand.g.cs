@@ -11,8 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.ChangeTextStyleCommand, MathcadPrime")]
 internal partial class ChangeTextStyleCommand : global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.TextStyleData _newTextStyleData;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.TextStyleData _oldTextStyleData;
 }

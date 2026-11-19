@@ -35,4 +35,7 @@ internal partial class ChangeTextStyleCommand
     }
 
     private readonly global::Quire.Controls.Core.ITextStylesManager _textStylesManager;
+
+    private readonly global::Quire.TextStyleData _newTextStyleData;
+    private readonly global::Quire.TextStyleData _oldTextStyleData;
 }

@@ -35,4 +35,7 @@ internal partial class DeleteTextStyleCommand
     }
 
     private readonly global::Quire.Controls.Core.ITextStylesManager _textStylesManager;
+
+    private readonly global::Quire.TextStyleData _deleteTextStyleData;
+    private readonly int _deleteTextStyleDataIndex;
 }

@@ -11,28 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.CustomMarginsViewModel, MathcadPrime")]
 internal partial class CustomMarginsViewModel : global::Quire.Controls.Core.ViewModelBaseWithDataErrors
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.WorksheetPageLayout _currentPageLayout;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Size _maxPageMarginsRestriction;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Thickness _minPageMarginsRestriction;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<global::System.Windows.Thickness> _fixMargins;
-    [global::Quire.Mirror.MirrorStub]
-    private string _leftMarginText;
-    [global::Quire.Mirror.MirrorStub]
-    private double _leftMargin;
-    [global::Quire.Mirror.MirrorStub]
-    private string _topMarginText;
-    [global::Quire.Mirror.MirrorStub]
-    private double _topMargin;
-    [global::Quire.Mirror.MirrorStub]
-    private string _rightMarginText;
-    [global::Quire.Mirror.MirrorStub]
-    private double _rightMargin;
-    [global::Quire.Mirror.MirrorStub]
-    private string _bottomMarginText;
-    [global::Quire.Mirror.MirrorStub]
-    private double _bottomMargin;
 }

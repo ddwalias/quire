@@ -58,3 +58,9 @@
 - ColumnViewModel: `_isCollectionInitialized` field declaration.
 - CompositSymbolDescriptorCollection: `Collections` auto-property and `.ctor`. Parked: `GetEnumerator` (C# iterator with a ResourceDictionary inner loop; its compiler-generated state machine is not reproduced).
 - Release IL: PASS (`--project Quire`), 782 checked, 0 failures.
+
+## Batch 9 — field declarations (ChangeTextStyleCommand, DeleteTextStyleCommand, CustomMarginsViewModel)
+
+- Moved the remaining field stubs into the hand-written partials (no initializers, no IL change).
+- Release IL: PASS (`--project Quire`), 782 checked, 0 failures.
+- Parked: DimensionEditDialogViewModel fields. Moving them into the hand-written partial made `get_UnitDataSource`'s lambda ordinals (`<get_UnitDataSource>b__4_0`, Mathcad `b__10_0`) differ; left as stubs for a compile-order pass.

@@ -277,4 +277,17 @@ internal partial class CustomMarginsViewModel
     {
         return new Thickness(DisplayUnitsUtils.DipsToDisplayUnits(margins.Left, _currentPageLayout.PageSizeUnits), DisplayUnitsUtils.DipsToDisplayUnits(margins.Top, _currentPageLayout.PageSizeUnits), DisplayUnitsUtils.DipsToDisplayUnits(margins.Right, _currentPageLayout.PageSizeUnits), DisplayUnitsUtils.DipsToDisplayUnits(margins.Bottom, _currentPageLayout.PageSizeUnits));
     }
+
+    private readonly global::Quire.Controls.Core.WorksheetPageLayout _currentPageLayout;
+    private readonly global::System.Windows.Size _maxPageMarginsRestriction;
+    private readonly global::System.Windows.Thickness _minPageMarginsRestriction;
+    private global::System.Nullable<global::System.Windows.Thickness> _fixMargins;
+    private string _leftMarginText;
+    private double _leftMargin;
+    private string _topMarginText;
+    private double _topMargin;
+    private string _rightMarginText;
+    private double _rightMargin;
+    private string _bottomMarginText;
+    private double _bottomMargin;
 }
