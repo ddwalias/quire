@@ -4,26 +4,19 @@
 - Branch: `feature/mslisp-agy`.
 - Target: `src/Quire.Mslisp` (C++/CLI under `MixedMode/`, MSVC 19.51.36246, D19/D20).
 
-## Landed in Batch 1
+## Landed Commits
 
-- Established the original-language C++/CLI project split for `Quire.Mslisp` mapped to `mslisp.dll` (`Quire.Mslisp.csproj` and `MixedMode/Quire.Mslisp.vcxproj`).
-- `mslisp.Stream`: `Write(string)`, `WriteLine(string)`.
-- `mslisp.ConsoleStream`: constructor, `Write(string)`, `WriteLine(string)`.
-- `mslisp.DebugStream`: constructor, `Write(string)`, `WriteLine(string)`.
-- `mslisp.Condition`: constructors `Condition(string, object)`, `Condition(string)`, `Condition(object[])`.
-- `mslisp.Symbol`: `get_name()`, `get_fullname()`, `get_package()`, `get_value()`, `set_value(object)`, `not_set()`, `get_Base()`, `get_Tag()`, `get_Labels()`, `get_Wild()`, `WithWild(bool)`.
+- `4698f51dc` (Batch 1): Established original-language C++/CLI project split for `Quire.Mslisp` (`Quire.Mslisp.csproj` and `MixedMode/Quire.Mslisp.vcxproj`); mirrored `mslisp.Stream`, `mslisp.ConsoleStream`, `mslisp.DebugStream`, `mslisp.Condition`, `mslisp.Symbol`.
+- `66f5478bc` (Batch 2): Mirrored `mslisp.Func0` .. `mslisp.Func6`, `mslisp.BuiltinDelegate`, `mslisp.GenCall`, `mslisp.FileStream`, `mslisp.TaggedSymbol`, `mslisp.SymbolImp`, `mslisp.Package`, `mslisp._fcomparer`.
 
-## Batch 2
+## Release IL Report & Gates
 
-- `mslisp.Func0` .. `mslisp.Func6`: delegates (`.ctor`, `Invoke`, `BeginInvoke`, `EndInvoke`).
-- `mslisp.BuiltinDelegate`: delegate (`.ctor`, `Invoke(object[])`, `BeginInvoke`, `EndInvoke`).
-- `mslisp.GenCall`: `Emit(ILGenerator, short)`.
-- `mslisp.FileStream`: `GetMutex(string)`, `TryDelete(string)`, constructor, `Write(string)`, `WriteLine(string)`, class constructor.
-- `mslisp.TaggedSymbol`: constructor, `ToString()`, `get_name()`, `get_fullname()`, `get_package()`, `get_value()`, `set_value(object)`, `not_set()`, `get_Base()`, `get_Tag()`, `get_Labels()`, `get_Wild()`, `WithWild(bool)`.
-- `mslisp.SymbolImp`: constructors, `GetObjectData`, `ToString()`, `get_name()`, `get_fullname()`, `get_package()`, `get_value()`, `set_value(object)`, `not_set()`, `get_Base()`, `get_Tag()`, `get_Labels()`, `get_Wild()`, `WithWild(bool)`.
-- `mslisp.Package`: constructor, `intern(string)`, `_export(Symbol)`, `_export(string)`, `find_export(string)`, `get_name()`.
-- `mslisp._fcomparer`: constructor, `Compare(object, object)`.
+- Batch 1: PASS, 103 checked, 88 exact, 0 failures, 72 Mathcad `<Module>` members not paired (`.mirror-cache/release-il-1aba42d8ae27/release-il.json`). Merged via `lane_merge.py` (receipt: `gate-il-851996b0cdd6.json`).
+- Batch 2: PASS, 132 checked, 130 exact, 0 failures, 72 Mathcad `<Module>` members not paired (`.mirror-cache/release-il-fbee254d2310/release-il.json`). Merged via `lane_merge.py` (receipt: `gate-il-28dd53bdfe00.json`).
 
-## Release IL report
+## Remaining Members and Actionable Blockers
 
-- `release_il.py --base main --project Quire.Mslisp`: PASS, 132 checked, 130 exact, 0 failures, 72 Mathcad `<Module>` members not paired (`.mirror-cache/release-il-fbee254d2310/release-il.json`).
+All remaining members in `mslisp.dll` are concretely blocked on upstream unmirrored assemblies:
+1. `mspcons-mgd` (`Engine.PCons`): 15 expression types (`mslisp.ApplyExpr`, `mslisp.ArgSpec`, `mslisp.CarExpr`, `mslisp.CdrExpr`, `mslisp.DefmacroExpr`, `mslisp.Env`, `mslisp.HandlerCaseExpr`, `mslisp.IfExpr`, `mslisp.IgnoreErrorsExpr`, `mslisp.LambdaExpr`, `mslisp.MacroExpr`, `mslisp.PrognExpr`, `mslisp.SetfExpr`, `mslisp.StandardBuiltins`, `mslisp.UnwindProtectExpr`), expression executors (`mslisp.FastApp` / `FastApp0`..`6`, `mslisp.LoggedFastApp` / `LoggedFastApp0`..`6`), `mslisp.CodeGen`, `mslisp.LocalVar`, and `mslisp.GlobalVar` require `Engine.PCons` from `mspcons-mgd.dll` (which is deferred in `Quire.Engine.Native` stubs and pending the `Quire.MspconsMgd` project split).
+2. `engutils-mgd` (`PushbackReader`, `PathCache`): `mslisp.InterpreterImp`, `mslisp.Interpreter`, and `mslisp.Factory` depend on `PushbackReader` and `PathCache` from `engutils-mgd.dll` (pending the `Quire.EngutilsMgd` project split).
+3. `<Module>`: 72 compiler/CRT support methods (e.g., `std.basic_ostream`, `std.basic_string`, `utl.ToStrng`, `mslisp.LogIndent`) will resolve automatically with the remaining module dependencies.
