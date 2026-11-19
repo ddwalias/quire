@@ -1,6 +1,7 @@
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <sdkddkver.h>
+#pragma warning(disable: 4100)
 
 namespace Quire { namespace mslisp {
 
@@ -55,6 +56,109 @@ namespace Quire { namespace mslisp {
         }
     };
 
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.FileStream, mslisp")]
+    public ref class FileStream : Stream
+    {
+    private:
+        static System::Collections::Generic::Dictionary<System::String^, Quire::utl_mgd::SafeMutex^>^ s_mutex_map =
+            gcnew System::Collections::Generic::Dictionary<System::String^, Quire::utl_mgd::SafeMutex^>();
+        static Quire::utl_mgd::SafeMutex^ s_map_mutex =
+            gcnew Quire::utl_mgd::SafeMutex("FileStream");
+        System::String^ m_file;
+        Quire::utl_mgd::SafeMutex^ m_mutex;
+
+        static Quire::utl_mgd::SafeMutex^ GetMutex(System::String^ path)
+        {
+            s_map_mutex->WaitOne();
+            try
+            {
+                if (s_mutex_map->ContainsKey(path))
+                {
+                    return s_mutex_map[path];
+                }
+                Quire::utl_mgd::SafeMutex^ safeMutex = gcnew Quire::utl_mgd::SafeMutex(path, 1);
+                s_mutex_map[path] = safeMutex;
+                return safeMutex;
+            }
+            finally
+            {
+                s_map_mutex->ReleaseMutex();
+            }
+        }
+
+        static bool TryDelete(System::String^ f)
+        {
+            Quire::utl_mgd::SafeMutex^ mutex = GetMutex(f);
+            mutex->WaitOne();
+            try
+            {
+                System::IO::File::Delete(f);
+                return true;
+            }
+            catch (System::Exception^)
+            {
+            }
+            finally
+            {
+                mutex->ReleaseMutex();
+            }
+            return false;
+        }
+
+    public:
+        FileStream(System::String^ f)
+        {
+            System::String^ text = f;
+            int num = 0;
+            if (!TryDelete(f))
+            {
+                do
+                {
+                    num++;
+                    System::ValueType^ valueType = num;
+                    text = System::String::Concat(System::String::Concat(f, "."), valueType);
+                }
+                while (!TryDelete(text));
+            }
+            m_file = text;
+            m_mutex = GetMutex(text);
+            System::GC::KeepAlive(this);
+        }
+
+        virtual System::String^ Write(System::String^ s)
+        {
+            try
+            {
+                m_mutex->WaitOne();
+                System::IO::StreamWriter^ streamWriter = System::IO::File::AppendText(m_file);
+                streamWriter->Write(s);
+                streamWriter->Close();
+                return s;
+            }
+            finally
+            {
+                m_mutex->ReleaseMutex();
+            }
+        }
+
+        virtual System::String^ WriteLine(System::String^ s)
+        {
+            try
+            {
+                m_mutex->WaitOne();
+                System::IO::StreamWriter^ streamWriter = System::IO::File::AppendText(m_file);
+                streamWriter->WriteLine(s);
+                streamWriter->Close();
+                return s;
+            }
+            finally
+            {
+                m_mutex->ReleaseMutex();
+            }
+        }
+    };
+
     [Quire::Mirror::MirrorOfAttribute("mslisp.Condition, mslisp")]
     public ref class Condition : System::Exception
     {
@@ -79,6 +183,36 @@ namespace Quire { namespace mslisp {
             arr[1] = handle;
             args = arr;
         }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.Func0, mslisp")]
+    delegate System::Object^ Func0();
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.Func1, mslisp")]
+    delegate System::Object^ Func1(System::Object^ A_0);
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.Func2, mslisp")]
+    delegate System::Object^ Func2(System::Object^ A_0, System::Object^ A_1);
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.Func3, mslisp")]
+    delegate System::Object^ Func3(System::Object^ A_0, System::Object^ A_1, System::Object^ A_2);
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.Func4, mslisp")]
+    delegate System::Object^ Func4(System::Object^ A_0, System::Object^ A_1, System::Object^ A_2, System::Object^ A_3);
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.Func5, mslisp")]
+    delegate System::Object^ Func5(System::Object^ A_0, System::Object^ A_1, System::Object^ A_2, System::Object^ A_3, System::Object^ A_4);
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.Func6, mslisp")]
+    delegate System::Object^ Func6(System::Object^ A_0, System::Object^ A_1, System::Object^ A_2, System::Object^ A_3, System::Object^ A_4, System::Object^ A_5);
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.BuiltinDelegate, mslisp")]
+    delegate System::Object^ BuiltinDelegate(array<System::Object^>^ args);
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.GenCall, mslisp")]
+    interface class GenCall
+    {
+        bool Emit(System::Reflection::Emit::ILGenerator^ g, short arity);
     };
 
     [Quire::Mirror::MirrorOfAttribute("mslisp.Symbol, mslisp")]
@@ -112,6 +246,381 @@ namespace Quire { namespace mslisp {
         }
 
         Symbol^ WithWild(bool bWild);
+    };
+
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.TaggedSymbol, mslisp")]
+    ref class TaggedSymbol : Symbol
+    {
+    private:
+        Symbol^ m_base;
+        Symbol^ m_tag;
+        Quire::utl_mgd::LabelSet^ m_labels;
+
+    public:
+        TaggedSymbol(Symbol^ base, Symbol^ tag, Quire::utl_mgd::LabelSet^ labels)
+            : m_base(base), m_tag(tag), m_labels(labels)
+        {
+        }
+
+        virtual System::String^ ToString() override
+        {
+            System::String^ text = m_base->ToString();
+            if (m_labels != nullptr && !m_labels->Empty())
+            {
+                text = System::String::Concat(text, m_labels->ToString());
+            }
+            if (m_tag != nullptr)
+            {
+                System::String^ text2 = m_tag->ToString();
+                System::String^ text3 = ":";
+                text = System::String::Concat(text, System::String::Concat(text3, text2));
+            }
+            System::GC::KeepAlive(this);
+            return text;
+        }
+
+        virtual System::String^ get_name()
+        {
+            System::String^ name = m_base->get_name();
+            System::GC::KeepAlive(this);
+            return name;
+        }
+
+        virtual System::String^ get_fullname()
+        {
+            System::String^ fullname = m_base->get_fullname();
+            System::GC::KeepAlive(this);
+            return fullname;
+        }
+
+        virtual System::String^ get_package()
+        {
+            System::String^ package = m_base->get_package();
+            System::GC::KeepAlive(this);
+            return package;
+        }
+
+        virtual System::Object^ get_value()
+        {
+            System::Object^ value = m_base->get_value();
+            System::GC::KeepAlive(this);
+            return value;
+        }
+
+        virtual System::Object^ set_value(System::Object^ o)
+        {
+            System::Object^ result = m_base->set_value(o);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+
+        virtual bool not_set()
+        {
+            bool result = m_base->not_set();
+            System::GC::KeepAlive(this);
+            return result;
+        }
+
+        property Symbol^ Base
+        {
+            virtual Symbol^ get()
+            {
+                return m_base;
+            }
+        }
+
+        property Symbol^ Tag
+        {
+            virtual Symbol^ get()
+            {
+                return m_tag;
+            }
+        }
+
+        property Quire::utl_mgd::LabelSet^ Labels
+        {
+            virtual Quire::utl_mgd::LabelSet^ get()
+            {
+                return m_labels;
+            }
+        }
+
+        property bool Wild
+        {
+            virtual bool get()
+            {
+                bool b = (m_labels != nullptr && m_labels->Wild());
+                System::GC::KeepAlive(this);
+                return b;
+            }
+        }
+
+        virtual Symbol^ WithWild(bool bWild)
+        {
+            if (bWild != Wild)
+            {
+                TaggedSymbol^ result = gcnew TaggedSymbol(Base, Tag, Quire::utl_mgd::LabelTrie::WithWild(Labels, bWild));
+                System::GC::KeepAlive(this);
+                return result;
+            }
+            System::GC::KeepAlive(this);
+            return this;
+        }
+    };
+
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.SymbolImp, mslisp")]
+    ref class SymbolImp : Symbol, System::Runtime::Serialization::ISerializable
+    {
+    private:
+        System::String^ m_name;
+        System::String^ m_package;
+        System::Object^ m_value;
+        System::String^ m_fullname;
+        bool m_not_set;
+
+    public:
+        property bool Wild
+        {
+            virtual bool get()
+            {
+                return false;
+            }
+        }
+
+        property Quire::utl_mgd::LabelSet^ Labels
+        {
+            virtual Quire::utl_mgd::LabelSet^ get()
+            {
+                return nullptr;
+            }
+        }
+
+        property Symbol^ Tag
+        {
+            virtual Symbol^ get()
+            {
+                return nullptr;
+            }
+        }
+
+        property Symbol^ Base
+        {
+            virtual Symbol^ get()
+            {
+                return this;
+            }
+        }
+
+        SymbolImp(System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context)
+        {
+            m_name = info->GetString("m_name");
+            System::String^ sPkg = info->GetString("m_package");
+            m_package = sPkg;
+            array<System::Object^>^ arr = gcnew array<System::Object^>(2);
+            arr[0] = sPkg;
+            arr[1] = m_name;
+            m_fullname = System::String::Format("{0}.{1}", arr);
+            if (info->GetBoolean("is_value"))
+            {
+                System::Type^ typeFromHandle = System::Object::typeid;
+                System::String^ name = "m_value";
+                m_value = info->GetValue(name, typeFromHandle);
+            }
+            m_not_set = info->GetBoolean("m_not_set");
+            System::GC::KeepAlive(this);
+        }
+
+        SymbolImp(System::String^ package, System::String^ name)
+            : m_name(name), m_package(package), m_not_set(true)
+        {
+            array<System::Object^>^ arr = gcnew array<System::Object^>(2);
+            arr[0] = m_package;
+            arr[1] = m_name;
+            m_fullname = System::String::Format("{0}.{1}", arr);
+            System::GC::KeepAlive(this);
+        }
+
+        virtual void GetObjectData(System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context)
+        {
+            info->AddValue("m_name", (System::Object^)m_name);
+            info->AddValue("m_package", (System::Object^)m_package);
+            if (m_value != nullptr)
+            {
+                if (m_value->GetType()->IsSerializable)
+                {
+                    info->AddValue("is_value", true);
+                    info->AddValue("m_value", m_value);
+                }
+                else
+                {
+                    info->AddValue("is_value", false);
+                    m_not_set = true;
+                }
+            }
+            else
+            {
+                info->AddValue("is_value", false);
+            }
+            info->AddValue("m_not_set", m_not_set);
+            System::GC::KeepAlive(this);
+        }
+
+        virtual System::String^ ToString() override
+        {
+            return m_name;
+        }
+
+        virtual System::String^ get_name()
+        {
+            return m_name;
+        }
+
+        virtual System::String^ get_fullname()
+        {
+            return m_fullname;
+        }
+
+        virtual System::String^ get_package()
+        {
+            return m_package;
+        }
+
+        virtual System::Object^ get_value()
+        {
+            return m_value;
+        }
+
+        virtual System::Object^ set_value(System::Object^ o)
+        {
+            m_not_set = false;
+            m_value = o;
+            return o;
+        }
+
+        virtual bool not_set()
+        {
+            return m_not_set;
+        }
+
+        virtual Symbol^ WithWild(bool bWild)
+        {
+            if (bWild != Wild)
+            {
+                TaggedSymbol^ result = gcnew TaggedSymbol(this, nullptr, Quire::utl_mgd::LabelTrie::WithWild(Quire::utl_mgd::LabelTrie::Empty(), bWild));
+                System::GC::KeepAlive(this);
+                return result;
+            }
+            System::GC::KeepAlive(this);
+            return this;
+        }
+    };
+
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.Package, mslisp")]
+    ref class Package
+    {
+    private:
+        System::String^ m_name;
+        System::Collections::Generic::Dictionary<System::String^, Symbol^>^ m_internal;
+        System::Collections::Generic::Dictionary<System::String^, Symbol^>^ m_external;
+
+    public:
+        Package(System::String^ name)
+            : m_name(name),
+              m_internal(gcnew System::Collections::Generic::Dictionary<System::String^, Symbol^>()),
+              m_external(gcnew System::Collections::Generic::Dictionary<System::String^, Symbol^>())
+        {
+        }
+
+        Symbol^ intern(System::String^ name)
+        {
+            Symbol^ sym = nullptr;
+            if (m_external->TryGetValue(name, sym))
+            {
+                System::GC::KeepAlive(this);
+                return sym;
+            }
+            if (m_internal->TryGetValue(name, sym))
+            {
+                System::GC::KeepAlive(this);
+                return sym;
+            }
+            sym = gcnew SymbolImp(m_name, name);
+            m_internal->Add(name, sym);
+            System::GC::KeepAlive(this);
+            return sym;
+        }
+
+        Symbol^ _export(Symbol^ s)
+        {
+            if (m_external->ContainsKey(s->get_name()))
+            {
+                m_external->Remove(s->get_name());
+            }
+            m_external->Add(s->get_name(), s);
+            System::GC::KeepAlive(this);
+            return s;
+        }
+
+        Symbol^ _export(System::String^ name)
+        {
+            Symbol^ sym = nullptr;
+            if (m_external->TryGetValue(name, sym))
+            {
+                System::GC::KeepAlive(this);
+                return sym;
+            }
+            sym = nullptr;
+            if (m_internal->TryGetValue(name, sym))
+            {
+                m_internal->Remove(name);
+            }
+            else
+            {
+                sym = gcnew SymbolImp(m_name, name);
+            }
+            m_external->Add(name, sym);
+            System::GC::KeepAlive(this);
+            return sym;
+        }
+
+        Symbol^ find_export(System::String^ name)
+        {
+            Symbol^ sym = nullptr;
+            if (m_external->TryGetValue(name, sym))
+            {
+                System::GC::KeepAlive(this);
+                return sym;
+            }
+            return nullptr;
+        }
+
+        System::String^ get_name()
+        {
+            return m_name;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp._fcomparer, mslisp")]
+    ref class _fcomparer : System::Collections::Generic::IComparer<System::Object^>
+    {
+    public:
+        Quire::utl_mgd::Function^ f;
+
+        _fcomparer(Quire::utl_mgd::Function^ _f) : f(_f)
+        {
+        }
+
+        virtual int Compare(System::Object^ x, System::Object^ y)
+        {
+            System::Object^ obj = f->Invoke2(x, y);
+            int^ val = dynamic_cast<int^>(obj);
+            System::Diagnostics::Trace::Assert(val != nullptr, nullptr);
+            System::GC::KeepAlive(this);
+            return *val;
+        }
     };
 
 }}
