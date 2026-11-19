@@ -11,40 +11,4 @@ namespace Quire.Controls.Plots.Contour.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Contour.Model.ContourLogicalDataCollection, Ptc.Controls.Plots")]
 public partial class ContourLogicalDataCollection
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.Contour.Model.ContourLogicalData[] _contours;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Rect _boundingRectangleXy;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.SortedList<double, object> _levels;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Contour.Model.ContourLogicalData[] Contours { internal get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Interval ZInterval { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect BoundingRectangleXy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Length { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Collections.Generic.IList<double> Levels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal int LevelsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.Plots.Contour.Model.ContourLogicalData BoundingContour { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ContourLogicalDataCollection() { }
-    [global::Quire.Mirror.MirrorStub]
-    private void AddLevel(double level) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void MergeRequestLevels(double[] requestLevels) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Compute(global::Quire.Controls.Plots.Contour.Model.ContourLogicalData contourLogicalData, int contourIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int GetExtendedIntervalIndex(int contourIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private int GetIntervalIndex(global::Quire.Controls.Plots.Contour.Model.ContourLogicalData contour) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.Contour.Model.ContourLogicalData CreateBoundingCountour() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal double NormalizedCenter(int intervalIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
