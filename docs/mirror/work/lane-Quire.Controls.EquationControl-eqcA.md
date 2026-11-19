@@ -13,8 +13,9 @@
   - `Controls.InputControls.InputCheckBoxEngineJScript`: 6 exact methods + fields/constants landed in commit `e4199a230`.
   - `Controls.InputControls.InputCheckBoxEnginePython`: 6 exact methods + fields/constants landed in commit `e4199a230`.
   - `Controls.InputControls.InputRadioButtonEngineVBScript`, `InputRadioButtonEngineJScript`, `InputRadioButtonEnginePython`: 20 exact methods + all fields/constants landed in commit `dca9f8c45`.
-  - `Controls.InputControls.InputSliderEngineVBScript`, `InputSliderEngineJScript`, `InputSliderEnginePython`: 22 exact methods + all fields/constants.
-- Release IL: PASS on changed members (3079 checked, 0 failures on changed members)
+  - `Controls.InputControls.InputSliderEngineVBScript`, `InputSliderEngineJScript`, `InputSliderEnginePython`: 22 exact methods + all fields/constants landed in commit `2516a83a2`.
+  - `Controls.InputControls.InputListBoxEngineVBScript`, `InputListBoxEngineJScript`, `InputListBoxEnginePython`: 23 exact methods + all fields/constants.
+- Release IL: PASS on changed members (3102 checked, 0 failures on changed members)
 - Parked members:
   - `Controls.Internal.DerivativeLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3`.
   - `Controls.Internal.ConjugateLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3` on identical 115 IL instructions.

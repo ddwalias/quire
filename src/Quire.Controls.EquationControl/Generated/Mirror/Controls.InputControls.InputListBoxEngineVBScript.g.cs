@@ -11,30 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputListBoxEngineVBScript, Ptc.Controls.EquationControl")]
 internal partial class InputListBoxEngineVBScript : global::Quire.Controls.InputControls.InputControlEngineVBScript
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string _scriptItemsAsString;
-    [global::Quire.Mirror.MirrorStub]
-    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableListBox.VbListBoxScriptInternalClass.vbs";
-    [global::Quire.Mirror.MirrorStub]
-    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableListBox.VbListBoxDefaultScript.vbs";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Event_Click = "_SelChanged()\r\n";
-    [global::Quire.Mirror.MirrorStub]
-    protected static string _defaultScript;
-    [global::Quire.Mirror.MirrorStub]
-    public override string Script { get => base.Script; }
-    [global::Quire.Mirror.MirrorStub]
-    public override string AddInternalScripts(string script, string controlObjectName, object[] inputs, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.AddInternalScripts(script, controlObjectName, inputs, engineParams);
-    [global::Quire.Mirror.MirrorStub]
-    public override string ScriptInternalClassInit(string controlObjectName, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.ScriptInternalClassInit(controlObjectName, engineParams);
-    [global::Quire.Mirror.MirrorStub]
-    protected override object GetScriptClassProperties(object scriptObjectProperties = default) => base.GetScriptClassProperties(scriptObjectProperties);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void GetExistingEvents(string convertUserScript) => base.GetExistingEvents(convertUserScript);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void UpdateScriptableClassValues(ref object value, object scriptControlObject, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string GetUserScriptObjectName(string userScript, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.GetUserScriptObjectName(userScript, engineParams);
-    [global::Quire.Mirror.MirrorStub]
-    public InputListBoxEngineVBScript() { }
 }
