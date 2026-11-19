@@ -74,3 +74,9 @@
 - Held (one attempt each, first write): `ClipBounds` (the `0.0 - num` constant ordering differs at the first instruction); `GetTickMarkElementPosition` (its `Point` return and `UIElement` argument order differs).
 - Not yet attempted (still generated stubs, not parked): the nested `Point2ScreenHelperImpl` class, `GetTickMarkPositionByIndex`, `GetTickLine`, `AxisLineGeometry`, `DrawNumbers`, and the overrides `GetAxisStartPosition`, `GetAxisEndPosition`, `TickMarksChanged`, `HandleOrientationChanged`, `PositionTickMarkChanged`, `UpdateAxisOriginPositions`, `MouseMoveDraw`, `MoveToValue`, `MoveByValue`, `FindClosestTickValueToZero`, `ApplyTickNumber`.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 1529 checked, 0 failures.
+
+## Batch 11 — PlotGraphAngularAxis
+
+- Exact (24): `RadiusRatio`, `Radius`, `TickOffset`, `RadiusWTickOffset`, `Position`, `IsDiscrete`, `Helper`, static `.cctor` (0 to 360 metadata), `.ctor`, `GetTickMarkElementPosition`, `ArrangeOverride`, `SetTicksExpressionsEqnVisibility`, `MeasureOverride`, `OnRender`, `SecondTickExpressionEqn_NavigateOffOfEquation`, `Draw`, `GetTickmarksGeometry`, `GetTickLine`, `AxisCircleGeometry`, `GetTickMarkPositionByAngle`, `GetTickMarkPositionByIndex`, `DrawNumbers`, `ShouldArrangeConvertedEquationsHorizontally`.
+- Not yet attempted (still generated stubs, not parked): `HitTestCore` and `CollectElementsForTraversal` (iterator), the nested `Point2ScreenHelperImpl`, `ClipBounds`, `GetAxisEffectiveStart`/`End`, `GetAxisStartPosition`/`EndPosition` overrides, `TickMarksChanged`, `HandleOrientationChanged`, `PositionTickMarkChanged`, `UpdateAxisOriginPositions`, `MouseMoveDraw`, `MoveToValue`, `MoveByValue`, `FindClosestTickValueToZero`, `ApplyTickNumber`.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 1553 checked, 0 failures.
