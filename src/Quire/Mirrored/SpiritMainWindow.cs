@@ -1,5 +1,19 @@
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
+using System.Windows;
+using System.Windows.Input;
+using Quire.Controls;
+using Quire.Controls.Core;
+using Quire.Freemium;
+using Quire.FunctionalitiesLimitation;
+using Quire.IO;
+using Quire.Services;
+
 namespace Quire;
 
 public partial class SpiritMainWindow
@@ -144,10 +158,10 @@ public partial class SpiritMainWindow
     {
         if (!IsGivenKeyMyTemplatesKey(templateKey))
         {
-            return global::Quire.IO.FileUtils.GetCommonConfigFolderPath();
+            return FileUtils.GetCommonConfigFolderPath();
         }
 
-        return global::Quire.IO.FileUtils.GetLocalApplicationDataPath();
+        return FileUtils.GetLocalApplicationDataPath();
     }
 
     private void UpdateTemplatesFolderLocationForKey(string userTemplatesDefaultLocationKey, string templatesLocation)
@@ -167,5 +181,128 @@ public partial class SpiritMainWindow
     {
         global::Quire.Properties.Settings.Default.PythonDirectoryPath = pythonDirectoryPath;
         global::Quire.Properties.Settings.Default.Save();
+    }
+
+    public static string ReviseFileExtension(string fileName, string extension)
+    {
+        string currentExtension = System.IO.Path.GetExtension(fileName);
+        if (!string.IsNullOrEmpty(currentExtension) && currentExtension.ToLower() == extension)
+        {
+            return fileName;
+        }
+
+        return System.IO.Path.ChangeExtension(fileName, currentExtension + extension);
+    }
+
+    private static void OnZoomChanged(double zoom)
+    {
+        global::Quire.Properties.Settings.Default.Zoom = zoom;
+        global::Quire.Properties.Settings.Default.Save();
+    }
+
+    private void OnDocumentModified(IEngineeringDocument engineeringDocument)
+    {
+        if (Addons != null && engineeringDocument.IsDirty && !string.IsNullOrEmpty(engineeringDocument.FileName))
+        {
+            Addons.CallAddonsOnDocumentModified(engineeringDocument.FilePath);
+        }
+
+        DocumentModified(engineeringDocument);
+    }
+
+    private void SetAndDisplayWarning(string warningMessage, string problematicEntity)
+    {
+        string displayedMessage = string.Format("{0}{1}{2}", warningMessage, Environment.NewLine, problematicEntity);
+        DisplayWarning(displayedMessage);
+    }
+
+    internal void ResetUntitledIndex()
+    {
+        _nextUntitledIndex = 0;
+    }
+
+    private void UpdateCurrentShowWarningsFilter()
+    {
+        CurrentShowWarningsFilter = IsShowWarningsEnabled ? DisplayWarningsFilter : WarningsTypesToShow.None;
+    }
+
+    private void ExitApplication(object sender, ExecutedRoutedEventArgs e)
+    {
+        Close();
+    }
+
+    internal void UpdateTemplateLocationsIfNeeded()
+    {
+        SetMyTemplatesLocation(global::Quire.Properties.Settings.Default.MyTemplatesLocation);
+        SetSharedTemplatesLocation(global::Quire.Properties.Settings.Default.SharedTemplatesLocation);
+    }
+
+    private void OpenUrl(string url, bool useBrowser)
+    {
+        if (!UrlUtils.TryOpenUrl(url, useBrowser))
+        {
+            ShowFailedToOpenUrlMessage(url);
+        }
+    }
+
+    private void FirePropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    public string GetEngineVersion()
+    {
+        if (ActiveDocument != null)
+        {
+            return ActiveDocument.GetEngineVersion();
+        }
+
+        return string.Empty;
+    }
+
+    private static string GetMathcadPrimeInstallDirectoryLocalPath()
+    {
+        return FileUtils.GetAssemblyFolder(Assembly.GetExecutingAssembly());
+    }
+
+    internal static string GetCultureForDefaultTemplatesAndSplashScreen()
+    {
+        string cultureLanguage = LanguageUtils.GetCultureLanguage(replaceHypenByUnderscore: false);
+        if (cultureLanguage.Equals("en"))
+        {
+            return "en-US";
+        }
+
+        return cultureLanguage;
+    }
+
+    private void SetupWindowDimensions()
+    {
+        SetupMainWindowDimensions(this);
+    }
+
+    private void DisplayFreemiumAboutBox(object sender, ExecutedRoutedEventArgs e)
+    {
+        FreemiumAboutBox.Instance.Show(e.Parameter, this);
+    }
+
+    private bool FindIsNotAllowedInFreemiumMode()
+    {
+        if (FindProperties.FindTextSubscriptPositions.IsNotEmpty())
+        {
+            return !FunctionalityService.Instance.IsFunctionalityEnabled(EnumFunctionalityKey.ToggleSubscript);
+        }
+
+        return false;
+    }
+
+    private bool ReplaceIsNotAllowedInFreemiumMode()
+    {
+        if (FindProperties.FindTextSubscriptPositions.IsNotEmpty() || FindProperties.ReplaceTextSubscriptPositions.IsNotEmpty())
+        {
+            return !FunctionalityService.Instance.IsFunctionalityEnabled(EnumFunctionalityKey.ToggleSubscript);
+        }
+
+        return false;
     }
 }
