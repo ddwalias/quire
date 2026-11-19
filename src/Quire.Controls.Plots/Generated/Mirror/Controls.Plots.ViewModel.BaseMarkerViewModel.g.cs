@@ -20,34 +20,14 @@ public abstract partial class BaseMarkerViewModel : global::Quire.Controls.Core.
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedCommand ActivateCommand;
     [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.Plots.Model.BaseMarker Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Color Color { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShowCallout { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Model.IMarkerCalculatable Calculatable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.NumberFormat DisplayNumberFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler<global::System.EventArgs> Activated;
     [global::Quire.Mirror.MirrorStub]
     protected BaseMarkerViewModel(global::Quire.Controls.Plots.Model.BaseMarker baseMarker) { }
     [global::Quire.Mirror.MirrorStub]
     private void ChangeColor(global::System.Windows.Media.SolidColorBrush newColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void Activate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void Deactivate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.BaseMarkerViewModel+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames
     {
-        [global::Quire.Mirror.MirrorStub]
-        public const string IsActive = "IsActive";
-        [global::Quire.Mirror.MirrorStub]
-        public const string DisplayNumberFormat = "DisplayNumberFormat";
     }
 }
