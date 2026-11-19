@@ -8,6 +8,8 @@ namespace Quire;
 
 public partial class TextDecorationCollectionToBooleanConverter
 {
+    public TextDecorationCollectionToBooleanConverter() { }
+
     public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value == null || parameter == null)

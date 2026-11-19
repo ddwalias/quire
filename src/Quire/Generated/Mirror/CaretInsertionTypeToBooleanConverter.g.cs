@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.CaretInsertionTypeToBooleanConverter, MathcadPrime")]
 public partial class CaretInsertionTypeToBooleanConverter : global::Quire.Wpf.EnumMatchToBooleanConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public CaretInsertionTypeToBooleanConverter() { }
 }

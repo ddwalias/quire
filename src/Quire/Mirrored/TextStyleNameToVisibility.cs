@@ -8,6 +8,8 @@ namespace Quire;
 
 public partial class TextStyleNameToVisibility
 {
+    public TextStyleNameToVisibility() { }
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if ((string)value == "(none)")

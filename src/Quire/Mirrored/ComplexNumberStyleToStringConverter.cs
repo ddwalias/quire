@@ -8,6 +8,8 @@ namespace Quire;
 
 public partial class ComplexNumberStyleToStringConverter
 {
+    public ComplexNumberStyleToStringConverter() { }
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value == null)

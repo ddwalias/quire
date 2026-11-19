@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.NumberStyleEnablesExponentialThresholdConverter, MathcadPrime")]
 public partial class NumberStyleEnablesExponentialThresholdConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public NumberStyleEnablesExponentialThresholdConverter() { }
 }

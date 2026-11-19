@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.IndentRule, MathcadPrime")]
 public partial class IndentRule : global::System.Windows.Controls.ValidationRule
 {
-    [global::Quire.Mirror.MirrorStub]
-    public IndentRule() { }
 }

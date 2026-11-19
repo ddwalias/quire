@@ -10,6 +10,8 @@ namespace Quire;
 
 internal partial class DocNameToTabHeaderConverter
 {
+    public DocNameToTabHeaderConverter() { }
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         string text = value as string;

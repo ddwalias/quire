@@ -8,6 +8,8 @@ namespace Quire;
 
 public partial class NumberStyleEnablesExponentialThresholdConverter
 {
+    public NumberStyleEnablesExponentialThresholdConverter() { }
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return value == null || value.ToString() == NumberFormat.NumberStyles.General.ToString();

@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.NumberStyleToStringConverter, MathcadPrime")]
 public partial class NumberStyleToStringConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public NumberStyleToStringConverter() { }
 }

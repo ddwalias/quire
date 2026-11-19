@@ -7,6 +7,8 @@ namespace Quire;
 
 public partial class FontSizeValidationRule
 {
+    public FontSizeValidationRule() { }
+
     private const double MinFontSizeForText = 1.0;
     private const double MaxFontSizeForText = 1638.0;
     private const int PrecisionForText = 1;

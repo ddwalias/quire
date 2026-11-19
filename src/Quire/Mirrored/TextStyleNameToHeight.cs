@@ -7,6 +7,8 @@ namespace Quire;
 
 public partial class TextStyleNameToHeight
 {
+    public TextStyleNameToHeight() { }
+
     private const int ControlHeightStyleIsNone = 24;
     private const int ControlHeightStyleIsNotNone = 52;
 

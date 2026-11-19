@@ -8,6 +8,8 @@ namespace Quire;
 
 public partial class FontWeightToBooleanConverter
 {
+    public FontWeightToBooleanConverter() { }
+
     public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value == null || parameter == null)

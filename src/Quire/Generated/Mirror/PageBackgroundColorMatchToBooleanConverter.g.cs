@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.PageBackgroundColorMatchToBooleanConverter, MathcadPrime")]
 internal partial class PageBackgroundColorMatchToBooleanConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    private PageBackgroundColorMatchToBooleanConverter() { }
 }

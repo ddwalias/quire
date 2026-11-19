@@ -10,6 +10,8 @@ namespace Quire;
 
 internal partial class CalculationStatusConverter
 {
+    public CalculationStatusConverter() { }
+
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         if (values == null || values.Length < 2)

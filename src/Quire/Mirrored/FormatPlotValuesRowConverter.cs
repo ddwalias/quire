@@ -7,6 +7,8 @@ namespace Quire;
 
 public partial class FormatPlotValuesRowConverter
 {
+    public FormatPlotValuesRowConverter() { }
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         bool isTickMarkValues = value.Equals("Ribbon.Tab.Plots.FormatTickMarkValues");

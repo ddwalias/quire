@@ -7,6 +7,8 @@ namespace Quire;
 
 public partial class EnumMatchToBooleanConverterWithNull
 {
+    public EnumMatchToBooleanConverterWithNull() { }
+
     public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         Type underlyingType = Nullable.GetUnderlyingType(targetType);

@@ -8,6 +8,8 @@ namespace Quire;
 
 public partial class RadixStyleToStringMultiConverter
 {
+    public RadixStyleToStringMultiConverter() { }
+
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         if (values.Length < 2 || !(values[0] is NumberFormat.RadixStyles) || !(values[1] is NumberFormat.NumberStyles))

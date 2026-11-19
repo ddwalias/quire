@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.FlowDocumentFamilyConverter, MathcadPrime")]
 public partial class FlowDocumentFamilyConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public FlowDocumentFamilyConverter() { }
 }

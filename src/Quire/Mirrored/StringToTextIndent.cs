@@ -7,6 +7,8 @@ namespace Quire;
 
 public partial class StringToTextIndent
 {
+    public StringToTextIndent() { }
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return value;

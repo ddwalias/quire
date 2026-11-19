@@ -9,3 +9,10 @@
 - Members: `.ctor` (moved from the generated stub to the hand-written partial).
 - Release IL: PASS (`--type Quire.BooleanToMultiThreadingValueConverter`), 742 checked, 0 failures; `Convert`, `Convert(bool)`, `ConvertBack` already exact.
 - Remaining mismatches in this batch: none.
+
+## Batch 2 — converter and rule constructors (38 types)
+
+- Members: the default `.ctor` of CalculationStatusConverter, CaretInsertionTypeToBooleanConverter, ComplexNumberStyleToStringConverter, DocNameToTabHeaderConverter, EnumMatchToBooleanConverterWithNull, FlowDocumentFamilyConverter, FontSizeToStringConverter, FontStyleToBooleanConverter, FontVariantsToBooleanConverter, FontWeightToBooleanConverter, FormatPlotValueVisiblityConverter, FormatPlotValuesColumnConverter, FormatPlotValuesRowConverter, IncrementDecimalPlaces, IndentRule, IntToStringConverter, IsCalcNowEnabledConverter, MultiThreadingValueToBooleanConverter, NumberStyleEnablesExponentialThresholdConverter, NumberStyleEnablesRadixStyleMultiConverter, NumberStyleToStringConverter, ObjectToBoolConverter, RadixStyleToStringConverter, RadixStyleToStringMultiConverter, SizeToVisibilityMultiConverter, SplitCamelCase, StringToTextIndent, StyleFontSizeToStringConverter, StyleFontSizeValidationRule, StylePropertiesLocalized, TextDecorationCollectionToBooleanConverter, TextStyleNameToHeight, TextStyleNameToVisibility, UnitSystemsToStringConverter, WorksheetPageLayoutToRowCountConverter, FontSizeValidationRule, DipsToDisplayUnitsConverter (private), PageBackgroundColorMatchToBooleanConverter (private).
+- Moved: each stub removed from `Generated/Mirror/<Type>.g.cs`; the constructor added to `Mirrored/<Type>.cs`.
+- Release IL: PASS (project-wide `--project Quire`), 0 failures; each constructor is in the report's `checked` list.
+- Remaining mismatches in this batch: none.

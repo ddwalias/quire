@@ -7,6 +7,8 @@ namespace Quire;
 
 public partial class IndentRule
 {
+    public IndentRule() { }
+
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
         if (value.ToString() == string.Empty)

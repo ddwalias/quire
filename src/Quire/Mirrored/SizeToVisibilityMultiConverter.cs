@@ -8,6 +8,8 @@ namespace Quire;
 
 internal partial class SizeToVisibilityMultiConverter
 {
+    public SizeToVisibilityMultiConverter() { }
+
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         if (values != null && values.Length == 2 && values[0] is double num && values[1] is double num2 && parameter is string text)

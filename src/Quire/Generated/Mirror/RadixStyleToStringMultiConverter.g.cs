@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.RadixStyleToStringMultiConverter, MathcadPrime")]
 public partial class RadixStyleToStringMultiConverter : global::System.Windows.Data.IMultiValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public RadixStyleToStringMultiConverter() { }
 }

@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.WorksheetPageLayoutToRowCountConverter, MathcadPrime")]
 internal partial class WorksheetPageLayoutToRowCountConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public WorksheetPageLayoutToRowCountConverter() { }
 }

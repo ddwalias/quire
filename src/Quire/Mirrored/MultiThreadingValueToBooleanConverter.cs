@@ -7,6 +7,8 @@ namespace Quire;
 
 internal partial class MultiThreadingValueToBooleanConverter
 {
+    public MultiThreadingValueToBooleanConverter() { }
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return Convert(value);

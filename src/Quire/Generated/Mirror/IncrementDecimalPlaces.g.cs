@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.IncrementDecimalPlaces, MathcadPrime")]
 public partial class IncrementDecimalPlaces : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public IncrementDecimalPlaces() { }
 }

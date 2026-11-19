@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.StylePropertiesLocalized, MathcadPrime")]
 public partial class StylePropertiesLocalized : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public StylePropertiesLocalized() { }
 }

@@ -8,6 +8,8 @@ namespace Quire;
 
 internal partial class WorksheetPageLayoutToRowCountConverter
 {
+    public WorksheetPageLayoutToRowCountConverter() { }
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is WorksheetPageLayout worksheetPageLayout)

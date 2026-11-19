@@ -7,6 +7,8 @@ namespace Quire;
 
 public partial class StyleFontSizeToStringConverter
 {
+    public StyleFontSizeToStringConverter() { }
+
     public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if ((string)value == string.Empty)

@@ -8,6 +8,8 @@ namespace Quire;
 
 internal partial class ObjectToBoolConverter
 {
+    public ObjectToBoolConverter() { }
+
     public static readonly ObjectToBoolConverter Instance = new ObjectToBoolConverter();
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

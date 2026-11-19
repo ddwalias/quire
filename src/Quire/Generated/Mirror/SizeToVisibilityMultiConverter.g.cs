@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.SizeToVisibilityMultiConverter, MathcadPrime")]
 internal partial class SizeToVisibilityMultiConverter : global::System.Windows.Data.IMultiValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public SizeToVisibilityMultiConverter() { }
 }

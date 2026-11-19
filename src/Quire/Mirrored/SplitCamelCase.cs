@@ -8,6 +8,8 @@ namespace Quire;
 
 public partial class SplitCamelCase
 {
+    public SplitCamelCase() { }
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return string.Join(" ", Regex.Split((string)value, "(?<!^)(?=[A-Z])"));

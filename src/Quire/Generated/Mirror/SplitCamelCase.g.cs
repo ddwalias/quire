@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.SplitCamelCase, MathcadPrime")]
 public partial class SplitCamelCase : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public SplitCamelCase() { }
 }

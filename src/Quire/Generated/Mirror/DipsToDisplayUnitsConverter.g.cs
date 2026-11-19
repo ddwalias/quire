@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.DipsToDisplayUnitsConverter, MathcadPrime")]
 internal partial class DipsToDisplayUnitsConverter : global::System.Windows.Data.IMultiValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    private DipsToDisplayUnitsConverter() { }
 }

@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.ObjectToBoolConverter, MathcadPrime")]
 internal partial class ObjectToBoolConverter : global::System.Windows.Data.IMultiValueConverter, global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ObjectToBoolConverter() { }
 }

@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.CalculationStatusConverter, MathcadPrime")]
 internal partial class CalculationStatusConverter : global::System.Windows.Data.IMultiValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public CalculationStatusConverter() { }
 }

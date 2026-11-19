@@ -8,6 +8,8 @@ namespace Quire;
 
 public partial class RadixStyleToStringConverter
 {
+    public RadixStyleToStringConverter() { }
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();

@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.DocNameToTabHeaderConverter, MathcadPrime")]
 internal partial class DocNameToTabHeaderConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public DocNameToTabHeaderConverter() { }
 }

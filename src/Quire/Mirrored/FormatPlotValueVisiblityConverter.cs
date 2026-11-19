@@ -8,6 +8,8 @@ namespace Quire;
 
 public partial class FormatPlotValueVisiblityConverter
 {
+    public FormatPlotValueVisiblityConverter() { }
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return value.Equals("Ribbon.Tab.Plots.FormatTickMarkValues") ? Visibility.Collapsed : Visibility.Visible;

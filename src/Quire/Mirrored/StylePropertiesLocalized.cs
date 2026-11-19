@@ -9,6 +9,8 @@ namespace Quire;
 
 public partial class StylePropertiesLocalized
 {
+    public StylePropertiesLocalized() { }
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (parameter is ResourceDictionary resourceDictionary && resourceDictionary.Contains(value))

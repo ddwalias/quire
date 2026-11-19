@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.FormatPlotValueVisiblityConverter, MathcadPrime")]
 public partial class FormatPlotValueVisiblityConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public FormatPlotValueVisiblityConverter() { }
 }

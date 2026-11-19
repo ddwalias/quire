@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.EnumMatchToBooleanConverterWithNull, MathcadPrime")]
 public partial class EnumMatchToBooleanConverterWithNull : global::Quire.Wpf.EnumMatchToBooleanConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public EnumMatchToBooleanConverterWithNull() { }
 }

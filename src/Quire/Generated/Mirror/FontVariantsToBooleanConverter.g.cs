@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.FontVariantsToBooleanConverter, MathcadPrime")]
 public partial class FontVariantsToBooleanConverter : global::Quire.Wpf.EnumMatchToBooleanConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public FontVariantsToBooleanConverter() { }
 }

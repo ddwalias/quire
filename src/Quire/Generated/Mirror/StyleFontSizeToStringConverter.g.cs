@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.StyleFontSizeToStringConverter, MathcadPrime")]
 public partial class StyleFontSizeToStringConverter : global::Quire.FontSizeToStringConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public StyleFontSizeToStringConverter() { }
 }

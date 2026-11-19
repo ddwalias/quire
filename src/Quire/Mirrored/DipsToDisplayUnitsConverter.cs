@@ -9,6 +9,8 @@ namespace Quire;
 
 internal partial class DipsToDisplayUnitsConverter
 {
+    private DipsToDisplayUnitsConverter() { }
+
     public static DipsToDisplayUnitsConverter Instance = new DipsToDisplayUnitsConverter();
 
     private static readonly int _numOfDigitsForRound = 2;

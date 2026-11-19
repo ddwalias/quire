@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.TextStyleNameToVisibility, MathcadPrime")]
 public partial class TextStyleNameToVisibility : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public TextStyleNameToVisibility() { }
 }

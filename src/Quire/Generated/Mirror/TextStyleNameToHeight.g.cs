@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.TextStyleNameToHeight, MathcadPrime")]
 public partial class TextStyleNameToHeight : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public TextStyleNameToHeight() { }
 }

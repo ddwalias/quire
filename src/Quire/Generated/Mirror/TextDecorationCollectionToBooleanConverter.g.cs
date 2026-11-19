@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.TextDecorationCollectionToBooleanConverter, MathcadPrime")]
 public partial class TextDecorationCollectionToBooleanConverter : global::Quire.Wpf.EnumMatchToBooleanConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public TextDecorationCollectionToBooleanConverter() { }
 }

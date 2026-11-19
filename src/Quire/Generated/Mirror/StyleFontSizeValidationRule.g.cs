@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.StyleFontSizeValidationRule, MathcadPrime")]
 public partial class StyleFontSizeValidationRule : global::Quire.FontSizeValidationRule
 {
-    [global::Quire.Mirror.MirrorStub]
-    public StyleFontSizeValidationRule() { }
 }

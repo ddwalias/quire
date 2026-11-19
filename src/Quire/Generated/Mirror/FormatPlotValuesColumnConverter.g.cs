@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.FormatPlotValuesColumnConverter, MathcadPrime")]
 public partial class FormatPlotValuesColumnConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public FormatPlotValuesColumnConverter() { }
 }

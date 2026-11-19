@@ -7,6 +7,8 @@ namespace Quire;
 
 internal partial class PageBackgroundColorMatchToBooleanConverter
 {
+    private PageBackgroundColorMatchToBooleanConverter() { }
+
     public static PageBackgroundColorMatchToBooleanConverter Instance = new PageBackgroundColorMatchToBooleanConverter();
 
     public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)

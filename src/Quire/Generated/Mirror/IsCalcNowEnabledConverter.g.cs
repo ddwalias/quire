@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.IsCalcNowEnabledConverter, MathcadPrime")]
 public partial class IsCalcNowEnabledConverter : global::System.Windows.Data.IMultiValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public IsCalcNowEnabledConverter() { }
 }

@@ -8,6 +8,8 @@ namespace Quire;
 
 public partial class IncrementDecimalPlaces
 {
+    public IncrementDecimalPlaces() { }
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (!(value is int) || !(parameter is int))

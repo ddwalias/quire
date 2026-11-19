@@ -8,6 +8,8 @@ namespace Quire;
 
 public partial class UnitSystemsToStringConverter
 {
+    public UnitSystemsToStringConverter() { }
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return Enum.GetName(typeof(UnitSystemsDataSource), (UnitSystemsDataSource)value);

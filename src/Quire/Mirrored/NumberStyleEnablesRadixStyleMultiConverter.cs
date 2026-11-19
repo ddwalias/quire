@@ -9,6 +9,8 @@ namespace Quire;
 
 public partial class NumberStyleEnablesRadixStyleMultiConverter
 {
+    public NumberStyleEnablesRadixStyleMultiConverter() { }
+
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         if (values.Length < 2 || !(values[1] is string))
