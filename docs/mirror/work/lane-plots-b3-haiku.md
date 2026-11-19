@@ -35,3 +35,14 @@
 - Parked after one attempt (placeholder, blocker recorded): `CurrentDisplayIdLabel` setter (Mathcad `brfalse` at the null test, Quire `brtrue`), `CurrentError` getter (Mathcad `stloc.0` temp, Quire `dup`), `ChangeBackgroundCommandExecute` (`SetRegionPropertyCommand.Execute` is `call`, Mathcad `callvirt`), `BindChangeOriginPositioningCommand` (delegate cache `<>O` ordinal differs), `HandleGotFocus` (`as` shape at the first cast differs).
 - Closure, LINQ and iterator members (`CalculatableChildren`, `DelegateFocus`, `BindCommands`, `ToggleGridLines`, `ToggleTicks`, `GetShowTicks`, `GetShowNumbers`, `UpdateMathFormat`, `SortRegionsByLocation`, `GetISearchableEnumerator`, `GetSearchableRegions`, `FindOncePrivate`, `DeserializeMathFormat`, `DeserializeLabeledIdFormat`, `InCustomInitialization`, `.ctor`, `.cctor`, and others) remain placeholders.
 - Remaining passes: the rest of the placeholder set, then `ExecuteAxesSetPropertyCommand`, `ShouldSerializeProperty`, `GetErrorMessage`, and the closure members in pass 3.
+
+## Group 4 — View.PlotControlBase (passes 3, final state)
+
+- Implemented and gated in total: 122 members (120 from passes 1-2 plus `ExecuteAxesSetPropertyCommand<T>` and `OnSetNumberFormatPropertyPreview`). Both pass the type gate.
+- Placeholders remaining (30), with named blockers:
+  - Closure ordinals: `BindCommands`, `DelegateFocus`, `FindOncePrivate`, `DeserializeMathFormat`, `DeserializeLabeledIdFormat`, `InCustomInitialization`, `GetShowGridLines`, `ToggleGridLines`, `ChangeGridLineColor`, `ToggleTicks`, `GetShowTicks`, `GetShowNumbers`, `ToggleNumbered`, `UpdateCurrentNumberFormat`, `CanClearResultFormat`, `UpdateMathFormat`. Each one's lambda is numbered `b__<n>_0` from its position in the whole class, so these need the earlier closure members (`BindCommands`, `DelegateFocus`, `FindOncePrivate`, and the search helpers) in place first. Ten were tried, all failed on the lambda name, and were reverted.
+  - Iterators: `CalculatableChildren`, `GetISearchableEnumerator`, `GetSearchableRegions`, `SortRegionsByLocation` (LINQ closures).
+  - Interface/XAML-bound: `IHasChildArrangeInfoProvider.ChildArrangeInfoProvider` (explicit implementation, not yet attempted), `CurrentDisplayIdLabel` setter, `CurrentError` getter (shape differs, see group 4 pass 2).
+  - Shape differences (one or two attempts each): `NavigateIntoItem` (Mathcad keeps the result in a local), `GetErrorMessage`, `HandleApplyTextStyleCommand`, `ChangeBackgroundCommandExecute` (`callvirt` on `SetRegionPropertyCommand.Execute`), `HandleGotFocus`.
+  - Blocked by a missing Quire type: `ChangeOriginPositioningCommandExecute` (`ButtonCommandParameter` has no Quire counterpart in `type-map.csv`), and its caller `BindChangeOriginPositioningCommand` (delegate cache ordinal `<2>` vs Mathcad `<12>`).
+- Not attempted: the rest of the closure members listed above, because their lambda numbers depend on the parked ones.
