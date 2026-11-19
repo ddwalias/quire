@@ -102,17 +102,9 @@ public partial class PlotTrace : global::System.Windows.FrameworkElement, global
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    public bool ResultValid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Imaging.BitmapSource ImageRenderer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool UseTraceInvalidStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public double XMinGap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double YMinGap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.ViewModel.TraceViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -128,35 +120,17 @@ public partial class PlotTrace : global::System.Windows.FrameworkElement, global
     [global::Quire.Mirror.MirrorStub]
     public bool ForcedToDensityVisualization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Color RenderColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Presenter.TraceSymbol Symbol { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double SymbolWeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double SymbolFrequency { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Presenter.LineStyle LineStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public double LineWeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.Trace2DResults.TraceType Type { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Label { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::System.Windows.Point> PlottingPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.SynchronizationStatus SynchronizationStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.CalculatingStatus CalculatingStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int NumberOfPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsNumOfPointsMutable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCommitted { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsSelected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Presenter.IPlotAxisView XAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -173,8 +147,6 @@ public partial class PlotTrace : global::System.Windows.FrameworkElement, global
     public string TraceSymbol { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Calculation.Core.EngineError global::Quire.Controls.Plots.Presenter.IPlotTrace.PlotCalculatableError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasEquationError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Color Color { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

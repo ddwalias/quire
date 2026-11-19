@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Quire.Controls.Plots.Presenter;
 
 namespace Quire.Controls.Plots;
@@ -158,6 +160,174 @@ public partial class PlotTrace
             LineStyle = _savedStyleForSmallTrace.LineStyle;
             Symbol = _savedStyleForSmallTrace.TraceSymbol;
             _previousStyleStateSaved = false;
+        }
+    }
+
+    public bool ResultValid
+    {
+        get
+        {
+            return (bool)GetValue(ResultValidProperty);
+        }
+        set
+        {
+            SetValue(ResultValidProperty, value);
+        }
+    }
+
+    public BitmapSource ImageRenderer
+    {
+        get
+        {
+            return (BitmapSource)GetValue(ImageRendererProperty);
+        }
+        set
+        {
+            SetValue(ImageRendererProperty, value);
+        }
+    }
+
+    public bool UseTraceInvalidStyle
+    {
+        get
+        {
+            return (bool)GetValue(UseTraceInvalidStyleProperty);
+        }
+        set
+        {
+            SetValue(UseTraceInvalidStyleProperty, value);
+        }
+    }
+
+    public bool HasPoints
+    {
+        get
+        {
+            return (bool)GetValue(HasPointsProperty);
+        }
+        set
+        {
+            SetValue(HasPointsProperty, value);
+        }
+    }
+
+    public int NumberOfPoints
+    {
+        get
+        {
+            return (int)GetValue(NumberOfPointsProperty);
+        }
+        set
+        {
+            SetValue(NumberOfPointsProperty, value);
+        }
+    }
+
+    public double SymbolWeight
+    {
+        get
+        {
+            return (double)GetValue(SymbolWeightProperty);
+        }
+        set
+        {
+            SetValue(SymbolWeightProperty, value);
+        }
+    }
+
+    public double SymbolFrequency
+    {
+        get
+        {
+            return (double)GetValue(SymbolFrequencyProperty);
+        }
+        set
+        {
+            SetValue(SymbolFrequencyProperty, value);
+        }
+    }
+
+    public double LineWeight
+    {
+        get
+        {
+            return (double)GetValue(LineWeightProperty);
+        }
+        set
+        {
+            SetValue(LineWeightProperty, value);
+        }
+    }
+
+    public string Label
+    {
+        get
+        {
+            return (string)GetValue(LabelProperty);
+        }
+        set
+        {
+            SetValue(LabelProperty, value);
+        }
+    }
+
+    public bool IsNumOfPointsMutable
+    {
+        get
+        {
+            return (bool)GetValue(IsNumOfPointsMutableProperty);
+        }
+        set
+        {
+            SetValue(IsNumOfPointsMutableProperty, value);
+        }
+    }
+
+    public bool IsCommitted
+    {
+        get
+        {
+            return (bool)GetValue(IsCommittedProperty);
+        }
+        set
+        {
+            SetValue(IsCommittedProperty, value);
+        }
+    }
+
+    public bool IsSelected
+    {
+        get
+        {
+            return (bool)GetValue(IsSelectedProperty);
+        }
+        private set
+        {
+            SetValue(IsSelectedProperty, value);
+        }
+    }
+
+    public bool HasEquationError
+    {
+        get
+        {
+            return (bool)GetValue(HasEquationErrorProperty);
+        }
+        set
+        {
+            SetValue(HasEquationErrorProperty, value);
+        }
+    }
+
+    public Color RenderColor
+    {
+        get
+        {
+            return (Color)GetValue(RenderColorProperty);
+        }
+        set
+        {
+            SetColorStyle(value);
         }
     }
 }
