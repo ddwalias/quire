@@ -93,7 +93,13 @@ namespace Mpl {
     };
 
     Loaded* GetModuleState(const Hex::Module& module);
-
+    __declspec(dllexport) Hex::Heap* GetModuleHeap(const Hex::Module& module);
+    __declspec(dllexport) Table* GetModuleTable(const Hex::Module& module);
+    __declspec(dllexport) void* GetModuleHandle(const Hex::Module& module);
+    __declspec(dllexport) void SetAssemblyPath(Substring<const char> path);
+    __declspec(dllexport) void SetAssemblyPath(Substring<const wchar_t> path);
+    void* pack(System::Object^ object);
+    void free(void* handle);
     inline System::String^ ToString(Substring<const char> text)
     {
         return gcnew System::String(text.begin(), 0, static_cast<int>(text.size()), System::Text::Encoding::UTF8);

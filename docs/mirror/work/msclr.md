@@ -1,9 +1,17 @@
 # Quire.Msclr checkpoint
 
-- Owner: Msclr lane (WORK row `Msclr`). Branch `mirror/msclr-20261116b` from `main` fff67b092. Worktree `C:/Users/DuyDang/orca/workspaces/Quire/lane-msclr`.
+- Owner: Msclr lane (WORK row `Msclr`). Branch `feature/msclr-agy`. Worktree `C:/Users/DuyDang/orca/workspaces/Quire/engutils-mgd-agy`.
 - Target: `src/Quire.Msclr` (C++/CLI under `MixedMode/`, MSVC 19.51.36246, D19/D20). C# stand-ins for the Debug build are in `Mirrored/`.
 
 ## Landed in this batch
+
+- `<Module>` `Mpl.GetModuleHeap(const Hex::Module&)` (0x06000098)
+- `<Module>` `Mpl.GetModuleTable(const Hex::Module&)` (0x06000099)
+- `<Module>` `Mpl.GetModuleHandle(const Hex::Module&)` (0x0600009a)
+- `<Module>` `Mpl.SetAssemblyPath(Substring<const char>)` (0x060000a7)
+- `<Module>` `Mpl.SetAssemblyPath(Substring<const wchar_t>)` (0x060000a8)
+
+## Landed in prior batch
 
 - `Mpl.Region`: constructor, `GetImports`, `GetExports`, `Evaluate`, `NewSymbols`, fields `m_ldr`, `m_imp`, `m_exp`.
 - `Mpl.IRegion.GetRegion(Hex.Module*)`. The abstract members, constructor and `Symbol` were already in the C++ source; their generated stubs are now removed too.
@@ -13,7 +21,7 @@
 
 ## Release IL report
 
-- `release_il.py --base main --project Quire.Msclr`: PASS, 92 checked, 90 exact, 0 failures, 9 native pairs exact, 325 Mathcad members not paired. Base: 82 checked, 80 exact.
+- `release_il.py --base main --project Quire.Msclr`: PASS, 97 checked, 95 exact, 0 failures, 9 native pairs exact, 320 Mathcad members not paired. Base: 92 checked, 90 exact.
 
 ## Parked: `Mpl.Reader` (`ReadAttribute`, constructor)
 
