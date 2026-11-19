@@ -64,3 +64,10 @@ Not started: Controls.FlexingStackPanel, Behaviors.BaseUIFunctionalityAttachedBe
 ## Remaining (set still incomplete)
 
 Not attempted: AddonsCollection (38 stubs), AllFunctionsBrowserTreeViewUIFunctionalityAttachedBehavior, BaseUIFunctionalityAttachedBehavior (its `.ctor` is blocked by the `Microsoft.Xaml.Behaviors.Behavior<T>` vs `System.Windows.Interactivity.Behavior<T>` mismatch), CMathcadPrimeApplication, CMathcadPrimeWorksheet (both reassigned to this worker), AppCommands (cctor only), and the App closures listed above, plus the Addon and ScrollViewerGrid items above.
+
+## Batch 9 — AddonsCollection (`731394cd4`, `fa468cab5`)
+
+- Landed members: `CallAddonsAtQuit`, `CallAddonsToEnablePtcPlaces` (the flag reset sits in the `else`, which is the layout Mathcad emits), `CallAddonsOnCommand`, `CallAddonsUpdateMenuItem`, `IsAddonsCollectionNotEmpty`, `CallAddonsWhenDocumentSaving`, `CallAddonsWhenDocumentSaved`. Gate: none of them in the failure list (1051 checked).
+- Parked (stubs kept, branch layout differs): `CallAddonsWhenDocumentOpened` (the Mathcad false paths jump to a different target than Roslyn's `&&` form) and `CallAddonsWhenDocumentClosing` (the `Remove` block placement differs).
+- Still stubs: the constructor, `LoadAddonsAndAddToCollection`, idle-timer members, ribbon members, dialog and file-name members, `CallAddonsToOpenFromWindchill`, `CallAddonsSaveToPtcServer`, `GetActiveAddOnId`, and the rest of the AddonsCollection list (not attempted).
+- Gate note: one attempt failed on an MSBuild OutOfMemoryException in an unrelated project; the rerun passed the same build.
