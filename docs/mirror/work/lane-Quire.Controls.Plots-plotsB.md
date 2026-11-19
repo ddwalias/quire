@@ -54,3 +54,9 @@
 - Held stubs (one attempt each, first write): `ArrowHeadGeometry` (`PathFigure` initializer's `Point` construction differs); `GetTickLine` (constants differ at the first `Point`); `GetTickValueTextAndPositionByTickNumber` (out-`start` local shape differs); `Length` (local slot order at `desiredSize`/`num`); `DrawNumbers` (`out var start` lowering differs in the loop).
 - Not yet attempted (still generated stubs, not parked): `GetRealOffset`, `GetRealRelaviveOffset`, `ArrangeOverride`, `GetPositions`, `MeasureOverride`, `OnRender`.
 - Release IL (project gate, changed methods, rebased onto main `c02f47e40`): PASS — 1436 checked, 0 failures.
+
+## Batch 8 — AxisMarkerViewModel, BaseMarkerViewModel
+
+- AxisMarkerViewModel exact: `Value`, `EquationProxy`, `IsUserSetValue`, `RealNumberCalculatable`, `CanChangeLineStyle`, `ChangeLineWeight`, `InternalSetIsUserSetValueKeepHiddenFromCalculation`, `InternalSetValue`. Held: `.ctor`, `LineStyle`, `LineWeight`, `ExecuteChangeValueAndIsUserSetFlagCommand` (lambdas in `UndoableCommand`/`RequestShowError`: closure ordinals); `ChangeLineStyle` (one attempt; the `AssertionE.Failed != (AssertionE)DevAssert(...)` branch shape differs).
+- BaseMarkerViewModel exact: `Model`, `ShowCallout`, `Calculatable`, `IsActive`, `DisplayNumberFormat`, `Activated`, `Activate` (event invoked through a local, which matched Mathcad's `stloc.0`), `Deactivate`. Held: `.ctor` and `Color` (lambdas); `ChangeColor` (one attempt; the `AssertionE` cast shape differs at the branch). Blocker: the static `ActivateCommand` initializer (`PlotViewModel.ActivateCommand`) lives in the generated field declaration, which I may not edit, so the `.cctor` stays unmatched until MirrorGen emits it.
+- Release IL (project gate, changed methods, rebased onto main `6cd4c03b0`): PASS — 1458 checked, 0 failures.
