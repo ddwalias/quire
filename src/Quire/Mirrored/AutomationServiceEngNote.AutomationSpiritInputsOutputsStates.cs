@@ -1,3 +1,4 @@
+using System.Linq;
 namespace Quire.AutomationServiceEngNote;
 
 public partial class AutomationSpiritInputsOutputsStates
@@ -40,5 +41,35 @@ public partial class AutomationSpiritInputsOutputsStates
         }
 
         return item;
+    }
+
+    private global::Quire.Controls.Core.IORegions.IScalarItemWithOriginalState GetInputItem(string alias)
+    {
+        if (_inputAliasToItemStatesMap == null && _itemsWithStates.InputItems.Any())
+        {
+            _inputAliasToItemStatesMap = _itemsWithStates.InputItems.ToDictionary(item => item.Alias);
+        }
+
+        if (_inputAliasToItemStatesMap == null || !_inputAliasToItemStatesMap.ContainsKey(alias))
+        {
+            return null;
+        }
+
+        return _inputAliasToItemStatesMap[alias];
+    }
+
+    private global::Quire.Controls.Core.IORegions.IScalarItem GetOutputItem(string alias)
+    {
+        if (_outputAliasToItemStatesMap == null && _itemsWithStates.OutputItems.Any())
+        {
+            _outputAliasToItemStatesMap = _itemsWithStates.OutputItems.ToDictionary(item => item.Alias);
+        }
+
+        if (_outputAliasToItemStatesMap == null || !_outputAliasToItemStatesMap.ContainsKey(alias))
+        {
+            return null;
+        }
+
+        return _outputAliasToItemStatesMap[alias];
     }
 }

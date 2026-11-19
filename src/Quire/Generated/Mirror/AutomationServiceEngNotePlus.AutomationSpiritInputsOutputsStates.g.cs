@@ -23,8 +23,4 @@ public partial class AutomationSpiritInputsOutputsStates : global::Quire.EngNote
     public int GetInputScalarStateByAlias(string aliasArg, out double valueArg, out string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int GetOutputScalarStateByAlias(string aliasArg, out double valueArg, out string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.IORegions.IScalarItemWithOriginalState GetInputItem(string alias) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.IORegions.IScalarItem GetOutputItem(string alias) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
