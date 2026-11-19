@@ -9,6 +9,30 @@ public partial class AutomationGetValueResult
         _valueItem = valueItem;
     }
 
+    public global::Quire.EngNotebookPlus.Automation.ValueResultTypes ResultType
+    {
+        get
+        {
+            if (_valueItem.ScalarState != null)
+            {
+                return global::Quire.EngNotebookPlus.Automation.ValueResultTypes.Real;
+            }
+
+            if (_valueItem.MatrixState != null)
+            {
+                return global::Quire.EngNotebookPlus.Automation.ValueResultTypes.Matrix;
+            }
+
+            if (_valueItem.StringState != null)
+            {
+                return global::Quire.EngNotebookPlus.Automation.ValueResultTypes.String;
+            }
+
+            global::Quire.DebugTools.DevAssert(_valueItem.ErrorState != null && _valueItem.ErrorState.ErrorCode != 0, null);
+            return global::Quire.EngNotebookPlus.Automation.ValueResultTypes.None;
+        }
+    }
+
     public int ErrorCode
     {
         get

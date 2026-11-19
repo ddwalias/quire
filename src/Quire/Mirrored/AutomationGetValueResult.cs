@@ -14,6 +14,30 @@ public partial class AutomationGetValueResult
         return _valueItem.ErrorState.ErrorCode;
     }
 
+    public global::Quire.Automation.ValueResultTypes ResultType
+    {
+        get
+        {
+            if (_valueItem.ScalarState != null)
+            {
+                return global::Quire.Automation.ValueResultTypes.Real;
+            }
+
+            if (_valueItem.MatrixState != null)
+            {
+                return global::Quire.Automation.ValueResultTypes.Matrix;
+            }
+
+            if (_valueItem.StringState != null)
+            {
+                return global::Quire.Automation.ValueResultTypes.String;
+            }
+
+            global::Quire.DebugTools.DevAssert(_valueItem.ErrorState != null && _valueItem.ErrorState.ErrorCode != 0, null);
+            return global::Quire.Automation.ValueResultTypes.None;
+        }
+    }
+
     public int ErrorCode
     {
         get
