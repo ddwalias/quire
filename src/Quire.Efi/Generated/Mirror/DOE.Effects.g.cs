@@ -12,9 +12,5 @@ namespace Quire.DOE;
 public partial class Effects : global::Quire.DOE.DoeAnlyz
 {
     [global::Quire.Mirror.MirrorStub]
-    private int interactionsEffects(int order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Mcd.MatVal general_interaction_effect(string factor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.MatVal get_general_effect(int order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

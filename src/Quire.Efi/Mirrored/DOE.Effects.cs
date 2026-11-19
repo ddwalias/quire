@@ -302,4 +302,86 @@ public partial class Effects
         return matVal;
     }
 
+
+    private int interactionsEffects(int order)
+    {
+        if (order < 2)
+        {
+            return m_nfacts + 1;
+        }
+        int[] findx = new int[m_nfacts];
+        for (int i = 0; i < m_nfacts; i++)
+        {
+            findx[i] = i;
+        }
+        string gen = "";
+        m_utils.getGenName(findx, out gen);
+        Combinations combinations = new Combinations(gen.GetEnumerator());
+        Array allCombinations = combinations.getAllCombinations();
+        int num = m_nfacts + 1;
+        for (int j = 1; j < order; j++)
+        {
+            IEnumerator enumerator = ((Array)allCombinations.GetValue(j)).GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                string[] gen2 = (string[])enumerator.Current;
+                string name = m_utils.getName(gen2);
+                m_utils.getGenIndices(name, out findx);
+                double[] array = null;
+                array = interactionEffect(findx);
+                m_T.set_2(num, 0, new StrVal(name));
+                m_T.set_2(num, 1, array[0], m_Ydim);
+                m_T.set_2(num, 2, array[1], m_Ydim);
+                m_T.set_2(num, 3, array[2], m_Ydim);
+                num++;
+            }
+        }
+        return num;
+    }
+
+    public MatVal get_general_effect(int order)
+    {
+        if (order < 1 || order > m_nfacts)
+        {
+            AppException.Raise("invalid interaction order", 3u);
+        }
+        int[] array = new int[m_nfacts];
+        for (int i = 0; i < m_nfacts; i++)
+        {
+            array[i] = i;
+        }
+        string gen = "";
+        m_utils.getGenName(array, out gen);
+        Combinations combinations = new Combinations(gen.GetEnumerator());
+        Array allCombinations = combinations.getAllCombinations();
+        int num = 0;
+        for (int j = 1; j <= order; j++)
+        {
+            num += Utils.combination(m_nfacts, j);
+        }
+        MatVal matVal = new MatVal(num + 1, 2);
+        matVal.set_2(0, 0, new StrVal("Factor"));
+        matVal.set_2(0, 1, new StrVal("Effects"));
+        MatVal matVal2 = null;
+        int num2 = 1;
+        for (int k = 0; k < order; k++)
+        {
+            IEnumerator enumerator = ((Array)allCombinations.GetValue(k)).GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                string[] gen2 = (string[])enumerator.Current;
+                string name = m_utils.getName(gen2);
+                matVal2 = general_interaction_effect(name);
+                if (matVal2.Rows != 1)
+                {
+                    matVal.set_2(num2, 0, new StrVal(FactorLabel(name)));
+                    matVal.set_2(num2, 1, matVal2);
+                    num2++;
+                }
+            }
+        }
+        matVal.Data.m_rows = num2;
+        return matVal;
+    }
+
 }
