@@ -38,11 +38,7 @@ internal partial class VisualBinaryOperatorNodeEditor : global::Quire.Controls.I
     [global::Quire.Mirror.MirrorStub]
     public void AddNodesHighlightOnlyCoreElements(global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::Quire.EquationEditor.View.IVisualMathNode>> linesOfnodes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void RemoveNodeHighlights() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public virtual void ShowOperatorHighlight(bool show) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Remove() => base.Remove();
     [global::Quire.Mirror.MirrorStub]
     protected void BindToSettings(bool isReadonly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -51,8 +47,4 @@ internal partial class VisualBinaryOperatorNodeEditor : global::Quire.Controls.I
     protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
     [global::Quire.Mirror.MirrorStub]
     protected virtual void OnOperatorSelectedChanged(bool selected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnCaretColorChanged(global::System.Drawing.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void UpdateCaretBlinking() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
