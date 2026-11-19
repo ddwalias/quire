@@ -21,6 +21,11 @@ namespace Quire.Controls.Worksheet;
 
 internal partial class WorksheetViewModel
 {
+    public event global::System.EventHandler Changed;
+    public event global::System.Action StartingPageNumberChanged;
+    public event global::System.Action CurrentElementChanged;
+    public event global::System.Action DictionaryUpdated;
+
     private global::Quire.Core.TextFormat _contentTextFormat;
     private readonly global::Quire.Controls.Worksheet.IWorksheetModel _model;
     private const string SpaceKeyCode = " ";

@@ -84,14 +84,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     public int CurrentPageNumber { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler Changed;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action StartingPageNumberChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action CurrentElementChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action DictionaryUpdated;
-    [global::Quire.Mirror.MirrorStub]
     public WorksheetViewModel(global::Quire.Controls.Worksheet.IWorksheetModel model, global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid grid, global::Quire.Controls.Worksheet.IWorksheetContent content, global::Quire.Controls.Worksheet.IWorksheetPageManager pageManager, global::Quire.Controls.Worksheet.IWorksheetPasteHandler pasteHandler) { }
     [global::Quire.Mirror.MirrorStub]
     public bool UNITTEST_CanCreateControlOfType<T>() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
