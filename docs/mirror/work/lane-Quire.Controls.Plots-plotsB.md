@@ -157,3 +157,9 @@
 - Held (one attempt, first write): `ViewModel` (the setter's unbinding and rebinding order differs from Mathcad's; the generated property is kept).
 - Not written (stubs kept): `AxisDirection`, `Labels`, `BaseLineEnd`, the constructor, the static field initializers, `FirePropertyChanged`, the binding helpers, the label, tick and arrowhead generation methods, and `Generate`/`Recalculate`.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 1921 checked, 0 failures.
+
+## Batch 24 — PlotEquation (partial)
+
+- Exact (12): `ScalingHeaderVisibility` (private setter writes the read-only key), `ScalingRl`, `Exp` (obsolete attribute kept), `Expression`, `Scaling` (obsolete attribute kept), `ScalingItem`, `IsScalingEmpty`, `IsExpEmpty`, `IsPlotEquationEmpty`, `ScalingChangedByUser`, `UserScalingExpression`, `EmptyPlotEquationSExp`. Their generated declarations are removed from the `.g.cs` by hand.
+- Not written (stubs kept): `EquationSExpression` (getter and setter are one property; the setter is not yet written), `ContainedEquationControls` (an iterator), `AtLeftEdge` and the rest of the properties and handlers, the constructor, the static field registrations, and the event and command members.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 1938 checked, 0 failures.
