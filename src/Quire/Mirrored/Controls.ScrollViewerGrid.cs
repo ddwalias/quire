@@ -40,4 +40,13 @@ public partial class ScrollViewerGrid
     }
 
     private global::Quire.Controls.Worksheet.IWorksheetControl Worksheet => EngineeringDocumentInstance.Worksheet;
+
+    public void StopUpdates()
+    {
+        _scrollViewer.ScrollChanged -= OnScrollChanged;
+        Worksheet.PageManager.Pages.CollectionChanged -= OnPagesCollectionChanged;
+        Worksheet.StartingPageNumberChanged -= OnStartingPageNumberChanged;
+    }
+
+    private void OnStartingPageNumberChanged() => UpdatePageNumbersTooltip();
 }

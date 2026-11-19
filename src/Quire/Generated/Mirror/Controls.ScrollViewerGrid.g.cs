@@ -18,10 +18,6 @@ public partial class ScrollViewerGrid : global::System.Windows.Controls.Grid
     [global::Quire.Mirror.MirrorStub]
     internal void UpdateEngineeringDocument(global::Quire.Controls.EngineeringDocument engineeringDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void OnStartingPageNumberChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void StopUpdates() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OnScrollChanged(object sender, global::System.Windows.Controls.ScrollChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdatePageNumbersTooltip() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
