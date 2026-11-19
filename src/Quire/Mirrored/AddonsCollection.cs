@@ -63,4 +63,23 @@ public partial class AddonsCollection
     {
         return _addonsCollection.Count > 0;
     }
+
+    public void CallAddonsWhenDocumentSaving(string documentPath)
+    {
+        if (!string.IsNullOrEmpty(documentPath))
+        {
+            foreach (Addon addon in _addonsCollection)
+            {
+                addon.CallAddonWhenDocumentSaving(documentPath);
+            }
+        }
+    }
+
+    public void CallAddonsWhenDocumentSaved(string documentPath)
+    {
+        foreach (Addon addon in _addonsCollection)
+        {
+            addon.CallAddonWhenDocumentSaved(documentPath);
+        }
+    }
 }

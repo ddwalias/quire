@@ -42,14 +42,6 @@ public partial class AddonsCollection
     [global::Quire.Mirror.MirrorStub]
     public void CallAddonsOnDocumentModified(string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void CallAddonsWhenDocumentOpened(global::Quire.Controls.Core.IEngineeringDocument doc, string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CallAddonsWhenDocumentSaving(string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CallAddonsWhenDocumentSaved(string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CallAddonsWhenDocumentClosing(string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public string CallAddonsToGetResolvedFileNameForOpen(string openedFileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string CallAddonsToGetResolvedFileNameForSave(string savedFileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -85,4 +77,8 @@ public partial class AddonsCollection
     public bool CallAddonsSaveToPtcServer(string currentDocumentPath, string newDocumentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string GetActiveAddOnId() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public void CallAddonsWhenDocumentOpened(global::Quire.Controls.Core.IEngineeringDocument doc, string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public void CallAddonsWhenDocumentClosing(string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
