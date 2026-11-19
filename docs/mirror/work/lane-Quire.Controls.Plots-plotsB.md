@@ -114,3 +114,9 @@
 - Held (one attempt, first write): `EquationSExpression` setter (the `Regex` construction and `Match` call order differs from Mathcad's) and the `Units` setter (the `PlotInvalidResultException` throw branch differs). Their generated stubs remain.
 - Not written (stubs kept): the constructor (the `_scaling` initializer and body are not yet read), the static field registrations, the events, and the remaining handlers and commands.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 1703 checked, 0 failures.
+
+## Batch 17 — PlotViewModelBase1 (partial)
+
+- Exact (3): ShowControlLevelErrorFrameForNestedError, AreAxisExpressionsVisible (private setter calls OnAxisExpressionsVisibilityChanged), CalcIsDisabled.
+- Not written (stubs kept): the constructor and its field initializers (_areAxisExpressionsVisible = true, _currentMinimalGraphWidth = PlotCommonConstants.PlotsGraphMinWidth; the constructor body is not yet read, so the default true is not yet set in the stub constructor), the static ShowAxisExpressionsCommand initializer, HideFromCalculationContext (closures over value: closure ordinal blocks it), and the rest of the members.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 1739 checked, 0 failures.
