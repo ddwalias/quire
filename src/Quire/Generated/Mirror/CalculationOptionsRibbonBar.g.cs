@@ -12,20 +12,6 @@ namespace Quire;
 public partial class CalculationOptionsRibbonBar : global::Fluent.RibbonGroupBox, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.CalculationOptionsRibbonBar Part_CalculationOptionsRibbonBar;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_CalculationOptionsRibbonBar_ApproximateEquality;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_CalculationOptionsRibbonBar_UseOriginInStrings;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_CalculationOptionsRibbonBar_StrictSingularityChecking;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_CalculationOptionsRibbonBar_MultiThreading;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_CalculationOptionsRibbonBar_UnitsAndConstantsInSymbolics;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_CalculationOptionsRibbonBar_BinOctHexMode;
-    [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public CalculationOptionsRibbonBar() { }

@@ -12,10 +12,6 @@ namespace Quire;
 public partial class DocumentViewRibbonBar : global::Fluent.RibbonGroupBox, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button _pageModeCheckButton;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button _draftModeCheckButton;
-    [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public DocumentViewRibbonBar() { }

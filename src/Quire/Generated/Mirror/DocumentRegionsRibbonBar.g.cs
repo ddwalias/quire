@@ -12,16 +12,6 @@ namespace Quire;
 public partial class DocumentRegionsRibbonBar : global::Fluent.RibbonGroupBox, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.DocumentRegionsRibbonBar Part_DocumentRegionsRibbonBar;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DocumentRegionsRibbonBar_Area;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DocumentRegionsRibbonBar_TextBlock;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DocumentRegionsRibbonBar_TextBox;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DocumentRegionsRibbonBar_Image;
-    [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public DocumentRegionsRibbonBar() { }

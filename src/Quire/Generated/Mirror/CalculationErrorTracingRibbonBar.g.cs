@@ -12,16 +12,6 @@ namespace Quire;
 public partial class CalculationErrorTracingRibbonBar : global::Fluent.RibbonGroupBox, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.CalculationErrorTracingRibbonBar Part_CalculationErrorTracingRibbonBar;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_CalculationErrorTracingRibbonBar_First;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_CalculationErrorTracingRibbonBar_Previous;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_CalculationErrorTracingRibbonBar_Next;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_CalculationErrorTracingRibbonBar_Last;
-    [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public CalculationErrorTracingRibbonBar() { }

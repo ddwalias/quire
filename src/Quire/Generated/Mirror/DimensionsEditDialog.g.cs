@@ -14,12 +14,6 @@ public partial class DimensionsEditDialog : global::Quire.Controls.Core.Controls
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.DimensionsEditDialog _this;
     [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.ListBox lbDimension;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.ListBox lbUnit;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Button OkButton;
-    [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DimensionEditDialogViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

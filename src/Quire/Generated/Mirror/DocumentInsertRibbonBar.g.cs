@@ -12,22 +12,6 @@ namespace Quire;
 public partial class DocumentInsertRibbonBar : global::Fluent.RibbonGroupBox, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.DocumentInsertRibbonBar Part_DocumentInsertRibbonBar;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DocumentInsertRibbonBar_SeparateRegions_Vertically;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DocumentInsertRibbonBar_SeparateRegions_Horizontally;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DocumentInsertRibbonBar_InsertPageBreak;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DocumentInsertRibbonBar_InsertSpace_Line;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DocumentInsertRibbonBar_InsertSpace_Page;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DocumentInsertRibbonBar_DeleteSpace;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DocumentInsertRibbonBar_DeletePage;
-    [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public DocumentInsertRibbonBar() { }

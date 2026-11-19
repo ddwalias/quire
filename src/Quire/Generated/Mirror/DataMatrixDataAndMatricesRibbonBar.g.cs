@@ -12,14 +12,6 @@ namespace Quire;
 public partial class DataMatrixDataAndMatricesRibbonBar : global::Fluent.RibbonGroupBox, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.DimensionSelectorButton Part_DataAndMatrices_InsertMatrix_DimensionSelector;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.DimensionSelectorButton Part_DataAndMatrices_InsertTable_DimensionSelector;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton vectorAndMatrixOperatorsDropdown;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton vectorAndMatrixFunctionsDropdown;
-    [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public DataMatrixDataAndMatricesRibbonBar() { }

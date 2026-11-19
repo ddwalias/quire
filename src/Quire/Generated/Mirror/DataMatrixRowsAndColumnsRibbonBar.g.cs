@@ -12,12 +12,6 @@ namespace Quire;
 public partial class DataMatrixRowsAndColumnsRibbonBar : global::Fluent.RibbonGroupBox, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DataMatrixRowsAndColumnsRibbonBar_DeleteRow;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DataMatrixRowsAndColumnsRibbonBar_DeleteColumn;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DataMatrixRowsAndColumnsRibbonBar_ClearCells;
-    [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public DataMatrixRowsAndColumnsRibbonBar() { }

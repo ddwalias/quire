@@ -12,18 +12,6 @@ namespace Quire;
 public partial class DataMatrixFileAccessRibbonBar : global::Fluent.RibbonGroupBox, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.DataMatrixFileAccessRibbonBar Part_DataMatrixFileAccessRibbonBar;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DataMatrixFileAccessRibbonBar_DataFileName;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DataMatrixFileAccessRibbonBar_ReadExcel;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DataMatrixFileAccessRibbonBar_ExcelComponent_New;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DataMatrixFileAccessRibbonBar_ExcelComponent_InputExpression;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button Part_DataMatrixFileAccessRibbonBar_ExcelComponent_OutputExpression;
-    [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public DataMatrixFileAccessRibbonBar() { }

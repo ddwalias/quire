@@ -12,8 +12,6 @@ namespace Quire;
 public partial class DialogManagerResourceDictionary : global::System.Windows.ResourceDictionary, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    public const string AccessDeniedToBrowsePath = "AccessDeniedToBrowsePath";
-    [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public DialogManagerResourceDictionary() { }
