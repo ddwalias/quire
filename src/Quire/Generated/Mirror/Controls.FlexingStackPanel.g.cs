@@ -16,12 +16,6 @@ public partial class FlexingStackPanel : global::System.Windows.Controls.Panel
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty SizeTypeProperty;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.Orientation Orientation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetSizeType(global::System.Windows.UIElement element, global::Quire.Controls.SizeType value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.SizeType GetSizeType(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
     [global::Quire.Mirror.MirrorStub]
     private static T Max<T>(params T[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -35,6 +29,4 @@ public partial class FlexingStackPanel : global::System.Windows.Controls.Panel
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
     [global::Quire.Mirror.MirrorStub]
     private double GetStrechLenght(global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> children, global::System.Windows.Size finalSize, bool isHorizontal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public FlexingStackPanel() { }
 }
