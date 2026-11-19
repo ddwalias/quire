@@ -32,8 +32,6 @@ public partial class AddonsCollection
     [global::Quire.Mirror.MirrorStub]
     private void OnIdleTimeProcessing(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void CallAddonsAtQuit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void UpdateRibbonMenuItems(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void DisableInRibbonAllAddonsMenuItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -84,15 +82,7 @@ public partial class AddonsCollection
     [global::Quire.Mirror.MirrorStub]
     public bool CallAddonsToCheckIfCwdShouldBeUpdated(string directoryPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void CallAddonsToEnablePtcPlaces(bool enable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CallAddonsOnCommand(int cmdID, string addonID) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool CallAddonsUpdateMenuItem(int cmdID, string addonID) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public bool CallAddonsSaveToPtcServer(string currentDocumentPath, string newDocumentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsAddonsCollectionNotEmpty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string GetActiveAddOnId() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
