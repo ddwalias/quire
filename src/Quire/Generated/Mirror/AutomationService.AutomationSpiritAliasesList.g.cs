@@ -11,14 +11,4 @@ namespace Quire.AutomationService;
 [global::Quire.Mirror.MirrorOf("Spirit.AutomationService.AutomationSpiritAliasesList, MathcadPrime")]
 public partial class AutomationSpiritAliasesList
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.List<string> _aliases;
-    [global::Quire.Mirror.MirrorStub]
-    public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public AutomationSpiritAliasesList(global::System.Collections.Generic.List<string> aliasesList) { }
-    [global::Quire.Mirror.MirrorStub]
-    public AutomationSpiritAliasesList(global::Quire.Controls.Core.IORegions.IIOItemCollection inputs) { }
-    [global::Quire.Mirror.MirrorStub]
-    public string GetAliasByIndex(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
