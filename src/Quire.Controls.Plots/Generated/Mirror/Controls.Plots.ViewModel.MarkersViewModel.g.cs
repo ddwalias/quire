@@ -36,20 +36,6 @@ internal partial class MarkersViewModel : global::Quire.Controls.Core.ViewModelB
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand DeleteMarkerCommand;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Presenter.IValueToScreen VerticalValueToScreen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Presenter.IValueToScreen HorizontalValueToScreen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> VerticalMarkers { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> HorizontalMarkers { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Wpf.IObservableRangeCollection<global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel> AllMarkers { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel ActiveMarker { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.AttachedBehavior.RoutedEventBindingCollection RoutedEventBindings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> InternalCalculatables { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.EventHandler<global::Quire.Controls.Plots.ViewModel.MarkerEventArgs> MarkerAdded;
@@ -135,7 +121,5 @@ internal partial class MarkersViewModel : global::Quire.Controls.Core.ViewModelB
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.MarkersViewModel+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames
     {
-        [global::Quire.Mirror.MirrorStub]
-        public const string ActiveMarker = "ActiveMarker";
     }
 }
