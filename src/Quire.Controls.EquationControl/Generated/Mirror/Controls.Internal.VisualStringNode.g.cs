@@ -26,17 +26,11 @@ internal partial class VisualStringNode : global::Quire.Controls.Internal.Visual
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IList<double> _characterWidths;
     [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.Tree.INodeInfo NodeInfo { get => base.NodeInfo; set => base.NodeInfo = value; }
-    [global::Quire.Mirror.MirrorStub]
     public override string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override double TextBaselineY { get => base.TextBaselineY; }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Geometry Geometry { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Rect ScreenInkBounds { get => base.ScreenInkBounds; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IList<double> ScreenCharacterWidths { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override event global::Quire.Delegate1<string> TextChanged;
     [global::Quire.Mirror.MirrorStub]
