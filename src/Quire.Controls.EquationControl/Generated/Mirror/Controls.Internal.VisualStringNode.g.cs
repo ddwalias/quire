@@ -28,21 +28,13 @@ internal partial class VisualStringNode : global::Quire.Controls.Internal.Visual
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.Tree.INodeInfo NodeInfo { get => base.NodeInfo; set => base.NodeInfo = value; }
     [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Media.FormattedText FormattedNodeText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override double TextBaselineY { get => base.TextBaselineY; }
     [global::Quire.Mirror.MirrorStub]
-    public override double EffectiveBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override double EffectiveScriptBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Geometry Geometry { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Rect ScreenInkBounds { get => base.ScreenInkBounds; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IList<double> CharacterWidths { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IList<double> ScreenCharacterWidths { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -63,6 +55,4 @@ internal partial class VisualStringNode : global::Quire.Controls.Internal.Visual
     private global::System.Windows.Rect ComputeAlignmentBox() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public VisualStringNode() { }
 }
