@@ -60,3 +60,10 @@
 - Moved 68 top-level constants and plain field declarations from `SpiritMainWindow.g.cs` to `Mirrored/SpiritMainWindow.cs` (no method changed). `AnyDocumentRequestToUpdateInputsEnabled` const stays in the stub: it clashes with the same-named property, and nested-class consts were excluded by indentation.
 - Events, DependencyProperty fields, static readonly fields, `_contentLoaded` and the `TypeOfThis` field stay stubs.
 - Gate: compiles; no changed method. SpiritMainWindow still has about 487 stub lines; its methods are not started.
+
+## Batch 19–20 — SpiritMainWindow members (groups 1 and 2)
+
+- Group 1 (`00334dacd`): GetPathToDefaultTemplateForNewDocument, SetPathToDefaultTemplateForNewDocument, GetDefaultTemplatesLocation, GetEnableCustomPathToDefaultTemplate, GetDefaultBuiltInTemplatesLocation, GetMyTemplatesLocation, SetMyTemplatesLocation, GetSharedTemplatesLocation, SetSharedTemplatesLocation (guard-return shape), GetFullPathForTemplatesLocationByKey, GetPathToTemplatesFolderByKey, UpdateTemplatesFolderLocationForKey, IsGivenKeyMyTemplatesKey, SetPythonDirectoryPath.
+- Group 2 (`38445ee65`): ReviseFileExtension, OnZoomChanged, OnDocumentModified, SetAndDisplayWarning (`string.Format("{0}{1}{2}", ...)` shape), ResetUntitledIndex, UpdateCurrentShowWarningsFilter, ExitApplication, UpdateTemplateLocationsIfNeeded, OpenUrl, FirePropertyChanged, GetEngineVersion, GetMathcadPrimeInstallDirectoryLocalPath, GetCultureForDefaultTemplatesAndSplashScreen, SetupWindowDimensions, DisplayFreemiumAboutBox, FindIsNotAllowedInFreemiumMode, ReplaceIsNotAllowedInFreemiumMode.
+- Parked: OnCWDChanged (Mathcad emits `call` on `AddonsCollection.CallAddonsToCheckIfCwdShouldBeUpdated` with the receiver kept by `dup`; Roslyn emits `callvirt` and a `stloc` for the local). One attempt; stays a stub.
+- Remaining in SpiritMainWindow: about 200 methods and events, plus the other four types.
