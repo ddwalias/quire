@@ -833,7 +833,13 @@ public abstract partial class PlotControlBase
             CommandBuffer.Execute(new AxesSetPropertyCommand(TargetAxes, newValue, set, get));
         }
     }
-    private void ExecuteAxesSetPropertyCommand<T>(T newValue, global::System.Action<global::Quire.Controls.Plots.PlotGraphAxis, T> set, global::System.Func<global::Quire.Controls.Plots.PlotGraphAxis, T> get, string name = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ExecuteAxesSetPropertyCommand<T>(T newValue, Action<PlotGraphAxis, T> set, Func<PlotGraphAxis, T> get, string name = null)
+    {
+        if (CanExecuteCommandsOnTargetAxes)
+        {
+            CommandBuffer.Execute(new AxesSetPropertyCommand<T>(TargetAxes, newValue, set, get, name));
+        }
+    }
     private bool GetShowTicks() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private bool GetShowNumbers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected static void CanExecuteCommandWithBooleanParameterOnTargetAxes(object sender, CanExecuteRoutedEventArgs e)
@@ -1022,7 +1028,19 @@ public abstract partial class PlotControlBase
     {
         ShowTicks = GetShowTicks();
     }
-    private void OnSetNumberFormatPropertyPreview(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnSetNumberFormatPropertyPreview(object sender, ExecutedRoutedEventArgs args)
+    {
+        using (new CommandScope(args.Command.ToString()))
+        {
+            PlotGraphAxis[] targetAxes = TargetAxes;
+            for (int num = 0; num < targetAxes.Length; num++)
+            {
+                CreateLocalNumberFormatIfNeeded(targetAxes[num]).SetPropertyValueWithCommand((SetPropertyValueCommandParameter)args.Parameter);
+            }
+        }
+        args.Handled = true;
+        UpdateCurrentNumberFormat();
+    }
     private void UpdateCurrentNumberFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected void OnClearResultFormatPreview(object sender, ExecutedRoutedEventArgs args)
     {
