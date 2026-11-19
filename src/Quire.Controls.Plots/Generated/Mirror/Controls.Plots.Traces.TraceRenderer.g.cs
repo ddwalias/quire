@@ -20,39 +20,9 @@ internal abstract partial class TraceRenderer
     [global::Quire.Mirror.MirrorStub]
     private const int StartNewCollectionAfter = 500;
     [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Media.Brush FillBrush { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Media.Pen LinePen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Media.Pen SymbolPen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::System.Windows.Media.PointCollection> ScreenPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.PointCollection LastScreenPointCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected int TotalPointCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected TraceRenderer(global::Quire.Controls.Plots.Presenter.IPlotTrace ownerTrace) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Render(global::System.Windows.Media.DrawingContext drawingContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected abstract void OnRender(global::System.Windows.Media.DrawingContext drawingContext);
     [global::Quire.Mirror.MirrorStub]
-    protected void DrawGeometry(global::System.Windows.Media.DrawingContext drawingContext, global::Quire.Controls.Plots.Traces.TraceRenderer.DrawGeometryDelegate drawGeometryDelegate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CreateSymbols(global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.Media.PointCollection pointCollecion, global::Quire.Controls.Plots.Presenter.TraceSymbol symbol) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected void DrawSymbolGeometry(global::System.Windows.Media.DrawingContext drawingContext, global::Quire.Controls.Plots.Presenter.TraceSymbol symbol) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.Dictionary<global::Quire.Controls.Plots.Presenter.TraceSymbol, global::Quire.Controls.Plots.Traces.Symbol> CreateSymbolsGeometryDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.Dictionary<global::Quire.Controls.Plots.Presenter.LineStyle, global::System.Windows.Media.DashStyle> CreateTraceLineDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AddNewScreenPointCollection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetScreenPoints() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void BreakPolylineIfItIsTooLong(global::System.Collections.Generic.IList<global::System.Windows.Point> plottingPoints, int plottingPointsCount, int index, global::System.Windows.Point screenPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
