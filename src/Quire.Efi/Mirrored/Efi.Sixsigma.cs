@@ -962,4 +962,112 @@ public partial struct Sixsigma
     {
         return BoxWilson_(arg1, arg2, arg3, keepOldOrder: true);
     }
+
+    public static NumVal fractresoln(object arg1)
+    {
+        if (!(arg1 is StrVal))
+        {
+            AppException.Raise("must be string", 1u);
+        }
+        string text = (arg1 as StrVal).m_string;
+        if (text.Equals(""))
+        {
+            AppException.Raise("invalid argument", 1u);
+        }
+        FractFact fractFact = new FractFact(text, keepOldOrder: true);
+        return new NumVal(fractFact.getResolution());
+    }
+
+    public static NumVal fractruns(object arg1)
+    {
+        if (!(arg1 is StrVal))
+        {
+            AppException.Raise("must be string", 1u);
+        }
+        string text = (arg1 as StrVal).m_string;
+        if (text.Equals(""))
+        {
+            AppException.Raise("invalid argument", 1u);
+        }
+        FractFact fractFact = new FractFact(text, keepOldOrder: true);
+        return new NumVal(fractFact.nruns);
+    }
+
+    public static MatVal boxplotgraph(object arg1)
+    {
+        Plots plots = new Plots();
+        MatVal matVal = Utl.as_matrix(arg1, 1u);
+        if (!matVal.IsRealMatrixMixed)
+        {
+            AppException.Raise("must be real", 1u);
+        }
+        MatVal matVal2 = plots.BoxPlot(matVal);
+        matVal2 = matVal2.Transpose();
+        MatVal matVal3 = new MatVal(matVal2.Rows);
+        Utils utils = new Utils();
+        SortedDictionary<int, string> icharMap = utils.icharMap;
+        for (int i = 0; i < matVal2.Rows; i++)
+        {
+            matVal3.set_1(i, new StrVal(icharMap[i]));
+        }
+        MatVal matVal4 = new MatVal(2);
+        matVal4.set_1(0, matVal3);
+        matVal4.set_1(1, matVal2);
+        return matVal4;
+    }
+
+    public static MatVal Block(object arg1, object arg2)
+    {
+        MatVal matVal = verify2LCodedDMatrix(arg1);
+        if (verifyBlocking(matVal)[0] != 1)
+        {
+            AppException.Raise("must be unblocked 2 level coded fact/fractfact design", 1u);
+        }
+        double[,] array = new double[matVal.Rows - 1, matVal.Cols - 2];
+        for (int i = 2; i < matVal.Cols; i++)
+        {
+            for (int j = 1; j < matVal.Rows; j++)
+            {
+                int num = i * matVal.Anr + j + matVal.Offset;
+                array[j - 1, i - 2] = matVal.m_rarr[num];
+            }
+        }
+        if (arg2 is NumVal)
+        {
+            int nblocks = (int)Utl.as_pint(arg2, 2u);
+            if (!DimVal.IsDimOf(arg2, Dim.identity))
+            {
+                AppException.Raise("must be dimless", 2u);
+            }
+            Blocking blockingByCount = new Blocking(array, nblocks);
+            blockingByCount.getBlockMatrix(out var dmat);
+            return dmat;
+        }
+        if (arg2 is StrVal)
+        {
+            string text = (arg2 as StrVal).m_string;
+            if (text.Equals(""))
+            {
+                AppException.Raise("invalid argument", 2u);
+            }
+            Blocking blockingByGens = new Blocking(array, text);
+            blockingByGens.getBlockMatrix(out var dmat2);
+            return dmat2;
+        }
+        AppException.Raise("invalid argument", 2u);
+        return null;
+    }
+
+    public static MatVal DoeLabel(object arg1, object arg2)
+    {
+        MatVal matVal = verifyNumericDMatrixFormat(arg1);
+        MatVal matVal2 = new MatVal(Utl.as_matrix(arg2, 2u));
+        if (matVal2.Rows < matVal.Cols - 2)
+        {
+            AppException.Raise("invalid matrix size", 2u);
+        }
+        Quire.DOE.DoeLabel doeLabel = new Quire.DOE.DoeLabel(matVal);
+        return doeLabel.coded2Real(matVal2);
+    }
+
 }

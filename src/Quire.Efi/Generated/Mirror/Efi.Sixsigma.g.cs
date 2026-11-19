@@ -13,22 +13,12 @@ namespace Quire.Efi;
 public partial struct Sixsigma
 {
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Mcd.MatVal fractfact_(object arg1, object arg2, bool keepOldOrder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.NumVal fractresoln(object arg1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.NumVal fractruns(object arg1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.MatVal boxplotgraph(object arg1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal MonteCarlo(object arg1, object arg2, object arg3, object arg4, object arg5) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.MatVal Block(object arg1, object arg2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.MatVal DoeLabel(object arg1, object arg2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal Pareto(object arg1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Efi.Sixsigma+polyfit_del, efisixsigma_")]
     public delegate global::Quire.Mcd.NumVal polyfit_del(object arg);
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mcd.MatVal fractfact_(object arg1, object arg2, bool keepOldOrder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
