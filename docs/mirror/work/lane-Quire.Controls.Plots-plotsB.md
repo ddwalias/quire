@@ -101,3 +101,9 @@
 - Held (one attempt, first write): `Splitter` setter (the `_splitter` event unhooking order differs from Mathcad) and `.ctor(EquationList, PlotTitle)` (the `_savedLength = double.NaN` field-initializer position and base-call form differ).
 - Not written (stubs kept, not parked): `Position` (lambda in `Dispatch`), the nested `MouseMoveRTDataAdorner` (kept as generated stubs; my nested partial collided with the generated `OnRender`), `InitializeColOrRowIndexProperties`, `Splitter_DragCompleted`/`Splitter_DragDelta`, and the remaining overrides and helpers.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 1646 checked, 0 failures.
+
+## Batch 15 — PlotGraphControl
+
+- Exact (8): `selectedTrace`, `XAxis`, `YAxis`, `AngularAxis`, `RadialAxis` (setters hook the axis `ShowGridLinesChanged` and `TickMarksChangedEvent`), `TracesUnsorted`, `Count`, and the `OnTraceRemoved`/`OnTraceAdded` callback properties (their generated declarations are removed from the `.g.cs` by hand, with their attributes).
+- Not written (stubs kept): the static constructor and the static field initializers (`selectedTraceProperty`, `TraceCountByTypePropertyKey`, and the other registrations; their full text is not yet read), the constructor `PlotGraphControl(PlotType)`, `SelectedTraceChanged`, the trace count/place attached properties, the `Children` collection handlers, `AddTrace`, `RemoveTrace`, `MeasureOverride`, `ArrangeOverride`, `OnRender`, and the gridline drawing helpers.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 1662 checked, 0 failures.
