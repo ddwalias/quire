@@ -9,6 +9,13 @@ namespace Quire.Controls.Internal;
 
 internal partial class VisualTextSpan
 {
+    private InlineCollection _inlines;
+    private double _baseline;
+    private double _superscriptBaseline;
+    private double _subscriptBaseline;
+    private ExtendedFont _font;
+    private ScriptedTextLayoutManager _layout;
+    private static IFontManager _fontManager;
     private readonly IList<double> _characterWidths = new List<double>();
 
     private static IFontManager FontManager
@@ -54,6 +61,16 @@ internal partial class VisualTextSpan
     public VisualTextSpan()
     {
         MathFormat = new MathFormatDobjController(this);
+    }
+
+    protected override Size ArrangeOverride(Size finalSize)
+    {
+        for (int num = 0; num < Children.Count; num++)
+        {
+            Children[num].Arrange(_layout.ChildItems[num].Rect);
+        }
+
+        return DesiredSize;
     }
 
     public void HandleMathFormatChanged(DependencyPropertyChangedEventArgs e)

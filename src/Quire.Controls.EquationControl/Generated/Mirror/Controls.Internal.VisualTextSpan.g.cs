@@ -12,25 +12,9 @@ namespace Quire.Controls.Internal;
 internal partial class VisualTextSpan : global::System.Windows.Controls.Panel, global::Quire.Controls.Internal.IVisualText, global::Quire.Controls.Core.IMathFormatOwner, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Documents.InlineCollection _inlines;
-    [global::Quire.Mirror.MirrorStub]
-    private double _baseline;
-    [global::Quire.Mirror.MirrorStub]
-    private double _superscriptBaseline;
-    [global::Quire.Mirror.MirrorStub]
-    private double _subscriptBaseline;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.ExtendedFont _font;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Internal.ScriptedTextLayoutManager _layout;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Core.IFontManager _fontManager;
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
     [global::Quire.Mirror.MirrorStub]
     protected virtual void UpdateChildren() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
