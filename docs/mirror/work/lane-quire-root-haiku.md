@@ -39,3 +39,9 @@
 - AliasTextBox: `.ctor`. CultureHelper: `Invariant` getter (`CultureInfo.InvariantCulture`).
 - Parked, same file group: AliasTextBox `PreMouseDown` event (Interlocked add/remove) stays generated.
 - Release IL: PASS (`--project Quire`), 753 checked, 0 failures.
+
+## Batch 6 — AutomationSpiritResult (three variants)
+
+- Members: fields `_errorCode`, `_realResult`, `_units`; getters `ErrorCodeInternal`, `ErrorCode`, `RealResult`, `Units`; `.ctor(IUnitedScalarState)`, for `AutomationSpiritResult`, `AutomationServiceEngNote.AutomationSpiritResult` and `AutomationServiceEngNotePlus.AutomationSpiritResult` (IL identical across the three).
+- Release IL: PASS (`--project Quire`), 768 checked, 0 failures; all 15 new members appear in the checked list.
+- Remaining mismatches in this batch: none.
