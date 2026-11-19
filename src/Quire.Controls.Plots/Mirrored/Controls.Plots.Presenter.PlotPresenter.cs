@@ -121,4 +121,103 @@ internal partial class PlotPresenter
         traceModel.Type = defaultTraceType;
         return traceModel;
     }
+
+    private void RemovePlotLegendItemFromPlotLegend(IPlotLegendModel plotLegendModel, ITraceModel trace)
+    {
+        IPlotLegendItem legendItem = _view.PlotLegend.RemoveTraceFromPlotLegend(GetViewTrace(trace));
+        plotLegendModel.RemoveLegendItem(legendItem);
+    }
+
+    private void AddTraceToEquation(ITraceModel trace, IEquationItem equationItem, IAxisModel axis)
+    {
+        equationItem.AddTrace(trace);
+        GetViewAxis(axis).AddTraceToEquation(GetViewTrace(trace), equationItem.Equation);
+    }
+
+    private void AddTraceToEquation(ITraceModel trace, IEquationItem equationItem, IAxisModel axis, int index)
+    {
+        equationItem.AddTrace(trace, index);
+        GetViewAxis(axis).AddTraceToEquation(GetViewTrace(trace), equationItem.Equation, index);
+    }
+
+    private void RemoveTraceFromEquation(int traceIndex, IEquationItem equationItem, IAxisModel axis)
+    {
+        equationItem.RemoveTrace(traceIndex);
+        GetViewAxis(axis).RemoveTraceFromEquation(traceIndex, equationItem.Equation);
+    }
+
+    private void RearrangeTraces(IAxisModel axis)
+    {
+        int num = 0;
+        IEnumerable<IEquationItem> equations = axis.Equations;
+        foreach (IEquationItem item in equations)
+        {
+            num++;
+            if (equations.Count() <= num)
+            {
+                break;
+            }
+            IEquationItem equationItem = equations.ElementAt(num);
+            switch (item.Traces.Count())
+            {
+            case 0:
+                if (equationItem != null && equationItem.Traces.Count() != 0)
+                {
+                    MoveFirstTrace(equationItem, item, axis);
+                }
+                break;
+            default:
+                if (equationItem != null)
+                {
+                    MoveAllButFirstTrace(item, equationItem, axis);
+                }
+                break;
+            case 1:
+                break;
+            }
+        }
+    }
+
+    private void MoveFirstTrace(IEquationItem source, IEquationItem target, IAxisModel axis)
+    {
+        ITraceModel traceModel = source.Traces.First();
+        if (traceModel != null)
+        {
+            traceModel.SetEquation(AxesTypeToIndex.Index(axis.Type), target);
+            GetViewTrace(traceModel).SetEquation(axis.Type, target.Equation);
+            RemoveTraceFromEquation(0, source, axis);
+            AddTraceToEquation(traceModel, target, axis);
+        }
+    }
+
+    private void MoveAllButFirstTrace(IEquationItem source, IEquationItem target, IAxisModel axis)
+    {
+        List<ITraceModel> list = source.Traces.Skip(1).ToList();
+        int num = 0;
+        // Enumerating through IEnumerable<T> is what Mathcad's IL calls; a List<T> loop differs.
+        foreach (ITraceModel item in (IEnumerable<ITraceModel>)list)
+        {
+            item.SetEquation(AxesTypeToIndex.Index(axis.Type), target);
+            GetViewTrace(item).SetEquation(axis.Type, target.Equation);
+            RemoveTraceFromEquation(1, source, axis);
+            AddTraceToEquation(item, target, axis, num++);
+        }
+    }
+
+    private IPlotAxisView GetViewAxis(IAxisModel axisModel)
+    {
+        return _axesMap[axisModel];
+    }
+
+    private IPlotTrace GetViewTrace(ITraceModel traceModel)
+    {
+        return _tracesMap[traceModel];
+    }
+
+    private static void SetCommonRange(IEnumerable<ITraceModel> traces, IAxisModel axis, Func<ITraceModel, double?> minSelector, Func<ITraceModel, double?> maxSelector)
+    {
+        double? start = traces.Min(minSelector);
+        double? end = traces.Max(maxSelector);
+        axis.SetRange(start, end);
+    }
 }

@@ -36,24 +36,6 @@ internal partial class PlotPresenter
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Plots.Presenter.ITraceModel HandleEquationRemoved(global::Quire.Controls.Plots.Presenter.IPlotLegendModel plotLegendModel, global::Quire.Controls.Plots.Presenter.IEquationItem eq_item, global::Quire.Controls.Plots.Presenter.AxesType eqAxis, global::Quire.Controls.Plots.Presenter.AxesType otherAxis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void RemovePlotLegendItemFromPlotLegend(global::Quire.Controls.Plots.Presenter.IPlotLegendModel plotLegendModel, global::Quire.Controls.Plots.Presenter.ITraceModel trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AddTraceToEquation(global::Quire.Controls.Plots.Presenter.ITraceModel trace, global::Quire.Controls.Plots.Presenter.IEquationItem equationItem, global::Quire.Controls.Plots.Presenter.IAxisModel axis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AddTraceToEquation(global::Quire.Controls.Plots.Presenter.ITraceModel trace, global::Quire.Controls.Plots.Presenter.IEquationItem equationItem, global::Quire.Controls.Plots.Presenter.IAxisModel axis, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RemoveTraceFromEquation(int traceIndex, global::Quire.Controls.Plots.Presenter.IEquationItem equationItem, global::Quire.Controls.Plots.Presenter.IAxisModel axis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RearrangeTraces(global::Quire.Controls.Plots.Presenter.IAxisModel axis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void MoveFirstTrace(global::Quire.Controls.Plots.Presenter.IEquationItem source, global::Quire.Controls.Plots.Presenter.IEquationItem target, global::Quire.Controls.Plots.Presenter.IAxisModel axis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void MoveAllButFirstTrace(global::Quire.Controls.Plots.Presenter.IEquationItem source, global::Quire.Controls.Plots.Presenter.IEquationItem target, global::Quire.Controls.Plots.Presenter.IAxisModel axis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.Presenter.IPlotAxisView GetViewAxis(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.Presenter.IPlotTrace GetViewTrace(global::Quire.Controls.Plots.Presenter.ITraceModel traceModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void SetCommonRange(global::Quire.Controls.Plots.Presenter.ITraceModel traceModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AxisModelLimitsValueChanged(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel, bool isStart, bool isEnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -61,10 +43,6 @@ internal partial class PlotPresenter
     private static void SetRangeAxisCommonRange(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.ITraceModel> traces, global::Quire.Controls.Plots.Presenter.IAxisModel xAxis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void SetResultAxisCommonRange(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.ITraceModel> traces, global::Quire.Controls.Plots.Presenter.IAxisModel yAxis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void SetCommonRange(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.ITraceModel> traces, global::Quire.Controls.Plots.Presenter.IAxisModel axis, global::System.Func<global::Quire.Controls.Plots.Presenter.ITraceModel, global::System.Nullable<double>> minSelector, global::System.Func<global::Quire.Controls.Plots.Presenter.ITraceModel, global::System.Nullable<double>> maxSelector) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CheckTraceVsPlotType(global::Quire.Controls.Plots.Presenter.ITraceModel traceModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Presenter.PlotPresenter+AddItemCommand, Ptc.Controls.Plots")]
     private partial class AddItemCommand : global::Quire.Undo.IUndoableCommand
@@ -131,4 +109,7 @@ internal partial class PlotPresenter
         [global::Quire.Mirror.MirrorStub]
         public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
+    [global::Quire.Mirror.MirrorStub]
+    private void CheckTraceVsPlotType(global::Quire.Controls.Plots.Presenter.ITraceModel traceModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
 }

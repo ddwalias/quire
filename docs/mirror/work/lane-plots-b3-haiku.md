@@ -20,3 +20,10 @@
 - Release IL (`--type Quire.Controls.Plots.Presenter.PlotPresenter`): none of the 16 moved members is in the failure list. The listed failures are the still-stubbed members.
 - Remaining stubs (closures or not yet read): `.ctor` (field initializers), `BoundToEvents`, `BoundToAxisModelEvents` (lambdas), `xAxis_EquationContolChange`, `PrimaryYAxis_EquationContolChange` (lambda FirstOrDefault), `HandleEquationAdded`, `HandleEquationRemoved`, `GetViewAxis`, `GetViewTrace`, `SetCommonRange`, `RearrangeTraces`, `CheckTraceVsPlotType`, `AxisModelLimitsValueChanged`, `SetRangeAxisCommonRange`, `SetResultAxisCommonRange`, `MoveFirstTrace`, `MoveAllButFirstTrace`, `RemoveTraceFromEquation`, `RemovePlotLegendItemFromPlotLegend`, `AddTraceToEquation` (two overloads), nested `AddItemCommand`/`RemoveItemCommand` members, and the closure display-class members.
 - Not written: the instance field initializers (`_axesMap`, `_tracesMap`, `_traceStyleSelector`) and the constructor body, which stay generated stubs.
+
+## Group 3 — Presenter.PlotPresenter (continued)
+
+- Moved (9 more members): `RemovePlotLegendItemFromPlotLegend`, both `AddTraceToEquation` overloads, `RemoveTraceFromEquation`, `RearrangeTraces` (switch with `default` first), `MoveFirstTrace`, `MoveAllButFirstTrace` (the `IEnumerable<T>` cast in the foreach is needed to match Mathcad), `GetViewAxis`, `GetViewTrace`, and the four-argument static `SetCommonRange`.
+- Release IL (`--type Quire.Controls.Plots.Presenter.PlotPresenter`): none of the nine moved members is in the failure list.
+- Parked: `CheckTraceVsPlotType` (two shapes tried: the `!(a ^ b) && !(c ^ d)` early return and the positive `(a ^ b) || (c ^ d)` block). Both differ at the first null-test branch (instruction 9: Quire `beq.s 24`, Mathcad `beq.s 25`, Mathcad has one more instruction in the preamble). Stub restored; no hand-written body.
+- Still stubs: the closure members listed in group 2, and `SetCommonRange(ITraceModel)` (lambdas).
