@@ -56,6 +56,63 @@ internal partial class WorksheetViewModel
         public override void Undo() => ViewModel.RemoveFromDictionary(_word);
         public override void Redo() => ViewModel.AddWordToDictionary(_word);
     }
+
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetViewModel+AddItemAtInsertionPointAndActivateCommand, Ptc.Controls.Worksheet")]
+    internal partial class AddItemAtInsertionPointAndActivateCommand : WorksheetCommand
+    {
+        private readonly global::Quire.Controls.Core.IWhiteboardItem _item;
+        private global::System.Windows.Point _insertionPoint;
+        private readonly bool _shouldInsertionPointOnUndo;
+
+        public AddItemAtInsertionPointAndActivateCommand(global::Quire.Controls.Worksheet.IWorksheetViewModel viewModel, string name, bool shouldInsertionPointOnUndo = true) : base(viewModel, name) => _shouldInsertionPointOnUndo = shouldInsertionPointOnUndo;
+        public AddItemAtInsertionPointAndActivateCommand(global::Quire.Controls.Worksheet.IWorksheetViewModel viewModel, global::Quire.Controls.Core.IWhiteboardItem item, string name, bool shouldInsertionPointOnUndo = true) : base(viewModel, name) { _item = item; _shouldInsertionPointOnUndo = shouldInsertionPointOnUndo; }
+        public AddItemAtInsertionPointAndActivateCommand(global::Quire.Controls.Worksheet.IWorksheetViewModel viewModel, global::Quire.Controls.Core.IWhiteboardItem item, string name, bool shouldInsertionPointOnUndo, global::System.Windows.Point insertionPoint) : base(viewModel, name) { _item = item; _insertionPoint = insertionPoint; _shouldInsertionPointOnUndo = shouldInsertionPointOnUndo; }
+        public override bool Do() { base.Do(); if (_shouldInsertionPointOnUndo) _insertionPoint = _viewModel.InsertionPoint; AddItem(); return true; }
+        public override void Undo() { base.Undo(); ViewModel.RemoveActiveSectionItemAndRestoreInsertionPoint(_item, _insertionPoint); }
+        public override void Redo() { base.Redo(); AddItem(); }
+        private void AddItem() { ViewModel.AddItemAtLocation(_item, _insertionPoint); _item.Activate(isActive: true); ViewModel.ActiveSection.ActiveItem = _item; }
+    }
+
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetViewModel+RemoveActiveItemCommand, Ptc.Controls.Worksheet")]
+    internal partial class RemoveActiveItemCommand : WorksheetCommand
+    {
+        private global::Quire.Controls.Core.IWhiteboardItem _item;
+        private global::System.Windows.Point _itemLocation;
+        public RemoveActiveItemCommand(global::Quire.Controls.Worksheet.IWorksheetViewModel viewModel) : base(viewModel, "Remove Active Item") { }
+        public override bool Do() { base.Do(); _item = _viewModel.ActiveItem; if (_item != null) { _itemLocation = _viewModel.GetWorksheetSectionItemLocation(_item); RemoveItem(); } return true; }
+        public override void Undo() { base.Undo(); new AddItemAtInsertionPointAndActivateCommand(_viewModel, _item, "Undo RemoveActiveItemCommand", false, _itemLocation).Do(); _viewModel.WorksheetContent.CommitItem(_item); }
+        public override void Redo() { base.Redo(); RemoveItem(); }
+        private void RemoveItem() { ViewModel._model.RemoveItem(_item); _viewModel.InsertionPoint = _itemLocation; }
+    }
+
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetViewModel+CreateTextRegionFromEquationControlCommand, Ptc.Controls.Worksheet")]
+    internal partial class CreateTextRegionFromEquationControlCommand : WorksheetCommand
+    {
+        private global::Quire.Controls.Core.IWhiteboardItem _mathRegion;
+        private readonly global::Quire.Controls.Core.IWhiteboardItem _textRegion;
+        private global::System.Windows.Point _insertionPoint;
+        private global::System.Windows.Point _itemLocation;
+        public CreateTextRegionFromEquationControlCommand(global::Quire.Controls.Worksheet.IWorksheetViewModel viewModel, global::Quire.Controls.Core.IWhiteboardItem textRegion, global::Quire.Controls.Core.IWhiteboardItem mathRegion) : base(viewModel, "create text region from equation control") { _textRegion = textRegion; _mathRegion = mathRegion; }
+        public override bool Do() { base.Do(); if (_mathRegion != null) { _itemLocation = _viewModel.GetWorksheetSectionItemLocation(_mathRegion); RemoveItem(_mathRegion); } _insertionPoint = _viewModel.InsertionPoint; AddItem(_textRegion); _viewModel.WorksheetContent.CommitItem(_textRegion); return true; }
+        private void AddItem(global::Quire.Controls.Core.IWhiteboardItem control) { ViewModel.AddItemAtLocation(control, _insertionPoint); control.Activate(isActive: true); ViewModel.ActiveSection.ActiveItem = control; }
+        public override void Undo() { base.Undo(); RemoveItem(_textRegion); AddItem(_mathRegion); _viewModel.WorksheetContent.CommitItem(_mathRegion); }
+        public override void Redo() { base.Redo(); RemoveItem(_mathRegion); AddItem(_textRegion); _viewModel.WorksheetContent.CommitItem(_textRegion); }
+        private void RemoveItem(global::Quire.Controls.Core.IWhiteboardItem control) { ViewModel.ActiveSection.RemoveItem(control); _viewModel.InsertionPoint = _itemLocation; }
+    }
+
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetViewModel+CreateTextRegionFromWhiteboardControlCommand, Ptc.Controls.Worksheet")]
+    internal partial class CreateTextRegionFromWhiteboardControlCommand : WorksheetCommand
+    {
+        private readonly global::Quire.Controls.Core.IWhiteboardItem _mathRegion;
+        private readonly global::Quire.Controls.Core.IWhiteboardItem _textRegion;
+        private new readonly global::Quire.Controls.Mathboard.IMathboardViewModel _viewModel;
+        public CreateTextRegionFromWhiteboardControlCommand(global::Quire.Controls.Mathboard.IMathboardViewModel viewModel, global::Quire.Controls.Core.IWhiteboardItem textRegion, global::Quire.Controls.Core.IWhiteboardItem mathRegion) : base(null, null) { _textRegion = textRegion; _mathRegion = mathRegion; _viewModel = viewModel; }
+        public override bool Do() { if (_mathRegion != null) RemoveItem(_mathRegion); AddItem(_textRegion); return true; }
+        private void AddItem(global::Quire.Controls.Core.IWhiteboardItem control) => _viewModel.AddItemAndActivate(control);
+        public override void Undo() { RemoveItem(_textRegion); AddItem(_mathRegion); }
+        public override void Redo() { RemoveItem(_mathRegion); AddItem(_textRegion); }
+        private void RemoveItem(global::Quire.Controls.Core.IWhiteboardItem control) => _viewModel.RemoveWhiteboardItem(control);
+    }
     public event global::System.EventHandler Changed;
     public event global::System.Action StartingPageNumberChanged;
     public event global::System.Action CurrentElementChanged;
