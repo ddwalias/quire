@@ -20,29 +20,11 @@ internal partial class PlotGraphLinearAxis : global::Quire.Controls.Plots.PlotGr
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty PositionProperty;
     [global::Quire.Mirror.MirrorStub]
-    private int ColOrRowIndex1 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private int ColOrRowIndex2 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Controls.GridSplitter Splitter { get => base.Splitter; set => base.Splitter = value; }
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsEffectAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.PlotGraphLinearAxis OtherLinearAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Plots.Presenter.Positions Position { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.PlotGraphLinearAxis.MouseMoveRTDataAdorner MouseMoveAdorner { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override int PositionValue { get => base.PositionValue; set => base.PositionValue = value; }
-    [global::Quire.Mirror.MirrorStub]
-    internal bool SizeFrozen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.Plots.Presenter.Positions> CalcPositionTickMarkNeeded;
-    [global::Quire.Mirror.MirrorStub]
     public PlotGraphLinearAxis(global::Quire.Controls.Plots.EquationList equationList, global::Quire.Controls.Plots.PlotTitle axisTitle = default) : base(default(global::Quire.Controls.Plots.EquationList), default(int), default(double)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public PlotGraphLinearAxis() : base(default(global::Quire.Controls.Plots.EquationList), default(int), default(double)) { }
     [global::Quire.Mirror.MirrorStub]
     private void InitializeColOrRowIndexProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
