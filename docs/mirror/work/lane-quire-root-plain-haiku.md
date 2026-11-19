@@ -35,7 +35,7 @@
 - Parked: the registry members (`OpenAddonsRegKey`, `CreateAddonsRegKey`, `OpenRegKeyByBaseKey`, `GetPtcPlacesConnectionStatus`, `SetPtcPlacesConnectionStatus`, `CheckIfAddonsShouldBeLoaded`, `GetAddonPath`). Mathcad's literal is `Software\PTC\Mathcad Prime\Mathcad Prime 1.0\Addons`, but the Quire constant `AddonRegKey` is `Software\Quire\Quire\Quire 1.0\Addons`. Matching needs a maintainer decision on the key string; not changed here.
 - Parked: `ReadOpenFromWcCmdText` (ResourceDictionary; not attempted), `GetAddonsProperties` (List and loop; not attempted), `.cctor` and static fields (static-constructor members).
 
-## Batch 6 — FlexingStackPanel (`<see git log>`)
+## Batch 6 — FlexingStackPanel (`b396bcbe7`)
 
 - Members: `Orientation` get/set (DependencyProperty), `SetSizeType`, `GetSizeType`, `.ctor`. Release IL: not in the failure list (827 checked).
 - Parked (triaged, not attempted): `MeasureOverride`, `ArrangeOverride` (stub base calls), `Measure`, `GetMinSize`, `SubtractSize`, `GetStrechLenght`, `Max<T>` (lambda closures `<MeasureOverride>b__7_*` and `<GetStrechLenght>b__13_*` need compile-order ordinals; `Max<T>` maps to `System.Linq.Enumerable.Max`).
