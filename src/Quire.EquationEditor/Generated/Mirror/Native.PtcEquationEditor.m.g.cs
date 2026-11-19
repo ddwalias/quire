@@ -12,15 +12,7 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class m : global::Quire.EquationEditor.Equation.EquationModel.b_
 {
     [global::Quire.Mirror.MirrorStub]
-    public m(global::Quire.EquationEditor.Equation.EquationModel A_0) : base(default(global::Quire.EquationEditor.Equation.EquationModel)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void a2() => base.a2();
-    [global::Quire.Mirror.MirrorStub]
     public override bool j(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.EquationEditor.Tree.FormattedString a(string A_0, string A_1, string A_2, bool A_3, out int A_4) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool a3(global::Quire.Controls.Core.FindReplaceQuery A_0) => base.a3(A_0);
     [global::Quire.Mirror.MirrorStub]
     public override bool a4(global::Quire.Controls.Core.FindReplaceQuery A_0) => base.a4(A_0);
     [global::Quire.Mirror.MirrorStub]
@@ -32,55 +24,7 @@ internal partial class m : global::Quire.EquationEditor.Equation.EquationModel.b
     [global::Quire.Mirror.MirrorStub]
     public override bool v(global::Quire.DelegateFunction0<global::Quire.EquationEditor.Tree.MathNode> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public override bool x(global::Quire.EquationEditor.Tree.FormattedString A_0) => base.x(A_0);
-    [global::Quire.Mirror.MirrorStub]
-    public override void ad() => base.ad();
-    [global::Quire.Mirror.MirrorStub]
-    public override void ae() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void af() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void ag(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.Direction A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void r(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void s() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void a(global::Quire.Delegate0 A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void am() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void an() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void ao() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void a8() => base.a8();
-    [global::Quire.Mirror.MirrorStub]
-    public override void k(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void q(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void t() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void a9() => base.a9();
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.DirectionalPair<global::Quire.EquationEditor.Tree.MathNode, global::Quire.EquationEditor.Tree.MathNode> a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void al(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.Direction A_1, global::Quire.Direction A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void ap() => base.ap();
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool aq(global::Quire.Direction A_0, global::Quire.EquationEditor.Tree.MathNode A_1) => base.aq(A_0, A_1);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.Direction ar(global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool @as(global::Quire.Controls.Core.IdLabels A_0) => base.@as(A_0);
-    [global::Quire.Mirror.MirrorStub]
-    public override bool at() => base.at();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool au() => base.au();
-    [global::Quire.Mirror.MirrorStub]
-    private void a(bool A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("m+a, Ptc.EquationEditor")]
     private sealed partial class a_
