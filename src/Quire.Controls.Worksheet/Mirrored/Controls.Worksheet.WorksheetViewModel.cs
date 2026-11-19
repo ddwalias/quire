@@ -21,6 +21,41 @@ namespace Quire.Controls.Worksheet;
 
 internal partial class WorksheetViewModel
 {
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetViewModel+WorksheetCommand, Ptc.Controls.Worksheet")]
+    internal abstract partial class WorksheetCommand : global::Quire.Undo.IUndoableCommand
+    {
+        protected global::Quire.Controls.Worksheet.IWorksheetViewModel _viewModel;
+        protected global::Quire.Controls.Worksheet.IWorksheetSection _activeSection;
+        protected global::Quire.Controls.Worksheet.WorksheetViewModel ViewModel => _viewModel as global::Quire.Controls.Worksheet.WorksheetViewModel;
+        public string Name { get; private set; }
+
+        protected WorksheetCommand(global::Quire.Controls.Worksheet.IWorksheetViewModel viewModel, string name)
+        {
+            _viewModel = viewModel;
+            Name = name;
+        }
+
+        public virtual bool Do()
+        {
+            _activeSection = _viewModel.ActiveSection;
+            return true;
+        }
+
+        public virtual void Undo() => ViewModel.ActiveSection = _activeSection;
+        public virtual void Redo() => ViewModel.ActiveSection = _activeSection;
+        public bool Execute() => global::Quire.Undo.CommandBuffer.Execute(this);
+    }
+
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetViewModel+AddWordToDictionaryCommand, Ptc.Controls.Worksheet")]
+    internal partial class AddWordToDictionaryCommand : WorksheetCommand
+    {
+        private string _word;
+        public AddWordToDictionaryCommand(global::Quire.Controls.Worksheet.IWorksheetViewModel viewModel, string word)
+            : base(viewModel, "Add word to Dictionary") => _word = word;
+        public override bool Do() => ViewModel.AddWordToDictionary(_word);
+        public override void Undo() => ViewModel.RemoveFromDictionary(_word);
+        public override void Redo() => ViewModel.AddWordToDictionary(_word);
+    }
     public event global::System.EventHandler Changed;
     public event global::System.Action StartingPageNumberChanged;
     public event global::System.Action CurrentElementChanged;

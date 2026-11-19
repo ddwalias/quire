@@ -589,44 +589,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
         private global::Quire.Controls.Core.IWhiteboardItem GetWhiteboardItemTopAncestor(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetViewModel+WorksheetCommand, Ptc.Controls.Worksheet")]
-    internal abstract partial class WorksheetCommand : global::Quire.Undo.IUndoableCommand
-    {
-        [global::Quire.Mirror.MirrorStub]
-        protected global::Quire.Controls.Worksheet.IWorksheetViewModel _viewModel;
-        [global::Quire.Mirror.MirrorStub]
-        protected global::Quire.Controls.Worksheet.IWorksheetSection _activeSection;
-        [global::Quire.Mirror.MirrorStub]
-        protected global::Quire.Controls.Worksheet.WorksheetViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        protected WorksheetCommand(global::Quire.Controls.Worksheet.IWorksheetViewModel viewModel, string name) { }
-        [global::Quire.Mirror.MirrorStub]
-        public virtual bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public bool Execute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    }
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetViewModel+AddWordToDictionaryCommand, Ptc.Controls.Worksheet")]
-    internal partial class AddWordToDictionaryCommand : global::Quire.Controls.Worksheet.WorksheetViewModel.WorksheetCommand
-    {
-        [global::Quire.Mirror.MirrorStub]
-        private string _word;
-        [global::Quire.Mirror.MirrorStub]
-        public AddWordToDictionaryCommand(global::Quire.Controls.Worksheet.IWorksheetViewModel viewModel, string word) : base(default(global::Quire.Controls.Worksheet.IWorksheetViewModel), default(string)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Do() => base.Do();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Undo() => base.Undo();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => base.Redo();
-    }
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetViewModel+RemoveItemCommand, Ptc.Controls.Worksheet")]
     internal partial class RemoveItemCommand : global::Quire.Controls.Worksheet.WorksheetViewModel.WorksheetCommand
     {
