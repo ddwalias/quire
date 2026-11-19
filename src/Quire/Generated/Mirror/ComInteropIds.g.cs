@@ -11,12 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.ComInteropIds, MathcadPrime")]
 internal static partial class ComInteropIds
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal const string IID_IClassFactory = "00000001-0000-0000-C000-000000000046";
-    [global::Quire.Mirror.MirrorStub]
-    internal const string IID_IClassFactory2 = "B196B28F-BAB4-101A-B69C-00AA00341D07";
-    [global::Quire.Mirror.MirrorStub]
-    internal const string IID_IUnknown = "00000000-0000-0000-C000-000000000046";
-    [global::Quire.Mirror.MirrorStub]
-    internal const string IID_IDispatch = "00020400-0000-0000-C000-000000000046";
 }

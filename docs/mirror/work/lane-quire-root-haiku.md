@@ -70,3 +70,10 @@
 - Members: fields, `TryConvertToBool` (nested `value != null` shape; the guard-return form gave `brtrue`), `ConvertToDocumentReadonlyOptions`, `.ctor`.
 - Parked: `SetOptionValue` (switch with the empty-catch shape: `pop; leave` to a default return; the same named blocker as the Automation getters).
 - Release IL: PASS (`--project Quire`), 784 checked, 0 failures.
+
+## Batch 11 — triage: ComInteropIds, AboutWindow, ButtonDropDownSelection
+
+- ComInteropIds: IID constants moved to the hand-written partial (plain).
+- AboutWindow: `_spiritMainWindow` field, `EngineVersion` getter, `Hyperlink_RequestNavigate` (try/catch with a non-empty catch, matched). Parked: `.ctor` (calls XAML `InitializeComponent`), `InitializeComponent`, `Connect`, `_this`, `_contentLoaded` (XAML).
+- ButtonDropDownSelection: `EndInit`, `.ctor` (matched). Parked: `childButton_Checked` (uses `DevComponents.WpfRibbon.ButtonDropDown.IsChecked`; the Quire base is `Fluent.DropDownButton`, which has no such property).
+- Release IL: PASS (`--project Quire`), 786 checked, 0 failures.
