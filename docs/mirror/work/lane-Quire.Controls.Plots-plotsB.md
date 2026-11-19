@@ -182,3 +182,10 @@
 - Exact (3 more, 6 total in this type): `TraceColor`, `TraceLineWeight`, `TraceSurfaceFillColor`, appended to the hand-written PlotControl3D file, with their generated declarations removed by hand.
 - Not written (stubs kept): `Trackball` (uses the view model's mouse handlers and the graph viewport), `AxesWidget`, `GraphImageFileNameForPrintXamlSerialization`, `CalculatableChildren`, `RegionBorder`, `CameraControlState`, `AxesWidgetHost`, `ViewModel`, `HideFromCalculationContext`, `ErrorIsNotNull`, `ErrorMessage`, `AxesWidgetZAxis`, the constructor and static initializers, and the rest of the type.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 2331 checked, 0 failures.
+
+## Batch 28 — PlotTrace3D (AddOrRemoveFromVisual)
+
+- Exact (1): `AddOrRemoveFromVisual` (appended to the hand-written PlotTrace3D file; its generated stub is removed by hand).
+- Held (one attempt, first write): `UpdateLineStyle` and `UpdateSymbol` (the null-guard `Visual != null && ...` shape differs from Mathcad's branch layout). Their stubs remain.
+- Not written (stubs kept): `FireVisualChanged`, `UpdateSurfaceFill`, `CreateSolidMesh`, `UpdateVisualData` (not yet read in full), and the rest.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 2332 checked, 0 failures.
