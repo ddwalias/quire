@@ -1,7 +1,7 @@
 # Lane Quire.Controls.Plots, half A Checkpoint
 
 - Owner: Antigravity worker (Orca task `task_1145e28e3ba2`)
-- Branch: `mirror/plots-a-batch6`
+- Branch: `mirror/plots-a-batch7`
 - Scope: Half A types up to and including `Controls.Plots.Plot3D.View.PlotAxesWidget3D.g.cs`
 
 ## Landed Commits
@@ -10,13 +10,12 @@
 - Batch 3: `33b86e258` — EquationListItem, ContourLogicalDataCollection (36 stubs removed, all 36 members exact)
 - Batch 4: `a4f8fa23b` — PlottingPointsFilter (33 stubs removed, all 23 members exact)
 - Batch 5: `5576c159c` — ImageCreator (35 stubs removed, all 18 members + PropertyNames exact)
+- Batch 6: `9d4428059` — BaseMarker (25 stubs removed, all 17 members + nested PropertyNames, DoActionWhenEquationProxyChanged, closures exact)
 
-## Batch 6 — BaseMarker
-- BaseMarker: exact — all 17 members + nested PropertyNames (3 consts) + nested DoActionWhenEquationProxyChanged (3 members) + 2 closures (<set_EquationSExpression>b__0, <set_ExpressionXml>b__0) (25 stubs removed):
-  - Nested type `PropertyNames`: 3 const strings (`Color`, `ShowCallout`, `IsUserSetValue`)
-  - Nested type `DoActionWhenEquationProxyChanged`: `_action`, `_baseMarker`, `.ctor()`, `ActionWrapper()`
-  - Fields: `_color`, `_showCallout`, `_equationProxy`, `_calculatable`, `_isUserSetValue`, `PropertyChanged`, `EquationProxyChanged`
-  - Properties: `Color`, `Calculatable`, `ShowCallout`, `IsUserSetValue`, `EquationSExpression`, `ExpressionXml`
-  - Methods: `CalculatableRequestEvaluation()`, `SetIsUserSetValue()`, `OnPropertyChanged()`, `SetEquationProxy()`, `.ctor()`
-  - Closures: `<>c__DisplayClass22_0::<set_EquationSExpression>b__0`, `<>c__DisplayClass25_0::<set_ExpressionXml>b__0`
-- Release IL Report: PASS — 1656 checked, 0 failures.
+## Batch 7 — TrackingHelper
+- TrackingHelper: exact — all 22 members + closures/lambdas (26 stubs removed):
+  - Fields: `_trackball`, `_wTransform`, `_hitTestTarget`, `_trackingPointsArray`, `_trackingLinesArray`
+  - Property: `Viewport`
+  - Methods: `.ctor()`, `Attach()`, `Detach()`, `Reset()`, `ClearTrackingVisuals()`, `TrackStart()`, `TrackEnd()`, `SetTrackingPoint()`, `AddTrackingPoint()`, `SetTrackingLine()`, `AddTrackingLine()`, `SetTrackingPoint2D()`, `AddTrackingPoint2D()`, `SetTrackingLine2D()`, `AddTrackingLine2D()`, `PerformHitTest()`, `HitTestResultCallback()`, `UpdateHitTestTarget(object, EventArgs)`, `UpdateHitTestTarget()`, `GetHitTestTargetTransformed()`
+  - Closures / Lambdas: `<Attach>b__6_0`, `<ClearTrackingVisuals>b__9_0`, `<ClearTrackingVisuals>b__9_1`, `<PerformHitTest>b__0` on `<>c__DisplayClass20_0`, `<GetHitTestTargetTransformed>b__0` on `<>c__DisplayClass26_0`
+- Release IL Report: PASS — 1699 checked, 0 failures.
