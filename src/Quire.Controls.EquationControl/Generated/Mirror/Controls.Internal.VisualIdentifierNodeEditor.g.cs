@@ -48,17 +48,7 @@ internal partial class VisualIdentifierNodeEditor : global::Quire.Controls.Inter
     [global::Quire.Mirror.MirrorStub]
     private void InitializeHighlightBox() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public override void Remove() => base.Remove();
-    [global::Quire.Mirror.MirrorStub]
     public void SetSelection(int start, int end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UnsetSelection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetCaretType(bool isReadWrite) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnCaretColorChanged(global::System.Drawing.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void UpdateCaretBlinking() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private double GlyphIndexToX(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -79,6 +69,4 @@ internal partial class VisualIdentifierNodeEditor : global::Quire.Controls.Inter
     protected void OnEditNodeMouseLeftButtonUp(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnHighlightColorChanged(global::System.Drawing.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnHighlightOpacityChanged(double opacity) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
