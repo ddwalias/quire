@@ -67,3 +67,10 @@
 - PlotDataObjectCreator exact (13): `CreatePlotDataObject`, `CreatePolarPlotType`, `GetXLegendPosition`, `GetYLegendPosition`, `GetPlotTitlePosition`, `CreateXyPlotType`, `CreateXyDomainType`, `CreateValueType`, `FillAxisBaseType`, `FillEquations`, `CreateNumberFormat`, `CreateTrace`, `CreateTraceStyle`. The committed `ConvertLineStyle` overloads are kept as they were.
 - Held (one attempt each, first write): `ConvertBackgroundType`, `ConvertScaling`, `ConvertAxisPosition`, `ConvertTraceType`, `ConvertSymbol` (C# `switch` expressions lower differently from Mathcad's switch tables), `FillPlotBaseType` (the `for` loop over `plotControl.Traces` differs in its array load order).
 - Release IL (project gate, changed methods, rebased onto main): PASS — 1514 checked, 0 failures.
+
+## Batch 10 — PlotGraphRadialAxis
+
+- Exact (14): `Radius`, `TickOffset`, `RadiusWTickOffset`, `ArrowHeadGeometry`, `Position`, `Helper`, static `.cctor` (`StartProperty`/`EndProperty` overrides), `.ctor`, `ArrangeOverride`, `MeasureOverride`, `OnRender`, `Draw`, `GetTickmarksGeometry`, `GetTickMarkPositionByRange`.
+- Held (one attempt each, first write): `ClipBounds` (the `0.0 - num` constant ordering differs at the first instruction); `GetTickMarkElementPosition` (its `Point` return and `UIElement` argument order differs).
+- Not yet attempted (still generated stubs, not parked): the nested `Point2ScreenHelperImpl` class, `GetTickMarkPositionByIndex`, `GetTickLine`, `AxisLineGeometry`, `DrawNumbers`, and the overrides `GetAxisStartPosition`, `GetAxisEndPosition`, `TickMarksChanged`, `HandleOrientationChanged`, `PositionTickMarkChanged`, `UpdateAxisOriginPositions`, `MouseMoveDraw`, `MoveToValue`, `MoveByValue`, `FindClosestTickValueToZero`, `ApplyTickNumber`.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 1529 checked, 0 failures.
