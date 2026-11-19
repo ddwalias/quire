@@ -11,55 +11,8 @@ namespace Quire.Controls.Plots.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.ImageCreator, Ptc.Controls.Plots")]
 internal partial class ImageCreator : global::Quire.Controls.Plots.Model.IStyleOwner
 {
-    [global::Quire.Mirror.MirrorStub]
-    private double[] _hitsArray;
-    [global::Quire.Mirror.MirrorStub]
-    private double _maxPixelCount;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _styleChanged;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.Model.IMapper _densityToRGBAMap;
-    [global::Quire.Mirror.MirrorStub]
-    public bool UpdateNeeded { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public uint Alpha { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Color Color { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool UseTraceInvalidStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Model.StyleType StyleType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<string> StyleChanged;
-    [global::Quire.Mirror.MirrorStub]
-    internal ImageCreator() { }
-    [global::Quire.Mirror.MirrorStub]
-    internal ImageCreator(global::Quire.Controls.Plots.Model.IStyleOwner sourceCreator) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void ResetUpdateNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public uint[] CreateRgba(global::System.Windows.Media.PointCollection dataPoints, global::System.Windows.Rect dataRange, global::System.Windows.Int32Rect viewPortRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public uint[] UpdateRgba() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool BuildHitsArray(global::System.Windows.Media.PointCollection points, global::System.Windows.Rect axesBounds, global::System.Windows.Int32Rect imageBounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static int SqueezeToBounds(int min, int max, int x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void NotifyStyleChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.ImageCreator+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames
     {
-        [global::Quire.Mirror.MirrorStub]
-        public const string UseTraceInvalidStyle = "UseTraceInvalidStyle";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Alpha = "Alpha";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Color = "Color";
-        [global::Quire.Mirror.MirrorStub]
-        public const string StyleType = "StyleType";
     }
 }
