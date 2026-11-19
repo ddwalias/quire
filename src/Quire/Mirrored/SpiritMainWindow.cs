@@ -72,4 +72,100 @@ public partial class SpiritMainWindow
     private global::Quire.Zoom _zoomControl;
     internal global::System.Windows.Controls.DockPanel EngineNotificationBar;
     internal global::AvalonDock.DockingManager appDock;
+
+    public string GetPathToDefaultTemplateForNewDocument()
+    {
+        return global::Quire.Properties.Settings.Default.PathToDefaultTemplateForNewDocument;
+    }
+
+    public void SetPathToDefaultTemplateForNewDocument(string filePath)
+    {
+        global::Quire.Properties.Settings.Default.PathToDefaultTemplateForNewDocument = filePath;
+        global::Quire.Properties.Settings.Default.Save();
+    }
+
+    public string GetDefaultTemplatesLocation()
+    {
+        return System.IO.Path.GetFullPath(System.IO.Path.Combine(GetMathcadPrimeInstallDirectoryLocalPath(), (string)TryFindResource("Application.BuiltInTemplatesDefaultLocation"), GetCultureForDefaultTemplatesAndSplashScreen()));
+    }
+
+    public bool GetEnableCustomPathToDefaultTemplate()
+    {
+        return global::Quire.Properties.Settings.Default.EnableCustomPathToDefaultTemplate;
+    }
+
+    public string GetDefaultBuiltInTemplatesLocation()
+    {
+        return DefaultBuiltInTemplatesLocation;
+    }
+
+    public string GetMyTemplatesLocation()
+    {
+        return global::Quire.Properties.Settings.Default.MyTemplatesLocation;
+    }
+
+    public void SetMyTemplatesLocation(string folderPath)
+    {
+        UpdateTemplatesFolderLocationForKey("Application.UserTemplatesDefaultLocation", GetMyTemplatesLocation());
+        if (string.Equals(GetMyTemplatesLocation(), folderPath, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        global::Quire.Properties.Settings.Default.MyTemplatesLocation = folderPath;
+        global::Quire.Properties.Settings.Default.Save();
+    }
+
+    public string GetSharedTemplatesLocation()
+    {
+        return global::Quire.Properties.Settings.Default.SharedTemplatesLocation;
+    }
+
+    public void SetSharedTemplatesLocation(string folderPath)
+    {
+        UpdateTemplatesFolderLocationForKey("Application.SharedTemplatesDefaultLocation", GetSharedTemplatesLocation());
+        if (string.Equals(GetSharedTemplatesLocation(), folderPath, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        global::Quire.Properties.Settings.Default.SharedTemplatesLocation = folderPath;
+        global::Quire.Properties.Settings.Default.Save();
+    }
+
+    private string GetFullPathForTemplatesLocationByKey(string templateKey)
+    {
+        string pathToTemplatesFolderByKey = GetPathToTemplatesFolderByKey(templateKey);
+        string path = TryFindResource(templateKey) as string;
+        return System.IO.Path.GetFullPath(System.IO.Path.Combine(pathToTemplatesFolderByKey, path));
+    }
+
+    private string GetPathToTemplatesFolderByKey(string templateKey)
+    {
+        if (!IsGivenKeyMyTemplatesKey(templateKey))
+        {
+            return global::Quire.IO.FileUtils.GetCommonConfigFolderPath();
+        }
+
+        return global::Quire.IO.FileUtils.GetLocalApplicationDataPath();
+    }
+
+    private void UpdateTemplatesFolderLocationForKey(string userTemplatesDefaultLocationKey, string templatesLocation)
+    {
+        if ((string)TryFindResource(userTemplatesDefaultLocationKey) != null)
+        {
+            TemplatesFolderLocations[(string)TryFindResource(userTemplatesDefaultLocationKey)] = templatesLocation;
+        }
+    }
+
+    public bool IsGivenKeyMyTemplatesKey(string templateKey)
+    {
+        return string.Equals("Application.UserTemplatesDefaultLocation", templateKey);
+    }
+
+    public void SetPythonDirectoryPath(string pythonDirectoryPath)
+    {
+        global::Quire.Properties.Settings.Default.PythonDirectoryPath = pythonDirectoryPath;
+        global::Quire.Properties.Settings.Default.Save();
+    }
 }

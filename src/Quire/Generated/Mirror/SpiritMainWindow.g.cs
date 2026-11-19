@@ -124,34 +124,6 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     [global::Quire.Mirror.MirrorStub]
     private void DocumentPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public string GetPathToDefaultTemplateForNewDocument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetPathToDefaultTemplateForNewDocument(string filePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetDefaultTemplatesLocation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool GetEnableCustomPathToDefaultTemplate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetDefaultBuiltInTemplatesLocation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetMyTemplatesLocation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetMyTemplatesLocation(string folderPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetSharedTemplatesLocation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetSharedTemplatesLocation(string folderPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string GetFullPathForTemplatesLocationByKey(string templateKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string GetPathToTemplatesFolderByKey(string templateKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateTemplatesFolderLocationForKey(string userTemplatesDefaultLocationKey, string templatesLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsGivenKeyMyTemplatesKey(string templateKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetPythonDirectoryPath(string pythonDirectoryPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void InitializeTemplatesLocations() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static string GetCultureForDefaultTemplatesAndSplashScreen() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
