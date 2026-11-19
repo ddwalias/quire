@@ -9,6 +9,19 @@ public partial class AutomationGetValueResult
         _valueItem = valueItem;
     }
 
+    public int ErrorCode
+    {
+        get
+        {
+            if (global::Quire.DebugTools.AssertNotNull(_valueItem.ErrorState, null).Failed)
+            {
+                return -1;
+            }
+
+            return (int)_valueItem.ErrorState.ErrorCode;
+        }
+    }
+
     public string Units
     {
         get

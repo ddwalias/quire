@@ -13,6 +13,4 @@ public partial class AutomationGetValueResult : global::Quire.EngNotebook.Automa
 {
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EngNotebook.Automation.ValueResultTypes ResultType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
