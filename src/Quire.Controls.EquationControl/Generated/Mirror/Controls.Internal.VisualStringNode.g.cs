@@ -18,35 +18,9 @@ internal partial class VisualStringNode : global::Quire.Controls.Internal.Visual
     [global::Quire.Mirror.MirrorStub]
     private const char _rightQuote = '\u201D';
     [global::Quire.Mirror.MirrorStub]
-    private double _baseline;
-    [global::Quire.Mirror.MirrorStub]
-    private double _exponentBaseline;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Media.FormattedText _formattedText;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IList<double> _characterWidths;
-    [global::Quire.Mirror.MirrorStub]
-    public override string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override double TextBaselineY { get => base.TextBaselineY; }
-    [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Rect ScreenInkBounds { get => base.ScreenInkBounds; }
     [global::Quire.Mirror.MirrorStub]
     public override event global::Quire.Delegate1<string> TextChanged;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect HighlightRect() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected static void TextPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void FireTextChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => base.MeasureStaticLayout(availableSize);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
-    [global::Quire.Mirror.MirrorStub]
     private void UpdateText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Rect ComputeAlignmentBox() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
