@@ -29,6 +29,22 @@
 - Parked: `SetTooltipAndMinScrollbarThumbSize`, `UpdateEngineeringDocument`, `OnStartingPageNumberChanged`, `StopUpdates`, `OnScrollChanged`, `UpdatePageNumbersTooltip`, `OnPagesCollectionChanged` (not started in this batch).
 - Release IL: the five changed members are not in the failure list (820 checked).
 
-## Remaining
+## Batch 5 — AddonsProperties+AddonsData (`967b93525`)
+
+- Members: `AddonsData` fields `_path`, `_id`, `.ctor`, `Path`, `ID`. Release IL: the three members are not in the failure list (825 checked).
+- Parked: the registry members (`OpenAddonsRegKey`, `CreateAddonsRegKey`, `OpenRegKeyByBaseKey`, `GetPtcPlacesConnectionStatus`, `SetPtcPlacesConnectionStatus`, `CheckIfAddonsShouldBeLoaded`, `GetAddonPath`). Mathcad's literal is `Software\PTC\Mathcad Prime\Mathcad Prime 1.0\Addons`, but the Quire constant `AddonRegKey` is `Software\Quire\Quire\Quire 1.0\Addons`. Matching needs a maintainer decision on the key string; not changed here.
+- Parked: `ReadOpenFromWcCmdText` (ResourceDictionary; not attempted), `GetAddonsProperties` (List and loop; not attempted), `.cctor` and static fields (static-constructor members).
+
+## Batch 6 — FlexingStackPanel (`<see git log>`)
+
+- Members: `Orientation` get/set (DependencyProperty), `SetSizeType`, `GetSizeType`, `.ctor`. Release IL: not in the failure list (827 checked).
+- Parked (triaged, not attempted): `MeasureOverride`, `ArrangeOverride` (stub base calls), `Measure`, `GetMinSize`, `SubtractSize`, `GetStrechLenght`, `Max<T>` (lambda closures `<MeasureOverride>b__7_*` and `<GetStrechLenght>b__13_*` need compile-order ordinals; `Max<T>` maps to `System.Linq.Enumerable.Max`).
+
+## Remaining (not done; set incomplete)
+
+Not attempted: App (13 stubs), AppCommands (static constructor only; its cctor is hand-written already, and the static field stubs remain), AddonsControls (19), Addon (28 incl. native delegates), AddonsCollection (38), CMathcadPrimeApplication (53), CMathcadPrimeWorksheet (100), AllFunctionsBrowserTreeViewUIFunctionalityAttachedBehavior (13), BaseUIFunctionalityAttachedBehavior (about 20; `.ctor` blocked: base-class type `Microsoft.Xaml.Behaviors.Behavior`1` vs Mathcad `System.Windows.Interactivity.Behavior`1), ScrollViewerGrid (7 stubs left), AddonsProperties (registry members parked above).
+
+Project-level blocker for Behaviors: `Behaviors.BaseUIFunctionalityAttachedBehavior.g.cs` derives from `Microsoft.Xaml.Behaviors.Behavior<T>`; Mathcad's `System.Windows.Interactivity.Behavior<T>` appears in every behavior's `AssociatedObject` call and base constructor call. Owned by the base-class file, not this lane.
+
 
 Not started: Controls.FlexingStackPanel, Behaviors.BaseUIFunctionalityAttachedBehavior, Behaviors.AllFunctionsBrowserTreeViewUIFunctionalityAttachedBehavior, App, AppCommands, AddonsProperties, AddonsControls, Addon, AddonsCollection, CMathcadPrimeApplication, CMathcadPrimeWorksheet.
