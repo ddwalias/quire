@@ -35,6 +35,6 @@
   VisualMultiLineAligningBinaryOperatorNode 30, VisualTextRun 26, VisualStringNode 26, VisualSubscriptOperatorNode 15,
   VisualTextSpan 12, VisualVariantLineBinaryOperatorNode 105, SpecTableControl 155, SpecTableView 172.
   VisualMathRegionNode: 42 stubs left (blockers above).
-- Total stub members in the half at this checkpoint: about 1,450. The lane stopped here; the rest is not claimed.
+- Total `MirrorStub` attributes left in the half at this checkpoint: 763 (counted in the 21 files, after the landing above). The lane stopped here; the rest is not claimed.
 - Observed pattern: most remaining members in VisualMatrixNode and the SpecTable views depend on lambdas, closures, or
   `<>c` ordinals, so the lane needs the placeholder-ordinal step from AGENTS.md before those can match.
