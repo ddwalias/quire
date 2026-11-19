@@ -13,8 +13,4 @@ public partial class FractFact : global::Quire.DOE.DoeBase
 {
     [global::Quire.Mirror.MirrorStub]
     public FractFact(string gens, bool keepOldOrder) { }
-    [global::Quire.Mirror.MirrorStub]
-    internal override double[,] getDesignMatrix() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<string> getDefiningRelation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

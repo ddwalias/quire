@@ -294,4 +294,68 @@ public partial class FractFact
         }
         return text;
     }
+
+    internal override double[,] getDesignMatrix()
+    {
+        double[,] array = new double[m_nruns, m_nfacts];
+        Permutations permutations = new Permutations(m_nfacts - m_gens.Length, m_keepOldOrder);
+        double[,] allPermutations = permutations.getAllPermutations();
+        for (int i = 0; i < allPermutations.GetLength(0); i++)
+        {
+            for (int j = 0; j < allPermutations.GetLength(1); j++)
+            {
+                array[i, j] = allPermutations[i, j];
+            }
+        }
+        int num = m_nfacts - m_gens.Length;
+        int num2 = 0;
+        string[] gens = m_gens;
+        foreach (string gen in gens)
+        {
+            m_utils.getGenIndices(gen, out var findx);
+            for (int l = 0; l < m_nruns; l++)
+            {
+                int num3 = 1;
+                for (int m = 0; m < findx.Length; m++)
+                {
+                    num3 *= (int)array[l, findx[m]];
+                }
+                array[l, num] = m_gens_sgn[num2] * num3;
+            }
+            num2++;
+            num++;
+        }
+        return array;
+    }
+
+    public List<string> getDefiningRelation()
+    {
+        int num = 1 + m_gens.Length;
+        for (int i = 2; i < m_gens.Length; i++)
+        {
+            num += Utils.combination(m_gens.Length, i);
+        }
+        m_defRel.Capacity = num;
+        for (int j = 0; j < m_gens.Length; j++)
+        {
+            int key = m_nfacts - m_gens.Length + j;
+            string item = ((m_gens_sgn[j] == -1) ? "-" : "") + m_gens[j] + m_utils.icharMap[key];
+            m_defRel.Add(item);
+        }
+        string[] array = new string[m_gens.Length];
+        m_defRel.CopyTo(0, array, 0, m_gens.Length);
+        Combinations combinations = new Combinations(array.GetEnumerator());
+        Array allCombinations = combinations.getAllCombinations();
+        for (int k = 1; k < allCombinations.Length; k++)
+        {
+            IEnumerator enumerator = ((Array)allCombinations.GetValue(k)).GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                string[] combs = (string[])enumerator.Current;
+                m_defRel.Add(getDefWord(combs));
+            }
+        }
+        return m_defRel;
+    }
+
 }
