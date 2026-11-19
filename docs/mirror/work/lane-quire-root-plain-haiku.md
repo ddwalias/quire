@@ -71,3 +71,9 @@ Not attempted: AddonsCollection (38 stubs), AllFunctionsBrowserTreeViewUIFunctio
 - Parked (stubs kept, branch layout differs): `CallAddonsWhenDocumentOpened` (the Mathcad false paths jump to a different target than Roslyn's `&&` form) and `CallAddonsWhenDocumentClosing` (the `Remove` block placement differs).
 - Still stubs: the constructor, `LoadAddonsAndAddToCollection`, idle-timer members, ribbon members, dialog and file-name members, `CallAddonsToOpenFromWindchill`, `CallAddonsSaveToPtcServer`, `GetActiveAddOnId`, and the rest of the AddonsCollection list (not attempted).
 - Gate note: one attempt failed on an MSBuild OutOfMemoryException in an unrelated project; the rerun passed the same build.
+
+## Batch 10 — AddonsCollection (remaining simple members)
+
+- Landed: `CallAddonsOnDocumentModified` (empty), `CallAddonsToGetResolvedFileNameForSave`, `CallAddonsSaveToPtcServer`, `CallAddonsToCheckIfCwdShouldBeUpdated` (try around the guarded body; the try around the whole method failed on the guard's branch target), `GetActiveAddOnId`. Gate: 5 of 5 checked, none failing (1069 checked).
+- Parked after one inverted/arm-swapped attempt each: `CallAddonsWhenDocumentOpened` and `CallAddonsWhenDocumentClosing`. Mathcad's false-branch targets sit at different instruction positions than Roslyn's layout for the `&&` guard and the empty-then `if`; both forms still differ at the first branch.
+- Still stubs (not yet attempted): `CallAddonsToGetDefaultDirectory` and `CallAddonsToOpenFromWindchill` (their `??`-style return shape needs a form check), `CallAddonsToGetResolvedFileNameForOpen`, the dialog members, the file-name display members, `CallAddonsToGeneratePdfFile`, `CopyViewable`, the constructor, and the idle/ribbon members.
