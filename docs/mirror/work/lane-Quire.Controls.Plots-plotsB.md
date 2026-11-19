@@ -170,3 +170,9 @@
 - Recovery note: an earlier `Write` to this path replaced the committed file; it was restored from HEAD before this batch and the earlier work is intact.
 - Not written (stubs kept): `ViewModel` and `ViewPortRect` (both have logic beyond accessors) and the rest of the `PlotTrace` members.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 2129 checked, 0 failures.
+
+## Batch 26 — PlotControl3D (partial)
+
+- Exact (3): `PlotCameraType`, `TraceSymbol`, `TraceLineStyle` (dependency-property accessors). Their generated declarations are removed from the generated file by hand. This file did not exist in HEAD, so nothing earlier was overwritten.
+- Not written (stubs kept): `TraceColor`, `TraceLineWeight`, `TraceSurfaceFillColor` (bodies not yet read), the constructor and static initializers, the trackball and widget members, and the rest of the type.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 2176 checked, 0 failures.
