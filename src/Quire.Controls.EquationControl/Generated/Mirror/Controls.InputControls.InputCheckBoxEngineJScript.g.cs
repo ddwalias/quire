@@ -11,32 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputCheckBoxEngineJScript, Ptc.Controls.EquationControl")]
 internal partial class InputCheckBoxEngineJScript : global::Quire.Controls.InputControls.InputControlEngineJScript
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string DefaultUserScriptObjectName = "CheckBox";
-    [global::Quire.Mirror.MirrorStub]
-    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableCheckBox.JsCheckBoxScriptInternalClass.js";
-    [global::Quire.Mirror.MirrorStub]
-    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableCheckBox.JsCheckBoxDefaultScript.js";
-    [global::Quire.Mirror.MirrorStub]
-    protected static string _defaultScript;
-    [global::Quire.Mirror.MirrorStub]
-    public const string text = "text";
-    [global::Quire.Mirror.MirrorStub]
-    public const string leftText = "leftText";
-    [global::Quire.Mirror.MirrorStub]
-    public const string check = "check";
-    [global::Quire.Mirror.MirrorStub]
-    public override string Script { get => base.Script; }
-    [global::Quire.Mirror.MirrorStub]
-    public override string GetUserScriptObjectName(string userScript, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.GetUserScriptObjectName(userScript, engineParams);
-    [global::Quire.Mirror.MirrorStub]
-    public override string AddInternalScripts(string script, string controlObjectName, object[] inputs, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.AddInternalScripts(script, controlObjectName, inputs, engineParams);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void UpdateScriptableClassValues(ref object value, object scriptControlObject, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void GetExistingEvents(string convertUserScript) => base.GetExistingEvents(convertUserScript);
-    [global::Quire.Mirror.MirrorStub]
-    protected override object GetScriptClassProperties(object scriptObjectProperties = default) => base.GetScriptClassProperties(scriptObjectProperties);
-    [global::Quire.Mirror.MirrorStub]
-    public InputCheckBoxEngineJScript() { }
 }
