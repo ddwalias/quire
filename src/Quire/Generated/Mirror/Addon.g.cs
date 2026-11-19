@@ -50,21 +50,7 @@ public partial class Addon
     [global::Quire.Mirror.MirrorStub]
     public bool LoadAddon(string pathToAddonLoader, global::Quire.Automation.IMathcadPrimeApplication mathcadPrimeApplicationPtr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void UnloadAddon() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool CallAddonInitialize(global::Quire.Automation.IMathcadPrimeApplication cMathcadPrimeApplicationPtr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CallAddonCleanup() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CallAddonOnIdle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CallAddonWhenDocumentOpened(string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CallAddonWhenDocumentClosing(string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CallAddonWhenDocumentSaving(string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CallAddonWhenDocumentSaved(string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string CallAddonToGetResolvedFileNameForOpenAlloc(string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -76,13 +62,9 @@ public partial class Addon
     [global::Quire.Mirror.MirrorStub]
     public bool CallAddonSaveToPtcServer(string currentDocumentPath, string newDocumentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void CallAddonOnCommand(int cmdID) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public bool CallAddonUpdateMenuItem(int cmdID) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool CallAddonToCheckIsAddOnActive() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private nint GetAddressOfFunction(string functionName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Spirit.Addon+Initialize, MathcadPrime")]
     private delegate void Initialize(global::Quire.Automation.IMathcadPrimeApplication ptr);
