@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Windows.Threading;
 using Quire.Controls.Core;
@@ -332,5 +333,104 @@ public partial class CMathcadPrimeWorksheet
         {
             return MathcadPrimeComServerManager.Instance.ListOfControlledWorksheets.Contains(new KeyValuePair<string, string>(DocumentName, DocumentFullName));
         }
+    }
+
+    public void Synchronize()
+    {
+        try
+        {
+            Delegate0 synchronize = DoSynchronize;
+            MathcadPrimeComServerManager.Instance.InvokeDelegate(synchronize, DispatcherPriority.Normal);
+        }
+        catch
+        {
+        }
+    }
+
+    public void PauseCalculation()
+    {
+        try
+        {
+            Delegate0 pauseCalculation = DoPauseCalculation;
+            MathcadPrimeComServerManager.Instance.InvokeDelegate(pauseCalculation, DispatcherPriority.Normal);
+        }
+        catch
+        {
+        }
+    }
+
+    public void ResumeCalculation()
+    {
+        try
+        {
+            Delegate0 resumeCalculation = DoResumeCalculation;
+            MathcadPrimeComServerManager.Instance.InvokeDelegate(resumeCalculation, DispatcherPriority.Normal);
+        }
+        catch
+        {
+        }
+    }
+
+    public void Activate()
+    {
+        try
+        {
+            Delegate0 activate = DoActivate;
+            MathcadPrimeComServerManager.Instance.InvokeDelegate(activate, DispatcherPriority.Normal);
+        }
+        catch
+        {
+        }
+    }
+
+    private void UpdateCalculationStatus(bool status)
+    {
+        try
+        {
+            IEngineeringDocument engineeringDocument = GetAssociatedEngineeringDocument();
+            if (engineeringDocument != null)
+            {
+                engineeringDocument.IsCalculationsEnabled = status;
+                if (status && !engineeringDocument.IsAutoCalcOn)
+                {
+                    engineeringDocument.IsAutoCalcOn = true;
+                }
+            }
+        }
+        catch
+        {
+        }
+    }
+
+    public void Save()
+    {
+        bool isSaved = false;
+        try
+        {
+            DelegateFunction0<bool> save = DoSave;
+            isSaved = (bool)MathcadPrimeComServerManager.Instance.InvokeDelegate(save, DispatcherPriority.Normal);
+        }
+        catch
+        {
+            isSaved = false;
+        }
+
+        if (!isSaved && _isUiInteractiveModeDisabled)
+        {
+            Marshal.ThrowExceptionForHR(unchecked((int)0x80004004));
+        }
+    }
+
+    private bool DoSave()
+    {
+        try
+        {
+            return DoSave(GetAssociatedEngineeringDocument());
+        }
+        catch
+        {
+        }
+
+        return false;
     }
 }

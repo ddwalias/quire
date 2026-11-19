@@ -38,13 +38,9 @@ public partial class CMathcadPrimeWorksheet : global::Quire.EngNotebook.Automati
     [global::Quire.Mirror.MirrorStub]
     private string DoGetTitle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void Save() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool DoSave() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SaveAs(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool DoSave(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SaveAs(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool DoSaveAs(string newDocumentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -55,14 +51,6 @@ public partial class CMathcadPrimeWorksheet : global::Quire.EngNotebook.Automati
     private bool TrySaveAsInMathcadPrimeFormatLocally(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument, string newDocumentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool TrySaveAsInNonMathcadPrimeFormatLocally(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument, string newDocumentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Synchronize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void PauseCalculation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ResumeCalculation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateCalculationStatus(bool status) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int SetRealValue(string aliasArg, double valueArg, string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -97,8 +85,6 @@ public partial class CMathcadPrimeWorksheet : global::Quire.EngNotebook.Automati
     public global::Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResultAs OutputGetMatrixValueAs(string aliasArg, string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.IORegions.IMatrixItem DoOutputGetMatrixValueAs(string alias, string units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Activate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Close(global::Quire.EngNotebook.Automation.SaveOption saveOptionArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
