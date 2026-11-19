@@ -38,17 +38,7 @@ public sealed partial class PlotViewModel3D : global::Quire.Controls.Plots.ViewM
     [global::Quire.Mirror.MirrorStub]
     private bool _equationListHasFocus;
     [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.Plots.Base3D.ViewModel.Base3DAxisViewModel XAxisViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.Plots.Base3D.ViewModel.Base3DAxisViewModel YAxisViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.Plots.Base3D.ViewModel.Base3DAxisViewModel ZAxisViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Plot3D.ViewModel.IPlotTraceViewModel3D> SelectedTraces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsActiveRegion { get => base.IsActiveRegion; set => base.IsActiveRegion = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size GridCellSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.Base3D.ViewModel.Base3DAxisViewModel HighlightedAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
