@@ -54,16 +54,6 @@ internal partial class PlotAxis3D : global::Quire.Media3D.WireBase, global::Quir
     [global::Quire.Mirror.MirrorStub]
     private bool _needToAddLabels;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Plot3D.View.PlotLabelsContainer3D LabelsContainer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Color LabelsColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShowTicks { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShowNumbers { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Media3D.GeometryModel3D BaseModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Base3D.ViewModel.IPlotAxisViewModel3D ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Media.Media3D.Point3D BaseLineEnd { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
