@@ -12,61 +12,11 @@ namespace Quire.Controls;
 public partial class CustomColorPicker : global::System.Windows.Controls.UserControl, global::System.Windows.Markup.IComponentConnector, global::System.Windows.Markup.IStyleConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    private const int SliderDrawingOffset = 5;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.CustomColorPickerViewModel _dataContext;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.HashSet<global::System.Windows.Controls.ValidationError> _activeErrors;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.DockPanel mainDockPanel;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TextBox tbNew;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TextBox tbCurrent;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.Button ResetBtn;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TextBox tbRed;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Slider sliderRed;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TextBox tbGreen;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Slider sliderGreen;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TextBox tbBlue;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Slider sliderBlue;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TextBox tbHue;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Slider sliderHue;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TextBox tbSat;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Slider sliderSat;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TextBox tbLum;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Slider sliderLum;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.CustomcolorPicker.CustomColorCanvas colorMap;
-    [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public CustomColorPicker(object brush) { }
     [global::Quire.Mirror.MirrorStub]
-    private void RgbTextBox_OnKeyDownText(object sender, global::System.Windows.Input.KeyEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void Slider_OnMouseDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void Slider_OnKeyDown(object sender, global::System.Windows.Input.KeyEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ResetBtn_OnClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CustomColorPicker_OnLoaded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void TextBox_OnError(object sender, global::System.Windows.Controls.ValidationErrorEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
