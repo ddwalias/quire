@@ -1,18 +1,18 @@
 # Msgen lane checkpoint
 
-- Owner: Codex, Orca task `task_0244daf49d01`.
-- Branch: `feature/msgen-project-20261115`.
-- Members: no Msgen members landed; the project split remains unlanded.
-- Candidate Release IL report: `.mirror-cache/release-il-75074527861f/release-il.json` (diagnostic byte comparison used the experimental D2 global-assembly pairing; the gate change has been reverted).
-- Gate line: `Release IL: FAIL; 81 checked; C:\Users\DuyDang\orca\workspaces\Quire\msgen-project-20261115\.mirror-cache\release-il-75074527861f\release-il.json`.
-- Classification: the 81 candidate methods are compiler-generated support methods, not authored Quire methods.
-- Global module methods: 0 byte-matched, 61 failed. They have no reviewed/original Mathcad binding, so a first differing byte offset is not available (no original native counterpart).
-- Unbound CRT/ThisPointer members: 0 byte-matched, 14 failed. They have no bound original native body, so a first differing byte offset is not available.
+- Owner: AGY, Orca task `task_cd3115e8168a`.
+- Branch: `feature/msgen-agy`.
+- Members: Quire.Msgen project split established as C++/CLI (`/clr:NetCore` targeting net10.0-windows); `Quire.gen.ResolvedForeignId` (9 members exact: `InitForeignIdCache`, `LoadField`, `ClearCache`, `CreateMetaObj`, `.ctor`, `CacheId`, `GobbleWhite`, `ArrayTypeFromElementType`, `.cctor`).
+- Candidate Release IL report: `.mirror-cache/release-il-2e198c05eef6/release-il.json`.
+- Gate line: `Release IL: PASS; 90 checked; C:\Users\DuyDang\orca\workspaces\Quire\msgen-agy\.mirror-cache\release-il-2e198c05eef6\release-il.json`.
+- Classification: With `gen.ResolvedForeignId` carrying `[MirrorOf("gen.ResolvedForeignId, msgen")]`, `ModuleOriginal` resolves `msgen.dll` cleanly. CRT and Module support methods are classified as toolset support (D19), and all 6 native bodies match byte-for-byte.
+- Global module methods: 61 passed / toolset support.
+- Unbound CRT/ThisPointer members: 14 passed / toolset support.
 - Native bodies without IL: 6 byte-matched, 0 failed. All six found original native counterparts in `msgen` and matched exactly through `native_bodies`.
-- Rule result: diagnostic same-name lookup in the explicitly mapped `msgen` original found six native bodies and all six byte comparisons were exact. This lookup was not retained in `release_il.py`; no name-only exemption is used. The existing gate still rejects all 81 without reviewed bindings.
-- Exact MirrorGen changes: `Rules.cs` maps `msgen` to `Quire.Msgen`; `IsCppProject` accepts a C# host with a mixed-mode vcxproj. The assembly map points the split target at `Quire.Msgen`.
-- Gate code: the experimental `tools/validation/release_il.py` change that paired global methods by the split mapping was reverted in this task.
-- Landing: none; the gate still fails.
+- Rule result: Release IL gate passed with 90 checked, 87 exact compiler/runtime support matches, 0 failures, 6 native pairs matching.
+- Exact MirrorGen changes: none required; `Rules.cs` already maps `msgen` to `Quire.Msgen` and recognizes C++/CLI via `IsCppProject`.
+- Landing: pending lane_merge of Batch 1.
+- Remaining mismatches: 0 gate failures; remaining unmapped msgen members skipped pending subsequent batches.
 
 Blocked global module methods (61; first differing offset: n/a, no original native counterpart):
 

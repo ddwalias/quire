@@ -1,0 +1,13 @@
+LIBRARY mshex
+EXPORTS
+    ??0Component@Hex@@QEAA@XZ
+    ??1Component@Hex@@UEAA@XZ
+    ?Insert@Component@Hex@@UEBAXAEAV?$basic_ostream@DU?$char_traits@D@std@@@std@@@Z
+    ?OnError@Component@Hex@@UEBAXAEAVError@2@@Z
+    ??0Error@Hex@@QEAA@I@Z
+    ??1Error@Hex@@QEAA@XZ
+    ??6Hex@@YAAEAVError@0@AEAV10@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z
+    ??6Hex@@YAAEAVError@0@AEAV10@PEBD@Z
+    ??6Hex@@YAAEAVError@0@AEAV10@V?$Substring@$$CBD@@@Z
+    ?OnError@Hex@@YAXAEAVError@1@@Z
+    ?GetHandle@Tag@Hex@@QEBAIXZ
