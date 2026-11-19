@@ -30,27 +30,11 @@ internal partial class VisualDerivativeOperatorNodeBase : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> CoreElements { get => base.CoreElements; }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Internal.VisualMathNode[] NodeChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Internal.VisualDerivativeSymbolNode OperatorSymbol { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Point OperatorSymbolTopLeft { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override double TextBaselineY { get => base.TextBaselineY; }
-    [global::Quire.Mirror.MirrorStub]
-    public override double EffectiveBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override double EffectiveScriptBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Internal.VisualMathNode Child { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Controls.Internal.VisualMathNode OperatorElement { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualMathNode Operator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     global::Quire.EquationEditor.View.IVisualMathNode global::Quire.EquationEditor.View.IVisualUnaryOperatorNode.Child { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode[] NavigatableParts { get => base.NavigatableParts; }
     [global::Quire.Mirror.MirrorStub]
     protected VisualDerivativeOperatorNodeBase(global::Quire.EquationEditor.Tree.MathNodeDescriptor descriptor) { }
     [global::Quire.Mirror.MirrorStub]
