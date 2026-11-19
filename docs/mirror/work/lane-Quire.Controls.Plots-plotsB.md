@@ -87,3 +87,10 @@
 - Held (one attempt, first write): `.ctor(IPlotTraceViewModel3D)`: the `_baseLineThickness = 1.0` initializer inside the constructor body and the field order differ from Mathcad's.
 - Not yet attempted (still generated stubs): `FireVisualChanged`, `AddOrRemoveFromVisual`, `UpdateLineStyle`, `UpdateSymbol`, `UpdateSurfaceFill`, `CreateSolidMesh`, `UpdateVisualData`. `Dispose` remains its generated `{ }` body.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 1575 checked, 0 failures.
+
+## Batch 13 — PlotGraphAxisBase (partial)
+
+- Exact (9 + static `.cctor`): static `.cctor` (type, `NumbersBrush`, `LineColorProperty`, `ShowGridLinesProperty`, `GridLineColorProperty`, `TickMarksProperty` in source order; the generated fields have no initializers, so these are assigned in the static constructor), `LineColor`, `ViewModel`, `StartExpressionEqn`, `SecondTickExpressionEqn`, `EndExpressionEqn`, `ShowGridLines`, `GridLineColor`, `LineColorChanged`.
+- Held (one attempt, first write): `.ctor()`: the instance field initializers (`LineBrush`, `_firstLabel`/`_secondLabel`/`_lastLabel`, `GridLineBrush`) are written in the constructor body, and the base-constructor call sequence differs from Mathcad's (`callvirt` in place of Quire's `call FrameworkElement::.ctor`).
+- Not yet attempted (still generated stubs): `TickMarks` (lambda in `Dispatch`), `InitializeLimitEquation` (both overloads), `LimitEquationSExpressionChanging`, `LimitEditorLostFocus`, `ShowLimit`, `HideLimit`, the Show/Hide start/second/end methods, `ShowGridLinesChanged`, `GridLineColorChanged`, `TickmarksChanged`, `CreateTickmarksPropertyMetadata`, `Dispatch`, `InitializeLimitLabel`, and `TickMarksChanged`.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 1615 checked, 0 failures.
