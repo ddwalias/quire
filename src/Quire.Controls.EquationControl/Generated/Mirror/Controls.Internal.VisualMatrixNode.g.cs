@@ -60,21 +60,7 @@ internal partial class VisualMatrixNode : global::Quire.Controls.Internal.Visual
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.EquationEditor.View.IVisualMathNode[] _children;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.TableSize OriginalSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int RowCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int ColumnCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.UIElementCollection Cells { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.Tree.INodeInfo NodeInfo { get => base.NodeInfo; set => base.NodeInfo = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public string[] MatrixHeadingRowIndices { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string[] MatrixHeadingColumnIndices { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::Quire.TableCoordinate> ErrorCell { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.View.IVisualMathNode ErrorNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
