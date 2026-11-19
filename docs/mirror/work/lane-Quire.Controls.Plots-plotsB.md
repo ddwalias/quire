@@ -144,3 +144,9 @@
 - Exact (5): `XAxisViewModel`, `YAxisViewModel`, `ZAxisViewModel` (internal, private setters), `IsActiveRegion` (override: base call, then `ActiveAxis.IsActive`), `GridCellSize` (internal setter raises `GridCellSize` change). Their generated declarations are removed from the `.g.cs` by hand.
 - Not written (stubs kept): the static field initializers (`_typeOfThis`, the two commands, `_initialGraphDimensionInDips`, and the `_traces`/`_equations` lists; the generated fields have no initializers), the constructor, the nested command classes (their members stay as generated stubs), `SelectedTraces` (an iterator), and the remaining properties and handlers.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 1900 checked, 0 failures.
+
+## Batch 22 — PlotGraph3D (partial)
+
+- Exact (10): `BaseLineThickness` (dependency property), `IsInPrinting`, `CanPrint`, `TraceViewsCount`, `BoxVisibility`, `XAxis`, `YAxis`, `ZAxis`, `Viewport`, `Camera`. Their generated declarations are removed from the `.g.cs` by hand.
+- Not written (stubs kept): the static constructor's registrations (their full text needs reading; the generated fields have no initializers), the constructor, `ImageSource`, `ImageFileNameForPrintXamlSerialization`, `IsCopyAsImageWithZoom` (uses DocumentAttachedProperties), the viewport and trace helpers, `CreateBitmapForPrint`, `Dispose`, and the XAML members (`InitializeComponent`, `_CreateDelegate`, `IComponentConnector.Connect`).
+- Release IL (project gate, changed methods, rebased onto main): PASS — 1912 checked, 0 failures.
