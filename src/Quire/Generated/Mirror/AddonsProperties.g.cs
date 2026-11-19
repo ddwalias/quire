@@ -84,15 +84,5 @@ internal static partial class AddonsProperties
     [global::Quire.Mirror.MirrorOf("Spirit.AddonsProperties+AddonsData, MathcadPrime")]
     public partial struct AddonsData
     {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly string _path;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly string _id;
-        [global::Quire.Mirror.MirrorStub]
-        public string Path { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public string ID { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public AddonsData(string path, string id) { }
     }
 }
