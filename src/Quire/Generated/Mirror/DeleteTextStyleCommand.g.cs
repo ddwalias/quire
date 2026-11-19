@@ -12,8 +12,6 @@ namespace Quire;
 internal partial class DeleteTextStyleCommand : global::Quire.Undo.IUndoableCommand
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.ITextStylesManager _textStylesManager;
-    [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.TextStyleData _deleteTextStyleData;
     [global::Quire.Mirror.MirrorStub]
     private readonly int _deleteTextStyleDataIndex;

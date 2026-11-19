@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.ColumnViewModel, MathcadPrime")]
 public partial class ColumnViewModel : global::System.Windows.FrameworkElement, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isCollectionInitialized;
 }

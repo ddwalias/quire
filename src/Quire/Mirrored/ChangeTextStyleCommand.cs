@@ -33,4 +33,6 @@ internal partial class ChangeTextStyleCommand
     {
         return global::Quire.Undo.CommandBuffer.Execute(this);
     }
+
+    private readonly global::Quire.Controls.Core.ITextStylesManager _textStylesManager;
 }

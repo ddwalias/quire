@@ -12,9 +12,5 @@ namespace Quire;
 internal partial class CompositSymbolDescriptorCollection : global::System.Collections.IEnumerable
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.ObjectModel.Collection<global::Quire.Controls.VisualDescriptorTableBase> Collections { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public CompositSymbolDescriptorCollection() { }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.IEnumerator GetEnumerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

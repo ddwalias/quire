@@ -148,4 +148,6 @@ public partial class ColumnViewModel
     public ColumnViewModel()
     {
     }
+
+    private bool _isCollectionInitialized;
 }

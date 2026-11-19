@@ -51,3 +51,10 @@
 - Members: fields `_errorCode`, `_realResult`; `ErrorCodeInternal`; `.ctor(IUnitedScalarState)`.
 - Parked (stubs kept): `ErrorCode` and `RealResult` getters. Mathcad's IL is `try { stloc; leave } catch { pop; leave } ldc; ret` with the catch leaving to the default return. Two forms tried: `try { return x; } catch { return -1; }` and `try { return x; } catch { } return -1;`; both emit the fall-through `ldc.i4.m1` with no `leave` after the catch, so they differ at the catch exit.
 - Release IL: PASS (`--project Quire`), 779 checked, 0 failures.
+
+## Batch 8 — small field and property holders
+
+- ChangeTextStyleCommand, DeleteTextStyleCommand: `_textStylesManager` (and the other command fields moved to the hand-written partials as declarations only; methods were already exact).
+- ColumnViewModel: `_isCollectionInitialized` field declaration.
+- CompositSymbolDescriptorCollection: `Collections` auto-property and `.ctor`. Parked: `GetEnumerator` (C# iterator with a ResourceDictionary inner loop; its compiler-generated state machine is not reproduced).
+- Release IL: PASS (`--project Quire`), 782 checked, 0 failures.
