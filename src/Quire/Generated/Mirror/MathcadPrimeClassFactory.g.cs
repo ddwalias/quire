@@ -14,7 +14,5 @@ internal partial class MathcadPrimeClassFactory : global::Quire.IClassFactory
     [global::Quire.Mirror.MirrorStub]
     public int CreateInstance(nint pUnkOuter, ref global::System.Guid riid, out nint ppvObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public int LockServer(bool fLock) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public MathcadPrimeClassFactory() { }
 }
