@@ -160,4 +160,20 @@ public partial class PlotTrace3D
             _symbolTraceVisual.Color = RenderColor;
         }
     }
+
+    private void AddOrRemoveFromVisual(Visual3D element, bool add)
+    {
+        if (add)
+        {
+            if (!Visual.Children.Contains(element))
+            {
+                Visual.Children.Add(element);
+            }
+        }
+        else
+        {
+            Visual.Children.Remove(element);
+        }
+    }
+
 }

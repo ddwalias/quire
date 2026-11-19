@@ -28,8 +28,6 @@ public partial class PlotTrace3D : global::System.IDisposable
     [global::Quire.Mirror.MirrorStub]
     private void FireVisualChanged(global::System.Windows.Media.Media3D.Visual3D oldVisual, global::System.Windows.Media.Media3D.Visual3D newVisual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void AddOrRemoveFromVisual(global::System.Windows.Media.Media3D.Visual3D element, bool add) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void UpdateLineStyle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateSymbol() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
