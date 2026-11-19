@@ -190,14 +190,16 @@ public partial class TraceImageRendererModel
             {
                 RenderingBitmap = _nullValueRenderingBitmap;
             }
+            return;
         }
-        else if (_renderingOperationState == null
+        if (_renderingOperationState == null
             || _renderingOperationState.Status == DispatcherOperationStatus.Completed
             || _renderingOperationState.Status == DispatcherOperationStatus.Aborted)
         {
             _renderingOperationState = Dispatcher.CurrentDispatcher.BeginInvoke(new Action(GenerateBitmap), DispatcherPriority.DataBind);
+            return;
         }
-        else if (_renderingOperationState.Status == DispatcherOperationStatus.Executing)
+        if (_renderingOperationState.Status == DispatcherOperationStatus.Executing)
         {
             DebugTools.DevAssert(false);
         }
