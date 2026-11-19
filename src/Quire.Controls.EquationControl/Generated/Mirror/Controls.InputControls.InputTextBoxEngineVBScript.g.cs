@@ -11,24 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputTextBoxEngineVBScript, Ptc.Controls.EquationControl")]
 internal partial class InputTextBoxEngineVBScript : global::Quire.Controls.InputControls.InputControlEngineVBScript
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableTextBox.VbTextBoxScriptInternalClass.vbs";
-    [global::Quire.Mirror.MirrorStub]
-    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableTextBox.VbTextBoxDefaultScript.vbs";
-    [global::Quire.Mirror.MirrorStub]
-    protected static string _defaultScript;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Collections.Generic.List<global::System.Type> ValidTextTypes;
-    [global::Quire.Mirror.MirrorStub]
-    public override string Script { get => base.Script; }
-    [global::Quire.Mirror.MirrorStub]
-    public override string AddInternalScripts(string script, string controlObjectName, object[] inputs, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.AddInternalScripts(script, controlObjectName, inputs, engineParams);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void UpdateScriptableClassValues(ref object value, object scriptObjectProperties, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override object GetScriptClassProperties(object scriptObjectProperties = default) => base.GetScriptClassProperties(scriptObjectProperties);
-    [global::Quire.Mirror.MirrorStub]
-    public override string GetUserScriptObjectName(string userScript, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.GetUserScriptObjectName(userScript, engineParams);
-    [global::Quire.Mirror.MirrorStub]
-    public InputTextBoxEngineVBScript() { }
 }

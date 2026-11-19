@@ -11,38 +11,4 @@ namespace Quire.Controls.InputControls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.InputTextBoxEngineJScript, Ptc.Controls.EquationControl")]
 internal partial class InputTextBoxEngineJScript : global::Quire.Controls.InputControls.InputControlEngineJScript
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string text = "text";
-    [global::Quire.Mirror.MirrorStub]
-    public const string backColor = "backColor";
-    [global::Quire.Mirror.MirrorStub]
-    public const string foreColor = "foreColor";
-    [global::Quire.Mirror.MirrorStub]
-    public const string fontSize = "fontSize";
-    [global::Quire.Mirror.MirrorStub]
-    public const string readOnly = "readOnly";
-    [global::Quire.Mirror.MirrorStub]
-    public const string textAlignment = "textAlignment";
-    [global::Quire.Mirror.MirrorStub]
-    public const string acceptsReturn = "acceptsReturn";
-    [global::Quire.Mirror.MirrorStub]
-    public const string DefaultUserScriptObjectName = "TextBox";
-    [global::Quire.Mirror.MirrorStub]
-    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableTextBox.JsTextBoxScriptInternalClass.js";
-    [global::Quire.Mirror.MirrorStub]
-    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableTextBox.JsTextBoxDefaultScript.js";
-    [global::Quire.Mirror.MirrorStub]
-    protected static string _defaultScript;
-    [global::Quire.Mirror.MirrorStub]
-    public override string Script { get => base.Script; }
-    [global::Quire.Mirror.MirrorStub]
-    public override string GetUserScriptObjectName(string userScript, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.GetUserScriptObjectName(userScript, engineParams);
-    [global::Quire.Mirror.MirrorStub]
-    public override string AddInternalScripts(string script, string controlObjectName, object[] inputs, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.AddInternalScripts(script, controlObjectName, inputs, engineParams);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void UpdateScriptableClassValues(ref object value, object scriptObjectProperties, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override object GetScriptClassProperties(object scriptObjectProperties = default) => base.GetScriptClassProperties(scriptObjectProperties);
-    [global::Quire.Mirror.MirrorStub]
-    public InputTextBoxEngineJScript() { }
 }
