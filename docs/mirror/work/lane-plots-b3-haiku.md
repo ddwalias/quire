@@ -27,3 +27,11 @@
 - Release IL (`--type Quire.Controls.Plots.Presenter.PlotPresenter`): none of the nine moved members is in the failure list.
 - Parked: `CheckTraceVsPlotType` (two shapes tried: the `!(a ^ b) && !(c ^ d)` early return and the positive `(a ^ b) || (c ^ d)` block). Both differ at the first null-test branch (instruction 9: Quire `beq.s 24`, Mathcad `beq.s 25`, Mathcad has one more instruction in the preamble). Stub restored; no hand-written body.
 - Still stubs: the closure members listed in group 2, and `SetCommonRange(ITraceModel)` (lambdas).
+
+## Group 4 — View.PlotControlBase (passes 1-2)
+
+- Partial `src/Quire.Controls.Plots/Mirrored/Controls.Plots.View.PlotControlBase.cs` holds every movable method and property in Mathcad order. Unfinished members are unmarked placeholders (`=> throw NotImplemented()`), so closure ordinals line up. Events, abstract members and fields stay generated.
+- Implemented and passing the type gate: 120 members (plain properties, DependencyProperty accessors, focus/origin/error/grid/traversal handlers, text-format and math-format members).
+- Parked after one attempt (placeholder, blocker recorded): `CurrentDisplayIdLabel` setter (Mathcad `brfalse` at the null test, Quire `brtrue`), `CurrentError` getter (Mathcad `stloc.0` temp, Quire `dup`), `ChangeBackgroundCommandExecute` (`SetRegionPropertyCommand.Execute` is `call`, Mathcad `callvirt`), `BindChangeOriginPositioningCommand` (delegate cache `<>O` ordinal differs), `HandleGotFocus` (`as` shape at the first cast differs).
+- Closure, LINQ and iterator members (`CalculatableChildren`, `DelegateFocus`, `BindCommands`, `ToggleGridLines`, `ToggleTicks`, `GetShowTicks`, `GetShowNumbers`, `UpdateMathFormat`, `SortRegionsByLocation`, `GetISearchableEnumerator`, `GetSearchableRegions`, `FindOncePrivate`, `DeserializeMathFormat`, `DeserializeLabeledIdFormat`, `InCustomInitialization`, `.ctor`, `.cctor`, and others) remain placeholders.
+- Remaining passes: the rest of the placeholder set, then `ExecuteAxesSetPropertyCommand`, `ShouldSerializeProperty`, `GetErrorMessage`, and the closure members in pass 3.

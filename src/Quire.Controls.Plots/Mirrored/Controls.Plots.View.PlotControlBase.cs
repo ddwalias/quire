@@ -111,22 +111,7 @@ public abstract partial class PlotControlBase
             FirePropertyChanged("CurrentIdLabel");
         }
     }
-    public IdLabels? CurrentDisplayIdLabel
-    {
-        get
-        {
-            return _currentDisplayIdLabel;
-        }
-        set
-        {
-            IdLabels? idLabels = ((value == IdLabels.None) ? ((IdLabels?)null) : value);
-            if (_currentDisplayIdLabel != idLabels)
-            {
-                _currentDisplayIdLabel = idLabels;
-                FirePropertyChanged("CurrentDisplayIdLabel");
-            }
-        }
-    }
+    public global::System.Nullable<global::Quire.Controls.Core.IdLabels> CurrentDisplayIdLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     public BackgroundTypeE PlotBackgroundType
     {
         get
@@ -238,7 +223,7 @@ public abstract partial class PlotControlBase
             }
         }
     }
-    public EngineError CurrentError => ((ICalculationErrorOwner)WpfUtils.GetFocusedAncestorOfTypeElement<EquationControl>(this))?.CurrentError;
+    public global::Quire.Calculation.Core.EngineError CurrentError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     protected virtual bool ErrorFrameShouldBeVisible => ErrorIsNotNull;
     public bool ShowAxisExpressions
     {
@@ -319,37 +304,36 @@ public abstract partial class PlotControlBase
         }
         set
         {
-            if (_targetAxes == value)
+            if (_targetAxes != value)
             {
-                return;
-            }
-            if (_targetAxes != null)
-            {
-                PlotGraphAxis[] targetAxes = _targetAxes;
-                foreach (PlotGraphAxis obj in targetAxes)
+                if (_targetAxes != null)
                 {
-                    obj.NumberFormatChanged -= PlotGraphAxisNumberFormatChanged;
-                    obj.ShowTicksChanged -= UpdateShowTicks;
-                    obj.ShowNumbersChanged -= UpdateShowNumbers;
-                    obj.ShowGridLinesChanged -= UpdateShowGridLines;
+                    PlotGraphAxis[] targetAxes = _targetAxes;
+                    foreach (PlotGraphAxis obj in targetAxes)
+                    {
+                        obj.NumberFormatChanged -= PlotGraphAxisNumberFormatChanged;
+                        obj.ShowTicksChanged -= UpdateShowTicks;
+                        obj.ShowNumbersChanged -= UpdateShowNumbers;
+                        obj.ShowGridLinesChanged -= UpdateShowGridLines;
+                    }
                 }
-            }
-            _targetAxes = value;
-            if (_targetAxes != null)
-            {
-                PlotGraphAxis[] targetAxes = _targetAxes;
-                foreach (PlotGraphAxis obj2 in targetAxes)
+                _targetAxes = value;
+                if (_targetAxes != null)
                 {
-                    obj2.NumberFormatChanged += PlotGraphAxisNumberFormatChanged;
-                    obj2.ShowTicksChanged += UpdateShowTicks;
-                    obj2.ShowNumbersChanged += UpdateShowNumbers;
-                    obj2.ShowGridLinesChanged += UpdateGridLines;
+                    PlotGraphAxis[] targetAxes = _targetAxes;
+                    foreach (PlotGraphAxis obj2 in targetAxes)
+                    {
+                        obj2.NumberFormatChanged += PlotGraphAxisNumberFormatChanged;
+                        obj2.ShowTicksChanged += UpdateShowTicks;
+                        obj2.ShowNumbersChanged += UpdateShowNumbers;
+                        obj2.ShowGridLinesChanged += UpdateGridLines;
+                    }
                 }
+                UpdateCurrentNumberFormat();
+                UpdateShowTicks();
+                UpdateShowNumbers();
+                UpdateGridLines();
             }
-            UpdateCurrentNumberFormat();
-            UpdateShowTicks();
-            UpdateShowNumbers();
-            UpdateGridLines();
         }
     }
     public int SelectedTracesNumOfPoints
@@ -431,11 +415,12 @@ public abstract partial class PlotControlBase
         }
         set
         {
-            if (_textStyleChangedHandler != value)
+            if (_textStyleChangedHandler == value)
             {
-                _textStyleChangedHandler = value;
-                PropagateTextStyleChangedHandler();
+                return;
             }
+            _textStyleChangedHandler = value;
+            PropagateTextStyleChangedHandler();
         }
     }
     public TextFormat InitialTextFormat
@@ -446,11 +431,12 @@ public abstract partial class PlotControlBase
         }
         set
         {
-            if (_initialTextFormat != value)
+            if (_initialTextFormat == value)
             {
-                _initialTextFormat = value;
-                PropagateInitialTextFormat();
+                return;
             }
+            _initialTextFormat = value;
+            PropagateInitialTextFormat();
         }
     }
     public IEnumerable<ICurrentMathFormatProperty> MathFormatElements
@@ -461,11 +447,12 @@ public abstract partial class PlotControlBase
         }
         private set
         {
-            if (_mathFormatElements != value)
+            if (_mathFormatElements == value)
             {
-                _mathFormatElements = value;
-                MathFormat = (_mathFormatElements.IsNullOrEmpty() ? null : new MathFormat((DependencyObject)(object)this));
+                return;
             }
+            _mathFormatElements = value;
+            MathFormat = (_mathFormatElements.IsNullOrEmpty() ? null : new MathFormat(this));
         }
     }
     public bool FirstPropertyForXamlSerialization
@@ -548,101 +535,607 @@ public abstract partial class PlotControlBase
     private global::System.Collections.Generic.IEnumerator<global::Quire.Controls.Core.IFindRestrictor> GetISearchableEnumerator(global::Quire.Controls.Core.ISearchableRegion from, global::System.Windows.Documents.LogicalDirection direction, bool findInMath, bool findInText) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private global::System.Collections.Generic.List<global::Quire.Controls.Core.IFindRestrictor> GetSearchableRegions(bool findInMath, bool findInText) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private global::System.Collections.Generic.List<global::Quire.Controls.Core.IFindRestrictor> SortRegionsByLocation(global::System.Collections.Generic.List<global::Quire.Controls.Core.IFindRestrictor> regions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private global::System.Nullable<global::System.Windows.Point> GetTopLeftPosition(global::Quire.Controls.Core.ISearchableRegion region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private Point? GetTopLeftPosition(ISearchableRegion region)
+    {
+        if (region is FrameworkElement { IsLoaded: not false } frameworkElement)
+        {
+            try
+            {
+                return frameworkElement.TranslatePoint(new Point(0.0, 0.0), this);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        return null;
+    }
     protected virtual void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected PlotControlBase() { }
     public virtual void DelegateFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void HandleMathFormatChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void Activate(bool isActive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void HandleMathFormatChanged(DependencyPropertyChangedEventArgs e)
+    {
+    }
+    public void Activate(bool isActive)
+    {
+        if (isActive && !IsKeyboardFocusWithin)
+        {
+            AppServiceRegistry.GetService<IFrameworkElementFacade>().ExecuteOnLoad(this, DelegateFocus);
+        }
+    }
     public global::System.Nullable<global::System.Windows.Vector> NavigateIntoItem(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void SimulateMouseClick(global::System.Windows.Point location, int numberOfClicks) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void EquationControlPropertyChangedHandler(object sender, global::System.ComponentModel.PropertyChangedEventArgs propertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected override void OnPreviewGotKeyboardFocus(global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => base.OnPreviewGotKeyboardFocus(e);
-    protected void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SimulateMouseClick(Point location, int numberOfClicks)
+    {
+        Activate(isActive: true);
+    }
+    private void EquationControlPropertyChangedHandler(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+    {
+        ICurrentIdLabelProperty currentIdLabelProperty = sender as ICurrentIdLabelProperty;
+        if (currentIdLabelProperty != null && propertyChangedEventArgs.PropertyName == "CurrentIdLabel")
+        {
+            CurrentIdLabel = currentIdLabelProperty.CurrentIdLabel;
+        }
+        if (currentIdLabelProperty != null && propertyChangedEventArgs.PropertyName == "CurrentDisplayIdLabel")
+        {
+            CurrentDisplayIdLabel = currentIdLabelProperty.CurrentDisplayIdLabel;
+        }
+    }
+    protected override void OnPreviewGotKeyboardFocus(KeyboardFocusChangedEventArgs e)
+    {
+        base.OnPreviewGotKeyboardFocus(e);
+        ActiveEquation = (e.OriginalSource as DependencyObject).TryFindAncestorIncludingSelf<EquationControl>();
+    }
+    protected void FirePropertyChanged(string propertyName)
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
     private static void ChangeBackgroundCommandExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void OnBackgroundTypeChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected virtual void OnBackgroundTypeChanged(global::Quire.Controls.Core.BackgroundTypeE newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected void FireCalculatableContainerCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected void FireCalculatableContainerCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected virtual void FireCalculatableMoved(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    internal void FireHasOriginPositioningChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void OnBackgroundTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
+    {
+        ((PlotControlBase)(object)d).OnBackgroundTypeChanged((BackgroundTypeE)args.NewValue);
+    }
+    protected virtual void OnBackgroundTypeChanged(BackgroundTypeE newValue)
+    {
+        if (BackgroundTypePropertyChanged != null)
+        {
+            BackgroundTypePropertyChanged(newValue);
+        }
+    }
+    protected void FireCalculatableContainerCalculatableAdded(ICalculatable calculatable)
+    {
+        if (CalculatableAdded != null)
+        {
+            CalculatableAdded(this, calculatable);
+        }
+    }
+    protected void FireCalculatableContainerCalculatableRemoved(ICalculatable calculatable)
+    {
+        if (CalculatableRemoved != null)
+        {
+            CalculatableRemoved(calculatable);
+        }
+    }
+    protected virtual void FireCalculatableMoved(ICalculatable calculatable)
+    {
+        if (CalculatableMoved != null)
+        {
+            CalculatableMoved(calculatable);
+        }
+    }
+    internal void FireHasOriginPositioningChanged()
+    {
+        if (HasOriginPositioningChanged != null)
+        {
+            HasOriginPositioningChanged(HasOriginPositioning);
+        }
+    }
     private static void ChangeOriginPositioningCommandExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public virtual void ChangeOriginPositioning(bool newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void ChangeOriginPositioning(bool newValue)
+    {
+    }
     protected void BindChangeOriginPositioningCommand() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected static void UpdateHasOriginPositioningOfAxes(bool newValue, global::Quire.Controls.Plots.PlotGraphAxis rangeAxis, global::Quire.Controls.Plots.PlotGraphAxis primaryResultAxis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void HandleLostFocus(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected static void UpdateHasOriginPositioningOfAxes(bool newValue, PlotGraphAxis rangeAxis, PlotGraphAxis primaryResultAxis)
+    {
+        using (new CommandScope("Call undoable cmds for updating HasOriginPositioning of x and y axis"))
+        {
+            int index = rangeAxis.PositionTickMark;
+            int index2 = primaryResultAxis.PositionTickMark;
+            if (newValue)
+            {
+                primaryResultAxis.FindClosestTickValueToZero(ref index);
+                rangeAxis.FindClosestTickValueToZero(ref index2);
+            }
+            new AxisSetTickNumberCommand(rangeAxis, index, newValue).Execute();
+            new AxisSetTickNumberCommand(primaryResultAxis, index2, newValue).Execute();
+        }
+    }
+    private void HandleLostFocus(object sender, RoutedEventArgs e)
+    {
+        DependencyObject val = e.OriginalSource as DependencyObject;
+        IInputElement focusedElement = FocusManager.GetFocusedElement(FocusManager.GetFocusScope(val));
+        DependencyObject newFocused = focusedElement as DependencyObject;
+        HandleLostFocus(val, newFocused);
+    }
     private void HandleGotFocus(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected virtual void HandleGotFocusOverride(global::System.Windows.DependencyObject newFocused) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void OnToggleHideFromCalculationContext(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected static void HasOriginPositioningPropertyChanged(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected static global::Quire.Controls.Core.NumberFormat CreateLocalNumberFormatIfNeeded(global::Quire.Controls.Plots.PlotGraphAxis axis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected void UpdateTargetAxes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected void ShowHideErrorFrame() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected void HideErrorMessage() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected void ShowErrorMessage(string errorMessage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected void ShowHideErrorMessage() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected static void ToggleTicksExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs executedRoutedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void HandleGotFocusOverride(DependencyObject newFocused)
+    {
+    }
+    private static void OnToggleHideFromCalculationContext(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (sender is PlotControlBase)
+        {
+            (sender as PlotControlBase).HideFromCalculationContext = !(sender as PlotControlBase).HideFromCalculationContext;
+            e.Handled = true;
+        }
+    }
+    protected static void HasOriginPositioningPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+    {
+        if (dependencyObject is PlotControlBase && dependencyPropertyChangedEventArgs.NewValue is bool)
+        {
+            (dependencyObject as PlotControlBase).FireHasOriginPositioningChanged();
+        }
+    }
+    protected static NumberFormat CreateLocalNumberFormatIfNeeded(PlotGraphAxis axis)
+    {
+        if (!axis.HasLocalValue(PlotGraphAxis.DisplayNumberFormatProperty))
+        {
+            DebugTools.DevAssert(axis.DisplayNumberFormat != null, null);
+            axis.DisplayNumberFormat = ((axis.DisplayNumberFormat != null) ? axis.DisplayNumberFormat.Clone() : new NumberFormat());
+        }
+        return axis.DisplayNumberFormat;
+    }
+    protected void UpdateTargetAxes()
+    {
+        if (ActivePlotItem != null)
+        {
+            TargetAxes = null;
+            return;
+        }
+        TargetAxes = ((IsActiveRegion && ActiveAxis != null) ? new PlotGraphAxis[1] { ActiveAxis } : Axes);
+    }
+    public bool ContainsError(EngineError error)
+    {
+        foreach (ICalculatable calculatableChild in CalculatableChildren)
+        {
+            if (calculatableChild is ICalculationErrorOwner calculationErrorOwner && calculationErrorOwner.ContainsError(error))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public void ShowError(EngineError error)
+    {
+        foreach (ICalculatable calculatableChild in CalculatableChildren)
+        {
+            if (calculatableChild is ICalculationErrorOwner calculationErrorOwner && calculationErrorOwner.ContainsError(error))
+            {
+                calculationErrorOwner.ShowError(error);
+                break;
+            }
+        }
+    }
+    protected void ShowHideErrorFrame()
+    {
+        if (ErrorFrameShouldBeVisible)
+        {
+            if (PlotErrorFrame == null)
+            {
+                PlotErrorFrame = PlotControl.CreateErrorFrame(this);
+            }
+        }
+        else if (PlotErrorFrame != null)
+        {
+            PlotErrorFrame.Remove();
+            PlotErrorFrame = null;
+        }
+    }
+    protected void HideErrorMessage()
+    {
+        if (ErrorAdorner != null)
+        {
+            ErrorAdorner.Remove();
+            ErrorAdorner = null;
+        }
+    }
+    protected void ShowErrorMessage(string errorMessage)
+    {
+        ErrorAdorner = new NodeMessageAdorner(this, errorMessage, NodeMessageAdornerType.Error);
+    }
+    protected void ShowHideErrorMessage()
+    {
+        HideErrorMessage();
+        string errorMessage = ErrorMessage;
+        if (ErrorMessage != null)
+        {
+            ShowErrorMessage(errorMessage);
+        }
+    }
+    protected static void ToggleTicksExecuted(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
+    {
+        if (sender is PlotControlBase plotControlBase)
+        {
+            plotControlBase.ToggleTicks(executedRoutedEventArgs.Parameter);
+        }
+    }
     private bool GetShowGridLines() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void ToggleGridLinesExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private global::System.Windows.Media.Brush GetGridLineColor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void UpdateShowGridLines() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void UpdateGridLineColor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void UpdateGridLines() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void ToggleGridLinesExecuted(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (sender is PlotControlBase plotControlBase)
+        {
+            plotControlBase.ToggleGridLines(e.Parameter);
+        }
+    }
+    private Brush GetGridLineColor()
+    {
+        if (TargetAxes == null || TargetAxes.Length == 0)
+        {
+            return GridLineColor;
+        }
+        return new SolidColorBrush(TargetAxes[0].GridLineColor);
+    }
+    private void UpdateShowGridLines()
+    {
+        ShowGridLines = GetShowGridLines();
+    }
+    private void UpdateGridLineColor()
+    {
+        GridLineColor = GetGridLineColor();
+    }
+    private void UpdateGridLines()
+    {
+        UpdateShowGridLines();
+        UpdateGridLineColor();
+    }
     private void ToggleGridLines(object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void CanExecuteToggleGridLines(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void ChangeGridLineColorExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void CanExecuteToggleGridLines(object sender, CanExecuteRoutedEventArgs e)
+    {
+        if (sender is PlotControlBase { ActiveAxis: not null } && (sender is XYPlotControl || sender is PolarPlotControl))
+        {
+            e.CanExecute = true;
+        }
+    }
+    private static void ChangeGridLineColorExecuted(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (sender is PlotControlBase plotControlBase && e.Parameter is SolidColorBrush parameter)
+        {
+            plotControlBase.ChangeGridLineColor(parameter);
+        }
+    }
     private void ChangeGridLineColor(object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void CanExecuteChangeGridLineColor(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void CanExecuteChangeGridLineColor(object sender, CanExecuteRoutedEventArgs e)
+    {
+        if (sender is PlotControlBase plotControlBase)
+        {
+            e.CanExecute = plotControlBase.ShowGridLines;
+        }
+    }
     private void ToggleTicks(object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private bool GetNewValue(bool currentValue, object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void ExecuteAxesSetPropertyCommand(bool newValue, global::System.Action<global::Quire.Controls.Plots.PlotGraphAxis, bool> set, global::System.Func<global::Quire.Controls.Plots.PlotGraphAxis, bool> get) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private bool GetNewValue(bool currentValue, object parameter)
+    {
+        if (IsActiveRegion)
+        {
+            return !currentValue;
+        }
+        if (parameter is bool)
+        {
+            return !(bool)parameter;
+        }
+        return !currentValue;
+    }
+    private void ExecuteAxesSetPropertyCommand(bool newValue, Action<PlotGraphAxis, bool> set, Func<PlotGraphAxis, bool> get)
+    {
+        if (CanExecuteCommandsOnTargetAxes)
+        {
+            CommandBuffer.Execute(new AxesSetPropertyCommand(TargetAxes, newValue, set, get));
+        }
+    }
     private void ExecuteAxesSetPropertyCommand<T>(T newValue, global::System.Action<global::Quire.Controls.Plots.PlotGraphAxis, T> set, global::System.Func<global::Quire.Controls.Plots.PlotGraphAxis, T> get, string name = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private bool GetShowTicks() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private bool GetShowNumbers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected static void CanExecuteCommandWithBooleanParameterOnTargetAxes(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected static void ToggleNumberedExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs executedRoutedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected static void CanExecuteCommandWithBooleanParameterOnTargetAxes(object sender, CanExecuteRoutedEventArgs e)
+    {
+        if (sender is PlotControlBase plotControlBase && e.Parameter is bool)
+        {
+            e.CanExecute = plotControlBase.CanExecuteCommandsOnTargetAxes;
+        }
+    }
+    protected static void ToggleNumberedExecuted(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
+    {
+        if (sender is PlotControlBase plotControlBase)
+        {
+            plotControlBase.ToggleNumbered(executedRoutedEventArgs.Parameter);
+        }
+    }
     private void ToggleNumbered(object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected static void IsActiveRegionChanged(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected virtual void IsActiveRegionChanged(bool newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void IsSelectedChanged(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected virtual void IsSelectedChanged(bool newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void OnWorksheetPropertiesChanged(string[] propertyNames, global::Quire.Controls.Core.IWorksheetProperties oldProperties, global::Quire.Controls.Core.IWorksheetProperties newProperties) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected static void IsActiveRegionChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+    {
+        if (dependencyObject is PlotControlBase && dependencyPropertyChangedEventArgs.NewValue is bool)
+        {
+            (dependencyObject as PlotControlBase).IsActiveRegionChanged((bool)dependencyPropertyChangedEventArgs.NewValue);
+        }
+    }
+    protected virtual void IsActiveRegionChanged(bool newValue)
+    {
+        UpdateTargetAxes();
+    }
+    private static void IsSelectedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+    {
+        if (dependencyObject is PlotControlBase && dependencyPropertyChangedEventArgs.NewValue is bool)
+        {
+            (dependencyObject as PlotControlBase).IsSelectedChanged((bool)dependencyPropertyChangedEventArgs.NewValue);
+        }
+    }
+    protected virtual void IsSelectedChanged(bool newValue)
+    {
+        MathFormatElements = (newValue ? GetPlotEquations() : null);
+    }
+    public void OnWorksheetPropertiesChanged(string[] propertyNames, IWorksheetProperties oldProperties, IWorksheetProperties newProperties)
+    {
+        foreach (string text in propertyNames)
+        {
+            if (text == "GridCellSize")
+            {
+                FirePropertyChanged(text);
+            }
+        }
+    }
     protected override bool ShouldSerializeProperty(global::System.Windows.DependencyProperty dp) => base.ShouldSerializeProperty(dp);
-    public bool ShouldSerializeResources() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected void OnTraverseForward(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected void OnTraverseBackward(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected void OnCanTraverseForward(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected void OnCanTraverseBackwards(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected virtual global::System.Collections.Generic.List<global::Quire.Controls.Text.RichTextTitle> BuildLabelsList() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected virtual global::System.Collections.Generic.List<global::Quire.Controls.EquationControl> CreateTickMarksAndMarkersList() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private global::System.Windows.UIElement GetNextTraversalItem(int step) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public static int GetNextTraversalIndex(global::System.Collections.Generic.IList<global::Quire.Controls.EquationControl> items, global::Quire.Controls.EquationControl active, int step, bool isCyclic) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected virtual void OnTraversedFocusEvent(object sender, global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.FocusNavigationDirection> args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnTraverse(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected void AddEquationsFromList(global::Quire.Controls.Plots.EquationList equationList, global::System.Collections.Generic.List<global::Quire.Controls.EquationControl> list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected static void ActivateExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void UpdateShowNumbers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void UpdateShowTicks() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public new bool ShouldSerializeResources()
+    {
+        return false;
+    }
+    protected void OnTraverseForward(object sender, ExecutedRoutedEventArgs e)
+    {
+        OnTraverse((FocusNavigationDirection)0);
+    }
+    protected void OnTraverseBackward(object sender, ExecutedRoutedEventArgs e)
+    {
+        OnTraverse((FocusNavigationDirection)1);
+    }
+    protected void OnCanTraverseForward(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = GetNextTraversalItem(1) != null;
+    }
+    protected void OnCanTraverseBackwards(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = GetNextTraversalItem(-1) != null;
+    }
+    protected virtual List<RichTextTitle> BuildLabelsList()
+    {
+        return null;
+    }
+    protected virtual List<EquationControl> CreateTickMarksAndMarkersList()
+    {
+        return null;
+    }
+    private UIElement GetNextTraversalItem(int step)
+    {
+        IList<EquationControl> list;
+        bool isCyclic;
+        if (ActivePlotEquation.ActiveEquation == ActiveEquation)
+        {
+            list = BuildEquationList();
+            isCyclic = false;
+        }
+        else
+        {
+            list = CreateTickMarksAndMarkersList();
+            isCyclic = true;
+        }
+        int nextTraversalIndex = GetNextTraversalIndex(list, ActiveEquation, step, isCyclic);
+        if (nextTraversalIndex != -1)
+        {
+            return list[nextTraversalIndex];
+        }
+        return null;
+    }
+    public static int GetNextTraversalIndex(IList<EquationControl> items, EquationControl active, int step, bool isCyclic)
+    {
+        if (items == null)
+        {
+            return -1;
+        }
+        int num = items.IndexOf(active);
+        int num2 = items.Count();
+        int num3 = -1;
+        int num4 = 1;
+        int num5;
+        do
+        {
+            num5 = num + step * num4;
+            if (isCyclic)
+            {
+                num5 %= num2;
+                if (num5 < 0)
+                {
+                    num5 += num2;
+                }
+            }
+            if (num5 >= 0 && num5 < num2)
+            {
+                num3 = num5;
+            }
+            num4++;
+        }
+        while (num4 < num2 && num3 == -1 && num5 >= 0 && num5 < num2);
+        return num3;
+    }
+    protected virtual void OnTraversedFocusEvent(object sender, CustomRoutedEventArgs<FocusNavigationDirection> args)
+    {
+    }
+    private void OnTraverse(FocusNavigationDirection direction)
+    {
+        int step;
+        if ((int)direction == 0)
+        {
+            step = 1;
+        }
+        else
+        {
+            DebugTools.DevAssert((int)direction == 1, null);
+            step = -1;
+        }
+        UIElement nextTraversalItem = GetNextTraversalItem(step);
+        DebugTools.DevAssert(nextTraversalItem != null, null);
+        ActivateCommand.Execute(null, nextTraversalItem);
+        nextTraversalItem.RaiseEvent(new CustomRoutedEventArgs<FocusNavigationDirection>(CommonRoutedEvents.TraversedFocusEvent, direction));
+    }
+    protected void AddEquationsFromList(EquationList equationList, List<EquationControl> list)
+    {
+        for (int num = 0; num < equationList.EquationCount; num++)
+        {
+            list.Add(equationList[num].Exp);
+            if (!(equationList[num] is PlotEquationWOUnit))
+            {
+                list.Add(equationList[num].Scaling);
+            }
+        }
+    }
+    protected static void ActivateExecuted(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (e.OriginalSource is PlotControlBase)
+        {
+            PlotControlBase plotControlBase = e.OriginalSource as PlotControlBase;
+            if (!plotControlBase.IsActiveRegion)
+            {
+                plotControlBase.DelegateFocus();
+            }
+        }
+        else if (e.OriginalSource is UIElement)
+        {
+            (e.OriginalSource as UIElement).Focus();
+        }
+        else
+        {
+            DebugTools.DevAssert(false, null);
+        }
+    }
+    private void UpdateShowNumbers()
+    {
+        ShowNumbers = GetShowNumbers();
+    }
+    private void UpdateShowTicks()
+    {
+        ShowTicks = GetShowTicks();
+    }
     private void OnSetNumberFormatPropertyPreview(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void UpdateCurrentNumberFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected void OnClearResultFormatPreview(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void OnClearResultFormatPreview(object sender, ExecutedRoutedEventArgs args)
+    {
+        using (new CommandScope(args.Command.ToString()))
+        {
+            PlotGraphAxis[] targetAxes = TargetAxes;
+            for (int num = 0; num < targetAxes.Length; num++)
+            {
+                targetAxes[num].ClearDisplayNumberFormatWithCommand();
+            }
+        }
+        args.Handled = true;
+    }
     private void CanClearResultFormat(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void PlotGraphAxisNumberFormatChanged(global::Quire.Controls.Core.NumberFormat numberFormat, bool isLocal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void PlotGraphAxisNumberFormatChanged(NumberFormat numberFormat, bool isLocal)
+    {
+        UpdateCurrentNumberFormat();
+    }
     protected string GetErrorMessage(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public virtual void DeserializeEpilog() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void DeserializeEpilog()
+    {
+    }
     private void UpdateMathFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected void SetActiveTitleForTextFormat(global::Quire.Controls.Text.RichTextTitle title) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnActiveTitlePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected global::Quire.Controls.Text.RichTextTitle FindRichTextTitleAncestor(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void ApplyTextFormatPropertyValueToControl(global::System.Windows.DependencyProperty property, object value, global::System.Windows.Documents.Block block = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void SetTextFormatPropertyValue(global::System.Windows.DependencyProperty property, object value, bool isUndoRedo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void SetActiveTitleForTextFormat(RichTextTitle title)
+    {
+        if (ActiveRichTextTitle == title)
+        {
+            return;
+        }
+        if (ActiveRichTextTitle != null)
+        {
+            ActiveRichTextTitle.PropertyChanged -= OnActiveTitlePropertyChanged;
+        }
+        ActiveRichTextTitle = title;
+        if (ActiveRichTextTitle != null)
+        {
+            ActiveRichTextTitle.PropertyChanged += OnActiveTitlePropertyChanged;
+        }
+        FirePropertyChanged("CurrentTextFormat");
+        FirePropertyChanged("CurrentProofingLanguage");
+    }
+    private void OnActiveTitlePropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+        case "CurrentTextFormat":
+            FirePropertyChanged("CurrentTextFormat");
+            break;
+        case "CurrentProofingLanguage":
+            FirePropertyChanged("CurrentProofingLanguage");
+            break;
+        case "IsSubscript":
+        case "IsSuperscript":
+            FirePropertyChanged(e.PropertyName);
+            break;
+        }
+    }
+    protected RichTextTitle FindRichTextTitleAncestor(DependencyObject element)
+    {
+        return element.TryFindAncestorIncludingSelf<RichTextTitle>();
+    }
+    public void ApplyTextFormatPropertyValueToControl(DependencyProperty property, object value, Block block = null)
+    {
+        ITextFormatCreation textFormatCreation = (ITextFormatCreation)ActiveRichTextTitle;
+        if (textFormatCreation != null)
+        {
+            textFormatCreation.ApplyTextFormatPropertyValueToControl(property, value, block);
+        }
+    }
+    public void SetTextFormatPropertyValue(DependencyProperty property, object value, bool isUndoRedo)
+    {
+        ITextFormatOwner textFormatOwner = (ITextFormatOwner)ActiveRichTextTitle;
+        if (textFormatOwner != null)
+        {
+            textFormatOwner.SetTextFormatPropertyValue(property, value, isUndoRedo);
+        }
+    }
     private void HandleApplyTextStyleCommand(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CanExecuteApplyTextStyleCommand(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected virtual void PropagateTextStyleChangedHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected virtual void PropagateInitialTextFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CanExecuteMathFormatCommandPreview(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void ReadDeserializationFormatsForPaste() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public string GetHelpContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void CanExecuteApplyTextStyleCommand(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = ActiveRichTextTitle != null;
+        e.Handled = true;
+    }
+    protected virtual void PropagateTextStyleChangedHandler()
+    {
+    }
+    protected virtual void PropagateInitialTextFormat()
+    {
+    }
+    private void CanExecuteMathFormatCommandPreview(object sender, CanExecuteRoutedEventArgs args)
+    {
+        if (MathFormat != null)
+        {
+            return;
+        }
+        args.CanExecute = false;
+        args.Handled = true;
+    }
+    private void ReadDeserializationFormatsForPaste()
+    {
+        if (DebugTools.DevAssert(MathFormatForPaste.Instance != null && MathFormatForPaste.Instance.DocumentMathFormat != null && MathFormatForPaste.Instance.DocumentLabeledIdFormat != null, null).Failed)
+        {
+            return;
+        }
+        DeserializeMathFormat = MathFormatForPaste.Instance.DocumentMathFormat;
+        DeserializeLabeledIdFormat = MathFormatForPaste.Instance.DocumentLabeledIdFormat;
+    }
+    public string GetHelpContext()
+    {
+        if (ActivePlotEquation.FocusedEquation == null)
+        {
+            return null;
+        }
+        return ActivePlotEquation.FocusedEquation.GetHelpContext();
+    }
 }
