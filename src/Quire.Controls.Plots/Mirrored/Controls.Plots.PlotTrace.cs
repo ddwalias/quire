@@ -3,8 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Quire.Calculation.Core;
+using Quire.Calculation.Core.Trace2DResults;
 using Quire.Controls.Plots.Presenter;
 
 namespace Quire.Controls.Plots;
@@ -328,6 +331,131 @@ public partial class PlotTrace
         set
         {
             SetColorStyle(value);
+        }
+    }
+
+    public TraceType Type
+    {
+        get
+        {
+            return (TraceType)GetValue(TypeProperty);
+        }
+        set
+        {
+            SetValue(TypeProperty, value);
+        }
+    }
+
+    public SynchronizationStatus SynchronizationStatus
+    {
+        get
+        {
+            return (SynchronizationStatus)GetValue(SynchronizationStatusProperty);
+        }
+        set
+        {
+            DispatchSetValue(SynchronizationStatusProperty, value);
+        }
+    }
+
+    public CalculatingStatus CalculatingStatus
+    {
+        get
+        {
+            return (CalculatingStatus)GetValue(CalculatingStatusProperty);
+        }
+        set
+        {
+            DispatchSetValue(CalculatingStatusProperty, value);
+        }
+    }
+
+    public IPlotAxisView XAxis { get; private set; }
+
+    public IPlotAxisView YAxis { get; private set; }
+
+    public bool IsResizing
+    {
+        get
+        {
+            return _isResizing;
+        }
+        set
+        {
+            if (value)
+            {
+                _sizeBeforeResizing = new Size(ActualWidth, ActualHeight);
+            }
+
+            _isResizing = value;
+            if (!_isResizing)
+            {
+                InvalidateVisual();
+                ViewPortRect = ComputeViewPortRect();
+            }
+        }
+    }
+
+    public string TraceLineStyle
+    {
+        get
+        {
+            return LineStyle.ToString();
+        }
+    }
+
+    public string TraceSymbol
+    {
+        get
+        {
+            return Symbol.ToString();
+        }
+    }
+
+    public bool RestrictedToDensityPointsOrSolidLine
+    {
+        get
+        {
+            if (_viewModel == null)
+            {
+                return false;
+            }
+
+            return _viewModel.RestrictedToDensityPointsOrSolidLine;
+        }
+    }
+
+    public bool AreDensityPointsSupported
+    {
+        get
+        {
+            if (_viewModel == null)
+            {
+                return false;
+            }
+
+            return _viewModel.AreDensityPointsSupported;
+        }
+    }
+
+    public bool ForcedToDensityVisualization
+    {
+        get
+        {
+            if (_viewModel == null)
+            {
+                return false;
+            }
+
+            return _viewModel.ForcedToDensityVisualization;
+        }
+    }
+
+    private bool IsInPrinting
+    {
+        get
+        {
+            return (bool)GetValue(IsInPrintingProperty);
         }
     }
 }
