@@ -13,3 +13,10 @@
   - `BreakPolylineIfItIsTooLong`: `Sum` lambda cached in `TraceRenderer+<>c` (closure; stays a stub).
   - `OnRender`: abstract declaration, no body.
 - Not written: the static field initialisation (`.cctor`, no stub in the generated file; static constructors stay out of scope for this lane).
+
+## Group 2 — Presenter.PlotPresenter (partial)
+
+- Moved (16 members, hand-written in `src/Quire.Controls.Plots/Mirrored/Controls.Plots.Presenter.PlotPresenter.cs`): `BoundToAxisViewEvents`, the six `View_*` handlers (`YLegendPositionsIndexChanged`, `XLegendPositionsIndexChanged`, `TitlePositionsIndexChanged`, `PlotLegendPositionsIndexChanged`, `PlotLegendWidthChanged`, `BackgroundTypePropertyChanged`), `View_HasOriginPositioningChanged`, `Model_DeserializationStarted`, `Model_DeserializationFinished`, `PrimaryYAxis_EquationAdded`, `xAxis_EquationAdded`, `xAxis_EquationRemoved`, `PrimaryYAxis_EquationRemoved`, `HandleSelectTraces`, `AddTrace`.
+- Release IL (`--type Quire.Controls.Plots.Presenter.PlotPresenter`): none of the 16 moved members is in the failure list. The listed failures are the still-stubbed members.
+- Remaining stubs (closures or not yet read): `.ctor` (field initializers), `BoundToEvents`, `BoundToAxisModelEvents` (lambdas), `xAxis_EquationContolChange`, `PrimaryYAxis_EquationContolChange` (lambda FirstOrDefault), `HandleEquationAdded`, `HandleEquationRemoved`, `GetViewAxis`, `GetViewTrace`, `SetCommonRange`, `RearrangeTraces`, `CheckTraceVsPlotType`, `AxisModelLimitsValueChanged`, `SetRangeAxisCommonRange`, `SetResultAxisCommonRange`, `MoveFirstTrace`, `MoveAllButFirstTrace`, `RemoveTraceFromEquation`, `RemovePlotLegendItemFromPlotLegend`, `AddTraceToEquation` (two overloads), nested `AddItemCommand`/`RemoveItemCommand` members, and the closure display-class members.
+- Not written: the instance field initializers (`_axesMap`, `_tracesMap`, `_traceStyleSelector`) and the constructor body, which stay generated stubs.
