@@ -120,3 +120,9 @@
 - Exact (3): ShowControlLevelErrorFrameForNestedError, AreAxisExpressionsVisible (private setter calls OnAxisExpressionsVisibilityChanged), CalcIsDisabled.
 - Not written (stubs kept): the constructor and its field initializers (_areAxisExpressionsVisible = true, _currentMinimalGraphWidth = PlotCommonConstants.PlotsGraphMinWidth; the constructor body is not yet read, so the default true is not yet set in the stub constructor), the static ShowAxisExpressionsCommand initializer, HideFromCalculationContext (closures over value: closure ordinal blocks it), and the rest of the members.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 1739 checked, 0 failures.
+
+## Batch 18 — PlotViewModel (partial)
+
+- Exact (4): `ShowAxisExpressions`, `IsActive`, `SelectedTraces` (method-group `Each` calls), `SelectedColor`.
+- Not written (stubs kept): the constructor and instance field initializer (`_selectedTraces = new List`), the static `ActivateCommand` (`new RoutedCommand` with an `InputGestureCollection`) and `ShowAxisExpressionsCommand` initializers (both in the generated field declarations), the other `Selected*` properties (their full text was cut off in the source read), `Markers`, the `Activated` event, and the trace-aggregation helpers.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 1747 checked, 0 failures.
