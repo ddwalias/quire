@@ -82,3 +82,9 @@
 
 - LoadLibrary, GetProcAddress, FreeLibrary: `[DllImport("kernel32.dll")] extern` declarations (the original is `pinvokeimpl("kernel32.dll" winapi)`); the gate passes with the default marshalling.
 - Release IL: PASS (`--project Quire`), 789 checked, 0 failures.
+
+## Batch 13 — ComNativeExternalApi (ole32 declarations, constructor)
+
+- CoRegisterClassObject, CoRevokeClassObject, CoResumeClassObjects as `[DllImport("ole32.dll")] extern`; CoRegisterClassObject needs `[MarshalAs(LPStruct)]` on the Guid, `[MarshalAs(Interface)]` on the object, and `[Out]` on the out parameter (Mathcad's `marshal(lpstruct)`, `marshal(interface)`, `[out]`).
+- `.ctor` matched.
+- Release IL: PASS (`--project Quire`), 792 checked, 0 failures.
