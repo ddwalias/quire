@@ -132,3 +132,9 @@
 - Exact (7): `VerticalValueToScreen`, `HorizontalValueToScreen` (private setters), `VerticalMarkers`, `HorizontalMarkers`, `AllMarkers`, `ActiveMarker` (private setter raises `ActiveMarker` change), `RoutedEventBindings`.
 - Not written (stubs kept): the constructor (lambdas over range and property-change events: closure ordinals), `InternalCalculatables` (lambda selector), the static commands (their initializers are in the generated declarations), the field initializers (`_verticalMarkers`, `_horizontalMarkers`, `_allMarkers`, `_routedEventBindings`, `_typeOfThis`), the events, and the marker add/delete/activate helpers, which were not yet read.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 1757 checked, 0 failures.
+
+## Batch 20 — PlotTraceViewModel3D (partial)
+
+- Exact (25): the forwarders to `_model`: `CalculatableInfo`, `VisualData`, `CommonRange`, `Color`, `Symbol`, `SymbolWeight`, `LineWeight`, `SurfaceFill`, `RenderColor`, `LineStyle`, `IsStyleAutomatic`, `NumberOfPoints` (commit when the count changes), `IsNumOfPointsMutable`, `VisualDataTypeOrDefault`, `IsInPrinting`.
+- Not written (stubs kept): the constructor (its `model.PropertyChanged` hook is not yet read), `FirePropertyChanged`, `ChangeSymbol`, `UserChangedStyle`, `IsOwnModel`, `ModelPropertyChanged`, `ChangeLineStyle`, `DoStyleChangeCommand`, `UndoStyleChangeCommand`.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 1832 checked, 0 failures.
