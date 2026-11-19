@@ -54,3 +54,9 @@
 ## Gates
 
 - Each type gated with `python tools/validation/release_il.py --base main --project Quire --type Quire.<Type>`; the project-wide FAIL is expected while other stubs remain. Judged by changed members only: no changed member fails.
+
+## Batch 18 — SpiritMainWindow declarations (pass 1)
+
+- Moved 68 top-level constants and plain field declarations from `SpiritMainWindow.g.cs` to `Mirrored/SpiritMainWindow.cs` (no method changed). `AnyDocumentRequestToUpdateInputsEnabled` const stays in the stub: it clashes with the same-named property, and nested-class consts were excluded by indentation.
+- Events, DependencyProperty fields, static readonly fields, `_contentLoaded` and the `TypeOfThis` field stay stubs.
+- Gate: compiles; no changed method. SpiritMainWindow still has about 487 stub lines; its methods are not started.
