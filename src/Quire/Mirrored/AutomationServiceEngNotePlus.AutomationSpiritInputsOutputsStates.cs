@@ -10,7 +10,7 @@ public partial class AutomationSpiritInputsOutputsStates
 
     private global::Quire.Controls.Core.IORegions.IScalarItemWithOriginalState GetInputItem(int idx, out string alias)
     {
-        global::Quire.Controls.Core.IORegions.IScalarItemWithOriginalState item = null;
+        global::Quire.Controls.Core.IORegions.IScalarItemWithOriginalState item;
         if (idx >= 0 && idx < ScalarInputsCount)
         {
             item = _itemsWithStates.InputItems[idx];
@@ -18,6 +18,7 @@ public partial class AutomationSpiritInputsOutputsStates
         }
         else
         {
+            item = null;
             alias = null;
         }
 
@@ -26,7 +27,7 @@ public partial class AutomationSpiritInputsOutputsStates
 
     private global::Quire.Controls.Core.IORegions.IScalarItem GetOutputItem(int idx, out string alias)
     {
-        global::Quire.Controls.Core.IORegions.IScalarItem item = null;
+        global::Quire.Controls.Core.IORegions.IScalarItem item;
         if (idx >= 0 && idx < ScalarOutputsCount)
         {
             item = _itemsWithStates.OutputItems[idx];
@@ -34,6 +35,7 @@ public partial class AutomationSpiritInputsOutputsStates
         }
         else
         {
+            item = null;
             alias = null;
         }
 
