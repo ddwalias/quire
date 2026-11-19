@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Quire.Mirror\Quire.Mirror.csproj" />
     <ProjectReference Include="..\Quire.Engine.Utl\Quire.Engine.Utl.csproj" />
+    <ProjectReference Include="..\Quire.EngutilsMgd\Quire.EngutilsMgd.csproj" />
   </ItemGroup>
 
   <!-- The pinned MSVC 19.51.36246 Build Tools instance (D19). The release gate sets this from vswhere and overrides it. -->

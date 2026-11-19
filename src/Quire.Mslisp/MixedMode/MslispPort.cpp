@@ -3,6 +3,55 @@
 #include <sdkddkver.h>
 #pragma warning(disable: 4100)
 
+namespace mslisp {
+    namespace Error {
+        __declspec(noinline) void report(System::String^ msg)
+        {
+            throw gcnew System::Exception(msg);
+        }
+
+        __declspec(noinline) void report(System::String^ msg, System::Object^ o)
+        {
+            report(System::String::Concat(msg, o));
+        }
+    }
+
+    bool is_true(System::Object^ o)
+    {
+        if (o == nullptr)
+        {
+            return false;
+        }
+        bool^ b = dynamic_cast<bool^>(o);
+        if (b != nullptr)
+        {
+            return *b;
+        }
+        return true;
+    }
+
+    array<System::Reflection::MethodInfo^>^ FindMethods(System::Type^ t, System::String^ name, short arity)
+    {
+        array<System::Reflection::MethodInfo^>^ methods = t->GetMethods(
+            (System::Reflection::BindingFlags)65884);
+        System::Collections::Generic::List<System::Reflection::MethodInfo^>^ list =
+            gcnew System::Collections::Generic::List<System::Reflection::MethodInfo^>(methods->Length);
+        for (short i = 0; i < methods->Length; i++)
+        {
+            array<System::Reflection::ParameterInfo^>^ parameters = methods[i]->GetParameters();
+            if (name->Equals(methods[i]->Name))
+            {
+                int num = methods[i]->IsStatic ? arity : (arity - 1);
+                if (arity == -1 || parameters->Length == (short)num)
+                {
+                    list->Add(methods[i]);
+                }
+            }
+        }
+        return list->ToArray();
+    }
+}
+
 namespace Quire { namespace mslisp {
 
     [Quire::Mirror::MirrorOfAttribute("mslisp.Stream, mslisp")]
@@ -620,6 +669,335 @@ namespace Quire { namespace mslisp {
             System::Diagnostics::Trace::Assert(val != nullptr, nullptr);
             System::GC::KeepAlive(this);
             return *val;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.InterpreterState, mslisp")]
+    value struct InterpreterState
+    {
+    public:
+        Package^ package;
+        System::Collections::Generic::Stack<Package^>^ pstack;
+
+        InterpreterState(Package^ p, System::Collections::Generic::Stack<Package^>^ ps)
+            : package(p), pstack(ps)
+        {
+        }
+    };
+
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.Env, mslisp")]
+    ref class Env
+    {
+    public:
+        Env(Env^ parent, array<System::Object^>^ vals)
+            : m_parent(parent), m_vals(vals)
+        {
+        }
+
+    private:
+        Env^ m_parent;
+        array<System::Object^>^ m_vals;
+        int m_size;
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.Expression, mslisp")]
+    interface class Expression
+    {
+        System::Object^ execute(Env^ e);
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.Settable, mslisp")]
+    interface class Settable
+    {
+        System::Object^ set(System::Object^ o, Env^ e);
+    };
+
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.StrcatFunction, mslisp")]
+    ref class StrcatFunction : Quire::utl_mgd::FunctionBase
+    {
+    public:
+        virtual System::Object^ Invoke(array<System::Object^>^ args) override
+        {
+            System::String^ result = System::String::Concat(args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+
+        StrcatFunction()
+        {
+        }
+    };
+
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.SignalFunction, mslisp")]
+    ref class SignalFunction : Quire::utl_mgd::FunctionBase
+    {
+    public:
+        virtual System::Object^ Invoke(array<System::Object^>^ args) override
+        {
+            if (args->Length == 1)
+            {
+                Condition^ condition = dynamic_cast<Condition^>(args[0]);
+                if (condition != nullptr)
+                {
+                    throw condition;
+                }
+            }
+            throw gcnew Condition(args);
+        }
+
+        SignalFunction()
+        {
+        }
+    };
+
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.SingleMethod, mslisp")]
+    ref class SingleMethod : Quire::utl_mgd::FunctionBase
+    {
+    private:
+        System::Reflection::MethodInfo^ m_info;
+
+    public:
+        SingleMethod(System::Reflection::MethodInfo^ m) : m_info(m)
+        {
+        }
+
+        virtual System::Object^ Invoke(array<System::Object^>^ args) override
+        {
+            System::Object^ result = m_info->Invoke(nullptr, args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+
+        virtual System::String^ ToString() override
+        {
+            System::String^ result = System::String::Concat("mslisp.SingleMethod: ", m_info);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.DelegateFunction, mslisp")]
+    ref class DelegateFunction : Quire::utl_mgd::FunctionBase
+    {
+    private:
+        BuiltinDelegate^ m_delegate;
+
+    public:
+        DelegateFunction(BuiltinDelegate^ d) : m_delegate(d)
+        {
+        }
+
+        virtual System::Object^ Invoke(array<System::Object^>^ args) override
+        {
+            System::Object^ result = m_delegate(args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+
+        virtual System::String^ ToString() override
+        {
+            System::String^ result = System::String::Concat("mslisp.DelegateFunction: ", m_delegate);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.CodeGen, mslisp")]
+    ref class CodeGen
+    {
+    public:
+        static array<System::Type^>^ s_dtype = gcnew array<System::Type^>(7);
+
+        static void EmitLdarg(System::Reflection::Emit::ILGenerator^ g, short i)
+        {
+            switch (i)
+            {
+            case 0:
+                g->Emit(System::Reflection::Emit::OpCodes::Ldarg_0);
+                break;
+            case 1:
+                g->Emit(System::Reflection::Emit::OpCodes::Ldarg_1);
+                break;
+            case 2:
+                g->Emit(System::Reflection::Emit::OpCodes::Ldarg_2);
+                break;
+            case 3:
+                g->Emit(System::Reflection::Emit::OpCodes::Ldarg_3);
+                break;
+            default:
+                g->Emit(System::Reflection::Emit::OpCodes::Ldarg, i);
+                break;
+            }
+        }
+
+        static void EmitLdargs(System::Reflection::Emit::ILGenerator^ g, short offset, short arity, array<System::Reflection::ParameterInfo^>^ p)
+        {
+            short num = offset;
+            if (offset < arity)
+            {
+                do
+                {
+                    EmitLdarg(g, num);
+                    if (p[num - offset]->ParameterType->IsValueType)
+                    {
+                        System::Type^ parameterType = p[num - offset]->ParameterType;
+                        System::Reflection::Emit::OpCode unbox_Any = System::Reflection::Emit::OpCodes::Unbox_Any;
+                        g->Emit(unbox_Any, parameterType);
+                    }
+                    num++;
+                }
+                while (num < arity);
+            }
+        }
+
+        static void MaybeBox(System::Reflection::Emit::ILGenerator^ g, System::Type^ t)
+        {
+            if (t == System::Void::typeid)
+            {
+                g->Emit(System::Reflection::Emit::OpCodes::Ldnull);
+            }
+            else if (t->IsValueType)
+            {
+                g->Emit(System::Reflection::Emit::OpCodes::Box, t);
+            }
+        }
+
+        static System::Object^ GenDelegate(System::Object^ f, int arity)
+        {
+            try
+            {
+                GenCall^ genCall = dynamic_cast<GenCall^>(f);
+                if (genCall == nullptr)
+                {
+                    return nullptr;
+                }
+                array<System::Type^>^ arrayType = gcnew array<System::Type^>(arity);
+                for (short num = 0; num < arity; num++)
+                {
+                    System::Type^ typeFromHandle = System::Object::typeid;
+                    arrayType[num] = typeFromHandle;
+                }
+                System::Reflection::Emit::DynamicMethod^ dynamicMethod = gcnew System::Reflection::Emit::DynamicMethod(
+                    f->ToString(),
+                    System::Object::typeid,
+                    arrayType,
+                    CodeGen::typeid);
+                System::Reflection::Emit::ILGenerator^ iLGenerator = dynamicMethod->GetILGenerator();
+                if (!genCall->Emit(iLGenerator, (short)arity))
+                {
+                    return nullptr;
+                }
+                return dynamicMethod->CreateDelegate(s_dtype[arity]);
+            }
+            catch (System::Exception^)
+            {
+                return nullptr;
+            }
+        }
+
+        CodeGen()
+        {
+        }
+
+    private:
+        static CodeGen()
+        {
+            s_dtype[0] = Func0::typeid;
+            s_dtype[1] = Func1::typeid;
+            s_dtype[2] = Func2::typeid;
+            s_dtype[3] = Func3::typeid;
+            s_dtype[4] = Func4::typeid;
+            s_dtype[5] = Func5::typeid;
+            s_dtype[6] = Func6::typeid;
+        }
+    };
+
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.Constructor, mslisp")]
+    ref class Constructor : Quire::utl_mgd::FunctionBase, GenCall
+    {
+    private:
+        System::Type^ m_type;
+
+    public:
+        Constructor(System::Type^ t) : m_type(t)
+        {
+        }
+
+        virtual System::Object^ Invoke(array<System::Object^>^ args) override
+        {
+            System::Object^ result = System::Activator::CreateInstance(m_type, args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+
+        virtual bool Emit(System::Reflection::Emit::ILGenerator^ g, short arity)
+        {
+            array<System::Reflection::ConstructorInfo^>^ constructors = m_type->GetConstructors();
+            short num = 0;
+            short num2 = -1;
+            short num3 = 0;
+            if (0 < constructors->Length)
+            {
+                do
+                {
+                    if (constructors[num3]->GetParameters()->Length == arity)
+                    {
+                        num++;
+                        num2 = num3;
+                    }
+                    num3++;
+                }
+                while (num3 < constructors->Length);
+                if (num == 1)
+                {
+                    CodeGen::EmitLdargs(g, 0, arity, constructors[num2]->GetParameters());
+                    System::Reflection::ConstructorInfo^ con = constructors[num2];
+                    g->Emit(System::Reflection::Emit::OpCodes::Newobj, con);
+                    g->Emit(System::Reflection::Emit::OpCodes::Ret);
+                    System::GC::KeepAlive(this);
+                    return true;
+                }
+            }
+            System::GC::KeepAlive(this);
+            return false;
+        }
+
+        virtual System::String^ ToString() override
+        {
+            System::String^ result = System::String::Concat("mslisp.Constructor: ", m_type);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.QuoteExpr, mslisp")]
+    ref class QuoteExpr : Expression
+    {
+    private:
+        System::Object^ m_val;
+
+    public:
+        QuoteExpr(System::Object^ o) : m_val(o)
+        {
+        }
+
+        virtual System::Object^ execute(Env^ e)
+        {
+            return m_val;
+        }
+
+        virtual System::String^ ToString() override
+        {
+            System::String^ result = System::String::Format("(quote {0})", m_val);
+            System::GC::KeepAlive(this);
+            return result;
         }
     };
 

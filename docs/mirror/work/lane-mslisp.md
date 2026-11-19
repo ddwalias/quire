@@ -8,15 +8,22 @@
 
 - `4698f51dc` (Batch 1): Established original-language C++/CLI project split for `Quire.Mslisp` (`Quire.Mslisp.csproj` and `MixedMode/Quire.Mslisp.vcxproj`); mirrored `mslisp.Stream`, `mslisp.ConsoleStream`, `mslisp.DebugStream`, `mslisp.Condition`, `mslisp.Symbol`.
 - `66f5478bc` (Batch 2): Mirrored `mslisp.Func0` .. `mslisp.Func6`, `mslisp.BuiltinDelegate`, `mslisp.GenCall`, `mslisp.FileStream`, `mslisp.TaggedSymbol`, `mslisp.SymbolImp`, `mslisp.Package`, `mslisp._fcomparer`.
+- `6c483b4dc` (Batch 3): Mirrored `Error::report(String^)`, `Error::report(String^, Object^)`, `is_true(Object^)`, `FindMethods(Type^, String^, short)`, `InterpreterState`, `Expression`, `Settable`, `StrcatFunction`, `SignalFunction`, `SingleMethod`, `DelegateFunction`, `CodeGen`, `Constructor`, `QuoteExpr`, `Env` (.ctor).
 
 ## Release IL Report & Gates
 
 - Batch 1: PASS, 103 checked, 88 exact, 0 failures, 72 Mathcad `<Module>` members not paired (`.mirror-cache/release-il-1aba42d8ae27/release-il.json`). Merged via `lane_merge.py` (receipt: `gate-il-851996b0cdd6.json`).
 - Batch 2: PASS, 132 checked, 130 exact, 0 failures, 72 Mathcad `<Module>` members not paired (`.mirror-cache/release-il-fbee254d2310/release-il.json`). Merged via `lane_merge.py` (receipt: `gate-il-28dd53bdfe00.json`).
+- Batch 3: PASS, 187 checked, 187 exact, 0 failures, 75 Mathcad members not paired (`.mirror-cache/release-il-203781de17ec/release-il.json`).
 
 ## Remaining Members and Actionable Blockers
 
-All remaining members in `mslisp.dll` are concretely blocked on upstream unmirrored assemblies:
-1. `mspcons-mgd` (`Engine.PCons`): 15 expression types (`mslisp.ApplyExpr`, `mslisp.ArgSpec`, `mslisp.CarExpr`, `mslisp.CdrExpr`, `mslisp.DefmacroExpr`, `mslisp.Env`, `mslisp.HandlerCaseExpr`, `mslisp.IfExpr`, `mslisp.IgnoreErrorsExpr`, `mslisp.LambdaExpr`, `mslisp.MacroExpr`, `mslisp.PrognExpr`, `mslisp.SetfExpr`, `mslisp.StandardBuiltins`, `mslisp.UnwindProtectExpr`), expression executors (`mslisp.FastApp` / `FastApp0`..`6`, `mslisp.LoggedFastApp` / `LoggedFastApp0`..`6`), `mslisp.CodeGen`, `mslisp.LocalVar`, and `mslisp.GlobalVar` require `Engine.PCons` from `mspcons-mgd.dll` (which is deferred in `Quire.Engine.Native` stubs and pending the `Quire.MspconsMgd` project split).
-2. `engutils-mgd` (`PushbackReader`, `PathCache`): `mslisp.InterpreterImp`, `mslisp.Interpreter`, and `mslisp.Factory` depend on `PushbackReader` and `PathCache` from `engutils-mgd.dll` (pending the `Quire.EngutilsMgd` project split).
-3. `<Module>`: 72 compiler/CRT support methods (e.g., `std.basic_ostream`, `std.basic_string`, `utl.ToStrng`, `mslisp.LogIndent`) will resolve automatically with the remaining module dependencies.
+All remaining members in `mslisp.dll` are concretely blocked on `mspcons-mgd.dll` (`Quire.MspconsMgd`), which is being worked on concurrently by another worker:
+1. `Quire.MspconsMgd` (`[mspcons-mgd]Engine.PCons`, `Engine.TagFunction`, `Engine.Reader`, `Engine.InternFunction`):
+   - `mslisp.Interpreter`: Directly exposes public API accepting `[mspcons-mgd]Engine.TagFunction tf`.
+   - `mslisp.Factory`: Returns `mslisp.Interpreter` and instantiates `mslisp.InterpreterImp`.
+   - `mslisp.InterpreterImp`: Implements `mslisp.Interpreter`, holding and manipulating `PCons`, `Reader`, `TagFunction`, and `InternFunction`.
+   - Expression types and executors: `mslisp.ApplyExpr`, `mslisp.ArgSpec`, `mslisp.CarExpr`, `mslisp.CdrExpr`, `mslisp.DefmacroExpr`, `mslisp.HandlerCaseExpr`, `mslisp.IfExpr`, `mslisp.IgnoreErrorsExpr`, `mslisp.LambdaExpr`, `mslisp.MacroExpr`, `mslisp.PrognExpr`, `mslisp.SetfExpr`, `mslisp.StandardBuiltins`, `mslisp.UnwindProtectExpr`, `mslisp.LocalVar`, `mslisp.FastApp` / `FastApp0`..`6`, `mslisp.LoggedFastApp` / `LoggedFastApp0`..`6`, and remaining `mslisp.Env` members require `Engine.PCons` from `mspcons-mgd.dll`.
+   - Dependent reflection & function evaluators: `mslisp.GlobalVar`, `mslisp.PlusFunction`, `mslisp.InstanceMethod`, and `mslisp.StaticOrInstanceMethod` integrate with the evaluator and `PCons` argument passing.
+2. `<Module>`: 75 compiler/CRT and internal support methods (e.g., `std.basic_ostream`, `std.basic_string`, `utl.ToStrng`, `mslisp.LogIndent`) will resolve automatically with the interpreter and parser integration once `Quire.MspconsMgd` is available.
+
