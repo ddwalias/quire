@@ -138,3 +138,9 @@
 - Exact (25): the forwarders to `_model`: `CalculatableInfo`, `VisualData`, `CommonRange`, `Color`, `Symbol`, `SymbolWeight`, `LineWeight`, `SurfaceFill`, `RenderColor`, `LineStyle`, `IsStyleAutomatic`, `NumberOfPoints` (commit when the count changes), `IsNumOfPointsMutable`, `VisualDataTypeOrDefault`, `IsInPrinting`.
 - Not written (stubs kept): the constructor (its `model.PropertyChanged` hook is not yet read), `FirePropertyChanged`, `ChangeSymbol`, `UserChangedStyle`, `IsOwnModel`, `ModelPropertyChanged`, `ChangeLineStyle`, `DoStyleChangeCommand`, `UndoStyleChangeCommand`.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 1832 checked, 0 failures.
+
+## Batch 21 — PlotViewModel3D (partial)
+
+- Exact (5): `XAxisViewModel`, `YAxisViewModel`, `ZAxisViewModel` (internal, private setters), `IsActiveRegion` (override: base call, then `ActiveAxis.IsActive`), `GridCellSize` (internal setter raises `GridCellSize` change). Their generated declarations are removed from the `.g.cs` by hand.
+- Not written (stubs kept): the static field initializers (`_typeOfThis`, the two commands, `_initialGraphDimensionInDips`, and the `_traces`/`_equations` lists; the generated fields have no initializers), the constructor, the nested command classes (their members stay as generated stubs), `SelectedTraces` (an iterator), and the remaining properties and handlers.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 1900 checked, 0 failures.
