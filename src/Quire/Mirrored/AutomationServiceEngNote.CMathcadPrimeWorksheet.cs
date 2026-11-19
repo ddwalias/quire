@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Quire.Controls.Core.IORegions;
 using System.Collections.Generic;
 using System.Windows.Threading;
 using Quire.Controls.Core;
@@ -432,5 +433,96 @@ public partial class CMathcadPrimeWorksheet
         }
 
         return false;
+    }
+
+    private AutomationSpiritInputs DoGetInputs()
+    {
+        try
+        {
+            IEngineeringDocument engineeringDocument = GetAssociatedEngineeringDocument();
+            if (engineeringDocument != null)
+            {
+                return new AutomationSpiritInputs(engineeringDocument.InputOutputRegionManager.Inputs);
+            }
+        }
+        catch
+        {
+        }
+
+        return null;
+    }
+
+    private AutomationSpiritOutputs DoGetOutputs()
+    {
+        try
+        {
+            IEngineeringDocument engineeringDocument = GetAssociatedEngineeringDocument();
+            if (engineeringDocument != null)
+            {
+                return new AutomationSpiritOutputs(engineeringDocument.InputOutputRegionManager.Outputs);
+            }
+        }
+        catch
+        {
+        }
+
+        return null;
+    }
+
+    private void DoSetWorksheetWorkingDirectory(string workingDir)
+    {
+        try
+        {
+            IEngineeringDocument engineeringDocument = GetAssociatedEngineeringDocument();
+            if (engineeringDocument != null)
+            {
+                engineeringDocument.CWD = workingDir;
+            }
+        }
+        catch
+        {
+        }
+    }
+
+    public IMathcadPrimeValuesSetter CreateValuesSetter()
+    {
+        try
+        {
+            IValuesSetter valuesSetter = DoCreateScaledValueSettersCollection();
+            return valuesSetter != null ? new AutomationSpiritValuesSetter(valuesSetter) : null;
+        }
+        catch
+        {
+        }
+
+        return null;
+    }
+
+    private IOManagerErrorCode DoSetStringValue(string alias, string stringValue)
+    {
+        try
+        {
+            IEngineeringDocument engineeringDocument = GetAssociatedEngineeringDocument();
+            return engineeringDocument != null ? engineeringDocument.InputOutputRegionManager.SetStringValue(alias, stringValue) : (IOManagerErrorCode)(-1);
+        }
+        catch
+        {
+        }
+
+        return (IOManagerErrorCode)(-1);
+    }
+
+    private IOManagerErrorCode DoSetSExprValue(string alias, string sexpression)
+    {
+        try
+        {
+            IEngineeringDocument engineeringDocument = GetAssociatedEngineeringDocument();
+            return engineeringDocument != null ? engineeringDocument.InputOutputRegionManager.SetSExprValue(alias, sexpression) : (IOManagerErrorCode)(-1);
+        }
+        catch
+        {
+        }
+
+        return (IOManagerErrorCode)(-1);
     }
 }

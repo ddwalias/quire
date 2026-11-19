@@ -56,10 +56,6 @@ public partial class CMathcadPrimeWorksheet : global::Quire.EngNotebook.Automati
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.IORegions.IOManagerErrorCode DoSetRealValue(string alias, double value, string units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.AutomationServiceEngNote.AutomationSpiritInputs DoGetInputs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.AutomationServiceEngNote.AutomationSpiritOutputs DoGetOutputs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EngNotebook.Automation.IMathcadPrimeInputResult InputGetRealValue(string aliasArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EngNotebook.Automation.IMathcadPrimeOutputResult OutputGetRealValue(string aliasArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -102,19 +98,13 @@ public partial class CMathcadPrimeWorksheet : global::Quire.EngNotebook.Automati
     [global::Quire.Mirror.MirrorStub]
     private string DoGetWorksheetWorkingDirectory() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void DoSetWorksheetWorkingDirectory(string workingDir) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public object GetWorksheetReadOnlyOptionValue(global::Quire.EngNotebook.Automation.WorksheetReadonlyOptionNames optionNameArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private object DoGetWorksheetReadOnlyOptionValue(global::Quire.EngNotebook.Automation.WorksheetReadonlyOptionNames optionName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EngNotebook.Automation.IMathcadPrimeValuesSetter CreateValuesSetter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.IORegions.IValuesSetter DoCreateScaledValueSettersCollection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int SetStringValue(string aliasArg, string valueArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.IORegions.IOManagerErrorCode DoSetStringValue(string alias, string stringValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string InputGetStringValue(string aliasArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -123,8 +113,6 @@ public partial class CMathcadPrimeWorksheet : global::Quire.EngNotebook.Automati
     private string DoGetStringValue(string alias, bool isInput) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int SetSExprValue(string aliasArg, string sexpressionArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.IORegions.IOManagerErrorCode DoSetSExprValue(string alias, string sexpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string InputGetSExprValue(string aliasArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
