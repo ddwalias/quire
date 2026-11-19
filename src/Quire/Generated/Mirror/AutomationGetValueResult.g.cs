@@ -12,21 +12,7 @@ namespace Quire;
 public partial class AutomationGetValueResult : global::Quire.Automation.IMathcadPrimeGetValueResult
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.IORegions.ICommonValueItem _valueItem;
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Automation.ValueResultTypes ResultType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double RealResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string StringResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Automation.IMathcadPrimeMatrix MatrixResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public AutomationGetValueResult(global::Quire.Controls.Core.IORegions.ICommonValueItem valueItem) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IORegions.IOManagerErrorCode GetErrorCode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
