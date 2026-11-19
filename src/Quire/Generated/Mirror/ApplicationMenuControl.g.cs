@@ -12,54 +12,6 @@ namespace Quire;
 public partial class ApplicationMenuControl : global::Fluent.ApplicationMenu, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_NewDocument;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_NewDocumentFromMyTemplates;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_NewDocumentFromSharedTemplates;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_NewDocumentFromBuiltInTemplates;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_OpenFromMyTemplates;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_OpenDocumentFromSharedTemplates;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_SaveDocumentAs;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_SaveDocumentAsMcdx;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_SaveDocumentAsMctx;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_SaveDocumentAsRtf;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_SaveDocumentAsXps;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_SaveDocumentAsPdf;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_PrintDocument;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_Winchill;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_WCWorkgroupManagerCheckOut;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_WCWorkgroupManagerUndoCheckOut;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_WCWorkgroupManagerWorkgroupManager;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_WCWorkgroupManagerServerManager;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_WCWorkgroupManagerEventManager;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_WCWorkgroupManagerWorkgroupManagerHelp;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_CloseFile;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_MathcadOptions;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_AboutMathcad;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton Part_ApplicationMenu_Exit;
-    [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public ApplicationMenuControl() { }
