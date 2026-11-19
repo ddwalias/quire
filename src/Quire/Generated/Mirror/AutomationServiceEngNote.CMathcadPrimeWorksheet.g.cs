@@ -12,15 +12,7 @@ namespace Quire.AutomationServiceEngNote;
 public partial class CMathcadPrimeWorksheet : global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheet, global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2, global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheet3
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly bool _isUiInteractiveModeDisabled;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.AutomationServiceEngNote.CMathcadPrimeWorksheet.WorksheetData worksheetData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string FullName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsReadOnly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool Modified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -40,19 +32,9 @@ public partial class CMathcadPrimeWorksheet : global::Quire.EngNotebook.Automati
     [global::Quire.Mirror.MirrorStub]
     public int DefaultCalculationTimeout { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public CMathcadPrimeWorksheet(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument, bool isUiInteractiveModeDisabled, bool isComClientControlled = false) { }
-    [global::Quire.Mirror.MirrorStub]
-    private bool DoIsReadOnly() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool DoGetModified() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void DoSetModified(bool isModified) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void SetTitle(string titleArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DoSetTitle(string title) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetTitle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string DoGetTitle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -76,15 +58,9 @@ public partial class CMathcadPrimeWorksheet : global::Quire.EngNotebook.Automati
     [global::Quire.Mirror.MirrorStub]
     public void Synchronize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void DoSynchronize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void PauseCalculation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ResumeCalculation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DoPauseCalculation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DoResumeCalculation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateCalculationStatus(bool status) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -122,39 +98,21 @@ public partial class CMathcadPrimeWorksheet : global::Quire.EngNotebook.Automati
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.IORegions.IMatrixItem DoOutputGetMatrixValueAs(string alias, string units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool IsOpen() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool DoIsDocumentOpen() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Activate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DoActivate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ActivateWorksheet(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Close(global::Quire.EngNotebook.Automation.SaveOption saveOptionArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void DoClose(global::Quire.EngNotebook.Automation.SaveOption saveOption) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.IEngineeringDocument GetAssociatedEngineeringDocument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool IsAssociatedEngineeringDocument(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string DoGetWorksheetTabIcon() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void DoSetWorksheetTabIcon(string iconFullPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private string DoGetWorksheetTabName() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DoSetWorksheetTabName(string tabName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string DoGetClosingPrompt() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void DoSetClosingPrompt(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private string DoGetWorksheetDisplayedFilePath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DoSetWorksheetDisplayedFilePath(string filePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string DoGetWorksheetWorkingDirectory() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -203,23 +161,5 @@ public partial class CMathcadPrimeWorksheet : global::Quire.EngNotebook.Automati
     [global::Quire.Mirror.MirrorOf("Spirit.AutomationServiceEngNote.CMathcadPrimeWorksheet+WorksheetData, MathcadPrime")]
     private partial class WorksheetData
     {
-        [global::Quire.Mirror.MirrorStub]
-        private string _documentFullName;
-        [global::Quire.Mirror.MirrorStub]
-        private string _documentName;
-        [global::Quire.Mirror.MirrorStub]
-        public string DocumentFullName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public string DocumentName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public void SetIsComClientControlled() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public void UnsetIsComClientControlled() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public bool IsComClientControlled() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public WorksheetData(string documentFullName, string documentName, bool isComClientControlled) { }
-        [global::Quire.Mirror.MirrorStub]
-        public void UpdateWorksheetData(string documentFullName, string documentName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }
