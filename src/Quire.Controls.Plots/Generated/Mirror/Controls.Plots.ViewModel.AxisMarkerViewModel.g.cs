@@ -11,16 +11,4 @@ namespace Quire.Controls.Plots.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.AxisMarkerViewModel, Ptc.Controls.Plots")]
 internal partial class AxisMarkerViewModel : global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel, global::Quire.Controls.Plots.Model.IAxisMarker, global::Quire.Controls.Plots.Model.IBaseMarker, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Plots.IEquationProxyOwner
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Plots.Model.AxisMarker _axisMarker;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Presenter.LineStyle LineStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double LineWeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected AxisMarkerViewModel(global::Quire.Controls.Plots.Model.AxisMarker axisMarker) : base(default(global::Quire.Controls.Plots.Model.BaseMarker)) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void ChangeLineStyle(object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ExecuteChangeValueAndIsUserSetFlagCommand(string commandName, double newValue, bool newIsUserSetValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
