@@ -16,3 +16,10 @@
 - Moved: each stub removed from `Generated/Mirror/<Type>.g.cs`; the constructor added to `Mirrored/<Type>.cs`.
 - Release IL: PASS (project-wide `--project Quire`), 0 failures; each constructor is in the report's `checked` list.
 - Remaining mismatches in this batch: none.
+
+## Batch 3 — TextStyleInheritedFontWeight, PageNumberIsCheckedConverter
+
+- Members: `TextStyleInheritedFontWeight` `Convert`, `ConvertBack`, `.ctor`; `PageNumberIsCheckedConverter` `Convert`, `ConvertBack` (returns `parameter`), `.ctor`.
+- Shape note: `PageNumberIsCheckedConverter.Convert` tests `value as IPageNumberControl != null` and reads the property from `value as IPageNumberControl`; the ternary and `is`/cast forms gave `brtrue` / `castclass`, which Mathcad does not emit.
+- Release IL: PASS (`--project Quire`), 746 checked, 0 failures.
+- Remaining mismatches in this batch: none.
