@@ -11,8 +11,8 @@
 - Native bodies without IL: 6 byte-matched, 0 failed. All six found original native counterparts in `msgen` and matched exactly through `native_bodies`.
 - Rule result: Release IL gate passed with 90 checked, 87 exact compiler/runtime support matches, 0 failures, 6 native pairs matching.
 - Exact MirrorGen changes: none required; `Rules.cs` already maps `msgen` to `Quire.Msgen` and recognizes C++/CLI via `IsCppProject`.
-- Landing: pending lane_merge of Batch 1.
-- Remaining mismatches: 0 gate failures; remaining unmapped msgen members skipped pending subsequent batches.
+- Landing: landed in commit `fd1bb1398fe444d833ae4ccf9e1f62e399a2028e` via `lane_merge.py`; receipt `C:\Projects\Quire\.mirror-cache\receipts\gate-il-d147751f6be5.json`.
+- Remaining mismatches: 0 gate failures; 131 skipped members in msgen compiler pipeline.
 
 Blocked global module methods (61; first differing offset: n/a, no original native counterpart):
 
