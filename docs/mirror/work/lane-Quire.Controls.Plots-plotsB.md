@@ -107,3 +107,10 @@
 - Exact (8): `selectedTrace`, `XAxis`, `YAxis`, `AngularAxis`, `RadialAxis` (setters hook the axis `ShowGridLinesChanged` and `TickMarksChangedEvent`), `TracesUnsorted`, `Count`, and the `OnTraceRemoved`/`OnTraceAdded` callback properties (their generated declarations are removed from the `.g.cs` by hand, with their attributes).
 - Not written (stubs kept): the static constructor and the static field initializers (`selectedTraceProperty`, `TraceCountByTypePropertyKey`, and the other registrations; their full text is not yet read), the constructor `PlotGraphControl(PlotType)`, `SelectedTraceChanged`, the trace count/place attached properties, the `Children` collection handlers, `AddTrace`, `RemoveTrace`, `MeasureOverride`, `ArrangeOverride`, `OnRender`, and the gridline drawing helpers.
 - Release IL (project gate, changed methods, rebased onto main): PASS — 1662 checked, 0 failures.
+
+## Batch 16 — PlotEquationWOUnit (partial)
+
+- Exact (17): `Exp` (obsolete attribute kept), `Expression`, `ExpressionItem`, `Scaling` (obsolete attribute kept), `ScalingItem`, `IsExpEmpty`, `IsPlotEquationEmpty`, `EmptyPlotEquationSExp`, `AtLeftEdge`, `RegionErrorSExp`, `RegionErrorCode`, `DisplayNumberFormat`, `ActiveEquation`, `FocusedEquation`, `SynchronizationStatus`, `CalculatingStatus`, and the `EquationSExpression` getter (written as string concatenation: the interpolated `$"..."` lowered to `String.Concat(string, string, string)` with different arguments from Mathcad).
+- Held (one attempt, first write): `EquationSExpression` setter (the `Regex` construction and `Match` call order differs from Mathcad's) and the `Units` setter (the `PlotInvalidResultException` throw branch differs). Their generated stubs remain.
+- Not written (stubs kept): the constructor (the `_scaling` initializer and body are not yet read), the static field registrations, the events, and the remaining handlers and commands.
+- Release IL (project gate, changed methods, rebased onto main): PASS — 1703 checked, 0 failures.
