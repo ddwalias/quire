@@ -11,6 +11,4 @@ namespace Quire.DOE;
 [global::Quire.Mirror.MirrorOf("DOE.BoxWilson, efisixsigma_")]
 public partial class BoxWilson : global::Quire.DOE.DoeBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal override double[,] getDesignMatrix() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

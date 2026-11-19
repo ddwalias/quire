@@ -103,4 +103,47 @@ public partial class BoxWilson
         m_alpha = Math.Pow(m_nf, 0.25);
     }
 
+
+    internal override double[,] getDesignMatrix()
+    {
+        double[,] array = new double[m_nruns, m_nfacts];
+        if (m_fract == 0)
+        {
+            Permutations permutations = new Permutations(m_nfacts, m_keepOldOrder);
+            double[,] allPermutations = permutations.getAllPermutations();
+            for (int i = 0; i < m_nf; i++)
+            {
+                for (int j = 0; j < m_nfacts; j++)
+                {
+                    array[i, j] = allPermutations[i, j];
+                }
+            }
+        }
+        else
+        {
+            FractFact fractFact = new FractFact(m_nfacts, m_fract, m_keepOldOrder);
+            double[,] designMatrix = fractFact.getDesignMatrix();
+            for (int k = 0; k < m_nf; k++)
+            {
+                for (int l = 0; l < m_nfacts; l++)
+                {
+                    array[k, l] = designMatrix[k, l];
+                }
+            }
+        }
+        for (int m = 0; m < m_nc + 2 * m_nfacts; m++)
+        {
+            for (int n = 0; n < m_nfacts; n++)
+            {
+                array[m + m_nf, n] = 0.0;
+            }
+        }
+        for (int num = 0; num < 2 * m_nfacts; num += 2)
+        {
+            array[num + m_nf + m_nc, num / 2] = m_alpha;
+            array[num + m_nf + m_nc + 1, num / 2] = -m_alpha;
+        }
+        return array;
+    }
+
 }
