@@ -803,7 +803,8 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
             solution.write_text('<Solution>\n' + ''.join(f'  <Project Path={quoteattr(str(t.resolve()))} />\n' for t in targets)
                                 + '</Solution>\n', encoding='utf-8')
             run([dotnet, 'build', solution, '-c', 'Release', '--no-incremental', '-o', assemblies,
-                 '-nologo', '-v:q', '-p:EnableSourceControlManagerQueries=false'], root, log, timeout, env)
+                 '-nologo', '-v:q', '-p:EnableSourceControlManagerQueries=false',
+                 '-p:ShouldUnsetParentConfigurationAndPlatform=false'], root, log, timeout, env)
         for project in projects:
             if reason := msvc_mismatch(assemblies / f'{project}.dll'):
                 raise RuntimeError(f'{project}.dll: {reason}')
@@ -844,7 +845,7 @@ def shared_cache(root=ROOT):
 
 
 CACHE = shared_cache() / 'inventory-cache'
-CACHE_FORMAT = 4
+CACHE_FORMAT = 5
 # A run's directory is older than this only if its run was killed: every step is bounded by --timeout.
 STALE_WORK = 12 * 3600
 PURGE = '''import os, shutil, stat, sys

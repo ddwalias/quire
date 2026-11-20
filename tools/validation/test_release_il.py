@@ -1164,7 +1164,9 @@ class CheckTests(unittest.TestCase):
         mock.patch.stopall()
         work = self.repo.root / 'work'
         keep = self.repo.root / 'kept.json'
+        commands = []
         def audit(command, cwd, log, timeout, env=None):
+            commands.append(command)
             if '--output' in map(str, command):
                 Path(command[command.index('--output') + 1]).write_text(
                     json.dumps({'methods': [], 'errors': [f'e{i}' for i in range(25)]}))
@@ -1181,6 +1183,7 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(len(json.loads(keep.read_text())['errors']), 25)
         # One build invocation names every project.
         self.assertIn(str((self.repo.root / 'src/P/P.csproj').resolve()), (work / 'build.slnx').read_text())
+        self.assertIn('-p:ShouldUnsetParentConfigurationAndPlatform=false', commands[0])
 
 
 class JudgeCacheTests(unittest.TestCase):
