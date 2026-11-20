@@ -30,6 +30,8 @@ EXPORTS
     ?CompareScores@WordChoice@utl@@SA_NV12@0@Z
     ??4WordChoice@utl@@QEAAAEAV01@AEBV01@@Z
     ??4WordChoice@utl@@QEAAAEAV01@$$QEAV01@@Z
+    ??0with_purecall_handler@utl@@QEAA@XZ
+    ??1with_purecall_handler@utl@@QEAA@XZ
     ??4with_purecall_handler@utl@@QEAAAEAV01@AEBV01@@Z
     ??0WordData@utl@@QEAA@XZ
     ??0WordData@utl@@QEAA@$$QEAV01@@Z

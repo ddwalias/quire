@@ -120,6 +120,8 @@ private:
 
 class with_purecall_handler {
 public:
+    with_purecall_handler();
+    ~with_purecall_handler();
     with_purecall_handler &operator=(const with_purecall_handler &other);
 
 private:

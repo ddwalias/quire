@@ -66,7 +66,7 @@
       <ExceptionHandling>Async</ExceptionHandling>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <BufferSecurityCheck>false</BufferSecurityCheck>
-      <AdditionalOptions>/Ob3 /D"_CRTIMP2=__declspec(dllimport)" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Ob3 /D"_CRTIMP2=__declspec(dllimport)" /D"_VCRTIMP=__declspec(dllimport)" %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ClCompile Include="utl_worddata.cpp">
       <ExceptionHandling>Async</ExceptionHandling>

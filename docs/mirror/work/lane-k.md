@@ -16,7 +16,7 @@
 | `InterruptControl` (`RequestInterrupt`, two `operator=`) | 3 | 3/3 OK, 0 unverified | `utl_interrupt.cpp`. `interrupted` is the `bool` at offset 0. |
 | `WordDatum` (ctor, `Name`, two `operator=`) | 4 | 4/4 OK, 0 unverified | `utl_word.cpp`. `name` is at offset 0. |
 | `WordChoice` (ctor, `Datum`, `Score`, `CompareScores`, three `operator=`) | 6 | 6/6 OK, 0 unverified | `utl_word.cpp`. Layout `{WordDatum*, double}`. The copy `operator=` uses `memcpy` so MSVC emits the original's 16-byte `movups` form. |
-| `with_purecall_handler::operator=` | 1 | 1/1 OK, 0 unverified | `utl_word.cpp`. |
+| `with_purecall_handler` (ctor, dtor, `operator=`) | 3 | 3/3 OK, 0 unverified | `utl_word.cpp`. Ctor enters `s_purecall_lock` and sets `ms_purecall_handler`; dtor restores previous handler and leaves lock (emitting the original's `nop` under `/EHa`). |
 | `InterruptControl::IsInterrupted`, `ThreadInitialize` (batch 2) | 2 | 2/2 OK, 0 unverified | `utl_interrupt.cpp`. Reads and writes `s_tls_index`, which the original exports, so the reference is verified. `Quire.Native.Mcaduser`'s only `utl.dll` import. |
 | `GetNumberOfProcessors` (batch 2) | 1 | 1/1 OK, 0 unverified | `utl_system.cpp`. `GetSystemInfo` on a local `SYSTEM_INFO`. |
 | `s_tls_index` (data, batch 2) | 0 | not byte-checked | Name present in export parity. The validator has no data-export check. Its TLS allocation is not yet ported. |
@@ -61,8 +61,8 @@ MSBuild, Release|x64, toolset v145, MSVC 14.51.36231. `/O2 /Gy /GS /EHsc /MD /st
 
 ## Remaining work
 
-- 52 exports missing from export parity.
-- **Completed in this batch:** `ms_purecall_handler`, `se_trans_func`, `RestoreThreadPriority`, `IsTimingInclusive`. All 83 checked functions pass strict byte validation with 0 failures and 0 unfinished.
+- 50 exports missing from export parity.
+- **Completed in this batch:** `with_purecall_handler` constructor and destructor (with `s_purecall_lock` static recorded in `internal-targets.json`). All 86 checked functions pass strict byte validation with 0 failures and 0 unfinished.
 - **Open:** the constructor and `Start`. Our build is 9 and 8 bytes shorter. The original has a `this` spill and `nop`s after `CRITICAL_SECTION` calls that our build lacks. `/EHa` (built and validated, all 21 functions unchanged) does not produce them, so the cause is a source shape not yet found. Not guessed.
 - Then the non-consumer groups: `TimeIt`, `WordData`, `WordChoice` (`BestGuess*`, `GetSuggestions`, `GetScore`), `with_purecall_handler` (ctor/dtor), `mcGetSetting`, timers, logging, paths, and the `std::` string/stream exports.
 - Static initialisers (`s_tls_init`, the TLS index allocation) are not yet implemented. The DLL will not set `s_tls_index` until they are.

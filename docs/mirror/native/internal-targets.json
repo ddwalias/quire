@@ -101,6 +101,10 @@
         "rva": "0x229b0",
         "size": 4
       },
+      "?s_purecall_lock@utl@@3U_RTL_CRITICAL_SECTION@@A": {
+        "rva": "0x22950",
+        "size": 40
+      },
       "?s_thread_priority@utl@@3KA": {
         "rva": "0x229b4",
         "size": 4
