@@ -9,6 +9,9 @@
         "rva": "0xbe10",
         "parked": true
       },
+      "??0?$list@PEAVWordDatum@utl@@V?$allocator@PEAVWordDatum@utl@@@std@@@std@@QEAA@AEBV01@@Z": {
+        "rva": "0xdaf0"
+      },
       "??0se_exception@utl@@QEAA@I@Z": {
         "rva": "0xc910"
       },
