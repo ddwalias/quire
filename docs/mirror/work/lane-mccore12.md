@@ -10,7 +10,7 @@
 
 ## Release IL Report & Gates
 
-- Batch 1: PASS, 106 checked, 104 exact, 0 failures, 289 Mathcad `<Module>` / unmanaged members not paired (`.mirror-cache/release-il-60e17d4869bc/release-il.json`).
+- Batch 1: PASS, 106 checked, 104 exact, 0 failures, 289 Mathcad `<Module>` / unmanaged members not paired (`.mirror-cache/release-il-60e17d4869bc/release-il.json`). Merged via `lane_merge.py` (receipt: `gate-il-fd10a1dff7ea.json`).
 
 ## Remaining Members and Actionable Blockers
 
