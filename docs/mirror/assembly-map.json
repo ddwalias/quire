@@ -9827,8 +9827,8 @@
         ]
       },
       "language": "CppCli",
-      "host": "Quire.Engine.Native",
-      "split": false,
+      "host": "split",
+      "split": true,
       "project_references": [],
       "dependencies": [
         "Quire.EngutilsMgd"
@@ -9841,7 +9841,7 @@
         "D": 50,
         "abstract": 0
       },
-      "scope": "deferred / out of scope",
+      "scope": "active / mixed",
       "stub_bodies": 1048,
       "status": "incomplete",
       "audit": null,
