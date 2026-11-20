@@ -43,3 +43,7 @@ EXPORTS
     ?toBSTR@utl@@YAPEA_WIPEBD@Z
     ?die@utl@@YAXPEB_W@Z
     ?IsTimingEnabled@utl@@YA_NXZ
+    ?ms_purecall_handler@utl@@YAXXZ
+    ?se_trans_func@utl@@YAXIPEAU_EXCEPTION_POINTERS@@@Z
+    ?RestoreThreadPriority@utl@@YA_NXZ
+    ?IsTimingInclusive@utl@@YA_NXZ

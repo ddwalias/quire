@@ -58,4 +58,24 @@ with_purecall_handler &with_purecall_handler::operator=(const with_purecall_hand
     return *this;
 }
 
+class purecall_exception {
+public:
+    ~purecall_exception() {}
+};
+
+void ms_purecall_handler() {
+    throw purecall_exception();
+}
+
+class se_exception {
+public:
+    explicit se_exception(unsigned int code) : code(code) {}
+    ~se_exception() {}
+    unsigned int code;
+};
+
+void se_trans_func(unsigned int code, _EXCEPTION_POINTERS *) {
+    throw se_exception(code);
+}
+
 }  // namespace utl

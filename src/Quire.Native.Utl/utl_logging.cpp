@@ -57,4 +57,14 @@ bool IsLoggingEnabled() {
     return enabled;
 }
 
+bool IsTimingInclusive() {
+    static bool enabled = true;
+    static bool initialized = false;
+    if (!initialized) {
+        enabled = ReadRegistryFlag(L"EngineTimingInclusive");
+        initialized = true;
+    }
+    return enabled;
+}
+
 }  // namespace utl

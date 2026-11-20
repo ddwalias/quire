@@ -20,4 +20,12 @@ bool BoostThreadPriority() {
            !SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL);
 }
 
+static DWORD s_process_priority;
+static DWORD s_thread_priority;
+
+bool RestoreThreadPriority() {
+    return !SetPriorityClass(GetCurrentProcess(), s_process_priority) &&
+           !SetThreadPriority(GetCurrentThread(), s_thread_priority);
+}
+
 }  // namespace utl

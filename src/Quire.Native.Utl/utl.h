@@ -14,11 +14,15 @@ namespace utl {
 
 int GetNumberOfProcessors();
 bool IsTimingEnabled();
+bool IsTimingInclusive();
 bool BoostThreadPriority();
+bool RestoreThreadPriority();
 wchar_t *toBSTR(unsigned int codePage, const char *source, size_t length);
 wchar_t *toBSTR(unsigned int codePage, const char *source);
 unsigned char *FromHex(const char *text);
 void die(const wchar_t *message);
+void ms_purecall_handler();
+void se_trans_func(unsigned int code, _EXCEPTION_POINTERS *ep);
 
 class InterruptControl {
 public:
