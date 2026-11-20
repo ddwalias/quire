@@ -12,43 +12,13 @@ namespace Quire.Calculation;
 public partial class CalculationController
 {
     [global::Quire.Mirror.MirrorStub]
-    public static bool PreserveEngineBuilder { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public CalculationController(global::Quire.Calculation.Core.ICalculatableContext context, global::Quire.Engine.IEngine engine, int importRequestHandle, int initialHandle) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void CleanupAfterCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RegisterDataExchange(global::Quire.Calculation.Core.ICalculatableWithDataExchange calcWithDataExchange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.ICalculatableWithDataExchange GetDataExchangeOwnerAdded(global::Quire.Calculation.Core.ICalculatableContainer container, global::Quire.Calculation.Core.ICalculatable arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.ICalculatableWithDataExchange GetDataExchangeOwnerRemoved(global::Quire.Calculation.Core.ICalculatableContainer container, global::Quire.Calculation.Core.ICalculatable arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleEngineNeedsUIThreadMessagesProcessed() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UnregisterDataExchange(global::Quire.Calculation.Core.ICalculatableWithDataExchange calcWithDataExchange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsAggregate(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsAggregate(global::Quire.Calculation.Core.ICalculatableContainer container) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private object HandleGetEngineOption(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HookupCalculatableEvents(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UnhookFromCalculatableEvents(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleCalculatableUpdated(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.IResultNode HandleGetValueOfIdentifierBefore(global::Quire.Calculation.Core.ICalculatable calcAtPosition, string id) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleTreatCalculatableAsUpToDate(global::Quire.Calculation.Core.ICalculatable arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsCalculatableInContext(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void DebugEnter(string methodName, string methodInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void DebugExit(string methodName, string methodInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Calculation.CalculationController+CalculatableMapInfo, Ptc.Calculation")]
     private partial struct CalculatableMapInfo

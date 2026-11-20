@@ -24,7 +24,11 @@ partial class CalculationController
     private readonly global::System.Threading.ManualResetEvent _waitForCalc;
     private readonly global::System.Threading.ManualResetEvent _interruptWaitForCalc;
     internal static readonly global::System.Windows.Threading.DispatcherPriority WaitForCalculationInterruptPriority_Send;
-    internal static void EnableDebugWrites(bool enable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::System.Diagnostics.Conditional("DEBUG")]
+    internal static void EnableDebugWrites(bool enable)
+    {
+        _enableDebugWrites = enable;
+    }
     public static global::Quire.Calculation.CalculationController BindTo(global::Quire.Calculation.Core.ICalculatableContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public static void Dispose() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public static void UNITTEST_InitBuilder(global::Quire.Calculation.EngineBuilder engineBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -42,7 +46,15 @@ partial class CalculationController
     private void HandleCalculateNow(global::Quire.Calculation.Core.ICalculatable lastVisibleCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void HandleStartAutoCalc() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void HandleStopAutoCalc() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void DebugInfo(string info) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::System.Diagnostics.Conditional("DEBUG")]
+    private static void DebugInfo(string info)
+    {
+        if (!_enableDebugWrites)
+        {
+            return;
+        }
+        string.IsNullOrEmpty(info);
+    }
     private void HandleSimplifyUnitSystemUpdated(bool simplifyUnitsInResults) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void HandleUnitSystemUpdated(global::Quire.Calculation.Core.UnitSystems unitSystem, global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor> baseList, global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor> derivedList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void HandleCalculationOptionUpdated(string name, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
