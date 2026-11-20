@@ -19,9 +19,17 @@
   - `Quire.Engine.GlobalDefinition` (`.ctor`, `IsGlobal`)
   - `Quire.Engine.UnaryNodeDataFunc` (delegate)
   - `Quire.Engine.NodeTracker` (interface)
-- Candidate Release IL report: `.mirror-cache/release-il-1706330ca4fc/release-il.json`.
-- Gate line: `Release IL: PASS; 113 checked; C:\Users\DuyDang\orca\workspaces\Quire\mslisp-agy\.mirror-cache\release-il-1706330ca4fc\release-il.json`.
+  - `Quire.Engine.IFactoryCallbacks` (`OnCreate`, `OnDestroy`)
+  - `Quire.Engine.HandleFactory` (`.ctor`, `NewHandle`, `IsValid`)
+  - `Quire.Engine.HasErrors` (`.ctor`, `Invoke`)
+  - `Quire.Engine.TagEncoder` (`.ctor`, `encode`)
+  - `Quire.Engine.RekeyDict` (`.ctor`, `Invoke`)
+  - `Quire.Engine.MergeState` (`.ctor`, `Invoke`)
+  - `Quire.Engine.NodeCollection` (`.ctor`, `get_Item`, `get_Count`, `Add`)
+  - `Quire.Engine.FScope` (`.ctor(owner)`, `.ctor()`, `get_Parent`, `get_Id`, `First`, `FindPreviousInScope`, `FindNextInScope`, `Last`, `Owner`, `OnFirst`, `OnNew`, `OnBefore`, `OnAfter`, `OnRemove`, `.cctor`)
+- Candidate Release IL report: `.mirror-cache/release-il-79fe4b861daa/release-il.json`.
+- Gate line: `Release IL: PASS; 134 checked; C:\Users\DuyDang\orca\workspaces\Quire\mslisp-agy\.mirror-cache\release-il-79fe4b861daa\release-il.json`.
 - Classification: With `Quire.Engine` types carrying `[MirrorOf("Engine.<Type>, mcfront12")]`, `ModuleOriginal` resolves `mcfront12.dll` cleanly. CRT and Module support methods are classified as toolset support (D19/D23), and all 6 native bodies match exact instruction-for-instruction and target bytes (including `__security_init_cookie` with hash-bound data target landed in `eded0f976`).
-- Rule result: Release IL gate passed with 113 checked, 0 failures, 6 native pairs matching.
+- Rule result: Release IL gate passed with 134 checked, 0 failures, 6 native pairs matching.
 - Exact MirrorGen changes: none required; `Rules.cs` already maps `mcfront12` to `Quire.Mcfront12` and recognizes C++/CLI via `IsCppProject`.
 - Remaining mismatches: 0 gate failures; 113 unmapped/missing members in mcfront12 compiler/engine AST scanner and singleton (MCFront12).

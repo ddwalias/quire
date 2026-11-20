@@ -423,4 +423,344 @@ namespace Quire { namespace Engine {
         void OnRemove(NodeData^ n);
     };
 
+    [Quire::Mirror::MirrorOfAttribute("Engine.IFactoryCallbacks, mcfront12")]
+    public interface class IFactoryCallbacks
+    {
+        void OnCreate(Quire::Engine::IEngine^ e);
+        void OnDestroy(Quire::Engine::IEngine^ e);
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("Engine.HandleFactory, mcfront12")]
+    ref class HandleFactory
+    {
+    private:
+        long m_count;
+        Quire::utl_mgd::SafeMutex^ m_mutex;
+
+    public:
+        HandleFactory()
+            : m_count(0), m_mutex(gcnew Quire::utl_mgd::SafeMutex("HandleFactory mutex"))
+        {
+        }
+
+        long NewHandle()
+        {
+            m_mutex->WaitOne();
+            try
+            {
+                return ++m_count;
+            }
+            finally
+            {
+                m_mutex->ReleaseMutex();
+            }
+        }
+
+        bool IsValid(long h)
+        {
+            return (h > 0 && h < m_count);
+        }
+    };
+
+
+    [Quire::Mirror::MirrorOfAttribute("Engine.HasErrors, mcfront12")]
+    ref class HasErrors : public Quire::utl_mgd::FunctionBase
+    {
+    public:
+        virtual System::Object^ Invoke(array<System::Object^>^ args) override
+        {
+            System::Collections::IDictionary^ dictionary = dynamic_cast<System::Collections::IDictionary^>(args[0]);
+            if (dictionary != nullptr && dictionary->Contains("%errors"))
+            {
+                return true;
+            }
+            return nullptr;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("Engine.TagEncoder, mcfront12")]
+    ref class TagEncoder
+    {
+    public:
+        int region_id;
+
+        TagEncoder(int id)
+            : region_id(id)
+        {
+        }
+
+        System::String^ encode(System::String^ tag)
+        {
+            System::String^ result = Quire::Engine::Tags::EncodeRegionID(region_id, tag);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("Engine.RekeyDict, mcfront12")]
+    ref class RekeyDict : public Quire::utl_mgd::FunctionBase
+    {
+    public:
+        virtual System::Object^ Invoke(array<System::Object^>^ args) override
+        {
+            System::String^ text = args[0]->ToString();
+            System::Collections::IDictionary^ dictionary = dynamic_cast<System::Collections::IDictionary^>(args[1]);
+            if (dictionary == nullptr)
+            {
+                return args[1];
+            }
+            Quire::utl_mgd::LabeledDictionary^ labeledDictionary = gcnew Quire::utl_mgd::LabeledDictionary();
+            for each (System::Object^ key in dictionary->Keys)
+            {
+                System::String^ text2 = dynamic_cast<System::String^>(key);
+                if (text2 != nullptr && text2->StartsWith("%"))
+                {
+                    labeledDictionary[text2] = dictionary[text2];
+                }
+            }
+            labeledDictionary["type " + text] = dictionary["type _raw"];
+            labeledDictionary["value " + text] = dictionary["value _raw"];
+            labeledDictionary["location " + text] = dictionary["location _raw"];
+            labeledDictionary["labels " + text] = dictionary["labels _raw"];
+            return labeledDictionary;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("Engine.MergeState, mcfront12")]
+    ref class MergeState : public Quire::utl_mgd::FunctionBase
+    {
+    public:
+        virtual System::Object^ Invoke(array<System::Object^>^ args) override
+        {
+            System::Collections::IDictionary^ dictionary = nullptr;
+            System::Collections::IDictionary^ dictionary2 = dynamic_cast<System::Collections::IDictionary^>(args[1]);
+            if (dictionary2 == nullptr)
+            {
+                return args[0];
+            }
+            Quire::utl_mgd::LabeledDictionary^ labeledDictionary = dynamic_cast<Quire::utl_mgd::LabeledDictionary^>(args[0]);
+            if (labeledDictionary != nullptr)
+            {
+                dictionary = labeledDictionary->Copy();
+            }
+            else
+            {
+                System::Collections::IDictionary^ d = dynamic_cast<System::Collections::IDictionary^>(args[0]);
+                if (d != nullptr)
+                {
+                    dictionary = Quire::Engine::CollectionUtils::CopyDict(d);
+                }
+            }
+            if (dictionary == nullptr)
+            {
+                return nullptr;
+            }
+            for each (System::Object^ key in dictionary2->Keys)
+            {
+                if (!dictionary->Contains(key))
+                {
+                    dictionary[key] = dictionary2[key];
+                }
+            }
+            return dictionary;
+        }
+    };
+
+    ref class FScope;
+
+    [Quire::Mirror::MirrorOfAttribute("Engine.NodeCollection, mcfront12")]
+    ref class NodeCollection
+    {
+    public:
+        int m_fnode;
+        System::Collections::Generic::List<long>^ m_ce_nodes;
+        FScope^ m_scope;
+        FScope^ m_child_scope;
+
+        NodeCollection(int fnode)
+            : m_fnode(fnode), m_ce_nodes(gcnew System::Collections::Generic::List<long>())
+        {
+        }
+
+        property long default[int]
+        {
+            long get(int i)
+            {
+                long result = m_ce_nodes[i];
+                System::GC::KeepAlive(this);
+                return result;
+            }
+        }
+
+        property int Count
+        {
+            int get()
+            {
+                int count = m_ce_nodes->Count;
+                System::GC::KeepAlive(this);
+                return count;
+            }
+        }
+
+        void Add(long h)
+        {
+            m_ce_nodes->Add(h);
+            System::GC::KeepAlive(this);
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("Engine.FScope, mcfront12")]
+    ref class FScope : public Quire::depman::Scope
+    {
+    private:
+        static int s_id = 0;
+        int m_id;
+        System::Collections::Generic::LinkedListNode<NodeCollection^>^ m_first;
+        System::Collections::Generic::LinkedListNode<NodeCollection^>^ m_last;
+        System::Collections::Generic::LinkedListNode<NodeCollection^>^ m_owner;
+
+    public:
+        virtual property int Id
+        {
+            int get() override
+            {
+                return m_id;
+            }
+        }
+
+        virtual property Quire::depman::Scope^ Parent
+        {
+            Quire::depman::Scope^ get() override
+            {
+                FScope^ result = (m_owner != nullptr) ? m_owner->Value->m_scope : nullptr;
+                System::GC::KeepAlive(this);
+                return result;
+            }
+        }
+
+        FScope(System::Collections::Generic::LinkedListNode<NodeCollection^>^ owner)
+            : m_owner(owner)
+        {
+            m_id = s_id++;
+        }
+
+        FScope()
+        {
+            m_id = s_id++;
+        }
+
+        System::Collections::Generic::LinkedListNode<NodeCollection^>^ First(bool bRec)
+        {
+            if (bRec && m_first != nullptr && m_first->Value->m_child_scope != nullptr)
+            {
+                System::Collections::Generic::LinkedListNode<NodeCollection^>^ result = m_first->Value->m_child_scope->First(true);
+                System::GC::KeepAlive(this);
+                return result;
+            }
+            System::GC::KeepAlive(this);
+            return m_first;
+        }
+
+        System::Collections::Generic::LinkedListNode<NodeCollection^>^ FindPreviousInScope(System::Collections::Generic::LinkedListNode<NodeCollection^>^ n)
+        {
+            System::Collections::Generic::LinkedListNode<NodeCollection^>^ previous = n->Previous;
+            if (previous->Value->m_scope != this)
+            {
+                do
+                {
+                    previous = previous->Previous;
+                }
+                while (previous->Value->m_scope != this);
+            }
+            System::GC::KeepAlive(this);
+            return previous;
+        }
+
+        System::Collections::Generic::LinkedListNode<NodeCollection^>^ FindNextInScope(System::Collections::Generic::LinkedListNode<NodeCollection^>^ n)
+        {
+            System::Collections::Generic::LinkedListNode<NodeCollection^>^ next = n->Next;
+            if (next->Value->m_scope != this)
+            {
+                do
+                {
+                    next = next->Next;
+                }
+                while (next->Value->m_scope != this);
+            }
+            System::GC::KeepAlive(this);
+            return next;
+        }
+
+        System::Collections::Generic::LinkedListNode<NodeCollection^>^ Last()
+        {
+            return m_last;
+        }
+
+        System::Collections::Generic::LinkedListNode<NodeCollection^>^ Owner()
+        {
+            return m_owner;
+        }
+
+        void OnFirst(System::Collections::Generic::LinkedListNode<NodeCollection^>^ n)
+        {
+            m_first = n;
+            m_last = n;
+            n->Value->m_scope = this;
+        }
+
+        void OnNew(System::Collections::Generic::LinkedListNode<NodeCollection^>^ n)
+        {
+            m_last = n;
+            n->Value->m_scope = this;
+        }
+
+        void OnBefore(System::Collections::Generic::LinkedListNode<NodeCollection^>^ n1, System::Collections::Generic::LinkedListNode<NodeCollection^>^ n2)
+        {
+            n2->Value->m_scope = this;
+            if (m_last == n2)
+            {
+                m_last = FindPreviousInScope(n2);
+            }
+            if (m_first == n1)
+            {
+                m_first = n2;
+            }
+        }
+
+        void OnAfter(System::Collections::Generic::LinkedListNode<NodeCollection^>^ n1, System::Collections::Generic::LinkedListNode<NodeCollection^>^ n2)
+        {
+            n2->Value->m_scope = this;
+            if (m_first == n2)
+            {
+                m_first = FindNextInScope(n2);
+            }
+            if (m_last == n1)
+            {
+                m_last = n2;
+            }
+        }
+
+        bool OnRemove(System::Collections::Generic::LinkedListNode<NodeCollection^>^ n)
+        {
+            if (m_first == n)
+            {
+                if (m_last == n)
+                {
+                    if (m_owner != nullptr)
+                    {
+                        m_owner->Value->m_child_scope = nullptr;
+                    }
+                    System::GC::KeepAlive(this);
+                    return true;
+                }
+                m_first = FindNextInScope(n);
+            }
+            else if (m_last == n)
+            {
+                m_last = FindPreviousInScope(n);
+            }
+            return false;
+        }
+    };
+
 }}
