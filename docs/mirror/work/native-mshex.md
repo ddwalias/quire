@@ -1,20 +1,20 @@
 # Quire.Native.Mshex (mshex.dll) checkpoint
 
-- Owner: native-mshex worker (Orca task task_b01bcca0fa3b).
-- Branch: `feature/native-mshex-20261113-r3`, worktree `C:/Users/DuyDang/orca/workspaces/Quire/native-mshex-20261113-r3`, from `main`.
+- Owner: AGY, Orca task `task_b966c70bda3b`, dispatch `ctx_8f50f58f4210`.
+- Branch: `feature/mshex-agy`, from `main`.
 - Gate: `python tools/validation/native_gate.py --base main --project Quire.Native.Mshex`.
 
 ## Members landed this batch
 
-- `Hex::Library`: default, copy and move constructors exported, and the four-slot interface vtable `??_7Library@Hex@@6B@`
-  exported as data. The original's four slots are all pure-call thunks, so the class is an interface with four pure
-  virtual members (names not recovered; placeholders `UnidentifiedSlot0..3`).
-- Gate: PASS, 110 checked (was 106 on `main`), 0 failures, 0 regressions, 0 unfinished among checked.
+- `Hex::Tag`: default constructor closure (`??_FTag@Hex@@QEAAXXZ`) exported and matched exactly by providing default argument values on the constructor.
+- `Hex::operator==(const Signature&, const Signature&)` (`??8Hex@@YA_NAEBVSignature@0@0@Z`): exported and matched byte-for-byte (standard `std::string::operator==` / `memcmp`).
+- `Hex::operator<(const Signature&, const Signature&)` (`??MHex@@YA_NAEBVSignature@0@0@Z`): exported and matched byte-for-byte (standard `std::string::operator<` / `memcmp`).
+- Gate: PASS, 113 checked (was 110 on `main`), 0 failures, 0 regressions, 0 unfinished among checked.
 
 ## Status against the original
 
-- Exports: 95 of 380 matched on `main` before this batch; 99 now (the three `Library` constructors and its vtable).
-  The other 281 exports are absent from the candidate, so the gate does not check them.
+- Exports: 99 matched on `main` before this batch; 102 matched now (113 total checked symbols including vtables and data).
+- The remaining 280 exports are either parked, blocked on internal targets or blocked on std::map instantiations.
 
 ## Remaining mismatches and blockers
 
@@ -30,4 +30,4 @@
 - `Hex::operator+(Tag, Tag)`, `Error::GetDetails(Substring)`, `operator<<(ostream, Error)`, the `Signature` accessors
   and `Node::GetError`: parked per the earlier lane (see `docs/mirror/work/lane-j.md`); not re-tested here.
 - Function-local statics (`Interpreter::Fetch`/`Clear`, `Formatter::Fetch`, `Tag` dynamic initializers): D29.
-- `std::map<Signature, Value const*>` and `_Tree` instantiations (about 160 exports): not started.
+- `std::map<Signature, Value const*>` and `_Tree` instantiations (about 120 exports): template instantiations that depend on `DefaultEnvironment`'s unmanaged map layout.

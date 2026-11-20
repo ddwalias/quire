@@ -14,10 +14,16 @@ class Signature {
 public:
     HEX_EXPORT Signature();
 
+    HEX_EXPORT friend bool operator==(const Signature &a, const Signature &b);
+    HEX_EXPORT friend bool operator<(const Signature &a, const Signature &b);
+
 private:
     std::uint16_t name_end_;
     std::uint16_t module_start_;
     std::string text_;
 };
+
+HEX_EXPORT bool operator==(const Signature &a, const Signature &b);
+HEX_EXPORT bool operator<(const Signature &a, const Signature &b);
 
 }  // namespace Hex
