@@ -11,20 +11,4 @@ namespace Quire.Automation.Wrappers;
 [global::Quire.Mirror.MirrorOf("Automation.Wrappers.StringValue, automation")]
 public partial class StringValue : global::Quire.IStringValue, global::Quire.IValue, global::System.Runtime.Serialization.ISerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Automation.StringValue _innerObject;
-    [global::Quire.Mirror.MirrorStub]
-    public string Type { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string AsString { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public StringValue() { }
-    [global::Quire.Mirror.MirrorStub]
-    internal StringValue(global::Quire.Automation.StringValue inner) { }
-    [global::Quire.Mirror.MirrorStub]
-    internal StringValue(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void GetObjectData(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,8 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Mathcad.Automation.IScalarValueProxy, automationmgd")]
 public partial interface IScalarValueProxy : global::Quire.Automation.IValueProxy
 {
-    [global::Quire.Mirror.MirrorStub]
-    double RealPart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double ImagPart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

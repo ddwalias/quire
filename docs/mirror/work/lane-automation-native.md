@@ -3,6 +3,19 @@
 - Owner: Automation.Native lane; branch `feature/automation-native-agy`.
 - Target: `src/Quire.Automation.Native` (C# net10.0-windows, hosting `automationmgd.dll` and `componentsmgd.dll`).
 
+## Batch 2 — Wrappers, HRESULT, and Interface declarations
+
+- Members:
+  - `Mathcad.Components.HRESULT`: `.cctor`, `S_FALSE` field. Hand-written in `Mirrored/HRESULT.cs`.
+  - `Automation.Wrappers.StringValue`: `.ctor()`, `.ctor(StringValue)`, `.ctor(SerializationInfo, StreamingContext)`, `Type`, `AsString`, `Value` (get/set), `GetObjectData`, and field `_innerObject`. Hand-written in `Mirrored/Wrappers.StringValue.cs`.
+  - `Automation.Wrappers.NumericValue`: `.ctor()`, `.ctor(NumericValue)`, `.ctor(SerializationInfo, StreamingContext)`, `Type`, `AsString`, `Real` (get/set), `Imag` (get/set), `Integer` (get/set), `GetObjectData`, and field `_innerObject`. Hand-written in `Mirrored/Wrappers.NumericValue.cs`.
+  - `Automation.Wrappers.MatrixValue`: `.ctor()`, `.ctor(MatrixValue)`, `.ctor(SerializationInfo, StreamingContext)`, `Type`, `AsString`, `Rows`, `Cols`, `GetElement`, `SetElement`, `GetObjectData`, and field `_innerObject`. Hand-written in `Mirrored/Wrappers.MatrixValue.cs`.
+  - `Automation.Wrappers.WrapperFactory`: `.ctor()`, `Instance`, `AutomationToWrapper`, `WrapperToAutomation`. Hand-written in `Mirrored/Wrappers.WrapperFactory.cs`.
+  - Interface declarations (abstract without bodies): `IScalarValueProxy`, `IStringValueProxy`, `IFunctionValueProxy`, `ISymbolicValueProxy`, `IFunctionValue`, `INumericValuePrivate`, `IMatrixValuePrivate`, `IValuePrivate`, `IValue`, `IStringValue`, `INumericValue`, `IMatrixValue`, `IMathcadComponent`, `IMathcadComponent2`, `IMcxComponent`, `IPersist`, `IVSPersistStream`. Hand-written in `Mirrored/AutomationInterfaces.cs`.
+- Stubs removed: `Generated/Mirror/` matching the 22 types above.
+- Release IL report: `python tools/validation/release_il.py --base main --project Quire.Automation.Native` — PASS, 133 checked (was 49 on base, +84 exact), 0 failures. Report: `.mirror-cache/release-il-6341a47271d8/release-il.json`.
+- Remaining: 362 unfinished members reported by the gate. `Mathcad.Automation.UnitPower` is absent from `automationmgd.dll`'s type list.
+
 ## Batch 1 — Value and Proxy types
 
 - Members:
@@ -13,7 +26,7 @@
   - `Mathcad.Automation.FunctionValue`: `.ctor()`, `.ctor(Function, RuntimeOptions)`, `Function`, `Type`, `AsString`, `Arity`, `WriteValueXml`, and `WriteValueRL`. Hand-written in `Mirrored/FunctionValue.cs`.
 - Hand-written: `src/Quire.Automation.Native/Mirrored/{ScalarValueProxy,StringValueProxy,FunctionValueProxy,StringValue,FunctionValue}.cs`.
 - Stubs removed: `Generated/Mirror/Automation.{ScalarValueProxy,StringValueProxy,FunctionValueProxy,StringValue,FunctionValue}.g.cs`.
-- Release IL report: `python tools/validation/release_il.py --base main --project Quire.Automation.Native` — PASS, 49 checked (was 17 on base, +32 exact), 0 failures. Report: `.mirror-cache/release-il-5d20270f7f31/release-il.json`.
+- Release IL report: `python tools/validation/release_il.py --base main --project Quire.Automation.Native` — PASS, 49 checked (was 17 on base, +32 exact), 0 failures. Landed on main: `8aef933af`.
 - Remaining: 445 unfinished members reported by the gate. `Mathcad.Automation.UnitPower` is absent from `automationmgd.dll`'s type list.
 
 ## Prior Batches

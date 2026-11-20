@@ -11,6 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Mathcad.Automation.IStringValueProxy, automationmgd")]
 public partial interface IStringValueProxy : global::Quire.Automation.IValueProxy
 {
-    [global::Quire.Mirror.MirrorStub]
-    string String { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

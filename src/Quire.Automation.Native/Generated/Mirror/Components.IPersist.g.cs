@@ -11,6 +11,4 @@ namespace Quire.Components;
 [global::Quire.Mirror.MirrorOf("Mathcad.Components.IPersist, componentsmgd")]
 public partial interface IPersist
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Guid Clsid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

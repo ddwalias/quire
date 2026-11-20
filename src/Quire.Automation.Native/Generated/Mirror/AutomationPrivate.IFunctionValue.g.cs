@@ -11,6 +11,4 @@ namespace Quire.AutomationPrivate;
 [global::Quire.Mirror.MirrorOf("MathcadAutomationPrivate.IFunctionValue, automationmgd")]
 public partial interface IFunctionValue
 {
-    [global::Quire.Mirror.MirrorStub]
-    int Arity { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

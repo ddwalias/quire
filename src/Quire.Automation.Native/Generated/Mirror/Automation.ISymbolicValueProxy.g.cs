@@ -11,6 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Mathcad.Automation.ISymbolicValueProxy, automationmgd")]
 public partial interface ISymbolicValueProxy : global::Quire.Automation.IValueProxy
 {
-    [global::Quire.Mirror.MirrorStub]
-    object Symbolic { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

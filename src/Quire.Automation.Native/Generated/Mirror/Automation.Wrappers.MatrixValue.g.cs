@@ -11,26 +11,4 @@ namespace Quire.Automation.Wrappers;
 [global::Quire.Mirror.MirrorOf("Automation.Wrappers.MatrixValue, automation")]
 public partial class MatrixValue : global::Quire.IMatrixValue, global::Quire.IValue, global::System.Runtime.Serialization.ISerializable
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Automation.MatrixValue _innerObject;
-    [global::Quire.Mirror.MirrorStub]
-    public string Type { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string AsString { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Cols { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public MatrixValue() { }
-    [global::Quire.Mirror.MirrorStub]
-    internal MatrixValue(global::Quire.Automation.MatrixValue inner) { }
-    [global::Quire.Mirror.MirrorStub]
-    internal MatrixValue(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void GetObjectData(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object GetElement(int row, int col) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetElement(int row, int col, object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,10 +11,4 @@ namespace Quire.Components;
 [global::Quire.Mirror.MirrorOf("Mathcad.Components.IMcxComponent, componentsmgd")]
 public partial interface IMcxComponent
 {
-    [global::Quire.Mirror.MirrorStub]
-    void Initialize(object executive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void McError(bool bSet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object[] Eval(object[] inputs, object reserved) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

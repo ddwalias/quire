@@ -11,6 +11,4 @@ namespace Quire.AutomationPrivate;
 [global::Quire.Mirror.MirrorOf("MathcadAutomationPrivate.INumericValuePrivate, automationmgd")]
 public partial interface INumericValuePrivate
 {
-    [global::Quire.Mirror.MirrorStub]
-    string UnitsXML(bool bSimplify = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

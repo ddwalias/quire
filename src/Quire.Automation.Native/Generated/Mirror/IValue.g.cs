@@ -11,8 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Mathcad.IValue, automationmgd")]
 public partial interface IValue
 {
-    [global::Quire.Mirror.MirrorStub]
-    string Type { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string AsString { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

@@ -11,12 +11,4 @@ namespace Quire.AutomationPrivate;
 [global::Quire.Mirror.MirrorOf("MathcadAutomationPrivate.IValuePrivate, automationmgd")]
 public partial interface IValuePrivate
 {
-    [global::Quire.Mirror.MirrorStub]
-    int Size { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string XML(bool bSimplify = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Save(global::Quire.AutomationPrivate.IStream pstm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Load(global::Quire.AutomationPrivate.IStream pstm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

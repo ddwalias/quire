@@ -11,12 +11,4 @@ namespace Quire.Automation.Wrappers;
 [global::Quire.Mirror.MirrorOf("Automation.Wrappers.WrapperFactory, automation")]
 public partial class WrapperFactory : global::Quire.Automation.ValueFactory
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Automation.Wrappers.WrapperFactory Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override object AutomationToWrapper(object inner) => base.AutomationToWrapper(inner);
-    [global::Quire.Mirror.MirrorStub]
-    public override object WrapperToAutomation(object outer) => base.WrapperToAutomation(outer);
-    [global::Quire.Mirror.MirrorStub]
-    public WrapperFactory() { }
 }

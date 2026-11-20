@@ -11,16 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Mathcad.IMatrixValue, automationmgd")]
 public partial interface IMatrixValue : global::Quire.IValue
 {
-    [global::Quire.Mirror.MirrorStub]
-    string Type { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string AsString { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int Cols { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    object GetElement(int row, int col) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetElement(int row, int col, object val) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

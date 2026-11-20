@@ -11,14 +11,4 @@ namespace Quire.Engine;
 [global::Quire.Mirror.MirrorOf("Engine.IMathcadComponent2, automationmgd")]
 public partial interface IMathcadComponent2
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool LockComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool LockComponent(bool wait) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void UnlockComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetValue(string place, global::Quire.IValue value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.IValue GetValue(string place) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

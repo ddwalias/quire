@@ -11,8 +11,4 @@ namespace Quire.Components;
 [global::Quire.Mirror.MirrorOf("Mathcad.Components.IVSPersistStream, componentsmgd")]
 public partial interface IVSPersistStream
 {
-    [global::Quire.Mirror.MirrorStub]
-    void Load(global::System.Runtime.InteropServices.ComTypes.IStream pstm, bool old) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Save(global::System.Runtime.InteropServices.ComTypes.IStream pstm, bool fClearDirty, bool old) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

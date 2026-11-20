@@ -11,6 +11,4 @@ namespace Quire.Components;
 [global::Quire.Mirror.MirrorOf("Mathcad.Components.HRESULT, componentsmgd")]
 internal static partial class HRESULT
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Runtime.InteropServices.COMException S_FALSE;
 }

@@ -11,6 +11,4 @@ namespace Quire.AutomationPrivate;
 [global::Quire.Mirror.MirrorOf("MathcadAutomationPrivate.IMatrixValuePrivate, automationmgd")]
 public partial interface IMatrixValuePrivate
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsRange { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
