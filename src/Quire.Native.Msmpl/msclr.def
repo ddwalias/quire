@@ -1,0 +1,4 @@
+LIBRARY msclr
+EXPORTS
+    ?GetModuleAttribute@Mpl@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$Substring@$$CBD@@W4module_attribute@1@_N@Z
+    ?GetModuleAttribute@Mpl@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$Substring@$$CB_W@@W4module_attribute@1@_N@Z

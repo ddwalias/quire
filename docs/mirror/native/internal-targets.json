@@ -177,5 +177,17 @@
         "parked": true
       }
     }
+  },
+  "msmpl.dll": {
+    "sha256": "30f5af92d002e4b1e03bd161fa0a176f33e70ab60cfa5a3ef52c861eb42ac976",
+    "targets": {
+      "??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@XZ": {
+        "rva": "0xffc0"
+      },
+      "??3@YAXPEAX_K@Z": {
+        "rva": "0x5e070",
+        "toolchain": true
+      }
+    }
   }
 }

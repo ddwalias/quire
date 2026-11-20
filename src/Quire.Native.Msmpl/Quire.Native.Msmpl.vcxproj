@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <ProjectGuid>{B42F74D2-5D6C-47D2-919C-F543F02AD65D}</ProjectGuid>
+    <RootNamespace>Quire.Native.Msmpl</RootNamespace>
+    <ProjectName>Quire.Native.Msmpl</ProjectName>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(MSBuildThisFileDirectory)..\..\.mirror-cache\bin\</OutDir>
+    <IntDir>$(MSBuildThisFileDirectory)..\..\.mirror-cache\obj\msmpl\</IntDir>
+    <TargetName>Quire.Native.Msmpl</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <PreprocessorDefinitions>_CRTIMP2=__declspec(dllimport);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>Quire.Native.Msmpl.def</ModuleDefinitionFile>
+      <AdditionalDependencies>$(IntDir)msclr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="msmpl.h" />
+    <ClInclude Include="msmpl_substring.h" />
+    <ClCompile Include="msmpl_module.cpp" />
+    <None Include="Quire.Native.Msmpl.def" />
+    <None Include="msclr.def" />
+  </ItemGroup>
+  <!-- Stopgap import library for msclr.dll until Quire.Msclr exports unmanaged symbols directly (D10). -->
+  <Target Name="BuildMsclrImportLibrary" BeforeTargets="Link" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Exec Command="&quot;$(VCToolsInstallDir)bin\HostX64\x64\lib.exe&quot; /nologo /def:&quot;$(MSBuildThisFileDirectory)msclr.def&quot; /machine:x64 /out:&quot;$(IntDir)msclr.lib&quot;" />
+  </Target>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

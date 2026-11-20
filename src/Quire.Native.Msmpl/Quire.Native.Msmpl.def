@@ -1,0 +1,9 @@
+EXPORTS
+    ?GetModuleInterface@Mpl@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$Substring@$$CBD@@@Z
+    ?GetModuleInterface@Mpl@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$Substring@$$CB_W@@@Z
+    ?GetModuleName@Mpl@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$Substring@$$CBD@@@Z
+    ?GetModuleName@Mpl@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$Substring@$$CB_W@@@Z
+    ?GetModuleText@Mpl@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$Substring@$$CBD@@@Z
+    ?GetModuleText@Mpl@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$Substring@$$CB_W@@@Z
+    ?IsModule@Mpl@@YA_NV?$Substring@$$CBD@@@Z
+    ?IsModule@Mpl@@YA_NV?$Substring@$$CB_W@@@Z
