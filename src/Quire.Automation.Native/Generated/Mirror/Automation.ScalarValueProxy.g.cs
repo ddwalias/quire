@@ -11,16 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Mathcad.Automation.ScalarValueProxy, automationmgd")]
 public partial class ScalarValueProxy : global::Quire.Automation.ValueProxy, global::Quire.Automation.IScalarValueProxy, global::Quire.Automation.IValueProxy
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.Mcd.NumVal m_value;
-    [global::Quire.Mirror.MirrorStub]
-    public override object Core { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Automation.IScalarValueProxy AsScalar { get => base.AsScalar; }
-    [global::Quire.Mirror.MirrorStub]
-    public double RealPart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double ImagPart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ScalarValueProxy(global::Quire.Mcd.NumVal v, bool bSimplify, global::Quire.Mcd.RuntimeOptions o) : base(default(bool), default(global::Quire.Mcd.RuntimeOptions)) { }
 }

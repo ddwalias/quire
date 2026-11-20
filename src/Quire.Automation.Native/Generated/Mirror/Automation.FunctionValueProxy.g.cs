@@ -11,14 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Mathcad.Automation.FunctionValueProxy, automationmgd")]
 public partial class FunctionValueProxy : global::Quire.Automation.ValueProxy, global::Quire.Automation.IFunctionValueProxy, global::Quire.Automation.IValueProxy
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.Mpl.Run.Function m_value;
-    [global::Quire.Mirror.MirrorStub]
-    public override object Core { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Automation.IFunctionValueProxy AsFunction { get => base.AsFunction; }
-    [global::Quire.Mirror.MirrorStub]
-    public string FunctionInfo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public FunctionValueProxy(global::Quire.Mpl.Run.Function v, bool bSimplify, global::Quire.Mcd.RuntimeOptions o) : base(default(bool), default(global::Quire.Mcd.RuntimeOptions)) { }
 }

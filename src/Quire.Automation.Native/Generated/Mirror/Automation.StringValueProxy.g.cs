@@ -11,16 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Mathcad.Automation.StringValueProxy, automationmgd")]
 public partial class StringValueProxy : global::Quire.Automation.ValueProxy, global::Quire.Automation.IStringValueProxy, global::Quire.Automation.IValueProxy
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected object m_value;
-    [global::Quire.Mirror.MirrorStub]
-    public override object Core { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Automation.IStringValueProxy AsString { get => base.AsString; }
-    [global::Quire.Mirror.MirrorStub]
-    public string String { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public StringValueProxy(global::Quire.Mcd.StrVal v, bool bSimplify, global::Quire.Mcd.RuntimeOptions o) : base(default(bool), default(global::Quire.Mcd.RuntimeOptions)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public StringValueProxy(string v, bool bSimplify, global::Quire.Mcd.RuntimeOptions o) : base(default(bool), default(global::Quire.Mcd.RuntimeOptions)) { }
 }
