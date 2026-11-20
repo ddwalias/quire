@@ -48,8 +48,16 @@
       "?ReadRegistryFlag@?A0x377d720e@utl@@YA_NPEB_W@Z": {
         "rva": "0x88e0"
       },
+      "?enabled@?1??IsLoggingEnabled@utl@@YA_NXZ@4_NA": {
+        "rva": "0x22862",
+        "size": 1
+      },
       "?enabled@?1??IsTimingEnabled@utl@@YA_NXZ@4_NA": {
         "rva": "0x229d1",
+        "size": 1
+      },
+      "?initialized@?1??IsLoggingEnabled@utl@@YA_NXZ@4_NA": {
+        "rva": "0x22863",
         "size": 1
       },
       "?initialized@?1??IsTimingEnabled@utl@@YA_NXZ@4_NA": {

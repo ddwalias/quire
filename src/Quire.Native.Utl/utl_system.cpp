@@ -15,15 +15,9 @@ int GetNumberOfProcessors() {
     return info.dwNumberOfProcessors;
 }
 
-// Returns true only when both calls fail: the original's branches return true at the end of the fall-through path.
 bool BoostThreadPriority() {
-    if (SetPriorityClass(GetCurrentProcess(), REALTIME_PRIORITY_CLASS)) {
-        return false;
-    }
-    if (!SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL)) {
-        return true;
-    }
-    return false;
+    return !SetPriorityClass(GetCurrentProcess(), REALTIME_PRIORITY_CLASS) &&
+           !SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL);
 }
 
 }  // namespace utl

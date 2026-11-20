@@ -23,8 +23,8 @@
 | `PerformanceTimer`: `Pause`, `Resume`, `Reset`, `GetCount` (batch 4) | 4 | 4/4 OK, 0 unverified | `utl_timer.cpp`. Layout inferred from bodies; field names beyond `started`/`frequency`/`count`/`lock`/`depth` are guesses (`anchor`, `anchor_copy`, `current`, `total`). |
 | `PerformanceTimer` constructor, `Start` (batch 4) | 2 | **not matching**: lengths 85 vs 94 and 90 vs 98 | The original has a `mov [rsp+8],rcx` spill of `this` and `nop`s after the `CRITICAL_SECTION` calls. The source shape producing these is not identified. `/EHa` was built and tested and changes nothing (see below), so the project stays on `/EHsc`. |
 | `PerformanceTimer::GetLast`, `GetElapsed`, `GetAverage` (batch 6) | 3 | 3/3 OK, 0 unverified; the `1000.0` constant is verified through the manifest | `utl_timer.cpp`. Reads `current`, `total`, `count` and `frequency`. |
-| `BoostThreadPriority` (batch 6, `utl_system.cpp`) | 1 | **not matching**: 65 bytes, original 66 | The original keeps the second call as a branch with `mov al,1` on the success path. Our forms fold it into `sete`. Only the original's shape remains to find. The branch logic as written returns true only when both calls return zero. |
-| `IsLoggingEnabled` (batch 5, `utl_logging.cpp`) | 1 | **not counted**: bytes match, `--strict` fails on the two zero-filled flags (limitation 1) | Reads `HKCU`, then `HKLM` (`ReadRegistryFlag`, an anonymous-namespace helper kept out of line). The helper and its three strings are recorded in `docs/mirror/native/internal-targets.json` and verified through it. |
+| `BoostThreadPriority` (batch 6, `utl_system.cpp`) | 1 | 1/1 OK, 0 unverified | Short-circuit AND `!SetPriorityClass(...) && !SetThreadPriority(...)` matches original's 66 bytes exactly. |
+| `IsLoggingEnabled` (batch 5, `utl_logging.cpp`) | 1 | 1/1 OK, 0 unverified | Zero-filled statics `enabled` (0x22862) and `initialized` (0x22863) recorded in internal-targets.json. |
 | `toBSTR` (batch 3, `utl_string.cpp`) | 1 | **not counted**: bytes identical, strict fails on the ordinal import `#4` (limitation 3) | Two-pass `MultiByteToWideChar` plus `SysAllocStringLen`. The reason text shows only the import-name mismatch, with no byte difference. |
 
 Totals: **21 functions OK, 0 unverified** under `--strict`; 2 `PerformanceTimer` functions not matching. Command:
@@ -52,13 +52,14 @@ MSBuild, Release|x64, toolset v145, MSVC 14.51.36231. `/O2 /Gy /GS /EHsc /MD /st
 | Consumer | `utl.dll` imports | Status |
 |---|---|---|
 | `Quire.Native.Mcaduser` | `IsInterrupted` | **Done** (batch 2, strict OK). Its only `utl` import is present. |
-| `Quire.Native.EfisymbolicsUmgd` | 10 exports (see below) | **Blocked.** Byte-identical but not strict-passing: `IsLoggingEnabled` (zero-filled flags, limitation 1) and `toBSTR` (ordinal import, limitation 3). Not implemented: 8. Three of those reference zero-filled data (`SafeTerminateProcess`, `SafeTerminateOnExit`, and `IsLoggingEnabled`). The rest use large STL code (`GetAppRelativeFS`, `GetDirectoryName`, `Win32ErrorText`, `mcGetEnvironmentVariable`) or the post-call `nop` shape (`getInstanceDirW`). |
+| `Quire.Native.EfisymbolicsUmgd` | 10 exports (see below) | **In progress.** Strict-passing: `IsLoggingEnabled` (zero-filled statics recorded in internal-targets.json) and `toBSTR`. Not implemented: 8. Two of those reference zero-filled data (`SafeTerminateProcess`, `SafeTerminateOnExit`). The rest use large STL code (`GetAppRelativeFS`, `GetDirectoryName`, `Win32ErrorText`, `mcGetEnvironmentVariable`) or the post-call `nop` shape (`getInstanceDirW`). |
 
 `EfisymbolicsUmgd` imports: `getInstanceDirW`, `SafeTerminateProcess`, `mcGetEnvironmentVariable` (wide), `SafeTerminateOnExit`, `Log` (char), `IsLoggingEnabled`, `GetDirectoryName`, `GetAppRelativeFS` (wide), `Win32ErrorText`, `toBSTR`.
 
 ## Remaining work
 
-- 74 exports missing from export parity. Written but not counted: `IsLoggingEnabled`, `toBSTR`, the `PerformanceTimer` constructor, and `Start`.
+- 56 exports missing from export parity.
+- **Completed in this batch:** `BoostThreadPriority` (short-circuit `&&` matches 66 bytes exactly) and `IsLoggingEnabled` (statics recorded in `internal-targets.json`). All 62 defined functions pass strict byte validation with 0 unfinished.
 - **Open:** the constructor and `Start`. Our build is 9 and 8 bytes shorter. The original has a `this` spill and `nop`s after `CRITICAL_SECTION` calls that our build lacks. `/EHa` (built and validated, all 21 functions unchanged) does not produce them, so the cause is a source shape not yet found. Not guessed.
 - Then the non-consumer groups: `TimeIt`, `WordData`, `WordChoice` (`BestGuess*`, `GetSuggestions`, `GetScore`), `with_purecall_handler` (ctor/dtor), `mcGetSetting`, timers, logging, paths, and the `std::` string/stream exports.
 - Static initialisers (`s_tls_init`, the TLS index allocation) are not yet implemented. The DLL will not set `s_tls_index` until they are.
