@@ -3,6 +3,19 @@
 - Owner: Automation.Native lane; branch `feature/automation-native-agy`.
 - Target: `src/Quire.Automation.Native` (C# net10.0-windows, hosting `automationmgd.dll` and `componentsmgd.dll`).
 
+## Batch 3 — NumericValue, Utilities, BitStream, Efi, UnitPower, and Interfaces
+
+- Members:
+  - `Mathcad.Automation.NumericValue`: `.ctor()`, `.ctor(NumVal)`, `.ctor(NumVal, RuntimeOptions)`, `.ctor(int)`, `.ctor(double)`, `.ctor(double, double)`, `Number`, `Size`, `Imag` (get/set), `Real` (get/set), `Integer` (get/set), `Type`, `AsString`, `FormatDoubleLegacy`, `WriteValueXml`, `WriteValueRL`, and `UnitsXML`. Hand-written in `Mirrored/NumericValue.cs`.
+  - `Mathcad.Components.Utilities`: `Unwrap`, `Release`, `ReleaseAll`, `SetProperty`, `GetProperty`, `SendMessage`, `ProgIDFromCLSID`, `GetUnits`, `ScaleToSI`, `ScaleFromSI`, `CALLBACK_INFO` (.ctor, hwnd, handle), `CALLBACK_MSG` (.ctor, msg, handle). Hand-written in `Mirrored/Utilities.cs`.
+  - `Mathcad.Components.BitStream`: `.ctor(IStream)`, `SerializeException`, `stream`, `ReadSome`, `WriteSome`, `WriteStringLength`, `ReadStringLength`, `ReadDouble`, `WriteDouble`, `ReadUInt`, `WriteUInt`, `BytesToString`, `StringToBytes`, `ReadString`, `WriteString`, `.cctor`. Hand-written in `Mirrored/BitStream.cs`.
+  - `Mathcad.Components.Efi`: `SendMessage`, `EvalComponent`. Hand-written in `Mirrored/Efi.cs`.
+  - `Mathcad.Automation.UnitPower`: `.ctor(string, Rational)`, `Name`, `Power`. Hand-written in `Mirrored/UnitPower.cs`.
+  - Interface declarations: `IAutomationValue`, `IMatrixValueDataAccessor`, `IMatrixValueProxy`, `IValueProxy`, `IValueFactory`, `IOleClientSite`, `IOleObject`, `IPersistStream`. Hand-written in `Mirrored/AutomationInterfaces.cs`.
+- Stubs removed: `Generated/Mirror/` matching the 13 types above.
+- Release IL report: `python tools/validation/release_il.py --base main --project Quire.Automation.Native` — PASS, 212 checked (was 133 on base, +79 exact), 0 failures. Report: `.mirror-cache/release-il-1b27de507e0b/release-il.json`.
+- Remaining: 234 unfinished stubs reported by the gate.
+
 ## Batch 2 — Wrappers, HRESULT, and Interface declarations
 
 - Members:

@@ -11,46 +11,4 @@ namespace Quire.Components;
 [global::Quire.Mirror.MirrorOf("Mathcad.Components.IOleObject, componentsmgd")]
 public partial interface IOleObject
 {
-    [global::Quire.Mirror.MirrorStub]
-    void SetClientSite(global::Quire.Components.IOleClientSite pClientSite) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void GetClientSite(ref global::Quire.Components.IOleClientSite ppClientSite) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetHostNames(object szContainerApp, object szContainerObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Close(uint dwSaveOption) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetMoniker(uint dwWhichMoniker, object pmk) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void GetMoniker(uint dwAssign, uint dwWhichMoniker, object ppmk) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void InitFromData(global::Quire.VSINTERFACESLib.IDataObject pDataObject, bool fCreation, uint dwReserved) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void GetClipboardData(uint dwReserved, ref global::Quire.VSINTERFACESLib.IDataObject ppDataObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void DoVerb(uint iVerb, uint lpmsg, object pActiveSite, uint lindex, uint hwndParent, uint lprcPosRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void EnumVerbs(ref object ppEnumOleVerb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Update() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void IsUpToDate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void GetUserClassID(out global::System.Guid pClsid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void GetUserType(uint dwFormOfType, uint pszUserType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetExtent(uint dwDrawAspect, uint psizel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void GetExtent(uint dwDrawAspect, uint psizel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Advise(object pAdvSink, uint pdwConnection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Unadvise(uint dwConnection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void EnumAdvise(ref object ppenumAdvise) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void GetMiscStatus(uint dwAspect, uint pdwStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetColorScheme(object pLogpal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

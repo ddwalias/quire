@@ -11,16 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Mathcad.Automation.IMatrixValueDataAccessor, automationmgd")]
 public partial interface IMatrixValueDataAccessor
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.List<global::Quire.Automation.PlainDataTypes> GetRowsPlainDataTypes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int GetFirstNonPlainDataRowIndex() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.List<global::System.Collections.IList> GetRowsPlainDataValues(int startIndex, int endIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.List<global::Quire.Automation.PlainDataTypes> GetColumnsPlainDataTypes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int GetFirstNonPlainDataColumnIndex() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.List<global::System.Collections.IList> GetColumnsPlainDataValues(int startIndex, int endIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

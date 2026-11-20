@@ -11,34 +11,4 @@ namespace Quire.Components;
 [global::Quire.Mirror.MirrorOf("Mathcad.Components.BitStream, componentsmgd")]
 internal partial class BitStream
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Runtime.InteropServices.ComTypes.IStream stream;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Exception SerializeException;
-    [global::Quire.Mirror.MirrorStub]
-    public byte[] ReadSome(int cb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteSome(byte[] buf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteStringLength(uint nLength) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private uint ReadStringLength() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public BitStream(global::System.Runtime.InteropServices.ComTypes.IStream stm) { }
-    [global::Quire.Mirror.MirrorStub]
-    public double ReadDouble() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteDouble(double val) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public uint ReadUInt() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteUInt(uint val) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string BytesToString(byte[] buf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public byte[] StringToBytes(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string ReadString(bool oldStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteString(string val, bool oldStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

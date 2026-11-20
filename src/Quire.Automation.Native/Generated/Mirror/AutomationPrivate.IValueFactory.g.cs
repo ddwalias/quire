@@ -11,20 +11,4 @@ namespace Quire.AutomationPrivate;
 [global::Quire.Mirror.MirrorOf("MathcadAutomationPrivate.IValueFactory, automationmgd")]
 public partial interface IValueFactory
 {
-    [global::Quire.Mirror.MirrorStub]
-    object EngineToAutomation(object engVal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object VariantToAutomation(object real, object imag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object WrapperToAutomation(object wrapVal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object VSDataToAutomation(object vsVal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object AutomationToEngine(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AutomationToVariant(object o, out object pReal, out object pImag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object AutomationToWrapper(object wrapVal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object AutomationToVSData(object vsVal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

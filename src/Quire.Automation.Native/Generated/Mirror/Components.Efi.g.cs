@@ -11,8 +11,4 @@ namespace Quire.Components;
 [global::Quire.Mirror.MirrorOf("Mathcad.Components.Efi, componentsmgd")]
 public static partial class Efi
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static object SendMessage(int info, int msg, object[] inputs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object EvalComponent(string cwd, int origin, int comp, object[] inputs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

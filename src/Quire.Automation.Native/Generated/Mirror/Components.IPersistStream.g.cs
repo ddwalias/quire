@@ -11,14 +11,4 @@ namespace Quire.Components;
 [global::Quire.Mirror.MirrorOf("Mathcad.Components.IPersistStream, componentsmgd")]
 public partial interface IPersistStream : global::Quire.Components.IPersist
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Guid Clsid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int IsDirty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    long MaxSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void Load(global::System.Runtime.InteropServices.ComTypes.IStream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Save(global::System.Runtime.InteropServices.ComTypes.IStream stream, bool fClearDirty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

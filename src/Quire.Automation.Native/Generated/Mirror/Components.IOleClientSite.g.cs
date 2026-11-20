@@ -11,16 +11,4 @@ namespace Quire.Components;
 [global::Quire.Mirror.MirrorOf("Mathcad.Components.IOleClientSite, componentsmgd")]
 public partial interface IOleClientSite
 {
-    [global::Quire.Mirror.MirrorStub]
-    void SaveObject() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void GetMoniker(uint dwAssign, uint dwWhichMoniker, ref object ppmk) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void GetContainer(ref object ppContainer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ShowObject() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void OnShowWindow(bool fShow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void RequestNewObjectLayout() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

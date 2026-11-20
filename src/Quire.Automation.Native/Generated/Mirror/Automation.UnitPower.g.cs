@@ -11,10 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Mathcad.Automation.UnitPower, automationmgd")]
 public partial struct UnitPower
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string Name;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Rational Power;
-    [global::Quire.Mirror.MirrorStub]
-    public UnitPower(string name, global::Quire.Mcd.Rational power) { }
 }

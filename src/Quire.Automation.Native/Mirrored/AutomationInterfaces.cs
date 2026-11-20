@@ -20,6 +20,63 @@ namespace Quire.Automation
     {
         object Symbolic { get; }
     }
+
+    public partial interface IAutomationValue : global::Quire.IValue, global::Quire.AutomationPrivate.IValuePrivate
+    {
+        object Core { get; set; }
+        global::Quire.Mcd.Dim Dim { get; }
+        string RL { get; }
+        global::Quire.Automation.IValueProxy Raw { get; }
+        global::Quire.Automation.IValueProxy Simplified { get; }
+        global::Quire.Automation.IValueProxy GetProxy(bool bSimplify);
+    }
+
+    public partial interface IMatrixValueDataAccessor
+    {
+        global::System.Collections.Generic.List<global::Quire.Automation.PlainDataTypes> GetRowsPlainDataTypes();
+        int GetFirstNonPlainDataRowIndex();
+        global::System.Collections.Generic.List<global::System.Collections.IList> GetRowsPlainDataValues(int startIndex, int endIndex);
+        global::System.Collections.Generic.List<global::Quire.Automation.PlainDataTypes> GetColumnsPlainDataTypes();
+        int GetFirstNonPlainDataColumnIndex();
+        global::System.Collections.Generic.List<global::System.Collections.IList> GetColumnsPlainDataValues(int startIndex, int endIndex);
+    }
+
+    public partial interface IMatrixValueProxy : global::Quire.Automation.IValueProxy
+    {
+        uint Rows { get; }
+        uint Cols { get; }
+        bool IsDimless { get; }
+        bool IsRange { get; }
+        bool IsRealMatrix { get; }
+        bool IsRealMatrixMixed { get; }
+        bool IsScalarMatrix { get; }
+        bool IsUniform { get; }
+        bool IsUniformScalar { get; }
+        bool IsVector { get; }
+        global::Quire.Automation.IValueProxy Get(uint row, uint col);
+        global::Quire.Automation.IMatrixValueProxy SubMatrix(uint r1, uint r2, uint c1, uint c2);
+        global::Quire.Automation.IMatrixValueDataAccessor GetPlainData(global::Quire.Automation.PlainDataConversionOptions options);
+    }
+
+    public partial interface IValueProxy
+    {
+        global::Quire.Automation.IScalarValueProxy AsScalar { get; }
+        global::Quire.Automation.IStringValueProxy AsString { get; }
+        global::Quire.Automation.IMatrixValueProxy AsMatrix { get; }
+        global::Quire.Automation.IFunctionValueProxy AsFunction { get; }
+        global::Quire.Automation.ISymbolicValueProxy AsSymbolic { get; }
+        global::Quire.Automation.UnitPower[] Units { get; }
+        bool Simplify { get; }
+        object Core { get; }
+        string Xml { get; }
+        void WriteXml(global::System.IO.TextWriter writer, bool simplify, double scaleFactor);
+        void WriteXml(global::System.IO.TextWriter writer, bool simplify);
+        void WriteXml(global::System.IO.TextWriter writer);
+        void WriteXml(global::System.Xml.XmlWriter xml, bool simplify, double scaleFactor);
+        void WriteXml(global::System.Xml.XmlWriter xml, bool simplify);
+        void WriteXml(global::System.Xml.XmlWriter xml);
+        void WriteUnitsXml(global::System.Xml.XmlWriter xml);
+    }
 }
 
 namespace Quire.AutomationPrivate
@@ -45,6 +102,18 @@ namespace Quire.AutomationPrivate
         string XML(bool bSimplify = false);
         void Save(global::Quire.AutomationPrivate.IStream pstm);
         void Load(global::Quire.AutomationPrivate.IStream pstm);
+    }
+
+    public partial interface IValueFactory
+    {
+        object EngineToAutomation(object engVal);
+        object VariantToAutomation(object real, object imag);
+        object WrapperToAutomation(object wrapVal);
+        object VSDataToAutomation(object vsVal);
+        object AutomationToEngine(object o);
+        void AutomationToVariant(object o, out object pReal, out object pImag);
+        object AutomationToWrapper(object wrapVal);
+        object AutomationToVSData(object vsVal);
     }
 }
 
@@ -124,5 +193,49 @@ namespace Quire.Components
     {
         void Load(global::System.Runtime.InteropServices.ComTypes.IStream pstm, bool old);
         void Save(global::System.Runtime.InteropServices.ComTypes.IStream pstm, bool fClearDirty, bool old);
+    }
+
+    public partial interface IOleClientSite
+    {
+        void SaveObject();
+        void GetMoniker(uint dwAssign, uint dwWhichMoniker, ref object ppmk);
+        void GetContainer(ref object ppContainer);
+        void ShowObject();
+        void OnShowWindow(bool fShow);
+        void RequestNewObjectLayout();
+    }
+
+    public partial interface IOleObject
+    {
+        void SetClientSite(global::Quire.Components.IOleClientSite pClientSite);
+        void GetClientSite(ref global::Quire.Components.IOleClientSite ppClientSite);
+        void SetHostNames(object szContainerApp, object szContainerObj);
+        void Close(uint dwSaveOption);
+        void SetMoniker(uint dwWhichMoniker, object pmk);
+        void GetMoniker(uint dwAssign, uint dwWhichMoniker, object ppmk);
+        void InitFromData(global::Quire.VSINTERFACESLib.IDataObject pDataObject, bool fCreation, uint dwReserved);
+        void GetClipboardData(uint dwReserved, ref global::Quire.VSINTERFACESLib.IDataObject ppDataObject);
+        void DoVerb(uint iVerb, uint lpmsg, object pActiveSite, uint lindex, uint hwndParent, uint lprcPosRect);
+        void EnumVerbs(ref object ppEnumOleVerb);
+        void Update();
+        void IsUpToDate();
+        void GetUserClassID(out global::System.Guid pClsid);
+        void GetUserType(uint dwFormOfType, uint pszUserType);
+        void SetExtent(uint dwDrawAspect, uint psizel);
+        void GetExtent(uint dwDrawAspect, uint psizel);
+        void Advise(object pAdvSink, uint pdwConnection);
+        void Unadvise(uint dwConnection);
+        void EnumAdvise(ref object ppenumAdvise);
+        void GetMiscStatus(uint dwAspect, uint pdwStatus);
+        void SetColorScheme(object pLogpal);
+    }
+
+    public partial interface IPersistStream : global::Quire.Components.IPersist
+    {
+        global::System.Guid Clsid { get; }
+        int IsDirty { get; }
+        long MaxSize { get; }
+        void Load(global::System.Runtime.InteropServices.ComTypes.IStream stream);
+        void Save(global::System.Runtime.InteropServices.ComTypes.IStream stream, bool fClearDirty);
     }
 }
