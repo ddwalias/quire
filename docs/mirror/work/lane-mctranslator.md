@@ -4,6 +4,10 @@
 - Branch: `feature/native-mctranslator-agy`, worktree `C:/Users/DuyDang/orca/workspaces/Quire/mslisp-agy`, from `main`.
 - Gate: `python tools/validation/native_gate.py --base main --project Quire.Native.Mctranslator`.
 
+## Landed Commits
+
+- `24f5f73d9` (Batch 1): Established `src/Quire.Native.Mctranslator/` native project (`Quire.Native.Mctranslator.vcxproj`) and implemented 3 `ModuleEnv` accessor methods matching Mathcad Prime 12.0.1.0's `mctranslator.dll` with 100% byte parity (receipt: `gate-il-efac20022305.json`).
+
 ## Members landed this batch
 
 - Established `src/Quire.Native.Mctranslator/` native C++ dynamic library project (`Quire.Native.Mctranslator.vcxproj`, MSVC `v145`, x64 Release, `/O2 /Oi`, `/EHa`, `/GS-`, `stdcpp17`).
