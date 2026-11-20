@@ -59,6 +59,8 @@ public:
 
     anyval *clone(alloc *allocator, anyval *out) const override;
     anyval *get_tag() const override;
+
+    static anyval *notag();
 };
 
 }  // namespace Unmanaged

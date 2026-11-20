@@ -21,3 +21,7 @@ EXPORTS
     ?clone@untagged@Unmanaged@Engine@@UEBAPEAVanyval@23@PEAValloc@23@PEAV423@@Z
     ?equals@anyval@Unmanaged@Engine@@QEBA_NPEBV123@@Z
     ?write_raw@anyval@Unmanaged@Engine@@UEBAXAEAV?$basic_ostream@DU?$char_traits@D@std@@@std@@@Z
+    ?get_tag@untagged@Unmanaged@Engine@@UEBAPEAVanyval@23@XZ
+    ?notag@untagged@Unmanaged@Engine@@SAPEAVanyval@23@XZ
+    ??_7anyval@Unmanaged@Engine@@6B@ DATA
+    ??_7untagged@Unmanaged@Engine@@6B@ DATA

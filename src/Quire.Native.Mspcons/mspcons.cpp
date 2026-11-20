@@ -83,6 +83,10 @@ anyval *untagged::get_tag() const {
     return reinterpret_cast<anyval *>(notag_object);
 }
 
+anyval *untagged::notag() {
+    return reinterpret_cast<anyval *>(notag_object);
+}
+
 }  // namespace Unmanaged
 }  // namespace Engine
 
