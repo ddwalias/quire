@@ -29,6 +29,7 @@
 | `se_trans_func` (batch 7, `utl_word.cpp`) | 1 | 1/1 OK, 0 unverified | 34 bytes. Throws `se_exception(code)`; ThrowInfo and RTTI internal targets recorded in internal-targets.json. |
 | `RestoreThreadPriority` (batch 7, `utl_system.cpp`) | 1 | 1/1 OK, 0 unverified | 76 bytes. Uses zero-initialized `s_process_priority` and `s_thread_priority` statics recorded in internal-targets.json. |
 | `IsTimingInclusive` (batch 7, `utl_logging.cpp`) | 1 | 1/1 OK, 0 unverified | 55 bytes. String literal `EngineTimingInclusive` and `enabled`/`initialized` statics recorded in internal-targets.json. |
+| `PerformanceTimer::operator=` (batch 8, `utl_timer_copy.cpp`) | 1 | 1/1 OK, 0 unverified | 105 bytes exact. Uses `/Ob2` and dummy outliner in `utl_timer_copy.cpp` to outline `vector<double>::operator=` (386 bytes) with `_Buy_raw`, `_Xlength`, `vector too long` string literal, and parked `_Throw_bad_array_new_length` recorded in internal-targets.json. |
 
 Totals: **21 functions OK, 0 unverified** under `--strict`; 2 `PerformanceTimer` functions not matching. Command:
 `python tools/validation/native_bytes.py --original "<install>/utl.dll" --candidate .mirror-cache/obj/utl/<file>.obj --strict --symbol <name>...`.
@@ -61,8 +62,7 @@ MSBuild, Release|x64, toolset v145, MSVC 14.51.36231. `/O2 /Gy /GS /EHsc /MD /st
 
 ## Remaining work
 
-- 50 exports missing from export parity.
-- **Completed in this batch:** `with_purecall_handler` constructor and destructor (with `s_purecall_lock` static recorded in `internal-targets.json`). All 86 checked functions pass strict byte validation with 0 failures and 0 unfinished.
+- **Completed in this batch:** `PerformanceTimer::operator=` (105 bytes exact, with `vector::operator=`, `_Buy_raw`, `_Xlength`, `vector too long` string literal, and parked `_Throw_bad_array_new_length` internal targets). All 92 checked functions pass strict byte validation with 0 failures, 0 regressions, and 0 unfinished.
 - **Open:** the constructor and `Start`. Our build is 9 and 8 bytes shorter. The original has a `this` spill and `nop`s after `CRITICAL_SECTION` calls that our build lacks. `/EHa` (built and validated, all 21 functions unchanged) does not produce them, so the cause is a source shape not yet found. Not guessed.
 - Then the non-consumer groups: `TimeIt`, `WordData`, `WordChoice` (`BestGuess*`, `GetSuggestions`, `GetScore`), `with_purecall_handler` (ctor/dtor), `mcGetSetting`, timers, logging, paths, and the `std::` string/stream exports.
 - Static initialisers (`s_tls_init`, the TLS index allocation) are not yet implemented. The DLL will not set `s_tls_index` until they are.

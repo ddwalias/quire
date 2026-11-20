@@ -26,9 +26,16 @@
         "rva": "0x11c00",
         "toolchain": true
       },
+      "??4?$vector@NV?$allocator@N@std@@@std@@QEAAAEAV01@AEBV01@@Z": {
+        "rva": "0xf6c0"
+      },
       "??_7type_info@@6B@": {
         "rva": "0x18d68",
         "toolchain": true
+      },
+      "??_C@_0BA@FOIKENOD@vector?5too?5long@": {
+        "rva": "0x193b0",
+        "size": 16
       },
       "??_C@_0O@NKNMEGII@list?5too?5long@": {
         "rva": "0x18e28",
@@ -72,6 +79,16 @@
       },
       "?ReadRegistryFlag@?A0x377d720e@utl@@YA_NPEB_W@Z": {
         "rva": "0x88e0"
+      },
+      "?_Buy_raw@?$vector@NV?$allocator@N@std@@@std@@AEAAX_K@Z": {
+        "rva": "0xfec0"
+      },
+      "?_Throw_bad_array_new_length@std@@YAXXZ": {
+        "rva": "0x8490",
+        "parked": true
+      },
+      "?_Xlength@?$vector@NV?$allocator@N@std@@@std@@CAXXZ": {
+        "rva": "0xc1b0"
       },
       "?enabled@?1??IsLoggingEnabled@utl@@YA_NXZ@4_NA": {
         "rva": "0x22862",

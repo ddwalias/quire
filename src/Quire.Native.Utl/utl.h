@@ -96,6 +96,7 @@ private:
 class PerformanceTimer {
 public:
     PerformanceTimer();
+    PerformanceTimer &operator=(const PerformanceTimer &other);
     ~PerformanceTimer();
     void Start();
     void Stop();

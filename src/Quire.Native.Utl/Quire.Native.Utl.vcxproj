@@ -60,7 +60,12 @@
     <ClCompile Include="utl_timer.cpp">
       <ExceptionHandling>Async</ExceptionHandling>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalOptions>/Ob3 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Ob3 /D"_CRTIMP2=__declspec(dllimport)" %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <ClCompile Include="utl_timer_copy.cpp">
+      <ExceptionHandling>Async</ExceptionHandling>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/Ob2 /D"_CRTIMP2=__declspec(dllimport)" %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ClCompile Include="utl_word.cpp">
       <ExceptionHandling>Async</ExceptionHandling>

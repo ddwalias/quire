@@ -7,6 +7,7 @@ EXPORTS
     ?toBSTR@utl@@YAPEA_WIPEBD_K@Z
     ?IsLoggingEnabled@utl@@YA_NXZ
     ??0PerformanceTimer@utl@@QEAA@XZ
+    ??4PerformanceTimer@utl@@QEAAAEAV01@AEBV01@@Z
     ?Start@PerformanceTimer@utl@@QEAAXXZ
     ?Pause@PerformanceTimer@utl@@QEAAXXZ
     ?Resume@PerformanceTimer@utl@@QEAAXXZ
