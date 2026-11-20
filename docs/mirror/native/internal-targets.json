@@ -160,6 +160,20 @@
       }
     }
   },
+  "mceng.dll": {
+    "sha256": "e08fa2ac6cc513e525f7d4612d16948a19e334398dc14b5a0a6074789f3f52dc",
+    "targets": {},
+    "managed": {
+      "new": {
+        "size": 68,
+        "toolchain": true
+      },
+      "delete[]": {
+        "size": 21,
+        "toolchain": true
+      }
+    }
+  },
   "engutils.dll": {
     "sha256": "90d1a0754271942118cbddf58442cc0c3a8aedd62b767f4021631abb736d3c0c",
     "targets": {
