@@ -206,24 +206,10 @@ public partial class CalculationController
     [global::Quire.Mirror.MirrorOf("Ptc.Calculation.CalculationController+EngineCallbackHandlerNoOP, Ptc.Calculation")]
     private partial class EngineCallbackHandlerNoOP : global::Quire.Calculation.CalculationController.DispatchedEngineCallbackHandler
     {
-        [global::Quire.Mirror.MirrorStub]
-        public EngineCallbackHandlerNoOP(global::Quire.Calculation.Core.ICalculatable calculatable, global::System.Windows.Threading.Dispatcher dispatcher, global::System.Func<global::Quire.Calculation.Core.ICalculatable, bool> isCalcInContext, global::Quire.Calculation.CalculationController.EngineOptions engineOptions) : base(default(global::Quire.Calculation.Core.ICalculatable), default(global::System.Windows.Threading.Dispatcher), default(global::System.Func<global::Quire.Calculation.Core.ICalculatable, bool>), default(global::Quire.Calculation.CalculationController.EngineOptions)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override void SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus computingStatus) => base.SetCalculatingStatus(computingStatus);
-        [global::Quire.Mirror.MirrorStub]
-        public override void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus) => base.SetSynchronizationStatus(syncStatus);
-        [global::Quire.Mirror.MirrorStub]
-        public override void SetResult(int handle, global::Quire.Engine.IEngine engine, global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> handleToICalculatableMap) => base.SetResult(handle, engine, handleToICalculatableMap);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Calculation.CalculationController+HandlersFactory, Ptc.Calculation")]
     private partial class HandlersFactory
     {
-        [global::Quire.Mirror.MirrorStub]
-        public static global::Quire.Calculation.CalculationController.IEngineCallbackHandler CreateEngineCallbackHandler(global::Quire.Calculation.Core.ICalculatable calculatable, global::System.Windows.Threading.Dispatcher dispatcher, global::System.Func<global::Quire.Calculation.Core.ICalculatable, bool> isCalcInContext, global::Quire.Calculation.CalculationController.EngineOptions engineOptions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public static global::Quire.Calculation.IDataExchangeHandler CreateDataExchangeHandler(global::Quire.Calculation.Core.ICalculatableWithDataExchange calculatable, global::System.Windows.Threading.Dispatcher dispatcher, global::System.Action handleEngineNeedsUIThreadMessagesProcessed, ref global::Quire.Calculation.CalculationController.EngineOptions engineOptions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public HandlersFactory() { }
     }
 }
