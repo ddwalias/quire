@@ -6,7 +6,7 @@
 
 ## Landed Commits
 
-- Pending Batch 1: Established original-language C++/CLI project split for `Quire.Mccore12` (`Quire.Mccore12.csproj` and `MixedMode/Quire.Mccore12.vcxproj`); mirrored `msclr._detail_class`, `msclr.lock`, and `Engine.DetectAlgos`.
+- `3c8d54e9a` (Batch 1): Established original-language C++/CLI project split for `Quire.Mccore12` (`Quire.Mccore12.csproj` and `MixedMode/Quire.Mccore12.vcxproj`); mirrored `msclr._detail_class`, `msclr.lock`, and `Engine.DetectAlgos`.
 
 ## Release IL Report & Gates
 
