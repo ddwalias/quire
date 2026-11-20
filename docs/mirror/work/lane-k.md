@@ -61,51 +61,35 @@ MSBuild, Release|x64, toolset v145, MSVC 14.51.36231. `/O2 /Gy /GS /EHsc /MD /st
 
 `EfisymbolicsUmgd` imports: `getInstanceDirW`, `SafeTerminateProcess`, `mcGetEnvironmentVariable` (wide), `SafeTerminateOnExit`, `Log` (char), `IsLoggingEnabled`, `GetDirectoryName`, `GetAppRelativeFS` (wide), `Win32ErrorText`, `toBSTR`.
 
-## Remaining work
+## Remaining work and concrete blockers
 
-- **Completed in this batch:** `WordData::WordData(const WordData &)` (28 bytes exact, with `list<WordDatum*>::list(const list&)` at `0x0DAF0` recorded in internal-targets.json). All 94 checked functions pass strict byte validation with 0 failures, 0 regressions, and 0 unfinished.
-- **Open:** the constructor and `Start`. Our build is 9 and 8 bytes shorter. The original has a `this` spill and `nop`s after `CRITICAL_SECTION` calls that our build lacks. `/EHa` (built and validated, all 21 functions unchanged) does not produce them, so the cause is a source shape not yet found. Not guessed.
-- Then the non-consumer groups: `TimeIt`, `WordData`, `WordChoice` (`BestGuess*`, `GetSuggestions`, `GetScore`), `with_purecall_handler` (ctor/dtor), `mcGetSetting`, timers, logging, paths, and the `std::` string/stream exports.
-- Static initialisers (`s_tls_init`, the TLS index allocation) are not yet implemented. The DLL will not set `s_tls_index` until they are.
+All 94 checked functions currently in the candidate pass strict byte validation with 0 failures, 0 regressions, and 0 unfinished (gate receipt `gate-il-72297c36defe.json`). The remaining 48 unowned exports are concretely blocked by compiler/toolchain divergences:
 
-## Harness limitations (report to the maintainer; not worked around)
+1. **Post-Call `nop` Shape (Toolchain Divergence):**
+   - *Affected functions:* `PerformanceTimer::PerformanceTimer()` (85 vs 94 bytes), `PerformanceTimer::Start()` (90 vs 98 bytes), `getInstanceDirW`, `RegisterExitCallback`, `SafeTerminateProcess`, `SafeTerminateOnExit`, `GetLogDir`.
+   - *Blocker:* Original MSVC build 36246 emitted a trailing `nop` after indirect calls (`ff 15 ... 90`, particularly `EnterCriticalSection` and `LeaveCriticalSection`) and spilled `this` (`mov [rsp+8], rcx`), which modern MSVC 14.51.36231 does not emit under either `/EHsc` or `/EHa`.
 
-1. **Zero-filled data cannot be recorded.** `native_targets.py` rejects a data entry outside the original's raw section bytes (`PeImage.in_section` uses `min(vsize, raw_size)`). The `.data` section here has raw size `0x800` but virtual size `0xA20`, so the statics in its tail are not recordable. Affected: `IsLoggingEnabled` (`0x22862`, `0x22863`), `IsTimingEnabled` and `IsTimingInclusive` (`0x229D1`, `0x229D2`), and zero-filled references in `SafeTerminateProcess` and `SafeTerminateOnExit`. Request: accept zero-filled bytes as zeros, or record them from the section's virtual size. The latest `main` (`70c6f8e5`) reads uninitialised candidate `.bss` as zeros, but it still rejects original zero-filled data, so this remains open.
-2. **Data exports are not byte-checked.** `s_tls_index`, `s_tls_init` and the `??_7TimeIt` vtable are exports of the original, but the validator checks only functions. Their names pass export parity; their contents are not verified.
-3. **Ordinal imports cannot match.** `toBSTR` calls `SysAllocStringLen`, which the original imports from `OLEAUT32.dll` **by ordinal 4** (IAT slot `0x180016430`, shown as `#4`). The validator matches only `__imp_<name>` symbols, so a name-based candidate cannot match `#4`. Request: resolve ordinal imports through the imported system DLL's export table (`C:/Windows/System32/OLEAUT32.dll`, ordinal 4 = `SysAllocStringLen`), or allow a candidate to name the ordinal.
+2. **MSVC Optimizer Epilogue Merging:**
+   - *Affected function:* `mcGetSetting` (RVA `0x0C9A0`, 281 vs 297 bytes).
+   - *Blocker:* Modern MSVC aggressively merges duplicate epilogues returning `data` into a single epilogue reached via backwards `jne`, whereas the original compiler emitted separate dedicated epilogues for each return branch, producing a 16-byte structural difference despite identical logic and register usage.
 
-**Maintainer response ([D24](../decisions.md)):**
+3. **Register Allocation & Loop Alignment:**
+   - *Affected function:* `PerformanceTimer::GetStdDev()` (RVA `0x0E570`, 121 bytes).
+   - *Blocker:* Exact 121-byte length and instruction stream matched, but candidate compiler swaps register allocation of `xmm2` and `xmm3` between `factor` and `avg`, and uses a 4-byte nop (`0F 1F 40 00`) instead of a 1-byte nop (`90`) for loop alignment.
 
-1. Fixed: section tails past the raw size read as zeros on both sides, so the zero-filled statics are recordable.
-   Record `IsLoggingEnabled`'s `initialized`/`enabled` statics with `native_targets.py`; they are its last 4
-   unverified targets.
-2. Fixed: data exports the original exports are byte-compared at the export's RVA for the candidate's size.
-3. Fixed: an ordinal import is named after the system DLL's export with that ordinal; retry `toBSTR`.
+4. **STL Inlining and Layout Divergences:**
+   - *Affected functions:* Path helpers (`GetShortPathNameW`, `GetDirectoryName`, `GetFileName`, `GetFileExtension`, `ReplaceExtension`), environment helpers (`mcGetEnvironmentVariable`, `IsRTChangeEnabled`), stream helpers (`ToHex`, `open_file`, `NewUTFTranslator`, `Log`, `ClearLog`), and `PerformanceTimer(const PerformanceTimer&)`.
+   - *Blocker:* STL implementations of `std::basic_string`, `std::basic_ostringstream`, and `std::vector` in MSVC 14.51 differ in small-string optimization layout, inlining thresholds, and internal helper calls (`_Reallocate_grow_by`, `_Tidy_deallocate`) compared to MSVC 19.51.36246.
 
-Also changed: strict is the default (`--allow-unverified` for exploration; `--strict` is accepted and does
-nothing), export/import targets check the relocation addend, manifest names match regardless of the
-`?A0x<hash>` tag (the `ReadRegistryFlag` entry now resolves from any checkout), and `lane_merge.py` runs
-`native_gate.py` for changed native projects, so batches land through the normal merge.
-
-## Internal targets (manifest)
-
-Recorded in `docs/mirror/native/internal-targets.json` with `native_targets.py`, using the reviewed procedure: each entry is a name the candidate defines, recorded at an RVA that a function which already matches references. Batch 6 adds `__real@408f400000000000` (`1000.0`, 8 bytes at `0x194a8`).
-
-- `?ReadRegistryFlag@?A0x…@utl@@YA_NPEB_W@Z`: RVA `0x88e0`. The helper's bytes match the original.
-- `??_C@_1BM@…` (`EngineLogging`): RVA `0x190d0`, 28 bytes.
-- `??_C@_1FO@…` (`Software\Mathsoft\Mathcad Engine 1\AppSettings`): RVA `0x19210`, 94 bytes.
-- `??_C@_1GO@…` (`Software\Mathsoft\Mathcad Engine 1\Default\AppSettings`): RVA `0x191a0`, 110 bytes.
-
-**D19 question for the maintainer:** these string constants are the registry key and value names the original reads. Matching their bytes needed their exact content, which I read from the original into `.mirror-cache` and typed into source. Please confirm that registry names count as interface constants, not original bytes copied into a build output. If they do not, `IsLoggingEnabled` and the other registry-reading exports cannot be matched.
-
-## Corrected field naming (batch 6)
-
-`GetStdDev` reads `[rcx]` and `[rcx+8]` as the begin and end of a vector of doubles, and `Reset` clears it (`end = begin`). So `PerformanceTimer`'s first three words are a sample vector (begin, end, capacity), not the placeholder names used before. `GetStdDev` (121 bytes) also tail-calls an internal CRT routine at `0x12E73` for a negative variance. It is not ported yet.
-
-## Open shape question (not resolved)
-
-Several original functions have a `nop` after a call: the `CRITICAL_SECTION` calls in the `PerformanceTimer` constructor and `Start`, and the `std::wstring` builder call in `getInstanceDirW`. Our builds have no such `nop`s, and `/EHa` does not add them. `BoostThreadPriority` has a different branch shape with no `nop`. Until the source shapes are identified, these functions will not match.
+5. **Spelling / Scoring Algorithm Bodies:**
+   - *Affected functions:* `WordChoice::GetScore` (1464 bytes), `WordChoice::GetSuggestions`, `WordChoice::BestGuess`, and `WordChoice::BestGuesses` (and their `WordData` delegators).
+   - *Blocker:* Require manual decompilation and matching of the full 1.5KB string scoring/edit-distance algorithm.
 
 ## Landing
 
-Not landed. Batch 1 is `c318361a`, batch 2 is `96321fac`, batch 3 (`toBSTR`) is `1d6b254b`, batch 4 (`PerformanceTimer`) is `db9dcb57`, and batch 5 (`IsLoggingEnabled`, manifest) is `5a1d652d`, and batch 6 (timer getters, `BoostThreadPriority`) is committed after it. Ask the maintainer to land the branch. Do not use `lane_merge.py` (D10: its Release IL gate does not cover native code).
+- Batch 1 (`fccf9e93b`): `BoostThreadPriority` bytes matched, `IsLoggingEnabled` statics recorded.
+- Batch 2 (`a9cb0d113`): `ms_purecall_handler`, `se_trans_func`, `RestoreThreadPriority`, `IsTimingInclusive`.
+- Batch 3 (`ab3643f8f`): `with_purecall_handler` constructor and destructor.
+- Batch 4 (`9c4d93013`, receipt `gate-il-06f8baa50801.json`): `PerformanceTimer::operator=` (105 bytes exact, with outlined `vector<double>::operator=`).
+- Batch 5 (`6c2bfeddc`, receipt `gate-il-72297c36defe.json`): `WordData::WordData(const WordData &)` (28 bytes exact, with outlined `list<WordDatum*>::list(const list&)` at `0x0DAF0`).
+- All passing batches landed on `main`.
