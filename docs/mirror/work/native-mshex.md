@@ -2,6 +2,7 @@
 
 - Owner: AGY, Orca task `task_b966c70bda3b`, dispatch `ctx_8f50f58f4210`.
 - Branch: `feature/mshex-agy`, from `main`.
+- Landed Commit: `0a87c74c4` (main merge receipt: `gate-il-c9103dc990ad.json`).
 - Gate: `python tools/validation/native_gate.py --base main --project Quire.Native.Mshex`.
 
 ## Members landed this batch
@@ -9,7 +10,7 @@
 - `Hex::Tag`: default constructor closure (`??_FTag@Hex@@QEAAXXZ`) exported and matched exactly by providing default argument values on the constructor.
 - `Hex::operator==(const Signature&, const Signature&)` (`??8Hex@@YA_NAEBVSignature@0@0@Z`): exported and matched byte-for-byte (standard `std::string::operator==` / `memcmp`).
 - `Hex::operator<(const Signature&, const Signature&)` (`??MHex@@YA_NAEBVSignature@0@0@Z`): exported and matched byte-for-byte (standard `std::string::operator<` / `memcmp`).
-- Gate: PASS, 113 checked (was 110 on `main`), 0 failures, 0 regressions, 0 unfinished among checked.
+- Gate: PASS, 113 checked (was 110 on `main`), 0 failures, 0 regressions, 0 unfinished among checked. Landed via `lane_merge.py` (`gate-il-c9103dc990ad.json`).
 
 ## Status against the original
 
