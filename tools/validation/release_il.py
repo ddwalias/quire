@@ -489,6 +489,7 @@ def compare_native(original, candidate, original_rva, rva):
     is an import thunk (`jmp [slot]`) matches a thunk of the same imported name. Any other body pairs instruction by
     instruction, and each address is checked by what it refers to. An unverified target is not a match."""
     from native_linked import Comparison
+    from native_bytes import load_targets
     imported = Comparison.imported(original.linked, original_rva), Comparison.imported(candidate.linked, rva)
     if any(imported):
         same = imported[0] == imported[1]
@@ -496,7 +497,10 @@ def compare_native(original, candidate, original_rva, rva):
     extents = original.extent(original_rva), candidate.extent(rva)
     if None in extents:
         return False, f"the {'original' if extents[0] is None else 'candidate'} body does not start a function"
-    status, reason, _ = Comparison(original.linked, candidate.linked, {}).instructions(*extents)
+    # Sized data entries retain byte comparison and avoid inferring an extent from unrelated adjacent data.
+    entries = load_targets(TOOLCHAIN_MANIFEST, original.linked.image) if TOOLCHAIN_MANIFEST.is_file() else {}
+    entries = {name: entry for name, entry in entries.items() if entry.size is not None and not entry.parked}
+    status, reason, _ = Comparison(original.linked, candidate.linked, entries).instructions(*extents)
     return status == 'ok', reason or 'instructions and targets match'
 
 
@@ -845,7 +849,7 @@ def shared_cache(root=ROOT):
 
 
 CACHE = shared_cache() / 'inventory-cache'
-CACHE_FORMAT = 5
+CACHE_FORMAT = 6
 # A run's directory is older than this only if its run was killed: every step is bounded by --timeout.
 STALE_WORK = 12 * 3600
 PURGE = '''import os, shutil, stat, sys
@@ -1000,9 +1004,8 @@ def slice_keys(root, commit, judge, projects, install):
     MethodAudit derives a project's rows from its assembly and those it references (its ProjectReference closure), the
     type map, the src directory names and the install, so the key is their content, not the commit or the other projects:
     a lane's base hits on rows another lane stored for other projects. One exception is keyed: which mixed-mode (C++/CLI)
-    closure members were scanned with it. A reference the build only references is built in Debug (a solution build
-    unsets the configuration of projects outside the solution), where a mixed-mode project builds its IL-only C# stand-in
-    instead of the mixed DLL, and MethodAudit binds an audited mixed-mode assembly's C++ types by name. This file is
+    closure members were scanned with it. A solution build keeps the requested Release configuration for references,
+    and MethodAudit binds an audited mixed-mode assembly's C++ types by name. This file is
     keyed as the gate's build recipe. A project gets no key (None) when its closure names a directory the commit lacks or
     a closure member's build files read a file outside their directory other than through ProjectReference."""
     src = [line.split(None, 3) for line in git('ls-tree', commit, 'src/', cwd=root).splitlines()]
@@ -1011,7 +1014,8 @@ def slice_keys(root, commit, judge, projects, install):
     dlls = sorted((str(p.relative_to(install)), s.st_size, s.st_mtime_ns) for p in install.rglob('*.dll') for s in [p.stat()])
     # The native comparison's rules decide the native_* fields of the stored rows.
     recipe = [hashlib.sha256(p.read_bytes()).hexdigest() for p in (Path(__file__), *NATIVE_RULES)]
-    common = [CACHE_FORMAT, recipe, judge, root_files(root, commit),
+    manifest = hashlib.sha256(TOOLCHAIN_MANIFEST.read_bytes()).hexdigest() if TOOLCHAIN_MANIFEST.is_file() else None
+    common = [CACHE_FORMAT, recipe, manifest, judge, root_files(root, commit),
               [path if kind == 'tree' else f'{path} {sha}' for _, kind, sha, path in src],
               git('rev-parse', f'{commit}:{TYPE_MAP}', cwd=root),
               git('ls-tree', commit, '--', GENERATED_ASSEMBLIES, cwd=root),  # MethodAudit binds registered projects by it

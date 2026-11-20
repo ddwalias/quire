@@ -493,6 +493,27 @@ class NativeBodyTests(unittest.TestCase):
             release_il.native_bodies(data, root / 'out', root / 'install', root / 'work', load)
             return data['methods']
 
+    def test_mixed_mode_comparison_uses_sized_data_targets(self):
+        from native_bytes import Entry
+
+        original_code = {0x1000: ('mov', f'rax,qword ptr [{at(0x2100)}h]'), 0x1007: ('ret', '')}
+        candidate_code = {0x1000: ('mov', f'rax,qword ptr [{at(0x2200)}h]'), 0x1007: ('ret', '')}
+        original = self.image(original_code, {0x1000: 0x1008}, [(0x1000, True, 'f')])
+        candidate = self.image(candidate_code, {0x1000: 0x1008}, [(0x1000, True, 'f')])
+        original.linked.image.memory[0x2100:0x2110] = b'12345678original'
+        candidate.linked.image.memory[0x2200:0x2210] = b'12345678modified'
+        candidate.linked.names = {0x2200: {'cookie'}, 0x2208: {'next'}}
+        candidate.linked.starts = sorted(candidate.linked.names)
+        target = {'cookie': Entry(0x2100, 8)}
+
+        with mock.patch('native_bytes.load_targets', return_value=target):
+            self.assertEqual(release_il.compare_native(original, candidate, 0x1000, 0x1000),
+                             (True, 'instructions and targets match'))
+            candidate.linked.image.memory[0x2200] = ord('x')
+            exact, reason = release_il.compare_native(original, candidate, 0x1000, 0x1000)
+            self.assertFalse(exact)
+            self.assertIn('data +0x0: bytes differ', reason)
+
     def test_mixed_mode_toolchain_entry_verifies_the_original_name_and_size(self):
         original = SimpleNamespace(methods=[(0x1000, True, 'delete[]')], rva=lambda token: 0x1000,
                                    extent=lambda rva: (0x1000, 0x1020))

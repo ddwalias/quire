@@ -178,6 +178,15 @@
       }
     }
   },
+  "mcfront12.dll": {
+    "sha256": "db9b4cc91cbf9a99b8ab666158937ba5c3d5911206c689c8bbe41dabf6bc9ad3",
+    "targets": {
+      "__security_cookie_complement": {
+        "rva": "0x2b240",
+        "size": 8
+      }
+    }
+  },
   "msmpl.dll": {
     "sha256": "30f5af92d002e4b1e03bd161fa0a176f33e70ab60cfa5a3ef52c861eb42ac976",
     "targets": {
