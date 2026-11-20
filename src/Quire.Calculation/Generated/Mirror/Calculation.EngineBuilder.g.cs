@@ -30,15 +30,5 @@ public partial class EngineBuilder : global::System.IDisposable
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Engine.IFactory _factory;
     [global::Quire.Mirror.MirrorStub]
-    public EngineBuilder() { }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Engine.IEngine CreateEngine(string importRequest, out int importRequestHandle, out int initialHandle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string GenerateDimensionUnitRL(global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor> unitList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string GenerateUnitSystemCustomRL(global::Quire.Calculation.Core.UnitSystems unitSystem, global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor> baseList, global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor> derivedList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GenerateUnitSystemRL(global::Quire.Calculation.Core.UnitSystems unitSystem, global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor> baseList, global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor> derivedList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Dispose() { }
 }
