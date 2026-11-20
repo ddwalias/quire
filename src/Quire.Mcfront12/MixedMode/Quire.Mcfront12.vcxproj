@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <ProjectGuid>{A2149975-A289-49B9-A73F-1751E4CBB29A}</ProjectGuid>
+    <Keyword>ManagedCProj</Keyword>
+    <RootNamespace>Quire.Mcfront12</RootNamespace>
+    <ProjectName>Quire.Mcfront12</ProjectName>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CLRSupport>NetCore</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir Condition="'$(AssemblyOutDir)'!=''">$(AssemblyOutDir)\</OutDir>
+    <OutDir Condition="'$(AssemblyOutDir)'==''">$(MSBuildThisFileDirectory)..\bin\Release\net10.0\</OutDir>
+    <IntDir>$(MSBuildThisFileDirectory)..\obj\mixedmode\Release\</IntDir>
+    <TargetName>Quire.Mcfront12</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DisableSpecificWarnings>4400;4679;4691;4945</DisableSpecificWarnings>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/Zc:sizedDealloc %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(IntDir)Quire.Mcfront12.pdb</ProgramDatabaseFile>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Mcfront12Port.cpp" />
+  </ItemGroup>
+  <PropertyGroup>
+    <_BuildQuireMirrorHere Condition="'$(QuireMirrorPath)' == ''">true</_BuildQuireMirrorHere>
+    <QuireMirrorOutDir>$(IntDir)Quire.Mirror\</QuireMirrorOutDir>
+    <QuireMirrorPath Condition="'$(QuireMirrorPath)' == ''">$(QuireMirrorOutDir)Quire.Mirror.dll</QuireMirrorPath>
+    <_BuildQuireEngineHere Condition="'$(QuireEnginePath)' == ''">true</_BuildQuireEngineHere>
+    <QuireDependenciesOutDir>$(IntDir)Quire.Dependencies\</QuireDependenciesOutDir>
+    <QuireEnginePath Condition="'$(QuireEnginePath)' == ''">$(QuireDependenciesOutDir)Quire.Engine.dll</QuireEnginePath>
+    <QuireEngineUtlPath Condition="'$(QuireEngineUtlPath)' == ''">$(QuireDependenciesOutDir)Quire.Engine.Utl.dll</QuireEngineUtlPath>
+    <QuireMcdPath Condition="'$(QuireMcdPath)' == ''">$(QuireDependenciesOutDir)Quire.Mcd.dll</QuireMcdPath>
+    <QuireMcdepmanPath Condition="'$(QuireMcdepmanPath)' == ''">$(QuireDependenciesOutDir)Quire.Mcdepman.dll</QuireMcdepmanPath>
+  </PropertyGroup>
+  <Target Name="BuildQuireMirrorReference" BeforeTargets="ClCompile" Condition="'$(Configuration)|$(Platform)'=='Release|x64' and '$(_BuildQuireMirrorHere)' == 'true'">
+    <Exec Command="dotnet build &quot;$(MSBuildThisFileDirectory)..\..\Quire.Mirror\Quire.Mirror.csproj&quot; --configuration Release --output &quot;$(QuireMirrorOutDir.TrimEnd('\'))&quot; --nologo" />
+  </Target>
+  <Target Name="BuildQuireEngineReference" BeforeTargets="ClCompile" Condition="'$(Configuration)|$(Platform)'=='Release|x64' and '$(_BuildQuireEngineHere)' == 'true'">
+    <Exec Command="dotnet build &quot;$(MSBuildThisFileDirectory)..\..\Quire.Engine\Quire.Engine.csproj&quot; --configuration Release --output &quot;$(QuireDependenciesOutDir.TrimEnd('\'))&quot; --nologo" />
+  </Target>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <ForcedUsingFiles>$(QuireMirrorPath);$(QuireEngineUtlPath);$(QuireEnginePath);$(QuireMcdPath);$(QuireMcdepmanPath);%(ForcedUsingFiles)</ForcedUsingFiles>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

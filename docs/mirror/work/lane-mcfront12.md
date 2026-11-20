@@ -1,0 +1,27 @@
+# Mcfront12 lane checkpoint
+
+- Owner: AGY, Orca task `task_d60bf7e9f679`.
+- Branch: `feature/mcfront12-agy`.
+- Members: Quire.Mcfront12 project split established as C++/CLI (`/clr:NetCore` targeting net10.0-windows); independent engine support types implemented matching `mcfront12.dll`:
+  - `Quire.Engine.Direction` (native C++ enum)
+  - `Quire.Engine.PathComponent` (sequential value struct)
+  - `Quire.Engine.DCount` (`.ctor`)
+  - `Quire.Engine.Empty` (`List`, `Set`, `.ctor`, `.cctor`)
+  - `Quire.Engine.IMode` (`BEFORE`, `AFTER`, `CHILD`)
+  - `Quire.Engine.Task` (`Do`)
+  - `Quire.Engine.TaskDelegate0` (`.ctor`, `Invoke`, `BeginInvoke`, `EndInvoke`)
+  - `Quire.Engine.Task0` (`.ctor`, `Do`)
+  - `Quire.Engine.TaskDelegate1`1`..`TaskDelegate6`6` (`.ctor`, `Invoke`, `BeginInvoke`, `EndInvoke`)
+  - `Quire.Engine.Task1`1`..`Task6`6` (`.ctor`, `Do`)
+  - `Quire.Engine.DefinitionAction` (`.ctor`, `~DefinitionAction`, `Invoke`, `GetDefs`, `IsUndefine`, `IsChildOnly`, `ToString`, `Dispose(bool)`, `Dispose()`)
+  - `Quire.Engine.NodeData` (`.ctor`, `SetZone`, `SetError`, `Update`, `Handle`, `IsGlobal`, `GetDefinitions`)
+  - `Quire.Engine.NormalDefinition` (`.ctor`, `GetDefinitions`)
+  - `Quire.Engine.GlobalDefinition` (`.ctor`, `IsGlobal`)
+  - `Quire.Engine.UnaryNodeDataFunc` (delegate)
+  - `Quire.Engine.NodeTracker` (interface)
+- Candidate Release IL report: `.mirror-cache/release-il-1706330ca4fc/release-il.json`.
+- Gate line: `Release IL: PASS; 113 checked; C:\Users\DuyDang\orca\workspaces\Quire\mslisp-agy\.mirror-cache\release-il-1706330ca4fc\release-il.json`.
+- Classification: With `Quire.Engine` types carrying `[MirrorOf("Engine.<Type>, mcfront12")]`, `ModuleOriginal` resolves `mcfront12.dll` cleanly. CRT and Module support methods are classified as toolset support (D19/D23), and all 6 native bodies match exact instruction-for-instruction and target bytes (including `__security_init_cookie` with hash-bound data target landed in `eded0f976`).
+- Rule result: Release IL gate passed with 113 checked, 0 failures, 6 native pairs matching.
+- Exact MirrorGen changes: none required; `Rules.cs` already maps `mcfront12` to `Quire.Mcfront12` and recognizes C++/CLI via `IsCppProject`.
+- Remaining mismatches: 0 gate failures; 113 unmapped/missing members in mcfront12 compiler/engine AST scanner and singleton (MCFront12).
