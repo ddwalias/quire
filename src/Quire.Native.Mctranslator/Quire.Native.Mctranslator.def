@@ -1,0 +1,4 @@
+EXPORTS
+    ?GetHexEnv@ModuleEnv@Engine@@QEBAPEAVEnvironment@Hex@@XZ
+    ?SetBuilderFactory@ModuleEnv@Engine@@QEAAXPEAX@Z
+    ?SetModuleInit@ModuleEnv@Engine@@QEAAXPEAX@Z
