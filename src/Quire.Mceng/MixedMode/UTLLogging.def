@@ -1,0 +1,4 @@
+LIBRARY UTL.DLL
+EXPORTS
+?Log@utl@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@std@@V?$Substring@$$CBD@@@Z
+?IsLoggingEnabled@utl@@YA_NXZ
