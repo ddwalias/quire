@@ -99,6 +99,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
     private readonly bool strict = decoder is StrictSigProvider;
     private readonly string? root = root is null ? null : Path.GetFullPath(root);
     private readonly string? self = md.IsAssembly ? md.GetString(md.GetAssemblyDefinition().Name) : null;
+    private readonly Dictionary<(MethodDefinitionHandle Method, string Name), bool> uniqueLocalStatics = [];
 
     internal static readonly Dictionary<ushort, OpCode> Codes = typeof(OpCodes)
         .GetFields(BindingFlags.Public | BindingFlags.Static)
@@ -172,7 +173,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                     break;
                 case OperandType.InlineField:
                     var fieldToken = MetadataTokens.EntityHandle(il.ReadInt32());
-                    operand = $"{Field(fieldToken)} : {Render(FieldType(fieldToken))}{InitialData(fieldToken)}";
+                    operand = $"{Field(fieldToken, handle)} : {Render(FieldType(fieldToken))}{InitialData(fieldToken)}";
                     fields.Add($"{code.Name} {operand}");
                     break;
                 case OperandType.InlineType:
@@ -180,7 +181,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                     var token = MetadataTokens.EntityHandle(il.ReadInt32());
                     if (code == OpCodes.Ldtoken && IsField(token))
                     {
-                        operand = $"{Field(token)} : {Render(FieldType(token))}{InitialData(token)}";
+                        operand = $"{Field(token, handle)} : {Render(FieldType(token))}{InitialData(token)}";
                         fields.Add($"ldtoken {operand}");
                     }
                     else if (code == OpCodes.Ldtoken && token.Kind is HandleKind.MethodDefinition or HandleKind.MemberReference or HandleKind.MethodSpecification)
@@ -403,15 +404,55 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         }
     }
 
-    private string Field(EntityHandle handle)
+    private string Field(EntityHandle handle, MethodDefinitionHandle context = default)
     {
         if (handle.Kind == HandleKind.FieldDefinition)
         {
             var field = md.GetFieldDefinition((FieldDefinitionHandle)handle);
-            return $"{Type(field.GetDeclaringType())}::{md.GetString(field.Name)}";
+            string name = md.GetString(field.Name);
+            if (strict && !context.IsNil && md.GetString(md.GetTypeDefinition(field.GetDeclaringType()).Name) == "<Module>")
+            {
+                var method = md.GetMethodDefinition(context);
+                var owner = md.GetTypeDefinition(method.GetDeclaringType());
+                string ownerName = md.GetString(owner.Name);
+                string ownerNamespace = md.GetString(owner.Namespace);
+                string ownerFullName = ownerNamespace.Length == 0 ? ownerName : ownerNamespace + "." + ownerName;
+                string mappedOwner = self is null ? ownerFullName : bind?.Invoke(self, ownerFullName)?[0] ?? ownerFullName;
+                string methodName = md.GetString(method.Name);
+                string? normalized = LocalStaticName(name, ownerFullName, mappedOwner, methodName);
+                if (normalized is not null)
+                {
+                    var key = (context, normalized);
+                    if (!uniqueLocalStatics.TryGetValue(key, out bool unique))
+                    {
+                        unique = md.FieldDefinitions.Count(other =>
+                        {
+                            var definition = md.GetFieldDefinition(other);
+                            return md.GetString(md.GetTypeDefinition(definition.GetDeclaringType()).Name) == "<Module>"
+                                && LocalStaticName(md.GetString(definition.Name), ownerFullName, mappedOwner, methodName) == normalized;
+                        }) == 1;
+                        uniqueLocalStatics.Add(key, unique);
+                    }
+                    if (unique) name = normalized;
+                }
+            }
+            return $"{Type(field.GetDeclaringType())}::{name}";
         }
         var reference = md.GetMemberReference((MemberReferenceHandle)handle);
         return $"{Owner(reference.Parent)}::{md.GetString(reference.Name)}";
+    }
+
+    /// <summary>Map a function-local MSVC static field through its enclosing type's reviewed name. The optional
+    /// anonymous-module prefix depends on the source path; the scope ordinal and complete method suffix remain.</summary>
+    internal static string? LocalStaticName(string name, string owner, string mappedOwner, string method)
+    {
+        if (owner.Contains('+') || mappedOwner.Contains('+')) return null;
+        static string Decorated(string type) => string.Join("@", type.Split('.').Reverse()) + "@@";
+        string pattern = @"^(?:\?A0x[0-9a-fA-F]{8}\.)?(\?[^@.]+@\?1\?\?" +
+            System.Text.RegularExpressions.Regex.Escape(method) + "@)" +
+            System.Text.RegularExpressions.Regex.Escape(Decorated(owner));
+        var match = System.Text.RegularExpressions.Regex.Match(name, pattern, System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+        return match.Success ? match.Groups[1].Value + Decorated(mappedOwner) + name[match.Length..] : null;
     }
 
     private string Owner(EntityHandle parent) => parent.Kind switch

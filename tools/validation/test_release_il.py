@@ -652,6 +652,37 @@ class NativeBodyTests(unittest.TestCase):
             self.assertEqual(dll.read_bytes(), bytes(data))
 
 
+class MsvcLocalStaticTests(unittest.TestCase):
+    def test_local_static_mapping_keeps_member_identity(self):
+        root = Path(__file__).resolve().parents[2]
+        with tempfile.TemporaryDirectory(prefix='quire-msvc-static-') as directory:
+            work = Path(directory)
+            structure = root / 'tools/Quire.Tools.MethodAudit/Structure.cs'
+            model = root / 'tools/Quire.Tools.MirrorGen/Model.cs'
+            metadata = root / 'tools/Quire.Tools.MirrorGen/MetadataLoader.cs'
+            (work / 'Test.csproj').write_text(f'''<Project Sdk="Microsoft.NET.Sdk">
+<PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net10.0</TargetFramework>
+<ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup>
+<ItemGroup><Compile Include="{structure}" Link="Structure.cs" /><Compile Include="{model}" Link="Model.cs" />
+<Compile Include="{metadata}" Link="MetadataLoader.cs" /></ItemGroup></Project>''')
+            (work / 'Program.cs').write_text('''
+string? Map(string field, string owner, string mapped, string method) => StructureReader.LocalStaticName(field, owner, mapped, method);
+void Check(bool condition) { if (!condition) throw new Exception("Unexpected static field mapping"); }
+string original = "?A0x0d0e4802.?bNeedInit@?1??VerifyIntegrity@FactoryImp@Engine@@UE$AAM_NXZ@4_NA";
+string candidate = "?bNeedInit@?1??VerifyIntegrity@FactoryImp@Engine@Quire@@UE$AAM_NXZ@4_NA";
+string? expected = Map(original, "Engine.FactoryImp", "Engine.FactoryImp", "VerifyIntegrity");
+Check(expected != null && expected == Map(candidate, "Quire.Engine.FactoryImp", "Engine.FactoryImp", "VerifyIntegrity"));
+Check(Map(candidate, "Quire.Engine.Other", "Engine.Other", "VerifyIntegrity") == null);
+Check(Map(candidate, "Quire.Engine.FactoryImp", "Engine.FactoryImp", "Other") == null);
+Check(Map(candidate.Replace("?1??", "?2??"), "Quire.Engine.FactoryImp", "Engine.FactoryImp", "VerifyIntegrity") == null);
+Check(Map(candidate.Replace("_NXZ", "_NYZ"), "Quire.Engine.FactoryImp", "Engine.FactoryImp", "VerifyIntegrity") != expected);
+Check(Map("?A0xNOHASH." + candidate, "Quire.Engine.FactoryImp", "Engine.FactoryImp", "VerifyIntegrity") == null);
+''')
+            result = subprocess.run(['dotnet', 'run', '--project', str(work / 'Test.csproj'),
+                                     '--configuration', 'Release'], capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+
 class ClonePairingTests(unittest.TestCase):
     def test_abstract_clone_methodimpl_identity_is_narrow(self):
         root = Path(__file__).resolve().parents[2]
