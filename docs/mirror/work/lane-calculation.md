@@ -13,3 +13,14 @@
 - Exact batch 10: `CalculationController` (`PreserveEngineBuilder` getter/setter, `EnableDebugWrites`, `DebugInfo`, `DebugEnter`, `DebugExit`, `HandleEngineNeedsUIThreadMessagesProcessed`, `RegisterDataExchange`, `UnregisterDataExchange`, `IsAggregate` 2 overloads, `HandleGetEngineOption`, `HookupCalculatableEvents`, `UnhookFromCalculatableEvents`, `IsCalculatableInContext`, `CleanupAfterCalculatableRemoved`, `GetDataExchangeOwnerAdded`, `GetDataExchangeOwnerRemoved`). Maintained member ordering in `00_CalculationController.Callbacks.cs` to preserve closure ordinal `<HandleCommitAndNotifyDependentCalculatables>b__47_0`, and ordered local declarations in `GetDataExchangeOwnerAdded`/`GetDataExchangeOwnerRemoved` to match Roslyn local slot allocation.
 - Release IL: `python tools/validation/release_il.py --base main --project Quire.Calculation` PASS, 145 checked, 0 failures. Report `.mirror-cache/release-il-99dc26d385fc/release-il.json`.
 - Remaining Mathcad-paired mismatches from this lane: none of the members listed in batches 1–10.
+
+## Concrete Blockers on Remaining Stubs
+1. `modopt([System.Runtime.CompilerServices.VisualC]System.Runtime.CompilerServices.IsLong)` on `IEngine` calls:
+   - In Mathcad Prime, `iengine.dll` was built as C++/CLI where handles (`AddAfter`, `Parent`, `Status`, `Update`, `GetValueAsync`, `GetValueBeforeAsync`, `AddChild`, etc.) carry `modopt(IsLong)`.
+   - In Quire, `Quire.Engine` (`src/Quire.Engine/IEngine.cs`) is pure C# and cannot declare `modopt(IsLong)`. Any C# call site emits tokens without `modopt`, causing a signature mismatch against Mathcad's IL.
+   - Blocks: `EngineBuilder.CreateEngine`, `DispatchedEngineCallbackHandler` methods calling `_engine` handle APIs (`ParentGlobalErrorResultsDictionary`, `SetResult`, `ProcessResult`), and `CalculationController` engine handle methods (`HandleCalculatableUpdated`, `HandleGetValueOfIdentifierBefore`, `HandleTreatCalculatableAsUpToDate`, `HandleCalculateNow`, `HandleCalculatableAdded`, `AddCalculatableChild`, `HandleCalculatableMoved`, `HandleCalculatableRemoved`, `BindTo`).
+2. Decision D7 Embedded NoPIA `Mathcad.IValue`:
+   - In Mathcad Prime, `Ptc.Calculation.dll` embedded `Mathcad.IValue` from `interop.mathcad.dll` (`[ptc.calculation]Mathcad.IValue`).
+   - In Quire, `Quire.Calculation` references `Quire.Automation.Native` (`[automationmgd]Mathcad.IValue`).
+   - Any method capturing `IValue` in a closure emits a DisplayClass field with `[automationmgd]Mathcad.IValue`, failing comparison against `[ptc.calculation]Mathcad.IValue`.
+   - Blocks: `DataExchangeHandler.SetValue` and `GetValue` (parked as unmarked placeholder stubs to preserve method ordinals 11 and 12).
