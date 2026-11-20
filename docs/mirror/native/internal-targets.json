@@ -212,5 +212,17 @@
         "toolchain": true
       }
     }
+  },
+  "creo3dfit.dll": {
+    "sha256": "72884de530703323b010246c5bcff75dc79f50aaa2b0223522a3c3e6f24aa4de",
+    "targets": {
+      "fit_surface_impl": {
+        "rva": "0x264a0"
+      },
+      "internal_fit_surface": {
+        "rva": "0x26540",
+        "parked": true
+      }
+    }
   }
 }
