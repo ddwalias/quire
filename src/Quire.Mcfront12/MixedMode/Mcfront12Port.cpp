@@ -464,9 +464,11 @@ namespace Quire { namespace Engine {
 
 
     [Quire::Mirror::MirrorOfAttribute("Engine.HasErrors, mcfront12")]
-    ref class HasErrors : public Quire::utl_mgd::FunctionBase
+    public ref class HasErrors : public Quire::utl_mgd::FunctionBase
     {
     public:
+        HasErrors() {}
+
         virtual System::Object^ Invoke(array<System::Object^>^ args) override
         {
             System::Collections::IDictionary^ dictionary = dynamic_cast<System::Collections::IDictionary^>(args[0]);
@@ -498,9 +500,11 @@ namespace Quire { namespace Engine {
     };
 
     [Quire::Mirror::MirrorOfAttribute("Engine.RekeyDict, mcfront12")]
-    ref class RekeyDict : public Quire::utl_mgd::FunctionBase
+    public ref class RekeyDict : public Quire::utl_mgd::FunctionBase
     {
     public:
+        RekeyDict() {}
+
         virtual System::Object^ Invoke(array<System::Object^>^ args) override
         {
             System::String^ text = args[0]->ToString();
@@ -513,7 +517,7 @@ namespace Quire { namespace Engine {
             for each (System::Object^ key in dictionary->Keys)
             {
                 System::String^ text2 = dynamic_cast<System::String^>(key);
-                if (text2 != nullptr && text2->StartsWith("%"))
+                if (text2 && text2->StartsWith("%"))
                 {
                     labeledDictionary[text2] = dictionary[text2];
                 }
@@ -527,9 +531,11 @@ namespace Quire { namespace Engine {
     };
 
     [Quire::Mirror::MirrorOfAttribute("Engine.MergeState, mcfront12")]
-    ref class MergeState : public Quire::utl_mgd::FunctionBase
+    public ref class MergeState : public Quire::utl_mgd::FunctionBase
     {
     public:
+        MergeState() {}
+
         virtual System::Object^ Invoke(array<System::Object^>^ args) override
         {
             System::Collections::IDictionary^ dictionary = nullptr;
@@ -565,6 +571,19 @@ namespace Quire { namespace Engine {
             return dictionary;
         }
     };
+
+    [Quire::Mirror::MirrorOfAttribute("Engine.GetRuntimeOptionsNumber, mcfront12")]
+    public ref class GetRuntimeOptionsNumber : public Quire::utl_mgd::FunctionBase
+    {
+    public:
+        GetRuntimeOptionsNumber() {}
+
+        virtual System::Object^ Invoke(array<System::Object^>^ args) override
+        {
+            return (dynamic_cast<::Mcd::RuntimeOptions^>(args[0]))->m_ro_number;
+        }
+    };
+
 
     ref class FScope;
 

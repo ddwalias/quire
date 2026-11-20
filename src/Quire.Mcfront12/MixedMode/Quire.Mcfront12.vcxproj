@@ -66,6 +66,8 @@
     <MathcadInstallDir Condition="'$(MathcadInstallDir)' == ''">C:\Program Files\PTC\Mathcad Prime 12.0.1.0\</MathcadInstallDir>
     <McdepmanRef Condition="Exists('$(MathcadInstallDir)mcdepman.dll')">$(MathcadInstallDir)mcdepman.dll</McdepmanRef>
     <McdepmanRef Condition="'$(McdepmanRef)' == ''">$(QuireMcdepmanPath)</McdepmanRef>
+    <MplrunRef Condition="Exists('$(MathcadInstallDir)mplrun.dll')">$(MathcadInstallDir)mplrun.dll</MplrunRef>
+    <MplrunRef Condition="'$(MplrunRef)' == ''">$(QuireMplPath)</MplrunRef>
   </PropertyGroup>
   <Target Name="BuildQuireMirrorReference" BeforeTargets="ClCompile" Condition="'$(Configuration)|$(Platform)'=='Release|x64' and '$(_BuildQuireMirrorHere)' == 'true'">
     <Exec Command="dotnet build &quot;$(MSBuildThisFileDirectory)..\..\Quire.Mirror\Quire.Mirror.csproj&quot; --configuration Release --output &quot;$(QuireMirrorOutDir.TrimEnd('\'))&quot; --nologo" />
@@ -75,7 +77,7 @@
   </Target>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <ForcedUsingFiles>$(QuireMirrorPath);$(QuireEngineUtlPath);$(QuireEnginePath);$(QuireMcdPath);$(McdepmanRef);%(ForcedUsingFiles)</ForcedUsingFiles>
+      <ForcedUsingFiles>$(QuireMirrorPath);$(QuireEngineUtlPath);$(QuireEnginePath);$(QuireMcdPath);$(McdepmanRef);$(MplrunRef);%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
