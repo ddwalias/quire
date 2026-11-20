@@ -145,7 +145,7 @@ namespace Quire { namespace Engine {
                     ::utl::Log("eng") << ::utl::ToStrng(ex->StackTrace) << std::endl;
                     return false;
                 }
-                ::utl::Log("eng") << "Engine factory: integrity check " << "(unknown cause)" << std::endl;
+                ::utl::Log("eng") << "Engine factory: integrity check failed " << "(unknown cause)" << std::endl;
                 System::GC::KeepAlive(this);
                 return false;
             }
