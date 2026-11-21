@@ -3,6 +3,14 @@
 - Owner: Automation.Native lane; branch `feature/automation-native-agy`.
 - Target: `src/Quire.Automation.Native` (C# net10.0-windows, hosting `automationmgd.dll` and `componentsmgd.dll`).
 
+## Batch 5 — MatrixValue
+
+- Members:
+  - `Mathcad.Automation.MatrixValue`: `size` field, `.ctor()`, `.ctor(MatVal)`, `.ctor(MatVal, RuntimeOptions)`, `.ctor(double[], int, int)`, `.ctor(double[], double[], int, int)`, `.ctor(int, int)`, `Matrix`, `Size`, `IsComplex` (get/set), `Rows`, `Cols`, `IsUniform`, `IsScalarMatrix`, `IsUniformScalar`, `IsRealMatrix`, `IsRealMatrixMixed`, `Type`, `AsString`, `IsRange`, `WriteValueXml`, `WriteValueRL`, `CountElements`, `SetElement`, `GetElement`. Hand-written in `Mirrored/MatrixValue.cs`.
+- Stubs removed: `Generated/Mirror/Automation.MatrixValue.g.cs` (25 stubs removed).
+- Release IL report: `python tools/validation/release_il.py --base main --project Quire.Automation.Native` — PASS, 186 checked (was 161 on base, +25 exact), 0 failures. Report: `.mirror-cache/release-il-c2d6d81ffc5d/release-il.json`.
+- Remaining: 179 unfinished stubs reported by the gate.
+
 ## Batch 4 — ValueFactory, McxIO, McxInput, and McxOutput
 
 - Members:
