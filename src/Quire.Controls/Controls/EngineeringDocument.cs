@@ -4,11 +4,20 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Packaging;
 using System.Linq;
+using System.Printing;
+using System.Runtime;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Documents.Serialization;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
+using System.Xml;
+using System.Xml.Linq;
 using Quire.Calculation.Core;
 using Quire.Controls.Core;
 using Quire.Controls.Core.IORegions;
@@ -16,11 +25,16 @@ using Quire.Controls.Core.Serialization;
 using Quire.Controls.InputControls;
 using Quire.Controls.Worksheet;
 using Quire.Core;
+using Quire.FunctionalitiesLimitation;
 using Quire.IO;
 using Quire.Mirror;
 using Quire.PersistentData;
 using Quire.Serialization;
+using Quire.Services;
+using Quire.Undo;
 using Quire.Wpf;
+using Quire.Wpf.Printing;
+using Quire.Xml;
 
 namespace Quire.Controls;
 
@@ -780,6 +794,903 @@ public partial class EngineeringDocument
             e.Handled = true;
         }
         base.OnMouseWheel(e);
+    }
+
+    private WorksheetControl _worksheet;
+    private bool _isDoneOpeningFile;
+
+    internal WorksheetControl WorksheetControl
+    {
+        get => _worksheet;
+        set
+        {
+            if (_worksheet == value)
+            {
+                return;
+            }
+            if (_worksheet != null)
+            {
+                _worksheet.PropertyChanged -= WorksheetPropertyChangedHandler;
+            }
+            _worksheet = value;
+            FirePropertyChanged("Worksheet");
+            if (_worksheet != null)
+            {
+                _worksheet.PropertyChanged += WorksheetPropertyChangedHandler;
+                BindingCalculationOptionsAndSystemVariables();
+            }
+        }
+    }
+
+    public XElementSerializable GetMcdxPageModel(XName name) => new McdxPageModel(WorksheetData, name);
+
+    public FileLoadResult NewFromDocument(string fullFilePath)
+    {
+        string text = Path.GetExtension(fullFilePath) ?? string.Empty;
+        _isDoneOpeningFile = false;
+        FileLoadResult result = new FileLoadResult();
+        try
+        {
+            _waitForLoad.Reset();
+            ResultManager.Instance.Clear();
+            if (FileManager.IsPackage(fullFilePath, text))
+            {
+                OpenPackage(ref result, fullFilePath, true);
+                ResultManager.Instance.PushResultsToOwners();
+                CommandBuffer.Clear();
+                _isNew = true;
+                IsDirty = false;
+            }
+            else if (FileManager.IsWorksheet(fullFilePath))
+            {
+                result.LoadException = new PreviousVersionWorksheetException();
+                result.LoadException.Data.Add("fileName", fullFilePath);
+                result.LoadException.Data.Add("extension", text);
+            }
+            else
+            {
+                result.LoadException = new FormatException("Incorrect file format, file should be from Prime");
+            }
+        }
+        catch (Exception ex)
+        {
+            ExceptionOccured("opening file {0} as {1}: {2}", fullFilePath, text, ex);
+            result.LoadException = ex;
+        }
+        finally
+        {
+            if (_fileStream != null)
+            {
+                EnsureStreamRelease();
+                _fileStream = null;
+            }
+            _waitForLoad.Set();
+        }
+        _isDoneOpeningFile = true;
+        return result;
+    }
+
+    internal MarginLineAdorner GetAnnotationMarginLineOfElement(FrameworkElement element) => GetTopLevelAdornersForElement(element).OfType<MarginLineAdorner>().SingleOrDefault();
+
+    private IEnumerable<VisualAdornerBase> GetTopLevelAdornersForElement(FrameworkElement element)
+    {
+        if (DebugTools.AssertNotNull(element, null).Failed)
+        {
+            return new List<VisualAdornerBase>();
+        }
+        AdornerDecorator errorMessageAdornerDecorator = GetErrorMessageAdornerDecorator();
+        if (DebugTools.AssertNotNull(errorMessageAdornerDecorator, null).Failed)
+        {
+            return new List<VisualAdornerBase>();
+        }
+        AdornerLayer adornerLayer = errorMessageAdornerDecorator.AdornerLayer;
+        if (DebugTools.AssertNotNull(adornerLayer, null).Failed)
+        {
+            return new List<VisualAdornerBase>();
+        }
+        Adorner[] adorners = adornerLayer.GetAdorners(element);
+        if (adorners == null)
+        {
+            return new List<VisualAdornerBase>();
+        }
+        return adorners.OfType<VisualAdornerBase>();
+    }
+
+    private AdornerDecorator GetErrorMessageAdornerDecorator() => GetTemplateChild("PART_ErrorMessageAdornerDecorator") as AdornerDecorator;
+
+    private void HandleAdornerAdded(object sender, RoutedEventArgs e)
+    {
+        VisualAdornerBase visualAdornerBase = e.OriginalSource as VisualAdornerBase;
+        if (DebugTools.AssertNotNull(visualAdornerBase, null).Failed)
+        {
+            return;
+        }
+        AdornerDecorator errorMessageAdornerDecorator = GetErrorMessageAdornerDecorator();
+        if (DebugTools.AssertNotNull(errorMessageAdornerDecorator, null).Failed)
+        {
+            return;
+        }
+        VisualAdornerBase.AddToAdornerLayer(errorMessageAdornerDecorator, visualAdornerBase);
+    }
+
+    private void HandleCopySingleWhiteboardItemNoImage(object sender, CustomRoutedEventArgs<IWhiteboardItem> e)
+    {
+        e.Handled = HandleCopyWhiteboardItems(e.Parameter.Yield().ToList(), false);
+    }
+
+    private void HandleCopyWhiteboardItems(object sender, CustomRoutedEventArgs<IEnumerable<IWhiteboardItem>> e)
+    {
+        IList<IWhiteboardItem> list;
+        if (DebugTools.DevAssert(e.Parameter.IsNotEmpty(out list), null).Failed)
+        {
+            return;
+        }
+        e.Handled = HandleCopyWhiteboardItems(list, true);
+    }
+
+    public CopyWidgetBase CreateCopyWidget()
+    {
+        return new CopyWidget
+        {
+            TotalPages = PageCount,
+            DisplaySavedDate = DisplaySavedDate,
+            DisplayFilePath = DisplayFilePath,
+            DisplayFileName = DisplayFileName,
+            DisplayDocumentName = DisplayDocumentName,
+            PageNumber = Worksheet.CurrentPageNumber,
+            Width = 0.0,
+            Height = 0.0
+        };
+    }
+
+    private void HandleWorksheetControlChanged(object sender, RoutedEventArgs e)
+    {
+        if (IsDoneOpeningFile())
+        {
+            IsDirty = true;
+        }
+    }
+
+    private bool IsDoneOpeningFile() => IsLoaded && _isDoneOpeningFile;
+
+    private void HandleReplace(object parameter)
+    {
+        if (parameter is FindReplaceQuery findReplaceQuery)
+        {
+            DebugTools.DevAssert(!findReplaceQuery.Status.HasValue, null);
+            findReplaceQuery.Status = FindReplaceStatus.Empty;
+        }
+        else
+        {
+            DebugTools.FailAssertion(parameter?.GetType().Name);
+        }
+    }
+
+    public void FireWaitForCalculationIdle() => Worksheet.WaitForCalculation();
+
+    public void FireWaitForCalculationIdle(int seconds, DispatcherPriority priority) => Worksheet.WaitForCalculation(seconds, priority);
+
+    public void Recalculate() => WorksheetCommands.RecalculateWorksheet.Execute(null, WorksheetControl);
+
+    public Exception PreSave(IDocumentSaveOptions saveOptions)
+    {
+        CloseOpenedComboBoxEditingMode();
+        Worksheet.PreSave(saveOptions);
+        Exception exception;
+        if (saveOptions.WaitForCalculationForSaveAsApi && !FireWaitForCalculationForSaveAsApi(out exception))
+        {
+            return exception;
+        }
+        return null;
+    }
+
+    public string GetEngineVersion() => Worksheet.GetEngineVersion();
+
+    public void WaitForSave(int seconds)
+    {
+        DebugTools.LogData("EngineeringDocument.WaitForSave: Enter");
+        // Storing the negated WaitOne result materializes ldc.i4.0 / ceq / brfalse.s matching Mathcad's IL.
+        bool timedOut = !_waitForSaveXps.WaitOne(seconds * 1000, false);
+        if (timedOut)
+        {
+            throw new TimeoutException("The wait for save has timed out");
+        }
+    }
+
+    private void EnsureStreamRelease()
+    {
+        FileManager.EnsureStreamRelease(_fileStream);
+        _fileStream = null;
+    }
+
+    protected void NetworkDriveEnsureStreamRelease(string filePath, ref IOException e)
+    {
+        DriveInfo[] drives = DriveInfo.GetDrives();
+        string text = filePath.Substring(0, 3);
+        foreach (DriveInfo driveInfo in drives)
+        {
+            DirectoryInfo rootDirectory = driveInfo.RootDirectory;
+            if (text.Contains(rootDirectory.FullName))
+            {
+                return;
+            }
+        }
+        EnsureStreamRelease();
+        _isNetworkDriveDisconnected = true;
+        e = new IOException(e.Message + Environment.NewLine + string.Format((string)_errorWarningMessageResourceDictionary["WorksheetMessages.NetworkDriveDisconnected"], text));
+    }
+
+    private void HandleTraverse(object sender, ExecutedRoutedEventArgs e)
+    {
+        MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+    }
+
+    public bool Find(string text, LogicalDirection direction, bool startFromCaret, FindOptions options, List<Pair<int, int>> subscriptPositions)
+    {
+        if ((options & FindOptions.HighlightAll) != 0)
+        {
+            throw new NotImplementedException();
+        }
+        return Worksheet.FindOnce(text, startFromCaret, direction, options, subscriptPositions);
+    }
+
+    private static void ThrowNotSupported(string message, params object[] args)
+    {
+        throw new NotSupportedException(string.Format(message, args));
+    }
+
+    private static void ExceptionOccured(string action, params object[] args)
+    {
+        // Mathcad calls string.Format rather than string.Concat for this interpolated format string.
+        TraceWarning(string.Format("Exception occurred while {0}", action), args);
+    }
+
+    public FileLoadResult OpenFileAndUpdateCWDState(string fileName)
+    {
+        string text = Path.GetExtension(fileName) ?? string.Empty;
+        _isDoneOpeningFile = false;
+        FilePath = fileName;
+        FileLoadResult result = new FileLoadResult();
+        try
+        {
+            _waitForLoad.Reset();
+            ResultManager.Instance.Clear();
+            if (FileManager.IsPackage(fileName, text))
+            {
+                OpenPackage(ref result, fileName, false);
+                OnFileForWorksheetOpened(fileName);
+            }
+            else if (FileManager.IsWorksheet(fileName))
+            {
+                result.LoadException = new PreviousVersionWorksheetException();
+                result.LoadException.Data.Add("fileName", fileName);
+                result.LoadException.Data.Add("extension", text);
+            }
+            else
+            {
+                result.LoadException = new FormatException("Incorrect file format, file should be from PTC Mathcad Prime");
+            }
+        }
+        catch (Exception ex)
+        {
+            ExceptionOccured("opening file {0} as {1}: {2}", fileName, text, ex);
+            result.LoadException = ex;
+        }
+        finally
+        {
+            _waitForLoad.Set();
+        }
+        _isDoneOpeningFile = true;
+        return result;
+    }
+
+    private void OnFileForWorksheetOpened(string fileName)
+    {
+        ResultManager.Instance.PushResultsToOwners(Worksheet.IsScriptingRunWorksheetOpen & Worksheet.HasScriptingControls);
+        ShowEngineChangesBanner = DocCalculationOptions.EngineTypeAutoCorrected && Worksheet.ContainsSymbolicEvaluation;
+        FilePath = fileName;
+        LastSavedDate = File.GetLastWriteTime(FilePath);
+        _isNew = false;
+        IsDirty = false;
+        CommandBuffer.Clear();
+        PostSaveOpenCommonOperations();
+        if (Path.IsPathRooted(fileName))
+        {
+            UpdateCWDState(fileName);
+        }
+    }
+
+    public Exception SaveFile(string fileName, IDocumentSaveOptions options, out string extensionOut)
+    {
+        extensionOut = "";
+        if (string.IsNullOrEmpty(fileName))
+        {
+            throw new InvalidOperationException("Logic Error: File name not initialized");
+        }
+        Exception result = null;
+        try
+        {
+            string text = (Path.GetExtension(fileName) ?? string.Empty).ToLower();
+            if (IsDocumentFromPTCPlaces)
+            {
+                text = ".mcdx";
+            }
+            extensionOut = text;
+            switch (text)
+            {
+            case ".xps":
+                SaveXpsDocument(fileName, true);
+                break;
+            case ".pdf":
+                if (FunctionalityService.Instance.IsFunctionalityEnabled(EnumFunctionalityKey.SaveEngineeringDocumentAsPdfCommand))
+                {
+                    SavePdfDocument(fileName);
+                }
+                else
+                {
+                    result = new FileFormatBlockedByFreemiumException();
+                }
+                break;
+            case ".rtf":
+                if (FunctionalityService.Instance.IsFunctionalityEnabled(EnumFunctionalityKey.SaveEngineeringDocumentAsRtfCommand))
+                {
+                    SaveRtfDocument(fileName);
+                }
+                else
+                {
+                    result = new FileFormatBlockedByFreemiumException();
+                }
+                break;
+            case ".dita":
+                SaveDita(fileName);
+                break;
+            case ".mcdx":
+                result = SavePrimeDocFormat(fileName, options);
+                break;
+            case ".mctx":
+                result = FunctionalityService.Instance.IsFunctionalityEnabled(EnumFunctionalityKey.SaveEngineeringDocumentAsMCTXCommand) ? SavePrimeDocFormat(fileName, options) : new FileFormatBlockedByFreemiumException();
+                break;
+            default:
+                ThrowNotSupported("Save File: \"{0}\" extension is not supported.", text);
+                break;
+            }
+        }
+        catch (Exception ex)
+        {
+            if (ex is OutOfMemoryException)
+            {
+                GC.Collect();
+            }
+            ExceptionOccured("saving file {0}: {1}", fileName, ex);
+            result = ex;
+        }
+        return result;
+    }
+
+    private Exception SavePrimeDocFormat(string fileName, IDocumentSaveOptions options)
+    {
+        Exception ex = SavePackage(fileName, options);
+        if (ex == null && !options.IsDetachedCopy)
+        {
+            LastSavedDate = DateTime.Today;
+            PostSaveOpenCommonOperations();
+        }
+        return ex;
+    }
+
+    private void PostSaveOpenCommonOperations()
+    {
+        MetadataModel.Version++;
+        FileIsSaved = true;
+        Worksheet.IsSavedWorksheet = true;
+    }
+
+    private Package OpenPackageStream(string fullFilePath)
+    {
+        Package result = null;
+        OpenPackageStreamForWriteAndSharedRead(fullFilePath, true);
+        if (_fileStream.Length > 0)
+        {
+            result = Package.Open(_fileStream);
+        }
+        return result;
+    }
+
+    private void OpenPackageStreamForWriteAndSharedRead(string fullFilePath, bool allowReadOnly)
+    {
+        FileStream fileStream;
+        try
+        {
+            fileStream = File.Open(fullFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read);
+        }
+        catch
+        {
+            if (allowReadOnly)
+            {
+                fileStream = PackageOperationsProvider.OpenFileStreamForReadWithFullShare(fullFilePath);
+            }
+            else
+            {
+                throw;
+            }
+        }
+        EnsureStreamRelease();
+        _fileStream = fileStream;
+    }
+
+    private void OpenPackage(ref FileLoadResult result, string fileName, bool newFromDocument)
+    {
+        try
+        {
+            using (Package package = OpenPackageStream(fileName))
+            {
+                if (package != null)
+                {
+                    Read(package, ref result, fileName, newFromDocument);
+                }
+            }
+        }
+        catch (Exception)
+        {
+            EnsureStreamRelease();
+            throw;
+        }
+    }
+
+    private void DeserializeWorksheetAndHeaderFooter(Package package, string fullFilePath)
+    {
+        worksheetRegionCollectionSerializer worksheetRegionCollectionSerializer = new worksheetRegionCollectionSerializer();
+        DocumentSerializationHelper.MainRegions = DeserializeWorksheetSection(PackageOpsProvider.GetMainPartFromPackage(package), WorksheetData.WorksheetContent, worksheetRegionCollectionSerializer, fullFilePath);
+        WorksheetData.WorksheetContent.ConvertedFromMC14 = worksheetRegionCollectionSerializer.ConvertedFromMC14;
+        WorksheetData.WorksheetContent.MsgId = worksheetRegionCollectionSerializer.MsgId;
+        PackagePart headersContainerPartFromPackage = PackageOpsProvider.GetHeadersContainerPartFromPackage(package);
+        if (headersContainerPartFromPackage != null)
+        {
+            DeserializeHeadersFromContainer(headersContainerPartFromPackage, fullFilePath);
+        }
+        else
+        {
+            headerRegionCollectionSerializer headerRegionCollectionSerializer = new headerRegionCollectionSerializer();
+            DocumentSerializationHelper.HeaderRegions = DeserializeWorksheetSection(PackageOpsProvider.GetHeaderPartFromPackage(package), WorksheetData.Header, headerRegionCollectionSerializer, fullFilePath);
+            WorksheetData.Header.ConvertedFromMC14 = headerRegionCollectionSerializer.ConvertedFromMC14;
+        }
+        PackagePart footersContainerPartFromPackage = PackageOpsProvider.GetFootersContainerPartFromPackage(package);
+        if (footersContainerPartFromPackage != null)
+        {
+            DeserializeFootersFromContainer(footersContainerPartFromPackage, fullFilePath);
+        }
+        else
+        {
+            footerRegionCollectionSerializer footerRegionCollectionSerializer = new footerRegionCollectionSerializer();
+            DocumentSerializationHelper.FooterRegions = DeserializeWorksheetSection(PackageOpsProvider.GetFooterPartFromPackage(package), WorksheetData.Footer, footerRegionCollectionSerializer, fullFilePath);
+            WorksheetData.Footer.ConvertedFromMC14 = footerRegionCollectionSerializer.ConvertedFromMC14;
+        }
+    }
+
+    private void DeserializeHeadersFromContainer(PackagePart containerPart, string fullFilePath)
+    {
+        headersContainerRegionCollectionSerializer headersContainerRegionCollectionSerializer = new headersContainerRegionCollectionSerializer();
+        XmlElement xmlElement = LoadAndGetRootElement(containerPart, "//ws:headers");
+        if (xmlElement != null)
+        {
+            headersContainerRegionCollectionSerializer.Deserialize(xmlElement, true);
+            headersContainerWrapper containerWrapper = headersContainerRegionCollectionSerializer.ContainerWrapper;
+            if (containerWrapper.Header?.Regions != null && containerWrapper.Header.Regions.Any())
+            {
+                DocumentSerializationHelper.HeaderRegions = DeserializeRegionsFromCollection(containerWrapper.Header, WorksheetData.Header, fullFilePath, containerPart);
+                WorksheetData.Header.ConvertedFromMC14 = containerWrapper.HeaderConvertedFromMC14;
+            }
+            if (containerWrapper.FirstPageHeader?.Regions != null && containerWrapper.FirstPageHeader.Regions.Any())
+            {
+                DocumentSerializationHelper.FirstPageHeaderRegions = DeserializeRegionsFromCollection(containerWrapper.FirstPageHeader, WorksheetData.FirstPageHeader, fullFilePath, containerPart);
+                WorksheetData.FirstPageHeader.ConvertedFromMC14 = containerWrapper.FirstPageHeaderConvertedFromMC14;
+            }
+        }
+    }
+
+    private void DeserializeFootersFromContainer(PackagePart containerPart, string fullFilePath)
+    {
+        footersContainerRegionCollectionSerializer footersContainerRegionCollectionSerializer = new footersContainerRegionCollectionSerializer();
+        XmlElement xmlElement = LoadAndGetRootElement(containerPart, "//ws:footers");
+        if (xmlElement != null)
+        {
+            footersContainerRegionCollectionSerializer.Deserialize(xmlElement, true);
+            footersContainerWrapper containerWrapper = footersContainerRegionCollectionSerializer.ContainerWrapper;
+            if (containerWrapper.Footer?.Regions != null && containerWrapper.Footer.Regions.Any())
+            {
+                DocumentSerializationHelper.FooterRegions = DeserializeRegionsFromCollection(containerWrapper.Footer, WorksheetData.Footer, fullFilePath, containerPart);
+                WorksheetData.Footer.ConvertedFromMC14 = containerWrapper.FooterConvertedFromMC14;
+            }
+            if (containerWrapper.FirstPageFooter?.Regions != null && containerWrapper.FirstPageFooter.Regions.Any())
+            {
+                DocumentSerializationHelper.FirstPageFooterRegions = DeserializeRegionsFromCollection(containerWrapper.FirstPageFooter, WorksheetData.FirstPageFooter, fullFilePath, containerPart);
+                WorksheetData.FirstPageFooter.ConvertedFromMC14 = containerWrapper.FirstPageFooterConvertedFromMC14;
+            }
+        }
+    }
+
+    private XmlElement LoadAndGetRootElement(PackagePart containerPart, string xpath)
+    {
+        using (Stream inStream = containerPart.GetStream(FileMode.Open))
+        {
+            XmlDocument xmlDocument = new XmlDocument();
+            SpiritResolver.InitializeDocument(xmlDocument, SchemasManager.Worksheet50);
+            xmlDocument.Load(inStream);
+            xmlDocument.Validate(null);
+            XmlNamespaceManager mcdxNameSpaceManager = XmlWorksheetData.McdxNameSpaceManager;
+            return xmlDocument.SelectSingleNode(xpath, mcdxNameSpaceManager) as XmlElement;
+        }
+    }
+
+    private IList<IRegionPersistentData> DeserializeWorksheetSection(PackagePart part, IWorksheetSectionPersistentData sectionData, IRegionCollectionSerializer regionCollectionSerializer, string fullFilePath)
+    {
+        IList<IRegionPersistentData> result;
+        if (part == null)
+        {
+            result = null;
+        }
+        else
+        {
+            using (Stream stream = part.GetStream(FileMode.Open))
+            using (McdxDeserializer mcdxDeserializer = new McdxDeserializer(fullFilePath, part, new WorksheetSectionDeserializationStrategy(sectionData, MathFormat, LabeledIdFormat), DocumentSerializationHelper, regionCollectionSerializer, true, _textStylesManager.TextStyleChangedHandler))
+            {
+                mcdxDeserializer.Deserialize(stream);
+                result = mcdxDeserializer.DeserializedRegions;
+            }
+        }
+        return result;
+    }
+
+    protected Exception SavePackage(string newFileName, IDocumentSaveOptions options)
+    {
+        Exception result = null;
+        string text = null;
+        string fullPath = Path.GetFullPath(newFileName);
+        try
+        {
+            text = Path.GetTempFileName();
+            using (FileStream fileStream = File.Open(text, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
+            {
+                using (Package package = PackageOpsProvider.GetPackageForWrite(fileStream))
+                {
+                    ResultManager.Instance.Clear();
+                    DocumentSerializationHelper.InitializeForWrite("MathcadPrime");
+                    DocumentSerializationHelper.EngineVersion = GetEngineVersion();
+                    SerializeWorksheet(package);
+                    package.Flush();
+                    using (Stream stream = PackageOpsProvider.AddCoreMetadataPartToPackage(package).GetStream(FileMode.Create))
+                    using (StreamWriter writer = new StreamWriter(stream))
+                    {
+                        new SpiritMetadataSerializer().Serialize(MetadataModel, writer);
+                    }
+                    PackageSerializable.GetApplicationPropertiesSerializer(PackageOpsProvider, DocumentSerializationHelper).Write(package);
+                    PackageSerializable.GetPresentationSettingsSerializable(this).Write(package);
+                    PackageSerializable.GetCalculationSettingsSerializable(this).Write(package);
+                    new ResultDataSerializer(PackageOpsProvider).Write(package);
+                    new IntegrationDataSerializer(this, Worksheet).Write(package);
+                    DocumentSerializationHelper.CleanSerializerTempData(WorksheetData.WorksheetContent.RegionsToSerialize.Keys.ToList());
+                    DocumentSerializationHelper.CleanSerializerTempData(WorksheetData.Header.RegionsToSerialize.Keys.ToList());
+                    DocumentSerializationHelper.CleanSerializerTempData(WorksheetData.Footer.RegionsToSerialize.Keys.ToList());
+                    DocumentSerializationHelper.CleanSerializerTempData(WorksheetData.FirstPageHeader.RegionsToSerialize.Keys.ToList());
+                    DocumentSerializationHelper.CleanSerializerTempData(WorksheetData.FirstPageFooter.RegionsToSerialize.Keys.ToList());
+                }
+                try
+                {
+                    if (!options.IsDetachedCopy)
+                    {
+                        DebugTools.DevAssert((_fileStream == null && (FilePath == null || _isNetworkDriveDisconnected)) || (_fileStream != null && _fileStream.Name == FilePath), null);
+                        if (_fileStream == null || !_fileStream.CanWrite || !string.Equals(_fileStream.Name, fullPath, StringComparison.OrdinalIgnoreCase))
+                        {
+                            OpenPackageStreamForWriteAndSharedRead(fullPath, false);
+                        }
+                        _fileStream.SetLength(0L);
+                        fileStream.Position = 0L;
+                        fileStream.CopyTo(_fileStream);
+                        _fileStream.Position = 0L;
+                        try
+                        {
+                            File.Open(fullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite).Dispose();
+                        }
+                        catch (Exception ex)
+                        {
+                            DebugTools.FailAssertion(ex);
+                        }
+                        FilePath = fullPath;
+                        _isNew = false;
+                        IsDirty = false;
+                        _isNetworkDriveDisconnected = false;
+                    }
+                }
+                catch (IOException innerException)
+                {
+                    NetworkDriveEnsureStreamRelease(FilePath, ref innerException);
+                    throw new FileIsUsedByAnotherProcessException(innerException);
+                }
+            }
+            try
+            {
+                if (options.IsDetachedCopy)
+                {
+                    FileAttributes? fileAttributes;
+                    try
+                    {
+                        fileAttributes = File.GetAttributes(fullPath);
+                    }
+                    catch (Exception)
+                    {
+                        fileAttributes = null;
+                    }
+                    if (fileAttributes.HasValue && fileAttributes.Value.HasFlag(FileAttributes.Hidden))
+                    {
+                        File.SetAttributes(fullPath, fileAttributes.Value & ~FileAttributes.Hidden);
+                    }
+                    File.Copy(text, fullPath, true);
+                    try
+                    {
+                        if (fileAttributes.HasValue)
+                        {
+                            File.SetAttributes(fullPath, fileAttributes.Value);
+                        }
+                    }
+                    catch (Exception ex3)
+                    {
+                        DebugTools.FailAssertion(ex3);
+                    }
+                }
+            }
+            catch (IOException innerException2)
+            {
+                NetworkDriveEnsureStreamRelease(FilePath, ref innerException2);
+                throw new FileIsUsedByAnotherProcessException(innerException2);
+            }
+        }
+        catch (Exception ex4)
+        {
+            if (ex4 is OutOfMemoryException)
+            {
+                GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+                GC.Collect();
+            }
+            ExceptionOccured("saving package {0}", ex4);
+            result = ex4;
+        }
+        finally
+        {
+            try
+            {
+                if (text != null)
+                {
+                    File.Delete(text);
+                }
+            }
+            catch (Exception ex5)
+            {
+                DebugTools.FailAssertion(ex5);
+            }
+            WorksheetData = null;
+            DocumentSerializationHelper.Reset();
+        }
+        return result;
+    }
+
+    protected void SaveDita(string fileName)
+    {
+        using (DitaWriter ditaWriter = new DitaWriter(fileName, DocumentSerializationHelper))
+        {
+            foreach (UIElement region in Regions)
+            {
+                if (region is ContentControl)
+                {
+                    ditaWriter.WriteContentControl(region as ContentControl);
+                }
+                else if (region is RichTextBox)
+                {
+                    ditaWriter.WriteRichTextBox(region as RichTextBox);
+                }
+                else if (region is ImageControl)
+                {
+                    ditaWriter.WriteImageControl(region as ImageControl);
+                }
+            }
+            using (new DitaWriter.Worksheet(ditaWriter))
+            {
+                foreach (UIElement region2 in Regions)
+                {
+                    if (region2 is ImageControl)
+                    {
+                        ditaWriter.WriteImageControlML(region2 as ImageControl);
+                    }
+                    if (region2 is IDitaRegion)
+                    {
+                        ditaWriter.WriteRegionML(region2);
+                    }
+                }
+            }
+            ditaWriter.Flush();
+            ditaWriter.Close();
+        }
+    }
+
+    private void OnPrintingStarted(object sender, WritingProgressChangedEventArgs args)
+    {
+        _runningPrintJobs.Add((PrintJob)sender);
+    }
+
+    private void OnPrintingCompleted(object sender, WritingCompletedEventArgs args)
+    {
+        PrintJob printJob = (PrintJob)sender;
+        _runningPrintJobs.Remove(printJob);
+        printJob.JobStarted -= OnPrintingStarted;
+        printJob.JobCompleted -= OnPrintingCompleted;
+        DisposePrintableDocument(printJob.PrintableDocument);
+    }
+
+    private void OnSaveToXpsStarted(object sender, WritingProgressChangedEventArgs args)
+    {
+        DebugTools.LogData("EngineeringDocument.OnSaveToXpsStarted: Enter");
+        _runningPrintJobs.Add((PrintJob)sender);
+        _waitForSaveXps.Reset();
+    }
+
+    private void OnSaveToXpsCompleted(object sender, WritingCompletedEventArgs args)
+    {
+        DebugTools.LogData("EngineeringDocument.OnSaveToXpsCompleted: Enter");
+        _waitForSaveXps.Set();
+        PrintJob printJob = (PrintJob)sender;
+        _runningPrintJobs.Remove(printJob);
+        printJob.JobStarted -= OnSaveToXpsStarted;
+        printJob.JobCompleted -= OnSaveToXpsCompleted;
+        DisposePrintableDocument(printJob.PrintableDocument);
+    }
+
+    private static void DisposePrintableDocument(IDocumentPaginatorSource printableDoc)
+    {
+        if (printableDoc is IDisposable disposable)
+        {
+            disposable.Dispose();
+        }
+    }
+
+    public void Print(Func<bool> askCancelPrintInProgress)
+    {
+        if (IsPrinting && !askCancelPrintInProgress())
+        {
+            return;
+        }
+        try
+        {
+            Quire.Wpf.Printing.PrintDialog printDialog = new Quire.Wpf.Printing.PrintDialog(FunctionalityService.Instance.IsFunctionalityEnabled(EnumFunctionalityKey.SelectPrintRange) ? (SelectedRegionCount > 0 ? Quire.Wpf.Printing.PrintDialog.RangeSelectionOptions.AllEnabled : Quire.Wpf.Printing.PrintDialog.RangeSelectionOptions.AllButSelection) : Quire.Wpf.Printing.PrintDialog.RangeSelectionOptions.NoneEnabled)
+            {
+                MaxPage = (uint)PageCount,
+                MinPage = 1u
+            };
+            SetPrintDialogPageLayoutOptionsFromDocument(Worksheet, printDialog);
+            if (printDialog.ShowDialog() == true)
+            {
+                PrintDocument(printDialog, true);
+            }
+        }
+        catch (Exception ex)
+        {
+            DebugTools.FailAssertion(ex);
+        }
+    }
+
+    private bool FireWaitForCalculationForSaveAsApi(out Exception exception)
+    {
+        if (!DocCalculationOptions.IsAutoCalcOn)
+        {
+            exception = null;
+            return true;
+        }
+        int defaultCalculationTimeout = InputOutputRegionManager.DefaultCalculationTimeout;
+        try
+        {
+            if (defaultCalculationTimeout != 0)
+            {
+                FireWaitForCalculationIdle(defaultCalculationTimeout, CalcResultsProcessingPriorities.DefaultResultDispatchPriority_Background);
+            }
+            exception = null;
+        }
+        catch (CalculationDisabledException)
+        {
+            exception = null;
+        }
+        catch (Exception ex2)
+        {
+            exception = ex2;
+            DebugTools.DevAssert(ex2 is TimeoutException, null);
+            return false;
+        }
+        return true;
+    }
+
+    public bool SaveAsPdf_ForApiOnly(string filename)
+    {
+        if (IsPrinting)
+        {
+            return false;
+        }
+        Exception exception;
+        if (!FireWaitForCalculationForSaveAsApi(out exception))
+        {
+            return false;
+        }
+        try
+        {
+            SavePdfDocument(filename);
+        }
+        catch
+        {
+            return false;
+        }
+        return true;
+    }
+
+    private void PrintDocument(IPrintDialogOptions printOptions, bool async)
+    {
+        IDocumentPaginatorSource documentPaginatorSource = CreatePrintableDocument(printOptions.PrintRange, printOptions.PageRange);
+        if (documentPaginatorSource == null)
+        {
+            return;
+        }
+        PrintJob printJob = new PrintJob
+        {
+            PrintableDocument = documentPaginatorSource
+        };
+        printJob.JobStarted += OnPrintingStarted;
+        printJob.JobCompleted += OnPrintingCompleted;
+        if (printOptions.PrintToFile)
+        {
+            printJob.PrintToFile(printOptions.FileName, async);
+            return;
+        }
+        printOptions.PrintQueue.CurrentJobSettings.Description = FilePathToNameConverter.Convert(DisplayFilePath, DocumentName);
+        printJob.Print(printOptions.PrintQueue, printOptions.PrintTicket, async);
+    }
+
+    private void SaveXpsDocument(string filePath, bool shouldEnrichPrintingTree = false)
+    {
+        DebugTools.LogData("EngineeringDocument.SaveXpsDocument: Enter");
+        IDocumentPaginatorSource documentPaginatorSource = CreatePrintableDocument(Win32PrintRange.AllPages, default, shouldEnrichPrintingTree);
+        if (documentPaginatorSource != null)
+        {
+            PrintJob printJob = new PrintJob();
+            printJob.JobStarted += OnSaveToXpsStarted;
+            printJob.JobCompleted += OnSaveToXpsCompleted;
+            printJob.PrintableDocument = documentPaginatorSource;
+            printJob.PrintToFile(filePath, false);
+        }
+    }
+
+    private void SaveRtfDocument(string filePath)
+    {
+        RtfItemWrapperHelper helper = new RtfItemWrapperHelper(this, Worksheet, true);
+        new SaveAsRtfWorksheetItemsVisitor(filePath, helper).VisitAll(Worksheet.WorksheetItems);
+    }
+
+    private static void SetPrintDialogPageLayoutOptionsFromDocument(IWorksheetControl worksheet, Quire.Wpf.Printing.PrintDialog printDlg)
+    {
+        printDlg.PrintTicket.PageOrientation = GetSystemPrintingPageOrientationEquvalent(worksheet.PageLayout.PageOrientation);
+        printDlg.PrintTicket.PageMediaSize = new PageMediaSize(GetSystemPrintingPageMediaSizeNameEquvalent(worksheet.PageLayout.PageSize));
+    }
+
+    private static System.Printing.PageOrientation GetSystemPrintingPageOrientationEquvalent(Quire.Controls.Core.PageOrientation pageOrientation)
+    {
+        if (!_pageOrientationTranslation.ContainsKey(pageOrientation))
+        {
+            return System.Printing.PageOrientation.Portrait;
+        }
+        return _pageOrientationTranslation[pageOrientation];
+    }
+
+    private static PageMediaSizeName GetSystemPrintingPageMediaSizeNameEquvalent(PageSize pageSize)
+    {
+        if (!_pageSizeTranslation.ContainsKey(pageSize))
+        {
+            return PageMediaSizeName.NorthAmericaLetter;
+        }
+        return _pageSizeTranslation[pageSize];
     }
 
     partial class RootDecorator
