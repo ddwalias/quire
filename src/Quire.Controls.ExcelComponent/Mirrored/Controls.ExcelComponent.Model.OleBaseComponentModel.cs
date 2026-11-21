@@ -1,58 +1,23 @@
-using Quire.Calculation.Core;
-
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using Quire.Calculation.Core;
+using Quire.Calculation.Core.Support;
 using Quire.Controls.Core;
 using Quire.Controls.ExcelComponent.View;
 using Quire.Controls.Mathboard;
 using Quire.Controls.Whiteboard;
 using Quire.Services;
+
 namespace Quire.Controls.ExcelComponent.Model;
 
-public abstract partial class OleBaseComponentModel
+public abstract partial class OleBaseComponentModel : AggregateMathboardModel, IOleBaseComponentModel, IAggregateMathboardModel, IMathboardModel, IWhiteboardModel, ICloneable, IDisposable, ICalculatableContainer, ICalculatableAggregate, ICalculatable, ICanContainSymbolicCalculation, IVerticalWhiteboardSections, INotifyPropertyChanged
 {
-    public global::System.Windows.ResourceDictionary Resources { get; set; }
-
-    public override int BlockSectionCount => 2;
-
-    internal virtual global::Quire.Controls.ExcelComponent.View.IOleContainerItem OleContainerItem { get; set; }
-
-    public EngineError Error
+    public static partial class PropertyNames
     {
-        get
-        {
-            return _error;
-        }
-        protected set
-        {
-            if (value == _error)
-            {
-                return;
-            }
-            _error = value;
-            OnPropertyChanged("Error");
-        }
-    }
-
-    protected uint ComponentNodeHandle { get; set; }
-
-    public int ComponentId { get; set; }
-
-    private static void HandleContainerChildrenChanged()
-    {
-    }
-
-    protected virtual ICalculatable LookupCalculatableWrapper(ICalculatable calc)
-    {
-        return GetWrapper(calc);
-    }
-
-    protected virtual void SetErrorFallback(EngineError error)
-    {
-        SetChildError(null);
-        SetComponentError(error);
+        public const string Error = "Error";
     }
 
     private static IOleBaseComponentItemManager _oleComponentItemMgr;
@@ -69,9 +34,16 @@ public abstract partial class OleBaseComponentModel
 
     public event Action<IOleBaseComponentCalculatableWrapper> OleComponentChildErrorChanged;
 
-    public event PropertyChangedEventHandler PropertyChanged;
+    protected OleBaseComponentModel()
+        : base(new OleBaseItemPositionComparer())
+    {
+        WhiteboardItems.ParentSupportsInputsOutputs = false;
+    }
 
-    public event Action<IOleContainerItem> OleContainerItemAdded;
+    static OleBaseComponentModel()
+    {
+        AppServiceRegistry.AddService<IOleBaseComponentItemManager>(new OleBaseComponentItemManager());
+    }
 
     protected internal static IOleBaseComponentItemManager OleComponentItemMgr
     {
@@ -85,31 +57,9 @@ public abstract partial class OleBaseComponentModel
         }
     }
 
-    internal IEnumerable<IWhiteboardItem> Inputs => WhiteboardItems.Where(IsInputItem);
+    public ResourceDictionary Resources { get; set; }
 
-    internal IEnumerable<IWhiteboardItem> Outputs => WhiteboardItems.Where(IsOutputItem);
-
-    public bool IsErrorFromChild
-    {
-        get
-        {
-            if (Error != null)
-            {
-                return Error.ErrorSource is IOleBaseComponentCalculatableWrapper;
-            }
-            return false;
-        }
-    }
-
-    protected abstract IEnumerable<string> ComponentErrors { get; }
-
-    public IEnumerable<IOleBaseComponentCalculatableWrapper> CalculatableWrappers => CalculatableWrapperMap.Values;
-
-    protected OleBaseComponentModel()
-        : base(new OleBaseItemPositionComparer())
-    {
-        WhiteboardItems.ParentSupportsInputsOutputs = false;
-    }
+    public override int BlockSectionCount => 2;
 
     public override string GetBlockSectionName(uint sectionIdx)
     {
@@ -146,6 +96,12 @@ public abstract partial class OleBaseComponentModel
         }
         throw new IndexOutOfRangeException("OLE component contains 2 sections");
     }
+
+    internal virtual IOleContainerItem OleContainerItem { get; set; }
+
+    internal IEnumerable<IWhiteboardItem> Inputs => WhiteboardItems.Where(IsInputItem);
+
+    internal IEnumerable<IWhiteboardItem> Outputs => WhiteboardItems.Where(IsOutputItem);
 
     protected bool IsInputItem(IWhiteboardItem item)
     {
@@ -184,6 +140,8 @@ public abstract partial class OleBaseComponentModel
         return null;
     }
 
+    public event PropertyChangedEventHandler PropertyChanged;
+
     protected void OnPropertyChanged(string propertyName)
     {
         if (PropertyChanged != null)
@@ -210,6 +168,35 @@ public abstract partial class OleBaseComponentModel
             return;
         }
         WhiteboardModel.WhiteboardItemMgr.SetItemLocation(item, location);
+    }
+
+    public EngineError Error
+    {
+        get
+        {
+            return _error;
+        }
+        protected set
+        {
+            if (value == _error)
+            {
+                return;
+            }
+            _error = value;
+            OnPropertyChanged("Error");
+        }
+    }
+
+    public bool IsErrorFromChild
+    {
+        get
+        {
+            if (Error != null)
+            {
+                return Error.ErrorSource is IOleBaseComponentCalculatableWrapper;
+            }
+            return false;
+        }
     }
 
     protected abstract void UpdateCustomErrorBasedOnPlacement(IWhiteboardItem item, bool placedAfterOleContainer);
@@ -254,6 +241,46 @@ public abstract partial class OleBaseComponentModel
         UpdateErrorAccordingToChildren();
     }
 
+    protected void UpdateErrorAccordingToChildren()
+    {
+        if (Error != null && !IsErrorFromChild)
+        {
+            return;
+        }
+        IOleBaseComponentCalculatableWrapper oleBaseComponentCalculatableWrapper = CalculatableWrappers.FirstOrDefault(wrapper => wrapper.Error != null);
+        EngineError engineError = oleBaseComponentCalculatableWrapper?.Error;
+        if (engineError != null && DebugTools.AssertNotNull(engineError.ErrorSource, null).Failed)
+        {
+            engineError.ErrorSource = oleBaseComponentCalculatableWrapper;
+        }
+        Error = engineError;
+    }
+
+    public void SetErrorInHiddenSection(bool hasHiddenErrors)
+    {
+        if (Error != null && !IsErrorFromChild && Error.ErrorCode != "ErrorsInHiddenSection.Error.Key")
+        {
+            return;
+        }
+        if (Error != null && Error.ErrorCode == "ErrorsInHiddenSection.Error.Key")
+        {
+            if (!hasHiddenErrors && DebugTools.DevAssert(!IsErrorFromChild, null).Passed)
+            {
+                SetComponentError(null);
+            }
+            return;
+        }
+        if (hasHiddenErrors)
+        {
+            SetComponentError(new EngineError
+            {
+                Message = "ErrorsInHiddenSection.Error.Key",
+                IsRuntime = true,
+                ResourceString = (string)Resources["ErrorsInHiddenSection.Error.Key"]
+            });
+        }
+    }
+
     protected void HandleChildWrapperErrorChanged(IOleBaseComponentCalculatableWrapper wrapper, EngineError newError)
     {
         UpdateErrorAccordingToChildren();
@@ -264,6 +291,16 @@ public abstract partial class OleBaseComponentModel
     }
 
     protected abstract void SetErrorByNodeHandle(EngineError error);
+
+    protected virtual void SetErrorFallback(EngineError error)
+    {
+        SetChildError(null);
+        SetComponentError(error);
+    }
+
+    protected uint ComponentNodeHandle { get; set; }
+
+    protected abstract IEnumerable<string> ComponentErrors { get; }
 
     public override void SetError(EngineError error)
     {
@@ -304,23 +341,141 @@ public abstract partial class OleBaseComponentModel
         }
     }
 
+    protected IEnumerable<IOleBaseComponentCalculatableChild> CalculatableFragments
+    {
+        get
+        {
+            foreach (IOleBaseComponentCalculatableChild calculatableChild in CalculatableChildren)
+            {
+                Pair<bool, bool> isFragment = calculatableChild.IsFragment;
+                if (isFragment.Second)
+                {
+                    DebugTools.DevAssert(calculatableChild.Rl.StartsWith("(fragment") == isFragment.First, calculatableChild.GetType().Name + " : " + calculatableChild.Rl);
+                }
+                if (isFragment.First)
+                {
+                    yield return calculatableChild;
+                }
+            }
+        }
+    }
+
+    protected virtual void SetChildError(EngineError error)
+    {
+        CalculatableFragments.Where(fragment => fragment.Error != null && !fragment.Error.IsPlaceholderError()).Each(fragment =>
+        {
+            fragment.SetError(null);
+        });
+        if (error == null)
+        {
+            return;
+        }
+        error.ErrorSource.SetError(error);
+    }
+
+    public IEnumerable<IOleBaseComponentCalculatableWrapper> CalculatableWrappers => CalculatableWrapperMap.Values;
+
+    public int ComponentId { get; set; }
+
+    public void UpdateCalculationPosition(IEnumerable<IWhiteboardItem> list)
+    {
+        List<IWhiteboardItem> itemsToUpdatePosition = new List<IWhiteboardItem>();
+        WhiteboardItems.EachWithIndex((int idx, IWhiteboardItem item) =>
+        {
+            if (list.IndexOf(item) != idx)
+            {
+                itemsToUpdatePosition.Add(item);
+            }
+        });
+        itemsToUpdatePosition.Each(UpdatePosition);
+    }
+
+    public event Action<IOleContainerItem> OleContainerItemAdded;
+
     protected override void AddItems(IEnumerable<IWhiteboardItem> items)
     {
+        IOleContainerItem oleContainerItem = items.OfType<IOleContainerItem>().FirstOrDefault();
+        if (oleContainerItem != null && OleContainerItemAdded != null)
+        {
+            OleContainerItemAdded(oleContainerItem);
+        }
         base.AddItems(items);
     }
 
+    protected virtual IEnumerable<ICalculatable> CalculatablesConnectedToTheEngine =>
+        WhiteboardItems.OfType<ICalculatable>().Where(item => GetWrapper(item).IsConnectedToTheEngine);
+
     protected override void FireCalculatableAdded(ICalculatable calculatable)
     {
+        IOleBaseComponentCalculatableChild oleBaseComponentCalculatableChild = calculatable as IOleBaseComponentCalculatableChild;
+        if (DebugTools.AssertNotNull(oleBaseComponentCalculatableChild, null).Failed)
+        {
+            return;
+        }
+        if (DebugTools.DevAssert(!oleBaseComponentCalculatableChild.IsConnectedToTheEngine, null).Failed)
+        {
+            return;
+        }
+        oleBaseComponentCalculatableChild.IsConnectedToTheEngine = true;
         base.FireCalculatableAdded(calculatable);
     }
 
     protected override void FireCalculatableRemoved(ICalculatable calculatable)
     {
+        IOleBaseComponentCalculatableChild oleBaseComponentCalculatableChild = calculatable as IOleBaseComponentCalculatableChild;
+        if (DebugTools.AssertNotNull(oleBaseComponentCalculatableChild, null).Failed)
+        {
+            return;
+        }
+        if (DebugTools.DevAssert(oleBaseComponentCalculatableChild.IsConnectedToTheEngine, null).Failed)
+        {
+            return;
+        }
         base.FireCalculatableRemoved(calculatable);
+        oleBaseComponentCalculatableChild.IsConnectedToTheEngine = false;
     }
 
     protected override void FireCalculatableMoved(ICalculatable calculatable)
     {
-        base.FireCalculatableMoved(calculatable);
+        IOleBaseComponentCalculatableChild oleBaseComponentCalculatableChild = calculatable as IOleBaseComponentCalculatableChild;
+        if (DebugTools.AssertNotNull(oleBaseComponentCalculatableChild, null).Failed)
+        {
+            return;
+        }
+        if (oleBaseComponentCalculatableChild.IsConnectedToTheEngine)
+        {
+            base.FireCalculatableMoved(calculatable);
+        }
+    }
+
+    protected abstract ICalculatable CreateCalculatableWrapper(ICalculatable calc, bool arg2);
+
+    protected virtual ICalculatable LookupCalculatableWrapper(ICalculatable calc)
+    {
+        return GetWrapper(calc);
+    }
+
+    protected abstract void RemoveCalculatableWrapper(ICalculatable calc);
+
+    private void HandleChildCalcHiddenStateChanged(ICalculatable calc, bool arg2)
+    {
+        if (calc is IOleBaseComponentCalculatableWrapper oleBaseComponentCalculatableWrapper)
+        {
+            FireCalculatableHiddenStatusChanged(oleBaseComponentCalculatableWrapper.WrappedCalculatable as ICalculationHideableChild);
+        }
+    }
+
+    private static void HandleContainerChildrenChanged()
+    {
+    }
+
+    protected override CalculatableChildHider InitializeChildManager()
+    {
+        return new WrappedChildManager(CalculatablesConnectedToTheEngine, FireCalculatableAdded, FireCalculatableRemoved, FireCalculatableMoved, CreateCalculatableWrapper, LookupCalculatableWrapper, RemoveCalculatableWrapper, HandleChildCalcHiddenStateChanged, HandleContainerChildrenChanged);
+    }
+
+    public override void SetIdentifierLabels(IDictionary<ResolvedId, string[]> idLabelMap)
+    {
+        DebugTools.FailAssertion(null, Array.Empty<object>());
     }
 }

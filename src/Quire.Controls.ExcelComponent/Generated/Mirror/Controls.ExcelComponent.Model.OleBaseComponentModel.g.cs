@@ -11,26 +11,6 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.OleBaseComponentModel, Ptc.Controls.ExcelComponent")]
 public abstract partial class OleBaseComponentModel : global::Quire.Controls.Mathboard.AggregateMathboardModel, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentModel, global::Quire.Controls.Mathboard.IAggregateMathboardModel, global::Quire.Controls.Mathboard.IMathboardModel, global::Quire.Controls.Whiteboard.IWhiteboardModel, global::System.ICloneable, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Controls.Mathboard.IVerticalWhiteboardSections, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Collections.Generic.IEnumerable<global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild> CalculatableFragments { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatablesConnectedToTheEngine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected void UpdateErrorAccordingToChildren() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetErrorInHiddenSection(bool hasHiddenErrors) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void SetChildError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UpdateCalculationPosition(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract global::Quire.Calculation.Core.ICalculatable CreateCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc, bool arg2);
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract void RemoveCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc);
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleChildCalcHiddenStateChanged(global::Quire.Calculation.Core.ICalculatable calc, bool arg2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.Calculation.Core.Support.CalculatableChildHider InitializeChildManager() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.OleBaseComponentModel+PropertyNames, Ptc.Controls.ExcelComponent")]
     public static partial class PropertyNames
     {
