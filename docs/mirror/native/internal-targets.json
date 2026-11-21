@@ -271,6 +271,20 @@
       }
     }
   },
+  "engutils-mgd.dll": {
+    "sha256": "37af5be4b88336d216fdb5cbdeb562fb2497df197b3c1868f112fa3c13c662ba",
+    "targets": {},
+    "managed": {
+      "new": {
+        "size": 68,
+        "toolchain": true
+      },
+      "delete[]": {
+        "size": 5,
+        "toolchain": true
+      }
+    }
+  },
   "engutils.dll": {
     "sha256": "90d1a0754271942118cbddf58442cc0c3a8aedd62b767f4021631abb736d3c0c",
     "targets": {
