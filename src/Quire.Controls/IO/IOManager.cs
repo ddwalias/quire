@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Threading;
+using Quire.Calculation.Core;
 using Quire.Calculation.Core.Support;
 using Quire.Controls.Core;
 using Quire.Controls.Core.IORegions;
@@ -11,6 +13,7 @@ using Quire.Core;
 using Quire.EquationEditor.Tree;
 using Quire.EquationEditor.Tree.Transform;
 using Quire.Mirror;
+using Quire.Wpf;
 
 namespace Quire.Controls.IO;
 
@@ -281,16 +284,182 @@ public partial class IOManager
     [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
     public event Action IODataChanged;
 
-    partial class InputOutputStateGetterNotifier
+    [MirrorOf("Ptc.Controls.IO.IOManager+InputOutputStateGetterNotifier, Ptc.Controls")]
+    private class InputOutputStateGetterNotifier : INotifyProgress, IDisposable
     {
-        [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-        public void Dispose() => AbortProgressTracking();
+        private const int ProgressZero = 0;
+        private const int ProgressNotStarted = -1;
+        private const int ProgressAborted = -2;
 
-        [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+        private int _progress = -1;
+        private readonly int _originalCount;
+        private DispatcherTimer _timer;
+        private readonly List<ICalcWithSyncStatus> _calculatables;
+
         public event ProgressChangedEventHandler ProgressChanged;
-
-        [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         public event Action<bool> ProgressStopped;
+
+        public InputOutputStateGetterNotifier(IEnumerable<ICalcWithSyncStatus> shadows)
+        {
+            _calculatables = shadows.ToList();
+            _originalCount = _calculatables.Count;
+        }
+
+        public void SetProgressAbortTimeout(int msThreshold)
+        {
+            if (_timer != null)
+            {
+                _timer.Stop();
+            }
+            if (msThreshold < 0)
+            {
+                return;
+            }
+            if (_timer == null)
+            {
+                _timer = new DispatcherTimer(DispatcherPriority.Background);
+                _timer.Tick += delegate
+                {
+                    AbortProgressTracking();
+                };
+            }
+            _timer.Interval = new TimeSpan(0, 0, 0, 0, msThreshold);
+            if (_progress >= 0 && _progress != _originalCount)
+            {
+                _timer.Start();
+            }
+        }
+
+        public void StartProgressTracking()
+        {
+            if (DebugTools.DevAssert(_progress == -1, null).Failed)
+            {
+                return;
+            }
+            _progress = 0;
+            if (_originalCount != 0)
+            {
+                foreach (ICalcWithSyncStatus item in _calculatables.ToList())
+                {
+                    // Mathcad SynchronizationStatus.Synchronized is 3; Quire.Calculation.Core has not assigned = 3 yet
+                    if (item.SynchronizationStatus == (SynchronizationStatus)3)
+                    {
+                        _progress++;
+                        _calculatables.Remove(item);
+                    }
+                    else
+                    {
+                        Hookup(item);
+                    }
+                }
+            }
+            if (!ReportProgressOrComplete() && _timer != null)
+            {
+                _timer.Start();
+            }
+        }
+
+        // Mathcad emits a shared ret at IL_0017 with bne.un.s to body, differing from Roslyn 10 branch layout
+        public void AbortProgressTracking() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+        public bool IsProgressTrackingAborted()
+        {
+            return _progress == -2;
+        }
+
+        public bool IsTrackingInProgress
+        {
+            get
+            {
+                if (_progress >= 0)
+                {
+                    return _progress < _originalCount;
+                }
+                return false;
+            }
+        }
+
+        public void Dispose()
+        {
+            AbortProgressTracking();
+        }
+
+        private void Hookup(ICalcWithSyncStatus calc)
+        {
+            calc.Synchronized += FireProgressChanged;
+        }
+
+        private void Unhookup(ICalcWithSyncStatus calc)
+        {
+            calc.Synchronized -= FireProgressChanged;
+        }
+
+        private void FireProgressChanged(ICalcWithSyncStatus simpleCalculatable)
+        {
+            _progress++;
+            Unhookup(simpleCalculatable);
+            _calculatables.Remove(simpleCalculatable);
+            ReportProgressOrComplete();
+        }
+
+        private bool ReportProgressOrComplete()
+        {
+            if (_progress == _originalCount)
+            {
+                CompleteProgressTracking();
+                return true;
+            }
+            if (ProgressChanged != null)
+            {
+                ProgressChanged(this, new ProgressChangedEventArgs(100 * _progress / _originalCount, null));
+            }
+            return false;
+        }
+
+        private void CompleteProgressTracking()
+        {
+            if (ProgressChanged != null)
+            {
+                ProgressChanged(this, new ProgressChangedEventArgs(100, null));
+            }
+            StopProgressTracking(true);
+        }
+
+        private void StopProgressTracking(bool finished)
+        {
+            if (_timer != null)
+            {
+                _timer.Stop();
+            }
+            if (ProgressStopped != null)
+            {
+                ProgressStopped(finished);
+            }
+            _calculatables.Each(Unhookup);
+            _calculatables.Clear();
+        }
+    }
+
+    [MirrorOf("Ptc.Controls.IO.IOManager+IUnitedValueGetter, Ptc.Controls")]
+    private interface IUnitedValueGetter
+    {
+        string Alias { get; }
+        IEnumerable<CalculationOverridesTypes> OverrideTypes { get; }
+        string ScalingSExpression { get; }
+        bool IsEmptyState(CalculationOverridesTypes type);
+        void GetComputedValue(IScaledEvaluation shadowEval, CalculationOverridesTypes type);
+        void SetOperationResult(IOManagerErrorCode code, CalculationOverridesTypes type);
+        IOManagerErrorCode GetOperationResult(CalculationOverridesTypes type);
+        bool IsScalingValid();
+    }
+
+    [MirrorOf("Ptc.Controls.IO.IOManager+ISingleValueSetter, Ptc.Controls")]
+    private interface ISingleValueSetter
+    {
+        string Alias { get; }
+        IOManagerErrorCode OperationResult { get; set; }
+        bool IsValid();
+        IShadowIdDefinition CreateShadowCalculatable(string sExprKey);
     }
 
     [MirrorOf("Ptc.Controls.IO.IOManager+UnitedScalarState, Ptc.Controls")]
