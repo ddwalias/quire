@@ -30,8 +30,6 @@ public partial class ChartComponentModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.ExcelComponent.Model.SimpleChartCalculatable> ConnectedDefaultLimits { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.ExcelComponent.View.ChartContainer ChartContainerItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     internal event global::System.Action RequestUpdateIdentifierLabels;
     [global::Quire.Mirror.MirrorStub]
     public ChartComponentModel() { }
@@ -40,31 +38,15 @@ public partial class ChartComponentModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     public override void Commit() => base.Commit();
     [global::Quire.Mirror.MirrorStub]
-    protected override void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) => base.FireCalculatableAdded(calculatable);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable) => base.FireCalculatableRemoved(calculatable);
-    [global::Quire.Mirror.MirrorStub]
     protected override void FireCalculatableMoved(global::Quire.Calculation.Core.ICalculatable calculatable) => base.FireCalculatableMoved(calculatable);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void SetErrorByNodeHandle(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void SetChildError(global::Quire.Calculation.Core.EngineError error) => base.SetChildError(error);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void UpdateCustomErrorBasedOnPlacement(global::Quire.Controls.Core.IWhiteboardItem item, bool placedAfterOleContainer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Calculation.Core.ICalculatable CreateCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc, bool arg2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.Calculation.Core.ICalculatable LookupCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc) => base.LookupCalculatableWrapper(calc);
-    [global::Quire.Mirror.MirrorStub]
     protected override void RemoveCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override object Clone() => base.Clone();
     [global::Quire.Mirror.MirrorStub]
     private void HandleChildWrapperRemovedOrChartTypeChanged(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapper, global::System.Nullable<global::Quire.Controls.ExcelComponent.Model.ChartWrapperType> prevTypeWhenRemoving) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateAllTraces(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapperToCommit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateChartMinMaxCalculatable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void InternalAddCalculatableAndEvaluate(global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

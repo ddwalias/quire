@@ -7,6 +7,11 @@ namespace Quire.Controls.ExcelComponent.Model;
 
 internal partial class ChartTraceCalculatable
 {
+    public ChartTraceCalculatable(IChartMinMaxCalculatable minMax)
+    {
+        _minMax = minMax;
+    }
+
     public static int TraceIdForChartApp(uint traceId)
     {
         return (int)traceId - 1;
@@ -287,6 +292,39 @@ internal partial class ChartTraceCalculatable
         child.RemoveAssociatedTrace(this);
     }
 
+    private void OnUpdateTraceWithDeserializedError(IChartComponentCalculatableWrapper wrapper, List<uint> traceIds)
+    {
+        DebugTools.DevAssert(wrapper.ChartWrapperType.IsTraceOrCommonType(), null);
+        if (!traceIds.Contains(TraceId))
+        {
+            return;
+        }
+        EngineError error = wrapper.Error;
+        if (DebugTools.AssertNotNull(error, null).Failed)
+        {
+            return;
+        }
+        EngineError engineError = null;
+        if (Error == null)
+        {
+            engineError = error;
+        }
+        else if (Error.NodeHandle == 0 && error.NodeHandle == 0 && Error.ErrorCode == error.ErrorCode)
+        {
+            EngineError engineError2 = error.Clone();
+            engineError2.ErrorSource = this;
+            engineError = engineError2;
+        }
+        else
+        {
+            DebugTools.FailAssertion(null, Array.Empty<object>());
+        }
+        if (engineError != null)
+        {
+            _currentError = engineError;
+        }
+    }
+
     private void UpdateChildren(ChartTraceDataToUpdate dataToUpdate)
     {
         IChartComponentCalculatableWrapper[] children = new IChartComponentCalculatableWrapper[] { XCalculatable, YCalculatable };
@@ -298,6 +336,10 @@ internal partial class ChartTraceCalculatable
             }
         }
     }
+
+    private readonly NodeHandleMapper _nodeHandleMapper = new NodeHandleMapper();
+
+    public static readonly string ChartVariableWithLabel = "mc_chart" + IdLabelsExtensions.GetRl(IdLabels.Variable, null);
 
     public const uint FirstTraceId = 1u;
 
@@ -323,9 +365,9 @@ internal partial class ChartTraceCalculatable
 
     private IChartComponentCalculatableWrapper _yCalculatable;
 
-    private SynchronizationStatus _syncStatus;
+    private SynchronizationStatus _syncStatus = (SynchronizationStatus)3;
 
-    private CalculatingStatus _calcStatus;
+    private CalculatingStatus _calcStatus = (CalculatingStatus)2;
 
     private bool _isConnectedToTheEngine;
 

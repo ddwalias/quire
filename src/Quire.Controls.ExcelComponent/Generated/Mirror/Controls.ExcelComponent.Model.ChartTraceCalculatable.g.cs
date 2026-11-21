@@ -12,19 +12,11 @@ namespace Quire.Controls.ExcelComponent.Model;
 internal partial class ChartTraceCalculatable : global::Quire.Controls.ExcelComponent.Model.IChartTraceCalculatable, global::Quire.Controls.ExcelComponent.Model.IChartCalculatable, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculationErrorOwner, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.NodeHandleMapper _nodeHandleMapper;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly string ChartVariableWithLabel;
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper> ErrorOwners { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public ChartTraceCalculatable(global::Quire.Controls.ExcelComponent.Model.IChartMinMaxCalculatable minMax) { }
-    [global::Quire.Mirror.MirrorStub]
     public void SetIdentifierLabels(global::System.Collections.Generic.IDictionary<global::Quire.Calculation.Core.ResolvedId, string[]> idLabelMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnUpdateTraceWithDeserializedError(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapper, global::System.Collections.Generic.List<uint> traceIds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
