@@ -1,62 +1,45 @@
+#nullable disable
+#pragma warning disable
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Quire;
+using Quire.Calculation.Core;
+using Quire.Controls;
 using Quire.Controls.Core;
+using Quire.Controls.Core.Serialization;
+using Quire.Controls.Core.Whiteboard;
+using Quire.Controls.ExcelComponent.Model;
+using Quire.Controls.ExcelComponent.ViewModel;
 using Quire.Controls.Internal;
+using Quire.Controls.Mathboard;
 using Quire.Wpf;
 
-using System.Collections.Generic;
-using System.Linq;
-using System.ComponentModel;
-using Quire.Calculation.Core;
-using Quire.Controls.ExcelComponent.ViewModel;
-using Quire.Controls.ExcelComponent.Model;
-using Quire.Controls.ExcelComponent.View;
-using Quire.Controls.Mathboard;
-using Quire.Controls.Core.Ole;
-using Quire.Controls.Whiteboard;
 namespace Quire.Controls.ExcelComponent.View;
 
 public abstract partial class OleBaseComponentControl
 {
-    public static double GetItemHeight(DependencyObject whiteboardItem)
+    public static DependencyProperty OleComponentLocationTopProperty;
+
+    public static DependencyProperty OleComponentLocationLeftProperty;
+
+    public static readonly DependencyProperty CalculatingStatusProperty;
+
+    public static readonly DependencyProperty SynchronizationStatusProperty;
+
+    private static void HandleOleComponentLocationTopChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
-        return (double)whiteboardItem.GetValue(FrameworkElement.HeightProperty);
+        obj.SetValue(AttachedProperties.PreviousLocationTopProperty, args.NewValue);
     }
 
-    public static void SetItemHeight(DependencyObject whiteboardItem, double value)
+    private static void HandleOleComponentLocationLeftChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
-        whiteboardItem.SetValue(FrameworkElement.HeightProperty, (object)value);
-    }
-
-    public static double GetOleComponentLocationLeft(DependencyObject whiteboardItem)
-    {
-        return (double)whiteboardItem.GetValue(OleComponentLocationLeftProperty);
-    }
-
-    public static void SetOleComponentLocationLeft(DependencyObject whiteboardItem, double value)
-    {
-        whiteboardItem.SetValue(OleComponentLocationLeftProperty, (object)value);
-    }
-
-    public Size CoerceNewSize(Size newSize, global::Quire.Controls.Core.IResizeData resizeData)
-    {
-        return newSize;
-    }
-
-    public override string GetBlockEquationTypeAttributeName(global::Quire.Controls.Core.IWhiteboardItem item)
-    {
-        return string.Empty;
-    }
-
-    public static double GetItemWidth(DependencyObject whiteboardItem)
-    {
-        return (double)whiteboardItem.GetValue(FrameworkElement.WidthProperty);
-    }
-
-    public static void SetItemWidth(DependencyObject whiteboardItem, double value)
-    {
-        whiteboardItem.SetValue(FrameworkElement.WidthProperty, (object)value);
+        obj.SetValue(AttachedProperties.PreviousLocationLeftProperty, args.NewValue);
     }
 
     public static double GetOleComponentLocationTop(DependencyObject whiteboardItem)
@@ -69,39 +52,123 @@ public abstract partial class OleBaseComponentControl
         whiteboardItem.SetValue(OleComponentLocationTopProperty, (object)value);
     }
 
-    private static void HandleOleComponentLocationTopChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+    public static double GetOleComponentLocationLeft(DependencyObject whiteboardItem)
     {
-        obj.SetValue(AttachedProperties.PreviousLocationTopProperty, args.NewValue);
+        return (double)whiteboardItem.GetValue(OleComponentLocationLeftProperty);
     }
 
-    private static void HandleOleComponentLocationLeftChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+    public static void SetOleComponentLocationLeft(DependencyObject whiteboardItem, double value)
     {
-        obj.SetValue(AttachedProperties.PreviousLocationLeftProperty, args.NewValue);
+        whiteboardItem.SetValue(OleComponentLocationLeftProperty, (object)value);
     }
 
-    public void UpdateAllErrors()
+    public static void SetItemWidth(DependencyObject whiteboardItem, double value)
     {
-        _oleBaseModel.UpdateAllErrors();
+        whiteboardItem.SetValue(FrameworkElement.WidthProperty, (object)value);
     }
 
-    private void FireCalcErrorChanged()
+    public static double GetItemWidth(DependencyObject whiteboardItem)
     {
-        FirePropertyChanged(global::Quire.Calculation.Core.ErrorChangedEventArgs.GetArgs());
+        return (double)whiteboardItem.GetValue(FrameworkElement.WidthProperty);
     }
 
-    public void SetPrintingZoom(bool set, global::System.Nullable<double> newPrintingZoom)
+    public static void SetItemHeight(DependencyObject whiteboardItem, double value)
     {
-        OleContainerItem.SetPrintingZoom(set, newPrintingZoom);
+        whiteboardItem.SetValue(FrameworkElement.HeightProperty, (object)value);
     }
 
-    public global::Quire.Controls.Core.IResizeData StoreResizeData(global::System.Windows.Size oldSize, global::System.Windows.Size newSize)
+    public static double GetItemHeight(DependencyObject whiteboardItem)
     {
-        return _oleBaseViewModel.StoreResizeData(oldSize, newSize);
+        return (double)whiteboardItem.GetValue(FrameworkElement.HeightProperty);
     }
 
-    public void RestoreResizeData(global::Quire.Controls.Core.IResizeData resizeData)
+    public override void SetCalculatingStatus(CalculatingStatus computingStatus)
     {
-        _oleBaseViewModel.RestoreResizeData(resizeData);
+        base.SetCalculatingStatus(computingStatus);
+        ((DependencyObject)this).SetValue(CalculatingStatusProperty, (object)computingStatus);
+    }
+
+    public override CalculatingStatus CalculatingStatus => (CalculatingStatus)((DependencyObject)this).GetValue(CalculatingStatusProperty);
+
+    public override void SetSynchronizationStatus(SynchronizationStatus syncStatus)
+    {
+        base.SetSynchronizationStatus(syncStatus);
+        ((DependencyObject)this).SetValue(SynchronizationStatusProperty, (object)syncStatus);
+    }
+
+    public override void SetIdentifierLabels(IDictionary<ResolvedId, string[]> idLabelMap)
+    {
+        Dictionary<ICalculatable, IDictionary<ResolvedId, string[]>> dictionary = new Dictionary<ICalculatable, IDictionary<ResolvedId, string[]>>();
+        foreach (KeyValuePair<ResolvedId, string[]> item in idLabelMap)
+        {
+            ResolvedId key = item.Key;
+            string[] value = item.Value;
+            IDictionary<ResolvedId, string[]> dictionary2;
+            ICalculatable calculatable;
+            if (key.Calculatable == this)
+            {
+                key = new ResolvedId
+                {
+                    Calculatable = _oleBaseModel,
+                    Name = key.Name,
+                    Tag = key.Tag
+                };
+            }
+            calculatable = key.Calculatable;
+            if (dictionary.ContainsKey(calculatable))
+            {
+                dictionary2 = dictionary[calculatable];
+            }
+            else
+            {
+                dictionary[calculatable] = (dictionary2 = new Dictionary<ResolvedId, string[]>());
+            }
+            dictionary2.Add(key, value);
+        }
+        dictionary.Each((KeyValuePair<ICalculatable, IDictionary<ResolvedId, string[]>> calcToLabelsPair) =>
+        {
+            calcToLabelsPair.Key.SetIdentifierLabels(calcToLabelsPair.Value);
+        });
+    }
+
+    public override SynchronizationStatus SynchronizationStatus => (SynchronizationStatus)((DependencyObject)this).GetValue(SynchronizationStatusProperty);
+
+    static OleBaseComponentControl()
+    {
+        OleComponentLocationTopProperty = DependencyProperty.RegisterAttached("OleComponentLocationTop", typeof(double), typeof(OleBaseComponentControl), new PropertyMetadata((object)double.NaN, (PropertyChangedCallback)HandleOleComponentLocationTopChanged));
+        OleComponentLocationLeftProperty = DependencyProperty.RegisterAttached("OleComponentLocationLeft", typeof(double), typeof(OleBaseComponentControl), new PropertyMetadata((object)double.NaN, (PropertyChangedCallback)HandleOleComponentLocationLeftChanged));
+        ErrorProperty = DependencyProperty.Register("Error", typeof(EngineError), typeof(OleBaseComponentControl), new FrameworkPropertyMetadata((object)null, (PropertyChangedCallback)ErrorChanged));
+        ResizableElementAttachedProperties.IsResizingProperty.AddOwner(typeof(OleBaseComponentControl), new FrameworkPropertyMetadata(IsResizingChanged));
+        EngineErrorMessages.MergeDictionary(ResourceProvider<OleBaseComponentErrorsDictionary>.Instance);
+        CalculatingStatusProperty = EquationControl.CalculatingStatusProperty.AddOwner(typeof(OleBaseComponentControl));
+        SynchronizationStatusProperty = EquationControl.SynchronizationStatusProperty.AddOwner(typeof(OleBaseComponentControl));
+    }
+
+    private readonly OleBaseComponentViewModel _oleBaseViewModel;
+
+    private readonly OleBaseComponentModel _oleBaseModel;
+
+    protected OleBaseComponentControl(OleBaseComponentViewModel viewModel, ResourceDictionary dict)
+        : base(viewModel, dict)
+    {
+        _oleBaseViewModel = (OleBaseComponentViewModel)ViewModel;
+        _oleBaseModel = (OleBaseComponentModel)_oleBaseViewModel.Model;
+        Init();
+        if (_oleBaseViewModel.OleContainerItem != null)
+        {
+            HandleOleContainerItemAdded(_oleBaseViewModel.OleContainerItem);
+        }
+    }
+
+    private void Init()
+    {
+        if (Resources.MergedDictionaries.Count > 0)
+        {
+            _oleBaseModel.Resources = Resources.MergedDictionaries[0];
+        }
+        _oleBaseModel.OleContainerItemAdded += HandleOleContainerItemAdded;
+        Loaded += OnOleComponentLoaded;
+        SetBinding(ErrorProperty, "Error");
     }
 
     private static void OnOleComponentLoaded(object sender, RoutedEventArgs e)
@@ -125,19 +192,66 @@ public abstract partial class OleBaseComponentControl
         oleBaseComponentControl._oleBaseViewModel.IsResizing = (bool)args.NewValue;
     }
 
-    private static void ErrorChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+    protected void InsertNewOleComponentExpression(string expression, bool navigateToEnd)
     {
-        OleBaseComponentControl oleBaseComponentControl = obj as OleBaseComponentControl;
-        if (DebugTools.AssertNotNull(oleBaseComponentControl, null).Failed)
+        OleBaseComponentCommands.NewOleComponentExpression.Execute(expression, this);
+        if (navigateToEnd)
         {
-            return;
+            IEquationControl equationControl = (IEquationControl)ActiveItem;
+            if (equationControl != null)
+            {
+                WhiteboardItemManager.ExecuteOnLoad(equationControl, equationControl.NavigateRegionEnd);
+            }
         }
-        oleBaseComponentControl.ErrorChanged();
     }
+
+    public IOleContainerItem OleContainerItem => _oleBaseViewModel.OleContainerItem;
 
     protected abstract IOleContainerItem CreateOleContainerItem();
 
-    public IOleContainerItem OleContainerItem => _oleBaseViewModel.OleContainerItem;
+    protected void CreateAndInitOleContainerItem()
+    {
+        IOleContainerItem oleContainerItem = CreateOleContainerItem();
+        oleContainerItem.CreateWindowlessOle();
+        _oleBaseViewModel.AddItemAtLocation(oleContainerItem, default);
+        _oleBaseViewModel.SetInitialSize();
+    }
+
+    protected void HandleOleContainerItemAdded(IOleContainerItem container)
+    {
+        WhiteboardItemManager.HookupLeftMouseButtonDown(container, (IWhiteboardItem item) =>
+        {
+            Activate(isActive: true);
+        });
+    }
+
+    public SectionIndicatorInfo InputSectionIndicator
+    {
+        get
+        {
+            return _oleBaseViewModel.InputSectionIndicator;
+        }
+        set
+        {
+            _oleBaseViewModel.InputSectionIndicator = value;
+        }
+    }
+
+    public SectionIndicatorInfo OutputSectionIndicator
+    {
+        get
+        {
+            return _oleBaseViewModel.OutputSectionIndicator;
+        }
+        set
+        {
+            _oleBaseViewModel.OutputSectionIndicator = value;
+        }
+    }
+
+    protected const string WhiteboardItemsPropertyName = "WhiteboardItems";
+
+    protected const string IsInputSectionVisiblePropertyName = "IsInputSectionVisible";
 
     public bool IsInputSectionVisible
     {
@@ -150,6 +264,8 @@ public abstract partial class OleBaseComponentControl
             _oleBaseViewModel.IsInputSectionVisible = value;
         }
     }
+
+    protected const string IsOutputSectionVisiblePropertyName = "IsOutputSectionVisible";
 
     public bool IsOutputSectionVisible
     {
@@ -176,6 +292,18 @@ public abstract partial class OleBaseComponentControl
     }
 
     public bool OutputSectionExists => _oleBaseViewModel.OutputSectionExists;
+
+    public IEnumerable<EquationControl> Items
+    {
+        get
+        {
+            if (_oleBaseModel.WhiteboardItems.Count > 1)
+            {
+                return _oleBaseModel.WhiteboardItems.Where((IWhiteboardItem item) => !item.Equals(OleContainerItem)).Cast<EquationControl>();
+            }
+            return null;
+        }
+    }
 
     public double OleContainerItemHeight
     {
@@ -207,6 +335,57 @@ public abstract partial class OleBaseComponentControl
 
     public IEnumerable<EquationControl> Outputs => _oleBaseModel.Outputs.Cast<EquationControl>();
 
+    protected override void OnContextMenuOpening(ContextMenuEventArgs e)
+    {
+        base.OnContextMenuOpening(e);
+        WpfUtils.SetMostRecentInputDeviceToKeyboardDevice();
+    }
+
+    public override void EndInit()
+    {
+        base.EndInit();
+        if (DebugTools.AssertNotNull(OleContainerItem, null).Passed)
+        {
+            _oleBaseViewModel.EndInit();
+        }
+        foreach (IOleBaseComponentCalculatableWrapper calculatableWrapper in _oleBaseModel.CalculatableWrappers)
+        {
+            EngineResult engineResult = calculatableWrapper.EngineResult;
+            if (engineResult.Errors.IsNotEmpty())
+            {
+                foreach (EngineError error in engineResult.Errors)
+                {
+                    error.ErrorSource = calculatableWrapper;
+                }
+            }
+            calculatableWrapper.EngineResult = engineResult;
+            calculatableWrapper.Commit();
+        }
+        if (EngineResult.Errors.IsNotEmpty())
+        {
+            EngineResult.Errors.Each((EngineError err) =>
+            {
+                err.ErrorSource = this;
+            });
+        }
+        ResultManager.DispatchResult(this);
+    }
+
+    protected override void ViewModelPropertyChangedHandler(object sender, PropertyChangedEventArgs e)
+    {
+        base.ViewModelPropertyChangedHandler(sender, e);
+        if (e.PropertyName == "IsOutputSectionVisible" || e.PropertyName == "IsInputSectionVisible")
+        {
+            AttachedProperties.SetHandlesContextMenu(this, _oleBaseViewModel.IsInputSectionVisible || _oleBaseViewModel.IsOutputSectionVisible);
+            FirePropertyChanged(e);
+        }
+    }
+
+    public override string GetBlockEquationTypeAttributeName(IWhiteboardItem item)
+    {
+        return string.Empty;
+    }
+
     public sealed override EngineResult EngineResult
     {
         get
@@ -237,123 +416,27 @@ public abstract partial class OleBaseComponentControl
         }
     }
 
-    public override EngineError Error => (EngineError)((DependencyObject)this).GetValue(ErrorProperty);
-
-    public bool IsPrintingZoomSet => OleContainerItem.IsPrintingZoomSet;
-
-    public IEnumerable<NodeMessageAdorner> NodeMessageAdorners
-    {
-        get
-        {
-            List<NodeMessageAdorner> list = new List<NodeMessageAdorner>();
-            if (_errorAdorner != null)
-            {
-                list.Add(_errorAdorner);
-            }
-            return list;
-        }
-    }
-
-    public bool IsOleOpen => OleContainerItem.IsOutOfPlaceActive;
-
-    public IDataExchangeModel DataExchangeModel => OleContainerItem.Component;
-
-    public int? ComponentHandle
-    {
-        get
-        {
-            return _oleBaseModel.ComponentId;
-        }
-        set
-        {
-            if (!value.HasValue)
-            {
-                _oleBaseModel.ComponentId = 0;
-                OleContainerItem.StartOleCloseOperation();
-            }
-            else
-            {
-                _oleBaseModel.ComponentId = value.Value;
-                OleContainerItem.AbortOleCloseOperation();
-            }
-        }
-    }
-
-    public int ComponentCookieMultiThreaded
-    {
-        get
-        {
-            lock (_componentCookieLock)
-            {
-                return _componentCookie;
-            }
-        }
-    }
-
-    public SectionIndicatorInfo InputSectionIndicator
-    {
-        get => _oleBaseViewModel.InputSectionIndicator;
-        set => _oleBaseViewModel.InputSectionIndicator = value;
-    }
-
-    public SectionIndicatorInfo OutputSectionIndicator
-    {
-        get => _oleBaseViewModel.OutputSectionIndicator;
-        set => _oleBaseViewModel.OutputSectionIndicator = value;
-    }
-
-    public override void SetCalculatingStatus(CalculatingStatus computingStatus)
-    {
-        base.SetCalculatingStatus(computingStatus);
-        ((DependencyObject)this).SetValue(CalculatingStatusProperty, (object)computingStatus);
-    }
-
-    public override void SetSynchronizationStatus(SynchronizationStatus syncStatus)
-    {
-        base.SetSynchronizationStatus(syncStatus);
-        ((DependencyObject)this).SetValue(SynchronizationStatusProperty, (object)syncStatus);
-    }
-
-    protected void InsertNewOleComponentExpression(string expression, bool navigateToEnd)
-    {
-        OleBaseComponentCommands.NewOleComponentExpression.Execute(expression, this);
-        if (navigateToEnd)
-        {
-            IEquationControl equationControl = (IEquationControl)ActiveItem;
-            if (equationControl != null)
-            {
-                WhiteboardItemManager.ExecuteOnLoad(equationControl, equationControl.NavigateRegionEnd);
-            }
-        }
-    }
-
-    protected void CreateAndInitOleContainerItem()
-    {
-        IOleContainerItem oleContainerItem = CreateOleContainerItem();
-        oleContainerItem.CreateWindowlessOle();
-        _oleBaseViewModel.AddItemAtLocation(oleContainerItem, default);
-        _oleBaseViewModel.SetInitialSize();
-    }
-
-    protected override void OnContextMenuOpening(ContextMenuEventArgs e)
-    {
-        base.OnContextMenuOpening(e);
-        WpfUtils.SetMostRecentInputDeviceToKeyboardDevice();
-    }
-
-    protected override void ViewModelPropertyChangedHandler(object sender, PropertyChangedEventArgs e)
-    {
-        base.ViewModelPropertyChangedHandler(sender, e);
-        if (e.PropertyName == "IsOutputSectionVisible" || e.PropertyName == "IsInputSectionVisible")
-        {
-            AttachedProperties.SetHandlesContextMenu(this, _oleBaseViewModel.IsInputSectionVisible || _oleBaseViewModel.IsOutputSectionVisible);
-            FirePropertyChanged(e);
-        }
-    }
-
     protected override Size MeasureOverride(Size constraint)
     {
         return _oleBaseViewModel.Measure(base.MeasureOverride(constraint));
+    }
+
+    public static readonly DependencyProperty ErrorProperty;
+
+    private NodeMessageAdorner _errorAdorner;
+
+    private RubberBandHighlighter _errorFrame;
+
+    public override EngineError Error => (EngineError)((DependencyObject)this).GetValue(ErrorProperty);
+
+    private static void ErrorChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+    {
+        OleBaseComponentControl oleBaseComponentControl = obj as OleBaseComponentControl;
+        if (DebugTools.AssertNotNull(oleBaseComponentControl, null).Failed)
+        {
+            return;
+        }
+        oleBaseComponentControl.ErrorChanged();
     }
 
     private void ErrorChanged()
@@ -372,6 +455,11 @@ public abstract partial class OleBaseComponentControl
         _oleBaseViewModel.IndicateHiddenErrors();
         UpdateErrorStateOnComponent();
         FireCalcErrorChanged();
+    }
+
+    private void FireCalcErrorChanged()
+    {
+        FirePropertyChanged(global::Quire.Calculation.Core.ErrorChangedEventArgs.GetArgs());
     }
 
     private void UpdateErrorStateOnComponent()
@@ -411,11 +499,114 @@ public abstract partial class OleBaseComponentControl
         _oleBaseModel.SetError(error);
     }
 
+    public void UpdateAllErrors()
+    {
+        _oleBaseModel.UpdateAllErrors();
+    }
+
+    public override IWhiteboardItem[] WhiteboardItemsForXamlSerialization
+    {
+        get
+        {
+            return base.WhiteboardItemsForXamlSerialization;
+        }
+        set
+        {
+            foreach (IWhiteboardItem obj in value)
+            {
+                DependencyObject val = obj as DependencyObject;
+                if (val != null && AttachedProperties.PreviousLocationHasLocalValue(val))
+                {
+                    Point previousLocation = AttachedProperties.GetPreviousLocation(val);
+                    AttachedProperties.ClearPreviousLocation(val);
+                    val.SetValue(OleComponentLocationLeftProperty, (object)previousLocation.X);
+                    val.SetValue(OleComponentLocationTopProperty, (object)previousLocation.Y);
+                }
+            }
+            base.WhiteboardItemsForXamlSerialization = value;
+        }
+    }
+
+    public void SetPrintingZoom(bool set, double? newPrintingZoom)
+    {
+        OleContainerItem.SetPrintingZoom(set, newPrintingZoom);
+    }
+
+    public bool IsPrintingZoomSet => OleContainerItem.IsPrintingZoomSet;
+
+    public IResizeData StoreResizeData(Size oldSize, Size newSize)
+    {
+        return _oleBaseViewModel.StoreResizeData(oldSize, newSize);
+    }
+
+    public void RestoreResizeData(IResizeData resizeData)
+    {
+        _oleBaseViewModel.RestoreResizeData(resizeData);
+    }
+
+    public Size CoerceNewSize(Size newSize, IResizeData resizeData)
+    {
+        return newSize;
+    }
+
+    public IEnumerable<NodeMessageAdorner> NodeMessageAdorners
+    {
+        get
+        {
+            List<NodeMessageAdorner> list = new List<NodeMessageAdorner>();
+            if (_errorAdorner != null)
+            {
+                list.Add(_errorAdorner);
+            }
+            return list;
+        }
+    }
+
     public void CloseOle()
     {
         if (IsOleOpen)
         {
             OleContainerItem.StartOleCloseOperation();
+        }
+    }
+
+    public bool IsOleOpen => OleContainerItem.IsOutOfPlaceActive;
+
+    public IDataExchangeModel DataExchangeModel => OleContainerItem.Component;
+
+    public int? ComponentHandle
+    {
+        get
+        {
+            return _oleBaseModel.ComponentId;
+        }
+        set
+        {
+            if (!value.HasValue)
+            {
+                _oleBaseModel.ComponentId = 0;
+                OleContainerItem.StartOleCloseOperation();
+            }
+            else
+            {
+                _oleBaseModel.ComponentId = value.Value;
+                OleContainerItem.AbortOleCloseOperation();
+            }
+        }
+    }
+
+    private int _componentCookie;
+
+    private readonly object _componentCookieLock = new object();
+
+    public int ComponentCookieMultiThreaded
+    {
+        get
+        {
+            lock (_componentCookieLock)
+            {
+                return _componentCookie;
+            }
         }
     }
 
