@@ -1,8 +1,10 @@
 using System;
 using System.Windows;
+using System.Runtime.InteropServices;
 using Quire.Serialization;
 using Quire.Calculation;
 using Quire.FunctionalitiesLimitation;
+using Quire.Automation;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -260,5 +262,120 @@ public partial class ChartContainerModel
                 m_Max = double.NaN
             }
         };
+    }
+
+    private void SetMatrix(string place, IValue value, IValueToIResultNodeTransform resultsTransform)
+    {
+        DebugTools.LogData(string.Format("ChartContainerModel.SetMatrix: {0}: Start", place));
+        try
+        {
+            IMatrixValue value2 = (IMatrixValue)value;
+            if (place == "MinMaxPre" || place == "MinMaxPost")
+            {
+                IResultNode arg = resultsTransform.Transform((IAutomationValue)value);
+                if (DebugTools.AssertNotNull(OnProcessMinMax, null).Failed)
+                {
+                    return;
+                }
+                StringBuilder stringBuilder = new StringBuilder();
+                double[,] array = OnProcessMinMax(arg, (place == "MinMaxPost") ? DataLimits : null, stringBuilder);
+                if (array == null)
+                {
+                    throw new Exception(stringBuilder.ToString());
+                }
+                if (!(place == "MinMaxPost"))
+                {
+                    return;
+                }
+                AddImageFreezeSource(ImageFreezeSources.AsynchronousCalculation);
+                try
+                {
+                    ChartMinMax chartMinMax = CreateEmptyChartMinMax();
+                    chartMinMax.m_X = new MinMax
+                    {
+                        m_Min = array[0, 0],
+                        m_Max = array[0, 1]
+                    };
+                    chartMinMax.m_Y = new MinMax
+                    {
+                        m_Min = array[1, 0],
+                        m_Max = array[1, 1]
+                    };
+                    chartMinMax.m_Y2 = new MinMax
+                    {
+                        m_Min = array[2, 0],
+                        m_Max = array[2, 1]
+                    };
+                    chartMinMax.m_Z = new MinMax
+                    {
+                        m_Min = array[3, 0],
+                        m_Max = array[3, 1]
+                    };
+                    ChartAppOLE chartObject = ChartObject;
+                    ChartMinMax data = chartMinMax;
+                    chartObject.setChartMinMax(ref data);
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    RemoveImageFreezeSource(ImageFreezeSources.AsynchronousCalculation);
+                    if (ex is COMException)
+                    {
+                        throw new Exception(ComExceptionEngineErrorCode, ex);
+                    }
+                    throw;
+                }
+            }
+            if (DebugTools.DevAssert(uint.TryParse(place, out var result), null).Passed)
+            {
+                SetTrace(result, value2, resultsTransform);
+            }
+        }
+        finally
+        {
+        }
+    }
+
+    private void AddOrRemoveImageFreezeSource(ImageFreezeSources source, bool add)
+    {
+        bool isImageFrozen = IsImageFrozen;
+        if (add)
+        {
+            if (source != ImageFreezeSources.AsynchronousCalculation && ImageFreezeSources.HasFlag(source & ~ImageFreezeSources.AsynchronousCalculation))
+            {
+                DebugTools.FailAssertionDoNotThrow(source.ToString() + " => " + ImageFreezeSources);
+            }
+            ImageFreezeSources |= source;
+        }
+        else
+        {
+            ImageFreezeSources &= ~source;
+        }
+        bool isImageFrozen2 = IsImageFrozen;
+        if (isImageFrozen2 == isImageFrozen)
+        {
+            DebugTools.LogData(string.Format("ChartContainerModel.AddOrRemoveImageFreezeSource: {0}: Skip because no change", isImageFrozen2));
+        }
+        else if (!IsOleSiteManagerRunning)
+        {
+            DebugTools.LogData(string.Format("ChartContainerModel.AddOrRemoveImageFreezeSource: {0}: Skip because not running", isImageFrozen2));
+        }
+        else
+        {
+            ApplyImageFrozenState();
+        }
+    }
+
+    private void SetHelpServerPathIfRunning()
+    {
+        if (IsOleSiteManagerRunning && HelpServerPath.IsNotEmpty())
+        {
+            string text = HelpServerPath;
+            if (text.Contains(Urls.DefaultUrlParam))
+            {
+                text = text.Substring(0, HelpServerPath.LastIndexOf(Urls.DefaultUrlParam, StringComparison.Ordinal));
+            }
+            ChartObject.setHelpPath(text);
+        }
     }
 }

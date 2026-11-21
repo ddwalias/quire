@@ -11,42 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.ChartMinMaxCalculatable, Ptc.Controls.ExcelComponent")]
 internal partial class ChartMinMaxCalculatable : global::Quire.Controls.ExcelComponent.Model.IChartMinMaxCalculatable, global::Quire.Controls.ExcelComponent.Model.IChartMinMaxCommon, global::Quire.Controls.ExcelComponent.Model.IChartCalculatable, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild, global::Quire.Calculation.Core.ICalculatable
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal const string MinMaxPre = "MinMaxPre";
-    [global::Quire.Mirror.MirrorStub]
-    internal const string MinMaxPost = "MinMaxPost";
-    [global::Quire.Mirror.MirrorStub]
-    private const double DefaultXMin = -10d;
-    [global::Quire.Mirror.MirrorStub]
-    private const double DefaultXMax = 10d;
-    [global::Quire.Mirror.MirrorStub]
-    private const double LimitsTooCloseThreshold = 1E-15d;
-    [global::Quire.Mirror.MirrorStub]
-    internal const int NumLimitAxes = 4;
-    [global::Quire.Mirror.MirrorStub]
-    internal const int NumLimitSides = 2;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly uint _matrixHandle;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly uint _definitionHandle;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly uint _subscriptHandle;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly uint _idHandle;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly uint[,] _limitHandles;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.ExcelComponent.Model.ChartWrapperType, global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper> _limitWrappers;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> RequestEvaluation;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Func<global::Quire.Calculation.Core.ICalculatable, string, global::Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> TreatAsUpToDate;
-    [global::Quire.Mirror.MirrorStub]
-    public ChartMinMaxCalculatable() { }
-    [global::Quire.Mirror.MirrorStub]
-    internal double[,] ProcessResult(global::Quire.Calculation.Core.IResultNode result, double[,] dataLimits, global::System.Text.StringBuilder errorBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void ProcessComponentError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

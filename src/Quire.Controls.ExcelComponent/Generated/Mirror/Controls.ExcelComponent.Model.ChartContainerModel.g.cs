@@ -24,17 +24,11 @@ public partial class ChartContainerModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     public ChartContainerModel() : base(default(global::Quire.OLE.IOleSiteManager), default(bool)) { }
     [global::Quire.Mirror.MirrorStub]
-    private void SetMatrix(string place, global::Quire.IValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void SetTrace(uint traceId, global::Quire.IMatrixValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ClearTracesAndLimits() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetRect(global::System.Windows.Int32Rect rectInPixels) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void AddOrRemoveImageFreezeSource(global::Quire.Controls.ExcelComponent.Model.ImageFreezeSources source, bool add) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ApplyImageFrozenState(global::System.Nullable<bool> frozenOverride = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetHelpServerPathIfRunning() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
