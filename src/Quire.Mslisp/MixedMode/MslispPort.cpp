@@ -1,6 +1,7 @@
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <sdkddkver.h>
+#include <stdlib.h>
 #pragma warning(disable: 4100)
 #pragma implicit_keepalive(off)
 
@@ -1796,6 +1797,1253 @@ namespace Quire { namespace mslisp {
             System::String^ result = System::String::Concat("mslisp.Constructor: ", m_type);
             System::GC::KeepAlive(this);
             return result;
+        }
+    };
+
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.InstanceMethod, mslisp")]
+    ref class InstanceMethod : Quire::utl_mgd::FunctionBase
+    {
+    private:
+        System::String^ m_name;
+    public:
+        InstanceMethod(System::String^ name) : m_name(name) {}
+        virtual System::Object^ Invoke(array<System::Object^>^ args) override
+        {
+            array<System::Object^>^ arr;
+            int num;
+            System::Object^ target = args[0];
+            num = args->Length - 1;
+            arr = gcnew array<System::Object^>(num);
+            System::Array::Copy(args, 1, arr, 0, num);
+            try
+            {
+                System::Type^ type = target->GetType();
+                System::Object^ result = type->InvokeMember(m_name,
+                    (System::Reflection::BindingFlags)65876,
+                    nullptr, target, arr);
+                System::GC::KeepAlive(this);
+                return result;
+            }
+            catch (System::MissingMethodException^)
+            {
+                ::mslisp::Error::report("Could not find method ", m_name);
+            }
+            return nullptr;
+        }
+        virtual System::String^ ToString() override
+        {
+            System::String^ result = System::String::Concat("mslisp.InstanceMethod: ", m_name);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.StaticOrInstanceMethod, mslisp")]
+    ref class StaticOrInstanceMethod : Quire::utl_mgd::FunctionBase, GenCall
+    {
+    private:
+        System::Type^ m_type;
+        System::String^ m_name;
+    public:
+        StaticOrInstanceMethod(System::Type^ t, System::String^ name) : m_type(t), m_name(name) {}
+        virtual System::Object^ Invoke(array<System::Object^>^ args) override
+        {
+            try
+            {
+                System::Object^ result = m_type->InvokeMember(m_name,
+                    (System::Reflection::BindingFlags)65880,
+                    nullptr, nullptr, args);
+                System::GC::KeepAlive(this);
+                return result;
+            }
+            catch (System::MissingMethodException^)
+            {
+                ::mslisp::Error::report("Could not find method ", m_name);
+            }
+            return nullptr;
+        }
+        virtual bool Emit(System::Reflection::Emit::ILGenerator^ g, short arity)
+        {
+            array<System::Reflection::MethodInfo^>^ methods = ::mslisp::FindMethods(m_type, m_name, arity);
+            System::Reflection::MethodInfo^ methodInfo = nullptr;
+            if (methods->Length == 1)
+            {
+                methodInfo = methods[0];
+            }
+            else
+            {
+                int num = 0;
+                if (0 < methods->Length)
+                {
+                    do
+                    {
+                        if (!methods[num]->IsVirtual)
+                        {
+                            num++;
+                            continue;
+                        }
+                        methodInfo = methods[num];
+                        break;
+                    }
+                    while (num < methods->Length);
+                }
+            }
+            if (methodInfo == nullptr)
+            {
+                System::GC::KeepAlive(this);
+                return false;
+            }
+            short offset = (short)(methodInfo->IsStatic ? 0 : 1);
+            if (!methodInfo->IsStatic)
+            {
+                g->Emit(System::Reflection::Emit::OpCodes::Ldarg_0);
+            }
+            CodeGen::EmitLdargs(g, offset, arity, methodInfo->GetParameters());
+            if (methodInfo->IsVirtual)
+            {
+                g->Emit(System::Reflection::Emit::OpCodes::Callvirt, methodInfo);
+            }
+            else
+            {
+                g->Emit(System::Reflection::Emit::OpCodes::Call, methodInfo);
+            }
+            CodeGen::MaybeBox(g, methodInfo->ReturnType);
+            g->Emit(System::Reflection::Emit::OpCodes::Ret);
+            System::GC::KeepAlive(this);
+            return true;
+        }
+        virtual System::String^ ToString() override
+        {
+            System::String^ result = System::String::Concat("mslisp.StaticOrInstanceMethod: ", m_name);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    static bool HasMethods(System::Type^ type, System::String^ name)
+    {
+        return ::mslisp::FindMethods(type, name, -1)->Length > 0;
+    }
+
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.GlobalVar, mslisp")]
+    ref class GlobalVar : Expression, Settable
+    {
+    public:
+        Symbol^ m_sym;
+        GlobalVar(Symbol^ s) : m_sym(s) {}
+        virtual System::Object^ execute(Env^ e)
+        {
+            System::Object^ value = m_sym->get_value();
+            if (value != nullptr)
+            {
+                System::GC::KeepAlive(this);
+                return value;
+            }
+            if (m_sym->not_set())
+            {
+                System::String^ name = m_sym->get_name();
+                if (name[0] == '*')
+                {
+                    System::GC::KeepAlive(this);
+                    return nullptr;
+                }
+                System::Object^ obj = nullptr;
+                System::Type^ type = Quire::Engine::Reflection::FindType(m_sym->get_package());
+                if ((System::Object^)type != nullptr)
+                {
+                    if (type->IsEnum)
+                    {
+                        array<System::String^>^ names = System::Enum::GetNames(type);
+                        System::Array^ values = System::Enum::GetValues(type);
+                        for (int num = 0; num < names->Length; num++)
+                        {
+                            if (names[num]->Equals(name))
+                            {
+                                obj = values->GetValue(num);
+                                break;
+                            }
+                        }
+                    }
+                    else if (HasMethods(type, name))
+                    {
+                        obj = gcnew StaticOrInstanceMethod(type, name);
+                    }
+                    else
+                    {
+                        array<System::Reflection::MemberInfo^>^ member = type->GetMember(name,
+                            (System::Reflection::BindingFlags)26);
+                        if (member != nullptr)
+                        {
+                            System::Reflection::FieldInfo^ fieldInfo = dynamic_cast<System::Reflection::FieldInfo^>(member[0]);
+                            if ((System::Object^)fieldInfo != nullptr)
+                            {
+                                obj = fieldInfo->GetValue(nullptr);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    System::Type^ type2 = Quire::Engine::Reflection::FindType(m_sym->get_fullname());
+                    if ((System::Object^)type2 != nullptr)
+                    {
+                        obj = gcnew Constructor(type2);
+                    }
+                }
+                if (obj == nullptr)
+                {
+                    obj = gcnew InstanceMethod(name);
+                }
+                m_sym->set_value(obj);
+            }
+            System::Object^ result = m_sym->get_value();
+            System::GC::KeepAlive(this);
+            return result;
+        }
+        virtual System::Object^ set(System::Object^ o, Env^ e)
+        {
+            System::Object^ result = m_sym->set_value(o);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+        virtual System::String^ ToString() override
+        {
+            System::String^ result = System::String::Format("{0} {{global}}", m_sym);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.FastApp, mslisp")]
+    ref class FastApp abstract
+    {
+    public:
+        virtual System::Object^ execute(Env^ e, int trace_level) abstract;
+        FastApp() {}
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.FastApp0, mslisp")]
+    ref class FastApp0 : FastApp
+    {
+    private:
+        Func0^ m_func;
+    public:
+        FastApp0(Func0^ f) : m_func(f) {}
+        virtual System::Object^ execute(Env^ e, int trace_level) override
+        {
+            System::Object^ result = m_func->Invoke();
+            System::GC::KeepAlive(this);
+            return result;
+        }
+        virtual System::String^ ToString() override
+        {
+            array<System::Object^>^ args = gcnew cli::array<System::Object^>(1);
+            args[0] = m_func;
+            System::String^ result = System::String::Format("(FastApp0 {0})", args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.FastApp1, mslisp")]
+    ref class FastApp1 : FastApp
+    {
+    private:
+        Expression^ m_arg1;
+        Func1^ m_func;
+    public:
+        FastApp1(Func1^ f, Expression^ arg1) : m_arg1(arg1), m_func(f) {}
+        virtual System::Object^ execute(Env^ e, int trace_level) override
+        {
+            System::Object^ result = m_func->Invoke(m_arg1->execute(e));
+            System::GC::KeepAlive(this);
+            return result;
+        }
+        virtual System::String^ ToString() override
+        {
+            array<System::Object^>^ args = gcnew cli::array<System::Object^>(2);
+            args[0] = m_func;
+            args[1] = m_arg1;
+            System::String^ result = System::String::Format("(FastApp1 {0} {1})", args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.FastApp2, mslisp")]
+    ref class FastApp2 : FastApp
+    {
+    private:
+        Expression^ m_arg1;
+        Expression^ m_arg2;
+        Func2^ m_func;
+    public:
+        FastApp2(Func2^ f, Expression^ arg1, Expression^ arg2) : m_arg1(arg1), m_arg2(arg2), m_func(f) {}
+        virtual System::Object^ execute(Env^ e, int trace_level) override
+        {
+            System::Object^ a1 = m_arg1->execute(e);
+            System::Object^ a2 = m_arg2->execute(e);
+            System::Object^ result = m_func->Invoke(a1, a2);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+        virtual System::String^ ToString() override
+        {
+            array<System::Object^>^ args = gcnew cli::array<System::Object^>(3);
+            args[0] = m_func;
+            args[1] = m_arg1;
+            args[2] = m_arg2;
+            System::String^ result = System::String::Format("(FastApp2 {0} {1} {2})", args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.FastApp3, mslisp")]
+    ref class FastApp3 : FastApp
+    {
+    private:
+        Expression^ m_arg1;
+        Expression^ m_arg2;
+        Expression^ m_arg3;
+        Func3^ m_func;
+    public:
+        FastApp3(Func3^ f, Expression^ arg1, Expression^ arg2, Expression^ arg3)
+            : m_arg1(arg1), m_arg2(arg2), m_arg3(arg3), m_func(f) {}
+        virtual System::Object^ execute(Env^ e, int trace_level) override
+        {
+            System::Object^ a1 = m_arg1->execute(e);
+            System::Object^ a2 = m_arg2->execute(e);
+            System::Object^ a3 = m_arg3->execute(e);
+            System::Object^ result = m_func->Invoke(a1, a2, a3);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+        virtual System::String^ ToString() override
+        {
+            array<System::Object^>^ args = gcnew cli::array<System::Object^>(4);
+            args[0] = m_func;
+            args[1] = m_arg1;
+            args[2] = m_arg2;
+            args[3] = m_arg3;
+            System::String^ result = System::String::Format("(FastApp3 {0} {1} {2} {3})", args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.FastApp4, mslisp")]
+    ref class FastApp4 : FastApp
+    {
+    private:
+        Expression^ m_arg1;
+        Expression^ m_arg2;
+        Expression^ m_arg3;
+        Expression^ m_arg4;
+        Func4^ m_func;
+    public:
+        FastApp4(Func4^ f, Expression^ arg1, Expression^ arg2, Expression^ arg3, Expression^ arg4)
+            : m_arg1(arg1), m_arg2(arg2), m_arg3(arg3), m_arg4(arg4), m_func(f) {}
+        virtual System::Object^ execute(Env^ e, int trace_level) override
+        {
+            System::Object^ a1 = m_arg1->execute(e);
+            System::Object^ a2 = m_arg2->execute(e);
+            System::Object^ a3 = m_arg3->execute(e);
+            System::Object^ a4 = m_arg4->execute(e);
+            System::Object^ result = m_func->Invoke(a1, a2, a3, a4);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+        virtual System::String^ ToString() override
+        {
+            array<System::Object^>^ args = gcnew cli::array<System::Object^>(5);
+            args[0] = m_func;
+            args[1] = m_arg1;
+            args[2] = m_arg2;
+            args[3] = m_arg3;
+            args[4] = m_arg4;
+            System::String^ result = System::String::Format("(FastApp4 {0} {1} {2} {3} {4})", args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.FastApp5, mslisp")]
+    ref class FastApp5 : FastApp
+    {
+    private:
+        Expression^ m_arg1;
+        Expression^ m_arg2;
+        Expression^ m_arg3;
+        Expression^ m_arg4;
+        Expression^ m_arg5;
+        Func5^ m_func;
+    public:
+        FastApp5(Func5^ f, Expression^ arg1, Expression^ arg2, Expression^ arg3, Expression^ arg4, Expression^ arg5)
+            : m_arg1(arg1), m_arg2(arg2), m_arg3(arg3), m_arg4(arg4), m_arg5(arg5), m_func(f) {}
+        virtual System::Object^ execute(Env^ e, int trace_level) override
+        {
+            System::Object^ a1 = m_arg1->execute(e);
+            System::Object^ a2 = m_arg2->execute(e);
+            System::Object^ a3 = m_arg3->execute(e);
+            System::Object^ a4 = m_arg4->execute(e);
+            System::Object^ a5 = m_arg5->execute(e);
+            System::Object^ result = m_func->Invoke(a1, a2, a3, a4, a5);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+        virtual System::String^ ToString() override
+        {
+            array<System::Object^>^ args = gcnew cli::array<System::Object^>(6);
+            args[0] = m_func;
+            args[1] = m_arg1;
+            args[2] = m_arg2;
+            args[3] = m_arg3;
+            args[4] = m_arg4;
+            args[5] = m_arg5;
+            System::String^ result = System::String::Format("(FastApp5 {0} {1} {2} {3} {4} {5})", args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.FastApp6, mslisp")]
+    ref class FastApp6 : FastApp
+    {
+    private:
+        Expression^ m_arg1;
+        Expression^ m_arg2;
+        Expression^ m_arg3;
+        Expression^ m_arg4;
+        Expression^ m_arg5;
+        Expression^ m_arg6;
+        Func6^ m_func;
+    public:
+        FastApp6(Func6^ f, Expression^ arg1, Expression^ arg2, Expression^ arg3, Expression^ arg4, Expression^ arg5, Expression^ arg6)
+            : m_arg1(arg1), m_arg2(arg2), m_arg3(arg3), m_arg4(arg4), m_arg5(arg5), m_arg6(arg6), m_func(f) {}
+        virtual System::Object^ execute(Env^ e, int trace_level) override
+        {
+            System::Object^ a1 = m_arg1->execute(e);
+            System::Object^ a2 = m_arg2->execute(e);
+            System::Object^ a3 = m_arg3->execute(e);
+            System::Object^ a4 = m_arg4->execute(e);
+            System::Object^ a5 = m_arg5->execute(e);
+            System::Object^ a6 = m_arg6->execute(e);
+            System::Object^ result = m_func->Invoke(a1, a2, a3, a4, a5, a6);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+        virtual System::String^ ToString() override
+        {
+            array<System::Object^>^ args = gcnew cli::array<System::Object^>(7);
+            args[0] = m_func;
+            args[1] = m_arg1;
+            args[2] = m_arg2;
+            args[3] = m_arg3;
+            args[4] = m_arg4;
+            args[5] = m_arg5;
+            args[6] = m_arg6;
+            System::String^ result = System::String::Format("(FastApp5 {0} {1} {2} {3} {4} {5} {6})", args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.ApplyFunction, mslisp")]
+    ref class ApplyFunction : Quire::utl_mgd::FunctionBase
+    {
+    public:
+        ApplyFunction() {}
+        virtual System::Object^ Invoke(array<System::Object^>^ args) override
+        {
+            Quire::utl_mgd::Function^ function = dynamic_cast<Quire::utl_mgd::Function^>(args[0]);
+            if (function == nullptr)
+            {
+                ::mslisp::Error::report("Cannot apply: ", args[0]);
+            }
+            int num = args->Length;
+            int num2 = num - 1;
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(args[num2]);
+            array<System::Object^>^ array = gcnew cli::array<System::Object^>(Quire::Engine::PCons::length(pCons) + (num - 2));
+            int num3 = 0;
+            int num4 = 1;
+            if (1 < num - 1)
+            {
+                do
+                {
+                    array[num3] = args[num4];
+                    num3++;
+                    num4++;
+                }
+                while (num4 < num - 1);
+            }
+            if (pCons != nullptr)
+            {
+                do
+                {
+                    array[num3] = pCons->hd;
+                    num3++;
+                    pCons = pCons->tl;
+                }
+                while (pCons != nullptr);
+            }
+            System::Object^ result = function->Invoke(array);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.PlusFunction, mslisp")]
+    ref class PlusFunction : Quire::utl_mgd::FunctionBase
+    {
+    private:
+        int m_multiplier;
+
+        int isum(array<System::Object^>^ args, bool^ ok)
+        {
+            int num = 0;
+            int num2 = 1;
+            int num3 = 0;
+            int num4 = args->Length;
+            if (0 < num4)
+            {
+                do
+                {
+                    int^ i = dynamic_cast<int^>(args[num3]);
+                    if (i != nullptr)
+                    {
+                        num += (*i) * num2;
+                        num2 = m_multiplier;
+                        num3++;
+                        continue;
+                    }
+                    *ok = false;
+                    return 0;
+                }
+                while (num3 < num4);
+            }
+            *ok = true;
+            return num;
+        }
+
+        double fsum(array<System::Object^>^ args)
+        {
+            double num = 0.0;
+            double num2 = 1.0;
+            int num3 = 0;
+            int num4 = args->Length;
+            if (0 < num4)
+            {
+                do
+                {
+                    double^ d = dynamic_cast<double^>(args[num3]);
+                    if (d == nullptr)
+                    {
+                        int^ i = dynamic_cast<int^>(args[num3]);
+                        if (i == nullptr)
+                        {
+                            ::mslisp::Error::report("Bad argument to +: ", args[num3]);
+                            break;
+                        }
+                        num = (double)(*i) * num2 + num;
+                    }
+                    else
+                    {
+                        num = (*d) * num2 + num;
+                    }
+                    num2 = m_multiplier;
+                    num3++;
+                }
+                while (num3 < num4);
+            }
+            return num;
+        }
+
+    public:
+        PlusFunction(int multiplier)
+        {
+            m_multiplier = multiplier;
+        }
+        virtual System::Object^ Invoke(array<System::Object^>^ args) override
+        {
+            bool^ ok = false;
+            int num = isum(args, ok);
+            if (*ok)
+            {
+                return num;
+            }
+            return fsum(args);
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.StandardBuiltins, mslisp")]
+    public ref class StandardBuiltins
+    {
+    public:
+        static System::Object^ True;
+
+    private:
+        static Quire::Engine::PCons^ maptree_accum1(
+            System::Collections::Generic::Dictionary<System::Object^, bool>^ A_0,
+            Quire::utl_mgd::Function^ A_1,
+            Quire::Engine::PCons^ A_2,
+            System::Object^ A_3)
+        {
+            System::Object^ obj = (A_3 == nullptr || dynamic_cast<Quire::Engine::PCons^>(A_3) == nullptr) ? True : nullptr;
+            if (obj != nullptr)
+            {
+                array<System::Object^>^ args = gcnew cli::array<System::Object^>(1);
+                args[0] = A_3;
+                A_2 = gcnew Quire::Engine::PCons(A_1->Invoke(args), A_2);
+            }
+            else
+            {
+                Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(A_3);
+                if (A_0->ContainsKey(pCons))
+                {
+                    A_2 = gcnew Quire::Engine::PCons("%circular", A_2);
+                }
+                else
+                {
+                    A_0[pCons] = true;
+                    if (pCons != nullptr)
+                    {
+                        do
+                        {
+                            A_2 = maptree_accum1(A_0, A_1, A_2, pCons->hd);
+                            pCons = pCons->tl;
+                        }
+                        while (pCons != nullptr);
+                    }
+                }
+            }
+            return A_2;
+        }
+
+        static double to_double(System::Object^ A_0)
+        {
+            double^ d = dynamic_cast<double^>(A_0);
+            if (d != nullptr) return *d;
+            int^ i = dynamic_cast<int^>(A_0);
+            if (i != nullptr) return (double)*i;
+            unsigned int^ u = dynamic_cast<unsigned int^>(A_0);
+            if (u != nullptr) return (double)*u;
+            ::mslisp::Error::report("Cannot convert to double: ", A_0);
+            return 0.0;
+        }
+
+    public:
+        static System::Object^ _car(System::Object^ o)
+        {
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(o);
+            return (pCons != nullptr) ? pCons->hd : nullptr;
+        }
+
+        static Quire::Engine::PCons^ _cdr(System::Object^ o)
+        {
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(o);
+            return (pCons != nullptr) ? pCons->tl : nullptr;
+        }
+
+        static Quire::Engine::PCons^ cons(System::Object^ o, System::Object^ l)
+        {
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(l);
+            System::Diagnostics::Trace::Assert(l == nullptr || pCons != nullptr, nullptr);
+            return gcnew Quire::Engine::PCons(o, pCons);
+        }
+
+        static int length(System::Object^ o)
+        {
+            if (o == nullptr) return 0;
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(o);
+            if (pCons != nullptr)
+            {
+                int num = 0;
+                do
+                {
+                    num++;
+                    pCons = pCons->tl;
+                }
+                while (pCons != nullptr);
+                return num;
+            }
+            ::mslisp::Error::report("Cannot take length of ", o);
+            return 0;
+        }
+
+        static System::Object^ identity(System::Object^ o)
+        {
+            return o;
+        }
+
+        static Quire::Engine::PCons^ mapcar(System::Object^ f, System::Object^ l)
+        {
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(l);
+            System::Diagnostics::Trace::Assert(l == nullptr || pCons != nullptr, nullptr);
+            Quire::utl_mgd::Function^ function = dynamic_cast<Quire::utl_mgd::Function^>(f);
+            if (function == nullptr)
+            {
+                ::mslisp::Error::report("Bad first argument to mapcar: ", f);
+            }
+            Quire::Engine::PCons^ pCons2 = nullptr;
+            array<System::Object^>^ array = gcnew cli::array<System::Object^>(1);
+            if (pCons != nullptr)
+            {
+                do
+                {
+                    array[0] = pCons->hd;
+                    pCons2 = gcnew Quire::Engine::PCons(function->Invoke(array), pCons2);
+                    pCons = pCons->tl;
+                }
+                while (pCons != nullptr);
+            }
+            return Quire::Engine::PCons::nreverse(pCons2);
+        }
+
+        static System::Object^ every(System::Object^ f, System::Object^ l)
+        {
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(l);
+            System::Diagnostics::Trace::Assert(l == nullptr || pCons != nullptr, nullptr);
+            Quire::utl_mgd::Function^ function = dynamic_cast<Quire::utl_mgd::Function^>(f);
+            if (function == nullptr)
+            {
+                ::mslisp::Error::report("Bad first argument to every: ", f);
+            }
+            array<System::Object^>^ array = gcnew cli::array<System::Object^>(1);
+            if (pCons != nullptr)
+            {
+                do
+                {
+                    array[0] = pCons->hd;
+                    if (::mslisp::is_true(function->Invoke(array)))
+                    {
+                        pCons = pCons->tl;
+                        continue;
+                    }
+                    return nullptr;
+                }
+                while (pCons != nullptr);
+            }
+            return True;
+        }
+
+        static System::Object^ some(System::Object^ f, System::Object^ l)
+        {
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(l);
+            System::Diagnostics::Trace::Assert(l == nullptr || pCons != nullptr, nullptr);
+            Quire::utl_mgd::Function^ function = dynamic_cast<Quire::utl_mgd::Function^>(f);
+            if (function == nullptr)
+            {
+                ::mslisp::Error::report("Bad first argument to some: ", f);
+            }
+            array<System::Object^>^ array = gcnew cli::array<System::Object^>(1);
+            if (pCons != nullptr)
+            {
+                do
+                {
+                    array[0] = pCons->hd;
+                    System::Object^ obj = function->Invoke(array);
+                    if (!::mslisp::is_true(obj))
+                    {
+                        pCons = pCons->tl;
+                        continue;
+                    }
+                    return obj;
+                }
+                while (pCons != nullptr);
+            }
+            return nullptr;
+        }
+
+        static Quire::Engine::PCons^ mapenum(System::Object^ f, System::Object^ o)
+        {
+            Quire::utl_mgd::Function^ function = dynamic_cast<Quire::utl_mgd::Function^>(f);
+            if (function == nullptr)
+            {
+                ::mslisp::Error::report("Bad 1st argument to mapenum: ", f);
+            }
+            System::Collections::IEnumerator^ enumerator2;
+            System::Collections::IEnumerator^ enumerator = dynamic_cast<System::Collections::IEnumerator^>(o);
+            if (enumerator != nullptr)
+            {
+                enumerator2 = enumerator;
+            }
+            else
+            {
+                System::Collections::IEnumerable^ enumerable = dynamic_cast<System::Collections::IEnumerable^>(o);
+                if (enumerable != nullptr)
+                {
+                    enumerator2 = enumerable->GetEnumerator();
+                }
+                else
+                {
+                    return nullptr;
+                }
+            }
+            Quire::Engine::PCons^ pCons = nullptr;
+            array<System::Object^>^ array = gcnew cli::array<System::Object^>(1);
+            if (enumerator2->MoveNext())
+            {
+                do
+                {
+                    array[0] = enumerator2->Current;
+                    pCons = gcnew Quire::Engine::PCons(function->Invoke(array), pCons);
+                }
+                while (enumerator2->MoveNext());
+            }
+            return Quire::Engine::PCons::nreverse(pCons);
+        }
+
+        static Quire::Engine::PCons^ mapenumby(System::Object^ n, System::Object^ f, System::Object^ o)
+        {
+            int^ val = dynamic_cast<int^>(n);
+            if (val == nullptr)
+            {
+                ::mslisp::Error::report("Bad first argument to mapenumby: ", n);
+            }
+            Quire::utl_mgd::Function^ function = dynamic_cast<Quire::utl_mgd::Function^>(f);
+            if (function == nullptr)
+            {
+                ::mslisp::Error::report("Bad 2nd argument to mapenumby: ", f);
+            }
+            System::Collections::IEnumerator^ enumerator2;
+            System::Collections::IEnumerator^ enumerator = dynamic_cast<System::Collections::IEnumerator^>(o);
+            if (enumerator != nullptr)
+            {
+                enumerator2 = enumerator;
+            }
+            else
+            {
+                System::Collections::IEnumerable^ enumerable = dynamic_cast<System::Collections::IEnumerable^>(o);
+                if (enumerable != nullptr)
+                {
+                    enumerator2 = enumerable->GetEnumerator();
+                }
+                else
+                {
+                    return nullptr;
+                }
+            }
+            Quire::Engine::PCons^ pCons = nullptr;
+            int num = 0;
+            array<System::Object^>^ array = gcnew cli::array<System::Object^>(*val);
+            if (enumerator2->MoveNext())
+            {
+                do
+                {
+                    array[num] = enumerator2->Current;
+                    num++;
+                    if (num == *val)
+                    {
+                        pCons = gcnew Quire::Engine::PCons(function->Invoke(array), pCons);
+                        num = 0;
+                    }
+                }
+                while (enumerator2->MoveNext());
+            }
+            return Quire::Engine::PCons::nreverse(pCons);
+        }
+
+        static Quire::Engine::PCons^ maptree_accum(System::Object^ f, System::Object^ o)
+        {
+            Quire::utl_mgd::Function^ function = dynamic_cast<Quire::utl_mgd::Function^>(f);
+            if (function == nullptr)
+            {
+                ::mslisp::Error::report("Bad 1st argument to maptree_accum: ", f);
+            }
+            return Quire::Engine::PCons::nreverse(maptree_accum1(gcnew System::Collections::Generic::Dictionary<System::Object^, bool>(), function, nullptr, o));
+        }
+
+        static Quire::Engine::PCons^ remove_if(System::Object^ f, System::Object^ l)
+        {
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(l);
+            System::Diagnostics::Trace::Assert(l == nullptr || pCons != nullptr, nullptr);
+            Quire::utl_mgd::Function^ function = dynamic_cast<Quire::utl_mgd::Function^>(f);
+            if (function == nullptr)
+            {
+                ::mslisp::Error::report("Bad first argument to remove-if: ", f);
+            }
+            Quire::Engine::PCons^ pCons2 = nullptr;
+            array<System::Object^>^ array = gcnew cli::array<System::Object^>(1);
+            if (pCons != nullptr)
+            {
+                do
+                {
+                    array[0] = pCons->hd;
+                    if (!::mslisp::is_true(function->Invoke(array)))
+                    {
+                        pCons2 = gcnew Quire::Engine::PCons(pCons->hd, pCons2);
+                    }
+                    pCons = pCons->tl;
+                }
+                while (pCons != nullptr);
+            }
+            return Quire::Engine::PCons::nreverse(pCons2);
+        }
+
+        static System::Object^ nth(System::Object^ n, System::Object^ l)
+        {
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(l);
+            System::Diagnostics::Trace::Assert(l == nullptr || pCons != nullptr, nullptr);
+            int^ val = dynamic_cast<int^>(n);
+            if (val == nullptr)
+            {
+                ::mslisp::Error::report("Bad first argument to nth: ", n);
+            }
+            int num = 0;
+            if (0 < *val)
+            {
+                do
+                {
+                    pCons = pCons->tl;
+                    if (pCons != nullptr)
+                    {
+                        num++;
+                        continue;
+                    }
+                    return nullptr;
+                }
+                while (num < *val);
+            }
+            return pCons->hd;
+        }
+
+        static System::Object^ last(System::Object^ l)
+        {
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(l);
+            System::Diagnostics::Trace::Assert(l == nullptr || pCons != nullptr, nullptr);
+            while (pCons != nullptr)
+            {
+                Quire::Engine::PCons^ tl = pCons->tl;
+                if (tl == nullptr)
+                {
+                    return pCons;
+                }
+                pCons = tl;
+            }
+            return pCons;
+        }
+
+        static System::Object^ butlast(System::Object^ l)
+        {
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(l);
+            System::Diagnostics::Trace::Assert(l == nullptr || pCons != nullptr, nullptr);
+            Quire::Engine::PCons^ pCons2 = nullptr;
+            if (pCons != nullptr)
+            {
+                do
+                {
+                    if (pCons->tl != nullptr)
+                    {
+                        pCons2 = gcnew Quire::Engine::PCons(pCons->hd, pCons2);
+                    }
+                    pCons = pCons->tl;
+                }
+                while (pCons != nullptr);
+            }
+            return Quire::Engine::PCons::nreverse(pCons2);
+        }
+
+        static System::Object^ eq(System::Object^ a, System::Object^ b)
+        {
+            return (a == b) ? True : nullptr;
+        }
+
+        static System::Object^ atom(System::Object^ a)
+        {
+            System::Object^ obj = (a == nullptr || dynamic_cast<Quire::Engine::PCons^>(a) == nullptr) ? True : nullptr;
+            return obj;
+        }
+
+        static System::Object^ symbolp(System::Object^ a)
+        {
+            System::Object^ obj = (a == nullptr || dynamic_cast<Symbol^>(a) == nullptr) ? True : nullptr;
+            return obj;
+        }
+
+        static System::Object^ symbol_name(System::Object^ a)
+        {
+            Symbol^ symbol = dynamic_cast<Symbol^>(a);
+            if (symbol == nullptr)
+            {
+                ::mslisp::Error::report("Cannot take symbol-name of: ", a);
+            }
+            return symbol->get_name();
+        }
+
+        static System::Object^ error(System::Object^ a)
+        {
+            throw gcnew System::Exception(a->ToString());
+        }
+
+#pragma warning(push)
+#pragma warning(disable: 4702)
+        static System::Object^ quit()
+        {
+            exit(0);
+            return nullptr;
+        }
+#pragma warning(pop)
+
+        static System::Object^ _unsigned(System::Object^ n)
+        {
+            int^ val = dynamic_cast<int^>(n);
+            if (val != nullptr)
+            {
+                return (unsigned int)*val;
+            }
+            return n;
+        }
+
+        static System::Object^ _gt(System::Object^ a, System::Object^ b)
+        {
+            return (to_double(a) > to_double(b)) ? True : nullptr;
+        }
+
+        static System::Object^ _lt(System::Object^ a, System::Object^ b)
+        {
+            return (to_double(a) < to_double(b)) ? True : nullptr;
+        }
+
+        static System::Object^ _eq(System::Object^ a, System::Object^ b)
+        {
+            return (to_double(a) == to_double(b)) ? True : nullptr;
+        }
+
+        static System::Object^ eqt(System::Object^ x, System::Object^ y)
+        {
+            TaggedSymbol^ taggedSymbol = dynamic_cast<TaggedSymbol^>(x);
+            if (taggedSymbol != nullptr)
+            {
+                x = taggedSymbol->Base;
+            }
+            TaggedSymbol^ taggedSymbol2 = dynamic_cast<TaggedSymbol^>(y);
+            if (taggedSymbol2 != nullptr)
+            {
+                y = taggedSymbol2->Base;
+            }
+            return (x == y) ? True : nullptr;
+        }
+
+        static System::Object^ no_tag(System::Object^ x)
+        {
+            TaggedSymbol^ taggedSymbol = dynamic_cast<TaggedSymbol^>(x);
+            if (taggedSymbol != nullptr)
+            {
+                return gcnew TaggedSymbol(taggedSymbol->Base, nullptr, taggedSymbol->Labels);
+            }
+            return x;
+        }
+
+        static System::Object^ no_tag_or_labels(System::Object^ x)
+        {
+            TaggedSymbol^ taggedSymbol = dynamic_cast<TaggedSymbol^>(x);
+            if (taggedSymbol != nullptr)
+            {
+                return taggedSymbol->Base;
+            }
+            return x;
+        }
+
+        static System::Object^ find_tag(System::Object^ x)
+        {
+            TaggedSymbol^ taggedSymbol = dynamic_cast<TaggedSymbol^>(x);
+            if (taggedSymbol != nullptr)
+            {
+                return taggedSymbol->Tag;
+            }
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(x);
+            if (pCons != nullptr)
+            {
+                do
+                {
+                    System::Object^ obj = find_tag(pCons->hd);
+                    if (obj == nullptr)
+                    {
+                        pCons = pCons->tl;
+                        continue;
+                    }
+                    return obj;
+                }
+                while (pCons != nullptr);
+            }
+            return nullptr;
+        }
+
+        static System::Object^ find_tag_on(System::Object^ x, System::Object^ y)
+        {
+            TaggedSymbol^ taggedSymbol = dynamic_cast<TaggedSymbol^>(y);
+            if (taggedSymbol != nullptr && taggedSymbol->Base == x)
+            {
+                return taggedSymbol->Tag;
+            }
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(y);
+            if (pCons != nullptr)
+            {
+                do
+                {
+                    System::Object^ obj = find_tag_on(x, pCons->hd);
+                    if (obj == nullptr)
+                    {
+                        pCons = pCons->tl;
+                        continue;
+                    }
+                    return obj;
+                }
+                while (pCons != nullptr);
+            }
+            return nullptr;
+        }
+
+        static System::Object^ set_tag(System::Object^ x, System::Object^ tag)
+        {
+            Symbol^ symbol = dynamic_cast<Symbol^>(x);
+            Symbol^ symbol2 = dynamic_cast<Symbol^>(tag);
+            if (symbol != nullptr && symbol2 != nullptr)
+            {
+                Symbol^ symbol3 = symbol;
+                TaggedSymbol^ taggedSymbol = dynamic_cast<TaggedSymbol^>(symbol);
+                if (taggedSymbol != nullptr)
+                {
+                    symbol3 = taggedSymbol->Base;
+                }
+                x = gcnew TaggedSymbol(symbol3, symbol2, symbol->Labels);
+            }
+            return x;
+        }
+
+        static System::Object^ _append(System::Object^ l)
+        {
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(l);
+            System::Diagnostics::Trace::Assert(l == nullptr || pCons != nullptr, nullptr);
+            Quire::Engine::PCons^ pCons2 = nullptr;
+            if (pCons != nullptr)
+            {
+                do
+                {
+                    Quire::Engine::PCons^ pCons3 = dynamic_cast<Quire::Engine::PCons^>(pCons->hd);
+                    if (pCons3 != nullptr)
+                    {
+                        do
+                        {
+                            pCons2 = gcnew Quire::Engine::PCons(pCons3->hd, pCons2);
+                            pCons3 = pCons3->tl;
+                        }
+                        while (pCons3 != nullptr);
+                    }
+                    pCons = pCons->tl;
+                }
+                while (pCons != nullptr);
+            }
+            return Quire::Engine::PCons::nreverse(pCons2);
+        }
+
+        static System::Object^ _clr_vec(System::Object^ ll)
+        {
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(ll);
+            System::Diagnostics::Trace::Assert(ll == nullptr || pCons != nullptr, nullptr);
+            array<System::Object^>^ array = nullptr;
+            int num = Quire::Engine::PCons::length(pCons);
+            if (num > 0)
+            {
+                array = gcnew cli::array<System::Object^>(num);
+                for (int i = 0; i < num; i++)
+                {
+                    array[i] = pCons->hd;
+                    pCons = pCons->tl;
+                }
+            }
+            return array;
+        }
+
+        static System::Object^ print(System::Object^ a)
+        {
+            System::Console::WriteLine(Quire::Engine::PCons::_ToString(a));
+            return a;
+        }
+
+        static System::Object^ printn(System::Object^ a)
+        {
+            System::Console::Write(Quire::Engine::PCons::_ToString(a));
+            return a;
+        }
+
+        static System::Object^ debug_out(System::Object^ a)
+        {
+            System::Diagnostics::Trace::Write(Quire::Engine::PCons::_ToString(a));
+            return a;
+        }
+
+        static System::Object^ pass()
+        {
+            return nullptr;
+        }
+
+        static System::Object^ pquote(System::Object^ a)
+        {
+            System::String^ text = "\"";
+            return System::String::Concat(text + a->ToString(), text);
+        }
+
+        static System::Collections::IDictionary^ make_hash_table()
+        {
+            return gcnew System::Collections::Hashtable();
+        }
+
+        static System::Collections::IDictionary^ make_hash_table1(System::Object^ size)
+        {
+            int^ val = dynamic_cast<int^>(size);
+            System::Diagnostics::Trace::Assert(val != nullptr, nullptr);
+            return gcnew System::Collections::Hashtable(*val);
+        }
+
+        static System::Object^ set_hash(System::Object^ h, System::Object^ k, System::Object^ v)
+        {
+            System::Collections::IDictionary^ dictionary = dynamic_cast<System::Collections::IDictionary^>(h);
+            System::Diagnostics::Trace::Assert(dictionary != nullptr, nullptr);
+            dictionary[k] = v;
+            return v;
+        }
+
+        static System::Object^ get_hash(System::Object^ h, System::Object^ k)
+        {
+            System::Collections::IDictionary^ dictionary = dynamic_cast<System::Collections::IDictionary^>(h);
+            System::Diagnostics::Trace::Assert(dictionary != nullptr, nullptr);
+            return dictionary[k];
+        }
+
+        static System::Object^ remove_hash(System::Object^ h, System::Object^ k)
+        {
+            System::Collections::IDictionary^ dictionary = dynamic_cast<System::Collections::IDictionary^>(h);
+            System::Diagnostics::Trace::Assert(dictionary != nullptr, nullptr);
+            dictionary->Remove(k);
+            return dictionary;
+        }
+
+        static System::Object^ contains_hash(System::Object^ h, System::Object^ k)
+        {
+            System::Collections::IDictionary^ dictionary = dynamic_cast<System::Collections::IDictionary^>(h);
+            System::Diagnostics::Trace::Assert(dictionary != nullptr, nullptr);
+            return dictionary->Contains(k) ? True : nullptr;
+        }
+
+        static System::Object^ comparer(System::Object^ A_0)
+        {
+            Quire::utl_mgd::Function^ function = dynamic_cast<Quire::utl_mgd::Function^>(A_0);
+            System::Diagnostics::Trace::Assert(function != nullptr, nullptr);
+            return gcnew _fcomparer(function);
+        }
+
+        StandardBuiltins() {}
+    private:
+        static StandardBuiltins()
+        {
+            True = true;
         }
     };
 
