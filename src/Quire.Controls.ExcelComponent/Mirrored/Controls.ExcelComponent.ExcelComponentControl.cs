@@ -22,22 +22,72 @@ public partial class ExcelComponentControl
 {
     private readonly ExcelComponentModel _exModel;
     private readonly ExcelComponentViewModel _exViewModel;
-    internal const string ExcelIdentifier = "excel";
 
     protected override ISerializationStrategy SerializationStrategy { get; set; }
     protected override IDeserializationStrategy DeserializationStrategy { get; set; }
-
-    internal ExcelContainer ExcelContainer => (ExcelContainer)OleContainerItem;
 
     static ExcelComponentControl()
     {
         EngineErrorMessages.MergeDictionary(ResourceProvider<ExcelComponentErrorsDictionary>.Instance);
     }
 
+    public ExcelComponentControl()
+        : this(createExcelContainer: false)
+    {
+    }
+
+    public ExcelComponentControl(Size? gridCellSize = null)
+        : this(createExcelContainer: true, gridCellSize)
+    {
+    }
+
+    private ExcelComponentControl(bool createExcelContainer, Size? gridCellSize = null)
+        : base(new ExcelComponentViewModel(new ExcelComponentModel(), gridCellSize), new ExcelComponentDictionary())
+    {
+        _exModel = (ExcelComponentModel)_model;
+        _exModel.QueryHiddenFromCalculationContext += () => HideFromCalculationContext;
+        _exViewModel = (ExcelComponentViewModel)ViewModel;
+        SerializationStrategy = new ExcelComponentSerializationStrategy(this, () => new excelComponentRegionType());
+        DeserializationStrategy = new ExcelComponentDeserializationStrategy(this);
+        ExcelInitialize();
+        if (createExcelContainer)
+        {
+            CreateAndInitOleContainerItem();
+        }
+    }
+
+    private ExcelComponentControl(ExcelComponentControl original)
+        : base(original._exViewModel.CloneExcelComponentViewModel(), null)
+    {
+        _exModel = _model as ExcelComponentModel;
+        _exViewModel = (ExcelComponentViewModel)ViewModel;
+        SerializationStrategy = new ExcelComponentSerializationStrategy(this, () => new excelComponentRegionType());
+        DeserializationStrategy = new ExcelComponentDeserializationStrategy(this);
+        ExcelInitialize();
+        if (Resources.MergedDictionaries.Count != original.Resources.MergedDictionaries.Count)
+        {
+            foreach (ResourceDictionary mergedDictionary in original.Resources.MergedDictionaries)
+            {
+                if (!Resources.MergedDictionaries.Contains(mergedDictionary))
+                {
+                    Resources.MergedDictionaries.Add(mergedDictionary);
+                }
+            }
+        }
+        if (_exModel != null)
+        {
+            _exModel.Resources = Resources.MergedDictionaries[0];
+        }
+    }
+
     private void ExcelInitialize()
     {
         BindCommands();
     }
+
+    internal ExcelContainer ExcelContainer => (ExcelContainer)OleContainerItem;
+
+    internal const string ExcelIdentifier = "excel";
 
     protected override IOleContainerItem CreateOleContainerItem()
     {
