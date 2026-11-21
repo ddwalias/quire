@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using Quire.Calculation.Core.Support;
 using Quire.Controls.Core;
 using Quire.Controls.Core.IORegions;
 using Quire.Core;
@@ -84,6 +85,46 @@ public partial class IOManager
             IOItemsAliasManager.SetIOAliasMap(item.Region, dictionary, item.IsInput);
         }
         return flag;
+    }
+
+    [MirrorOf("Ptc.Controls.IO.IOManager+EvaluationHelper, Ptc.Controls")]
+    private static partial class EvaluationHelper
+    {
+        public static IOManagerErrorCode AnalyzeEvaluationError(ISimpleCalculatable calculatable)
+        {
+            IOManagerErrorCode result;
+            if (calculatable.Error == null)
+            {
+                result = IOManagerErrorCode.NoError;
+            }
+            else
+            {
+                result = calculatable.IsErrorOnScalingUnits() ? IOManagerErrorCode.UnitsIncompatible : IOManagerErrorCode.CalculationError;
+            }
+            return result;
+        }
+    }
+
+    private static IOManagerErrorCode ScaledEvaluationResultToIOManagerErrorCode(ScaledEvaluation.ScaledEvaluationResult scaledEvaluationResult)
+    {
+        IOManagerErrorCode result;
+        switch (scaledEvaluationResult)
+        {
+        case ScaledEvaluation.ScaledEvaluationResult.NoError:
+            result = IOManagerErrorCode.NoError;
+            break;
+        case ScaledEvaluation.ScaledEvaluationResult.ResultTypeIncompatible:
+            result = IOManagerErrorCode.ResultTypeIncompatible;
+            break;
+        case ScaledEvaluation.ScaledEvaluationResult.MatrixResultInvalid:
+            result = IOManagerErrorCode.MatrixResultInvalid;
+            break;
+        default:
+            result = IOManagerErrorCode.UnknownError;
+            DebugTools.DevAssert(false, "ScaledEvaluationResultToIOManagerOperationResult {0} unsupported value", scaledEvaluationResult);
+            break;
+        }
+        return result;
     }
 
     public static string GetIOAlias(IOItem item)
@@ -252,7 +293,8 @@ public partial class IOManager
         public event Action<bool> ProgressStopped;
     }
 
-    partial class UnitedScalarState
+    [MirrorOf("Ptc.Controls.IO.IOManager+UnitedScalarState, Ptc.Controls")]
+    private partial class UnitedScalarState : IUnitedScalarState, IErrorState
     {
         internal UnitedScalarState(double value, string units, IOManagerErrorCode errorCode)
         {
@@ -271,7 +313,8 @@ public partial class IOManager
         public IOManagerErrorCode ErrorCode { get; private set; }
     }
 
-    partial class UnitedMatrixState
+    [MirrorOf("Ptc.Controls.IO.IOManager+UnitedMatrixState, Ptc.Controls")]
+    private partial class UnitedMatrixState : IUnitedMatrixState, IErrorState
     {
         internal UnitedMatrixState(double[][] value, string units, IOManagerErrorCode errorCode)
         {
@@ -290,7 +333,8 @@ public partial class IOManager
         public IOManagerErrorCode ErrorCode { get; private set; }
     }
 
-    partial class StringState
+    [MirrorOf("Ptc.Controls.IO.IOManager+StringState, Ptc.Controls")]
+    private partial class StringState : IStringState, IErrorState
     {
         private string _value;
 
@@ -314,7 +358,8 @@ public partial class IOManager
         public IOManagerErrorCode ErrorCode { get; private set; }
     }
 
-    partial class ErrorState
+    [MirrorOf("Ptc.Controls.IO.IOManager+ErrorState, Ptc.Controls")]
+    private partial class ErrorState : IErrorState
     {
         public ErrorState(IOManagerErrorCode errorCode)
         {
@@ -325,12 +370,16 @@ public partial class IOManager
         public IOManagerErrorCode ErrorCode { get; private set; }
     }
 
-    partial class UnitedValueGetter
+    [MirrorOf("Ptc.Controls.IO.IOManager+UnitedValueGetter, Ptc.Controls")]
+    private abstract partial class UnitedValueGetter : IUnitedValueGetter
     {
-        public virtual bool IsScalingValid()
-        {
-            return EnumerableExtensions.IsNullOrEmpty<char>(ScaledByUnits) || EnumerableExtensions.IsNotEmpty<char>(ScalingSExpression);
-        }
+        public abstract IEnumerable<CalculationOverridesTypes> OverrideTypes { get; }
+
+        public string ScaledByUnits { get; private set; }
+
+        public string Alias { get; private set; }
+
+        public string ScalingSExpression { get; private set; }
 
         protected UnitedValueGetter(string alias, string scaledByUnits)
         {
@@ -339,14 +388,77 @@ public partial class IOManager
             ScalingSExpression = EnumerableExtensions.IsNotEmpty<char>(scaledByUnits) ? InfixMonomialToSExpressionTransform.GetInstance(true).Transform(ScaledByUnits) : string.Empty;
         }
 
-        [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-        public string ScaledByUnits { get; private set; }
+        public abstract bool IsEmptyState(CalculationOverridesTypes type);
 
-        [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-        public string Alias { get; private set; }
+        public abstract void GetComputedValue(IScaledEvaluation shadowEval, CalculationOverridesTypes type);
 
-        [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-        public string ScalingSExpression { get; private set; }
+        public abstract void SetOperationResult(IOManagerErrorCode code, CalculationOverridesTypes type);
+
+        public abstract IOManagerErrorCode GetOperationResult(CalculationOverridesTypes type);
+
+        protected IOManagerErrorCode GetComputedScalar(IScaledEvaluation shadowEval, out double value, out string units)
+        {
+            string units2 = null;
+            double value2 = double.NaN;
+            IOManagerErrorCode iOManagerErrorCode = EvaluationHelper.AnalyzeEvaluationError(shadowEval);
+            if (iOManagerErrorCode == IOManagerErrorCode.NoError)
+            {
+                iOManagerErrorCode = ScaledEvaluationResultToIOManagerErrorCode(shadowEval.GetComputedValue(out value2, out units2));
+            }
+            if (iOManagerErrorCode == IOManagerErrorCode.NoError && !AreUnitsCompatible(units2))
+            {
+                iOManagerErrorCode = IOManagerErrorCode.UnitsIncompatible;
+            }
+            value = ((iOManagerErrorCode == IOManagerErrorCode.NoError) ? value2 : double.NaN);
+            units = ((iOManagerErrorCode == IOManagerErrorCode.NoError) ? units2 : null);
+            return iOManagerErrorCode;
+        }
+
+        protected IOManagerErrorCode GetComputedMatrix(IScaledEvaluation shadowEval, out double[][] value, out string units)
+        {
+            string units2 = null;
+            double[][] value2 = null;
+            IOManagerErrorCode iOManagerErrorCode = EvaluationHelper.AnalyzeEvaluationError(shadowEval);
+            if (iOManagerErrorCode == IOManagerErrorCode.NoError)
+            {
+                iOManagerErrorCode = ScaledEvaluationResultToIOManagerErrorCode(shadowEval.GetComputedValue(out value2, out units2));
+            }
+            if (iOManagerErrorCode == IOManagerErrorCode.NoError && !AreUnitsCompatible(units2))
+            {
+                iOManagerErrorCode = IOManagerErrorCode.UnitsIncompatible;
+            }
+            value = ((iOManagerErrorCode == IOManagerErrorCode.NoError) ? value2 : null);
+            units = ((iOManagerErrorCode == IOManagerErrorCode.NoError) ? units2 : null);
+            return iOManagerErrorCode;
+        }
+
+        protected static IOManagerErrorCode GetComputedString(IScaledEvaluation shadowEval, out string value)
+        {
+            IOManagerErrorCode iOManagerErrorCode = EvaluationHelper.AnalyzeEvaluationError(shadowEval);
+            if (iOManagerErrorCode == IOManagerErrorCode.NoError)
+            {
+                iOManagerErrorCode = ScaledEvaluationResultToIOManagerErrorCode(shadowEval.GetComputedValue(out value));
+            }
+            else
+            {
+                value = null;
+            }
+            return iOManagerErrorCode;
+        }
+
+        private bool AreUnitsCompatible(string resultUnits)
+        {
+            if (!ScaledByUnits.IsNullOrEmpty())
+            {
+                return resultUnits.IsNullOrEmpty();
+            }
+            return true;
+        }
+
+        public bool IsScalingValid()
+        {
+            return ScaledByUnits.IsNullOrEmpty() || ScalingSExpression.IsNotEmpty();
+        }
     }
 
     partial class ScalarOutputGetter
@@ -366,7 +478,8 @@ public partial class IOManager
         public IUnitedScalarState ScalarState { get; private set; }
     }
 
-    partial class ItemAliasComparer
+    [MirrorOf("Ptc.Controls.IO.IOManager+ItemAliasComparer, Ptc.Controls")]
+    public partial class ItemAliasComparer : EqualityComparer<IItemAlias>
     {
         public override bool Equals(IItemAlias x, IItemAlias y)
         {
@@ -452,7 +565,8 @@ public partial class IOManager
         public IErrorState ErrorState { get; private set; }
     }
 
-    partial class InputOutputItemsStates
+    [MirrorOf("Ptc.Controls.IO.IOManager+InputOutputItemsStates, Ptc.Controls")]
+    public partial class InputOutputItemsStates : IInputOutputItemsStates
     {
         public InputOutputItemsStates(IList<IScalarItemWithOriginalState> inputs, IList<IScalarItem> outputs)
         {

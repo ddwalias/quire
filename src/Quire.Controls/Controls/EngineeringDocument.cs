@@ -1,10 +1,13 @@
 #nullable disable
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Media;
 using Quire.Controls.Core;
 using Quire.Controls.InputControls;
 using Quire.Controls.Worksheet;
+using Quire.Core;
 using Quire.Mirror;
 using Quire.PersistentData;
 using Quire.Serialization;
@@ -94,6 +97,72 @@ public partial class EngineeringDocument
 
     [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
     public event Action<IEngineeringDocument> FilePathChanged;
+
+    [MirrorOf("Ptc.Controls.EngineeringDocument+PropertyNames, Ptc.Controls")]
+    public static class PropertyNames
+    {
+        public const string IsDocumentATemplate = "IsDocumentATemplate";
+        public const string ReadonlyOptions = "ReadonlyOptions";
+        public const string Zoom = "Zoom";
+        public const string Worksheet = "Worksheet";
+        public const string DocumentTabIcon = "DocumentTabIcon";
+        public const string DisplayFilePath = "DisplayFilePath";
+        public const string DisplayFileName = "DisplayFileName";
+        public const string DisplaySavedDate = "DisplaySavedDate";
+        public const string DisplayDocumentName = "DisplayDocumentName";
+        public const string DisplayWindowTitle = "DisplayWindowTitle";
+    }
+
+    [MirrorOf("Ptc.Controls.EngineeringDocument+CustomizedValues, Ptc.Controls")]
+    private struct CustomizedValues
+    {
+        public DateTime? SavedDate;
+        public string FilePath;
+        public string DocumentName;
+        public string WindowTitle;
+        public string TabIcon;
+        public string ClosePrompt;
+    }
+
+    private CustomizedValues _customizedValues;
+
+    public void ActivateHeader() => Worksheet.ActivateHeader();
+
+    public void ActivateFooter() => Worksheet.ActivateFooter();
+
+    public void ActivateMain() => Worksheet.ActivateContent();
+
+    public void ActivateWorksheet() => WorksheetControl.Activate();
+
+    public MatrixFormat MathResultMatrixFormat
+    {
+        get => Worksheet.ResultMatrixFormat;
+        set => Worksheet.ResultMatrixFormat = value;
+    }
+
+    public NumberFormat MathDisplayNumberFormat
+    {
+        get => Worksheet.DisplayNumberFormat;
+        set => Worksheet.DisplayNumberFormat = value;
+    }
+
+    public IRegionFactory RegionFactory
+    {
+        get => Quire.Controls.Worksheet.RegionFactory.Instance;
+        set => DebugTools.FailAssertion("RegionFactory: setter not imp");
+    }
+
+    public IDictionary<IdLabels, ExtendedFont> LabeledIdFormat
+    {
+        get => Worksheet.LabeledIdFormat;
+        set => Worksheet.LabeledIdFormat = value;
+    }
+
+    public MathFormat MathFormat => Worksheet.MathFormat;
+
+    IWorksheetProperties IEngineeringDocument.Worksheet => Worksheet;
+
+    public bool IsPrinting => _runningPrintJobs.Count > 0;
 
     partial class RootDecorator
     {

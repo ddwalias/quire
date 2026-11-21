@@ -68,8 +68,6 @@ public partial class IOManager : global::Quire.Controls.Core.IORegions.IIORegion
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Controls.Core.IORegions.IOManagerErrorCode CreateShadowEvalForCalc(global::Quire.Controls.Core.IORegions.IIOItem ioItem, string scalingSExpression, out global::Quire.Controls.IO.ScaledEvaluation eval) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Core.IORegions.IOManagerErrorCode ScaledEvaluationResultToIOManagerErrorCode(global::Quire.Controls.IO.ScaledEvaluation.ScaledEvaluationResult scaledEvaluationResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void HandleIORegionChanged(global::System.Windows.DependencyObject region, global::Quire.Controls.Core.IORegions.IORegionChangeType ioRegionChangeType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleInputItemsCollectionRangeChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -139,13 +137,6 @@ public partial class IOManager : global::Quire.Controls.Core.IORegions.IIORegion
         private void StopProgressTracking(bool finished) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+EvaluationHelper, Ptc.Controls")]
-    private static partial class EvaluationHelper
-    {
-        [global::Quire.Mirror.MirrorStub]
-        public static global::Quire.Controls.Core.IORegions.IOManagerErrorCode AnalyzeEvaluationError(global::Quire.Calculation.Core.Support.ISimpleCalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    }
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+IUnitedValueGetter, Ptc.Controls")]
     private partial interface IUnitedValueGetter
     {
@@ -180,49 +171,6 @@ public partial class IOManager : global::Quire.Controls.Core.IORegions.IIORegion
         global::Quire.Controls.IO.IShadowIdDefinition CreateShadowCalculatable(string sExprKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+UnitedScalarState, Ptc.Controls")]
-    private partial class UnitedScalarState : global::Quire.Controls.Core.IORegions.IUnitedScalarState, global::Quire.Controls.Core.IORegions.IErrorState
-    {
-    }
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+UnitedMatrixState, Ptc.Controls")]
-    private partial class UnitedMatrixState : global::Quire.Controls.Core.IORegions.IUnitedMatrixState, global::Quire.Controls.Core.IORegions.IErrorState
-    {
-    }
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+StringState, Ptc.Controls")]
-    private partial class StringState : global::Quire.Controls.Core.IORegions.IStringState, global::Quire.Controls.Core.IORegions.IErrorState
-    {
-    }
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+ErrorState, Ptc.Controls")]
-    private partial class ErrorState : global::Quire.Controls.Core.IORegions.IErrorState
-    {
-    }
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+UnitedValueGetter, Ptc.Controls")]
-    private abstract partial class UnitedValueGetter : global::Quire.Controls.IO.IOManager.IUnitedValueGetter
-    {
-        [global::Quire.Mirror.MirrorStub]
-        public abstract global::System.Collections.Generic.IEnumerable<global::Quire.Controls.IO.CalculationOverridesTypes> OverrideTypes { get; }
-        [global::Quire.Mirror.MirrorStub]
-        public abstract bool IsEmptyState(global::Quire.Controls.IO.CalculationOverridesTypes type);
-        [global::Quire.Mirror.MirrorStub]
-        public abstract void GetComputedValue(global::Quire.Controls.IO.IScaledEvaluation shadowEval, global::Quire.Controls.IO.CalculationOverridesTypes type);
-        [global::Quire.Mirror.MirrorStub]
-        public abstract void SetOperationResult(global::Quire.Controls.Core.IORegions.IOManagerErrorCode code, global::Quire.Controls.IO.CalculationOverridesTypes type);
-        [global::Quire.Mirror.MirrorStub]
-        public abstract global::Quire.Controls.Core.IORegions.IOManagerErrorCode GetOperationResult(global::Quire.Controls.IO.CalculationOverridesTypes type);
-        [global::Quire.Mirror.MirrorStub]
-        protected global::Quire.Controls.Core.IORegions.IOManagerErrorCode GetComputedScalar(global::Quire.Controls.IO.IScaledEvaluation shadowEval, out double value, out string units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        protected global::Quire.Controls.Core.IORegions.IOManagerErrorCode GetComputedMatrix(global::Quire.Controls.IO.IScaledEvaluation shadowEval, out double[][] value, out string units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        protected static global::Quire.Controls.Core.IORegions.IOManagerErrorCode GetComputedString(global::Quire.Controls.IO.IScaledEvaluation shadowEval, out string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private bool AreUnitsCompatible(string resultUnits) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    }
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+ScalarOutputGetter, Ptc.Controls")]
     private partial class ScalarOutputGetter : global::Quire.Controls.IO.IOManager.UnitedValueGetter, global::Quire.Controls.Core.IORegions.IScalarItem, global::Quire.Controls.Core.IORegions.IItemAlias
     {
@@ -236,11 +184,6 @@ public partial class IOManager : global::Quire.Controls.Core.IORegions.IIORegion
         public override void SetOperationResult(global::Quire.Controls.Core.IORegions.IOManagerErrorCode code, global::Quire.Controls.IO.CalculationOverridesTypes type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public override global::Quire.Controls.Core.IORegions.IOManagerErrorCode GetOperationResult(global::Quire.Controls.IO.CalculationOverridesTypes type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    }
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+ItemAliasComparer, Ptc.Controls")]
-    public partial class ItemAliasComparer : global::System.Collections.Generic.EqualityComparer<global::Quire.Controls.Core.IORegions.IItemAlias>
-    {
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+ScalarInputGetter, Ptc.Controls")]
@@ -309,8 +252,4 @@ public partial class IOManager : global::Quire.Controls.Core.IORegions.IIORegion
         public override global::Quire.Controls.Core.IORegions.IOManagerErrorCode GetOperationResult(global::Quire.Controls.IO.CalculationOverridesTypes type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager+InputOutputItemsStates, Ptc.Controls")]
-    public partial class InputOutputItemsStates : global::Quire.Controls.Core.IORegions.IInputOutputItemsStates
-    {
-    }
 }
