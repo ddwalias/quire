@@ -2,10 +2,91 @@
 #define NOMINMAX
 #include <sdkddkver.h>
 #include <stdlib.h>
+#include <iostream>
+#include <ostream>
+#include <string>
+#include <type_traits>
 #pragma warning(disable: 4100)
 #pragma implicit_keepalive(off)
 
+namespace ms
+{
+    template <typename T>
+    struct Range
+    {
+        T* first;
+        T* last;
+    };
+}
+
+template <typename T>
+class Substring : public ms::Range<T>
+{
+public:
+    Substring(T* p, size_t n) : ms::Range<T>{p, p + n} {}
+    Substring(T* s) : Substring(s, std::char_traits<std::remove_const_t<T>>::length(s)) {}
+    Substring(const std::basic_string<std::remove_const_t<T>>& s) : Substring{s.c_str(), s.size()} {}
+    Substring(const ms::Range<T>& r) : ms::Range<T>(r) {}
+};
+
+namespace utl
+{
+    std::string ToStrng(System::Object^ o)
+    {
+        if (o == nullptr)
+        {
+            return "<null>";
+        }
+        System::String^ s = o->ToString();
+        if (s->Length > 0)
+        {
+            pin_ptr<System::Byte> p = &System::Text::Encoding::UTF8->GetBytes(s)[0];
+            return reinterpret_cast<const char*>(p);
+        }
+        return "";
+    }
+
+    __declspec(dllimport) std::ostream& __cdecl Log(Substring<const char> name);
+    __declspec(dllimport) unsigned long __cdecl mcGetSetting(const wchar_t* name, unsigned long defaultVal);
+}
+
+static const wchar_t* const STR_LISP_LOGGING = L"LispLogging";
+static bool sVerboseTrace = utl::mcGetSetting(STR_LISP_LOGGING, 0) > 0;
+
 namespace mslisp {
+    void LogIndent(int level)
+    {
+        for (int i = 0; i < level; i++)
+        {
+            utl::Log("lisp") << " ";
+        }
+    }
+
+    void LogIndented(int trace_level, const std::string& msg)
+    {
+        LogIndent(trace_level);
+        utl::Log("lisp") << "[" << trace_level << "] " << msg << std::endl;
+    }
+
+    System::String^ dbg_msg(System::Object^ f, array<System::Object^>^ args)
+    {
+        array<System::String^>^ parts = gcnew array<System::String^>(3);
+        parts[0] = "Lisp applying: ";
+        parts[1] = Quire::Engine::PCons::_ToString(f);
+        parts[2] = " to ";
+        System::String^ s = System::String::Concat(parts);
+        unsigned int n = args->Length;
+        for (unsigned int i = 0; i < n; i++)
+        {
+            s = System::String::Concat(s, Quire::Engine::PCons::_ToString(args[i]));
+            if (i < n - 1)
+            {
+                s = System::String::Concat(s, ", ");
+            }
+        }
+        return s;
+    }
+
     namespace Error {
         __declspec(noinline) void report(System::String^ msg)
         {
@@ -2252,6 +2333,518 @@ namespace Quire { namespace mslisp {
         }
     };
 
+    [Quire::Mirror::MirrorOfAttribute("mslisp.LoggedFastApp, mslisp")]
+    ref class LoggedFastApp abstract : FastApp
+    {
+    protected:
+        Expression^ m_f;
+        array<Expression^>^ m_args;
+
+        array<System::Object^>^ LogArgs(Env^ e, int trace_level)
+        {
+            array<System::Object^>^ arr = gcnew array<System::Object^>(m_args->Length);
+            for (int i = 0; i < m_args->Length; i++)
+            {
+                arr[i] = m_args[i]->execute(e);
+            }
+            ::mslisp::LogIndented(trace_level, utl::ToStrng(::mslisp::dbg_msg(m_f, arr)));
+            System::GC::KeepAlive(this);
+            return arr;
+        }
+
+    public:
+        LoggedFastApp(Expression^ f, array<Expression^>^ args)
+            : m_f(f), m_args(args)
+        {
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.LoggedFastApp0, mslisp")]
+    ref class LoggedFastApp0 : LoggedFastApp
+    {
+    private:
+        Func0^ m_func;
+    public:
+        LoggedFastApp0(Func0^ f, Expression^ ff, array<Expression^>^ args)
+            : LoggedFastApp(ff, args), m_func(f)
+        {
+        }
+
+        virtual System::Object^ execute(Env^ e, int trace_level) override
+        {
+            LogArgs(e, trace_level);
+            System::Object^ obj = m_func();
+            ::mslisp::LogIndented(trace_level, utl::ToStrng("-> " + obj));
+            System::GC::KeepAlive(this);
+            return obj;
+        }
+
+        virtual System::String^ ToString() override
+        {
+            array<System::Object^>^ args = gcnew array<System::Object^>(1);
+            args[0] = m_f;
+            System::String^ result = System::String::Format("(LoggedFastApp1 {0})", args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.LoggedFastApp1, mslisp")]
+    ref class LoggedFastApp1 : LoggedFastApp
+    {
+    private:
+        Func1^ m_func;
+    public:
+        LoggedFastApp1(Func1^ f, Expression^ ff, array<Expression^>^ args)
+            : LoggedFastApp(ff, args), m_func(f)
+        {
+        }
+
+        virtual System::Object^ execute(Env^ e, int trace_level) override
+        {
+            array<System::Object^>^ arr = LogArgs(e, trace_level);
+            System::Object^ obj = m_func(arr[0]);
+            ::mslisp::LogIndented(trace_level, utl::ToStrng("-> " + obj));
+            System::GC::KeepAlive(this);
+            return obj;
+        }
+
+        virtual System::String^ ToString() override
+        {
+            array<System::Object^>^ args = gcnew array<System::Object^>(2);
+            args[0] = m_f;
+            args[1] = m_args[0];
+            System::String^ result = System::String::Format("(LoggedFastApp1 {0} {1})", args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.LoggedFastApp2, mslisp")]
+    ref class LoggedFastApp2 : LoggedFastApp
+    {
+    private:
+        Func2^ m_func;
+    public:
+        LoggedFastApp2(Func2^ f, Expression^ ff, array<Expression^>^ args)
+            : LoggedFastApp(ff, args), m_func(f)
+        {
+        }
+
+        virtual System::Object^ execute(Env^ e, int trace_level) override
+        {
+            array<System::Object^>^ arr = LogArgs(e, trace_level);
+            System::Object^ obj = m_func(arr[0], arr[1]);
+            ::mslisp::LogIndented(trace_level, utl::ToStrng("-> " + obj));
+            System::GC::KeepAlive(this);
+            return obj;
+        }
+
+        virtual System::String^ ToString() override
+        {
+            array<System::Object^>^ args = gcnew array<System::Object^>(3);
+            args[0] = m_f;
+            args[1] = m_args[0];
+            args[2] = m_args[1];
+            System::String^ result = System::String::Format("(LoggedFastApp1 {0} {1} {2})", args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.LoggedFastApp3, mslisp")]
+    ref class LoggedFastApp3 : LoggedFastApp
+    {
+    private:
+        Func3^ m_func;
+    public:
+        LoggedFastApp3(Func3^ f, Expression^ ff, array<Expression^>^ args)
+            : LoggedFastApp(ff, args), m_func(f)
+        {
+        }
+
+        virtual System::Object^ execute(Env^ e, int trace_level) override
+        {
+            array<System::Object^>^ arr = LogArgs(e, trace_level);
+            System::Object^ obj = m_func(arr[0], arr[1], arr[2]);
+            ::mslisp::LogIndented(trace_level, utl::ToStrng("-> " + obj));
+            System::GC::KeepAlive(this);
+            return obj;
+        }
+
+        virtual System::String^ ToString() override
+        {
+            array<System::Object^>^ args = gcnew array<System::Object^>(4);
+            args[0] = m_f;
+            args[1] = m_args[0];
+            args[2] = m_args[1];
+            args[3] = m_args[2];
+            System::String^ result = System::String::Format("(LoggedFastApp1 {0} {1} {2} {3})", args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.LoggedFastApp4, mslisp")]
+    ref class LoggedFastApp4 : LoggedFastApp
+    {
+    private:
+        Func4^ m_func;
+    public:
+        LoggedFastApp4(Func4^ f, Expression^ ff, array<Expression^>^ args)
+            : LoggedFastApp(ff, args), m_func(f)
+        {
+        }
+
+        virtual System::Object^ execute(Env^ e, int trace_level) override
+        {
+            array<System::Object^>^ arr = LogArgs(e, trace_level);
+            System::Object^ obj = m_func(arr[0], arr[1], arr[2], arr[3]);
+            ::mslisp::LogIndented(trace_level, utl::ToStrng("-> " + obj));
+            System::GC::KeepAlive(this);
+            return obj;
+        }
+
+        virtual System::String^ ToString() override
+        {
+            array<System::Object^>^ args = gcnew array<System::Object^>(5);
+            args[0] = m_f;
+            args[1] = m_args[0];
+            args[2] = m_args[1];
+            args[3] = m_args[2];
+            args[4] = m_args[3];
+            System::String^ result = System::String::Format("(LoggedFastApp1 {0} {1} {2} {3} {4})", args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.LoggedFastApp5, mslisp")]
+    ref class LoggedFastApp5 : LoggedFastApp
+    {
+    private:
+        Func5^ m_func;
+    public:
+        LoggedFastApp5(Func5^ f, Expression^ ff, array<Expression^>^ args)
+            : LoggedFastApp(ff, args), m_func(f)
+        {
+        }
+
+        virtual System::Object^ execute(Env^ e, int trace_level) override
+        {
+            array<System::Object^>^ arr = LogArgs(e, trace_level);
+            System::Object^ obj = m_func(arr[0], arr[1], arr[2], arr[3], arr[4]);
+            ::mslisp::LogIndented(trace_level, utl::ToStrng("-> " + obj));
+            System::GC::KeepAlive(this);
+            return obj;
+        }
+
+        virtual System::String^ ToString() override
+        {
+            array<System::Object^>^ args = gcnew array<System::Object^>(6);
+            args[0] = m_f;
+            args[1] = m_args[0];
+            args[2] = m_args[1];
+            args[3] = m_args[2];
+            args[4] = m_args[3];
+            args[5] = m_args[4];
+            System::String^ result = System::String::Format("(LoggedFastApp1 {0} {1} {2} {3} {4} {5})", args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.LoggedFastApp6, mslisp")]
+    ref class LoggedFastApp6 : LoggedFastApp
+    {
+    private:
+        Func6^ m_func;
+    public:
+        LoggedFastApp6(Func6^ f, Expression^ ff, array<Expression^>^ args)
+            : LoggedFastApp(ff, args), m_func(f)
+        {
+        }
+
+        virtual System::Object^ execute(Env^ e, int trace_level) override
+        {
+            array<System::Object^>^ arr = LogArgs(e, trace_level);
+            System::Object^ obj = m_func(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
+            ::mslisp::LogIndented(trace_level, utl::ToStrng("-> " + obj));
+            System::GC::KeepAlive(this);
+            return obj;
+        }
+
+        virtual System::String^ ToString() override
+        {
+            array<System::Object^>^ args = gcnew array<System::Object^>(7);
+            args[0] = m_f;
+            args[1] = m_args[0];
+            args[2] = m_args[1];
+            args[3] = m_args[2];
+            args[4] = m_args[3];
+            args[5] = m_args[4];
+            args[6] = m_args[5];
+            System::String^ result = System::String::Format("(LoggedFastApp1 {0} {1} {2} {3} {4} {5} {6})", args);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.ApplyExpr, mslisp")]
+    ref class ApplyExpr : Expression
+    {
+    private:
+        Expression^ m_func;
+        array<Expression^>^ m_args;
+        FastApp^ m_optimized;
+        bool m_try_optimize;
+        [System::ThreadStaticAttribute]
+        static int s_trace_level;
+
+        static FastApp^ TryOptimize(System::Object^ f, Expression^ ff, array<Expression^>^ args, bool bVerbose)
+        {
+            int num = args->Length;
+            if (num >= 0 && num <= 6)
+            {
+                if (bVerbose)
+                {
+                    switch (num)
+                    {
+                    case 0:
+                    {
+                        Func0^ d = dynamic_cast<Func0^>(CodeGen::GenDelegate(f, 0));
+                        if ((System::Object^)d != nullptr) return gcnew LoggedFastApp0(d, ff, args);
+                        break;
+                    }
+                    case 1:
+                    {
+                        Func1^ d = dynamic_cast<Func1^>(CodeGen::GenDelegate(f, 1));
+                        if ((System::Object^)d != nullptr) return gcnew LoggedFastApp1(d, ff, args);
+                        break;
+                    }
+                    case 2:
+                    {
+                        Func2^ d = dynamic_cast<Func2^>(CodeGen::GenDelegate(f, 2));
+                        if ((System::Object^)d != nullptr) return gcnew LoggedFastApp2(d, ff, args);
+                        break;
+                    }
+                    case 3:
+                    {
+                        Func3^ d = dynamic_cast<Func3^>(CodeGen::GenDelegate(f, 3));
+                        if ((System::Object^)d != nullptr) return gcnew LoggedFastApp3(d, ff, args);
+                        break;
+                    }
+                    case 4:
+                    {
+                        Func4^ d = dynamic_cast<Func4^>(CodeGen::GenDelegate(f, 4));
+                        if ((System::Object^)d != nullptr) return gcnew LoggedFastApp4(d, ff, args);
+                        break;
+                    }
+                    case 5:
+                    {
+                        Func5^ d = dynamic_cast<Func5^>(CodeGen::GenDelegate(f, 5));
+                        if ((System::Object^)d != nullptr) return gcnew LoggedFastApp5(d, ff, args);
+                        [[fallthrough]];
+                    }
+                    case 6:
+                    {
+                        Func6^ d = dynamic_cast<Func6^>(CodeGen::GenDelegate(f, 6));
+                        if ((System::Object^)d != nullptr) return gcnew LoggedFastApp6(d, ff, args);
+                        break;
+                    }
+                    }
+                }
+                else
+                {
+                    switch (num)
+                    {
+                    case 0:
+                    {
+                        Func0^ d = dynamic_cast<Func0^>(CodeGen::GenDelegate(f, 0));
+                        if ((System::Object^)d != nullptr) return gcnew FastApp0(d);
+                        break;
+                    }
+                    case 1:
+                    {
+                        Func1^ d = dynamic_cast<Func1^>(CodeGen::GenDelegate(f, 1));
+                        if ((System::Object^)d != nullptr) return gcnew FastApp1(d, args[0]);
+                        break;
+                    }
+                    case 2:
+                    {
+                        Func2^ d = dynamic_cast<Func2^>(CodeGen::GenDelegate(f, 2));
+                        if ((System::Object^)d != nullptr) return gcnew FastApp2(d, args[0], args[1]);
+                        break;
+                    }
+                    case 3:
+                    {
+                        Func3^ d = dynamic_cast<Func3^>(CodeGen::GenDelegate(f, 3));
+                        if ((System::Object^)d != nullptr) return gcnew FastApp3(d, args[0], args[1], args[2]);
+                        break;
+                    }
+                    case 4:
+                    {
+                        Func4^ d = dynamic_cast<Func4^>(CodeGen::GenDelegate(f, 4));
+                        if ((System::Object^)d != nullptr) return gcnew FastApp4(d, args[0], args[1], args[2], args[3]);
+                        break;
+                    }
+                    case 5:
+                    {
+                        Func5^ d = dynamic_cast<Func5^>(CodeGen::GenDelegate(f, 5));
+                        if ((System::Object^)d != nullptr) return gcnew FastApp5(d, args[0], args[1], args[2], args[3], args[4]);
+                        [[fallthrough]];
+                    }
+                    case 6:
+                    {
+                        Func6^ d = dynamic_cast<Func6^>(CodeGen::GenDelegate(f, 6));
+                        if ((System::Object^)d != nullptr) return gcnew FastApp6(d, args[0], args[1], args[2], args[3], args[4], args[5]);
+                        break;
+                    }
+                    }
+                }
+            }
+            return nullptr;
+        }
+
+    public:
+        ApplyExpr(Analyzer^ i, Env^ e, System::Object^ f, Quire::Engine::PCons^ args)
+            : m_try_optimize(true)
+        {
+            m_func = i->analyze(f, e);
+            int n = Quire::Engine::PCons::length(args);
+            m_args = gcnew array<Expression^>(n);
+            for (int k = 0; k < n; k++)
+            {
+                m_args[k] = i->analyze(args->hd, e);
+                args = args->tl;
+            }
+            System::GC::KeepAlive(this);
+        }
+
+        virtual System::Object^ execute(Env^ e)
+        {
+            if (m_optimized != nullptr)
+            {
+                try
+                {
+                    System::Object^ result = m_optimized->execute(e, s_trace_level++);
+                    System::GC::KeepAlive(this);
+                    return result;
+                }
+                finally
+                {
+                    s_trace_level--;
+                }
+            }
+            System::Object^ obj = m_func->execute(e);
+            if (obj == nullptr)
+            {
+                ::mslisp::Error::report("Cannot be applied (value is nil): ", m_func);
+            }
+            Quire::utl_mgd::Function^ function = dynamic_cast<Quire::utl_mgd::Function^>(obj);
+            System::Delegate^ del = nullptr;
+            if (function == nullptr)
+            {
+                del = dynamic_cast<System::Delegate^>(obj);
+                if ((System::Object^)del == nullptr)
+                {
+                    ::mslisp::Error::report("Cannot be applied: ", obj);
+                }
+            }
+            if (m_try_optimize)
+            {
+                if (function != nullptr)
+                {
+                    m_optimized = TryOptimize(function, m_func, m_args, sVerboseTrace);
+                }
+                if (m_optimized != nullptr)
+                {
+                    try
+                    {
+                        System::Object^ result = m_optimized->execute(e, s_trace_level++);
+                        System::GC::KeepAlive(this);
+                        return result;
+                    }
+                    finally
+                    {
+                        s_trace_level--;
+                    }
+                }
+                m_try_optimize = false;
+            }
+            int n = m_args->Length;
+            array<System::Object^>^ arr = gcnew array<System::Object^>(n);
+            for (int i = 0; i < n; i++)
+            {
+                arr[i] = m_args[i]->execute(e);
+            }
+            if (sVerboseTrace)
+            {
+                ::mslisp::LogIndented(s_trace_level, utl::ToStrng(::mslisp::dbg_msg(m_func, arr)));
+            }
+            try
+            {
+                if (sVerboseTrace)
+                {
+                    try
+                    {
+                        s_trace_level++;
+                        System::Object^ res = (function != nullptr) ? function->Invoke(arr) : del->DynamicInvoke(arr);
+                        ::mslisp::LogIndented(s_trace_level - 1, utl::ToStrng("-> " + res));
+                        System::GC::KeepAlive(this);
+                        return res;
+                    }
+                    finally
+                    {
+                        s_trace_level--;
+                    }
+                }
+                System::Object^ res = (function != nullptr) ? function->Invoke(arr) : del->DynamicInvoke(arr);
+                System::GC::KeepAlive(this);
+                return res;
+            }
+            catch (System::Reflection::TargetInvocationException^ ex)
+            {
+                System::Exception^ cur = ex;
+                if (ex != nullptr)
+                {
+                    do
+                    {
+                        if (dynamic_cast<System::Threading::ThreadAbortException^>(cur) == nullptr)
+                        {
+                            cur = cur->InnerException;
+                            continue;
+                        }
+                        throw ex;
+                    }
+                    while (cur != nullptr);
+                }
+                System::Exception^ inner = ex->InnerException;
+                System::String^ message = inner->Message;
+                System::String^ msg = ::mslisp::dbg_msg(m_func, arr);
+                throw gcnew System::Exception(System::String::Concat(System::String::Concat(msg, "; "), message), inner);
+            }
+            return nullptr;
+        }
+
+        virtual System::String^ ToString() override
+        {
+            System::Text::StringBuilder^ sb = gcnew System::Text::StringBuilder();
+            sb->Append("(");
+            sb->Append(m_func->ToString());
+            for (int i = 0; i < m_args->Length; i++)
+            {
+                sb->Append(" ");
+                sb->Append(m_args[i]->ToString());
+            }
+            sb->Append(")");
+            System::String^ result = sb->ToString();
+            System::GC::KeepAlive(this);
+            return result;
+        }
+    };
+
     [System::SerializableAttribute]
     [Quire::Mirror::MirrorOfAttribute("mslisp.ApplyFunction, mslisp")]
     ref class ApplyFunction : Quire::utl_mgd::FunctionBase
@@ -3044,6 +3637,631 @@ namespace Quire { namespace mslisp {
         static StandardBuiltins()
         {
             True = true;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.Interpreter, mslisp")]
+    public interface class Interpreter
+    {
+        void load(System::IO::TextReader^ t);
+        void load_file(System::String^ s);
+        System::Object^ read(System::String^ s, Quire::Engine::TagFunction^ tf);
+        System::Object^ read(System::IO::TextReader^ t, Quire::Engine::TagFunction^ tf);
+        System::Object^ read(System::String^ s);
+        System::Object^ read(System::IO::TextReader^ t);
+        System::Object^ eval(System::Object^ o);
+        System::Object^ eval(System::String^ s);
+        System::Object^ eval(System::IO::TextReader^ t);
+        void set_special(System::String^ name, System::Object^ value);
+        System::Reflection::Assembly^ add_dotnet_assembly(System::Reflection::Assembly^ a);
+        System::String^ find_file(System::String^ name);
+        void add_to_load_path(System::String^ path);
+        System::Object^ _intern(System::String^ A_0);
+        System::Object^ _intern_labeled(System::String^ A_0, System::String^ A_1, System::String^ A_2);
+        Symbol^ intern(System::String^ name);
+        Symbol^ intern_labeled(System::String^ name, System::String^ labels, System::String^ tag);
+        void add_function(System::String^ package, System::String^ name, Quire::utl_mgd::Function^ f);
+        void save(System::String^ path);
+    };
+
+    [System::SerializableAttribute]
+    [Quire::Mirror::MirrorOfAttribute("mslisp.InterpreterImp, mslisp")]
+    ref class InterpreterImp : Interpreter, Analyzer
+    {
+    private:
+        Quire::Engine::Reader^ m_reader;
+        System::Collections::Generic::Dictionary<System::String^, Package^>^ m_packages;
+        System::Collections::Generic::Stack<Package^>^ m_used_packages;
+        Package^ m_current_package;
+        System::Collections::Generic::Stack<InterpreterState>^ m_state_stack;
+        Symbol^ SETF;
+        Symbol^ DEFMACRO;
+        Symbol^ LAMBDA;
+        Symbol^ QUOTE;
+        Symbol^ IF;
+        Symbol^ PROGN;
+        Symbol^ CAR;
+        Symbol^ CDR;
+        Symbol^ UNWIND_PROTECT;
+        Symbol^ IGNORE_ERRORS;
+        Symbol^ HANDLER_CASE;
+        Symbol^ BACKQUOTE;
+        Symbol^ COMMA;
+        Symbol^ COMMA_AT;
+        ::Quire::Native::EngutilsMgd::PathCache^ m_paths;
+
+        Package^ get_package(System::String^ name)
+        {
+            Package^ value = nullptr;
+            if (m_packages->TryGetValue(name, value))
+            {
+                System::GC::KeepAlive(this);
+                return value;
+            }
+            value = gcnew Package(name);
+            m_packages->Add(name, value);
+            System::GC::KeepAlive(this);
+            return value;
+        }
+
+        Package^ use_package(Package^ p)
+        {
+            m_used_packages->Push(p);
+            System::GC::KeepAlive(this);
+            return p;
+        }
+
+        Symbol^ global(System::String^ name)
+        {
+            Symbol^ result = get_package("lisp")->_export(name);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+
+        void push_state()
+        {
+            m_state_stack->Push(InterpreterState(m_current_package, m_used_packages));
+            System::GC::KeepAlive(this);
+        }
+
+        void pop_state()
+        {
+            InterpreterState state = m_state_stack->Pop();
+            m_current_package = state.package;
+            m_used_packages = state.pstack;
+        }
+
+        System::Object^ read(::Quire::Native::EngutilsMgd::PushbackReader^ r, Quire::Engine::TagFunction^ tf)
+        {
+            System::Object^ result = m_reader->read(r, tf);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+
+    public:
+        virtual System::Object^ read(System::String^ s, Quire::Engine::TagFunction^ tf)
+        {
+            return read(gcnew System::IO::StringReader(s), tf);
+        }
+
+        virtual System::Object^ read(System::IO::TextReader^ t, Quire::Engine::TagFunction^ tf)
+        {
+            ::Quire::Native::EngutilsMgd::PushbackReader^ r = gcnew ::Quire::Native::EngutilsMgd::PushbackReader(t);
+            System::Object^ result = m_reader->read(r, tf);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+
+        virtual System::Object^ read(System::String^ s)
+        {
+            return read(gcnew System::IO::StringReader(s), nullptr);
+        }
+
+        virtual System::Object^ read(System::IO::TextReader^ t)
+        {
+            ::Quire::Native::EngutilsMgd::PushbackReader^ r = gcnew ::Quire::Native::EngutilsMgd::PushbackReader(t);
+            System::Object^ result = m_reader->read(r, nullptr);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+
+        InterpreterImp()
+            : m_packages(gcnew System::Collections::Generic::Dictionary<System::String^, Package^>()),
+              m_used_packages(gcnew System::Collections::Generic::Stack<Package^>()),
+              m_state_stack(gcnew System::Collections::Generic::Stack<InterpreterState>()),
+              m_paths(gcnew ::Quire::Native::EngutilsMgd::PathCache())
+        {
+            Quire::Engine::InternFunction^ f = gcnew Quire::Engine::InternFunction(this, &InterpreterImp::_intern);
+            Quire::Engine::InternFunctionLabeled^ lf = gcnew Quire::Engine::InternFunctionLabeled(this, &InterpreterImp::_intern_labeled);
+            m_reader = gcnew Quire::Engine::Reader(f, lf);
+            m_current_package = use_package(get_package("lisp"));
+            m_paths->AddPaths(System::IO::Directory::GetCurrentDirectory());
+            SETF = global("setf");
+            DEFMACRO = global("defmacro");
+            LAMBDA = global("lambda");
+            QUOTE = global("quote");
+            IF = global("if");
+            PROGN = global("progn");
+            CAR = global("car");
+            CDR = global("cdr");
+            UNWIND_PROTECT = global("unwind-protect");
+            IGNORE_ERRORS = global("ignore-errors");
+            HANDLER_CASE = global("handler-case");
+            BACKQUOTE = intern(":backquote");
+            COMMA = intern(":comma");
+            COMMA_AT = intern(":comma-at");
+            Quire::Engine::ReadFunction^ rf = gcnew Quire::Engine::ReadFunction(this, &InterpreterImp::readm);
+            m_reader->add_reader_macro('\'', rf, true);
+            m_reader->add_reader_macro('`', rf, true);
+            m_reader->add_reader_macro(',', rf, true);
+            add_static_methods("lisp", StandardBuiltins::typeid);
+            add_function("lisp", "apply", gcnew ApplyFunction());
+            add_function("lisp", "strcat", gcnew StrcatFunction());
+            add_function("lisp", "+", gcnew PlusFunction(1));
+            add_function("lisp", "-", gcnew PlusFunction(-1));
+            add_function("lisp", "signal", gcnew SignalFunction());
+            add_function("lisp", "load", gcnew DelegateFunction(gcnew BuiltinDelegate(this, &InterpreterImp::_load)));
+            add_function("lisp", "use-package", gcnew DelegateFunction(gcnew BuiltinDelegate(this, &InterpreterImp::_use_package)));
+            add_function("lisp", "in-package", gcnew DelegateFunction(gcnew BuiltinDelegate(this, &InterpreterImp::_in_package)));
+            add_function("lisp", "export", gcnew DelegateFunction(gcnew BuiltinDelegate(this, &InterpreterImp::_export)));
+            add_function("lisp", "gensym", gcnew DelegateFunction(gcnew BuiltinDelegate(this, &InterpreterImp::_gensym)));
+            get_package("lisp")->_export("*interpreter*")->set_value(this);
+            get_package("lisp")->_export("t")->set_value(true);
+            get_package("lisp")->_export("nil")->set_value(nullptr);
+            get_package("lisp")->_export("False")->set_value(false);
+            get_package("lisp")->_export("*tab*")->set_value("\t");
+            get_package("lisp")->_export("*newline*")->set_value("\r\n");
+            System::GC::KeepAlive(this);
+        }
+
+        void add_as_builtins(System::String^ package, System::Type^ t)
+        {
+            array<System::Reflection::MethodInfo^>^ methods = t->GetMethods((System::Reflection::BindingFlags)26);
+            for (int i = 0; i < methods->Length; i++)
+            {
+                SingleMethod^ f = gcnew SingleMethod(methods[i]);
+                System::String^ name = methods[i]->Name;
+                add_function(package, name, f);
+            }
+            System::GC::KeepAlive(this);
+        }
+
+        void add_static_methods(System::String^ package, System::Type^ t)
+        {
+            array<System::Reflection::MethodInfo^>^ methods = t->GetMethods((System::Reflection::BindingFlags)26);
+            for (int i = 0; i < methods->Length; i++)
+            {
+                System::String^ name = methods[i]->Name;
+                Symbol^ sym = get_package(package)->_export(name);
+                sym->set_value(gcnew StaticOrInstanceMethod(t, name));
+            }
+            System::GC::KeepAlive(this);
+        }
+
+        void add_instance_methods(System::String^ package, System::Type^ t)
+        {
+            array<System::Reflection::MethodInfo^>^ methods = t->GetMethods((System::Reflection::BindingFlags)22);
+            for (int i = 0; i < methods->Length; i++)
+            {
+                System::String^ name = methods[i]->Name;
+                Symbol^ sym = get_package(package)->_export(name);
+                sym->set_value(gcnew InstanceMethod(name));
+            }
+            System::GC::KeepAlive(this);
+        }
+
+        void add_enum(System::Type^ t)
+        {
+            array<System::String^>^ names = System::Enum::GetNames(t);
+            System::Array^ values = System::Enum::GetValues(t);
+            for (int i = 0; i < names->Length; i++)
+            {
+                Symbol^ sym = get_package(t->FullName)->_export(names[i]);
+                sym->set_value(values->GetValue(i));
+            }
+            System::GC::KeepAlive(this);
+        }
+
+        void add_dotnet_type(System::Type^ t)
+        {
+            System::String^ fullName = t->FullName;
+            int idx = fullName->LastIndexOf('.');
+            if (t->IsEnum)
+            {
+                add_enum(t);
+                return;
+            }
+            System::String^ pkgName = (idx < 0) ? "lisp" : fullName->Substring(0, idx);
+            System::Object^ value = gcnew Constructor(t);
+            get_package(pkgName)->_export(t->Name)->set_value(value);
+            if (!fullName->Equals("System.Threading.CompressedStack") &&
+                !fullName->Equals("System.Security.SecurityManager") &&
+                !fullName->Equals("System.Runtime.Serialization.Formatters.InternalRM") &&
+                !fullName->Equals("System.Runtime.Serialization.Formatters.InternalST") &&
+                !fullName->Equals("System.Threading.Thread"))
+            {
+                add_static_methods(fullName, t);
+                add_instance_methods("dotnet", t);
+            }
+            else
+            {
+                System::GC::KeepAlive(this);
+            }
+        }
+
+        void reset_path_cache()
+        {
+            m_paths = gcnew ::Quire::Native::EngutilsMgd::PathCache();
+        }
+
+        virtual void save(System::String^ path)
+        {
+            try
+            {
+                System::Runtime::Serialization::DataContractSerializer^ serializer =
+                    gcnew System::Runtime::Serialization::DataContractSerializer(InterpreterImp::typeid);
+                System::IO::Directory::CreateDirectory(System::IO::Path::GetDirectoryName(path));
+                System::IO::Stream^ stream = gcnew System::IO::FileStream(
+                    path, System::IO::FileMode::Create, System::IO::FileAccess::Write, System::IO::FileShare::None);
+                System::Xml::XmlDictionaryWriter^ writer = System::Xml::XmlDictionaryWriter::CreateTextWriter(stream);
+                serializer->WriteStartObject(writer, this);
+                serializer->WriteObjectContent(writer, this);
+                serializer->WriteEndObject(writer);
+                writer->Flush();
+                stream->Close();
+            }
+            catch (System::Exception^)
+            {
+                System::Diagnostics::Trace::Assert(false, nullptr);
+            }
+            System::GC::KeepAlive(this);
+        }
+
+        virtual System::Object^ _intern(System::String^ name)
+        {
+            return intern(name);
+        }
+
+        virtual Symbol^ intern(System::String^ name)
+        {
+            if (name->Length > 0 && name[0] == ':')
+            {
+                Symbol^ result = get_package("keyword")->_export(name->Substring(1));
+                System::GC::KeepAlive(this);
+                return result;
+            }
+            int idx = name->LastIndexOf('.');
+            if (idx != -1 && name[0] != '"')
+            {
+                System::String^ pkgName = name->Substring(0, idx);
+                if (pkgName->Length > 0)
+                {
+                    wchar_t c = pkgName[0];
+                    if (!System::Char::IsDigit(c) && c != '-' && c != '+')
+                    {
+                        Symbol^ result = get_package(pkgName)->intern(name->Substring(idx + 1));
+                        System::GC::KeepAlive(this);
+                        return result;
+                    }
+                }
+            }
+            System::Collections::Generic::Stack<Package^>::Enumerator enumerator = m_used_packages->GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                Symbol^ symbol = enumerator.Current->find_export(name);
+                if (symbol != nullptr)
+                {
+                    System::GC::KeepAlive(this);
+                    return symbol;
+                }
+            }
+            Symbol^ result = m_current_package->intern(name);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+
+        virtual System::Object^ _intern_labeled(System::String^ name, System::String^ labels, System::String^ tag)
+        {
+            return intern_labeled(name, labels, tag);
+        }
+
+        virtual Symbol^ intern_labeled(System::String^ name, System::String^ labels, System::String^ tag)
+        {
+            Quire::utl_mgd::LabelSet^ labelSet = nullptr;
+            if ((System::Object^)labels != nullptr)
+            {
+                labelSet = Quire::utl_mgd::LabelTrie::InternLabels(labels);
+            }
+            Symbol^ tagSym = ((System::Object^)tag != nullptr) ? intern(tag) : nullptr;
+            return gcnew TaggedSymbol(intern(name), tagSym, labelSet);
+        }
+
+        virtual System::Object^ eval(System::Object^ o)
+        {
+            System::Object^ result = analyze(o, nullptr)->execute(nullptr);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+
+        virtual System::Object^ eval(System::String^ s)
+        {
+            return eval(read(s));
+        }
+
+        virtual System::Object^ eval(System::IO::TextReader^ t)
+        {
+            return eval(read(t));
+        }
+
+        virtual void set_special(System::String^ name, System::Object^ value)
+        {
+            intern(name)->set_value(value);
+            System::GC::KeepAlive(this);
+        }
+
+        virtual Expression^ analyze(System::Object^ o, Env^ env)
+        {
+            Symbol^ sym = dynamic_cast<Symbol^>(o);
+            if (sym != nullptr)
+            {
+                LocalVar^ localVar = env->lookup(sym);
+                if (localVar != nullptr)
+                {
+                    System::GC::KeepAlive(this);
+                    return localVar;
+                }
+                return gcnew GlobalVar(sym);
+            }
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(o);
+            if (pCons != nullptr)
+            {
+                System::Object^ hd = pCons->hd;
+                Quire::Engine::PCons^ tl = pCons->tl;
+                Symbol^ hdSym = dynamic_cast<Symbol^>(hd);
+                if (hdSym != nullptr)
+                {
+                    MacroExpr^ macroExpr = dynamic_cast<MacroExpr^>(hdSym->get_value());
+                    if (macroExpr != nullptr)
+                    {
+                        Expression^ result = analyze(macroExpr->Invoke(tl->ToArray()), env);
+                        System::GC::KeepAlive(this);
+                        return result;
+                    }
+                }
+                if (hd == SETF)
+                {
+                    return gcnew SetfExpr(this, env, tl);
+                }
+                if (hd == DEFMACRO)
+                {
+                    return gcnew DefmacroExpr(this, env, tl);
+                }
+                if (hd == LAMBDA)
+                {
+                    return gcnew LambdaExpr(this, env, tl);
+                }
+                if (hd == QUOTE)
+                {
+                    return gcnew QuoteExpr(tl->hd);
+                }
+                if (hd == IF)
+                {
+                    return gcnew IfExpr(this, env, tl);
+                }
+                if (hd == PROGN)
+                {
+                    return PrognExpr::NewPrognExpr(this, env, tl);
+                }
+                if (hd == CAR)
+                {
+                    return gcnew CarExpr(this, env, tl);
+                }
+                if (hd == CDR)
+                {
+                    return gcnew CdrExpr(this, env, tl);
+                }
+                if (hd == UNWIND_PROTECT)
+                {
+                    return gcnew UnwindProtectExpr(this, env, tl);
+                }
+                if (hd == HANDLER_CASE)
+                {
+                    return gcnew HandlerCaseExpr(this, env, tl);
+                }
+                if (hd == IGNORE_ERRORS)
+                {
+                    return gcnew IgnoreErrorsExpr(this, env, tl);
+                }
+                return gcnew ApplyExpr(this, env, hd, tl);
+            }
+            return gcnew QuoteExpr(o);
+        }
+
+        virtual void add_function(System::String^ package, System::String^ name, Quire::utl_mgd::Function^ f)
+        {
+            get_package(package)->_export(name)->set_value(f);
+            System::GC::KeepAlive(this);
+        }
+
+        virtual System::Reflection::Assembly^ add_dotnet_assembly(System::Reflection::Assembly^ a)
+        {
+            array<System::Type^>^ types = a->GetTypes();
+            for (int i = 0; i < types->Length; i++)
+            {
+                if (types[i]->IsPublic)
+                {
+                    add_dotnet_type(types[i]);
+                }
+            }
+            return a;
+        }
+
+        virtual System::String^ find_file(System::String^ name)
+        {
+            System::String^ result = m_paths->FindFile(name);
+            System::GC::KeepAlive(this);
+            return result;
+        }
+
+        virtual void add_to_load_path(System::String^ path)
+        {
+            m_paths->AddPaths(path);
+            System::GC::KeepAlive(this);
+        }
+
+        virtual void load(System::IO::TextReader^ t)
+        {
+            while (t->Peek() != -1)
+            {
+                eval(t);
+            }
+        }
+
+        virtual void load_file(System::String^ s)
+        {
+            push_state();
+            m_used_packages = gcnew System::Collections::Generic::Stack<Package^>();
+            m_current_package = use_package(get_package("lisp"));
+            System::IO::TextReader^ textReader = System::IO::File::OpenText(find_file(s));
+            load(textReader);
+            textReader->Close();
+            pop_state();
+        }
+
+        System::Object^ _load(array<System::Object^>^ args)
+        {
+            if (args->Length != 1)
+            {
+                ::mslisp::Error::report("bad arguments to load");
+            }
+            System::String^ text = dynamic_cast<System::String^>(args[0]);
+            if ((System::Object^)text == nullptr)
+            {
+                ::mslisp::Error::report("bad arguments to load");
+            }
+            load_file(text);
+            Symbol^ result = get_package("lisp")->intern("t");
+            System::GC::KeepAlive(this);
+            return result;
+        }
+
+        System::Object^ _use_package(array<System::Object^>^ args)
+        {
+            if (args->Length != 1)
+            {
+                ::mslisp::Error::report("bad arguments to use-package");
+            }
+            System::String^ text = dynamic_cast<System::String^>(args[0]);
+            if ((System::Object^)text == nullptr)
+            {
+                ::mslisp::Error::report("bad arguments to use-package");
+            }
+            Package^ pkg = get_package(text);
+            m_used_packages->Push(pkg);
+            System::GC::KeepAlive(this);
+            return pkg;
+        }
+
+        System::Object^ _in_package(array<System::Object^>^ args)
+        {
+            if (args->Length != 1)
+            {
+                ::mslisp::Error::report("bad arguments to in-package");
+            }
+            System::String^ text = dynamic_cast<System::String^>(args[0]);
+            if ((System::Object^)text == nullptr)
+            {
+                ::mslisp::Error::report("bad arguments to in-package");
+            }
+            System::GC::KeepAlive(this);
+            return m_current_package = get_package(text);
+        }
+
+        System::Object^ _export(array<System::Object^>^ args)
+        {
+            int num = args->Length;
+            for (int i = 0; i < num; i++)
+            {
+                Symbol^ sym = dynamic_cast<Symbol^>(args[i]);
+                if (sym == nullptr)
+                {
+                    ::mslisp::Error::report("bad argument to export ", args[i]);
+                    break;
+                }
+                m_current_package->_export(sym);
+            }
+            System::GC::KeepAlive(this);
+            return args[num - 1];
+        }
+
+        System::Object^ _gensym(array<System::Object^>^ args)
+        {
+            if (args->Length > 0)
+            {
+                ::mslisp::Error::report("bad arguments to gensym: ", args);
+            }
+            static unsigned int s_count = 0;
+            unsigned int num = s_count++;
+            Symbol^ result = intern(System::String::Format("gensyms.gensym{0}", num));
+            System::GC::KeepAlive(this);
+            return result;
+        }
+
+        System::Object^ _read(System::String^ s)
+        {
+            return read(s);
+        }
+
+        System::Object^ _eval(System::String^ s)
+        {
+            return eval(read(s));
+        }
+
+        System::Object^ readm(Quire::Engine::Reader^ r, ::Quire::Native::EngutilsMgd::PushbackReader^ t, Quire::Engine::TagFunction^ tf, int ch)
+        {
+            if (ch == '\'')
+            {
+                Quire::Engine::PCons^ result = gcnew Quire::Engine::PCons(QUOTE, gcnew Quire::Engine::PCons(r->read(t, tf), nullptr));
+                System::GC::KeepAlive(this);
+                return result;
+            }
+            if (ch == '`')
+            {
+                Quire::Engine::PCons^ result = gcnew Quire::Engine::PCons(BACKQUOTE, gcnew Quire::Engine::PCons(r->read(t, tf), nullptr));
+                System::GC::KeepAlive(this);
+                return result;
+            }
+            if (ch == ',')
+            {
+                int next = t->Read();
+                if (next == '@')
+                {
+                    Quire::Engine::PCons^ result = gcnew Quire::Engine::PCons(COMMA_AT, gcnew Quire::Engine::PCons(r->read(t, tf), nullptr));
+                    System::GC::KeepAlive(this);
+                    return result;
+                }
+                t->Unread(next);
+                Quire::Engine::PCons^ result = gcnew Quire::Engine::PCons(COMMA, gcnew Quire::Engine::PCons(r->read(t, tf), nullptr));
+                System::GC::KeepAlive(this);
+                return result;
+            }
+            ::mslisp::Error::report("Unknown reader macro: ", ch);
+            return nullptr;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("mslisp.Factory, mslisp")]
+    public ref class Factory
+    {
+    public:
+        static Interpreter^ NewInterpreter()
+        {
+            return gcnew InterpreterImp();
+        }
+
+        static Interpreter^ LoadInterpreter(System::String^ path)
+        {
+            return nullptr;
         }
     };
 

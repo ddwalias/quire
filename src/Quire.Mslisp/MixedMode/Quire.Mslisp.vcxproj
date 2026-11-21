@@ -47,6 +47,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(IntDir)Quire.Mslisp.pdb</ProgramDatabaseFile>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>$(IntDir)UTLLogging.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -83,6 +84,9 @@
       <ForcedUsingFiles>$(QuireMirrorPath);$(QuireEngineUtlPath);$(QuireEngutilsMgdPath);$(QuireMspconsMgdPath);%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
   </ItemDefinitionGroup>
+  <Target Name="BuildUtlLoggingImportLibrary" BeforeTargets="Link" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Exec Command="&quot;$(VCToolsInstallDir)bin\HostX64\x64\lib.exe&quot; /nologo /def:&quot;$(MSBuildThisFileDirectory)UTLLogging.def&quot; /machine:x64 /out:&quot;$(IntDir)UTLLogging.lib&quot;" />
+  </Target>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>
