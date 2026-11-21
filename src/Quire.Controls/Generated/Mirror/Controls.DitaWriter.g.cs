@@ -12,39 +12,11 @@ namespace Quire.Controls;
 public partial class DitaWriter : global::System.Xml.XmlTextWriter, global::Quire.Serialization.IS11NProvider, global::Quire.Serialization.IBaseS11NProvider
 {
     [global::Quire.Mirror.MirrorStub]
-    public const string RootElement = "pubsTopic";
-    [global::Quire.Mirror.MirrorStub]
-    private const double EquationscalingFactor = 2d;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string _fileName;
-    [global::Quire.Mirror.MirrorStub]
-    private const string P = "p";
-    [global::Quire.Mirror.MirrorStub]
-    private const string Fig = "fig";
-    [global::Quire.Mirror.MirrorStub]
-    private int _currentId;
-    [global::Quire.Mirror.MirrorStub]
-    private const string GraphicsFolderName = "graphics";
-    [global::Quire.Mirror.MirrorStub]
-    public const string PubsBody = "pubsBody";
-    [global::Quire.Mirror.MirrorStub]
-    public DitaWriter(string fileName, global::Quire.Serialization.ISerializationHelper documentHelper) : base(default(global::System.IO.TextWriter)) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void WriteHeader() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.IO.FileStream WriteImageElementCreateFile(string extension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void WriteContentControl(global::System.Windows.FrameworkElement element, global::System.IO.Stream fileStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteContentControl(global::System.Windows.Controls.ContentControl contentControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteRichTextBox(global::System.Windows.Controls.RichTextBox richTextBox) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void WriteImageControl(global::Quire.Controls.Core.ImageControl imageControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void WriteRegionML(global::System.Windows.UIElement region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteImageControlML(global::Quire.Controls.Core.ImageControl imageControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.DitaWriter+Element, Ptc.Controls")]
     public partial class Element : global::System.IDisposable

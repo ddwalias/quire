@@ -54,5 +54,8 @@
   - Shapes: `.ctor` switch matches jump table when `MathcadOnPrem` is explicitly listed; `GetServerPath` switch similarly lists `MathcadOnPrem` explicitly and uses `if (!text.IsNullOrEmpty())` to place the `new Uri(...)` branch first; `GetWebPathPerVariant` matches 26-instruction boolean switch with `case false` and `default` arms.
 - Batch 24: `DitaWriter.Element` (`Element(XmlWriter, string)`, `Element(XmlWriter, string, string)`) and `DitaWriter.Worksheet` (`_regions`, `ElementName`, `Worksheet(DitaWriter)`, `Dispose`). Gate: PASS, 573 checked. Report: `.mirror-cache/release-il-b0158d28bd75/release-il.json`.
   - Shapes: `Element` constructors and `Worksheet` constructor with `regions` element and `ZeroCurrentId` call matched natural source on first try.
+- Batch 25: `DitaWriter` (`.ctor`, `WriteHeader`, `WriteImageElementCreateFile`, `WriteContentControl(ContentControl)`, `WriteRichTextBox`, `WriteImageControlML`, constants/fields `RootElement`, `EquationscalingFactor`, `_fileName`, `P`, `Fig`, `_currentId`, `GraphicsFolderName`, `PubsBody`). Gate: PASS, 579 checked. Report: `.mirror-cache/release-il-e9b989bbde7f/release-il.json`.
+  - Shapes: `WriteHeader` uses `string.Format("{0}-{1:yyyyMMdd}", _fileName, DateTime.Today)`; `WriteRichTextBox` qualifies `System.Windows.Documents.TextRange`; all matched natural source on first try.
+
 
 
