@@ -3,6 +3,16 @@
 - Owner: Automation.Native lane; branch `feature/automation-native-agy`.
 - Target: `src/Quire.Automation.Native` (C# net10.0-windows, hosting `automationmgd.dll` and `componentsmgd.dll`).
 
+## Batch 8 — MatrixValueProxy and MatrixValueData
+
+- Members:
+  - `Mathcad.Automation.MatrixValueProxy`: `m_value` field, `Mat`, `Core`, `AsMatrix`, `Rows`, `Cols`, `IsRange`, `IsUniform`, `IsUniformScalar`, `IsDimless`, `IsVector`, `IsRealMatrix`, `IsScalarMatrix`, `IsRealMatrixMixed`, `.ctor(MatVal, bool, RuntimeOptions)`, `SubMatrix`, `Get`, `GetPlainData`.
+  - `Mathcad.Automation.MatrixValueProxy+MatrixValueData`: `m_parent`, `m_options`, `m_scale`, `non_plain_mask`, `double_mask`, `string_mask`, `elem_to_plain`, `fold_plain`, `plain_type(IEnumerable<ElementType>)`, `indices`, `element_types`, `plain_type(MatAxis, int)`, `plain_types`, `mask`, `double_data`, `string_data`, `get_data`, `not_nan`, `obj_not_nan`, `plain_data(MatAxis, int)`, `plain_data(MatAxis, int, int)`, `.ctor(MatrixValueProxy, PlainDataConversionOptions, double)`, `GetRowsPlainDataTypes`, `GetFirstNonPlainDataRowIndex`, `GetRowsPlainDataValues`, `GetColumnsPlainDataTypes`, `GetFirstNonPlainDataColumnIndex`, `GetColumnsPlainDataValues`.
+  - Hand-written in `Mirrored/MatrixValueProxy.cs`.
+- Stubs removed: `Generated/Mirror/Automation.MatrixValueProxy.g.cs` (46 stubs removed).
+- Release IL report: `python tools/validation/release_il.py --base main --project Quire.Automation.Native` — PASS, 309 checked (was 258 on base, +51 exact), 0 failures. Report: `.mirror-cache/release-il-d82b9c88b51b/release-il.json`.
+- Remaining: 69 unfinished stubs (all in blocked classes: `VSDataValue` [40], `McxComponent` [23], `SymbolicValue` [11], `VSValueFactory` [4]).
+
 ## Batch 7 — Value
 
 - Members:
