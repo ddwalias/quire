@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Windows;
 using System.Windows.Media;
+using Quire.Calculation.Core;
 using Quire.Controls.Core;
 using Quire.Controls.Core.IORegions;
+using Quire.Controls.Core.Serialization;
 using Quire.Controls.InputControls;
 using Quire.Controls.Worksheet;
 using Quire.Core;
+using Quire.IO;
 using Quire.Mirror;
 using Quire.PersistentData;
 using Quire.Serialization;
@@ -386,6 +391,221 @@ public partial class EngineeringDocument
     IWorksheetProperties IEngineeringDocument.Worksheet => Worksheet;
 
     public bool IsPrinting => _runningPrintJobs.Count > 0;
+
+    private IMetadataModel _metadataModel;
+    private IFileOperationsProvider _fileOpsProvider;
+    private IPackageOperationsProvider _packageOpsProvider;
+    private FileStream _fileStream;
+    private bool _isDocumentATemplate;
+    private bool _showEngineChangesBanner;
+
+    public string UnitSystemHeader
+    {
+        get
+        {
+            switch (DefaultUnitSystem)
+            {
+                case UnitSystems.Custom:
+                    return Resources[UnitSystemHeaderCustom].ToString();
+                case UnitSystems.CGS:
+                    return UnitSystems.CGS.ToString();
+                case UnitSystems.SI:
+                    return UnitSystems.SI.ToString();
+                case UnitSystems.US:
+                    return UnitSystems.US.ToString() + "CS";
+                default:
+                    return UnitSystems.SI.ToString();
+            }
+        }
+    }
+
+    public IMetadataModel MetadataModel
+    {
+        get => _metadataModel = _metadataModel ?? new MetadataModel();
+        set => _metadataModel = value;
+    }
+
+    public IFileOperationsProvider FileOpsProvider
+    {
+        get => _fileOpsProvider ?? new FileOperationsProvider();
+        set => _fileOpsProvider = value;
+    }
+
+    public IPackageOperationsProvider PackageOpsProvider
+    {
+        get => _packageOpsProvider ?? PackageOperationsProvider.Instance;
+        set => _packageOpsProvider = value;
+    }
+
+    public UnitSystems DefaultUnitSystem
+    {
+        get => WorksheetControl.DefaultUnitSystem;
+        set => WorksheetControl.DefaultUnitSystem = value;
+    }
+
+    public UnitSystems CustomBaseUnitSystem
+    {
+        get => WorksheetControl.CustomBaseUnitSystem;
+        set => WorksheetControl.CustomBaseUnitSystem = value;
+    }
+
+    public bool SimplifyUnitSystem
+    {
+        get => WorksheetControl.SimplifyUnitSystem;
+        set => WorksheetControl.SimplifyUnitSystem = value;
+    }
+
+    public List<UnitDescriptor> CustomBaseUnitDescriptors
+    {
+        get => WorksheetControl.CustomBaseUnitDescriptors;
+        set => WorksheetControl.CustomBaseUnitDescriptors = value;
+    }
+
+    public List<UnitDescriptor> CustomDerivedUnitDescriptors
+    {
+        get => WorksheetControl.CustomDerivedUnitDescriptors;
+        set => WorksheetControl.CustomDerivedUnitDescriptors = value;
+    }
+
+    public CalculationOptions DocCalculationOptions => Worksheet.DocCalculationOptions;
+
+    public CalculationVariables DocCalculationVariables => Worksheet.DocCalculationVariables;
+
+    public int RegionCount => Regions.Count();
+
+    public IEnumerable<UIElement> Regions => Worksheet.WorksheetItems.Cast<UIElement>();
+
+    public bool IsDirty
+    {
+        get => (bool)GetValue(IsDirtyProperty);
+        set => SetValue(IsDirtyProperty, value);
+    }
+
+    public bool IsDocumentATemplate
+    {
+        get => _isDocumentATemplate;
+        set
+        {
+            if (_isDocumentATemplate == value)
+            {
+                return;
+            }
+            _isDocumentATemplate = value;
+            FirePropertyChanged("IsDocumentATemplate");
+        }
+    }
+
+    public IIOItemCollection Inputs => Worksheet.Inputs;
+
+    public IIOItemCollection Outputs => Worksheet.Outputs;
+
+    public bool IsCalculationsEnabled
+    {
+        get => Worksheet.IsCalculationsEnabled;
+        set => Worksheet.IsCalculationsEnabled = value;
+    }
+
+    public bool IsAutoCalcOn
+    {
+        get => Worksheet.IsAutoCalcOn;
+        set => Worksheet.IsAutoCalcOn = value;
+    }
+
+    public DateTime? LastSavedDate
+    {
+        get => (DateTime?)GetValue(LastSavedDateProperty);
+        set => SetValue(LastSavedDateProperty, value);
+    }
+
+    public bool FileIsSaved
+    {
+        get => (bool)GetValue(FileIsSavedProperty);
+        set => SetValue(FileIsSavedProperty, value);
+    }
+
+    public string FileExtension
+    {
+        get => Path.GetExtension(FilePath);
+        set => FilePath = Path.ChangeExtension(FilePath, value);
+    }
+
+    public int PageCount => Worksheet.PageCount;
+
+    public int SelectedRegionCount => Worksheet.SelectedItems.Count();
+
+    public bool IsHeaderFocused => Worksheet.IsHeaderActive;
+
+    public bool IsFooterFocused => Worksheet.IsFooterActive;
+
+    public bool IsMainActive => Worksheet.IsContentActive;
+
+    public Point InsertionPoint => Worksheet.InsertionPoint;
+
+    public string CWD
+    {
+        get => DocCalculationVariables.CurrentWorkingDirectory;
+        set
+        {
+            string objectToCheck;
+            try
+            {
+                objectToCheck = Path.GetFullPath(value);
+            }
+            catch
+            {
+                objectToCheck = null;
+            }
+            if (DebugTools.AssertNotNull(objectToCheck, null).Failed)
+            {
+                return;
+            }
+            if (DocCalculationVariables.CurrentWorkingDirectory == value)
+            {
+                return;
+            }
+            DocCalculationVariables.CurrentWorkingDirectory = value;
+        }
+    }
+
+    public bool CanBeSavedWithOriginalName
+    {
+        get
+        {
+            if (_fileStream != null)
+            {
+                return _fileStream.CanWrite;
+            }
+            return false;
+        }
+    }
+
+    public bool CacheWorksheet
+    {
+        get => Worksheet.CacheWorksheet;
+        set => Worksheet.CacheWorksheet = value;
+    }
+
+    public string HelpServerPath
+    {
+        get => WorksheetControl.HelpServerPath;
+        set => WorksheetControl.HelpServerPath = value;
+    }
+
+    public IEnumerable<UIElement> ActiveSectionRegions => Worksheet.ActiveSectionItems.OfType<UIElement>();
+
+    public bool ShowEngineChangesBanner
+    {
+        get => _showEngineChangesBanner;
+        set
+        {
+            if (_showEngineChangesBanner == value)
+            {
+                return;
+            }
+            _showEngineChangesBanner = value;
+            FirePropertyChanged("ShowEngineChangesBanner");
+        }
+    }
 
     partial class RootDecorator
     {
