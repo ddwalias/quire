@@ -46,11 +46,13 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(IntDir)Quire.EngutilsMgd.pdb</ProgramDatabaseFile>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>$(IntDir)engutils.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="EngutilsMgd.h" />
     <ClCompile Include="Tags.cpp" />
+    <ClCompile Include="StringUtils.cpp" />
     <ClCompile Include="CollectionUtils.cpp" />
     <ClCompile Include="Reflection.cpp" />
     <ClCompile Include="CircTracker.cpp" />
@@ -80,6 +82,9 @@
       <ForcedUsingFiles>$(QuireMirrorPath);$(QuireMplPath);%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
   </ItemDefinitionGroup>
+  <Target Name="BuildEngutilsImportLibrary" BeforeTargets="Link" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Exec Command="&quot;$(VCToolsInstallDir)bin\HostX64\x64\lib.exe&quot; /nologo /def:&quot;$(MSBuildThisFileDirectory)engutils.def&quot; /machine:x64 /out:&quot;$(IntDir)engutils.lib&quot;" />
+  </Target>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

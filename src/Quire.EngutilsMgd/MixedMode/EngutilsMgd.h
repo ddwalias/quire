@@ -25,6 +25,15 @@ namespace Quire { namespace Engine {
         static bool is_hex(wchar_t c);
     };
 
+    [Quire::Mirror::MirrorOfAttribute("Engine.StringUtils, engutils-mgd")]
+    [StructLayout(LayoutKind::Sequential, Size = 1)]
+    public value struct StringUtils
+    {
+    public:
+        static int^ ParseInt(String^ s);
+        static String^ MangleForXAML(String^ s);
+    };
+
     [Quire::Mirror::MirrorOfAttribute("Engine.CollectionUtils, engutils-mgd")]
     public ref class CollectionUtils
     {
