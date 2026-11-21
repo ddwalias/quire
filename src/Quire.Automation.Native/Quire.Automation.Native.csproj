@@ -1,6 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <Import Project="Generated\Mirror.props" />
+  <ItemGroup>
+    <ProjectReference Include="..\Quire.Efi\Quire.Efi.csproj" />
+  </ItemGroup>
 </Project>
