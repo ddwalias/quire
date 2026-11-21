@@ -56,6 +56,129 @@ public abstract partial class OleBaseComponentViewModel
         SetRestrictedArea();
     }
 
+    private OleComponentResizeData _previousResizeData;
+
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+DeleteSpaceCommandForOleComponent, Ptc.Controls.ExcelComponent")]
+    public partial class DeleteSpaceCommandForOleComponent : global::Quire.Controls.Whiteboard.Commands.WhiteboardCommand
+    {
+        private readonly Direction _direction;
+        private readonly MoveItemsCommand _moveCommand;
+        private Point _insertionPoint;
+        private readonly OleBaseComponentViewModel _oleBaseComponentViewModel;
+        private readonly double _oldInputHeight;
+        private readonly double _oldHeight;
+        private bool _insertionPointPushedUp;
+        private Vector _offset;
+
+        public DeleteSpaceCommandForOleComponent(OleBaseComponentViewModel oleBaseComponentViewModel, int numberOfLines, Direction direction)
+            : base(oleBaseComponentViewModel, "Delete Space")
+        {
+            _oleBaseComponentViewModel = (OleBaseComponentViewModel)_viewModel;
+            _direction = direction;
+            _insertionPoint = _viewModel.InsertionPoint;
+            _oldHeight = _viewModel.ContentHeight;
+            _oldInputHeight = _oleBaseComponentViewModel.InputSectionActualHeight;
+            _insertionPointPushedUp = false;
+            double height = _viewModel.Grid.GridCellSize.Height;
+            WhiteboardItemsCollection whiteboardItems = _viewModel.WhiteboardItems;
+            Func<double, double, bool> comparer = (double value, double value2) => (_direction == Direction.Down) ? value.IsGreaterThan(value2) : value.IsGreaterThanOrEqual(value2);
+            IEnumerable<IWhiteboardItem> enumerable = whiteboardItems.Where((IWhiteboardItem item) => comparer(ViewModel.GetItemTop(item), _insertionPoint.Y));
+            _offset = new Vector(0.0, -((double)numberOfLines * height));
+            if (numberOfLines > 1)
+            {
+                double val = _viewModel.LimitOffsetBasedOnItemsToMove(enumerable, _offset.Y, _direction, _insertionPoint);
+                _offset.Y = Math.Max(val, LimitOffsetBasedOnMinimumHeightAndCaretPosition());
+            }
+            if (enumerable.Count() > 0 && _offset.Y != 0.0)
+            {
+                _moveCommand = new MoveItemsCommand(_viewModel, _offset, allowGrowthDownOrRight: true, enumerable.ToArray());
+            }
+        }
+
+        public override bool Do()
+        {
+            double inputSectionActualHeight = _oleBaseComponentViewModel.InputSectionActualHeight;
+            double height = _viewModel.Grid.GridCellSize.Height;
+            DoubleComparer defaultDoubleComparer = DoubleComparer.DefaultDoubleComparer;
+            if (_direction == Direction.Up)
+            {
+                if (_insertionPoint.Y < inputSectionActualHeight && _insertionPoint.Y < height)
+                {
+                    return false;
+                }
+                double num = inputSectionActualHeight + _oleBaseComponentViewModel.OleContainerItemSize.Height;
+                if (_insertionPoint.Y > num && defaultDoubleComparer.Compare(_insertionPoint.Y - height, num) <= 0)
+                {
+                    return false;
+                }
+            }
+            if (_oleBaseComponentViewModel.InsertionPoint.Y < _oldInputHeight)
+            {
+                _oleBaseComponentViewModel.InputSectionActualHeight += _offset.Y;
+            }
+            if (_moveCommand != null && !_moveCommand.Execute())
+            {
+                return false;
+            }
+            inputSectionActualHeight = _oleBaseComponentViewModel.InputSectionActualHeight;
+            if (_direction == Direction.Up)
+            {
+                _viewModel.InsertionPoint = new Point(_viewModel.InsertionPoint.X, _viewModel.InsertionPoint.Y + _offset.Y);
+            }
+            else if (defaultDoubleComparer.Compare(_insertionPoint.Y, inputSectionActualHeight) == 0)
+            {
+                _viewModel.InsertionPoint = new Point(_insertionPoint.X, _insertionPoint.Y - height);
+                _insertionPointPushedUp = true;
+            }
+            _viewModel.ContentHeight += _offset.Y;
+            _oleBaseComponentViewModel.UpdateSectionHeights();
+            return true;
+        }
+
+        public override void Undo()
+        {
+            _viewModel.ContentHeight = _oldHeight;
+            if (_moveCommand != null)
+            {
+                _moveCommand.Undo();
+            }
+            if (_direction == Direction.Up)
+            {
+                _viewModel.InsertionPoint = _insertionPoint;
+            }
+            else if (_insertionPointPushedUp)
+            {
+                _viewModel.InsertionPoint = new Point(_insertionPoint.X, _insertionPoint.Y);
+            }
+            _oleBaseComponentViewModel.UpdateSectionHeights();
+        }
+
+        public override void Redo()
+        {
+            Do();
+        }
+
+        private double LimitOffsetBasedOnMinimumHeightAndCaretPosition()
+        {
+            double height = _viewModel.Grid.GridCellSize.Height;
+            double oleContainerItemTop = _oleBaseComponentViewModel.OleContainerItemTop;
+            double sectionsMinimumHeight = _oleBaseComponentViewModel.SectionsMinimumHeight;
+            double val2;
+            double val3;
+            if (_insertionPoint.Y <= oleContainerItemTop)
+            {
+                val2 = oleContainerItemTop - sectionsMinimumHeight;
+                val3 = oleContainerItemTop - _insertionPoint.Y;
+            }
+            else
+            {
+                val2 = _viewModel.ContentHeight - oleContainerItemTop - _oleBaseComponentViewModel.OleContainerItemSize.Height - sectionsMinimumHeight;
+                val3 = _viewModel.ContentHeight - _insertionPoint.Y;
+            }
+            return -(Math.Round(Math.Min(val2, val3) / height) * height);
+        }
+    }
+
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+ToggleSectionVisibilityCommand, Ptc.Controls.ExcelComponent")]
     public partial class ToggleSectionVisibilityCommand : IUndoableCommand
     {
@@ -973,5 +1096,284 @@ public abstract partial class OleBaseComponentViewModel
         InputSectionActualHeight = original.InputSectionActualHeight;
         OutputSectionActualHeight = original.OutputSectionActualHeight;
         ContentSize = original.ContentSize;
+    }
+
+    public abstract bool OutputSectionExists { get; }
+
+    protected abstract double GetSectionInitialHeight();
+
+    protected override void SetInsertionPoint(Point insertionPoint)
+    {
+        DebugTools.DevAssert(OleContainerItemTop.IsValid(), null);
+        double num;
+        Size gridCellSize = Grid.GridCellSize;
+        num = gridCellSize.Height / 2.0;
+        if (IsInputSectionVisible && insertionPoint.Y.IsBetween(OleContainerItemTop - num, OleContainerItemTop, isInclusive: false))
+        {
+            insertionPoint.Y -= num;
+        }
+        else if (IsOutputSectionVisible && insertionPoint.Y.IsBetween(OutputSectionActualTop, OutputSectionActualTop + num, isInclusive: false))
+        {
+            insertionPoint.Y += num;
+        }
+        base.SetInsertionPoint(insertionPoint);
+        Point insertionPoint2;
+        if (IsInputSectionVisible && !IsOutputSectionVisible)
+        {
+            insertionPoint2 = InsertionPoint;
+            DebugTools.DevAssert(insertionPoint2.Y.IsLessThan(OleContainerItemTop), null);
+        }
+        else if (!IsInputSectionVisible && IsOutputSectionVisible)
+        {
+            insertionPoint2 = InsertionPoint;
+            DebugTools.DevAssert(insertionPoint2.Y.IsGreaterThan(OutputSectionActualTop), null);
+        }
+    }
+
+    internal void OnSizeChanged(object sender, SizeChangedEventArgs eArgs)
+    {
+        Size val2;
+        Size val3;
+        if (eArgs.PreviousSize == default(Size))
+        {
+            return;
+        }
+        val2 = new Size
+        {
+            Width = OleContainerItemWidth,
+            Height = OleContainerItemHeight
+        };
+        val3 = val2;
+        if (eArgs.HeightChanged)
+        {
+            val3.Height = Math.Max(GetOleContainerItemMinSize(false).Height, eArgs.NewSize.Height - InputSectionActualHeight - OutputSectionActualHeight);
+        }
+        if (eArgs.WidthChanged)
+        {
+            val3.Width = eArgs.NewSize.Width;
+        }
+        if (IsResizing || IsInternalResizing)
+        {
+            if (_previousResizeData == null)
+            {
+                _previousResizeData = FillOleComponentResizeData(eArgs.PreviousSize);
+            }
+            if (eArgs.HeightChanged)
+            {
+                OnResizeOleContainerItem();
+                if (IsPointInDeadArea(InsertionPoint, OleContainerItemTop))
+                {
+                    NavigateInto(Direction.Down, new Point(InsertionPoint.X, InsertionPoint.Y + Grid.GridCellSize.Height));
+                }
+            }
+        }
+        else
+        {
+            val3 = AdjustOleContainerItemSize(val3);
+        }
+        if (val3 != val2)
+        {
+            SetItemSize(OleContainerItem, val3, DragMode.None);
+        }
+        UpdateSectionHeights();
+    }
+
+    protected override void HandleChildSizeChanged(IWhiteboardItem item, Size oldSize, Size newSize)
+    {
+        Size contentSize;
+        if (InputItems.Contains(item))
+        {
+            if (IsInputSectionVisible)
+            {
+                contentSize = ContentSize;
+                double itemBottom = GetItemBottom(item);
+                double itemRightEdge;
+                int numberOfLines;
+                IEnumerable<IWhiteboardItem> itemsToMove;
+                Point nextIntersectionIgnoringRestrictedAreas;
+                if (itemBottom.IsGreaterThan(InputSectionActualHeight))
+                {
+                    nextIntersectionIgnoringRestrictedAreas = (_alignmentGrid as IRestrictedAreaAlignmentGrid).GetNextIntersectionIgnoringRestrictedAreas(new Point(0.0, itemBottom), Direction.Down);
+                    numberOfLines = (int)((nextIntersectionIgnoringRestrictedAreas.Y - OleContainerItemTop) / Grid.GridCellSize.Height);
+                    itemsToMove = WhiteboardItems.Except(InputItems);
+                    CommandBuffer.ExecuteAndAttach(new PushItemsDownCommand(this, numberOfLines, itemsToMove));
+                    contentSize.Height = OleContainerItemTop + OleContainerItemHeight + OutputSectionActualHeight;
+                }
+                itemRightEdge = GetItemRightEdge(item);
+                if (itemRightEdge.IsGreaterThan(ContentSize.Width))
+                {
+                    contentSize.Width = itemRightEdge;
+                }
+                if (!ContentSize.IsEqualTo(contentSize))
+                {
+                    FireChildCausedResize(ContentSize, contentSize);
+                }
+            }
+        }
+        else if (OutputItems.Contains(item) && IsOutputSectionVisible)
+        {
+            base.HandleChildSizeChanged(item, oldSize, newSize);
+            double contentHeight = ContentHeight;
+            double num2 = (contentHeight / _alignmentGrid.GridCellSize.Height).Ceiling();
+            double contentHeight2 = num2 * _alignmentGrid.GridCellSize.Height;
+            ContentHeight = contentHeight2;
+            OutputSectionActualHeight = ContentSize.Height - OutputSectionActualTop;
+        }
+        UpdateSectionHeights();
+    }
+
+    public override void InsertVerticalSpace(int numberOfLines, bool pushInsertionPoint, bool ignoreItemsOnCurrentLine)
+    {
+        Point insertionPoint = InsertionPoint;
+        if (insertionPoint.Y < InputSectionActualHeight)
+        {
+            InputSectionActualHeight += (double)numberOfLines * Grid.GridCellSize.Height;
+        }
+        InsertSpaceCommand command = new InsertSpaceCommand(this, numberOfLines, pushInsertionPoint, ignoreItemsOnCurrentLine, new IWhiteboardItem[] { OleContainerItem });
+        command.Execute();
+    }
+
+    protected override void HandleCarriageReturn()
+    {
+        if (ActiveOrSelectedItems.IsNullOrEmpty())
+        {
+            InsertVerticalSpace(1, pushInsertionPoint: true, ignoreItemsOnCurrentLine: false);
+            return;
+        }
+        double height = Grid.GridCellSize.Height;
+        Point insertionPointAfterCarriageReturn = GetInsertionPointAfterCarriageReturn();
+        bool flag = insertionPointAfterCarriageReturn.Y < OleContainerItemTop + OleContainerItemSize.Height && insertionPointAfterCarriageReturn.Y >= OleContainerItemTop - height / 2.0;
+        if ((insertionPointAfterCarriageReturn.Y > ContentHeight) | flag)
+        {
+            if (flag)
+            {
+                InsertionPoint = new Point(insertionPointAfterCarriageReturn.X, insertionPointAfterCarriageReturn.Y - height);
+            }
+            InsertVerticalSpace(1, pushInsertionPoint: true, ignoreItemsOnCurrentLine: true);
+        }
+        InsertionPoint = insertionPointAfterCarriageReturn;
+    }
+
+    public override void HandleGridCellSizeChanged(Size oldSize, Size newSize)
+    {
+        Point insertionPoint = InsertionPoint;
+        bool flag = insertionPoint.Y > OleContainerItemTop;
+        if (flag)
+        {
+            insertionPoint.Y -= OutputSectionActualTop;
+        }
+        double num = newSize.Width / oldSize.Width;
+        double num2 = newSize.Height / oldSize.Height;
+        Grid.GridCellSize = newSize;
+        MaximumSize = new Size(MaximumSize.Width * num, MaximumSize.Height * num2);
+        UpdateSizeLimits(MaximumSize);
+        UpdateItemsLocation(isOutput: false, num, num2);
+        InputSectionIndicator.Height = 0.0;
+        OleContainerItemTop = Math.Max(Math.Max(OleContainerItemTop * num2, SectionsMinimumHeight), GetLowestItemEdge(InputItems));
+        InputSectionIndicator.Height = OleContainerItemTop;
+        OleContainerItem.ViewModel.MinSizeChanged -= OleContainerMinSizeChanged;
+        OleContainerItem.IsResizing = true;
+        Size oleContainerItemMinSize = GetOleContainerItemMinSize(false);
+        OleComponentItemMgr.SetSize(OleContainerItem, new Size(Math.Max(oleContainerItemMinSize.Width, OleContainerItemSize.Width * num), Math.Max(oleContainerItemMinSize.Height, OleContainerItemSize.Height * num2)));
+        OleContainerItem.IsResizing = false;
+        SetRestrictedArea();
+        OleContainerItem.ViewModel.MinSizeChanged += OleContainerMinSizeChanged;
+        UpdateItemsLocation(isOutput: true, num, num2);
+        OutputSectionIndicator.Top = OutputSectionActualTop;
+        double val2 = GetLowestItemEdge(OutputItems) - OutputSectionActualTop;
+        OutputSectionIndicator.Height = Math.Max(val2, Math.Max(AlignHeightWithGridLines(OutputSectionIndicator.Height * num2, isOleContainerItem: false), SectionsMinimumHeight));
+        UpdateSizeLimits(MaximumSize);
+        ContentSize = new Size(Math.Max(OleContainerItemSize.Width, GetRightMostItemEdge(InputItems.Union(OutputItems))), OutputSectionActualTop + OutputSectionActualHeight);
+        if (IsCrosshairVisible)
+        {
+            double num5 = insertionPoint.X * num;
+            double num6 = insertionPoint.Y * num2;
+            if (num5 < newSize.Width)
+            {
+                num5 = newSize.Width;
+            }
+            if (num6 < newSize.Height)
+            {
+                num6 = newSize.Height;
+            }
+            InsertionPoint = ((!flag) ? new Point(num5, num6) : new Point(num5, OutputSectionActualTop + num6));
+        }
+    }
+
+    private void UpdateItemsLocation(bool isOutput, double xRatio = 1.0, double yRatio = 1.0)
+    {
+        List<IWhiteboardItem> list = (isOutput ? OutputItems : InputItems).ToList();
+        double num = (isOutput ? (InputSectionIndicator.Height + OleContainerItemHeight) : 0.0);
+        foreach (IWhiteboardItem item in list)
+        {
+            Point itemLocation = OleComponentItemMgr.GetItemLocation(item);
+            Point itemOleComponentLocation = OleComponentItemMgr.GetItemOleComponentLocation(item);
+            Point location = new Point(itemLocation.X * xRatio, itemLocation.Y * yRatio);
+            Point val = new Point(itemOleComponentLocation.X * xRatio, num + itemLocation.Y * yRatio);
+            if (!val.IsEqualTo(itemOleComponentLocation))
+            {
+                OleComponentItemMgr.SetItemOleComponentLocation(item, val);
+                base.SetItemLocation(item, location);
+            }
+        }
+    }
+
+    public IResizeData StoreResizeData(Size oldSize, Size newSize)
+    {
+        IResizeData result;
+        if (IsResizing && _previousResizeData != null)
+        {
+            result = _previousResizeData;
+            _previousResizeData = null;
+        }
+        else
+        {
+            result = FillOleComponentResizeData(oldSize);
+        }
+        return result;
+    }
+
+    public void RestoreResizeData(IResizeData resizeData)
+    {
+        OleComponentResizeData oleComponentResizeData = (OleComponentResizeData)resizeData;
+        if (oleComponentResizeData != null)
+        {
+            Size oldSize = oleComponentResizeData.OldSize;
+            if (oleComponentResizeData.InputSectionHeight <= 0.0)
+            {
+                if (IsInputSectionVisible)
+                {
+                    oldSize.Height += InputSectionActualHeight;
+                }
+            }
+            else if (!IsInputSectionVisible && DebugTools.DevAssert(oldSize.Height > oleComponentResizeData.InputSectionHeight, null).Passed)
+            {
+                oldSize.Height -= oleComponentResizeData.InputSectionHeight;
+            }
+            if (oleComponentResizeData.OutputSectionHeight <= 0.0)
+            {
+                if (IsOutputSectionVisible)
+                {
+                    oldSize.Height += OutputSectionActualHeight;
+                }
+            }
+            else if (!IsOutputSectionVisible && DebugTools.DevAssert(oldSize.Height > oleComponentResizeData.OutputSectionHeight, null).Passed)
+            {
+                oldSize.Height -= oleComponentResizeData.OutputSectionHeight;
+            }
+            ContentSize = oldSize;
+            Size oleContainerItemMinSize = GetOleContainerItemMinSize(false);
+            Size oleContainerItemSize = oleComponentResizeData.OleContainerItemSize;
+            Size size = new Size
+            {
+                Width = Math.Max(oleContainerItemMinSize.Width, oleContainerItemSize.Width),
+                Height = Math.Max(oleContainerItemMinSize.Height, oleContainerItemSize.Height)
+            };
+            OleContainerItemTop = oleComponentResizeData.OleContainerItemTop;
+            SetItemSize(OleContainerItem, size, DragMode.None);
+            InputSectionActualHeight = OleContainerItemTop;
+            OutputSectionActualHeight = ContentHeight - InputSectionActualHeight - OleContainerItemHeight;
+            ReconcileOutputItemsLocations();
+        }
     }
 }

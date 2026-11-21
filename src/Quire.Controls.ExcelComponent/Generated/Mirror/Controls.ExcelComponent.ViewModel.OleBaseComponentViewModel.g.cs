@@ -24,13 +24,9 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size _strictMinimumSize;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData _previousResizeData;
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Input.ICommand ToggleInputSectionVisibilityCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Input.ICommand ToggleOutputSectionVisibilityCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract bool OutputSectionExists { get; }
     [global::Quire.Mirror.MirrorStub]
     private void Init() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -54,70 +50,19 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Controls.Core.IWhiteboardItem GetChildItemFromLocation(global::System.Windows.Point point) => base.GetChildItemFromLocation(point);
     [global::Quire.Mirror.MirrorStub]
-    protected override void SetInsertionPoint(global::System.Windows.Point insertionPoint) => base.SetInsertionPoint(insertionPoint);
-    [global::Quire.Mirror.MirrorStub]
     public override bool IsValidLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> newLocations, bool allowGrowthDownOrRight) => base.IsValidLocation(item, newLocations, allowGrowthDownOrRight);
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Size Measure(global::System.Windows.Size availableSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void SetInitialSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected abstract double GetSectionInitialHeight();
-    [global::Quire.Mirror.MirrorStub]
-    internal void OnSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Size ResizeAndNotify(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> list, global::System.Windows.Size oldSize) => base.ResizeAndNotify(list, oldSize);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleChildSizeChanged(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => base.HandleChildSizeChanged(item, oldSize, newSize);
-    [global::Quire.Mirror.MirrorStub]
-    public override void InsertVerticalSpace(int numberOfLines, bool pushInsertionPoint, bool ignoreItemsOnCurrentLine) => base.InsertVerticalSpace(numberOfLines, pushInsertionPoint, ignoreItemsOnCurrentLine);
     [global::Quire.Mirror.MirrorStub]
     private bool CheckCanDeleteInInput() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool CheckCanDeleteInOutput(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override void HandleCarriageReturn() => base.HandleCarriageReturn();
-    [global::Quire.Mirror.MirrorStub]
-    public override void HandleGridCellSizeChanged(global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => base.HandleGridCellSizeChanged(oldSize, newSize);
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateItemsLocation(bool isOutput, double xRatio = 1d, double yRatio = 1d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IResizeData StoreResizeData(global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RestoreResizeData(global::Quire.Controls.Core.IResizeData resizeData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData FillOleComponentResizeData(global::System.Windows.Size oldSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void PostClone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+DeleteSpaceCommandForOleComponent, Ptc.Controls.ExcelComponent")]
-    public partial class DeleteSpaceCommandForOleComponent : global::Quire.Controls.Whiteboard.Commands.WhiteboardCommand
-    {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::Quire.Direction _direction;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::Quire.Controls.Whiteboard.WhiteboardViewModel.MoveItemsCommand _moveCommand;
-        [global::Quire.Mirror.MirrorStub]
-        private global::System.Windows.Point _insertionPoint;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel _oleBaseComponentViewModel;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly double _oldInputHeight;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly double _oldHeight;
-        [global::Quire.Mirror.MirrorStub]
-        private bool _insertionPointPushedUp;
-        [global::Quire.Mirror.MirrorStub]
-        private global::System.Windows.Vector _offset;
-        [global::Quire.Mirror.MirrorStub]
-        public DeleteSpaceCommandForOleComponent(global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel oleBaseComponentViewModel, int numberOfLines, global::Quire.Direction direction) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private double LimitOffsetBasedOnMinimumHeightAndCaretPosition() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    }
 }
