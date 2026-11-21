@@ -9,6 +9,7 @@
     <ProjectReference Include="..\Quire.Mirror\Quire.Mirror.csproj" />
     <ProjectReference Include="..\Quire.Engine.Utl\Quire.Engine.Utl.csproj" />
     <ProjectReference Include="..\Quire.EngutilsMgd\Quire.EngutilsMgd.csproj" />
+    <ProjectReference Include="..\Quire.MspconsMgd\Quire.MspconsMgd.csproj" />
   </ItemGroup>
 
   <!-- The pinned MSVC 19.51.36246 Build Tools instance (D19). The release gate sets this from vswhere and overrides it. -->
@@ -27,11 +28,15 @@
     <ItemGroup>
       <_QuireEngineUtlReference Include="@(ReferencePath)" Condition="'%(Filename)' == 'Quire.Engine.Utl'" />
       <_QuireMirrorReference Include="@(ReferencePath)" Condition="'%(Filename)' == 'Quire.Mirror'" />
+      <_QuireEngutilsMgdReference Include="@(ReferencePath)" Condition="'%(Filename)' == 'Quire.EngutilsMgd'" />
+      <_QuireMspconsMgdReference Include="@(ReferencePath)" Condition="'%(Filename)' == 'Quire.MspconsMgd'" />
     </ItemGroup>
     <Error Condition="'@(_QuireMirrorReference)' == ''" Text="Quire.Mirror.dll is not among this project's references; the mixed-mode build cannot find it." />
     <Error Condition="'@(_QuireEngineUtlReference)' == ''" Text="Quire.Engine.Utl.dll is not among this project's references." />
+    <Error Condition="'@(_QuireEngutilsMgdReference)' == ''" Text="Quire.EngutilsMgd.dll is not among this project's references." />
+    <Error Condition="'@(_QuireMspconsMgdReference)' == ''" Text="Quire.MspconsMgd.dll is not among this project's references." />
     <!-- Rebuild, not an incremental build: an up-to-date vcxproj would leave the C# DLL copied into bin above in place. -->
-    <Exec Command="&quot;$(QuireMsvcInstallDir)MSBuild\Current\Bin\amd64\MSBuild.exe&quot; &quot;$(MSBuildProjectDirectory)\MixedMode\Quire.Mslisp.vcxproj&quot; /t:Rebuild /m /p:Configuration=Release /p:Platform=x64 /p:AssemblyOutDir=&quot;$(TargetDir.TrimEnd('\'))&quot; /p:QuireMirrorPath=&quot;@(_QuireMirrorReference->'%(FullPath)')&quot; /p:QuireEngineUtlPath=&quot;@(_QuireEngineUtlReference->'%(FullPath)')&quot; /v:minimal" />
+    <Exec Command="&quot;$(QuireMsvcInstallDir)MSBuild\Current\Bin\amd64\MSBuild.exe&quot; &quot;$(MSBuildProjectDirectory)\MixedMode\Quire.Mslisp.vcxproj&quot; /t:Rebuild /m /p:Configuration=Release /p:Platform=x64 /p:AssemblyOutDir=&quot;$(TargetDir.TrimEnd('\'))&quot; /p:QuireMirrorPath=&quot;@(_QuireMirrorReference->'%(FullPath)')&quot; /p:QuireEngineUtlPath=&quot;@(_QuireEngineUtlReference->'%(FullPath)')&quot; /p:QuireEngutilsMgdPath=&quot;@(_QuireEngutilsMgdReference->'%(FullPath)')&quot; /p:QuireMspconsMgdPath=&quot;@(_QuireMspconsMgdReference->'%(FullPath)')&quot; /v:minimal" />
     <!-- The mixed DLL cannot use the portable PDB emitted by the preceding C# reference build. -->
     <Delete Files="$(TargetDir)Quire.Mslisp.pdb" />
   </Target>
