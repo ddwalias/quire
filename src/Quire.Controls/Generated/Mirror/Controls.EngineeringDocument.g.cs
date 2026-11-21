@@ -12,58 +12,6 @@ namespace Quire.Controls;
 public partial class EngineeringDocument : global::System.Windows.Controls.ContentControl, global::Quire.Controls.Core.IEngineeringDocument, global::System.IDisposable, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.IRegionFactoryOwner
 {
     [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    private const string UnitSystemHeaderCustom = "UnitSystemHeader.Custom";
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.ResourceDictionary _errorWarningMessageResourceDictionary;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty LastSavedDateProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FileIsSavedProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Threading.ManualResetEvent _waitForSaveXps;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.List<global::Quire.Wpf.Printing.PrintJob> _runningPrintJobs;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.FrameworkElementFacade _frameworkElementFacade;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsDirtyProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.PageOrientation, global::System.Printing.PageOrientation> _pageOrientationTranslation;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.PageSize, global::System.Printing.PageMediaSizeName> _pageSizeTranslation;
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetFirstNonEmptyString(params string[] values) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public EngineeringDocument(global::Quire.Controls.Core.DocumentReadonlyOptions readonlyOptions = default) { }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Collections.Generic.List<global::Quire.Controls.Core.NodeMessageAdorner> GetVisibleNodeMessageAdornersForElement(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool HandleCopyWhiteboardItems(global::System.Collections.Generic.ICollection<global::Quire.Controls.Core.IWhiteboardItem> whiteboardItems, bool copyAsImage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.FrameworkElement PrepareRegionCloneForImage(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.Core.RegionImageSettings imageSettings, global::Quire.Controls.Core.CopyWidgetBase popup, global::System.Windows.ResourceDictionary resourceDictionary = default, global::System.Nullable<global::System.Windows.Rect> boundsConstraint = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HookupCommandBindings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Dispose() { }
-    [global::Quire.Mirror.MirrorStub]
-    private void Read(global::System.IO.Packaging.Package package, ref global::Quire.Controls.Core.FileLoadResult result, string fullFilePath, bool newFromDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> DeserializeRegionsFromCollection(global::Quire.PersistentData.IRegionCollectionType regionCollection, global::Quire.PersistentData.IWorksheetSectionPersistentData sectionData, string fullFilePath, global::System.IO.Packaging.PackagePart packagePart) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SerializeWorksheet(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SerializeHeadersContainer(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SerializeFootersContainer(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SerializeWorksheetSection(global::System.IO.Packaging.PackagePart part, global::Quire.PersistentData.IWorksheetSectionPersistentData sectionData, global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> worksheetSectionRegionDataCreator, global::Quire.PersistentData.IRegionCollectionSerializer regionCollectionSerializer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SavePdfDocument(string filePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Documents.IDocumentPaginatorSource CreatePrintableDocument(global::Quire.Wpf.Printing.Win32PrintRange printRange, global::Quire.Wpf.Printing.PageIndexRange pageRange, bool shouldEnrichPrintingTree = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Exception SaveFileAndUpdateCWDState(string fileName, global::Quire.Controls.Core.IDocumentSaveOptions options, out bool wasRenamed) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.EngineeringDocument+RootDecorator, Ptc.Controls")]

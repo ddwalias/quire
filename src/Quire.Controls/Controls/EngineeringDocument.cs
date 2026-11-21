@@ -11,6 +11,7 @@ using System.Runtime;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Documents.Serialization;
 using System.Windows.Input;
@@ -19,16 +20,25 @@ using System.Windows.Threading;
 using System.Xml;
 using System.Xml.Linq;
 using Quire.Calculation.Core;
+using Quire.Controls.Bookmarks;
 using Quire.Controls.Core;
 using Quire.Controls.Core.IORegions;
 using Quire.Controls.Core.Serialization;
+using Quire.Controls.Core.Whiteboard;
+using Quire.Controls.ExcelComponent.View;
+using Quire.Controls.IO;
 using Quire.Controls.InputControls;
+using Quire.Controls.Plots;
+using Quire.Controls.Properties;
 using Quire.Controls.Worksheet;
+using Quire.Controls.Worksheet.Printing;
 using Quire.Core;
+using Quire.EquationEditor.View;
 using Quire.FunctionalitiesLimitation;
 using Quire.IO;
 using Quire.Mirror;
 using Quire.PersistentData;
+using Quire.PersistentDataObjects;
 using Quire.Serialization;
 using Quire.Services;
 using Quire.Undo;
@@ -38,89 +48,9 @@ using Quire.Xml;
 
 namespace Quire.Controls;
 
+// Members are declared in Mathcad order to preserve closure ordinals (36, 187, 188, 196, 199, 203, 224, 247, 252, 255..257, 269, 277) and <>O slot order.
 public partial class EngineeringDocument
 {
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public void CloseOpenedComboBoxEditingMode() => WpfUtils.ExecuteCommandIfFocusedElementIsDescendantOf<EngineeringDocument>(this, EditableComboBoxCommands.CloseEditingMode);
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    private readonly ManualResetEvent _waitForLoad;
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public void WaitForLoad(int seconds) => FileManager.WaitFor(seconds, _waitForLoad);
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    private void FireCalculationOptionUpdated(string name, object value) => IsDirty = true;
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    private static void TraceWarning(string format, params object[] args) => Trace.TraceWarning(format, args);
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public IWorksheetControl Worksheet => WorksheetControl;
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public bool NeedsDictionaryRefresh { get; set; }
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public double Zoom { get => DocumentAttachedProperties.GetZoom(this); set => DocumentAttachedProperties.SetZoom<EngineeringDocument>(this, value); }
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public string FilePath { get => DocumentAttachedProperties.GetFilePath(this); set => DocumentAttachedProperties.SetFilePath(this, value); }
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public long MaxUpdateLayoutTimeMsec { get; set; }
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public IWorksheetPersistentData WorksheetData { get; private set; }
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    private bool _isNetworkDriveDisconnected;
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public bool IsNetworkDriveDisconnected => _isNetworkDriveDisconnected;
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public ISerializationHelper DocumentSerializationHelper { get; }
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    private static bool _isDocumentFromPtcPlaces;
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public bool IsDocumentFromPTCPlaces { get => _isDocumentFromPtcPlaces; set => _isDocumentFromPtcPlaces = value; }
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    private readonly ITextStylesManager _textStylesManager;
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public ITextStylesManager TextStylesManager => _textStylesManager;
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    private bool _isNew;
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public bool IsNew => _isNew;
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public event Action<EngineeringDocument> OnPrepareSnapshotStart;
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public event Action<EngineeringDocument> OnPrepareSnapshotEnd;
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public event Action<IEngineeringDocument> IsDirtyChanged;
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public event Action<EngineeringDocument> OnDispose;
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public event Action<string> CwdUpdated;
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-    public event Action<IEngineeringDocument> FilePathChanged;
-
     [MirrorOf("Ptc.Controls.EngineeringDocument+PropertyNames, Ptc.Controls")]
     public static class PropertyNames
     {
@@ -146,10 +76,6 @@ public partial class EngineeringDocument
         public string TabIcon;
         public string ClosePrompt;
     }
-
-    private CustomizedValues _customizedValues;
-    private DocumentReadonlyOptions _readonlyOptions;
-    private string _unsavedDocumentName;
 
     [MirrorOf("Ptc.Controls.EngineeringDocument+DisplayPropertyChangeNotifier, Ptc.Controls")]
     private class DisplayPropertyChangeNotifier : IDisposable
@@ -196,19 +122,269 @@ public partial class EngineeringDocument
         }
     }
 
-    private void FirePropertyChanged(string propertyName)
+    private static readonly Type _typeOfThis = typeof(EngineeringDocument);
+
+    private const string UnitSystemHeaderCustom = "UnitSystemHeader.Custom";
+
+    private readonly ResourceDictionary _errorWarningMessageResourceDictionary;
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    private readonly ITextStylesManager _textStylesManager;
+
+    public static readonly DependencyProperty LastSavedDateProperty = DependencyProperty.Register("LastSavedDate", typeof(DateTime?), _typeOfThis, new PropertyMetadata(null, OnLastSavedDateChanged));
+
+    private static void OnLastSavedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (propertyName == "DisplayFilePath")
+        if (d is EngineeringDocument)
         {
-            WorksheetControl.DisplayFilePath = DisplayFilePath;
-        }
-        if (PropertyChanged != null)
-        {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            (d as EngineeringDocument).FirePropertyChanged("DisplaySavedDate");
         }
     }
 
-    public IIORegionManager InputOutputRegionManager => Worksheet.InputOutputRegionManager;
+    public static readonly DependencyProperty FileIsSavedProperty = DependencyProperty.Register("FileIsSaved", typeof(bool), _typeOfThis, new PropertyMetadata(false));
+
+    static EngineeringDocument()
+    {
+        DocumentAttachedProperties.ZoomProperty.OverrideMetadata(_typeOfThis, new FrameworkPropertyMetadata(OnZoomChanged));
+        DocumentAttachedProperties.FilePathProperty.OverrideMetadata(_typeOfThis, new FrameworkPropertyMetadata(DocumentAttachedProperties.FilePathProperty.DefaultMetadata.DefaultValue, OnFilePathChanged));
+    }
+
+    private static void OnFilePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
+    {
+        if (d is EngineeringDocument)
+        {
+            (d as EngineeringDocument).OnFilePathChanged();
+        }
+    }
+
+    private void OnFilePathChanged()
+    {
+        FilePathChanged(this);
+        FirePropertyChanged("DisplayFilePath");
+        FirePropertyChanged("DisplayFileName");
+        FirePropertyChanged("DisplayDocumentName");
+        FirePropertyChanged("DisplayWindowTitle");
+    }
+
+    private static void OnZoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
+    {
+        (d as EngineeringDocument)?.OnZoomChanged((double)args.OldValue, (double)args.NewValue);
+    }
+
+    private void OnZoomChanged(double oldValue, double newValue)
+    {
+        AdjustScrollBeforeZoomChange(oldValue, newValue);
+        LayoutTransform = new ScaleTransform(newValue, newValue);
+        FirePropertyChanged("Zoom");
+    }
+
+    public MatrixFormat MathResultMatrixFormat
+    {
+        get => Worksheet.ResultMatrixFormat;
+        set => Worksheet.ResultMatrixFormat = value;
+    }
+
+    public NumberFormat MathDisplayNumberFormat
+    {
+        get => Worksheet.DisplayNumberFormat;
+        set => Worksheet.DisplayNumberFormat = value;
+    }
+
+    public IRegionFactory RegionFactory
+    {
+        get => Quire.Controls.Worksheet.RegionFactory.Instance;
+        set => DebugTools.FailAssertion("RegionFactory: setter not imp");
+    }
+
+    public IDictionary<IdLabels, ExtendedFont> LabeledIdFormat
+    {
+        get => Worksheet.LabeledIdFormat;
+        set => Worksheet.LabeledIdFormat = value;
+    }
+
+    public MathFormat MathFormat => Worksheet.MathFormat;
+
+    public XElementSerializable GetMcdxPageModel(XName name) => new McdxPageModel(WorksheetData, name);
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public event Action<EngineeringDocument> OnPrepareSnapshotStart;
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public event Action<EngineeringDocument> OnPrepareSnapshotEnd;
+
+    public static string GetFirstNonEmptyString(params string[] values)
+    {
+        return values.FirstOrDefault((string value) => value.IsNotEmpty());
+    }
+
+    private IMetadataModel _metadataModel;
+
+    private IFileOperationsProvider _fileOpsProvider;
+
+    private IPackageOperationsProvider _packageOpsProvider;
+
+    private readonly ManualResetEvent _waitForSaveXps = new ManualResetEvent(true);
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    private readonly ManualResetEvent _waitForLoad = new ManualResetEvent(true);
+
+    private readonly List<PrintJob> _runningPrintJobs = new List<PrintJob>();
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    private static bool _isDocumentFromPtcPlaces = false;
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public event Action<IEngineeringDocument> IsDirtyChanged = delegate { };
+
+    private WorksheetControl _worksheet;
+
+    internal WorksheetControl WorksheetControl
+    {
+        get => _worksheet;
+        set
+        {
+            if (_worksheet == value)
+            {
+                return;
+            }
+            if (_worksheet != null)
+            {
+                _worksheet.PropertyChanged -= WorksheetPropertyChangedHandler;
+            }
+            _worksheet = value;
+            FirePropertyChanged("Worksheet");
+            if (_worksheet != null)
+            {
+                _worksheet.PropertyChanged += WorksheetPropertyChangedHandler;
+                BindingCalculationOptionsAndSystemVariables();
+            }
+        }
+    }
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public IWorksheetControl Worksheet => WorksheetControl;
+
+    private readonly FrameworkElementFacade _frameworkElementFacade;
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public bool NeedsDictionaryRefresh { get; set; }
+
+    IWorksheetProperties IEngineeringDocument.Worksheet => Worksheet;
+
+    private void BindingCalculationOptionsAndSystemVariables()
+    {
+        Worksheet.DocCalculationOptions.CalculationOptionChanged += FireCalculationOptionUpdated;
+        IsAutoCalcOn = Worksheet.DocCalculationOptions.IsAutoCalcOn;
+        Worksheet.DocCalculationVariables.CalculationVariableChanged += FireSystemVariableUpdated;
+        Worksheet.DocCalculationOptions.BinOctHexModeOptionChanged += FireCalculationOptionUpdated;
+    }
+
+    private void WorksheetPropertyChangedHandler(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case "SimplifyUnitSystem":
+                IsDirty = true;
+                break;
+            case "DefaultUnitSystem":
+                IsDirty = true;
+                FirePropertyChanged("UnitSystemHeader");
+                break;
+        }
+    }
+
+    public bool IsPrinting => _runningPrintJobs.Count > 0;
+
+    public string UnitSystemHeader
+    {
+        get
+        {
+            switch (DefaultUnitSystem)
+            {
+                case UnitSystems.Custom:
+                    return Resources[UnitSystemHeaderCustom].ToString();
+                case UnitSystems.CGS:
+                    return UnitSystems.CGS.ToString();
+                case UnitSystems.SI:
+                    return UnitSystems.SI.ToString();
+                case UnitSystems.US:
+                    return UnitSystems.US.ToString() + "CS";
+                default:
+                    return UnitSystems.SI.ToString();
+            }
+        }
+    }
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public double Zoom { get => DocumentAttachedProperties.GetZoom(this); set => DocumentAttachedProperties.SetZoom<EngineeringDocument>(this, value); }
+
+    private void AdjustScrollBeforeZoomChange(double zoomOldValue, double zoomNewValue)
+    {
+        ScrollViewer scrollViewer = this.TryFindAncestorIncludingSelf<ScrollViewer>();
+        if (scrollViewer != null)
+        {
+            double num = scrollViewer.ViewportWidth / 2.0;
+            double num2 = scrollViewer.ViewportHeight / 2.0;
+            double num3 = scrollViewer.HorizontalOffset + num;
+            double num4 = scrollViewer.VerticalOffset + num2;
+            double num5 = zoomNewValue / zoomOldValue;
+            double value = scrollViewer.ExtentWidth * num5;
+            if (scrollViewer.ExtentWidth.IsLessThan(scrollViewer.ViewportWidth) && value.IsGreaterThan(scrollViewer.ViewportWidth))
+            {
+                Point val = TranslatePoint(default, scrollViewer);
+                num3 -= val.X;
+            }
+            double num6 = num3 * num5;
+            double num7 = num4 * num5;
+            double offset = num6 - num;
+            double offset2 = num7 - num2;
+            scrollViewer.ScrollToHorizontalOffset(offset);
+            scrollViewer.ScrollToVerticalOffset(offset2);
+        }
+    }
+
+    protected override void OnMouseWheel(MouseWheelEventArgs e)
+    {
+        if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+        {
+            int num = Math.Abs(e.Delta) < WpfUtils.MouseWheelScrollDelta ? WpfUtils.MouseScrollDeltaForTouchPad : WpfUtils.MouseWheelScrollDelta;
+            int num2 = e.Delta / num;
+            if (num2 == 0)
+            {
+                return;
+            }
+            HandleCtrlMouseWheel(num2);
+            e.Handled = true;
+        }
+        base.OnMouseWheel(e);
+    }
+
+    internal void HandleCtrlMouseWheel(int ticks)
+    {
+        EngineeringDocCommands.ZoomIn.Execute(ticks, this);
+    }
+
+    public IMetadataModel MetadataModel
+    {
+        get => _metadataModel = _metadataModel ?? new MetadataModel();
+        set => _metadataModel = value;
+    }
+
+    public IFileOperationsProvider FileOpsProvider
+    {
+        get => _fileOpsProvider ?? new FileOperationsProvider();
+        set => _fileOpsProvider = value;
+    }
+
+    public IPackageOperationsProvider PackageOpsProvider
+    {
+        get => _packageOpsProvider ?? PackageOperationsProvider.Instance;
+        set => _packageOpsProvider = value;
+    }
+
+    private DocumentReadonlyOptions _readonlyOptions;
+
+    private CustomizedValues _customizedValues;
 
     public string DocumentTabIcon
     {
@@ -250,6 +426,9 @@ public partial class EngineeringDocument
         set => _customizedValues.ClosePrompt = value;
     }
 
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public string FilePath { get => DocumentAttachedProperties.GetFilePath(this); set => DocumentAttachedProperties.SetFilePath(this, value); }
+
     public string CustomizedFilePath
     {
         get => _customizedValues.FilePath;
@@ -273,6 +452,9 @@ public partial class EngineeringDocument
     public string CustomizedFileName => Path.GetFileName(CustomizedFilePath);
 
     public string DisplayFileName => GetFirstNonEmptyString(CustomizedFileName, FileName);
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public long MaxUpdateLayoutTimeMsec { get; set; } = 10000L;
 
     public DateTime? CustomizedSavedDate
     {
@@ -316,6 +498,8 @@ public partial class EngineeringDocument
             return null;
         }
     }
+
+    private string _unsavedDocumentName;
 
     public string DocumentName
     {
@@ -370,88 +554,14 @@ public partial class EngineeringDocument
 
     public string DisplayWindowTitle => GetFirstNonEmptyString(CustomizedWindowTitle, DisplayFilePath, DisplayDocumentName);
 
-    public void ActivateHeader() => Worksheet.ActivateHeader();
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public IWorksheetPersistentData WorksheetData { get; private set; }
 
-    public void ActivateFooter() => Worksheet.ActivateFooter();
+    public TextFormat GetContentTextFormat() => Worksheet.ContentTextFormat;
 
-    public void ActivateMain() => Worksheet.ActivateContent();
+    public TextFormat GetHeaderTextFormat() => Worksheet.HeaderTextFormat;
 
-    public void ActivateWorksheet() => WorksheetControl.Activate();
-
-    public MatrixFormat MathResultMatrixFormat
-    {
-        get => Worksheet.ResultMatrixFormat;
-        set => Worksheet.ResultMatrixFormat = value;
-    }
-
-    public NumberFormat MathDisplayNumberFormat
-    {
-        get => Worksheet.DisplayNumberFormat;
-        set => Worksheet.DisplayNumberFormat = value;
-    }
-
-    public IRegionFactory RegionFactory
-    {
-        get => Quire.Controls.Worksheet.RegionFactory.Instance;
-        set => DebugTools.FailAssertion("RegionFactory: setter not imp");
-    }
-
-    public IDictionary<IdLabels, ExtendedFont> LabeledIdFormat
-    {
-        get => Worksheet.LabeledIdFormat;
-        set => Worksheet.LabeledIdFormat = value;
-    }
-
-    public MathFormat MathFormat => Worksheet.MathFormat;
-
-    IWorksheetProperties IEngineeringDocument.Worksheet => Worksheet;
-
-    public bool IsPrinting => _runningPrintJobs.Count > 0;
-
-    private IMetadataModel _metadataModel;
-    private IFileOperationsProvider _fileOpsProvider;
-    private IPackageOperationsProvider _packageOpsProvider;
-    private FileStream _fileStream;
-    private bool _isDocumentATemplate;
-    private bool _showEngineChangesBanner;
-
-    public string UnitSystemHeader
-    {
-        get
-        {
-            switch (DefaultUnitSystem)
-            {
-                case UnitSystems.Custom:
-                    return Resources[UnitSystemHeaderCustom].ToString();
-                case UnitSystems.CGS:
-                    return UnitSystems.CGS.ToString();
-                case UnitSystems.SI:
-                    return UnitSystems.SI.ToString();
-                case UnitSystems.US:
-                    return UnitSystems.US.ToString() + "CS";
-                default:
-                    return UnitSystems.SI.ToString();
-            }
-        }
-    }
-
-    public IMetadataModel MetadataModel
-    {
-        get => _metadataModel = _metadataModel ?? new MetadataModel();
-        set => _metadataModel = value;
-    }
-
-    public IFileOperationsProvider FileOpsProvider
-    {
-        get => _fileOpsProvider ?? new FileOperationsProvider();
-        set => _fileOpsProvider = value;
-    }
-
-    public IPackageOperationsProvider PackageOpsProvider
-    {
-        get => _packageOpsProvider ?? PackageOperationsProvider.Instance;
-        set => _packageOpsProvider = value;
-    }
+    public TextFormat GetFooterTextFormat() => Worksheet.FooterTextFormat;
 
     public UnitSystems DefaultUnitSystem
     {
@@ -491,162 +601,16 @@ public partial class EngineeringDocument
 
     public IEnumerable<UIElement> Regions => Worksheet.WorksheetItems.Cast<UIElement>();
 
+    public static readonly DependencyProperty IsDirtyProperty = DependencyProperty.Register("IsDirty", typeof(bool), typeof(EngineeringDocument), new PropertyMetadata(OnIsDirtyChanged));
+
     public bool IsDirty
     {
         get => (bool)GetValue(IsDirtyProperty);
         set => SetValue(IsDirtyProperty, value);
     }
 
-    public bool IsDocumentATemplate
-    {
-        get => _isDocumentATemplate;
-        set
-        {
-            if (_isDocumentATemplate == value)
-            {
-                return;
-            }
-            _isDocumentATemplate = value;
-            FirePropertyChanged("IsDocumentATemplate");
-        }
-    }
-
-    public IIOItemCollection Inputs => Worksheet.Inputs;
-
-    public IIOItemCollection Outputs => Worksheet.Outputs;
-
-    public bool IsCalculationsEnabled
-    {
-        get => Worksheet.IsCalculationsEnabled;
-        set => Worksheet.IsCalculationsEnabled = value;
-    }
-
-    public bool IsAutoCalcOn
-    {
-        get => Worksheet.IsAutoCalcOn;
-        set => Worksheet.IsAutoCalcOn = value;
-    }
-
-    public DateTime? LastSavedDate
-    {
-        get => (DateTime?)GetValue(LastSavedDateProperty);
-        set => SetValue(LastSavedDateProperty, value);
-    }
-
-    public bool FileIsSaved
-    {
-        get => (bool)GetValue(FileIsSavedProperty);
-        set => SetValue(FileIsSavedProperty, value);
-    }
-
-    public string FileExtension
-    {
-        get => Path.GetExtension(FilePath);
-        set => FilePath = Path.ChangeExtension(FilePath, value);
-    }
-
-    public int PageCount => Worksheet.PageCount;
-
-    public int SelectedRegionCount => Worksheet.SelectedItems.Count();
-
-    public bool IsHeaderFocused => Worksheet.IsHeaderActive;
-
-    public bool IsFooterFocused => Worksheet.IsFooterActive;
-
-    public bool IsMainActive => Worksheet.IsContentActive;
-
-    public Point InsertionPoint => Worksheet.InsertionPoint;
-
-    public string CWD
-    {
-        get => DocCalculationVariables.CurrentWorkingDirectory;
-        set
-        {
-            string objectToCheck;
-            try
-            {
-                objectToCheck = Path.GetFullPath(value);
-            }
-            catch
-            {
-                objectToCheck = null;
-            }
-            if (DebugTools.AssertNotNull(objectToCheck, null).Failed)
-            {
-                return;
-            }
-            if (DocCalculationVariables.CurrentWorkingDirectory == value)
-            {
-                return;
-            }
-            DocCalculationVariables.CurrentWorkingDirectory = value;
-        }
-    }
-
-    public bool CanBeSavedWithOriginalName
-    {
-        get
-        {
-            if (_fileStream != null)
-            {
-                return _fileStream.CanWrite;
-            }
-            return false;
-        }
-    }
-
-    public bool CacheWorksheet
-    {
-        get => Worksheet.CacheWorksheet;
-        set => Worksheet.CacheWorksheet = value;
-    }
-
-    public string HelpServerPath
-    {
-        get => WorksheetControl.HelpServerPath;
-        set => WorksheetControl.HelpServerPath = value;
-    }
-
-    public IEnumerable<UIElement> ActiveSectionRegions => Worksheet.ActiveSectionItems.OfType<UIElement>();
-
-    public bool ShowEngineChangesBanner
-    {
-        get => _showEngineChangesBanner;
-        set
-        {
-            if (_showEngineChangesBanner == value)
-            {
-                return;
-            }
-            _showEngineChangesBanner = value;
-            FirePropertyChanged("ShowEngineChangesBanner");
-        }
-    }
-
-    private static void OnLastSavedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-        if (d is EngineeringDocument)
-        {
-            (d as EngineeringDocument).FirePropertyChanged("DisplaySavedDate");
-        }
-    }
-
-    private static void OnFilePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
-    {
-        if (d is EngineeringDocument)
-        {
-            (d as EngineeringDocument).OnFilePathChanged();
-        }
-    }
-
-    private void OnFilePathChanged()
-    {
-        FilePathChanged(this);
-        FirePropertyChanged("DisplayFilePath");
-        FirePropertyChanged("DisplayFileName");
-        FirePropertyChanged("DisplayDocumentName");
-        FirePropertyChanged("DisplayWindowTitle");
-    }
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public bool IsNetworkDriveDisconnected => _isNetworkDriveDisconnected;
 
     private static void OnIsDirtyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -656,173 +620,11 @@ public partial class EngineeringDocument
         }
     }
 
-    private void FireSystemVariableUpdated(string name, object value)
-    {
-        if (!name.Equals("mc_CWD"))
-        {
-            IsDirty = true;
-        }
-    }
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public ISerializationHelper DocumentSerializationHelper { get; }
 
-    private void BindingCalculationOptionsAndSystemVariables()
-    {
-        Worksheet.DocCalculationOptions.CalculationOptionChanged += FireCalculationOptionUpdated;
-        IsAutoCalcOn = Worksheet.DocCalculationOptions.IsAutoCalcOn;
-        Worksheet.DocCalculationVariables.CalculationVariableChanged += FireSystemVariableUpdated;
-        Worksheet.DocCalculationOptions.BinOctHexModeOptionChanged += FireCalculationOptionUpdated;
-    }
-
-    private void WorksheetPropertyChangedHandler(object sender, PropertyChangedEventArgs e)
-    {
-        switch (e.PropertyName)
-        {
-            case "SimplifyUnitSystem":
-                IsDirty = true;
-                break;
-            case "DefaultUnitSystem":
-                IsDirty = true;
-                FirePropertyChanged("UnitSystemHeader");
-                break;
-        }
-    }
-
-    public void SetAutoCalculationEnabledWithoutTriggeringIsDirty(bool value)
-    {
-        bool isDirty = IsDirty;
-        IsAutoCalcOn = value;
-        IsDirty = isDirty;
-    }
-
-    public TextFormat GetContentTextFormat() => Worksheet.ContentTextFormat;
-
-    public TextFormat GetHeaderTextFormat() => Worksheet.HeaderTextFormat;
-
-    public TextFormat GetFooterTextFormat() => Worksheet.FooterTextFormat;
-
-    private void InvokeOnDispose()
-    {
-        try
-        {
-            Worksheet.Dispose();
-        }
-        catch (Exception ex)
-        {
-            DebugTools.FailAssertion(ex.ToString());
-        }
-        finally
-        {
-            OnDispose?.Invoke(this);
-        }
-    }
-
-    public void ResetDocumentCustomization()
-    {
-        ReadonlyOptions = null;
-        DocumentTabIcon = null;
-        CustomizedDocumentName = null;
-        CustomizedFilePath = null;
-        CustomizedSavedDate = null;
-        CustomizedWindowTitle = null;
-        CustomizedClosePrompt = null;
-        DebugTools.DevAssert(ReadonlyOptions == DocumentReadonlyOptions.Default, null);
-        DebugTools.DevAssert(_customizedValues.Equals(default(CustomizedValues)), null);
-    }
-
-    private void UpdateCWDState(string fileName)
-    {
-        string prevCwd = CWD;
-        string newCwd = CWD = Path.GetDirectoryName(Path.GetFullPath(fileName));
-        if (ReadonlyOptions.FileLocationHistoryEnabled && prevCwd != newCwd && CwdUpdated != null)
-        {
-            CwdUpdated(newCwd);
-        }
-    }
-
-    private static void OnZoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
-    {
-        (d as EngineeringDocument)?.OnZoomChanged((double)args.OldValue, (double)args.NewValue);
-    }
-
-    private void OnZoomChanged(double oldValue, double newValue)
-    {
-        AdjustScrollBeforeZoomChange(oldValue, newValue);
-        LayoutTransform = new ScaleTransform(newValue, newValue);
-        FirePropertyChanged("Zoom");
-    }
-
-    private void AdjustScrollBeforeZoomChange(double zoomOldValue, double zoomNewValue)
-    {
-        ScrollViewer scrollViewer = this.TryFindAncestorIncludingSelf<ScrollViewer>();
-        if (scrollViewer != null)
-        {
-            double num = scrollViewer.ViewportWidth / 2.0;
-            double num2 = scrollViewer.ViewportHeight / 2.0;
-            double num3 = scrollViewer.HorizontalOffset + num;
-            double num4 = scrollViewer.VerticalOffset + num2;
-            double num5 = zoomNewValue / zoomOldValue;
-            double value = scrollViewer.ExtentWidth * num5;
-            if (scrollViewer.ExtentWidth.IsLessThan(scrollViewer.ViewportWidth) && value.IsGreaterThan(scrollViewer.ViewportWidth))
-            {
-                Point val = TranslatePoint(default, scrollViewer);
-                num3 -= val.X;
-            }
-            double num6 = num3 * num5;
-            double num7 = num4 * num5;
-            double offset = num6 - num;
-            double offset2 = num7 - num2;
-            scrollViewer.ScrollToHorizontalOffset(offset);
-            scrollViewer.ScrollToVerticalOffset(offset2);
-        }
-    }
-
-    internal void HandleCtrlMouseWheel(int ticks)
-    {
-        EngineeringDocCommands.ZoomIn.Execute(ticks, this);
-    }
-
-    protected override void OnMouseWheel(MouseWheelEventArgs e)
-    {
-        if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
-        {
-            int num = Math.Abs(e.Delta) < WpfUtils.MouseWheelScrollDelta ? WpfUtils.MouseScrollDeltaForTouchPad : WpfUtils.MouseWheelScrollDelta;
-            int num2 = e.Delta / num;
-            if (num2 == 0)
-            {
-                return;
-            }
-            HandleCtrlMouseWheel(num2);
-            e.Handled = true;
-        }
-        base.OnMouseWheel(e);
-    }
-
-    private WorksheetControl _worksheet;
-    private bool _isDoneOpeningFile;
-
-    internal WorksheetControl WorksheetControl
-    {
-        get => _worksheet;
-        set
-        {
-            if (_worksheet == value)
-            {
-                return;
-            }
-            if (_worksheet != null)
-            {
-                _worksheet.PropertyChanged -= WorksheetPropertyChangedHandler;
-            }
-            _worksheet = value;
-            FirePropertyChanged("Worksheet");
-            if (_worksheet != null)
-            {
-                _worksheet.PropertyChanged += WorksheetPropertyChangedHandler;
-                BindingCalculationOptionsAndSystemVariables();
-            }
-        }
-    }
-
-    public XElementSerializable GetMcdxPageModel(XName name) => new McdxPageModel(WorksheetData, name);
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public bool IsDocumentFromPTCPlaces { get => _isDocumentFromPtcPlaces; set => _isDocumentFromPtcPlaces = value; }
 
     public FileLoadResult NewFromDocument(string fullFilePath)
     {
@@ -870,6 +672,108 @@ public partial class EngineeringDocument
         return result;
     }
 
+    private bool _isDocumentATemplate;
+
+    public bool IsDocumentATemplate
+    {
+        get => _isDocumentATemplate;
+        set
+        {
+            if (_isDocumentATemplate == value)
+            {
+                return;
+            }
+            _isDocumentATemplate = value;
+            FirePropertyChanged("IsDocumentATemplate");
+        }
+    }
+
+    public IIOItemCollection Inputs => Worksheet.Inputs;
+
+    public IIOItemCollection Outputs => Worksheet.Outputs;
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public ITextStylesManager TextStylesManager => _textStylesManager;
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public event Action<EngineeringDocument> OnDispose;
+
+    private void InvokeOnDispose()
+    {
+        try
+        {
+            Worksheet.Dispose();
+        }
+        catch (Exception ex)
+        {
+            DebugTools.FailAssertion(ex.ToString());
+        }
+        finally
+        {
+            OnDispose?.Invoke(this);
+        }
+    }
+
+    public EngineeringDocument(DocumentReadonlyOptions readonlyOptions = null)
+    {
+        CommandBuffer.CreateBufferForKey(this);
+        IsDirty = false;
+        _isDoneOpeningFile = true;
+        VerticalAlignment = VerticalAlignment.Center;
+        HorizontalAlignment = HorizontalAlignment.Center;
+        Padding = new Thickness(0.0, 24.0, 0.0, 24.0);
+        DocumentSerializationHelper = new SerializationHelper();
+        KeyboardNavigation.SetTabNavigation(this, KeyboardNavigationMode.Cycle);
+        _textStylesManager = new TextStylesCollectionManager();
+        ResourceDictionary resources = new ResourceDictionary
+        {
+            Source = new Uri("pack://application:,,,/Quire.Controls;component/EngineeringDocumentResources.xaml")
+        };
+        Resources = resources;
+        _errorWarningMessageResourceDictionary = (ResourceDictionary)Resources["WorksheetMessages"];
+        WorksheetControl worksheetControl = new WorksheetControl(_textStylesManager)
+        {
+            InputOutputRegionManager = new IOManager(this),
+            BookmarksManager = new BookmarksManager()
+        };
+        worksheetControl.SetBinding(WorksheetControl.WorksheetNameProperty, new MultiBinding
+        {
+            Converter = FileNameConverter.Instance,
+            Bindings =
+            {
+                new Binding
+                {
+                    Path = new PropertyPath("DisplayFileName"),
+                    Mode = BindingMode.OneWay,
+                    Source = this
+                },
+                new Binding
+                {
+                    Path = new PropertyPath("DisplayDocumentName"),
+                    Mode = BindingMode.OneWay,
+                    Source = this
+                }
+            }
+        });
+        WorksheetControl = worksheetControl;
+        Content = Worksheet;
+        ReadonlyOptions = readonlyOptions;
+        HookupCommandBindings();
+        AddHandler(CommonRoutedEvents.CopyWhiteboardItemsEvent, new CustomRoutedEventHandler<IEnumerable<IWhiteboardItem>>(HandleCopyWhiteboardItems), true);
+        AddHandler(CommonRoutedEvents.CopySingleItemNoImageEvent, new CustomRoutedEventHandler<IWhiteboardItem>(HandleCopySingleWhiteboardItemNoImage), true);
+        AddHandler(VisualAdornerBase.AdornerAddedEvent, new RoutedEventHandler(HandleAdornerAdded));
+        _frameworkElementFacade = new FrameworkElementFacade();
+        _isNew = true;
+        WorksheetControl.Changed += HandleWorksheetControlChanged;
+    }
+
+    internal List<NodeMessageAdorner> GetVisibleNodeMessageAdornersForElement(FrameworkElement element)
+    {
+        return (from adorner in GetTopLevelAdornersForElement(element).OfType<NodeMessageAdorner>()
+                where adorner.IsVisible
+                select adorner).OrderBy((NodeMessageAdorner adorner) => adorner.RelativeLocation.Y).ToList();
+    }
+
     internal MarginLineAdorner GetAnnotationMarginLineOfElement(FrameworkElement element) => GetTopLevelAdornersForElement(element).OfType<MarginLineAdorner>().SingleOrDefault();
 
     private IEnumerable<VisualAdornerBase> GetTopLevelAdornersForElement(FrameworkElement element)
@@ -913,6 +817,19 @@ public partial class EngineeringDocument
         VisualAdornerBase.AddToAdornerLayer(errorMessageAdornerDecorator, visualAdornerBase);
     }
 
+    public void ResetDocumentCustomization()
+    {
+        ReadonlyOptions = null;
+        DocumentTabIcon = null;
+        CustomizedDocumentName = null;
+        CustomizedFilePath = null;
+        CustomizedSavedDate = null;
+        CustomizedWindowTitle = null;
+        CustomizedClosePrompt = null;
+        DebugTools.DevAssert(ReadonlyOptions == DocumentReadonlyOptions.Default, null);
+        DebugTools.DevAssert(_customizedValues.Equals(default(CustomizedValues)), null);
+    }
+
     private void HandleCopySingleWhiteboardItemNoImage(object sender, CustomRoutedEventArgs<IWhiteboardItem> e)
     {
         e.Handled = HandleCopyWhiteboardItems(e.Parameter.Yield().ToList(), false);
@@ -926,6 +843,64 @@ public partial class EngineeringDocument
             return;
         }
         e.Handled = HandleCopyWhiteboardItems(list, true);
+    }
+
+    private bool HandleCopyWhiteboardItems(ICollection<IWhiteboardItem> whiteboardItems, bool copyAsImage)
+    {
+        bool flag = false;
+        CompoundCommand compoundCommand = new CompoundCommand();
+        using (new CommandScope(compoundCommand))
+        {
+            try
+            {
+                try
+                {
+                    Mouse.OverrideCursor = Cursors.Wait;
+                    IContainerItemManager itemManager = WhiteboardItemContainerExtensions.ItemManager;
+                    DataObject dataObject = new DataObject();
+                    try
+                    {
+                        whiteboardItems.Each((IWhiteboardItem item) =>
+                        {
+                            itemManager.SetItemIsInCopy(item, true);
+                        });
+                        flag = WpfClipboard.CopyPrimeXamlToDataObject(dataObject, new WhiteboardItemsCollection(whiteboardItems), whiteboardItems.Count);
+                    }
+                    finally
+                    {
+                        whiteboardItems.Each(itemManager.ClearItemIsInCopy);
+                    }
+                    if (flag)
+                    {
+                        RtfItemWrapperHelper helper = new RtfItemWrapperHelper(this, Worksheet, Worksheet.IsWorksheetContentScoped);
+                        IWorksheetItemCopyVisitor worksheetItemCopyVisitor;
+                        if (whiteboardItems.Count == 1)
+                        {
+                            worksheetItemCopyVisitor = new SingleWorksheetItemCopyVisitor(dataObject, helper, copyAsImage);
+                        }
+                        else
+                        {
+                            worksheetItemCopyVisitor = new MultiWorksheetItemCopyVisitor(dataObject, helper, copyAsImage);
+                        }
+                        worksheetItemCopyVisitor.VisitAll(whiteboardItems);
+                    }
+                }
+                finally
+                {
+                    Mouse.OverrideCursor = null;
+                }
+            }
+            catch (DevAssertionException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                DebugTools.FailAssertionDoNotThrow(ex);
+            }
+            DebugTools.DevAssert(compoundCommand.Count == 0, null);
+        }
+        return flag;
     }
 
     public CopyWidgetBase CreateCopyWidget()
@@ -943,6 +918,97 @@ public partial class EngineeringDocument
         };
     }
 
+    partial class RootDecorator
+    {
+        [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+        public RootDecorator() { }
+
+        [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+        public Visual Visual => this;
+    }
+
+    public FrameworkElement PrepareRegionCloneForImage(IWhiteboardItem item, RegionImageSettings imageSettings, CopyWidgetBase popup, ResourceDictionary resourceDictionary = null, Rect? boundsConstraint = null)
+    {
+        using (new CommandScope(new CompoundCommand()))
+        {
+            FrameworkElement frameworkElement = item as FrameworkElement;
+            FrameworkElement frameworkElement2;
+            Dictionary<IdLabels, ExtendedFont> dictionary = LabeledIdFormat.ToDictionary((KeyValuePair<IdLabels, ExtendedFont> extendedFont) => extendedFont.Key, (KeyValuePair<IdLabels, ExtendedFont> extendedFont) => extendedFont.Value.Clone());
+            try
+            {
+                DocumentAttachedProperties.SetCopyAsImageSettings(frameworkElement, imageSettings);
+                using (MathFormatForPaste.Generate(new StaticMathFormat(MathFormat), dictionary))
+                {
+                    ISupportPrintViewport supportPrintViewport = frameworkElement as ISupportPrintViewport;
+                    if (supportPrintViewport != null)
+                    {
+                        supportPrintViewport.PrintViewport = new Rect(new Point(0.0, 0.0), _frameworkElementFacade.GetSize(frameworkElement));
+                    }
+                    frameworkElement2 = AttachedProperties.GetPrintView(frameworkElement) as FrameworkElement;
+                    if (supportPrintViewport != null)
+                    {
+                        supportPrintViewport.PrintViewport = null;
+                    }
+                }
+            }
+            finally
+            {
+                DocumentAttachedProperties.ClearCopyAsImageSettings(frameworkElement);
+            }
+            if (DebugTools.AssertNotNullDoNotThrow(frameworkElement2, null).Failed)
+            {
+                return null;
+            }
+            AttachedProperties.SetIsOnVisiblePage(frameworkElement2, true);
+            MC14ConversionAnnotation.ClearConversionAnnotations(frameworkElement2);
+            WorksheetPropertiesManager.SetOrRemoveWorksheetPropertiesSource(frameworkElement2, new CachedWorksheetPropertiesSource(Worksheet), true);
+            if (imageSettings.ApplyTransparency && AttachedProperties.GetPlotBackgroundType(frameworkElement2) != BackgroundTypeE.Gray)
+            {
+                AttachedProperties.SetPlotBackgroundType(frameworkElement2, BackgroundTypeE.Transparent);
+            }
+            RegionCloneForImageHelper regionCloneForImageHelper = new RegionCloneForImageHelper(this, frameworkElement, imageSettings, boundsConstraint);
+            Border border = new Border
+            {
+                Background = imageSettings.ApplyTransparency ? Brushes.Transparent : Brushes.White,
+                Child = frameworkElement2
+            };
+            border.SetValue(EquationControl.ResultMatrixFormatProperty, MathResultMatrixFormat.Clone());
+            border.SetValue(EquationControl.DisplayNumberFormatProperty, MathDisplayNumberFormat.Clone());
+            border.SetValue(AttachedProperties.LabeledIdFormatProperty, dictionary);
+            border.SetValue(AttachedProperties.WarningDisplayFilterProperty, AttachedProperties.GetWarningDisplayFilter(this));
+            Worksheet.MathFormat.CopyTo(new MathFormat(border));
+            if (resourceDictionary != null)
+            {
+                border.Resources.MergedDictionaries.Add(resourceDictionary);
+            }
+            DocumentAttachedProperties.SetShowInputOutputDesignation(border, DocumentAttachedProperties.GetShowInputOutputDesignation(WorksheetControl));
+            Rect descendantBounds = VisualTreeHelper.GetDescendantBounds(frameworkElement);
+            RootDecorator rootDecorator = new RootDecorator
+            {
+                Child = border
+            };
+            popup.ChildBorder.Child = rootDecorator;
+            regionCloneForImageHelper.ApplyLayoutSettings(descendantBounds, frameworkElement2, border, popup);
+            WpfUtils.CreateVisualTreeForPrinting(popup, MaxUpdateLayoutTimeMsec);
+            Rect descendantBounds2 = VisualTreeHelper.GetDescendantBounds(frameworkElement2);
+            if (!descendantBounds.IsEmpty && !descendantBounds2.IsEmpty && (descendantBounds2.TopLeft.X.IsLessThan(descendantBounds.TopLeft.X, 1E-05) || descendantBounds2.TopLeft.Y.IsLessThan(descendantBounds.TopLeft.Y, 1E-05) || descendantBounds2.BottomRight.X.IsGreaterThan(descendantBounds.BottomRight.X, 1E-05) || descendantBounds2.BottomRight.Y.IsGreaterThan(descendantBounds.BottomRight.Y, 1E-05)))
+            {
+                regionCloneForImageHelper.ApplyLayoutSettings(descendantBounds2, frameworkElement2, border, popup);
+                popup.UpdateLayout();
+                if (frameworkElement is IPlotControl)
+                {
+                    DebugTools.FailAssertionDoNotThrow("origBounds: {0}, cloneBounds: {1}", descendantBounds, descendantBounds2);
+                }
+                else if (!(frameworkElement is EquationControl equationControl) || !(equationControl.Content is IVisualMathRegionNode content) || (content.LhsOfDefinitionVisibility != Visibility.Collapsed && content.LhsOfDefinitionVisibility != Visibility.Visible))
+                {
+                    DebugTools.FailAssertion("origBounds: {0}, cloneBounds: {1}", descendantBounds, descendantBounds2);
+                }
+            }
+            DebugTools.DevAssert(popup.ChildBorder.Width.IsEqualTo(rootDecorator.ActualWidth, 1E-05) && popup.ChildBorder.Height.IsEqualTo(rootDecorator.ActualHeight, 1E-05), null);
+            return frameworkElement2;
+        }
+    }
+
     private void HandleWorksheetControlChanged(object sender, RoutedEventArgs e)
     {
         if (IsDoneOpeningFile())
@@ -951,7 +1017,23 @@ public partial class EngineeringDocument
         }
     }
 
+    private bool _isDoneOpeningFile;
+
     private bool IsDoneOpeningFile() => IsLoaded && _isDoneOpeningFile;
+
+    private void HookupCommandBindings()
+    {
+        WpfUtils.AddPreemptiveCommandBinding(this, ApplicationCommands.Undo, UndoRedoHelper.HandleUndoCommand, UndoRedoHelper.CanExecuteUndoCommandPreview, true);
+        WpfUtils.AddPreemptiveCommandBinding(this, ApplicationCommands.Redo, UndoRedoHelper.HandleRedoCommand, UndoRedoHelper.CanExecuteRedoCommandPreview, true);
+        WpfUtils.AddPreemptiveCommandBinding(this, RegionCommands.Replace, (object sender, ExecutedRoutedEventArgs args) =>
+        {
+            HandleReplace(args.Parameter);
+        }, (object sender, CanExecuteRoutedEventArgs args) =>
+        {
+            HandleReplace(args.Parameter);
+        }, false);
+        CommandBindings.Add(new CommandBinding(EngineeringDocCommands.Traverse, HandleTraverse));
+    }
 
     private void HandleReplace(object parameter)
     {
@@ -971,6 +1053,9 @@ public partial class EngineeringDocument
     public void FireWaitForCalculationIdle(int seconds, DispatcherPriority priority) => Worksheet.WaitForCalculation(seconds, priority);
 
     public void Recalculate() => WorksheetCommands.RecalculateWorksheet.Execute(null, WorksheetControl);
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public void CloseOpenedComboBoxEditingMode() => WpfUtils.ExecuteCommandIfFocusedElementIsDescendantOf<EngineeringDocument>(this, EditableComboBoxCommands.CloseEditingMode);
 
     public Exception PreSave(IDocumentSaveOptions saveOptions)
     {
@@ -997,6 +1082,39 @@ public partial class EngineeringDocument
         }
     }
 
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public void WaitForLoad(int seconds) => FileManager.WaitFor(seconds, _waitForLoad);
+
+    public bool IsCalculationsEnabled
+    {
+        get => Worksheet.IsCalculationsEnabled;
+        set => Worksheet.IsCalculationsEnabled = value;
+    }
+
+    public bool IsAutoCalcOn
+    {
+        get => Worksheet.IsAutoCalcOn;
+        set => Worksheet.IsAutoCalcOn = value;
+    }
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    private void FireCalculationOptionUpdated(string name, object value) => IsDirty = true;
+
+    private void FireSystemVariableUpdated(string name, object value)
+    {
+        if (!name.Equals("mc_CWD"))
+        {
+            IsDirty = true;
+        }
+    }
+
+    public void SetAutoCalculationEnabledWithoutTriggeringIsDirty(bool value)
+    {
+        bool isDirty = IsDirty;
+        IsAutoCalcOn = value;
+        IsDirty = isDirty;
+    }
+
     private void EnsureStreamRelease()
     {
         FileManager.EnsureStreamRelease(_fileStream);
@@ -1020,6 +1138,28 @@ public partial class EngineeringDocument
         e = new IOException(e.Message + Environment.NewLine + string.Format((string)_errorWarningMessageResourceDictionary["WorksheetMessages.NetworkDriveDisconnected"], text));
     }
 
+    public void Dispose()
+    {
+        EnsureStreamRelease();
+        _runningPrintJobs.Each((PrintJob job) =>
+        {
+            job.CancelAsyncJob();
+        });
+        Worksheet.DocCalculationOptions.CalculationOptionChanged -= FireCalculationOptionUpdated;
+        Worksheet.DocCalculationVariables.CalculationVariableChanged -= FireSystemVariableUpdated;
+        Worksheet.DocCalculationOptions.BinOctHexModeOptionChanged -= FireCalculationOptionUpdated;
+        WorksheetControl.Changed -= HandleWorksheetControlChanged;
+        Worksheet.InputOutputRegionManager.Dispose();
+        try
+        {
+            CommandBuffer.RemoveBufferForKey(this);
+        }
+        finally
+        {
+            InvokeOnDispose();
+        }
+    }
+
     private void HandleTraverse(object sender, ExecutedRoutedEventArgs e)
     {
         MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
@@ -1034,10 +1174,25 @@ public partial class EngineeringDocument
         return Worksheet.FindOnce(text, startFromCaret, direction, options, subscriptPositions);
     }
 
+    public DateTime? LastSavedDate
+    {
+        get => (DateTime?)GetValue(LastSavedDateProperty);
+        set => SetValue(LastSavedDateProperty, value);
+    }
+
+    public bool FileIsSaved
+    {
+        get => (bool)GetValue(FileIsSavedProperty);
+        set => SetValue(FileIsSavedProperty, value);
+    }
+
     private static void ThrowNotSupported(string message, params object[] args)
     {
         throw new NotSupportedException(string.Format(message, args));
     }
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    private static void TraceWarning(string format, params object[] args) => Trace.TraceWarning(format, args);
 
     private static void ExceptionOccured(string action, params object[] args)
     {
@@ -1178,6 +1333,12 @@ public partial class EngineeringDocument
         return ex;
     }
 
+    public string FileExtension
+    {
+        get => Path.GetExtension(FilePath);
+        set => FilePath = Path.ChangeExtension(FilePath, value);
+    }
+
     private void PostSaveOpenCommonOperations()
     {
         MetadataModel.Version++;
@@ -1234,6 +1395,42 @@ public partial class EngineeringDocument
         {
             EnsureStreamRelease();
             throw;
+        }
+    }
+
+    private void Read(Package package, ref FileLoadResult result, string fullFilePath, bool newFromDocument)
+    {
+        try
+        {
+            WorksheetData = new WorksheetPersistentData();
+            PackageSerializable.GetApplicationPropertiesSerializer(PackageOpsProvider, DocumentSerializationHelper).Read(package);
+            PackageSerializable.GetPresentationSettingsSerializable(this).Read(package);
+            PackageSerializable.GetCalculationSettingsSerializable(this).Read(package);
+            DeserializeWorksheetAndHeaderFooter(package, fullFilePath);
+            Worksheet.ApplyWorksheetData(WorksheetData);
+            TextStylesManager.LoadWorkSheetStyles(WorksheetData.TextStyles);
+            if (!newFromDocument)
+            {
+                using (Stream stream = PackageOpsProvider.GetCoreMetadataPartFromPackage(package).GetStream(FileMode.Open))
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    new SpiritMetadataSerializer().Deserialize(reader, MetadataModel);
+                }
+            }
+            new ResultDataSerializer(PackageOpsProvider).Read(package);
+            new IntegrationDataSerializer(this, Worksheet).Read(package);
+            DocumentSerializationHelper.CleanSerializerTempData(WorksheetData.WorksheetContent.SerializedRegions.Collect((IRegionPersistentData regionPersistentData) => regionPersistentData.Control).ToList());
+            DocumentSerializationHelper.CleanSerializerTempData(WorksheetData.Header.SerializedRegions.Collect((IRegionPersistentData regionPersistentData) => regionPersistentData.Control).ToList());
+            DocumentSerializationHelper.CleanSerializerTempData(WorksheetData.Footer.SerializedRegions.Collect((IRegionPersistentData regionPersistentData) => regionPersistentData.Control).ToList());
+            DocumentSerializationHelper.CleanSerializerTempData(WorksheetData.FirstPageHeader.SerializedRegions.Collect((IRegionPersistentData regionPersistentData) => regionPersistentData.Control).ToList());
+            DocumentSerializationHelper.CleanSerializerTempData(WorksheetData.FirstPageFooter.SerializedRegions.Collect((IRegionPersistentData regionPersistentData) => regionPersistentData.Control).ToList());
+            result.ErrorsOccurredWhenLoadingRegions = DocumentSerializationHelper.ErrorsOccurredWhenLoadingRegions;
+            result.DeserializationExceptions = DocumentSerializationHelper.HeaderRegions.AllDeserializationExceptions().Union(DocumentSerializationHelper.MainRegions.AllDeserializationExceptions()).Union(DocumentSerializationHelper.FooterRegions.AllDeserializationExceptions()).Union(DocumentSerializationHelper.FirstPageHeaderRegions.AllDeserializationExceptions()).Union(DocumentSerializationHelper.FirstPageFooterRegions.AllDeserializationExceptions());
+        }
+        finally
+        {
+            WorksheetData = null;
+            DocumentSerializationHelper.Reset();
         }
     }
 
@@ -1320,6 +1517,45 @@ public partial class EngineeringDocument
             XmlNamespaceManager mcdxNameSpaceManager = XmlWorksheetData.McdxNameSpaceManager;
             return xmlDocument.SelectSingleNode(xpath, mcdxNameSpaceManager) as XmlElement;
         }
+    }
+
+    private IList<IRegionPersistentData> DeserializeRegionsFromCollection(IRegionCollectionType regionCollection, IWorksheetSectionPersistentData sectionData, string fullFilePath, PackagePart packagePart)
+    {
+        List<IRegionPersistentData> list = new List<IRegionPersistentData>();
+        if (regionCollection?.Regions == null)
+        {
+            return list;
+        }
+        IRegionCollectionSerializer regionCollectionSerializer;
+        if (sectionData == WorksheetData.Header || sectionData == WorksheetData.FirstPageHeader)
+        {
+            regionCollectionSerializer = new headerRegionCollectionSerializer();
+        }
+        else
+        {
+            regionCollectionSerializer = new footerRegionCollectionSerializer();
+        }
+        foreach (IRegionInWhiteboardType item in regionCollection.Regions.OfType<IRegionInWhiteboardType>())
+        {
+            try
+            {
+                using (McdxDeserializer deS11NProvider = new McdxDeserializer(fullFilePath, packagePart, new WorksheetSectionDeserializationStrategy(sectionData, MathFormat, LabeledIdFormat), DocumentSerializationHelper, regionCollectionSerializer, true, _textStylesManager.TextStyleChangedHandler))
+                {
+                    IRegionPersistentData regionPersistentData = RegionFactory.ConvertFromIRegionType(deS11NProvider, (UIElement control) => { }, item, null);
+                    if (regionPersistentData != null)
+                    {
+                        regionPersistentData.Location = item.Location;
+                        list.Add(regionPersistentData);
+                        sectionData.SerializedRegions.Add(regionPersistentData);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                DebugTools.FailAssertionDoNotThrow("Error deserializing region from container: {0}", ex);
+            }
+        }
+        return list;
     }
 
     private IList<IRegionPersistentData> DeserializeWorksheetSection(PackagePart part, IWorksheetSectionPersistentData sectionData, IRegionCollectionSerializer regionCollectionSerializer, string fullFilePath)
@@ -1471,6 +1707,53 @@ public partial class EngineeringDocument
             DocumentSerializationHelper.Reset();
         }
         return result;
+    }
+
+    private void SerializeWorksheet(Package package)
+    {
+        WorksheetData = Worksheet.GetWorksheetData();
+        SerializeWorksheetSection(PackageOpsProvider.AddMainPartToPackage(package), WorksheetData.WorksheetContent, () => new worksheetRegionType(), new worksheetRegionCollectionSerializer
+        {
+            RegionCollection =
+            {
+                msgId = WorksheetData.WorksheetContent.MsgId
+            }
+        });
+        if (!Worksheet.IsFirstPageHeaderFooterDifferent)
+        {
+            SerializeWorksheetSection(PackageOpsProvider.AddHeaderPartToPackage(package), WorksheetData.Header, () => new headerFooterRegionType(), new headerRegionCollectionSerializer());
+            SerializeWorksheetSection(PackageOpsProvider.AddFooterPartToPackage(package), WorksheetData.Footer, () => new headerFooterRegionType(), new footerRegionCollectionSerializer());
+        }
+        else
+        {
+            SerializeHeadersContainer(package);
+            SerializeFootersContainer(package);
+        }
+    }
+
+    private void SerializeHeadersContainer(Package package)
+    {
+        headersContainerRegionCollectionSerializer headersContainerRegionCollectionSerializer = new headersContainerRegionCollectionSerializer();
+        WorksheetSectionSerializationStrategy headerStrategy = new WorksheetSectionSerializationStrategy(WorksheetData.Header, () => new headerFooterRegionType());
+        WorksheetSectionSerializationStrategy firstPageHeaderStrategy = new WorksheetSectionSerializationStrategy(WorksheetData.FirstPageHeader, () => new headerFooterRegionType());
+        HeadersContainerSerializationStrategy serializationStrategy = new HeadersContainerSerializationStrategy(headerStrategy, firstPageHeaderStrategy, headersContainerRegionCollectionSerializer);
+        PackagePart part = PackageOpsProvider.AddHeadersContainerPartToPackage(package);
+        new McdxSerializer(part, serializationStrategy, DocumentSerializationHelper, headersContainerRegionCollectionSerializer, SerializableXmlPackagePart.OnWriteValidationFailedDevAssert, true).Serialize(part);
+    }
+
+    private void SerializeFootersContainer(Package package)
+    {
+        footersContainerRegionCollectionSerializer footersContainerRegionCollectionSerializer = new footersContainerRegionCollectionSerializer();
+        WorksheetSectionSerializationStrategy footerStrategy = new WorksheetSectionSerializationStrategy(WorksheetData.Footer, () => new headerFooterRegionType());
+        WorksheetSectionSerializationStrategy firstPageFooterStrategy = new WorksheetSectionSerializationStrategy(WorksheetData.FirstPageFooter, () => new headerFooterRegionType());
+        FootersContainerSerializationStrategy serializationStrategy = new FootersContainerSerializationStrategy(footerStrategy, firstPageFooterStrategy, footersContainerRegionCollectionSerializer);
+        PackagePart part = PackageOpsProvider.AddFootersContainerPartToPackage(package);
+        new McdxSerializer(part, serializationStrategy, DocumentSerializationHelper, footersContainerRegionCollectionSerializer, SerializableXmlPackagePart.OnWriteValidationFailedDevAssert, true).Serialize(part);
+    }
+
+    private void SerializeWorksheetSection(PackagePart part, IWorksheetSectionPersistentData sectionData, DelegateFunction0<IRegionType> worksheetSectionRegionDataCreator, IRegionCollectionSerializer regionCollectionSerializer)
+    {
+        new McdxSerializer(part, new WorksheetSectionSerializationStrategy(sectionData, worksheetSectionRegionDataCreator), DocumentSerializationHelper, regionCollectionSerializer, SerializableXmlPackagePart.OnWriteValidationFailedDevAssert, true).Serialize(part);
     }
 
     protected void SaveDita(string fileName)
@@ -1649,6 +1932,77 @@ public partial class EngineeringDocument
         printJob.Print(printOptions.PrintQueue, printOptions.PrintTicket, async);
     }
 
+    private void SavePdfDocument(string filePath)
+    {
+        if (File.Exists(filePath))
+        {
+            try
+            {
+                File.Delete(filePath);
+            }
+            catch (IOException innerException)
+            {
+                throw new FileIsUsedByAnotherProcessException(innerException);
+            }
+        }
+        string microsoftPdfDriverName = GetFirstNonEmptyString(Settings.Default.MicrosoftPdfDriverName, "Microsoft Print To PDF");
+        Exception ex = null;
+        PrintQueue printQueue = new LocalPrintServer().GetLocalNonRedirectedPrintQueues().FirstOrDefault((PrintQueue queue) => object.Equals(microsoftPdfDriverName, queue.QueueDriver.Name));
+        int jobId = -1;
+        string text = printQueue?.FullName;
+        if (text != null)
+        {
+            string text2 = null;
+            try
+            {
+                try
+                {
+                    text2 = Path.GetTempFileName();
+                    SaveXpsDocument(text2);
+                }
+                catch (IOException innerException2)
+                {
+                    ex = new PrintToFileException(null, innerException2, PrintFileErrorCode.TakeInnerExceptionByOS);
+                }
+                if (ex == null)
+                {
+                    XpsPrintInterop.XpsFileToPrinterFile(text, text2, filePath, out jobId);
+                    PrintSystemJobInfo printSystemJobInfo = printQueue.GetPrintJobInfoCollection().FirstOrDefault((PrintSystemJobInfo jobItem) => jobItem.JobIdentifier == jobId);
+                    if (printSystemJobInfo != null && printSystemJobInfo.IsInError)
+                    {
+                        ex = new PrintToFileException("Error printing document: " + filePath + ". Please inspect printer queue: " + text, null, PrintFileErrorCode.PrintQueueJobError, filePath, text);
+                    }
+                }
+            }
+            catch (Exception innerException3)
+            {
+                ex = new PrintToFileException("Unexpected error when saving document: " + filePath, innerException3, PrintFileErrorCode.Unknown, filePath);
+            }
+            finally
+            {
+                try
+                {
+                    if (text2 != null)
+                    {
+                        File.Delete(text2);
+                    }
+                }
+                catch (Exception ex2)
+                {
+                    DebugTools.FailAssertion(ex2);
+                }
+            }
+        }
+        else
+        {
+            ex = new PrintToFileException("No " + microsoftPdfDriverName + " found", null, PrintFileErrorCode.MissingMicrosoftPDFDriver, microsoftPdfDriverName);
+        }
+        if (ex != null)
+        {
+            throw ex;
+        }
+    }
+
     private void SaveXpsDocument(string filePath, bool shouldEnrichPrintingTree = false)
     {
         DebugTools.LogData("EngineeringDocument.SaveXpsDocument: Enter");
@@ -1675,6 +2029,12 @@ public partial class EngineeringDocument
         printDlg.PrintTicket.PageMediaSize = new PageMediaSize(GetSystemPrintingPageMediaSizeNameEquvalent(worksheet.PageLayout.PageSize));
     }
 
+    private static readonly IDictionary<Quire.Controls.Core.PageOrientation, System.Printing.PageOrientation> _pageOrientationTranslation = new Dictionary<Quire.Controls.Core.PageOrientation, System.Printing.PageOrientation>
+    {
+        { Quire.Controls.Core.PageOrientation.Landscape, System.Printing.PageOrientation.Landscape },
+        { Quire.Controls.Core.PageOrientation.Portrait, System.Printing.PageOrientation.Portrait }
+    };
+
     private static System.Printing.PageOrientation GetSystemPrintingPageOrientationEquvalent(Quire.Controls.Core.PageOrientation pageOrientation)
     {
         if (!_pageOrientationTranslation.ContainsKey(pageOrientation))
@@ -1683,6 +2043,18 @@ public partial class EngineeringDocument
         }
         return _pageOrientationTranslation[pageOrientation];
     }
+
+    private static readonly IDictionary<PageSize, PageMediaSizeName> _pageSizeTranslation = new Dictionary<PageSize, PageMediaSizeName>
+    {
+        { PageSize.A1, PageMediaSizeName.ISOA1 },
+        { PageSize.A2, PageMediaSizeName.ISOA2 },
+        { PageSize.A3, PageMediaSizeName.ISOA3 },
+        { PageSize.A4, PageMediaSizeName.ISOA4 },
+        { PageSize.A5, PageMediaSizeName.ISOA5 },
+        { PageSize.Letter, PageMediaSizeName.NorthAmericaLetter },
+        { PageSize.Legal, PageMediaSizeName.NorthAmericaLegal },
+        { PageSize.Ledger, PageMediaSizeName.NorthAmerica11x17 }
+    };
 
     private static PageMediaSizeName GetSystemPrintingPageMediaSizeNameEquvalent(PageSize pageSize)
     {
@@ -1693,12 +2065,228 @@ public partial class EngineeringDocument
         return _pageSizeTranslation[pageSize];
     }
 
-    partial class RootDecorator
+    private IDocumentPaginatorSource CreatePrintableDocument(Win32PrintRange printRange, PageIndexRange pageRange, bool shouldEnrichPrintingTree = false)
     {
-        [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-        public RootDecorator() { }
-
-        [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
-        public Visual Visual => this;
+        DebugTools.LogData("EngineeringDocument.CreatePrintableDocument: Enter");
+        Worksheet.PrePrintUpdateWorksheetLayout(printRange, pageRange);
+        WpfUtils.DoEvents();
+        EngineeringPages engPages = null;
+        try
+        {
+            engPages = new EngineeringPages
+            {
+                PageLayout = Worksheet.PageLayout.Clone(),
+                DisplayGrid = Worksheet.DisplayGrid,
+                IsSolveBlockLabelVisible = Worksheet.IsSolveBlockLabelVisible,
+                DisplayHFGrid = Worksheet.DisplayHFGrid,
+                UseMajorGridLines = Worksheet.UseMajorGridLines,
+                UseHFMajorGridLines = Worksheet.UseHFMajorGridLines,
+                DisplayFrame = Worksheet.DisplayFrame,
+                DisplayHeaderFrame = Worksheet.DisplayHeaderFrame,
+                DisplayFooterFrame = Worksheet.DisplayFooterFrame,
+                TotalPages = PageCount,
+                StartingPageNumber = Worksheet.StartingPageNumber,
+                TotalPagesOffset = Worksheet.TotalPagesOffset,
+                IsFirstPageHeaderFooterDifferent = Worksheet.IsFirstPageHeaderFooterDifferent,
+                DisplaySavedDate = DisplaySavedDate,
+                DisplayFilePath = DisplayFilePath,
+                DisplayFileName = DisplayFileName,
+                DisplayDocumentName = DisplayDocumentName,
+                MaxUpdateLayoutTimeMsec = MaxUpdateLayoutTimeMsec
+            };
+            Dictionary<IdLabels, ExtendedFont> dictionary = Worksheet.LabeledIdFormat.ToDictionary((KeyValuePair<IdLabels, ExtendedFont> extendedFont) => extendedFont.Key, (KeyValuePair<IdLabels, ExtendedFont> extendedFont) => extendedFont.Value.Clone());
+            engPages.SetValue(EquationControl.ResultMatrixFormatProperty, Worksheet.ResultMatrixFormat.Clone());
+            engPages.SetValue(EquationControl.DisplayNumberFormatProperty, Worksheet.DisplayNumberFormat.Clone());
+            engPages.SetValue(AttachedProperties.LabeledIdFormatProperty, dictionary);
+            AttachedProperties.SetWarningDisplayFilter(engPages, AttachedProperties.GetWarningDisplayFilter(this));
+            MathFormat mathFormat = new MathFormat(engPages);
+            Worksheet.MathFormat.CopyTo(mathFormat);
+            DocumentAttachedProperties.SetShowInputOutputDesignation(engPages, DocumentAttachedProperties.GetShowInputOutputDesignation(Worksheet as DependencyObject));
+            engPages.Resources["PageBodyWidth"] = Worksheet.FindResource("PageBodyWidth");
+            engPages.Resources["PageBodyContentWidth"] = Worksheet.FindResource("PageBodyContentWidth");
+            WorksheetPropertiesManager.SetOrRemoveWorksheetPropertiesSource(engPages, new CachedWorksheetPropertiesSource(Worksheet), true);
+            OnPrepareSnapshotStart?.Invoke(this);
+            using (MathFormatForPaste.Generate(mathFormat, dictionary))
+            {
+                using (ChartComponentUtils.CreateDisposablePrintHelper(Worksheet.WorksheetItems, true))
+                {
+                    switch (printRange)
+                    {
+                    case Win32PrintRange.CurrentPage:
+                        engPages.AddPage(Worksheet.GetPageSnapshot(Worksheet.CurrentPageNumber - 1));
+                        break;
+                    case Win32PrintRange.SomePages:
+                        pageRange.FirstIndex.Range(pageRange.LastIndex).Each((int pgIdx) =>
+                        {
+                            engPages.AddPage(Worksheet.GetPageSnapshot(pgIdx));
+                        });
+                        break;
+                    case Win32PrintRange.Selection:
+                        (from pgIdx in Worksheet.SelectedItems.Select((IWhiteboardItem item) => Worksheet.GetPagesContaining(item)).SelectMany((PageIndexRange range) => range.FirstIndex.Range(range.LastIndex))
+                         orderby pgIdx
+                         select pgIdx).Distinct().Each((int pgIdx) =>
+                        {
+                            engPages.AddPage(Worksheet.GetPageSnapshot(pgIdx));
+                        });
+                        break;
+                    case Win32PrintRange.AllPages:
+                        PageCount.Times((int pgIdx) =>
+                        {
+                            engPages.AddPage(Worksheet.GetPageSnapshot(pgIdx));
+                        });
+                        break;
+                    }
+                }
+            }
+            engPages.CreateVisualTreeForPrinting(shouldEnrichPrintingTree);
+        }
+        catch (Exception ex)
+        {
+            if (engPages != null)
+            {
+                engPages.Dispose();
+                engPages = null;
+            }
+            string arg = string.Format((string)_errorWarningMessageResourceDictionary["WorksheetMessages.CantPrint"], ex.Message);
+            AppServiceRegistry.GetService<IMessageBoxManager>().ShowCriticalErrorMessage(Application.Current.MainWindow, arg, WpfUtils.ApplicationFullName);
+        }
+        finally
+        {
+            Worksheet.PostPrintUpdateWorksheetLayout();
+            OnPrepareSnapshotEnd?.Invoke(this);
+        }
+        return engPages;
     }
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    private bool _isNew;
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    private bool _isNetworkDriveDisconnected;
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public bool IsNew => _isNew;
+
+    public int PageCount => Worksheet.PageCount;
+
+    public int SelectedRegionCount => Worksheet.SelectedItems.Count();
+
+    public bool IsHeaderFocused => Worksheet.IsHeaderActive;
+
+    public bool IsFooterFocused => Worksheet.IsFooterActive;
+
+    public bool IsMainActive => Worksheet.IsContentActive;
+
+    public Point InsertionPoint => Worksheet.InsertionPoint;
+
+    public IIORegionManager InputOutputRegionManager => Worksheet.InputOutputRegionManager;
+
+    public void ActivateHeader() => Worksheet.ActivateHeader();
+
+    public void ActivateFooter() => Worksheet.ActivateFooter();
+
+    public void ActivateMain() => Worksheet.ActivateContent();
+
+    public string CWD
+    {
+        get => DocCalculationVariables.CurrentWorkingDirectory;
+        set
+        {
+            string objectToCheck;
+            try
+            {
+                objectToCheck = Path.GetFullPath(value);
+            }
+            catch
+            {
+                objectToCheck = null;
+            }
+            if (DebugTools.AssertNotNull(objectToCheck, null).Failed)
+            {
+                return;
+            }
+            if (DocCalculationVariables.CurrentWorkingDirectory == value)
+            {
+                return;
+            }
+            DocCalculationVariables.CurrentWorkingDirectory = value;
+        }
+    }
+
+    private void UpdateCWDState(string fileName)
+    {
+        string prevCwd = CWD;
+        string newCwd = CWD = Path.GetDirectoryName(Path.GetFullPath(fileName));
+        if (ReadonlyOptions.FileLocationHistoryEnabled && prevCwd != newCwd && CwdUpdated != null)
+        {
+            CwdUpdated(newCwd);
+        }
+    }
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public event Action<string> CwdUpdated;
+
+    private FileStream _fileStream;
+
+    public bool CanBeSavedWithOriginalName
+    {
+        get
+        {
+            if (_fileStream != null)
+            {
+                return _fileStream.CanWrite;
+            }
+            return false;
+        }
+    }
+
+    public bool CacheWorksheet
+    {
+        get => Worksheet.CacheWorksheet;
+        set => Worksheet.CacheWorksheet = value;
+    }
+
+    public string HelpServerPath
+    {
+        get => WorksheetControl.HelpServerPath;
+        set => WorksheetControl.HelpServerPath = value;
+    }
+
+    public IEnumerable<UIElement> ActiveSectionRegions => Worksheet.ActiveSectionItems.OfType<UIElement>();
+
+    private bool _showEngineChangesBanner;
+
+    public bool ShowEngineChangesBanner
+    {
+        get => _showEngineChangesBanner;
+        set
+        {
+            if (_showEngineChangesBanner == value)
+            {
+                return;
+            }
+            _showEngineChangesBanner = value;
+            FirePropertyChanged("ShowEngineChangesBanner");
+        }
+    }
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    [MirrorVerified("PtcControlsEngineeringDocumentMechanicalDifferentialTests")]
+    public event Action<IEngineeringDocument> FilePathChanged = delegate { };
+
+    private void FirePropertyChanged(string propertyName)
+    {
+        if (propertyName == "DisplayFilePath")
+        {
+            WorksheetControl.DisplayFilePath = DisplayFilePath;
+        }
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    public void ActivateWorksheet() => WorksheetControl.Activate();
 }
