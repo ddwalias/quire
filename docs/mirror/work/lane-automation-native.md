@@ -3,6 +3,14 @@
 - Owner: Automation.Native lane; branch `feature/automation-native-agy`.
 - Target: `src/Quire.Automation.Native` (C# net10.0-windows, hosting `automationmgd.dll` and `componentsmgd.dll`).
 
+## Batch 6 — ValueProxy
+
+- Members:
+  - `Mathcad.Automation.ValueProxy`: `m_Simplify` field, `m_options` field, `Dim`, `Simplify`, `Unit`, `Core`, `AsScalar`, `AsMatrix`, `AsFunction`, `AsString`, `AsSymbolic`, `Units`, `Xml`, `GetUnits`, `.ctor(bool, RuntimeOptions)`, `ToString()`, `GetAutomationValue`, `WriteXml(TextWriter, bool, double)`, `WriteXml(TextWriter, bool)`, `WriteXml(TextWriter)`, `WriteXml(XmlWriter, bool, double)`, `WriteXml(XmlWriter, bool)`, `WriteXml(XmlWriter)`, `WriteUnitsXml(XmlWriter)`, `MakeProxy(object, bool, RuntimeOptions)`. Hand-written in `Mirrored/ValueProxy.cs`.
+- Stubs removed: `Generated/Mirror/Automation.ValueProxy.g.cs` (25 stubs removed).
+- Release IL report: `python tools/validation/release_il.py --base main --project Quire.Automation.Native` — PASS, 208 checked (was 186 on base, +22 exact), 0 failures. Report: `.mirror-cache/release-il-4fb3b45eb717/release-il.json`.
+- Remaining: 157 unfinished stubs reported by the gate.
+
 ## Batch 5 — MatrixValue
 
 - Members:
