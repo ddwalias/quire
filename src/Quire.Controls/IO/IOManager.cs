@@ -467,8 +467,27 @@ public partial class IOManager
         public IList<IScalarItem> OutputItems { get; private set; }
     }
 
-    partial class SetValueResults
+    [MirrorOf("Ptc.Controls.IO.IOManager+SetValueResults, Ptc.Controls")]
+    private partial class SetValueResults : ISetValueResults
     {
+        public IOManagerErrorCode GetResult(int index)
+        {
+            if (index < 0 || index >= Count)
+            {
+                return IOManagerErrorCode.UnknownError;
+            }
+            return _operationsResults[index];
+        }
+
+        public IOManagerErrorCode GetResult(string alias)
+        {
+            if (!_aliasToOperationResultsMap.ContainsKey(alias))
+            {
+                return IOManagerErrorCode.UnknownError;
+            }
+            return _aliasToOperationResultsMap[alias];
+        }
+
         public SetValueResults(IEnumerable<ISingleValueSetter> setters)
         {
             _operationsResults = setters.Select(setter => setter.OperationResult).ToList();
@@ -487,7 +506,8 @@ public partial class IOManager
         public IEnumerable<IOManagerErrorCode> AllResults => _operationsResults;
     }
 
-    partial class UnitlessValueSetter
+    [MirrorOf("Ptc.Controls.IO.IOManager+UnitlessValueSetter, Ptc.Controls")]
+    private abstract partial class UnitlessValueSetter : ISingleValueSetter
     {
         protected UnitlessValueSetter(string alias)
         {
@@ -499,9 +519,14 @@ public partial class IOManager
 
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         public IOManagerErrorCode OperationResult { get; set; }
+
+        public abstract IShadowIdDefinition CreateShadowCalculatable(string sExprKey);
+
+        public abstract bool IsValid();
     }
 
-    partial class UnitedValueSetter
+    [MirrorOf("Ptc.Controls.IO.IOManager+UnitedValueSetter, Ptc.Controls")]
+    private abstract partial class UnitedValueSetter : UnitlessValueSetter
     {
         protected UnitedValueSetter(string alias, string units)
             : base(alias)
@@ -515,9 +540,30 @@ public partial class IOManager
 
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         protected string ScalingSExpression { get; private set; }
+
+        private bool AreUnitsValid()
+        {
+            if (!Units.IsNullOrEmpty())
+            {
+                return ScalingSExpression.IsNotEmpty();
+            }
+            return true;
+        }
+
+        protected abstract bool IsValueValid();
+
+        public override bool IsValid()
+        {
+            if (AreUnitsValid())
+            {
+                return IsValueValid();
+            }
+            return false;
+        }
     }
 
-    partial class SExpressionSetter
+    [MirrorOf("Ptc.Controls.IO.IOManager+SExpressionSetter, Ptc.Controls")]
+    private partial class SExpressionSetter : UnitedValueSetter
     {
         private string _sexprScaling;
 
@@ -534,9 +580,20 @@ public partial class IOManager
 
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         protected override bool IsValueValid() => EnumerableExtensions.IsNotEmpty<char>(_sexprValue);
+
+        public override IShadowIdDefinition CreateShadowCalculatable(string sExprKey)
+        {
+            SexprDefinition sexprDefinition = new SexprDefinition(sExprKey, _sexprValue, _sexprScaling);
+            if (!sexprDefinition.IsValid)
+            {
+                return null;
+            }
+            return sexprDefinition;
+        }
     }
 
-    partial class UnitedScalarSetter
+    [MirrorOf("Ptc.Controls.IO.IOManager+UnitedScalarSetter, Ptc.Controls")]
+    private partial class UnitedScalarSetter : UnitedValueSetter
     {
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         private readonly double _value;
@@ -549,9 +606,19 @@ public partial class IOManager
 
         [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         protected override bool IsValueValid() => DoubleExtension.IsValid(_value);
+
+        public override IShadowIdDefinition CreateShadowCalculatable(string sExprKey)
+        {
+            if (!SExpressionHelperUtilites.IsIdentifierSExpr(sExprKey))
+            {
+                return null;
+            }
+            return new IdDefinition(sExprKey, _value, ScalingSExpression);
+        }
     }
 
-    partial class StringValueSetter
+    [MirrorOf("Ptc.Controls.IO.IOManager+StringValueSetter, Ptc.Controls")]
+    private partial class StringValueSetter : UnitlessValueSetter
     {
         private readonly string _stringValueSExpr;
 
@@ -560,9 +627,26 @@ public partial class IOManager
         {
             _stringValueSExpr = stringValue == null ? null : string.Format("\"{0}\"", SExpressionUtility.EscapeStringValue(stringValue));
         }
+
+        public override bool IsValid() => _stringValueSExpr != null;
+
+        public override IShadowIdDefinition CreateShadowCalculatable(string sExprKey)
+        {
+            if (!SExpressionHelperUtilites.IsIdentifierSExpr(sExprKey))
+            {
+                return null;
+            }
+            SexprDefinition sexprDefinition = new SexprDefinition(sExprKey, _stringValueSExpr);
+            if (!sexprDefinition.IsValid)
+            {
+                return null;
+            }
+            return sexprDefinition;
+        }
     }
 
-    partial class ValuesSetter
+    [MirrorOf("Ptc.Controls.IO.IOManager+ValuesSetter, Ptc.Controls")]
+    private partial class ValuesSetter : IValuesSetter
     {
         private readonly List<ISingleValueSetter> _setters;
 
@@ -573,6 +657,38 @@ public partial class IOManager
             _managerRef = new WeakReference(manager);
             _setters = new List<ISingleValueSetter>();
         }
+
+        public void AddScalarValue(string alias, double value, string units)
+        {
+            _setters.Add(new UnitedScalarSetter(alias, value, units));
+        }
+
+        public void AddMatrixValue(string alias, object[,] value, string units)
+        {
+            _setters.Add(new UnitedMatrixSetter(alias, value, units));
+        }
+
+        public void AddStringValue(string alias, string value)
+        {
+            _setters.Add(new StringValueSetter(alias, value));
+        }
+
+        public void AddSExprValue(string alias, string sexpression)
+        {
+            _setters.Add(new SExpressionSetter(alias, sexpression));
+        }
+
+        public ISetValueResults SetValues(int seconds)
+        {
+            if (!(_managerRef.Target is IOManager iOManager))
+            {
+                return null;
+            }
+            iOManager.SetValues(_setters, seconds);
+            return new SetValueResults(_setters);
+        }
+
+        public IEnumerable<string> Aliases => _setters.Collect(setter => setter.Alias);
     }
 
     [MirrorOf("Ptc.Controls.IO.IOManager+UnitedMatrixSetter, Ptc.Controls")]

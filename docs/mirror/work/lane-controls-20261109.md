@@ -62,6 +62,8 @@
   - Shapes: Reordered member declarations in Mathcad order, kept `WriteContentControl(FrameworkElement, Stream)` as an unmarked placeholder stub, and separated late properties in `DitaWriter.Properties.cs` to match closure ordinal `30_0` for `<WriteRegionML>b__30_0`.
 - Batch 28: `IO.IOManager` alias management, value setters and getters (`SetIOAlias`, `GetIOAlias`, `ClearIOAlias`, `SetValue` x3, `SetStringValue`, `SetSExprValue`, `InputOutputGetRealValueAs`, `InputOutputGetMatrixValueAs`, `InputOutputGetStringValue`, `InputOutputGetCalculatedValue`, `InputGetSExprValue`, `CanToggleRegionAsInput`, `CanToggleRegionAsOutput`) and nested `UnitedMatrixSetter` (double[][] ctor, `CreateShadowCalculatable`, `IsValueValid`). Gate: PASS, 602 checked. Report: `.mirror-cache/release-il-f48ce0af32dc/release-il.json`.
   - Shapes: `InputOutputGetRealValueAs` branch assigns both interfaces directly matching dup/stloc.0/stloc.1 without castclass; `UnitedMatrixSetter` `[MirrorOf]` preserves type binding when stubs are removed.
+- Batch 29: `IO.IOManager` nested setter classes (`SetValueResults.GetResult` x2, `UnitlessValueSetter.CreateShadowCalculatable`/`IsValid`, `UnitedValueSetter.AreUnitsValid`/`IsValid`, `SExpressionSetter.CreateShadowCalculatable`, `UnitedScalarSetter.CreateShadowCalculatable`, `StringValueSetter.IsValid`/`CreateShadowCalculatable`, `ValuesSetter.AddScalarValue`/`AddMatrixValue`/`AddStringValue`/`AddSExprValue`/`SetValues`/`Aliases`). Gate: PASS, 619 checked. Report: `.mirror-cache/release-il-8787003dcde8/release-il.json`.
+  - Shapes: `SetValueResults` declares `GetResult` before `.ctor` to preserve closure ordinals `b__2_x`; `ValuesSetter` declares `Aliases` after methods to preserve closure ordinal `b__9_0`.
 
 
 
