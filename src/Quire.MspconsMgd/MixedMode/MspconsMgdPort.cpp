@@ -125,35 +125,34 @@ namespace Quire { namespace Engine {
             return array;
         }
 
-        [Quire::Mirror::MirrorStub]
         virtual bool Equals(Object^ A_0) override
         {
             if (this == A_0)
             {
                 return true;
             }
-            PCons^ pCons = dynamic_cast<PCons^>(A_0);
-            if (pCons != nullptr)
+            PCons^ other = dynamic_cast<PCons^>(A_0);
+            if (other != nullptr)
             {
-                PCons^ pCons2 = this;
-                while (pCons != nullptr && pCons2 != nullptr)
+                PCons^ cur = this;
+                // Idiomatic truthiness test (`other && cur`) preserves Mathcad's loop header instead of MSVC rotating `other != nullptr`.
+                while (other && cur)
                 {
-                    if (pCons->hd != nullptr && pCons2->hd != nullptr)
+                    if (other->hd && cur->hd)
                     {
-                        if (!pCons->hd->Equals(pCons2->hd))
+                        if (!other->hd->Equals(cur->hd))
                         {
                             return false;
                         }
                     }
-                    else if (pCons->hd != nullptr || pCons2->hd != nullptr)
+                    else if (other->hd || cur->hd)
                     {
                         return false;
                     }
-                    pCons = pCons->tl;
-                    pCons2 = pCons2->tl;
+                    other = other->tl;
+                    cur = cur->tl;
                 }
-                GC::KeepAlive(this);
-                return pCons == nullptr && pCons2 == nullptr;
+                return !other && !cur;
             }
             return false;
         }
@@ -317,10 +316,72 @@ namespace Quire { namespace Engine {
         cli::array<bool>^ m_macro_places;
         System::Collections::Generic::Dictionary<int, ReaderMacro^>^ m_macro_table;
 
-        [Quire::Mirror::MirrorStub]
-        __declspec(noinline) Object^ read_symbol_or_number(::Quire::Native::EngutilsMgd::PushbackReader^ t, TagFunction^ tf)
+        Object^ read_symbol_or_number(::Quire::Native::EngutilsMgd::PushbackReader^ t, TagFunction^ tf)
         {
-            throw Quire::Mirror::MirrorStub::NotImplemented();
+            String^ labels = nullptr;
+            String^ tag = nullptr;
+            bool done = false;
+            bool hasChars = false;
+            StringBuilder^ sb = gcnew StringBuilder();
+            while (!done)
+            {
+                int ch = t->Read();
+                if (Char::IsWhiteSpace((wchar_t)ch) || ch == -1)
+                {
+                    done = true;
+                }
+                else
+                {
+                    switch (ch)
+                    {
+                    case '{':
+                        if (tag == nullptr && hasChars)
+                        {
+                            labels = read_labels(t, tf);
+                            break;
+                        }
+                        throw gcnew ReaderException("misplaced labels");
+                    case ':':
+                        if (hasChars)
+                        {
+                            tag = read_tag(t, tf);
+                            done = true;
+                            break;
+                        }
+                        [[fallthrough]];
+                    default:
+                        hasChars = true;
+                        if (ch < 256 && m_macro_places[ch])
+                        {
+                            ReaderMacro^ macro = m_macro_table[ch];
+                            if (macro != nullptr && macro->is_terminating)
+                            {
+                                t->Unread(ch);
+                                done = true;
+                                break;
+                            }
+                        }
+                        sb->Append((wchar_t)ch);
+                        break;
+                    }
+                }
+            }
+            String^ s = sb->ToString();
+            if ((labels == nullptr && tag == nullptr) || m_intern_func_labeled == nullptr)
+            {
+                int^ value = ::Quire::Engine::StringUtils::ParseInt(s);
+                if (value != nullptr)
+                {
+                    GC::KeepAlive(this);
+                    return value;
+                }
+                Object^ result = m_intern_func(s);
+                GC::KeepAlive(this);
+                return result;
+            }
+            Object^ labeledResult = m_intern_func_labeled(s, labels, tag);
+            GC::KeepAlive(this);
+            return labeledResult;
         }
 
         Object^ read_string(::Quire::Native::EngutilsMgd::PushbackReader^ t, TagFunction^ tf)
