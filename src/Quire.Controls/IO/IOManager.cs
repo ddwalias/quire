@@ -461,11 +461,12 @@ public partial class IOManager
         }
     }
 
-    partial class ScalarOutputGetter
+    [MirrorOf("Ptc.Controls.IO.IOManager+ScalarOutputGetter, Ptc.Controls")]
+    private class ScalarOutputGetter : UnitedValueGetter, IScalarItem, IItemAlias
     {
-        string IItemAlias.Alias => Alias;
-
         private readonly GetOutputValueTypes _valueTypes;
+
+        string IItemAlias.Alias => Alias;
 
         public ScalarOutputGetter(string alias, GetOutputValueTypes valueTypes, string scaledByUnits = default)
             : base(alias, scaledByUnits)
@@ -474,7 +475,78 @@ public partial class IOManager
             DebugTools.DevAssert((uint)valueTypes > 0, null);
         }
 
-        [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+        public override bool IsEmptyState(CalculationOverridesTypes type)
+        {
+            bool result;
+            if (type == CalculationOverridesTypes.OutputOverriddenValueGetter)
+            {
+                result = ScalarState == null;
+            }
+            else
+            {
+                result = true;
+                DebugTools.FailAssertion("Unsupported CalculationOverridesType");
+            }
+            return result;
+        }
+
+        public override void GetComputedValue(IScaledEvaluation shadowEval, CalculationOverridesTypes type)
+        {
+            double value;
+            string units;
+            IOManagerErrorCode computedScalar = GetComputedScalar(shadowEval, out value, out units);
+            if (type == CalculationOverridesTypes.OutputOverriddenValueGetter)
+            {
+                ScalarState = new UnitedScalarState(value, units, computedScalar);
+            }
+            else
+            {
+                DebugTools.FailAssertion("Unsupported CalculationOverridesType");
+            }
+        }
+
+        public override void SetOperationResult(IOManagerErrorCode code, CalculationOverridesTypes type)
+        {
+            if (DebugTools.DevAssert((uint)code > 0, null).Failed)
+            {
+                return;
+            }
+            if (type == CalculationOverridesTypes.OutputOverriddenValueGetter)
+            {
+                ScalarState = new UnitedScalarState(double.NaN, null, code);
+            }
+            else
+            {
+                DebugTools.FailAssertion("Unsupported CalculationOverridesType");
+            }
+        }
+
+        public override IOManagerErrorCode GetOperationResult(CalculationOverridesTypes type)
+        {
+            IOManagerErrorCode result;
+            if (type == CalculationOverridesTypes.OutputOverriddenValueGetter)
+            {
+                result = (DebugTools.AssertNotNull(ScalarState, null).Passed ? ScalarState.ErrorCode : IOManagerErrorCode.UnknownError);
+            }
+            else
+            {
+                result = IOManagerErrorCode.UnknownError;
+                DebugTools.FailAssertion("Unsupported CalculationOverridesType");
+            }
+            return result;
+        }
+
+        public override IEnumerable<CalculationOverridesTypes> OverrideTypes
+        {
+            get
+            {
+                if (_valueTypes.HasFlag(GetOutputValueTypes.OverriddenValues))
+                {
+                    yield return CalculationOverridesTypes.OutputOverriddenValueGetter;
+                }
+            }
+        }
+
         public IUnitedScalarState ScalarState { get; private set; }
     }
 
@@ -501,11 +573,12 @@ public partial class IOManager
         }
     }
 
-    partial class ScalarInputGetter
+    [MirrorOf("Ptc.Controls.IO.IOManager+ScalarInputGetter, Ptc.Controls")]
+    private class ScalarInputGetter : UnitedValueGetter, IScalarItemWithOriginalState, IScalarItem, IItemAlias
     {
-        string IItemAlias.Alias => Alias;
-
         private readonly GetInputValueTypes _valueTypes;
+
+        string IItemAlias.Alias => Alias;
 
         public ScalarInputGetter(string alias, GetInputValueTypes valueTypes, string scaledByUnits = default)
             : base(alias, scaledByUnits)
@@ -514,18 +587,109 @@ public partial class IOManager
             DebugTools.DevAssert((uint)valueTypes > 0, null);
         }
 
-        [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+        public override bool IsEmptyState(CalculationOverridesTypes type)
+        {
+            bool result;
+            switch (type)
+            {
+            case CalculationOverridesTypes.InputOverriddenValueGetter:
+                result = ScalarState == null;
+                break;
+            case CalculationOverridesTypes.InputOriginalValueGetter:
+                result = OriginalScalarState == null;
+                break;
+            default:
+                result = true;
+                DebugTools.FailAssertion("Unsupported CalculationOverridesType");
+                break;
+            }
+            return result;
+        }
+
+        public override void GetComputedValue(IScaledEvaluation shadowEval, CalculationOverridesTypes type)
+        {
+            double value;
+            string units;
+            IOManagerErrorCode computedScalar = GetComputedScalar(shadowEval, out value, out units);
+            switch (type)
+            {
+            case CalculationOverridesTypes.InputOverriddenValueGetter:
+                ScalarState = new UnitedScalarState(value, units, computedScalar);
+                break;
+            case CalculationOverridesTypes.InputOriginalValueGetter:
+                OriginalScalarState = new UnitedScalarState(value, units, computedScalar);
+                break;
+            default:
+                DebugTools.FailAssertion("Unsupported CalculationOverridesType");
+                break;
+            }
+        }
+
+        public override void SetOperationResult(IOManagerErrorCode code, CalculationOverridesTypes type)
+        {
+            if (DebugTools.DevAssert((uint)code > 0, null).Failed)
+            {
+                return;
+            }
+            switch (type)
+            {
+            case CalculationOverridesTypes.InputOverriddenValueGetter:
+                ScalarState = new UnitedScalarState(double.NaN, null, code);
+                break;
+            case CalculationOverridesTypes.InputOriginalValueGetter:
+                OriginalScalarState = new UnitedScalarState(double.NaN, null, code);
+                break;
+            default:
+                DebugTools.FailAssertion("Unsupported CalculationOverridesType");
+                break;
+            }
+        }
+
+        public override IOManagerErrorCode GetOperationResult(CalculationOverridesTypes type)
+        {
+            IOManagerErrorCode result;
+            switch (type)
+            {
+            case CalculationOverridesTypes.InputOverriddenValueGetter:
+                result = (DebugTools.AssertNotNull(ScalarState, null).Passed ? ScalarState.ErrorCode : IOManagerErrorCode.UnknownError);
+                break;
+            case CalculationOverridesTypes.InputOriginalValueGetter:
+                result = (DebugTools.AssertNotNull(OriginalScalarState, null).Passed ? OriginalScalarState.ErrorCode : IOManagerErrorCode.UnknownError);
+                break;
+            default:
+                result = IOManagerErrorCode.UnknownError;
+                DebugTools.FailAssertion("Unsupported CalculationOverridesType");
+                break;
+            }
+            return result;
+        }
+
+        public override IEnumerable<CalculationOverridesTypes> OverrideTypes
+        {
+            get
+            {
+                if (_valueTypes.HasFlag(GetInputValueTypes.OriginalValues))
+                {
+                    yield return CalculationOverridesTypes.InputOriginalValueGetter;
+                }
+                if (_valueTypes.HasFlag(GetInputValueTypes.OverriddenValues))
+                {
+                    yield return CalculationOverridesTypes.InputOverriddenValueGetter;
+                }
+            }
+        }
+
         public IUnitedScalarState OriginalScalarState { get; private set; }
 
-        [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
         public IUnitedScalarState ScalarState { get; private set; }
     }
 
-    partial class UnitedMatrixGetter
+    [MirrorOf("Ptc.Controls.IO.IOManager+UnitedMatrixGetter, Ptc.Controls")]
+    private class UnitedMatrixGetter : UnitedValueGetter, IMatrixItem, IItemAlias
     {
-        string IItemAlias.Alias => Alias;
-
         private readonly CalculationOverridesTypes _getterType;
+
+        string IItemAlias.Alias => Alias;
 
         public UnitedMatrixGetter(string alias, bool isInput, string scaledByUnits = default)
             : base(alias, scaledByUnits)
@@ -533,11 +697,74 @@ public partial class IOManager
             _getterType = isInput ? CalculationOverridesTypes.InputOverriddenValueGetter : CalculationOverridesTypes.OutputOverriddenValueGetter;
         }
 
-        [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+        public override bool IsEmptyState(CalculationOverridesTypes type)
+        {
+            if (_getterType == type)
+            {
+                return MatrixState == null;
+            }
+            DebugTools.FailAssertion("Unsupported CalculationOverridesType");
+            return true;
+        }
+
+        public override void GetComputedValue(IScaledEvaluation shadowEval, CalculationOverridesTypes type)
+        {
+            double[][] value;
+            string units;
+            IOManagerErrorCode computedMatrix = GetComputedMatrix(shadowEval, out value, out units);
+            if (_getterType == type)
+            {
+                MatrixState = new UnitedMatrixState(value, units, computedMatrix);
+            }
+            else
+            {
+                DebugTools.FailAssertion("Unsupported CalculationOverridesType");
+            }
+        }
+
+        public override void SetOperationResult(IOManagerErrorCode code, CalculationOverridesTypes type)
+        {
+            if (DebugTools.DevAssert((uint)code > 0, null).Failed)
+            {
+                return;
+            }
+            if (_getterType == type)
+            {
+                MatrixState = new UnitedMatrixState((double[][])null, null, code);
+            }
+            else
+            {
+                DebugTools.FailAssertion("Unsupported CalculationOverridesType");
+            }
+        }
+
+        public override IOManagerErrorCode GetOperationResult(CalculationOverridesTypes type)
+        {
+            if (_getterType == type)
+            {
+                if (!DebugTools.AssertNotNull(MatrixState, null).Passed)
+                {
+                    return IOManagerErrorCode.UnknownError;
+                }
+                return MatrixState.ErrorCode;
+            }
+            DebugTools.FailAssertion("Unsupported CalculationOverridesType");
+            return IOManagerErrorCode.UnknownError;
+        }
+
+        public override IEnumerable<CalculationOverridesTypes> OverrideTypes
+        {
+            get
+            {
+                yield return _getterType;
+            }
+        }
+
         public IUnitedMatrixState MatrixState { get; private set; }
     }
 
-    partial class StringGetter
+    [MirrorOf("Ptc.Controls.IO.IOManager+StringGetter, Ptc.Controls")]
+    private class StringGetter : UnitedValueGetter, IStringItem, IItemAlias
     {
         private readonly CalculationOverridesTypes _getterType;
 
@@ -547,11 +774,72 @@ public partial class IOManager
             _getterType = isInput ? CalculationOverridesTypes.InputOverriddenValueGetter : CalculationOverridesTypes.OutputOverriddenValueGetter;
         }
 
-        [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+        public override bool IsEmptyState(CalculationOverridesTypes type)
+        {
+            if (DebugTools.DevAssert(_getterType == type, "Unsupported CalculationOverridesType").Failed)
+            {
+                return true;
+            }
+            return StringState == null;
+        }
+
+        public override void GetComputedValue(IScaledEvaluation shadowEval, CalculationOverridesTypes type)
+        {
+            string value;
+            IOManagerErrorCode computedString = GetComputedString(shadowEval, out value);
+            if (_getterType == type)
+            {
+                StringState = new StringState(value, computedString);
+            }
+            else
+            {
+                DebugTools.FailAssertion("Unsupported CalculationOverridesType");
+            }
+        }
+
+        public override void SetOperationResult(IOManagerErrorCode code, CalculationOverridesTypes type)
+        {
+            if (DebugTools.DevAssert((uint)code > 0, null).Failed)
+            {
+                return;
+            }
+            if (_getterType == type)
+            {
+                StringState = new StringState(null, code);
+            }
+            else
+            {
+                DebugTools.FailAssertion("Unsupported CalculationOverridesType");
+            }
+        }
+
+        public override IOManagerErrorCode GetOperationResult(CalculationOverridesTypes type)
+        {
+            if (_getterType == type)
+            {
+                if (!DebugTools.AssertNotNull(StringState, null).Passed)
+                {
+                    return IOManagerErrorCode.UnknownError;
+                }
+                return StringState.ErrorCode;
+            }
+            DebugTools.FailAssertion("Unsupported CalculationOverridesType");
+            return IOManagerErrorCode.UnknownError;
+        }
+
+        public override IEnumerable<CalculationOverridesTypes> OverrideTypes
+        {
+            get
+            {
+                yield return _getterType;
+            }
+        }
+
         public IStringState StringState { get; private set; }
     }
 
-    partial class CommonValueGetter
+    [MirrorOf("Ptc.Controls.IO.IOManager+CommonValueGetter, Ptc.Controls")]
+    private class CommonValueGetter : UnitedValueGetter, ICommonValueItem, IItemAlias
     {
         private readonly CalculationOverridesTypes _getterType;
 
@@ -561,7 +849,96 @@ public partial class IOManager
             _getterType = isInput ? CalculationOverridesTypes.InputOverriddenValueGetter : CalculationOverridesTypes.OutputOverriddenValueGetter;
         }
 
-        [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+        public override bool IsEmptyState(CalculationOverridesTypes type)
+        {
+            if (DebugTools.DevAssert(_getterType == type, "Unsupported CalculationOverridesType").Failed)
+            {
+                return true;
+            }
+            return ErrorState == null;
+        }
+
+        public override void GetComputedValue(IScaledEvaluation shadowEval, CalculationOverridesTypes type)
+        {
+            if (DebugTools.DevAssert(_getterType == type, "Unsupported CalculationOverridesType").Failed)
+            {
+                return;
+            }
+            IOManagerErrorCode iOManagerErrorCode = EvaluationHelper.AnalyzeEvaluationError(shadowEval);
+            if (iOManagerErrorCode == IOManagerErrorCode.NoError)
+            {
+                iOManagerErrorCode = IOManagerErrorCode.ResultTypeIncompatible;
+            }
+            if (iOManagerErrorCode == IOManagerErrorCode.ResultTypeIncompatible)
+            {
+                iOManagerErrorCode = GetComputedScalar(shadowEval, out var value, out var units);
+                if (iOManagerErrorCode == IOManagerErrorCode.NoError)
+                {
+                    ErrorState = new UnitedScalarState(value, units, iOManagerErrorCode);
+                }
+            }
+            if (iOManagerErrorCode == IOManagerErrorCode.ResultTypeIncompatible)
+            {
+                iOManagerErrorCode = GetComputedMatrix(shadowEval, out var value2, out var units2);
+                if (iOManagerErrorCode == IOManagerErrorCode.NoError)
+                {
+                    ErrorState = new UnitedMatrixState(value2, units2, iOManagerErrorCode);
+                }
+            }
+            if (iOManagerErrorCode == IOManagerErrorCode.ResultTypeIncompatible)
+            {
+                iOManagerErrorCode = GetComputedString(shadowEval, out var value3);
+                if (iOManagerErrorCode == IOManagerErrorCode.NoError)
+                {
+                    ErrorState = new StringState(value3, iOManagerErrorCode);
+                }
+            }
+            if (iOManagerErrorCode != IOManagerErrorCode.NoError)
+            {
+                ErrorState = new ErrorState(iOManagerErrorCode);
+            }
+        }
+
+        public override void SetOperationResult(IOManagerErrorCode code, CalculationOverridesTypes type)
+        {
+            if (DebugTools.DevAssert((uint)code > 0, null).Failed)
+            {
+                return;
+            }
+            if (DebugTools.DevAssert(_getterType == type, "Unsupported CalculationOverridesType").Failed)
+            {
+                return;
+            }
+            ErrorState = new ErrorState(code);
+        }
+
+        public override IOManagerErrorCode GetOperationResult(CalculationOverridesTypes type)
+        {
+            if (DebugTools.DevAssert(_getterType == type, "Unsupported CalculationOverridesType").Failed)
+            {
+                return IOManagerErrorCode.UnknownError;
+            }
+            if (!DebugTools.AssertNotNull(ErrorState, null).Passed)
+            {
+                return IOManagerErrorCode.UnknownError;
+            }
+            return ErrorState.ErrorCode;
+        }
+
+        public override IEnumerable<CalculationOverridesTypes> OverrideTypes
+        {
+            get
+            {
+                yield return _getterType;
+            }
+        }
+
+        public IUnitedScalarState ScalarState => ErrorState as IUnitedScalarState;
+
+        public IUnitedMatrixState MatrixState => ErrorState as IUnitedMatrixState;
+
+        public IStringState StringState => ErrorState as IStringState;
+
         public IErrorState ErrorState { get; private set; }
     }
 
