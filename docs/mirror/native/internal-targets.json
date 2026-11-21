@@ -258,7 +258,7 @@
     }
   },
   "mslisp.dll": {
-    "sha256": "6c97e5e7e4437613c0ce0cae4cb113bb45a542032dc14b5a0a6074789f3f52dc",
+    "sha256": "6c97e5e7e4437613c0ce0cae4cb113bb45a542032dc13bb3c1ee5b54c12d5ebb",
     "targets": {},
     "managed": {
       "new": {
