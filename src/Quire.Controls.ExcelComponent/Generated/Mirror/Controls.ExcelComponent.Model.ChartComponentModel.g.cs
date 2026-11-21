@@ -20,8 +20,6 @@ public partial class ChartComponentModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.SortedDictionary<uint, global::Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable> _traceCalculatables;
     [global::Quire.Mirror.MirrorStub]
-    public override string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Collections.Generic.IEnumerable<string> ComponentErrors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatablesConnectedToTheEngine { get => base.CalculatablesConnectedToTheEngine; }
@@ -37,14 +35,6 @@ public partial class ChartComponentModel : global::Quire.Controls.ExcelComponent
     internal void CommitPre() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void Commit() => base.Commit();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void FireCalculatableMoved(global::Quire.Calculation.Core.ICalculatable calculatable) => base.FireCalculatableMoved(calculatable);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.Calculation.Core.ICalculatable CreateCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc, bool arg2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void RemoveCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleChildWrapperRemovedOrChartTypeChanged(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapper, global::System.Nullable<global::Quire.Controls.ExcelComponent.Model.ChartWrapperType> prevTypeWhenRemoving) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateAllTraces(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapperToCommit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

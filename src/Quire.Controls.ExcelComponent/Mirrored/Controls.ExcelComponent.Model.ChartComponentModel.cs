@@ -41,6 +41,33 @@ public partial class ChartComponentModel
         }
     }
 
+    public override string Rl
+    {
+        get
+        {
+            ComponentNodeHandle = 1u;
+            return string.Format("(eval (named-component:0x{0:x8} {1} {2} %@ 0))", ComponentNodeHandle, ChartTraceCalculatable.ChartVariableWithLabel, ComponentId);
+        }
+    }
+
+    protected override void FireCalculatableMoved(ICalculatable calculatable)
+    {
+        IChartComponentCalculatableWrapper chartComponentCalculatableWrapper = calculatable as IChartComponentCalculatableWrapper;
+        if (DebugTools.AssertNotNull(chartComponentCalculatableWrapper, null).Failed)
+        {
+            return;
+        }
+        if (chartComponentCalculatableWrapper.IsLimitExpression())
+        {
+            UpdateChartMinMaxCalculatable();
+        }
+        if (chartComponentCalculatableWrapper.IsTraceOrCommonExpression())
+        {
+            UpdateAllTraces(null);
+        }
+        base.FireCalculatableMoved(calculatable);
+    }
+
     protected override void SetErrorByNodeHandle(EngineError error)
     {
         DebugTools.FailAssertion(error.NodeHandle.ToString());
@@ -76,6 +103,43 @@ public partial class ChartComponentModel
         return base.LookupCalculatableWrapper(calc);
     }
 
+    protected override ICalculatable CreateCalculatableWrapper(ICalculatable calc, bool arg2)
+    {
+        if (calc is IChartCalculatable)
+        {
+            DebugTools.FailAssertion(null, Array.Empty<object>());
+            return calc;
+        }
+        if (CalculatableWrapperMap.ContainsKey(calc))
+        {
+            DebugTools.FailAssertion(null, Array.Empty<object>());
+            return CalculatableWrapperMap[calc];
+        }
+        ChartComponentCalculatableWrapper chartComponentCalculatableWrapper = new ChartComponentCalculatableWrapper(calc);
+        CalculatableWrapperMap[calc] = chartComponentCalculatableWrapper;
+        chartComponentCalculatableWrapper.ChartTypeChanged += HandleChildWrapperChartTypeChanged;
+        chartComponentCalculatableWrapper.ErrorChanged += HandleChildWrapperErrorChanged;
+        return chartComponentCalculatableWrapper;
+    }
+
+    protected override void RemoveCalculatableWrapper(ICalculatable calc)
+    {
+        if (calc is IChartCalculatable)
+        {
+            DebugTools.FailAssertion(null, Array.Empty<object>());
+            return;
+        }
+        IChartComponentCalculatableWrapper chartComponentCalculatableWrapper = GetWrapper(calc) as IChartComponentCalculatableWrapper;
+        if (DebugTools.AssertNotNull(chartComponentCalculatableWrapper, null).Passed)
+        {
+            chartComponentCalculatableWrapper.ChartTypeChanged -= HandleChildWrapperChartTypeChanged;
+            chartComponentCalculatableWrapper.ErrorChanged -= HandleChildWrapperErrorChanged;
+            chartComponentCalculatableWrapper.Dispose();
+        }
+        CalculatableWrapperMap.Remove(calc);
+        UpdateErrorAccordingToChildren();
+    }
+
     public override object Clone()
     {
         ChartComponentModel chartComponentModel = new ChartComponentModel();
@@ -86,6 +150,33 @@ public partial class ChartComponentModel
     private void HandleChildWrapperChartTypeChanged(IChartComponentCalculatableWrapper wrapper)
     {
         HandleChildWrapperRemovedOrChartTypeChanged(wrapper, null);
+    }
+
+    private void HandleChildWrapperRemovedOrChartTypeChanged(IChartComponentCalculatableWrapper wrapper, ChartWrapperType? prevTypeWhenRemoving)
+    {
+        ChartWrapperType type = prevTypeWhenRemoving ?? wrapper.PreviousChartType;
+        ChartWrapperType chartWrapperType = wrapper.ChartWrapperType;
+        if (chartWrapperType.IsUnknownType() && !prevTypeWhenRemoving.HasValue)
+        {
+            return;
+        }
+        DebugTools.DevAssert(!prevTypeWhenRemoving.HasValue || (wrapper.ChartWrapperType == ChartWrapperType.Unknown && wrapper.PreviousChartType == ChartWrapperType.Unknown), null);
+        if (type.IsLimitType() || chartWrapperType.IsLimitType())
+        {
+            if (wrapper.IsConnectedToTheEngine && !chartWrapperType.IsLimitType())
+            {
+                base.FireCalculatableRemoved(wrapper);
+            }
+            UpdateChartMinMaxCalculatable();
+        }
+        if (type.IsTraceOrCommonType() || chartWrapperType.IsTraceOrCommonType())
+        {
+            UpdateAllTraces(wrapper);
+        }
+        if (RequestUpdateIdentifierLabels != null)
+        {
+            RequestUpdateIdentifierLabels();
+        }
     }
 
     private void InternalAddCalculatableAndEvaluate(IOleBaseComponentCalculatableChild calc)

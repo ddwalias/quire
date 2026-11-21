@@ -19,8 +19,4 @@ public partial class ExcelComponentControl : global::Quire.Controls.ExcelCompone
     private ExcelComponentControl(bool createExcelContainer, global::System.Nullable<global::System.Windows.Size> gridCellSize = default) : base(default(global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel), default(global::System.Windows.ResourceDictionary)) { }
     [global::Quire.Mirror.MirrorStub]
     private ExcelComponentControl(global::Quire.Controls.ExcelComponent.ExcelComponentControl original) : base(default(global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel), default(global::System.Windows.ResourceDictionary)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider deS11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
