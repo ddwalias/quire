@@ -325,7 +325,7 @@ ILookup<string, RawMethod> Owned(Artifact a) => owned.TryGetValue(a, out var byO
 // System.Runtime.
 var globalKeys = new Dictionary<Artifact, ILookup<string, RawMethod>>();
 ILookup<string, RawMethod> Globals(Artifact module) => globalKeys.TryGetValue(module, out var byKey) ? byKey
-    : globalKeys[module] = Owned(module)["<Module>"].ToLookup(m => Signatures.Method(m.Name, m.Signature.GenericParameterCount,
+    : globalKeys[module] = Owned(module)["<Module>"].ToLookup(m => Signatures.Method(StructureReader.AnonymousModuleInitializerName(m.Name) ?? m.Name, m.Signature.GenericParameterCount,
         m.Signature.ParameterTypes.Select(Corlib), Corlib(m.Signature.ReturnType), m.Static));
 // Keys leave out custom modifiers, which C# cannot write (C++/CLI's IsLong, IsConst...). They only break a tie between
 // originals that differ in nothing else, for the one whose modifiers are the Quire method's. A tie they leave is that
@@ -361,7 +361,7 @@ foreach (var artifact in quire)
                 continue;
             }
             var module = ModuleOriginal(artifact);
-            string key = Signatures.Method(raw.Name, raw.Signature.GenericParameterCount, raw.Signature.ParameterTypes.Select(Map),
+            string key = Signatures.Method(StructureReader.AnonymousModuleInitializerName(raw.Name) ?? raw.Name, raw.Signature.GenericParameterCount, raw.Signature.ParameterTypes.Select(Map),
                 Map(raw.Signature.ReturnType), raw.Static);
             var global = module == null ? null : Counterpart(raw, module, [.. Globals(module)[key]], ref problem);
             matched.Add((artifact, raw, null, null, module, global, problem));

@@ -677,6 +677,23 @@ Check(Map(candidate, "Quire.Engine.FactoryImp", "Engine.FactoryImp", "Other") ==
 Check(Map(candidate.Replace("?1??", "?2??"), "Quire.Engine.FactoryImp", "Engine.FactoryImp", "VerifyIntegrity") == null);
 Check(Map(candidate.Replace("_NXZ", "_NYZ"), "Quire.Engine.FactoryImp", "Engine.FactoryImp", "VerifyIntegrity") != expected);
 Check(Map("?A0xNOHASH." + candidate, "Quire.Engine.FactoryImp", "Engine.FactoryImp", "VerifyIntegrity") == null);
+if (OperatingSystem.IsWindows()) {
+    string left = "?s_count@?1??_gensym@InterpreterImp@mslisp@Quire@@QE$AAMPE$AAVObject@System@@P$01EAPE$AAV56@@Z@4IA";
+    string right = "?s_count@?1??_gensym@InterpreterImp@mslisp@@QE$AAMPE$AAVObject@System@@P$01EAPE$AAV45@@Z@4IA";
+    string? mapped = Map(left, "Quire.mslisp.InterpreterImp", "mslisp.InterpreterImp", "_gensym");
+    Check(mapped != null && mapped == Map(right, "mslisp.InterpreterImp", "mslisp.InterpreterImp", "_gensym"));
+    Check(mapped != Map(right.Replace("@4IA", "@4JA"), "mslisp.InterpreterImp", "mslisp.InterpreterImp", "_gensym"));
+    Check(mapped != Map(right.Replace("s_count", "s_other"), "mslisp.InterpreterImp", "mslisp.InterpreterImp", "_gensym"));
+}
+string? Module(string field) => StructureReader.AnonymousModuleStaticName(field);
+Check(Module("?A0x0144f16f.sVerboseTrace") == Module("?A0xd2f58043.sVerboseTrace"));
+Check(Module("?A0xd2f58043.sOther") != Module("?A0xd2f58043.sVerboseTrace"));
+Check(Module("?A0xNOHASH.sVerboseTrace") == null);
+Check(Module("?A0x0144f16f.?s_count@?1??Other@@") == null);
+string? Init(string name) => StructureReader.AnonymousModuleInitializerName(name);
+Check(Init("?A0x0144f16f.??__E?A0x0144f16f@sVerboseTrace@@YMXXZ") == Init("?A0xd2f58043.??__E?A0xd2f58043@sVerboseTrace@@YMXXZ"));
+Check(Init("?A0x0144f16f.??__E?A0xd2f58043@sVerboseTrace@@YMXXZ") == null);
+Check(Init("?A0x0144f16f.??__E?A0x0144f16f@sOther@@YMXXZ") != Init("?A0x0144f16f.??__E?A0x0144f16f@sVerboseTrace@@YMXXZ"));
 ''')
             result = subprocess.run(['dotnet', 'run', '--project', str(work / 'Test.csproj'),
                                      '--configuration', 'Release'], capture_output=True, text=True)

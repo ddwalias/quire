@@ -412,6 +412,13 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
             string name = md.GetString(field.Name);
             if (strict && !context.IsNil && md.GetString(md.GetTypeDefinition(field.GetDeclaringType()).Name) == "<Module>")
             {
+                string? moduleStatic = AnonymousModuleStaticName(name);
+                if (moduleStatic is not null && md.FieldDefinitions.Count(other =>
+                {
+                    var definition = md.GetFieldDefinition(other);
+                    return md.GetString(md.GetTypeDefinition(definition.GetDeclaringType()).Name) == "<Module>"
+                        && AnonymousModuleStaticName(md.GetString(definition.Name)) == moduleStatic;
+                }) == 1) name = moduleStatic;
                 var method = md.GetMethodDefinition(context);
                 var owner = md.GetTypeDefinition(method.GetDeclaringType());
                 string ownerName = md.GetString(owner.Name);
@@ -442,6 +449,24 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         return $"{Owner(reference.Parent)}::{md.GetString(reference.Name)}";
     }
 
+    /// <summary>Remove the source-path hash only from a plainly named anonymous-namespace module field.</summary>
+    internal static string? AnonymousModuleStaticName(string name)
+    {
+        var match = System.Text.RegularExpressions.Regex.Match(name,
+            @"^\?A0x[0-9a-fA-F]{8}\.([A-Za-z_][A-Za-z0-9_]*)$",
+            System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+        return match.Success ? "?A0x<source>." + match.Groups[1].Value : null;
+    }
+
+    /// <summary>Identify the compiler initializer for a named anonymous-namespace module field.</summary>
+    internal static string? AnonymousModuleInitializerName(string name)
+    {
+        var match = System.Text.RegularExpressions.Regex.Match(name,
+            @"^\?A0x(?<hash>[0-9a-fA-F]{8})\.\?\?__E\?A0x\k<hash>@(?<field>[A-Za-z_][A-Za-z0-9_]*)@@YMXXZ$",
+            System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+        return match.Success ? "?A0x<source>.??__E?A0x<source>@" + match.Groups["field"].Value + "@@YMXXZ" : null;
+    }
+
     /// <summary>Map a function-local MSVC static field through its enclosing type's reviewed name. The optional
     /// anonymous-module prefix depends on the source path; the scope ordinal and complete method suffix remain.</summary>
     internal static string? LocalStaticName(string name, string owner, string mappedOwner, string method)
@@ -452,8 +477,28 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
             System.Text.RegularExpressions.Regex.Escape(method) + "@)" +
             System.Text.RegularExpressions.Regex.Escape(Decorated(owner));
         var match = System.Text.RegularExpressions.Regex.Match(name, pattern, System.Text.RegularExpressions.RegexOptions.CultureInvariant);
-        return match.Success ? match.Groups[1].Value + Decorated(mappedOwner) + name[match.Length..] : null;
+        if (!match.Success) return null;
+        // Namespace changes also renumber MSVC type backreferences in the method signature. Compare the complete
+        // undecorated symbol, changing only its already-reviewed enclosing type; retain the mangling if unavailable.
+        if (OperatingSystem.IsWindows())
+        {
+            var buffer = new System.Text.StringBuilder(8192);
+            string symbol = name[match.Groups[1].Index..];
+            if (UnDecorateSymbolName(symbol, buffer, buffer.Capacity, 0) is > 0 and < 8191)
+            {
+                string decoded = buffer.ToString();
+                string enclosing = owner.Replace(".", "::") + "::" + method + "(";
+                int index = decoded.IndexOf(enclosing, StringComparison.Ordinal);
+                if (index >= 0 && decoded.IndexOf(enclosing, index + enclosing.Length, StringComparison.Ordinal) < 0)
+                    return decoded[..index] + mappedOwner.Replace(".", "::") + "::" + method + "(" + decoded[(index + enclosing.Length)..];
+            }
+        }
+        return match.Groups[1].Value + Decorated(mappedOwner) + name[match.Length..];
     }
+
+    [System.Runtime.InteropServices.DllImport("dbghelp.dll", CharSet = System.Runtime.InteropServices.CharSet.Ansi,
+        ExactSpelling = true, SetLastError = false)]
+    private static extern uint UnDecorateSymbolName(string decorated, System.Text.StringBuilder output, int length, uint flags);
 
     private string Owner(EntityHandle parent) => parent.Kind switch
     {
