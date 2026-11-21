@@ -44,17 +44,9 @@ public abstract partial class OleBaseComponentControl : global::Quire.Controls.M
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Calculation.Core.SynchronizationStatus SynchronizationStatus { get => base.SynchronizationStatus; }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Mathboard.SectionIndicatorInfo InputSectionIndicator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Mathboard.SectionIndicatorInfo OutputSectionIndicator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.EquationControl> Items { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Core.IWhiteboardItem[] WhiteboardItemsForXamlSerialization { get => base.WhiteboardItemsForXamlSerialization; set => base.WhiteboardItemsForXamlSerialization = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public override void SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus computingStatus) => base.SetCalculatingStatus(computingStatus);
-    [global::Quire.Mirror.MirrorStub]
-    public override void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus) => base.SetSynchronizationStatus(syncStatus);
     [global::Quire.Mirror.MirrorStub]
     public override void SetIdentifierLabels(global::System.Collections.Generic.IDictionary<global::Quire.Calculation.Core.ResolvedId, string[]> idLabelMap) => base.SetIdentifierLabels(idLabelMap);
     [global::Quire.Mirror.MirrorStub]
@@ -62,33 +54,7 @@ public abstract partial class OleBaseComponentControl : global::Quire.Controls.M
     [global::Quire.Mirror.MirrorStub]
     private void Init() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected void InsertNewOleComponentExpression(string expression, bool navigateToEnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void CreateAndInitOleContainerItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected void HandleOleContainerItemAdded(global::Quire.Controls.ExcelComponent.View.IOleContainerItem container) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnContextMenuOpening(global::System.Windows.Controls.ContextMenuEventArgs e) => base.OnContextMenuOpening(e);
-    [global::Quire.Mirror.MirrorStub]
     public override void EndInit() => base.EndInit();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void ViewModelPropertyChangedHandler(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => base.ViewModelPropertyChangedHandler(sender, e);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
-    [global::Quire.Mirror.MirrorStub]
-    private void ErrorChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateErrorStateOnComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ClearErrorOnComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void SetError(global::Quire.Calculation.Core.EngineError error) => base.SetError(error);
-    [global::Quire.Mirror.MirrorStub]
-    public void CloseOle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int IncrementComponentCookieMultiThreaded(bool isAutoCalc = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ReplaceCalculatablesWithWrappersInResultManager() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ReplaceCalculatablesAndResultWithWrappersInResultManager() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

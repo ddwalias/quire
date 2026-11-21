@@ -1,5 +1,9 @@
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using Quire.Controls.Core;
+using Quire.Controls.Internal;
+using Quire.Wpf;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -283,6 +287,159 @@ public abstract partial class OleBaseComponentControl
             {
                 return _componentCookie;
             }
+        }
+    }
+
+    public SectionIndicatorInfo InputSectionIndicator
+    {
+        get => _oleBaseViewModel.InputSectionIndicator;
+        set => _oleBaseViewModel.InputSectionIndicator = value;
+    }
+
+    public SectionIndicatorInfo OutputSectionIndicator
+    {
+        get => _oleBaseViewModel.OutputSectionIndicator;
+        set => _oleBaseViewModel.OutputSectionIndicator = value;
+    }
+
+    public override void SetCalculatingStatus(CalculatingStatus computingStatus)
+    {
+        base.SetCalculatingStatus(computingStatus);
+        ((DependencyObject)this).SetValue(CalculatingStatusProperty, (object)computingStatus);
+    }
+
+    public override void SetSynchronizationStatus(SynchronizationStatus syncStatus)
+    {
+        base.SetSynchronizationStatus(syncStatus);
+        ((DependencyObject)this).SetValue(SynchronizationStatusProperty, (object)syncStatus);
+    }
+
+    protected void InsertNewOleComponentExpression(string expression, bool navigateToEnd)
+    {
+        OleBaseComponentCommands.NewOleComponentExpression.Execute(expression, this);
+        if (navigateToEnd)
+        {
+            IEquationControl equationControl = (IEquationControl)ActiveItem;
+            if (equationControl != null)
+            {
+                WhiteboardItemManager.ExecuteOnLoad(equationControl, equationControl.NavigateRegionEnd);
+            }
+        }
+    }
+
+    protected void CreateAndInitOleContainerItem()
+    {
+        IOleContainerItem oleContainerItem = CreateOleContainerItem();
+        oleContainerItem.CreateWindowlessOle();
+        _oleBaseViewModel.AddItemAtLocation(oleContainerItem, default);
+        _oleBaseViewModel.SetInitialSize();
+    }
+
+    protected override void OnContextMenuOpening(ContextMenuEventArgs e)
+    {
+        base.OnContextMenuOpening(e);
+        WpfUtils.SetMostRecentInputDeviceToKeyboardDevice();
+    }
+
+    protected override void ViewModelPropertyChangedHandler(object sender, PropertyChangedEventArgs e)
+    {
+        base.ViewModelPropertyChangedHandler(sender, e);
+        if (e.PropertyName == "IsOutputSectionVisible" || e.PropertyName == "IsInputSectionVisible")
+        {
+            AttachedProperties.SetHandlesContextMenu(this, _oleBaseViewModel.IsInputSectionVisible || _oleBaseViewModel.IsOutputSectionVisible);
+            FirePropertyChanged(e);
+        }
+    }
+
+    protected override Size MeasureOverride(Size constraint)
+    {
+        return _oleBaseViewModel.Measure(base.MeasureOverride(constraint));
+    }
+
+    private void ErrorChanged()
+    {
+        if (Error != null)
+        {
+            if (Error.ErrorSource == null)
+            {
+                Error.ErrorSource = this;
+            }
+            else
+            {
+                DebugTools.DevAssert(Error.ErrorSource is IOleBaseComponentCalculatableWrapper, null);
+            }
+        }
+        _oleBaseViewModel.IndicateHiddenErrors();
+        UpdateErrorStateOnComponent();
+        FireCalcErrorChanged();
+    }
+
+    private void UpdateErrorStateOnComponent()
+    {
+        ClearErrorOnComponent();
+        if (Error != null && !_oleBaseModel.IsErrorFromChild)
+        {
+            string resourceString = Error.ResourceString;
+            if (DebugTools.AssertNotNull(resourceString, null).Passed)
+            {
+                _errorFrame = new RubberBandHighlighter(this, new List<UIElement>())
+                {
+                    Color = Colors.Transparent,
+                    CornerStyle = HighlightCornerStyle.RoundedWithBorder
+                };
+                _errorAdorner = new NodeMessageAdorner(this, resourceString, NodeMessageAdornerType.Error);
+            }
+        }
+    }
+
+    private void ClearErrorOnComponent()
+    {
+        if (_errorAdorner != null)
+        {
+            _errorAdorner.Remove();
+            _errorAdorner = null;
+        }
+        if (_errorFrame != null)
+        {
+            _errorFrame.Remove();
+            _errorFrame = null;
+        }
+    }
+
+    public override void SetError(EngineError error)
+    {
+        _oleBaseModel.SetError(error);
+    }
+
+    public void CloseOle()
+    {
+        if (IsOleOpen)
+        {
+            OleContainerItem.StartOleCloseOperation();
+        }
+    }
+
+    public int IncrementComponentCookieMultiThreaded(bool isAutoCalc = false)
+    {
+        lock (_componentCookieLock)
+        {
+            return ++_componentCookie;
+        }
+    }
+
+    public void ReplaceCalculatablesWithWrappersInResultManager()
+    {
+        foreach (IOleBaseComponentCalculatableWrapper calculatableWrapper in _oleBaseModel.CalculatableWrappers)
+        {
+            ResultManager.Instance.ReplaceCalculatable(calculatableWrapper.WrappedCalculatable, calculatableWrapper);
+        }
+    }
+
+    public void ReplaceCalculatablesAndResultWithWrappersInResultManager()
+    {
+        foreach (IOleBaseComponentCalculatableWrapper calculatableWrapper in _oleBaseModel.CalculatableWrappers)
+        {
+            ResultManager.Instance.ReplaceCalculatableAndResult(calculatableWrapper.WrappedCalculatable, calculatableWrapper);
         }
     }
 }
