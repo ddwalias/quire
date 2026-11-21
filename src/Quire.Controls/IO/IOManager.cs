@@ -1,6 +1,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -9,6 +10,7 @@ using Quire.Calculation.Core;
 using Quire.Calculation.Core.Support;
 using Quire.Controls.Core;
 using Quire.Controls.Core.IORegions;
+using Quire.Controls.Core.Whiteboard;
 using Quire.Core;
 using Quire.EquationEditor.Tree;
 using Quire.EquationEditor.Tree.Transform;
@@ -55,11 +57,136 @@ public partial class IOManager
         }
     }
 
+    public IOManager(IEngineeringDocument doc)
+    {
+        _inputs = new IOItemCollection(true);
+        _outputs = new IOItemCollection(false);
+        _inputs.RangeChanged += HandleInputItemsCollectionRangeChanged;
+        _inputs.AliasChanged += FireIODataChanged;
+        _outputs.RangeChanged += HandleOutputItemsCollectionRangeChanged;
+        _outputs.AliasChanged += FireIODataChanged;
+        _shadowCalculatableNotifier = new ShadowCalculationNotifier();
+        _document = doc;
+        DefaultCalculationTimeout = 60;
+    }
+
     [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
     private readonly IEngineeringDocument _document;
 
     [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
     private void FireWaitForCalculation(DependencyObject region, int seconds) => _document.FireWaitForCalculationIdle(seconds, ShadowCalculatable.ShadowResultsProcessingPriority_Send);
+
+    public void HandleElementAddedToParentContainer(IIORegion ioRegion)
+    {
+        DependencyObject val = ioRegion as DependencyObject;
+        if (IOTag.HasInputTag(val))
+        {
+            if (val is IInputRegion region && region.IsSuitableForInputTagging())
+            {
+                _inputs.HandleTaggedRegionAdded(val);
+            }
+            else
+            {
+                RemoveIOTagFromRegion(ioRegion, IOTagType.Input);
+            }
+        }
+        if (IOTag.HasOutputTag(val))
+        {
+            if (val is IOutputRegion region2 && region2.IsSuitableForOutputTagging())
+            {
+                _outputs.HandleTaggedRegionAdded(val);
+            }
+            else
+            {
+                RemoveIOTagFromRegion(ioRegion, IOTagType.Output);
+            }
+        }
+    }
+
+    public void HandleElementRemovedFromParentContainer(IIORegion ioRegion)
+    {
+        DependencyObject region = ioRegion as DependencyObject;
+        if (IOTag.HasInputTag(region))
+        {
+            _inputs.HandleTaggedRegionRemoved(region);
+        }
+        if (IOTag.HasOutputTag(region))
+        {
+            _outputs.HandleTaggedRegionRemoved(region);
+        }
+    }
+
+    public void HandleElementsListSelectedInParentContainer(IEnumerable<IIORegionBase> ioItemsList)
+    {
+        ioItemsList.OfType<IIORegion>().Each(HandleElementSelectedInParentContainer);
+    }
+
+    private void HandleElementSelectedInParentContainer(IIORegion region)
+    {
+        if (IOTag.IsIOTagged(region as DependencyObject) && IORegionsSelected != null)
+        {
+            List<string> list = new List<string>();
+            List<string> list2 = new List<string>();
+            if (IOTag.HasInputTag(region as DependencyObject))
+            {
+                list.AddRange(IOItemsAliasManager.GetAliases(region as DependencyObject, true));
+            }
+            if (IOTag.HasOutputTag(region as DependencyObject))
+            {
+                list2.AddRange(IOItemsAliasManager.GetAliases(region as DependencyObject, false));
+            }
+            IORegionsSelected(_document, list, list2);
+        }
+    }
+
+    public IList<ICalculatable> GetCalculationOverrides(IIORegion region)
+    {
+        DependencyObject val = region as DependencyObject;
+        if (DebugTools.AssertNotNull(val, null).Failed)
+        {
+            return null;
+        }
+        ICalculationOverrideContainer calculationOverrides = CalculationOverridesHandler.GetCalculationOverrides(val);
+        if (calculationOverrides != null)
+        {
+            return ((IEnumerable<ICalculatable>)calculationOverrides.CalculatableChildren).ToList();
+        }
+        return null;
+    }
+
+    public void ToggleInputRegions(IEnumerable<IIORegion> inputRegions)
+    {
+        if (inputRegions.IsNullOrEmpty())
+        {
+            return;
+        }
+        List<IIORegion> list = inputRegions.ToList().FindAll(CanToggleRegionAsInput);
+        if (list.IsNullOrEmpty())
+        {
+            return;
+        }
+        ToggleRegionsDesignationCommand command = new ToggleRegionsDesignationCommand(CreateToggleTagCommandsCollection(list, true), "Toggle Inputs");
+        command.Execute();
+    }
+
+    public void ToggleOutputRegions(IEnumerable<IIORegion> outputRegions)
+    {
+        if (outputRegions.IsNullOrEmpty())
+        {
+            return;
+        }
+        List<IIORegion> list = outputRegions.ToList().FindAll(CanToggleRegionAsOutput);
+        if (list.IsNullOrEmpty())
+        {
+            return;
+        }
+        ToggleRegionsDesignationCommand command = new ToggleRegionsDesignationCommand(CreateToggleTagCommandsCollection(list, false), "Toggle Outputs");
+        command.Execute();
+    }
+
+    public bool CanToggleRegionsAsInput(IEnumerable<IIORegion> regions) => regions.Any(CanToggleRegionAsInput);
+
+    public bool CanToggleRegionsAsOutput(IEnumerable<IIORegion> regions) => regions.Any(CanToggleRegionAsOutput);
 
     [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
     public IScalarItem InputOutputGetRealValue(string alias, bool isInp) => InputOutputGetRealValueAs(alias, isInp, null);
@@ -249,6 +376,262 @@ public partial class IOManager
             return region2.IsSuitableForOutputTagging();
         }
         return false;
+    }
+
+    private void InputRemoveAllCalculationOverrides(DependencyObject region)
+    {
+        foreach (ICalculatable item2 in CalculationOverridesHandler.RemoveCalculatableOverrides(region, CalculationOverridesTypes.InputOverriddenValueSetter))
+        {
+            Pair<IIORegion, ICalculatable> item = new Pair<IIORegion, ICalculatable>
+            {
+                First = region as IIORegion,
+                Second = item2
+            };
+            _shadowCalculatableNotifier.Remove(item);
+        }
+        DebugTools.DevAssert(CalculationOverridesHandler.GetInputCalculationOverrides(region).IsNullOrEmpty(), null);
+    }
+
+    private void InputRemoveCalculationOverridesOnRemoveIOItems(IEnumerable<IIOItem> ioItem)
+    {
+        List<DependencyObject> list = new List<DependencyObject>();
+        foreach (IOItem item2 in ioItem)
+        {
+            DependencyObject region = item2.Region;
+            string idSexp = item2.IdSexp;
+            ICalculatable calculatable = CalculationOverridesHandler.RemoveCalculationOverrideForSExpr(region, idSexp, CalculationOverridesTypes.InputOverriddenValueSetter);
+            if (calculatable != null)
+            {
+                Pair<IIORegion, ICalculatable> item = new Pair<IIORegion, ICalculatable>
+                {
+                    First = region as IIORegion,
+                    Second = calculatable
+                };
+                _shadowCalculatableNotifier.Remove(item);
+            }
+            if (!list.Contains(region))
+            {
+                list.Add(region);
+            }
+        }
+        foreach (DependencyObject item3 in list)
+        {
+            if (_inputs.GetRegionIOItems(item3).IsNullOrEmpty())
+            {
+                DebugTools.DevAssert(CalculationOverridesHandler.GetInputCalculationOverrides(item3).IsNullOrEmpty(), null);
+            }
+        }
+    }
+
+    private void OutputAssertNoCalculationOverridesOnRemoveIOItems(IEnumerable<IIOItem> ioItem)
+    {
+        List<DependencyObject> list = new List<DependencyObject>();
+        foreach (IOItem item in ioItem)
+        {
+            DependencyObject region = item.Region;
+            if (!list.Contains(region))
+            {
+                list.Add(region);
+            }
+        }
+        foreach (DependencyObject item2 in list)
+        {
+            if (DebugTools.DevAssert(_outputs.GetRegionIOItems(item2).IsNullOrEmpty(), null).Passed)
+            {
+                OutputAssertNoCalculationOverrides(item2);
+            }
+        }
+    }
+
+    private static void OutputAssertNoCalculationOverrides(DependencyObject region)
+    {
+        DebugTools.DevAssert(CalculationOverridesHandler.GetOutputCalculationOverrides(region).IsNullOrEmpty(), null);
+    }
+
+    private void HandleIORegionChanged(DependencyObject region, IORegionChangeType ioRegionChangeType)
+    {
+        if (region is IIORegion)
+        {
+            IIORegion iIORegion = region as IIORegion;
+            if (IOTag.HasInputTag(region))
+            {
+                switch (ioRegionChangeType)
+                {
+                case IORegionChangeType.Content:
+                    if (!CanToggleRegionAsInput(iIORegion))
+                    {
+                        DebugTools.FailAssertion(null, Array.Empty<object>());
+                        _inputs.HandleTaggedRegionRemoved(region);
+                        RemoveInputTagFromRegion(iIORegion);
+                    }
+                    else
+                    {
+                        _inputs.HandleTaggedRegionChanged(region);
+                    }
+                    break;
+                case IORegionChangeType.CalcIsDisabledStatus:
+                    if (CalculatableChildHider.IsHiddenFromCalculation(region))
+                    {
+                        InputRemoveAllCalculationOverrides(region);
+                    }
+                    break;
+                default:
+                    DebugTools.FailAssertion("unexpected IORegionChangeType {0}", ioRegionChangeType);
+                    break;
+                }
+            }
+            if (IOTag.HasOutputTag(region))
+            {
+                switch (ioRegionChangeType)
+                {
+                case IORegionChangeType.Content:
+                    if (!CanToggleRegionAsOutput(iIORegion))
+                    {
+                        _outputs.HandleTaggedRegionRemoved(region);
+                        RemoveOutputTagFromRegion(iIORegion);
+                    }
+                    else
+                    {
+                        _outputs.HandleTaggedRegionChanged(region);
+                    }
+                    break;
+                case IORegionChangeType.CalcIsDisabledStatus:
+                    if (CalculatableChildHider.IsHiddenFromCalculation(region))
+                    {
+                        OutputAssertNoCalculationOverrides(region);
+                    }
+                    break;
+                default:
+                    DebugTools.FailAssertion("unexpected IORegionChangeType {0}", ioRegionChangeType);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void HandleInputItemsCollectionRangeChanged(object sender, NotifyCollectionChangedEventArgs args)
+    {
+        switch (args.Action)
+        {
+        case NotifyCollectionChangedAction.Remove:
+            InputRemoveCalculationOverridesOnRemoveIOItems(args.OldItems.OfType<IOItem>());
+            break;
+        default:
+            DebugTools.FailAssertion("Unsupported action: {0}", args.Action);
+            break;
+        case NotifyCollectionChangedAction.Add:
+            break;
+        }
+        FireIODataChanged();
+    }
+
+    private void HandleOutputItemsCollectionRangeChanged(object sender, NotifyCollectionChangedEventArgs args)
+    {
+        switch (args.Action)
+        {
+        case NotifyCollectionChangedAction.Remove:
+            OutputAssertNoCalculationOverridesOnRemoveIOItems(args.OldItems.OfType<IOItem>());
+            break;
+        default:
+            DebugTools.FailAssertion("Unsupported action: {0}", args.Action);
+            break;
+        case NotifyCollectionChangedAction.Add:
+            break;
+        }
+        FireIODataChanged();
+    }
+
+    private void SetIOTagOnRegion(IIORegion element, IOTagType type)
+    {
+        IOTagType tagType = IOTag.GetIOTag(element as DependencyObject) | type;
+        IOTag.SetIOTag(element as DependencyObject, tagType);
+        element.IORegionChanged += HandleIORegionChanged;
+    }
+
+    private void SetInputTagOnRegion(IIORegion element)
+    {
+        if (DebugTools.DevAssert(CanToggleRegionAsInput(element), null).Failed)
+        {
+            return;
+        }
+        SetIOTagOnRegion(element, IOTagType.Input);
+    }
+
+    private void SetOutputTagOnRegion(IIORegion element)
+    {
+        if (DebugTools.DevAssert(CanToggleRegionAsOutput(element), null).Failed)
+        {
+            return;
+        }
+        SetIOTagOnRegion(element, IOTagType.Output);
+    }
+
+    private void RemoveIOTagFromRegion(IIORegion element, IOTagType type)
+    {
+        IOTagType iOTagType = IOTag.GetIOTag(element as DependencyObject) & ~type;
+        IOTag.SetIOTag(element as DependencyObject, iOTagType);
+        if (iOTagType == IOTagType.None)
+        {
+            element.IORegionChanged -= HandleIORegionChanged;
+        }
+    }
+
+    private void RemoveInputTagFromRegion(IIORegion element)
+    {
+        if (!IOTag.HasInputTag(element as DependencyObject))
+        {
+            return;
+        }
+        RemoveIOTagFromRegion(element, IOTagType.Input);
+    }
+
+    private void RemoveOutputTagFromRegion(IIORegion element)
+    {
+        if (!IOTag.HasOutputTag(element as DependencyObject))
+        {
+            return;
+        }
+        RemoveIOTagFromRegion(element, IOTagType.Output);
+    }
+
+    private void ToggleIOTagOnRegion(IIORegion ioRegion, bool asInp, bool set, bool toggleRegionBorder)
+    {
+        DependencyObject region = ioRegion as DependencyObject;
+        if (set)
+        {
+            if (asInp)
+            {
+                SetInputTagOnRegion(ioRegion);
+                _inputs.HandleTaggedRegionAdded(region);
+            }
+            else
+            {
+                SetOutputTagOnRegion(ioRegion);
+                _outputs.HandleTaggedRegionAdded(region);
+            }
+        }
+        else if (asInp)
+        {
+            _inputs.HandleTaggedRegionRemoved(region);
+            RemoveInputTagFromRegion(ioRegion);
+        }
+        else
+        {
+            _outputs.HandleTaggedRegionRemoved(region);
+            RemoveOutputTagFromRegion(ioRegion);
+        }
+        if (toggleRegionBorder)
+        {
+            WhiteboardDependencyProperties.ToggleRegionBorderVisibility(region);
+        }
+    }
+
+    public void Dispose()
+    {
+        _inputs.RangeChanged -= HandleInputItemsCollectionRangeChanged;
+        _inputs.AliasChanged -= FireIODataChanged;
+        _outputs.RangeChanged -= HandleOutputItemsCollectionRangeChanged;
+        _outputs.AliasChanged -= FireIODataChanged;
     }
 
     [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]

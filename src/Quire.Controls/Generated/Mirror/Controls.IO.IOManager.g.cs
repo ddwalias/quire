@@ -12,26 +12,6 @@ namespace Quire.Controls.IO;
 public partial class IOManager : global::Quire.Controls.Core.IORegions.IIORegionManager, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
-    public IOManager(global::Quire.Controls.Core.IEngineeringDocument doc) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleElementAddedToParentContainer(global::Quire.Controls.Core.IORegions.IIORegion ioRegion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleElementRemovedFromParentContainer(global::Quire.Controls.Core.IORegions.IIORegion ioRegion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleElementsListSelectedInParentContainer(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IIORegionBase> ioItemsList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleElementSelectedInParentContainer(global::Quire.Controls.Core.IORegions.IIORegion region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.Calculation.Core.ICalculatable> GetCalculationOverrides(global::Quire.Controls.Core.IORegions.IIORegion region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ToggleInputRegions(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IIORegion> inputRegions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ToggleOutputRegions(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IIORegion> outputRegions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool CanToggleRegionsAsInput(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IIORegion> regions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool CanToggleRegionsAsOutput(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IIORegion> regions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.Support.ICalcWithSyncStatus> CreateIOEvals(global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<global::Quire.Controls.Core.IORegions.IIOItem, global::Quire.Controls.IO.IOManager.IUnitedValueGetter>> itemToValueGetter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void ExtractValues(global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<global::Quire.Controls.Core.IORegions.IIOItem, global::Quire.Controls.IO.IOManager.IUnitedValueGetter>> itemToValueGetter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -43,14 +23,6 @@ public partial class IOManager : global::Quire.Controls.Core.IORegions.IIORegion
     public global::Quire.Controls.Core.IORegions.IInputOutputItemsStates CollectScalarInputsOutputsStates(global::Quire.Controls.Core.IORegions.GetInputValueTypes inputTypes, global::Quire.Controls.Core.IORegions.GetOutputValueTypes outputTypes, global::System.Func<global::Quire.Wpf.INotifyProgress, bool> waitForCalculationStopped) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.List<global::Quire.Controls.Core.IORegions.IIORegion> GetUntaggedRegions(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IIORegion> regions, bool asInp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void InputRemoveAllCalculationOverrides(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void InputRemoveCalculationOverridesOnRemoveIOItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IIOItem> ioItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OutputAssertNoCalculationOverridesOnRemoveIOItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IIOItem> ioItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OutputAssertNoCalculationOverrides(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.IORegions.IOManagerErrorCode CreateShadowOverrideValue(global::Quire.Controls.Core.IORegions.IIOItem ioItem, global::Quire.Controls.IO.IOManager.ISingleValueSetter singleValueSetter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -68,30 +40,8 @@ public partial class IOManager : global::Quire.Controls.Core.IORegions.IIORegion
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Controls.Core.IORegions.IOManagerErrorCode CreateShadowEvalForCalc(global::Quire.Controls.Core.IORegions.IIOItem ioItem, string scalingSExpression, out global::Quire.Controls.IO.ScaledEvaluation eval) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HandleIORegionChanged(global::System.Windows.DependencyObject region, global::Quire.Controls.Core.IORegions.IORegionChangeType ioRegionChangeType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleInputItemsCollectionRangeChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleOutputItemsCollectionRangeChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetIOTagOnRegion(global::Quire.Controls.Core.IORegions.IIORegion element, global::Quire.Controls.Core.IORegions.IOTagType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetInputTagOnRegion(global::Quire.Controls.Core.IORegions.IIORegion element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetOutputTagOnRegion(global::Quire.Controls.Core.IORegions.IIORegion element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RemoveIOTagFromRegion(global::Quire.Controls.Core.IORegions.IIORegion element, global::Quire.Controls.Core.IORegions.IOTagType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RemoveInputTagFromRegion(global::Quire.Controls.Core.IORegions.IIORegion element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RemoveOutputTagFromRegion(global::Quire.Controls.Core.IORegions.IIORegion element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ToggleIOTagOnRegion(global::Quire.Controls.Core.IORegions.IIORegion ioRegion, bool asInp, bool set, bool toggleRegionBorder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.List<global::Quire.Undo.UndoableCommand> CreateToggleTagCommandsCollection(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IIORegion> regions, bool asInp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Undo.UndoableCommand CreateToggleOutputCommand(global::Quire.Controls.Core.IORegions.IOutputRegion region, bool setTag, bool toggleRegionBorder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Dispose() { }
 
 }
