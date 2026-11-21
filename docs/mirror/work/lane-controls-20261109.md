@@ -60,6 +60,8 @@
   - Shapes: `if (!(originalImageUri == null ? false : ImageUtils.CopyImageToStream(...)))` emits ternary stack-materialization and jump table matching Mathcad's IL.
 - Batch 27: `DitaWriter.WriteRegionML(UIElement)`. Gate: PASS, 584 checked. Report: `.mirror-cache/release-il-4d51ce31119c/release-il.json`.
   - Shapes: Reordered member declarations in Mathcad order, kept `WriteContentControl(FrameworkElement, Stream)` as an unmarked placeholder stub, and separated late properties in `DitaWriter.Properties.cs` to match closure ordinal `30_0` for `<WriteRegionML>b__30_0`.
+- Batch 28: `IO.IOManager` alias management, value setters and getters (`SetIOAlias`, `GetIOAlias`, `ClearIOAlias`, `SetValue` x3, `SetStringValue`, `SetSExprValue`, `InputOutputGetRealValueAs`, `InputOutputGetMatrixValueAs`, `InputOutputGetStringValue`, `InputOutputGetCalculatedValue`, `InputGetSExprValue`, `CanToggleRegionAsInput`, `CanToggleRegionAsOutput`) and nested `UnitedMatrixSetter` (double[][] ctor, `CreateShadowCalculatable`, `IsValueValid`). Gate: PASS, 602 checked. Report: `.mirror-cache/release-il-f48ce0af32dc/release-il.json`.
+  - Shapes: `InputOutputGetRealValueAs` branch assigns both interfaces directly matching dup/stloc.0/stloc.1 without castclass; `UnitedMatrixSetter` `[MirrorOf]` preserves type binding when stubs are removed.
 
 
 

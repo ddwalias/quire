@@ -9,7 +9,6 @@ using Quire.Controls.Core.IORegions;
 using Quire.Core;
 using Quire.EquationEditor.Tree;
 using Quire.EquationEditor.Tree.Transform;
-using Quire.Core;
 using Quire.Mirror;
 
 namespace Quire.Controls.IO;
@@ -63,6 +62,150 @@ public partial class IOManager
 
     [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
     public IMatrixItem InputOutputGetMatrixValue(string alias, bool isInp) => InputOutputGetMatrixValueAs(alias, isInp, null);
+
+    public static bool SetIOAlias(IOItem item, string alias)
+    {
+        IIORegionManager inputOutputRegionManager = DocumentAttachedProperties.GetInputOutputRegionManager(item.Region);
+        bool flag = inputOutputRegionManager.IsValidAlias(alias, item.IsInput);
+        if (flag)
+        {
+            Dictionary<string, string> iOAliasMap = IOItemsAliasManager.GetIOAliasMap(item.Region, item.IsInput);
+            Dictionary<string, string> dictionary = new Dictionary<string, string>(iOAliasMap);
+            string oldAlias = iOAliasMap[item.IdSexp];
+            dictionary[item.IdSexp] = alias;
+            if (item.IsInput)
+            {
+                inputOutputRegionManager.Inputs.ResetAlias(item, oldAlias, alias);
+            }
+            else
+            {
+                inputOutputRegionManager.Outputs.ResetAlias(item, oldAlias, alias);
+            }
+            IOItemsAliasManager.SetIOAliasMap(item.Region, dictionary, item.IsInput);
+        }
+        return flag;
+    }
+
+    public static string GetIOAlias(IOItem item)
+    {
+        Dictionary<string, string> iOAliasMap = IOItemsAliasManager.GetIOAliasMap(item.Region, item.IsInput);
+        if (iOAliasMap != null)
+        {
+            return iOAliasMap[item.IdSexp];
+        }
+        return string.Empty;
+    }
+
+    public static void ClearIOAlias(IOItem item)
+    {
+        Dictionary<string, string> iOAliasMap = IOItemsAliasManager.GetIOAliasMap(item.Region, item.IsInput);
+        if (iOAliasMap != null && iOAliasMap[item.IdSexp] != null)
+        {
+            iOAliasMap.Remove(item.IdSexp);
+        }
+    }
+
+    public IOManagerErrorCode SetValue(string alias, double value, string units)
+    {
+        UnitedScalarSetter unitedScalarSetter = new UnitedScalarSetter(alias, value, units);
+        SetValue(unitedScalarSetter);
+        return unitedScalarSetter.OperationResult;
+    }
+
+    public IOManagerErrorCode SetValue(string alias, double[][] value, string units)
+    {
+        UnitedMatrixSetter unitedMatrixSetter = new UnitedMatrixSetter(alias, value, units);
+        SetValue(unitedMatrixSetter);
+        return unitedMatrixSetter.OperationResult;
+    }
+
+    private void SetValue(ISingleValueSetter unitedSingleValueSetter)
+    {
+        SetValues(new ISingleValueSetter[1] { unitedSingleValueSetter }, DefaultCalculationTimeout);
+    }
+
+    public IOManagerErrorCode SetStringValue(string alias, string stringValue)
+    {
+        StringValueSetter stringValueSetter = new StringValueSetter(alias, stringValue);
+        SetValue(stringValueSetter);
+        return stringValueSetter.OperationResult;
+    }
+
+    public IOManagerErrorCode SetSExprValue(string alias, string sExpression)
+    {
+        SExpressionSetter sExpressionSetter = new SExpressionSetter(alias, sExpression);
+        SetValue(sExpressionSetter);
+        return sExpressionSetter.OperationResult;
+    }
+
+    public IScalarItem InputOutputGetRealValueAs(string alias, bool isInp, string units)
+    {
+        IScalarItem result;
+        IUnitedValueGetter getter;
+        if (isInp)
+        {
+            ScalarInputGetter inputGetter = new ScalarInputGetter(alias, GetInputValueTypes.OverriddenValues, units);
+            result = inputGetter;
+            getter = inputGetter;
+        }
+        else
+        {
+            ScalarOutputGetter outputGetter = new ScalarOutputGetter(alias, GetOutputValueTypes.OverriddenValues, units);
+            result = outputGetter;
+            getter = outputGetter;
+        }
+        GetValue(isInp, getter);
+        return result;
+    }
+
+    public IMatrixItem InputOutputGetMatrixValueAs(string alias, bool isInp, string units)
+    {
+        UnitedMatrixGetter unitedMatrixGetter = new UnitedMatrixGetter(alias, isInp, units);
+        GetValue(isInp, unitedMatrixGetter);
+        return unitedMatrixGetter;
+    }
+
+    public IStringItem InputOutputGetStringValue(string alias, bool isInp)
+    {
+        StringGetter stringGetter = new StringGetter(alias, isInp);
+        GetValue(isInp, stringGetter);
+        return stringGetter;
+    }
+
+    public ICommonValueItem InputOutputGetCalculatedValue(string alias, bool isInp)
+    {
+        CommonValueGetter commonValueGetter = new CommonValueGetter(alias, isInp);
+        GetValue(isInp, commonValueGetter);
+        return commonValueGetter;
+    }
+
+    public string InputGetSExprValue(string alias)
+    {
+        IIOItem item = Inputs.GetItem(alias, GetAndSetOperationsCompareAliasesCaseInsensitively);
+        if (item != null)
+        {
+            return ((IInputRegion)item.Region).GetDefinitionSExpression(item.IdSexp);
+        }
+        return null;
+    }
+
+    private static bool CanToggleRegionAsInput(IIORegion region)
+    {
+        if (region is IInputRegion region2)
+        {
+            return region2.IsSuitableForInputTagging();
+        }
+        return false;
+    }
+
+    private static bool CanToggleRegionAsOutput(IIORegion region)
+    {
+        if (region is IOutputRegion region2)
+        {
+            return region2.IsSuitableForOutputTagging();
+        }
+        return false;
+    }
 
     [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
     public IValuesSetter CreateScaledValueSettersCollection() => new ValuesSetter(this);
@@ -432,7 +575,8 @@ public partial class IOManager
         }
     }
 
-    partial class UnitedMatrixSetter
+    [MirrorOf("Ptc.Controls.IO.IOManager+UnitedMatrixSetter, Ptc.Controls")]
+    private partial class UnitedMatrixSetter : UnitedValueSetter
     {
         private readonly double[,] _value;
 
@@ -465,6 +609,62 @@ public partial class IOManager
             {
                 _value = null;
             }
+        }
+
+        public UnitedMatrixSetter(string alias, double[][] value, string units)
+            : base(alias, units)
+        {
+            if (value == null)
+            {
+                return;
+            }
+            int length = value.GetLength(0);
+            int length2 = value[0].GetLength(0);
+            for (int num = 1; num < length; num++)
+            {
+                if (value[num].GetLength(0) != length2)
+                {
+                    return;
+                }
+            }
+            _value = new double[length, length2];
+            for (int num2 = 0; num2 < length; num2++)
+            {
+                for (int num3 = 0; num3 < length2; num3++)
+                {
+                    _value[num2, num3] = value[num2][num3];
+                }
+            }
+        }
+
+        public override IShadowIdDefinition CreateShadowCalculatable(string sExprKey)
+        {
+            if (!SExpressionHelperUtilites.IsIdentifierSExpr(sExprKey))
+            {
+                return null;
+            }
+            return new MatrixDefinition(sExprKey, _value, ScalingSExpression);
+        }
+
+        protected override bool IsValueValid()
+        {
+            if (_value == null)
+            {
+                return false;
+            }
+            int length = _value.GetLength(0);
+            int length2 = _value.GetLength(1);
+            for (int num = 0; num < length; num++)
+            {
+                for (int num2 = 0; num2 < length2; num2++)
+                {
+                    if (!_value[num, num2].IsValid())
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 }
