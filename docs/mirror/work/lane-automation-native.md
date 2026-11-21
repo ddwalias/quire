@@ -10,7 +10,7 @@
   - Added `<ProjectReference Include="..\Quire.Efi\Quire.Efi.csproj" />` and `<UseWindowsForms>true</UseWindowsForms>` to `Quire.Automation.Native.csproj`.
   - Hand-written in `Mirrored/SymbolicValue.cs`.
 - Stubs removed: `Generated/Mirror/Automation.SymbolicValue.g.cs` (11 stubs removed).
-- Release IL report: `python tools/validation/release_il.py --base main --project Quire.Automation.Native` — PASS, 320 checked (was 309 on base, +11 exact), 0 failures. Report: `.mirror-cache/release-il-95d1a13ad7da/release-il.json`.
+- Release IL report: `python tools/validation/release_il.py --base main --project Quire.Automation.Native` — PASS, 320 checked (was 309 on base, +11 exact), 0 failures. Landed on main: `09db4b3a1` (receipt: `gate-il-182001f500b0.json`).
 - Remaining: 58 stubs and 4 unpaired members left in `componentsmgd.dll` (`VSDataValue`, `McxComponent`, `VSValueFactory`), concretely blocked on cross-assembly interop mapping (`[interop.mathcad]` vs `[automationmgd]` for `Mathcad.IMatrixValue`).
 
 ## Batch 8 — MatrixValueProxy and MatrixValueData
