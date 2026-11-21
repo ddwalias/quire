@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Media;
 using Quire.Controls.Core;
+using Quire.Controls.Core.IORegions;
 using Quire.Controls.InputControls;
 using Quire.Controls.Worksheet;
 using Quire.Core;
@@ -125,6 +127,227 @@ public partial class EngineeringDocument
     }
 
     private CustomizedValues _customizedValues;
+    private DocumentReadonlyOptions _readonlyOptions;
+    private string _unsavedDocumentName;
+
+    [MirrorOf("Ptc.Controls.EngineeringDocument+DisplayPropertyChangeNotifier, Ptc.Controls")]
+    private class DisplayPropertyChangeNotifier : IDisposable
+    {
+        private readonly EngineeringDocument _doc;
+        private readonly string _displayDocumentName;
+        private readonly string _displayFileName;
+        private readonly string _displayFilePath;
+        private readonly string _displayWindowTitle;
+        private readonly DateTime? _displaySavedDate;
+
+        public DisplayPropertyChangeNotifier(EngineeringDocument doc)
+        {
+            _doc = doc;
+            _displayDocumentName = doc.DisplayDocumentName;
+            _displayFileName = doc.DisplayFileName;
+            _displayFilePath = doc.DisplayFilePath;
+            _displaySavedDate = doc.DisplaySavedDate;
+            _displayWindowTitle = doc.DisplayWindowTitle;
+        }
+
+        public void Dispose()
+        {
+            if (_displayDocumentName != _doc.DisplayDocumentName)
+            {
+                _doc.FirePropertyChanged("DisplayDocumentName");
+            }
+            if (_displayFileName != _doc.DisplayFileName)
+            {
+                _doc.FirePropertyChanged("DisplayFileName");
+            }
+            if (_displayFilePath != _doc.DisplayFilePath)
+            {
+                _doc.FirePropertyChanged("DisplayFilePath");
+            }
+            if (_displaySavedDate != _doc.DisplaySavedDate)
+            {
+                _doc.FirePropertyChanged("DisplaySavedDate");
+            }
+            if (_displayWindowTitle != _doc.DisplayWindowTitle)
+            {
+                _doc.FirePropertyChanged("DisplayWindowTitle");
+            }
+        }
+    }
+
+    private void FirePropertyChanged(string propertyName)
+    {
+        if (propertyName == "DisplayFilePath")
+        {
+            WorksheetControl.DisplayFilePath = DisplayFilePath;
+        }
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    public IIORegionManager InputOutputRegionManager => Worksheet.InputOutputRegionManager;
+
+    public string DocumentTabIcon
+    {
+        get => _customizedValues.TabIcon;
+        set
+        {
+            if (_customizedValues.TabIcon == value)
+            {
+                return;
+            }
+            if (value.IsNotEmpty() && !File.Exists(value))
+            {
+                return;
+            }
+            _customizedValues.TabIcon = value;
+            FirePropertyChanged("DocumentTabIcon");
+        }
+    }
+
+    public DocumentReadonlyOptions ReadonlyOptions
+    {
+        get => _readonlyOptions;
+        private set
+        {
+            DocumentReadonlyOptions documentReadonlyOptions = value ?? DocumentReadonlyOptions.Default;
+            if (_readonlyOptions == documentReadonlyOptions)
+            {
+                return;
+            }
+            _readonlyOptions = documentReadonlyOptions;
+            InputOutputRegionManager.GetAndSetOperationsCompareAliasesCaseInsensitively = _readonlyOptions.CaseInsensitiveAliasComparisonEnabled;
+            FirePropertyChanged("ReadonlyOptions");
+        }
+    }
+
+    public string CustomizedClosePrompt
+    {
+        get => _customizedValues.ClosePrompt;
+        set => _customizedValues.ClosePrompt = value;
+    }
+
+    public string CustomizedFilePath
+    {
+        get => _customizedValues.FilePath;
+        set
+        {
+            if (_customizedValues.FilePath == value)
+            {
+                return;
+            }
+            using (new DisplayPropertyChangeNotifier(this))
+            {
+                _customizedValues.FilePath = value;
+            }
+        }
+    }
+
+    public string DisplayFilePath => GetFirstNonEmptyString(CustomizedFilePath, FilePath);
+
+    public string FileName => Path.GetFileName(FilePath);
+
+    public string CustomizedFileName => Path.GetFileName(CustomizedFilePath);
+
+    public string DisplayFileName => GetFirstNonEmptyString(CustomizedFileName, FileName);
+
+    public DateTime? CustomizedSavedDate
+    {
+        get => _customizedValues.SavedDate;
+        set
+        {
+            if (_customizedValues.SavedDate == value)
+            {
+                return;
+            }
+            using (new DisplayPropertyChangeNotifier(this))
+            {
+                _customizedValues.SavedDate = value;
+            }
+        }
+    }
+
+    public DateTime? DisplaySavedDate
+    {
+        get
+        {
+            if (CustomizedFilePath.IsNullOrEmpty())
+            {
+                return LastSavedDate;
+            }
+            if (CustomizedSavedDate.HasValue)
+            {
+                return CustomizedSavedDate;
+            }
+            try
+            {
+                if (Path.IsPathRooted(CustomizedFilePath) && File.Exists(CustomizedFilePath))
+                {
+                    return File.GetLastWriteTime(CustomizedFilePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                DebugTools.FailAssertion(string.Format("{0} : {1}", ex.Message, CustomizedFilePath));
+            }
+            return null;
+        }
+    }
+
+    public string DocumentName
+    {
+        get => FilePathToNameConverter.Convert(FilePath, _unsavedDocumentName);
+        set
+        {
+            if (_unsavedDocumentName == value)
+            {
+                return;
+            }
+            DebugTools.DevAssert(string.IsNullOrEmpty(_unsavedDocumentName) && string.IsNullOrEmpty(FilePath), null);
+            using (new DisplayPropertyChangeNotifier(this))
+            {
+                _unsavedDocumentName = value;
+            }
+        }
+    }
+
+    public string CustomizedDocumentName
+    {
+        get => _customizedValues.DocumentName;
+        set
+        {
+            if (_customizedValues.DocumentName == value)
+            {
+                return;
+            }
+            using (new DisplayPropertyChangeNotifier(this))
+            {
+                _customizedValues.DocumentName = value;
+            }
+        }
+    }
+
+    public string DisplayDocumentName => GetFirstNonEmptyString(CustomizedDocumentName, FilePathToNameConverter.Convert(DisplayFileName, DocumentName));
+
+    public string CustomizedWindowTitle
+    {
+        get => _customizedValues.WindowTitle;
+        set
+        {
+            if (_customizedValues.WindowTitle == value)
+            {
+                return;
+            }
+            using (new DisplayPropertyChangeNotifier(this))
+            {
+                _customizedValues.WindowTitle = value;
+            }
+        }
+    }
+
+    public string DisplayWindowTitle => GetFirstNonEmptyString(CustomizedWindowTitle, DisplayFilePath, DisplayDocumentName);
 
     public void ActivateHeader() => Worksheet.ActivateHeader();
 

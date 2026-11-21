@@ -36,10 +36,6 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Controls.Core.FrameworkElementFacade _frameworkElementFacade;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.DocumentReadonlyOptions _readonlyOptions;
-    [global::Quire.Mirror.MirrorStub]
-    private string _unsavedDocumentName;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty IsDirtyProperty;
     [global::Quire.Mirror.MirrorStub]
     private bool _isDocumentATemplate;
@@ -63,36 +59,6 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     public global::Quire.IO.IFileOperationsProvider FileOpsProvider { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.IO.IPackageOperationsProvider PackageOpsProvider { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string DocumentTabIcon { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.DocumentReadonlyOptions ReadonlyOptions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string CustomizedClosePrompt { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string CustomizedFilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string DisplayFilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string FileName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string CustomizedFileName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string DisplayFileName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::System.DateTime> CustomizedSavedDate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::System.DateTime> DisplaySavedDate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string DocumentName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string CustomizedDocumentName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string DisplayDocumentName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string CustomizedWindowTitle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string DisplayWindowTitle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.UnitSystems DefaultUnitSystem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -141,8 +107,6 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     public bool IsMainActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Point InsertionPoint { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IORegions.IIORegionManager InputOutputRegionManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string CWD { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -331,29 +295,6 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     public global::System.Exception SaveFileAndUpdateCWDState(string fileName, global::Quire.Controls.Core.IDocumentSaveOptions options, out bool wasRenamed) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateCWDState(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.EngineeringDocument+DisplayPropertyChangeNotifier, Ptc.Controls")]
-    private partial class DisplayPropertyChangeNotifier : global::System.IDisposable
-    {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::Quire.Controls.EngineeringDocument _doc;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly string _displayDocumentName;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly string _displayFileName;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly string _displayFilePath;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly string _displayWindowTitle;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.Nullable<global::System.DateTime> _displaySavedDate;
-        [global::Quire.Mirror.MirrorStub]
-        public DisplayPropertyChangeNotifier(global::Quire.Controls.EngineeringDocument doc) { }
-        [global::Quire.Mirror.MirrorStub]
-        public void Dispose() { }
-    }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.EngineeringDocument+RootDecorator, Ptc.Controls")]
     private partial class RootDecorator : global::System.Windows.Documents.AdornerDecorator, global::Quire.Wpf.IAlignedRoot
