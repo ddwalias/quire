@@ -3,12 +3,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Quire;
 using Quire.Calculation.Core;
 using Quire.Controls.Core;
 using Quire.Controls.Core.Serialization;
+using Quire.Controls.Core.Whiteboard;
 using Quire.Controls.ExcelComponent.Model;
 using Quire.Controls.ExcelComponent.ViewModel;
 using Quire.PersistentData;
@@ -22,25 +25,114 @@ public partial class ChartComponentControl
     private readonly ChartComponentModel _chartModel;
     private readonly ChartComponentViewModel _chartViewModel;
 
+    protected override ISerializationStrategy SerializationStrategy { get; set; }
+
+    protected override IDeserializationStrategy DeserializationStrategy { get; set; }
+
     static ChartComponentControl()
     {
         EngineErrorMessages.MergeDictionary(ResourceProvider<ChartComponentErrorsDictionary>.Instance);
     }
 
-    protected override ISerializationStrategy SerializationStrategy { get; set; }
+    public ChartComponentControl()
+        : this(createOleContainer: false)
+    {
+    }
 
-    protected override IDeserializationStrategy DeserializationStrategy { get; set; }
+    public ChartComponentControl(Size? gridCellSize)
+        : this(createOleContainer: true, gridCellSize)
+    {
+    }
+
+    private ChartComponentControl(bool createOleContainer, Size? gridCellSize = null)
+        : base(new ChartComponentViewModel(new ChartComponentModel(), gridCellSize), new ChartComponentDictionary())
+    {
+        _chartModel = (ChartComponentModel)_model;
+        _chartModel.RequestUpdateIdentifierLabels += HandleRequestUpdateIdentifierLabels;
+        _chartViewModel = (ChartComponentViewModel)ViewModel;
+        Init();
+        if (createOleContainer)
+        {
+            CreateAndInitOleContainerItem();
+            _chartViewModel.EndInit();
+        }
+    }
+
+    private ChartComponentControl(ChartComponentControl original)
+        : base(original._chartViewModel.CloneChartComponentViewModel(), null)
+    {
+        _chartModel = (ChartComponentModel)_model;
+        _chartViewModel = (ChartComponentViewModel)ViewModel;
+        Init();
+        if (Resources.MergedDictionaries.Count != original.Resources.MergedDictionaries.Count)
+        {
+            foreach (ResourceDictionary mergedDictionary in original.Resources.MergedDictionaries)
+            {
+                if (!Resources.MergedDictionaries.Contains(mergedDictionary))
+                {
+                    Resources.MergedDictionaries.Add(mergedDictionary);
+                }
+            }
+        }
+        if (_chartModel != null)
+        {
+            _chartModel.Resources = Resources.MergedDictionaries[0];
+        }
+        _chartViewModel.EndInit();
+    }
+
+    private void Init()
+    {
+        SerializationStrategy = new ChartComponentSerializationStrategy(this, () => new chartComponentRegionType());
+        DeserializationStrategy = new ChartComponentDeserializationStrategy(this);
+        BindCommands();
+    }
 
     private DispatcherOperation UpdateIdentifierLabelsOperation { get; set; }
 
-    private ChartContainer ChartContainer => OleContainerItem as ChartContainer;
-
-    IChartContainer IChartComponentControl.ChartContainer => ChartContainer;
+    private void HandleRequestUpdateIdentifierLabels()
+    {
+        if (UpdateIdentifierLabelsOperation == null)
+        {
+            UpdateIdentifierLabelsOperation = Dispatcher.BeginInvoke((Action)(() =>
+            {
+                foreach (IChartComponentCalculatableWrapper item in _chartModel.CalculatableWrappers.Cast<IChartComponentCalculatableWrapper>())
+                {
+                    item.UpdateIdentifierLabelsIfNeeded();
+                }
+            }), (DispatcherPriority)9, Array.Empty<object>());
+            UpdateIdentifierLabelsOperation.Aborted += delegate
+            {
+                UpdateIdentifierLabelsOperation = null;
+            };
+            UpdateIdentifierLabelsOperation.Completed += delegate
+            {
+                UpdateIdentifierLabelsOperation = null;
+            };
+        }
+        else
+        {
+            DebugTools.DevAssert((int)UpdateIdentifierLabelsOperation.Status == 0, null);
+        }
+    }
 
     protected override IOleContainerItem CreateOleContainerItem()
     {
         return new ChartContainer();
     }
+
+    public override void SetStatusSynchronized()
+    {
+        CalculatableChildren.Where((ICalculatable calc) => !(calc is IOleBaseComponentCalculatableWrapper)).Each((ICalculatable calc) =>
+        {
+            calc.SetStatusSynchronized();
+        });
+        base.SetStatusSynchronized();
+    }
+
+    private ChartContainer ChartContainer => OleContainerItem as ChartContainer;
+
+    IChartContainer IChartComponentControl.ChartContainer => ChartContainer;
 
     private void BindCommands()
     {
@@ -78,6 +170,42 @@ public partial class ChartComponentControl
     private void CanInsertAxisExpression(object sender, CanExecuteRoutedEventArgs args)
     {
         args.CanExecute = _chartViewModel.CanInsertInputExpression;
+    }
+
+    private void OnInsertAxisExpression(object sender, ExecutedRoutedEventArgs args)
+    {
+        if (DebugTools.DevAssert(args.Parameter is ChartWrapperType, null).Failed)
+        {
+            return;
+        }
+        ChartWrapperType chartType = (ChartWrapperType)args.Parameter;
+        uint? index;
+        IEnumerable<IChartComponentCalculatableWrapper> enumerable = _chartModel.CalculatableWrappers.Cast<IChartComponentCalculatableWrapper>().Where((IChartComponentCalculatableWrapper wrapper) => wrapper.ChartWrapperType == chartType);
+        if (chartType.IsIndexedTraceType())
+        {
+            if (enumerable.IsNullOrEmpty())
+            {
+                index = 1u;
+            }
+            else
+            {
+                uint num = 1u;
+                foreach (IChartComponentCalculatableWrapper item in enumerable)
+                {
+                    if (!DebugTools.AssertNotNull(item.TraceId, null).Failed)
+                    {
+                        num = Math.Max(num, item.TraceId.Value);
+                    }
+                }
+                index = num + 1;
+            }
+        }
+        else
+        {
+            index = null;
+        }
+        string expression = ChartComponentCalculatableWrapper.ConstructAxisExpression(chartType, index);
+        InsertNewOleComponentExpression(expression, navigateToEnd: true);
     }
 
     public IList<IRegionPersistentData> SetRegionPersistentData(IDeS11NProvider d11NProvider, object data)
