@@ -49,22 +49,10 @@ public partial class DitaWriter : global::System.Xml.XmlTextWriter, global::Quir
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.DitaWriter+Element, Ptc.Controls")]
     public partial class Element : global::System.IDisposable
     {
-        [global::Quire.Mirror.MirrorStub]
-        public Element(global::System.Xml.XmlWriter writer, string localName) { }
-        [global::Quire.Mirror.MirrorStub]
-        public Element(global::System.Xml.XmlWriter writer, string localName, string nameSpace) { }
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.DitaWriter+Worksheet, Ptc.Controls")]
     public partial class Worksheet : global::Quire.Controls.DitaWriter.Element
     {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::Quire.Controls.DitaWriter.Element _regions;
-        [global::Quire.Mirror.MirrorStub]
-        private const string ElementName = "worksheet";
-        [global::Quire.Mirror.MirrorStub]
-        public Worksheet(global::Quire.Controls.DitaWriter writer) : base(default(global::System.Xml.XmlWriter), default(string)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override void Dispose() => base.Dispose();
     }
 }

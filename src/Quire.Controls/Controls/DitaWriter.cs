@@ -60,13 +60,44 @@ public partial class DitaWriter
     [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
     public bool UseOverrides => true;
 
-    partial class Element
+    public partial class Element
     {
         [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
         private readonly XmlWriter _writer;
 
+        public Element(XmlWriter writer, string localName)
+        {
+            _writer = writer;
+            writer.WriteStartElement(localName);
+        }
+
+        public Element(XmlWriter writer, string localName, string nameSpace)
+        {
+            _writer = writer;
+            writer.WriteStartElement(localName, nameSpace);
+        }
+
         [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
         public virtual void Dispose() => _writer.WriteEndElement();
+    }
+
+    public partial class Worksheet : Element
+    {
+        private readonly Element _regions;
+        private const string ElementName = "worksheet";
+
+        public Worksheet(DitaWriter writer)
+            : base(writer, "worksheet", "http://schemas.mathsoft.com/worksheet50")
+        {
+            _regions = new Element(writer, "regions");
+            writer.ZeroCurrentId();
+        }
+
+        public override void Dispose()
+        {
+            _regions.Dispose();
+            base.Dispose();
+        }
     }
 
     private string CurrentIdString => string.Format("ml-{0}", _currentId);

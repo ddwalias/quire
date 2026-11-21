@@ -52,4 +52,7 @@
   - Shapes: matched first try with `if (_contentLoaded) return;` and `if (connectionId == 1)` branch layout.
 - Batch 23: `Help.HelpManager` (fields, .ctor, `EngNbLocalHelpEnvironmentVariableName` get/set, `HelpServerPath` get/set, `GetWebPathPerVariant`, `GetTutorialPath`, `ConstructTopicPath`, `BuildHelpUidKey`, `GetServerPath`, `OnHelpSettingsPropertyChanged`, `OnPropertyChanged`). Gate: PASS, 569 checked. Report: `.mirror-cache/release-il-e0d03d75c937/release-il.json`.
   - Shapes: `.ctor` switch matches jump table when `MathcadOnPrem` is explicitly listed; `GetServerPath` switch similarly lists `MathcadOnPrem` explicitly and uses `if (!text.IsNullOrEmpty())` to place the `new Uri(...)` branch first; `GetWebPathPerVariant` matches 26-instruction boolean switch with `case false` and `default` arms.
+- Batch 24: `DitaWriter.Element` (`Element(XmlWriter, string)`, `Element(XmlWriter, string, string)`) and `DitaWriter.Worksheet` (`_regions`, `ElementName`, `Worksheet(DitaWriter)`, `Dispose`). Gate: PASS, 573 checked. Report: `.mirror-cache/release-il-b0158d28bd75/release-il.json`.
+  - Shapes: `Element` constructors and `Worksheet` constructor with `regions` element and `ZeroCurrentId` call matched natural source on first try.
+
 
