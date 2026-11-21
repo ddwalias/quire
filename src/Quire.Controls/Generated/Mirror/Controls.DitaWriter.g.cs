@@ -14,8 +14,6 @@ public partial class DitaWriter : global::System.Xml.XmlTextWriter, global::Quir
     [global::Quire.Mirror.MirrorStub]
     private void WriteContentControl(global::System.Windows.FrameworkElement element, global::System.IO.Stream fileStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void WriteImageControl(global::Quire.Controls.Core.ImageControl imageControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void WriteRegionML(global::System.Windows.UIElement region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.DitaWriter+Element, Ptc.Controls")]

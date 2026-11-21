@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media.Imaging;
 using System.Xml;
 using Quire.Controls.Core;
 using Quire.Mirror;
@@ -144,6 +145,21 @@ public partial class DitaWriter
     {
         FlowDocument document = richTextBox.Document;
         WriteElementString("p", new System.Windows.Documents.TextRange(document.ContentStart, document.ContentEnd).Text);
+    }
+
+    public void WriteImageControl(ImageControl imageControl)
+    {
+        BitmapSource source = imageControl.Source as BitmapSource;
+        Uri originalImageUri = imageControl.OriginalImageUri;
+        string imageExtension = ImageControl.GetImageExtension(originalImageUri);
+        using (Stream stream = WriteImageElementCreateFile(imageExtension))
+        {
+            if (!(originalImageUri == null ? false : ImageUtils.CopyImageToStream(originalImageUri, stream, imageControl.OriginalStreamHash)))
+            {
+                ImageUtils.EncodeImage(source, imageExtension, stream);
+            }
+        }
+        _currentId++;
     }
 
     public void WriteImageControlML(ImageControl imageControl)

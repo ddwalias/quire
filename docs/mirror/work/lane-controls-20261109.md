@@ -56,6 +56,8 @@
   - Shapes: `Element` constructors and `Worksheet` constructor with `regions` element and `ZeroCurrentId` call matched natural source on first try.
 - Batch 25: `DitaWriter` (`.ctor`, `WriteHeader`, `WriteImageElementCreateFile`, `WriteContentControl(ContentControl)`, `WriteRichTextBox`, `WriteImageControlML`, constants/fields `RootElement`, `EquationscalingFactor`, `_fileName`, `P`, `Fig`, `_currentId`, `GraphicsFolderName`, `PubsBody`). Gate: PASS, 579 checked. Report: `.mirror-cache/release-il-e9b989bbde7f/release-il.json`.
   - Shapes: `WriteHeader` uses `string.Format("{0}-{1:yyyyMMdd}", _fileName, DateTime.Today)`; `WriteRichTextBox` qualifies `System.Windows.Documents.TextRange`; all matched natural source on first try.
+- Batch 26: `DitaWriter.WriteImageControl(ImageControl)`. Gate: PASS, 580 checked. Report: `.mirror-cache/release-il-4872e951a780/release-il.json`.
+  - Shapes: `if (!(originalImageUri == null ? false : ImageUtils.CopyImageToStream(...)))` emits ternary stack-materialization and jump table matching Mathcad's IL.
 
 
 
