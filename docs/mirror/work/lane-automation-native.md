@@ -3,6 +3,14 @@
 - Owner: Automation.Native lane; branch `feature/automation-native-agy`.
 - Target: `src/Quire.Automation.Native` (C# net10.0-windows, hosting `automationmgd.dll` and `componentsmgd.dll`).
 
+## Batch 7 — Value
+
+- Members:
+  - `Mathcad.Automation.Value`: `core`, `m_options`, `s_MathPrefix`, `s_UnitPrefix`, `s_XmlPrefix`, `s_MathNamespaceUriVersionForClassic`, `s_MathNamespaceUriVersion`, `s_MathNamespaceUriPrefix`, `s_MathNamespaceUriForClassic`, `s_MathNamespaceUri`, `s_UnitNamespaceUri`, `s_XmlNamespaceUri`, `s_WriteXmlNamespaces`, `Size`, `Core` (get/set), `Dim`, `Raw`, `Simplified`, `MathPrefix` (get/set), `UnitPrefix` (get/set), `XmlPrefix` (get/set), `MathNamespaceUriVersion` (get/set), `MathNamespaceUri` (get/set), `UnitNamespaceUri` (get/set), `XmlNamespaceUri` (get/set), `WriteXmlNamespaces` (get/set), `AsString`, `Type`, `RL`, `NumFmt`, `.ctor()`, `.ctor(object)`, `.ctor(object, RuntimeOptions)`, `NearlyEqual`, `Equals`, `GetHashCode`, `ToString`, `InitializeLifetimeService`, `GetProxy`, `GetUnits`, `WriteValueXml`, `WriteXml(XmlWriter, UnitAction, double)`, `WriteUnitsXml(XmlWriter, Units)`, `WriteValueRL`, `WriteRL(TextWriter, UnitAction)`, `WriteMathElementString`, `WriteUnitElementString`, `WriteMathElementStart`, `WriteUnitElementStart`, `WriteXmlAttribute`, `WriteXml(TextWriter, bool, double)`, `WriteXml(TextWriter, bool)`, `WriteXml(XmlWriter, bool, double)`, `WriteXml(XmlWriter, bool)`, `XML`, `Save`, `Load`, `.cctor`. Hand-written in `Mirrored/Value.cs`.
+- Stubs removed: `Generated/Mirror/Automation.Value.g.cs` (57 stubs removed).
+- Release IL report: `python tools/validation/release_il.py --base main --project Quire.Automation.Native` — PASS, 258 checked (was 208 on base, +50 exact), 0 failures. Report: `.mirror-cache/release-il-81680e968807/release-il.json`.
+- Remaining: 108 unfinished stubs reported by the gate.
+
 ## Batch 6 — ValueProxy
 
 - Members:
