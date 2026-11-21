@@ -50,3 +50,6 @@
   - Shapes: matched first try with natural C# constructs (foreach on IDictionary, is-pattern with member property assignments).
 - Batch 22: `CopyWidget` (ctor, InitializeComponent, Connect) and `Help.HelpIdDictionary` (ctor, InitializeComponent, Connect, KeysOwnerTypes cctor). Gate: PASS, 551 checked. Report: `.mirror-cache/release-il-14ac186f113d/release-il.json`.
   - Shapes: matched first try with `if (_contentLoaded) return;` and `if (connectionId == 1)` branch layout.
+- Batch 23: `Help.HelpManager` (fields, .ctor, `EngNbLocalHelpEnvironmentVariableName` get/set, `HelpServerPath` get/set, `GetWebPathPerVariant`, `GetTutorialPath`, `ConstructTopicPath`, `BuildHelpUidKey`, `GetServerPath`, `OnHelpSettingsPropertyChanged`, `OnPropertyChanged`). Gate: PASS, 569 checked. Report: `.mirror-cache/release-il-e0d03d75c937/release-il.json`.
+  - Shapes: `.ctor` switch matches jump table when `MathcadOnPrem` is explicitly listed; `GetServerPath` switch similarly lists `MathcadOnPrem` explicitly and uses `if (!text.IsNullOrEmpty())` to place the `new Uri(...)` branch first; `GetWebPathPerVariant` matches 26-instruction boolean switch with `case false` and `default` arms.
+
