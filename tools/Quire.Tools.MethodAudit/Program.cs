@@ -207,6 +207,10 @@ string[]? Bind(string assembly, string name)
     // An audited assembly's [MirrorOf] names the Mathcad assembly as written; it is named canonically, as an unaudited
     // one's binding is below, so the name does not depend on what else is audited.
     if (typeNames.TryGetValue((assembly, name), out var own)) return [own[0], CanonicalAssembly(own[1])];
+    // A referenced TlbImp-generated project has no [MirrorOf] attributes. Bind its actual types by the
+    // registered original and metadata name even when that project is not part of this audit.
+    if (generatedBindings.TryGetValue(assembly, out var generated))
+        return ReferencedGeneratedBinding(assembly, name, generated);
     if (!reviewed.TryGetValue(name, out var bound))
     {
         // A local or call-site signature may name a native type directly even when the Quire map records
@@ -247,6 +251,21 @@ string[]? Bind(string assembly, string name)
         if (binding == null || !Reviewed(name, binding)) return null;
     }
     return [binding[0], CanonicalAssembly(binding[1])];
+}
+string[]? ReferencedGeneratedBinding(string assembly, string name, GeneratedAssemblyBinding generated)
+{
+    if (!referenced.TryGetValue(assembly, out var model))
+    {
+        string path = Path.Combine(assemblies, assembly + ".dll");
+        referenced[assembly] = model = File.Exists(path) ? MetadataLoader.Load(path) : null;
+    }
+    if (model?.Types.Any(t => t.FullName == name) != true) return null;
+    if (!originals.TryGetValue(generated.Assembly, out var original))
+    {
+        try { originals[generated.Assembly] = original = new Artifact(InstallFile(generated.Assembly)); }
+        catch (Exception e) when (e is IOException or BadImageFormatException) { return null; }
+    }
+    return original.Model.Types.Any(t => t.FullName == name) ? [name, CanonicalAssembly(generated.Assembly)] : null;
 }
 string CanonicalAssembly(string assembly)
 {
