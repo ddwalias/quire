@@ -15,658 +15,15 @@ using Quire.Core;
 using Quire.EquationEditor.Tree;
 using Quire.EquationEditor.Tree.Transform;
 using Quire.Mirror;
+using Quire.Services;
+using Quire.Undo;
 using Quire.Wpf;
 
 namespace Quire.Controls.IO;
 
+// Nested types, fields, properties, events and methods are kept in Mathcad declaration order to match closure ordinals (DisplayClass81/90/109/110) and <>O slot order.
 public partial class IOManager
 {
-    private int _defaultCalculationTimeout;
-
-    public int DefaultCalculationTimeout
-    {
-        get => _defaultCalculationTimeout;
-        set
-        {
-            if (value < -1)
-            {
-                return;
-            }
-            _defaultCalculationTimeout = value;
-        }
-    }
-
-    public bool IsValidAlias(string alias, bool isIn)
-    {
-        if (string.IsNullOrEmpty(alias))
-        {
-            return false;
-        }
-        if (isIn)
-        {
-            return Inputs.GetItem(alias, false) == null;
-        }
-        return Outputs.GetItem(alias, false) == null;
-    }
-
-    private void FireIODataChanged()
-    {
-        if (IODataChanged != null)
-        {
-            IODataChanged.Invoke();
-        }
-    }
-
-    public IOManager(IEngineeringDocument doc)
-    {
-        _inputs = new IOItemCollection(true);
-        _outputs = new IOItemCollection(false);
-        _inputs.RangeChanged += HandleInputItemsCollectionRangeChanged;
-        _inputs.AliasChanged += FireIODataChanged;
-        _outputs.RangeChanged += HandleOutputItemsCollectionRangeChanged;
-        _outputs.AliasChanged += FireIODataChanged;
-        _shadowCalculatableNotifier = new ShadowCalculationNotifier();
-        _document = doc;
-        DefaultCalculationTimeout = 60;
-    }
-
-    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-    private readonly IEngineeringDocument _document;
-
-    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-    private void FireWaitForCalculation(DependencyObject region, int seconds) => _document.FireWaitForCalculationIdle(seconds, ShadowCalculatable.ShadowResultsProcessingPriority_Send);
-
-    public void HandleElementAddedToParentContainer(IIORegion ioRegion)
-    {
-        DependencyObject val = ioRegion as DependencyObject;
-        if (IOTag.HasInputTag(val))
-        {
-            if (val is IInputRegion region && region.IsSuitableForInputTagging())
-            {
-                _inputs.HandleTaggedRegionAdded(val);
-            }
-            else
-            {
-                RemoveIOTagFromRegion(ioRegion, IOTagType.Input);
-            }
-        }
-        if (IOTag.HasOutputTag(val))
-        {
-            if (val is IOutputRegion region2 && region2.IsSuitableForOutputTagging())
-            {
-                _outputs.HandleTaggedRegionAdded(val);
-            }
-            else
-            {
-                RemoveIOTagFromRegion(ioRegion, IOTagType.Output);
-            }
-        }
-    }
-
-    public void HandleElementRemovedFromParentContainer(IIORegion ioRegion)
-    {
-        DependencyObject region = ioRegion as DependencyObject;
-        if (IOTag.HasInputTag(region))
-        {
-            _inputs.HandleTaggedRegionRemoved(region);
-        }
-        if (IOTag.HasOutputTag(region))
-        {
-            _outputs.HandleTaggedRegionRemoved(region);
-        }
-    }
-
-    public void HandleElementsListSelectedInParentContainer(IEnumerable<IIORegionBase> ioItemsList)
-    {
-        ioItemsList.OfType<IIORegion>().Each(HandleElementSelectedInParentContainer);
-    }
-
-    private void HandleElementSelectedInParentContainer(IIORegion region)
-    {
-        if (IOTag.IsIOTagged(region as DependencyObject) && IORegionsSelected != null)
-        {
-            List<string> list = new List<string>();
-            List<string> list2 = new List<string>();
-            if (IOTag.HasInputTag(region as DependencyObject))
-            {
-                list.AddRange(IOItemsAliasManager.GetAliases(region as DependencyObject, true));
-            }
-            if (IOTag.HasOutputTag(region as DependencyObject))
-            {
-                list2.AddRange(IOItemsAliasManager.GetAliases(region as DependencyObject, false));
-            }
-            IORegionsSelected(_document, list, list2);
-        }
-    }
-
-    public IList<ICalculatable> GetCalculationOverrides(IIORegion region)
-    {
-        DependencyObject val = region as DependencyObject;
-        if (DebugTools.AssertNotNull(val, null).Failed)
-        {
-            return null;
-        }
-        ICalculationOverrideContainer calculationOverrides = CalculationOverridesHandler.GetCalculationOverrides(val);
-        if (calculationOverrides != null)
-        {
-            return ((IEnumerable<ICalculatable>)calculationOverrides.CalculatableChildren).ToList();
-        }
-        return null;
-    }
-
-    public void ToggleInputRegions(IEnumerable<IIORegion> inputRegions)
-    {
-        if (inputRegions.IsNullOrEmpty())
-        {
-            return;
-        }
-        List<IIORegion> list = inputRegions.ToList().FindAll(CanToggleRegionAsInput);
-        if (list.IsNullOrEmpty())
-        {
-            return;
-        }
-        ToggleRegionsDesignationCommand command = new ToggleRegionsDesignationCommand(CreateToggleTagCommandsCollection(list, true), "Toggle Inputs");
-        command.Execute();
-    }
-
-    public void ToggleOutputRegions(IEnumerable<IIORegion> outputRegions)
-    {
-        if (outputRegions.IsNullOrEmpty())
-        {
-            return;
-        }
-        List<IIORegion> list = outputRegions.ToList().FindAll(CanToggleRegionAsOutput);
-        if (list.IsNullOrEmpty())
-        {
-            return;
-        }
-        ToggleRegionsDesignationCommand command = new ToggleRegionsDesignationCommand(CreateToggleTagCommandsCollection(list, false), "Toggle Outputs");
-        command.Execute();
-    }
-
-    public bool CanToggleRegionsAsInput(IEnumerable<IIORegion> regions) => regions.Any(CanToggleRegionAsInput);
-
-    public bool CanToggleRegionsAsOutput(IEnumerable<IIORegion> regions) => regions.Any(CanToggleRegionAsOutput);
-
-    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-    public IScalarItem InputOutputGetRealValue(string alias, bool isInp) => InputOutputGetRealValueAs(alias, isInp, null);
-
-    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-    public IMatrixItem InputOutputGetMatrixValue(string alias, bool isInp) => InputOutputGetMatrixValueAs(alias, isInp, null);
-
-    public static bool SetIOAlias(IOItem item, string alias)
-    {
-        IIORegionManager inputOutputRegionManager = DocumentAttachedProperties.GetInputOutputRegionManager(item.Region);
-        bool flag = inputOutputRegionManager.IsValidAlias(alias, item.IsInput);
-        if (flag)
-        {
-            Dictionary<string, string> iOAliasMap = IOItemsAliasManager.GetIOAliasMap(item.Region, item.IsInput);
-            Dictionary<string, string> dictionary = new Dictionary<string, string>(iOAliasMap);
-            string oldAlias = iOAliasMap[item.IdSexp];
-            dictionary[item.IdSexp] = alias;
-            if (item.IsInput)
-            {
-                inputOutputRegionManager.Inputs.ResetAlias(item, oldAlias, alias);
-            }
-            else
-            {
-                inputOutputRegionManager.Outputs.ResetAlias(item, oldAlias, alias);
-            }
-            IOItemsAliasManager.SetIOAliasMap(item.Region, dictionary, item.IsInput);
-        }
-        return flag;
-    }
-
-    [MirrorOf("Ptc.Controls.IO.IOManager+EvaluationHelper, Ptc.Controls")]
-    private static partial class EvaluationHelper
-    {
-        public static IOManagerErrorCode AnalyzeEvaluationError(ISimpleCalculatable calculatable)
-        {
-            IOManagerErrorCode result;
-            if (calculatable.Error == null)
-            {
-                result = IOManagerErrorCode.NoError;
-            }
-            else
-            {
-                result = calculatable.IsErrorOnScalingUnits() ? IOManagerErrorCode.UnitsIncompatible : IOManagerErrorCode.CalculationError;
-            }
-            return result;
-        }
-    }
-
-    private static IOManagerErrorCode ScaledEvaluationResultToIOManagerErrorCode(ScaledEvaluation.ScaledEvaluationResult scaledEvaluationResult)
-    {
-        IOManagerErrorCode result;
-        switch (scaledEvaluationResult)
-        {
-        case ScaledEvaluation.ScaledEvaluationResult.NoError:
-            result = IOManagerErrorCode.NoError;
-            break;
-        case ScaledEvaluation.ScaledEvaluationResult.ResultTypeIncompatible:
-            result = IOManagerErrorCode.ResultTypeIncompatible;
-            break;
-        case ScaledEvaluation.ScaledEvaluationResult.MatrixResultInvalid:
-            result = IOManagerErrorCode.MatrixResultInvalid;
-            break;
-        default:
-            result = IOManagerErrorCode.UnknownError;
-            DebugTools.DevAssert(false, "ScaledEvaluationResultToIOManagerOperationResult {0} unsupported value", scaledEvaluationResult);
-            break;
-        }
-        return result;
-    }
-
-    public static string GetIOAlias(IOItem item)
-    {
-        Dictionary<string, string> iOAliasMap = IOItemsAliasManager.GetIOAliasMap(item.Region, item.IsInput);
-        if (iOAliasMap != null)
-        {
-            return iOAliasMap[item.IdSexp];
-        }
-        return string.Empty;
-    }
-
-    public static void ClearIOAlias(IOItem item)
-    {
-        Dictionary<string, string> iOAliasMap = IOItemsAliasManager.GetIOAliasMap(item.Region, item.IsInput);
-        if (iOAliasMap != null && iOAliasMap[item.IdSexp] != null)
-        {
-            iOAliasMap.Remove(item.IdSexp);
-        }
-    }
-
-    public IOManagerErrorCode SetValue(string alias, double value, string units)
-    {
-        UnitedScalarSetter unitedScalarSetter = new UnitedScalarSetter(alias, value, units);
-        SetValue(unitedScalarSetter);
-        return unitedScalarSetter.OperationResult;
-    }
-
-    public IOManagerErrorCode SetValue(string alias, double[][] value, string units)
-    {
-        UnitedMatrixSetter unitedMatrixSetter = new UnitedMatrixSetter(alias, value, units);
-        SetValue(unitedMatrixSetter);
-        return unitedMatrixSetter.OperationResult;
-    }
-
-    private void SetValue(ISingleValueSetter unitedSingleValueSetter)
-    {
-        SetValues(new ISingleValueSetter[1] { unitedSingleValueSetter }, DefaultCalculationTimeout);
-    }
-
-    public IOManagerErrorCode SetStringValue(string alias, string stringValue)
-    {
-        StringValueSetter stringValueSetter = new StringValueSetter(alias, stringValue);
-        SetValue(stringValueSetter);
-        return stringValueSetter.OperationResult;
-    }
-
-    public IOManagerErrorCode SetSExprValue(string alias, string sExpression)
-    {
-        SExpressionSetter sExpressionSetter = new SExpressionSetter(alias, sExpression);
-        SetValue(sExpressionSetter);
-        return sExpressionSetter.OperationResult;
-    }
-
-    public IScalarItem InputOutputGetRealValueAs(string alias, bool isInp, string units)
-    {
-        IScalarItem result;
-        IUnitedValueGetter getter;
-        if (isInp)
-        {
-            ScalarInputGetter inputGetter = new ScalarInputGetter(alias, GetInputValueTypes.OverriddenValues, units);
-            result = inputGetter;
-            getter = inputGetter;
-        }
-        else
-        {
-            ScalarOutputGetter outputGetter = new ScalarOutputGetter(alias, GetOutputValueTypes.OverriddenValues, units);
-            result = outputGetter;
-            getter = outputGetter;
-        }
-        GetValue(isInp, getter);
-        return result;
-    }
-
-    public IMatrixItem InputOutputGetMatrixValueAs(string alias, bool isInp, string units)
-    {
-        UnitedMatrixGetter unitedMatrixGetter = new UnitedMatrixGetter(alias, isInp, units);
-        GetValue(isInp, unitedMatrixGetter);
-        return unitedMatrixGetter;
-    }
-
-    public IStringItem InputOutputGetStringValue(string alias, bool isInp)
-    {
-        StringGetter stringGetter = new StringGetter(alias, isInp);
-        GetValue(isInp, stringGetter);
-        return stringGetter;
-    }
-
-    public ICommonValueItem InputOutputGetCalculatedValue(string alias, bool isInp)
-    {
-        CommonValueGetter commonValueGetter = new CommonValueGetter(alias, isInp);
-        GetValue(isInp, commonValueGetter);
-        return commonValueGetter;
-    }
-
-    public string InputGetSExprValue(string alias)
-    {
-        IIOItem item = Inputs.GetItem(alias, GetAndSetOperationsCompareAliasesCaseInsensitively);
-        if (item != null)
-        {
-            return ((IInputRegion)item.Region).GetDefinitionSExpression(item.IdSexp);
-        }
-        return null;
-    }
-
-    private static bool CanToggleRegionAsInput(IIORegion region)
-    {
-        if (region is IInputRegion region2)
-        {
-            return region2.IsSuitableForInputTagging();
-        }
-        return false;
-    }
-
-    private static bool CanToggleRegionAsOutput(IIORegion region)
-    {
-        if (region is IOutputRegion region2)
-        {
-            return region2.IsSuitableForOutputTagging();
-        }
-        return false;
-    }
-
-    private void InputRemoveAllCalculationOverrides(DependencyObject region)
-    {
-        foreach (ICalculatable item2 in CalculationOverridesHandler.RemoveCalculatableOverrides(region, CalculationOverridesTypes.InputOverriddenValueSetter))
-        {
-            Pair<IIORegion, ICalculatable> item = new Pair<IIORegion, ICalculatable>
-            {
-                First = region as IIORegion,
-                Second = item2
-            };
-            _shadowCalculatableNotifier.Remove(item);
-        }
-        DebugTools.DevAssert(CalculationOverridesHandler.GetInputCalculationOverrides(region).IsNullOrEmpty(), null);
-    }
-
-    private void InputRemoveCalculationOverridesOnRemoveIOItems(IEnumerable<IIOItem> ioItem)
-    {
-        List<DependencyObject> list = new List<DependencyObject>();
-        foreach (IOItem item2 in ioItem)
-        {
-            DependencyObject region = item2.Region;
-            string idSexp = item2.IdSexp;
-            ICalculatable calculatable = CalculationOverridesHandler.RemoveCalculationOverrideForSExpr(region, idSexp, CalculationOverridesTypes.InputOverriddenValueSetter);
-            if (calculatable != null)
-            {
-                Pair<IIORegion, ICalculatable> item = new Pair<IIORegion, ICalculatable>
-                {
-                    First = region as IIORegion,
-                    Second = calculatable
-                };
-                _shadowCalculatableNotifier.Remove(item);
-            }
-            if (!list.Contains(region))
-            {
-                list.Add(region);
-            }
-        }
-        foreach (DependencyObject item3 in list)
-        {
-            if (_inputs.GetRegionIOItems(item3).IsNullOrEmpty())
-            {
-                DebugTools.DevAssert(CalculationOverridesHandler.GetInputCalculationOverrides(item3).IsNullOrEmpty(), null);
-            }
-        }
-    }
-
-    private void OutputAssertNoCalculationOverridesOnRemoveIOItems(IEnumerable<IIOItem> ioItem)
-    {
-        List<DependencyObject> list = new List<DependencyObject>();
-        foreach (IOItem item in ioItem)
-        {
-            DependencyObject region = item.Region;
-            if (!list.Contains(region))
-            {
-                list.Add(region);
-            }
-        }
-        foreach (DependencyObject item2 in list)
-        {
-            if (DebugTools.DevAssert(_outputs.GetRegionIOItems(item2).IsNullOrEmpty(), null).Passed)
-            {
-                OutputAssertNoCalculationOverrides(item2);
-            }
-        }
-    }
-
-    private static void OutputAssertNoCalculationOverrides(DependencyObject region)
-    {
-        DebugTools.DevAssert(CalculationOverridesHandler.GetOutputCalculationOverrides(region).IsNullOrEmpty(), null);
-    }
-
-    private void HandleIORegionChanged(DependencyObject region, IORegionChangeType ioRegionChangeType)
-    {
-        if (region is IIORegion)
-        {
-            IIORegion iIORegion = region as IIORegion;
-            if (IOTag.HasInputTag(region))
-            {
-                switch (ioRegionChangeType)
-                {
-                case IORegionChangeType.Content:
-                    if (!CanToggleRegionAsInput(iIORegion))
-                    {
-                        DebugTools.FailAssertion(null, Array.Empty<object>());
-                        _inputs.HandleTaggedRegionRemoved(region);
-                        RemoveInputTagFromRegion(iIORegion);
-                    }
-                    else
-                    {
-                        _inputs.HandleTaggedRegionChanged(region);
-                    }
-                    break;
-                case IORegionChangeType.CalcIsDisabledStatus:
-                    if (CalculatableChildHider.IsHiddenFromCalculation(region))
-                    {
-                        InputRemoveAllCalculationOverrides(region);
-                    }
-                    break;
-                default:
-                    DebugTools.FailAssertion("unexpected IORegionChangeType {0}", ioRegionChangeType);
-                    break;
-                }
-            }
-            if (IOTag.HasOutputTag(region))
-            {
-                switch (ioRegionChangeType)
-                {
-                case IORegionChangeType.Content:
-                    if (!CanToggleRegionAsOutput(iIORegion))
-                    {
-                        _outputs.HandleTaggedRegionRemoved(region);
-                        RemoveOutputTagFromRegion(iIORegion);
-                    }
-                    else
-                    {
-                        _outputs.HandleTaggedRegionChanged(region);
-                    }
-                    break;
-                case IORegionChangeType.CalcIsDisabledStatus:
-                    if (CalculatableChildHider.IsHiddenFromCalculation(region))
-                    {
-                        OutputAssertNoCalculationOverrides(region);
-                    }
-                    break;
-                default:
-                    DebugTools.FailAssertion("unexpected IORegionChangeType {0}", ioRegionChangeType);
-                    break;
-                }
-            }
-        }
-    }
-
-    private void HandleInputItemsCollectionRangeChanged(object sender, NotifyCollectionChangedEventArgs args)
-    {
-        switch (args.Action)
-        {
-        case NotifyCollectionChangedAction.Remove:
-            InputRemoveCalculationOverridesOnRemoveIOItems(args.OldItems.OfType<IOItem>());
-            break;
-        default:
-            DebugTools.FailAssertion("Unsupported action: {0}", args.Action);
-            break;
-        case NotifyCollectionChangedAction.Add:
-            break;
-        }
-        FireIODataChanged();
-    }
-
-    private void HandleOutputItemsCollectionRangeChanged(object sender, NotifyCollectionChangedEventArgs args)
-    {
-        switch (args.Action)
-        {
-        case NotifyCollectionChangedAction.Remove:
-            OutputAssertNoCalculationOverridesOnRemoveIOItems(args.OldItems.OfType<IOItem>());
-            break;
-        default:
-            DebugTools.FailAssertion("Unsupported action: {0}", args.Action);
-            break;
-        case NotifyCollectionChangedAction.Add:
-            break;
-        }
-        FireIODataChanged();
-    }
-
-    private void SetIOTagOnRegion(IIORegion element, IOTagType type)
-    {
-        IOTagType tagType = IOTag.GetIOTag(element as DependencyObject) | type;
-        IOTag.SetIOTag(element as DependencyObject, tagType);
-        element.IORegionChanged += HandleIORegionChanged;
-    }
-
-    private void SetInputTagOnRegion(IIORegion element)
-    {
-        if (DebugTools.DevAssert(CanToggleRegionAsInput(element), null).Failed)
-        {
-            return;
-        }
-        SetIOTagOnRegion(element, IOTagType.Input);
-    }
-
-    private void SetOutputTagOnRegion(IIORegion element)
-    {
-        if (DebugTools.DevAssert(CanToggleRegionAsOutput(element), null).Failed)
-        {
-            return;
-        }
-        SetIOTagOnRegion(element, IOTagType.Output);
-    }
-
-    private void RemoveIOTagFromRegion(IIORegion element, IOTagType type)
-    {
-        IOTagType iOTagType = IOTag.GetIOTag(element as DependencyObject) & ~type;
-        IOTag.SetIOTag(element as DependencyObject, iOTagType);
-        if (iOTagType == IOTagType.None)
-        {
-            element.IORegionChanged -= HandleIORegionChanged;
-        }
-    }
-
-    private void RemoveInputTagFromRegion(IIORegion element)
-    {
-        if (!IOTag.HasInputTag(element as DependencyObject))
-        {
-            return;
-        }
-        RemoveIOTagFromRegion(element, IOTagType.Input);
-    }
-
-    private void RemoveOutputTagFromRegion(IIORegion element)
-    {
-        if (!IOTag.HasOutputTag(element as DependencyObject))
-        {
-            return;
-        }
-        RemoveIOTagFromRegion(element, IOTagType.Output);
-    }
-
-    private void ToggleIOTagOnRegion(IIORegion ioRegion, bool asInp, bool set, bool toggleRegionBorder)
-    {
-        DependencyObject region = ioRegion as DependencyObject;
-        if (set)
-        {
-            if (asInp)
-            {
-                SetInputTagOnRegion(ioRegion);
-                _inputs.HandleTaggedRegionAdded(region);
-            }
-            else
-            {
-                SetOutputTagOnRegion(ioRegion);
-                _outputs.HandleTaggedRegionAdded(region);
-            }
-        }
-        else if (asInp)
-        {
-            _inputs.HandleTaggedRegionRemoved(region);
-            RemoveInputTagFromRegion(ioRegion);
-        }
-        else
-        {
-            _outputs.HandleTaggedRegionRemoved(region);
-            RemoveOutputTagFromRegion(ioRegion);
-        }
-        if (toggleRegionBorder)
-        {
-            WhiteboardDependencyProperties.ToggleRegionBorderVisibility(region);
-        }
-    }
-
-    public void Dispose()
-    {
-        _inputs.RangeChanged -= HandleInputItemsCollectionRangeChanged;
-        _inputs.AliasChanged -= FireIODataChanged;
-        _outputs.RangeChanged -= HandleOutputItemsCollectionRangeChanged;
-        _outputs.AliasChanged -= FireIODataChanged;
-    }
-
-    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-    public IValuesSetter CreateScaledValueSettersCollection() => new ValuesSetter(this);
-
-    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-    private void GetValue(bool asInp, IUnitedValueGetter unitedValueGetter) => GetComputedValueScaledBy(asInp, unitedValueGetter);
-
-    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-    public bool GetAndSetOperationsCompareAliasesCaseInsensitively { private get; set; }
-
-    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-    private readonly IOItemCollection _inputs;
-
-    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-    public IIOItemCollection Inputs => _inputs;
-
-    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-    private readonly IOItemCollection _outputs;
-
-    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-    public IIOItemCollection Outputs => _outputs;
-
-    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-    private readonly ShadowCalculationNotifier _shadowCalculatableNotifier;
-
-    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-    public IShadowCalculationNotifier ShadowCalculationsChangedNotifier => _shadowCalculatableNotifier;
-
-    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-    public event Action<IEngineeringDocument, List<string>, List<string>> IORegionsSelected;
-
-    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
-    public event Action IODataChanged;
-
     [MirrorOf("Ptc.Controls.IO.IOManager+InputOutputStateGetterNotifier, Ptc.Controls")]
     private class InputOutputStateGetterNotifier : INotifyProgress, IDisposable
     {
@@ -820,6 +177,25 @@ public partial class IOManager
             }
             _calculatables.Each(Unhookup);
             _calculatables.Clear();
+        }
+    }
+
+
+    [MirrorOf("Ptc.Controls.IO.IOManager+EvaluationHelper, Ptc.Controls")]
+    private static partial class EvaluationHelper
+    {
+        public static IOManagerErrorCode AnalyzeEvaluationError(ISimpleCalculatable calculatable)
+        {
+            IOManagerErrorCode result;
+            if (calculatable.Error == null)
+            {
+                result = IOManagerErrorCode.NoError;
+            }
+            else
+            {
+                result = calculatable.IsErrorOnScalingUnits() ? IOManagerErrorCode.UnitsIncompatible : IOManagerErrorCode.CalculationError;
+            }
+            return result;
         }
     }
 
@@ -1825,5 +1201,1148 @@ public partial class IOManager
             }
             return true;
         }
+    }
+
+    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+    private readonly IOItemCollection _inputs;
+
+    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+    private readonly IOItemCollection _outputs;
+
+    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+    private readonly IEngineeringDocument _document;
+
+    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+    private readonly ShadowCalculationNotifier _shadowCalculatableNotifier;
+
+    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+    public event Action<IEngineeringDocument, List<string>, List<string>> IORegionsSelected;
+
+    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+    public event Action IODataChanged;
+
+    private void FireIODataChanged()
+    {
+        if (IODataChanged != null)
+        {
+            IODataChanged.Invoke();
+        }
+    }
+
+    public IOManager(IEngineeringDocument doc)
+    {
+        _inputs = new IOItemCollection(true);
+        _outputs = new IOItemCollection(false);
+        _inputs.RangeChanged += HandleInputItemsCollectionRangeChanged;
+        _inputs.AliasChanged += FireIODataChanged;
+        _outputs.RangeChanged += HandleOutputItemsCollectionRangeChanged;
+        _outputs.AliasChanged += FireIODataChanged;
+        _shadowCalculatableNotifier = new ShadowCalculationNotifier();
+        _document = doc;
+        DefaultCalculationTimeout = 60;
+    }
+
+    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+    private void FireWaitForCalculation(DependencyObject region, int seconds) => _document.FireWaitForCalculationIdle(seconds, ShadowCalculatable.ShadowResultsProcessingPriority_Send);
+
+    public void HandleElementAddedToParentContainer(IIORegion ioRegion)
+    {
+        DependencyObject val = ioRegion as DependencyObject;
+        if (IOTag.HasInputTag(val))
+        {
+            if (val is IInputRegion region && region.IsSuitableForInputTagging())
+            {
+                _inputs.HandleTaggedRegionAdded(val);
+            }
+            else
+            {
+                RemoveIOTagFromRegion(ioRegion, IOTagType.Input);
+            }
+        }
+        if (IOTag.HasOutputTag(val))
+        {
+            if (val is IOutputRegion region2 && region2.IsSuitableForOutputTagging())
+            {
+                _outputs.HandleTaggedRegionAdded(val);
+            }
+            else
+            {
+                RemoveIOTagFromRegion(ioRegion, IOTagType.Output);
+            }
+        }
+    }
+
+    public void HandleElementRemovedFromParentContainer(IIORegion ioRegion)
+    {
+        DependencyObject region = ioRegion as DependencyObject;
+        if (IOTag.HasInputTag(region))
+        {
+            _inputs.HandleTaggedRegionRemoved(region);
+        }
+        if (IOTag.HasOutputTag(region))
+        {
+            _outputs.HandleTaggedRegionRemoved(region);
+        }
+    }
+
+    public void HandleElementsListSelectedInParentContainer(IEnumerable<IIORegionBase> ioItemsList)
+    {
+        ioItemsList.OfType<IIORegion>().Each(HandleElementSelectedInParentContainer);
+    }
+
+    private void HandleElementSelectedInParentContainer(IIORegion region)
+    {
+        if (IOTag.IsIOTagged(region as DependencyObject) && IORegionsSelected != null)
+        {
+            List<string> list = new List<string>();
+            List<string> list2 = new List<string>();
+            if (IOTag.HasInputTag(region as DependencyObject))
+            {
+                list.AddRange(IOItemsAliasManager.GetAliases(region as DependencyObject, true));
+            }
+            if (IOTag.HasOutputTag(region as DependencyObject))
+            {
+                list2.AddRange(IOItemsAliasManager.GetAliases(region as DependencyObject, false));
+            }
+            IORegionsSelected(_document, list, list2);
+        }
+    }
+
+    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+    public bool GetAndSetOperationsCompareAliasesCaseInsensitively { private get; set; }
+
+    private int _defaultCalculationTimeout;
+
+    public int DefaultCalculationTimeout
+    {
+        get => _defaultCalculationTimeout;
+        set
+        {
+            if (value < -1)
+            {
+                return;
+            }
+            _defaultCalculationTimeout = value;
+        }
+    }
+
+    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+    public IIOItemCollection Inputs => _inputs;
+
+    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+    public IIOItemCollection Outputs => _outputs;
+
+    public bool IsValidAlias(string alias, bool isIn)
+    {
+        if (string.IsNullOrEmpty(alias))
+        {
+            return false;
+        }
+        if (isIn)
+        {
+            return Inputs.GetItem(alias, false) == null;
+        }
+        return Outputs.GetItem(alias, false) == null;
+    }
+
+    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+    public IShadowCalculationNotifier ShadowCalculationsChangedNotifier => _shadowCalculatableNotifier;
+
+    public IList<ICalculatable> GetCalculationOverrides(IIORegion region)
+    {
+        DependencyObject val = region as DependencyObject;
+        if (DebugTools.AssertNotNull(val, null).Failed)
+        {
+            return null;
+        }
+        ICalculationOverrideContainer calculationOverrides = CalculationOverridesHandler.GetCalculationOverrides(val);
+        if (calculationOverrides != null)
+        {
+            return ((IEnumerable<ICalculatable>)calculationOverrides.CalculatableChildren).ToList();
+        }
+        return null;
+    }
+
+    public void ToggleInputRegions(IEnumerable<IIORegion> inputRegions)
+    {
+        if (inputRegions.IsNullOrEmpty())
+        {
+            return;
+        }
+        List<IIORegion> list = inputRegions.ToList().FindAll(CanToggleRegionAsInput);
+        if (list.IsNullOrEmpty())
+        {
+            return;
+        }
+        ToggleRegionsDesignationCommand command = new ToggleRegionsDesignationCommand(CreateToggleTagCommandsCollection(list, true), "Toggle Inputs");
+        command.Execute();
+    }
+
+    public void ToggleOutputRegions(IEnumerable<IIORegion> outputRegions)
+    {
+        if (outputRegions.IsNullOrEmpty())
+        {
+            return;
+        }
+        List<IIORegion> list = outputRegions.ToList().FindAll(CanToggleRegionAsOutput);
+        if (list.IsNullOrEmpty())
+        {
+            return;
+        }
+        ToggleRegionsDesignationCommand command = new ToggleRegionsDesignationCommand(CreateToggleTagCommandsCollection(list, false), "Toggle Outputs");
+        command.Execute();
+    }
+
+    public bool CanToggleRegionsAsInput(IEnumerable<IIORegion> regions) => regions.Any(CanToggleRegionAsInput);
+
+    public bool CanToggleRegionsAsOutput(IEnumerable<IIORegion> regions) => regions.Any(CanToggleRegionAsOutput);
+
+    public static bool SetIOAlias(IOItem item, string alias)
+    {
+        IIORegionManager inputOutputRegionManager = DocumentAttachedProperties.GetInputOutputRegionManager(item.Region);
+        bool flag = inputOutputRegionManager.IsValidAlias(alias, item.IsInput);
+        if (flag)
+        {
+            Dictionary<string, string> iOAliasMap = IOItemsAliasManager.GetIOAliasMap(item.Region, item.IsInput);
+            Dictionary<string, string> dictionary = new Dictionary<string, string>(iOAliasMap);
+            string oldAlias = iOAliasMap[item.IdSexp];
+            dictionary[item.IdSexp] = alias;
+            if (item.IsInput)
+            {
+                inputOutputRegionManager.Inputs.ResetAlias(item, oldAlias, alias);
+            }
+            else
+            {
+                inputOutputRegionManager.Outputs.ResetAlias(item, oldAlias, alias);
+            }
+            IOItemsAliasManager.SetIOAliasMap(item.Region, dictionary, item.IsInput);
+        }
+        return flag;
+    }
+
+    public static string GetIOAlias(IOItem item)
+    {
+        Dictionary<string, string> iOAliasMap = IOItemsAliasManager.GetIOAliasMap(item.Region, item.IsInput);
+        if (iOAliasMap != null)
+        {
+            return iOAliasMap[item.IdSexp];
+        }
+        return string.Empty;
+    }
+
+    public static void ClearIOAlias(IOItem item)
+    {
+        Dictionary<string, string> iOAliasMap = IOItemsAliasManager.GetIOAliasMap(item.Region, item.IsInput);
+        if (iOAliasMap != null && iOAliasMap[item.IdSexp] != null)
+        {
+            iOAliasMap.Remove(item.IdSexp);
+        }
+    }
+
+    public IOManagerErrorCode SetValue(string alias, double value, string units)
+    {
+        UnitedScalarSetter unitedScalarSetter = new UnitedScalarSetter(alias, value, units);
+        SetValue(unitedScalarSetter);
+        return unitedScalarSetter.OperationResult;
+    }
+
+    public IOManagerErrorCode SetValue(string alias, double[][] value, string units)
+    {
+        UnitedMatrixSetter unitedMatrixSetter = new UnitedMatrixSetter(alias, value, units);
+        SetValue(unitedMatrixSetter);
+        return unitedMatrixSetter.OperationResult;
+    }
+
+    public IOManagerErrorCode SetStringValue(string alias, string stringValue)
+    {
+        StringValueSetter stringValueSetter = new StringValueSetter(alias, stringValue);
+        SetValue(stringValueSetter);
+        return stringValueSetter.OperationResult;
+    }
+
+    public IOManagerErrorCode SetSExprValue(string alias, string sExpression)
+    {
+        SExpressionSetter sExpressionSetter = new SExpressionSetter(alias, sExpression);
+        SetValue(sExpressionSetter);
+        return sExpressionSetter.OperationResult;
+    }
+
+    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+    public IScalarItem InputOutputGetRealValue(string alias, bool isInp) => InputOutputGetRealValueAs(alias, isInp, null);
+
+    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+    public IMatrixItem InputOutputGetMatrixValue(string alias, bool isInp) => InputOutputGetMatrixValueAs(alias, isInp, null);
+
+    public IScalarItem InputOutputGetRealValueAs(string alias, bool isInp, string units)
+    {
+        IScalarItem result;
+        IUnitedValueGetter getter;
+        if (isInp)
+        {
+            ScalarInputGetter inputGetter = new ScalarInputGetter(alias, GetInputValueTypes.OverriddenValues, units);
+            result = inputGetter;
+            getter = inputGetter;
+        }
+        else
+        {
+            ScalarOutputGetter outputGetter = new ScalarOutputGetter(alias, GetOutputValueTypes.OverriddenValues, units);
+            result = outputGetter;
+            getter = outputGetter;
+        }
+        GetValue(isInp, getter);
+        return result;
+    }
+
+    public IMatrixItem InputOutputGetMatrixValueAs(string alias, bool isInp, string units)
+    {
+        UnitedMatrixGetter unitedMatrixGetter = new UnitedMatrixGetter(alias, isInp, units);
+        GetValue(isInp, unitedMatrixGetter);
+        return unitedMatrixGetter;
+    }
+
+    public IStringItem InputOutputGetStringValue(string alias, bool isInp)
+    {
+        StringGetter stringGetter = new StringGetter(alias, isInp);
+        GetValue(isInp, stringGetter);
+        return stringGetter;
+    }
+
+    public ICommonValueItem InputOutputGetCalculatedValue(string alias, bool isInp)
+    {
+        CommonValueGetter commonValueGetter = new CommonValueGetter(alias, isInp);
+        GetValue(isInp, commonValueGetter);
+        return commonValueGetter;
+    }
+
+    private IEnumerable<ICalcWithSyncStatus> CreateIOEvals(IEnumerable<KeyValuePair<IIOItem, IUnitedValueGetter>> itemToValueGetter)
+    {
+        List<ICalcWithSyncStatus> list = new List<ICalcWithSyncStatus>();
+        foreach (KeyValuePair<IIOItem, IUnitedValueGetter> item in itemToValueGetter)
+        {
+            IIOItem key = item.Key;
+            IUnitedValueGetter value = item.Value;
+            CollectionWithSyncStatus collectionWithSyncStatus = null;
+            foreach (CalculationOverridesTypes overrideType in value.OverrideTypes)
+            {
+                ScaledEvaluation shadowEval;
+                IOManagerErrorCode iOManagerErrorCode = CreateScaledShadowEvalForIOItem(key, overrideType, value, out shadowEval);
+                if (iOManagerErrorCode != IOManagerErrorCode.NoError)
+                {
+                    value.SetOperationResult(iOManagerErrorCode, overrideType);
+                    continue;
+                }
+                collectionWithSyncStatus = collectionWithSyncStatus ?? new CollectionWithSyncStatus();
+                collectionWithSyncStatus.Add(shadowEval);
+            }
+            if (collectionWithSyncStatus != null)
+            {
+                list.Add(collectionWithSyncStatus);
+            }
+        }
+        return list;
+    }
+
+    private static void ExtractValues(IEnumerable<KeyValuePair<IIOItem, IUnitedValueGetter>> itemToValueGetter)
+    {
+        foreach (KeyValuePair<IIOItem, IUnitedValueGetter> item in itemToValueGetter)
+        {
+            IIOItem key = item.Key;
+            IUnitedValueGetter value = item.Value;
+            foreach (CalculationOverridesTypes overrideType in value.OverrideTypes)
+            {
+                if (value.IsEmptyState(overrideType))
+                {
+                    ISimpleCalculatable calculationOverrideForSExpr = CalculationOverridesHandler.GetCalculationOverrideForSExpr(key.Region, key.IdSexp, overrideType);
+                    if (DebugTools.AssertNotNull(calculationOverrideForSExpr, null).Passed)
+                    {
+                        IScaledEvaluation scaledEvaluation = calculationOverrideForSExpr as IScaledEvaluation;
+                        if (DebugTools.AssertNotNull(scaledEvaluation, null).Passed)
+                        {
+                            value.GetComputedValue(scaledEvaluation, overrideType);
+                        }
+                    }
+                }
+                else
+                {
+                    DebugTools.DevAssert(value.GetOperationResult(overrideType) != IOManagerErrorCode.NoError, null);
+                }
+            }
+            if (value is IScalarItemWithOriginalState && (value as IScalarItemWithOriginalState).ScalarState != null && (value as IScalarItemWithOriginalState).OriginalScalarState != null)
+            {
+                DebugTools.DevAssert(
+                    value.GetOperationResult(CalculationOverridesTypes.InputOriginalValueGetter) == value.GetOperationResult(CalculationOverridesTypes.InputOverriddenValueGetter)
+                    && double.IsNaN((value as IScalarItemWithOriginalState).OriginalScalarState.Value) == double.IsNaN((value as IScalarItemWithOriginalState).ScalarState.Value)
+                    && (double.IsNaN((value as IScalarItemWithOriginalState).OriginalScalarState.Value) || (value as IScalarItemWithOriginalState).OriginalScalarState.Value == (value as IScalarItemWithOriginalState).ScalarState.Value)
+                    && (value as IScalarItemWithOriginalState).OriginalScalarState.Units == (value as IScalarItemWithOriginalState).ScalarState.Units,
+                    "Item: {{ {0}, {1} }} :\nOriginalError: '{2}', OverriddenError: '{3}'\nOriginalValue: {4}, OverriddenValue: {5}\nOriginalUnits: \"{6}\", OverriddenUnits: \"{7}\"\n",
+                    key.Alias,
+                    key.IdSexp,
+                    value.GetOperationResult(CalculationOverridesTypes.InputOriginalValueGetter),
+                    value.GetOperationResult(CalculationOverridesTypes.InputOverriddenValueGetter),
+                    (value as IScalarItemWithOriginalState).OriginalScalarState.Value,
+                    (value as IScalarItemWithOriginalState).ScalarState.Value,
+                    (value as IScalarItemWithOriginalState).OriginalScalarState.Units ?? "{null}",
+                    (value as IScalarItemWithOriginalState).ScalarState.Units ?? "{null}");
+            }
+        }
+    }
+
+    private static void SetError(IEnumerable<KeyValuePair<IIOItem, IUnitedValueGetter>> itemToValueGetter, IOManagerErrorCode code)
+    {
+        foreach (KeyValuePair<IIOItem, IUnitedValueGetter> item in itemToValueGetter)
+        {
+            IUnitedValueGetter value = item.Value;
+            foreach (CalculationOverridesTypes overrideType in value.OverrideTypes)
+            {
+                if (value.IsEmptyState(overrideType))
+                {
+                    value.SetOperationResult(code, overrideType);
+                }
+                else
+                {
+                    DebugTools.DevAssert(value.GetOperationResult(overrideType) != IOManagerErrorCode.NoError, null);
+                }
+            }
+        }
+    }
+
+    private void RemoveShadowEvals(IEnumerable<KeyValuePair<IIOItem, IUnitedValueGetter>> itemToValueGetter)
+    {
+        foreach (KeyValuePair<IIOItem, IUnitedValueGetter> item in itemToValueGetter)
+        {
+            IIOItem key = item.Key;
+            IUnitedValueGetter value = item.Value;
+            foreach (CalculationOverridesTypes overrideType in value.OverrideTypes)
+            {
+                ISimpleCalculatable calculationOverrideForSExpr = CalculationOverridesHandler.GetCalculationOverrideForSExpr(key.Region, key.IdSexp, overrideType);
+                if (calculationOverrideForSExpr != null)
+                {
+                    RemoveShadowEval(key, calculationOverrideForSExpr, overrideType);
+                }
+                else
+                {
+                    DebugTools.DevAssert(!value.IsEmptyState(overrideType) && (value.GetOperationResult(overrideType) == IOManagerErrorCode.ItemDisabled || value.GetOperationResult(overrideType) == IOManagerErrorCode.ResultTypeIncompatible), null);
+                }
+            }
+        }
+    }
+
+    public IInputOutputItemsStates CollectScalarInputsOutputsStates(GetInputValueTypes inputTypes, GetOutputValueTypes outputTypes, Func<INotifyProgress, bool> waitForCalculationStopped)
+    {
+        List<IScalarItemWithOriginalState> list = new List<IScalarItemWithOriginalState>(Inputs.Count);
+        List<IScalarItem> list2 = new List<IScalarItem>(Outputs.Count);
+        Dictionary<IIOItem, IUnitedValueGetter> dictionary = new Dictionary<IIOItem, IUnitedValueGetter>(list.Count + list2.Count);
+        if (inputTypes != GetInputValueTypes.None)
+        {
+            foreach (IIOItem input in Inputs)
+            {
+                ScalarInputGetter scalarInputGetter = new ScalarInputGetter(input.Alias, inputTypes);
+                list.Add(scalarInputGetter);
+                dictionary.Add(input, scalarInputGetter);
+            }
+        }
+        if (outputTypes != GetOutputValueTypes.None)
+        {
+            foreach (IIOItem output in Outputs)
+            {
+                ScalarOutputGetter scalarOutputGetter = new ScalarOutputGetter(output.Alias, outputTypes);
+                list2.Add(scalarOutputGetter);
+                dictionary.Add(output, scalarOutputGetter);
+            }
+        }
+        IEnumerable<ICalcWithSyncStatus> enumerable = CreateIOEvals(dictionary);
+        if (enumerable.Any())
+        {
+            InputOutputStateGetterNotifier inputOutputStateGetterNotifier = new InputOutputStateGetterNotifier(enumerable);
+            IApplicationBehaviorOptions service = AppServiceRegistry.GetService<IApplicationBehaviorOptions>();
+            if (DebugTools.DevAssert(service != null, null).Passed)
+            {
+                inputOutputStateGetterNotifier.SetProgressAbortTimeout(service.CollectInputOutputStatesTimeout);
+            }
+            if (waitForCalculationStopped(inputOutputStateGetterNotifier))
+            {
+                if (inputOutputStateGetterNotifier.IsProgressTrackingAborted())
+                {
+                    SetError(dictionary, IOManagerErrorCode.CalculationTimeOut);
+                }
+                else
+                {
+                    ExtractValues(dictionary);
+                }
+            }
+            else
+            {
+                list = null;
+                list2 = null;
+            }
+            inputOutputStateGetterNotifier.Dispose();
+            RemoveShadowEvals(dictionary);
+        }
+        if (list != null || list2 != null)
+        {
+            return new InputOutputItemsStates(list, list2);
+        }
+        return null;
+    }
+
+    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+    public IValuesSetter CreateScaledValueSettersCollection() => new ValuesSetter(this);
+
+    public string InputGetSExprValue(string alias)
+    {
+        IIOItem item = Inputs.GetItem(alias, GetAndSetOperationsCompareAliasesCaseInsensitively);
+        if (item != null)
+        {
+            return ((IInputRegion)item.Region).GetDefinitionSExpression(item.IdSexp);
+        }
+        return null;
+    }
+
+    private static List<IIORegion> GetUntaggedRegions(IEnumerable<IIORegion> regions, bool asInp)
+    {
+        return regions.Where((IIORegion region) => (asInp && !IOTag.HasInputTag(region as DependencyObject)) || (!asInp && !IOTag.HasOutputTag(region as DependencyObject))).ToList();
+    }
+
+    private static bool CanToggleRegionAsInput(IIORegion region)
+    {
+        if (region is IInputRegion region2)
+        {
+            return region2.IsSuitableForInputTagging();
+        }
+        return false;
+    }
+
+    private static bool CanToggleRegionAsOutput(IIORegion region)
+    {
+        if (region is IOutputRegion region2)
+        {
+            return region2.IsSuitableForOutputTagging();
+        }
+        return false;
+    }
+
+    private void InputRemoveAllCalculationOverrides(DependencyObject region)
+    {
+        foreach (ICalculatable item2 in CalculationOverridesHandler.RemoveCalculatableOverrides(region, CalculationOverridesTypes.InputOverriddenValueSetter))
+        {
+            Pair<IIORegion, ICalculatable> item = new Pair<IIORegion, ICalculatable>
+            {
+                First = region as IIORegion,
+                Second = item2
+            };
+            _shadowCalculatableNotifier.Remove(item);
+        }
+        DebugTools.DevAssert(CalculationOverridesHandler.GetInputCalculationOverrides(region).IsNullOrEmpty(), null);
+    }
+
+    private void InputRemoveCalculationOverridesOnRemoveIOItems(IEnumerable<IIOItem> ioItem)
+    {
+        List<DependencyObject> list = new List<DependencyObject>();
+        foreach (IOItem item2 in ioItem)
+        {
+            DependencyObject region = item2.Region;
+            string idSexp = item2.IdSexp;
+            ICalculatable calculatable = CalculationOverridesHandler.RemoveCalculationOverrideForSExpr(region, idSexp, CalculationOverridesTypes.InputOverriddenValueSetter);
+            if (calculatable != null)
+            {
+                Pair<IIORegion, ICalculatable> item = new Pair<IIORegion, ICalculatable>
+                {
+                    First = region as IIORegion,
+                    Second = calculatable
+                };
+                _shadowCalculatableNotifier.Remove(item);
+            }
+            if (!list.Contains(region))
+            {
+                list.Add(region);
+            }
+        }
+        foreach (DependencyObject item3 in list)
+        {
+            if (_inputs.GetRegionIOItems(item3).IsNullOrEmpty())
+            {
+                DebugTools.DevAssert(CalculationOverridesHandler.GetInputCalculationOverrides(item3).IsNullOrEmpty(), null);
+            }
+        }
+    }
+
+    private void OutputAssertNoCalculationOverridesOnRemoveIOItems(IEnumerable<IIOItem> ioItem)
+    {
+        List<DependencyObject> list = new List<DependencyObject>();
+        foreach (IOItem item in ioItem)
+        {
+            DependencyObject region = item.Region;
+            if (!list.Contains(region))
+            {
+                list.Add(region);
+            }
+        }
+        foreach (DependencyObject item2 in list)
+        {
+            if (DebugTools.DevAssert(_outputs.GetRegionIOItems(item2).IsNullOrEmpty(), null).Passed)
+            {
+                OutputAssertNoCalculationOverrides(item2);
+            }
+        }
+    }
+
+    private static void OutputAssertNoCalculationOverrides(DependencyObject region)
+    {
+        DebugTools.DevAssert(CalculationOverridesHandler.GetOutputCalculationOverrides(region).IsNullOrEmpty(), null);
+    }
+
+    private IOManagerErrorCode CreateShadowOverrideValue(IIOItem ioItem, ISingleValueSetter singleValueSetter)
+    {
+        DependencyObject region = ioItem.Region;
+        bool flag = CalculatableChildHider.IsHiddenFromCalculation(region);
+        IShadowIdDefinition shadowIdDefinition = singleValueSetter.IsValid() ? singleValueSetter.CreateShadowCalculatable(ioItem.IdSexp) : null;
+        if (shadowIdDefinition == null)
+        {
+            return IOManagerErrorCode.InputInvalid;
+        }
+        IInputRegion inputRegion = ioItem.Region as IInputRegion;
+        ISimpleCalculatable calculationOverrideForSExpr = CalculationOverridesHandler.GetCalculationOverrideForSExpr(region, ioItem.IdSexp, CalculationOverridesTypes.InputOverriddenValueSetter);
+        if (calculationOverrideForSExpr != null)
+        {
+            DebugTools.DevAssert(!flag, null);
+        }
+        if (shadowIdDefinition.Equals(calculationOverrideForSExpr))
+        {
+            if (!flag)
+            {
+                return IOManagerErrorCode.NoError;
+            }
+            return IOManagerErrorCode.ItemDisabled;
+        }
+        IOManagerErrorCode iOManagerErrorCode = flag ? IOManagerErrorCode.ItemDisabled : IOManagerErrorCode.NoError;
+        using (new CommandScope(new CompoundCommand()))
+        {
+            if (DebugTools.AssertNotNull(inputRegion, null).Passed)
+            {
+                inputRegion.IORegionChanged -= HandleIORegionChanged;
+                if (!inputRegion.SubstituteAndCommitInputValue(ioItem.IdSexp, shadowIdDefinition.ValueSExpression, shadowIdDefinition.ScalingSExpression))
+                {
+                    iOManagerErrorCode = IOManagerErrorCode.InputInvalid;
+                }
+                inputRegion.IORegionChanged += HandleIORegionChanged;
+            }
+        }
+        if (iOManagerErrorCode != IOManagerErrorCode.NoError)
+        {
+            return iOManagerErrorCode;
+        }
+        CalculationOverridesHandler.SetCalculationOverrideForSExpr(region, ioItem.IdSexp, CalculationOverridesTypes.InputOverriddenValueSetter, shadowIdDefinition);
+        if (calculationOverrideForSExpr != null)
+        {
+            Pair<IIORegion, ICalculatable> item = new Pair<IIORegion, ICalculatable>
+            {
+                First = region as IIORegion,
+                Second = calculationOverrideForSExpr
+            };
+            _shadowCalculatableNotifier.Remove(item);
+        }
+        Pair<IIORegion, ICalculatable> item2 = new Pair<IIORegion, ICalculatable>
+        {
+            First = region as IIORegion,
+            Second = shadowIdDefinition
+        };
+        _shadowCalculatableNotifier.Add(item2);
+        shadowIdDefinition.Commit();
+        return IOManagerErrorCode.NoError;
+    }
+
+    private void SetValue(ISingleValueSetter unitedSingleValueSetter)
+    {
+        SetValues(new ISingleValueSetter[1] { unitedSingleValueSetter }, DefaultCalculationTimeout);
+    }
+
+    private void SetValues(IEnumerable<ISingleValueSetter> scaledValueSetters, int seconds)
+    {
+        IIOItem iIOItem = null;
+        bool flag = false;
+        foreach (ISingleValueSetter scaledValueSetter in scaledValueSetters)
+        {
+            IIOItem item = Inputs.GetItem(scaledValueSetter.Alias, GetAndSetOperationsCompareAliasesCaseInsensitively);
+            if (item != null)
+            {
+                scaledValueSetter.OperationResult = IOManagerErrorCode.NoError;
+                scaledValueSetter.OperationResult = CreateShadowOverrideValue(item, scaledValueSetter);
+                if (scaledValueSetter.OperationResult == IOManagerErrorCode.NoError)
+                {
+                    iIOItem = item;
+                    flag = true;
+                }
+            }
+            else
+            {
+                scaledValueSetter.OperationResult = IOManagerErrorCode.AliasNotFound;
+            }
+        }
+        if (!flag)
+        {
+            return;
+        }
+        IOManagerErrorCode errorCode;
+        try
+        {
+            FireWaitForCalculation(iIOItem.Region, seconds);
+            foreach (ISingleValueSetter scaledValueSetter2 in scaledValueSetters)
+            {
+                if (scaledValueSetter2.OperationResult == IOManagerErrorCode.NoError)
+                {
+                    IIOItem item2 = Inputs.GetItem(scaledValueSetter2.Alias, GetAndSetOperationsCompareAliasesCaseInsensitively);
+                    ISimpleCalculatable calculationOverrideForSExpr = CalculationOverridesHandler.GetCalculationOverrideForSExpr(item2.Region, item2.IdSexp, CalculationOverridesTypes.InputOverriddenValueSetter);
+                    if (calculationOverrideForSExpr != null)
+                    {
+                        scaledValueSetter2.OperationResult = EvaluationHelper.AnalyzeEvaluationError(calculationOverrideForSExpr);
+                    }
+                }
+            }
+            errorCode = IOManagerErrorCode.NoError;
+        }
+        catch (CalculationDisabledException)
+        {
+            errorCode = IOManagerErrorCode.CalculationDisabled;
+        }
+        catch (TimeoutException)
+        {
+            errorCode = IOManagerErrorCode.CalculationTimeOut;
+        }
+        if (errorCode != IOManagerErrorCode.NoError)
+        {
+            scaledValueSetters.Each((ISingleValueSetter item) =>
+            {
+                if (item.OperationResult == IOManagerErrorCode.NoError)
+                {
+                    item.OperationResult = errorCode;
+                }
+            });
+        }
+    }
+
+    private void GetComputedValueScaledBy(bool isInp, IUnitedValueGetter unitedValueGetter)
+    {
+        IIOItem iIOItem = isInp ? Inputs.GetItem(unitedValueGetter.Alias, GetAndSetOperationsCompareAliasesCaseInsensitively) : Outputs.GetItem(unitedValueGetter.Alias, GetAndSetOperationsCompareAliasesCaseInsensitively);
+        if (iIOItem == null)
+        {
+            foreach (CalculationOverridesTypes overrideType in unitedValueGetter.OverrideTypes)
+            {
+                unitedValueGetter.SetOperationResult(IOManagerErrorCode.AliasNotFound, overrideType);
+            }
+        }
+        else
+        {
+            GetComputedValueScaledBy(iIOItem, unitedValueGetter);
+        }
+    }
+
+    private void GetComputedValueScaledBy(IIOItem ioItem, IUnitedValueGetter unitedValueGetter)
+    {
+        KeyValuePair<IIOItem, IUnitedValueGetter>[] itemToValueGetter = new KeyValuePair<IIOItem, IUnitedValueGetter>[1]
+        {
+            new KeyValuePair<IIOItem, IUnitedValueGetter>(ioItem, unitedValueGetter)
+        };
+        int num = 0;
+        foreach (CalculationOverridesTypes overrideType in unitedValueGetter.OverrideTypes)
+        {
+            ScaledEvaluation shadowEval;
+            IOManagerErrorCode iOManagerErrorCode = CreateScaledShadowEvalForIOItem(ioItem, overrideType, unitedValueGetter, out shadowEval);
+            if (iOManagerErrorCode != IOManagerErrorCode.NoError)
+            {
+                unitedValueGetter.SetOperationResult(iOManagerErrorCode, overrideType);
+            }
+            else
+            {
+                num++;
+            }
+        }
+        if (num > 0)
+        {
+            try
+            {
+                FireWaitForCalculation(ioItem.Region, DefaultCalculationTimeout);
+                ExtractValues(itemToValueGetter);
+            }
+            catch (CalculationDisabledException)
+            {
+                SetError(itemToValueGetter, IOManagerErrorCode.CalculationDisabled);
+            }
+            catch (TimeoutException)
+            {
+                SetError(itemToValueGetter, IOManagerErrorCode.CalculationTimeOut);
+            }
+            finally
+            {
+                RemoveShadowEvals(itemToValueGetter);
+            }
+        }
+    }
+
+    private IOManagerErrorCode CreateScaledShadowEvalForIOItem(IIOItem ioItem, CalculationOverridesTypes type, IUnitedValueGetter unitedValueGetter, out ScaledEvaluation shadowEval)
+    {
+        shadowEval = null;
+        DependencyObject region = ioItem.Region;
+        if (CalculatableChildHider.IsHiddenFromCalculation(region))
+        {
+            return IOManagerErrorCode.ItemDisabled;
+        }
+        if (!unitedValueGetter.IsScalingValid())
+        {
+            return IOManagerErrorCode.InputInvalid;
+        }
+        string idSexp = ioItem.IdSexp;
+        if (GetCalculatableRegion(region, idSexp) == null)
+        {
+            DebugTools.DevAssert(false, "IO item is not of ICalculatable type or could not find the ICalculatable region in the IO item.");
+            return IOManagerErrorCode.UnknownError;
+        }
+        IOManagerErrorCode iOManagerErrorCode = CreateShadowEvalForCalc(ioItem, unitedValueGetter.ScalingSExpression, out shadowEval);
+        if (iOManagerErrorCode != IOManagerErrorCode.NoError)
+        {
+            DebugTools.DevAssert(iOManagerErrorCode != IOManagerErrorCode.UnknownError, null);
+            return iOManagerErrorCode;
+        }
+        DebugTools.DevAssert(CalculationOverridesHandler.SetCalculationOverrideForSExpr(region, idSexp, type, shadowEval) == null, "previous shadow calculatable wasn't removed");
+        Pair<IIORegion, ICalculatable> item = new Pair<IIORegion, ICalculatable>
+        {
+            First = ioItem.Region as IIORegion,
+            Second = shadowEval
+        };
+        _shadowCalculatableNotifier.Add(item);
+        shadowEval.Commit();
+        return IOManagerErrorCode.NoError;
+    }
+
+    private void RemoveShadowEval(IIOItem ioItem, ICalculatable shadowEval, CalculationOverridesTypes type)
+    {
+        Pair<IIORegion, ICalculatable> item = new Pair<IIORegion, ICalculatable>
+        {
+            First = ioItem.Region as IIORegion,
+            Second = shadowEval
+        };
+        _shadowCalculatableNotifier.Remove(item);
+        CalculationOverridesHandler.RemoveCalculationOverrideForSExpr(ioItem.Region, ioItem.IdSexp, type);
+    }
+
+    private static ICalculatable GetCalculatableRegion(DependencyObject region, string sExprKey)
+    {
+        ICalculatable result = null;
+        if (region is ICalculatable)
+        {
+            result = region as ICalculatable;
+        }
+        else if (region is ICalculatableContainer && region is IIOCalculatableContainerRegion)
+        {
+            result = ((IIOCalculatableContainerRegion)region).GetCalculatableBySExpression(sExprKey);
+        }
+        return result;
+    }
+
+    private static IOManagerErrorCode CreateShadowEvalForCalc(IIOItem ioItem, string scalingSExpression, out ScaledEvaluation eval)
+    {
+        string text = null;
+        eval = null;
+        IOManagerErrorCode iOManagerErrorCode = IOManagerErrorCode.NoError;
+        string[] allowedDescriptors;
+        string[] disallowedDescriptors;
+        if (ioItem.IsInput)
+        {
+            allowedDescriptors = new string[1] { "IDENTIFIER" };
+            disallowedDescriptors = null;
+            IInputRegion inputRegion = (IInputRegion)ioItem.Region;
+            if (inputRegion.GetDefinedIdentifierSExpressions().Contains(ioItem.IdSexp))
+            {
+                text = ioItem.IdSexp;
+            }
+            else
+            {
+                DebugTools.FailAssertionDoNotThrow("{0} - doesn't exist in input with alias: \"{1}\", defined list is: {2}", ioItem.IdSexp, ioItem.Alias, string.Join(";", inputRegion.GetDefinedIdentifierSExpressions()));
+            }
+        }
+        else
+        {
+            allowedDescriptors = null;
+            disallowedDescriptors = new string[2] { "FUNCTION_DEFINITION", "SYMBOLIC_EVALUATION" };
+            text = ((IOutputRegion)ioItem.Region).GetEvaluationSExp(true);
+        }
+        if (!SExpressionHelperUtilites.IsValidType(text, allowedDescriptors, disallowedDescriptors))
+        {
+            iOManagerErrorCode = IOManagerErrorCode.ResultTypeIncompatible;
+        }
+        if (iOManagerErrorCode == IOManagerErrorCode.NoError && DebugTools.AssertNotNullDoNotThrow(text, null).Passed)
+        {
+            eval = ScaledEvaluation.Create(text, scalingSExpression);
+            DebugTools.AssertNotNullDoNotThrow(eval, "failed to create shadow for: SExpr: {0} ScalingsExpr: {1}", text, scalingSExpression);
+        }
+        if (eval == null)
+        {
+            if (iOManagerErrorCode == IOManagerErrorCode.NoError)
+            {
+                return IOManagerErrorCode.UnknownError;
+            }
+            return iOManagerErrorCode;
+        }
+        return IOManagerErrorCode.NoError;
+    }
+
+    private static IOManagerErrorCode ScaledEvaluationResultToIOManagerErrorCode(ScaledEvaluation.ScaledEvaluationResult scaledEvaluationResult)
+    {
+        IOManagerErrorCode result;
+        switch (scaledEvaluationResult)
+        {
+        case ScaledEvaluation.ScaledEvaluationResult.NoError:
+            result = IOManagerErrorCode.NoError;
+            break;
+        case ScaledEvaluation.ScaledEvaluationResult.ResultTypeIncompatible:
+            result = IOManagerErrorCode.ResultTypeIncompatible;
+            break;
+        case ScaledEvaluation.ScaledEvaluationResult.MatrixResultInvalid:
+            result = IOManagerErrorCode.MatrixResultInvalid;
+            break;
+        default:
+            result = IOManagerErrorCode.UnknownError;
+            DebugTools.DevAssert(false, "ScaledEvaluationResultToIOManagerOperationResult {0} unsupported value", scaledEvaluationResult);
+            break;
+        }
+        return result;
+    }
+
+    [MirrorVerified("PtcControlsIOIOManagerMechanicalDifferentialTests")]
+    private void GetValue(bool asInp, IUnitedValueGetter unitedValueGetter) => GetComputedValueScaledBy(asInp, unitedValueGetter);
+
+    private void HandleIORegionChanged(DependencyObject region, IORegionChangeType ioRegionChangeType)
+    {
+        if (region is IIORegion)
+        {
+            IIORegion iIORegion = region as IIORegion;
+            if (IOTag.HasInputTag(region))
+            {
+                switch (ioRegionChangeType)
+                {
+                case IORegionChangeType.Content:
+                    if (!CanToggleRegionAsInput(iIORegion))
+                    {
+                        DebugTools.FailAssertion(null, Array.Empty<object>());
+                        _inputs.HandleTaggedRegionRemoved(region);
+                        RemoveInputTagFromRegion(iIORegion);
+                    }
+                    else
+                    {
+                        _inputs.HandleTaggedRegionChanged(region);
+                    }
+                    break;
+                case IORegionChangeType.CalcIsDisabledStatus:
+                    if (CalculatableChildHider.IsHiddenFromCalculation(region))
+                    {
+                        InputRemoveAllCalculationOverrides(region);
+                    }
+                    break;
+                default:
+                    DebugTools.FailAssertion("unexpected IORegionChangeType {0}", ioRegionChangeType);
+                    break;
+                }
+            }
+            if (IOTag.HasOutputTag(region))
+            {
+                switch (ioRegionChangeType)
+                {
+                case IORegionChangeType.Content:
+                    if (!CanToggleRegionAsOutput(iIORegion))
+                    {
+                        _outputs.HandleTaggedRegionRemoved(region);
+                        RemoveOutputTagFromRegion(iIORegion);
+                    }
+                    else
+                    {
+                        _outputs.HandleTaggedRegionChanged(region);
+                    }
+                    break;
+                case IORegionChangeType.CalcIsDisabledStatus:
+                    if (CalculatableChildHider.IsHiddenFromCalculation(region))
+                    {
+                        OutputAssertNoCalculationOverrides(region);
+                    }
+                    break;
+                default:
+                    DebugTools.FailAssertion("unexpected IORegionChangeType {0}", ioRegionChangeType);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void HandleInputItemsCollectionRangeChanged(object sender, NotifyCollectionChangedEventArgs args)
+    {
+        switch (args.Action)
+        {
+        case NotifyCollectionChangedAction.Remove:
+            InputRemoveCalculationOverridesOnRemoveIOItems(args.OldItems.OfType<IOItem>());
+            break;
+        default:
+            DebugTools.FailAssertion("Unsupported action: {0}", args.Action);
+            break;
+        case NotifyCollectionChangedAction.Add:
+            break;
+        }
+        FireIODataChanged();
+    }
+
+    private void HandleOutputItemsCollectionRangeChanged(object sender, NotifyCollectionChangedEventArgs args)
+    {
+        switch (args.Action)
+        {
+        case NotifyCollectionChangedAction.Remove:
+            OutputAssertNoCalculationOverridesOnRemoveIOItems(args.OldItems.OfType<IOItem>());
+            break;
+        default:
+            DebugTools.FailAssertion("Unsupported action: {0}", args.Action);
+            break;
+        case NotifyCollectionChangedAction.Add:
+            break;
+        }
+        FireIODataChanged();
+    }
+
+    private void SetIOTagOnRegion(IIORegion element, IOTagType type)
+    {
+        IOTagType tagType = IOTag.GetIOTag(element as DependencyObject) | type;
+        IOTag.SetIOTag(element as DependencyObject, tagType);
+        element.IORegionChanged += HandleIORegionChanged;
+    }
+
+    private void SetInputTagOnRegion(IIORegion element)
+    {
+        if (DebugTools.DevAssert(CanToggleRegionAsInput(element), null).Failed)
+        {
+            return;
+        }
+        SetIOTagOnRegion(element, IOTagType.Input);
+    }
+
+    private void SetOutputTagOnRegion(IIORegion element)
+    {
+        if (DebugTools.DevAssert(CanToggleRegionAsOutput(element), null).Failed)
+        {
+            return;
+        }
+        SetIOTagOnRegion(element, IOTagType.Output);
+    }
+
+    private void RemoveIOTagFromRegion(IIORegion element, IOTagType type)
+    {
+        IOTagType iOTagType = IOTag.GetIOTag(element as DependencyObject) & ~type;
+        IOTag.SetIOTag(element as DependencyObject, iOTagType);
+        if (iOTagType == IOTagType.None)
+        {
+            element.IORegionChanged -= HandleIORegionChanged;
+        }
+    }
+
+    private void RemoveInputTagFromRegion(IIORegion element)
+    {
+        if (!IOTag.HasInputTag(element as DependencyObject))
+        {
+            return;
+        }
+        RemoveIOTagFromRegion(element, IOTagType.Input);
+    }
+
+    private void RemoveOutputTagFromRegion(IIORegion element)
+    {
+        if (!IOTag.HasOutputTag(element as DependencyObject))
+        {
+            return;
+        }
+        RemoveIOTagFromRegion(element, IOTagType.Output);
+    }
+
+    private void ToggleIOTagOnRegion(IIORegion ioRegion, bool asInp, bool set, bool toggleRegionBorder)
+    {
+        DependencyObject region = ioRegion as DependencyObject;
+        if (set)
+        {
+            if (asInp)
+            {
+                SetInputTagOnRegion(ioRegion);
+                _inputs.HandleTaggedRegionAdded(region);
+            }
+            else
+            {
+                SetOutputTagOnRegion(ioRegion);
+                _outputs.HandleTaggedRegionAdded(region);
+            }
+        }
+        else if (asInp)
+        {
+            _inputs.HandleTaggedRegionRemoved(region);
+            RemoveInputTagFromRegion(ioRegion);
+        }
+        else
+        {
+            _outputs.HandleTaggedRegionRemoved(region);
+            RemoveOutputTagFromRegion(ioRegion);
+        }
+        if (toggleRegionBorder)
+        {
+            WhiteboardDependencyProperties.ToggleRegionBorderVisibility(region);
+        }
+    }
+
+    private List<UndoableCommand> CreateToggleTagCommandsCollection(IEnumerable<IIORegion> regions, bool asInp)
+    {
+        List<IIORegion> list = GetUntaggedRegions(regions, asInp);
+        bool setTag;
+        if (list.Count > 0)
+        {
+            setTag = true;
+        }
+        else
+        {
+            setTag = false;
+            list = regions.ToList();
+        }
+        List<UndoableCommand> result;
+        if (asInp)
+        {
+            result = list.OfType<IInputRegion>().Select((IInputRegion input) =>
+            {
+                bool toggleRegionBorder = input is DependencyObject val && WhiteboardDependencyProperties.GetIsRegionBorderVisible(val);
+                return input.CreateToggleInputCommand((IInputRegion region, bool set) =>
+                {
+                    ToggleIOTagOnRegion(region, true, set, toggleRegionBorder);
+                }, setTag);
+            }).ToList();
+        }
+        else
+        {
+            result = list.OfType<IOutputRegion>().Select((IOutputRegion region) =>
+            {
+                bool toggleRegionBorder = region is DependencyObject val && WhiteboardDependencyProperties.GetIsRegionBorderVisible(val);
+                return CreateToggleOutputCommand(region, setTag, toggleRegionBorder);
+            }).ToList();
+        }
+        return result;
+    }
+
+    private UndoableCommand CreateToggleOutputCommand(IOutputRegion region, bool setTag, bool toggleRegionBorder)
+    {
+        DelegateFunction0<bool> doMethod = () =>
+        {
+            ToggleIOTagOnRegion(region, false, setTag, toggleRegionBorder);
+            return true;
+        };
+        Delegate0 undoMethod = () =>
+        {
+            ToggleIOTagOnRegion(region, false, !setTag, toggleRegionBorder);
+        };
+        return new UndoableCommand("Region Set Output", doMethod, undoMethod);
+    }
+
+    public void Dispose()
+    {
+        _inputs.RangeChanged -= HandleInputItemsCollectionRangeChanged;
+        _inputs.AliasChanged -= FireIODataChanged;
+        _outputs.RangeChanged -= HandleOutputItemsCollectionRangeChanged;
+        _outputs.AliasChanged -= FireIODataChanged;
     }
 }

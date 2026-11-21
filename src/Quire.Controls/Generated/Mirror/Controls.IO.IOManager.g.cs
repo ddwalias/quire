@@ -11,37 +11,4 @@ namespace Quire.Controls.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.IOManager, Ptc.Controls")]
 public partial class IOManager : global::Quire.Controls.Core.IORegions.IIORegionManager, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.Support.ICalcWithSyncStatus> CreateIOEvals(global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<global::Quire.Controls.Core.IORegions.IIOItem, global::Quire.Controls.IO.IOManager.IUnitedValueGetter>> itemToValueGetter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void ExtractValues(global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<global::Quire.Controls.Core.IORegions.IIOItem, global::Quire.Controls.IO.IOManager.IUnitedValueGetter>> itemToValueGetter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void SetError(global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<global::Quire.Controls.Core.IORegions.IIOItem, global::Quire.Controls.IO.IOManager.IUnitedValueGetter>> itemToValueGetter, global::Quire.Controls.Core.IORegions.IOManagerErrorCode code) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RemoveShadowEvals(global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<global::Quire.Controls.Core.IORegions.IIOItem, global::Quire.Controls.IO.IOManager.IUnitedValueGetter>> itemToValueGetter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IORegions.IInputOutputItemsStates CollectScalarInputsOutputsStates(global::Quire.Controls.Core.IORegions.GetInputValueTypes inputTypes, global::Quire.Controls.Core.IORegions.GetOutputValueTypes outputTypes, global::System.Func<global::Quire.Wpf.INotifyProgress, bool> waitForCalculationStopped) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.List<global::Quire.Controls.Core.IORegions.IIORegion> GetUntaggedRegions(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IIORegion> regions, bool asInp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.IORegions.IOManagerErrorCode CreateShadowOverrideValue(global::Quire.Controls.Core.IORegions.IIOItem ioItem, global::Quire.Controls.IO.IOManager.ISingleValueSetter singleValueSetter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetValues(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.IO.IOManager.ISingleValueSetter> scaledValueSetters, int seconds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void GetComputedValueScaledBy(bool isInp, global::Quire.Controls.IO.IOManager.IUnitedValueGetter unitedValueGetter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void GetComputedValueScaledBy(global::Quire.Controls.Core.IORegions.IIOItem ioItem, global::Quire.Controls.IO.IOManager.IUnitedValueGetter unitedValueGetter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.IORegions.IOManagerErrorCode CreateScaledShadowEvalForIOItem(global::Quire.Controls.Core.IORegions.IIOItem ioItem, global::Quire.Controls.IO.CalculationOverridesTypes type, global::Quire.Controls.IO.IOManager.IUnitedValueGetter unitedValueGetter, out global::Quire.Controls.IO.ScaledEvaluation shadowEval) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RemoveShadowEval(global::Quire.Controls.Core.IORegions.IIOItem ioItem, global::Quire.Calculation.Core.ICalculatable shadowEval, global::Quire.Controls.IO.CalculationOverridesTypes type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Calculation.Core.ICalculatable GetCalculatableRegion(global::System.Windows.DependencyObject region, string sExprKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Core.IORegions.IOManagerErrorCode CreateShadowEvalForCalc(global::Quire.Controls.Core.IORegions.IIOItem ioItem, string scalingSExpression, out global::Quire.Controls.IO.ScaledEvaluation eval) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::Quire.Undo.UndoableCommand> CreateToggleTagCommandsCollection(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IORegions.IIORegion> regions, bool asInp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Undo.UndoableCommand CreateToggleOutputCommand(global::Quire.Controls.Core.IORegions.IOutputRegion region, bool setTag, bool toggleRegionBorder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
 }
