@@ -58,6 +58,9 @@
   - Shapes: `WriteHeader` uses `string.Format("{0}-{1:yyyyMMdd}", _fileName, DateTime.Today)`; `WriteRichTextBox` qualifies `System.Windows.Documents.TextRange`; all matched natural source on first try.
 - Batch 26: `DitaWriter.WriteImageControl(ImageControl)`. Gate: PASS, 580 checked. Report: `.mirror-cache/release-il-4872e951a780/release-il.json`.
   - Shapes: `if (!(originalImageUri == null ? false : ImageUtils.CopyImageToStream(...)))` emits ternary stack-materialization and jump table matching Mathcad's IL.
+- Batch 27: `DitaWriter.WriteRegionML(UIElement)`. Gate: PASS, 584 checked. Report: `.mirror-cache/release-il-4d51ce31119c/release-il.json`.
+  - Shapes: Reordered member declarations in Mathcad order, kept `WriteContentControl(FrameworkElement, Stream)` as an unmarked placeholder stub, and separated late properties in `DitaWriter.Properties.cs` to match closure ordinal `30_0` for `<WriteRegionML>b__30_0`.
+
 
 
 

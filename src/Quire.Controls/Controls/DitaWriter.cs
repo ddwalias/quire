@@ -9,7 +9,9 @@ using System.Windows.Documents;
 using System.Windows.Media.Imaging;
 using System.Xml;
 using Quire.Controls.Core;
+using Quire.Controls.Worksheet;
 using Quire.Mirror;
+using Quire.PersistentDataObjects;
 using Quire.Serialization;
 using Quire.Wpf;
 using Quire.Xml;
@@ -20,45 +22,13 @@ public partial class DitaWriter
 {
     public const string RootElement = "pubsTopic";
     private const double EquationscalingFactor = 2.0;
-
-    [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
-    private void WriteId(string value) => base.WriteAttributeString("id", value);
-
-    [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
-    public override void WriteEndElement() => base.WriteFullEndElement();
-
-    [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
-    public string PackImage(ImagePackagingInformation pictureInfo) => throw new NotImplementedException();
-
-    [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
-    public string PackExternalObject(string sourceFileName, string targetPackagePartName, ExternalObjectType objectType) => throw new NotImplementedException();
-
-    [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
-    public string PackIncludedWorksheet(string fullFilePath, DateTime lastSavedDate, string uniqueId, Func<Package, string, PackagePart> writePackagePart) => throw new NotImplementedException();
-
-    [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
-    public string PackFlowDocument(FlowDocument flowDocument, string regionId) => throw new NotImplementedException();
-
-    [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
-    public string PackProtectedPart(Stream content, string uniqueId, string regionType) => throw new NotImplementedException();
-
     [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
     public ITextStyleChangedHandler TextStyleChangedHandler { get; }
-
     private readonly string _fileName;
-
     [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
     private readonly string _filePath;
-
-    [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
-    private string DirectoryName => Path.Combine(_filePath, "graphics");
-
-    [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
-    public PackagePart PackagePart => null;
-
     [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
     private readonly ISerializationHelper _helper;
-
     private const string P = "p";
     private const string Fig = "fig";
     private int _currentId;
@@ -66,16 +36,15 @@ public partial class DitaWriter
     public const string PubsBody = "pubsBody";
 
     [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
-    public ISerializationHelper Helper => _helper;
+    private string DirectoryName => Path.Combine(_filePath, "graphics");
+
+    private string CurrentIdString => string.Format("ml-{0}", _currentId);
 
     [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
-    public XmlNamespaceManager NameSpaceManager => XmlWorksheetData.McdxNameSpaceManager;
+    public PackagePart PackagePart => null;
 
     [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
-    public XmlDocument XmlContentDocument { get; set; }
-
-    [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
-    public bool UseOverrides => true;
+    private void WriteId(string value) => base.WriteAttributeString("id", value);
 
     public DitaWriter(string fileName, ISerializationHelper documentHelper)
         : base(fileName, Encoding.UTF8)
@@ -118,8 +87,6 @@ public partial class DitaWriter
         }
     }
 
-    private string CurrentIdString => string.Format("ml-{0}", _currentId);
-
     private FileStream WriteImageElementCreateFile(string extension)
     {
         string text = ImageFileName(extension);
@@ -134,6 +101,8 @@ public partial class DitaWriter
         EnsureDirectoryExists();
         return File.Create(Path.Combine(_filePath, text));
     }
+
+    private void WriteContentControl(FrameworkElement element, Stream fileStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public void WriteContentControl(ContentControl contentControl)
     {
@@ -162,10 +131,41 @@ public partial class DitaWriter
         _currentId++;
     }
 
+    public void WriteRegionML(UIElement region)
+    {
+        DebugTools.DevAssert(region is FrameworkElement, "region is expected to be a framework element, otherwise it's width and height will not be saved.");
+        XmlContentDocument = new XmlDocument();
+        if (RegionFactory.Instance.ConvertToIRegionType(() => new worksheetRegionType(), this, region) is worksheetRegionType worksheetRegionType2)
+        {
+            worksheetRegionType2.regionid = CurrentIdString;
+            worksheetRegionType2.Location = new Point(WorksheetControl.GetWorksheetLeft(region), WorksheetControl.GetWorksheetTop(region));
+            worksheetRegionType2.Serialize().WriteTo(this);
+        }
+        _currentId++;
+    }
+
     public void WriteImageControlML(ImageControl imageControl)
     {
         _currentId++;
     }
+
+    [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
+    public override void WriteEndElement() => base.WriteFullEndElement();
+
+    [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
+    public string PackImage(ImagePackagingInformation pictureInfo) => throw new NotImplementedException();
+
+    [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
+    public string PackExternalObject(string sourceFileName, string targetPackagePartName, ExternalObjectType objectType) => throw new NotImplementedException();
+
+    [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
+    public string PackIncludedWorksheet(string fullFilePath, DateTime lastSavedDate, string uniqueId, Func<Package, string, PackagePart> writePackagePart) => throw new NotImplementedException();
+
+    [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
+    public string PackFlowDocument(FlowDocument flowDocument, string regionId) => throw new NotImplementedException();
+
+    [MirrorVerified("PtcControlsDitaWriterMechanicalDifferentialTests")]
+    public string PackProtectedPart(Stream content, string uniqueId, string regionType) => throw new NotImplementedException();
 
     public partial class Element
     {

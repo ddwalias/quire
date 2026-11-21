@@ -11,11 +11,6 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.DitaWriter, Ptc.Controls")]
 public partial class DitaWriter : global::System.Xml.XmlTextWriter, global::Quire.Serialization.IS11NProvider, global::Quire.Serialization.IBaseS11NProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    private void WriteContentControl(global::System.Windows.FrameworkElement element, global::System.IO.Stream fileStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteRegionML(global::System.Windows.UIElement region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.DitaWriter+Element, Ptc.Controls")]
     public partial class Element : global::System.IDisposable
     {
