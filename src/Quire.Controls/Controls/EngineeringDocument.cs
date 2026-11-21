@@ -6,6 +6,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Quire.Calculation.Core;
 using Quire.Controls.Core;
@@ -605,6 +607,179 @@ public partial class EngineeringDocument
             _showEngineChangesBanner = value;
             FirePropertyChanged("ShowEngineChangesBanner");
         }
+    }
+
+    private static void OnLastSavedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is EngineeringDocument)
+        {
+            (d as EngineeringDocument).FirePropertyChanged("DisplaySavedDate");
+        }
+    }
+
+    private static void OnFilePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
+    {
+        if (d is EngineeringDocument)
+        {
+            (d as EngineeringDocument).OnFilePathChanged();
+        }
+    }
+
+    private void OnFilePathChanged()
+    {
+        FilePathChanged(this);
+        FirePropertyChanged("DisplayFilePath");
+        FirePropertyChanged("DisplayFileName");
+        FirePropertyChanged("DisplayDocumentName");
+        FirePropertyChanged("DisplayWindowTitle");
+    }
+
+    private static void OnIsDirtyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is EngineeringDocument engineeringDocument)
+        {
+            engineeringDocument.IsDirtyChanged(engineeringDocument);
+        }
+    }
+
+    private void FireSystemVariableUpdated(string name, object value)
+    {
+        if (!name.Equals("mc_CWD"))
+        {
+            IsDirty = true;
+        }
+    }
+
+    private void BindingCalculationOptionsAndSystemVariables()
+    {
+        Worksheet.DocCalculationOptions.CalculationOptionChanged += FireCalculationOptionUpdated;
+        IsAutoCalcOn = Worksheet.DocCalculationOptions.IsAutoCalcOn;
+        Worksheet.DocCalculationVariables.CalculationVariableChanged += FireSystemVariableUpdated;
+        Worksheet.DocCalculationOptions.BinOctHexModeOptionChanged += FireCalculationOptionUpdated;
+    }
+
+    private void WorksheetPropertyChangedHandler(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case "SimplifyUnitSystem":
+                IsDirty = true;
+                break;
+            case "DefaultUnitSystem":
+                IsDirty = true;
+                FirePropertyChanged("UnitSystemHeader");
+                break;
+        }
+    }
+
+    public void SetAutoCalculationEnabledWithoutTriggeringIsDirty(bool value)
+    {
+        bool isDirty = IsDirty;
+        IsAutoCalcOn = value;
+        IsDirty = isDirty;
+    }
+
+    public TextFormat GetContentTextFormat() => Worksheet.ContentTextFormat;
+
+    public TextFormat GetHeaderTextFormat() => Worksheet.HeaderTextFormat;
+
+    public TextFormat GetFooterTextFormat() => Worksheet.FooterTextFormat;
+
+    private void InvokeOnDispose()
+    {
+        try
+        {
+            Worksheet.Dispose();
+        }
+        catch (Exception ex)
+        {
+            DebugTools.FailAssertion(ex.ToString());
+        }
+        finally
+        {
+            OnDispose?.Invoke(this);
+        }
+    }
+
+    public void ResetDocumentCustomization()
+    {
+        ReadonlyOptions = null;
+        DocumentTabIcon = null;
+        CustomizedDocumentName = null;
+        CustomizedFilePath = null;
+        CustomizedSavedDate = null;
+        CustomizedWindowTitle = null;
+        CustomizedClosePrompt = null;
+        DebugTools.DevAssert(ReadonlyOptions == DocumentReadonlyOptions.Default, null);
+        DebugTools.DevAssert(_customizedValues.Equals(default(CustomizedValues)), null);
+    }
+
+    private void UpdateCWDState(string fileName)
+    {
+        string prevCwd = CWD;
+        string newCwd = CWD = Path.GetDirectoryName(Path.GetFullPath(fileName));
+        if (ReadonlyOptions.FileLocationHistoryEnabled && prevCwd != newCwd && CwdUpdated != null)
+        {
+            CwdUpdated(newCwd);
+        }
+    }
+
+    private static void OnZoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
+    {
+        (d as EngineeringDocument)?.OnZoomChanged((double)args.OldValue, (double)args.NewValue);
+    }
+
+    private void OnZoomChanged(double oldValue, double newValue)
+    {
+        AdjustScrollBeforeZoomChange(oldValue, newValue);
+        LayoutTransform = new ScaleTransform(newValue, newValue);
+        FirePropertyChanged("Zoom");
+    }
+
+    private void AdjustScrollBeforeZoomChange(double zoomOldValue, double zoomNewValue)
+    {
+        ScrollViewer scrollViewer = this.TryFindAncestorIncludingSelf<ScrollViewer>();
+        if (scrollViewer != null)
+        {
+            double num = scrollViewer.ViewportWidth / 2.0;
+            double num2 = scrollViewer.ViewportHeight / 2.0;
+            double num3 = scrollViewer.HorizontalOffset + num;
+            double num4 = scrollViewer.VerticalOffset + num2;
+            double num5 = zoomNewValue / zoomOldValue;
+            double value = scrollViewer.ExtentWidth * num5;
+            if (scrollViewer.ExtentWidth.IsLessThan(scrollViewer.ViewportWidth) && value.IsGreaterThan(scrollViewer.ViewportWidth))
+            {
+                Point val = TranslatePoint(default, scrollViewer);
+                num3 -= val.X;
+            }
+            double num6 = num3 * num5;
+            double num7 = num4 * num5;
+            double offset = num6 - num;
+            double offset2 = num7 - num2;
+            scrollViewer.ScrollToHorizontalOffset(offset);
+            scrollViewer.ScrollToVerticalOffset(offset2);
+        }
+    }
+
+    internal void HandleCtrlMouseWheel(int ticks)
+    {
+        EngineeringDocCommands.ZoomIn.Execute(ticks, this);
+    }
+
+    protected override void OnMouseWheel(MouseWheelEventArgs e)
+    {
+        if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+        {
+            int num = Math.Abs(e.Delta) < WpfUtils.MouseWheelScrollDelta ? WpfUtils.MouseScrollDeltaForTouchPad : WpfUtils.MouseWheelScrollDelta;
+            int num2 = e.Delta / num;
+            if (num2 == 0)
+            {
+                return;
+            }
+            HandleCtrlMouseWheel(num2);
+            e.Handled = true;
+        }
+        base.OnMouseWheel(e);
     }
 
     partial class RootDecorator

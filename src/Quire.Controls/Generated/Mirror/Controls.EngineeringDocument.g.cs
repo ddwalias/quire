@@ -40,41 +40,11 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Worksheet.WorksheetControl WorksheetControl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private static void OnLastSavedDateChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnFilePathChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnFilePathChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnZoomChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnZoomChanged(double oldValue, double newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.Serialization.XElementSerializable GetMcdxPageModel(global::System.Xml.Linq.XName name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string GetFirstNonEmptyString(params string[] values) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void BindingCalculationOptionsAndSystemVariables() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void WorksheetPropertyChangedHandler(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AdjustScrollBeforeZoomChange(double zoomOldValue, double zoomNewValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnMouseWheel(global::System.Windows.Input.MouseWheelEventArgs e) => base.OnMouseWheel(e);
-    [global::Quire.Mirror.MirrorStub]
-    internal void HandleCtrlMouseWheel(int ticks) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Core.TextFormat GetContentTextFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Core.TextFormat GetHeaderTextFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Core.TextFormat GetFooterTextFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnIsDirtyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.FileLoadResult NewFromDocument(string fullFilePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void InvokeOnDispose() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public EngineeringDocument(global::Quire.Controls.Core.DocumentReadonlyOptions readonlyOptions = default) { }
     [global::Quire.Mirror.MirrorStub]
@@ -87,8 +57,6 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     private global::System.Windows.Documents.AdornerDecorator GetErrorMessageAdornerDecorator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleAdornerAdded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ResetDocumentCustomization() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleCopySingleWhiteboardItemNoImage(object sender, global::Quire.Wpf.CustomRoutedEventArgs<global::Quire.Controls.Core.IWhiteboardItem> e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -119,10 +87,6 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     public string GetEngineVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void WaitForSave(int seconds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireSystemVariableUpdated(string name, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetAutoCalculationEnabledWithoutTriggeringIsDirty(bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void EnsureStreamRelease() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -213,8 +177,6 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     private global::System.Windows.Documents.IDocumentPaginatorSource CreatePrintableDocument(global::Quire.Wpf.Printing.Win32PrintRange printRange, global::Quire.Wpf.Printing.PageIndexRange pageRange, bool shouldEnrichPrintingTree = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Exception SaveFileAndUpdateCWDState(string fileName, global::Quire.Controls.Core.IDocumentSaveOptions options, out bool wasRenamed) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateCWDState(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.EngineeringDocument+RootDecorator, Ptc.Controls")]
     private partial class RootDecorator : global::System.Windows.Documents.AdornerDecorator, global::Quire.Wpf.IAlignedRoot
