@@ -3,6 +3,18 @@
 - Owner: Automation.Native lane; branch `feature/automation-native-agy`.
 - Target: `src/Quire.Automation.Native` (C# net10.0-windows, hosting `automationmgd.dll` and `componentsmgd.dll`).
 
+## Batch 4 — ValueFactory, McxIO, McxInput, and McxOutput
+
+- Members:
+  - `Mathcad.Automation.ValueFactory`: `.ctor()`, `Instance`, `RangeToVector`, `TransposeArray`, `GetDimensions`, `FirstValue`, `VariantToEngine`, `ToAutomation(object, string)`, `ToAutomation(object, string, RuntimeOptions)`, `FromAutomation`, `EngineToAutomation(object)`, `EngineToAutomation(object, RuntimeOptions)`, `AutomationToEngine`, `VariantToAutomation`, `AutomationToVariant`, `WrapperToAutomation`, `AutomationToWrapper`, `VSDataToAutomation`, `AutomationToVSData`. Hand-written in `Mirrored/ValueFactory.cs`.
+  - `Mathcad.Components.McxIO`: `.ctor(UnitAction)`, `data`, `action`, `Data` (get/set), `IsValid`, `CopyOf`. Hand-written in `Mirrored/McxIO.cs`.
+  - `Mathcad.Components.McxInput`: `.ctor(UnitAction)`, `Set`, `IsReady`, `Recv`. Hand-written in `Mirrored/McxInput.cs`.
+  - `Mathcad.Components.McxOutput`: `.ctor(UnitAction)`, `Set`, `Send`, `IsReady`. Hand-written in `Mirrored/McxOutput.cs`.
+- Stubs removed: `Generated/Mirror/Automation.ValueFactory.g.cs`, `Generated/Mirror/Components.McxIO.g.cs`, `Generated/Mirror/Components.McxInput.g.cs`, `Generated/Mirror/Components.McxOutput.g.cs`.
+- Blocked: `VSValueFactory` deferred: `VSValueFactory.VSDataToAutomation` in original `componentsmgd.dll` calls `[interop.mathcad]Mathcad.IMatrixValue::GetElement`, while `Quire.Automation.Native` maps `IMatrixValue` to `[automationmgd]Mathcad.IMatrixValue`, creating a cross-assembly interop call reference mismatch.
+- Release IL report: `python tools/validation/release_il.py --base main --project Quire.Automation.Native` — PASS, 161 checked (was 128 checked, +33 exact), 0 failures. Report: `.mirror-cache/release-il-7cae7307e729/release-il.json`.
+- Remaining: 203 unfinished stubs reported by the gate.
+
 ## Batch 3 — NumericValue, Utilities, BitStream, Efi, UnitPower, and Interfaces
 
 - Members:
