@@ -148,3 +148,8 @@
 - Member: `private void VerifyInsertionPositions()`. Hand-written in `Mirrored/Controls.Text.RichTextBase.cs`; stub removed from the `.g.cs`.
 - Shapes that mattered: `_cachedInsertionPoints.Concat(Document.ContentEnd.Yield())` for the foreach source; `previous` and `current` locals (copies of `last` and `insertionPoint` taken at the top of each iteration, used later in the inner loop) match Mathcad's slots `[3]` and `[4]`; the assertion message is an interpolated string (`DefaultInterpolatedStringHandler`), which matches as written.
 - Release IL (project-wide): PASS — 626 checked, 0 failures.
+
+## Parked — SearchWholeWordRuns (evidence)
+
+- `GetInsertionPointAtPointer(ref start)` is preceded by `ldarg.0; ldarg.1; callvirt get_Start; stloc.s 4; ldloca.s 4; call`: `this` is pushed before the `TextPointer` local is stored, the same receiver-first shape recorded for `SelectionStart`/`SelectionEnd`. A C# local declaration cannot store between a receiver and its `ref` argument. Parked with that family.
+- The rest (the `GetSameTypeRunRanges` call, the `direction == Backward` reverse, the struct `List<ValueTuple>.Enumerator` loop with `dup`/`ldfld` deconstruction, the `TryFindWholeWord` loop with `leave`) was not reproduced; not attempted.
