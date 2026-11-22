@@ -303,6 +303,23 @@
       }
     }
   },
+  "msprolog.dll": {
+    "sha256": "93074748c4f6e02f76fc7e571d54f08603502e776e8ec5ebd554c28d129b9c16",
+    "targets": {
+      "??_7type_info@@6B@": {
+        "rva": "0x24558",
+        "toolchain": true
+      },
+      "??_R0?AVanyval@Unmanaged@Engine@@@8": {
+        "rva": "0x30b40",
+        "size": 46
+      },
+      "??_R0?AVpstring@Unmanaged@Engine@@@8": {
+        "rva": "0x30b10",
+        "size": 47
+      }
+    }
+  },
   "engutils.dll": {
     "sha256": "90d1a0754271942118cbddf58442cc0c3a8aedd62b767f4021631abb736d3c0c",
     "targets": {
