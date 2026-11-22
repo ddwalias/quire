@@ -47,3 +47,10 @@
 - Shapes that matched: `!param.ShowDialog || ShowHyperlinkDialog(...)` as one guard around `GetState` and the `DevAssert`; `DevAssert(state.PerformedLinkEditOperation != None, ...)`; switch sections in source order Delete, Insert/Edit, default, None (Mathcad's code layout); `state.PerformedLinkEditOperation` re-read for the Edit comparison and the final cleanup condition (Mathcad calls the getter each time); `DevAssert(parentInlines == null, null).Failed` before `Remove` (Mathcad's literal condition).
 - Calls `EditLinkUndoableCommand` (still a stub), which only matters at runtime.
 - Release IL (project-wide): PASS — 614 checked, 0 failures.
+
+## Attempt — RichTextWithEmbeddedItem.EditLinkUndoableCommand (not landed)
+
+- Wrote the full method from its Release IL (CommandScope, DeclareChangeBlock, foreach/try-finally over `Selection.EnumerateInlinesInRange`, the `IsNotEmpty` / `UserChangedText` / try-catch branches, the `BlockUIContainer` path, the `CommandBuffer` undo loop). The project compiles with it; the gate's first difference is at instruction 58 and, after a diagnostic temporary, at instruction 81. Reverted to the stub; nothing from this attempt is committed.
+- Blocker 1 (instruction 58): Mathcad calls `blockContainer.get_Child()`, then `set_Child(null)`, then `new InlineUIContainer(child)`. Roslyn emits the constructor after the `Child` read's use, so the set cannot precede it without a temporary. Mathcad's local list has no `UIElement` slot, so a temporary changes the locals. This is the receiver-retention/argument-order family already recorded for SelectionStart/End.
+- Blocker 2 (instruction 81): Mathcad calls `TextFormat.ApplyTextFormat(range)` with `call` on the `textFormat` local; Roslyn emits `callvirt` for a plain public instance method on a reference-type local. Not yet resolved.
+- Remaining unverified: after 81 the gate does not report further differences for this method, so the rest of the body is unchecked.
