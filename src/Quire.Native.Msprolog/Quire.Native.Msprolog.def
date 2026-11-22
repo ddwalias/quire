@@ -4,4 +4,5 @@ EXPORTS
     ??4PObjParser@Prolog@@QEAAAEAV01@$$QEAV01@@Z
     ??4PObjParser@Prolog@@QEAAAEAV01@AEBV01@@Z
     ??CRuleset@Prolog@@QEBAPEAVProgram@1@XZ
+    ?format_code@PObjParser@Prolog@@CAEPEBVanyval@Unmanaged@Engine@@@Z
     ?GetProgram@Ruleset@Prolog@@QEBAPEAVProgram@2@XZ

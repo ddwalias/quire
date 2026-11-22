@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Quire.Native.Mspcons/unmanaged.h"
+
 namespace Prolog {
 
 // Abstract program. The destructor is the first virtual slot; the five pure virtual slots after it are not in the
@@ -35,6 +37,24 @@ class PObjParser {
 public:
     PObjParser &operator=(PObjParser &&other);
     PObjParser &operator=(PObjParser const &other);
+
+private:
+    static unsigned char format_code(Engine::Unmanaged::anyval const *value);
 };
 
+
+}
+
+namespace Engine {
+namespace Unmanaged {
+
+// Observed by format_code: the char pointer read there is at offset 0x10. The field at offset 0x08 is not identified
+// and has no semantics assigned here.
+class pstring : public anyval {
+public:
+    unsigned __int64 reserved_8;
+    char const *text;
+};
+
+}
 }

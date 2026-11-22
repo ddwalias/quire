@@ -50,3 +50,16 @@ The Ruleset constructor (`0x9CF0`) is also unstarted; it depends on items 2 and 
   supplies from Mspcons. Blocked until the maintainer decides how RTTI descriptors owned by Mspcons are verified
   (or Mspcons exports them). The Mspcons header does not yet declare `pstring`; that needs a maintainer edit.
 - Not landed: the gate fails on those two targets. Program/Ruleset vftables remain parked.
+
+## format_code landing (task_6d51318dc9f3)
+
+- `?format_code@PObjParser@Prolog@@CAEPEBVanyval@Unmanaged@Engine@@@Z` is implemented in `prolog_pobjparser.cpp` (private static) with a
+  Msprolog-local `Engine::Unmanaged::pstring` declaration in `prolog.h`. The observed char pointer is at offset 0x10; offset 0x08 is
+  not identified and has no semantics assigned.
+- Strict native gate on this branch with the `msprolog.dll` entries from `a6b0376f8` applied (`git apply`, not committed here):
+  `native_gate.py --base main --project Quire.Native.Msprolog` PASS, 9 checked, 0 failures, 0 regressions (6 exports, the RTTI
+  descriptors `??_R0?AVanyval@Unmanaged@Engine@@@8` and `??_R0?AVpstring@Unmanaged@Engine@@@8`, and the `??_7type_info@@6B@` toolchain entry).
+- Combined landing: the manifest entries (`a6b0376f8`, on `maintainer/msprolog-rtti-20261123`) must enter `main` with this change.
+  Without them the gate fails on the two descriptors and `format_code`.
+- Still parked: Program constructors, `??1Program`, `??_7Program`, `??1Ruleset`, `??_7Ruleset`, `NewProgram`, the Ruleset constructor and
+  the remaining PObjParser functions.
