@@ -136,3 +136,9 @@
 - Member: `protected virtual void HandleReplace(object, ExecutedRoutedEventArgs)`. Hand-written in `Mirrored/Controls.Text.RichTextBase.cs`; stub removed from the `.g.cs`.
 - Shape: Mathcad materializes `ValueToFind != null && ValueToFind.Equals(Selection.Text)` into a value before the `IsInvalidOperation` test. The direct `if (A && B && C) return;` short-circuits to the end and differs at instruction 56. Naming the first two terms as a `bool` local matches the materialized form.
 - Release IL (project-wide): PASS — 624 checked, 0 failures.
+
+## Batch 20 — RichTextBase.ReplaceTextInHyperlink
+
+- Member: `private void ReplaceTextInHyperlink(string, Hyperlink, bool, ScriptState, List<Pair<int,int>>, int, out bool)`. Hand-written in `Mirrored/Controls.Text.RichTextBase.cs`; stub removed from the `.g.cs`.
+- Shapes that mattered: Mathcad keeps only `originalLength` and `hyperlinkLength` as named locals. The later lengths are inline expressions evaluated inside the `out` assignment (`shouldRestoreStyle = (hyperlink != null ? (int?)hyperlink.GetText().Length : null) == hyperlinkLength - originalLength + text.Length && !(originalLength == hyperlinkLength);`). Named `int?` locals for `delta`, `newEnd` or a scoped block shift the temporary slots and differ at the first ternary's null temp.
+- Release IL (project-wide): PASS — 625 checked, 0 failures.

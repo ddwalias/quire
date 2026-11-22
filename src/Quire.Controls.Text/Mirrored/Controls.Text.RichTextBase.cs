@@ -25,6 +25,14 @@ namespace Quire.Controls.Text;
 
 public partial class RichTextBase
 {
+    private void ReplaceTextInHyperlink(string text, Hyperlink hyperlink, bool preserveScriptState, ScriptState scriptState, List<Pair<int, int>> subscriptPositions, int selectionStartOffset, out bool shouldRestoreStyle)
+    {
+        int originalLength = Selection.Text.Length;
+        int? hyperlinkLength = hyperlink != null ? (int?)hyperlink.GetText().Length : null;
+        ReplaceText(text, preserveScriptState, scriptState, subscriptPositions, selectionStartOffset);
+        shouldRestoreStyle = (hyperlink != null ? (int?)hyperlink.GetText().Length : null) == hyperlinkLength - originalLength + text.Length && !(originalLength == hyperlinkLength);
+    }
+
     protected virtual void HandleReplace(object sender, ExecutedRoutedEventArgs e)
     {
         DebugTools.DevAssert(!Selection.IsEmpty, null);
