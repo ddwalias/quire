@@ -365,3 +365,10 @@
 - Shapes: `LimitHasErrors` with `?.HasErrors ?? false` gave `brtrue` where Mathcad has `brfalse`; `axisLimitEditor != null && axisLimitEditor.HasErrors` matched. `FireTickMarkLabelsUpdated` with `?.Invoke()` compiles to `dup`; Mathcad copies the event into a local, so the handler-copy form matched. The `if (X != null) X(...)` form matched for the other `Fire*` helpers.
 - Release IL: PASS — 2463 checked, 0 failures.
 - Left in AxisModel: `Start`, `End`, `Scaling`, `GridLineColor`, `DisplayNumberFormat`, the limit-expression properties, `StartValueChanged`, `GetRadialPointsStart`, `CreateLogMinorTickmarksPattern`, `AxisCalculatables` (iterator), the constructor, and the tick-mark and XML helpers.
+
+## Batch 53 — AxisModel range, scaling and assert properties
+
+- Members: `Start`, `End` (guarded setters that enable the linearized assert), `Scaling` (early return on equal, then clears and restores `IsLinearizedRangeAssertEnabled` around `UseMagnitudeThreashold` and `FireScalingChanged`), `DisplayNumberFormat` (private set), `IsLinearizedRangeAssertEnabled` (setter that recomputes `LinearizedStart`/`LinearizedEnd`). Hand-written: appended to `Mirrored/Controls.Plots.Model.AxisModel.cs` (adds `using Quire.Controls.Core;`); stubs removed from `AxisModel.g.cs`.
+- Shapes: `Scaling` matched with an early return; `if (_scaling != value) { ... }` gave `beq` vs Mathcad's `bne.un`. The assert setter needed a non-short-circuit `&` in the equality test, comparisons via `GetValueOrDefault`/`HasValue` and a local copy of the old field and value for the test only; the store uses `value` directly.
+- Release IL: PASS — 2473 checked, 0 failures.
+- Left in AxisModel: `GridLineColor` (getter has try/catch regions), `StartExpression`/`SecondTickExpression`/`EndExpression` setters, `StartValueChanged`, `GetRadialPointsStart`, `CreateLogMinorTickmarksPattern`, `AxisCalculatables` (iterator), the constructor, and the tick-mark and XML helpers.

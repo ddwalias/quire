@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Quire.Controls.Core;
 using Quire.Controls.Plots.Presenter;
 
 namespace Quire.Controls.Plots.Model;
@@ -264,6 +265,104 @@ internal partial class AxisModel
         if (tickMarkLabelsUpdated != null)
         {
             tickMarkLabelsUpdated();
+        }
+    }
+
+    public double Start
+    {
+        get
+        {
+            return _start;
+        }
+        set
+        {
+            if (_start != value)
+            {
+                _start = value;
+                if (IsLinearizedRangeAssertEnabled.HasValue)
+                {
+                    IsLinearizedRangeAssertEnabled = true;
+                }
+                OnPropertyChanged("Start");
+            }
+        }
+    }
+
+    public double End
+    {
+        get
+        {
+            return _end;
+        }
+        set
+        {
+            if (value != _end)
+            {
+                _end = value;
+                if (IsLinearizedRangeAssertEnabled.HasValue)
+                {
+                    IsLinearizedRangeAssertEnabled = true;
+                }
+                OnPropertyChanged("End");
+            }
+        }
+    }
+
+    public AxisScaling Scaling
+    {
+        get
+        {
+            return _scaling;
+        }
+        set
+        {
+            if (_scaling == value)
+            {
+                return;
+            }
+            bool hasValue = IsLinearizedRangeAssertEnabled.HasValue;
+            IsLinearizedRangeAssertEnabled = null;
+            _scaling = value;
+            MajorTickMarks.UseMagnitudeThreashold = _scaling == AxisScaling.Linear;
+            FireScalingChanged();
+            IsLinearizedRangeAssertEnabled = (hasValue ? new bool?(true) : ((bool?)null));
+        }
+    }
+
+    public NumberFormat DisplayNumberFormat
+    {
+        get
+        {
+            return _displayNumberFormat;
+        }
+        private set
+        {
+            if (value != _displayNumberFormat)
+            {
+                _displayNumberFormat = value;
+                OnPropertyChanged("DisplayNumberFormat");
+            }
+        }
+    }
+
+    public bool? IsLinearizedRangeAssertEnabled
+    {
+        get
+        {
+            return _isLinearizedRangeAssertEnabled;
+        }
+        set
+        {
+            bool? current = _isLinearizedRangeAssertEnabled;
+            bool? newValue = value;
+            // Non-short-circuit '&': Release IL evaluates both comparisons before one branch.
+            if ((current.GetValueOrDefault() == newValue.GetValueOrDefault()) & (current.HasValue == newValue.HasValue))
+            {
+                return;
+            }
+            _isLinearizedRangeAssertEnabled = value;
+            _ = LinearizedStart;
+            _ = LinearizedEnd;
         }
     }
 }
