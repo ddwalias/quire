@@ -410,10 +410,21 @@ foreach (var artifact in quire)
                 signature = m.Key, token = m.Token, token_hex = $"0x{m.Token:x8}", native_code = m.NativeCode } });
     }
 }
+// An anonymous initializer's source-path hash changes between base and candidate build directories. Normalize it
+// only when its complete signature is unique within the module; ambiguous names keep their raw identities.
+string GlobalIdentity(RawMethod raw) => Signatures.Method(StructureReader.AnonymousModuleInitializerName(raw.Name) ?? raw.Name,
+    raw.Signature.GenericParameterCount, raw.Signature.ParameterTypes, raw.Signature.ReturnType, raw.Static);
+var globalIdentityCounts = matched.Where(m => m.Raw.Owner == "<Module>" && m.Type == null)
+    .GroupBy(m => (m.Artifact, Key: GlobalIdentity(m.Raw))).ToDictionary(g => g.Key, g => g.Count());
 // A row's identity: a type member's comparison key, stable across explicit-interface source qualifiers (its metadata
 // key when it has no model, or when the key is ambiguous, which fails the row); a global's metadata key.
 var keys = matched.Select((string Key, string? Problem) (m) =>
 {
+    if (m.Type == null && m.Raw.Owner == "<Module>")
+    {
+        string key = GlobalIdentity(m.Raw);
+        return (StructureReader.ModuleInitializerIdentity(m.Raw.Name, m.Raw.Key, key, globalIdentityCounts[(m.Artifact, key)]), null);
+    }
     if (m.Type == null || m.Method == null) return (m.Raw.Key, null);
     try { return (m.Artifact.ComparisonKey(m.Raw), null); }
     catch (BadImageFormatException e) { return (m.Raw.Key, e.Message); }

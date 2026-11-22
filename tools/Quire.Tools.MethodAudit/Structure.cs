@@ -467,6 +467,10 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         return match.Success ? "?A0x<source>.??__E?A0x<source>@" + match.Groups["field"].Value + "@@YMXXZ" : null;
     }
 
+    /// <summary>Only a unique compiler initializer can use a path-independent inventory identity.</summary>
+    internal static string ModuleInitializerIdentity(string name, string rawKey, string normalizedKey, int count) =>
+        count == 1 && AnonymousModuleInitializerName(name) is not null ? normalizedKey : rawKey;
+
     /// <summary>Map a function-local MSVC static field through its enclosing type's reviewed name. The optional
     /// anonymous-module prefix depends on the source path; the scope ordinal and complete method suffix remain.</summary>
     internal static string? LocalStaticName(string name, string owner, string mappedOwner, string method)

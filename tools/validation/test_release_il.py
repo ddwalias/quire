@@ -694,6 +694,12 @@ string? Init(string name) => StructureReader.AnonymousModuleInitializerName(name
 Check(Init("?A0x0144f16f.??__E?A0x0144f16f@sVerboseTrace@@YMXXZ") == Init("?A0xd2f58043.??__E?A0xd2f58043@sVerboseTrace@@YMXXZ"));
 Check(Init("?A0x0144f16f.??__E?A0xd2f58043@sVerboseTrace@@YMXXZ") == null);
 Check(Init("?A0x0144f16f.??__E?A0x0144f16f@sOther@@YMXXZ") != Init("?A0x0144f16f.??__E?A0x0144f16f@sVerboseTrace@@YMXXZ"));
+string firstInit = "?A0x0144f16f.??__E?A0x0144f16f@sVerboseTrace@@YMXXZ";
+string secondInit = "?A0xd2f58043.??__E?A0xd2f58043@sVerboseTrace@@YMXXZ";
+string Identity(string name, int count) => StructureReader.ModuleInitializerIdentity(name, name + "()->void", Init(name) + "()->void", count);
+Check(Identity(firstInit, 1) == Identity(secondInit, 1));
+Check(Identity(firstInit, 2) != Identity(secondInit, 2));
+Check(Identity("?A0x0144f16f.??__E?A0xd2f58043@sVerboseTrace@@YMXXZ", 1).StartsWith("?A0x0144f16f."));
 ''')
             result = subprocess.run(['dotnet', 'run', '--project', str(work / 'Test.csproj'),
                                      '--configuration', 'Release'], capture_output=True, text=True)
