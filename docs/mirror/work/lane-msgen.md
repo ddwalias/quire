@@ -1,5 +1,16 @@
 # Msgen lane checkpoint
 
+## Batch 18 (`Quire.gen.IlAsm::Emitter`, `IlAsm::SetEmitter`)
+
+- Owner: AGY, Orca task `task_82261cd9eb87`. Branch `feature/msgen-agy-2`, from current `main`.
+- Members: `IlAsm::Emitter()` (getter for `m_emit`) and `IlAsm::SetEmitter(IlEmit)` (stores the new emitter and returns the previous one), exact Release IL.
+- `CtxtMod::BegCtxt` and `CtxtMod::EndCtxt` are NOT landed. `BegCtxt` matched once the `(byte)` cast was explicit, but `EndCtxt` calls `FinishClosure` through the `Closure` receiver. The original emits `callvirt Closure::FinishClosure` (C# uses the receiver's static type), while C++/CLI emits the declaring `MetaObj::FinishClosure`. The gate fails on that token, and `Closure` cannot declare the member without adding an unmatched counterpart. This is the same receiver-token family as the closure-receiver mismatch; it needs a toolchain or shared-tool decision.
+- `Rts.StackDepth` and `Rts.ResetStackDepth` already exist in `Quire.Mpl`.
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 437 checked; 0 failures; 7 unfinished.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 17 (`Quire.gen.Ctxt`: `Parent`, `Root`, `lookup`)
 
 - Owner: AGY, Orca task `task_6ef4c62e31da`. Branch `feature/msgen-agy-2`, from current `main`.

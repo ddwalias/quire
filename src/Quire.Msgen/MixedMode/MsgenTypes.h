@@ -426,6 +426,8 @@ namespace Quire { namespace gen {
         static Type^ VoidType();
         static System::Reflection::Emit::Quire::Mpl::ConstructorBuilder^ GetTypeInitializer(System::Reflection::Emit::Quire::Mpl::TypeBuilder^ tb);
         void Branch(Closure^ clo, Label lab);
+        IlEmit^ Emitter();
+        IlEmit^ SetEmitter(IlEmit^ emit);
         static MethodInfo^ NumValCtor();
         static String^ FieldName(int i);
         static cli::array<String^>^ FieldNames(int n);

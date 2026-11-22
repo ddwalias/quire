@@ -677,4 +677,15 @@ namespace Quire { namespace gen {
         GC::KeepAlive(this);
         return result;
     }
+    IlEmit^ IlAsm::Emitter()
+    {
+        return m_emit;
+    }
+
+    IlEmit^ IlAsm::SetEmitter(IlEmit^ emit)
+    {
+        IlEmit^ previous = m_emit;
+        m_emit = emit;
+        return previous;
+    }
 }}
