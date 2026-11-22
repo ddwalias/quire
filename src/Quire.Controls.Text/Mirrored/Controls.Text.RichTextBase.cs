@@ -25,6 +25,23 @@ namespace Quire.Controls.Text;
 
 public partial class RichTextBase
 {
+    private void OnCorrectSpellingError(object sender, ExecutedRoutedEventArgs e)
+    {
+        string correctedWord = e.Parameter as string;
+        if (!(e.OriginalSource.Equals(this) && IsActive && !correctedWord.IsNullOrEmpty()))
+        {
+            return;
+        }
+        DebugTools.DevAssert(!_spellingErrorRange.HasValue, null);
+        _spellingErrorRange = null;
+        DocumentTextRange wordRange = GetWordRangeAtCaretPosition(out string partialWord, (TextFromRunsStops)7, true);
+        if (wordRange.IsNotEmpty() && wordRange.Start.Parent is CustomScriptRunBase)
+        {
+            int offset = Document.ContentStart.GetOffsetToPosition(wordRange.Start);
+            _spellingErrorRange = (offset, correctedWord.Length);
+        }
+    }
+
     public void ApplyTextFormatPropertyValueToControl(DependencyProperty property, object value, Block block = null)
     {
         global::System.Windows.Documents.Paragraph paragraph = (block as List)?.ListItems.FirstListItem.Blocks.FirstBlock as global::System.Windows.Documents.Paragraph;

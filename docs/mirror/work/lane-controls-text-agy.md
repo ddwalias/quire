@@ -106,3 +106,9 @@
 - Member: `public void ApplyTextFormatPropertyValueToControl(DependencyProperty, object, Block block = null)`. Hand-written in `Mirrored/Controls.Text.RichTextBase.cs`; stub removed from the `.g.cs`.
 - Shapes that matched on the first try: `(block as List)?.ListItems.FirstListItem.Blocks.FirstBlock as Paragraph` (the null-conditional chain), and `paragraph?.Inlines.FirstInline != null ? paragraph.Inlines.FirstInline.GetValue(property) : value` as the `SetTextFormat` value argument. The `WPF Paragraph` is qualified because `Quire.Controls.Text.Paragraph` shadows it in this file.
 - Release IL (project-wide): PASS — 621 checked, 0 failures.
+
+## Batch 17 — RichTextBase.OnCorrectSpellingError
+
+- Member: `private void OnCorrectSpellingError(object, ExecutedRoutedEventArgs)`. Hand-written in `Mirrored/Controls.Text.RichTextBase.cs`; stub removed from the `.g.cs`.
+- Shape: Mathcad returns early through a `ret` placed right after the negated three-part guard, and then runs the body (`if (!(... && ... && ...)) return;`). The block form `if (... && ...) { body }` branches to the end and fails at instruction 8. The WPF `TextRange` is written as `DocumentTextRange`; `out string partialWord` is the out local, which matches Mathcad's local order.
+- Release IL (project-wide): PASS — 622 checked, 0 failures.
