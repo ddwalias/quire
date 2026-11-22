@@ -1,5 +1,15 @@
 # Msgen lane checkpoint
 
+## Batch 3 (landed: `Quire.gen.Ctxt::EmitBranch` only)
+
+- Owner: AGY, Orca task `task_b44f336613f9` (previously `task_3e02aeb04edd`). Branch `feature/msgen-agy-2`, from current `main`.
+- Members: `Quire.gen.Ctxt::EmitBranch` (new virtual on `Ctxt`, body in `MsgenPort.cpp`, `GC::KeepAlive(this)` after each arm as in the source).
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 379 checked; 0 failures; 7 unfinished.
+- The full earlier Batch 3 WIP (`Closures.cpp`, `Constructors.cpp`, `MsgenStubs.cpp` and tracked edits) is preserved on branch `msgen-batch3-wip-backup` (commit 9205680fd), not landed. Its gate state was 42 failures before the `KeepAlive` removal and 32 after; placeholder stubs do not pass.
+- Remaining mismatch families (WIP): closure receiver (`MethodClo`/`ModuleRecordClo`/`ModuleTypeClo` `DefineFunction` call `Closure::NewMethodFunction`), `ldarg.0`/`ldloc.0` in `DataRep`, and `Constructor` `DelegateValue`/`FunctionValue`. These need classes (`MethodClo`, `DataRep`, the `Constructor` hierarchy) that are not on `main`.
+
+---
+
 - Owner: AGY, Orca task `task_3e02aeb04edd` (continuing `task_cd3115e8168a`).
 - Branch: `feature/msgen-agy-2`.
 - Members (Batch 2, cumulative):
