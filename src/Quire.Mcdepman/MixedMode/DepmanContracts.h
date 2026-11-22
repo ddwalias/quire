@@ -267,6 +267,11 @@ namespace Quire { namespace depman {
         {
             return m_result;
         }
+
+        void set_result(System::Object^ r)
+        {
+            m_result = r;
+        }
     };
 
     [Quire::Mirror::MirrorOfAttribute("depman.DepException, mcdepman")]
