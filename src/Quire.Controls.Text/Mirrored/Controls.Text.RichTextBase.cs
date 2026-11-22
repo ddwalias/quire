@@ -25,6 +25,20 @@ namespace Quire.Controls.Text;
 
 public partial class RichTextBase
 {
+    private void ClearSelectedRegionFormatProperties(TextFormat textFormat)
+    {
+        CommandBuffer.Execute(ToggleScriptUndoCommand.CreateToggleScriptUndoCommand(this, TextRange, ScriptState.None, false), null);
+        Document.ApplyTextFormatValues(textFormat);
+        using (DeclareChangeBlock())
+        {
+            Document.Blocks.Each(block => block.ClearTextFormatPropsRecursively((TextElement x) => true, TextFormat.ClearFormatPropsList));
+        }
+    }
+
+    public bool IsFullySubscript(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void BuildSubscriptPositions(global::System.Windows.Documents.TextRange range, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private global::System.Windows.Documents.TextPointer GetPointerToAddDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void PostPasting() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public virtual IList<IRegionPersistentData> SetRegionPersistentData(IDeS11NProvider d11NProvider, object data)
     {
