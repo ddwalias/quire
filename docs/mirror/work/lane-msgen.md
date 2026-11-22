@@ -1,5 +1,15 @@
 # Msgen lane checkpoint
 
+## Batch 14 (`Quire.gen.MethodFunction::CreateParameterEnv`)
+
+- Owner: AGY, Orca task `task_efc73f6f7302`. Branch `feature/msgen-agy-2`, from current `main`.
+- Member: `MethodFunction::CreateParameterEnv(Range)` override (exact Release IL on the first gate run). It uses `Ctxt::NewCtxtEnv` (out of line, Batch 13), `Closure::ClosureArgs`, `MplParameterTypes`, `IlAsm::VoidType`, the Batch 13 `VoidConstructor(IlAsm, void*)`, and `MetaObj::NewMetaObj(void*, int)`, all on `main`.
+- Still blocked in `MethodFunction`: the `string` and `sbyte*` constructors (they need the `Range`/`Unsafe` substring path), and `EmitProlog`/`EmitEpilog`/`EmitStackProbe` (tracing and `AppException` reflection).
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 429 checked; 0 failures; 7 unfinished.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 13 (`Quire.gen.VoidConstructor`, `ContinuationFunction::DeclareFunction`)
 
 - Owner: AGY, Orca task `task_1c9bf6789f1d`. Branch `feature/msgen-agy-2`, from current `main`.

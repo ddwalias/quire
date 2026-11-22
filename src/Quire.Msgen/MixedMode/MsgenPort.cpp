@@ -611,4 +611,25 @@ namespace Quire { namespace gen {
     {
         return gcnew cli::array<MetaObj^>(sz);
     }
+    cli::array<MetaObj^>^ MethodFunction::CreateParameterEnv(ms::Range<void* const> args)
+    {
+        cli::array<MetaObj^>^ array = Ctxt::NewCtxtEnv(static_cast<int>(args.size()));
+        int num = m_clo->ClosureArgs();
+        int num2 = 0;
+        cli::array<Type^>^ array2 = MplParameterTypes();
+        for (unsigned int i = 0; i < args.size(); i++)
+        {
+            if (array2[i] == IlAsm::VoidType())
+            {
+                array[i] = gcnew VoidConstructor(IlAssembler(), args[i]);
+            }
+            else
+            {
+                array[i] = MetaObj::NewMetaObj(args[i], num2 + num);
+                num2++;
+            }
+        }
+        GC::KeepAlive(this);
+        return array;
+    }
 }}
