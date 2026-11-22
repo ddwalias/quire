@@ -1,71 +1,96 @@
-using namespace System;
-using namespace System::Collections;
+#include "MsgenTypes.h"
+
+namespace gen {
+
+    System::String^ ToString(Substring<const char> text)
+    {
+        return gcnew System::String(text.begin(), 0, static_cast<int>(text.size()), System::Text::Encoding::UTF8);
+    }
+
+}
 
 namespace Quire { namespace gen {
 
-    ref class IlAsm;
-    ref class MetaObj;
-
-    [Quire::Mirror::MirrorOfAttribute("gen.ResolvedForeignId, msgen")]
-    ref class ResolvedForeignId abstract
+    MetaObj::MetaObj(void* v)
+        : m_var(v), m_name(nullptr)
     {
-    public:
-        static char m_wildcard;
+        GC::KeepAlive(this);
+    }
 
-        static void InitForeignIdCache(char wildcard)
+    Type^ IlAsm::IntType()
+    {
+        return m_int_type;
+    }
+
+    Type^ IlAsm::DblType()
+    {
+        return m_dbl_type;
+    }
+
+    Type^ IlAsm::ObjType()
+    {
+        return m_obj_type;
+    }
+
+    Type^ IlAsm::FcnType()
+    {
+        return m_fcn_type;
+    }
+
+    Type^ IlAsm::TagType()
+    {
+        return m_tag_type;
+    }
+
+    Type^ IlAsm::VoidType()
+    {
+        return m_voidtype;
+    }
+
+    MethodInfo^ IlAsm::NumValCtor()
+    {
+        return m_num_ctor;
+    }
+
+    cli::array<Type^>^ IlAsm::GetParameterTypes(MethodBase^ mb, bool is_static)
+    {
+        cli::array<ParameterInfo^>^ parameters = mb->GetParameters();
+        int offset = is_static ? 0 : 1;
+        int total = parameters->Length + offset;
+        cli::array<Type^>^ types = gcnew cli::array<Type^>(total);
+        if (offset != 0)
         {
-            if (m_wildcard != wildcard)
+            types[0] = mb->DeclaringType;
+        }
+        for (int i = offset; i < total; i++)
+        {
+            types[i] = parameters[i - offset]->ParameterType;
+        }
+        return types;
+    }
+
+    cli::array<Type^>^ IlAsm::GetParameterTypes(MethodBase^ mb)
+    {
+        return GetParameterTypes(mb, true);
+    }
+
+    Type^ IlAsm::TranslateType(Substring<const char> ty)
+    {
+        if (ty.size() == 1)
+        {
+            switch (*ty.begin())
             {
-                m_wildcard = wildcard;
-                ClearCache();
+            case 'f':
+                return m_dbl_type;
+            case 'i':
+                return m_int_type;
+            case 'v':
+                return m_voidtype;
+            default:
+                return m_obj_type;
             }
         }
+        return (ty.size() > 1) ? m_fcn_type : ObjType();
+    }
 
-        virtual Object^ LoadField()
-        {
-            return nullptr;
-        }
-
-        static void ClearCache()
-        {
-            m_fv_cache = gcnew Hashtable();
-            s_loaded = gcnew Hashtable(100);
-        }
-
-        virtual MetaObj^ CreateMetaObj(IlAsm^ bcasm) = 0;
-
-    protected:
-        String^ m_id;
-
-        ResolvedForeignId(String^ id)
-            : m_id(id)
-        {
-        }
-
-        void CacheId()
-        {
-            String^ id = m_id;
-            m_fv_cache->default[id] = this;
-        }
-
-    private:
-        static Hashtable^ m_fv_cache;
-        static Hashtable^ s_loaded;
-
-        static int GobbleWhite(int idx, String^ s)
-        {
-            while (Char::IsWhiteSpace(s, idx))
-            {
-                idx++;
-            }
-            return idx;
-        }
-
-        static Type^ ArrayTypeFromElementType(Type^ element)
-        {
-            if (element == nullptr)
-                return nullptr;
-            return Array::CreateInstance(element, 0)->GetType();
-        }
-    };
 }}

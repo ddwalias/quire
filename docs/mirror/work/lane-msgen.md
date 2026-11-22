@@ -1,5 +1,23 @@
 # Msgen lane checkpoint
 
+- Owner: AGY, Orca task `task_3e02aeb04edd` (continuing `task_cd3115e8168a`).
+- Branch: `feature/msgen-agy-2`.
+- Members (Batch 1):
+  - `Quire.gen.ResolvedForeignId` (9 exact methods preserved: `InitForeignIdCache`, `LoadField`, `ClearCache`, `CreateMetaObj`, `.ctor`, `CacheId`, `GobbleWhite`, `ArrayTypeFromElementType`, `.cctor`).
+  - `Quire.gen.IlGenMethod` (4/4 exact: `.ctor`, `StartMethod`, `EndMethod`, `GetEmit`).
+  - `Quire.gen.MetaObj` (initial exact batch: `.ctor(void*)`, `.ctor()`, `maxargs`, `Arity`, `ModuleScope`, `SetInstance`).
+  - `Quire.gen.Callable` (5 exact constructors + abstract virtuals).
+  - `Quire.gen.IlAsm` (10 exact static helpers: `IntType`, `DblType`, `ObjType`, `FcnType`, `TagType`, `VoidType`, `NumValCtor`, `GetParameterTypes` x2, `TranslateType`; temporary `[MirrorStub]` `.ctor(void*, AstInfo*, unsigned int)` placeholder).
+  - `Quire.gen.IlEmit` (57 exact methods: `.ctor`, `SetIlGenerator`, `GetIlGenerator`, `EmitProlog`, `EmitEpilog`, `EmitStackProbe`, `EmitReturn`, `Reachable`, `TracingEnabled`, `EnableTracing`, `Protected`, `SetProtected`, `DefineLocal`, `new_label`, `emit_label_ref` x2, `emit_label_def` x2, `Ldarg`, `Starg`, `Ldloc` x2, `Stloc` x2, `Ldloca`, `Ldsfld`, `Stsfld`, `Ldfld`, `Stfld`, `emit_double`, `emit_complex`, `emit_Double`, `emit_Int`, `emit_word` x2, `emit_handle`, `emit_string`, `emit_return`, `emit_leave`, `emit_branch`, `emit_raise` x2, `emit_rethrow`, `emit_pattern_match_failure`, `emit_begin_exception_block`, `emit_begin_catch_block`, `emit_begin_filter_block`, `emit_end_exception_block`, `emit_tailcall`, 14 `emit_instr` overloads).
+  - `<Module>` `gen.ToString(Substring<char const>)` exact.
+- Candidate Release IL report: `.mirror-cache/release-il-75d7185f86d9/release-il.json`.
+- Gate line: `Release IL: PASS; 185 checked; C:\Users\DuyDang\orca\workspaces\Quire\engutils-mgd-agy\.mirror-cache\release-il-75d7185f86d9\release-il.json`.
+- Remaining: 1 temporary `[MirrorStub]` (`IlAsm::.ctor`), plus remaining `gen.*` classes and methods across `msgen.dll`.
+
+---
+
+## Previous checkpoint (`task_cd3115e8168a`)
+
 - Owner: AGY, Orca task `task_cd3115e8168a`.
 - Branch: `feature/msgen-agy`.
 - Members: Quire.Msgen project split established as C++/CLI (`/clr:NetCore` targeting net10.0-windows); `Quire.gen.ResolvedForeignId` (9 members exact: `InitForeignIdCache`, `LoadField`, `ClearCache`, `CreateMetaObj`, `.ctor`, `CacheId`, `GobbleWhite`, `ArrayTypeFromElementType`, `.cctor`).
