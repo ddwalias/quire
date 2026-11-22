@@ -286,6 +286,19 @@ namespace Quire { namespace gen {
         void CreateType();
     };
 
+    [::Quire::Mirror::MirrorOfAttribute("gen.Constructor, msgen")]
+    ref class Constructor abstract : public Callable
+    {
+    private:
+        MethodFunction^ m_method_function;
+
+    public:
+        Constructor(IlAsm^ il);
+        virtual MethodInfo^ GetMethod([MarshalAs(UnmanagedType::U1)] bool may_emit) override;
+        MethodFunction^ ImplementAsMethodFunction();
+        virtual cli::array<MetaObj^>^ Deconstruct(MetaObj^ loc, ms::Range<void* const> vs) = 0;
+    };
+
     [::Quire::Mirror::MirrorOfAttribute("gen.ContinuationClo, msgen")]
     ref class ContinuationClo : public Closure
     {

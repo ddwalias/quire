@@ -502,4 +502,56 @@ namespace Quire { namespace gen {
         IlAssembler()->Branch(m_clo, m_label);
         GC::KeepAlive(this);
     }
+    Constructor::Constructor(IlAsm^ il)
+        : Callable(il), m_method_function(nullptr)
+    {
+    }
+
+    MethodInfo^ Constructor::GetMethod(bool may_emit)
+    {
+        if (!m_method && may_emit)
+        {
+            ImplementAsMethodFunction();
+        }
+        return m_method;
+    }
+
+    MethodFunction^ Constructor::ImplementAsMethodFunction()
+    {
+        if (m_method_function)
+        {
+            return m_method_function;
+        }
+        Closure^ closure = IlAssembler()->ModuleClosure();
+        cli::array<Type^>^ a_ = MplParameterTypes();
+        Type^ a_2 = ReturnType();
+        String^ a_3 = IlAsm::NewName(Name());
+        MethodFunction^ methodFunction = closure->NewMethodFunction(a_3, closure, a_2, a_);
+        int nargs = MplParameterTypes()->Length;
+        cli::array<Type^>^ parameters = MplParameterTypes();
+        Type^ return_type = ReturnType();
+        LdFuncArg(methodFunction, return_type, parameters);
+        int num = 0;
+        if (0 < Arity())
+        {
+            do
+            {
+                BegArg(methodFunction, num, nargs);
+                methodFunction->Ldarg(num);
+                EndArg(methodFunction, num, MplParameterTypes()[num], nargs);
+                num++;
+            }
+            while (num < Arity());
+        }
+        cli::array<Type^>^ parameters2 = MplParameterTypes();
+        Type^ return_type2 = ReturnType();
+        int nargs2 = Arity();
+        CallFunc(methodFunction, nargs2, true, nullptr, return_type2, parameters2);
+        methodFunction->emit_return();
+        m_method_function = methodFunction;
+        m_method = methodFunction->GetMethod(false);
+        GC::KeepAlive(this);
+        return methodFunction;
+    }
+
 }}

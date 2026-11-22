@@ -1,5 +1,16 @@
 # Msgen lane checkpoint
 
+## Batch 12 (`Quire.gen.Constructor` base subset)
+
+- Owner: AGY, Orca task `task_8d00981af8a9`. Branch `feature/msgen-agy-2`, from current `main`.
+- Members: `Constructor` abstract class (field `m_method_function`), `.ctor(IlAsm)`, `GetMethod`, `ImplementAsMethodFunction`, and pure `Deconstruct(MetaObj, Range)` (exact Release IL). `ImplementAsMethodFunction` uses the existing `LdFuncArg`, `BegArg`, `EndArg`, `CallFunc`, `NewMethodFunction` and `ModuleClosure` on main.
+- `VoidConstructor` is NOT landed: `release_il.py` never compared its members (no inventory rows and no skipped rows for `gen.VoidConstructor`, although `type-map.csv` binds it to the `Quire.Engine.Native` project). A member the gate does not compare is unverified, so it stays out until that binding is fixed.
+- `ContinuationFunction::DeclareFunction` remains blocked on `VoidConstructor(IlAsm, void*)`.
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 422 checked; 0 failures; 7 unfinished.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 11 (`IlAsm::Branch`, `ContinuationFunction::CallFunc`)
 
 - Owner: AGY, Orca task `task_b88bf996af63`. Branch `feature/msgen-agy-2`, from current `main`.
