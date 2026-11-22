@@ -252,6 +252,21 @@ namespace Quire { namespace depman {
         {
             return m_action;
         }
+
+        CachingEnv^ env()
+        {
+            return m_env;
+        }
+
+        System::Object^ state()
+        {
+            return m_state;
+        }
+
+        System::Object^ result()
+        {
+            return m_result;
+        }
     };
 
     [Quire::Mirror::MirrorOfAttribute("depman.DepException, mcdepman")]
