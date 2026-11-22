@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gcroot.h>
+#include "DepmanContracts.h"
 
 template <typename T>
 class OrderedList;
@@ -38,6 +39,9 @@ public:
     void ResetPriority();
     void ClearDParent();
     void SetBasePriority(int priority);
+    ::Quire::depman::Scope^ GetScope();
+    ::Quire::depman::Scope^ GetEnvScope();
+    ::Quire::depman::SEnvironment^ env() const;
 
 private:
     DepManager* dep_manager_;                      // 0x08
@@ -45,10 +49,10 @@ private:
     int handle_;                                  // 0x18 (offset 24)
     unsigned char pad_1c_[0x04];                  // 0x1C
     ActionChain* action_chain_;                   // 0x20 (offset 32)
-    void* env_;                                   // 0x28 (offset 40, gcroot<depman::SEnvironment^>)
+    gcroot<::Quire::depman::SEnvironment^> env_;    // 0x28 (offset 40)
     void* static_deps_;                           // 0x30 (offset 48, gcroot<System::Collections::ICollection^>)
-    void* scope_;                                 // 0x38 (offset 56, gcroot<depman::Scope^>)
-    void* env_scope_;                             // 0x40 (offset 64, gcroot<depman::Scope^>)
+    gcroot<::Quire::depman::Scope^> scope_;         // 0x38 (offset 56)
+    gcroot<::Quire::depman::Scope^> env_scope_;     // 0x40 (offset 64)
     void* labeled_dictionary_;                    // 0x48 (offset 72, gcroot<utl_mgd::LabeledDictionary^>)
     void* pos_callback_;                          // 0x50 (offset 80, gcroot<depman::PosCallback^>)
     void* pos_queue_callback_;                    // 0x58 (offset 88, gcroot<depman::PosQueueCallback^>)

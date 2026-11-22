@@ -21,12 +21,21 @@
 #pragma comment(linker, "/include:?IsLocked@PositionBase@depman@@QEBA_NXZ")
 #pragma comment(linker, "/include:?IsUndefine@PositionBase@depman@@QEAA_NXZ")
 #pragma comment(linker, "/include:?IsChildOnly@PositionBase@depman@@QEAA_NXZ")
+#pragma comment(linker, "/include:?GetScope@PositionBase@depman@@QEAMPE$AAVScope@2Quire@@XZ")
+#pragma comment(linker, "/include:?GetEnvScope@PositionBase@depman@@QEAMPE$AAVScope@2Quire@@XZ")
+#pragma comment(linker, "/include:?env@PositionBase@depman@@$$FQEBMPE$AAUSEnvironment@2Quire@@XZ")
 // Uncalled native member functions are stripped by /OPT:REF unless referenced.
 // When referenced by callers in Depman, they will be emitted with exact IL.
 // #pragma comment(linker, "/include:?previous@Position@depman@@$$FQEAAPEAV12@XZ")
 // #pragma comment(linker, "/include:?next@Position@depman@@$$FQEAAPEAV12@XZ")
 
 namespace depman {
+
+::Quire::depman::Scope^ PositionBase::GetScope() { return scope_; }
+
+::Quire::depman::Scope^ PositionBase::GetEnvScope() { return env_scope_; }
+
+::Quire::depman::SEnvironment^ PositionBase::env() const { return env_; }
 
 long PositionBase::GetHandle() const
 {
