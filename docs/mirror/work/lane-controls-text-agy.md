@@ -130,3 +130,9 @@
 - The first half (the `foreach` over `Enum.GetValues(typeof(TextMenuItemCommands))` with `continue` guards and the `Header` copy) and the second loop structure match in shape; the static `_contextMenuOpening` guard and the early returns match.
 - Local slots: `Type[] keyTypes` declared at the method's top level takes slot `[2]` (Roslyn allocates top-level locals first). Mathcad keeps it in slot `[8]`, so it has to be declared in a nested block after the first loop; the nested block fixes the slot.
 - Remaining mismatch (instruction #92): Mathcad stores `handled = false` (`ldc.i4.0; stloc.s 10`) between `ldloc keyTypes; ldloc i; ldelem.ref` and the `Enum.GetValues` call. A C# `bool handled = false;` at the top of the loop body always stores before the element load. No source form found that places the store after the element load without a `dup`. Parked (shape blocker, evidence above).
+
+## Batch 19 — RichTextBase.HandleReplace
+
+- Member: `protected virtual void HandleReplace(object, ExecutedRoutedEventArgs)`. Hand-written in `Mirrored/Controls.Text.RichTextBase.cs`; stub removed from the `.g.cs`.
+- Shape: Mathcad materializes `ValueToFind != null && ValueToFind.Equals(Selection.Text)` into a value before the `IsInvalidOperation` test. The direct `if (A && B && C) return;` short-circuits to the end and differs at instruction 56. Naming the first two terms as a `bool` local matches the materialized form.
+- Release IL (project-wide): PASS — 624 checked, 0 failures.

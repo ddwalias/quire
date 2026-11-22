@@ -25,6 +25,48 @@ namespace Quire.Controls.Text;
 
 public partial class RichTextBase
 {
+    protected virtual void HandleReplace(object sender, ExecutedRoutedEventArgs e)
+    {
+        DebugTools.DevAssert(!Selection.IsEmpty, null);
+        FindReplaceQuery query = e.Parameter as FindReplaceQuery;
+        string valueToReplaceWith = query.ValueToReplaceWith;
+        DebugTools.DevAssert(valueToReplaceWith != null, null);
+        Focus();
+        List<Run> runs = TextRangeExtension.EnumerateRunsInRange(Selection).ToList();
+        DebugTools.DevAssert(runs.Count != 0, null);
+        if (runs.Count == 0)
+        {
+            return;
+        }
+        TextFormat textFormat = new TextFormat(Selection, true);
+        int selectionStart = SelectionStart;
+        using (DeclareChangeBlock())
+        {
+            bool sameFindText = query.ValueToFind != null && query.ValueToFind.Equals(Selection.Text);
+            if (sameFindText && IsInvalidOperation(query, runs))
+            {
+                return;
+            }
+            bool preserveScriptState = !query.IsFindContainSubscript && !query.IsReplaceContainSubscript;
+            ScriptState scriptState = GetScriptType(runs[0]);
+            bool shouldRestoreStyle = true;
+            Hyperlink hyperlink = runs[0].GetTextElementParentOrSelf<Hyperlink>();
+            if (hyperlink != null)
+            {
+                ReplaceTextInHyperlink(valueToReplaceWith, hyperlink, preserveScriptState, scriptState, query.ReplaceSubscriptPositions, selectionStart, out shouldRestoreStyle);
+            }
+            else
+            {
+                ReplaceText(valueToReplaceWith, preserveScriptState, scriptState, query.ReplaceSubscriptPositions, selectionStart);
+            }
+            RestoreSelection(valueToReplaceWith, selectionStart);
+            if (shouldRestoreStyle)
+            {
+                textFormat.ApplyTextFormat(Selection);
+            }
+        }
+    }
+
     private void AddBlockedSelectDirectionForNextElement(LogicalDirection direction)
     {
         TextPointerContext context = CaretPosition.GetPointerContext(direction);

@@ -182,8 +182,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     private bool SubscriptsMatch(global::System.Windows.Documents.TextRange foundRange, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> findTextSubscriptsList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected virtual void HandleReplace(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ReplaceTextInHyperlink(string text, global::System.Windows.Documents.Hyperlink hyperlink, bool preserveScriptState, global::Quire.Controls.Text.ScriptState scriptState, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions, int selectionStartOffset, out bool shouldRestoreStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool IsInvalidOperation(global::Quire.Controls.Core.FindReplaceQuery query, global::System.Collections.Generic.List<global::System.Windows.Documents.Run> selectionRuns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
