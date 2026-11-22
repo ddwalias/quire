@@ -88,3 +88,9 @@
 - `MeasureOverride`: at #4 Mathcad stores into local slot 12 (its earlier locals occupy 0–11), while the C# form uses slot 0; the body compiles but the local layout does not match.
 - `ArrangeOverride`: the `visibility` ternary with `HeadingsVisibility = ...` as an assignment expression matches the first branch but leaves the arm one instruction larger (`brfalse` 17 vs 16), and the body is 160 vs 155 instructions. The if/else and inverted-ternary forms did not resolve it.
 - Gate on the attempted tree with both parked: PASS; 3429 checked (`.mirror-cache/release-il-cdd9decef00a/release-il.json`), which is the same exact set as before this attempt.
+
+### Batch 13: Controls.Internal.VisualMatrixNode (constructor)
+
+- Exact: `VisualMatrixNode()` (the `Name = VISUAL_MATRIX_NAME` read, `_opacity` initializer, heading and bracket setup, `Loaded += LoadedHandler`).
+- Still parked/untried: `SetupResizeIndicatorBehaviour` (a lambda closure whose `<>c` and `b__` ordinals are not yet checked), `MeasureOverride`, `ArrangeOverride` (parked, see batch 12).
+- Gate (project-level): PASS; 3430 checked (`.mirror-cache/release-il-aa57582cb7b8/release-il.json`).

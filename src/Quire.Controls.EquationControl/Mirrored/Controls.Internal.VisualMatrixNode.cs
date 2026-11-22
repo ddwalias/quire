@@ -375,4 +375,22 @@ internal partial class VisualMatrixNode
             }
         }
     }
+
+    public VisualMatrixNode()
+    {
+        Name = VISUAL_MATRIX_NAME;
+        _matrixGrid = new VisualMatrixContents();
+        ColumnCount = 1;
+        ExtendedFont font = FontManager.GetFont(MathFormat);
+        _rowHeading = CreateHeading("RowHeading", font);
+        _columnHeading = CreateHeading("ColumnHeading", font);
+        _columnHeading.LayoutTransform = new RotateTransform(-90.0);
+        ((Freezable)_columnHeading.LayoutTransform).Freeze();
+        Children.Add(_matrixGrid);
+        Children.Add(_rowHeading);
+        Children.Add(_columnHeading);
+        CreateBrackets();
+        HeadingsVisibility = Visibility.Hidden;
+        Loaded += LoadedHandler;
+    }
 }

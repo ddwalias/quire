@@ -28,8 +28,6 @@ internal partial class VisualMatrixNode : global::Quire.Controls.Internal.Visual
     [global::Quire.Mirror.MirrorStub]
     public void TryDragIntoHiddenPart(global::Quire.EquationEditor.View.IVisualMathNode nodeHit, out int rowShift, out int columnShift) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public VisualMatrixNode() { }
-    [global::Quire.Mirror.MirrorStub]
     private void SetupResizeIndicatorBehaviour(global::Quire.Controls.Internal.VisualTextNode resizeIndicator) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
