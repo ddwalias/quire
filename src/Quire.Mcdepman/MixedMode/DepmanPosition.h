@@ -18,6 +18,10 @@ class PositionBase {
 public:
     virtual ~PositionBase();
 
+    long GetHandle() const;
+    int GetPriority() const;
+    bool IsDead();
+
 private:
     DepManager* dep_manager_;                      // 0x08
     Position* position_;                          // 0x10 (offset 16)
