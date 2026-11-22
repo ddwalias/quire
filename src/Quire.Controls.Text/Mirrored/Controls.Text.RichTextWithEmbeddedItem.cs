@@ -25,6 +25,22 @@ namespace Quire.Controls.Text;
 
 public partial class RichTextWithEmbeddedItem
 {
+    private void DispatchCommandToItems(RoutedCommand cmd, object parameter, PropertiesForUpdate propertyForUpdate)
+    {
+        IEnumerable<IWhiteboardItem> items = SelectedWhiteboardItems.Any() ? SelectedWhiteboardItems : WhiteboardItems;
+        IRegionCollectionWithProperty regions = global::Quire.Services.AppServiceRegistry.GetService<IRegionCollectionWithPropertyCreator>().CreateRegionCollection(items);
+        regions.DispatchCommand(cmd, parameter, propertyForUpdate);
+        if (propertyForUpdate == PropertiesForUpdate.CurrentNumberFormat || propertyForUpdate == PropertiesForUpdate.CurrentNumberFormatClear)
+        {
+            CurrentNumberFormat = regions.CurrentNumberFormat;
+            return;
+        }
+        if (propertyForUpdate == PropertiesForUpdate.CurrentMatrixFormat)
+        {
+            CurrentMatrixFormat = regions.CurrentMatrixFormat;
+        }
+    }
+
 
     internal void ModifyHyperlink(ModifyHyperlinkCommandParameter param)
     {

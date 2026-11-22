@@ -174,8 +174,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     protected override void UpdateCurrentFormats() => base.UpdateCurrentFormats();
     [global::Quire.Mirror.MirrorStub]
-    private void DispatchCommandToItems(global::System.Windows.Input.RoutedCommand cmd, object parameter, global::Quire.Controls.Core.PropertiesForUpdate propertyForUpdate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override string GetHelpContext() => base.GetHelpContext();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.RichTextWithEmbeddedItem+PreviewKeyDownData, Ptc.Controls.Text")]

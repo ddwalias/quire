@@ -164,3 +164,14 @@
 - Receiver retention (a local is stored while a receiver or first argument is on the stack; no C# form without `dup`): SelectionStart, SelectionEnd, GetEmbeddedObjectCaretOffset, GetPointerToAddDictionary, VerticalAlignmentOffset, SearchWholeWordRuns, GetTextBoundary (4-parameter), ContextMenuOpened (store of `handled` between element load and `Enum.GetValues`).
 - Receiver call-versus-callvirt on a `new` receiver (Quire emits `call`, Mathcad `callvirt`): CalculateBaseline (`new DocumentTextRange(...).Text`), OnPreviewBackspace (`new TextRange(...).Text`). InsertBaselineOffsetTag matched only after a named local that Mathcad lacks in these two methods.
 - Parked as well: SetStyleFromTextStyles (runIndex store order, literal `"Normal".Equals` call form, conditional branch layout), ToggleRangeToState (stloc before newobj), SubscriptsMatch (shared return), CreateTextChangedCommand (store after newobj), GetRangeIfMatch (dup of intermediate TextPointer).
+
+## Batch 22 — RichTextWithEmbeddedItem.DispatchCommandToItems
+
+- Member: `private void DispatchCommandToItems(RoutedCommand, object, PropertiesForUpdate)`. Hand-written in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stub removed from the `.g.cs`.
+- Shape: the items ternary (`SelectedWhiteboardItems.Any() ? SelectedWhiteboardItems : WhiteboardItems`) and the early-return enum tests matched on the first attempt; no closure, no new-receiver call, no value carried across statements.
+- Release IL (project-wide): PASS — 627 checked, 0 failures.
+
+## Parked — HandleToggleSubSuperScriptCommand and EnumerateEmbeddedObjectsInRange (evidence)
+
+- `HandleToggleSubSuperScriptCommand`: the `Selection.IsEmpty` boolean is computed first and kept on the evaluation stack (`dup; brfalse`, and a later `brfalse` on the retained value) across `stloc` statements. Mathcad has no bool local for it. Same stack-across-statement family as the receiver-retention blockers. Parked.
+- `EnumerateEmbeddedObjectsInRange`: an iterator; its state-machine class is numbered `<EnumerateEmbeddedObjectsInRange>d__217`, so the class name depends on the same member-ordinal counting as the closure blocker. Parked.
