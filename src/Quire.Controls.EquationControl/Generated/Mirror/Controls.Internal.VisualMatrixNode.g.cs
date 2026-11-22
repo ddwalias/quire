@@ -22,71 +22,19 @@ internal partial class VisualMatrixNode : global::Quire.Controls.Internal.Visual
     [global::Quire.Mirror.MirrorStub]
     private const string columnHeadingName = "ColumnHeading";
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Visibility _headingsVisibility;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly string VISUAL_MATRIX_NAME;
     [global::Quire.Mirror.MirrorStub]
-    private double _effectiveBaselineY;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.EquationEditor.Tree.MatrixNodeInfo _matrixInfo;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.StackPanel _rowHeading;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.StackPanel _columnHeading;
-    [global::Quire.Mirror.MirrorStub]
-    private string[] _rowIndices;
-    [global::Quire.Mirror.MirrorStub]
-    private string[] _columnIndices;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Internal.VerticalFence _leftBracket;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Internal.VerticalFence _rightBracket;
-    [global::Quire.Mirror.MirrorStub]
-    private double _opacity;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Internal.VisualMatrixContents _matrixGrid;
-    [global::Quire.Mirror.MirrorStub]
-    private double _rowHeadingTop;
-    [global::Quire.Mirror.MirrorStub]
-    private double _columnHeadingLeft;
-    [global::Quire.Mirror.MirrorStub]
-    private double _matrixTop;
-    [global::Quire.Mirror.MirrorStub]
-    private double _matrixLeft;
-    [global::Quire.Mirror.MirrorStub]
-    private double _matrixContentTop;
-    [global::Quire.Mirror.MirrorStub]
-    private double _matrixContentLeft;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.EquationEditor.View.IVisualMathNode[] _children;
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.Tree.INodeInfo NodeInfo { get => base.NodeInfo; set => base.NodeInfo = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.View.IVisualMathNode ErrorNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Visibility HeadingsVisibility { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => base[index]; set => base[index] = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode LeftFence { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode RightFence { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Internal.VisualMathNode[] NodeChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Size DesiredSizeWithoutFences { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Horizontal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public VisualMatrixNode() { }
     [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseMove(global::System.Windows.Input.MouseEventArgs args) => base.OnMouseMove(args);
     [global::Quire.Mirror.MirrorStub]
     private void LoadedHandler(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HookupMatrixResizeWidget(object sender, global::System.Windows.Input.MouseEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void TryDragIntoHiddenPart(global::Quire.EquationEditor.View.IVisualMathNode nodeHit, out int rowShift, out int columnShift) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public VisualMatrixNode() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupMatrixResizeWidget(object sender, global::System.Windows.Input.MouseEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -96,15 +44,9 @@ internal partial class VisualMatrixNode : global::Quire.Controls.Internal.Visual
     [global::Quire.Mirror.MirrorStub]
     private void ResizeIndicatorOnLoaded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void CreateBrackets() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
-    [global::Quire.Mirror.MirrorStub]
-    public override void SetParensVisibility(global::System.Windows.Visibility visibility) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.StackPanel CreateHeading(string panelName, global::Quire.Controls.Core.ExtendedFont font) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ArrangeHeadingContent(global::System.Windows.Controls.StackPanel heading) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
