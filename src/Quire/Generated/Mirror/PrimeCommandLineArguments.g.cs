@@ -11,18 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.PrimeCommandLineArguments, MathcadPrime")]
 public partial class PrimeCommandLineArguments
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool Embedding;
-    [global::Quire.Mirror.MirrorStub]
-    public string[] SourcePaths;
-    [global::Quire.Mirror.MirrorStub]
-    public string Culture;
-    [global::Quire.Mirror.MirrorStub]
-    public bool EmbeddingObsolete;
-    [global::Quire.Mirror.MirrorStub]
-    public bool EmbeddingEngNote;
-    [global::Quire.Mirror.MirrorStub]
-    public bool EmbeddingEngNotePlus;
-    [global::Quire.Mirror.MirrorStub]
-    public PrimeCommandLineArguments() { }
 }
