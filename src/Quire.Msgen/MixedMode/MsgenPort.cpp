@@ -693,4 +693,40 @@ namespace Quire { namespace gen {
     {
         CacheId();
     }
+    Constructor::Constructor(IlAsm^ il, String^ nm)
+        : Callable(il, nm), m_method_function(nullptr)
+    {
+    }
+
+    ForeignConstructor::ForeignConstructor(IlAsm^ il, String^ mn, String^ tn, ConstructorInfo^ ctor, cli::array<Type^>^ tys)
+        : Constructor(il, String::Concat(mn, ".", tn)), m_ctor(ctor), m_arity(tys->Length), m_types(tys)
+    {
+        GC::KeepAlive(this);
+    }
+
+    int ForeignConstructor::Arity()
+    {
+        return m_arity;
+    }
+
+    Type^ ForeignConstructor::ReturnType()
+    {
+        Type^ result = IlAsm::ObjType();
+        GC::KeepAlive(this);
+        return result;
+    }
+
+    Type^ ForeignConstructor::RepresentationType()
+    {
+        Type^ declaringType = m_ctor->DeclaringType;
+        GC::KeepAlive(this);
+        return declaringType;
+    }
+
+    cli::array<Type^>^ ForeignConstructor::MplParameterTypes()
+    {
+        cli::array<Type^>^ parameterTypes = IlAsm::GetParameterTypes(m_ctor);
+        GC::KeepAlive(this);
+        return parameterTypes;
+    }
 }}

@@ -294,6 +294,7 @@ namespace Quire { namespace gen {
 
     public:
         Constructor(IlAsm^ il);
+        Constructor(IlAsm^ il, String^ nm);
         virtual MethodInfo^ GetMethod([MarshalAs(UnmanagedType::U1)] bool may_emit) override;
         MethodFunction^ ImplementAsMethodFunction();
         virtual cli::array<MetaObj^>^ Deconstruct(MetaObj^ loc, ms::Range<void* const> vs) = 0;
@@ -1037,6 +1038,22 @@ namespace Quire { namespace gen {
 
     public:
         ForeignCtor(String^ id, cli::array<Type^>^ sig, ConstructorInfo^ ci);
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.ForeignConstructor, msgen")]
+    ref class ForeignConstructor abstract : public Constructor
+    {
+    private:
+        ConstructorInfo^ m_ctor;
+        int m_arity;
+        cli::array<Type^>^ m_types;
+
+    public:
+        ForeignConstructor(IlAsm^ il, String^ mn, String^ tn, ConstructorInfo^ ctor, cli::array<Type^>^ tys);
+        virtual int Arity() override;
+        virtual Type^ ReturnType() override;
+        virtual Type^ RepresentationType() override;
+        virtual cli::array<Type^>^ MplParameterTypes() override;
     };
 
 }}

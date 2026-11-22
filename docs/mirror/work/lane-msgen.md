@@ -1,5 +1,16 @@
 # Msgen lane checkpoint
 
+## Batch 20 (`Quire.gen.ForeignConstructor` subset, `Constructor(IlAsm, string)`)
+
+- Owner: AGY, Orca task `task_da1e51931b59`. Branch `feature/msgen-agy-2`, from current `main`.
+- Members: `Constructor(IlAsm, String)` and `ForeignConstructor` (class, fields `m_ctor`, `m_arity`, `m_types`) with `.ctor(IlAsm, String, String, ConstructorInfo, Type[])`, `Arity`, `ReturnType`, `RepresentationType`, `MplParameterTypes` (exact Release IL).
+- Still missing: `ForeignConstructor::Deconstruct` (pure in `Constructor`, so the class stays abstract), `CallFunc`, and `LdVal`. `LdVal` needs `Constructor::FunctionValue`, which needs `ImplementAsMethodFunction().FunctionValue()`.
+- `MetaObj::NewMetaObj(IlAsm, ConstructorInfo, Type[])` and `ForeignCtor::CreateMetaObj` need `ForeignConstructor` to be concrete, so they remain blocked until `Deconstruct` lands.
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 444 checked; 0 failures; 7 unfinished.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 19 (`Quire.gen.ForeignCtor` constructor)
 
 - Owner: AGY, Orca task `task_faa779f237e3`. Branch `feature/msgen-agy-2`, from current `main`.
