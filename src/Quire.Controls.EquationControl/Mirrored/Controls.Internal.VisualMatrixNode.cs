@@ -304,4 +304,18 @@ internal partial class VisualMatrixNode
         }
         return _matrixGrid.Children.IndexOf(element);
     }
+
+    private static bool IsResizeIndicator(IVisualTextNode text)
+    {
+        if (text != null)
+        {
+            if (!(text.Text == '…'.ToString()) && !(text.Text == '⋮'.ToString()) && !(text.Text == '⋰'.ToString()))
+            {
+                return text.Text == '⋱'.ToString();
+            }
+            return true;
+        }
+        return false;
+    }
+
 }

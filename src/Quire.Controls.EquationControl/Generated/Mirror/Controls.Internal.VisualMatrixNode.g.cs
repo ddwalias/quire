@@ -34,11 +34,7 @@ internal partial class VisualMatrixNode : global::Quire.Controls.Internal.Visual
     [global::Quire.Mirror.MirrorStub]
     internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static bool IsResizeIndicator(global::Quire.EquationEditor.View.IVisualTextNode text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void SetupResizeIndicatorBehaviour(global::Quire.Controls.Internal.VisualTextNode resizeIndicator) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ResizeIndicatorOnLoaded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
     [global::Quire.Mirror.MirrorStub]
@@ -48,7 +44,9 @@ internal partial class VisualMatrixNode : global::Quire.Controls.Internal.Visual
     [global::Quire.Mirror.MirrorStub]
     private void ConstructMatrixGrid() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.EquationEditor.View.IVisualMathNode CreateTextNode(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ResizeIndicatorOnLoaded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ArrangeHeadingContent(global::System.Windows.Controls.StackPanel heading) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNode CreateTextNode(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
