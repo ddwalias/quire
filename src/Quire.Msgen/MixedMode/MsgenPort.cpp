@@ -353,4 +353,16 @@ namespace Quire { namespace gen {
         GC::KeepAlive(this);
         return result;
     }
+    ContinuationClo::ContinuationClo(IlAsm^ il, IlEmit^ mf)
+        : Closure(il)
+    {
+        m_parent = mf->GetMethodFunction();
+        GC::KeepAlive(this);
+    }
+
+    void ContinuationClo::LdVal(IlEmit^)
+    {
+        IlAsm::Raise("invalid continuation");
+        GC::KeepAlive(this);
+    }
 }}

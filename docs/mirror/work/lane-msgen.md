@@ -1,5 +1,15 @@
 # Msgen lane checkpoint
 
+## Batch 7 (`Quire.gen.ContinuationClo`, partial)
+
+- Owner: AGY, Orca task `task_5692e63e3586`. Branch `feature/msgen-agy-2`, from current `main`.
+- Members: `ContinuationClo` class with field `m_parent`, `.ctor`, `LdVal`, `HasInstance` (exact Release IL).
+- Left out: `DefineFunction`, which needs the absent `ContinuationFunction` class (an `IlEmit` subclass with its own prerequisites).
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 397 checked; 0 failures; 7 unfinished.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 6 (`Quire.gen.CctorFunction`, `IlBuilderType::Cctor`)
 
 - Owner: AGY, Orca task `task_fd17b1d0d474`. Branch `feature/msgen-agy-2`, from current `main`.

@@ -286,6 +286,17 @@ namespace Quire { namespace gen {
         void CreateType();
     };
 
+    [::Quire::Mirror::MirrorOfAttribute("gen.ContinuationClo, msgen")]
+    ref class ContinuationClo : public Closure
+    {
+    public:
+        MethodFunction^ m_parent;
+
+        ContinuationClo(IlAsm^ il, IlEmit^ mf);
+        virtual void LdVal(IlEmit^ emit) override;
+        virtual [returnvalue: MarshalAs(UnmanagedType::U1)] bool HasInstance() override { return false; }
+    };
+
     [::Quire::Mirror::MirrorOfAttribute("gen.Ctxt, msgen")]
     ref class Ctxt abstract
     {
