@@ -142,3 +142,9 @@
 - Member: `private void ReplaceTextInHyperlink(string, Hyperlink, bool, ScriptState, List<Pair<int,int>>, int, out bool)`. Hand-written in `Mirrored/Controls.Text.RichTextBase.cs`; stub removed from the `.g.cs`.
 - Shapes that mattered: Mathcad keeps only `originalLength` and `hyperlinkLength` as named locals. The later lengths are inline expressions evaluated inside the `out` assignment (`shouldRestoreStyle = (hyperlink != null ? (int?)hyperlink.GetText().Length : null) == hyperlinkLength - originalLength + text.Length && !(originalLength == hyperlinkLength);`). Named `int?` locals for `delta`, `newEnd` or a scoped block shift the temporary slots and differ at the first ternary's null temp.
 - Release IL (project-wide): PASS — 625 checked, 0 failures.
+
+## Batch 21 — RichTextBase.VerifyInsertionPositions
+
+- Member: `private void VerifyInsertionPositions()`. Hand-written in `Mirrored/Controls.Text.RichTextBase.cs`; stub removed from the `.g.cs`.
+- Shapes that mattered: `_cachedInsertionPoints.Concat(Document.ContentEnd.Yield())` for the foreach source; `previous` and `current` locals (copies of `last` and `insertionPoint` taken at the top of each iteration, used later in the inner loop) match Mathcad's slots `[3]` and `[4]`; the assertion message is an interpolated string (`DefaultInterpolatedStringHandler`), which matches as written.
+- Release IL (project-wide): PASS — 626 checked, 0 failures.

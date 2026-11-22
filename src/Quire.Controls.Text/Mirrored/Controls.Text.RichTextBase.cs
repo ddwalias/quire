@@ -25,6 +25,34 @@ namespace Quire.Controls.Text;
 
 public partial class RichTextBase
 {
+    private void VerifyInsertionPositions()
+    {
+        if (!DebugTools.DebugVerificationsAllowed)
+        {
+            return;
+        }
+        TextPointer last = Document.ContentStart;
+        foreach (TextPointer insertionPoint in _cachedInsertionPoints.Concat(Document.ContentEnd.Yield()))
+        {
+            TextPointer previous = last;
+            TextPointer current = insertionPoint;
+            if (last.GetOffsetToPosition(insertionPoint) > 1)
+            {
+                TextPointer position = previous.GetPositionAtOffset(1);
+                while (position != null && position.CompareTo(current) < 0)
+                {
+                    if (position.IsAtInsertionPosition && position.GetInsertionPosition(LogicalDirection.Forward).CompareTo(current) < 0)
+                    {
+                        DebugTools.FailAssertion($"Unreachable Insertion Position at offset: {Document.ContentStart.GetOffsetToPosition(position)}.");
+                        break;
+                    }
+                    position = position.GetPositionAtOffset(1);
+                }
+            }
+            last = insertionPoint;
+        }
+    }
+
     private void ReplaceTextInHyperlink(string text, Hyperlink hyperlink, bool preserveScriptState, ScriptState scriptState, List<Pair<int, int>> subscriptPositions, int selectionStartOffset, out bool shouldRestoreStyle)
     {
         int originalLength = Selection.Text.Length;

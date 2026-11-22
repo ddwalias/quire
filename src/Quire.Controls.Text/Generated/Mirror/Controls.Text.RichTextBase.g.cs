@@ -170,8 +170,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Core.TextFormat GetTextFormatForWholeDocument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void VerifyInsertionPositions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected internal int GetInsertionPointAtPointer(ref global::System.Windows.Documents.TextPointer pointer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Collections.Generic.IEnumerable<object> EnumerateEmbeddedObjectsInRange(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
