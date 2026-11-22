@@ -761,4 +761,52 @@ namespace Quire { namespace gen {
         GC::KeepAlive(this);
         return result;
     }
+    void ForeignConstructor::CallFunc(IlEmit^ emit, int, bool, Hex::Tag*, Type^, cli::array<Type^>^)
+    {
+        ConstructorInfo^ ctor = m_ctor;
+        emit->emit_instr(OpCodes::Newobj, ctor);
+        GC::KeepAlive(this);
+    }
+    MetaObj^ Constructor::FunctionValue()
+    {
+        if (m_function)
+        {
+            return m_function;
+        }
+        MetaObj^ result = (m_function = ImplementAsMethodFunction()->FunctionValue());
+        GC::KeepAlive(this);
+        return result;
+    }
+
+    void ForeignConstructor::LdVal(IlEmit^ emit)
+    {
+        if (m_arity > 0)
+        {
+            MetaObj^ metaObj = static_cast<Callable^>(this)->FunctionValue();
+            if (metaObj)
+            {
+                metaObj->LdVal(emit);
+            }
+            else
+            {
+                EmitFunctionValue(emit);
+            }
+        }
+        else
+        {
+            Type^ declaringType = m_ctor->DeclaringType;
+            String^ name = "singleton";
+            FieldInfo^ field = declaringType->GetField(name);
+            if (static_cast<Object^>(field) != nullptr)
+            {
+                emit->Ldsfld(field);
+            }
+            else
+            {
+                ConstructorInfo^ ctor = m_ctor;
+                emit->emit_instr(OpCodes::Newobj, ctor);
+            }
+        }
+        GC::KeepAlive(this);
+    }
 }}

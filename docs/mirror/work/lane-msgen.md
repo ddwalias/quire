@@ -1,5 +1,16 @@
 # Msgen lane checkpoint
 
+## Batch 22 (`ForeignConstructor::CallFunc`, `ForeignConstructor::LdVal`, `Constructor::FunctionValue`)
+
+- Owner: AGY, Orca task `task_5b449a6680d2`. Branch `feature/msgen-agy-2`, from current `main`.
+- Members: `ForeignConstructor::CallFunc` (`newobj` through `emit_instr`), `Constructor::FunctionValue` (caches `ImplementAsMethodFunction().FunctionValue()`, exact), and `ForeignConstructor::LdVal`.
+- Token detail: the original `LdVal` calls `Callable::FunctionValue`, the base declaration. A direct call resolves to the `Constructor` override, so the call goes through `static_cast<Callable^>(this)`.
+- `EmitFunctionValue` already exists on `main` (inherited from `Callable`), so no new prerequisite was needed.
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 450 checked; 0 failures; 7 unfinished.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 21 (`Quire.gen.ForeignConstructor::Deconstruct`, `MetaObj::NewMetaObj(IlAsm, ConstructorInfo, Type[])`, `ForeignCtor::CreateMetaObj`)
 
 - Owner: AGY, Orca task `task_da1e51931b59`. Branch `feature/msgen-agy-2`, from current `main`.

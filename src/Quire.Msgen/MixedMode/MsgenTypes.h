@@ -298,6 +298,7 @@ namespace Quire { namespace gen {
         Constructor(IlAsm^ il, String^ nm);
         virtual MethodInfo^ GetMethod([MarshalAs(UnmanagedType::U1)] bool may_emit) override;
         MethodFunction^ ImplementAsMethodFunction();
+        virtual MetaObj^ FunctionValue() override;
         virtual cli::array<MetaObj^>^ Deconstruct(MetaObj^ loc, ms::Range<void* const> vs) = 0;
     };
 
@@ -1057,6 +1058,8 @@ namespace Quire { namespace gen {
         virtual Type^ RepresentationType() override;
         virtual cli::array<Type^>^ MplParameterTypes() override;
         virtual cli::array<MetaObj^>^ Deconstruct(MetaObj^ loc, ms::Range<void* const> vs) override;
+        virtual void CallFunc(IlEmit^ emit, int nargs, [MarshalAs(UnmanagedType::U1)] bool tail, Hex::Tag* einfo, Type^ return_type, cli::array<Type^>^ parameters) override;
+        virtual void LdVal(IlEmit^ emit) override;
     };
 
 }}
