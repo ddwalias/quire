@@ -50,13 +50,7 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     [global::Quire.Mirror.MirrorStub]
     public double Start { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public double LinearizedStart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public double End { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double LinearizedEnd { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private double StartDefaultByScaling { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Presenter.AxisScaling Scaling { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -74,8 +68,6 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlNode RegionXmlNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private bool ExpressionsAreReady { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Func<global::Quire.Controls.Plots.Presenter.IAxisModel, global::System.Xml.XmlNode, global::Quire.Controls.Plots.Presenter.IPlotEquation> RequestAddEquation;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action Changed;
@@ -92,21 +84,11 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     [global::Quire.Mirror.MirrorStub]
     public AxisModel(global::Quire.Controls.Plots.Presenter.AxesType axisType, global::Quire.Controls.Plots.Presenter.PlotType plotType, global::Quire.Controls.Plots.IPlotTitleModel axisTitleModel = default) { }
     [global::Quire.Mirror.MirrorStub]
-    private void OnPropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void SetDisplayNumberFormat(global::Quire.Controls.Core.NumberFormat numberFormat, bool isLocalValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Contains(double coordinate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsInStartEndInterval(double coordinate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void ValidateAxisLimitExpression(global::Quire.Controls.Plots.Presenter.IAxisLimitEditor oldExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnExpressionHasErrorsChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool LimitHasErrors(global::Quire.Controls.Plots.Presenter.IAxisLimitEditor axisLimitEditor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasAxisError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Nullable<double> LinearizeStartEnd(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -154,14 +136,6 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     [global::Quire.Mirror.MirrorStub]
     private static bool SetDoubleValueIfValid(ref double variableToChange, double newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static double OrderFunction(double step) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static double RoundWithOrder(double exp, double order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static double CeilingWithOrder(double exp, double order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static double FloorWithOrder(double exp, double order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void SetTickMarksPattern(double startGap, double[] pattern) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetXmlNode(global::System.Xml.XmlNode value, global::System.Xml.XmlNamespaceManager nmspmgr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -171,14 +145,6 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     private int ConvertLegendPositionEnumToLegendPositionIndex(string enumValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string ConvertLegendPositionIndexToLegendPositionEnum() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireRangeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireScalingChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireNumberFormatInitialized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void AddEquation(global::Quire.Controls.Plots.Presenter.IPlotEquation equation, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -199,10 +165,6 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     public void SetDataObject(global::Quire.PersistentDataObjects.axisBaseType axisData, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateTickMarkValues(bool useSecondTickValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsReady(global::Quire.Controls.Plots.Presenter.IAxisLimitEditor axisLimitEditor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireTickMarkLabelsUpdated() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ReadAxisDomainData(global::Quire.PersistentDataObjects.xyDomainType axisDomain, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -358,3 +358,10 @@
 - Shapes: all matched first gate run.
 - Release IL: PASS — 2444 checked, 0 failures.
 - Left in AxisModel: `Start`, `End`, `Scaling`, `GridLineColor`, `DisplayNumberFormat`, the limit-expression properties (event handlers), the constructor, and the range/tick helpers.
+
+## Batch 52 — AxisModel range, rounding and event helpers
+
+- Members: `LinearizedStart`/`LinearizedEnd` (`?? double.MinValue/MaxValue`), `StartDefaultByScaling`, `ExpressionsAreReady`, `Contains`, `IsInStartEndInterval`, `LimitHasErrors`, `HasAxisError`, `IsReady`, `OrderFunction`, `RoundWithOrder`, `CeilingWithOrder`, `FloorWithOrder`, `OnPropertyChanged`, `FireChanged`, `FireRangeChanged`, `FireScalingChanged`, `FireNumberFormatInitialized`, `FireTickMarkLabelsUpdated`. Hand-written: appended to `Mirrored/Controls.Plots.Model.AxisModel.cs` (adds `using System;` and `using System.ComponentModel;`); stubs removed from `AxisModel.g.cs`.
+- Shapes: `LimitHasErrors` with `?.HasErrors ?? false` gave `brtrue` where Mathcad has `brfalse`; `axisLimitEditor != null && axisLimitEditor.HasErrors` matched. `FireTickMarkLabelsUpdated` with `?.Invoke()` compiles to `dup`; Mathcad copies the event into a local, so the handler-copy form matched. The `if (X != null) X(...)` form matched for the other `Fire*` helpers.
+- Release IL: PASS — 2463 checked, 0 failures.
+- Left in AxisModel: `Start`, `End`, `Scaling`, `GridLineColor`, `DisplayNumberFormat`, the limit-expression properties, `StartValueChanged`, `GetRadialPointsStart`, `CreateLogMinorTickmarksPattern`, `AxisCalculatables` (iterator), the constructor, and the tick-mark and XML helpers.

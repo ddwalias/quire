@@ -1,7 +1,9 @@
 #nullable disable
 #pragma warning disable
 
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Quire.Controls.Plots.Presenter;
 
 namespace Quire.Controls.Plots.Model;
@@ -132,6 +134,136 @@ internal partial class AxisModel
                 _showNumbers = value;
                 OnPropertyChanged("ShowNumbers");
             }
+        }
+    }
+
+    public double LinearizedStart => LinearizeStartEnd(Start) ?? double.MinValue;
+
+    public double LinearizedEnd => LinearizeStartEnd(End) ?? double.MaxValue;
+
+    private double StartDefaultByScaling
+    {
+        get
+        {
+            if (Scaling != AxisScaling.Logarithmic)
+            {
+                return StartDefault;
+            }
+            return 0.01;
+        }
+    }
+
+    private bool ExpressionsAreReady => IsReady(StartExpression) && IsReady(EndExpression) && IsReady(SecondTickExpression);
+
+    public bool Contains(double coordinate)
+    {
+        switch (Type)
+        {
+            case AxesType.X:
+            case AxesType.Y:
+            case AxesType.Z:
+                return IsInStartEndInterval(coordinate);
+            case AxesType.Radial:
+                return coordinate <= End;
+            default:
+                return true;
+        }
+    }
+
+    private bool IsInStartEndInterval(double coordinate)
+    {
+        if (Start <= coordinate)
+        {
+            return coordinate <= End;
+        }
+        return false;
+    }
+
+    private static bool LimitHasErrors(IAxisLimitEditor axisLimitEditor)
+    {
+        return axisLimitEditor != null && axisLimitEditor.HasErrors;
+    }
+
+    public bool HasAxisError()
+    {
+        return StartExpression.ErrorCount > 0 || EndExpression.ErrorCount > 0;
+    }
+
+    private static bool IsReady(IAxisLimitEditor axisLimitEditor)
+    {
+        if (axisLimitEditor != null)
+        {
+            return !axisLimitEditor.IsWaitingForEngineResponse;
+        }
+        return true;
+    }
+
+    private static double OrderFunction(double step)
+    {
+        return Math.Pow(10.0, Math.Floor(Math.Log10(step)));
+    }
+
+    private static double RoundWithOrder(double exp, double order)
+    {
+        return Math.Round(exp / order) * order;
+    }
+
+    private static double CeilingWithOrder(double exp, double order)
+    {
+        return Math.Ceiling(exp / order) * order;
+    }
+
+    private static double FloorWithOrder(double exp, double order)
+    {
+        return Math.Floor(exp / order) * order;
+    }
+
+    private void OnPropertyChanged(string propertyName)
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    private void FireChanged()
+    {
+        if (Changed != null)
+        {
+            Changed();
+        }
+    }
+
+    private void FireRangeChanged()
+    {
+        if (RangeChanged != null)
+        {
+            RangeChanged();
+        }
+    }
+
+    private void FireScalingChanged()
+    {
+        if (ScalingChanged != null)
+        {
+            ScalingChanged(Scaling);
+        }
+    }
+
+    private void FireNumberFormatInitialized()
+    {
+        if (NumberFormatInitialized != null)
+        {
+            NumberFormatInitialized();
+        }
+    }
+
+    private void FireTickMarkLabelsUpdated()
+    {
+        Action tickMarkLabelsUpdated = TickMarkLabelsUpdated;
+        if (tickMarkLabelsUpdated != null)
+        {
+            tickMarkLabelsUpdated();
         }
     }
 }
