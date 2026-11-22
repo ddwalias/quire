@@ -35,3 +35,18 @@
    `Quire.Native.Mspcons`, the `istream_wrapper` class, and `std::deque`/`std::vector` instantiations. Not started.
 
 The Ruleset constructor (`0x9CF0`) is also unstarted; it depends on items 2 and 3.
+
+## format_code follow-up (task_7bf814fd3ff3)
+
+- `?format_code@PObjParser@Prolog@@CAEPEBVanyval@Unmanaged@Engine@@@Z` (RVA `0xA7D0`, 86 bytes, private static) is
+  `dynamic_cast<Engine::Unmanaged::pstring const *>(value)`, then `text != nullptr && strlen(text) == 2 && text[0] == '%'`
+  returning `text[1]`, else `'0'`. The import thunks `__RTDynamicCast` and `strlen` verify by name.
+- With the `pstring` declaration inside `Engine::Unmanaged` (text pointer at offset 0x10; offset 0x08 not identified) and the
+  null check, the candidate matches the original in all bytes except two unverified call/address targets:
+  the type descriptors `??_R0?AVpstring@Unmanaged@Engine@@@8` (original RVA `0x30B10`) and
+  `??_R0?AVanyval@Unmanaged@Engine@@@8` (original RVA `0x30B40`).
+- These descriptors are referenced by the candidate but not defined by any Msprolog object, so `native_targets.py`
+  cannot record them. Defining them would require a `pstring` vftable or key function in this project, which the original
+  supplies from Mspcons. Blocked until the maintainer decides how RTTI descriptors owned by Mspcons are verified
+  (or Mspcons exports them). The Mspcons header does not yet declare `pstring`; that needs a maintainer edit.
+- Not landed: the gate fails on those two targets. Program/Ruleset vftables remain parked.
