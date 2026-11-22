@@ -193,6 +193,40 @@ namespace Quire { namespace depman {
         }
     };
 
+    enum class DependencyType
+    {
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("depman.CacheKey, mcdepman")]
+    public value struct CacheKey
+    {
+    public:
+        DSym ds;
+        ScopingMode sm;
+        DependencyType dt;
+
+        CacheKey(DSym _ds, ScopingMode _sm, DependencyType _dt)
+        {
+            ds = _ds;
+            sm = _sm;
+            dt = _dt;
+        }
+
+        property System::String^ name
+        {
+            System::String^ get()
+            {
+                return ds.full;
+            }
+        }
+
+        virtual int GetHashCode() override
+        {
+            int symbol_hash = ds.GetHashCode();
+            return (int)sm ^ (int)dt ^ symbol_hash;
+        }
+    };
+
     [Quire::Mirror::MirrorOfAttribute("depman.DepException, mcdepman")]
     public ref class DepException abstract : System::Exception
     {
