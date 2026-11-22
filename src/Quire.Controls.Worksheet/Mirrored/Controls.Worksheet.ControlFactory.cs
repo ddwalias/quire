@@ -1,6 +1,7 @@
 using System;
 using System.Windows;
 using System.Windows.Markup;
+using Quire.Controls.CollapsibleArea;
 using Quire.Controls.Core;
 using Quire.Controls.Core.Whiteboard;
 using Quire.Controls.ExcelComponent;
@@ -175,6 +176,14 @@ internal partial class ControlFactory
     public IAggregateMathboardControl CreateChartComponentControl(Size? gridCellSize)
     {
         return new ChartComponentControl(gridCellSize)
+        {
+            RegionFactory = RegionFactory.Instance
+        };
+    }
+
+    public ICollapsibleAreaControl CreateCollapsibleAreaControl(Size? gridCellSize)
+    {
+        return new CollapsibleAreaControl(gridCellSize)
         {
             RegionFactory = RegionFactory.Instance
         };

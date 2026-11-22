@@ -11,6 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.ControlFactory, Ptc.Controls.Worksheet")]
 internal partial class ControlFactory : global::Quire.Controls.Worksheet.IControlFactory, global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.ICollapsibleAreaControl CreateCollapsibleAreaControl(global::System.Nullable<global::System.Windows.Size> gridCellSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

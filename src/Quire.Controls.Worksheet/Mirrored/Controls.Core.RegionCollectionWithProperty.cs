@@ -121,4 +121,29 @@ public partial class RegionCollectionWithProperty
             PropertyChanged(this, e);
         }
     }
+
+    private static void HandleTextFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
+    {
+        TextFormat oldFormat = args.OldValue as TextFormat;
+        TextFormat newFormat = args.NewValue as TextFormat;
+        if (d is RegionCollectionWithProperty regionCollectionWithProperty)
+        {
+            regionCollectionWithProperty.HandleTextFormatChanged(oldFormat, newFormat);
+        }
+    }
+
+    private void HandleTextFormatChanged(TextFormat oldFormat, TextFormat newFormat)
+    {
+        if (oldFormat != null)
+        {
+            oldFormat.FormatChanged -= OnTextFormattingChanged;
+        }
+
+        if (newFormat != null)
+        {
+            newFormat.FormatChanged += OnTextFormattingChanged;
+        }
+
+        CurrentTextFormat = TextFormat;
+    }
 }
