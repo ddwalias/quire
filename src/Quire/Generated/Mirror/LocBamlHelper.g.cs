@@ -11,14 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.LocBamlHelper, MathcadPrime")]
 public static partial class LocBamlHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Threading.Thread CurrentThreadProperty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.ComponentModel.ListSortDirection Ascending { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.ComponentModel.ListSortDirection Descending { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Type UnitSystemsEnumType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Array GetEnumValues(global::System.Type enumType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
