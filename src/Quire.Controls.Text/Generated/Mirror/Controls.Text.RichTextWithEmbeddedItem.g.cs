@@ -58,8 +58,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.IWhiteboardItem _savedActiveItem;
     [global::Quire.Mirror.MirrorStub]
-    private string _copyLinkText;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Text.IRichTextWithEmbededItemCloneHelper _richTextWithEmbededItemCloneHelper;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Controls.Text.IRichTextWithEmbededItemCloneHelper _defaultCloneHelper;
@@ -85,8 +83,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableMoved;
     [global::Quire.Mirror.MirrorStub]
     private void BindHyperlinkCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CopyHyperlink(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void ModifyHyperlink(global::Quire.Controls.Text.ModifyHyperlinkCommandParameter param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

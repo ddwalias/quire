@@ -33,3 +33,10 @@
 - Shape: `GetPropertyValue` and `ApplyPropertyValue` on a `new DocumentTextRange(...)` receiver emit `call`; Mathcad uses `callvirt`. Routing each receiver through a named local produces `callvirt`. The ternary is `fontWeight != FontWeights.Bold ? FontWeights.Bold : FontWeights.DemiBold`.
 - Tried and reverted: `RichTextBase.ToggleRangeToState`. Mathcad stores the second `GetPositionAtTextOffset` result in a local after pushing the first argument, which the natural `new TextRange(A, B)` shape does not reproduce (first difference at #6).
 - Release IL (project-wide): PASS — 612 checked, 0 failures; 119 generated stubs remain.
+
+## Batch 13 — RichTextWithEmbeddedItem.CopyHyperlink
+
+- Member: `CopyHyperlink` (`private void`, `ExecutedRoutedEventArgs`). Field `_copyLinkText` moved from the `.g.cs` to the hand-written partial.
+- Shape: Mathcad wraps the body in one positive guard, `if (hyperlink != null && DebugTools.AssertNotNull(hyperlink.NavigateUri, null).Passed) { try { ... } finally { _copyLinkText = null; } }`. A separate early-return guard and a helper method both fail (the helper adds a call Mathcad does not make).
+- Release IL (project-wide): PASS — 613 checked, 0 failures; 118 generated stubs remain.
+- Not attempted in this batch: `EditLinkUndoableCommand` (795 bytes, a `TextFormat`/`CommandScope`/`DeclareChangeBlock` try/finally tree) and `ModifyHyperlink(ModifyHyperlinkCommandParameter)` (396 bytes, with `DevAssert` and a `switch` over `LinkEditOperation`). Both are larger than one independent batch and remain stubs.

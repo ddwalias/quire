@@ -26,6 +26,44 @@ namespace Quire.Controls.Text;
 public partial class RichTextWithEmbeddedItem
 {
 
+    private string _copyLinkText;
+
+    private void CopyHyperlink(object sender, ExecutedRoutedEventArgs e)
+    {
+        Hyperlink hyperlink = CheckAndGetExactlyOneHyperlink();
+        if (hyperlink != null && DebugTools.AssertNotNull(hyperlink.NavigateUri, null).Passed)
+        {
+            try
+            {
+                _copyLinkText = hyperlink.NavigateUri.ToString();
+                TextPointer caretPosition = null;
+                DocumentTextRange selectionRange = null;
+                if (Selection.IsEmpty)
+                {
+                    caretPosition = CaretPosition;
+                }
+                else
+                {
+                    selectionRange = new DocumentTextRange(Selection.Start, Selection.End);
+                }
+                Selection.Select(hyperlink.ElementStart, hyperlink.ElementEnd);
+                Copy();
+                if (selectionRange != null)
+                {
+                    Selection.Select(selectionRange.Start, selectionRange.End);
+                }
+                else
+                {
+                    CaretPosition = caretPosition;
+                }
+            }
+            finally
+            {
+                _copyLinkText = null;
+            }
+        }
+    }
+
     internal static void InsertBaselineOffsetTag(double value, TextPointer insertionPoint)
     {
         Run run = new Run("baselineOffsetTag" + value.ToString(), insertionPoint);
