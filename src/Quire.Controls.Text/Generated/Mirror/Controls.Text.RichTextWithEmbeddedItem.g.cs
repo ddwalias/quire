@@ -179,12 +179,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.RichTextWithEmbeddedItem+PreviewKeyDownData, Ptc.Controls.Text")]
     private partial struct PreviewKeyDownData
     {
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Windows.Input.Key PressedKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public int ChangeInsertionPoint { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        internal PreviewKeyDownData(global::System.Windows.Input.Key key, int point) { }
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.RichTextWithEmbeddedItem+PropertyNames, Ptc.Controls.Text")]

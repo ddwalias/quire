@@ -175,3 +175,14 @@
 
 - `HandleToggleSubSuperScriptCommand`: the `Selection.IsEmpty` boolean is computed first and kept on the evaluation stack (`dup; brfalse`, and a later `brfalse` on the retained value) across `stloc` statements. Mathcad has no bool local for it. Same stack-across-statement family as the receiver-retention blockers. Parked.
 - `EnumerateEmbeddedObjectsInRange`: an iterator; its state-machine class is numbered `<EnumerateEmbeddedObjectsInRange>d__217`, so the class name depends on the same member-ordinal counting as the closure blocker. Parked.
+
+## Batch 23 — RichTextWithEmbeddedItem.PreviewKeyDownData
+
+- Members: the nested `private partial struct PreviewKeyDownData` gets `PressedKey` and `ChangeInsertionPoint` as get-only auto-properties (backing fields `<PressedKey>k__BackingField`, `<ChangeInsertionPoint>k__BackingField`, in that order) and the constructor that stores both in order. The generated declaration's three stub members were removed; the completed type is in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`.
+- Release IL (project-wide): PASS — 630 checked, 0 failures.
+
+## Parked — remaining RichTextWithEmbeddedItem stubs (evidence)
+
+- `ValidateURL`: `new FileInfo(path).Exists` keeps the `FileInfo` receiver on the stack while `new DirectoryInfo(path)` is stored to a local. Receiver-retention family. Parked.
+- `OpenHyperlinkUrl`: contains a constant-false branch (`ldc.i4.0; brfalse.s`) that Mathcad did not fold; a source form that compiles to that branch was not identified. Parked.
+- The remaining stubs are closure-bound (ordinal), receiver-retention, or new-receiver call/callvirt, as recorded in the earlier batches.

@@ -25,6 +25,19 @@ namespace Quire.Controls.Text;
 
 public partial class RichTextWithEmbeddedItem
 {
+    private partial struct PreviewKeyDownData
+    {
+        public Key PressedKey { get; }
+
+        public int ChangeInsertionPoint { get; }
+
+        internal PreviewKeyDownData(Key key, int point)
+        {
+            PressedKey = key;
+            ChangeInsertionPoint = point;
+        }
+    }
+
     private void DispatchCommandToItems(RoutedCommand cmd, object parameter, PropertiesForUpdate propertyForUpdate)
     {
         IEnumerable<IWhiteboardItem> items = SelectedWhiteboardItems.Any() ? SelectedWhiteboardItems : WhiteboardItems;
