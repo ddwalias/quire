@@ -1,16 +1,29 @@
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <sdkddkver.h>
+#include "DepmanContracts.h"
 #include "DepmanPosition.h"
 
 // Defined in its own translation unit so that PositionBase::IsLocked calls it, as the original does.
 #pragma comment(linker, "/include:?IsLocked@ActionChain@depman@@QEBA_NXZ")
+#pragma comment(linker, "/include:?IsUndefine@ActionChain@depman@@QEAA_NXZ")
+#pragma comment(linker, "/include:?IsChildOnly@ActionChain@depman@@QEAA_NXZ")
 
 namespace depman {
 
 bool ActionChain::IsLocked() const
 {
     return locked_;
+}
+
+bool ActionChain::IsUndefine()
+{
+    return mgd_->action()->IsUndefine();
+}
+
+bool ActionChain::IsChildOnly()
+{
+    return mgd_->action()->IsChildOnly();
 }
 
 } // namespace depman

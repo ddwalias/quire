@@ -1,10 +1,16 @@
 #pragma once
 
+#include <gcroot.h>
+
 template <typename T>
 class OrderedList;
 
 template <typename T>
 class OrderedListNode;
+
+namespace Quire { namespace depman {
+    ref class ActionChainMgd;
+}}
 
 namespace depman {
 
@@ -77,10 +83,13 @@ static_assert(sizeof(PositionBase) == 216, "PositionBase size must be 216 bytes"
 class ActionChain {
 public:
     bool IsLocked() const;
+    bool IsUndefine();
+    bool IsChildOnly();
 
 private:
-    unsigned char pad_00_[0x20];
-    bool locked_;                                 // 0x20 (offset 32)
+    gcroot<::Quire::depman::ActionChainMgd^> mgd_;   // 0x00 (offset 0)
+    unsigned char pad_08_[0x18];                     // 0x08
+    bool locked_;                                    // 0x20 (offset 32)
 };
 
 } // namespace depman
