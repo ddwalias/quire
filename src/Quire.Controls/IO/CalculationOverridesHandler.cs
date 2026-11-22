@@ -109,7 +109,18 @@ internal static partial class CalculationOverridesHandler
             _sExprToCalcOverridesMap = new Dictionary<string, CalculationOverrides>();
         }
 
-        public ISimpleCalculatable SetCalculationOverrideForSExpr(string sExprKey, CalculationOverridesTypes type, ISimpleCalculatable newOverride) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public ISimpleCalculatable SetCalculationOverrideForSExpr(string sExprKey, CalculationOverridesTypes type, ISimpleCalculatable newOverride)
+        {
+            bool containsKey = _sExprToCalcOverridesMap.ContainsKey(sExprKey);
+            CalculationOverrides calculationOverrides = containsKey ? _sExprToCalcOverridesMap[sExprKey] : new CalculationOverrides();
+            ISimpleCalculatable calculatableOfType = calculationOverrides.GetCalculatableOfType(type);
+            calculationOverrides.SetCalculatableOfType(type, newOverride);
+            if (!containsKey)
+            {
+                _sExprToCalcOverridesMap.Add(sExprKey, calculationOverrides);
+            }
+            return calculatableOfType;
+        }
 
         public ISimpleCalculatable GetCalculationOverrideForSExpr(string sExprKey, CalculationOverridesTypes type)
         {
@@ -120,7 +131,23 @@ internal static partial class CalculationOverridesHandler
             return null;
         }
 
-        public ISimpleCalculatable RemoveCalculationOverrideForSExpr(string sExprKey, CalculationOverridesTypes type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public ISimpleCalculatable RemoveCalculationOverrideForSExpr(string sExprKey, CalculationOverridesTypes type)
+        {
+            if (_sExprToCalcOverridesMap.ContainsKey(sExprKey))
+            {
+                ISimpleCalculatable calculatableOfType = _sExprToCalcOverridesMap[sExprKey].GetCalculatableOfType(type);
+                if (calculatableOfType != null)
+                {
+                    _sExprToCalcOverridesMap[sExprKey].SetCalculatableOfType(type, null);
+                    if (_sExprToCalcOverridesMap[sExprKey].GetAllCalculatables().IsNullOrEmpty())
+                    {
+                        _sExprToCalcOverridesMap.Remove(sExprKey);
+                    }
+                    return calculatableOfType;
+                }
+            }
+            return null;
+        }
 
         public bool IsEmpty(string sExprKey) => !_sExprToCalcOverridesMap.ContainsKey(sExprKey);
 

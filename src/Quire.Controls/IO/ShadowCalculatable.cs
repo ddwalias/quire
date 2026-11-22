@@ -14,7 +14,7 @@ internal partial class ShadowCalculatable
     protected ShadowCalculatable() { }
 
     [MirrorVerified("PtcControlsIOShadowCalculatableMechanicalDifferentialTests")]
-    public static readonly DispatcherPriority ShadowResultsProcessingPriority_Send;
+    public static readonly DispatcherPriority ShadowResultsProcessingPriority_Send = DispatcherPriority.Send;
 
     [MirrorVerified("PtcControlsIOShadowCalculatableMechanicalDifferentialTests")]
     public Nullable<DispatcherPriority> ResultsProcessingPriority => new DispatcherPriority?(ShadowResultsProcessingPriority_Send);

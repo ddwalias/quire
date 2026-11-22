@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml;
 using Quire.Controls.Core;
@@ -102,7 +103,44 @@ public partial class DitaWriter
         return File.Create(Path.Combine(_filePath, text));
     }
 
-    private void WriteContentControl(FrameworkElement element, Stream fileStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void WriteContentControl(FrameworkElement element, Stream fileStream)
+    {
+        using (MemoryStream memoryStream = new MemoryStream())
+        {
+            double width = element.ActualWidth;
+            double height = element.ActualHeight;
+            if (element.Clip is RectangleGeometry rectangleGeometry)
+            {
+                width = Math.Min(width, rectangleGeometry.Rect.Right);
+                height = Math.Max(height, rectangleGeometry.Rect.Bottom);
+            }
+            Rect rectangle = new Rect(0.0, 0.0, 2.0 * (width * 1.0), 2.0 * (height * 1.0));
+            RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap((int)rectangle.Width, (int)rectangle.Height, 96.0, 96.0, PixelFormats.Pbgra32);
+            DrawingVisual drawingVisual = new DrawingVisual();
+            using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+            {
+                VisualBrush brush = new VisualBrush(element)
+                {
+                    ViewboxUnits = BrushMappingMode.RelativeToBoundingBox,
+                    Stretch = Stretch.Fill,
+                    Viewbox = new Rect(0.0, 0.0, 1.0, 1.0)
+                };
+                drawingContext.DrawRectangle(Brushes.White, null, rectangle);
+                drawingContext.DrawRectangle(brush, null, rectangle);
+            }
+            renderTargetBitmap.Render(drawingVisual);
+            ImageUtils.EncodePngImage(renderTargetBitmap, memoryStream);
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = memoryStream;
+            bitmapImage.DecodePixelHeight = (int)Math.Round(rectangle.Height / 2.0);
+            bitmapImage.DecodePixelWidth = (int)Math.Round(rectangle.Width / 2.0);
+            bitmapImage.CacheOption = BitmapCacheOption.Default;
+            bitmapImage.EndInit();
+            ImageUtils.EncodePngImage(bitmapImage, fileStream);
+            _currentId++;
+        }
+    }
 
     public void WriteContentControl(ContentControl contentControl)
     {

@@ -85,7 +85,21 @@ internal partial class IOItemCollection
         return IOTag.HasOutputTag(region);
     }
 
-    private void CleanAliasesOfRegion(DependencyObject region, bool removeMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void CleanAliasesOfRegion(DependencyObject region, bool removeMap)
+    {
+        if (!IsValidItem(region) || DebugTools.AssertNotNull(IOItemsAliasManager.GetAliases(region, _isInp), null).Failed)
+        {
+            return;
+        }
+        foreach (string alias in IOItemsAliasManager.GetAliases(region, _isInp))
+        {
+            _aliasManager.Remove(alias);
+        }
+        if (removeMap)
+        {
+            IOItemsAliasManager.ClearIOAliasMap(region, _isInp);
+        }
+    }
 
     private IEnumerable<IOItem> CreateIOItemsAndResetAliases(DependencyObject region, IEnumerable<string> idSExpr, bool isInp)
     {

@@ -100,7 +100,15 @@ public partial class IOManager
         }
 
         // Mathcad emits a shared ret at IL_0017 with bne.un.s to body, differing from Roslyn 10 branch layout
-        public void AbortProgressTracking() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public void AbortProgressTracking()
+        {
+            if (_progress < 0 || _progress == _originalCount)
+            {
+                return;
+            }
+            StopProgressTracking(false);
+            _progress = -2;
+        }
 
         public bool IsProgressTrackingAborted()
         {
