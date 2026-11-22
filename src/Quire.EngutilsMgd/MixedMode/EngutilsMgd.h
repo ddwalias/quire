@@ -87,6 +87,39 @@ namespace Quire { namespace Engine {
         static Exception^ Unwrap(Exception^ e);
     };
 
+    [Quire::Mirror::MirrorOfAttribute("Engine.UnmanagedMemoryStream, engutils-mgd")]
+    public ref class UnmanagedMemoryStream : Stream
+    {
+    private:
+        // Int32::MaxValue prevents C++ constant-folding so Seek emits ldsfld MemStreamMaxLength.
+        static const long MemStreamMaxLength = Int32::MaxValue;
+        unsigned char* _mem;
+        int _length;
+        int _capacity;
+        int _position;
+        bool _writable;
+        bool _isOpen;
+
+    public:
+        UnmanagedMemoryStream(unsigned char* memory, int length, int capacity, bool canWrite);
+        virtual property bool CanRead { bool get() override; }
+        virtual property bool CanSeek { bool get() override; }
+        virtual property bool CanWrite { bool get() override; }
+        virtual void Close() override;
+        virtual void Flush() override;
+        virtual property long long Length { long long get() override; }
+        virtual property long long Position { long long get() override; void set(long long value) override; }
+        unsigned char* GetBytePtr();
+        virtual int Read(array<unsigned char>^ buffer, int offset, int count) override;
+        virtual int ReadByte() override;
+        virtual long long Seek(long long offset, SeekOrigin loc) override;
+        virtual void SetLength(long long value) override;
+        virtual void Write(array<unsigned char>^ buffer, int offset, int count) override;
+        virtual void WriteByte(unsigned char value) override;
+        static void memcpy(array<unsigned char>^ src, int srcIndex, unsigned char* dest, int destIndex, int len);
+        static void memcpy(unsigned char* src, int srcIndex, array<unsigned char>^ dest, int destIndex, int len);
+    };
+
 }}
 
 namespace Quire { namespace Native { namespace EngutilsMgd {

@@ -60,6 +60,7 @@
     <ClCompile Include="PushbackReader.cpp" />
     <ClCompile Include="UnwindProtect.cpp" />
     <ClCompile Include="NormalizeComponentExceptions.cpp" />
+    <ClCompile Include="UnmanagedMemoryStream.cpp" />
   </ItemGroup>
   <!-- The Build Tools MSBuild cannot evaluate SDK-style projects, so managed references are forced in with /FU. The production
        .csproj passes the DLLs it already built; a direct build builds their project closure with dotnet. -->
