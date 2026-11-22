@@ -15,3 +15,9 @@
 - Field/method name clashes (CS0102): obfuscated fields such as `a`/`b`/`c` that share names with Mathcad methods. MirrorGen suffixes these fields, and the gate compares field names, so members touching them cannot match. Needs a maintainer decision.
 - Obfuscated property accessors (e.g. `RedefinitionWarning` setters named `a`/`b`/`c`, `MathNodeSettings`): C# property accessors compile to `get_`/`set_`, so they cannot match Mathcad's accessor names.
 - `MatrixNodeInfo.MatrixFormat` getter/setter: field `a` clashes with method `a(string, object)`.
+
+## Batch 2 — Tree.MatrixNodeInfo viewport change dispatcher
+
+- Member: `MatrixNodeInfo.a(string, object)` (private property-change dispatcher for "Size" and "Offset"), in `Mirrored/EquationEditor.Tree.MatrixNodeInfo.ViewportChange.cs`. Stub removed from the `.g.cs` by hand.
+- Release IL: `--project Quire.EquationEditor` PASS, 1075 checked, 0 failures.
+- Still blocked: `MatrixNodeInfo.MatrixFormat` (field `a` clashes with method `a`); `ICloneable.Clone` explicit implementation (Mathcad name `b` clashes with field `b`).

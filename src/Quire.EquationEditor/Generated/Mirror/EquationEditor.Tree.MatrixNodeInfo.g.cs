@@ -16,7 +16,5 @@ public partial class MatrixNodeInfo : global::Quire.EquationEditor.Tree.INodeInf
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.MatrixFormat MatrixFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private void a(string A_0, object A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
