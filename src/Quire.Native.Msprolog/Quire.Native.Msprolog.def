@@ -1,0 +1,7 @@
+LIBRARY Quire.Native.Msprolog.dll
+EXPORTS
+    ??4Program@Prolog@@QEAAAEAV01@AEBV01@@Z
+    ??4PObjParser@Prolog@@QEAAAEAV01@$$QEAV01@@Z
+    ??4PObjParser@Prolog@@QEAAAEAV01@AEBV01@@Z
+    ??CRuleset@Prolog@@QEBAPEAVProgram@1@XZ
+    ?GetProgram@Ruleset@Prolog@@QEBAPEAVProgram@2@XZ
