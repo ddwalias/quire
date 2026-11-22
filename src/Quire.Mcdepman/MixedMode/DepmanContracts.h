@@ -112,6 +112,26 @@ namespace Quire { namespace depman {
         }
     };
 
+    ref class ActionChainMgd;
+
+    [Quire::Mirror::MirrorOfAttribute("depman.CachingEnv, mcdepman")]
+    ref class CachingEnv
+    {
+        System::Collections::Hashtable^ m_table;
+        bool m_needs_check;
+        DepTrackingEnv^ m_env;
+        ActionChainMgd^ m_chain;
+
+    public:
+        CachingEnv(DepTrackingEnv^ e, ActionChainMgd^ c)
+            : m_table(gcnew System::Collections::Hashtable()),
+              m_needs_check(false),
+              m_env(e),
+              m_chain(c)
+        {
+        }
+    };
+
     [Quire::Mirror::MirrorOfAttribute("depman.BooleanMediator, mcdepman")]
     public interface class BooleanMediator
     {
