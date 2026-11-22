@@ -54,3 +54,18 @@
 - Blocker 1 (instruction 58): Mathcad calls `blockContainer.get_Child()`, then `set_Child(null)`, then `new InlineUIContainer(child)`. Roslyn emits the constructor after the `Child` read's use, so the set cannot precede it without a temporary. Mathcad's local list has no `UIElement` slot, so a temporary changes the locals. This is the receiver-retention/argument-order family already recorded for SelectionStart/End.
 - Blocker 2 (instruction 81): Mathcad calls `TextFormat.ApplyTextFormat(range)` with `call` on the `textFormat` local; Roslyn emits `callvirt` for a plain public instance method on a reference-type local. Not yet resolved.
 - Remaining unverified: after 81 the gate does not report further differences for this method, so the rest of the body is unchecked.
+
+## Batch 15 — RichTextBase.SetRegionPersistentData
+
+- Member: `public virtual IList<IRegionPersistentData> SetRegionPersistentData(IDeS11NProvider, object)`. Hand-written in `Mirrored/Controls.Text.RichTextBase.cs`; stub removed from `Generated/Mirror/Controls.Text.RichTextBase.g.cs`.
+- Shape: `textType text = (textType)data` then `text.DeS11NProvider = ...` matched first time (the local is not in Mathcad's list but the gate passed, so no extra slot was emitted).
+- Release IL (project-wide): PASS — 615 checked, 0 failures.
+
+## Probe — EditLinkUndoableCommand blockers (follow-up)
+
+- Blocker 1 (get_Child / set_Child(null) before the InlineUIContainer constructor, no UIElement local): not reproduced by any source form tried. A `??`/ternary or a tuple wrapper introduces branches or temporaries Mathcad does not have; a private helper would be a new member without a Mathcad counterpart. Still blocked.
+- Blocker 2 (`call` on the `TextFormat` local for ApplyTextFormat): not probed with a gate run; Roslyn emits `callvirt` for a plain public instance method on a reference-type local. Still blocked.
+
+## Probe — SubscriptsMatch (not landed)
+
+- Nested `if (!IsNotEmpty) { if (IsFullySubscript) return true; }` followed by `if (SequenceEqual) return true; return false;` fails at instruction 2: Mathcad branches the first test straight to the compute block, and returns both `true` cases through one shared `ldc.i4.1; ret`. Reverted to the stub.

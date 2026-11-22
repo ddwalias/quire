@@ -26,6 +26,19 @@ namespace Quire.Controls.Text;
 public partial class RichTextBase
 {
 
+    public virtual IList<IRegionPersistentData> SetRegionPersistentData(IDeS11NProvider d11NProvider, object data)
+    {
+        textType text = (textType)data;
+        text.DeS11NProvider = d11NProvider;
+        FlowDocument document = text.Document;
+        if (document != null)
+        {
+            Document = document;
+            TextRange.FixAndCleanImportedHyperlinksData(FixHyperlinkEmptyRuns);
+        }
+        return null;
+    }
+
     public virtual string GetHelpContext()
     {
         return RichTextBaseConstants.RichTextHelpContext;
