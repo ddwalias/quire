@@ -95,6 +95,23 @@ namespace Quire { namespace depman {
         bool IsChildOnly();
     };
 
+    [Quire::Mirror::MirrorOfAttribute("depman.DepTrackingEnv, mcdepman")]
+    ref class DepTrackingEnv
+    {
+        ::depman::Position* m_loc;
+
+    public:
+        DepTrackingEnv(::depman::Position* p)
+            : m_loc(p)
+        {
+        }
+
+        ::depman::Position* loc()
+        {
+            return m_loc;
+        }
+    };
+
     [Quire::Mirror::MirrorOfAttribute("depman.BooleanMediator, mcdepman")]
     public interface class BooleanMediator
     {
