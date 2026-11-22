@@ -1,10 +1,20 @@
 # Msgen lane checkpoint
 
+## Batch 19 (`Quire.gen.ForeignCtor` constructor)
+
+- Owner: AGY, Orca task `task_faa779f237e3`. Branch `feature/msgen-agy-2`, from current `main`.
+- Member: `ForeignCtor(String, Type[], ConstructorInfo)` (exact Release IL). It uses `ResolvedForeignId(String)` and `CacheId()` from `main`.
+- Not landed: `ForeignCtor::CreateMetaObj`. Its original calls `MetaObj::NewMetaObj(IlAsm, ConstructorInfo, Type[])`, which builds the absent `ForeignConstructor` class (a `Constructor` subclass with its own members).
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 438 checked; 0 failures; 7 unfinished.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 18 (`Quire.gen.IlAsm::Emitter`, `IlAsm::SetEmitter`)
 
 - Owner: AGY, Orca task `task_82261cd9eb87`. Branch `feature/msgen-agy-2`, from current `main`.
 - Members: `IlAsm::Emitter()` (getter for `m_emit`) and `IlAsm::SetEmitter(IlEmit)` (stores the new emitter and returns the previous one), exact Release IL.
-- `CtxtMod::BegCtxt` and `CtxtMod::EndCtxt` are NOT landed. `BegCtxt` matched once the `(byte)` cast was explicit, but `EndCtxt` calls `FinishClosure` through the `Closure` receiver. The original emits `callvirt Closure::FinishClosure` (C# uses the receiver's static type), while C++/CLI emits the declaring `MetaObj::FinishClosure`. The gate fails on that token, and `Closure` cannot declare the member without adding an unmatched counterpart. This is the same receiver-token family as the closure-receiver mismatch; it needs a toolchain or shared-tool decision.
+- `CtxtMod::BegCtxt` and `CtxtMod::EndCtxt` are NOT landed. `BegCtxt` matches once its `(byte)` test is explicit. `EndCtxt` calls `MetaObj::FinishClosure` (the original IL's token is `gen.MetaObj::FinishClosure`, so the earlier receiver-token note was wrong). Its only mismatch is the original's `conv.u1` before the `!= 0` test: the candidate folds that conversion away whenever the value reaches the call, through the `num` local or directly. Reaching the original shape would need an IL-level change, so this stays blocked.
 - `Rts.StackDepth` and `Rts.ResetStackDepth` already exist in `Quire.Mpl`.
 - Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 437 checked; 0 failures; 7 unfinished.
 - Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.

@@ -1028,4 +1028,15 @@ namespace Quire { namespace gen {
         virtual MetaObj^ CreateMetaObj(IlAsm^) override;
     };
 
+    [::Quire::Mirror::MirrorOfAttribute("gen.ForeignCtor, msgen")]
+    ref class ForeignCtor abstract : public ResolvedForeignId
+    {
+    private:
+        cli::array<Type^>^ m_sig;
+        ConstructorInfo^ m_ci;
+
+    public:
+        ForeignCtor(String^ id, cli::array<Type^>^ sig, ConstructorInfo^ ci);
+    };
+
 }}

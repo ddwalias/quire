@@ -688,4 +688,9 @@ namespace Quire { namespace gen {
         m_emit = emit;
         return previous;
     }
+    ForeignCtor::ForeignCtor(String^ id, cli::array<Type^>^ sig, ConstructorInfo^ ci)
+        : ResolvedForeignId(id), m_sig(sig), m_ci(ci)
+    {
+        CacheId();
+    }
 }}
