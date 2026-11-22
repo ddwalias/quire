@@ -124,3 +124,9 @@
 - Member: `private void AddBlockedSelectDirectionForNextElement(LogicalDirection)`. Hand-written in `Mirrored/Controls.Text.RichTextBase.cs`; stub removed from the `.g.cs`.
 - Shapes that mattered: `LogicalDirection.Backward` is `0` (the Mathcad branch on `brtrue` falls through for Backward; `Forward` is `1`); `TextPointerContext.None` (not `Text`) is the null-position context; the direction ternary is written `direction == LogicalDirection.Backward ? 22 : 41` (the `!=` form emits the branch arms the other way round).
 - Release IL (project-wide): PASS — 623 checked, 0 failures.
+
+## Parked — ContextMenuOpened (evidence)
+
+- The first half (the `foreach` over `Enum.GetValues(typeof(TextMenuItemCommands))` with `continue` guards and the `Header` copy) and the second loop structure match in shape; the static `_contextMenuOpening` guard and the early returns match.
+- Local slots: `Type[] keyTypes` declared at the method's top level takes slot `[2]` (Roslyn allocates top-level locals first). Mathcad keeps it in slot `[8]`, so it has to be declared in a nested block after the first loop; the nested block fixes the slot.
+- Remaining mismatch (instruction #92): Mathcad stores `handled = false` (`ldc.i4.0; stloc.s 10`) between `ldloc keyTypes; ldloc i; ldelem.ref` and the `Enum.GetValues` call. A C# `bool handled = false;` at the top of the loop body always stores before the element load. No source form found that places the store after the element load without a `dup`. Parked (shape blocker, evidence above).
