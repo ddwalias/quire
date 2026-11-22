@@ -76,3 +76,9 @@
 - Expected (Mathcad): `<>c::<ClearSelectedRegionFormatProperties>b__113_0` and nested `b__113_1`. Emitted with the method at the top of the hand-written partial: `b__117_0` / `b__117_1`. Emitted with the method at the end of the class: `b__297_0` / `b__297_1`.
 - The ordinal therefore follows the method's position among the class's members in compile order (generated `.g.cs` members first), not the lambda count alone. Hypothesis: the top position counts four members that Mathcad's order does not, located in the generated partial (not verified). Placeholder stubs would only add to the count, and the generated file cannot be reordered by hand.
 - Parked: no safe placement found that yields 113 in this worktree. Reverted to the stub.
+
+## Trace — RichTextBase closure ordinals (evidence)
+
+- Mathcad (`members.tsv`) closure ordinal vs. containing method's row among the 217 RichTextBase method rows (token order): (2, 0), (81, 31), (93, 39), (95, 41), (113, 58), (122, 65), (159, 98), (165, 103), (169, 106), (207, 135), (261, 177), (297, 203). The offset grows from 2 to 94, so the ordinal is not a method row index plus a constant.
+- Quire: the closure-bearing methods on `main` have no RichTextBase closures apart from the probe, so there is no in-class anchor to regress against. The probe method sits at generated declaration position 66 (of 105 generated member lines) and the emitted ordinal is 117 with the method at the top of the hand-written partial, 297 at the end.
+- Where the evidence runs out: the reference IL lists fields first and the decompiled `.cs` regroups members by kind, so Mathcad's source interleaving of fields, properties, events and accessors is not recoverable from the cache. Until that interleaving is known, the declaration(s) responsible for the 4-step gap at the top of the partial cannot be named.
