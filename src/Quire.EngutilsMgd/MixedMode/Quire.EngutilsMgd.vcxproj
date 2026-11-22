@@ -61,17 +61,23 @@
     <ClCompile Include="UnwindProtect.cpp" />
     <ClCompile Include="NormalizeComponentExceptions.cpp" />
     <ClCompile Include="UnmanagedMemoryStream.cpp" />
+    <ClCompile Include="ComponentSupport.cpp" />
   </ItemGroup>
   <!-- The Build Tools MSBuild cannot evaluate SDK-style projects, so managed references are forced in with /FU. The production
        .csproj passes the DLLs it already built; a direct build builds their project closure with dotnet. -->
   <PropertyGroup>
+    <_BuildQuireAutomationNativeHere Condition="'$(QuireAutomationNativePath)' == ''">true</_BuildQuireAutomationNativeHere>
     <_BuildQuireMirrorHere Condition="'$(QuireMirrorPath)' == ''">true</_BuildQuireMirrorHere>
     <QuireMirrorOutDir>$(IntDir)Quire.Mirror\</QuireMirrorOutDir>
     <_BuildQuireMplHere Condition="'$(QuireMplPath)' == ''">true</_BuildQuireMplHere>
     <QuireDependenciesOutDir>$(IntDir)Quire.Dependencies\</QuireDependenciesOutDir>
+    <QuireAutomationNativePath Condition="'$(QuireAutomationNativePath)' == ''">$(QuireDependenciesOutDir)Quire.Automation.Native.dll</QuireAutomationNativePath>
     <QuireMplPath Condition="'$(QuireMplPath)' == ''">$(QuireDependenciesOutDir)Quire.Mpl.dll</QuireMplPath>
     <QuireMirrorPath Condition="'$(QuireMirrorPath)' == ''">$(QuireMirrorOutDir)Quire.Mirror.dll</QuireMirrorPath>
   </PropertyGroup>
+  <Target Name="BuildQuireAutomationNativeReference" BeforeTargets="ClCompile" Condition="'$(Configuration)|$(Platform)'=='Release|x64' and '$(_BuildQuireAutomationNativeHere)' == 'true'">
+    <Exec Command="dotnet build &quot;$(MSBuildThisFileDirectory)..\..\Quire.Automation.Native\Quire.Automation.Native.csproj&quot; --configuration Release --output &quot;$(QuireDependenciesOutDir.TrimEnd('\'))&quot; --nologo" />
+  </Target>
   <Target Name="BuildQuireMirrorReference" BeforeTargets="ClCompile" Condition="'$(Configuration)|$(Platform)'=='Release|x64' and '$(_BuildQuireMirrorHere)' == 'true'">
     <Exec Command="dotnet build &quot;$(MSBuildThisFileDirectory)..\..\Quire.Mirror\Quire.Mirror.csproj&quot; --configuration Release --output &quot;$(QuireMirrorOutDir.TrimEnd('\'))&quot; --nologo" />
   </Target>
@@ -80,7 +86,7 @@
   </Target>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <ForcedUsingFiles>$(QuireMirrorPath);$(QuireMplPath);%(ForcedUsingFiles)</ForcedUsingFiles>
+      <ForcedUsingFiles>$(QuireAutomationNativePath);$(QuireMirrorPath);$(QuireMplPath);%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
   </ItemDefinitionGroup>
   <Target Name="BuildEngutilsImportLibrary" BeforeTargets="Link" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

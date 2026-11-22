@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Quire.Automation.Native\Quire.Automation.Native.csproj" />
     <ProjectReference Include="..\Quire.Mirror\Quire.Mirror.csproj" />
     <ProjectReference Include="..\Quire.Mpl\Quire.Mpl.csproj" />
   </ItemGroup>
@@ -24,13 +25,15 @@
 
   <Target Name="BuildMixedModeRelease" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
     <ItemGroup>
+      <_QuireAutomationNativeReference Include="@(ReferencePath)" Condition="'%(Filename)' == 'Quire.Automation.Native'" />
       <_QuireMirrorReference Include="@(ReferencePath)" Condition="'%(Filename)' == 'Quire.Mirror'" />
       <_QuireMplReference Include="@(ReferencePath)" Condition="'%(Filename)' == 'Quire.Mpl'" />
     </ItemGroup>
+    <Error Condition="'@(_QuireAutomationNativeReference)' == ''" Text="Quire.Automation.Native.dll is not among this project's references; the mixed-mode build cannot find it." />
     <Error Condition="'@(_QuireMirrorReference)' == ''" Text="Quire.Mirror.dll is not among this project's references; the mixed-mode build cannot find it." />
-    <Error Condition="'@(_QuireMplReference)' == ''" Text="Quire.Mpl.dll is not among this project's references." />
+    <Error Condition="'@(_QuireMplReference)' == ''" Text="Quire.Mpl.dll is not among this project's references; the mixed-mode build cannot find it." />
     <!-- Rebuild, not an incremental build: an up-to-date vcxproj would leave the C# DLL copied into bin above in place. -->
-    <Exec Command="&quot;$(QuireMsvcInstallDir)MSBuild\Current\Bin\amd64\MSBuild.exe&quot; &quot;$(MSBuildProjectDirectory)\MixedMode\Quire.EngutilsMgd.vcxproj&quot; /t:Rebuild /m /p:Configuration=Release /p:Platform=x64 /p:AssemblyOutDir=&quot;$(TargetDir.TrimEnd('\'))&quot; /p:QuireMirrorPath=&quot;@(_QuireMirrorReference->'%(FullPath)')&quot; /p:QuireMplPath=&quot;@(_QuireMplReference->'%(FullPath)')&quot; /v:minimal" />
+    <Exec Command="&quot;$(QuireMsvcInstallDir)MSBuild\Current\Bin\amd64\MSBuild.exe&quot; &quot;$(MSBuildProjectDirectory)\MixedMode\Quire.EngutilsMgd.vcxproj&quot; /t:Rebuild /m /p:Configuration=Release /p:Platform=x64 /p:AssemblyOutDir=&quot;$(TargetDir.TrimEnd('\'))&quot; /p:QuireAutomationNativePath=&quot;@(_QuireAutomationNativeReference->'%(FullPath)')&quot; /p:QuireMirrorPath=&quot;@(_QuireMirrorReference->'%(FullPath)')&quot; /p:QuireMplPath=&quot;@(_QuireMplReference->'%(FullPath)')&quot; /v:minimal" />
     <!-- The mixed DLL cannot use the portable PDB emitted by the preceding C# reference build. -->
     <Delete Files="$(TargetDir)Quire.EngutilsMgd.pdb" />
   </Target>
