@@ -11,6 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlExtensions, Ptc.Controls.Worksheet")]
 public static partial class WorksheetControlExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void SeparateOverlappedItems(this global::Quire.Controls.Worksheet.WorksheetControl control, global::Quire.Dimension dimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

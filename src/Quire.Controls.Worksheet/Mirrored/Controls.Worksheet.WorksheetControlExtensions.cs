@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using Quire.Controls.Whiteboard;
 using Quire.Controls.Core;
 using Quire.FunctionalitiesLimitation;
 
@@ -155,5 +156,20 @@ public static partial class WorksheetControlExtensions
     private static int GetLinesPerPage(this WorksheetControl control)
     {
         return control.GetViewModel().PageLayout.LinesPerPage;
+    }
+
+    public static void SeparateOverlappedItems(this WorksheetControl control, Dimension dimension)
+    {
+        IInputElement inputElement = (IInputElement)(control.ActiveItem as IMathboardControl)
+            ?? (control.IsContentActive ? control : (IInputElement)control.GetViewModel().ActiveSection);
+
+        if (dimension == Dimension.Horizontal)
+        {
+            WhiteboardCommands.SeparateOverlappedItemsHorizontally.Execute(null, inputElement);
+        }
+        else
+        {
+            WhiteboardCommands.SeparateOverlappedItemsVertically.Execute(null, inputElement);
+        }
     }
 }
