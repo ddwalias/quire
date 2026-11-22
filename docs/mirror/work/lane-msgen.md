@@ -1,5 +1,17 @@
 # Msgen lane checkpoint
 
+## Batch 25 (review only: DataRep consumers of NullConstructor; nothing landed)
+
+- Owner: AGY, Orca task `task_b62966fede88`. Branch `feature/msgen-agy-2`, from current `main`.
+- Real consumers of `NullConstructor::.ctor(IlAsm, void**)` in the original: `DataRep::MaybeTypeConstructors`, `DataRep::BoolTypeConstructors` (its non-record branch), and `DataRep::InitializeDataRep` (the arity-0 branch). The minimal one is `MaybeTypeConstructors`, which also calls `RecordTypeConstructor(void**, int)` on both branches.
+- `RecordTypeConstructor(void**, int)` needs, absent on `main`: the `DataRep` class itself; `DataRep::SpecialConstructor` (with `LiftConstructorParameter`); `IlAsm::ImportedConstructor` (a try/fault region with `Hex::Error` and `std::string` unwinding); `IlAsm::NewConstructorType` and `NewRecordType` (which need `RecordClosure` and `DynamicType.DefineRecord`); `RecordConstructor` and `NullaryConstructor`.
+- Without `DataRep` as a type with a real member consumer, a `NullConstructor` candidate is omitted from the inventory, as with `VoidConstructor` before Batch 13. A `DataRep` subset would be omitted the same way, so there is no independent verifiable DataRep group yet.
+- Parked: `MethodClo` (constructor evaluation order), `CtxtMod::EndCtxt` (`conv.u1`), and the abstract `Ctxt::BegCtxt`/`EndCtxt`.
+- Release IL: unchanged at 453 checked and 0 failures on `main`.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 24 (review only: MethodClo, NullConstructor; nothing landed)
 
 - Owner: AGY, Orca task `task_1572aed179f2`. Branch `feature/msgen-agy-2`, from current `main`.
