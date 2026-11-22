@@ -1,5 +1,7 @@
 #nullable disable
+using System.Windows.Controls;
 using Quire.Calculation.Core;
+using Quire.EquationEditor;
 using Quire.Controls.Core;
 using Quire.EquationEditor.SpecTable;
 using Quire.Controls.Core.IORegions;
@@ -308,5 +310,80 @@ public partial class SpecTableControl
             }
         }
         return false;
+    }
+
+    public EquationControl ActiveCell => View.ActiveCell;
+
+    public TableCoordinate ActiveCellCoordinate
+    {
+        get
+        {
+            EquationControl activeCell = ActiveCell;
+            if (activeCell == null)
+            {
+                throw new InvalidOperationException("There is no active cell, likely the table does not have keyboard focus");
+            }
+            return new TableCoordinate(Grid.GetRow(activeCell), Grid.GetColumn(activeCell));
+        }
+    }
+
+    public string ActiveCellSExpression
+    {
+        get
+        {
+            EquationControl activeCell = ActiveCell;
+            if (activeCell == null)
+            {
+                throw new InvalidOperationException("There is no active cell, likely the table does not have keyboard focus");
+            }
+            return activeCell.EquationSExpression;
+        }
+    }
+
+    public EngineError CurrentError
+    {
+        get
+        {
+            ICalculationErrorOwner calculationErrorOwner = (ICalculationErrorOwner)ActiveCell;
+            if (calculationErrorOwner != null)
+            {
+                return calculationErrorOwner.CurrentError;
+            }
+            return null;
+        }
+    }
+
+    public bool InCustomInitialization
+    {
+        get
+        {
+            return Model.InCustomInitialization;
+        }
+        set
+        {
+            Model.InCustomInitialization = value;
+            if (!value)
+            {
+                DeserializeLabeledIdFormat = null;
+                DeserializeMathFormat = null;
+            }
+        }
+    }
+
+    public int ErrorCount
+    {
+        get
+        {
+            int num = 0;
+            foreach (ISpecTableColumn column in Model.Columns)
+            {
+                foreach (IEquationModel item in column)
+                {
+                    ICalculatableInfo calculatableInfo = Map.GetAssociatedView(item) as EquationControl;
+                    num += calculatableInfo.ErrorCount;
+                }
+            }
+            return num;
+        }
     }
 }
