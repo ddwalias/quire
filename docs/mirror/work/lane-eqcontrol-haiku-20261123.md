@@ -106,3 +106,9 @@
 - Exact: `ActiveCell`, `ActiveCellCoordinate`, `ActiveCellSExpression` (explicit null check, not `??`), `CurrentError` (positive null check on the interface cast), `InCustomInitialization`, `ErrorCount`.
 - Left as in main: the existing `CalcIsDisabled` (already mirrored), `HideFromCalculationContext` and `EngineResults` (closure and LINQ shapes, parked for now).
 - Gate (project-level): PASS; 3442 checked (`.mirror-cache/release-il-2dcb1423561d/release-il.json`).
+
+### Batch 16: Controls.SpecTableControl (static initializer)
+
+- Exact: `.cctor` (type token, default-style and whiteboard `IsActive` overrides, `SynchronizationStatus`/`CalculatingStatus` owners, IO tag override, `CalcIsDisabled` owner with its change handler, and the `ContentChanged` routed-event owner). The five static fields moved to the hand-written partial.
+- Still parked/untried: `HideFromCalculationContext` and `EngineResults` (closure and LINQ shapes).
+- Gate (project-level): PASS; 3443 checked (`.mirror-cache/release-il-895c54aed7c0/release-il.json`).

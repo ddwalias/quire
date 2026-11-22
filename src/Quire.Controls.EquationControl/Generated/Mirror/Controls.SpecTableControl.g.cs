@@ -12,14 +12,6 @@ namespace Quire.Controls;
 public partial class SpecTableControl : global::System.Windows.Controls.ContentControl, global::Quire.Controls.ISpecTableControl, global::Quire.Controls.Core.IDitaRegion, global::Quire.Serialization.IPersistentDataProvider, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculationHideableChild, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.IDelegateFocus, global::Quire.Controls.Core.ISearchableRegion, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Controls.Core.IORegions.IInputRegion, global::Quire.Controls.Core.IORegions.IIORegion, global::Quire.Controls.Core.IORegions.IIORegionBase, global::Quire.Controls.Core.IORegions.IIOCalculatableContainerRegion, global::Quire.Controls.ICurrentIdLabelProperty, global::Quire.Controls.Core.IMathFormatOwner, global::Quire.Controls.Core.ICurrentMathFormatProperty, global::Quire.Controls.Core.IMathFormatForDeserialization, global::Quire.Controls.Core.ISupportCustomInitialization, global::Quire.Controls.Core.IHasChildArrangeInfoProvider
 {
     [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty CalcIsDisabledProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty SynchronizationStatusProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty CalculatingStatusProperty;
-    [global::Quire.Mirror.MirrorStub]
     private const string FirstPropertyForXamlSerializationPropertyName = "FirstPropertyForXamlSerialization";
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Calculation.Core.Support.CalculatableChildHider _childHider;
@@ -31,8 +23,6 @@ public partial class SpecTableControl : global::System.Windows.Controls.ContentC
     internal readonly global::Quire.EquationEditor.SpecTable.SpecTableCellMap Map;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.EquationControl _currentCell;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.RoutedEvent ChangedEvent;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.EngineResult[] _engineResults;
     [global::Quire.Mirror.MirrorStub]

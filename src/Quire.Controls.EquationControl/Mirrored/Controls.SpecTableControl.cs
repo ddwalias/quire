@@ -5,6 +5,7 @@ using Quire.EquationEditor;
 using Quire.Controls.Core;
 using Quire.EquationEditor.SpecTable;
 using Quire.Controls.Core.IORegions;
+using Quire.Controls.Core.Whiteboard;
 using Quire.Matrices;
 using Quire.PersistentData;
 using System.Windows;
@@ -18,6 +19,12 @@ namespace Quire.Controls;
 
 public partial class SpecTableControl
 {
+    private static readonly Type _typeOfThis;
+    public static readonly DependencyProperty CalcIsDisabledProperty;
+    public static readonly DependencyProperty SynchronizationStatusProperty;
+    public static readonly DependencyProperty CalculatingStatusProperty;
+    public static readonly RoutedEvent ChangedEvent;
+
     public bool CalcIsDisabled
     {
         get => (bool)GetValue(CalcIsDisabledProperty);
@@ -310,6 +317,18 @@ public partial class SpecTableControl
             }
         }
         return false;
+    }
+
+    static SpecTableControl()
+    {
+        _typeOfThis = typeof(SpecTableControl);
+        FrameworkElement.DefaultStyleKeyProperty.OverrideMetadata(_typeOfThis, new FrameworkPropertyMetadata(_typeOfThis));
+        WhiteboardDependencyProperties.IsActiveProperty.OverrideMetadata(_typeOfThis, new FrameworkPropertyMetadata(IsActiveRegionChanged));
+        SynchronizationStatusProperty = EquationControl.SynchronizationStatusProperty.AddOwner(_typeOfThis);
+        CalculatingStatusProperty = EquationControl.CalculatingStatusProperty.AddOwner(_typeOfThis);
+        IOTag.IOTagProperty.OverrideMetadata(_typeOfThis, new FrameworkPropertyMetadata(HandleIOTagPropertyChanged));
+        CalcIsDisabledProperty = AttachedProperties.CalcIsDisabledProperty.AddOwner(_typeOfThis, new FrameworkPropertyMetadata(HandleCalcIsDisabledChanged));
+        ChangedEvent = CommonRoutedEvents.ContentChangedEvent.AddOwner(_typeOfThis);
     }
 
     public EquationControl ActiveCell => View.ActiveCell;
