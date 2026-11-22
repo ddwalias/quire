@@ -5,6 +5,7 @@ void __cdecl operator delete(void* ptr, unsigned __int64 size) noexcept;
 #include "../../Quire.Native.Utl/utl.h"
 
 namespace depman {
+    class ActionChain;
     class Position;
 }
 
@@ -224,6 +225,32 @@ namespace Quire { namespace depman {
         {
             int symbol_hash = ds.GetHashCode();
             return (int)sm ^ (int)dt ^ symbol_hash;
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("depman.ActionChainMgd, mcdepman")]
+    ref class ActionChainMgd
+    {
+        ::depman::ActionChain* m_chain_umgd;
+        Action^ m_action;
+        CachingEnv^ m_env;
+        System::Object^ m_state;
+        System::Object^ m_result;
+        System::Collections::Generic::Dictionary<CacheKey, System::Collections::Generic::HashSet<Scope^>^>^ m_deps;
+
+    public:
+        ActionChainMgd(::depman::ActionChain* chain, Action^ action, DepTrackingEnv^ env, System::Object^ state)
+            : m_chain_umgd(chain),
+              m_action(action),
+              m_env(gcnew CachingEnv(env, this)),
+              m_state(state),
+              m_deps(gcnew System::Collections::Generic::Dictionary<CacheKey, System::Collections::Generic::HashSet<Scope^>^>())
+        {
+        }
+
+        Action^ action()
+        {
+            return m_action;
         }
     };
 
