@@ -69,3 +69,10 @@
 ## Probe — SubscriptsMatch (not landed)
 
 - Nested `if (!IsNotEmpty) { if (IsFullySubscript) return true; }` followed by `if (SequenceEqual) return true; return false;` fails at instruction 2: Mathcad branches the first test straight to the compute block, and returns both `true` cases through one shared `ldc.i4.1; ret`. Reverted to the stub.
+
+## Probe — RichTextBase.ClearSelectedRegionFormatProperties (not landed)
+
+- Body matched except the closure identity: `CommandBuffer.Execute(ToggleScriptUndoCommand.CreateToggleScriptUndoCommand(this, TextRange, ScriptState.None, false), null)`, `Document.ApplyTextFormatValues(textFormat)`, `using (DeclareChangeBlock()) Document.Blocks.Each(block => block.ClearTextFormatPropsRecursively((TextElement x) => true, TextFormat.ClearFormatPropsList))`. The gate's first difference is the `ldftn` of the outer lambda.
+- Expected (Mathcad): `<>c::<ClearSelectedRegionFormatProperties>b__113_0` and nested `b__113_1`. Emitted with the method at the top of the hand-written partial: `b__117_0` / `b__117_1`. Emitted with the method at the end of the class: `b__297_0` / `b__297_1`.
+- The ordinal therefore follows the method's position among the class's members in compile order (generated `.g.cs` members first), not the lambda count alone. Hypothesis: the top position counts four members that Mathcad's order does not, located in the generated partial (not verified). Placeholder stubs would only add to the count, and the generated file cannot be reordered by hand.
+- Parked: no safe placement found that yields 113 in this worktree. Reverted to the stub.
