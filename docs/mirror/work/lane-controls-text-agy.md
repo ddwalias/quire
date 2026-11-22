@@ -40,3 +40,10 @@
 - Shape: Mathcad wraps the body in one positive guard, `if (hyperlink != null && DebugTools.AssertNotNull(hyperlink.NavigateUri, null).Passed) { try { ... } finally { _copyLinkText = null; } }`. A separate early-return guard and a helper method both fail (the helper adds a call Mathcad does not make).
 - Release IL (project-wide): PASS — 613 checked, 0 failures; 118 generated stubs remain.
 - Not attempted in this batch: `EditLinkUndoableCommand` (795 bytes, a `TextFormat`/`CommandScope`/`DeclareChangeBlock` try/finally tree) and `ModifyHyperlink(ModifyHyperlinkCommandParameter)` (396 bytes, with `DevAssert` and a `switch` over `LinkEditOperation`). Both are larger than one independent batch and remain stubs.
+
+## Batch 14 — RichTextWithEmbeddedItem.ModifyHyperlink(ModifyHyperlinkCommandParameter)
+
+- Member: `internal void ModifyHyperlink(ModifyHyperlinkCommandParameter param)`. Hand-written in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stub removed from the `.g.cs`.
+- Shapes that matched: `!param.ShowDialog || ShowHyperlinkDialog(...)` as one guard around `GetState` and the `DevAssert`; `DevAssert(state.PerformedLinkEditOperation != None, ...)`; switch sections in source order Delete, Insert/Edit, default, None (Mathcad's code layout); `state.PerformedLinkEditOperation` re-read for the Edit comparison and the final cleanup condition (Mathcad calls the getter each time); `DevAssert(parentInlines == null, null).Failed` before `Remove` (Mathcad's literal condition).
+- Calls `EditLinkUndoableCommand` (still a stub), which only matters at runtime.
+- Release IL (project-wide): PASS — 614 checked, 0 failures.

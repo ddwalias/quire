@@ -26,6 +26,76 @@ namespace Quire.Controls.Text;
 public partial class RichTextWithEmbeddedItem
 {
 
+    internal void ModifyHyperlink(ModifyHyperlinkCommandParameter param)
+    {
+        HyperlinkContextValues context = new HyperlinkContextValues(this);
+        bool restoreSelectionBrush = false;
+        if (context.ConvertToLinkRange != null)
+        {
+            Selection.Select(context.ConvertToLinkRange.Start, context.ConvertToLinkRange.End);
+            if (!WpfUtils.HasLocalValue(this, System.Windows.Controls.Primitives.TextBoxBase.SelectionBrushProperty))
+            {
+                // Mathcad copies the inherited brush into the local value before the highlight is restored.
+                SelectionBrush = SelectionBrush;
+                restoreSelectionBrush = true;
+            }
+            IsInactiveSelectionHighlightEnabled = true;
+        }
+
+        HyperlinkDialogViewModel viewModel = new HyperlinkDialogViewModel(context);
+        if (param.UserInputText != null)
+        {
+            viewModel.UserInputText = param.UserInputText;
+        }
+        if (param.UserInputAddress != null)
+        {
+            viewModel.UserInputAddress = param.UserInputAddress;
+        }
+
+        HyperlinkEditState state = default;
+        if (!param.ShowDialog || HyperlinkDialog.ShowHyperlinkDialog(viewModel, Application.Current.MainWindow))
+        {
+            state = viewModel.GetState();
+            DebugTools.DevAssert(state.PerformedLinkEditOperation != LinkEditOperation.None, "Either Link operation context must contain link, or address field shouldn't be empty");
+        }
+
+        if (IsInactiveSelectionHighlightEnabled)
+        {
+            IsInactiveSelectionHighlightEnabled = false;
+        }
+        if (restoreSelectionBrush)
+        {
+            ClearValue(System.Windows.Controls.Primitives.TextBoxBase.SelectionBrushProperty);
+        }
+
+        LinkEditOperation operation = state.PerformedLinkEditOperation;
+        switch (operation)
+        {
+            case LinkEditOperation.Delete:
+                RemoveHyperlinkUndoableCommand(context.ContextLink);
+                break;
+            case LinkEditOperation.Insert:
+            case LinkEditOperation.Edit:
+                param.ResultIsSingleLinkEditOperation = state.PerformedLinkEditOperation == LinkEditOperation.Edit;
+                param.ResultHyperlink = EditLinkUndoableCommand(state, context.ConvertToLinkRange, false);
+                break;
+            default:
+                DebugTools.FailAssertion("Unknown link operation.");
+                break;
+            case LinkEditOperation.None:
+                break;
+        }
+
+        if (state.PerformedLinkEditOperation != LinkEditOperation.None && context.ContextLink != null)
+        {
+            InlineCollection parentInlines = context.ContextLink.GetParentInlines();
+            if (DebugTools.DevAssert(parentInlines == null, null).Failed)
+            {
+                parentInlines.Remove(context.ContextLink);
+            }
+        }
+    }
+
     private string _copyLinkText;
 
     private void CopyHyperlink(object sender, ExecutedRoutedEventArgs e)
