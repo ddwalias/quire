@@ -296,6 +296,10 @@
       "delete[]": {
         "size": 5,
         "toolchain": true
+      },
+      "_Init_thread_wait_v2": {
+        "size": 51,
+        "toolchain": true
       }
     }
   },
