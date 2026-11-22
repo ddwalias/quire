@@ -37,7 +37,45 @@ public partial class RichTextTitle
 
     public string InitialTitleText { get; set; }
 
+    public ITextStyleChangedHandler TextStyleChangedHandler
+    {
+        get => _textStyleChangedHandler;
+        set
+        {
+            if (_textStyleChangedHandler != null)
+            {
+                _textStyleChangedHandler.StyleChanged -= OnStyleChanged;
+            }
+            _textStyleChangedHandler = value;
+            if (_textStyleChangedHandler != null)
+            {
+                _textStyleChangedHandler.StyleChanged += OnStyleChanged;
+            }
+        }
+    }
+
     public Action ToggleOrientationRequest { get; set; }
+
+    protected override bool CanEnableSpellCheck
+    {
+        get
+        {
+            DependencyObject val = WpfUtils.TryFindVisualAncestorByString("XYPlotControl", this);
+            if (val == null)
+            {
+                val = WpfUtils.TryFindVisualAncestorByString("PolarPlotControl", this);
+            }
+            if (val is UIElement elem)
+            {
+                if (IsVisible && AttachedProperties.GetIsOnVisiblePage(elem))
+                {
+                    return WorksheetPropertiesManager.GetWorksheetProperties(this).SpellCheckEnabled;
+                }
+                return false;
+            }
+            return base.CanEnableSpellCheck;
+        }
+    }
 
     private static bool IsEditingAllowed => FunctionalityService.Instance.IsFunctionalityEnabled((EnumFunctionalityKey)765);
 
@@ -51,11 +89,38 @@ public partial class RichTextTitle
         SetParagraphMarginToZero();
     }
 
+    public RichTextTitle(string initialTitleText)
+    {
+        InitialTitleText = initialTitleText;
+        SetInitialTitleText();
+        SetParagraphMarginToZero();
+        CommandManager.RegisterClassCommandBinding(typeof(RichTextTitle), new CommandBinding(ToggleOrientation, HandleToggleOrientationExecuted, ToggleOrientationCanExecute));
+    }
+
     private void SetParagraphMarginToZero()
     {
         Style style = new Style(typeof(System.Windows.Documents.Paragraph));
         style.Setters.Add(new Setter(Block.MarginProperty, new Thickness(0.0)));
         Resources.Add(typeof(System.Windows.Documents.Paragraph), style);
+    }
+
+    private void SetInitialTitleText()
+    {
+        DocumentTextRange textRange = new DocumentTextRange(Document.ContentStart, Document.ContentEnd);
+        Document.ApplyTextFormatValues(new TextFormat());
+        if (!string.IsNullOrWhiteSpace(textRange.Text))
+        {
+            return;
+        }
+        SetText(InitialTitleText);
+        IsDirty = false;
+    }
+
+    public string GetText()
+    {
+        // Typed local ensures callvirt get_Text() matching Mathcad's IL.
+        DocumentTextRange textRange = new DocumentTextRange(Document.ContentStart, Document.ContentEnd);
+        return textRange.Text.Replace("\r", "").Replace("\n", "").Replace("\t", "");
     }
 
     public void SetText(string text)
@@ -149,6 +214,30 @@ public partial class RichTextTitle
         return width;
     }
 
+    private double MeasureInlineWidth(Inline inline)
+    {
+        switch (inline)
+        {
+        case Run run:
+            return MeasureRunWidth(run);
+        case Span span:
+            double width = 0.0;
+            foreach (Inline child in span.Inlines)
+            {
+                width += MeasureInlineWidth(child);
+            }
+            return width;
+        case InlineUIContainer inlineUIContainer:
+            if (inlineUIContainer.Child is FrameworkElement frameworkElement)
+            {
+                return frameworkElement.ActualWidth > 0.0 ? frameworkElement.ActualWidth : frameworkElement.Width;
+            }
+            return 0.0;
+        default:
+            return 0.0;
+        }
+    }
+
     private double MeasureRunWidth(Run run)
     {
         if (string.IsNullOrEmpty(run.Text))
@@ -179,6 +268,67 @@ public partial class RichTextTitle
             return parameter is TextStyleData;
         }
         return false;
+    }
+
+    protected override bool ToggleSubSuperscriptCommandCanExecute(object argsParameter)
+    {
+        if (SupportsSubscriptSuperscript && (IsActive || IsSelected || IsKeyboardFocusWithin))
+        {
+            if (!Selection.IsEmpty)
+            {
+                return Selection.Text.Length > 0;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private void SanitizeUnsupportedFormatting()
+    {
+        if (_isSanitizing)
+        {
+            return;
+        }
+        _isSanitizing = true;
+        try
+        {
+            List<global::System.Windows.Documents.List> lists = new List<global::System.Windows.Documents.List>();
+            List<Hyperlink> hyperlinks = new List<Hyperlink>();
+            List<InlineUIContainer> inlineContainers = new List<InlineUIContainer>();
+            List<BlockUIContainer> blockContainers = new List<BlockUIContainer>();
+            CollectUnsupportedBlocks(Document.Blocks, lists, hyperlinks, inlineContainers, blockContainers);
+            foreach (global::System.Windows.Documents.List list in lists)
+            {
+                ConvertListToParagraphs(list);
+            }
+            foreach (Hyperlink hyperlink in hyperlinks)
+            {
+                RemoveHyperlinkPreservingText(hyperlink);
+            }
+            foreach (InlineUIContainer inlineContainer in inlineContainers)
+            {
+                inlineContainer.SiblingInlines?.Remove(inlineContainer);
+            }
+            foreach (BlockUIContainer blockContainer in blockContainers)
+            {
+                Document.Blocks.Remove(blockContainer);
+            }
+        }
+        finally
+        {
+            _isSanitizing = false;
+        }
+    }
+
+    private static void RemoveHyperlinkPreservingText(Hyperlink hyperlink)
+    {
+        string text = new DocumentTextRange(hyperlink.ContentStart, hyperlink.ContentEnd).Text;
+        TextPointer elementStart = hyperlink.ElementStart;
+        hyperlink.SiblingInlines?.Remove(hyperlink);
+        if (!string.IsNullOrEmpty(text))
+        {
+            elementStart?.InsertTextInRun(text);
+        }
     }
 
     protected override void OnGotFocus(RoutedEventArgs e)

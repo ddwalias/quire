@@ -11,18 +11,4 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.HyperlinkDialog, Ptc.Controls.Text")]
 public partial class HyperlinkDialog : global::Quire.Controls.Core.ControlsWindow, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TextBox InsertDisplayTextBox;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TextBox InsertAddressTextBox;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Button OkButton;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    private HyperlinkDialog(global::Quire.Controls.Text.HyperlinkDialogViewModel hyperlinkViewModel) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

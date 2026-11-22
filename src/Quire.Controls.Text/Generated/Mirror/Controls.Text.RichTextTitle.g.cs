@@ -11,22 +11,4 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.RichTextTitle, Ptc.Controls.Text")]
 public partial class RichTextTitle : global::Quire.Controls.Text.RichTextBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool CanEnableSpellCheck { get => base.CanEnableSpellCheck; }
-    [global::Quire.Mirror.MirrorStub]
-    private void SetInitialTitleText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private double MeasureInlineWidth(global::System.Windows.Documents.Inline inline) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool ToggleSubSuperscriptCommandCanExecute(object argsParameter) => base.ToggleSubSuperscriptCommandCanExecute(argsParameter);
-    [global::Quire.Mirror.MirrorStub]
-    private void SanitizeUnsupportedFormatting() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void RemoveHyperlinkPreservingText(global::System.Windows.Documents.Hyperlink hyperlink) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public RichTextTitle(string initialTitleText) { }
-    [global::Quire.Mirror.MirrorStub]
-    public string GetText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
