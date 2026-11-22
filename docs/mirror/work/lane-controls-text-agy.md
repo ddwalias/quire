@@ -83,9 +83,14 @@
 - Quire: the closure-bearing methods on `main` have no RichTextBase closures apart from the probe, so there is no in-class anchor to regress against. The probe method sits at generated declaration position 66 (of 105 generated member lines) and the emitted ordinal is 117 with the method at the top of the hand-written partial, 297 at the end.
 - Where the evidence runs out: the reference IL lists fields first and the decompiled `.cs` regroups members by kind, so Mathcad's source interleaving of fields, properties, events and accessors is not recoverable from the cache. Until that interleaving is known, the declaration(s) responsible for the 4-step gap at the top of the partial cannot be named.
 
-## Proposal — RichTextBase.ClearSelectedRegionFormatProperties (closure ordinal 113; not landed)
+## Landed — RichTextBase.ClearSelectedRegionFormatProperties (closure ordinal 113)
 
 - Measured (disposable probes): a method in a folder that compiles first gets `b__0_*`; with the method at the top of the hand-written partial the ordinal is `b__117_*`, and at the end of the class `b__297_*`. The ordinal is the count of counted members (fields, accessors, nested types, the auto-property backing fields and the implicit `.cctor` included) in compile order, with all generated members first. Generated members precede `113` by 117.
 - Arrangement that gives exactly 113: remove the `ClearSelectedRegionFormatProperties` stub and the four throw-only stubs that follow it in Mathcad order (`IsFullySubscript`, `BuildSubscriptPositions`, `GetPointerToAddDictionary`, `PostPasting`) from the generated file, and declare the method first in the hand-written partial with those four as unmarked placeholders after it. Four members leave the counted prefix, so the count is 117 - 4 = 113.
 - Gate (project-wide, LF tree): PASS — 620 checked, 620 exact, 0 failures, 115 unfinished (placeholders are unchanged throws, so they do not block), 46 missing.
 - Caveat: this relies on the generated stubs being replaced by hand-written unmarked declarations, which regeneration handles by omitting them. Regeneration was not run to confirm the exact output.
+
+## Verification and next step
+
+- MirrorGen parity (disposable worktree, all 47 production projects built in Release, `emit`): regenerated `RichTextBase.g.cs` is byte-identical to the landed generated file, so the five omitted stubs match regeneration. `emit` also changes `RichTextWithEmbeddedItem.g.cs` (LogDocumentContents placement) and `CustomSplitRichTextWithEmbeddedItem.g.cs` (blank line); these drifts are present on `main` and predate this change.
+- Next closure candidate `SetStyleFromTextStyles` (display class ordinal 105): its metadata row (50) precedes `ClearSelectedRegionFormatProperties` (row 58), but MirrorGen emits the stub after it, so reaching 105 would need reordering several generated declarations. Not attempted; blocked on the MirrorGen ordering difference.
