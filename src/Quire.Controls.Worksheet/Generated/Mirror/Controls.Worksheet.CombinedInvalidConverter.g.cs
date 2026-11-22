@@ -11,6 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.CombinedInvalidConverter, Ptc.Controls.Worksheet")]
 public partial class CombinedInvalidConverter : global::System.Windows.Data.IMultiValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public object Convert(object[] values, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
