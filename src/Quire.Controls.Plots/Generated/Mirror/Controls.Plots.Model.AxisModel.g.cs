@@ -88,15 +88,11 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     [global::Quire.Mirror.MirrorStub]
     private bool SetRangeToAngularAxis() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public double GetRadialPointsStart() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool SetRangeToRadialAxis(global::System.Nullable<double> min, global::System.Nullable<double> max) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool SetRangeToLinearAxis(double start, double end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetRange(global::System.Nullable<double> min, global::System.Nullable<double> max) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsStringLabel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void DealWithZeroLengthRange(ref double min, ref double max) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -111,8 +107,6 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     private void BuildTickMarksValues(bool useSecondTickValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool SetLogarithmicScale(double start, double end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void SetAxisLimitEditorError(global::Quire.Controls.Plots.Presenter.IAxisLimitEditor axisLimitEditor, string errorCodeString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetRangeError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

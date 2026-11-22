@@ -372,3 +372,10 @@
 - Shapes: `Scaling` matched with an early return; `if (_scaling != value) { ... }` gave `beq` vs Mathcad's `bne.un`. The assert setter needed a non-short-circuit `&` in the equality test, comparisons via `GetValueOrDefault`/`HasValue` and a local copy of the old field and value for the test only; the store uses `value` directly.
 - Release IL: PASS — 2473 checked, 0 failures.
 - Left in AxisModel: `GridLineColor` (getter has try/catch regions), `StartExpression`/`SecondTickExpression`/`EndExpression` setters, `StartValueChanged`, `GetRadialPointsStart`, `CreateLogMinorTickmarksPattern`, `AxisCalculatables` (iterator), the constructor, and the tick-mark and XML helpers.
+
+## Batch 54 — AxisModel radial start, limit-editor error and string-label helpers
+
+- Members: `GetRadialPointsStart` (`DevAssert(Radial == Type, null).Failed` guard, log10 for logarithmic scaling), `SetAxisLimitEditorError` (static, sets the custom error when not default), `IsStringLabel` (a two-case string `switch` on `AxisXmlNodeName`, returning `XIsString`/`YIsString`/false). Hand-written: appended to `Mirrored/Controls.Plots.Model.AxisModel.cs` (adds `using Quire;`); stubs removed from `AxisModel.g.cs`.
+- Shapes: `IsStringLabel` as an `if` chain or early returns did not match. The two-case string `switch` statement matched because Roslyn emits the `brtrue` string-compare chain Mathcad uses.
+- Release IL: PASS — 2476 checked, 0 failures.
+- Left in AxisModel: `GridLineColor`, the limit-expression setters, `StartValueChanged`, `CreateLogMinorTickmarksPattern`, `AxisCalculatables` (iterator), `SetDoubleValueIfValid` (dup pattern), the constructor, the legend-position and XML helpers, and the tick-mark helpers.

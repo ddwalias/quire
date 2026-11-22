@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Quire.Controls.Core;
+using Quire;
 using Quire.Controls.Plots.Presenter;
 
 namespace Quire.Controls.Plots.Model;
@@ -363,6 +364,45 @@ internal partial class AxisModel
             _isLinearizedRangeAssertEnabled = value;
             _ = LinearizedStart;
             _ = LinearizedEnd;
+        }
+    }
+
+    public double GetRadialPointsStart()
+    {
+        if (DebugTools.DevAssert(AxesType.Radial == Type, null).Failed)
+        {
+            return double.NaN;
+        }
+        double num = Start;
+        if (Scaling == AxisScaling.Logarithmic)
+        {
+            if (num <= 0.0)
+            {
+                num = 0.01;
+            }
+            num = Math.Log10(num);
+        }
+        return num;
+    }
+
+    private static void SetAxisLimitEditorError(IAxisLimitEditor axisLimitEditor, string errorCodeString)
+    {
+        if (!axisLimitEditor.IsDefaultValue)
+        {
+            axisLimitEditor.SetNonCalculationRelatedCustomError(errorCodeString);
+        }
+    }
+
+    private bool IsStringLabel()
+    {
+        switch (AxisXmlNodeName)
+        {
+            case "xAxis":
+                return XIsString;
+            case "yAxis":
+                return YIsString;
+            default:
+                return false;
         }
     }
 }
