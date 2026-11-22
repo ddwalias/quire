@@ -191,6 +191,25 @@ string[]? GeneratedBinding(Artifact artifact, TypeModel type)
 foreach (var artifact in quire)
     foreach (var type in artifact.Model.Types.Where(t => t.CompilerGenerated))
         GeneratedBinding(artifact, type);
+// MSVC embeds the managed argument's C++ name in the native gcroot TypeDef and its module methods.
+// Bind only an emitted global gcroot with a reviewed local argument and a matching original layout.
+var gcrootTypes = new Dictionary<(string Assembly, string Name), string>();
+const string gcrootPrefix = "gcroot<", gcrootSuffix = " ^>";
+foreach (var artifact in quire.Where(a => !a.IlOnly))
+    foreach (var type in artifact.Model.Types)
+    {
+        var name = type.FullName;
+        if (type.NativeSize is null || !name.StartsWith(gcrootPrefix, StringComparison.Ordinal)
+            || !name.EndsWith(gcrootSuffix, StringComparison.Ordinal)) continue;
+        var argument = name[gcrootPrefix.Length..^gcrootSuffix.Length].Replace("::", ".");
+        if (!typeNames.TryGetValue((artifact.Name, argument), out var binding)
+            || !reviewed.ContainsKey(argument) || !originals.TryGetValue(binding[1], out var original)) continue;
+        var mapped = gcrootPrefix + binding[0].Replace(".", "::") + gcrootSuffix;
+        if (mapped == name || !original.Model.Types.Any(t => t.FullName == mapped && t.Kind == type.Kind
+                && t.NativeSize == type.NativeSize)) continue;
+        if (typeNames.TryAdd((artifact.Name, name), [mapped, binding[1]]))
+            gcrootTypes.Add((artifact.Name, name), mapped);
+    }
 var referenced = new Dictionary<string, AssemblyModel?>();
 var assemblyNames = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 // A type of a project not audited here (one a signature or a call names) maps through the reviewed type map, as its
@@ -324,6 +343,17 @@ ILookup<string, RawMethod> Owned(Artifact a) => owned.TryGetValue(a, out var byO
 // A mixed-mode original's globals by their key, its types unified as for type members (OriginalKey): mscorlib is
 // System.Runtime.
 var globalKeys = new Dictionary<Artifact, ILookup<string, RawMethod>>();
+string GlobalName(Artifact artifact, string name)
+{
+    if (name.StartsWith(gcrootPrefix, StringComparison.Ordinal)
+        && name.IndexOf(gcrootSuffix + ".", StringComparison.Ordinal) is var end && end >= 0)
+    {
+        end += gcrootSuffix.Length;
+        if (gcrootTypes.TryGetValue((artifact.Name, name[..end]), out var mapped))
+            return mapped + name[end..];
+    }
+    return StructureReader.AnonymousModuleInitializerName(name) ?? name;
+}
 ILookup<string, RawMethod> Globals(Artifact module) => globalKeys.TryGetValue(module, out var byKey) ? byKey
     : globalKeys[module] = Owned(module)["<Module>"].ToLookup(m => Signatures.Method(StructureReader.AnonymousModuleInitializerName(m.Name) ?? m.Name, m.Signature.GenericParameterCount,
         m.Signature.ParameterTypes.Select(Corlib), Corlib(m.Signature.ReturnType), m.Static));
@@ -361,7 +391,7 @@ foreach (var artifact in quire)
                 continue;
             }
             var module = ModuleOriginal(artifact);
-            string key = Signatures.Method(StructureReader.AnonymousModuleInitializerName(raw.Name) ?? raw.Name, raw.Signature.GenericParameterCount, raw.Signature.ParameterTypes.Select(Map),
+            string key = Signatures.Method(GlobalName(artifact, raw.Name), raw.Signature.GenericParameterCount, raw.Signature.ParameterTypes.Select(Map),
                 Map(raw.Signature.ReturnType), raw.Static);
             var global = module == null ? null : Counterpart(raw, module, [.. Globals(module)[key]], ref problem);
             matched.Add((artifact, raw, null, null, module, global, problem));
