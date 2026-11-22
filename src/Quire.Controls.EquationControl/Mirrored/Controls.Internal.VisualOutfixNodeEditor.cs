@@ -9,6 +9,12 @@ namespace Quire.Controls.Internal;
 
 internal partial class VisualOutfixNodeEditor
 {
+    public static readonly DependencyProperty NodeSideProperty;
+    public static readonly DependencyProperty CaretOpacityProperty;
+    public static readonly DependencyProperty ScoperModeProperty;
+    public static readonly DependencyProperty ScopeColorProperty;
+    public static readonly DependencyProperty ScopeOpacityProperty;
+
     protected readonly Fence _leftFence;
     protected readonly Fence _rightFence;
     protected RubberBandHighlighter _highlighter;
@@ -50,6 +56,56 @@ internal partial class VisualOutfixNodeEditor
     private static void OnScopeColorPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         ((VisualOutfixNodeEditor)d).OnScopeColorChanged((System.Drawing.Color)e.NewValue);
+    }
+
+    static VisualOutfixNodeEditor()
+    {
+        FrameworkPropertyMetadata nodeSideMetadata = new FrameworkPropertyMetadata();
+        nodeSideMetadata.DefaultValue = Direction.Indeterminate;
+        nodeSideMetadata.AffectsArrange = true;
+        nodeSideMetadata.PropertyChangedCallback += OnNodeSidePropertyChanged;
+        NodeSideProperty = DependencyProperty.Register("NodeSide", typeof(Direction), typeof(VisualOutfixNodeEditor), nodeSideMetadata);
+        FrameworkPropertyMetadata caretOpacityMetadata = new FrameworkPropertyMetadata();
+        caretOpacityMetadata.AffectsRender = true;
+        caretOpacityMetadata.PropertyChangedCallback += OnCaretOpacityPropertyChanged;
+        CaretOpacityProperty = DependencyProperty.Register("CaretOpacity", typeof(double), typeof(VisualOutfixNodeEditor), caretOpacityMetadata);
+        FrameworkPropertyMetadata scopeColorMetadata = new FrameworkPropertyMetadata();
+        scopeColorMetadata.AffectsRender = true;
+        scopeColorMetadata.PropertyChangedCallback += OnScopeColorPropertyChanged;
+        scopeColorMetadata.DefaultValue = System.Drawing.Color.Transparent;
+        ScopeColorProperty = DependencyProperty.Register("ScopeColor", typeof(System.Drawing.Color), typeof(VisualOutfixNodeEditor), scopeColorMetadata);
+        FrameworkPropertyMetadata scopeOpacityMetadata = new FrameworkPropertyMetadata();
+        scopeOpacityMetadata.AffectsRender = true;
+        scopeOpacityMetadata.PropertyChangedCallback += OnScopeOpacityPropertyChanged;
+        ScopeOpacityProperty = DependencyProperty.Register("ScopeOpacity", typeof(double), typeof(VisualOutfixNodeEditor), scopeOpacityMetadata);
+        FrameworkPropertyMetadata scoperModeMetadata = new FrameworkPropertyMetadata();
+        scoperModeMetadata.AffectsRender = true;
+        scoperModeMetadata.DefaultValue = EquationEditModeEnum.Scope;
+        scoperModeMetadata.PropertyChangedCallback += OnScoperModePropertyChanged;
+        ScoperModeProperty = DependencyProperty.Register("ScoperMode", typeof(EquationEditModeEnum), typeof(VisualOutfixNodeEditor), scoperModeMetadata);
+    }
+
+    public VisualOutfixNodeEditor(VisualOutfixNode editNode, VisualMathRegionNode region)
+        : base(editNode, region)
+    {
+        Fence fence = editNode.LeftFence as Fence;
+        _leftFence = fence.Clone() as Fence;
+        AddVisualChild(_leftFence);
+        Fence fence2 = editNode.RightFence as Fence;
+        _rightFence = fence2.Clone() as Fence;
+        AddVisualChild(_rightFence);
+        GeneralTransform transform;
+        if (editNode.Horizontal)
+        {
+            transform = fence.TransformToAncestor(editNode);
+        }
+        else
+        {
+            transform = fence2.TransformToAncestor(editNode);
+        }
+        _firstFenceOffset = transform.Transform(new Point(0.0, 0.0));
+        EditNode.SetParensVisibility(Visibility.Hidden);
+        BindToSettings();
     }
 
     public override void GetFocus()
