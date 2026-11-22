@@ -1,5 +1,16 @@
 # Msgen lane checkpoint
 
+## Batch 6 (`Quire.gen.CctorFunction`, `IlBuilderType::Cctor`)
+
+- Owner: AGY, Orca task `task_fd17b1d0d474`. Branch `feature/msgen-agy-2`, from current `main`.
+- Members: `CctorFunction` class (`.ctor`, `Arity`, `ReturnType`, `MplParameterTypes`, `GetMethod`) and `IlBuilderType::Cctor`.
+- `GetMethod` returns through a named local initialised to `nullptr` before `GC::KeepAlive(this)`. The comma-expression form emits the `ldnull` after the call and fails the gate.
+- Constructor: the base call takes `nullptr` for the ILGenerator, then `m_il` is set from `m_ctor`. This matches Mathcad's order for the checked members.
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 394 checked; 0 failures; 7 unfinished.
+- Preserved candidate on branch `msgen-cctor-candidate-wip`; WIP backup remains on `msgen-batch3-wip-backup` at 9205680fd.
+
+---
+
 ## Batch 5 (`IlAsm::GetTypeInitializer`, `IlBuilderType::TypeInitializer`)
 
 - Owner: AGY, Orca task `task_0e0c0bd093fb`. Branch `feature/msgen-agy-2`, from current `main`.

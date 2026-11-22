@@ -282,6 +282,7 @@ namespace Quire { namespace gen {
         System::Reflection::Emit::Quire::Mpl::ConstructorBuilder^ TypeInitializer();
         System::Reflection::Emit::Quire::Mpl::TypeBuilder^ GetTypeBuilder() { return m_tb; }
         virtual Type^ GetInstanceType() override { return m_tb; }
+        IlEmit^ Cctor();
         void CreateType();
     };
 
@@ -608,6 +609,21 @@ namespace Quire { namespace gen {
             if (m_reachable)
                 m_il->Emit(op);
         }
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.CctorFunction, msgen")]
+    ref class CctorFunction : public IlEmit
+    {
+    private:
+        MetaObj^ m_value;
+        System::Reflection::Emit::Quire::Mpl::ConstructorBuilder^ m_ctor;
+
+    public:
+        CctorFunction(IlBuilderType^ clo);
+        virtual int Arity() override;
+        virtual Type^ ReturnType() override;
+        virtual cli::array<Type^>^ MplParameterTypes() override;
+        virtual MethodInfo^ GetMethod([MarshalAs(UnmanagedType::U1)] bool may_emit) override;
     };
 
     [::Quire::Mirror::MirrorOfAttribute("gen.ArgVar, msgen")]

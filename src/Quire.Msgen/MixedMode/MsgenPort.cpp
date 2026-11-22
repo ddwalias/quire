@@ -313,4 +313,44 @@ namespace Quire { namespace gen {
         return ti;
     }
 
+    IlEmit^ IlBuilderType::Cctor()
+    {
+        if (!m_cctor)
+        {
+            m_cctor = gcnew CctorFunction(this);
+        }
+        return m_cctor;
+    }
+
+    CctorFunction::CctorFunction(IlBuilderType^ clo)
+        : IlEmit(".cctor", clo, nullptr), m_value(nullptr), m_ctor(clo->TypeInitializer())
+    {
+        m_il = m_ctor->GetILGenerator();
+        GC::KeepAlive(this);
+    }
+
+    int CctorFunction::Arity()
+    {
+        return 0;
+    }
+
+    Type^ CctorFunction::ReturnType()
+    {
+        Type^ result = IlAsm::VoidType();
+        GC::KeepAlive(this);
+        return result;
+    }
+
+    cli::array<Type^>^ CctorFunction::MplParameterTypes()
+    {
+        return gcnew cli::array<Type^>(0);
+    }
+
+    MethodInfo^ CctorFunction::GetMethod(bool)
+    {
+        IlAsm::Raise("not implemented");
+        MethodInfo^ result = nullptr;
+        GC::KeepAlive(this);
+        return result;
+    }
 }}
