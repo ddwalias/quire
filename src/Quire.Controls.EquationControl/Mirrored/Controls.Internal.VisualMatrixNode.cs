@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -214,5 +217,91 @@ internal partial class VisualMatrixNode
         {
             equationControl.UpdateMatrixForResizeAdorner(this);
         }
+    }
+
+    private string[] GetMatrixRowOrColumnIndices(StackPanel heading)
+    {
+        ArrayList arrayList = new ArrayList();
+        if (heading.Children.Count > 0)
+        {
+            Regex regex = new Regex("\\d");
+            foreach (UIElement child in heading.Children)
+            {
+                if (!(child is Label label))
+                {
+                    continue;
+                }
+                string[] array = label.Content.ToString().Split('\n');
+                foreach (string text in array)
+                {
+                    if (regex.IsMatch(text))
+                    {
+                        arrayList.Add(text);
+                    }
+                    else
+                    {
+                        arrayList.Add('…'.ToString());
+                    }
+                }
+            }
+        }
+        else
+        {
+            int num2 = ((heading.Name == "RowHeading") ? _matrixInfo.ViewportSize.Rows : _matrixInfo.ViewportSize.Columns);
+            int origin = _matrixInfo.Origin;
+            for (int num3 = 0; num3 < num2; num3++)
+            {
+                arrayList.Add((num3 + origin).ToString());
+            }
+        }
+        return (string[])arrayList.ToArray(typeof(string));
+    }
+
+    public void SetHeadingsCellsVisibility()
+    {
+        foreach (UIElement child in RowHeading.Children)
+        {
+            child.Visibility = HeadingsVisibility;
+        }
+        foreach (UIElement child2 in ColumnHeading.Children)
+        {
+            child2.Visibility = HeadingsVisibility;
+        }
+    }
+
+    public override void BuildChildren(IVisualMathNode[] children)
+    {
+        base.BuildChildren(children);
+        ConstructMatrixGrid();
+    }
+
+    private IVisualMathNode CheckIfSpecialCellNeeded(TableCoordinate cellPosition, MatrixDisplayHelper displayHelper)
+    {
+        if (displayHelper.ShowDownRightEllipsis(cellPosition))
+        {
+            return CreateTextNode('⋱'.ToString());
+        }
+        if (displayHelper.ShowHorizontalEllipsis(cellPosition))
+        {
+            return CreateTextNode('…'.ToString());
+        }
+        if (displayHelper.ShowVerticalEllipsis(cellPosition))
+        {
+            return CreateTextNode('⋮'.ToString());
+        }
+        if (displayHelper.ShowEmptyCell(cellPosition))
+        {
+            return CreateTextNode(" ");
+        }
+        return null;
+    }
+
+    private int GetIndexOfNode(IVisualMathNode childNode)
+    {
+        if (!(childNode is VisualMathNode element))
+        {
+            return -1;
+        }
+        return _matrixGrid.Children.IndexOf(element);
     }
 }
