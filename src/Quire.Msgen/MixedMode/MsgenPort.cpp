@@ -554,4 +554,61 @@ namespace Quire { namespace gen {
         return methodFunction;
     }
 
+    VoidConstructor::VoidConstructor(IlAsm^ il, void* v)
+        : Constructor(il)
+    {
+        m_var = v;
+    }
+
+    void VoidConstructor::LdVal(IlEmit^)
+    {
+    }
+
+    int VoidConstructor::Arity()
+    {
+        return 0;
+    }
+
+    Type^ VoidConstructor::ReturnType()
+    {
+        Type^ result = IlAsm::VoidType();
+        GC::KeepAlive(this);
+        return result;
+    }
+
+    cli::array<Type^>^ VoidConstructor::MplParameterTypes()
+    {
+        return gcnew cli::array<Type^>(0);
+    }
+
+    cli::array<MetaObj^>^ VoidConstructor::Deconstruct(MetaObj^, ms::Range<void* const>)
+    {
+        return gcnew cli::array<MetaObj^>(0);
+    }
+
+    void ContinuationFunction::DeclareFunction(Hex::Tag*, ms::Range<void* const> args, Type^ ty, cli::array<Type^>^ tys)
+    {
+        m_arity = tys->Length;
+        m_return_type = ty;
+        m_param_types = tys;
+        cli::array<MetaObj^>^ params = Ctxt::NewCtxtEnv(static_cast<int>(args.size()));
+        cli::array<Type^>^ ptys = MplParameterTypes();
+        for (unsigned int i = 0; i < args.size(); i++)
+        {
+            if (ptys[i] == IlAsm::VoidType())
+            {
+                params[i] = gcnew VoidConstructor(IlAssembler(), args[i]);
+            }
+            else
+            {
+                params[i] = MetaObj::NewMetaObj(args[i], DefineLocal(ptys[i]));
+            }
+        }
+        m_params = params;
+    }
+    // Out of line so callers such as ContinuationFunction::DeclareFunction call it rather than inlining the allocation.
+    cli::array<MetaObj^>^ Ctxt::NewCtxtEnv(int sz)
+    {
+        return gcnew cli::array<MetaObj^>(sz);
+    }
 }}

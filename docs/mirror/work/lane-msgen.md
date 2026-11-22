@@ -1,5 +1,16 @@
 # Msgen lane checkpoint
 
+## Batch 13 (`Quire.gen.VoidConstructor`, `ContinuationFunction::DeclareFunction`)
+
+- Owner: AGY, Orca task `task_1c9bf6789f1d`. Branch `feature/msgen-agy-2`, from current `main`.
+- `VoidConstructor` (`MirrorOf("gen.VoidConstructor, msgen")`, same pattern as `Constructor`): `.ctor(IlAsm, void*)`, `LdVal`, `Arity`, `ReturnType`, `MplParameterTypes`, `Deconstruct`. Exact Release IL. Diagnosis: in Batch 12 the type had no consumer, so the C++/CLI compiler did not emit it and the gate never saw its rows. `ContinuationFunction::DeclareFunction` is the consumer that forces emission; with it the six rows appear in the candidate inventory.
+- `ContinuationFunction::DeclareFunction` (exact Release IL): loop over `ms::Range` calling `VoidConstructor` or `NewMetaObj(void*, LocalBuilder)`.
+- `Ctxt::NewCtxtEnv` is now defined out of line in `MsgenPort.cpp` and marked `__declspec(noinline)`, so the `DeclareFunction` call site matches Mathcad's call to `Ctxt::NewCtxtEnv`. Its body is unchanged and stays exact.
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 428 checked; 0 failures; 7 unfinished.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 12 (`Quire.gen.Constructor` base subset)
 
 - Owner: AGY, Orca task `task_8d00981af8a9`. Branch `feature/msgen-agy-2`, from current `main`.

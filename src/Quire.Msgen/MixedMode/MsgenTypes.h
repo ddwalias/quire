@@ -299,6 +299,18 @@ namespace Quire { namespace gen {
         virtual cli::array<MetaObj^>^ Deconstruct(MetaObj^ loc, ms::Range<void* const> vs) = 0;
     };
 
+    [::Quire::Mirror::MirrorOfAttribute("gen.VoidConstructor, msgen")]
+    ref class VoidConstructor : public Constructor
+    {
+    public:
+        VoidConstructor(IlAsm^ il, void* v);
+        virtual void LdVal(IlEmit^ emit) override;
+        virtual int Arity() override;
+        virtual Type^ ReturnType() override;
+        virtual cli::array<Type^>^ MplParameterTypes() override;
+        virtual cli::array<MetaObj^>^ Deconstruct(MetaObj^ loc, ms::Range<void* const> vs) override;
+    };
+
     [::Quire::Mirror::MirrorOfAttribute("gen.ContinuationClo, msgen")]
     ref class ContinuationClo : public Closure
     {
@@ -323,10 +335,7 @@ namespace Quire { namespace gen {
         {
         }
 
-        static cli::array<MetaObj^>^ NewCtxtEnv(int sz)
-        {
-            return gcnew cli::array<MetaObj^>(sz);
-        }
+        static __declspec(noinline) cli::array<MetaObj^>^ NewCtxtEnv(int sz);
 
         virtual void EmitBranch(IlEmit^ emit, Closure^ clo, Label lab);
     };
@@ -695,6 +704,7 @@ namespace Quire { namespace gen {
         virtual MethodInfo^ GetMethod([MarshalAs(UnmanagedType::U1)] bool may_emit) override;
         virtual void EmitProlog(IlAsm^ bcasm, [MarshalAs(UnmanagedType::U1)] bool) override;
         virtual void CallFunc(IlEmit^ emit, int nargs, [MarshalAs(UnmanagedType::U1)] bool tail, Hex::Tag* einfo, Type^ return_type, cli::array<Type^>^ parameters) override;
+        virtual void DeclareFunction(Hex::Tag* info, ms::Range<void* const> args, Type^ ty, cli::array<Type^>^ tys) override;
     };
 
     [::Quire::Mirror::MirrorOfAttribute("gen.ArgVar, msgen")]
