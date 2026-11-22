@@ -423,4 +423,17 @@ namespace Quire { namespace gen {
         emit->emit_call(einfo, OpCodes::Call, method);
         GC::KeepAlive(this);
     }
+    void MethodFunction::DeclareFunction(Hex::Tag*, ms::Range<void* const>, Type^ ty, cli::array<Type^>^ tys)
+    {
+        m_arity = tys->Length;
+        m_return_type = ty;
+        m_param_types = tys;
+        Closure^ clo = m_clo;
+        cli::array<Type^>^ actuals = MethodParameterTypes();
+        String^ nm = Name();
+        IlGenMethod^ ilGenMethod = clo->CreateMethod(nm, ty, actuals);
+        m_method = ilGenMethod->Method();
+        m_il = ilGenMethod->IlGen();
+        GC::KeepAlive(this);
+    }
 }}

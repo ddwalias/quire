@@ -1,5 +1,16 @@
 # Msgen lane checkpoint
 
+## Batch 9 (`Quire.gen.MethodFunction::DeclareFunction`)
+
+- Owner: AGY, Orca task `task_54df3dcaa425`. Branch `feature/msgen-agy-2`, from current `main`.
+- Member: `MethodFunction::DeclareFunction` override (exact Release IL). It needs only `MethodParameterTypes`, `Name`, `Closure::CreateMethod` and `IlGenMethod`, all on `main`; the `Hex::Tag` and `Range` arguments are unused in the original.
+- The `Closure^ clo = m_clo;` local is needed to load `m_clo` before the `MethodParameterTypes()` call, as the Release IL does.
+- Still blocked: the `string` and `sbyte*` constructors (they need `ms::Range`/`Unsafe` substring handling), `CreateParameterEnv` (needs `VoidConstructor`), and `EmitProlog`/`EmitEpilog`/`EmitStackProbe` (tracing/`AppException`).
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 407 checked; 0 failures; 7 unfinished.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 8 (`Quire.gen.MethodFunction`, subset)
 
 - Owner: AGY, Orca task `task_4fa0e5aab024`. Branch `feature/msgen-agy-2`, from current `main`.
