@@ -344,3 +344,10 @@
 - Shapes: matched first time.
 - Blocked (not in this batch): `AnalyzeResultData` (its `Sum` lambda). Its generated lambda method is named `<AnalyzeResultData>b__207_0` in Quire against Mathcad's `b__172_0`. Roslyn's ordinal counts every member of the type in compile order, and the generated stubs in `Generated/` compile before hand-written members, so the ordinal is out of step until the remaining TraceModel stubs (fields, accessors, nested class) are moved into the hand-written file in Mathcad order as placeholders. The same applies to `SetResult`, `UpdatePlottingPointsForDisplay`, `MinPositiveX`, `MinPositiveY` (all use closures).
 - Release IL: PASS — 626 checked, 626 exact, 0 failures.
+
+## Batch 50 — AxisModel simple accessors (owner: Orca task `task_4799da3a9685`, branch `feature/haiku-plots-20261123`)
+
+- Members: `AxisTitleModel`, `Markers`, `Equations`, `CanHaveMarkers`, `XIsString`, `YIsString`, `IsDiscrete`, `LegendWidth` (auto-properties and expression getters), `AxisXmlNodeName`, `DomainXmlNodeName`. Hand-written: `Mirrored/Controls.Plots.Model.AxisModel.cs`; stubs removed from `AxisModel.g.cs`. The backing fields `_markers` and `_equations` stay stubs (constructor not mirrored yet).
+- Shapes: the `switch` expression form compiles to an extra local (`stloc.1`), so both name switches are `switch` statements with `return` per case. `DomainXmlNodeName` needs separate `case X:` and `case Y:` returns (Mathcad keeps two blocks); stacked labels did not match.
+- Release IL: PASS — 2410 checked, 0 failures.
+- Remaining in AxisModel: constructor, setters/logic members, range and tick helpers.
