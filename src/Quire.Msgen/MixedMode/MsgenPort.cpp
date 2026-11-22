@@ -301,4 +301,16 @@ namespace Quire { namespace gen {
         }
         m_tb->CreateType();
     }
+    System::Reflection::Emit::Quire::Mpl::ConstructorBuilder^ IlAsm::GetTypeInitializer(System::Reflection::Emit::Quire::Mpl::TypeBuilder^ tb)
+    {
+        return ::Quire::Mpl::Run::Rts::GetTypeInitializer(tb);
+    }
+
+    System::Reflection::Emit::Quire::Mpl::ConstructorBuilder^ IlBuilderType::TypeInitializer()
+    {
+        System::Reflection::Emit::Quire::Mpl::ConstructorBuilder^ ti = IlAsm::GetTypeInitializer(m_tb);
+        GC::KeepAlive(this);
+        return ti;
+    }
+
 }}

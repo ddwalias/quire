@@ -279,6 +279,7 @@ namespace Quire { namespace gen {
         System::Reflection::Emit::Quire::Mpl::ConstructorBuilder^ DefineConstructor(MethodAttributes attrs, cli::array<Type^>^ parameters);
         FieldInfo^ DefineField(String^ nm, Type^ ty, FieldAttributes attrs);
         virtual IlGenMethod^ CreateMethod(String^ nm, Type^ rtype, cli::array<Type^>^ actuals) override;
+        System::Reflection::Emit::Quire::Mpl::ConstructorBuilder^ TypeInitializer();
         System::Reflection::Emit::Quire::Mpl::TypeBuilder^ GetTypeBuilder() { return m_tb; }
         virtual Type^ GetInstanceType() override { return m_tb; }
         void CreateType();
@@ -385,6 +386,7 @@ namespace Quire { namespace gen {
         static Type^ DelegateType();
         static Type^ TagType();
         static Type^ VoidType();
+        static System::Reflection::Emit::Quire::Mpl::ConstructorBuilder^ GetTypeInitializer(System::Reflection::Emit::Quire::Mpl::TypeBuilder^ tb);
         static MethodInfo^ NumValCtor();
         static String^ FieldName(int i);
         static cli::array<String^>^ FieldNames(int n);

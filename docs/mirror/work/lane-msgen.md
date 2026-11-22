@@ -1,5 +1,15 @@
 # Msgen lane checkpoint
 
+## Batch 5 (`IlAsm::GetTypeInitializer`, `IlBuilderType::TypeInitializer`)
+
+- Owner: AGY, Orca task `task_0e0c0bd093fb`. Branch `feature/msgen-agy-2`, from current `main`.
+- Members: `IlAsm::GetTypeInitializer` (static forwarder to `Rts::GetTypeInitializer`, no KeepAlive, as in the original) and `IlBuilderType::TypeInitializer` (with `GC::KeepAlive(this)` after the call, as in the original).
+- `Cctor` remains out: it needs the absent `CctorFunction` class.
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 388 checked; 0 failures; 7 unfinished.
+- Preserved WIP remains on `msgen-batch3-wip-backup` at 9205680fd.
+
+---
+
 ## Batch 4 (`Quire.gen.IlBuilderType`, candidate for landing)
 
 - Owner: AGY, Orca task `task_236af414ffdf`. Branch `feature/msgen-agy-2`, from current `main`.
