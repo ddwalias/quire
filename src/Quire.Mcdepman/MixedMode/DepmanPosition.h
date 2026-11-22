@@ -1,7 +1,5 @@
 #pragma once
 
-class ActionChain;
-
 template <typename T>
 class OrderedList;
 
@@ -10,6 +8,7 @@ class OrderedListNode;
 
 namespace depman {
 
+class ActionChain;
 class DepManager;
 class Position;
 
@@ -21,6 +20,7 @@ public:
     long GetHandle() const;
     int GetPriority() const;
     bool IsDead();
+    bool IsLocked() const;
     long GetClientHandle() const;
     int GetBasePriority() const;
     bool Invalidated() const;
@@ -72,6 +72,16 @@ private:
 };
 
 static_assert(sizeof(PositionBase) == 216, "PositionBase size must be 216 bytes");
+
+// Only the lock flag is recovered: the accessors read the byte at offset 0x20 and nothing else of the class.
+class ActionChain {
+public:
+    bool IsLocked() const;
+
+private:
+    unsigned char pad_00_[0x20];
+    bool locked_;                                 // 0x20 (offset 32)
+};
 
 } // namespace depman
 

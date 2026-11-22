@@ -18,6 +18,7 @@
 #pragma comment(linker, "/include:?ResetPriority@PositionBase@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?ClearDParent@PositionBase@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?SetBasePriority@PositionBase@depman@@QEAAXH@Z")
+#pragma comment(linker, "/include:?IsLocked@PositionBase@depman@@QEBA_NXZ")
 // Uncalled native member functions are stripped by /OPT:REF unless referenced.
 // When referenced by callers in Depman, they will be emitted with exact IL.
 // #pragma comment(linker, "/include:?previous@Position@depman@@$$FQEAAPEAV12@XZ")
@@ -58,6 +59,11 @@ bool PositionBase::Invalidated() const
 bool PositionBase::TreatedReady() const
 {
     return treated_ready_;
+}
+
+bool PositionBase::IsLocked() const
+{
+    return action_chain_ && action_chain_->IsLocked();
 }
 
 bool PositionBase::IsBusy()
