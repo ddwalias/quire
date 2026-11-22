@@ -263,4 +263,50 @@ public partial class SpecTableControl
         CellPropertyChangedHandler(sender, new PropertyChangedEventArgs(nameof(CurrentIdLabel)));
         CellPropertyChangedHandler(sender, new PropertyChangedEventArgs(nameof(CurrentDisplayIdLabel)));
     }
+
+    public string GetHelpContext()
+    {
+        if (ActiveCell == null)
+        {
+            return null;
+        }
+        return ActiveCell.GetHelpContext();
+    }
+
+    public int DataRows
+    {
+        get
+        {
+            if (Model.ColumnCount <= 0)
+            {
+                return 0;
+            }
+            return Model.GetColumn(0).DataCellCount;
+        }
+    }
+
+    public ISpecTableColumn GetActiveColumn()
+    {
+        return GetColumnFromIndex(ActiveCellCoordinate.Column);
+    }
+
+    private void FirePropertyChanged(string propertyName)
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    public bool ContainsError(EngineError error)
+    {
+        foreach (ICalculatable calculatableChild in CalculatableChildren)
+        {
+            if (calculatableChild is ICalculationErrorOwner calculationErrorOwner && calculationErrorOwner.ContainsError(error))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

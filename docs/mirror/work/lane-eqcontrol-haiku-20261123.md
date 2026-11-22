@@ -94,3 +94,9 @@
 - Exact: `VisualMatrixNode()` (the `Name = VISUAL_MATRIX_NAME` read, `_opacity` initializer, heading and bracket setup, `Loaded += LoadedHandler`).
 - Still parked/untried: `SetupResizeIndicatorBehaviour` (a lambda closure whose `<>c` and `b__` ordinals are not yet checked), `MeasureOverride`, `ArrangeOverride` (parked, see batch 12).
 - Gate (project-level): PASS; 3430 checked (`.mirror-cache/release-il-aa57582cb7b8/release-il.json`).
+
+### Batch 14: Controls.SpecTableControl (small independent group)
+
+- Exact: `GetHelpContext`, `DataRows`, `GetActiveColumn`, `FirePropertyChanged`, `ContainsError` (foreach with a pattern variable).
+- Gate (project-level): PASS; 3435 checked (`.mirror-cache/release-il-15761d609404/release-il.json`).
+- Dependency recorded: `VisualMatrixNode.SetupResizeIndicatorBehaviour` is a lambda closure (`MouseDown +=` with a `<>c` cache); it stays a stub until the closure ordinal layout is verified, and it does not block the rest of the matrix type.

@@ -58,8 +58,6 @@ public partial class SpecTableControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.EngineResult[] EngineResults { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public int DataRows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.EngineError CurrentError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -126,8 +124,6 @@ public partial class SpecTableControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     private void HandleContentChangeEvent(object arg1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn GetActiveColumn() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void DelegateFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleNewColumn(global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -156,8 +152,6 @@ public partial class SpecTableControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleRequestShowError(object sender, global::Quire.Calculation.Core.RequestShowErrorEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -165,8 +159,6 @@ public partial class SpecTableControl : global::System.Windows.Controls.ContentC
     private void ShowError(global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper wrapper, global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnToggleHideFromCalculationContext(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnLostKeyboardFocus(global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => base.OnLostKeyboardFocus(e);
     [global::Quire.Mirror.MirrorStub]
@@ -193,6 +185,4 @@ public partial class SpecTableControl : global::System.Windows.Controls.ContentC
     public void HandleMathFormatChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleOverrideLabelColor(global::System.Windows.DependencyPropertyChangedEventArgs e, global::System.Windows.DependencyObject obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetHelpContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
