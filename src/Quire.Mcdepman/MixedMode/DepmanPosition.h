@@ -29,6 +29,7 @@ public:
     void SetNotifyComputing(bool notify);
     void ResetPriority();
     void ClearDParent();
+    void SetBasePriority(int priority);
 
 private:
     DepManager* dep_manager_;                      // 0x08

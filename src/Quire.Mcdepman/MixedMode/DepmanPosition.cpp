@@ -3,6 +3,8 @@
 #include <sdkddkver.h>
 #include "DepmanPosition.h"
 
+#include <algorithm>
+
 // Uncalled native member functions are stripped by /OPT:REF unless referenced.
 #pragma comment(linker, "/include:?GetHandle@PositionBase@depman@@QEBAJXZ")
 #pragma comment(linker, "/include:?GetPriority@PositionBase@depman@@QEBAHXZ")
@@ -15,6 +17,7 @@
 #pragma comment(linker, "/include:?SetNotifyComputing@PositionBase@depman@@QEAAX_N@Z")
 #pragma comment(linker, "/include:?ResetPriority@PositionBase@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?ClearDParent@PositionBase@depman@@QEAAXXZ")
+#pragma comment(linker, "/include:?SetBasePriority@PositionBase@depman@@QEAAXH@Z")
 // Uncalled native member functions are stripped by /OPT:REF unless referenced.
 // When referenced by callers in Depman, they will be emitted with exact IL.
 // #pragma comment(linker, "/include:?previous@Position@depman@@$$FQEAAPEAV12@XZ")
@@ -75,6 +78,12 @@ void PositionBase::ResetPriority()
 void PositionBase::ClearDParent()
 {
     dparent_ = nullptr;
+}
+
+void PositionBase::SetBasePriority(int priority)
+{
+    base_priority_ = priority;
+    priority_ = std::max(priority_, base_priority_);
 }
 
 Position* Position::previous()
