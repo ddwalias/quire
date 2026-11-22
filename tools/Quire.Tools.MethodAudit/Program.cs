@@ -343,14 +343,29 @@ ILookup<string, RawMethod> Owned(Artifact a) => owned.TryGetValue(a, out var byO
 // A mixed-mode original's globals by their key, its types unified as for type members (OriginalKey): mscorlib is
 // System.Runtime.
 var globalKeys = new Dictionary<Artifact, ILookup<string, RawMethod>>();
-string GlobalName(Artifact artifact, string name)
+string GlobalName(Artifact artifact, RawMethod raw)
 {
+    string name = raw.Name;
     if (name.StartsWith(gcrootPrefix, StringComparison.Ordinal)
         && name.IndexOf(gcrootSuffix + ".", StringComparison.Ordinal) is var end && end >= 0)
     {
         end += gcrootSuffix.Length;
         if (gcrootTypes.TryGetValue((artifact.Name, name[..end]), out var mapped))
-            return mapped + name[end..];
+        {
+            string suffix = name[end..];
+            // A gcroot conversion operator also spells its return type in the decorated method name.
+            // Change that spelling only if it is the same managed type as the verified template argument.
+            if (raw.Signature.ReturnType is NamedSig result && result.Args.IsEmpty && result.Assembly == artifact.Name
+                && result.Name.Replace(".", "::") == name[gcrootPrefix.Length..(end - gcrootSuffix.Length)]
+                && typeNames.TryGetValue((artifact.Name, result.Name), out var binding))
+            {
+                static string Decorate(string type) => string.Join("@", type.Split('.').Reverse()) + "@@";
+                foreach (string prefix in new[] { "..PE$AAV", "..PE$AAU" })
+                    if (suffix == prefix + Decorate(result.Name))
+                        return mapped + prefix + Decorate(binding[0]);
+            }
+            return mapped + suffix;
+        }
     }
     return StructureReader.AnonymousModuleInitializerName(name) ?? name;
 }
@@ -391,7 +406,7 @@ foreach (var artifact in quire)
                 continue;
             }
             var module = ModuleOriginal(artifact);
-            string key = Signatures.Method(GlobalName(artifact, raw.Name), raw.Signature.GenericParameterCount, raw.Signature.ParameterTypes.Select(Map),
+            string key = Signatures.Method(GlobalName(artifact, raw), raw.Signature.GenericParameterCount, raw.Signature.ParameterTypes.Select(Map),
                 Map(raw.Signature.ReturnType), raw.Static);
             var global = module == null ? null : Counterpart(raw, module, [.. Globals(module)[key]], ref problem);
             matched.Add((artifact, raw, null, null, module, global, problem));
