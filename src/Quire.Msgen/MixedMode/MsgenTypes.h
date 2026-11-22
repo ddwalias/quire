@@ -293,6 +293,7 @@ namespace Quire { namespace gen {
         MethodFunction^ m_parent;
 
         ContinuationClo(IlAsm^ il, IlEmit^ mf);
+        virtual IlEmit^ DefineFunction(void* f) override;
         virtual void LdVal(IlEmit^ emit) override;
         virtual [returnvalue: MarshalAs(UnmanagedType::U1)] bool HasInstance() override { return false; }
     };
@@ -656,6 +657,29 @@ namespace Quire { namespace gen {
         virtual Type^ ClosureType() override;
         virtual void CallFunc(IlEmit^ emit, int nargs, [MarshalAs(UnmanagedType::U1)] bool tail, Hex::Tag* einfo, Type^ return_type, cli::array<Type^>^ parameters) override;
         virtual void DeclareFunction(Hex::Tag* info, ms::Range<void* const> args, Type^ ty, cli::array<Type^>^ tys) override;
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.ContinuationFunction, msgen")]
+    ref class ContinuationFunction : public IlEmit
+    {
+    private:
+        Label m_label;
+        int m_arity;
+        Type^ m_return_type;
+        cli::array<Type^>^ m_param_types;
+        cli::array<MetaObj^>^ m_params;
+        MethodFunction^ m_method;
+        ContinuationClo^ m_clo;
+
+    public:
+        ContinuationFunction(void* f, MethodFunction^ e, ContinuationClo^ clo);
+        virtual int Arity() override;
+        virtual Type^ ReturnType() override;
+        virtual cli::array<Type^>^ MplParameterTypes() override;
+        virtual cli::array<MetaObj^>^ CreateParameterEnv(ms::Range<void* const> args) override;
+        virtual MethodFunction^ GetMethodFunction() override;
+        virtual MethodInfo^ GetMethod([MarshalAs(UnmanagedType::U1)] bool may_emit) override;
+        virtual void EmitProlog(IlAsm^ bcasm, [MarshalAs(UnmanagedType::U1)] bool) override;
     };
 
     [::Quire::Mirror::MirrorOfAttribute("gen.ArgVar, msgen")]

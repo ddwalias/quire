@@ -436,4 +436,56 @@ namespace Quire { namespace gen {
         m_il = ilGenMethod->IlGen();
         GC::KeepAlive(this);
     }
+    IlEmit^ ContinuationClo::DefineFunction(void* f)
+    {
+        return gcnew ContinuationFunction(f, m_parent, this);
+    }
+
+    ContinuationFunction::ContinuationFunction(void* f, MethodFunction^ e, ContinuationClo^ clo)
+        : IlEmit(f, e), m_arity(0), m_return_type(nullptr), m_param_types(nullptr),
+          m_params(nullptr), m_method(e), m_clo(clo)
+    {
+        Label label = e->new_label();
+        m_label = label;
+        GC::KeepAlive(this);
+    }
+
+    int ContinuationFunction::Arity()
+    {
+        return m_arity;
+    }
+
+    Type^ ContinuationFunction::ReturnType()
+    {
+        return m_return_type;
+    }
+
+    cli::array<Type^>^ ContinuationFunction::MplParameterTypes()
+    {
+        return m_param_types;
+    }
+
+    cli::array<MetaObj^>^ ContinuationFunction::CreateParameterEnv(ms::Range<void* const>)
+    {
+        return m_params;
+    }
+
+    MethodFunction^ ContinuationFunction::GetMethodFunction()
+    {
+        return m_method;
+    }
+
+    MethodInfo^ ContinuationFunction::GetMethod(bool)
+    {
+        IlAsm::Raise("not implemented");
+        // Named result keeps the null on the stack across GC::KeepAlive(this), as the Release IL requires.
+        MethodInfo^ result = nullptr;
+        GC::KeepAlive(this);
+        return result;
+    }
+
+    void ContinuationFunction::EmitProlog(IlAsm^, bool)
+    {
+        emit_label_def(m_label);
+    }
 }}

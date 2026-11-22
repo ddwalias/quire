@@ -1,5 +1,16 @@
 # Msgen lane checkpoint
 
+## Batch 10 (`Quire.gen.ContinuationFunction` subset, `ContinuationClo::DefineFunction`)
+
+- Owner: AGY, Orca task `task_5ae4301f31f6`. Branch `feature/msgen-agy-2`, from current `main`.
+- Members: `ContinuationFunction` class (fields `m_label`, `m_arity`, `m_return_type`, `m_param_types`, `m_params`, and the derived `m_method`/`m_clo`), `.ctor`, `Arity`, `ReturnType`, `MplParameterTypes`, `CreateParameterEnv`, `GetMethodFunction`, `GetMethod`, `EmitProlog`; and `ContinuationClo::DefineFunction` (exact Release IL).
+- `DeclareFunction` is still blocked: its Mathcad IL includes the `VoidConstructor` branch. Batch 9's `MethodFunction::DeclareFunction` does not cover this, since it has no `VoidConstructor` branch.
+- `CallFunc` is still blocked on `IlAsm::Branch`, which is absent on `main`.
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 416 checked; 0 failures; 7 unfinished.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 9 (`Quire.gen.MethodFunction::DeclareFunction`)
 
 - Owner: AGY, Orca task `task_54df3dcaa425`. Branch `feature/msgen-agy-2`, from current `main`.
