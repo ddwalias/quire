@@ -25,6 +25,12 @@ namespace Quire.Controls.Text;
 
 public partial class RichTextBase
 {
+    public void ApplyTextFormatPropertyValueToControl(DependencyProperty property, object value, Block block = null)
+    {
+        global::System.Windows.Documents.Paragraph paragraph = (block as List)?.ListItems.FirstListItem.Blocks.FirstBlock as global::System.Windows.Documents.Paragraph;
+        TextFormat.SetTextFormat(property, paragraph?.Inlines.FirstInline != null ? paragraph.Inlines.FirstInline.GetValue(property) : value, Document);
+    }
+
     private void ClearSelectedRegionFormatProperties(TextFormat textFormat)
     {
         CommandBuffer.Execute(ToggleScriptUndoCommand.CreateToggleScriptUndoCommand(this, TextRange, ScriptState.None, false), null);
