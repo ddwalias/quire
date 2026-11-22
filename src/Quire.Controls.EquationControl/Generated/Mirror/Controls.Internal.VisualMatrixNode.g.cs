@@ -26,10 +26,6 @@ internal partial class VisualMatrixNode : global::Quire.Controls.Internal.Visual
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Internal.VisualMathNode[] NodeChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnMouseMove(global::System.Windows.Input.MouseEventArgs args) => base.OnMouseMove(args);
-    [global::Quire.Mirror.MirrorStub]
-    private void LoadedHandler(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void TryDragIntoHiddenPart(global::Quire.EquationEditor.View.IVisualMathNode nodeHit, out int rowShift, out int columnShift) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public VisualMatrixNode() { }

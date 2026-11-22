@@ -187,4 +187,32 @@ internal partial class VisualMatrixNode
         TextElement.SetFontFamily(stackPanel, font.FontTypeface.FontFamily);
         return stackPanel;
     }
+
+    protected override void OnMouseMove(MouseEventArgs args)
+    {
+        base.OnMouseMove(args);
+        if (ResizeAdorner != null && DebugTools.DevAssert(ResizeAdorner.VisualMatrix == this, null).Passed)
+        {
+            return;
+        }
+        if (Mouse.LeftButton == MouseButtonState.Pressed)
+        {
+            return;
+        }
+        EquationControl equationControl = this.TryFindVisualAncestor<EquationControl>();
+        if (equationControl != null)
+        {
+            equationControl.SetMatrixForResizeAdorner(this);
+        }
+    }
+
+    private void LoadedHandler(object sender, RoutedEventArgs e)
+    {
+        Loaded -= LoadedHandler;
+        EquationControl equationControl = this.TryFindVisualAncestor<EquationControl>();
+        if (equationControl != null)
+        {
+            equationControl.UpdateMatrixForResizeAdorner(this);
+        }
+    }
 }
