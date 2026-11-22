@@ -1,5 +1,17 @@
 # Msgen lane checkpoint
 
+## Batch 24 (review only: MethodClo, NullConstructor; nothing landed)
+
+- Owner: AGY, Orca task `task_1572aed179f2`. Branch `feature/msgen-agy-2`, from current `main`.
+- `MethodClo`: a subset of the class (fields, the simple `Closure` overrides `ClosureArgs`, `DynClosureType`, `StaClosureType`, `ModuleScope`, `SetInstance`, `LdVal`, `HasInstance`, `GetInstanceType`) passed exact, but the constructor did not. The original evaluates `module.StaClosureType()` before the `Closure` base's `module.IlAssembler()` argument, and C++ evaluates base-initializer arguments first, so the call order differs. Reordering needs a helper member the original does not have. The subset is not landed.
+- `NullConstructor` (`: Constructor`): its members pass when compiled, but the compiler omits the type from the candidate, so the gate never compares them. Its only Mathcad consumers are in `DataRep`, which is absent. Like `VoidConstructor` before Batch 13, it cannot be verified until a consumer exists. Not landed.
+- The other `Constructor` subclasses (`BoxConstructor`, `PropConstructor`, `RecordConstructor`, `VectorConstructor`, `NullaryConstructor`) share this blocker through `DataRep`.
+- Parked: `CtxtMod::EndCtxt` (`conv.u1`), and the abstract `Ctxt::BegCtxt`/`EndCtxt` declarations.
+- Release IL: unchanged; `main` at this batch has 453 checked and 0 failures.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 23 (`Quire.gen.CtxtTry` subset: fields, `.ctor`, `lookup`, `EmitBranch`)
 
 - Owner: AGY, Orca task `task_f7ee5e725387`. Branch `feature/msgen-agy-2`, from current `main`.
