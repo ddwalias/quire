@@ -7,6 +7,43 @@ namespace Quire.Controls.Worksheet;
 
 public partial class DirectRenderingAlignmentGridBorder
 {
+    private static readonly Type TypeOfThis;
+
+    public static readonly DependencyProperty MajorLinesColorProperty;
+
+    public static readonly DependencyProperty MinorLinesColorProperty;
+
+    public static readonly DependencyProperty MajorLinesThicknessProperty;
+
+    public static readonly DependencyProperty MinorLinesThicknessProperty;
+
+    public static readonly DependencyProperty GridCellSizeProperty;
+
+    public static readonly DependencyProperty MajorGridLinesProperty;
+
+    public static readonly DependencyProperty DisplayGridProperty;
+
+    public static readonly DependencyProperty UseMajorGridLinesProperty;
+
+    public static readonly DependencyProperty UseDirectRenderingProperty;
+
+    public static readonly DependencyProperty UseDashesProperty;
+
+    static DirectRenderingAlignmentGridBorder()
+    {
+        TypeOfThis = typeof(DirectRenderingAlignmentGridBorder);
+        MajorLinesColorProperty = DependencyProperty.Register("MajorLinesColor", typeof(Color), TypeOfThis, new FrameworkPropertyMetadata(PrintGridSettings.MajorLinesColor, RecreateMajorPen));
+        MinorLinesColorProperty = DependencyProperty.Register("MinorLinesColor", typeof(Color), TypeOfThis, new FrameworkPropertyMetadata(PrintGridSettings.MinorLinesColor, RecreateMinorPen));
+        MajorLinesThicknessProperty = DependencyProperty.Register("MajorLinesThickness", typeof(double), TypeOfThis, new FrameworkPropertyMetadata(PrintGridSettings.MajorLinesThickness, RecreateMajorPen));
+        MinorLinesThicknessProperty = DependencyProperty.Register("MinorLinesThickness", typeof(double), TypeOfThis, new FrameworkPropertyMetadata(PrintGridSettings.MinorLinesThickness, RecreateMinorPen));
+        MajorGridLinesProperty = DependencyProperty.Register("MajorGridLines", typeof(double), TypeOfThis, new FrameworkPropertyMetadata(double.NaN, HandleGridPropertyChanged));
+        DisplayGridProperty = DependencyProperty.Register("DisplayGrid", typeof(bool), TypeOfThis, new FrameworkPropertyMetadata(false, HandleGridPropertyChanged));
+        UseMajorGridLinesProperty = DependencyProperty.Register("UseMajorGridLines", typeof(bool), TypeOfThis, new FrameworkPropertyMetadata(false, HandleGridPropertyChanged));
+        UseDirectRenderingProperty = DependencyProperty.Register("UseDirectRendering", typeof(bool), TypeOfThis, new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, HandleUseDirectRenderingChanged));
+        UseDashesProperty = DependencyProperty.Register("UseDashes", typeof(bool), TypeOfThis, new FrameworkPropertyMetadata(false, HandleUseDashesChanged));
+        GridCellSizeProperty = AlignmentGrid.GridCellSizeProperty.AddOwner(TypeOfThis, new FrameworkPropertyMetadata(AlignmentGrid.GridCellSizeProperty.DefaultMetadata.DefaultValue, HandleGridPropertyChanged));
+    }
+
     public DirectRenderingAlignmentGridBorder()
     {
         CreateMinorPen();
