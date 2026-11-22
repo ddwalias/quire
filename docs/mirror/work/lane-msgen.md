@@ -1,5 +1,18 @@
 # Msgen lane checkpoint
 
+## Batch 26 (review only: gcroot CurrAsm/Callable; nothing landed)
+
+- Owner: AGY, Orca task `task_32a5b7651a22`. Branch `feature/msgen-agy-2`, from current `main`.
+- The shared fix on `main` (0e1edc8f9, `tools/Quire.Tools.MethodAudit/Program.cs`, `GlobalName`) maps the `gcroot<Quire::gen::IlAsm ^>` type prefix to the original `gcroot<gen::IlAsm ^>`. It does not rewrite the accessor suffix. The original `gen.CurrAsm` calls `'<Module>'::'gcroot<gen::IlAsm ^>..PE$AAVIlAsm@gen@@'`; the candidate spelling `..PE$AAVIlAsm@gen@Quire@@` keeps `Quire@@` in its mangled tail, so the name still does not match.
+- The "pinned global `<gcroot.h>` compatibility header" is not in this repository. `Quire.Mcdepman` includes the standard MSVC `<gcroot.h>` only.
+- `gen.CurrAsm` also reads the native global `?m_curr_asm@AsmProxy@gen@@2PEAV12@EA` at offset 16 of an `AsmProxy` struct. Msgen has no `AsmProxy` type or global, and the shared fix does not cover native global names.
+- `Callable::IlAssembler` and `Clo` therefore stay parked as MirrorStub bodies until the accessor suffix normalisation covers `@Quire@@` and an `AsmProxy` global is declared.
+- Parked (unchanged): `DataRep` consumer chain, `MethodClo` (constructor base-argument order), `CtxtMod::EndCtxt` (`conv.u1`), and the abstract `Ctxt::BegCtxt`/`EndCtxt`.
+- Release IL: unchanged at 453 checked and 0 failures on `main`.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 25 (review only: DataRep consumers of NullConstructor; nothing landed)
 
 - Owner: AGY, Orca task `task_b62966fede88`. Branch `feature/msgen-agy-2`, from current `main`.
