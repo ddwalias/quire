@@ -1,0 +1,17 @@
+# Quire.EquationEditor checkpoint (haiku-equationeditor-20261123)
+
+- Owner: EquationEditor worker (task_a5b258a05c92)
+- Branch: `feature/haiku-equationeditor-20261123`
+- Assembly: `Quire.EquationEditor`
+
+## Batch 1 — Tree.MatrixNodeInfo viewport and format accessors
+
+- Members: `ViewportSize`, `ViewportOffset`, `ShowIndices`, `CollapseNestedMatrices`, `Origin` (get and set), in `Mirrored/EquationEditor.Tree.MatrixNodeInfo.FormatProperties.cs`. Stubs removed from the `.g.cs` by hand, because MirrorGen `emit` could not run (needs a Release build of `Quire.Componentsmgd`).
+- Release IL: `--project Quire.EquationEditor` PASS, 1074 checked, 0 failures.
+- Remaining mismatches: none in changed members.
+
+## Parked (blockers, unchanged)
+
+- Field/method name clashes (CS0102): obfuscated fields such as `a`/`b`/`c` that share names with Mathcad methods. MirrorGen suffixes these fields, and the gate compares field names, so members touching them cannot match. Needs a maintainer decision.
+- Obfuscated property accessors (e.g. `RedefinitionWarning` setters named `a`/`b`/`c`, `MathNodeSettings`): C# property accessors compile to `get_`/`set_`, so they cannot match Mathcad's accessor names.
+- `MatrixNodeInfo.MatrixFormat` getter/setter: field `a` clashes with method `a(string, object)`.
