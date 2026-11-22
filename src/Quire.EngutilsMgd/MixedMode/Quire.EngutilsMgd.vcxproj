@@ -46,11 +46,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(IntDir)Quire.EngutilsMgd.pdb</ProgramDatabaseFile>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(IntDir)engutils.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(IntDir)engutils.lib;$(IntDir)utl.lib;$(IntDir)msmpl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="EngutilsMgd.h" />
+    <ClInclude Include="EngutilsNative.h" />
     <ClCompile Include="Tags.cpp" />
     <ClCompile Include="StringUtils.cpp" />
     <ClCompile Include="CollectionUtils.cpp" />
@@ -62,6 +63,8 @@
     <ClCompile Include="NormalizeComponentExceptions.cpp" />
     <ClCompile Include="UnmanagedMemoryStream.cpp" />
     <ClCompile Include="ComponentSupport.cpp" />
+    <ClCompile Include="Timing.cpp" />
+    <ClCompile Include="Logging.cpp" />
   </ItemGroup>
   <!-- The Build Tools MSBuild cannot evaluate SDK-style projects, so managed references are forced in with /FU. The production
        .csproj passes the DLLs it already built; a direct build builds their project closure with dotnet. -->
@@ -91,6 +94,8 @@
   </ItemDefinitionGroup>
   <Target Name="BuildEngutilsImportLibrary" BeforeTargets="Link" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Exec Command="&quot;$(VCToolsInstallDir)bin\HostX64\x64\lib.exe&quot; /nologo /def:&quot;$(MSBuildThisFileDirectory)engutils.def&quot; /machine:x64 /out:&quot;$(IntDir)engutils.lib&quot;" />
+    <Exec Command="&quot;$(VCToolsInstallDir)bin\HostX64\x64\lib.exe&quot; /nologo /def:&quot;$(MSBuildThisFileDirectory)utl.def&quot; /machine:x64 /out:&quot;$(IntDir)utl.lib&quot;" />
+    <Exec Command="&quot;$(VCToolsInstallDir)bin\HostX64\x64\lib.exe&quot; /nologo /def:&quot;$(MSBuildThisFileDirectory)msmpl.def&quot; /machine:x64 /out:&quot;$(IntDir)msmpl.lib&quot;" />
   </Target>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

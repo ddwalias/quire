@@ -1,34 +1,10 @@
 #include "EngutilsMgd.h"
-#include <string>
+#include "EngutilsNative.h"
 
 using namespace System;
 using namespace System::Text;
 
 __declspec(dllimport) bool parse_int(const char* text, unsigned int maxDigits, int& value);
-
-template <class _Elem, class _Traits, class _Alloc>
-std::basic_string<_Elem, _Traits, _Alloc> to_string(const std::basic_string<_Elem, _Traits, _Alloc>& rs)
-{
-    return std::basic_string<_Elem, _Traits, _Alloc>(rs);
-}
-
-namespace utl {
-    std::string ToStrng(System::Object^ o)
-    {
-        if (o == nullptr)
-        {
-            return std::string("<null>");
-        }
-        System::String^ s = o->ToString();
-        if (s->Length > 0)
-        {
-            cli::array<System::Byte>^ bytes = System::Text::Encoding::UTF8->GetBytes(s);
-            pin_ptr<System::Byte> ptr = &bytes[0];
-            return std::string((const char*)ptr);
-        }
-        return std::string("");
-    }
-}
 
 namespace Quire { namespace Engine {
 

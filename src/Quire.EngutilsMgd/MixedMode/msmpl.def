@@ -1,0 +1,6 @@
+LIBRARY msmpl.dll
+EXPORTS
+    ?GetModuleName@Mpl@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAV?$basic_streambuf@DU?$char_traits@D@std@@@3@@Z
+    ?GetModuleName@Mpl@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$Substring@$$CB_W@@@Z
+    ?GetModuleDependencies@Mpl@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$Substring@$$CB_W@@@Z
+    ?GetModuleDependencies@Mpl@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAV?$basic_streambuf@DU?$char_traits@D@std@@@3@@Z
