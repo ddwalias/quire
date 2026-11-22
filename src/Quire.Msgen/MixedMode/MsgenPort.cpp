@@ -488,4 +488,18 @@ namespace Quire { namespace gen {
     {
         emit_label_def(m_label);
     }
+    void IlAsm::Branch(Closure^ clo, Label lab)
+    {
+        m_ctxt->EmitBranch(m_emit, clo, lab);
+        GC::KeepAlive(this);
+    }
+    void ContinuationFunction::CallFunc(IlEmit^ emit, int, bool, Hex::Tag*, Type^, cli::array<Type^>^)
+    {
+        for (int i = m_params->Length - 1; i >= 0; i--)
+        {
+            m_params[i]->StVal(emit);
+        }
+        IlAssembler()->Branch(m_clo, m_label);
+        GC::KeepAlive(this);
+    }
 }}

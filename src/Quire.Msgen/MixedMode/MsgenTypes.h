@@ -400,6 +400,7 @@ namespace Quire { namespace gen {
         static Type^ TagType();
         static Type^ VoidType();
         static System::Reflection::Emit::Quire::Mpl::ConstructorBuilder^ GetTypeInitializer(System::Reflection::Emit::Quire::Mpl::TypeBuilder^ tb);
+        void Branch(Closure^ clo, Label lab);
         static MethodInfo^ NumValCtor();
         static String^ FieldName(int i);
         static cli::array<String^>^ FieldNames(int n);
@@ -680,6 +681,7 @@ namespace Quire { namespace gen {
         virtual MethodFunction^ GetMethodFunction() override;
         virtual MethodInfo^ GetMethod([MarshalAs(UnmanagedType::U1)] bool may_emit) override;
         virtual void EmitProlog(IlAsm^ bcasm, [MarshalAs(UnmanagedType::U1)] bool) override;
+        virtual void CallFunc(IlEmit^ emit, int nargs, [MarshalAs(UnmanagedType::U1)] bool tail, Hex::Tag* einfo, Type^ return_type, cli::array<Type^>^ parameters) override;
     };
 
     [::Quire::Mirror::MirrorOfAttribute("gen.ArgVar, msgen")]
