@@ -7,6 +7,14 @@
 #pragma comment(linker, "/include:?GetHandle@PositionBase@depman@@QEBAJXZ")
 #pragma comment(linker, "/include:?GetPriority@PositionBase@depman@@QEBAHXZ")
 #pragma comment(linker, "/include:?IsDead@PositionBase@depman@@QEAA_NXZ")
+#pragma comment(linker, "/include:?GetClientHandle@PositionBase@depman@@QEBAJXZ")
+#pragma comment(linker, "/include:?GetBasePriority@PositionBase@depman@@QEBAHXZ")
+#pragma comment(linker, "/include:?Invalidated@PositionBase@depman@@QEBA_NXZ")
+#pragma comment(linker, "/include:?TreatedReady@PositionBase@depman@@QEBA_NXZ")
+#pragma comment(linker, "/include:?IsBusy@PositionBase@depman@@QEAA_NXZ")
+#pragma comment(linker, "/include:?SetNotifyComputing@PositionBase@depman@@QEAAX_N@Z")
+#pragma comment(linker, "/include:?ResetPriority@PositionBase@depman@@QEAAXXZ")
+#pragma comment(linker, "/include:?ClearDParent@PositionBase@depman@@QEAAXXZ")
 // Uncalled native member functions are stripped by /OPT:REF unless referenced.
 // When referenced by callers in Depman, they will be emitted with exact IL.
 // #pragma comment(linker, "/include:?previous@Position@depman@@$$FQEAAPEAV12@XZ")
@@ -27,6 +35,46 @@ int PositionBase::GetPriority() const
 bool PositionBase::IsDead()
 {
     return is_dead_;
+}
+
+long PositionBase::GetClientHandle() const
+{
+    return client_handle_;
+}
+
+int PositionBase::GetBasePriority() const
+{
+    return base_priority_;
+}
+
+bool PositionBase::Invalidated() const
+{
+    return invalidated_;
+}
+
+bool PositionBase::TreatedReady() const
+{
+    return treated_ready_;
+}
+
+bool PositionBase::IsBusy()
+{
+    return is_busy_;
+}
+
+void PositionBase::SetNotifyComputing(bool notify)
+{
+    notify_computing_ = notify;
+}
+
+void PositionBase::ResetPriority()
+{
+    priority_ = base_priority_;
+}
+
+void PositionBase::ClearDParent()
+{
+    dparent_ = nullptr;
 }
 
 Position* Position::previous()

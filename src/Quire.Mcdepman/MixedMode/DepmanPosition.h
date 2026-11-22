@@ -21,6 +21,14 @@ public:
     long GetHandle() const;
     int GetPriority() const;
     bool IsDead();
+    long GetClientHandle() const;
+    int GetBasePriority() const;
+    bool Invalidated() const;
+    bool TreatedReady() const;
+    bool IsBusy();
+    void SetNotifyComputing(bool notify);
+    void ResetPriority();
+    void ClearDParent();
 
 private:
     DepManager* dep_manager_;                      // 0x08
