@@ -1,5 +1,16 @@
 # Msgen lane checkpoint
 
+## Batch 17 (`Quire.gen.Ctxt`: `Parent`, `Root`, `lookup`)
+
+- Owner: AGY, Orca task `task_6ef4c62e31da`. Branch `feature/msgen-agy-2`, from current `main`.
+- Members: `Ctxt::Parent`, `Ctxt::Root` (the original's null test is `brfalse` on the parent handle, so the ternary is written as `m_parent ? m_parent->Root() : this`), and the virtual `Ctxt::lookup(void*)` forwarding to the parent (exact Release IL).
+- Blocked: `PushCtxt`, `PopCtxt` and `PopCtxtFirst` need `Ctxt::BegCtxt` and `Ctxt::EndCtxt`, which the original declares abstract. Declaring them pure would make `CtxtMod` abstract, and the original `CtxtMod` implements them with bodies that need `Closure::Update`, `Closure::FinishClosure`, `IlAsm::SetEmitter` and `Rts.StackDepth`.
+- Still blocked: `CtxtTry` and therefore `EmitProlog` and `EmitEpilog`.
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 435 checked; 0 failures; 7 unfinished.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 16 (`Quire.gen.MethodFunction::EmitStackProbe`)
 
 - Owner: AGY, Orca task `task_863729880aea`. Branch `feature/msgen-agy-2`, from current `main`.

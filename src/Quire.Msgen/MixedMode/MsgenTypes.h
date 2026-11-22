@@ -338,6 +338,9 @@ namespace Quire { namespace gen {
         static __declspec(noinline) cli::array<MetaObj^>^ NewCtxtEnv(int sz);
 
         virtual void EmitBranch(IlEmit^ emit, Closure^ clo, Label lab);
+        Ctxt^ Parent();
+        Ctxt^ Root();
+        virtual MetaObj^ lookup(void* v);
     };
 
     [::Quire::Mirror::MirrorOfAttribute("gen.CtxtMod, msgen")]

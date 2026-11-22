@@ -661,4 +661,20 @@ namespace Quire { namespace gen {
             }
         }
     }
+    Ctxt^ Ctxt::Parent()
+    {
+        return m_parent;
+    }
+
+    Ctxt^ Ctxt::Root()
+    {
+        return m_parent ? m_parent->Root() : this;
+    }
+
+    MetaObj^ Ctxt::lookup(void* v)
+    {
+        MetaObj^ result = m_parent->lookup(v);
+        GC::KeepAlive(this);
+        return result;
+    }
 }}
