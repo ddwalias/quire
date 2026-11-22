@@ -1,5 +1,16 @@
 # Msgen lane checkpoint
 
+## Batch 23 (`Quire.gen.CtxtTry` subset: fields, `.ctor`, `lookup`, `EmitBranch`)
+
+- Owner: AGY, Orca task `task_f7ee5e725387`. Branch `feature/msgen-agy-2`, from current `main`.
+- Members: `CtxtTry` class with its seven fields, `.ctor(Ctxt, Type)` (in-class field initialisers match the original's stores), `lookup(void*)` (the ternary is written as `m_ExceptionVar == key ? m_ExceptionObj : Parent()->lookup(key)`, because the original branches with `bne.un`), and `EmitBranch` (exact Release IL).
+- Left out: `BegCtxt`, `EndCtxt`, `EmitReturn`, `BegHandler`, `EnterCatch`, `RetLabel`, `FallThroughLabel`. These need `Ctxt::BegCtxt`/`EndCtxt` declared on `Ctxt` (abstract in the original; declaring them would make `CtxtMod` abstract, and its own overrides are parked), plus `DefineLetVar`, `Protected`/`SetProtected`, and `Reachable`.
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 453 checked; 0 failures; 7 unfinished.
+- Parked: `CtxtMod::EndCtxt` (the original's `conv.u1` before the `!= 0` test is folded away by the candidate compiler).
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 22 (`ForeignConstructor::CallFunc`, `ForeignConstructor::LdVal`, `Constructor::FunctionValue`)
 
 - Owner: AGY, Orca task `task_5b449a6680d2`. Branch `feature/msgen-agy-2`, from current `main`.

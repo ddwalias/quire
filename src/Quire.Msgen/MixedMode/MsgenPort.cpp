@@ -809,4 +809,22 @@ namespace Quire { namespace gen {
         }
         GC::KeepAlive(this);
     }
+    CtxtTry::CtxtTry(Ctxt^ parent, Type^ ty)
+        : Ctxt(parent), m_protected(false), m_type(ty), m_BlockValue(nullptr), m_ret(0), m_fallthrough(0),
+          m_ExceptionObj(nullptr), m_ExceptionVar(nullptr)
+    {
+    }
+
+    MetaObj^ CtxtTry::lookup(void* key)
+    {
+        MetaObj^ result = ((m_ExceptionVar == key) ? m_ExceptionObj : Parent()->lookup(key));
+        GC::KeepAlive(this);
+        return result;
+    }
+
+    void CtxtTry::EmitBranch(IlEmit^ emit, Closure^, Label lab)
+    {
+        emit->emit_leave(lab);
+        GC::KeepAlive(this);
+    }
 }}

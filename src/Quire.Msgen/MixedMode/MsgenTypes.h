@@ -346,6 +346,26 @@ namespace Quire { namespace gen {
         virtual MetaObj^ lookup(void* v);
     };
 
+    [::Quire::Mirror::MirrorOfAttribute("gen.CtxtTry, msgen")]
+    ref class CtxtTry : public Ctxt
+    {
+    private:
+        bool m_protected;
+        Type^ m_type;
+        MetaObj^ m_BlockValue;
+        int m_ret;
+        int m_fallthrough;
+        Label m_label_1;
+        Label m_label_2;
+        MetaObj^ m_ExceptionObj;
+        void* m_ExceptionVar;
+
+    public:
+        CtxtTry(Ctxt^ parent, Type^ ty);
+        virtual MetaObj^ lookup(void* key) override;
+        virtual void EmitBranch(IlEmit^ emit, Closure^ clo, Label lab) override;
+    };
+
     [::Quire::Mirror::MirrorOfAttribute("gen.CtxtMod, msgen")]
     ref class CtxtMod : public Ctxt
     {
