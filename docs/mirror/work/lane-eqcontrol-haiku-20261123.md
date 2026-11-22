@@ -76,3 +76,8 @@
 - Exact: `IsResizeIndicator` (Mathcad compares against U+2026, U+22EE, U+22F0 and returns the U+22F1 comparison).
 - Parked: `ResizeIndicatorOnLoaded` (the `sender as` shape differs at #4), `ArrangeHeadingContent` (the `for` loop and `text != null && IndexOf` branch layout differ at #11; the heading ellipsis test is U+22EE, which is now in the candidate).
 - Gate (project-level): PASS; 3427 checked (`.mirror-cache/release-il-5a6ee6722eb1/release-il.json`).
+
+### Batch 11: Controls.Internal.VisualMatrixNode (GetNodeAtPoint, HookupMatrixResizeWidget)
+
+- Exact: `GetNodeAtPoint` (hit-test branches as written), `HookupMatrixResizeWidget` (the null check is nested positively, `if (equationControl != null) { ... }`, because Mathcad's `brfalse` jumps to the end; a guard return emitted `brtrue`).
+- Gate (project-level): PASS; 3429 checked (`.mirror-cache/release-il-44da2f95b648/release-il.json`).

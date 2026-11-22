@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Windows.Controls.Primitives;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -318,4 +319,60 @@ internal partial class VisualMatrixNode
         return false;
     }
 
+    internal override HitTestResult GetNodeAtPoint(Point hitPoint)
+    {
+        Point val = TransformToDescendant(_matrixGrid).Transform(hitPoint);
+        if (val.X < 0.0)
+        {
+            Point val2 = TransformToDescendant((Visual)LeftFence).Transform(hitPoint);
+            if (val2.X < 0.0)
+            {
+                return new VisualMathNodeHitTestResult(this, Direction.Left, Direction.Indeterminate, hitPoint);
+            }
+            return new VisualMathNodeHitTestResult(this, Direction.Indeterminate, Direction.Left, hitPoint);
+        }
+        if (val.X > _matrixGrid.ActualWidth)
+        {
+            Point val3 = TransformToDescendant((Visual)RightFence).Transform(hitPoint);
+            if (val3.X > ((FrameworkElement)RightFence).ActualWidth)
+            {
+                return new VisualMathNodeHitTestResult(this, Direction.Right, Direction.Indeterminate, hitPoint);
+            }
+            return new VisualMathNodeHitTestResult(this, Direction.Indeterminate, Direction.Right, hitPoint);
+        }
+        VisualMathNode visualMathNode = _matrixGrid.CellFromPoint(val);
+        GeneralTransform generalTransform = TransformToDescendant(visualMathNode);
+        return visualMathNode.GetNodeAtPoint(generalTransform.Transform(hitPoint));
+    }
+
+    private void HookupMatrixResizeWidget(object sender, MouseEventArgs eventArgs)
+    {
+        eventArgs.Handled = true;
+        EquationControl equationControl = this.TryFindVisualAncestor<EquationControl>();
+        if (equationControl != null)
+        {
+            if (!equationControl.IsKeyboardFocusWithin)
+            {
+                equationControl.Activate(isActive: true);
+            }
+            Popup popup = MatrixResizeWidget.CreatePopup(equationControl, this);
+            if (popup.Child is FrameworkElement)
+            {
+                AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(equationControl);
+                if (adornerLayer != null && VisualTreeHelper.GetParent(adornerLayer) is Visual visual)
+                {
+                    try
+                    {
+                        Transform layoutTransform = TransformToVisual(visual) as Transform;
+                        (popup.Child as FrameworkElement).LayoutTransform = layoutTransform;
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        _ = ex.Message;
+                        popup.IsOpen = false;
+                    }
+                }
+            }
+        }
+    }
 }

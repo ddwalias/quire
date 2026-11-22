@@ -30,10 +30,6 @@ internal partial class VisualMatrixNode : global::Quire.Controls.Internal.Visual
     [global::Quire.Mirror.MirrorStub]
     public VisualMatrixNode() { }
     [global::Quire.Mirror.MirrorStub]
-    private void HookupMatrixResizeWidget(object sender, global::System.Windows.Input.MouseEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void SetupResizeIndicatorBehaviour(global::Quire.Controls.Internal.VisualTextNode resizeIndicator) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
