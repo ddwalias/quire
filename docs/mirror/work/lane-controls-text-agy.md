@@ -153,3 +153,14 @@
 
 - `GetInsertionPointAtPointer(ref start)` is preceded by `ldarg.0; ldarg.1; callvirt get_Start; stloc.s 4; ldloca.s 4; call`: `this` is pushed before the `TextPointer` local is stored, the same receiver-first shape recorded for `SelectionStart`/`SelectionEnd`. A C# local declaration cannot store between a receiver and its `ref` argument. Parked with that family.
 - The rest (the `GetSameTypeRunRanges` call, the `direction == Backward` reverse, the struct `List<ValueTuple>.Enumerator` loop with `dup`/`ldfld` deconstruction, the `TryFindWholeWord` loop with `leave`) was not reproduced; not attempted.
+
+## Parked — four-parameter GetTextBoundary (evidence)
+
+- Entry guard (`AssertNotNull(range)`), enum `HasFlag` boxing and the `partialText`/`StringBuilder` loop shape are expressible.
+- Blocker: `stloc.s 4` stores the second `direction`-ternary while the first ternary's value (and `this` for `GetInsertionPosition`) is still on the evaluation stack. Same receiver-retention family as SelectionStart/End, SearchWholeWordRuns, GetPointerToAddDictionary and VerticalAlignmentOffset.
+
+## Shared blocker inventory (receiver retention and receiver call/callvirt)
+
+- Receiver retention (a local is stored while a receiver or first argument is on the stack; no C# form without `dup`): SelectionStart, SelectionEnd, GetEmbeddedObjectCaretOffset, GetPointerToAddDictionary, VerticalAlignmentOffset, SearchWholeWordRuns, GetTextBoundary (4-parameter), ContextMenuOpened (store of `handled` between element load and `Enum.GetValues`).
+- Receiver call-versus-callvirt on a `new` receiver (Quire emits `call`, Mathcad `callvirt`): CalculateBaseline (`new DocumentTextRange(...).Text`), OnPreviewBackspace (`new TextRange(...).Text`). InsertBaselineOffsetTag matched only after a named local that Mathcad lacks in these two methods.
+- Parked as well: SetStyleFromTextStyles (runIndex store order, literal `"Normal".Equals` call form, conditional branch layout), ToggleRangeToState (stloc before newobj), SubscriptsMatch (shared return), CreateTextChangedCommand (store after newobj), GetRangeIfMatch (dup of intermediate TextPointer).
