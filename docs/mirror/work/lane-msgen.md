@@ -2,17 +2,25 @@
 
 - Owner: AGY, Orca task `task_3e02aeb04edd` (continuing `task_cd3115e8168a`).
 - Branch: `feature/msgen-agy-2`.
-- Members (Batch 1):
-  - `Quire.gen.ResolvedForeignId` (9 exact methods preserved: `InitForeignIdCache`, `LoadField`, `ClearCache`, `CreateMetaObj`, `.ctor`, `CacheId`, `GobbleWhite`, `ArrayTypeFromElementType`, `.cctor`).
-  - `Quire.gen.IlGenMethod` (4/4 exact: `.ctor`, `StartMethod`, `EndMethod`, `GetEmit`).
-  - `Quire.gen.MetaObj` (initial exact batch: `.ctor(void*)`, `.ctor()`, `maxargs`, `Arity`, `ModuleScope`, `SetInstance`).
-  - `Quire.gen.Callable` (5 exact constructors + abstract virtuals).
-  - `Quire.gen.IlAsm` (10 exact static helpers: `IntType`, `DblType`, `ObjType`, `FcnType`, `TagType`, `VoidType`, `NumValCtor`, `GetParameterTypes` x2, `TranslateType`; temporary `[MirrorStub]` `.ctor(void*, AstInfo*, unsigned int)` placeholder).
-  - `Quire.gen.IlEmit` (57 exact methods: `.ctor`, `SetIlGenerator`, `GetIlGenerator`, `EmitProlog`, `EmitEpilog`, `EmitStackProbe`, `EmitReturn`, `Reachable`, `TracingEnabled`, `EnableTracing`, `Protected`, `SetProtected`, `DefineLocal`, `new_label`, `emit_label_ref` x2, `emit_label_def` x2, `Ldarg`, `Starg`, `Ldloc` x2, `Stloc` x2, `Ldloca`, `Ldsfld`, `Stsfld`, `Ldfld`, `Stfld`, `emit_double`, `emit_complex`, `emit_Double`, `emit_Int`, `emit_word` x2, `emit_handle`, `emit_string`, `emit_return`, `emit_leave`, `emit_branch`, `emit_raise` x2, `emit_rethrow`, `emit_pattern_match_failure`, `emit_begin_exception_block`, `emit_begin_catch_block`, `emit_begin_filter_block`, `emit_end_exception_block`, `emit_tailcall`, 14 `emit_instr` overloads).
-  - `<Module>` `gen.ToString(Substring<char const>)` exact.
-- Candidate Release IL report: `.mirror-cache/release-il-75d7185f86d9/release-il.json`.
-- Gate line: `Release IL: PASS; 185 checked; C:\Users\DuyDang\orca\workspaces\Quire\engutils-mgd-agy\.mirror-cache\release-il-75d7185f86d9\release-il.json`.
-- Remaining: 1 temporary `[MirrorStub]` (`IlAsm::.ctor`), plus remaining `gen.*` classes and methods across `msgen.dll`.
+- Members (Batch 2, cumulative):
+  - `Quire.gen.IlEmit` (**74/74 exact**, including `emit_call`, `emit_value_assertion`, `CreateParameterEnv` via `Hex::Error`/`Hex::OnError`, `Clo`, `ModuleScope`, `HasInstance`, `GetMethodFunction`, `DefineLocal(void*)`, all 3 ctors).
+  - `Quire.gen.MetaObj` (**43/45 exact**; remaining 2 static factories wait on `ForeignConstructor` / `ResolvedForeignId::ResolveForeignId` in Batch 3).
+  - `Quire.gen.Callable` (**28/30 exact**; `IlAssembler` and `Clo` are blocked stubs on `gen::CurrAsm()` / `gcroot<Quire::gen::IlAsm ^>` mangled name normalization).
+  - `Quire.gen.Closure` (**31/31 exact**).
+  - All 8 `Var` subclasses (**33/33 exact**): `ArgVar` (4/4), `LocalVar` (4/4), `FieldVar` (4/4), `StaticField` (5/5), `TopLevelVar` (3/3), `PropertyVar` (3/3), `ElementVar` (6/6), `TopLevelElementVar` (4/4).
+  - `Quire.gen.IlOpCode` (**9/9 exact**), `Quire.gen.IlMethod` (**8/8 exact**), `Quire.gen.LateBoundMethod` (**8/8 exact**).
+  - `Quire.gen.ForeignField` (**3/3 exact**), `Quire.gen.ForeignMethod` (**3/3 exact**).
+  - `Quire.gen.IlGenMethod` (**4/4 exact**), `Quire.gen.ResolvedForeignId` (9/16 exact).
+  - `Quire.gen.Ctxt` (2 exact: `.ctor`, `NewCtxtEnv`), `Quire.gen.CtxtMod` (3 exact: `.cctor`, `ModuleClosure`, `GetApplyMethod`; `.ctor` & `ForeignValue` placeholder stubs).
+  - `Quire.gen.IlAsm` (32 exact helpers including `AstInfo` 13-slot vtable dispatch and `Raise(Substring<const char>)`; `Raise(String^)` blocked stub on `std::string` CRT `new`/`delete[]`; `GetReturnType(Substring, uint64)` and `.ctor` temporary stubs).
+  - `<Module>` exact: `gen.ToString`, `IsDyn`, `IsTuple`, `IsStrVal`.
+- Candidate Release IL report: `.mirror-cache/release-il-8f4a16c07a54/release-il.json`.
+- Gate line: `Release IL: PASS; 378 checked; C:\Users\DuyDang\orca\workspaces\Quire\engutils-mgd-agy\.mirror-cache\release-il-8f4a16c07a54\release-il.json`.
+- Batch 1 landing: landed on `main` at `027638a3e` via `lane_merge.py`; receipt `C:\Projects\Quire\.mirror-cache\receipts\gate-il-f5bc976e1c3d.json`.
+- Concrete blockers identified:
+  1. `std::string` (`gen.ToStrng`, `IlAsm::Raise(String^)`, etc.) pulls in CRT `operator new` / `operator delete[]` native bodies whose machine code differs from Mathcad.
+  2. `gen.CurrAsm()` uses `gcroot<Quire::gen::IlAsm ^>` whose `<Module>` mangled name embeds `Quire::` (`gcroot<Quire::gen::IlAsm ^>..PE$AAVIlAsm@gen@Quire@@`), which MethodAudit does not normalize to `gcroot<gen::IlAsm ^>..PE$AAVIlAsm@gen@@`.
+- Remaining: `Closure` subclasses, `MethodFunction` / `IlEmit` subclasses, `Constructor` hierarchy, `DataRep`, `Ctxt` hierarchy, `ModuleEnv`, `IlAsm` remaining methods.
 
 ---
 

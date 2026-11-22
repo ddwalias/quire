@@ -19,7 +19,17 @@ namespace Quire { namespace gen {
     ref class Ctxt;
     ref class CtxtMod;
     ref class MethodFunction;
-    struct AstInfo;
+    ref class ArgVar;
+    ref class LocalVar;
+    ref class FieldVar;
+    ref class StaticField;
+    ref class TopLevelVar;
+    ref class PropertyVar;
+    ref class ElementVar;
+    ref class TopLevelElementVar;
+    ref class IlOpCode;
+    ref class IlMethod;
+    ref class LateBoundMethod;
 
     [::Quire::Mirror::MirrorOfAttribute("gen.IlGenMethod, msgen")]
     ref class IlGenMethod
@@ -62,6 +72,7 @@ namespace Quire { namespace gen {
         {
         }
 
+        MetaObj(const char* n);
         MetaObj(void* v);
 
         MetaObj()
@@ -70,10 +81,53 @@ namespace Quire { namespace gen {
         }
 
     public:
+        String^ Name();
+
+        [returnvalue: MarshalAs(UnmanagedType::U1)]
+        bool IsVar(void* v)
+        {
+            return m_var == v;
+        }
+
+        virtual void FinishClosure(IlAsm^, [MarshalAs(UnmanagedType::U1)] bool);
+        virtual void LdVal(IlEmit^ emit);
+        virtual void StVal(IlEmit^ emit);
         virtual int maxargs() { return 16; }
+
+        void ApplyFunc(IlEmit^ emit, int nargs, [MarshalAs(UnmanagedType::U1)] bool tail, Hex::Tag* einfo, Type^ return_type, cli::array<Type^>^ parameters);
+        virtual void PartialApplyFunc(IlEmit^ emit, int nargs, [MarshalAs(UnmanagedType::U1)] bool tail, Hex::Tag* einfo, Type^ return_type, cli::array<Type^>^ parameters);
+        virtual void LdFuncArg(IlEmit^ emit, Type^ return_type, cli::array<Type^>^ parameters);
+        virtual void BegArg(IlEmit^ emit, int i, int nargs);
+        void BegVectorArg(IlEmit^ emit, int i);
+        virtual void EndArg(IlEmit^ emit, int i, Type^ ty, int nargs);
+        virtual void EndArg(IlEmit^ emit, int i, Substring<const char> ty, int nargs);
+        void EndVectorArg(IlEmit^ emit, int i, Type^ ty);
+        void EndVectorArg(IlEmit^ emit, int i, Substring<const char> ty);
+        virtual void CallFunc(IlEmit^ emit, int nargs, [MarshalAs(UnmanagedType::U1)] bool tail, Hex::Tag* einfo, Type^ return_type, cli::array<Type^>^ parameters);
+        virtual Type^ RepresentationType();
         virtual int Arity() { return 0; }
         virtual [returnvalue: MarshalAs(UnmanagedType::U1)] bool ModuleScope() { return false; }
+        virtual void DeclareFunction(Hex::Tag* info, ms::Range<void* const> args, Type^ ty, cli::array<Type^>^ tys);
+        void DeclareFunction(ms::Range<void* const> args, Hex::Tag* info);
         virtual void SetInstance(MetaObj^) {}
+        virtual Object^ Invoke(cli::array<Object^>^ args);
+        virtual int Ordinal();
+
+        static MetaObj^ NewMetaObj(::Quire::Mpl::Run::Primitive^ prim);
+        static MetaObj^ NewMetaObj(String^ nm, FieldInfo^ mi);
+        static MetaObj^ NewMetaObj(String^ nm, MethodInfo^ mi);
+        static MetaObj^ NewMetaObj(String^ nm, MethodInfo^ mi, CallConv cc);
+        static MetaObj^ NewMetaObj(FieldInfo^ f);
+        static MetaObj^ NewMetaObj(String^ nm, System::Reflection::Emit::Quire::Mpl::LocalBuilder^ lb);
+        static MetaObj^ NewMetaObj(void* v, System::Reflection::Emit::Quire::Mpl::LocalBuilder^ lb);
+        static MetaObj^ NewMetaObj(void* v, MetaObj^ r, int i, Type^ unbox);
+        static MetaObj^ NewMetaObj(void* v, MetaObj^ r, Callable^ p);
+        static MetaObj^ NewMetaObj(void* v, MetaObj^ r, FieldInfo^ f);
+        static MetaObj^ NewMetaObj(String^ nm, int idx);
+        static MetaObj^ NewMetaObj(void* v, int idx);
+        static MetaObj^ NewMetaObj(void* v, FieldInfo^ f);
+        static MetaObj^ ModuleVar(String^ nm, MetaObj^ r, int i, Type^ unbox);
+        static MetaObj^ ModuleVar(void* v, MetaObj^ r, int i, Type^ unbox);
     };
 
     [::Quire::Mirror::MirrorOfAttribute("gen.Callable, msgen")]
@@ -120,10 +174,153 @@ namespace Quire { namespace gen {
         {
         }
 
+        // Blocked on gen::CurrAsm() / gcroot<Quire::gen::IlAsm ^> mangled name normalization.
+        [::Quire::Mirror::MirrorStub]
+        IlAsm^ IlAssembler()
+        {
+            throw ::Quire::Mirror::MirrorStub::NotImplemented();
+        }
+
+        MetaObj^ Function() { return m_function; }
+        MetaObj^ Delegate() { return m_delegate; }
+
+        virtual MetaObj^ DelegateValue();
+        virtual MetaObj^ FunctionValue();
+        virtual [returnvalue: MarshalAs(UnmanagedType::U1)] bool ModuleScope() override { return true; }
+        virtual void LdVal(IlEmit^ emit) override;
+        virtual void LdFuncArg(IlEmit^ emit, Type^ return_type, cli::array<Type^>^ parameters) override;
+
+        // Blocked on gen::CurrAsm() / gcroot<Quire::gen::IlAsm ^> mangled name normalization.
+        [::Quire::Mirror::MirrorStub]
+        virtual Closure^ Clo()
+        {
+            throw ::Quire::Mirror::MirrorStub::NotImplemented();
+        }
+        virtual Type^ ClosureType();
+        virtual [returnvalue: MarshalAs(UnmanagedType::U1)] bool LdClosure(IlEmit^ emit);
+        virtual [returnvalue: MarshalAs(UnmanagedType::U1)] bool LdClosureRecord(IlEmit^) { return false; }
+        void LdFunction(IlEmit^ emit);
+        void LdDelegate(IlEmit^ emit);
+
         virtual MethodInfo^ GetMethod([MarshalAs(UnmanagedType::U1)] bool may_emit) = 0;
         virtual Type^ ReturnType() = 0;
         virtual cli::array<Type^>^ MplParameterTypes() = 0;
         virtual int Arity() override = 0;
+        virtual Object^ Invoke(cli::array<Object^>^ args) override;
+        virtual void EmitDelegateValue(IlEmit^ emit);
+        virtual void EmitFunctionValue(IlEmit^ emit);
+        cli::array<Type^>^ DelegateParameterTypes();
+        cli::array<Type^>^ MethodParameterTypes();
+        Type^ GetDelegateType();
+        ConstructorInfo^ GetDelegateCtor();
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.Closure, msgen")]
+    ref class Closure : public MetaObj
+    {
+    private:
+        IlAsm^ m_ilasm;
+        Queue^ m_queue;
+
+        void QueueInitialization(Callable^ func);
+
+    protected:
+        MetaObj^ DfvImplementation(Callable^ func, ftype ty);
+        void EmitInitializations();
+        static cli::array<Type^>^ FilterVoid(Type^ sta, Type^ clo, cli::array<Type^>^ p);
+
+    public:
+        Closure(IlAsm^ il)
+            : MetaObj(), m_ilasm(il), m_queue(nullptr)
+        {
+        }
+
+        virtual MetaObj^ DefineVariable(void* f);
+        virtual MetaObj^ DefineVariable(String^ nm, Type^ ty);
+        virtual MetaObj^ DefineDynamicVariable(void* f, int ord);
+        virtual IlEmit^ DefineFunction(void* f);
+        MethodFunction^ DefineMethodFunction(String^ nm, Type^ ty, cli::array<Type^>^ tys);
+        MethodFunction^ DefineMethodFunction(void* f);
+        virtual MethodFunction^ NewMethodFunction(String^ nm, Closure^ clo, Type^ ty, cli::array<Type^>^ tys);
+        virtual MethodFunction^ NewMethodFunction(void* f, Closure^ clo);
+        IlAsm^ IlAssembler();
+        virtual [returnvalue: MarshalAs(UnmanagedType::U1)] bool HasInstance() { return false; }
+        virtual [returnvalue: MarshalAs(UnmanagedType::U1)] bool ModuleScope() override { return true; }
+        virtual [returnvalue: MarshalAs(UnmanagedType::U1)] bool Static();
+        virtual Type^ GetInstanceType();
+        virtual int ClosureArgs() { return 0; }
+        virtual Type^ DynClosureType() { return nullptr; }
+        virtual Type^ StaClosureType() { return nullptr; }
+        virtual cli::array<MetaObj^>^ Exports();
+        virtual IlGenMethod^ CreateMethod(String^ nm, Type^ rtype, cli::array<Type^>^ actuals);
+        virtual MetaObj^ DefineConstant(double re, double im);
+        virtual System::Reflection::Emit::Quire::Mpl::ModuleBuilder^ Builder();
+        virtual IlEmit^ Update();
+        virtual Delegate^ UpdateDelegate();
+        virtual MetaObj^ DefineFunctionValue(Callable^, ftype) { return nullptr; }
+        virtual void EmitFunctionInitialization(Callable^ func);
+        cli::array<Type^>^ MethodParameterTypes(cli::array<Type^>^ p);
+        cli::array<Type^>^ DelegateParameterTypes(cli::array<Type^>^ p);
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.Ctxt, msgen")]
+    ref class Ctxt abstract
+    {
+    private:
+        Ctxt^ m_parent;
+
+    public:
+        Ctxt(Ctxt^ parent)
+            : m_parent(parent)
+        {
+        }
+
+        static cli::array<MetaObj^>^ NewCtxtEnv(int sz)
+        {
+            return gcnew cli::array<MetaObj^>(sz);
+        }
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.CtxtMod, msgen")]
+    ref class CtxtMod : public Ctxt
+    {
+    private:
+        IlAsm^ const m_ilasm;
+        System::Reflection::Emit::ModuleBuilder^ m_module_builder;
+        Hashtable^ m_cache;
+        static cli::array<wchar_t>^ m_fid_punctuation;
+        const unsigned int m_compilation_options;
+        cli::array<MetaObj^>^ m_env;
+        int m_envsize;
+        Closure^ m_clo;
+        IlEmit^ m_update;
+        MetaObj^ m_calldepth;
+
+        static CtxtMod()
+        {
+            m_fid_punctuation = String::Intern(".:")->ToCharArray();
+        }
+
+    public:
+        [::Quire::Mirror::MirrorStub]
+        CtxtMod(IlAsm^ ilasm, unsigned int compilation_options, System::Reflection::Emit::Quire::Mpl::TypeBuilder^)
+            : Ctxt(nullptr), m_ilasm(ilasm), m_compilation_options(compilation_options)
+        {
+            throw ::Quire::Mirror::MirrorStub::NotImplemented();
+        }
+
+        Closure^ ModuleClosure()
+        {
+            return m_clo;
+        }
+
+        MethodInfo^ GetApplyMethod(Type^ return_type, cli::array<Type^>^ parameters);
+
+        [::Quire::Mirror::MirrorStub]
+        MetaObj^ ForeignValue(String^)
+        {
+            throw ::Quire::Mirror::MirrorStub::NotImplemented();
+        }
     };
 
     [::Quire::Mirror::MirrorOfAttribute("gen.IlAsm, msgen")]
@@ -131,7 +328,7 @@ namespace Quire { namespace gen {
     {
     private:
         static bool m_statics_initialized;
-        static AstInfo* m_info;
+        static ::gen::AstInfo* m_info;
         static int m_counter;
         static Type^ m_int_type;
         static Type^ m_dbl_type;
@@ -153,7 +350,7 @@ namespace Quire { namespace gen {
 
     public:
         [::Quire::Mirror::MirrorStub]
-        IlAsm(void*, AstInfo*, unsigned int)
+        IlAsm(void*, ::gen::AstInfo*, unsigned int)
         {
             throw ::Quire::Mirror::MirrorStub::NotImplemented();
         }
@@ -162,12 +359,47 @@ namespace Quire { namespace gen {
         static Type^ DblType();
         static Type^ ObjType();
         static Type^ FcnType();
+        static Type^ DelegateType();
         static Type^ TagType();
         static Type^ VoidType();
         static MethodInfo^ NumValCtor();
+        static String^ FieldName(int i);
+        static cli::array<String^>^ FieldNames(int n);
+        static String^ NewName();
+        static String^ NewName(String^ prefix);
+        [::Quire::Mirror::MirrorStub]
+        static void Raise(String^)
+        {
+            throw ::Quire::Mirror::MirrorStub::NotImplemented();
+        }
+        static void Raise(Substring<const char> m);
+        static [returnvalue: MarshalAs(UnmanagedType::U1)] bool Exported(void* v);
+        static const char* Name(void*** d);
+        static const char* Name(void** c);
+        static String^ Name(void* v);
+        static const char* ModuleName(void** c);
+        static int Arity(void** c);
+        static int GetTag(void** c);
+        static int GetSpan(void*** d);
+        static void** GetConstructor(void*** d, int i);
+        static Constructor^ DynConstructor();
+        static Constructor^ KeyConstructor();
+        static Type^ GetValueType(void* v);
+        static cli::array<Type^>^ GetConParameters(void** c);
+        // Temporarily stubbed while isolating Range::drop uint64 temp spill.
+        [::Quire::Mirror::MirrorStub]
+        static Type^ GetReturnType(Substring<const char> ty, unsigned long long arity);
+        static Type^ GetReturnType(void* v, unsigned long long arity);
         static cli::array<Type^>^ GetParameterTypes(MethodBase^ mb, [MarshalAs(UnmanagedType::U1)] bool is_static);
         static cli::array<Type^>^ GetParameterTypes(MethodBase^ mb);
+        static cli::array<Type^>^ GetParameterTypes(Substring<const char> ty, unsigned long long arity);
+        static cli::array<Type^>^ GetParameterTypes(void* v, unsigned long long arity);
         static Type^ TranslateType(Substring<const char> ty);
+
+        MetaObj^ ForeignValue(String^ fid);
+        MetaObj^ ForeignValue(Substring<const char> fid);
+        Closure^ ModuleClosure();
+        MethodInfo^ GetApplyMethod(Type^ return_type, cli::array<Type^>^ parameters);
     };
 
     [::Quire::Mirror::MirrorOfAttribute("gen.IlEmit, msgen")]
@@ -191,6 +423,11 @@ namespace Quire { namespace gen {
         {
         }
 
+        IlEmit(String^ nm, Closure^ clo, System::Reflection::Emit::Quire::Mpl::ILGenerator^ il);
+        IlEmit(void* v, Closure^ clo, System::Reflection::Emit::Quire::Mpl::ILGenerator^ il);
+
+        virtual Closure^ Clo() override { return m_clo; }
+
         void SetIlGenerator(System::Reflection::Emit::Quire::Mpl::ILGenerator^ il)
         {
             m_il = il;
@@ -200,6 +437,10 @@ namespace Quire { namespace gen {
         {
             return m_il;
         }
+
+        virtual [returnvalue: MarshalAs(UnmanagedType::U1)] bool ModuleScope() override;
+        [returnvalue: MarshalAs(UnmanagedType::U1)] bool HasInstance();
+        virtual cli::array<MetaObj^>^ CreateParameterEnv(ms::Range<void* const> args);
 
         virtual void EmitProlog(IlAsm^, [MarshalAs(UnmanagedType::U1)] bool) {}
         virtual void EmitEpilog(IlAsm^) {}
@@ -219,6 +460,8 @@ namespace Quire { namespace gen {
 
         void SetProtected([MarshalAs(UnmanagedType::U1)] bool protect) { m_protected = protect; }
 
+        virtual MethodFunction^ GetMethodFunction();
+        System::Reflection::Emit::Quire::Mpl::LocalBuilder^ DefineLocal(void* v);
         System::Reflection::Emit::Quire::Mpl::LocalBuilder^ DefineLocal(Type^ ty);
         Label new_label();
         Label emit_label_ref(OpCode op);
@@ -238,6 +481,7 @@ namespace Quire { namespace gen {
         void Ldfld(FieldInfo^ fi);
         void Stfld(FieldInfo^ fi);
 
+        void emit_value_assertion();
         void emit_double(const double val);
         void emit_complex(const double re, const double im);
         void emit_Double(const double re);
@@ -257,6 +501,7 @@ namespace Quire { namespace gen {
         void emit_begin_catch_block(Type^ ty);
         void emit_begin_filter_block();
         void emit_end_exception_block();
+        void emit_call(Hex::Tag* einfo, OpCode op, MethodInfo^ mi);
         void emit_tailcall();
 
         void emit_instr(OpCode op, Type^ ty)
@@ -340,6 +585,214 @@ namespace Quire { namespace gen {
         }
     };
 
+    [::Quire::Mirror::MirrorOfAttribute("gen.ArgVar, msgen")]
+    ref class ArgVar : public MetaObj
+    {
+    private:
+        int m_index;
+
+    public:
+        ArgVar(String^ nm, int index)
+            : MetaObj(nm), m_index(index)
+        {
+        }
+
+        ArgVar(void* v, int index)
+            : MetaObj(v), m_index(index)
+        {
+        }
+
+        virtual void LdVal(IlEmit^ emit) override;
+        virtual void StVal(IlEmit^ emit) override;
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.LocalVar, msgen")]
+    ref class LocalVar : public MetaObj
+    {
+    private:
+        System::Reflection::Emit::Quire::Mpl::LocalBuilder^ m_local;
+
+    public:
+        LocalVar(String^ nm, System::Reflection::Emit::Quire::Mpl::LocalBuilder^ local);
+        LocalVar(void* v, System::Reflection::Emit::Quire::Mpl::LocalBuilder^ local);
+        virtual void LdVal(IlEmit^ emit) override;
+        virtual void StVal(IlEmit^ emit) override;
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.FieldVar, msgen")]
+    ref class FieldVar : public MetaObj
+    {
+    private:
+        MetaObj^ m_record;
+        FieldInfo^ m_field;
+
+    public:
+        FieldVar(void* v, MetaObj^ rec, FieldInfo^ field)
+            : MetaObj(v), m_record(rec), m_field(field)
+        {
+        }
+
+        virtual [returnvalue: MarshalAs(UnmanagedType::U1)] bool ModuleScope() override;
+        virtual void LdVal(IlEmit^ emit) override;
+        virtual void StVal(IlEmit^ emit) override;
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.StaticField, msgen")]
+    ref class StaticField : public MetaObj
+    {
+    protected:
+        FieldInfo^ m_field;
+
+    public:
+        StaticField(FieldInfo^ field)
+            : MetaObj(), m_field(field)
+        {
+        }
+
+        StaticField(String^ nm, FieldInfo^ field)
+            : MetaObj(nm), m_field(field)
+        {
+        }
+
+        StaticField(void* v, FieldInfo^ field)
+            : MetaObj(v), m_field(field)
+        {
+        }
+
+        virtual void LdVal(IlEmit^ emit) override;
+        virtual [returnvalue: MarshalAs(UnmanagedType::U1)] bool ModuleScope() override { return true; }
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.TopLevelVar, msgen")]
+    ref class TopLevelVar : public StaticField
+    {
+    public:
+        TopLevelVar(String^ nm, FieldInfo^ field)
+            : StaticField(nm, field)
+        {
+        }
+
+        TopLevelVar(void* v, FieldInfo^ field)
+            : StaticField(v, field)
+        {
+        }
+
+        virtual void StVal(IlEmit^ emit) override;
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.PropertyVar, msgen")]
+    ref class PropertyVar : public MetaObj
+    {
+    private:
+        MetaObj^ m_record;
+        Callable^ m_prop_get;
+        cli::array<Type^>^ m_get_param;
+
+    public:
+        PropertyVar(void* v, MetaObj^ rec, Callable^ prop);
+        virtual [returnvalue: MarshalAs(UnmanagedType::U1)] bool ModuleScope() override;
+        virtual void LdVal(IlEmit^ emit) override;
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.ElementVar, msgen")]
+    ref class ElementVar : public MetaObj
+    {
+    protected:
+        MetaObj^ m_record;
+        int m_index;
+        Type^ m_unbox;
+
+    public:
+        ElementVar(String^ nm, MetaObj^ rec, int index, Type^ unbox)
+            : MetaObj(nm), m_record(rec), m_index(index), m_unbox(unbox)
+        {
+        }
+
+        ElementVar(void* v, MetaObj^ rec, int index, Type^ unbox)
+            : MetaObj(v), m_record(rec), m_index(index), m_unbox(unbox)
+        {
+        }
+
+        virtual [returnvalue: MarshalAs(UnmanagedType::U1)] bool ModuleScope() override;
+        virtual Type^ RepresentationType() override { return m_unbox; }
+        virtual void LdVal(IlEmit^ emit) override;
+        virtual void StVal(IlEmit^ emit) override;
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.TopLevelElementVar, msgen")]
+    ref class TopLevelElementVar : public ElementVar
+    {
+    public:
+        TopLevelElementVar(void* v, MetaObj^ rec, int index, Type^ unbox)
+            : ElementVar(v, rec, index, unbox)
+        {
+        }
+
+        TopLevelElementVar(String^ nm, MetaObj^ rec, int index, Type^ unbox)
+            : ElementVar(nm, rec, index, unbox)
+        {
+        }
+
+        virtual int Ordinal() override { return m_index; }
+        virtual [returnvalue: MarshalAs(UnmanagedType::U1)] bool ModuleScope() override { return true; }
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.IlOpCode, msgen")]
+    ref class IlOpCode : public Callable
+    {
+    private:
+        cli::array<OpCode>^ m_op;
+        ::Quire::Mpl::Run::Code^ m_code;
+        int m_arity;
+
+    public:
+        IlOpCode(::Quire::Mpl::Run::Primitive^ p);
+        virtual int Arity() override { return m_arity; }
+        virtual Type^ ReturnType() override;
+        virtual cli::array<Type^>^ MplParameterTypes() override;
+        virtual MethodInfo^ GetMethod([MarshalAs(UnmanagedType::U1)] bool) override { return m_method; }
+        virtual void CallFunc(IlEmit^ emit, int nargs, [MarshalAs(UnmanagedType::U1)] bool tail, Hex::Tag* einfo, Type^ return_type, cli::array<Type^>^ parameters) override;
+        virtual void BegArg(IlEmit^ emit, int i, int nargs) override;
+        virtual void EndArg(IlEmit^ emit, int i, Substring<const char> ty, int nargs) override;
+        virtual void EndArg(IlEmit^ emit, int i, Type^ ty, int nargs) override;
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.IlMethod, msgen")]
+    ref class IlMethod : public Callable
+    {
+    private:
+        CallConv m_cc;
+        int m_arity;
+
+    public:
+        IlMethod(String^ nm, MethodInfo^ mi, CallConv cc);
+        IlMethod(::Quire::Mpl::Run::Primitive^ prim);
+        virtual int Arity() override { return m_arity; }
+        virtual Type^ ReturnType() override;
+        virtual cli::array<Type^>^ MplParameterTypes() override;
+        virtual MethodInfo^ GetMethod([MarshalAs(UnmanagedType::U1)] bool) override { return m_method; }
+        virtual void CallFunc(IlEmit^ emit, int nargs, [MarshalAs(UnmanagedType::U1)] bool tail, Hex::Tag* einfo, Type^ return_type, cli::array<Type^>^ parameters) override;
+        virtual Object^ Invoke(cli::array<Object^>^ args) override;
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.LateBoundMethod, msgen")]
+    ref class LateBoundMethod : public Callable
+    {
+    private:
+        String^ m_foreign;
+        Callable^ m_impl;
+
+    public:
+        LateBoundMethod(::Quire::Mpl::Run::Primitive^ prim);
+        Callable^ GetImpl();
+        virtual int Arity() override;
+        virtual Type^ ReturnType() override;
+        virtual cli::array<Type^>^ MplParameterTypes() override;
+        virtual void CallFunc(IlEmit^ emit, int nargs, [MarshalAs(UnmanagedType::U1)] bool tail, Hex::Tag* einfo, Type^ return_type, cli::array<Type^>^ parameters) override;
+        virtual MethodInfo^ GetMethod([MarshalAs(UnmanagedType::U1)] bool may_emit) override;
+        virtual Object^ Invoke(cli::array<Object^>^ args) override;
+    };
+
     [::Quire::Mirror::MirrorOfAttribute("gen.ResolvedForeignId, msgen")]
     ref class ResolvedForeignId abstract
     {
@@ -401,6 +854,47 @@ namespace Quire { namespace gen {
                 return nullptr;
             return Array::CreateInstance(element, 0)->GetType();
         }
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.ForeignField, msgen")]
+    ref class ForeignField : public ResolvedForeignId
+    {
+    private:
+        FieldInfo^ m_fi;
+
+    public:
+        ForeignField(String^ id, FieldInfo^ fi)
+            : ResolvedForeignId(id), m_fi(fi)
+        {
+            CacheId();
+        }
+
+        virtual MetaObj^ CreateMetaObj(IlAsm^) override;
+        virtual Object^ LoadField() override;
+    };
+
+    [::Quire::Mirror::MirrorOfAttribute("gen.ForeignMethod, msgen")]
+    ref class ForeignMethod : public ResolvedForeignId
+    {
+    private:
+        MethodInfo^ m_mi;
+        String^ m_name;
+        CallConv m_conv;
+
+    public:
+        ForeignMethod(String^ id, String^ name, MethodInfo^ mi, CallConv conv)
+            : ResolvedForeignId(id), m_mi(mi), m_name(name), m_conv(conv)
+        {
+            CacheId();
+        }
+
+        ForeignMethod(String^ id, String^ name, MethodInfo^ mi)
+            : ResolvedForeignId(id), m_mi(mi), m_name(name), m_conv(CallConv_Default)
+        {
+            CacheId();
+        }
+
+        virtual MetaObj^ CreateMetaObj(IlAsm^) override;
     };
 
 }}

@@ -2,9 +2,60 @@
 
 namespace Quire { namespace gen {
 
+    // Defined out-of-line so IlAsm::GetReturnType(void*, uint64) in MsgenPort.cpp calls it rather than inlining the stub.
+    Type^ IlAsm::GetReturnType(Substring<const char>, unsigned long long)
+    {
+        throw ::Quire::Mirror::MirrorStub::NotImplemented();
+    }
+
+    IlEmit::IlEmit(String^ nm, Closure^ clo, System::Reflection::Emit::Quire::Mpl::ILGenerator^ il)
+        : Callable(clo->IlAssembler(), nm), m_clo(clo), m_il(il), m_reachable(true),
+          m_tracing(false), m_protected(false), m_current_handle(0)
+    {
+        GC::KeepAlive(this);
+    }
+
+    IlEmit::IlEmit(void* v, Closure^ clo, System::Reflection::Emit::Quire::Mpl::ILGenerator^ il)
+        : Callable(clo->IlAssembler(), v), m_clo(clo), m_il(il), m_reachable(true),
+          m_tracing(false), m_protected(false), m_current_handle(0)
+    {
+        GC::KeepAlive(this);
+    }
+
+    bool IlEmit::ModuleScope()
+    {
+        return m_clo->ModuleScope();
+    }
+
+    bool IlEmit::HasInstance()
+    {
+        return m_clo->HasInstance();
+    }
+
+#pragma warning(push)
+#pragma warning(disable: 4702)
+    // Match Mathcad's unreachable return nullptr after noreturn Hex::OnError.
+    cli::array<MetaObj^>^ IlEmit::CreateParameterEnv(ms::Range<void* const>)
+    {
+        Hex::OnError(Hex::Error(63) << "CreateParameterEnv");
+        return nullptr;
+    }
+#pragma warning(pop)
+
     void IlEmit::EmitReturn()
     {
         emit_return();
+    }
+
+    MethodFunction^ IlEmit::GetMethodFunction()
+    {
+        // Comma expression places ldnull on stack before GC::KeepAlive(this) to match Mathcad IL.
+        return (IlAsm::Raise("not implemented"), static_cast<MethodFunction^>(nullptr));
+    }
+
+    System::Reflection::Emit::Quire::Mpl::LocalBuilder^ IlEmit::DefineLocal(void* v)
+    {
+        return DefineLocal(IlAsm::GetValueType(v));
     }
 
     System::Reflection::Emit::Quire::Mpl::LocalBuilder^ IlEmit::DefineLocal(Type^ ty)
@@ -166,6 +217,14 @@ namespace Quire { namespace gen {
         emit_instr(OpCodes::Stfld, fi);
     }
 
+    void IlEmit::emit_value_assertion()
+    {
+        if (m_tracing && ReturnType() == Object::typeid)
+        {
+            emit_call(nullptr, OpCodes::Call, ::Quire::Mcd::NumVal::typeid->GetMethod("NotNoValue"));
+        }
+    }
+
     void IlEmit::emit_double(const double val)
     {
         emit_instr(OpCodes::Ldc_R8, val);
@@ -314,6 +373,25 @@ namespace Quire { namespace gen {
     {
         m_il->EndExceptionBlock();
         m_reachable = true;
+    }
+
+    void IlEmit::emit_call(Hex::Tag* einfo, OpCode op, MethodInfo^ mi)
+    {
+        if (m_tracing)
+        {
+            unsigned int handle = (einfo != nullptr) ? einfo->GetHandle() : 0;
+            if (static_cast<int>(handle) != m_current_handle)
+            {
+                m_current_handle = static_cast<int>(handle);
+                emit_word(static_cast<int>(handle));
+                m_einfo_local->StVal(this);
+            }
+            emit_instr(op, mi);
+        }
+        else
+        {
+            emit_instr(op, mi);
+        }
     }
 
     void IlEmit::emit_tailcall()

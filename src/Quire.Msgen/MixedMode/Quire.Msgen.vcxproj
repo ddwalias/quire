@@ -52,6 +52,7 @@
   <ItemGroup>
     <ClCompile Include="MsgenPort.cpp" />
     <ClCompile Include="IlEmit.cpp" />
+    <ClCompile Include="MetaObj.cpp" />
   </ItemGroup>
   <!-- Managed references passed with /FU -->
   <PropertyGroup>
