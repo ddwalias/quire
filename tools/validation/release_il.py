@@ -255,6 +255,30 @@ def compare(before, after, types=(), methods=(), everything=False):
     """
     old = {m['id']: m for m in before['methods']}
     new = {m['id']: m for m in after['methods']}
+    # Adding or removing an overload causes MethodAudit to add or remove its modifier suffix. Align only a unique
+    # pair with the same declared signature and the same original metadata token, preserving all exactness checks.
+    def original_identity(row):
+        origin = row.get('original') or {}
+        if not all(origin.get(k) for k in ('assembly', 'sha256', 'token')) or not row.get('declared_signature'):
+            return None
+        return (row.get('project'), row.get('type'), row['declared_signature'],
+                origin['assembly'], origin['sha256'], origin['token'])
+
+    old_originals, new_originals = {}, {}
+    for rows, grouped in ((old, old_originals), (new, new_originals)):
+        for key, row in rows.items():
+            if (identity := original_identity(row)) is not None:
+                grouped.setdefault(identity, []).append(key)
+    for identity, old_keys in old_originals.items():
+        new_keys = new_originals.get(identity, [])
+        if len(old_keys) != 1 or len(new_keys) != 1:
+            continue
+        old_key, new_key = old_keys[0], new_keys[0]
+        base = f"{identity[0]}::{identity[1]}::{identity[2]}"
+        if old_key != new_key and old_key not in new and new_key not in old and (
+                old_key == base and new_key.startswith(base + ' [')
+                or new_key == base and old_key.startswith(base + ' [')):
+            old[new_key] = old.pop(old_key)
     # A compiler-generated member renumbered by an unrelated declaration change is the same member.
     renumbered = {}
     for m in before['methods']:

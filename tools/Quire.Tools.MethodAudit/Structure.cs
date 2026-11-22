@@ -425,8 +425,9 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                 string ownerNamespace = md.GetString(owner.Namespace);
                 string ownerFullName = ownerNamespace.Length == 0 ? ownerName : ownerNamespace + "." + ownerName;
                 string mappedOwner = self is null ? ownerFullName : bind?.Invoke(self, ownerFullName)?[0] ?? ownerFullName;
-                string methodName = md.GetString(method.Name);
-                string? normalized = LocalStaticName(name, ownerFullName, mappedOwner, methodName);
+                var methods = owner.GetMethods().Select(h => md.GetString(md.GetMethodDefinition(h).Name));
+                var (methodName, normalized) = ResolveLocalStaticName(name, ownerFullName, mappedOwner,
+                    md.GetString(method.Name), methods);
                 if (normalized is not null)
                 {
                     var key = (context, normalized);
@@ -470,6 +471,16 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
     /// <summary>Only a unique compiler initializer can use a path-independent inventory identity.</summary>
     internal static string ModuleInitializerIdentity(string name, string rawKey, string normalizedKey, int count) =>
         count == 1 && AnonymousModuleInitializerName(name) is not null ? normalizedKey : rawKey;
+
+    /// <summary>Also resolve a static from an inlined method of this type, if its declaring name is unambiguous.</summary>
+    internal static (string Method, string? Name) ResolveLocalStaticName(string field, string owner, string mappedOwner,
+        string contextMethod, IEnumerable<string> methods)
+    {
+        string? direct = LocalStaticName(field, owner, mappedOwner, contextMethod);
+        if (direct is not null) return (contextMethod, direct);
+        var matches = methods.Where(method => LocalStaticName(field, owner, mappedOwner, method) is not null).ToArray();
+        return matches.Length == 1 ? (matches[0], LocalStaticName(field, owner, mappedOwner, matches[0])) : (contextMethod, null);
+    }
 
     /// <summary>Map a function-local MSVC static field through its enclosing type's reviewed name. The optional
     /// anonymous-module prefix depends on the source path; the scope ordinal and complete method suffix remain.</summary>

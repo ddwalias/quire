@@ -106,6 +106,18 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         result = compare(inventory(method(exact=False)), inventory())
         self.assertEqual(result['failures'][0]['reason'], 'method removed')
 
+    def test_new_modifier_overload_keeps_prior_exact_obligation(self):
+        original = {'assembly': 'A', 'sha256': 'hash', 'token': 42}
+        prior = dict(method(), project='P', declared_signature='M', original=original)
+        same = dict(prior, id='P::T::M [modopt(const)]', signature='M [modopt(const)]')
+        overload = dict(prior, id='P::T::M [modopt(move)]', signature='M [modopt(move)]',
+                        original=dict(original, token=43))
+        self.assertTrue(compare(inventory(prior), inventory(same, overload))['passed'])
+        self.assertFalse(compare(inventory(prior), inventory(dict(same, exact_match=False), overload))['passed'])
+        self.assertFalse(compare(inventory(prior), inventory(overload))['passed'])
+        self.assertFalse(compare(inventory(prior), inventory(same, dict(overload, original=original)))['passed'])
+        self.assertTrue(compare(inventory(same, overload), inventory(prior))['failures'])  # move overload removed
+
     def test_removed_method_is_moved_only_to_an_exact_counterpart_in_another_project(self):
         removed = method(project='Quire.Mcd')
         moved = method(project='Quire.Mcdepman')
@@ -700,6 +712,12 @@ string Identity(string name, int count) => StructureReader.ModuleInitializerIden
 Check(Identity(firstInit, 1) == Identity(secondInit, 1));
 Check(Identity(firstInit, 2) != Identity(secondInit, 2));
 Check(Identity("?A0x0144f16f.??__E?A0xd2f58043@sVerboseTrace@@YMXXZ", 1).StartsWith("?A0x0144f16f."));
+string inlined = "?$TSS0@?1??GetTimer@Timing@Engine@Quire@@CMPEAVPerformanceTimer@utl@@XZ@4HA";
+var resolved = StructureReader.ResolveLocalStaticName(inlined, "Quire.Engine.Timing", "Engine.Timing", "Start", ["Start", "GetTimer"]);
+Check(resolved.Method == "GetTimer" && resolved.Name == Map(inlined, "Quire.Engine.Timing", "Engine.Timing", "GetTimer"));
+Check(StructureReader.ResolveLocalStaticName(inlined, "Quire.Engine.Timing", "Engine.Timing", "Start", ["Start"]).Name == null);
+Check(StructureReader.ResolveLocalStaticName(inlined, "Quire.Engine.Timing", "Engine.Timing", "Start", ["GetTimer", "GetTimer"]).Name == null);
+Check(StructureReader.ResolveLocalStaticName(inlined, "Quire.Engine.Other", "Engine.Other", "Start", ["GetTimer"]).Name == null);
 ''')
             result = subprocess.run(['dotnet', 'run', '--project', str(work / 'Test.csproj'),
                                      '--configuration', 'Release'], capture_output=True, text=True)
