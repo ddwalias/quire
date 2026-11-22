@@ -637,6 +637,26 @@ namespace Quire { namespace gen {
         virtual MethodInfo^ GetMethod([MarshalAs(UnmanagedType::U1)] bool may_emit) override;
     };
 
+    [::Quire::Mirror::MirrorOfAttribute("gen.MethodFunction, msgen")]
+    ref class MethodFunction : public IlEmit
+    {
+    private:
+        int m_arity;
+        Type^ m_return_type;
+        cli::array<Type^>^ m_param_types;
+
+    public:
+        MethodFunction(void* f, Closure^ clo);
+        virtual int Arity() override;
+        virtual Type^ ReturnType() override;
+        virtual cli::array<Type^>^ MplParameterTypes() override;
+        virtual MethodInfo^ GetMethod([MarshalAs(UnmanagedType::U1)] bool may_emit) override;
+        virtual MethodFunction^ GetMethodFunction() override;
+        virtual [returnvalue: MarshalAs(UnmanagedType::U1)] bool LdClosureRecord(IlEmit^ emit) override;
+        virtual Type^ ClosureType() override;
+        virtual void CallFunc(IlEmit^ emit, int nargs, [MarshalAs(UnmanagedType::U1)] bool tail, Hex::Tag* einfo, Type^ return_type, cli::array<Type^>^ parameters) override;
+    };
+
     [::Quire::Mirror::MirrorOfAttribute("gen.ArgVar, msgen")]
     ref class ArgVar : public MetaObj
     {

@@ -1,5 +1,16 @@
 # Msgen lane checkpoint
 
+## Batch 8 (`Quire.gen.MethodFunction`, subset)
+
+- Owner: AGY, Orca task `task_4fa0e5aab024`. Branch `feature/msgen-agy-2`, from current `main`.
+- Members: class `MethodFunction : IlEmit` with fields `m_arity`, `m_return_type`, `m_param_types`; `.ctor(void*, Closure)`, `Arity`, `ReturnType`, `MplParameterTypes`, `GetMethod`, `GetMethodFunction`, `LdClosureRecord`, `ClosureType`, `CallFunc` (exact Release IL).
+- Left out: the `string` and `sbyte*` constructors (need `ms::Range`/`Unsafe` and `ToString` of a substring), `DeclareFunction` and `CreateParameterEnv` (need the `Range` path and `VoidConstructor`), and `EmitProlog`/`EmitEpilog`/`EmitStackProbe` (need `AppException` reflection and the `m_einfo_local` tracing path). These are Mathcad members with no Quire counterpart yet.
+- `ContinuationClo::DefineFunction` remains blocked on `ContinuationFunction`, which needs the `DeclareFunction` path.
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 406 checked; 0 failures; 7 unfinished.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 7 (`Quire.gen.ContinuationClo`, partial)
 
 - Owner: AGY, Orca task `task_5692e63e3586`. Branch `feature/msgen-agy-2`, from current `main`.

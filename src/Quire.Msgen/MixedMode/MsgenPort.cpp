@@ -365,4 +365,62 @@ namespace Quire { namespace gen {
         IlAsm::Raise("invalid continuation");
         GC::KeepAlive(this);
     }
+    MethodFunction::MethodFunction(void* f, Closure^ clo)
+        : IlEmit(f, clo, nullptr), m_arity(-1)
+    {
+    }
+
+    int MethodFunction::Arity()
+    {
+        return m_arity;
+    }
+
+    Type^ MethodFunction::ReturnType()
+    {
+        return m_return_type;
+    }
+
+    cli::array<Type^>^ MethodFunction::MplParameterTypes()
+    {
+        return m_param_types;
+    }
+
+    MethodInfo^ MethodFunction::GetMethod(bool)
+    {
+        return m_method;
+    }
+
+    MethodFunction^ MethodFunction::GetMethodFunction()
+    {
+        return this;
+    }
+
+    bool MethodFunction::LdClosureRecord(IlEmit^ emit)
+    {
+        if (m_clo->HasInstance())
+        {
+            m_clo->LdVal(emit);
+            GC::KeepAlive(this);
+            return true;
+        }
+        return false;
+    }
+
+    Type^ MethodFunction::ClosureType()
+    {
+        Type^ instanceType = m_clo->GetInstanceType();
+        GC::KeepAlive(this);
+        return instanceType;
+    }
+
+    void MethodFunction::CallFunc(IlEmit^ emit, int, bool tail, Hex::Tag* einfo, Type^, cli::array<Type^>^)
+    {
+        if (tail)
+        {
+            emit->emit_tailcall();
+        }
+        MethodInfo^ method = m_method;
+        emit->emit_call(einfo, OpCodes::Call, method);
+        GC::KeepAlive(this);
+    }
 }}
