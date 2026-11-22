@@ -12,3 +12,12 @@
   - `Spirit.FindReplaceRichTextBox`
 - **Release IL:** PASS (`607 checked`; report `.mirror-cache/release-il-b224b9e1a214/release-il.json`)
 - **Remaining:** `RichTextWithEmbeddedItem` (45 `.g.cs` stubs), `RichTextBase` (50 `.g.cs` stubs).
+
+## Batch 11 — RichTextWithEmbeddedItem accessors
+
+- Owner: agy (this worktree, `feature/controls-text-agy`, based on main `88eb55a8b`).
+- Members: `TextStyleChangedHandler` get/set (with backing field `_textStyleChangedHandler`, moved to the hand-written partial), `DeserializeMathFormat` set, `DeserializeLabeledIdFormat` set.
+- Shapes: the `StyleChanged += OnStyleChanged` method group matches Mathcad's `ldvirtftn RichTextBase::OnStyleChanged` (a `((RichTextBase)this).OnStyleChanged` cast fails with CS1540 protected access).
+- Blocked: `IsTabNavigatable` (`WhiteboardItems.Any(lambda)`) stays a stub. Its lambda is emitted as `<get_IsTabNavigatable>b__105_0` while Mathcad has `b__149_0`; the closure ordinal counts earlier lambda-bearing members in the class, so the placeholder must reproduce those members' closures first.
+- Release IL (project-wide): PASS — 611 checked, 0 failures; 120 generated stubs remain in this project.
+- Remaining: `RichTextBase` (≈164 stubs before this batch), `RichTextWithEmbeddedItem` (≈130 stubs, including the closure-ordinal blocked members above).

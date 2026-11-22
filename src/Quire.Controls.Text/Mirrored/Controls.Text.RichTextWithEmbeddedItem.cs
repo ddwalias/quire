@@ -26,6 +26,31 @@ namespace Quire.Controls.Text;
 public partial class RichTextWithEmbeddedItem
 {
 
+    private ITextStyleChangedHandler _textStyleChangedHandler;
+
+    public ITextStyleChangedHandler TextStyleChangedHandler
+    {
+        get { return _textStyleChangedHandler; }
+        set
+        {
+            _textStyleChangedHandler = value;
+            if (_textStyleChangedHandler != null)
+            {
+                _textStyleChangedHandler.StyleChanged += OnStyleChanged;
+            }
+        }
+    }
+
+    public IMathFormat DeserializeMathFormat
+    {
+        set { _deserializationStrategy.DeserializeMathFormat = value; }
+    }
+
+    public IDictionary<IdLabels, ExtendedFont> DeserializeLabeledIdFormat
+    {
+        set { _deserializationStrategy.DeserializeLabeledIdFormat = value; }
+    }
+
     private void OnToggleHideFromCalculationContext(object sender, ExecutedRoutedEventArgs e)
     {
         ToggleHideFromCalculationContext();
