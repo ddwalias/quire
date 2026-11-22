@@ -162,8 +162,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Markup.XmlLanguage ComputeProofingLanguage(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void AddBlockedSelectDirectionForNextElement(global::System.Windows.Documents.LogicalDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected virtual global::Quire.Undo.IUndoableCommand CreateTextChangedCommand(global::System.Windows.Controls.TextChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ExecuteTextChangedAndReactivateCommand(global::System.Windows.Controls.TextChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

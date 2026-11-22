@@ -25,6 +25,62 @@ namespace Quire.Controls.Text;
 
 public partial class RichTextBase
 {
+    private void AddBlockedSelectDirectionForNextElement(LogicalDirection direction)
+    {
+        TextPointerContext context = CaretPosition.GetPointerContext(direction);
+        if (context == TextPointerContext.EmbeddedElement)
+        {
+            if (DebugTools.DevAssert(CaretPosition.Parent is BlockUIContainer, null).Passed)
+            {
+                bool isBlocked;
+                TextPointer leading;
+                TextPointer trailing;
+                BlockedSelectionDirection side;
+                if (direction == LogicalDirection.Backward)
+                {
+                    leading = Selection.End;
+                    trailing = Selection.Start;
+                    side = (BlockedSelectionDirection)4;
+                }
+                else
+                {
+                    leading = Selection.Start;
+                    trailing = Selection.End;
+                    side = (BlockedSelectionDirection)8;
+                }
+                if (Selection.IsEmpty || CaretPosition.CompareTo(leading) != 0)
+                {
+                    isBlocked = true;
+                }
+                else
+                {
+                    TextPointer next = leading.GetNextContextPosition(direction);
+                    isBlocked = next != null && next.CompareTo(trailing) == 0;
+                }
+                if (isBlocked)
+                {
+                    BlockedSelectDirection |= (BlockedSelectionDirection)63 & ~side;
+                    return;
+                }
+                BlockedSelectDirection |= (BlockedSelectionDirection)63;
+                return;
+            }
+        }
+        else
+        {
+            TextPointer position = CaretPosition;
+            while (position != null && (context == TextPointerContext.ElementStart || context == TextPointerContext.ElementEnd))
+            {
+                position = position.GetNextContextPosition(direction);
+                context = position != null ? position.GetPointerContext(direction) : TextPointerContext.None;
+            }
+            if (position != null && position.Parent is BlockUIContainer && context == TextPointerContext.EmbeddedElement)
+            {
+                BlockedSelectDirection |= direction == LogicalDirection.Backward ? (BlockedSelectionDirection)22 : (BlockedSelectionDirection)41;
+            }
+        }
+    }
+
     private void OnCorrectSpellingError(object sender, ExecutedRoutedEventArgs e)
     {
         string correctedWord = e.Parameter as string;
