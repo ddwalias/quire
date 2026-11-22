@@ -12,15 +12,5 @@ namespace Quire.Controls.Internal;
 internal partial class VisualTextNodeEditor : global::Quire.Controls.Internal.VisualMathNodeEditor<global::Quire.Controls.Internal.VisualTextNodeForEditor>, global::Quire.EquationEditor.View.IVisualTextNodeEditor, global::Quire.EquationEditor.View.IVisualMathNodeEditor, global::Quire.Controls.Internal.IGeometryProvider
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty CaretPositionProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty CaretHighlightColorProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty CaretHighlightOpacityProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.DependencyProperty CreateDependencyProperty(object defaultValue, bool affectsRender, bool affectsArrange, global::System.Windows.PropertyChangedCallback callback, string dpName, global::System.Type dpType, global::System.Type ownerType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
-    [global::Quire.Mirror.MirrorStub]
-    public VisualTextNodeEditor(global::Quire.Controls.Internal.VisualMathRegionNode region, global::Quire.Controls.Internal.VisualMathNode adornedElement) : base(default(global::Quire.Controls.Internal.VisualMathNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
 }

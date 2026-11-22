@@ -12,6 +12,10 @@ namespace Quire.Controls.Internal;
 
 internal partial class VisualTextNodeEditor
 {
+    public static DependencyProperty CaretPositionProperty;
+    public static DependencyProperty CaretHighlightColorProperty;
+    public static DependencyProperty CaretHighlightOpacityProperty;
+
     private readonly Caret _caret = new Caret();
     private readonly Rectangle _highlightBox = new Rectangle();
     private double _highlightX;
@@ -38,6 +42,33 @@ internal partial class VisualTextNodeEditor
         {
             return new RectangleGeometry(_idAlignmentBox);
         }
+    }
+
+    static VisualTextNodeEditor()
+    {
+        CaretPositionProperty = CreateDependencyProperty(0, affectsRender: true, affectsArrange: true, OnCaretPositionChanged, "CaretPosition", typeof(int), typeof(VisualTextNodeEditor));
+        CaretHighlightColorProperty = CreateDependencyProperty(System.Drawing.Color.Black, affectsRender: true, affectsArrange: false, OnCaretHighlightColorChanged, "CaretHighlightColor", typeof(System.Drawing.Color), typeof(VisualTextNodeEditor));
+        CaretHighlightOpacityProperty = CreateDependencyProperty(1.0, affectsRender: true, affectsArrange: false, OnCaretHighlightOpacityChanged, "CaretHighlightOpacity", typeof(double), typeof(VisualTextNodeEditor));
+    }
+
+    private static DependencyProperty CreateDependencyProperty(object defaultValue, bool affectsRender, bool affectsArrange, PropertyChangedCallback callback, string dpName, Type dpType, Type ownerType)
+    {
+        FrameworkPropertyMetadata metadata = new FrameworkPropertyMetadata();
+        metadata.DefaultValue = defaultValue;
+        metadata.AffectsArrange = affectsArrange;
+        metadata.AffectsRender = affectsRender;
+        metadata.PropertyChangedCallback += callback;
+        return DependencyProperty.Register(dpName, dpType, ownerType, metadata);
+    }
+
+    public VisualTextNodeEditor(VisualMathRegionNode region, VisualMathNode adornedElement)
+        : base(adornedElement, region)
+    {
+        BindProperties();
+        HookupEvents();
+        UpdateMeasure();
+        InitializeCaret();
+        InitializeHighlightBox();
     }
 
     private static void OnCaretPositionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
