@@ -12,15 +12,9 @@ namespace Quire.Controls.Worksheet;
 public partial class HeaderFooterZombie : global::System.Windows.Controls.ItemsControl, global::Quire.Controls.Worksheet.IHeaderFooterZombie, global::Quire.Controls.Worksheet.IHeaderFooter, global::Quire.Controls.Worksheet.IWorksheetPageSection, global::System.IDisposable, global::Quire.Controls.Core.IZombie, global::Quire.Core.IMaybeHasPointThatSnapsToPixel, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty PageNumberProperty;
-    [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsAssociatedWithPage(global::Quire.Controls.Worksheet.IWorksheetPage worksheetPage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

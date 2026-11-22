@@ -56,3 +56,9 @@
 - `TypeOfThis`, the ten static DependencyProperty fields and the static constructor moved to `Mirrored/` (stubs removed from `.g.cs`). No lambdas; callbacks are method groups. `GridCellSizeProperty` uses `AlignmentGrid.GridCellSizeProperty.AddOwner`.
 - Release IL: PASS (1276 checked, 0 failures).
 - Left as stubs: `BuildTileDrawingGeometry` (contains a `UpTo` lambda; closure-ordinal blocker as for RegionCollectionWithProperty), and the instance pen fields.
+
+## Batch 8 — HeaderFooterZombie IsAssociatedWithPage and static PageNumber property
+
+- `_typeOfThis` and `PageNumberProperty` moved to `Mirrored/` as field initializers (stubs removed). `IsAssociatedWithPage` implemented (no closures). Release IL: PASS (1278 checked, 0 failures).
+- Left as XAML-generated stubs: `InitializeComponent`, `IComponentConnector.Connect`, `_contentLoaded`.
+- Survey, closure-free types checked: `RegionFactory` (large serialization chain, not attempted), `RegionPersistentData` (Accept parked), `WhiteboardItemZombie` (constructor and `HandleZombieLoaded` use lambdas).

@@ -9,6 +9,10 @@ namespace Quire.Controls.Worksheet;
 
 public partial class HeaderFooterZombie
 {
+    private static readonly Type _typeOfThis = typeof(HeaderFooterZombie);
+
+    public static readonly DependencyProperty PageNumberProperty = DependencyProperty.Register("PageNumber", typeof(int), _typeOfThis);
+
     private readonly IHeaderFooterZombieViewModel _viewModel;
 
     private SnappableZombieItemHelper _snappableHelper;
@@ -25,6 +29,21 @@ public partial class HeaderFooterZombie
     {
         get => (int)GetValue(PageNumberProperty);
         set => SetValue(PageNumberProperty, value);
+    }
+
+    public bool IsAssociatedWithPage(IWorksheetPage worksheetPage)
+    {
+        if (worksheetPage == null)
+        {
+            return false;
+        }
+
+        if (worksheetPage.HeaderZombie != this && worksheetPage.FooterZombie != this && worksheetPage.FirstPageHeaderZombie != this)
+        {
+            return worksheetPage.FirstPageFooterZombie == this;
+        }
+
+        return true;
     }
 
     public UIElement RenderTarget
