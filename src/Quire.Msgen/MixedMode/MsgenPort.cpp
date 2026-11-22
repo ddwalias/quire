@@ -258,4 +258,18 @@ namespace Quire { namespace gen {
         return MetaObj::NewMetaObj(m_name, m_mi, m_conv);
     }
 
+    void Ctxt::EmitBranch(IlEmit^ emit, Closure^ clo, Label lab)
+    {
+        if (m_parent != nullptr)
+        {
+            m_parent->EmitBranch(emit, clo, lab);
+            GC::KeepAlive(this);
+        }
+        else
+        {
+            IlAsm::Raise("call to continuation out of scope");
+            GC::KeepAlive(this);
+        }
+    }
+
 }}

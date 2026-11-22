@@ -279,6 +279,8 @@ namespace Quire { namespace gen {
         {
             return gcnew cli::array<MetaObj^>(sz);
         }
+
+        virtual void EmitBranch(IlEmit^ emit, Closure^ clo, Label lab);
     };
 
     [::Quire::Mirror::MirrorOfAttribute("gen.CtxtMod, msgen")]
