@@ -12,22 +12,6 @@ namespace Quire.Controls.Core;
 public partial class RegionCollectionWithProperty : global::System.Windows.DependencyObject, global::Quire.Controls.Core.IRegionCollectionWithProperty, global::Quire.Controls.Core.ICurrentNumberFormatProperty, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.ICurrentMatrixFormatProperty, global::Quire.Core.ICurrentTextFormatProperty, global::Quire.Controls.Core.IMathFormatElementCollection, global::Quire.Controls.Core.IMathFormatOwner, global::Quire.Controls.Core.ICurrentMathFormatProperty, global::Quire.Controls.Core.ICurrentProofingLanguageProperty
 {
     [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty TextFormatProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty CalcIsDisabledProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ShowAxisExpressionsProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ShowTicksProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ShowNumbersProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty PlotBackgroundTypeProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty PlotCameraTypeProperty;
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.BackgroundTypeE PlotBackgroundType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.CameraType3D PlotCameraType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -42,11 +26,7 @@ public partial class RegionCollectionWithProperty : global::System.Windows.Depen
     [global::Quire.Mirror.MirrorStub]
     public bool AreAllTextRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public RegionCollectionWithProperty(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> regions) { }
-    [global::Quire.Mirror.MirrorStub]
     private static void SetTextFormatPropertyValueWithCommand(global::System.Windows.DependencyPropertyChangedEventArgs e, global::Quire.Core.ITextFormatOwner owner, global::Quire.Controls.Core.RegionCollectionWithProperty collection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnTextFormattingChanged(global::System.Windows.DependencyPropertyChangedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
