@@ -67,4 +67,71 @@ internal partial class AxisModel
             }
         }
     }
+
+    public AxesType Type { get; private set; }
+
+    public PlotType PlotType { get; private set; }
+
+    public Positions Position { get; set; }
+
+    public int PositionTickMark { get; set; }
+
+    public int LegendPositionIndex { get; set; }
+
+    public bool UseBetterTickMarks { get; set; }
+
+    public double StartDefault { get; private set; }
+
+    public double EndDefault { get; private set; }
+
+    public int DefaultTickMarks { get; private set; }
+
+    public int MaxTickmarks { get; private set; }
+
+    public bool IsDisplayNumberFormatLocal { get; private set; }
+
+    public TickScale MajorTickMarks { get; set; }
+
+    public TickScale MinorTickMarks { get; set; }
+
+    public string[] FilteredLabels { get; private set; }
+
+    public bool ShowTicks
+    {
+        get => MajorTickMarks.Show;
+        set
+        {
+            if (ShowTicks != value)
+            {
+                MajorTickMarks.Show = value;
+                OnPropertyChanged("ShowTicks");
+            }
+        }
+    }
+
+    public bool ShowGridLines
+    {
+        get => _showGridLines;
+        set
+        {
+            if (_showGridLines != value)
+            {
+                _showGridLines = value;
+                OnPropertyChanged("ShowGridLines");
+            }
+        }
+    }
+
+    public bool ShowNumbers
+    {
+        get => _showNumbers;
+        set
+        {
+            if (_showNumbers != value)
+            {
+                _showNumbers = value;
+                OnPropertyChanged("ShowNumbers");
+            }
+        }
+    }
 }

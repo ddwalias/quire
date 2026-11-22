@@ -351,3 +351,10 @@
 - Shapes: the `switch` expression form compiles to an extra local (`stloc.1`), so both name switches are `switch` statements with `return` per case. `DomainXmlNodeName` needs separate `case X:` and `case Y:` returns (Mathcad keeps two blocks); stacked labels did not match.
 - Release IL: PASS — 2410 checked, 0 failures.
 - Remaining in AxisModel: constructor, setters/logic members, range and tick helpers.
+
+## Batch 51 — AxisModel auto-properties and show flags
+
+- Members: `Type`, `PlotType`, `Position`, `PositionTickMark`, `LegendPositionIndex`, `UseBetterTickMarks`, `StartDefault`, `EndDefault`, `DefaultTickMarks`, `MaxTickmarks`, `IsDisplayNumberFormatLocal`, `MajorTickMarks`, `MinorTickMarks`, `FilteredLabels` (auto-properties, private setters where Mathcad has them); `ShowTicks` (via `MajorTickMarks.Show`), `ShowGridLines`, `ShowNumbers` (guarded `if (x != value)` set with `OnPropertyChanged`). Hand-written: appended to `Mirrored/Controls.Plots.Model.AxisModel.cs`; stubs removed from `AxisModel.g.cs`. The `_showGridLines` and `_showNumbers` fields stay stubs.
+- Shapes: all matched first gate run.
+- Release IL: PASS — 2444 checked, 0 failures.
+- Left in AxisModel: `Start`, `End`, `Scaling`, `GridLineColor`, `DisplayNumberFormat`, the limit-expression properties (event handlers), the constructor, and the range/tick helpers.
