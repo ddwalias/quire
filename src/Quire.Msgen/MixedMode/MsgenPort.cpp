@@ -645,4 +645,20 @@ namespace Quire { namespace gen {
     {
         GC::KeepAlive(this);
     }
+    void MethodFunction::EmitStackProbe(IlAsm^, bool probe)
+    {
+        if (m_tracing)
+        {
+            if (probe)
+            {
+                MethodInfo^ method = ::Quire::Mpl::Run::AppException::typeid->GetMethod("ProbeStack");
+                emit_instr(OpCodes::Call, method);
+            }
+            else
+            {
+                MethodInfo^ method2 = ::Quire::Mpl::Run::AppException::typeid->GetMethod("RestoreStack");
+                emit_instr(OpCodes::Call, method2);
+            }
+        }
+    }
 }}

@@ -682,6 +682,7 @@ namespace Quire { namespace gen {
         virtual Type^ ClosureType() override;
         virtual void CallFunc(IlEmit^ emit, int nargs, [MarshalAs(UnmanagedType::U1)] bool tail, Hex::Tag* einfo, Type^ return_type, cli::array<Type^>^ parameters) override;
         virtual cli::array<MetaObj^>^ CreateParameterEnv(ms::Range<void* const> args) override;
+        virtual void EmitStackProbe(IlAsm^ bcasm, [MarshalAs(UnmanagedType::U1)] bool probe) override;
         virtual void DeclareFunction(Hex::Tag* info, ms::Range<void* const> args, Type^ ty, cli::array<Type^>^ tys) override;
     };
 

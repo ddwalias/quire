@@ -1,5 +1,15 @@
 # Msgen lane checkpoint
 
+## Batch 16 (`Quire.gen.MethodFunction::EmitStackProbe`)
+
+- Owner: AGY, Orca task `task_863729880aea`. Branch `feature/msgen-agy-2`, from current `main`.
+- Member: `EmitStackProbe(IlAsm, bool)` override: `typeof(AppException)` (`Quire.Mpl.Run.AppException`, referenced by Msgen) `.GetMethod("ProbeStack"|"RestoreStack")`, `emit_instr(OpCodes::Call, ...)` (exact Release IL on the first run).
+- Still blocked: `EmitProlog` and `EmitEpilog` (tracing). Their original IL calls `IlAsm::beg_exception_block(Type)`, `beg_catch_block()` and `end_exception_block()`, which forward to `PushCtxt(new CtxtTry(...))`, `CtxtTry::BegHandler` and `PopCtxtFirst`. On `main` there is no `CtxtTry`, `PushCtxt`, `PopCtxtFirst` or `BegHandler`, and the `IlAsm` forwarders are absent.
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 432 checked; 0 failures; 7 unfinished.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 15 (`Quire.gen.MethodFunction` constructors `(string, Closure, Type, Type[])` and `(sbyte*, Closure)`)
 
 - Owner: AGY, Orca task `task_863729880aea`. Branch `feature/msgen-agy-2`, from current `main`.
