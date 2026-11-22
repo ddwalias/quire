@@ -123,6 +123,7 @@ namespace Quire { namespace gen {
         static MetaObj^ NewMetaObj(void* v, MetaObj^ r, int i, Type^ unbox);
         static MetaObj^ NewMetaObj(void* v, MetaObj^ r, Callable^ p);
         static MetaObj^ NewMetaObj(void* v, MetaObj^ r, FieldInfo^ f);
+        static MetaObj^ NewMetaObj(IlAsm^ il, ConstructorInfo^ ci, cli::array<Type^>^ params);
         static MetaObj^ NewMetaObj(String^ nm, int idx);
         static MetaObj^ NewMetaObj(void* v, int idx);
         static MetaObj^ NewMetaObj(void* v, FieldInfo^ f);
@@ -1038,10 +1039,11 @@ namespace Quire { namespace gen {
 
     public:
         ForeignCtor(String^ id, cli::array<Type^>^ sig, ConstructorInfo^ ci);
+        virtual MetaObj^ CreateMetaObj(IlAsm^ bcasm) override;
     };
 
     [::Quire::Mirror::MirrorOfAttribute("gen.ForeignConstructor, msgen")]
-    ref class ForeignConstructor abstract : public Constructor
+    ref class ForeignConstructor : public Constructor
     {
     private:
         ConstructorInfo^ m_ctor;
@@ -1054,6 +1056,7 @@ namespace Quire { namespace gen {
         virtual Type^ ReturnType() override;
         virtual Type^ RepresentationType() override;
         virtual cli::array<Type^>^ MplParameterTypes() override;
+        virtual cli::array<MetaObj^>^ Deconstruct(MetaObj^ loc, ms::Range<void* const> vs) override;
     };
 
 }}

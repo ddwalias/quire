@@ -1,5 +1,15 @@
 # Msgen lane checkpoint
 
+## Batch 21 (`Quire.gen.ForeignConstructor::Deconstruct`, `MetaObj::NewMetaObj(IlAsm, ConstructorInfo, Type[])`, `ForeignCtor::CreateMetaObj`)
+
+- Owner: AGY, Orca task `task_da1e51931b59`. Branch `feature/msgen-agy-2`, from current `main`.
+- Members: `ForeignConstructor::Deconstruct` (do-while over field names, exact Release IL), `MetaObj::NewMetaObj(IlAsm, ConstructorInfo, Type[])` (static overload that builds a `ForeignConstructor` with the `"ctor"` name, exact), and `ForeignCtor::CreateMetaObj`.
+- `ForeignConstructor` is now concrete: the `abstract` keyword is removed because `Deconstruct` implements the inherited pure member. `CallFunc` and `LdVal` remain unimplemented in this type; the gate does not require them to be declared.
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 447 checked; 0 failures; 7 unfinished.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 20 (`Quire.gen.ForeignConstructor` subset, `Constructor(IlAsm, string)`)
 
 - Owner: AGY, Orca task `task_da1e51931b59`. Branch `feature/msgen-agy-2`, from current `main`.

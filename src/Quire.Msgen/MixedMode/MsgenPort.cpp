@@ -729,4 +729,36 @@ namespace Quire { namespace gen {
         GC::KeepAlive(this);
         return parameterTypes;
     }
+    cli::array<MetaObj^>^ ForeignConstructor::Deconstruct(MetaObj^ loc, ms::Range<void* const> vs)
+    {
+        cli::array<MetaObj^>^ array = Ctxt::NewCtxtEnv(Arity());
+        Type^ type = RepresentationType();
+        cli::array<String^>^ array2 = IlAsm::FieldNames(Arity());
+        int num = 0;
+        if (0 < Arity())
+        {
+            do
+            {
+                FieldInfo^ field = type->GetField(array2[num]);
+                MetaObj^ metaObj = MetaObj::NewMetaObj(vs[num], loc, field);
+                array[num] = metaObj;
+                num++;
+            }
+            while (num < Arity());
+        }
+        GC::KeepAlive(this);
+        return array;
+    }
+    MetaObj^ MetaObj::NewMetaObj(IlAsm^ il, ConstructorInfo^ ci, cli::array<Type^>^ params)
+    {
+        String^ tn = "ctor";
+        return gcnew ForeignConstructor(il, ci->DeclaringType->FullName, tn, ci, params);
+    }
+
+    MetaObj^ ForeignCtor::CreateMetaObj(IlAsm^ bcasm)
+    {
+        MetaObj^ result = MetaObj::NewMetaObj(bcasm, m_ci, m_sig);
+        GC::KeepAlive(this);
+        return result;
+    }
 }}
