@@ -21,3 +21,8 @@
 - Blocked: `IsTabNavigatable` (`WhiteboardItems.Any(lambda)`) stays a stub. Its lambda is emitted as `<get_IsTabNavigatable>b__105_0` while Mathcad has `b__149_0`; the closure ordinal counts earlier lambda-bearing members in the class, so the placeholder must reproduce those members' closures first.
 - Release IL (project-wide): PASS — 611 checked, 0 failures; 120 generated stubs remain in this project.
 - Remaining: `RichTextBase` (≈164 stubs before this batch), `RichTextWithEmbeddedItem` (≈130 stubs, including the closure-ordinal blocked members above).
+
+## Attempt — RichTextBase SelectionStart / SelectionEnd (not landed)
+
+- Shape `TextPointer start = Selection.Start; return GetInsertionPointAtPointer(ref start);` fails: Mathcad pushes `this` as the receiver of `GetInsertionPointAtPointer` before `Selection.Start` is loaded into the local (`ldarg.0; ldarg.0; call get_Selection; ...; stloc.0; ldloca.s 0`), while Roslyn emits the receiver after the local initializer. Same unresolved receiver-retention shape as batch 5 (`CompareBaselineOffset`) and batch 7 (`ToggleScriptUndoCommand`).
+- Reverted; both stubs stay in `Generated/Mirror/Controls.Text.RichTextBase.g.cs`.
