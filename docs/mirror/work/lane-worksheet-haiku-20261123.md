@@ -43,3 +43,10 @@
 - Release IL: PASS (1275 checked, 0 failures).
 - `GetTextFormat`: the decompiled `region as X` / `is X` shape matched; the pattern-variable form (`is IRichTextBase richText`) differed at the first type test.
 - Parked, lambda-bearing helpers (reverted to stubs): `UpdateShowNumbers`, `UpdateShowTicks`, `UpdateShowAxisExpressions`, `GetNumberFormatsForRegions`, `GetProofingLanguageForRegions`, `GetMatrixFormatsForRegions`, `GetCalcIsDisabled`, `GetOleObjectAutoResizeState`. Shared blocker: the Quire lambda names are `<UpdateShowNumbers>b__97_0` and `<GetCalcIsDisabled>b__...` with method ordinals about 30 higher than Mathcad's (`<UpdateShowNumbers>b__67_0`, `<GetCalcIsDisabled>b__77_0`), so the Mathcad closure names (`<>c` members and `<>c__DisplayClass105_0`) have no counterpart. The Generated stubs for members Mathcad places earlier are compiled before the Mirrored partial. A placeholder layout in Mathcad order (AGENTS: unmarked placeholder stubs) is needed before these can land.
+
+## Probe — UpdateShowNumbers closure ordinal (parked; no source change)
+
+- Mathcad: `<UpdateShowNumbers>b__67_0` (members.tsv `+<>c` row 77; `UpdateShowNumbers` is method row 40, token 0x06000031).
+- Quire, current main: `<UpdateShowNumbers>b__97_0` (the stub sits in `Generated/`, which compiles before `Mirrored/`).
+- To reach 67, exactly 66 methods must precede it in compile order. That needs a compile-first hand-written file declaring the Mathcad members before it as placeholders, in Mathcad order, and removing their generated stubs. This is a broad reorder of the class, so the group is parked per the task rule.
+- Still open, all lambda-bearing: UpdateShowNumbers/Ticks/AxisExpressions, GetNumberFormatsForRegions, GetProofingLanguageForRegions, GetMatrixFormatsForRegions, GetCalcIsDisabled, GetOleObjectAutoResizeState, GetPlotCameraType, SetTextFormatPropertyValueWithCommand, HandleCollectionChanged.
