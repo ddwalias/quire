@@ -11,12 +11,4 @@ namespace Quire.Controls.Core.Ole;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Ole.OleContainer`4, Ptc.Controls.Core")]
 public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TPersistentData> : global::Quire.Controls.Core.Ole.OleContainerBase, global::Quire.Controls.Core.Ole.IOleContainer, global::Quire.Controls.Core.IWorksheetPropertiesTarget, global::Quire.Core.IMaybeHasPointThatSnapsToPixel, global::System.IDisposable where TViewModel : global::Quire.Controls.Core.Ole.OleContainerViewModel<TModel, TIPublicModel, TPersistentData> where TModel : global::Quire.Controls.Core.Ole.OleContainerModel<TPersistentData>, TIPublicModel where TIPublicModel : global::Quire.Controls.Core.Ole.IPublicOleContainerModel<TPersistentData> where TPersistentData : global::Quire.PersistentData.IOleObjectPersistentData
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string StorageFileNameForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public void StartOleCloseOperation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected string TrySavingBitmapForPrint() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual TPersistentData GetOlePersistentData(global::Quire.Serialization.IS11NProvider s11NProvider, string uniqueId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

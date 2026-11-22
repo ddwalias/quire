@@ -143,9 +143,10 @@ public partial class MathFormatAttachedProperties
         return basevalue;
     }
 
-    // Parked: Mathcad branches with `blt` (jump when less than the minimum); the idiomatic `if`/ternary forms compile to `bge.un`.
-    [MirrorStub]
-    private static object CoerceFontSize(DependencyObject d, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static object CoerceFontSize(DependencyObject d, object basevalue)
+    {
+        return (double)basevalue < FontConstants.MinimumFontSizeInPoints ? FontConstants.MinimumFontSizeInPoints : basevalue;
+    }
 
     [MirrorVerified("PtcControlsCoreMathFormatAttachedPropertiesMechanicalDifferentialTests")]
     public MathFormatAttachedProperties() { }

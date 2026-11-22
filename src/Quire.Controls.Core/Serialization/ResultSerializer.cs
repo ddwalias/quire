@@ -276,7 +276,79 @@ public partial class ResultSerializer
         ReadXml(xElement, ResultManager.Instance);
     }
 
-    public void ReadXml(XElement xElement, IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void ReadXml(XElement xElement, IResultManager resultManager)
+    {
+        XNamespace xNamespace = "http://schemas.mathsoft.com/math50";
+        foreach (XElement item in xElement.Elements(ResultDataSerializer.GetXNameWithResultNameSpace("resultData")))
+        {
+            try
+            {
+                XAttribute xAttribute = item.Attribute("result-id");
+                // Explicit != null ternary emits brtrue.s + callvirt get_Value() matching Mathcad's IL.
+                if (!int.TryParse(xAttribute != null ? xAttribute.Value : null, out int result))
+                {
+                    continue;
+                }
+                XNode xNode = null;
+                XElement resultElement = item.Element(xNamespace + "result");
+                if (resultElement != null)
+                {
+                    xNode = resultElement.FirstNode;
+                }
+                else
+                {
+                    XElement symResultElement = item.Element(xNamespace + "symResult");
+                    if (symResultElement != null)
+                    {
+                        xNode = symResultElement;
+                    }
+                    else
+                    {
+                        XElement trace2dElement = item.Element(xNamespace + "Trace2dResult");
+                        if (trace2dElement != null)
+                        {
+                            xNode = trace2dElement;
+                        }
+                    }
+                }
+                XElement errorsElement = item.Element(ResultDataSerializer.GetXNameWithResultNameSpace("engineErrors"));
+                EngineErrorCollection errorCollection = ReadEngineErrors(errorsElement, result);
+                XElement warningsElement = item.Element(ResultDataSerializer.GetXNameWithResultNameSpace("Warnings"));
+                List<EngineRedefInfo> warnings = ReadEngineWarnings(warningsElement, result);
+                xAttribute = item.Attribute("calculation-status");
+                // Mathcad SynchronizationStatus.Synchronized == 3.
+                SynchronizationStatus synchronizationStatus = (SynchronizationStatus)3;
+                if (xAttribute != null)
+                {
+                    synchronizationStatus = (SynchronizationStatus)Enum.Parse(typeof(SynchronizationStatus), xAttribute.Value);
+                }
+                XmlDocument xmlDocument = null;
+                if (xNode != null)
+                {
+                    using (XmlReader xmlReader = xNode.CreateReader())
+                    {
+                        xmlDocument = new XmlDocument(xmlReader.NameTable);
+                        xmlDocument.Load(xmlReader);
+                    }
+                }
+                IResultNode resultNode = _xmcdToResultNodeTransform.Transform(xmlDocument);
+                if (resultNode is ISymbolicResultNode)
+                {
+                    resultNode = null;
+                }
+                XAttribute tagAttribute = item.Attribute("tag");
+                EngineResult engineResult = new EngineResult(resultNode, errorCollection, warnings, synchronizationStatus)
+                {
+                    SerializationTag = tagAttribute != null ? tagAttribute.Value : null
+                };
+                resultManager.SetEngineResult(result, engineResult);
+            }
+            catch (Exception ex)
+            {
+                DebugTools.DevAssert(false, ex.Message);
+            }
+        }
+    }
 
     private List<EngineRedefInfo> ReadEngineWarnings(XContainer element, int resultId)
     {

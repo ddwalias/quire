@@ -190,6 +190,73 @@ public partial class VisualDragger
         }
     }
 
+    private void DragInDirection(Vector vector)
+    {
+        // Declaring directions before newMargin matches local slots [0] array, [1] Thickness, [2] bool.
+        DraggingDirection?[] directions;
+        Thickness newMargin = _originalMargin;
+        switch (Direction)
+        {
+        case DraggingDirection.UpLeft:
+            directions = new DraggingDirection?[2] { DraggingDirection.Up, DraggingDirection.Left };
+            break;
+        case DraggingDirection.UpRight:
+            directions = new DraggingDirection?[2] { DraggingDirection.Up, DraggingDirection.Right };
+            break;
+        case DraggingDirection.DownLeft:
+            directions = new DraggingDirection?[2] { DraggingDirection.Down, DraggingDirection.Left };
+            break;
+        case DraggingDirection.DownRight:
+            directions = new DraggingDirection?[2] { DraggingDirection.Down, DraggingDirection.Right };
+            break;
+        default:
+            directions = new DraggingDirection?[2] { Direction, null };
+            break;
+        }
+        bool isValid = true;
+        foreach (DraggingDirection? draggingDirection in directions)
+        {
+            if (!draggingDirection.HasValue || !isValid)
+            {
+                break;
+            }
+            switch (draggingDirection.Value)
+            {
+            case DraggingDirection.Left:
+                if (isValid = _originalSize.Width - vector.X > 0.0)
+                {
+                    newMargin.Left += vector.X;
+                }
+                break;
+            case DraggingDirection.Right:
+                if (isValid = _originalSize.Width + vector.X > 0.0)
+                {
+                    newMargin.Right -= vector.X;
+                }
+                break;
+            case DraggingDirection.Up:
+                if (isValid = _originalSize.Height - vector.Y > 0.0)
+                {
+                    newMargin.Top += vector.Y;
+                }
+                break;
+            case DraggingDirection.Down:
+                if (isValid = _originalSize.Height + vector.Y > 0.0)
+                {
+                    newMargin.Bottom -= vector.Y;
+                }
+                break;
+            default:
+                DebugTools.DevAssert(false, null);
+                break;
+            }
+        }
+        if (isValid)
+        {
+            SetMargin(newMargin);
+        }
+    }
+
     private void DragMoveMargin(Vector vector)
     {
         Thickness margin = _originalMargin;

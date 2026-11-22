@@ -11,9 +11,6 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.VisualDragger, Ptc.Controls.Core")]
 public partial class VisualDragger : global::System.Windows.Controls.ContentControl
 {
-    [global::Quire.Mirror.MirrorStub]
-    private void DragInDirection(global::System.Windows.Vector vector) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.VisualDragger+DragHandler, Ptc.Controls.Core")]
     public delegate void DragHandler(object sender, global::Quire.Controls.Core.DragEventArgs e);
 }

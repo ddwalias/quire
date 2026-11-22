@@ -27,6 +27,35 @@ public partial class IOItemsAliasManager
         _aliasesToItemsMap = new Dictionary<string, IIOItem>();
     }
 
+    internal static IList<string> DistinctIds(IEnumerable<string> ids)
+    {
+        return (from id in ids
+            group id by id into gr
+            select gr.First()).ToList();
+    }
+
+    public static IList<string> GetSExpressionsList(DependencyObject region, ItemOptions itemOptions)
+    {
+        IList<string> list = null;
+        if (itemOptions.HasFlag(ItemOptions.Inputs) && region is IInputRegion inputRegion)
+        {
+            list = DistinctIds(inputRegion.GetDefinedIdentifierSExpressions());
+        }
+        if (itemOptions.HasFlag(ItemOptions.Outputs) && region is IOutputRegion)
+        {
+            if (list != null)
+            {
+                list.Add("out");
+            }
+            else
+            {
+                list = new List<string> { "out" };
+            }
+        }
+        // Ternary emits the temporary IList<string> local matching Mathcad's stloc.2 / ldloc.2 / ret.
+        return DebugTools.AssertNotNull(list, null).Passed ? list : new List<string>();
+    }
+
     public static DependencyProperty InAliasMapProperty = DependencyProperty.RegisterAttached("InAliasMap", typeof(Dictionary<string, string>), _typeOfThis, new PropertyMetadata((object)null, HandleInAliassesPropertyChanged));
 
     public static DependencyProperty OutAliasMapProperty = DependencyProperty.RegisterAttached("OutAliasMap", typeof(Dictionary<string, string>), _typeOfThis, new PropertyMetadata((object)null, HandleOutAliassesPropertyChanged));

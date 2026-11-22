@@ -7,13 +7,13 @@ using System.Windows.Data;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Quire.Wpf;
 using System.Windows.Threading;
 using Quire.Controls.Core.AttachedBehavior;
 using Quire.Core;
 using Quire.Mirror;
 using Quire.PersistentData;
 using Quire.Serialization;
+using Quire.Wpf;
 
 namespace Quire.Controls.Core.Ole;
 
@@ -25,11 +25,15 @@ public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TP
 
     public static readonly RoutedEvent ContentChangedEvent;
 
-    public static readonly DependencyProperty IsInPrintingProperty;
+    private SnappableItemHelper _snappableHelper;
 
-    public static readonly DependencyProperty IsInCopyProperty;
+    public TViewModel ViewModel { get; private set; }
 
-    private double? _prePrintingZoom;
+    IOleContainerViewModel IOleContainer.ViewModel => ViewModel;
+
+    public TIPublicModel PublicModel => ViewModel.PublicModel;
+
+    private DispatcherOperation OleForceCloseOperation { get; set; }
 
     static OleContainer()
     {
@@ -49,124 +53,6 @@ public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TP
     private static void OnIsInCopyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         ((OleContainer<TViewModel, TModel, TIPublicModel, TPersistentData>)d).OnIsInCopyPropertyChanged(e);
-    }
-
-    private SnappableItemHelper _snappableHelper;
-
-    public TViewModel ViewModel { get; private set; }
-
-    IOleContainerViewModel IOleContainer.ViewModel => ViewModel;
-
-    public TIPublicModel PublicModel => ViewModel.PublicModel;
-
-    private DispatcherOperation OleForceCloseOperation { get; set; }
-
-    public Size MinSizeForXamlSerialization
-    {
-        get => ViewModel.MinSizeValue;
-        set => ViewModel.MinSize = value;
-    }
-
-    protected override bool IsOleCreated => ViewModel.IsCreated;
-
-    protected virtual bool IsZoomAware => false;
-
-    public bool IsInPrinting => (bool)GetValue(IsInPrintingProperty);
-
-    public bool IsInCopy => (bool)GetValue(IsInCopyProperty);
-
-    public IOleSizeData SizeDataForXamlSerialization
-    {
-        get => ViewModel.SizeDataForXamlSerialization;
-        set => ViewModel.SizeDataForXamlSerialization = value;
-    }
-
-    protected bool CanPrint => !AttachedProperties.GetContainedInCollapsedWhiteboard(this);
-
-    public string ImageFileNameForPrintXamlSerialization
-    {
-        get
-        {
-            if (!IsInPrinting)
-            {
-                return null;
-            }
-            return TrySavingBitmapForPrint();
-        }
-        set
-        {
-            if (value == null)
-            {
-                return;
-            }
-            DebugTools.DevAssert(!ViewModel.IsCreated, null);
-            Bitmap = PublicModel.LoadBitmap(value);
-        }
-    }
-
-    public bool? IsOleOpenForXamlSerializationInPrinting
-    {
-        get
-        {
-            if (!IsInPrinting)
-            {
-                return null;
-            }
-            return ViewModel.GrayVisibility == Visibility.Visible;
-        }
-        set
-        {
-            if (value.HasValue && value.Value)
-            {
-                ViewModel.ForceGrayVisibility();
-            }
-        }
-    }
-
-    public MessageList MessageListForPrint
-    {
-        get
-        {
-            if (!IsInPrinting)
-            {
-                return null;
-            }
-            return ViewModel.MessageList;
-        }
-        set
-        {
-            if (value != null)
-            {
-                foreach (MessageItem item in value)
-                {
-                    ViewModel.SetMessage(item.MessageCategory, item.MessageType, item.MessageResourceKey);
-                }
-            }
-        }
-    }
-
-    public bool SiteCreated => ViewModel.SiteCreated;
-
-    public bool IsOutOfPlaceActive => ViewModel.IsOutOfPlaceActive;
-
-    public bool IsStorageEmpty => PublicModel.IsStorageEmpty;
-
-    public ISnapToPixelHelper SnappingHelper => _snappableHelper;
-
-    public double Zoom => DocumentAttachedProperties.GetZoom(this);
-
-    public bool IsPrintingZoomSet => _prePrintingZoom.HasValue;
-
-    protected bool HasEffectivePrintingZoom
-    {
-        get
-        {
-            if (_prePrintingZoom.HasValue)
-            {
-                return _prePrintingZoom.Value != Zoom;
-            }
-            return false;
-        }
     }
 
     protected override void OnZoomChanged()
@@ -195,151 +81,6 @@ public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TP
         {
             CleanStorage(deleteFile);
         }
-    }
-
-    protected virtual void HandleBeforeActiveStateToggled()
-    {
-    }
-
-    protected override bool ShouldSerializeProperty(DependencyProperty dp)
-    {
-        if (dp == UIElement.RenderTransformProperty)
-        {
-            return false;
-        }
-        return base.ShouldSerializeProperty(dp);
-    }
-
-    protected virtual IValueConverter GetDimensionsConverter()
-    {
-        return null;
-    }
-
-    protected virtual void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs args)
-    {
-        if (args.PropertyName == "AutoResize" || args.PropertyName == "Width" || args.PropertyName == "Height")
-        {
-            RaiseEvent(new RoutedEventArgs(ContentChangedEvent));
-        }
-    }
-
-    protected virtual void OnViewChangedSync()
-    {
-        Bitmap = null;
-        if (!HasEffectivePrintingZoom)
-        {
-            InvalidateVisual();
-        }
-    }
-
-    protected virtual void OnViewChangedOrSavedAsync()
-    {
-        RaiseEvent(new RoutedEventArgs(ContentChangedEvent));
-    }
-
-    public void AbortOleCloseOperation()
-    {
-        if (OleForceCloseOperation != null)
-        {
-            DebugTools.DevAssert(OleForceCloseOperation.Abort(), null);
-        }
-        ViewModel.AbortDeactivate();
-    }
-
-    private void OleForceClose()
-    {
-        ViewModel.OleForceClose();
-    }
-
-    protected virtual void OnCreationError(bool isNew)
-    {
-        if (isNew)
-        {
-            ThrowExceptionWithMessage("server_busy_create_error");
-        }
-        else
-        {
-            ThrowExceptionWithMessage("server_busy_create_error_from_file");
-        }
-    }
-
-    protected virtual void OnCreationError()
-    {
-    }
-
-    public void CreateWindowlessOle()
-    {
-        if (!ViewModel.CreateWindowlessOle())
-        {
-            OnCreationError();
-        }
-    }
-
-    protected void ThrowExceptionWithMessage(string messageKey)
-    {
-        string text = TryFindResource(messageKey) as string;
-        if (DebugTools.AssertNotNull(text, null).Failed)
-        {
-            text = messageKey;
-        }
-        throw new ApplicationException(text);
-    }
-
-    public void CleanStorage(bool deleteFile = true)
-    {
-        PublicModel.CleanStorage(deleteFile);
-    }
-
-    public virtual IList<IRegionPersistentData> SetOlePersistentData(IDeS11NProvider d11NProvider, TPersistentData data)
-    {
-        return ViewModel.SetRegionPersistentData(d11NProvider, data);
-    }
-
-    public void OnWorksheetPropertiesChanged(string[] propertyNames, IWorksheetProperties oldProperties, IWorksheetProperties newProperties)
-    {
-        ViewModel.OnWorksheetPropertiesChanged(propertyNames, oldProperties, newProperties);
-    }
-
-    public void Dispose()
-    {
-        _snappableHelper.Dispose();
-        AbortOleCloseOperation();
-        ViewModel.Dispose();
-    }
-
-    public void SetPrintingZoom(bool set, double? newPrintingZoom)
-    {
-        if (!set)
-        {
-            DebugTools.DevAssert(!newPrintingZoom.HasValue, null);
-        }
-        bool hasValue = _prePrintingZoom.HasValue;
-        if (set && !CanPrint)
-        {
-            DebugTools.DevAssert(!hasValue, null);
-            return;
-        }
-        double num = (set ? newPrintingZoom : _prePrintingZoom) ?? Zoom;
-        if (hasValue != set)
-        {
-            _prePrintingZoom = set ? new double?(Zoom) : null;
-            ApplyPrintingZoom(set ? new double?(num) : null);
-        }
-        DebugTools.DevAssert(Zoom == num, null);
-    }
-
-    protected virtual void ApplyPrintingZoom(double? zoom)
-    {
-        if (zoom.HasValue)
-        {
-            SetValue(DocumentAttachedProperties.ZoomProperty, zoom.Value);
-            return;
-        }
-        if (CanPrint)
-        {
-            DebugTools.AssertNotNull(TrySavingBitmapForPrint(), null);
-        }
-        ClearValue(DocumentAttachedProperties.ZoomProperty);
     }
 
     protected OleContainer(TViewModel viewModel, ResourceDictionary dictionary)
@@ -384,6 +125,86 @@ public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TP
         _snappableHelper.RenderTarget = this;
     }
 
+    protected virtual void HandleBeforeActiveStateToggled()
+    {
+    }
+
+    protected override bool ShouldSerializeProperty(DependencyProperty dp)
+    {
+        if (dp == UIElement.RenderTransformProperty)
+        {
+            return false;
+        }
+        return base.ShouldSerializeProperty(dp);
+    }
+
+    public Size MinSizeForXamlSerialization
+    {
+        get => ViewModel.MinSizeValue;
+        set => ViewModel.MinSize = value;
+    }
+
+    protected virtual IValueConverter GetDimensionsConverter()
+    {
+        return null;
+    }
+
+    protected virtual void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs args)
+    {
+        if (args.PropertyName == "AutoResize" || args.PropertyName == "Width" || args.PropertyName == "Height")
+        {
+            RaiseEvent(new RoutedEventArgs(ContentChangedEvent));
+        }
+    }
+
+    public void StartOleCloseOperation()
+    {
+        if (OleForceCloseOperation == null)
+        {
+            OleForceCloseOperation = Dispatcher.BeginInvoke((Delegate)new Action(OleForceClose), OleForceClosePriority, Array.Empty<object>());
+            OleForceCloseOperation.Aborted += delegate
+            {
+                OleForceCloseOperation = null;
+            };
+            OleForceCloseOperation.Completed += delegate
+            {
+                OleForceCloseOperation = null;
+            };
+        }
+        else
+        {
+            DebugTools.DevAssert(OleForceCloseOperation.Status == DispatcherOperationStatus.Pending, null);
+        }
+    }
+
+    public void AbortOleCloseOperation()
+    {
+        if (OleForceCloseOperation != null)
+        {
+            DebugTools.DevAssert(OleForceCloseOperation.Abort(), null);
+        }
+        ViewModel.AbortDeactivate();
+    }
+
+    private void OleForceClose()
+    {
+        ViewModel.OleForceClose();
+    }
+
+    protected virtual void OnViewChangedSync()
+    {
+        Bitmap = null;
+        if (!HasEffectivePrintingZoom)
+        {
+            InvalidateVisual();
+        }
+    }
+
+    protected virtual void OnViewChangedOrSavedAsync()
+    {
+        RaiseEvent(new RoutedEventArgs(ContentChangedEvent));
+    }
+
     protected override void OnRender(DrawingContext drawingContext)
     {
         base.OnRender(drawingContext);
@@ -417,6 +238,21 @@ public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TP
         return CreateBitmapSource(hBitmap, rectInPixels);
     }
 
+    protected override bool IsOleCreated => ViewModel.IsCreated;
+
+    protected override void AcquireBitmapSource()
+    {
+        if (ViewModel.IsOleAppSupportZoom)
+        {
+            double zoom = DocumentAttachedProperties.GetZoom(this);
+            _bitmap = CreateBitmap(new Int32Rect(0, 0, (RenderSize.Width * zoom).IntRound(), (RenderSize.Height * zoom).IntRound()), PresentationSource.FromVisual(this) as HwndSource);
+        }
+        else if (SiteCreated)
+        {
+            base.AcquireBitmapSource();
+        }
+    }
+
     protected override Int32Rect GetRenderRectInPixels(out HwndSource hwndSource)
     {
         Size scale;
@@ -444,6 +280,8 @@ public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TP
         }
         return new Int32Rect(0, 0, (Math.Round(renderSize.Width, 5) * scale.Width).IntRound(), (Math.Round(renderSize.Height, 5) * scale.Height).IntRound());
     }
+
+    protected virtual bool IsZoomAware => false;
 
     protected nint CreateHBitmap(Int32Rect rectInPixels, HwndSource hwndSource)
     {
@@ -493,16 +331,239 @@ public abstract partial class OleContainer<TViewModel, TModel, TIPublicModel, TP
         return formatConvertedBitmap;
     }
 
-    protected override void AcquireBitmapSource()
+    public static readonly DependencyProperty IsInPrintingProperty;
+
+    public static readonly DependencyProperty IsInCopyProperty;
+
+    public bool IsInPrinting => (bool)GetValue(IsInPrintingProperty);
+
+    public bool IsInCopy => (bool)GetValue(IsInCopyProperty);
+
+    [DefaultValue(null)]
+    public string StorageFileNameForXamlSerialization
     {
-        if (ViewModel.IsOleAppSupportZoom)
+        get
         {
-            double zoom = DocumentAttachedProperties.GetZoom(this);
-            _bitmap = CreateBitmap(new Int32Rect(0, 0, (RenderSize.Width * zoom).IntRound(), (RenderSize.Height * zoom).IntRound()), PresentationSource.FromVisual(this) as HwndSource);
+            if (IsInPrinting)
+            {
+                return null;
+            }
+            return PublicModel.Save(() =>
+            {
+                ThrowExceptionWithMessage(IsInCopy ? "server_busy_copy_error" : "server_busy_save_error");
+            });
         }
-        else if (SiteCreated)
+        set
         {
-            base.AcquireBitmapSource();
+            DebugTools.DevAssert(!ViewModel.IsCreated, null);
+            PublicModel.Load(value);
+            PublicModel.CleanStorage(deleteFile: false);
         }
+    }
+
+    public IOleSizeData SizeDataForXamlSerialization
+    {
+        get => ViewModel.SizeDataForXamlSerialization;
+        set => ViewModel.SizeDataForXamlSerialization = value;
+    }
+
+    protected virtual void OnCreationError(bool isNew)
+    {
+        if (isNew)
+        {
+            ThrowExceptionWithMessage("server_busy_create_error");
+        }
+        else
+        {
+            ThrowExceptionWithMessage("server_busy_create_error_from_file");
+        }
+    }
+
+    protected virtual void OnCreationError()
+    {
+    }
+
+    public void CreateWindowlessOle()
+    {
+        if (!ViewModel.CreateWindowlessOle())
+        {
+            OnCreationError();
+        }
+    }
+
+    protected void ThrowExceptionWithMessage(string messageKey)
+    {
+        string text = TryFindResource(messageKey) as string;
+        if (DebugTools.AssertNotNull(text, null).Failed)
+        {
+            text = messageKey;
+        }
+        throw new ApplicationException(text);
+    }
+
+    protected bool CanPrint => !AttachedProperties.GetContainedInCollapsedWhiteboard(this);
+
+    [DefaultValue(null)]
+    public string ImageFileNameForPrintXamlSerialization
+    {
+        get
+        {
+            if (!IsInPrinting)
+            {
+                return null;
+            }
+            return TrySavingBitmapForPrint();
+        }
+        set
+        {
+            if (value == null)
+            {
+                return;
+            }
+            DebugTools.DevAssert(!ViewModel.IsCreated, null);
+            Bitmap = PublicModel.LoadBitmap(value);
+        }
+    }
+
+    protected string TrySavingBitmapForPrint()
+    {
+        if (!CanPrint)
+        {
+            return null;
+        }
+        return PublicModel.SaveBitmap(() => Bitmap);
+    }
+
+    public bool? IsOleOpenForXamlSerializationInPrinting
+    {
+        get
+        {
+            if (!IsInPrinting)
+            {
+                return null;
+            }
+            return ViewModel.GrayVisibility == Visibility.Visible;
+        }
+        set
+        {
+            if (value.HasValue && value.Value)
+            {
+                ViewModel.ForceGrayVisibility();
+            }
+        }
+    }
+
+    [DefaultValue(null)]
+    public MessageList MessageListForPrint
+    {
+        get
+        {
+            if (!IsInPrinting)
+            {
+                return null;
+            }
+            return ViewModel.MessageList;
+        }
+        set
+        {
+            if (value != null)
+            {
+                foreach (MessageItem item in value)
+                {
+                    ViewModel.SetMessage(item.MessageCategory, item.MessageType, item.MessageResourceKey);
+                }
+            }
+        }
+    }
+
+    public bool SiteCreated => ViewModel.SiteCreated;
+
+    public bool IsOutOfPlaceActive => ViewModel.IsOutOfPlaceActive;
+
+    public void CleanStorage(bool deleteFile = true)
+    {
+        PublicModel.CleanStorage(deleteFile);
+    }
+
+    public bool IsStorageEmpty => PublicModel.IsStorageEmpty;
+
+    public virtual IList<IRegionPersistentData> SetOlePersistentData(IDeS11NProvider d11NProvider, TPersistentData data)
+    {
+        return ViewModel.SetRegionPersistentData(d11NProvider, data);
+    }
+
+    public virtual TPersistentData GetOlePersistentData(IS11NProvider s11NProvider, string uniqueId)
+    {
+        return ViewModel.GetRegionPersistentData(s11NProvider, uniqueId, () =>
+        {
+            ThrowExceptionWithMessage("server_busy_save_error");
+        });
+    }
+
+    public void OnWorksheetPropertiesChanged(string[] propertyNames, IWorksheetProperties oldProperties, IWorksheetProperties newProperties)
+    {
+        ViewModel.OnWorksheetPropertiesChanged(propertyNames, oldProperties, newProperties);
+    }
+
+    public void Dispose()
+    {
+        _snappableHelper.Dispose();
+        AbortOleCloseOperation();
+        ViewModel.Dispose();
+    }
+
+    public ISnapToPixelHelper SnappingHelper => _snappableHelper;
+
+    public double Zoom => DocumentAttachedProperties.GetZoom(this);
+
+    private double? _prePrintingZoom;
+
+    public bool IsPrintingZoomSet => _prePrintingZoom.HasValue;
+
+    protected bool HasEffectivePrintingZoom
+    {
+        get
+        {
+            if (_prePrintingZoom.HasValue)
+            {
+                return _prePrintingZoom.Value != Zoom;
+            }
+            return false;
+        }
+    }
+
+    public void SetPrintingZoom(bool set, double? newPrintingZoom)
+    {
+        if (!set)
+        {
+            DebugTools.DevAssert(!newPrintingZoom.HasValue, null);
+        }
+        bool hasValue = _prePrintingZoom.HasValue;
+        if (set && !CanPrint)
+        {
+            DebugTools.DevAssert(!hasValue, null);
+            return;
+        }
+        double num = (set ? newPrintingZoom : _prePrintingZoom) ?? Zoom;
+        if (hasValue != set)
+        {
+            _prePrintingZoom = set ? new double?(Zoom) : null;
+            ApplyPrintingZoom(set ? new double?(num) : null);
+        }
+        DebugTools.DevAssert(Zoom == num, null);
+    }
+
+    protected virtual void ApplyPrintingZoom(double? zoom)
+    {
+        if (zoom.HasValue)
+        {
+            SetValue(DocumentAttachedProperties.ZoomProperty, zoom.Value);
+            return;
+        }
+        if (CanPrint)
+        {
+            DebugTools.AssertNotNull(TrySavingBitmapForPrint(), null);
+        }
+        ClearValue(DocumentAttachedProperties.ZoomProperty);
     }
 }
