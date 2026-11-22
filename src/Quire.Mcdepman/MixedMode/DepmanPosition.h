@@ -27,6 +27,8 @@ public:
     int GetPriority() const;
     bool IsDead();
     bool IsLocked() const;
+    bool IsUndefine();
+    bool IsChildOnly();
     long GetClientHandle() const;
     int GetBasePriority() const;
     bool Invalidated() const;

@@ -19,6 +19,8 @@
 #pragma comment(linker, "/include:?ClearDParent@PositionBase@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?SetBasePriority@PositionBase@depman@@QEAAXH@Z")
 #pragma comment(linker, "/include:?IsLocked@PositionBase@depman@@QEBA_NXZ")
+#pragma comment(linker, "/include:?IsUndefine@PositionBase@depman@@QEAA_NXZ")
+#pragma comment(linker, "/include:?IsChildOnly@PositionBase@depman@@QEAA_NXZ")
 // Uncalled native member functions are stripped by /OPT:REF unless referenced.
 // When referenced by callers in Depman, they will be emitted with exact IL.
 // #pragma comment(linker, "/include:?previous@Position@depman@@$$FQEAAPEAV12@XZ")
@@ -64,6 +66,16 @@ bool PositionBase::TreatedReady() const
 bool PositionBase::IsLocked() const
 {
     return action_chain_ && action_chain_->IsLocked();
+}
+
+bool PositionBase::IsUndefine()
+{
+    return action_chain_ && action_chain_->IsUndefine();
+}
+
+bool PositionBase::IsChildOnly()
+{
+    return action_chain_ && action_chain_->IsChildOnly();
 }
 
 bool PositionBase::IsBusy()
