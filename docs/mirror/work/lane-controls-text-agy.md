@@ -26,3 +26,10 @@
 
 - Shape `TextPointer start = Selection.Start; return GetInsertionPointAtPointer(ref start);` fails: Mathcad pushes `this` as the receiver of `GetInsertionPointAtPointer` before `Selection.Start` is loaded into the local (`ldarg.0; ldarg.0; call get_Selection; ...; stloc.0; ldloca.s 0`), while Roslyn emits the receiver after the local initializer. Same unresolved receiver-retention shape as batch 5 (`CompareBaselineOffset`) and batch 7 (`ToggleScriptUndoCommand`).
 - Reverted; both stubs stay in `Generated/Mirror/Controls.Text.RichTextBase.g.cs`.
+
+## Batch 12 — RichTextWithEmbeddedItem.InsertBaselineOffsetTag
+
+- Member: `InsertBaselineOffsetTag` (static, `internal`). Hand-written in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stub removed from the `.g.cs`.
+- Shape: `GetPropertyValue` and `ApplyPropertyValue` on a `new DocumentTextRange(...)` receiver emit `call`; Mathcad uses `callvirt`. Routing each receiver through a named local produces `callvirt`. The ternary is `fontWeight != FontWeights.Bold ? FontWeights.Bold : FontWeights.DemiBold`.
+- Tried and reverted: `RichTextBase.ToggleRangeToState`. Mathcad stores the second `GetPositionAtTextOffset` result in a local after pushing the first argument, which the natural `new TextRange(A, B)` shape does not reproduce (first difference at #6).
+- Release IL (project-wide): PASS — 612 checked, 0 failures; 119 generated stubs remain.

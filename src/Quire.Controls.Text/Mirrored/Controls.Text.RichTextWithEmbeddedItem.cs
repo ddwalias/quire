@@ -26,6 +26,16 @@ namespace Quire.Controls.Text;
 public partial class RichTextWithEmbeddedItem
 {
 
+    internal static void InsertBaselineOffsetTag(double value, TextPointer insertionPoint)
+    {
+        Run run = new Run("baselineOffsetTag" + value.ToString(), insertionPoint);
+        DocumentTextRange previousRange = new DocumentTextRange(insertionPoint.GetNextContextPosition(LogicalDirection.Backward), insertionPoint);
+        FontWeight fontWeight = (FontWeight)previousRange.GetPropertyValue(TextElement.FontWeightProperty);
+        DocumentTextRange runRange = new DocumentTextRange(run.ContentStart, run.ContentEnd);
+        runRange.ApplyPropertyValue(TextElement.FontWeightProperty, fontWeight != FontWeights.Bold ? FontWeights.Bold : FontWeights.DemiBold);
+    }
+
+
     private ITextStyleChangedHandler _textStyleChangedHandler;
 
     public ITextStyleChangedHandler TextStyleChangedHandler

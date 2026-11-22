@@ -182,8 +182,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     private void DispatchCommandToItems(global::System.Windows.Input.RoutedCommand cmd, object parameter, global::Quire.Controls.Core.PropertiesForUpdate propertyForUpdate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal static void InsertBaselineOffsetTag(double value, global::System.Windows.Documents.TextPointer insertionPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override string GetHelpContext() => base.GetHelpContext();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.RichTextWithEmbeddedItem+PreviewKeyDownData, Ptc.Controls.Text")]
