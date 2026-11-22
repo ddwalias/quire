@@ -91,7 +91,7 @@ namespace gen {
         virtual Substring<const char> GetType(void*) = 0;  // vtable offset 88
     };
 
-    System::String^ ToString(Substring<const char> text);
+    __declspec(noinline) System::String^ ToString(Substring<const char> text);
 
 }
 

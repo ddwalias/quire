@@ -1,5 +1,16 @@
 # Msgen lane checkpoint
 
+## Batch 15 (`Quire.gen.MethodFunction` constructors `(string, Closure, Type, Type[])` and `(sbyte*, Closure)`)
+
+- Owner: AGY, Orca task `task_863729880aea`. Branch `feature/msgen-agy-2`, from current `main`.
+- `.ctor(string, Closure, Type, Type[])`: the unset `ms::Range` (-1 begin/end) passed to `DeclareFunction(null, ...)`, exact Release IL on the first run.
+- `.ctor(const char*, Closure)` (Mathcad `sbyte*`): `IlEmit(::gen::ToString(Substring<const char>(f)), clo, null)`. The `strlen` inside `Substring(char*)` matched the original's loop. It needed `gen::ToString` marked `__declspec(noinline)` (declared in `MsgenCommon.h`, defined in `MsgenPort.cpp`), because the constructor sits in the same translation unit and otherwise inlines it; the body is unchanged.
+- Still blocked in `MethodFunction`: `EmitProlog`, `EmitEpilog`, `EmitStackProbe` (tracing; `typeof(AppException)` reflection, `m_einfo_local`, `beg_exception_block`).
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 431 checked; 0 failures; 7 unfinished.
+- Backup: `msgen-batch3-wip-backup` at 9205680fd remains intact.
+
+---
+
 ## Batch 14 (`Quire.gen.MethodFunction::CreateParameterEnv`)
 
 - Owner: AGY, Orca task `task_efc73f6f7302`. Branch `feature/msgen-agy-2`, from current `main`.

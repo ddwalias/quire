@@ -632,4 +632,17 @@ namespace Quire { namespace gen {
         GC::KeepAlive(this);
         return array;
     }
+    MethodFunction::MethodFunction(String^ f, Closure^ clo, Type^ ty, cli::array<Type^>^ tys)
+        : IlEmit(f, clo, nullptr), m_arity(-1)
+    {
+        // Unset argument range (-1 begin and end), as the original declares before DeclareFunction.
+        ms::Range<void* const> args(reinterpret_cast<void* const*>(-1), reinterpret_cast<void* const*>(-1));
+        DeclareFunction(nullptr, args, ty, tys);
+        GC::KeepAlive(this);
+    }
+    MethodFunction::MethodFunction(const char* f, Closure^ clo)
+        : IlEmit(::gen::ToString(Substring<const char>(f)), clo, nullptr), m_arity(-1)
+    {
+        GC::KeepAlive(this);
+    }
 }}

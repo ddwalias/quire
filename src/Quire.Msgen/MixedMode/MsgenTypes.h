@@ -671,6 +671,8 @@ namespace Quire { namespace gen {
 
     public:
         MethodFunction(void* f, Closure^ clo);
+        MethodFunction(String^ f, Closure^ clo, Type^ ty, cli::array<Type^>^ tys);
+        MethodFunction(const char* f, Closure^ clo);
         virtual int Arity() override;
         virtual Type^ ReturnType() override;
         virtual cli::array<Type^>^ MplParameterTypes() override;
