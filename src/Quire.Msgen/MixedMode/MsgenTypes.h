@@ -263,6 +263,27 @@ namespace Quire { namespace gen {
         cli::array<Type^>^ DelegateParameterTypes(cli::array<Type^>^ p);
     };
 
+    [::Quire::Mirror::MirrorOfAttribute("gen.IlBuilderType, msgen")]
+    ref class IlBuilderType : public Closure
+    {
+    protected:
+        System::Reflection::Emit::Quire::Mpl::TypeBuilder^ m_tb;
+        IlEmit^ m_cctor;
+
+    public:
+        IlBuilderType(IlAsm^ il, System::Reflection::Emit::Quire::Mpl::TypeBuilder^ tb)
+            : Closure(il), m_tb(tb), m_cctor(nullptr)
+        {
+        }
+
+        System::Reflection::Emit::Quire::Mpl::ConstructorBuilder^ DefineConstructor(MethodAttributes attrs, cli::array<Type^>^ parameters);
+        FieldInfo^ DefineField(String^ nm, Type^ ty, FieldAttributes attrs);
+        virtual IlGenMethod^ CreateMethod(String^ nm, Type^ rtype, cli::array<Type^>^ actuals) override;
+        System::Reflection::Emit::Quire::Mpl::TypeBuilder^ GetTypeBuilder() { return m_tb; }
+        virtual Type^ GetInstanceType() override { return m_tb; }
+        void CreateType();
+    };
+
     [::Quire::Mirror::MirrorOfAttribute("gen.Ctxt, msgen")]
     ref class Ctxt abstract
     {

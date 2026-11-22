@@ -272,4 +272,33 @@ namespace Quire { namespace gen {
         }
     }
 
+    System::Reflection::Emit::Quire::Mpl::ConstructorBuilder^ IlBuilderType::DefineConstructor(MethodAttributes attrs, cli::array<Type^>^ parameters)
+    {
+        return m_tb->DefineConstructor(attrs, CallingConventions::Standard, parameters);
+    }
+
+    FieldInfo^ IlBuilderType::DefineField(String^ nm, Type^ ty, FieldAttributes attrs)
+    {
+        // The original keeps `this` alive after the builder call; the Release IL shape requires that.
+        FieldInfo^ result = (ty == IlAsm::VoidType()) ? nullptr : m_tb->DefineField(nm, ty, attrs);
+        GC::KeepAlive(this);
+        return result;
+    }
+
+    IlGenMethod^ IlBuilderType::CreateMethod(String^ nm, Type^ rtype, cli::array<Type^>^ actuals)
+    {
+        // Same `this` keep-alive as DefineField, before the wrapper is built.
+        System::Reflection::Emit::Quire::Mpl::MethodBuilder^ mb = m_tb->DefineMethod(nm, MethodAttributes::Public | MethodAttributes::Static, rtype, actuals);
+        GC::KeepAlive(this);
+        return gcnew IlGenMethod(mb);
+    }
+
+    void IlBuilderType::CreateType()
+    {
+        if (m_cctor)
+        {
+            m_cctor->emit_return();
+        }
+        m_tb->CreateType();
+    }
 }}

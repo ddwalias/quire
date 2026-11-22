@@ -1,5 +1,16 @@
 # Msgen lane checkpoint
 
+## Batch 4 (`Quire.gen.IlBuilderType`, candidate for landing)
+
+- Owner: AGY, Orca task `task_236af414ffdf`. Branch `feature/msgen-agy-2`, from current `main`.
+- Members: `IlBuilderType` class (fields `m_tb`, `m_cctor`), `.ctor`, `DefineConstructor`, `DefineField`, `CreateMethod`, `GetTypeBuilder`, `GetInstanceType`, `CreateType` (7 members, exact Release IL).
+- Left out, blocked on absent types: `Cctor` (needs `CctorFunction`) and `TypeInitializer` (needs `IlAsm::GetTypeInitializer` and its `ConstructorBuilder` path); both are Mathcad members with no Quire counterpart yet, so they are skipped rather than stubbed.
+- `DefineField` and `CreateMethod` keep `GC::KeepAlive(this)` after the builder call, as Mathcad's IL requires.
+- Release IL: `release_il.py --base main --project Quire.Msgen` PASS; 386 checked; 0 failures; 7 unfinished.
+- Preserved WIP remains on `msgen-batch3-wip-backup` at 9205680fd.
+
+---
+
 ## Batch 3 (landed: `Quire.gen.Ctxt::EmitBranch` only)
 
 - Owner: AGY, Orca task `task_b44f336613f9` (previously `task_3e02aeb04edd`). Branch `feature/msgen-agy-2`, from current `main`.
