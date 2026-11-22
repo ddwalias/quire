@@ -36,19 +36,13 @@ public partial class RegionCollectionWithProperty : global::System.Windows.Depen
     [global::Quire.Mirror.MirrorStub]
     private void UpdateShowAxisExpressions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private TValue GetPlotsCommonState<TValue>(global::System.Func<global::Quire.Controls.Core.IPlotRegionCommonProperties, TValue> getState, TValue defaultValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.NumberFormat> GetNumberFormatsForRegions(global::System.Collections.IList regions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.IEnumerable<global::System.Windows.Markup.XmlLanguage> GetProofingLanguageForRegions(global::System.Collections.IList regions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.MatrixFormat> GetMatrixFormatsForRegions(global::System.Collections.IList regions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Core.TextFormat GetTextFormat(global::System.Collections.IList regions, global::Quire.Core.TextFormat tf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static bool GetCalcIsDisabled(global::System.Collections.IList regions, global::System.Nullable<bool> initialVal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Core.BackgroundTypeE GetPlotBackgroundType(global::System.Collections.IList regions, global::System.Nullable<global::Quire.Controls.Core.BackgroundTypeE> globalType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Controls.Core.CameraType3D GetPlotCameraType(global::System.Collections.IList regionsList, global::System.Nullable<global::Quire.Controls.Core.CameraType3D> globalValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

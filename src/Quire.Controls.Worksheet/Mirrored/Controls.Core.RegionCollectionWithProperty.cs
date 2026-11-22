@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -212,5 +213,64 @@ public partial class RegionCollectionWithProperty
                 }
             }
         }
+    }
+
+    private TValue GetPlotsCommonState<TValue>(Func<IPlotRegionCommonProperties, TValue> getState, TValue defaultValue)
+    {
+        return PlotRegions.GetCommonValue(getState, defaultValue);
+    }
+
+    private static TextFormat GetTextFormat(IList regions, TextFormat tf)
+    {
+        foreach (IWhiteboardItem region in regions)
+        {
+            if (region is IRichTextBase)
+            {
+                tf = new TextFormat((region as IRichTextBase).GetTextFormatForWholeDocument(), tf);
+            }
+            else if (region is ICurrentTextFormatProperty)
+            {
+                ICurrentTextFormatProperty currentTextFormatProperty = region as ICurrentTextFormatProperty;
+                if (currentTextFormatProperty.CurrentTextFormat != null)
+                {
+                    tf = new TextFormat(currentTextFormatProperty.CurrentTextFormat, tf);
+                }
+            }
+        }
+
+        return tf;
+    }
+
+    private static BackgroundTypeE GetPlotBackgroundType(IList regions, BackgroundTypeE? globalType)
+    {
+        if (globalType.HasValue && globalType.Value == BackgroundTypeE.Undefined)
+        {
+            return BackgroundTypeE.Undefined;
+        }
+
+        foreach (IWhiteboardItem region in regions)
+        {
+            DependencyObject val = region as DependencyObject;
+            if (val.HasLocalValue(AttachedProperties.PlotBackgroundTypeProperty))
+            {
+                BackgroundTypeE plotBackgroundType = AttachedProperties.GetPlotBackgroundType(val);
+                if (!globalType.HasValue)
+                {
+                    globalType = plotBackgroundType;
+                }
+                else if (globalType != plotBackgroundType)
+                {
+                    globalType = BackgroundTypeE.Undefined;
+                    break;
+                }
+            }
+        }
+
+        if (!globalType.HasValue)
+        {
+            return BackgroundTypeE.Undefined;
+        }
+
+        return globalType.Value;
     }
 }
