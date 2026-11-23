@@ -66,13 +66,7 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     [global::Quire.Mirror.MirrorStub]
     public AxisModel(global::Quire.Controls.Plots.Presenter.AxesType axisType, global::Quire.Controls.Plots.Presenter.PlotType plotType, global::Quire.Controls.Plots.IPlotTitleModel axisTitleModel = default) { }
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<double> LinearizeStartEnd(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void BuildTickMarksValues(bool useSecondTickValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal void CalculateBetterTickmarks(ref double start, ref double end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void CalculateBetterTickmarksWhenZeroIsNotInRange(ref double start, ref double end, ref int numberOfIntervals) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void CalculateBetterTickmarksWithZeroInRange(ref double start, ref double end, ref int numberOfIntervals) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -93,8 +87,6 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     public void SetDataObject(global::Quire.PersistentDataObjects.axisBaseType axisData, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ReadAxisDomainData(global::Quire.PersistentDataObjects.xyDomainType axisDomain, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool FormatTickMarkValues() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.AxisModel+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames

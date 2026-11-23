@@ -250,6 +250,86 @@ internal partial class AxisModel
         return true;
     }
 
+    private double? LinearizeStartEnd(double value)
+    {
+        double num = Linearize(value);
+        if (num.IsValid())
+        {
+            return num;
+        }
+        if (IsLinearizedRangeAssertEnabled.HasValue && IsLinearizedRangeAssertEnabled.Value && Scaling == AxisScaling.Logarithmic && !HasAxisError())
+        {
+            IsLinearizedRangeAssertEnabled = false;
+            DebugTools.FailAssertion("Start or End values of axis model should not be negative when scaling is logarithmic.");
+        }
+        return null;
+    }
+
+    private void BuildTickMarksValues(bool useSecondTickValue)
+    {
+        int tickCount = MajorTickMarks.Count;
+        if (DebugTools.DevAssert(tickCount > 1, null).Passed)
+        {
+            double spacing = (End - Start) / (double)(tickCount - 1);
+            if (useSecondTickValue && SecondTickExpression != null && SecondTickExpression.IsValueValid && !SecondTickExpression.HasErrors)
+            {
+                spacing = SecondTickExpression.CalculatedValue - Start;
+                tickCount = (int)Math.Ceiling((End - Start) / spacing);
+                End = Start + spacing * (double)tickCount;
+                tickCount++;
+            }
+            MajorTickMarks.Values = new double[tickCount];
+            MajorTickMarks.Count = tickCount;
+            for (int i = 0; i < tickCount - 1; i++)
+            {
+                MajorTickMarks.Values[i] = Start + spacing * (double)i;
+            }
+            MajorTickMarks.Values[tickCount - 1] = End;
+        }
+    }
+
+    private static void CalculateBetterTickmarksWhenZeroIsNotInRange(ref double start, ref double end, ref int numberOfIntervals)
+    {
+        if (start < 0.0 && end > 0.0)
+        {
+            throw new ArgumentException("Zero is not in range, this function should not have been called");
+        }
+        if (end > start)
+        {
+            double step = (end - start) / (double)numberOfIntervals;
+            double order = OrderFunction(step);
+            step = RoundWithOrder(step, 0.5 * order);
+            if (step == 0.0)
+            {
+                step = 0.5 * order;
+            }
+            double floor = FloorWithOrder(start, 0.5 * order);
+            double ceiling = CeilingWithOrder(end, 0.5 * order);
+            if (DebugTools.DevAssert(floor.IsValid() && ceiling.IsValid(), null).Passed)
+            {
+                start = floor;
+                end = ceiling;
+                int intervals = (int)CeilingWithOrder((end - start) / step, 1.0);
+                numberOfIntervals = intervals;
+                end = start + (double)numberOfIntervals * step;
+            }
+        }
+    }
+
+    public bool FormatTickMarkValues()
+    {
+        if (IsDiscrete)
+        {
+            return false;
+        }
+        NumberFormat numberFormat = (DisplayNumberFormat != null) ? DisplayNumberFormat.Clone() : new NumberFormat();
+        numberFormat.ExponentialThreshold = 3;
+        MajorTickMarks.FormatValues(numberFormat);
+        UpdateFilteredLabels();
+        FireTickMarkLabelsUpdated();
+        return true;
+    }
+
     public void SetRange(double? min, double? max)
     {
         // The IL creates the closure only after the readiness test, so the body sits inside the if.

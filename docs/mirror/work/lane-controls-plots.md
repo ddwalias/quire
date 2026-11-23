@@ -495,3 +495,11 @@
 - Generated layout: changed (five stubs removed). Verified: after a Release build, `emit` regenerates `AxisModel.g.cs` byte-identical.
 - Release IL: PASS — 2524 checked, 0 failures.
 - Correction to batch 67's "Left" list: `SetLogarithmicScale`, `SetRangeToLinearAxis` and `SetRangeToRadialAxis` are done (batches 64-65). Remaining AxisModel stubs: `AxisCalculatables`, `RegionXmlNode`, `LinearizeStartEnd`, `BuildTickMarksValues`, `FormatTickMarkValues`, `CalculateBetterTickmarks*`, `SetLevels`, `SetXmlNode`, `GetXmlNode`, `AddEquation` (both), `CreateXyDomainType`, `GetDataObject`, `SetDataObject`, `ReadAxisDomainData`, `SetTickMarksPattern` (done in batch 60), and the constructor.
+
+## Batch 69 — AxisModel tick-mark builders (partial)
+
+- Members: `LinearizeStartEnd`, `BuildTickMarksValues`, `CalculateBetterTickmarksWhenZeroIsNotInRange`, `FormatTickMarkValues`. Hand-written: placed ahead of `SetRange` in `Mirrored/Controls.Plots.Model.AxisModel.cs` (keeps the `SetRange` 170 and `GetNumberOfTracesForEquation` 213 ordinals); stubs removed from `AxisModel.g.cs`.
+- Release IL: PASS — 2528 checked, 0 failures. Generated layout: four stubs removed; after a Release build, `emit` regenerates `AxisModel.g.cs` byte-identical.
+- Blocked, kept as stubs: `CalculateBetterTickmarks` (the Mathcad IL materialises `start < 0 && end > 0` as a bool value and then `brfalse`, with no bool local; Roslyn branches on the condition instead, and a bool local adds a slot Mathcad does not have) and `CalculateBetterTickmarksWithZeroInRange` (Mathcad stores the second `RoundWithOrder` result in a local before `Math.Max`, and the first result stays on the stack; neither the expression form nor the named-local form reproduces it).
+- Left in AxisModel: the two blocked helpers above, `SetLevels`, `RegionXmlNode`, `AxisCalculatables`, `SetXmlNode`, `GetXmlNode`, `AddEquation` (both), `CreateXyDomainType`, `GetDataObject`, `SetDataObject`, `ReadAxisDomainData`, and the constructor.
+- SetMinWidthHeight (XYPlotStrategy) remains parked on the slot 41 vs 40 mismatch.
