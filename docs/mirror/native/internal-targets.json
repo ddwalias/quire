@@ -345,6 +345,20 @@
         "rva": "0x2b240",
         "size": 8
       }
+    },
+    "managed": {
+      "new": {
+        "size": 68,
+        "toolchain": true
+      },
+      "delete[]": {
+        "size": 5,
+        "toolchain": true
+      },
+      "delete": {
+        "size": 21,
+        "toolchain": true
+      }
     }
   },
   "msmpl.dll": {
