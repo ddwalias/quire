@@ -593,3 +593,10 @@
 - Blocked, kept as stubs:
   - `OnContentSizeChanged`: Mathcad pushes `this` before the `newSize = e.NewSize` store (`ldarg.0; ldarg.2; get_NewSize; stloc.0; ldloca.s 0; get_Width; set_Width`). The two-statement form gives the wrong order; `Width = (newSize = e.NewSize).Width` makes Roslyn add a struct temp (28 entries against 26).
   - `Move`: Mathcad stores `this` in a temp (`ldarg.0; stloc.3`) before the `is PlotTitle` / `is PlotLegend` tests. Roslyn does not emit that temp.
+
+## Batch 84 — PlotGraphLinearAxisBase tick and offset helpers
+
+- Members: `GetTickLine` (`-size` for the negative side, as Mathcad's `neg`), `Length` (the `double` local is declared before the `Size` local, matching the Mathcad slot order), `GetRealOffset`, `GetRealRelaviveOffset`. Hand-written at the end of `Mirrored/Controls.Plots.PlotGraphLinearAxisBase.cs`; four stubs removed from `PlotGraphLinearAxisBase.g.cs`.
+- Generated layout: four stubs removed. Verified: after a Release build, `emit` regenerates `PlotGraphLinearAxisBase.g.cs` byte-identical to the committed file.
+- Release IL: full gate PASS — 2571 checked, 0 failures.
+- Still stubs in this class: `ArrowHeadGeometry`, `GetTickValueTextAndPositionByTickNumber`, `DrawNumbers`, `GetPositions`.

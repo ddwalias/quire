@@ -197,4 +197,59 @@ public abstract partial class PlotGraphLinearAxisBase
         }
     }
 
+    protected LineGeometry GetTickLine(double tickPosition, double size)
+    {
+        Point startPoint;
+        Point endPoint;
+        if (Orientation == Orientation.Horizontal)
+        {
+            startPoint = new Point(tickPosition, -size);
+            endPoint = new Point(tickPosition, size);
+        }
+        else
+        {
+            startPoint = new Point(-size, tickPosition);
+            endPoint = new Point(size, tickPosition);
+        }
+        return new LineGeometry(startPoint, endPoint);
+    }
+
+    protected double Length(bool fullSize)
+    {
+        double length;
+        Size desiredSize;
+        if (Orientation == Orientation.Horizontal)
+        {
+            desiredSize = DesiredSize;
+            length = desiredSize.Width;
+        }
+        else
+        {
+            desiredSize = DesiredSize;
+            length = desiredSize.Height;
+        }
+        if (!fullSize)
+        {
+            length -= 5.0;
+        }
+        return length;
+    }
+
+    protected double GetRealOffset(double offset)
+    {
+        if (Orientation != Orientation.Horizontal)
+        {
+            return Length(fullSize: true) - offset;
+        }
+        return offset;
+    }
+
+    private double GetRealRelaviveOffset(double offset)
+    {
+        if (Orientation != Orientation.Horizontal)
+        {
+            return 1.0 - offset;
+        }
+        return offset;
+    }
 }
