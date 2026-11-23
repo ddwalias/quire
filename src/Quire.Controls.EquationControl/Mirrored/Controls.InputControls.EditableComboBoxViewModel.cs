@@ -338,4 +338,25 @@ public partial class EditableComboBoxViewModel
             }
         }
     }
+
+    private MathNode TryReadMathNodeFromClipboard()
+    {
+        string sExpression = WpfClipboard.Current.GetSExpression();
+        if (sExpression == null || !sExpression.IsNotEmpty())
+        {
+            return null;
+        }
+
+        MathNode result = null;
+        try
+        {
+            result = TransformMathNodeToComboBoxValues.SExpressionToMathNode(sExpression);
+        }
+        catch (Exception ex)
+        {
+            DebugTools.FailAssertion(ex.Message);
+        }
+
+        return result;
+    }
 }
