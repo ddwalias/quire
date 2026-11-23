@@ -931,4 +931,73 @@ internal partial class TraceModel
             DebugTools.DevAssert(NumberOfPointsInResult >= FinalNumberOfDataPointsToRender, null);
         }
     }
+
+    private partial struct TraceAnalyzedData
+    {
+        public bool HasMoreThanOneColumn { get; set; }
+
+        public void SetDefaults()
+        {
+            PointsCollection = null;
+            XLabels = null;
+            YLabels = null;
+            RectPoints.Top = (RectPoints.Left = (RectPoints.Right = (RectPoints.Bottom = double.NaN)));
+            RangeUnits = null;
+            ResultUnits = null;
+        }
+    }
+
+    private partial class PlottingPointsForDisplay
+    {
+        public PointCollection ViewPoints => _viewPoints;
+
+        internal PlottingPointsForDisplay(PointCollection filteredPoints, PointCollection viewPoints)
+        {
+            if (DebugTools.DevAssert((_filteredPoints == null && _viewPoints == null) || (_filteredPoints != null && _viewPoints != null && _filteredPoints.Count == _viewPoints.Count), null).Passed)
+            {
+                _filteredPoints = filteredPoints;
+                _viewPoints = viewPoints;
+            }
+        }
+
+        internal double GetClosestPlottingCoordinateOnRangeAxis(double value, double threshold)
+        {
+            double result = double.NaN;
+            if (_filteredPoints != null)
+            {
+                double closestDistance = double.MaxValue;
+                foreach (Point filteredPoint in _filteredPoints)
+                {
+                    double distance = Math.Abs(filteredPoint.X - value);
+                    if (distance < threshold && distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        result = filteredPoint.X;
+                    }
+                }
+            }
+            return result;
+        }
+
+        internal List<Point> GetGraphPointsForPlottingCoordinateOnRangeAxis(double value)
+        {
+            List<Point> list = new List<Point>();
+            if (!double.IsNaN(value) && _filteredPoints != null && _viewPoints != null)
+            {
+                for (int i = 0; i < _filteredPoints.Count; i++)
+                {
+                    Point point = _filteredPoints[i];
+                    if (point.X == value)
+                    {
+                        point = _viewPoints[i];
+                        if (point.Y.IsValid())
+                        {
+                            list.Add(_viewPoints[i]);
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+    }
 }

@@ -542,3 +542,11 @@
 - Result: not landed; the constructor stays a generated stub. The draft is kept outside the repo, not committed.
 - Left in AxisModel: the constructor (blocked above), the two blocked tick-mark helpers from batch 69 and `SetXmlNode` (both placeholders from batch 75), and the `AxisCalculatables` iterator is done (batch 75).
 - SetMinWidthHeight (XYPlotStrategy) remains parked on the slot 41 vs 40 mismatch.
+
+## Batch 77 — TraceModel nested helpers
+
+- Members: `TraceAnalyzedData.HasMoreThanOneColumn` (auto property), `TraceAnalyzedData.SetDefaults`, `PlottingPointsForDisplay` constructor, `ViewPoints`, `GetClosestPlottingCoordinateOnRangeAxis`, `GetGraphPointsForPlottingCoordinateOnRangeAxis`. Hand-written: a nested `partial struct`/`partial class` block at the end of `Mirrored/Controls.Plots.Model.TraceModel.cs`; six stubs removed from `TraceModel.g.cs`.
+- Shapes: the idiomatic bodies match, including the chained `RectPoints` NaN assignment and the copied-point loop as written in the original (no rewrite needed).
+- Generated layout: six stubs removed. Verified: after a Release build, `emit` regenerates `TraceModel.g.cs` byte-identical to the committed file.
+- Release IL: full gate PASS — 2554 checked, 0 failures.
+- Left in TraceModel: `MinPositiveX` and `MinPositiveY` (lambda arguments), `RegionXmlNode`, `DataRange`, `Rl`, `SetEquation`, `RecalculateResultOnPlotTypeChange`, `UpdatePlottingPointsForDisplay`, `SetResult`, `AnalyzeResultData`, `CopyMinMaxAndUnitsResults`.

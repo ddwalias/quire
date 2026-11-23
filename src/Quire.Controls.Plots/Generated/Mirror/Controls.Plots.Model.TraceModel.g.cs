@@ -99,10 +99,6 @@ internal partial class TraceModel : global::Quire.Controls.Plots.Model.PlotCalcu
         public global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> RangeUnits;
         [global::Quire.Mirror.MirrorStub]
         public global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> ResultUnits;
-        [global::Quire.Mirror.MirrorStub]
-        public bool HasMoreThanOneColumn { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public void SetDefaults() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
         [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.TraceModel+TraceAnalyzedData+RectBoundPoints, Ptc.Controls.Plots")]
         internal partial struct RectBoundPoints
@@ -125,13 +121,5 @@ internal partial class TraceModel : global::Quire.Controls.Plots.Model.PlotCalcu
         private readonly global::System.Windows.Media.PointCollection _filteredPoints;
         [global::Quire.Mirror.MirrorStub]
         private readonly global::System.Windows.Media.PointCollection _viewPoints;
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Windows.Media.PointCollection ViewPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        internal PlottingPointsForDisplay(global::System.Windows.Media.PointCollection filteredPoints, global::System.Windows.Media.PointCollection viewPoints) { }
-        [global::Quire.Mirror.MirrorStub]
-        internal double GetClosestPlottingCoordinateOnRangeAxis(double value, double threshold) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        internal global::System.Collections.Generic.List<global::System.Windows.Point> GetGraphPointsForPlottingCoordinateOnRangeAxis(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }
