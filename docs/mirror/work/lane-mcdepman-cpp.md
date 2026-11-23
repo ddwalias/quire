@@ -182,6 +182,21 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
   - A `PositionBase.StartTiming` probe was rejected: dereferencing `gcroot<Quire::depman::NodeTimer^>` emits template operator `..PE$AAVNodeTimer@depman@Quire@@` instead of Mathcad's `..PE$AAUNodeTimer@depman@@` (identical to the rejected `WaitReady` probe in Batch 14); no probe code remains.
   - `PositionBase.Kill` remains parked on the unproven `std::set<depman::Position*>` erase path at offset 136.
 
+## Batch 19 — PositionBase.BeginMove and ActionChain.GetSharedThreadContext
+
+- Owner: AGY, Orca task `task_23a24d971035`; branch `feature/luna-mcdepman`.
+- Members:
+  - `PositionBase.BeginMove()`: empty method (`ret`) maintaining the 216-byte `PositionBase` layout.
+  - `ActionChain.GetSharedThreadContext()`: reads `loc_->env()->GetSharedThreadContext()` via offset 16 (`loc_`), returning `SharedThreadContext^` and maintaining the 40-byte `ActionChain` layout.
+- Release IL report: `.mirror-cache/release-il-c1a6a72c6cc3/release-il.json` (PASS, 213 checked; module `PositionBase.BeginMove` and `ActionChain.GetSharedThreadContext` exact).
+- Remaining prerequisites:
+  - `DepManager.add_dep` / `remove_dep`: large unmanaged methods operating directly on multi-level `std::map<SDef, std::map<Position*, pair<ActionChain*, DependencyType>>>` containers with `std_label_set` and custom comparators; native `DepManager` layout and tables remain unported.
+  - `PositionBase.SetEnvScope`: branches on Scope nullness, calling `ActionChain.remove_env_scope` and `ActionChain.add_env_scope` which require `DepManager.remove_dep` and `add_dep`.
+  - `PositionBase.Invalidate`: requires callback wiring for `PosCallback`, `PosQueueCallback`, `InterruptCallback`, and `TreatedReadyInvalidCallback`.
+  - `PositionBase.Kill` and `TreatAsReady(false)`: require the unproven `std::set<depman::Position*>` erase path at offset 136.
+  - `Position.previous` / `Position.next`: dynamic cast emits RTTI type descriptor data differences against Mathcad RTTI; pragmas remain commented out until RTTI descriptor handling is resolved.
+
+
 
 
 

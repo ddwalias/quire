@@ -46,6 +46,7 @@ public:
     void SetScope(::Quire::depman::Scope^ scope);
     void Lock();
     void UnLock();
+    void BeginMove();
     ::Quire::depman::Scope^ GetScope();
     ::Quire::depman::Scope^ GetEnvScope();
     ::Quire::depman::SEnvironment^ env() const;
@@ -106,6 +107,7 @@ public:
     void UnLock();
     void SetNeedsCheck();
     void Kill();
+    ::Quire::depman::SharedThreadContext^ GetSharedThreadContext() const;
 
     // ActionChainMgd's reference IL reads these pointer fields at offsets 8, 16, and 24.
     DepManager* dep_manager_;                       // 0x08 (offset 8)
