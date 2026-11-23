@@ -458,7 +458,7 @@
 ## Remaining in this lane — reasons (not retried)
 
 - Closure-ordinal model unresolved (per lane note): members whose Release IL has `<Member>b__N_k`, `<>c__DisplayClassN_k`, `d__N`, or `g__` names, e.g. `SetInsertionPoint`, `HandleGridCellSizeChanged`, `Initialize`, `HandleItemsListChanging`, `SelectContiguous`, `RestoreSavedState`, `OnRequestMoveAndResize`, `SelectItems`, `FindSizeLimit`, `GetOverlappingItems`, `FindOncePrivate`, `TabInto`, `HandleMouseDown`, `GetInsertionPointAfterCarriageReturn`, `GetRightMostItemEdge`, `GetLowestItemEdge`, `PredictFocus`, `GetItemsAccordingTabNavigateOrder`, `CanSeparateOverlappedItems`, `SeparateOverlappedItems`, `GetChildItemFromLocation`, `HandleItemAdded`, `HandleItemRemoved`, `ChildTriggeredResizeHandler`, `SetEqResizable`, `SetupCommandBindings`, `LimitOffsetBasedOnItemsToMove`, `CanDeleteVerticalSpace`, `AddItemsCommand.DoWithResize`, `RemoveItemsCommand.Do`, `MoveItemsCommand.CheckMovementWithoutGrowth`/`Undo`, `RecursivelyEnumerate*` (iterators).
-- Devirtualization of `new XCommand(...).Execute()` (checked this batch with a standalone Roslyn experiment: a `new` receiver, including through a cast, compiles to `call`; Mathcad's Release IL uses `callvirt` on the non-virtual `WhiteboardCommand.Execute`/`Do`, so no source shape matches it): `AddItemAndActivate`, `AddItems`, `SetItemGridPosition`, `DeleteSelectedItems`, `DeleteVerticalSpaceAbove`/`Below`, `InsertVerticalSpace`, `HandleCarriageReturn`, `DirectionalMoveHandler(Direction, bool)`, `RemoveItemsCommand.Undo` (`new AddItemsCommand(...).Do()`), `WhiteboardDragger.DropTargetDrop`. Needs a maintainer decision on the generator or compiler setting; not retried.
+- Devirtualization of `new XCommand(...).Execute()`: resolved in Batch 41 via idiomatic typed local `Commands.WhiteboardCommand command = new XCommand(...); command.Execute();`, which prevents devirtualization to `call` while Roslyn Release optimization eliminates the temporary local variable slot, matching Mathcad's stack-only `callvirt` IL. The remaining command call in this group is `WhiteboardDragger.DropTargetDrop` (closure-gated).
 - Other, with reasons from earlier batches: `DeleteItemIfNeeded` (`dup` on the command), `NavigateInto` (branch offset), `FindMinimumSize` (local slot numbering), `IsValidLocation` (`call` on a `virtual` declaration; ownership decision), `WhiteboardItemsSeparator.Separate` (deferred), `IsTabNavigatable` (closure ordinal).
 
 ## Batch 33 — nested command Do/Undo/Redo members (SeparateOverlappedItemsCommand, ResizeItemCommand, PushItemsDownCommand, InsertSpaceCommand, DeleteSpaceCommand)
@@ -523,5 +523,27 @@
 - Shapes Release IL requires: `PushItemsDownCommand` uses `itemsToMove.Count() > 0` with `itemsToMove.ToArray()` passed to `MoveItemsCommand`; `SeparateOverlappedItemsCommand` uses inverted early-return guard `if (!whiteboardItemsSeparator.CanSeparate()) return;`; `MoveItemsCommand` uses field initializers on `_initialLocations` and `_finalLocations`.
 - Release IL: PASS — 927 checked, 0 failures (`release-il-42ca1cc928c8`).
 - Remaining mismatches in this batch: none.
+
+## Batch 41 — Command receiver methods (AddItemAndActivate, AddItems, SetItemGridPosition, HandleCarriageReturn, DirectionalMoveHandler, DeleteSelectedItems, InsertVerticalSpace, DeleteVerticalSpaceAbove, DeleteVerticalSpaceBelow, RemoveItemsCommand.Undo)
+
+- Members:
+  - `WhiteboardViewModel.AddItemAndActivate(IWhiteboardItem)`
+  - `WhiteboardViewModel.AddItems(Dictionary<IWhiteboardItem, Point>)`
+  - `WhiteboardViewModel.SetItemGridPosition(IWhiteboardItem, Point)`
+  - `WhiteboardViewModel.HandleCarriageReturn()`
+  - `WhiteboardViewModel.DirectionalMoveHandler(Direction, bool)`
+  - `WhiteboardViewModel.DeleteSelectedItems()`
+  - `WhiteboardViewModel.InsertVerticalSpace(int, bool, bool)`
+  - `WhiteboardViewModel.DeleteVerticalSpaceAbove(int)`
+  - `WhiteboardViewModel.DeleteVerticalSpaceBelow(int)`
+  - `RemoveItemsCommand.Undo()`
+- Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; stubs and `[MirrorStub]` attributes removed.
+- Shapes Release IL requires:
+  - Idiomatic typed local `Commands.WhiteboardCommand command = new XCommand(...); command.Execute();` (or `command.Do();`) prevents Roslyn from devirtualizing non-virtual `Execute`/`Do` calls on `new` expressions to `call`. In Release mode, Roslyn's optimizer eliminates the temporary local variable slot, producing the exact stack-only `newobj` followed by `callvirt WhiteboardCommand::Execute` (or `Do`) sequence with zero extra locals.
+  - `DirectionalMoveHandler(Direction, bool)` declares `Point point;` at the method head (slot 0), uses `return;` inside the `if (HasSelectedItems)` branch to ensure `if (command.Execute())` false branch jumps directly to local `ret` (offset 10) matching Mathcad's `brfalse.s IL_0059`.
+  - `HandleCarriageReturn()` uses `Point` locals `insertionPoint` (slot 0) and `nearestIntersectionInDirection` (slot 1) before `InsertSpaceCommand` invocation.
+- Release IL: PASS — 937 checked, 0 failures (`release-il-c8408fa7bc8b`).
+- Remaining mismatches in this batch: none.
+
 
 

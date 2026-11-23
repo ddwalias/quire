@@ -656,7 +656,11 @@ public partial class WhiteboardViewModel
         }
     }
 
-    public virtual void AddItemAndActivate(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void AddItemAndActivate(IWhiteboardItem item)
+    {
+        Commands.WhiteboardCommand command = new AddItemsCommand(this, "Add Whiteboard Items", item);
+        command.Execute();
+    }
 
     public void RemoveWhiteboardItem(global::Quire.Controls.Core.IWhiteboardItem item)
     {
@@ -673,7 +677,11 @@ public partial class WhiteboardViewModel
         _whiteboardModel.AddItemAtLocation(item, location);
     }
 
-    public void AddItems(global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> addItemsAtLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void AddItems(Dictionary<IWhiteboardItem, Point> addItemsAtLocation)
+    {
+        Commands.WhiteboardCommand command = new AddItemsCommand(this, "Add Items", addItemsAtLocation);
+        command.Execute();
+    }
 
     public virtual Point GetItemLocation(IWhiteboardItem item)
     {
@@ -708,7 +716,12 @@ public partial class WhiteboardViewModel
         SetItemLocation(item, nearestIntersection);
     }
 
-    public void SetItemGridPosition(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetItemGridPosition(IWhiteboardItem item, Point location)
+    {
+        Point point = Grid.ConvertGridCoordinatesToDips(location);
+        Commands.WhiteboardCommand command = new MoveItemsCommand(this, item, point);
+        command.Execute();
+    }
 
     public virtual Point GetItemGridPosition(IWhiteboardItem item)
     {
@@ -1317,7 +1330,23 @@ public partial class WhiteboardViewModel
         RemoveWhiteboardItem(itemToRemove);
     }
 
-    protected virtual void HandleCarriageReturn() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void HandleCarriageReturn()
+    {
+        if (EnumerableExtensions.IsNullOrEmpty(ActiveOrSelectedItems))
+        {
+            InsertVerticalSpace(1, pushInsertionPoint: true, ignoreItemsOnCurrentLine: false);
+            return;
+        }
+
+        Point insertionPoint = GetInsertionPointAfterCarriageReturn();
+        InsertionPoint = insertionPoint;
+        Point nearestIntersectionInDirection = Grid.GetNearestIntersectionInDirection(insertionPoint, Direction.Below);
+        if (DoubleExtension.IsGreaterThanOrEqual(nearestIntersectionInDirection.Y, ContentHeight, double.NaN))
+        {
+            Commands.WhiteboardCommand command = new InsertSpaceCommand(this, 1, pushInsertionPoint: true, ignoreItemsOnCurrentLine: true, Array.Empty<IWhiteboardItem>());
+            command.Execute();
+        }
+    }
 
     protected global::System.Windows.Point GetInsertionPointAfterCarriageReturn() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -1347,7 +1376,24 @@ public partial class WhiteboardViewModel
         DirectionalMoveHandler(direction, allowGrowthDownOrRight: true);
     }
 
-    protected void DirectionalMoveHandler(global::Quire.Direction direction, bool allowGrowthDownOrRight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void DirectionalMoveHandler(Direction direction, bool allowGrowthDownOrRight)
+    {
+        Point point;
+        if (HasSelectedItems)
+        {
+            Point itemLocation = GetItemLocation(SelectedItems.First());
+            Vector vector = GetNextIntersectionForMove(itemLocation, direction) - itemLocation;
+            Commands.WhiteboardCommand command = new MoveItemsCommand(this, vector, allowGrowthDownOrRight, SelectedItems.ToArray());
+            if (command.Execute())
+            {
+                RequestBringIntoView?.Invoke(SelectedItems);
+            }
+            return;
+        }
+
+        point = _alignmentGrid.GetNearestIntersectionInDirection(GetNavigationStartLocation(direction), direction);
+        NavigateInto(direction, point);
+    }
 
     protected virtual Point GetNextIntersectionForMove(Point currentLocation, Direction direction)
     {
@@ -1376,7 +1422,11 @@ public partial class WhiteboardViewModel
         }
     }
 
-    protected void DeleteSelectedItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void DeleteSelectedItems()
+    {
+        Commands.WhiteboardCommand command = new RemoveSelectedItemsCommand(this, "Remove Selected Items");
+        command.Execute();
+    }
 
     private void DeleteActiveOrSelectedItems()
     {
@@ -1580,11 +1630,23 @@ public partial class WhiteboardViewModel
 
     public virtual bool CanDeleteVerticalSpaceBelow { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
-    public virtual void InsertVerticalSpace(int numberOfLines, bool pushInsertionPoint, bool ignoreItemsOnCurrentLine) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void InsertVerticalSpace(int numberOfLines, bool pushInsertionPoint, bool ignoreItemsOnCurrentLine)
+    {
+        Commands.WhiteboardCommand command = new InsertSpaceCommand(this, numberOfLines, pushInsertionPoint, Array.Empty<IWhiteboardItem>());
+        command.Execute();
+    }
 
-    public virtual void DeleteVerticalSpaceAbove(int numberOfLines) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void DeleteVerticalSpaceAbove(int numberOfLines)
+    {
+        Commands.WhiteboardCommand command = new DeleteSpaceCommand(this, numberOfLines, Direction.Above);
+        command.Execute();
+    }
 
-    public virtual void DeleteVerticalSpaceBelow(int numberOfLines) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void DeleteVerticalSpaceBelow(int numberOfLines)
+    {
+        Commands.WhiteboardCommand command = new DeleteSpaceCommand(this, numberOfLines, Direction.Below);
+        command.Execute();
+    }
 
     public double LimitOffsetBasedOnItemsToMove(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToMove, double offsetY, global::Quire.Direction direction, global::System.Windows.Point insertionPointLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -1756,8 +1818,15 @@ public partial class WhiteboardViewModel
         }
         [global::Quire.Mirror.MirrorStub]
         public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override void Undo()
+        {
+            Commands.WhiteboardCommand command = new AddItemsCommand(_viewModel, "Add Item", _itemsAtLocations);
+            command.Do();
+            if (_activeItemPriorToRemoval != null)
+            {
+                _activeItemPriorToRemoval.Activate(true);
+            }
+        }
         public override void Redo()
         {
             Do();
