@@ -13,6 +13,4 @@ public partial class RegionPersistentData : global::Quire.Serialization.IRegionP
 {
     [global::Quire.Mirror.MirrorStub]
     public virtual object Accept(global::Quire.IVisitor visitor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::System.Collections.Generic.IEnumerable<global::System.Exception> AllDeserializationExceptions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

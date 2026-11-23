@@ -87,3 +87,10 @@
 - Build fix: `Quire.Controls.Include` (`IncludeWorksheetControl`) is reached through the generated `Mirror.props` closure, so only a `using` was needed. The added `System.Windows.Documents` using made `Paragraph` ambiguous, so it was removed and the plain name resolves to `Quire.Controls.Text.Paragraph`.
 - Release IL: PASS (1282 checked, 1282 exact, 0 failures).
 - Left as stubs: `ConvertToIRegionType` (parked, batch 10 note).
+
+## Batch 12 — RegionPersistentData.AllDeserializationExceptions (getter)
+
+- Implemented in `Mirrored/` (stub removed from `.g.cs`). The initial list is `DeserializationException != null ? new List { x } : new List()`. The `== null` form and an `if`/`else` both differed: the `== null` ternary places the non-null branch as fall-through, and the `if`/`else` stores to the local twice (one `stloc` too many).
+- The `foreach` over `Children` (`IList`) with `AddRange` is the closure-free bottom-tested loop.
+- Release IL: PASS (1283 checked, 0 failures).
+- Still parked: `PageNumberControl.IsValidTemplateKey` (lambda, `<>c__DisplayClass17_0` ordinal blocker) and the closure-bearing members listed in batch 6 and batch 8 notes.

@@ -36,6 +36,28 @@ public partial class RegionPersistentData
 
     public UIElement Control { get; private set; }
 
+    public virtual IEnumerable<Exception> AllDeserializationExceptions
+    {
+        get
+        {
+            List<Exception> exceptions = DeserializationException != null
+                ? new List<Exception> { DeserializationException }
+                : new List<Exception>();
+            if (Children != null)
+            {
+                foreach (IRegionPersistentData child in Children)
+                {
+                    IEnumerable<Exception> childExceptions = child.AllDeserializationExceptions;
+                    if (childExceptions != null)
+                    {
+                        exceptions.AddRange(childExceptions);
+                    }
+                }
+            }
+            return exceptions;
+        }
+    }
+
     public virtual bool HasDeserializationErrors => !AllDeserializationExceptions.IsNullOrEmpty();
 
     protected bool HideFromCalculationContext
