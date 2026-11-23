@@ -392,3 +392,15 @@
 - Members: `GetInitialPlaceholderIndices` (four `out` assignments, `0, 1, 1, 0`). Hand-written: appended to `Mirrored/Controls.Plots.XYPlotStrategy.cs`; stub removed from `XYPlotStrategy.g.cs`.
 - Release IL: PASS — 2478 checked, 0 failures.
 - Left: `PlotItemPlaceholder.GetMinLegendPlaceholderHeight` (uses `DebugTools.AssertNotNull` and `IsPlotTitleOrientationSwapped`), `PlotItemPlaceholder.AdjustPadding`, the other `XYPlotStrategy` layout methods, and the `PlotItem` WPF handlers.
+
+## Batch 57 — AxisModel log minor tick-mark pattern
+
+- Members: `CreateLogMinorTickmarksPattern` (static; `new double[8]`, bottom-tested-equivalent `for` over 3..9 storing `Log10(n / (n - 1))`, last entry `Log10(2.2222222222222223)`). Hand-written: appended to `Mirrored/Controls.Plots.Model.AxisModel.cs`; stub removed from `AxisModel.g.cs`.
+- Release IL: PASS — 2479 checked, 0 failures.
+
+## Blocker — XYPlotStrategy.SetMinWidthHeight (not landed; reverted)
+
+- Implemented `SetMinWidthHeight` (decompiled order, local static `Safe`) and, separately, `BuildEditableAxisRelatedElements` (lambda closure). Both reverted.
+- `SetMinWidthHeight` alone: the local function is named `<SetMinWidthHeight>g__Safe|6_0` in Quire vs `g__Safe|5_0` in Mathcad (calls differ at #60; the method also has a "no Mathcad counterpart" row for the Quire local). Moving `GetInitialPlaceholderIndices` after it changed Quire's ordinal to 6 but did not reach 5.
+- `BuildEditableAxisRelatedElements` added: its closure is `<>c__DisplayClass5_0` in Quire vs `<>c__DisplayClass4_0` in Mathcad, and the display class has no Mathcad counterpart.
+- Mathcad's XYPlotStrategy also declares `InitializeAxes` and a private static `InitializeAxisTitle` (not declared in Quire). Their absence, and the stub declarations in `XYPlotStrategy.g.cs` ordering, appear to drive the ordinals. Needs the maintainer's decision on placeholder stubs (AGENTS.md compile-order device) or the ordinal rule for generated stubs.

@@ -405,4 +405,15 @@ internal partial class AxisModel
                 return false;
         }
     }
+
+    private static double[] CreateLogMinorTickmarksPattern()
+    {
+        double[] array = new double[8];
+        for (int num = 3; num < 10; num++)
+        {
+            array[num - 3] = Math.Log10((double)num / ((double)num - 1.0));
+        }
+        array[7] = Math.Log10(2.2222222222222223);
+        return array;
+    }
 }

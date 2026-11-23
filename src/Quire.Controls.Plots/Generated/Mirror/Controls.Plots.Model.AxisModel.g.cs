@@ -110,8 +110,6 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     [global::Quire.Mirror.MirrorStub]
     private void SetRangeError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static double[] CreateLogMinorTickmarksPattern() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal void CalculateBetterTickmarks(ref double start, ref double end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void CalculateBetterTickmarksWhenZeroIsNotInRange(ref double start, ref double end, ref int numberOfIntervals) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
