@@ -215,3 +215,10 @@
 - Roslyn in Release returns the Select result directly, with no stloc/ldloc, in every form tried: a named local, a local declared before the `if`, a direct return, and both block orders. The first difference is at #20 (`brtrue.s` target off by two bytes), and the entry count is 33 against Mathcad's 35.
 - It stays a placeholder in the partial. `DeleteEmptyColumns` still reaches it at run time.
 - Left open: `UpdateComboBoxTable` (display classes `29_0`/`29_1`), `InsertRow` (lambda `<>c` `33_0`), `InsertColumn` (`37_0`). Their ordinals are predicted by the rule above, and each needs its own gate probe.
+
+### Batch 29: Controls.InputControls.ComboBoxTableModel (InsertRow, InsertColumn, UpdateComboBoxTable)
+
+- Exact: `InsertRow` (lambda `cell.Row += 1`, `<>c` `33_0`), `InsertColumn` (lambda `cell.Column += 1`, `<>c` `37_0`), and `UpdateComboBoxTable` (display classes `29_0` and `29_1` for the captured `data` and `dataRowsList`, with the `ValueTuple` row list and `DebugTools.IsDebug`). The partial gains `using Quire.EquationEditor.Tree;` for the adapter type.
+- Gate (project-level): PASS; 3531 checked, zero failures (`.mirror-cache/release-il-8c2536ad0c9b/release-il.json`).
+- Regeneration: the generated file is unchanged (zero diff) after a fresh Release build of `Quire.Controls.EquationControl` and `emit`. A stale project build made `emit` re-add all method stubs, so the build must come first.
+- Still placeholders: `GetColumnCells` (the Release IL blocker in batch 28). No other ComboBoxTableModel member remains as a placeholder except that one; every method stub from the generated file is now either exact or the `GetColumnCells` placeholder.

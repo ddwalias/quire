@@ -3,6 +3,7 @@ using Quire.Controls.InputControls;
 using System.Collections.Generic;
 using System.Linq;
 using Quire.EquationEditor.View;
+using Quire.EquationEditor.Tree;
 
 namespace Quire.Controls.InputControls;
 
@@ -111,7 +112,41 @@ public partial class ComboBoxTableModel
         return _topRow.GetCellAt(colIdx);
     }
 
-    public void UpdateComboBoxTable(global::Quire.EquationEditor.Tree.IComboBoxInputControlDataAdapter data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void UpdateComboBoxTable(IComboBoxInputControlDataAdapter data)
+    {
+        if (DebugTools.AssertNotNull(data, null).Failed || DebugTools.AssertNotNull(AllRows, null).Failed)
+        {
+            return;
+        }
+
+        IList<(string rowName, IList<string> rowValues)> dataRowsList = data.GroupByRows;
+        int num = dataRowsList.Count + 1;
+        int num2 = data.Units.Count + 1;
+        if (DebugTools.DevAssert(num >= 2 && num2 >= 2, null).Failed)
+        {
+            return;
+        }
+
+        UpdateTableSize(num, num2);
+        TableTitle = data.TableTitle;
+        _topRow.UnitCells.EachWithIndex((int idx, ICellData cell) =>
+        {
+            cell.Text = data.Units[idx];
+        });
+        _nameValuesRows.EachWithIndex((int rowIndex, NameValuesRow row) =>
+        {
+            row.NameCell.Text = dataRowsList[rowIndex].rowName;
+            row.ValueCells.EachWithIndex((int columnIndex, ICellData cell) =>
+            {
+                cell.Text = dataRowsList[rowIndex].rowValues[columnIndex];
+            });
+        });
+        SelectedNameValuesRowIndex = data.SelectedValueRow;
+        if (DebugTools.IsDebug)
+        {
+            DebugTools.DevAssert(IsValid(), null);
+        }
+    }
 
     private bool IsValid()
     {
@@ -174,7 +209,28 @@ public partial class ComboBoxTableModel
         DebugTools.DevAssert(Rows == rows && Columns == columns && _topRow.CellCount == columns, null);
     }
 
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData> InsertRow(int rowIndex, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public IEnumerable<ICellData> InsertRow(int rowIndex, Direction direction)
+    {
+        if (DebugTools.AssertNotNull(0 <= rowIndex && rowIndex < Rows, null).Failed)
+        {
+            return Enumerable.Empty<ICellData>();
+        }
+
+        if (DebugTools.DevAssert(direction != Direction.Up || rowIndex != 0, null).Failed)
+        {
+            return Enumerable.Empty<ICellData>();
+        }
+
+        DebugTools.DevAssert(direction == Direction.Up || direction == Direction.Down, null);
+        int num = rowIndex + ((direction == Direction.Down) ? 1 : 0);
+        NameValuesRow nameValuesRow = new NameValuesRow(num, Columns);
+        _nameValuesRows.Insert(num - 1, nameValuesRow);
+        UpdateCellsPositionForShiftedNameValuesRows(num, (ICellData cell) =>
+        {
+            cell.Row += 1;
+        });
+        return nameValuesRow.AllCells;
+    }
 
     public bool CanRemoveRow(int rowIndex)
     {
@@ -210,7 +266,37 @@ public partial class ComboBoxTableModel
         });
     }
 
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData> InsertColumn(int columnIndex, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public IEnumerable<ICellData> InsertColumn(int columnIndex, Direction direction)
+    {
+        if (DebugTools.DevAssert(0 <= columnIndex && columnIndex < Columns, null).Failed)
+        {
+            return Enumerable.Empty<ICellData>();
+        }
+
+        if (DebugTools.DevAssert(direction != Direction.Left || columnIndex != 0, null).Failed)
+        {
+            return Enumerable.Empty<ICellData>();
+        }
+
+        DebugTools.DevAssert(direction == Direction.Right || direction == Direction.Left, null);
+        int num = columnIndex + ((direction == Direction.Right) ? 1 : 0);
+        List<ICellData> list = new List<ICellData>(Rows);
+        int num2 = 0;
+        foreach (ComboBoxRow allRow in AllRows)
+        {
+            CellData cellData = new CellData(string.Empty, num2, num);
+            list.Add(cellData);
+            allRow.InsertCell(num, cellData);
+            UpdateShiftedCellsColumnPosition(allRow.AllCells, num + 1, (ICellData cell) =>
+            {
+                cell.Column += 1;
+            });
+            num2++;
+        }
+
+        Columns++;
+        return list;
+    }
 
     public bool CanRemoveColumn(int columnIndex)
     {
