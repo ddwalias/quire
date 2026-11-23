@@ -559,3 +559,9 @@
 - Blocked for now: `MinPositiveX` and `MinPositiveY` stay generated stubs. Their lambdas are named `<get_MinPositiveX>b__36_0` / `b__39_0` in Mathcad; the same placement at the top of the class gives `b__52_0` / `b__54_0`, so Quire has 16 more member units ahead of them. Matching needs the remaining `TraceModel` stubs in Mathcad order as placeholders (the approach used for `AxisCalculatables`), which is a larger restructure.
 - Also pending on the same closure-ordinal layout: `UpdatePlottingPointsForDisplay` (display class 74) and `AnalyzeResultData` (lambda 172); `SetResult` (display class 166).
 - Still stubs in TraceModel: `RegionXmlNode` (XML reader/writer), `Rl` (uses `InlineArray8<object>`), `SetEquation` (no closure; `SetEquationWithoutCommit` and the attach/detach helpers are already in hand-written code), `SetResult`, `AnalyzeResultData`, `CopyMinMaxAndUnitsResults`, `MinPositiveX`, `MinPositiveY`, `UpdatePlottingPointsForDisplay`.
+
+## Batch 79 — TraceModel SetEquation and CopyMinMaxAndUnitsResults (blocked on a shared enum, kept as stubs)
+
+- Members: `SetEquation(AxesIndex, IEquationItem)` and `CopyMinMaxAndUnitsResults(EngineResult)`. Both draft bodies match except one constant: the comparison with `SynchronizationStatus.Synchronized` is `ldc.i4.3` in Mathcad and `ldc.i4.1` in Quire.
+- Cause: the enum value differs between the two sides. Mathcad `Ptc.Calculation.Core.SynchronizationStatus` is `Pending = 0, Synchronized = 3` (reference.py). Quire `Quire.Calculation.Core.SynchronizationStatus` (`src/Quire.Calculation.Core/ICalculatable.cs`) is `Pending, Synchronized` (0, 1).
+- Result: not landed; both stay generated stubs. The fix is in `Quire.Calculation.Core` (give `Synchronized` the Mathcad value 3), which is outside this lane's assembly. Needs the maintainer or the owning lane. Any other Plots member that compares `SynchronizationStatus` will show the same mismatch until then.
