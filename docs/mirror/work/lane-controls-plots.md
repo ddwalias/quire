@@ -412,3 +412,10 @@
 - Remaining mismatch in `SetMinWidthHeight` only: the `if (PlotLegendPositions != null)` block stores into local slot 41 where Mathcad uses 40, a one-slot difference from an extra double local earlier in Quire's body. Inlining the array temporaries shifted the first difference to instruction #54 (Quire 485 entries vs Mathcad 493), so the named-local form is correct.
 - Not landed: `SetMinWidthHeight` remains a stub, so no previously exact method is affected. Patch kept in the scratch folder for resuming the local-slot investigation.
 - MirrorGen regeneration of the probe's `.g.cs` was not checked.
+
+## XYPlotStrategy isolated BuildEditableAxisRelatedElements (not landed; handoff)
+
+- Isolated the minimum moves: `InitializeLegendPositions` and `ApplyPlotTemplate` and `SetMinWidthHeight` as unmarked throwing placeholders, `BuildEditableAxisRelatedElements` implemented, and the constructor last, all in `Mirrored/Controls.Plots.XYPlotStrategy.cs` after `InitializeAxisTitle` and before `GetInitialPlaceholderIndices`. Generated `XYPlotStrategy.g.cs` keeps only the class shell.
+- Release IL: PASS — 2482 checked, 0 failures (includes the closure `<>c__DisplayClass4_0` identity for `BuildEditableAxisRelatedElements`).
+- MirrorGen regeneration of this file was not run; treat it as unverified.
+- `SetMinWidthHeight` stays a placeholder until the extra double local (Quire slot 41 vs Mathcad 40) is resolved. Patch: `scratchpad/xy-isolate-wip.patch`.

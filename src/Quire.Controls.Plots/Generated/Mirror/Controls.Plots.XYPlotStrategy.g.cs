@@ -11,14 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.XYPlotStrategy, Ptc.Controls.Plots")]
 internal partial class XYPlotStrategy : global::Quire.Controls.Plots.IPlotStrategy
 {
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeLegendPositions(global::Quire.Controls.Plots.PlotControl plot, out global::Quire.Controls.Plots.PlotItemPlaceholder[] rangeLegendsPositions, out global::Quire.Controls.Plots.PlotItemPlaceholder[] resultLegendsPositions, out global::Quire.Controls.Plots.PlotItemPlaceholder[] titlePositions, out global::Quire.Controls.Plots.PlotItemPlaceholder[] plotLegendPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ApplyPlotTemplate(global::Quire.Controls.Plots.PlotControl plot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.Controls.EquationControl> BuildEditableAxisRelatedElements(global::Quire.Controls.Plots.PlotControl plot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetMinWidthHeight(global::Quire.Controls.Plots.PlotControl plot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public XYPlotStrategy() { }
 }
