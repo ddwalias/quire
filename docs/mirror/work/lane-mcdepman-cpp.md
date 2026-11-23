@@ -87,4 +87,11 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
 - Release IL report: `.mirror-cache/release-il-b9bd52a597f7/release-il.json` (PASS, 191 checked; selected Quire.depman.CacheKey).
 - Remaining mismatches: none in this batch. Other mcdepman members remain incomplete as listed above; `ActionChainMgd` methods were not selected.
 
+## Batch 8 — ActionChainMgd managed accessors
+
+- Owner: Codex / Orca task `task_dd7c54fcfe97`; branch `feature/luna-mcdepman`.
+- Members verified: `ActionChainMgd` constructor, `action()`, `env()`, `state()`, `result()`, and `set_result(object)`; existing mixed-mode implementations match the original Release IL.
+- Release IL report: `.mirror-cache/release-il-0aab2241176b/release-il.json` (PASS, 191 checked; selected Quire.depman.ActionChainMgd).
+- Remaining mismatches: none in this batch. Other mcdepman members remain incomplete as listed above.
+
 
