@@ -654,6 +654,26 @@
 - Release IL: PASS — 989 checked, 0 failures (`release-il-1b8243e26c4a`).
 - Remaining mismatches in this batch: none.
 
+## Batch 48 — WhiteboardViewModel: CanSeparateOverlappedItems, SeparateOverlappedItems, and closures
+
+- Members:
+  - `WhiteboardViewModel.CanSeparateOverlappedItems(Dimension)` and closures:
+    - `<>c__DisplayClass278_0` (`.ctor`, `<CanSeparateOverlappedItems>b__0`, `<CanSeparateOverlappedItems>b__1`)
+  - `WhiteboardViewModel.SeparateOverlappedItems(Dimension)` and closures:
+    - `<>c__DisplayClass279_0` (`.ctor`, `<SeparateOverlappedItems>b__0`, `<SeparateOverlappedItems>b__1`, `<SeparateOverlappedItems>b__2`)
+  - `WhiteboardControl.CanSeparateOverlappedItems(Dimension)` (verified exact)
+  - `WhiteboardControl.SeparateOverlappedItems(Dimension)` (verified exact)
+- Hand-written: `src/Quire.Controls.Whiteboard/Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stubs replaced; `GetItemIgnoreForHorizontalMovementAndWidth` declaration un-virtualized to match Mathcad's interface-implementation IL (`.method public final hidebysig newslot virtual`) enabling non-virtual `call` emission in lambda closures.
+- Ordinals: The aligned member ordering established in Batch 42 successfully aligned every target member and closure:
+  - `CanSeparateOverlappedItems` (278) -> `<>c__DisplayClass278_0`
+  - `SeparateOverlappedItems` (279) -> `<>c__DisplayClass279_0`
+- Shapes Release IL requires:
+  - `CanSeparateOverlappedItems`: returns false if `ActiveItem != null`; evaluates ternary `SelectedItems.Any() ? SelectedItems : (whiteboardItems = WhiteboardItems)` emitting `brtrue.s` to SelectedItems and fallthrough store to WhiteboardItems; checks nested whiteboard control overlap with `<CanSeparateOverlappedItems>b__0`; filters horizontal movement ignores via `<CanSeparateOverlappedItems>b__1` when `dimension == Dimension.Horizontal`; calls `ItemsOverlapped`.
+  - `SeparateOverlappedItems`: evaluates ternary `SelectedItems.Any() ? SelectedItems : (whiteboardItems = WhiteboardItems)` with `itemsToSeparate` filtered for horizontal ignores; inside `using (new CommandScope("Separate Overlapped Items"))` dispatches recursive separate calls on nested `IWhiteboardControl` items via `<SeparateOverlappedItems>b__1` / `<SeparateOverlappedItems>b__2` and executes `CreateSeparateOverlappedItemsCommand(itemsToSeparate, dimension).Execute()`.
+- Release IL: PASS — 998 checked, 0 failures (`release-il-eabcb6f94f6d`).
+- Remaining mismatches in this batch: none.
+
+
 
 
 

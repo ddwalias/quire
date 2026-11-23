@@ -789,7 +789,7 @@ public partial class WhiteboardViewModel
         return Grid.ConvertDipsToGridCoordinates(GetItemLocation(item));
     }
 
-    public virtual bool GetItemIgnoreForHorizontalMovementAndWidth(IWhiteboardItem item)
+    public bool GetItemIgnoreForHorizontalMovementAndWidth(IWhiteboardItem item)
     {
         return WhiteboardItemMgr.GetIgnoreForHorizontalMovementAndWidth(item);
     }
@@ -1759,9 +1759,54 @@ public partial class WhiteboardViewModel
         return !EnumerableExtensions.IsNullOrEmpty(ActiveOrSelectedItems);
     }
 
-    public virtual bool CanSeparateOverlappedItems(global::Quire.Dimension dimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual bool CanSeparateOverlappedItems(Dimension dimension)
+    {
+        if (ActiveItem != null)
+        {
+            return false;
+        }
 
-    public void SeparateOverlappedItems(global::Quire.Dimension dimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        INotifyCollectionRangeChanged<IWhiteboardItem> whiteboardItems;
+        IEnumerable<IWhiteboardItem> items = SelectedItems.Any()
+            ? SelectedItems
+            : (whiteboardItems = WhiteboardItems);
+
+        if (items.OfType<IWhiteboardControl>().Any((IWhiteboardControl wb) => wb.CanSeparateOverlappedItems(dimension)))
+        {
+            return true;
+        }
+
+        if (dimension == Dimension.Horizontal)
+        {
+            items = items.Where((IWhiteboardItem item) => !GetItemIgnoreForHorizontalMovementAndWidth(item));
+        }
+
+        return ItemsOverlapped(items);
+    }
+
+    public void SeparateOverlappedItems(Dimension dimension)
+    {
+        INotifyCollectionRangeChanged<IWhiteboardItem> whiteboardItems;
+        IEnumerable<IWhiteboardItem> items = SelectedItems.Any()
+            ? SelectedItems
+            : (whiteboardItems = WhiteboardItems);
+
+        IEnumerable<IWhiteboardItem> itemsToSeparate = items;
+        if (dimension == Dimension.Horizontal)
+        {
+            itemsToSeparate = itemsToSeparate.Where((IWhiteboardItem item) => !GetItemIgnoreForHorizontalMovementAndWidth(item));
+        }
+
+        using (new global::Quire.Undo.CommandScope("Separate Overlapped Items"))
+        {
+            items.OfType<IWhiteboardControl>()
+                .Where((IWhiteboardControl wb) => wb.CanSeparateOverlappedItems(dimension))
+                .ToList()
+                .Each((IWhiteboardControl wb) => wb.SeparateOverlappedItems(dimension));
+
+            CreateSeparateOverlappedItemsCommand(itemsToSeparate, dimension).Execute();
+        }
+    }
 
         protected virtual SeparateOverlappedItemsCommand CreateSeparateOverlappedItemsCommand(IEnumerable<IWhiteboardItem> itemsToSeparate, Dimension dimension)
     {
