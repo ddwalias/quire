@@ -413,9 +413,15 @@
 - Not landed: `SetMinWidthHeight` remains a stub, so no previously exact method is affected. Patch kept in the scratch folder for resuming the local-slot investigation.
 - MirrorGen regeneration of the probe's `.g.cs` was not checked.
 
-## XYPlotStrategy isolated BuildEditableAxisRelatedElements (not landed; handoff)
+## XYPlotStrategy isolated BuildEditableAxisRelatedElements (landed at ae14fd60a)
 
 - Isolated the minimum moves: `InitializeLegendPositions` and `ApplyPlotTemplate` and `SetMinWidthHeight` as unmarked throwing placeholders, `BuildEditableAxisRelatedElements` implemented, and the constructor last, all in `Mirrored/Controls.Plots.XYPlotStrategy.cs` after `InitializeAxisTitle` and before `GetInitialPlaceholderIndices`. Generated `XYPlotStrategy.g.cs` keeps only the class shell.
 - Release IL: PASS — 2482 checked, 0 failures (includes the closure `<>c__DisplayClass4_0` identity for `BuildEditableAxisRelatedElements`).
-- MirrorGen regeneration of this file was not run; treat it as unverified.
+- MirrorGen `emit` reproduces `Controls.Plots.XYPlotStrategy.g.cs` byte-identical to the committed file (checked on the worktree; the emit noise in other projects was reverted).
 - `SetMinWidthHeight` stays a placeholder until the extra double local (Quire slot 41 vs Mathcad 40) is resolved. Patch: `scratchpad/xy-isolate-wip.patch`.
+
+## Batch 58 — AxisModel small helpers
+
+- Members: `ValidateAxisLimitExpression` (static, `DevAssert(false, null)` guard), `OnExpressionHasErrorsChanged`, `ClearCustomErrors`, `SetSecondTickPreCalculatedValue`, `SetDoubleValueIfValid` (static, `IsValid()` store), `RemoveEquation`, `StartValueChanged`. Hand-written: appended to `Mirrored/Controls.Plots.Model.AxisModel.cs`; stubs removed from `AxisModel.g.cs`.
+- Release IL: PASS — 2489 checked, 0 failures.
+- Left in AxisModel: `GridLineColor`, the limit-expression setters, `GetNumberOfTracesForEquation` (LINQ `First`), the legend-position converters, `SetRangeError`, `Linearize`, `DealWithZeroLengthRange`, `UpdateFilteredLabels`, the tick-mark and XML helpers, and the constructor.

@@ -416,4 +416,55 @@ internal partial class AxisModel
         array[7] = Math.Log10(2.2222222222222223);
         return array;
     }
+
+    private static void ValidateAxisLimitExpression(IAxisLimitEditor oldExpression)
+    {
+        if (oldExpression != null)
+        {
+            DebugTools.DevAssert(false, null);
+        }
+    }
+
+    private void OnExpressionHasErrorsChanged()
+    {
+        FormatTickMarkValues();
+    }
+
+    private void ClearCustomErrors()
+    {
+        StartExpression.ClearNonCalculationRelatedCustomErrors();
+        SecondTickExpression.ClearNonCalculationRelatedCustomErrors();
+        EndExpression.ClearNonCalculationRelatedCustomErrors();
+    }
+
+    private void SetSecondTickPreCalculatedValue()
+    {
+        if (MajorTickMarks != null && MajorTickMarks.Values != null && MajorTickMarks.Values.Length > 1)
+        {
+            SecondTickExpression.SetPreCalculatedValue(MajorTickMarks.Values[1]);
+        }
+    }
+
+    private static bool SetDoubleValueIfValid(ref double variableToChange, double newValue)
+    {
+        bool flag = newValue.IsValid();
+        if (flag)
+        {
+            variableToChange = newValue;
+        }
+        return flag;
+    }
+
+    public void RemoveEquation(IEquationItem equation)
+    {
+        _equations.Remove(equation);
+    }
+
+    public void StartValueChanged()
+    {
+        if (StartExpression.IsValueValid && SecondTickExpression.IsValueValid && SecondTickExpression.CalculatedValue <= StartExpression.CalculatedValue)
+        {
+            SecondTickExpression.IsDefaultValue = true;
+        }
+    }
 }
