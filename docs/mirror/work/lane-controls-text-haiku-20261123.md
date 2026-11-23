@@ -66,3 +66,10 @@
 - Re-measured unchanged: `b__103_0`, `<>c__DisplayClass96_0`, `97_0`, `b__149_0`, `d__114`, `d__284`.
 - Release IL (project-wide): PASS — 663 checked, 0 failures.
 - Regeneration: `MirrorGen emit` gives the same stub removal; the only difference is the pre-existing `LogDocumentContents` placement drift.
+
+## Parked — RichTextWithEmbeddedItem.ReproduceRemovedHyperlinkColors
+
+- Member: `private void ReproduceRemovedHyperlinkColors(List<Inline>, Hyperlink)`, no lambda. Stays a `[MirrorStub]` in the `.g.cs`; no hand-written partial.
+- Measured first mismatch (Release IL gate, 664 checked, 1 failure): `#25` Quire `brfalse.s` vs Mathcad `brtrue.s`; also `Enumerable.First` in Quire where Mathcad calls `Colors.get_Black` first.
+- Mathcad materializes the `dictionary == null || dictionary.Count != 0` condition as a bool on the stack (`ldc.i4.1` / `cgt.un`, then `brtrue`), with no bool local. Two ternary forms (original and reversed `||`) did not reproduce that shape.
+- Next step: find a source form that Roslyn lowers to this branch layout, or leave it parked.
