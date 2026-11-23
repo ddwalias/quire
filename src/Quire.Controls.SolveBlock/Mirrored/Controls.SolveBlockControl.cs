@@ -30,6 +30,18 @@ public partial class SolveBlockControl
 
     public global::Quire.Controls.Core.IWhiteboardItem Solver => _sbModel.SolverItem;
 
+    public double GuessValuesIndicatorTop => AggregateViewModel.SectionIndicators[0].Top;
+
+    public double GuessValuesIndicatorBottom => GuessValuesIndicatorTop + AggregateViewModel.SectionIndicators[0].Height;
+
+    public double ConstraintsIndicatorTop => AggregateViewModel.SectionIndicators[1].Top;
+
+    public double ConstraintsIndicatorBottom => ConstraintsIndicatorTop + AggregateViewModel.SectionIndicators[1].Height;
+
+    public double SolverIndicatorTop => AggregateViewModel.SectionIndicators[2].Top;
+
+    public double SolverIndicatorBottom => SolverIndicatorTop + AggregateViewModel.SectionIndicators[2].Height;
+
     // Keep these members before EngineResults to preserve its Mathcad closure ordinal.
     object global::System.ICloneable.Clone() => Clone();
 

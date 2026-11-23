@@ -17,18 +17,6 @@ public partial class SolveBlockControl : global::Quire.Controls.Mathboard.Aggreg
     private const uint SolverSectionIndex = 2u;
     private global::Quire.Calculation.Core.EngineResult[] _engineResults;
     [global::Quire.Mirror.MirrorStub]
-    public double GuessValuesIndicatorTop { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double GuessValuesIndicatorBottom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double ConstraintsIndicatorTop { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double ConstraintsIndicatorBottom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double SolverIndicatorTop { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double SolverIndicatorBottom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Calculation.Core.EngineError Error { get => base.Error; }
     [global::Quire.Mirror.MirrorStub]
     public SolveBlockControl() : base(default(global::Quire.Controls.Mathboard.IMathboardViewModel), default(global::System.Windows.ResourceDictionary)) { }
