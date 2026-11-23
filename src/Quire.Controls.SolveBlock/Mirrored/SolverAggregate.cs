@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Quire.Controls;
 
@@ -40,6 +41,21 @@ internal partial class SolverAggregate
 
     private string _rl;
     private readonly List<global::Quire.Calculation.Core.ICalculatable> _calculatableChildren;
+
+    // Placed before the auto-properties: the lambda ordinal must be b__20_0 as in Release IL.
+    private static string GetSolvingAlgorithmRl(string algorithmString)
+    {
+        if (string.IsNullOrEmpty(algorithmString))
+            return SolvingAlgoToRL[string.Empty];
+        string[] array = algorithmString.Split('-');
+        string text = SolvingAlgoToRL.TryGetValue(array[0], out var value) ? value : SolvingAlgoToRL[string.Empty];
+        string text2 = string.Join(" ", from key in array.Skip(1)
+            where SolvingAlgoOptionsToRL.ContainsKey(key)
+            select SolvingAlgoOptionsToRL[key]);
+        if (!string.IsNullOrEmpty(text2))
+            return text + " " + text2;
+        return text;
+    }
 
     public string DefinedRl { get; private set; }
     public string DefinedParams { get; private set; }
