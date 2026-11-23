@@ -129,6 +129,30 @@ public partial class RichTextWithEmbeddedItem
 
     private string _copyLinkText;
 
+    private void RepairWrapperHosts()
+    {
+        List<KeyValuePair<InlineUIContainer, UIElement>> list = new List<KeyValuePair<InlineUIContainer, UIElement>>();
+        for (TextPointer textPointer = Document.ContentStart; textPointer != null; textPointer = textPointer.GetNextContextPosition(LogicalDirection.Forward))
+        {
+            if (textPointer.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.EmbeddedElement && textPointer.GetAdjacentElement(LogicalDirection.Forward) is Grid { Parent: InlineUIContainer parent } grid && GetWrapper(grid) is UIElement value)
+            {
+                list.Add(new KeyValuePair<InlineUIContainer, UIElement>(parent, value));
+            }
+        }
+        if (list.Count == 0)
+        {
+            return;
+        }
+        using (new CommandScope(new CompoundCommand()))
+        {
+            foreach (KeyValuePair<InlineUIContainer, UIElement> item in list)
+            {
+                ((Grid)item.Key.Child).Children.Remove(item.Value);
+                item.Key.Child = item.Value;
+            }
+        }
+    }
+
     private void BindHyperlinkCommands()
     {
         CommandBindings.Add(new CommandBinding(HyperlinkCommands.ModifyHyperlink, ModifyHyperlink, CanModifyHyperlink));

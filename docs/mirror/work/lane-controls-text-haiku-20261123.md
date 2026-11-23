@@ -59,3 +59,10 @@
 - Re-measured unchanged: `<>c__DisplayClass96_0`, `97_0`, `b__149_0`, `d__114`, `d__284`.
 - Release IL (project-wide): PASS — 662 checked, 0 failures.
 - Regeneration: `MirrorGen emit` gives the same stub removal; the only difference is the pre-existing `LogDocumentContents` placement drift.
+
+## Batch 31 — RichTextWithEmbeddedItem.RepairWrapperHosts
+
+- Member: `private void RepairWrapperHosts()`, a `for` over `Document.ContentStart` with the `Grid { Parent: InlineUIContainer parent } grid && GetWrapper(grid) is UIElement value` pattern, then `using (new CommandScope(new CompoundCommand()))` with a `foreach`. No lambda, so no closure ordinal. Hand-written in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs` (placed before `BindHyperlinkCommands`, ahead of every ordinal-bearing member); stub removed from the `.g.cs`.
+- Re-measured unchanged: `b__103_0`, `<>c__DisplayClass96_0`, `97_0`, `b__149_0`, `d__114`, `d__284`.
+- Release IL (project-wide): PASS — 663 checked, 0 failures.
+- Regeneration: `MirrorGen emit` gives the same stub removal; the only difference is the pre-existing `LogDocumentContents` placement drift.
