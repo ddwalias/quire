@@ -245,9 +245,21 @@ internal partial class SolverAggregate
             .Any((global::Quire.Controls.SolverAggregateChildWrapper wrapper) => wrapper.WrappedCalculatable == calculatable);
     }
 
-    public int GetIndexOfChild(global::Quire.Calculation.Core.ICalculatable child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public int GetIndexOfChild(global::Quire.Calculation.Core.ICalculatable child)
+    {
+        if (child == null)
+            return -1;
+        return _calculatableChildren.IndexOf(_calculatableChildren.Cast<global::Quire.Controls.SolverAggregateChildWrapper>()
+            .FirstOrDefault((global::Quire.Controls.SolverAggregateChildWrapper calc) => calc.WrappedCalculatable == child));
+    }
 
-    public void CommitAllChildren() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void CommitAllChildren()
+    {
+        Children.Each((global::Quire.Calculation.Core.ICalculatable child) =>
+        {
+            child.Commit();
+        });
+    }
 
     public void AddChild(global::Quire.Calculation.Core.ICalculatable calculatable)
     {
