@@ -16,10 +16,6 @@ public partial class IdentifierNodeInfo : global::Quire.EquationEditor.Tree.Valu
     [global::Quire.Mirror.MirrorStub]
     public string algorithm;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.FormattedString Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ValueSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::Quire.Controls.Core.IdLabels> IdLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public IdentifierNodeInfo() { }
@@ -29,12 +25,6 @@ public partial class IdentifierNodeInfo : global::Quire.EquationEditor.Tree.Valu
     public IdentifierNodeInfo(global::Quire.EquationEditor.Tree.IdentifierNodeInfo other) { }
     [global::Quire.Mirror.MirrorStub]
     public IdentifierNodeInfo(global::Quire.EquationEditor.Tree.StringValueNodeInfo other) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.IdentifierNodeInfo Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsEquivalentTo(global::Quire.EquationEditor.Tree.INodeInfo other) => base.IsEquivalentTo(other);
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsEquivalentTo(global::Quire.EquationEditor.Tree.IdentifierNodeInfo other) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.IdentifierNodeInfo+a, Ptc.EquationEditor")]
     private sealed partial class a

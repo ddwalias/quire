@@ -72,3 +72,15 @@
 
 - 147 rejected: 140 field-name clashes (`a_`/`b_`/... fields vs Mathcad `a`/`b`) and 7 compile errors.
   The field-name clash group stays parked. The compile-error group is being worked next.
+
+## Batch 7 — IdentifierNodeInfo Value, ValueSExpression, Clone and IsEquivalentTo (hand-written)
+
+- Members, in `Mirrored/EquationEditor.Tree.IdentifierNodeInfo.cs`: `Value` (get/set, `(FormattedString)base.Value`),
+  `ValueSExpression`, `Clone()`, `IsEquivalentTo(INodeInfo)`, `IsEquivalentTo(IdentifierNodeInfo)`. Their stubs are
+  removed from `Generated/Mirror/EquationEditor.Tree.IdentifierNodeInfo.g.cs` by hand.
+- Two IL-shape notes, each with a comment in the source: the nullable comparison uses a non-short-circuit `&`
+  (Release IL evaluates both operands), and the `IsEquivalentTo` guard is written as `if (!(...)) return false;` so the
+  branch is `brtrue` as in Mathcad.
+- Still stubs (not in this batch): the constructors (Mathcad stores `algorithm` before the base call, which C# cannot
+  express), and `IdLabel` get/set (closure over `CommandBuffer`, needs compile-order placeholders).
+- Release IL: `--project Quire.EquationEditor` PASS, 1398 checked, 0 failures (was 1392).
