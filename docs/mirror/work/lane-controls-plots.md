@@ -458,3 +458,9 @@
 - Shapes: `ViewModel == null || Title == null` early return, then a separate `!IsNullOrWhiteSpace` early return, then `if (ViewModel.ShowTitle)` wrapping the body. The combined guard gave a different branch layout.
 - Release IL: PASS — 2509 checked, 0 failures.
 - Left in PlotTitle: only the XAML-generated `InitializeComponent`, `_CreateDelegate` and `Connect` stubs.
+
+## Batch 64 — AxisModel linear, radial and second-tick range helpers
+
+- Members: `SetRangeToLinearAxis` (conditional `IsValueValid && !IsStringLabel()` picks), `SetRangeToRadialAxis` (`Nullable` `HasValue`/`Value` branches), `ValidateSecondTickValue` (early returns, `try`/`catch OverflowException` with the tick-mark limit). Hand-written: appended to `Mirrored/Controls.Plots.Model.AxisModel.cs`; stubs removed from `AxisModel.g.cs`.
+- Shapes: `SetRangeToRadialAxis` gave `stloc.0` where Mathcad uses slot 2; Mathcad's locals are `effectiveStart`, `effectiveEnd`, then `start`, `num` (declaration order matters for slots), so the two effective locals are declared first.
+- Release IL: PASS — 2512 checked, 0 failures.

@@ -672,4 +672,74 @@ internal partial class AxisModel
             FilteredLabels = labels;
         }
     }
+
+    private bool SetRangeToRadialAxis(double? min, double? max)
+    {
+        double effectiveStart;
+        double effectiveEnd;
+        double start;
+        double num;
+        if (min.HasValue && max.HasValue)
+        {
+            start = min.Value;
+            num = max.Value;
+            if (StartExpression.IsValueValid)
+            {
+                effectiveStart = StartExpression.CalculatedValue;
+                effectiveEnd = EndExpression.IsValueValid ? EndExpression.CalculatedValue : num;
+            }
+            else
+            {
+                double num2 = Math.Max(Math.Abs(min.Value), Math.Abs(max.Value));
+                effectiveStart = Math.Max(0.0, min.Value);
+                effectiveEnd = EndExpression.IsValueValid ? Math.Max(Math.Abs(min.Value), EndExpression.CalculatedValue) : num2;
+            }
+        }
+        else
+        {
+            effectiveStart = StartExpression.IsValueValid ? StartExpression.CalculatedValue : StartDefaultByScaling;
+            effectiveEnd = EndExpression.IsValueValid ? EndExpression.CalculatedValue : EndDefault;
+            start = Start;
+            num = End;
+        }
+        return SetTickMarksByEffectiveValues(effectiveStart, effectiveEnd, start, num);
+    }
+
+    private bool SetRangeToLinearAxis(double start, double end)
+    {
+        double effectiveStart = (StartExpression.IsValueValid && !IsStringLabel()) ? StartExpression.CalculatedValue : start;
+        double effectiveEnd = (EndExpression.IsValueValid && !IsStringLabel()) ? EndExpression.CalculatedValue : end;
+        return SetTickMarksByEffectiveValues(effectiveStart, effectiveEnd, start, end);
+    }
+
+    private bool ValidateSecondTickValue(double start, double end)
+    {
+        if (SecondTickExpression != null && SecondTickExpression.IsValueValid)
+        {
+            if (SecondTickExpression.CalculatedValue <= start)
+            {
+                SetAxisLimitEditorError(SecondTickExpression, "Ptc.Plots.Axis.SECOND_TICK_TO_BE_GREATER_THAN_MIN");
+                return false;
+            }
+            if (Type == AxesType.Angular && SecondTickExpression.CalculatedValue > 355.0)
+            {
+                SetAxisLimitEditorError(SecondTickExpression, "Ptc.Plots.Axis.ANGULAR_MAX_TO_BE_SMALLER_THAN_355");
+                return false;
+            }
+            double num = SecondTickExpression.CalculatedValue - start;
+            try
+            {
+                if (Convert.ToInt32(Math.Ceiling((end - start) / num)) <= MaxTickmarks)
+                {
+                    return true;
+                }
+            }
+            catch (OverflowException)
+            {
+            }
+            SetAxisLimitEditorError(SecondTickExpression, "Ptc.Plots.Axis.TOO_MANY_TICKMARKS");
+            return false;
+        }
+        return true;
+    }
 }
