@@ -207,7 +207,17 @@ public partial class RichTextWithEmbeddedItem
         visitor.Visit(this);
     }
 
-    // Compile order: this iterator follows six counted members so its state machine is <EnumerateEmbeddedObjectsInRange>d__114 as in Mathcad.
+    private void ClearSavedState()
+    {
+        _savedActiveItem = null;
+    }
+
+    private void ClearState()
+    {
+        ActiveItem = null;
+    }
+
+    // Compile order: this iterator follows the eight methods above it so its state machine is <EnumerateEmbeddedObjectsInRange>d__114 as in Mathcad.
     public override IEnumerable<object> EnumerateEmbeddedObjectsInRange(DocumentTextRange range)
     {
         for (TextPointer curPos = range.Start; curPos != null && curPos.CompareTo(range.End) < 0; curPos = curPos.GetPositionAtOffset(1, LogicalDirection.Forward))
@@ -223,16 +233,6 @@ public partial class RichTextWithEmbeddedItem
                 yield return obj;
             }
         }
-    }
-
-    private void ClearSavedState()
-    {
-        _savedActiveItem = null;
-    }
-
-    private void ClearState()
-    {
-        ActiveItem = null;
     }
 
     public virtual object Clone()
@@ -1648,6 +1648,18 @@ public partial class RichTextWithEmbeddedItem
 
             Thickness pagePadding = Document.PagePadding;
             return new Rect(contentHost.TransformToAncestor(this).Transform(new Point(pagePadding.Left, pagePadding.Top)), new Size(ViewportWidth - pagePadding.Right - pagePadding.Left, ViewportHeight - pagePadding.Top - pagePadding.Bottom));
+        }
+    }
+
+    // Compile order: positioned so the getter's state machine is <get_Lines>d__284 as in Mathcad.
+    public IEnumerable<TextPointer> Lines
+    {
+        get
+        {
+            for (TextPointer textPointer = GetFirstLine(Document); textPointer != null; textPointer = GetNextLine(textPointer))
+            {
+                yield return textPointer;
+            }
         }
     }
 

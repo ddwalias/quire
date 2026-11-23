@@ -12,3 +12,10 @@
 - Release IL (project-wide): PASS — 639 checked, 0 failures.
 - Regeneration: `MirrorGen emit` gives the same stub removal; the only difference in the regenerated file is the pre-existing `LogDocumentContents` placement drift already on main.
 - Remaining in this file: 104 generated stubs not implemented; the iterator's layout is the count device above, so the partial's member order is not Mathcad token order.
+
+## Batch 25 — RichTextWithEmbeddedItem.Lines (get)
+
+- Member: `public IEnumerable<TextPointer> Lines` (getter iterator, `for` over `GetFirstLine`/`GetNextLine`). Hand-written in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stub removed from the `.g.cs`.
+- Mathcad ordinal: `<get_Lines>d__284`. Measured here: placed before `AddEmbeddedItem(IWhiteboardItemInText, TextPointer)` gives d__284. Removing the get-only stub from the `.g.cs` shifted earlier counts by two, so the `EnumerateEmbeddedObjectsInRange` iterator was moved after `ClearSavedState`/`ClearState` to keep `d__114`.
+- Release IL (project-wide): PASS — 648 checked, 0 failures; both `get_Lines` and `d__114` are in the report.
+- Regeneration: `MirrorGen emit` gives the same stub removal; the only difference is the pre-existing `LogDocumentContents` placement drift.
