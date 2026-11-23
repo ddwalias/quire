@@ -17,8 +17,6 @@ public partial class SolveBlockControl : global::Quire.Controls.Mathboard.Aggreg
     private const uint SolverSectionIndex = 2u;
     private global::Quire.Calculation.Core.EngineResult[] _engineResults;
     [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Calculation.Core.EngineError Error { get => base.Error; }
-    [global::Quire.Mirror.MirrorStub]
     public SolveBlockControl() : base(default(global::Quire.Controls.Mathboard.IMathboardViewModel), default(global::System.Windows.ResourceDictionary)) { }
     [global::Quire.Mirror.MirrorStub]
     public SolveBlockControl(global::System.Nullable<global::System.Windows.Size> gridCellSize) : base(default(global::Quire.Controls.Mathboard.IMathboardViewModel), default(global::System.Windows.ResourceDictionary)) { }

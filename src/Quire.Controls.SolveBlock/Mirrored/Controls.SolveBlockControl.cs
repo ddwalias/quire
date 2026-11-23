@@ -52,6 +52,31 @@ public partial class SolveBlockControl
 
     public override int ErrorCount => _sbModel.ChildErrorCountTotal;
 
+    private void HandleChildCalcErrorChanged()
+    {
+        FirePropertyChanged(global::Quire.Calculation.Core.ErrorChangedEventArgs.GetArgs());
+    }
+
+    private void UpdateGridCellSizeIfNeeded(object sender, RoutedEventArgs e)
+    {
+        Size gridCellSize = WorksheetPropertiesManager.GetWorksheetProperties(this).GridCellSize;
+        if (!GridCellSize.IsEqualTo(gridCellSize))
+            GridCellSize = gridCellSize;
+    }
+
+    public override global::Quire.Calculation.Core.EngineError Error
+    {
+        get
+        {
+            global::Quire.Calculation.Core.ICalculatableInfo errorInfo = CalculatableChildren
+                .OfType<global::Quire.Calculation.Core.ICalculatableInfo>()
+                .FirstOrDefault((global::Quire.Calculation.Core.ICalculatableInfo cinfo) => ErrorCount != 0);
+            if (errorInfo == null)
+                return null;
+            return errorInfo.Error;
+        }
+    }
+
     public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatableResultOwner>
         ResultOwners => _sbModel.AllCalculatables;
 
@@ -84,23 +109,11 @@ public partial class SolveBlockControl
             _sbModel.ChildCalcErrorChanged += HandleChildCalcErrorChanged;
     }
 
-    private void HandleChildCalcErrorChanged()
-    {
-        FirePropertyChanged(global::Quire.Calculation.Core.ErrorChangedEventArgs.GetArgs());
-    }
-
     public override void EndInit()
     {
         base.EndInit();
         if (_sbModel != null)
             global::Quire.Calculation.Core.ResultManager.DispatchResults(_engineResults, ResultOwners);
-    }
-
-    private void UpdateGridCellSizeIfNeeded(object sender, RoutedEventArgs e)
-    {
-        Size gridCellSize = WorksheetPropertiesManager.GetWorksheetProperties(this).GridCellSize;
-        if (!GridCellSize.IsEqualTo(gridCellSize))
-            GridCellSize = gridCellSize;
     }
 
     public EngineResult[] EngineResults
