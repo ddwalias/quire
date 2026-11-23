@@ -150,6 +150,43 @@ internal partial class WorksheetPageManager
         RemoveEmptyPagesAfterLocation(GetPageIndex(location.Y));
     }
 
+    private void RemoveEmptyPagesAfterLocation(int locationPageIndex)
+    {
+        if (locationPageIndex >= Pages.Count - 1)
+        {
+            return;
+        }
+        IWorksheetPage locationPage = Pages[locationPageIndex];
+        do
+        {
+            IWorksheetPage lastPage = Pages.Last();
+            if (lastPage == locationPage)
+            {
+                break;
+            }
+            if (!IsTrailingEmptyPage(lastPage, Pages.Count - 1))
+            {
+                break;
+            }
+            Pages.Remove(lastPage);
+        }
+        while (Pages.Count > 1);
+    }
+
+    private IWorksheetPage GetPage(double yOffset)
+    {
+        int pageIndex = GetPageIndex(yOffset);
+        if (DebugTools.DevAssert(pageIndex >= 0).Failed)
+        {
+            return Pages.First();
+        }
+        if (pageIndex >= Pages.Count)
+        {
+            return Pages.Last();
+        }
+        return Pages[pageIndex];
+    }
+
     private void RemoveNonOwnedItemAndZombies(IWhiteboardItem item)
     {
         RemoveNonOwnedWhiteboardItem(item);

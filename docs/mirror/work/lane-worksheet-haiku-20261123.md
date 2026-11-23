@@ -106,3 +106,9 @@
 - Implemented in `Mirrored/` (stubs removed from `.g.cs`). `RemoveNonOwnedItemAndZombies` stays `private`, as the stub declares it.
 - Release IL: PASS (1297 checked, 0 failures).
 - Still stubs: `RemoveEmptyPagesAfterLocation(int)` (loop with `Enumerable.Last`, bottom-tested with an entry guard), `GetPage(double)` (DevAssert with `Array.Empty`), `IsTrailingEmptyPage` (closure).
+
+## Batch 15 — WorksheetPageManager RemoveEmptyPagesAfterLocation(int), GetPage(double)
+
+- Implemented in `Mirrored/` (stubs removed from `.g.cs`). `RemoveEmptyPagesAfterLocation(int)` is an entry guard followed by a bottom-tested `do`/`while (Pages.Count > 1)` with two early `break`s. `GetPage` uses the public `DebugTools.DevAssert(pageIndex >= 0).Failed` form.
+- Release IL: PASS (1299 checked, 0 failures).
+- Still stubs in this type: `IsTrailingEmptyPage` (closure), `RemoveItemsFromPage` (closure), `HandleItemMoved`, `SplitItemIfNeeded`, the `UpdateVisiblePages*` set, `Dispose`, `ActivateDescendant*`, `GetPagesContaining` and others from the batch 13 survey.
