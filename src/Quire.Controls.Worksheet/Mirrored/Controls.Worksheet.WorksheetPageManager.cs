@@ -157,6 +157,28 @@ internal partial class WorksheetPageManager
         }
     }
 
+    public void Dispose()
+    {
+        if (_disposeStatus == DisposeStatus.Disposed)
+        {
+            return;
+        }
+        _disposeStatus = DisposeStatus.Disposing;
+        try
+        {
+            Pages.Each(page => page.Dispose());
+            _worksheetVisiblePages.Dispose();
+            Pages.RemoveAll();
+            _worksheetItemSplitter.Dispose();
+        }
+        finally
+        {
+            _disposeStatus = DisposeStatus.Disposed;
+        }
+    }
+
+    public void HandleItemMoved(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point oldLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     public IWorksheetPage SetInsertionPointOnAppropriatePage(Point insertionPoint)
     {
         int pageIndex = GetPageIndex(insertionPoint.Y);

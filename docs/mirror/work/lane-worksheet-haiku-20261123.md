@@ -201,3 +201,9 @@
 - `HandlePagebreaksCollectionChanged`: switch on `e.Action` (Add → `NewItems.OfType<IWorksheetPageBreak>().Each(HandlePagebreakAdded)`, Remove → `OldItems…Each(HandlePagebreakRemoved)`, default → `DebugTools.FailAssertion("Unsupported action: {0}", e.Action)`).
 - `HandlePagesCollectionChanged`: the same switch over `IWorksheetPage` (Add subscribes `page.PageBodyActivated += PageBodyActivatedHandler`, Remove unsubscribes), then `Pages.EachWithIndex((index, page) => page.PageNumber = index + 1)`. Lambda ordinals `b__92_1`/`b__92_2` (instance) and `b__92_0` (static in `<>c`) match Mathcad.
 - Release IL gate: PASS, 1341 checked, 1341 exact, 0 failures.
+
+## Batch 30 — WorksheetPageManager Dispose
+
+- `Dispose` implemented in the partial at token row 26: `if (_disposeStatus == Disposed) return; _disposeStatus = Disposing; try { Pages.Each(page => page.Dispose()); _worksheetVisiblePages.Dispose(); Pages.RemoveAll(); _worksheetItemSplitter.Dispose(); } finally { _disposeStatus = Disposed; }`. Lambda `<Dispose>b__45_0` (static, in `<>c`) matches Mathcad.
+- The generated stub for `HandleItemMoved` (row 27) compiled ahead of `Dispose` and made the ordinal 46. It moved into the partial as an unmarked placeholder after `Dispose`, which restores the Mathcad count.
+- Release IL gate: PASS, 1343 checked, 1343 exact, 0 failures.
