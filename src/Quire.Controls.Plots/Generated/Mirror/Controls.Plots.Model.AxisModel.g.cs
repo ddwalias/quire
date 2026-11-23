@@ -66,15 +66,7 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     [global::Quire.Mirror.MirrorStub]
     public AxisModel(global::Quire.Controls.Plots.Presenter.AxesType axisType, global::Quire.Controls.Plots.Presenter.PlotType plotType, global::Quire.Controls.Plots.IPlotTitleModel axisTitleModel = default) { }
     [global::Quire.Mirror.MirrorStub]
-    public void SetDisplayNumberFormat(global::Quire.Controls.Core.NumberFormat numberFormat, bool isLocalValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Nullable<double> LinearizeStartEnd(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool SetTickMarksByEffectiveValues(double effectiveStart, double effectiveEnd, double start, double end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool SetRangeToAngularAxis() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool SetLinearScale(double start, double end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void BuildTickMarksValues(bool useSecondTickValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -99,8 +91,6 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     public global::Quire.PersistentDataObjects.axisBaseType GetDataObject(global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetDataObject(global::Quire.PersistentDataObjects.axisBaseType axisData, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UpdateTickMarkValues(bool useSecondTickValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ReadAxisDomainData(global::Quire.PersistentDataObjects.xyDomainType axisDomain, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

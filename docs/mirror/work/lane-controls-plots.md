@@ -487,3 +487,11 @@
 - Generated layout: changed (stub removed). Verified: after a Release build of `Quire.Controls.Plots`, `emit` regenerates `AxisModel.g.cs` byte-identical to the file committed here.
 - Release IL: PASS — 2519 checked, 0 failures.
 - Left in AxisModel: `SetRangeToLinearAxis` and related done; remaining: `SetLevels`, `SetLogarithmicScale` done; the XML helpers (`SetXmlNode`, `GetXmlNode`, `AddEquation`), the data-object helpers, `UpdateTickMarkValues`, `FormatTickMarkValues`, `BuildTickMarksValues`, `SetLinearScale`, `CalculateBetterTickmarks*`, `RegionXmlNode`, `AxisCalculatables`, `SetDisplayNumberFormat`, `LinearizeStartEnd`, `SetTickMarksByEffectiveValues`, `SetRangeToAngularAxis`, `SetDisplayNumberFormat`, and the constructor.
+
+## Batch 68 — AxisModel tick-mark range helpers
+
+- Members: `SetRangeToAngularAxis`, `SetTickMarksByEffectiveValues` (the two scale branches join on one `bool` local and one return, as the IL does), `SetDisplayNumberFormat`, `UpdateTickMarkValues`, `SetLinearScale`. Hand-written: placed ahead of `SetRange` in `Mirrored/Controls.Plots.Model.AxisModel.cs`; stubs removed from `AxisModel.g.cs`.
+- Ordinal note: removing five stubs from the generated file lowers every later closure ordinal by five. Placing the new members ahead of `SetRange` restores both `SetRange` (170) and `GetNumberOfTracesForEquation` (213). Any further stub removal before those two needs the same compensation.
+- Generated layout: changed (five stubs removed). Verified: after a Release build, `emit` regenerates `AxisModel.g.cs` byte-identical.
+- Release IL: PASS — 2524 checked, 0 failures.
+- Correction to batch 67's "Left" list: `SetLogarithmicScale`, `SetRangeToLinearAxis` and `SetRangeToRadialAxis` are done (batches 64-65). Remaining AxisModel stubs: `AxisCalculatables`, `RegionXmlNode`, `LinearizeStartEnd`, `BuildTickMarksValues`, `FormatTickMarkValues`, `CalculateBetterTickmarks*`, `SetLevels`, `SetXmlNode`, `GetXmlNode`, `AddEquation` (both), `CreateXyDomainType`, `GetDataObject`, `SetDataObject`, `ReadAxisDomainData`, `SetTickMarksPattern` (done in batch 60), and the constructor.

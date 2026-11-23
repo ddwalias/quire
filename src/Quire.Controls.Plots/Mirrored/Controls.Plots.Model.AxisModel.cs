@@ -182,6 +182,74 @@ internal partial class AxisModel
         return false;
     }
 
+    private bool SetRangeToAngularAxis()
+    {
+        return SetTickMarksByEffectiveValues(StartDefault, EndDefault, StartDefault, EndDefault);
+    }
+
+    private bool SetTickMarksByEffectiveValues(double effectiveStart, double effectiveEnd, double start, double end)
+    {
+        ClearCustomErrors();
+        if (effectiveStart >= effectiveEnd)
+        {
+            SetRangeError();
+            if (effectiveStart > effectiveEnd)
+            {
+                return false;
+            }
+        }
+        start = effectiveStart;
+        end = effectiveEnd;
+        DealWithZeroLengthRange(ref start, ref end);
+        // The IL joins both scale branches on one result local and a single return.
+        bool isSet;
+        if (Scaling == AxisScaling.Logarithmic)
+        {
+            isSet = SetLogarithmicScale(start, end);
+        }
+        else
+        {
+            isSet = SetLinearScale(start, end);
+        }
+        return isSet;
+    }
+
+    public void SetDisplayNumberFormat(NumberFormat numberFormat, bool isLocalValue)
+    {
+        DisplayNumberFormat = numberFormat;
+        IsDisplayNumberFormatLocal = isLocalValue;
+    }
+
+    public void UpdateTickMarkValues(bool useSecondTickValue)
+    {
+        BuildTickMarksValues(useSecondTickValue);
+        FormatTickMarkValues();
+    }
+
+    private bool SetLinearScale(double start, double end)
+    {
+        if (!IsDiscrete)
+        {
+            MajorTickMarks.Count = DefaultTickMarks;
+            if (SecondTickExpression.IsDefaultValue && UseBetterTickMarks)
+            {
+                CalculateBetterTickmarks(ref start, ref end);
+            }
+        }
+        bool useSecondTickValue = !IsDiscrete && ValidateSecondTickValue(start, end);
+        MinorTickMarks.Show = false;
+        Start = start;
+        End = end;
+        if (MajorTickMarks.Count > 1)
+        {
+            UpdateTickMarkValues(useSecondTickValue);
+        }
+        StartExpression.SetPreCalculatedValue(Start);
+        SetSecondTickPreCalculatedValue();
+        EndExpression.SetPreCalculatedValue(End);
+        return true;
+    }
+
     public void SetRange(double? min, double? max)
     {
         // The IL creates the closure only after the readiness test, so the body sits inside the if.
