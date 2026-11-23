@@ -61,4 +61,103 @@ internal partial class LimitLayoutManager
         _childItems[3].Rect.Location = p6;
         _baseline = LimitExpressionRect.Y + _childItems[3].TextBaselineOffset;
     }
+
+    public override void FindClosestChild(Point hitPoint, out LayoutChildType childType, out int childIndex, out Direction childSideHit)
+    {
+        for (int i = 0; i < _childItems.Length; i++)
+        {
+            if (_childItems[i].Rect.Contains(hitPoint))
+            {
+                childType = LayoutChildType.Child;
+                childIndex = i;
+                childSideHit = Direction.Indeterminate;
+                return;
+            }
+        }
+
+        for (int j = 0; j < _operatorPartItems.Length; j++)
+        {
+            if (_operatorPartItems[j].Rect.Contains(hitPoint))
+            {
+                childType = LayoutChildType.OperatorPart;
+                childIndex = j;
+                childSideHit = Direction.Indeterminate;
+                return;
+            }
+        }
+
+        if (hitPoint.X < 0.0)
+        {
+            childType = LayoutChildType.OperatorPart;
+            childIndex = 0;
+            childSideHit = Direction.Left;
+            return;
+        }
+
+        if (hitPoint.X > LimitExpressionRect.Right)
+        {
+            childType = LayoutChildType.Child;
+            childIndex = 3;
+            childSideHit = Direction.Right;
+            return;
+        }
+
+        if (hitPoint.X < 5.0)
+        {
+            if (LimitSymbolRect.Left > 5.0)
+            {
+                if (hitPoint.Y < LimitVariableRect.Top)
+                {
+                    childType = LayoutChildType.OperatorPart;
+                    childIndex = 0;
+                    childSideHit = Direction.Left;
+                    return;
+                }
+            }
+        }
+
+        if (hitPoint.Y < LimitSymbolRect.Top)
+        {
+            if (hitPoint.X < LimitExpressionRect.Left)
+            {
+                childType = LayoutChildType.OperatorPart;
+                childIndex = 0;
+                childSideHit = Direction.Up;
+                return;
+            }
+        }
+
+        for (int k = 0; k < _childItems.Length; k++)
+        {
+            if (hitPoint.Y < _childItems[k].Rect.Top && IsBetween(hitPoint.X, _childItems[k].Rect.Left, _childItems[k].Rect.Right))
+            {
+                childType = LayoutChildType.Child;
+                childIndex = k;
+                childSideHit = Direction.Up;
+                return;
+            }
+
+            if (hitPoint.Y > _childItems[k].Rect.Bottom && IsBetween(hitPoint.X, _childItems[k].Rect.Left, _childItems[k].Rect.Right))
+            {
+                childType = LayoutChildType.Child;
+                childIndex = k;
+                childSideHit = Direction.Down;
+                return;
+            }
+        }
+
+        childType = LayoutChildType.OperatorPart;
+        childIndex = 0;
+        childSideHit = Direction.Down;
+    }
+
+    private bool IsBetween(double given, double left, double right)
+    {
+        if (left < given)
+        {
+            return given < right;
+        }
+
+        return false;
+    }
 }

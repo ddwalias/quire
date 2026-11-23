@@ -11,8 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.LimitLayoutManager, Ptc.Controls.EquationControl")]
 internal partial class LimitLayoutManager : global::Quire.Controls.Internal.VisualLayoutManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override void FindClosestChild(global::System.Windows.Point hitPoint, out global::Quire.Controls.Internal.LayoutChildType childType, out int childIndex, out global::Quire.Direction childSideHit) => base.FindClosestChild(hitPoint, out childType, out childIndex, out childSideHit);
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsBetween(double given, double left, double right) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

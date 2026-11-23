@@ -222,3 +222,9 @@
 - Gate (project-level): PASS; 3531 checked, zero failures (`.mirror-cache/release-il-8c2536ad0c9b/release-il.json`).
 - Regeneration: the generated file is unchanged (zero diff) after a fresh Release build of `Quire.Controls.EquationControl` and `emit`. A stale project build made `emit` re-add all method stubs, so the build must come first.
 - Still placeholders: `GetColumnCells` (the Release IL blocker in batch 28). No other ComboBoxTableModel member remains as a placeholder except that one; every method stub from the generated file is now either exact or the `GetColumnCells` placeholder.
+
+### Batch 30: Controls.Internal.LimitLayoutManager (FindClosestChild, IsBetween)
+
+- Exact: `FindClosestChild` (the override with its loops and `out` writes) and `IsBetween` (leaf). The stubs are removed from the generated file and both are in the hand-written partial.
+- Shape note: the decompiled `double x`, `double y` and `Rect val` locals are not in Mathcad's IL. Mathcad reads `hitPoint.X` and `LimitExpressionRect.Right` directly; `Rect val = ...` with `val.Right` put an extra local in the candidate.
+- Gate (project-level): PASS; 3533 checked, zero failures (`.mirror-cache/release-il-8f545cd3fe11/release-il.json`).
