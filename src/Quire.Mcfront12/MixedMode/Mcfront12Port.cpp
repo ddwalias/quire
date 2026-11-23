@@ -2034,6 +2034,9 @@ namespace Quire { namespace Engine {
 #pragma comment(linker, "/include:?ToActionResult@Engine@@$$FYM?AVActionResult@depman@Quire@@PE$AAVObject@System@@0@Z")
 #pragma comment(linker, "/include:?ErrorDictFromMessage@Engine@@$$FYMPE$AAVObject@System@@PE$AAVString@3@II@Z")
 #pragma comment(linker, "/include:?ToStrng@utl@@$$FYM?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PE$AAVObject@System@@@Z")
+#pragma comment(linker, "/include:?UintFromObject@Engine@@$$FYMIPE$AAVObject@System@@@Z")
+#pragma comment(linker, "/include:?ErrorDictFromCondition@Engine@@$$FYMPE$AAVObject@System@@PE$AAVCondition@mslisp@Quire@@@Z")
+#pragma comment(linker, "/include:?ErrorDictFromObject@Engine@@$$FYMPE$AAVObject@System@@PE$AAV23@@Z")
 // The original's global functions live in its <Module> under their unqualified-to-Quire names (Engine.X).
 namespace Engine {
 
@@ -2065,20 +2068,82 @@ namespace Engine {
 
 
 // Engine-side copy of utl::ToStrng(object) for the mixed DLL. The original is a <Module> global of utl.
-namespace utl {
-    std::string ToStrng(System::Object^ o)
+namespace Engine {
+
+    unsigned int ParseHex(System::String^ ss);
+
+    unsigned int UintFromObject(System::Object^ x)
     {
-        if (o == nullptr)
+        if (x == nullptr)
         {
-            return std::string("<null>");
+            return 0;
         }
-        System::String^ s = o->ToString();
-        if (s->Length > 0)
+        System::String^ s = x->ToString();
+        if (s->StartsWith("0x"))
         {
-            cli::array<System::Byte>^ bytes = System::Text::Encoding::UTF8->GetBytes(s);
-            pin_ptr<System::Byte> ptr = &bytes[0];
-            return std::string((const char*)ptr);
+            return ParseHex(s);
         }
-        return std::string("");
+        return *static_cast<int^>(Quire::Engine::StringUtils::ParseInt(s));
     }
+
+    System::Object^ ErrorDictFromCondition(Quire::mslisp::Condition^ c)
+    {
+        System::Collections::IDictionary^ dictionary = dynamic_cast<System::Collections::IDictionary^>(c->args[0]);
+        if (dictionary != nullptr)
+        {
+            return dictionary;
+        }
+        System::String^ message = c->args[0]->ToString();
+        unsigned int handle = 0;
+        unsigned int argument = 0;
+        if (c->args->Length > 1)
+        {
+            handle = UintFromObject(c->args[1]);
+        }
+        if (c->args->Length > 2)
+        {
+            argument = UintFromObject(c->args[2]);
+        }
+        return ErrorDictFromMessage(message, argument, handle);
+    }
+
+    System::Object^ ErrorDictFromObject(System::Object^ o)
+    {
+        Quire::mslisp::Condition^ condition = dynamic_cast<Quire::mslisp::Condition^>(o);
+        if (condition != nullptr)
+        {
+            return ErrorDictFromCondition(condition);
+        }
+        System::Exception^ exception = dynamic_cast<System::Exception^>(o);
+        if (exception != nullptr)
+        {
+            return ErrorDictFromMessage(exception->Message, 0, 0);
+        }
+        return ErrorDictFromMessage(o->ToString(), 0, 0);
+    }
+
 }
+
+namespace Engine {
+
+    bool HasErrors(Quire::depman::ActionResult r)
+    {
+        if (r.GetNext() != nullptr)
+        {
+            return false;
+        }
+        System::Object^ result = r.GetResult();
+        if (result != nullptr)
+        {
+            System::Collections::IDictionary^ dictionary = dynamic_cast<System::Collections::IDictionary^>(result);
+            if (dictionary != nullptr && dictionary->Contains("%errors"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+}
+
+#pragma comment(linker, "/include:?HasErrors@Engine@@$$FYM_NVActionResult@depman@Quire@@@Z")
