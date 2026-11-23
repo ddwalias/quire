@@ -18,6 +18,29 @@ namespace Quire.Controls.Plots.Model;
 
 internal partial class TraceModel
 {
+    private Rect DataRange
+    {
+        get
+        {
+            Rect result;
+            if (PlotType.Polar == PlotType)
+            {
+                double num = ResultAxisModel.LinearizedEnd - ResultAxisModel.LinearizedStart;
+                result = new Rect(-num, -num, 2.0 * num, 2.0 * num);
+            }
+            else
+            {
+                result = new Rect(RangeAxisModel.LinearizedStart, ResultAxisModel.LinearizedStart, RangeAxisModel.LinearizedEnd - RangeAxisModel.LinearizedStart, ResultAxisModel.LinearizedEnd - ResultAxisModel.LinearizedStart);
+            }
+            return result;
+        }
+    }
+
+    public void RecalculateResultOnPlotTypeChange()
+    {
+        ResultManager.DispatchResult(this);
+    }
+
     private static void CalculateRadialRange(IEnumerable<Point> points, out double min, out double max)
     {
         min = double.PositiveInfinity;

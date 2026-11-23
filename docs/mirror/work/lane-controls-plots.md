@@ -550,3 +550,12 @@
 - Generated layout: six stubs removed. Verified: after a Release build, `emit` regenerates `TraceModel.g.cs` byte-identical to the committed file.
 - Release IL: full gate PASS — 2554 checked, 0 failures.
 - Left in TraceModel: `MinPositiveX` and `MinPositiveY` (lambda arguments), `RegionXmlNode`, `DataRange`, `Rl`, `SetEquation`, `RecalculateResultOnPlotTypeChange`, `UpdatePlottingPointsForDisplay`, `SetResult`, `AnalyzeResultData`, `CopyMinMaxAndUnitsResults`.
+
+## Batch 78 — TraceModel DataRange and RecalculateResultOnPlotTypeChange
+
+- Members: `DataRange` (private `Rect` getter; the polar branch uses `-num`, which Roslyn compiles to `neg` as Mathcad does), `RecalculateResultOnPlotTypeChange`. Hand-written at the top of the class in `Mirrored/Controls.Plots.Model.TraceModel.cs`; two stubs removed from `TraceModel.g.cs`.
+- Generated layout: two stubs removed. Verified: after a Release build, `emit` regenerates `TraceModel.g.cs` byte-identical.
+- Release IL: full gate PASS — 2556 checked, 0 failures.
+- Blocked for now: `MinPositiveX` and `MinPositiveY` stay generated stubs. Their lambdas are named `<get_MinPositiveX>b__36_0` / `b__39_0` in Mathcad; the same placement at the top of the class gives `b__52_0` / `b__54_0`, so Quire has 16 more member units ahead of them. Matching needs the remaining `TraceModel` stubs in Mathcad order as placeholders (the approach used for `AxisCalculatables`), which is a larger restructure.
+- Also pending on the same closure-ordinal layout: `UpdatePlottingPointsForDisplay` (display class 74) and `AnalyzeResultData` (lambda 172); `SetResult` (display class 166).
+- Still stubs in TraceModel: `RegionXmlNode` (XML reader/writer), `Rl` (uses `InlineArray8<object>`), `SetEquation` (implemented in hand-written code already; check), `SetResult`, `AnalyzeResultData`, `CopyMinMaxAndUnitsResults`, `MinPositiveX`, `MinPositiveY`, `UpdatePlottingPointsForDisplay`.
