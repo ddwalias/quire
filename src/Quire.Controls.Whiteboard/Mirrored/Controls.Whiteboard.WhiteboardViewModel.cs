@@ -1431,7 +1431,10 @@ public partial class WhiteboardViewModel
         return false;
     }
 
-    public virtual global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> RecursivelyEnumerateDescendantItemssBypassWhiteboard() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual IEnumerable<IWhiteboardItem> RecursivelyEnumerateDescendantItemssBypassWhiteboard()
+    {
+        return RecursivelyEnumerateDescendantsIgnoringTypes(WhiteboardItems);
+    }
 
     public Point GetDescendantInsertionPoint()
     {
@@ -1503,7 +1506,29 @@ public partial class WhiteboardViewModel
         args.Handled = true;
     }
 
-    public static global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> RecursivelyEnumerateDescendantsIgnoringTypes(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, params global::System.Type[] typesToIgnore) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static IEnumerable<IWhiteboardItem> RecursivelyEnumerateDescendantsIgnoringTypes(IEnumerable<IWhiteboardItem> items, params Type[] typesToIgnore)
+    {
+        foreach (IWhiteboardItem whiteboardItem in items)
+        {
+            if (!(whiteboardItem is IWhiteboardControl whiteboardControl))
+            {
+                if (typesToIgnore.All((Type ignoreType) => !ignoreType.IsInstanceOfType(whiteboardItem)))
+                {
+                    yield return whiteboardItem;
+                }
+
+                continue;
+            }
+
+            foreach (IWhiteboardItem descendantWhiteboardItem in whiteboardControl.RecursivelyEnumerateDescendantItemssBypassWhiteboard())
+            {
+                if (typesToIgnore.All((Type ignoreType) => !ignoreType.IsInstanceOfType(descendantWhiteboardItem)))
+                {
+                    yield return descendantWhiteboardItem;
+                }
+            }
+        }
+    }
 
     protected virtual void DeactivateActiveItem()
     {

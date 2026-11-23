@@ -618,6 +618,25 @@
 - Release IL: PASS — 967 checked, 0 failures (`release-il-50469c43fd14`).
 - Remaining mismatches in this batch: none.
 
+## Batch 46 — WhiteboardViewModel: RecursivelyEnumerateDescendantsIgnoringTypes, RecursivelyEnumerateDescendantItemssBypassWhiteboard, and closures
+
+- Members:
+  - `WhiteboardViewModel.RecursivelyEnumerateDescendantItemssBypassWhiteboard()`
+  - `WhiteboardViewModel.RecursivelyEnumerateDescendantsIgnoringTypes(IEnumerable<IWhiteboardItem>, params Type[])` and closures / iterator:
+    - `<RecursivelyEnumerateDescendantsIgnoringTypes>d__252` (state machine, `.ctor`, `Dispose`, `MoveNext`, `<>m__Finally1`, `<>m__Finally2`, `get_Current`, `Reset`, `GetEnumerator`)
+    - `<>c__DisplayClass252_0` (`.ctor`, `<RecursivelyEnumerateDescendantsIgnoringTypes>b__0`)
+    - `<>c__DisplayClass252_1` (`.ctor`, `<RecursivelyEnumerateDescendantsIgnoringTypes>b__1`)
+  - `WhiteboardControl.RecursivelyEnumerateDescendantItemssBypassWhiteboard()` (verified exact)
+- Hand-written: `src/Quire.Controls.Whiteboard/Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stubs replaced.
+- Ordinals: The aligned member ordering established in Batch 42 successfully aligned every target member and closure:
+  - `RecursivelyEnumerateDescendantsIgnoringTypes` (252) -> `<RecursivelyEnumerateDescendantsIgnoringTypes>d__252`, `<>c__DisplayClass252_0`, `<>c__DisplayClass252_1`
+- Shapes Release IL requires:
+  - `RecursivelyEnumerateDescendantItemssBypassWhiteboard`: invokes `RecursivelyEnumerateDescendantsIgnoringTypes(WhiteboardItems)`, passing an empty Type array via params calling convention matching Mathcad's `Array.Empty<Type>()` call.
+  - `RecursivelyEnumerateDescendantsIgnoringTypes`: standard iterator method yielding items recursively unless type matched in `typesToIgnore`, generating state machine `d__252` and closures `DisplayClass252_0` / `DisplayClass252_1` matching Mathcad IL in every instruction.
+- Release IL: PASS — 983 checked, 0 failures (`release-il-1fc103d7792a`).
+- Remaining mismatches in this batch: none.
+
+
 
 
 
