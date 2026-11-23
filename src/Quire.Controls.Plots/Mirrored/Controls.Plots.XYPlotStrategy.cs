@@ -39,4 +39,12 @@ internal partial class XYPlotStrategy
         rangeAxis.AxisTitle.Header = rangeAxis.AxisTitle.Resources["XAxisTitle.Header"] as string;
         primaryResultAxis.AxisTitle.Header = primaryResultAxis.AxisTitle.Resources["YAxisTitle.Header"] as string;
     }
+
+    public void GetInitialPlaceholderIndices(PlotControl plot, out int xLegendIndex, out int yLegendIndex, out int plotTitleIndex, out int plotLegendIndex)
+    {
+        xLegendIndex = 0;
+        yLegendIndex = 1;
+        plotTitleIndex = 1;
+        plotLegendIndex = 0;
+    }
 }

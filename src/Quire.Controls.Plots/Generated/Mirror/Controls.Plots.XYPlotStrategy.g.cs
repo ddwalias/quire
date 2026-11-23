@@ -20,7 +20,5 @@ internal partial class XYPlotStrategy : global::Quire.Controls.Plots.IPlotStrate
     [global::Quire.Mirror.MirrorStub]
     public void SetMinWidthHeight(global::Quire.Controls.Plots.PlotControl plot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void GetInitialPlaceholderIndices(global::Quire.Controls.Plots.PlotControl plot, out int xLegendIndex, out int yLegendIndex, out int plotTitleIndex, out int plotLegendIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public XYPlotStrategy() { }
 }

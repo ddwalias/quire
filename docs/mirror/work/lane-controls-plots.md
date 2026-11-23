@@ -386,3 +386,9 @@
 - Release IL: PASS — 2477 checked, 0 failures.
 - Tried and reverted: `HideTitleIfEmpty`. Its single combined `&&` guard, the early-return form and the nested-if form each differ from Mathcad's layout (Mathcad has 30 entries against 28, with a different branch target at the first test). Left as a stub; needs a closer op-level diff.
 - Left in PlotTitle: `HandleEditingStarted`, `HandleEditingEnded`, `RegisterToEvents`, `TitleSizeChanged` (WPF event and orientation logic), and the XAML-generated `InitializeComponent`, `_CreateDelegate`, `Connect`.
+
+## Batch 56 — XYPlotStrategy initial placeholder indices
+
+- Members: `GetInitialPlaceholderIndices` (four `out` assignments, `0, 1, 1, 0`). Hand-written: appended to `Mirrored/Controls.Plots.XYPlotStrategy.cs`; stub removed from `XYPlotStrategy.g.cs`.
+- Release IL: PASS — 2478 checked, 0 failures.
+- Left: `PlotItemPlaceholder.GetMinLegendPlaceholderHeight` (uses `DebugTools.AssertNotNull` and `IsPlotTitleOrientationSwapped`), `PlotItemPlaceholder.AdjustPadding`, the other `XYPlotStrategy` layout methods, and the `PlotItem` WPF handlers.
