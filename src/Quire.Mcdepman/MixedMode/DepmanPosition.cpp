@@ -24,7 +24,7 @@
 #pragma comment(linker, "/include:?UnLock@PositionBase@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?BeginMove@PositionBase@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?SendMessage@PositionBase@depman@@$$FQEAMXW4NodeStatus@Engine@Quire@@@Z")
-#pragma comment(linker, "/include:?SetTimer@PositionBase@depman@@$$FQEAMXPE$AAVNodeTimer@2Quire@@@Z")
+#pragma comment(linker, "/include:?SetTimer@PositionBase@depman@@$$FQEAMXPE$AAUNodeTimer@2Quire@@@Z")
 #pragma comment(linker, "/include:?IsLocked@PositionBase@depman@@QEBA_NXZ")
 #pragma comment(linker, "/include:?IsUndefine@PositionBase@depman@@QEAA_NXZ")
 #pragma comment(linker, "/include:?IsChildOnly@PositionBase@depman@@QEAA_NXZ")
@@ -35,6 +35,7 @@
 #pragma comment(linker, "/include:?GetEnvScope@PositionBase@depman@@QEAMPE$AAVScope@2Quire@@XZ")
 #pragma comment(linker, "/include:?env@PositionBase@depman@@$$FQEBMPE$AAUSEnvironment@2Quire@@XZ")
 #pragma comment(linker, "/include:?GetSharedThreadContext@PositionBase@depman@@$$FQEBMPE$AAVSharedThreadContext@2Quire@@XZ")
+#pragma comment(linker, "/include:?StartTiming@PositionBase@depman@@QEAAXXZ")
 // Uncalled native member functions are stripped by /OPT:REF unless referenced.
 // When referenced by callers in Depman, they will be emitted with exact IL.
 // #pragma comment(linker, "/include:?previous@Position@depman@@$$FQEAAPEAV12@XZ")
@@ -144,6 +145,12 @@ void PositionBase::SetBusy(bool busy)
     {
         not_busy_event_->Set();
     }
+}
+
+void PositionBase::StartTiming()
+{
+    if (timer_)
+        timer_->Start();
 }
 
 void PositionBase::SetNotifyComputing(bool notify)

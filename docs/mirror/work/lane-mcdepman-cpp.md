@@ -239,6 +239,22 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
   - `PositionBase.Kill` and `TreatAsReady(false)`: require the unproven `std::set<depman::Position*>` erase path at offset 136.
   - `Position.previous` / `Position.next`: dynamic cast emits RTTI type descriptor data differences against Mathcad RTTI; pragmas remain commented out until RTTI descriptor handling is resolved.
 
+## Batch 23 — PositionBase.StartTiming
+
+- Owner: AGY, Orca task `task_030b5c9a4417`; branch `feature/luna-mcdepman`.
+- Member: `PositionBase.StartTiming()`, tests `timer_` at offset 200 via `operator NodeTimer^()` and calls `timer_->Start()`, maintaining the 216-byte `PositionBase` layout.
+- Details: aligned `NodeTimer` from `ref class` to `ref struct` in `DepmanNodeTimer.h` to match Mathcad's `U` mangling (`..PE$AAUNodeTimer@depman@@`), unlocking exact `StartTiming` and `gcroot<NodeTimer^>` IL parity.
+- Release IL report: `.mirror-cache/release-il-3e115359359d/release-il.json` (PASS, 222 checked; module `PositionBase.StartTiming` exact).
+- Remaining prerequisites:
+  - `SafeEvent` cross-assembly `gcroot` binding: `PositionBase.SetBusy`, `PositionBase.WaitReady`, and `PositionBase.PrepareKill` access `not_busy_event_` (offset 168) or `ready_event_` (offset 176); because `SafeEvent` is declared in `Quire.Engine.Utl`, `MethodAudit` currently does not map `gcroot<Quire::utl_mgd::SafeEvent ^>` to `gcroot<utl_mgd::SafeEvent ^>`.
+  - `DepManager.add_dep` / `remove_dep` / `invalidateChains`: large unmanaged methods operating directly on multi-level `std::map<SDef, std::map<Position*, pair<ActionChain*, DependencyType>>>` containers with `std_label_set` and custom comparators; native `DepManager` layout and tables remain unported.
+  - `PositionBase.InvalidateDeps`: blocked on `DepManager.invalidateChains`.
+  - `PositionBase.EndMove`: blocked on `ActionChain.TreatAsReadyDeps`.
+  - `PositionBase.SetEnvScope`: branches on Scope nullness, calling `ActionChain.remove_env_scope` and `ActionChain.add_env_scope` which require `DepManager.remove_dep` and `add_dep`.
+  - `PositionBase.Invalidate`: requires callback wiring for `PosCallback`, `PosQueueCallback`, `InterruptCallback`, and `TreatedReadyInvalidCallback`.
+  - `PositionBase.Kill` and `TreatAsReady(false)`: require the unproven `std::set<depman::Position*>` erase path at offset 136.
+  - `Position.previous` / `Position.next`: dynamic cast emits RTTI type descriptor data differences against Mathcad RTTI; pragmas remain commented out until RTTI descriptor handling is resolved.
+
 
 
 

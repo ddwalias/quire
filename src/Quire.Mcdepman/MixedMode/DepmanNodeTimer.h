@@ -8,7 +8,7 @@
 namespace Quire { namespace depman {
 
     [Quire::Mirror::MirrorOfAttribute("depman.NodeTimer, mcdepman")]
-    public ref class NodeTimer : System::IDisposable
+    public ref struct NodeTimer : System::IDisposable
     {
     public:
         ::utl::PerformanceTimer* m_timer;

@@ -12,7 +12,7 @@ class OrderedListNode;
 
 namespace Quire { namespace depman {
     ref class ActionChainMgd;
-    ref class NodeTimer;
+    ref struct NodeTimer;
 }}
 
 namespace depman {
@@ -39,6 +39,7 @@ public:
     bool IsBusy();
     bool IsReady();
     void SetBusy(bool busy);
+    void StartTiming();
     void SetNotifyComputing(bool notify);
     void ResetPriority();
     void ClearDParent();
