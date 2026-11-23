@@ -625,6 +625,6 @@
 ## Batch 88 — PlotGraphRadialAxis overrides
 
 - Members: `HandleOrientationChanged`, `PositionTickMarkChanged`, `UpdateAxisOriginPositions`, `MouseMoveDraw`, `MoveToValue`, `MoveByValue`, `FindClosestTickValueToZero` (returns true), `ApplyTickNumber`. Mathcad bodies are empty (same as the angular axis in batch 82). Hand-written at the top of the class in `Mirrored/Controls.Plots.PlotGraphRadialAxis.cs`, so the unit count ahead of any existing hand-written member does not change; eight stubs removed.
-- Generated layout: eight stubs removed. Verified: after a Release build, `emit` regenerates `PlotGraphRadialAxis.g.cs` byte-identical.
+- Generated layout: eight stubs removed. The first `emit` after the build also generated two base-call stubs for the nested `Point2ScreenHelperImpl` overrides (`Point2Screen`, `Contains`), as in batch 82; the committed file is the emitted version and the gate passes on it.
 - Release IL: full gate PASS — 2581 checked, 0 failures.
 - Still stubs in this class: `GetTickMarkElementPosition`, `GetTickMarkPositionByIndex`, `GetTickLine`, `AxisLineGeometry`, `DrawNumbers`.
