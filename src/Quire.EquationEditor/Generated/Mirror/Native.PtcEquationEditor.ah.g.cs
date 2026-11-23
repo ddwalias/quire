@@ -28,15 +28,11 @@ internal partial class ah : global::Quire.EquationEditor.Tree.Transform.IResultT
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.MatrixFormat ResultMatrixFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public ah() { }
-    [global::Quire.Mirror.MirrorStub]
     internal ah(global::Quire.Native.PtcEquationEditor.r A_0) { }
     [global::Quire.Mirror.MirrorStub]
     object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Native.PtcEquationEditor.ah a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.MathNode Format(global::Quire.Native.PtcEquationEditor.t result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode FormatResult(global::Quire.Native.PtcEquationEditor.u result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

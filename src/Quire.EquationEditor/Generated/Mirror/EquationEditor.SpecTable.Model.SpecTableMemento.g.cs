@@ -19,8 +19,6 @@ public partial class SpecTableMemento : global::Quire.EquationEditor.SpecTable.M
     public SpecTableMemento(global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn> columns) { }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn> RestoreData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Restore(global::Quire.EquationEditor.SpecTable.ISpecTableModel model) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.SpecTable.Model.SpecTableMemento+a, Ptc.EquationEditor")]
     private sealed partial class a_
@@ -31,11 +29,5 @@ public partial class SpecTableMemento : global::Quire.EquationEditor.SpecTable.M
         public static global::System.Func<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn, global::Quire.EquationEditor.SpecTable.Model.IColumnMemento> b;
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<global::Quire.EquationEditor.SpecTable.Model.IColumnMemento, global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn> c;
-        [global::Quire.Mirror.MirrorStub]
-        public a_() { }
-        [global::Quire.Mirror.MirrorStub]
-        internal global::Quire.EquationEditor.SpecTable.Model.IColumnMemento a(global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        internal global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn a(global::Quire.EquationEditor.SpecTable.Model.IColumnMemento A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

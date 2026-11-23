@@ -162,8 +162,6 @@ internal partial class ap
         [global::Quire.Mirror.MirrorStub]
         public global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> b;
         [global::Quire.Mirror.MirrorStub]
-        public c_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal void a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
@@ -174,8 +172,6 @@ internal partial class ap
         public int a_;
         [global::Quire.Mirror.MirrorStub]
         public int b;
-        [global::Quire.Mirror.MirrorStub]
-        public d_() { }
         [global::Quire.Mirror.MirrorStub]
         internal bool a(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

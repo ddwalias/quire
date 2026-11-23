@@ -31,14 +31,6 @@ public static partial class ComboBoxInputControlDataToSExpressionTransform
         public static global::System.Func<global::Quire.EquationEditor.Tree.MathNode, string> c;
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<string, bool> d;
-        [global::Quire.Mirror.MirrorStub]
-        public a_() { }
-        [global::Quire.Mirror.MirrorStub]
-        internal string b(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        internal string a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        internal bool a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Transform.ComboBoxInputControlDataToSExpressionTransform+b, Ptc.EquationEditor")]
@@ -46,8 +38,6 @@ public static partial class ComboBoxInputControlDataToSExpressionTransform
     {
         [global::Quire.Mirror.MirrorStub]
         public bool a_;
-        [global::Quire.Mirror.MirrorStub]
-        public b() { }
         [global::Quire.Mirror.MirrorStub]
         internal string a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

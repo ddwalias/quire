@@ -1,4 +1,5 @@
 using System;
+
 using System.Text.RegularExpressions;
 using Quire.Controls.Core;
 using Quire.EquationEditor;
@@ -6,6 +7,7 @@ using Quire.EquationEditor.Equation;
 using Quire.EquationEditor.Tree;
 using Quire.EquationEditor.Tree.Navigation;
 using Quire.EquationEditor.Tree.Scoping;
+using Quire.Mirror;
 
 namespace Quire.Native.PtcEquationEditor;
 
@@ -375,5 +377,14 @@ internal partial class m
             av().ao();
             av().t();
         }
+    }
+
+    partial class a_
+    {
+        [MirrorVerified("Release IL")]
+        public a_() { }
+
+        [MirrorVerified("Release IL")]
+        internal bool a(MathNode A_0) => A_0.IsEvaluatable;
     }
 }

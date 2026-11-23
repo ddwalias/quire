@@ -24,8 +24,6 @@ internal partial class a5
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Native.PtcEquationEditor.a3 f_;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Native.PtcEquationEditor.at g;
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Native.PtcEquationEditor.a5 b(global::Quire.Native.PtcEquationEditor.r A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Native.PtcEquationEditor.aw f() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -49,8 +47,4 @@ internal partial class a5
     public void a(global::Quire.Native.PtcEquationEditor.a3 A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Native.PtcEquationEditor.at a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void a(global::Quire.Native.PtcEquationEditor.at A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public a5() { }
 }

@@ -34,8 +34,6 @@ internal partial class a9 : global::Quire.Native.PtcEquationEditor.bf
         [global::Quire.Mirror.MirrorStub]
         public bool h;
         [global::Quire.Mirror.MirrorStub]
-        public a_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal void a(global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

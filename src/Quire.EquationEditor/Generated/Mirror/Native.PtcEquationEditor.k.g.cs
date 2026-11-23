@@ -16,8 +16,6 @@ internal partial class k
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.EquationEditor.IEquationModel b_;
     [global::Quire.Mirror.MirrorStub]
-    private k() { }
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Native.PtcEquationEditor.k b(global::Quire.EquationEditor.IEquationModel A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string c() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

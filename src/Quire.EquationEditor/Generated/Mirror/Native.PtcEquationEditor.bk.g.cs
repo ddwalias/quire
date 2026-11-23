@@ -21,7 +21,5 @@ internal partial class bk : global::Quire.Native.PtcEquationEditor.bf
         public static readonly global::Quire.Native.PtcEquationEditor.bk.a_ a__;
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<global::Quire.EquationEditor.Tree.MathNode, bool> b;
-        [global::Quire.Mirror.MirrorStub]
-        public a_() { }
     }
 }

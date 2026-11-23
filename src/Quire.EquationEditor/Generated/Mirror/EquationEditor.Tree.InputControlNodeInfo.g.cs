@@ -35,8 +35,6 @@ public abstract partial class InputControlNodeInfo : global::Quire.EquationEdito
     public void NotifyValueChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void DelegateRequestRestoreInsertionPoint(global::Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected InputControlNodeInfo() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.InputControlNodeInfo+a, Ptc.EquationEditor")]
     private sealed partial class a_
@@ -47,8 +45,6 @@ public abstract partial class InputControlNodeInfo : global::Quire.EquationEdito
         public global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue b;
         [global::Quire.Mirror.MirrorStub]
         public bool c;
-        [global::Quire.Mirror.MirrorStub]
-        public a_() { }
         [global::Quire.Mirror.MirrorStub]
         internal bool a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

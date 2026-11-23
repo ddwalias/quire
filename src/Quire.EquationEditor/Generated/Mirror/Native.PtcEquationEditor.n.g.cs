@@ -48,8 +48,6 @@ internal partial class n : global::Quire.EquationEditor.Equation.EquationModel.b
         [global::Quire.Mirror.MirrorStub]
         public int d;
         [global::Quire.Mirror.MirrorStub]
-        public a_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal global::Quire.EquationEditor.Tree.MathNode a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

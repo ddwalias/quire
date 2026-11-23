@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 
+using Quire.Mirror;
+
 namespace Quire.EquationEditor.Tree.Scoping;
 
 public partial class ScopedNodes
@@ -56,5 +58,17 @@ public partial class ScopedNodes
             DebugTools.DevAssert(ScopedLines.Count == 1);
             return null;
         }
+    }
+
+    partial class a_
+    {
+        [MirrorVerified("Release IL")]
+        public a_() { }
+    }
+
+    partial class b_
+    {
+        [MirrorVerified("Release IL")]
+        public b_() { }
     }
 }

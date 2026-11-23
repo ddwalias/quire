@@ -33,9 +33,5 @@ internal partial class m : global::Quire.EquationEditor.Equation.EquationModel.b
         public static readonly global::Quire.Native.PtcEquationEditor.m.a_ a__;
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<global::Quire.EquationEditor.Tree.MathNode, bool> b;
-        [global::Quire.Mirror.MirrorStub]
-        public a_() { }
-        [global::Quire.Mirror.MirrorStub]
-        internal bool a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

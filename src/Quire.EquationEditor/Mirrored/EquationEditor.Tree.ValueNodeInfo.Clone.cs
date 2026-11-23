@@ -1,3 +1,5 @@
+using Quire.Mirror;
+
 namespace Quire.EquationEditor.Tree;
 
 public abstract partial class ValueNodeInfo
@@ -21,5 +23,17 @@ public abstract partial class ValueNodeInfo
     public object Clone()
     {
         return bk();
+    }
+
+    partial class a_
+    {
+        [MirrorVerified("Release IL")]
+        public a_() { }
+    }
+
+    partial class b
+    {
+        [MirrorVerified("Release IL")]
+        public b() { }
     }
 }

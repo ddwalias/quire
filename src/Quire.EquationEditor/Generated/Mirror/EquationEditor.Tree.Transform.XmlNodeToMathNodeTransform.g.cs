@@ -241,10 +241,6 @@ public partial class XmlNodeToMathNodeTransform
         public static readonly global::Quire.EquationEditor.Tree.Transform.XmlNodeToMathNodeTransform.c_ a_;
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<global::System.Xml.XmlElement, string> b;
-        [global::Quire.Mirror.MirrorStub]
-        public c_() { }
-        [global::Quire.Mirror.MirrorStub]
-        internal string a(global::System.Xml.XmlElement A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Transform.XmlNodeToMathNodeTransform+d, Ptc.EquationEditor")]
@@ -252,8 +248,6 @@ public partial class XmlNodeToMathNodeTransform
     {
         [global::Quire.Mirror.MirrorStub]
         public global::System.Xml.XmlElement a_;
-        [global::Quire.Mirror.MirrorStub]
-        public d_() { }
         [global::Quire.Mirror.MirrorStub]
         internal bool a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

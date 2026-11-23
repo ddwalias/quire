@@ -14,8 +14,6 @@ public partial class InputScriptableWithInputNodeInfo : global::Quire.EquationEd
     [global::Quire.Mirror.MirrorStub]
     private object a__;
     [global::Quire.Mirror.MirrorStub]
-    private object[] b;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Action<global::Quire.DelegateFunction0<bool>, string> c;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Action d;
@@ -25,8 +23,6 @@ public partial class InputScriptableWithInputNodeInfo : global::Quire.EquationEd
     public bool IsInputsAreaShown { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsInputsExists { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object[] InputsToRestore { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -54,11 +50,7 @@ public partial class InputScriptableWithInputNodeInfo : global::Quire.EquationEd
     [global::Quire.Mirror.MirrorStub]
     private object[] a(global::Quire.EquationEditor.Tree.InputScriptableControlDataWithInputs A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected object a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void NotifyValueChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void DelegateRequestRestoreInsertionPoint(global::Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.InputScriptableWithInputNodeInfo+a, Ptc.EquationEditor")]
     private sealed partial class a_
@@ -67,8 +59,6 @@ public partial class InputScriptableWithInputNodeInfo : global::Quire.EquationEd
         public global::Quire.EquationEditor.Tree.InputScriptableWithInputNodeInfo a__;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue b;
-        [global::Quire.Mirror.MirrorStub]
-        public a_() { }
         [global::Quire.Mirror.MirrorStub]
         internal bool a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
@@ -80,8 +70,6 @@ public partial class InputScriptableWithInputNodeInfo : global::Quire.EquationEd
         public object a_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.InputScriptableWithInputNodeInfo.a_ b;
-        [global::Quire.Mirror.MirrorStub]
-        public b_() { }
         [global::Quire.Mirror.MirrorStub]
         internal void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

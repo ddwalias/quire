@@ -1,3 +1,5 @@
+using Quire.Mirror;
+
 namespace Quire.EquationEditor.Tree.Transform;
 
 public static partial class ParsedSExpressionToComboBoxInputControlData
@@ -19,5 +21,20 @@ public static partial class ParsedSExpressionToComboBoxInputControlData
         }
 
         return false;
+    }
+
+    partial class b
+    {
+        [MirrorVerified("Release IL")]
+        public b() { }
+
+        [MirrorVerified("Release IL")]
+        internal bool d(ParsedSExpression A_0) => A_0.IsValid;
+
+        [MirrorVerified("Release IL")]
+        internal MathNode c(ParsedSExpression A_0) => SExpressionToMathNodeTransform.Default.f(A_0);
+
+        [MirrorVerified("Release IL")]
+        internal string a(ParsedSExpression A_0) => A_0.Value;
     }
 }

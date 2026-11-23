@@ -18,13 +18,7 @@ internal partial class l : global::Quire.EquationEditor.Equation.EquationModel.b
     [global::Quire.Mirror.MirrorStub]
     public l(global::Quire.EquationEditor.Equation.EquationModel A_0, global::Quire.Native.PtcEquationEditor.f A_1) : base(default(global::Quire.EquationEditor.Equation.EquationModel)) { }
     [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.EquationEditModeEnum e() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.Tree.Navigation.NavigatorState f() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void b(global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.EquationEditor.Tree.MathNode g() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void h() => base.h();
     [global::Quire.Mirror.MirrorStub]
@@ -54,8 +48,6 @@ internal partial class l : global::Quire.EquationEditor.Equation.EquationModel.b
     [global::Quire.Mirror.MirrorStub]
     public override void r(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public override void s() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void t() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool a(string A_0, global::System.Nullable<global::Quire.EquationEditor.Tree.Parsing.Fixity> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -83,8 +75,6 @@ internal partial class l : global::Quire.EquationEditor.Equation.EquationModel.b
     public bool a(global::Quire.EquationEditor.Tree.FormattedString A_0, int A_1, global::System.Nullable<global::Quire.Controls.Core.IdLabels> A_2, string[] A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override bool ab(global::Quire.EquationEditor.Tree.MathNode A_0) => base.ab(A_0);
-    [global::Quire.Mirror.MirrorStub]
-    public override bool ac(global::Quire.EquationEditor.Tree.MathNode A_0) => base.ac(A_0);
     [global::Quire.Mirror.MirrorStub]
     public override void ad() => base.ad();
     [global::Quire.Mirror.MirrorStub]
@@ -138,8 +128,6 @@ internal partial class l : global::Quire.EquationEditor.Equation.EquationModel.b
         [global::Quire.Mirror.MirrorStub]
         public string b;
         [global::Quire.Mirror.MirrorStub]
-        public a_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal global::Quire.EquationEditor.Tree.MathNode a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
@@ -148,8 +136,6 @@ internal partial class l : global::Quire.EquationEditor.Equation.EquationModel.b
     {
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.MathNode a_;
-        [global::Quire.Mirror.MirrorStub]
-        public b_() { }
         [global::Quire.Mirror.MirrorStub]
         internal bool a(global::Quire.EquationEditor.Tree.FunctionOperatorDescriptor A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
@@ -162,8 +148,6 @@ internal partial class l : global::Quire.EquationEditor.Equation.EquationModel.b
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.LimitSideNodeInfo b;
         [global::Quire.Mirror.MirrorStub]
-        public c() { }
-        [global::Quire.Mirror.MirrorStub]
         internal global::Quire.EquationEditor.Tree.MathNode a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
@@ -174,8 +158,6 @@ internal partial class l : global::Quire.EquationEditor.Equation.EquationModel.b
         public global::Quire.Native.PtcEquationEditor.l a_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.Controls.Core.InputControlTypes b_;
-        [global::Quire.Mirror.MirrorStub]
-        public d() { }
         [global::Quire.Mirror.MirrorStub]
         internal global::Quire.EquationEditor.Tree.MathNode b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
@@ -190,8 +172,6 @@ internal partial class l : global::Quire.EquationEditor.Equation.EquationModel.b
         [global::Quire.Mirror.MirrorStub]
         public string b;
         [global::Quire.Mirror.MirrorStub]
-        public e_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal global::Quire.EquationEditor.Tree.MathNode a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
@@ -202,8 +182,6 @@ internal partial class l : global::Quire.EquationEditor.Equation.EquationModel.b
         public string a_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.Native.PtcEquationEditor.l.e_ b;
-        [global::Quire.Mirror.MirrorStub]
-        public f_() { }
         [global::Quire.Mirror.MirrorStub]
         internal global::Quire.EquationEditor.Tree.MathNode a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
@@ -219,8 +197,6 @@ internal partial class l : global::Quire.EquationEditor.Equation.EquationModel.b
         public global::System.Nullable<global::Quire.Controls.Core.IdLabels> c;
         [global::Quire.Mirror.MirrorStub]
         public int d;
-        [global::Quire.Mirror.MirrorStub]
-        public g_() { }
         [global::Quire.Mirror.MirrorStub]
         internal global::Quire.EquationEditor.Tree.MathNode a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
@@ -238,8 +214,6 @@ internal partial class l : global::Quire.EquationEditor.Equation.EquationModel.b
         public global::Quire.EquationEditor.Tree.FormattedString d;
         [global::Quire.Mirror.MirrorStub]
         public global::System.Nullable<global::Quire.Controls.Core.IdLabels> e;
-        [global::Quire.Mirror.MirrorStub]
-        public h_() { }
         [global::Quire.Mirror.MirrorStub]
         internal void a(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
@@ -259,8 +233,6 @@ internal partial class l : global::Quire.EquationEditor.Equation.EquationModel.b
         public global::Quire.Native.PtcEquationEditor.l d;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.Direction e;
-        [global::Quire.Mirror.MirrorStub]
-        public i_() { }
         [global::Quire.Mirror.MirrorStub]
         internal void a(global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

@@ -16,19 +16,7 @@ internal partial class bc : global::Quire.Native.PtcEquationEditor.bf
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.EquationEditor.Tree.FormattedString b_;
     [global::Quire.Mirror.MirrorStub]
-    private bool c;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.EquationEditor.Tree.Navigation.NavigatorState d;
-    [global::Quire.Mirror.MirrorStub]
     public bc(global::Quire.Native.PtcEquationEditor.a5 A_0, global::Quire.EquationEditor.Tree.Scoping.NavigatorSegment A_1, global::Quire.EquationEditor.Tree.FormattedString A_2) : base(default(global::Quire.Native.PtcEquationEditor.a5)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void a(bool A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void a(global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.EquationEditor.Tree.Navigation.NavigatorState bq() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

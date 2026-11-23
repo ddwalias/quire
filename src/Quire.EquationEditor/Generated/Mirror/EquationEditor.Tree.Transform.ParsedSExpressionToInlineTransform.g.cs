@@ -37,7 +37,5 @@ public partial class ParsedSExpressionToInlineTransform
         public static global::System.Func<global::System.Windows.Documents.Inline> e_;
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<global::System.Windows.Documents.Inline> f;
-        [global::Quire.Mirror.MirrorStub]
-        public a_() { }
     }
 }

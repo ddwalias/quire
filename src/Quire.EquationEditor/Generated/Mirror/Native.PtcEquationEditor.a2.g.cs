@@ -125,8 +125,6 @@ internal partial class a2
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.Native.PtcEquationEditor.a2.b_ a_;
         [global::Quire.Mirror.MirrorStub]
-        public d_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal bool a(global::Quire.EquationEditor.Tree.IMathNodeDescriptor A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 

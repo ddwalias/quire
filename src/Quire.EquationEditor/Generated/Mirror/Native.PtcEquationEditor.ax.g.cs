@@ -32,17 +32,11 @@ internal partial class ax
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState a(global::Quire.Direction A_0, global::Quire.EquationEditor.Tree.MathNode A_1, global::Quire.DelegateFunction0<global::Quire.EquationEditor.Tree.MathNode> A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState b(global::Quire.Direction A_0, global::Quire.EquationEditor.Tree.MathNode A_1, global::Quire.DelegateFunction0<global::Quire.EquationEditor.Tree.MathNode> A_2, global::System.Nullable<global::Quire.EquationEditor.Tree.Parsing.Fixity> A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState b(global::Quire.Direction A_0, global::Quire.EquationEditor.Tree.MathNode A_1, global::Quire.EquationEditor.Tree.MathNode A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState b(global::Quire.Direction A_0, global::Quire.EquationEditor.Tree.MathNode A_1, global::Quire.EquationEditor.Tree.MathNode A_2, global::System.Nullable<global::Quire.EquationEditor.Tree.Parsing.Fixity> A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState a(global::Quire.Direction A_0, global::Quire.EquationEditor.Tree.MathNode A_1, global::Quire.EquationEditor.Tree.MathNode A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState a(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.Direction A_1, global::Quire.EquationEditor.Tree.FormattedString A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState c(global::Quire.EquationEditor.Tree.MathNode A_0, int A_1, string A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState b(global::Quire.EquationEditor.Tree.MathNode A_0, int A_1, int A_2, string A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -52,17 +46,11 @@ internal partial class ax
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState b(global::Quire.EquationEditor.Tree.MathNode A_0, int A_1, string A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState a(global::Quire.EquationEditor.Tree.MathNode A_0, int A_1, string A_2, global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState a(global::Quire.EquationEditor.Tree.MathNode A_0, int A_1, global::Quire.EquationEditor.Tree.FormattedString A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState a(global::Quire.EquationEditor.Tree.MathNode A_0, int A_1, int A_2, string A_3, global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes A_4) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState b(global::Quire.EquationEditor.Tree.MathNode A_0, int A_1, int A_2, global::Quire.EquationEditor.Tree.FormattedString A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Native.PtcEquationEditor.bf a(global::Quire.EquationEditor.Tree.MathNode A_0, int A_1, int A_2, global::Quire.EquationEditor.Tree.FormattedString A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState a(global::Quire.EquationEditor.Tree.MathNode A_0, int A_1, string A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.EquationEditor.Tree.Navigation.NavigatorState a(global::Quire.EquationEditor.Tree.MathNode A_0, int A_1, int A_2, string A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -94,8 +82,6 @@ internal partial class ax
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState a(bool A_0, global::Quire.EquationEditor.Tree.MathNode A_1, string A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState a(global::Quire.EquationEditor.Tree.MathNode A_0, string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState a(global::Quire.EquationEditor.Tree.Scoping.TypeoverState A_0, string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState a(global::Quire.EquationEditor.Tree.Scoping.TypeoverState A_0, global::Quire.DelegateFunction0<global::Quire.EquationEditor.Tree.MathNode> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -122,8 +108,6 @@ internal partial class ax
         [global::Quire.Mirror.MirrorStub]
         public string b;
         [global::Quire.Mirror.MirrorStub]
-        public a_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal global::Quire.EquationEditor.Tree.MathNode a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
@@ -134,8 +118,6 @@ internal partial class ax
         public global::Quire.Native.PtcEquationEditor.ax a_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.FormattedString b;
-        [global::Quire.Mirror.MirrorStub]
-        public b_() { }
         [global::Quire.Mirror.MirrorStub]
         internal global::Quire.EquationEditor.Tree.MathNode a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
@@ -148,8 +130,6 @@ internal partial class ax
         [global::Quire.Mirror.MirrorStub]
         public string b;
         [global::Quire.Mirror.MirrorStub]
-        public c_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal global::Quire.EquationEditor.Tree.MathNode a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
@@ -160,8 +140,6 @@ internal partial class ax
         public global::Quire.Native.PtcEquationEditor.ax a_;
         [global::Quire.Mirror.MirrorStub]
         public string b;
-        [global::Quire.Mirror.MirrorStub]
-        public d() { }
         [global::Quire.Mirror.MirrorStub]
         internal global::Quire.EquationEditor.Tree.MathNode a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
@@ -174,8 +152,6 @@ internal partial class ax
         [global::Quire.Mirror.MirrorStub]
         public string b;
         [global::Quire.Mirror.MirrorStub]
-        public e() { }
-        [global::Quire.Mirror.MirrorStub]
         internal global::Quire.EquationEditor.Tree.MathNode a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
@@ -186,8 +162,6 @@ internal partial class ax
         public global::Quire.Native.PtcEquationEditor.ax a_;
         [global::Quire.Mirror.MirrorStub]
         public string b;
-        [global::Quire.Mirror.MirrorStub]
-        public f() { }
         [global::Quire.Mirror.MirrorStub]
         internal global::Quire.EquationEditor.Tree.MathNode a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

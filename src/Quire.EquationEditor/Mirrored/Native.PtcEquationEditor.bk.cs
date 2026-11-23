@@ -1,7 +1,9 @@
 using System.Runtime.CompilerServices;
+
 using Quire.EquationEditor.Tree;
 using Quire.EquationEditor.Tree.Navigation;
 using Quire.EquationEditor.Tree.Parsing;
+using Quire.Mirror;
 
 namespace Quire.Native.PtcEquationEditor;
 
@@ -30,5 +32,11 @@ internal partial class bk
         {
             return node.IsPlaceholder;
         }
+    }
+
+    partial class a_
+    {
+        [MirrorVerified("Release IL")]
+        public a_() { }
     }
 }

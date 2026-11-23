@@ -52,8 +52,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     [global::Quire.Mirror.MirrorStub]
     public bool IsEmpty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn this[int index] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     internal int NumberOfDataCells { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal int CellCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -77,8 +75,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     public event global::System.Action RequestUpdateCellsVisibility;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<bool> RestrictedReadonlyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public SpecTableModel() { }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.EquationEditor.SpecTable.Model.SpecTableModel DefinitionsListToSpecTableModel(global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> definitionsMathNodesList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -146,8 +142,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     [global::Quire.Mirror.MirrorStub]
     private void f(int A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void f(global::Quire.EquationEditor.IEquationModel A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void e(global::Quire.EquationEditor.IEquationModel A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void d(global::Quire.EquationEditor.IEquationModel A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -173,8 +167,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     public void HandleOnTraverseForward(global::Quire.EquationEditor.IEquationModel equationModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HandleOnTraverseBackward(global::Quire.EquationEditor.IEquationModel equationModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleNavigateToFirstCell() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HandleNavigateToLastCell() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -245,8 +237,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
         public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private static string[][] a(global::System.Collections.Generic.IList<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
@@ -334,8 +324,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
         public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.SpecTable.Model.SpecTableModel+e, Ptc.EquationEditor")]
@@ -467,8 +455,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
         public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.SpecTable.Model.SpecTableModel+j, Ptc.EquationEditor")]
@@ -531,19 +517,7 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn, bool> g;
         [global::Quire.Mirror.MirrorStub]
-        public l_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal bool a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        internal void c() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        internal void b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        internal void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        internal void a(global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        internal bool a(global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.SpecTable.Model.SpecTableModel+m, Ptc.EquationEditor")]
@@ -551,8 +525,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     {
         [global::Quire.Mirror.MirrorStub]
         public bool a_;
-        [global::Quire.Mirror.MirrorStub]
-        public m_() { }
         [global::Quire.Mirror.MirrorStub]
         internal void a(global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

@@ -60,8 +60,6 @@ internal partial class a6
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.MathNode h;
         [global::Quire.Mirror.MirrorStub]
-        public a_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal void a(global::Quire.EquationEditor.Tree.Parsing.Panceaux.ReparentChild A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         internal void a(global::Quire.EquationEditor.Tree.Parsing.Panceaux.ReparentNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -46,8 +46,6 @@ public partial class MathNodeToSExpressionTransform
     [global::Quire.Mirror.MirrorStub]
     public MathNodeToSExpressionTransform(global::System.Collections.Generic.Dictionary<string, string> formatMap, global::System.Collections.Generic.Dictionary<string, global::Quire.DelegateFunction2<string, global::Quire.EquationEditor.Tree.MathNode, global::Quire.DelegateFunction1<string, global::Quire.EquationEditor.Tree.MathNode>>> specialCaseMap) { }
     [global::Quire.Mirror.MirrorStub]
-    public string Transform(global::Quire.EquationEditor.Tree.MathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public string Transform(global::Quire.EquationEditor.Tree.MathNode node, global::Quire.DelegateFunction1<string, global::Quire.EquationEditor.Tree.MathNode> labelGenerator) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string b(global::Quire.EquationEditor.Tree.MathNode A_0, string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -1,3 +1,5 @@
+using Quire.Mirror;
+
 namespace Quire.EquationEditor.Tree.Transform;
 
 public partial class SExpressionToRlTransform
@@ -13,5 +15,11 @@ public partial class SExpressionToRlTransform
     {
         MathNode node = global::Quire.EquationEditor.Tree.SExpressionHelperUtilites.a(sExpr);
         return a(node);
+    }
+
+    partial class a_
+    {
+        [MirrorVerified("Release IL")]
+        public a_() { }
     }
 }

@@ -1,7 +1,11 @@
 using System;
+
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Quire.Core;
 using Quire.EquationEditor.Tree.Parsing;
+using Quire.EquationEditor.Tree.Transform;
+using Quire.Mirror;
 
 namespace Quire.EquationEditor.Tree;
 
@@ -482,6 +486,60 @@ public partial class MathNode
         if (NodeInfo != null)
         {
             NodeInfo.MakeReadOnly();
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    internal MathNode(MathNodeDescriptor A_0, params MathNode[] A_1) : this(A_0, null, A_1) { }
+
+    [MirrorVerified("Release IL")]
+    public int GetMatrixCellIndex(MathNode matrixAncestor) => GetBranchIndexInAncestor(matrixAncestor);
+
+    [MirrorVerified("Release IL")]
+    public MathNode LeftNeighbor => null;
+
+    [MirrorVerified("Release IL")]
+    public virtual string SExpression => MathNodeToSExpressionTransform.Default.Transform(this);
+
+    [MirrorVerified("Release IL")]
+    public bool ContainsOrIsComboBox => ContainsOrIs("ComboBoxControl");
+
+    partial class b_
+    {
+        [MirrorVerified("Release IL")]
+        public b_() { }
+    }
+
+    partial class c_
+    {
+        [MirrorVerified("Release IL")]
+        public c_() { }
+    }
+
+    partial class d_
+    {
+        [MirrorVerified("Release IL")]
+        public d_() { }
+    }
+
+    partial class e_
+    {
+        [MirrorVerified("Release IL")]
+        public e_() { }
+    }
+
+    partial class f_
+    {
+        [MirrorVerified("Release IL")]
+        public f_() { }
+    }
+
+    partial class a_
+    {
+        partial class a__
+        {
+            [MirrorVerified("Release IL")]
+            public a__() { }
         }
     }
 }

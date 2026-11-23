@@ -35,6 +35,4 @@ public static partial class MathNodeToStringTransformer
     public static string TransformToUnitViewString(this global::Quire.EquationEditor.Tree.MathNode mathNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string TransformToValueViewString(this global::Quire.EquationEditor.Tree.MathNode mathNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string TransformToViewStringByType(this global::Quire.EquationEditor.Tree.MathNode mathNode, global::System.Nullable<global::Quire.EquationEditor.Tree.ComboBoxCellDataType> dataType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

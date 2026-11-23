@@ -61,6 +61,4 @@ public partial class RedefinitionWarning
     private global::Quire.Controls.Core.WarningsTypesToShow b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.WarningsTypesToShow a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public RedefinitionWarning() { }
 }

@@ -37,11 +37,5 @@ internal partial class j : global::Quire.EquationEditor.View.IMathViewTransforme
     [global::Quire.Mirror.MirrorOf("j+a, Ptc.EquationEditor")]
     private partial struct a_
     {
-        [global::Quire.Mirror.MirrorStub]
-        public readonly char a;
-        [global::Quire.Mirror.MirrorStub]
-        public readonly global::Quire.EquationEditor.Tree.SymbolMargin b;
-        [global::Quire.Mirror.MirrorStub]
-        public a_(char A_0, global::Quire.EquationEditor.Tree.SymbolMargin A_1) { }
     }
 }

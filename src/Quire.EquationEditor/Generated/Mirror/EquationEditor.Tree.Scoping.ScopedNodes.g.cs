@@ -24,8 +24,6 @@ public partial class ScopedNodes
         [global::Quire.Mirror.MirrorStub]
         public global::System.Func<global::Quire.EquationEditor.Tree.MathNode, bool> a__;
         [global::Quire.Mirror.MirrorStub]
-        public a_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal bool a(global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
@@ -34,8 +32,6 @@ public partial class ScopedNodes
     {
         [global::Quire.Mirror.MirrorStub]
         public global::System.Func<global::Quire.EquationEditor.Tree.MathNode, bool> a_;
-        [global::Quire.Mirror.MirrorStub]
-        public b_() { }
         [global::Quire.Mirror.MirrorStub]
         internal bool a(global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

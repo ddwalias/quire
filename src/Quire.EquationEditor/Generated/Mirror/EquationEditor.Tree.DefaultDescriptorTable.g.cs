@@ -224,8 +224,6 @@ public partial class DefaultDescriptorTable : global::Quire.EquationEditor.Tree.
         [global::Quire.Mirror.MirrorStub]
         public global::System.Collections.Generic.List<string> b;
         [global::Quire.Mirror.MirrorStub]
-        public c_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

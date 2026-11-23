@@ -14,8 +14,6 @@ internal partial class ac : global::Quire.Native.PtcEquationEditor.t, global::Qu
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.IList<global::Quire.Native.PtcEquationEditor.t> a_;
     [global::Quire.Mirror.MirrorStub]
-    private int b;
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Native.PtcEquationEditor.t this[int A_0, int A_1] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -28,15 +26,9 @@ internal partial class ac : global::Quire.Native.PtcEquationEditor.t, global::Qu
     [global::Quire.Mirror.MirrorStub]
     public ac(int A_0, int A_1) { }
     [global::Quire.Mirror.MirrorStub]
-    private void a(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void SetElementAt(int r, int c, global::Quire.Calculation.Core.IResultNode element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.Tree.MathNode bo(global::Quire.EquationEditor.Tree.Transform.IResultTreeFormatter A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Native.PtcEquationEditor.t bp() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Accept(global::Quire.Calculation.Core.IResultNodeVisitor visitor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Calculation.Core.IResultNode global::Quire.Calculation.Core.IMatrixResultNode.this[int r, int c] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

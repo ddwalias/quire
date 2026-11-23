@@ -18,7 +18,5 @@ public partial class VisualOperatorDescriptorTable : global::System.Windows.Reso
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal global::System.Delegate a(global::System.Type A_0, string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IComponentConnector.Connect(int A_0, object A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

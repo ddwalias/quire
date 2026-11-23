@@ -36,8 +36,6 @@ internal partial class bo : global::Quire.Native.PtcEquationEditor.bf
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.FormattedString c;
         [global::Quire.Mirror.MirrorStub]
-        public a_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal bool b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         internal void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

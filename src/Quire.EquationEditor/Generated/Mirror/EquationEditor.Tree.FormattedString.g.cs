@@ -98,12 +98,6 @@ public partial class FormattedString : global::System.ICloneable, global::System
         [global::Quire.Mirror.MirrorStub]
         private int c;
         [global::Quire.Mirror.MirrorStub]
-        private int d;
-        [global::Quire.Mirror.MirrorStub]
-        private int b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void a(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         public global::System.Collections.Generic.IEnumerable<global::System.Windows.Documents.Run> a(out int A_0, out int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public bool a(global::System.Windows.Documents.Run A_0, global::System.Func<string, int> A_1, bool A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

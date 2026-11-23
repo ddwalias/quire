@@ -43,8 +43,6 @@ public partial class ComboBoxControlNodeInfo : global::Quire.EquationEditor.Tree
     public void NotifyValueChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void DelegateRequestRestoreInsertionPoint(global::Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override object bk() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.ComboBoxControlNodeInfo+a, Ptc.EquationEditor")]
     private sealed partial class a_
@@ -55,8 +53,6 @@ public partial class ComboBoxControlNodeInfo : global::Quire.EquationEditor.Tree
         public global::Quire.EquationEditor.Tree.ComboBoxInputControlData b;
         [global::Quire.Mirror.MirrorStub]
         public bool c;
-        [global::Quire.Mirror.MirrorStub]
-        public a_() { }
         [global::Quire.Mirror.MirrorStub]
         internal bool a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

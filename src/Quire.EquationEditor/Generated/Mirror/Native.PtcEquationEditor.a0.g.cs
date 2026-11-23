@@ -38,9 +38,5 @@ internal partial class a0
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Native.PtcEquationEditor.ar a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected virtual bool br() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void bs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected global::Quire.EquationEditor.Tree.MathNode a(global::System.Collections.Generic.LinkedList<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.Native.PtcEquationEditor.aq A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -75,8 +75,6 @@ internal partial class at
         [global::Quire.Mirror.MirrorStub]
         public string b;
         [global::Quire.Mirror.MirrorStub]
-        public b_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal void a(global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.Native.PtcEquationEditor.aq A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 

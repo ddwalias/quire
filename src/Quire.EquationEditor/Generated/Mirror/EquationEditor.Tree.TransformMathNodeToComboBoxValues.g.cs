@@ -26,10 +26,6 @@ public static partial class TransformMathNodeToComboBoxValues
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<global::Quire.EquationEditor.Tree.MathNode, bool> c;
         [global::Quire.Mirror.MirrorStub]
-        public a() { }
-        [global::Quire.Mirror.MirrorStub]
-        internal string b(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         internal bool a__(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

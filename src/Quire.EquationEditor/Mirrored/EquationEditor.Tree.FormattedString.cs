@@ -1,5 +1,7 @@
 using System.Text;
+
 using System.Windows.Documents;
+using Quire.Mirror;
 
 namespace Quire.EquationEditor.Tree;
 
@@ -249,5 +251,17 @@ public partial class FormattedString
         DebugTools.DevAssert(WpfTextBlock.Inlines.Count < 2, null);
         a(WpfTextBlock.Inlines.FirstInline, text, true);
         return text.ToString();
+    }
+
+    partial class a_
+    {
+        [MirrorVerified("Release IL")]
+        private int d;
+
+        [MirrorVerified("Release IL")]
+        private int b() => d;
+
+        [MirrorVerified("Release IL")]
+        private void a(int A_0) => d = A_0;
     }
 }

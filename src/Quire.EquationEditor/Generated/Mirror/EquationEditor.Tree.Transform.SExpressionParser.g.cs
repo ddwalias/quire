@@ -60,8 +60,6 @@ public partial class SExpressionParser
         [global::Quire.Mirror.MirrorStub]
         public char a__;
         [global::Quire.Mirror.MirrorStub]
-        public a_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal bool a(char A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

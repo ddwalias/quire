@@ -84,10 +84,6 @@ public partial class InfixMonomialToSExpressionTransform
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<string, string> c;
         [global::Quire.Mirror.MirrorStub]
-        public a_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal bool b(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        internal string a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

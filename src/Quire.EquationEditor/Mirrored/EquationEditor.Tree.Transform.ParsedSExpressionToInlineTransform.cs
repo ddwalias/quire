@@ -1,3 +1,5 @@
+using Quire.Mirror;
+
 namespace Quire.EquationEditor.Tree.Transform;
 
 public partial class ParsedSExpressionToInlineTransform
@@ -72,5 +74,11 @@ public partial class ParsedSExpressionToInlineTransform
     public global::System.Windows.Documents.Span Transform(ParsedSExpression parsed)
     {
         return d(parsed);
+    }
+
+    partial class a_
+    {
+        [MirrorVerified("Release IL")]
+        public a_() { }
     }
 }

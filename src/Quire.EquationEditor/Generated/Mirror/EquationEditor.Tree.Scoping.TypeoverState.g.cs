@@ -22,15 +22,9 @@ public partial class TypeoverState : global::Quire.EquationEditor.Tree.Scoping.N
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> TypeoverNodes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode> ExcludedNodes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode> ExcludedOperands { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<int> MatrixCellsInTypeover { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public TypeoverState(global::Quire.EquationEditor.Tree.MathNode left, global::Quire.EquationEditor.Tree.MathNode right, global::Quire.EquationEditor.Tree.Navigation.NavigatorState navState) : base(default(global::Quire.EquationEditor.Tree.Navigation.NavigatorState), default(global::Quire.EquationEditor.Tree.Navigation.NavigatorState)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public TypeoverState(global::Quire.EquationEditor.Tree.Scoping.LinearSegment segment, global::Quire.EquationEditor.Tree.Navigation.NavigatorState navState) : base(default(global::Quire.EquationEditor.Tree.Navigation.NavigatorState), default(global::Quire.EquationEditor.Tree.Navigation.NavigatorState)) { }
     [global::Quire.Mirror.MirrorStub]
     public TypeoverState(global::Quire.EquationEditor.Tree.Scoping.LinearSegment segment, global::Quire.EquationEditor.Tree.Navigation.NavigatorState navState, bool includePrimalChildren) : base(default(global::Quire.EquationEditor.Tree.Navigation.NavigatorState), default(global::Quire.EquationEditor.Tree.Navigation.NavigatorState)) { }
     [global::Quire.Mirror.MirrorStub]
@@ -38,15 +32,11 @@ public partial class TypeoverState : global::Quire.EquationEditor.Tree.Scoping.N
     [global::Quire.Mirror.MirrorStub]
     public TypeoverState(global::Quire.EquationEditor.Tree.Scoping.NavigatorSegment segment, global::Quire.EquationEditor.Tree.Navigation.NavigatorState navState, bool includePrimalChildren) : base(default(global::Quire.EquationEditor.Tree.Navigation.NavigatorState), default(global::Quire.EquationEditor.Tree.Navigation.NavigatorState)) { }
     [global::Quire.Mirror.MirrorStub]
-    public TypeoverState(global::Quire.EquationEditor.Tree.Navigation.NavigatorState left, global::Quire.EquationEditor.Tree.Navigation.NavigatorState right, global::Quire.EquationEditor.Tree.Navigation.NavigatorState navState) : base(default(global::Quire.EquationEditor.Tree.Navigation.NavigatorState), default(global::Quire.EquationEditor.Tree.Navigation.NavigatorState)) { }
-    [global::Quire.Mirror.MirrorStub]
     public TypeoverState(global::Quire.EquationEditor.Tree.Navigation.NavigatorState left, global::Quire.EquationEditor.Tree.Navigation.NavigatorState right, global::Quire.EquationEditor.Tree.Navigation.NavigatorState navState, bool includePrimalChildren) : base(default(global::Quire.EquationEditor.Tree.Navigation.NavigatorState), default(global::Quire.EquationEditor.Tree.Navigation.NavigatorState)) { }
     [global::Quire.Mirror.MirrorStub]
     public TypeoverState(global::Quire.EquationEditor.Tree.Scoping.TypeoverState objectToCopy) : base(default(global::Quire.EquationEditor.Tree.Navigation.NavigatorState), default(global::Quire.EquationEditor.Tree.Navigation.NavigatorState)) { }
     [global::Quire.Mirror.MirrorStub]
     object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Scoping.TypeoverState Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Scoping.TypeoverState CloneForNewTree(global::Quire.EquationEditor.Tree.MathNode newRoot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -70,8 +60,6 @@ public partial class TypeoverState : global::Quire.EquationEditor.Tree.Scoping.N
         [global::Quire.Mirror.MirrorStub]
         public global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode> b;
         [global::Quire.Mirror.MirrorStub]
-        public a_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal string a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
@@ -80,8 +68,6 @@ public partial class TypeoverState : global::Quire.EquationEditor.Tree.Scoping.N
     {
         [global::Quire.Mirror.MirrorStub]
         public global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> a_;
-        [global::Quire.Mirror.MirrorStub]
-        public b_() { }
         [global::Quire.Mirror.MirrorStub]
         internal string a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

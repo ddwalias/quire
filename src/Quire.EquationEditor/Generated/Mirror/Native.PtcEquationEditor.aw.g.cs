@@ -57,8 +57,6 @@ internal partial class aw
     private void b(global::System.Collections.Generic.LinkedList<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.EquationEditor.Tree.MathNode A_1, global::System.Collections.Generic.ICollection<global::Quire.EquationEditor.Tree.MathNode> A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void a(global::System.Collections.Generic.LinkedList<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.EquationEditor.Tree.MathNode A_1, global::System.Collections.Generic.ICollection<global::Quire.EquationEditor.Tree.MathNode> A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public aw() { }
 
     [global::Quire.Mirror.MirrorOf("aw+a, Ptc.EquationEditor")]
     private sealed partial class a_
@@ -67,8 +65,6 @@ internal partial class aw
         public static readonly global::Quire.Native.PtcEquationEditor.aw.a_ a__;
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<global::Quire.EquationEditor.Tree.MathNode, bool> b;
-        [global::Quire.Mirror.MirrorStub]
-        public a_() { }
         [global::Quire.Mirror.MirrorStub]
         internal bool a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
@@ -82,8 +78,6 @@ internal partial class aw
         public global::System.Collections.Generic.List<global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode>> b;
         [global::Quire.Mirror.MirrorStub]
         public global::System.Action c;
-        [global::Quire.Mirror.MirrorStub]
-        public b_() { }
         [global::Quire.Mirror.MirrorStub]
         internal void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

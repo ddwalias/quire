@@ -31,8 +31,6 @@ public partial class SExpressionToRlTransform
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<string, bool> b;
         [global::Quire.Mirror.MirrorStub]
-        public a_() { }
-        [global::Quire.Mirror.MirrorStub]
         internal bool a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

@@ -20,13 +20,9 @@ public partial class XmcdToMathNodeTransform : global::Quire.EquationEditor.Tree
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Native.PtcEquationEditor.r b_;
     [global::Quire.Mirror.MirrorStub]
-    public XmcdToMathNodeTransform() { }
-    [global::Quire.Mirror.MirrorStub]
     internal XmcdToMathNodeTransform(global::Quire.Native.PtcEquationEditor.r A_0, global::System.Collections.Generic.Dictionary<string, global::Quire.Calculation.Core.UnitDescriptor> A_1) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode Transform(string xmcdSnippet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.MathNode Transform(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.EquationEditor.Tree.MathNode g(global::System.Xml.XmlNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -47,10 +43,6 @@ public partial class XmcdToMathNodeTransform : global::Quire.EquationEditor.Tree
     public global::Quire.EquationEditor.Tree.MathNode BuildUnitMonomial(global::System.Xml.XmlNode unitMonomial) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.EquationEditor.Tree.MathNode a(global::Quire.EquationEditor.Tree.MathNode A_0, int A_1, int A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private int b(global::System.Xml.XmlNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private int a(global::System.Xml.XmlNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.EquationEditor.Tree.MathNode a(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.EquationEditor.Tree.MathNode A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

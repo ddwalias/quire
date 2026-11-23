@@ -1,14 +1,16 @@
 using System;
+
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Quire.Controls.Core;
 using Quire.Core;
-using Quire.Matrices;
 using Quire.EquationEditor;
 using Quire.EquationEditor.Equation;
-using Quire.EquationEditor.Tree.Scoping;
 using Quire.EquationEditor.Tree;
 using Quire.EquationEditor.Tree.Navigation;
+using Quire.EquationEditor.Tree.Scoping;
+using Quire.Matrices;
+using Quire.Mirror;
 
 namespace Quire.Native.PtcEquationEditor;
 
@@ -251,5 +253,11 @@ internal partial class n
     {
         node = null;
         return false;
+    }
+
+    partial class a_
+    {
+        [MirrorVerified("Release IL")]
+        public a_() { }
     }
 }

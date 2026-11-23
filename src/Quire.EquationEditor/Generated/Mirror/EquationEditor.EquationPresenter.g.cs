@@ -34,10 +34,6 @@ public partial class EquationPresenter
     [global::Quire.Mirror.MirrorStub]
     protected static global::Quire.Controls.Core.IFrameworkElementFacade FrameworkElementFacade { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public EquationPresenter(global::Quire.EquationEditor.IEquationModel model, global::Quire.EquationEditor.View.IVisualMathRegionNode view) { }
-    [global::Quire.Mirror.MirrorStub]
-    public EquationPresenter(global::Quire.EquationEditor.IEquationModel model, global::Quire.EquationEditor.View.IVisualMathRegionNode view, global::Quire.EquationEditor.IMathNodeToVisualNodeMap map) { }
-    [global::Quire.Mirror.MirrorStub]
     internal EquationPresenter(global::Quire.EquationEditor.IEquationModel A_0, global::Quire.EquationEditor.View.IVisualMathRegionNode A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2, global::Quire.Native.PtcEquationEditor.c A_3, global::Quire.Native.PtcEquationEditor.b A_4) { }
     [global::Quire.Mirror.MirrorStub]
     private void x() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -46,21 +42,13 @@ public partial class EquationPresenter
     [global::Quire.Mirror.MirrorStub]
     private static void a(ref bool A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static bool v() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool a(global::Quire.Controls.Core.FindReplaceQuery A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void u() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void t() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void s() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void a(global::Quire.EquationEditor.View.IVisualMatrixNode A_0, int A_1, int A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void r() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void q() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void p() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -110,10 +98,6 @@ public partial class EquationPresenter
     [global::Quire.Mirror.MirrorStub]
     private void a(global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void d() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void a(global::System.Windows.DependencyPropertyChangedEventArgs A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void c() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void a(object A_0, global::System.EventArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -125,8 +109,6 @@ public partial class EquationPresenter
     private global::System.ValueTuple<global::Quire.EquationEditor.RedefinitionWarning, global::Quire.EquationEditor.View.IVisualMathNode> a(global::System.ValueTuple<global::Quire.EquationEditor.RedefinitionWarning, global::Quire.EquationEditor.Tree.MathNode> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool a(global::System.ValueTuple<global::Quire.EquationEditor.RedefinitionWarning, global::Quire.EquationEditor.View.IVisualMathNode> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -161,8 +143,6 @@ public partial class EquationPresenter
         public int c;
         [global::Quire.Mirror.MirrorStub]
         public int d;
-        [global::Quire.Mirror.MirrorStub]
-        public c_() { }
         [global::Quire.Mirror.MirrorStub]
         internal void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

@@ -29,8 +29,6 @@ public partial class MathNodeDescriptorTable : global::System.Collections.Generi
     public bool IsMatchingDescriptor(global::Quire.EquationEditor.Tree.IMathNodeDescriptor descriptor, string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.FunctionOperatorDescriptor GetFunctionOperatorDescriptor(string name, int argumentCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public MathNodeDescriptorTable() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.MathNodeDescriptorTable+a, Ptc.EquationEditor")]
     private sealed partial class a
@@ -39,8 +37,6 @@ public partial class MathNodeDescriptorTable : global::System.Collections.Generi
         public string a_;
         [global::Quire.Mirror.MirrorStub]
         public int b;
-        [global::Quire.Mirror.MirrorStub]
-        public a() { }
         [global::Quire.Mirror.MirrorStub]
         internal bool a__(global::Quire.EquationEditor.Tree.FunctionOperatorDescriptor A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

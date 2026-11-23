@@ -30,8 +30,6 @@ public partial class IdentifierNodeInfo : global::Quire.EquationEditor.Tree.Valu
     [global::Quire.Mirror.MirrorStub]
     public IdentifierNodeInfo(global::Quire.EquationEditor.Tree.StringValueNodeInfo other) { }
     [global::Quire.Mirror.MirrorStub]
-    protected override object bk() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.IdentifierNodeInfo Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override bool IsEquivalentTo(global::Quire.EquationEditor.Tree.INodeInfo other) => base.IsEquivalentTo(other);
@@ -47,8 +45,6 @@ public partial class IdentifierNodeInfo : global::Quire.EquationEditor.Tree.Valu
         public global::System.Nullable<global::Quire.Controls.Core.IdLabels> b_;
         [global::Quire.Mirror.MirrorStub]
         public global::System.Nullable<global::Quire.Controls.Core.IdLabels> c;
-        [global::Quire.Mirror.MirrorStub]
-        public a() { }
         [global::Quire.Mirror.MirrorStub]
         internal bool b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]

@@ -33,3 +33,25 @@
 - Member: `SegmentIsSingleNode` getter, in `Mirrored/EquationEditor.Tree.Scoping.NavigatorSegment.cs`, `[SkipLocalsInit]` on the getter because Mathcad has `.initlocals False`. Stub removed from the `.g.cs` by hand.
 - Release IL: `--project Quire.EquationEditor` PASS, 1081 checked, 0 failures (first run failed only on `.initlocals`).
 - Still blocked: `LeftNode`, `RightNode`, `Linearizable` (obfuscated `bq` and `aw` helpers and field `a`), `LeftNavigatorState`.
+
+## Batch 5 — MemberGen `accept` over Quire.EquationEditor (mechanical members)
+
+- Owner: EquationEditor worker (haiku-equationeditor-20261123). Branch `feature/haiku-equationeditor-20261123`.
+- Method: `python tools/Quire.Tools.MemberGen/accept.py --project Quire.EquationEditor --rounds 3`
+  (run once; 3 rounds; each kept member passed the Release IL check inside the tool).
+- Kept: 434 members (52 fields moved out of `Generated/Mirror`). Rejected: 147 (140 IL mismatch,
+  7 compile errors). Rejected members keep their stubs.
+- Files: 86 modified or removed stubs in `Generated/Mirror/*.g.cs`, plus new hand-written partials
+  under `src/Quire.EquationEditor/{Equation,EquationEditor,Native/PtcEquationEditor,SpecTable/Model,Tree,Tree/Scoping,Tree/Transform}`.
+  Duplicate `using` lines introduced by the tool were removed from 8 files (no IL effect).
+- Release IL: `--project Quire.EquationEditor` PASS, 1392 checked, 0 failures (was 1081 before this batch).
+  Stub-not-implemented skips: 2666 -> 2355.
+- Remaining mismatches: none in checked members.
+- Quality debt (not fixed in this batch): MemberGen emits ILSpy-style parameter names (`A_0`, `A_1`, ~1250
+  uses in ~56 files) and some `MirrorVerified` placeholder partials (`b_`, `c_`, ...). These are IL-neutral
+  and need a manual idiomatic pass (rename parameters from their bodies) under AGENTS.md before the names are final.
+
+## Still blocked (unchanged)
+
+- Field/method name clashes, `.initlocals`, ctor-stores-before-base-call, and closure ordinals that need
+  placeholder stubs. The 147 members MemberGen rejected are in this group.

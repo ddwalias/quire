@@ -20,14 +20,6 @@ internal partial class af
     [global::Quire.Mirror.MirrorStub]
     public af(global::System.Xml.XmlElement A_0) { }
     [global::Quire.Mirror.MirrorStub]
-    public int b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void b(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void a(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private int a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void a(string A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

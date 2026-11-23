@@ -1,5 +1,7 @@
 using Quire.Controls.Core;
 
+using Quire.Mirror;
+
 namespace Quire.EquationEditor.Tree;
 
 public partial class IdentifierNodeInfo
@@ -24,5 +26,14 @@ public partial class IdentifierNodeInfo
             }
             return ResolvedIdLabel;
         }
+    }
+
+    [MirrorVerified("Release IL")]
+    protected override object bk() => Clone();
+
+    partial class a
+    {
+        [MirrorVerified("Release IL")]
+        public a() { }
     }
 }
