@@ -35,3 +35,12 @@
 - Release IL (project-wide): PASS — 651 checked, 0 failures.
 - Regeneration: `MirrorGen emit` gives the same stub removal; the only difference is the pre-existing `LogDocumentContents` placement drift.
 - Parked for later: `CanModifyHyperlink()` (lambda `<CanModifyHyperlink>b__20_0` needs an ordinal of 20, below the generated-stub prefix) and `RemoveInlineRecursively` (lambda, recursive) need the g.cs prefix reordered first.
+
+## Batch 28 — RichTextWithEmbeddedItem.ExecuteChangeFontColor and ExecuteChangeHighlightColor
+
+- Members: `private void ExecuteChangeFontColor(object, ExecutedRoutedEventArgs)` and `ExecuteChangeHighlightColor(...)`, each a single `ExecuteCommandKeepingSelection` call with a lambda that captures `this` and `e`. Hand-written in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs` (placed before `CopyHyperlink`); stubs removed from the `.g.cs`.
+- Mathcad closures: `<>c__DisplayClass96_0` (`<ExecuteChangeFontColor>b__0`) and `<>c__DisplayClass97_0` (`<ExecuteChangeHighlightColor>b__0`). Measured: at the top of the counted members the display classes were 91_0 and 92_0; after `ChildArrangeInfoProvider`, `DispatchCommandToItems`, `ModifyHyperlink` and `_copyLinkText` the names are 96_0 and 97_0.
+- The iterator `d__114`, `b__149_0` and `d__284` are unchanged (re-measured).
+- Release IL (project-wide): PASS — 657 checked, 0 failures.
+- Regeneration: `MirrorGen emit` gives the same stub removal; the only difference is the pre-existing `LogDocumentContents` placement drift.
+- Not attempted: `CanModifyHyperlink()` (lambda ordinal 20). The 33 generated fields are compiled before every hand-written member, so ordinal 20 needs the field and method prefix reordered; that is a wider change than one batch.

@@ -98,10 +98,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     private void OnPreviewTabForward(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void ExecuteChangeFontColor(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ExecuteChangeHighlightColor(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void CopyingHandler(object sender, global::System.Windows.DataObjectCopyingEventArgs e) => base.CopyingHandler(sender, e);
     [global::Quire.Mirror.MirrorStub]
     private string InlayXamlWithEmbeddedItems(global::System.Windows.Documents.TextRange rangeToSerialize, string xaml, out global::Quire.RichTextEmbeddedItemsInfo richTextEmbeddedItemsInfoData, global::System.Collections.Generic.List<global::Quire.Controls.Core.IWhiteboardItem> embeddedEquationItems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

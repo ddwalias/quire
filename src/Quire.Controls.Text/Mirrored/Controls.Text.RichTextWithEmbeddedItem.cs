@@ -129,6 +129,17 @@ public partial class RichTextWithEmbeddedItem
 
     private string _copyLinkText;
 
+    // Compile order: positioned so the lambdas are <>c__DisplayClass96_0 and <>c__DisplayClass97_0 as in Mathcad.
+    private void ExecuteChangeFontColor(object sender, ExecutedRoutedEventArgs e)
+    {
+        ExecuteCommandKeepingSelection(() => CurrentMathFormat.ChangeFontColor((System.Windows.Media.Color)e.Parameter), "ChangeFontColor");
+    }
+
+    private void ExecuteChangeHighlightColor(object sender, ExecutedRoutedEventArgs e)
+    {
+        ExecuteCommandKeepingSelection(() => CurrentMathFormat.ChangeHighlightColor((System.Windows.Media.Color?)e.Parameter), "ChangeHighlightColor");
+    }
+
     private void CopyHyperlink(object sender, ExecutedRoutedEventArgs e)
     {
         Hyperlink hyperlink = CheckAndGetExactlyOneHyperlink();
