@@ -19,16 +19,4 @@ internal partial class SolverAggregate : global::Quire.Controls.SolveBlockCalcul
     private static string GetSolvingAlgorithmRl(string algorithmString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.SolverAggregateChildWrapperAggregate GetSolverWrappedAggregate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsChild(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int GetIndexOfChild(global::Quire.Calculation.Core.ICalculatable child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CommitAllChildren() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ClearError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool ContainsError(global::Quire.Calculation.Core.EngineError error) => base.ContainsError(error);
-    [global::Quire.Mirror.MirrorStub]
-    public override void ShowError(global::Quire.Calculation.Core.EngineError error) => base.ShowError(error);
 }

@@ -41,10 +41,6 @@ internal partial class SolverAggregate
     private string _rl;
     private readonly List<global::Quire.Calculation.Core.ICalculatable> _calculatableChildren;
 
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableRemoved;
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableMoved;
-
     public string DefinedRl { get; private set; }
     public string DefinedParams { get; private set; }
     private string SolverName { get; set; }
@@ -53,9 +49,14 @@ internal partial class SolverAggregate
     private string LeftOfSolverApply { get; set; }
     private string RightOfSolverApply { get; set; }
 
+    public SolverAggregate(global::Quire.Calculation.Core.ICalculatable calculatable)
+        : base(calculatable)
+    {
+        _calculatableChildren = new List<global::Quire.Calculation.Core.ICalculatable>();
+        EquationType = SolveBlockEquationTypes.Solver;
+    }
+
     public override string Rl => _rl;
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren =>
-        _calculatableChildren;
 
     public global::Quire.Calculation.Core.ICalculatable LastChild
     {
@@ -69,60 +70,42 @@ internal partial class SolverAggregate
         }
     }
 
-    public SolverAggregate(global::Quire.Calculation.Core.ICalculatable calculatable)
-        : base(calculatable)
+    private void AddAlgorithmIfRequired(
+        global::System.Text.StringBuilder solverRlBuilder,
+        global::Quire.Calculation.Core.ICalculatable wrappedCalculatable,
+        string solverName)
     {
-        _calculatableChildren = new List<global::Quire.Calculation.Core.ICalculatable>();
-        EquationType = SolveBlockEquationTypes.Solver;
-    }
-
-    private void ParseWrappedRl()
-    {
-        string input;
-        global::System.Collections.Generic.IList<string> aggregateRl = null;
-        var calculatableAggregate = WrappedCalculatable as global::Quire.Calculation.Core.ICalculatableAggregate;
-        bool containsSymbolicEvaluation = calculatableAggregate?.ContainsSymbolicEvaluation ?? false;
-        if (calculatableAggregate == null ||
-            global::Quire.EnumerableExtensions.IsNullOrEmpty<global::Quire.Calculation.Core.ICalculatable>(
-                calculatableAggregate.CalculatableChildren))
+        string pattern = global::System.Text.RegularExpressions.Regex.Escape(solverName) +
+            "\\s+\\(@ALGO\\s+([\\w-]+)\\)";
+        string algorithm = string.Empty;
+        if (WrappedCalculatable is global::Quire.Controls.EquationControl equationControl)
         {
-            input = WrappedCalculatable.Rl;
-        }
-        else
-        {
-            aggregateRl = global::Quire.Calculation.Core.CalculatableAggregateExtensions.GetAggregateRl(
-                calculatableAggregate);
-            input = SolveBlockCalculatableAggregate.ComposeSolveblockChildRlFromEquationControl(aggregateRl);
+            global::System.Text.RegularExpressions.Match match =
+                global::System.Text.RegularExpressions.Regex.Match(equationControl.EquationSExpression, pattern);
+            if (match != null && match.Success)
+                algorithm = match.Groups[1].Value;
         }
 
-        var match = SolveBlockCalculatable._solverMatch.Match(input);
-        DefinedParams = string.Empty;
-        DefinedRl = match.Groups["defined"].Value;
-        if ((aggregateRl != null) & containsSymbolicEvaluation)
+        switch (solverName.ToLower())
         {
-            // Locals force the virtual Regex.Match calls used by Release IL.
-            var defineRegex = new global::System.Text.RegularExpressions.Regex("\\((?<operator>define)(?<operatorTag>(?::0x[0-9a-fA-F]{8})?)\\s+(?<defined>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-defined))\\s+(?<expression>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-expression))\\s*\\)");
-            var defineMatch = defineRegex.Match(aggregateRl[0]);
-            if (defineMatch.Success)
-                DefinedRl = SolveBlockCalculatableAggregate.GetDefinedVariable(defineMatch);
-
-            string expression = defineMatch.Groups["expression"].Value;
-            if (expression.Contains("lambda"))
-            {
-                var symbolicRegex = new global::System.Text.RegularExpressions.Regex("\\((?<operator>define-symeval)(?<operatorTag>(?::0x[0-9a-fA-F]{8})?)\\s+(?<resultId>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-resultId))\\s+(?<expression>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-expression))\\s*(?:\\s(?<keywords>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-keywords)))?\\s*\\)");
-                if (symbolicRegex.Match(input).Success)
-                    DefinedParams = expression;
-            }
+            case "find":
+            case "minerr":
+                if (algorithm != string.Empty)
+                    solverRlBuilder.Append(" ").Append(GetSolvingAlgorithmRl(algorithm));
+                break;
+            case "odesolve":
+                if (algorithm != string.Empty)
+                    solverRlBuilder.Append(" ").Append(algorithm);
+                else
+                    solverRlBuilder.Append(" ").Append(OdeDefaultAlgorithmString);
+                break;
+            case "pdesolve":
+                if (algorithm != string.Empty)
+                    solverRlBuilder.Append(" ").Append(PdeAlgoToRL[algorithm]);
+                else
+                    solverRlBuilder.Append(" ").Append(PdeDefaultAlgorithmString);
+                break;
         }
-
-        SolverName = match.Groups["solver_name"].Value;
-        SolverTag = match.Groups["solver_tag"].Value;
-        SolverArgs = new string[match.Groups["solver_arg"].Captures.Count];
-        int index = 0;
-        foreach (global::System.Text.RegularExpressions.Capture capture in match.Groups["solver_arg"].Captures)
-            SolverArgs[index++] = capture.Value;
-        LeftOfSolverApply = match.Groups["left_of_solver"].Value;
-        RightOfSolverApply = match.Groups["right_of_solver"].Value;
     }
 
     public bool IsSolverOfSymbolicContainsFind(string rl)
@@ -142,21 +125,6 @@ internal partial class SolverAggregate
         }
 
         return false;
-    }
-
-    private static int GetChildIndexForResult(global::Quire.Calculation.Core.ICalculatableContainer aggregate)
-    {
-        for (int index = 0; index < aggregate.CalculatableChildren.Count(); index++)
-        {
-            // Release IL calls Regex.Match virtually through this local.
-            var regex = new global::System.Text.RegularExpressions.Regex("\\((?<operator>define-only-symbolic)(?<operatorTag>(?::0x[0-9a-fA-F]{8})?)\\s+(?<resultId>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-resultId))\\s+(?<expression>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-expression))\\s*(?:\\s(?<keywords>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-keywords)))?\\s*\\)");
-            if (regex.Match(aggregate.CalculatableChildren.ElementAt(index).Rl).Success)
-            {
-                return index;
-            }
-        }
-
-        return 2;
     }
 
     public bool IsSolverOfSymbolicContainsUndefineSubscripts(string rl)
@@ -201,6 +169,32 @@ internal partial class SolverAggregate
     Finished:
         return;
     }
+
+    protected override bool UpdateEquationType(global::Quire.Calculation.Core.ICalculatable calc)
+    {
+        if (!(WrappedCalculatable is global::Quire.Calculation.Core.ICalculatableAggregate aggregate) ||
+            aggregate.CalculatableChildren.IsNullOrEmpty())
+            return base.UpdateEquationType(calc);
+        return UpdateEquationTypeOfAggregateCalculatable(aggregate);
+    }
+
+    protected bool UpdateEquationTypeOfAggregateCalculatable(
+        global::Quire.Calculation.Core.ICalculatableAggregate calc)
+    {
+        SolveBlockEquationTypes oldEquationType = EquationType;
+        EquationType = SolveBlockCalculatable.GetEquationTypeOfCalc(calc);
+        return EquationType != oldEquationType;
+    }
+
+    public bool IsChild(global::Quire.Calculation.Core.ICalculatable calculatable)
+    {
+        return CalculatableChildren.Cast<global::Quire.Controls.SolverAggregateChildWrapper>()
+            .Any((global::Quire.Controls.SolverAggregateChildWrapper wrapper) => wrapper.WrappedCalculatable == calculatable);
+    }
+
+    public int GetIndexOfChild(global::Quire.Calculation.Core.ICalculatable child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public void CommitAllChildren() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public void AddChild(global::Quire.Calculation.Core.ICalculatable calculatable)
     {
@@ -280,6 +274,48 @@ internal partial class SolverAggregate
         FireCalculatableMoved(wrapper);
     }
 
+    public override void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus)
+    {
+        base.SetSynchronizationStatus(syncStatus);
+    }
+
+    public override void SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus computingStatus)
+    {
+        base.SetCalculatingStatus(computingStatus);
+    }
+
+    private static int GetChildIndexForResult(global::Quire.Calculation.Core.ICalculatableContainer aggregate)
+    {
+        for (int index = 0; index < aggregate.CalculatableChildren.Count(); index++)
+        {
+            // Release IL calls Regex.Match virtually through this local.
+            var regex = new global::System.Text.RegularExpressions.Regex("\\((?<operator>define-only-symbolic)(?<operatorTag>(?::0x[0-9a-fA-F]{8})?)\\s+(?<resultId>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-resultId))\\s+(?<expression>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-expression))\\s*(?:\\s(?<keywords>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-keywords)))?\\s*\\)");
+            if (regex.Match(aggregate.CalculatableChildren.ElementAt(index).Rl).Success)
+            {
+                return index;
+            }
+        }
+
+        return 2;
+    }
+
+    public override void SetResult(global::Quire.Calculation.Core.IResultNode result)
+    {
+        if (!(WrappedCalculatable is global::Quire.Calculation.Core.ICalculatableAggregate aggregate) ||
+            aggregate.CalculatableChildren.IsNullOrEmpty())
+        {
+            base.SetResult(result);
+            return;
+        }
+
+        int childIndex = GetChildIndexForResult(aggregate);
+        if (global::Quire.DebugTools.DevAssert(
+                childIndex >= 0 && childIndex < aggregate.CalculatableChildren.Count(), null).Passed)
+        {
+            aggregate.CalculatableChildren.ElementAt(childIndex).SetResult(result);
+        }
+    }
+
     public override void SetError(global::Quire.Calculation.Core.EngineError error)
     {
         if (error == null)
@@ -301,76 +337,67 @@ internal partial class SolverAggregate
         }
     }
 
-    public override void SetResult(global::Quire.Calculation.Core.IResultNode result)
+    private void ClearError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void ParseWrappedRl()
     {
-        if (!(WrappedCalculatable is global::Quire.Calculation.Core.ICalculatableAggregate aggregate) ||
-            aggregate.CalculatableChildren.IsNullOrEmpty())
+        string input;
+        global::System.Collections.Generic.IList<string> aggregateRl = null;
+        var calculatableAggregate = WrappedCalculatable as global::Quire.Calculation.Core.ICalculatableAggregate;
+        bool containsSymbolicEvaluation = calculatableAggregate?.ContainsSymbolicEvaluation ?? false;
+        if (calculatableAggregate == null ||
+            global::Quire.EnumerableExtensions.IsNullOrEmpty<global::Quire.Calculation.Core.ICalculatable>(
+                calculatableAggregate.CalculatableChildren))
         {
-            base.SetResult(result);
-            return;
+            input = WrappedCalculatable.Rl;
+        }
+        else
+        {
+            aggregateRl = global::Quire.Calculation.Core.CalculatableAggregateExtensions.GetAggregateRl(
+                calculatableAggregate);
+            input = SolveBlockCalculatableAggregate.ComposeSolveblockChildRlFromEquationControl(aggregateRl);
         }
 
-        int childIndex = GetChildIndexForResult(aggregate);
-        if (global::Quire.DebugTools.DevAssert(
-                childIndex >= 0 && childIndex < aggregate.CalculatableChildren.Count(), null).Passed)
+        var match = SolveBlockCalculatable._solverMatch.Match(input);
+        DefinedParams = string.Empty;
+        DefinedRl = match.Groups["defined"].Value;
+        if ((aggregateRl != null) & containsSymbolicEvaluation)
         {
-            aggregate.CalculatableChildren.ElementAt(childIndex).SetResult(result);
-        }
-    }
+            // Locals force the virtual Regex.Match calls used by Release IL.
+            var defineRegex = new global::System.Text.RegularExpressions.Regex("\\((?<operator>define)(?<operatorTag>(?::0x[0-9a-fA-F]{8})?)\\s+(?<defined>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-defined))\\s+(?<expression>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-expression))\\s*\\)");
+            var defineMatch = defineRegex.Match(aggregateRl[0]);
+            if (defineMatch.Success)
+                DefinedRl = SolveBlockCalculatableAggregate.GetDefinedVariable(defineMatch);
 
-    private void AddAlgorithmIfRequired(
-        global::System.Text.StringBuilder solverRlBuilder,
-        global::Quire.Calculation.Core.ICalculatable wrappedCalculatable,
-        string solverName)
-    {
-        string pattern = global::System.Text.RegularExpressions.Regex.Escape(solverName) +
-            "\\s+\\(@ALGO\\s+([\\w-]+)\\)";
-        string algorithm = string.Empty;
-        if (WrappedCalculatable is global::Quire.Controls.EquationControl equationControl)
-        {
-            global::System.Text.RegularExpressions.Match match =
-                global::System.Text.RegularExpressions.Regex.Match(equationControl.EquationSExpression, pattern);
-            if (match != null && match.Success)
-                algorithm = match.Groups[1].Value;
+            string expression = defineMatch.Groups["expression"].Value;
+            if (expression.Contains("lambda"))
+            {
+                var symbolicRegex = new global::System.Text.RegularExpressions.Regex("\\((?<operator>define-symeval)(?<operatorTag>(?::0x[0-9a-fA-F]{8})?)\\s+(?<resultId>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-resultId))\\s+(?<expression>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-expression))\\s*(?:\\s(?<keywords>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-keywords)))?\\s*\\)");
+                if (symbolicRegex.Match(input).Success)
+                    DefinedParams = expression;
+            }
         }
 
-        switch (solverName.ToLower())
-        {
-            case "find":
-            case "minerr":
-                if (algorithm != string.Empty)
-                    solverRlBuilder.Append(" ").Append(GetSolvingAlgorithmRl(algorithm));
-                break;
-            case "odesolve":
-                if (algorithm != string.Empty)
-                    solverRlBuilder.Append(" ").Append(algorithm);
-                else
-                    solverRlBuilder.Append(" ").Append(OdeDefaultAlgorithmString);
-                break;
-            case "pdesolve":
-                if (algorithm != string.Empty)
-                    solverRlBuilder.Append(" ").Append(PdeAlgoToRL[algorithm]);
-                else
-                    solverRlBuilder.Append(" ").Append(PdeDefaultAlgorithmString);
-                break;
-        }
+        SolverName = match.Groups["solver_name"].Value;
+        SolverTag = match.Groups["solver_tag"].Value;
+        SolverArgs = new string[match.Groups["solver_arg"].Captures.Count];
+        int index = 0;
+        foreach (global::System.Text.RegularExpressions.Capture capture in match.Groups["solver_arg"].Captures)
+            SolverArgs[index++] = capture.Value;
+        LeftOfSolverApply = match.Groups["left_of_solver"].Value;
+        RightOfSolverApply = match.Groups["right_of_solver"].Value;
     }
 
-    protected override bool UpdateEquationType(global::Quire.Calculation.Core.ICalculatable calc)
-    {
-        if (!(WrappedCalculatable is global::Quire.Calculation.Core.ICalculatableAggregate aggregate) ||
-            aggregate.CalculatableChildren.IsNullOrEmpty())
-            return base.UpdateEquationType(calc);
-        return UpdateEquationTypeOfAggregateCalculatable(aggregate);
-    }
+    public override bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    protected bool UpdateEquationTypeOfAggregateCalculatable(
-        global::Quire.Calculation.Core.ICalculatableAggregate calc)
-    {
-        SolveBlockEquationTypes oldEquationType = EquationType;
-        EquationType = SolveBlockCalculatable.GetEquationTypeOfCalc(calc);
-        return EquationType != oldEquationType;
-    }
+    public override void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableRemoved;
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableMoved;
+
+    public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren =>
+        _calculatableChildren;
 
     private void FireCalculatableAdded(
         global::Quire.Controls.SolverAggregateChildWrapper wrapper,
