@@ -12,9 +12,5 @@ namespace Quire.Controls.Internal;
 internal partial class VisualTextRun : global::System.Windows.FrameworkElement, global::Quire.Controls.Internal.IVisualText, global::Quire.Controls.Core.IMathFormatOwner, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
-    public string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
     protected virtual void UpdateText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

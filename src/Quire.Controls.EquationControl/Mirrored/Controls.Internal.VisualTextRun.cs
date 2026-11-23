@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
@@ -9,6 +10,26 @@ namespace Quire.Controls.Internal;
 
 internal partial class VisualTextRun
 {
+    public string Text
+    {
+        get
+        {
+            return _text;
+        }
+        set
+        {
+            if (_text == value)
+            {
+                return;
+            }
+
+            _text = value;
+            UpdateText();
+        }
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
     private ExtendedFont _font;
     private string _text;
     protected FormattedText _formattedText;

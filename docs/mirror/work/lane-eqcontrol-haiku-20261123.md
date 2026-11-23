@@ -237,3 +237,9 @@
 ### Parked (not landed): LimitLayoutManager siblings
 
 - `ConjugateLayoutManager.FindClosestChild` (and `VectorizationLayoutManager`, same size): Mathcad reads `hitPoint.X` before `OperatorSymbolRect` in the `X < Left` test, and it merges the `X < 0` and `X < Left` returns into one block. The `||` form matches the read order and the branch, but leaves `.maxstack 2` against Mathcad's `3`. A `Rect` local declared before the `X` read matches the maxstack question no better and changes the call order. Not landed.
+
+### Batch 32: Controls.Internal.VisualTextRun (Text, PropertyChanged)
+
+- Exact: the `Text` property (getter returns `_text`; the setter returns early when the value is unchanged, then sets `_text` and calls `UpdateText()`) and the `PropertyChanged` event. Both stub pairs are removed from the generated file, and both are in the hand-written partial with the `System.ComponentModel` using.
+- Still a stub: `UpdateText` (protected virtual). Its Mathcad body is not attempted in this batch.
+- Gate (project-level): PASS; 3536 checked, zero failures (`.mirror-cache/release-il-fa11980eb547/release-il.json`).
