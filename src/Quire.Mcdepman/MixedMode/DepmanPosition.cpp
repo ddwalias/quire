@@ -28,6 +28,8 @@
 #pragma comment(linker, "/include:?IsLocked@PositionBase@depman@@QEBA_NXZ")
 #pragma comment(linker, "/include:?IsUndefine@PositionBase@depman@@QEAA_NXZ")
 #pragma comment(linker, "/include:?IsChildOnly@PositionBase@depman@@QEAA_NXZ")
+#pragma comment(linker, "/include:?GetDefs@PositionBase@depman@@QEAMPE$AAUICollection@Collections@System@@XZ")
+#pragma comment(linker, "/include:?GetDependents@PositionBase@depman@@QEAAAEAV?$set@PEAVPosition@depman@@U?$less@PEAVPosition@depman@@@std@@V?$allocator@PEAVPosition@depman@@@4@@std@@XZ")
 #pragma comment(linker, "/include:?GetScope@PositionBase@depman@@QEAMPE$AAVScope@2Quire@@XZ")
 #pragma comment(linker, "/include:?SetScope@PositionBase@depman@@QEAMXPE$AAVScope@2Quire@@@Z")
 #pragma comment(linker, "/include:?GetEnvScope@PositionBase@depman@@QEAMPE$AAVScope@2Quire@@XZ")
@@ -38,6 +40,16 @@
 // #pragma comment(linker, "/include:?next@Position@depman@@$$FQEAAPEAV12@XZ")
 
 namespace depman {
+
+System::Collections::ICollection^ PositionBase::GetDefs()
+{
+    return static_deps_;
+}
+
+std::set<Position*>& PositionBase::GetDependents()
+{
+    return *reinterpret_cast<std::set<Position*>*>(dependents_);
+}
 
 ::Quire::depman::Scope^ PositionBase::GetScope() { return scope_; }
 

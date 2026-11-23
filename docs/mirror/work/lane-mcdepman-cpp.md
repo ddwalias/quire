@@ -196,6 +196,7 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
   - `PositionBase.Kill` and `TreatAsReady(false)`: require the unproven `std::set<depman::Position*>` erase path at offset 136.
   - `Position.previous` / `Position.next`: dynamic cast emits RTTI type descriptor data differences against Mathcad RTTI; pragmas remain commented out until RTTI descriptor handling is resolved.
 
+
 ## Batch 20 — PositionBase.IsReady and ActionChain.value
 
 - Owner: AGY, Orca task `task_f9ee0c2aa8f9`; branch `feature/luna-mcdepman`.
@@ -209,6 +210,21 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
   - `PositionBase.Invalidate`: requires callback wiring for `PosCallback`, `PosQueueCallback`, `InterruptCallback`, and `TreatedReadyInvalidCallback`.
   - `PositionBase.Kill` and `TreatAsReady(false)`: require the unproven `std::set<depman::Position*>` erase path at offset 136.
   - `Position.previous` / `Position.next`: dynamic cast emits RTTI type descriptor data differences against Mathcad RTTI; pragmas remain commented out until RTTI descriptor handling is resolved.
+
+## Batch 21 — PositionBase.GetDefs and PositionBase.GetDependents
+
+- Owner: AGY, Orca task `task_9280af5b10b2`; branch `feature/luna-mcdepman`.
+- Members:
+  - `PositionBase.GetDefs()`: reads `static_deps_` via offset 48 (`gcroot<System::Collections::ICollection^>`), preserving the 216-byte `PositionBase` layout.
+  - `PositionBase.GetDependents()`: returns reference to `std::set<depman::Position*>&` at offset 136 (`dependents_`), preserving the 216-byte `PositionBase` layout.
+- Release IL report: `.mirror-cache/release-il-e38f3a358c84/release-il.json` (PASS, 218 checked; module `PositionBase.GetDefs` and `PositionBase.GetDependents` exact).
+- Remaining prerequisites:
+  - `DepManager.add_dep` / `remove_dep`: large unmanaged methods operating directly on multi-level `std::map<SDef, std::map<Position*, pair<ActionChain*, DependencyType>>>` containers with `std_label_set` and custom comparators; native `DepManager` layout and tables remain unported.
+  - `PositionBase.SetEnvScope`: branches on Scope nullness, calling `ActionChain.remove_env_scope` and `ActionChain.add_env_scope` which require `DepManager.remove_dep` and `add_dep`.
+  - `PositionBase.Invalidate`: requires callback wiring for `PosCallback`, `PosQueueCallback`, `InterruptCallback`, and `TreatedReadyInvalidCallback`.
+  - `PositionBase.Kill` and `TreatAsReady(false)`: require the unproven `std::set<depman::Position*>` erase path at offset 136.
+  - `Position.previous` / `Position.next`: dynamic cast emits RTTI type descriptor data differences against Mathcad RTTI; pragmas remain commented out until RTTI descriptor handling is resolved.
+
 
 
 

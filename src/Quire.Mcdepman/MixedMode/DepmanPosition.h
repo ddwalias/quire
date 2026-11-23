@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gcroot.h>
+#include <set>
 #include "DepmanContracts.h"
 
 template <typename T>
@@ -48,6 +49,8 @@ public:
     void Lock();
     void UnLock();
     void BeginMove();
+    System::Collections::ICollection^ GetDefs();
+    std::set<Position*>& GetDependents();
     ::Quire::depman::Scope^ GetScope();
     ::Quire::depman::Scope^ GetEnvScope();
     ::Quire::depman::SEnvironment^ env() const;
@@ -60,7 +63,7 @@ private:
     unsigned char pad_1c_[0x04];                  // 0x1C
     ActionChain* action_chain_;                   // 0x20 (offset 32)
     gcroot<::Quire::depman::SEnvironment^> env_;    // 0x28 (offset 40)
-    void* static_deps_;                           // 0x30 (offset 48, gcroot<System::Collections::ICollection^>)
+    gcroot<System::Collections::ICollection^> static_deps_; // 0x30 (offset 48)
     gcroot<::Quire::depman::Scope^> scope_;         // 0x38 (offset 56)
     gcroot<::Quire::depman::Scope^> env_scope_;     // 0x40 (offset 64)
     void* labeled_dictionary_;                    // 0x48 (offset 72, gcroot<utl_mgd::LabeledDictionary^>)
