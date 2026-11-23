@@ -120,8 +120,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     protected override void PostPasting() => base.PostPasting();
     [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IEnumerable<object> EnumerateEmbeddedObjectsInRange(global::System.Windows.Documents.TextRange range) => base.EnumerateEmbeddedObjectsInRange(range);
-    [global::Quire.Mirror.MirrorStub]
     private void ExecuteAddItemToListCommand(global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ExecuteRemoveItemFromListCommand(global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

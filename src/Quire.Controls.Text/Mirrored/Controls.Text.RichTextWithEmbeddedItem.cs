@@ -25,6 +25,7 @@ namespace Quire.Controls.Text;
 
 public partial class RichTextWithEmbeddedItem
 {
+
     private partial struct PreviewKeyDownData
     {
         public Key PressedKey { get; }
@@ -53,7 +54,6 @@ public partial class RichTextWithEmbeddedItem
             CurrentMatrixFormat = regions.CurrentMatrixFormat;
         }
     }
-
 
     internal void ModifyHyperlink(ModifyHyperlinkCommandParameter param)
     {
@@ -172,7 +172,6 @@ public partial class RichTextWithEmbeddedItem
         runRange.ApplyPropertyValue(TextElement.FontWeightProperty, fontWeight != FontWeights.Bold ? FontWeights.Bold : FontWeights.DemiBold);
     }
 
-
     private ITextStyleChangedHandler _textStyleChangedHandler;
 
     public ITextStyleChangedHandler TextStyleChangedHandler
@@ -206,6 +205,24 @@ public partial class RichTextWithEmbeddedItem
     public void Accept(ISpecialCopyVisitor visitor)
     {
         visitor.Visit(this);
+    }
+
+    // Compile order: this iterator follows six counted members so its state machine is <EnumerateEmbeddedObjectsInRange>d__114 as in Mathcad.
+    public override IEnumerable<object> EnumerateEmbeddedObjectsInRange(DocumentTextRange range)
+    {
+        for (TextPointer curPos = range.Start; curPos != null && curPos.CompareTo(range.End) < 0; curPos = curPos.GetPositionAtOffset(1, LogicalDirection.Forward))
+        {
+            if (curPos.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.EmbeddedElement)
+            {
+                object obj = curPos.GetAdjacentElement(LogicalDirection.Forward);
+                IWhiteboardItemInTextWrapper wrapper = GetWrapper(obj);
+                if (wrapper != null)
+                {
+                    obj = wrapper.WrappedItem;
+                }
+                yield return obj;
+            }
+        }
     }
 
     private void ClearSavedState()
@@ -1633,7 +1650,6 @@ public partial class RichTextWithEmbeddedItem
             return new Rect(contentHost.TransformToAncestor(this).Transform(new Point(pagePadding.Left, pagePadding.Top)), new Size(ViewportWidth - pagePadding.Right - pagePadding.Left, ViewportHeight - pagePadding.Top - pagePadding.Bottom));
         }
     }
-
 
     public void AddEmbeddedItem(IWhiteboardItemInText item, TextPointer textPointer = default)
     {
