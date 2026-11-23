@@ -742,4 +742,70 @@ internal partial class AxisModel
         }
         return true;
     }
+
+    private bool SetLogarithmicScale(double start, double end)
+    {
+        bool isValid = true;
+        if (AssertionE.Failed == (AssertionE)DebugTools.DevAssert(start <= end, null))
+        {
+            SetRangeError();
+            isValid = false;
+        }
+        if (end <= 0.0)
+        {
+            SetAxisLimitEditorError(EndExpression, "Ptc.Plots.Axis.ERROR_ONE_LIMIT_MUST_BE_POSITIVE");
+            isValid = false;
+        }
+        if (!isValid)
+        {
+            return false;
+        }
+        if (start <= 0.0)
+        {
+            start = Math.Min(end / (double)DefaultTickMarks, 0.01);
+        }
+        double num = Math.Floor(Math.Log10(start));
+        double num2 = Math.Ceiling(Math.Log10(end));
+        double num3 = num2 - num;
+        if (num3 < 0.5)
+        {
+            num3 = 1.0;
+            num = num2 - num3;
+        }
+        int num4;
+        int count;
+        try
+        {
+            num4 = Convert.ToInt32(Math.Ceiling(num3 / (double)(DefaultTickMarks - 1)));
+            count = Convert.ToInt32(num3 / (double)num4 + 1.0);
+        }
+        catch
+        {
+            return false;
+        }
+        Start = Math.Pow(10.0, num);
+        End = Math.Pow(10.0, num2);
+        MajorTickMarks.Count = count;
+        MajorTickMarks.Values = new double[MajorTickMarks.Count];
+        MinorTickMarks.Count = (MajorTickMarks.Count - 1) * 8;
+        MinorTickMarks.Values = new double[MinorTickMarks.Count];
+        for (int i = 0; i < MajorTickMarks.Count - 1; i++)
+        {
+            double num5 = Math.Pow(10.0, num + (double)(num4 * i));
+            MajorTickMarks.Values[i] = num5;
+            for (int j = 0; j < 8; j++)
+            {
+                MinorTickMarks.Values[i * 8 + j] = num5 * (double)(j + 2);
+            }
+        }
+        MajorTickMarks.Values[MajorTickMarks.Count - 1] = End;
+        MinorTickMarks.Show = true;
+        MinorTickMarks.StartGap = Math.Log10(2.0);
+        MinorTickMarks.Pattern = CreateLogMinorTickmarksPattern();
+        FormatTickMarkValues();
+        StartExpression.SetPreCalculatedValue(Start);
+        EndExpression.SetPreCalculatedValue(End);
+        SetSecondTickPreCalculatedValue();
+        return true;
+    }
 }

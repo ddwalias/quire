@@ -464,3 +464,9 @@
 - Members: `SetRangeToLinearAxis` (conditional `IsValueValid && !IsStringLabel()` picks), `SetRangeToRadialAxis` (`Nullable` `HasValue`/`Value` branches), `ValidateSecondTickValue` (early returns, `try`/`catch OverflowException` with the tick-mark limit). Hand-written: appended to `Mirrored/Controls.Plots.Model.AxisModel.cs`; stubs removed from `AxisModel.g.cs`.
 - Shapes: `SetRangeToRadialAxis` gave `stloc.0` where Mathcad uses slot 2; Mathcad's locals are `effectiveStart`, `effectiveEnd`, then `start`, `num` (declaration order matters for slots), so the two effective locals are declared first.
 - Release IL: PASS — 2512 checked, 0 failures.
+
+## Batch 65 — AxisModel logarithmic scale
+
+- Member: `SetLogarithmicScale`. Hand-written: appended to `Mirrored/Controls.Plots.Model.AxisModel.cs`; stub removed from `AxisModel.g.cs`.
+- Shapes: `AssertionE.Failed == (AssertionE)DebugTools.DevAssert(start <= end, null)` (the enum conversion is what Mathcad's `op_Implicit` call needs); the try/catch with `int` locals declared before the `try` matched without changes.
+- Release IL: PASS — 2513 checked, 0 failures.
