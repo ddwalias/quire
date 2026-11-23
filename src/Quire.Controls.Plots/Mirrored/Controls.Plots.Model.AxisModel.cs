@@ -5,6 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Media;
+using System.Globalization;
+using System.Xml;
+using Quire.Calculation.Core;
+using Quire.PersistentDataObjects;
+using Quire.Controls.Core.Serialization;
+using Quire.Xml;
 using Quire.Controls.Core;
 using Quire;
 using Quire.Controls.Plots.Presenter;
@@ -328,6 +334,182 @@ internal partial class AxisModel
         UpdateFilteredLabels();
         FireTickMarkLabelsUpdated();
         return true;
+    }
+
+    public void AddEquation(IPlotEquation equation, int index)
+    {
+        EquationItem item = new EquationItem(equation);
+        _equations.Insert(index, item);
+    }
+
+    public void AddEquation(XmlNode xmlNode)
+    {
+        RequestAddEquation(this, xmlNode);
+    }
+
+    protected xyDomainType CreateXyDomainType(IResultManager resultManager)
+    {
+        return new xyDomainType
+        {
+            startValue = _startExpression.GetDataObject(resultManager),
+            endValue = _endExpression.GetDataObject(resultManager),
+            secondTickValue = _secondTickExpression.IsDefaultValue ? null : _secondTickExpression.GetDataObject(resultManager),
+            scaletype = scaleType.linear,
+            autoscale = true,
+            allownegativevaluesSpecified = true
+        };
+    }
+
+    public axisBaseType GetDataObject(IResultManager resultManager)
+    {
+        xyDomainType xyDomainType2 = CreateXyDomainType(resultManager);
+        axisBaseType axisBaseType2;
+        switch (Type)
+        {
+            case AxesType.X:
+                axisBaseType2 = new xAxis
+                {
+                    xyDomain = xyDomainType2
+                };
+                break;
+            case AxesType.Y:
+                axisBaseType2 = new yAxis
+                {
+                    xyDomain = xyDomainType2
+                };
+                break;
+            case AxesType.Z:
+                axisBaseType2 = new zAxis
+                {
+                    zDomain = xyDomainType2
+                };
+                break;
+            default:
+                DebugTools.DevAssert(false, null);
+                return new axisBaseType();
+        }
+        axisBaseType2.axisGrid = new axisGridType
+        {
+            gridFrequency = new axisGridTypeGridFrequency
+            {
+                Value = MajorTickMarks.Count.ToString(CultureInfo.InvariantCulture)
+            },
+            gridLabels = new axisGridTypeGridLabels
+            {
+                display = ShowNumbers
+            },
+            tickMarks = new axisGridTypeTickMarks
+            {
+                display = ShowTicks
+            },
+            gridLines = new axisGridTypeGridLines()
+        };
+        axisBaseType2.rank = "1";
+        axisBaseType2.axisLabel = new plotTitleType();
+        axisBaseType2.axisLine = new axisBaseTypeAxisLine
+        {
+            legendWidthSpecified = false
+        };
+        axisBaseType2.start = Start;
+        axisBaseType2.startSpecified = true;
+        axisBaseType2.end = End;
+        axisBaseType2.endSpecified = true;
+        if (IsDisplayNumberFormatLocal)
+        {
+            NumberFormatSerializer numberFormatSerializer = new NumberFormatSerializer(DisplayNumberFormat, null);
+            axisBaseType2.numberFormat = numberFormatSerializer.GetDataObject(resultManager);
+        }
+        return axisBaseType2;
+    }
+
+    private void ReadAxisDomainData(xyDomainType axisDomain, IResultManager resultManager)
+    {
+        _startExpression.SetDataObject(axisDomain.startValue, resultManager);
+        _endExpression.SetDataObject(axisDomain.endValue, resultManager);
+        _secondTickExpression.SetDataObject(axisDomain.secondTickValue, resultManager);
+    }
+
+    public void SetDataObject(axisBaseType axisData, IResultManager resultManager)
+    {
+        xyDomainType axisDomain = null;
+        switch (Type)
+        {
+            case AxesType.X:
+                if (axisData is xAxis xAxis2)
+                {
+                    axisDomain = xAxis2.xyDomain;
+                }
+                else
+                {
+                    DebugTools.DevAssert(false, null);
+                }
+                break;
+            case AxesType.Y:
+                if (axisData is yAxis yAxis2)
+                {
+                    axisDomain = yAxis2.xyDomain;
+                }
+                else
+                {
+                    DebugTools.DevAssert(false, null);
+                }
+                break;
+            case AxesType.Z:
+                if (axisData is zAxis zAxis2)
+                {
+                    axisDomain = zAxis2.zDomain;
+                }
+                else
+                {
+                    DebugTools.DevAssert(false, null);
+                }
+                break;
+            default:
+                DebugTools.DevAssert(false, null);
+                break;
+        }
+        ReadAxisDomainData(axisDomain, resultManager);
+        MajorTickMarks.Count = int.Parse(axisData.axisGrid.gridFrequency.Value, CultureInfo.InvariantCulture);
+        ShowNumbers = axisData.axisGrid.gridLabels.display;
+        ShowTicks = axisData.axisGrid.tickMarks.display;
+        resultFormatType numberFormat = axisData.numberFormat;
+        if (numberFormat != null)
+        {
+            DisplayNumberFormat = new NumberFormat();
+            IsDisplayNumberFormatLocal = true;
+            // The IL calls the serializer through a stored reference, not on the fresh instance.
+            NumberFormatSerializer numberFormatSerializer = new NumberFormatSerializer(DisplayNumberFormat, null);
+            numberFormatSerializer.SetDataObject(numberFormat, resultManager);
+            FireNumberFormatInitialized();
+        }
+    }
+
+    public XmlNode RegionXmlNode
+    {
+        get
+        {
+            return GetXmlNode(XmlWorksheetData.McdxNameSpaceManager.LookupNamespace(string.Empty), "http://schemas.mathsoft.com/math50");
+        }
+        set
+        {
+            SetXmlNode(value, XmlWorksheetData.McdxNameSpaceManager);
+        }
+    }
+
+    public void SetLevels(double[] levels)
+    {
+        int num = levels.Length;
+        if (num > 1)
+        {
+            DefaultTickMarks = num;
+            double start = levels[0];
+            double end = levels[num - 1];
+            if (SetRangeToLinearAxis(start, end))
+            {
+                FireRangeChanged();
+            }
+        }
+        DefaultTickMarks = AxisModelDefinitionCollection.Instance[Type, PlotType].TickMarksDefault;
     }
 
     public void SetRange(double? min, double? max)

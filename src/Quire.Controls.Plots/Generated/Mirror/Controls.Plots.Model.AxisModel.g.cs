@@ -48,8 +48,6 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> AxisCalculatables { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlNode RegionXmlNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Func<global::Quire.Controls.Plots.Presenter.IAxisModel, global::System.Xml.XmlNode, global::Quire.Controls.Plots.Presenter.IPlotEquation> RequestAddEquation;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action Changed;
@@ -73,20 +71,6 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     private void SetXmlNode(global::System.Xml.XmlNode value, global::System.Xml.XmlNamespaceManager nmspmgr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Xml.XmlNode GetXmlNode(string wsNameSpace, string mathNameSpace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddEquation(global::Quire.Controls.Plots.Presenter.IPlotEquation equation, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddEquation(global::System.Xml.XmlNode xmlNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetLevels(double[] levels) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.PersistentDataObjects.xyDomainType CreateXyDomainType(global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.axisBaseType GetDataObject(global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetDataObject(global::Quire.PersistentDataObjects.axisBaseType axisData, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ReadAxisDomainData(global::Quire.PersistentDataObjects.xyDomainType axisDomain, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.AxisModel+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames

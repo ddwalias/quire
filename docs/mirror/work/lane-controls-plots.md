@@ -503,3 +503,11 @@
 - Blocked, kept as stubs: `CalculateBetterTickmarks` (the Mathcad IL materialises `start < 0 && end > 0` as a bool value and then `brfalse`, with no bool local; Roslyn branches on the condition instead, and a bool local adds a slot Mathcad does not have) and `CalculateBetterTickmarksWithZeroInRange` (Mathcad stores the second `RoundWithOrder` result in a local before `Math.Max`, and the first result stays on the stack; neither the expression form nor the named-local form reproduces it).
 - Left in AxisModel: the two blocked helpers above, `SetLevels`, `RegionXmlNode`, `AxisCalculatables`, `SetXmlNode`, `GetXmlNode`, `AddEquation` (both), `CreateXyDomainType`, `GetDataObject`, `SetDataObject`, `ReadAxisDomainData`, and the constructor.
 - SetMinWidthHeight (XYPlotStrategy) remains parked on the slot 41 vs 40 mismatch.
+
+## Batches 70-72 — AxisModel XML and data-object members (grouped candidate)
+
+- Members: `AddEquation(IPlotEquation, int)`, `AddEquation(XmlNode)`, `CreateXyDomainType` (protected, object initializer), `GetDataObject` (switch on `AxesType`, `DevAssert` default), `ReadAxisDomainData`, `SetDataObject`, `RegionXmlNode` (property; its get/set call the still-stubbed `GetXmlNode`/`SetXmlNode`), `SetLevels`. Hand-written: placed ahead of `SetRange` (ordinals for `SetRange` 170 and `GetNumberOfTracesForEquation` 213 preserved); stubs removed from `AxisModel.g.cs`. Usings added: `System.Globalization`, `System.Xml`, `Quire.Calculation.Core`, `Quire.PersistentDataObjects`, `Quire.Controls.Core.Serialization`, `Quire.Xml`.
+- Shapes: `new NumberFormatSerializer(...).SetDataObject(...)` on a fresh instance gave `call`, Mathcad uses `callvirt`; storing the serializer in a local matched.
+- Release IL: PASS — 2537 checked, 0 failures (last run, after batch 72).
+- Still stubs: `GetXmlNode`, `SetXmlNode` (large XML writer/reader), `AxisCalculatables` (iterator), `AddEquation` is done, the constructor, and the two blocked tick-mark helpers from batch 69.
+- SetMinWidthHeight (XYPlotStrategy) remains parked on the slot 41 vs 40 mismatch.
