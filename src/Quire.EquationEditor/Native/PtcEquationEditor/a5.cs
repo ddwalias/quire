@@ -9,7 +9,7 @@ internal partial class a5
     private at g;
 
     [MirrorVerified("Release IL")]
-    public void a(at A_0) => g = A_0;
+    public void a(at first) => g = first;
 
     [MirrorVerified("Release IL")]
     public a5() { }

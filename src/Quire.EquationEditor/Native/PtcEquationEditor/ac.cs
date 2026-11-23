@@ -12,10 +12,10 @@ internal partial class ac
     private int b;
 
     [MirrorVerified("Release IL")]
-    private void a(int A_0) => b = A_0;
+    private void a(int index) => b = index;
 
     [MirrorVerified("Release IL")]
-    public override MathNode bo(IResultTreeFormatter A_0) => A_0.FormatResult(this);
+    public override MathNode bo(IResultTreeFormatter resultTreeFormatter) => resultTreeFormatter.FormatResult(this);
 
     [MirrorVerified("Release IL")]
     public override void Accept(IResultNodeVisitor visitor) => visitor.Visit(this);

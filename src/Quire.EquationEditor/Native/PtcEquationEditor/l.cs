@@ -21,7 +21,7 @@ internal partial class l
     public override void s() { }
 
     [MirrorVerified("Release IL")]
-    public override bool ac(MathNode A_0) => ab(A_0);
+    public override bool ac(MathNode mathNode) => ab(mathNode);
 
     partial class a_
     {

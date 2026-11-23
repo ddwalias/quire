@@ -262,6 +262,6 @@ public partial class FormattedString
         private int b() => d;
 
         [MirrorVerified("Release IL")]
-        private void a(int A_0) => d = A_0;
+        private void a(int index) => d = index;
     }
 }

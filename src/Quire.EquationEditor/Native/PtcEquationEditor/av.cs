@@ -12,9 +12,9 @@ internal partial struct av
     public readonly au[] c;
 
     [MirrorVerified("Release IL")]
-    public av(bool A_0, params au[] A_1)
+    public av(bool flag, params au[] secondItems)
     {
-        b = A_0;
-        c = A_1;
+        b = flag;
+        c = secondItems;
     }
 }

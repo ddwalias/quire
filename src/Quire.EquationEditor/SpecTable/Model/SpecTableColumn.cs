@@ -19,7 +19,7 @@ public partial class SpecTableColumn
     public string GetScaleSExpression() => b.EquationSExpression;
 
     [MirrorVerified("Release IL")]
-    private void a(int A_0, IEquationModel A_1) => a(A_1, A_0);
+    private void a(int index, IEquationModel equationModel) => a(equationModel, index);
 
     [MirrorVerified("Release IL")]
     public IEquationModel ScalingFactor => b;
@@ -54,10 +54,10 @@ public partial class SpecTableColumn
         public c_() { }
 
         [MirrorVerified("Release IL")]
-        internal IEquationModel a(k A_0) => A_0.a();
+        internal IEquationModel a(k first) => first.a();
 
         [MirrorVerified("Release IL")]
-        internal bool a(IEquationModel A_0) => A_0.IsExpressionValueModified;
+        internal bool a(IEquationModel equationModel) => equationModel.IsExpressionValueModified;
     }
 
     partial class d_

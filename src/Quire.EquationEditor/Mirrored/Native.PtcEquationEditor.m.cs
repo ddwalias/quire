@@ -385,6 +385,6 @@ internal partial class m
         public a_() { }
 
         [MirrorVerified("Release IL")]
-        internal bool a(MathNode A_0) => A_0.IsEvaluatable;
+        internal bool a(MathNode mathNode) => mathNode.IsEvaluatable;
     }
 }

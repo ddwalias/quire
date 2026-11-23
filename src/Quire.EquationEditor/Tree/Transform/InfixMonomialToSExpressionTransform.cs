@@ -11,6 +11,6 @@ public partial class InfixMonomialToSExpressionTransform
         public a_() { }
 
         [MirrorVerified("Release IL")]
-        internal string a(string A_0) => A_0.Trim();
+        internal string a(string text) => text.Trim();
     }
 }

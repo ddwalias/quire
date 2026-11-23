@@ -490,7 +490,7 @@ public partial class MathNode
     }
 
     [MirrorVerified("Release IL")]
-    internal MathNode(MathNodeDescriptor A_0, params MathNode[] A_1) : this(A_0, null, A_1) { }
+    internal MathNode(MathNodeDescriptor mathNodeDescriptor, params MathNode[] mathNodes) : this(mathNodeDescriptor, null, mathNodes) { }
 
     [MirrorVerified("Release IL")]
     public int GetMatrixCellIndex(MathNode matrixAncestor) => GetBranchIndexInAncestor(matrixAncestor);

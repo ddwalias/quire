@@ -9,11 +9,11 @@ internal partial class af
     public int b() => a("rows");
 
     [MirrorVerified("Release IL")]
-    public void b(int A_0) => a("rows", A_0);
+    public void b(int index) => a("rows", index);
 
     [MirrorVerified("Release IL")]
     public int a() => a("cols");
 
     [MirrorVerified("Release IL")]
-    public void a(int A_0) => a("cols", A_0);
+    public void a(int index) => a("cols", index);
 }

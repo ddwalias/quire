@@ -9,7 +9,7 @@ public partial class SpecTableModel
     public SpecTableModel() : this(1, 1) { }
 
     [MirrorVerified("Release IL")]
-    private static void f(IEquationModel A_0) => A_0.FireRequestFocus();
+    private static void f(IEquationModel equationModel) => equationModel.FireRequestFocus();
 
     [MirrorVerified("Release IL")]
     public void HandleNavigateToFirstCell() => a(Discrete2DCoordinate.Origin, Direction.Left);
@@ -50,10 +50,10 @@ public partial class SpecTableModel
         internal void a() { }
 
         [MirrorVerified("Release IL")]
-        internal void a(SpecTableCalculatableWrapper A_0) => A_0.Commit();
+        internal void a(SpecTableCalculatableWrapper specTableCalculatableWrapper) => specTableCalculatableWrapper.Commit();
 
         [MirrorVerified("Release IL")]
-        internal bool a(ISpecTableColumn A_0) => A_0.IsEmpty;
+        internal bool a(ISpecTableColumn specTableColumn) => specTableColumn.IsEmpty;
     }
 
     partial class m_

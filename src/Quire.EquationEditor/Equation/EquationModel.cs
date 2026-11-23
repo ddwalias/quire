@@ -138,7 +138,7 @@ public partial class EquationModel
     public void FireSynchEvents() => o.t();
 
     [MirrorVerified("Release IL")]
-    internal EquationModel(r A_0, ax A_1) : this(A_0, A_1, null, null, null) { }
+    internal EquationModel(r first, ax second) : this(first, second, null, null, null) { }
 
     [MirrorVerified("Release IL")]
     private bool i() => o.j();
@@ -311,19 +311,19 @@ public partial class EquationModel
         public virtual void bc() => throw new InvalidOperationException("not in typeover mode");
 
         [MirrorVerified("Release IL")]
-        public virtual bool x(FormattedString A_0) => false;
+        public virtual bool x(FormattedString formattedString) => false;
 
         [MirrorVerified("Release IL")]
-        public virtual bool z(string A_0) => false;
+        public virtual bool z(string text) => false;
 
         [MirrorVerified("Release IL")]
-        public virtual bool y(InputControlTypes A_0) => false;
+        public virtual bool y(InputControlTypes inputControlTypes) => false;
 
         [MirrorVerified("Release IL")]
-        public virtual bool a4(FindReplaceQuery A_0) => false;
+        public virtual bool a4(FindReplaceQuery findReplaceQuery) => false;
 
         [MirrorVerified("Release IL")]
-        public virtual bool aa(FormattedString A_0, int A_1, Nullable<IdLabels> A_2) => false;
+        public virtual bool aa(FormattedString formattedString, int index, Nullable<IdLabels> idLabels) => false;
 
         [MirrorVerified("Release IL")]
         public virtual bool au() => false;
@@ -353,19 +353,19 @@ public partial class EquationModel
         public virtual void m() { }
 
         [MirrorVerified("Release IL")]
-        protected virtual bool aq(Direction A_0, MathNode A_1) => false;
+        protected virtual bool aq(Direction directionArg, MathNode mathNode) => false;
 
         [MirrorVerified("Release IL")]
-        public virtual bool p(Direction A_0) => true;
+        public virtual bool p(Direction directionArg) => true;
 
         [MirrorVerified("Release IL")]
-        public virtual bool ab(MathNode A_0) => false;
+        public virtual bool ab(MathNode mathNode) => false;
 
         [MirrorVerified("Release IL")]
-        public virtual bool ac(MathNode A_0) => false;
+        public virtual bool ac(MathNode mathNode) => false;
 
         [MirrorVerified("Release IL")]
-        public virtual bool a3(FindReplaceQuery A_0) => false;
+        public virtual bool a3(FindReplaceQuery findReplaceQuery) => false;
     }
 
     partial class e_
@@ -377,7 +377,7 @@ public partial class EquationModel
         public bool b() => h;
 
         [MirrorVerified("Release IL")]
-        public void a(bool A_0) => h = A_0;
+        public void a(bool flag) => h = flag;
     }
 
     partial class f_
@@ -386,7 +386,7 @@ public partial class EquationModel
         public f_() { }
 
         [MirrorVerified("Release IL")]
-        internal bool a(MathNode A_0) => A_0.IsReadonly;
+        internal bool a(MathNode mathNode) => mathNode.IsReadonly;
     }
 
     partial class g_

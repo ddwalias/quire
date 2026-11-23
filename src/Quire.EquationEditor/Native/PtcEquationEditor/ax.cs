@@ -9,25 +9,25 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class ax
 {
     [MirrorVerified("Release IL")]
-    public NavigatorState b(Direction A_0, MathNode A_1, DelegateFunction0<MathNode> A_2, Nullable<Fixity> A_3) => a(A_0, A_1, A_2, A_3);
+    public NavigatorState b(Direction direction, MathNode mathNode, DelegateFunction0<MathNode> callback, Nullable<Fixity> fixity) => a(direction, mathNode, callback, fixity);
 
     [MirrorVerified("Release IL")]
-    public NavigatorState b(Direction A_0, MathNode A_1, MathNode A_2, Nullable<Fixity> A_3) => a(A_0, A_1, A_2, A_3);
+    public NavigatorState b(Direction direction, MathNode mathNode, MathNode mathNodeArg, Nullable<Fixity> fixity) => a(direction, mathNode, mathNodeArg, fixity);
 
     [MirrorVerified("Release IL")]
-    public NavigatorState c(MathNode A_0, int A_1, string A_2) => b(A_0, A_1, A_1, A_2);
+    public NavigatorState c(MathNode mathNode, int index, string text) => b(mathNode, index, index, text);
 
     [MirrorVerified("Release IL")]
-    public NavigatorState a(MathNode A_0, int A_1, string A_2, CaretInsertionTypes A_3) => a(A_0, A_1, A_1, A_2, A_3);
+    public NavigatorState a(MathNode mathNode, int index, string text, CaretInsertionTypes caretInsertionTypes) => a(mathNode, index, index, text, caretInsertionTypes);
 
     [MirrorVerified("Release IL")]
-    public NavigatorState a(MathNode A_0, int A_1, FormattedString A_2) => b(A_0, A_1, A_1, A_2);
+    public NavigatorState a(MathNode mathNode, int index, FormattedString formattedString) => b(mathNode, index, index, formattedString);
 
     [MirrorVerified("Release IL")]
-    public NavigatorState a(MathNode A_0, int A_1, string A_2) => a(A_0, A_1, A_1, A_2);
+    public NavigatorState a(MathNode mathNode, int index, string text) => a(mathNode, index, index, text);
 
     [MirrorVerified("Release IL")]
-    public NavigatorState a(MathNode A_0, string A_1) => a(false, A_0, A_1);
+    public NavigatorState a(MathNode mathNode, string text) => a(false, mathNode, text);
 
     partial class a_
     {

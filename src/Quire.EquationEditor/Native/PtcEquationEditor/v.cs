@@ -12,10 +12,10 @@ internal partial class v
     private IList<Unit> b;
 
     [MirrorVerified("Release IL")]
-    private void a(IList<Unit> A_0) => b = A_0;
+    private void a(IList<Unit> units) => b = units;
 
     [MirrorVerified("Release IL")]
-    public override MathNode bo(IResultTreeFormatter A_0) => A_0.FormatResult(this);
+    public override MathNode bo(IResultTreeFormatter resultTreeFormatter) => resultTreeFormatter.FormatResult(this);
 
     [MirrorVerified("Release IL")]
     public override void Accept(IResultNodeVisitor visitor) => visitor.Visit(this);

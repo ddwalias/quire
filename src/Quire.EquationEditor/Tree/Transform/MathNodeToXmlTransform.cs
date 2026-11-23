@@ -7,13 +7,13 @@ namespace Quire.EquationEditor.Tree.Transform;
 public partial class MathNodeToXmlTransform
 {
     [MirrorVerified("Release IL")]
-    private static XmlElement a(XmlDocument A_0, string A_1) => A_0.CreateElement("ml", A_1, "http://schemas.mathsoft.com/math50");
+    private static XmlElement a(XmlDocument xmlDocument, string text) => xmlDocument.CreateElement("ml", text, "http://schemas.mathsoft.com/math50");
 
     [MirrorVerified("Release IL")]
     public static XmlNode TransformPlaceholderNode(MathNodeToXmlTransform transformer, XmlDocument document, MathNode node) => a(document, "placeholder");
 
     [MirrorVerified("Release IL")]
-    private static XmlElement a(XmlDocument A_0) => a(A_0, "unitedValue");
+    private static XmlElement a(XmlDocument xmlDocument) => a(xmlDocument, "unitedValue");
 
     [MirrorVerified("Release IL")]
     public static XmlNode TransformScaleNode(MathNodeToXmlTransform transformer, XmlDocument document, MathNode node) => TransformOperatorNode(transformer, document, node);

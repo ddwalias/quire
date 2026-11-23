@@ -41,33 +41,33 @@ public partial class ComboBoxInputControlData
         public a_() { }
 
         [MirrorVerified("Release IL")]
-        internal ValueTuple<MathNode, MathNode> a(MathNode A_0, MathNode A_1) => new ValueTuple<MathNode, MathNode>(A_0, A_1);
+        internal ValueTuple<MathNode, MathNode> a(MathNode mathNode, MathNode mathNodeArg) => new ValueTuple<MathNode, MathNode>(mathNode, mathNodeArg);
 
         [MirrorVerified("Release IL")]
-        internal string i(MathNode A_0) => MathNodeToStringTransformer.TransformToTitleViewString(A_0);
+        internal string i(MathNode mathNode) => MathNodeToStringTransformer.TransformToTitleViewString(mathNode);
 
         [MirrorVerified("Release IL")]
-        internal string h(MathNode A_0) => MathNodeToStringTransformer.TransformToValueViewString(A_0);
+        internal string h(MathNode mathNode) => MathNodeToStringTransformer.TransformToValueViewString(mathNode);
 
         [MirrorVerified("Release IL")]
-        internal string g(MathNode A_0) => MathNodeToStringTransformer.TransformToUnitViewString(A_0);
+        internal string g(MathNode mathNode) => MathNodeToStringTransformer.TransformToUnitViewString(mathNode);
 
         [MirrorVerified("Release IL")]
-        internal void f(MathNode A_0) => A_0.MakeReadOnly();
+        internal void f(MathNode mathNode) => mathNode.MakeReadOnly();
 
         [MirrorVerified("Release IL")]
-        internal void e(MathNode A_0) => A_0.MakeReadOnly();
+        internal void e(MathNode mathNode) => mathNode.MakeReadOnly();
 
         [MirrorVerified("Release IL")]
-        internal void d(MathNode A_0) => A_0.MakeReadOnly();
+        internal void d(MathNode mathNode) => mathNode.MakeReadOnly();
 
         [MirrorVerified("Release IL")]
-        internal void c(MathNode A_0) => A_0.MakeEditable();
+        internal void c(MathNode mathNode) => mathNode.MakeEditable();
 
         [MirrorVerified("Release IL")]
-        internal void b(MathNode A_0) => A_0.MakeEditable();
+        internal void b(MathNode mathNode) => mathNode.MakeEditable();
 
         [MirrorVerified("Release IL")]
-        internal void a(MathNode A_0) => A_0.MakeEditable();
+        internal void a(MathNode mathNode) => mathNode.MakeEditable();
     }
 }

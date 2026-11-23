@@ -11,19 +11,19 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class g
 {
     [MirrorVerified("Release IL")]
-    public void d(IMathNodeToVisualNodeMap A_0, TypeoverChangeEventArgs A_1) => a(A_0, A_1.State);
+    public void d(IMathNodeToVisualNodeMap mathNodeToVisualNodeMap, TypeoverChangeEventArgs typeoverChangeEventArgs) => a(mathNodeToVisualNodeMap, typeoverChangeEventArgs.State);
 
     [MirrorVerified("Release IL")]
-    private static bool e(MathNode A_0) => A_0.CarriesValue;
+    private static bool e(MathNode mathNode) => mathNode.CarriesValue;
 
     [MirrorVerified("Release IL")]
-    private static bool d(MathNode A_0) => A_0.IsPlaceholder;
+    private static bool d(MathNode mathNode) => mathNode.IsPlaceholder;
 
     [MirrorVerified("Release IL")]
-    private static bool b(MathNode A_0) => A_0.IsLineSplit;
+    private static bool b(MathNode mathNode) => mathNode.IsLineSplit;
 
     [MirrorVerified("Release IL")]
-    private static bool a(MathNode A_0) => A_0.NoLogicOnlyVisual;
+    private static bool a(MathNode mathNode) => mathNode.NoLogicOnlyVisual;
 
     partial struct a_
     {
@@ -34,10 +34,10 @@ internal partial class g
         public readonly DelegateFunction3<IVisualMathNodeEditor, IVisualMathNode, NavigatorState, IMathNodeToVisualNodeMap> b;
 
         [MirrorVerified("Release IL")]
-        public a_(Predicate<MathNode> A_0, DelegateFunction3<IVisualMathNodeEditor, IVisualMathNode, NavigatorState, IMathNodeToVisualNodeMap> A_1)
+        public a_(Predicate<MathNode> predicate, DelegateFunction3<IVisualMathNodeEditor, IVisualMathNode, NavigatorState, IMathNodeToVisualNodeMap> callback)
         {
-            a = A_0;
-            b = A_1;
+            a = predicate;
+            b = callback;
         }
     }
 
@@ -47,10 +47,10 @@ internal partial class g
         public c_() { }
 
         [MirrorVerified("Release IL")]
-        internal bool a(MathNode A_0) => A_0.IsReadonly;
+        internal bool a(MathNode mathNode) => mathNode.IsReadonly;
 
         [MirrorVerified("Release IL")]
-        internal MathNode a(MathNodeAnalysisHandle A_0) => A_0.Node;
+        internal MathNode a(MathNodeAnalysisHandle mathNodeAnalysisHandle) => mathNodeAnalysisHandle.Node;
     }
 
     partial class d_

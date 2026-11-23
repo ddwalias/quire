@@ -12,7 +12,7 @@ public partial class XmlNodeToMathNodeTransform
         public c_() { }
 
         [MirrorVerified("Release IL")]
-        internal string a(XmlElement A_0) => A_0.InnerText;
+        internal string a(XmlElement xmlElement) => xmlElement.InnerText;
     }
 
     partial class d_

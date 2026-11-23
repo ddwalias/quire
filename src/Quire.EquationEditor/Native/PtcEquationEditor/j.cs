@@ -15,10 +15,10 @@ internal partial class j
         public readonly SymbolMargin b;
 
         [MirrorVerified("Release IL")]
-        public a_(char A_0, SymbolMargin A_1)
+        public a_(char symbol, SymbolMargin symbolMargin)
         {
-            a = A_0;
-            b = A_1;
+            a = symbol;
+            b = symbolMargin;
         }
     }
 }

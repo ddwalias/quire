@@ -29,12 +29,12 @@ public static partial class ParsedSExpressionToComboBoxInputControlData
         public b() { }
 
         [MirrorVerified("Release IL")]
-        internal bool d(ParsedSExpression A_0) => A_0.IsValid;
+        internal bool d(ParsedSExpression parsedSExpression) => parsedSExpression.IsValid;
 
         [MirrorVerified("Release IL")]
-        internal MathNode c(ParsedSExpression A_0) => SExpressionToMathNodeTransform.Default.f(A_0);
+        internal MathNode c(ParsedSExpression parsedSExpression) => SExpressionToMathNodeTransform.Default.f(parsedSExpression);
 
         [MirrorVerified("Release IL")]
-        internal string a(ParsedSExpression A_0) => A_0.Value;
+        internal string a(ParsedSExpression parsedSExpression) => parsedSExpression.Value;
     }
 }

@@ -9,8 +9,8 @@ internal partial class a3
     private readonly r b;
 
     [MirrorVerified("Release IL")]
-    public a3(r A_0)
+    public a3(r first)
     {
-        b = A_0;
+        b = first;
     }
 }

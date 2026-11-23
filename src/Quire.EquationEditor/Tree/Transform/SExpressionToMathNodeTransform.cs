@@ -6,5 +6,5 @@ namespace Quire.EquationEditor.Tree.Transform;
 public partial class SExpressionToMathNodeTransform
 {
     [MirrorVerified("Release IL")]
-    internal MathNode f(ParsedSExpression A_0) => e(A_0);
+    internal MathNode f(ParsedSExpression parsedSExpression) => e(parsedSExpression);
 }

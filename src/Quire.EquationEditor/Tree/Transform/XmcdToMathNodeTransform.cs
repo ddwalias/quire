@@ -13,8 +13,8 @@ public partial class XmcdToMathNodeTransform
     public MathNode Transform(XmlNode node) => g(node);
 
     [MirrorVerified("Release IL")]
-    private int b(XmlNode A_0) => a(A_0, "power-denominator", 1);
+    private int b(XmlNode xmlNode) => a(xmlNode, "power-denominator", 1);
 
     [MirrorVerified("Release IL")]
-    private int a(XmlNode A_0) => a(A_0, "power-numerator", 1);
+    private int a(XmlNode xmlNode) => a(xmlNode, "power-numerator", 1);
 }

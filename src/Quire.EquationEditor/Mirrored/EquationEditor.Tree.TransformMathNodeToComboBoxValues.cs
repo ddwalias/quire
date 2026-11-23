@@ -15,6 +15,6 @@ public static partial class TransformMathNodeToComboBoxValues
         public a() { }
 
         [MirrorVerified("Release IL")]
-        internal string b(MathNode A_0) => MathNodeToStringTransformer.TransformToValueViewString(A_0);
+        internal string b(MathNode mathNode) => MathNodeToStringTransformer.TransformToValueViewString(mathNode);
     }
 }

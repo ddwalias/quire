@@ -55,3 +55,20 @@
 
 - Field/method name clashes, `.initlocals`, ctor-stores-before-base-call, and closure ordinals that need
   placeholder stubs. The 147 members MemberGen rejected are in this group.
+
+## Batch 6 — parameter names of batch 5 (no IL change)
+
+- Renamed every `A_n` parameter that batch 5 (3512543ee) added in the hand-written partials and new
+  files: 111 declarations, 276 uses in 41 files. The pre-batch `Generated` stubs carried the original
+  metadata names where present (e.g. `ColumnMemento(column)`), so only the metadata-less `A_n` names
+  needed descriptive names: from the parameter type (`mathNode`, `text`, `index`, ...), with
+  ordinal words for obfuscated types. Names avoid every identifier used in the file.
+- No named-argument call sites of these methods in `Quire.EquationEditor`. The `A_0:` named calls in
+  `Quire.Engine.Utl` target `Dispose(bool)` of another assembly and are unchanged.
+- Release IL: `--project Quire.EquationEditor` PASS, 1392 checked, 0 failures.
+- Remaining `A_n` names: none in batch-5 lines. Pre-batch hand-written code and `Generated` stubs still use them.
+
+## Rejected members (batch 5 gate); not yet mirrored
+
+- 147 rejected: 140 field-name clashes (`a_`/`b_`/... fields vs Mathcad `a`/`b`) and 7 compile errors.
+  The field-name clash group stays parked. The compile-error group is being worked next.

@@ -14,9 +14,9 @@ public partial class SpecTableMemento
         public a_() { }
 
         [MirrorVerified("Release IL")]
-        internal IColumnMemento a(ISpecTableColumn A_0) => A_0.CreateMemento();
+        internal IColumnMemento a(ISpecTableColumn specTableColumn) => specTableColumn.CreateMemento();
 
         [MirrorVerified("Release IL")]
-        internal ISpecTableColumn a(IColumnMemento A_0) => A_0.RestoreData();
+        internal ISpecTableColumn a(IColumnMemento columnMemento) => columnMemento.RestoreData();
     }
 }

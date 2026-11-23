@@ -58,10 +58,10 @@ public partial class SpecTableCalculatableWrapper
         public a_() { }
 
         [MirrorVerified("Release IL")]
-        internal void a(object A_0, RequestShowErrorEventArgs A_1) { }
+        internal void a(object valueArg, RequestShowErrorEventArgs requestShowErrorEventArgs) { }
 
         [MirrorVerified("Release IL")]
-        internal EngineRedefInfo a(ValueTuple<RedefinitionWarning, MathNode> A_0) => A_0.Item1.Original;
+        internal EngineRedefInfo a(ValueTuple<RedefinitionWarning, MathNode> valueTuple) => valueTuple.Item1.Original;
     }
 
     partial class b_

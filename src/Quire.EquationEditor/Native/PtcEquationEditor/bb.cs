@@ -12,5 +12,5 @@ internal partial class bb
     public bool a() => d;
 
     [MirrorVerified("Release IL")]
-    public void a(bool A_0) => d = A_0;
+    public void a(bool flag) => d = flag;
 }

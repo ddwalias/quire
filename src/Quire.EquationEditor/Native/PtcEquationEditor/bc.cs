@@ -13,7 +13,7 @@ internal partial class bc
     public bool b() => c;
 
     [MirrorVerified("Release IL")]
-    public void a(bool A_0) => c = A_0;
+    public void a(bool flag) => c = flag;
 
     [MirrorVerified("Release IL")]
     private NavigatorState d;
@@ -22,5 +22,5 @@ internal partial class bc
     public NavigatorState a() => d;
 
     [MirrorVerified("Release IL")]
-    public void a(NavigatorState A_0) => d = A_0;
+    public void a(NavigatorState navigatorState) => d = navigatorState;
 }

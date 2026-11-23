@@ -6,10 +6,10 @@ namespace Quire.EquationEditor.Tree.Transform;
 public partial class MathNodeToRlTransformer
 {
     [MirrorVerified("Release IL")]
-    private string z(MathNode A_0) => b(A_0, "setf");
+    private string z(MathNode mathNode) => b(mathNode, "setf");
 
     [MirrorVerified("Release IL")]
-    private string y(MathNode A_0) => b(A_0, "global");
+    private string y(MathNode mathNode) => b(mathNode, "global");
 
     partial class PositionsToLabel
     {

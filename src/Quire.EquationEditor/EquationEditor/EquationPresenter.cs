@@ -20,7 +20,7 @@ public partial class EquationPresenter
     private static bool v() => false;
 
     [MirrorVerified("Release IL")]
-    private static bool a(FindReplaceQuery A_0) => false;
+    private static bool a(FindReplaceQuery findReplaceQuery) => false;
 
     [MirrorVerified("Release IL")]
     private void t() { }
@@ -32,10 +32,10 @@ public partial class EquationPresenter
     private void d() => c();
 
     [MirrorVerified("Release IL")]
-    private void a(DependencyPropertyChangedEventArgs A_0) => c();
+    private void a(DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => c();
 
     [MirrorVerified("Release IL")]
-    private void a(MathNode A_0) => b(A_0);
+    private void a(MathNode mathNode) => b(mathNode);
 
     partial class c_
     {

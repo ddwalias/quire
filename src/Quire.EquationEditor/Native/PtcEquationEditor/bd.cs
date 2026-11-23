@@ -13,5 +13,5 @@ internal partial class bd
     public NavigatorState a() => c;
 
     [MirrorVerified("Release IL")]
-    public void a(NavigatorState A_0) => c = A_0;
+    public void a(NavigatorState navigatorState) => c = navigatorState;
 }

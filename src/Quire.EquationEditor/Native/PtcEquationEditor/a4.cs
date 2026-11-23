@@ -7,8 +7,8 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class a4
 {
     [MirrorVerified("Release IL")]
-    private void g(ref LinkedListNode<MathNodeAnalysisHandle> A_0) => throw new ApplicationException("Bad right operand");
+    private void g(ref LinkedListNode<MathNodeAnalysisHandle> linkedListNode) => throw new ApplicationException("Bad right operand");
 
     [MirrorVerified("Release IL")]
-    private void f(ref LinkedListNode<MathNodeAnalysisHandle> A_0) => throw new ApplicationException("Bad left operand");
+    private void f(ref LinkedListNode<MathNodeAnalysisHandle> linkedListNode) => throw new ApplicationException("Bad left operand");
 }

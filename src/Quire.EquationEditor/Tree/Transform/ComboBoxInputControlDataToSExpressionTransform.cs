@@ -11,13 +11,13 @@ public static partial class ComboBoxInputControlDataToSExpressionTransform
         public a_() { }
 
         [MirrorVerified("Release IL")]
-        internal string b(MathNode A_0) => A_0.SExpression;
+        internal string b(MathNode mathNode) => mathNode.SExpression;
 
         [MirrorVerified("Release IL")]
-        internal string a(MathNode A_0) => A_0.SExpression;
+        internal string a(MathNode mathNode) => mathNode.SExpression;
 
         [MirrorVerified("Release IL")]
-        internal bool a(string A_0) => EnumerableExtensions.IsNullOrEmpty<char>(A_0);
+        internal bool a(string text) => EnumerableExtensions.IsNullOrEmpty<char>(text);
     }
 
     partial class b
