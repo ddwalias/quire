@@ -5,6 +5,7 @@ using System.Windows.Documents;
 using Quire.Controls.Core;
 using Quire.Core;
 using Quire.Services;
+using Quire.Wpf;
 
 namespace Quire.Controls.Internal;
 
@@ -128,7 +129,70 @@ internal partial class VisualTextSpan
 
 
 
-    protected virtual void UpdateChildren() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void UpdateChildren()
+    {
+        Children.Clear();
+        _baseline = 0.0;
+        _superscriptBaseline = 0.0;
+        _characterWidths.Clear();
+        if (Font == null || Inlines == null || Inlines.Count == 0)
+        {
+            return;
+        }
+
+        List<TextLayoutItem> list = new List<TextLayoutItem>();
+        foreach (Inline inline in Inlines)
+        {
+            if (inline is Run run)
+            {
+                VisualTextRun visualTextRun = new VisualTextRun();
+                Children.Add(visualTextRun);
+                visualTextRun.Text = run.Text;
+                ExtendedFont font = visualTextRun.Font;
+                list.Add(new TextLayoutItem
+                {
+                    ItemType = TextLayoutItem.ItemTypes.Normal,
+                    CapsHeight = font.GlyphTypeface.CapsHeight * font.FontSize,
+                    XHeight = font.GlyphTypeface.XHeight * font.FontSize,
+                });
+                continue;
+            }
+            // Keep the Span pattern variable at loop-body scope so its local slot precedes the Run block's locals.
+            if (inline is Span span)
+            {
+                bool flag = span is Subscript;
+                VisualTextSpan visualTextSpan = new VisualTextSpan();
+                visualTextSpan.MathFormat.SetPropertiesFrom(MathFormat, true);
+                if (flag)
+                {
+                    visualTextSpan.MathFormat.FontSize = FontManager.GetScaledFontSize(MathFormat, FontConstants.SubscriptIDFontSizeRatio);
+                }
+
+                Children.Add(visualTextSpan);
+                visualTextSpan.Inlines = span.Inlines;
+                ExtendedFont font2 = visualTextSpan.Font;
+                list.Add(new TextLayoutItem
+                {
+                    ItemType = flag ? TextLayoutItem.ItemTypes.Subscript : TextLayoutItem.ItemTypes.Normal,
+                    CapsHeight = font2.GlyphTypeface.CapsHeight * font2.FontSize,
+                    XHeight = font2.GlyphTypeface.XHeight * font2.FontSize,
+                });
+            }
+        }
+
+        ExtendedFont subscriptFont = GetSubscriptFont();
+        TextLayoutItem defaultSubscriptItem = new TextLayoutItem
+        {
+            ItemType = TextLayoutItem.ItemTypes.Subscript,
+            TextBaselineOffset = subscriptFont.GlyphTypeface.Baseline * subscriptFont.FontSize,
+            CapsHeight = subscriptFont.GlyphTypeface.CapsHeight * subscriptFont.FontSize,
+        };
+        _layout = new ScriptedTextLayoutManager(list.ToArray(), defaultSubscriptItem);
+        foreach (IVisualText child in Children)
+        {
+            child.CharacterWidths.Each(cwidth => _characterWidths.Add(cwidth));
+        }
+    }
 
     public event PropertyChangedEventHandler PropertyChanged;
 }

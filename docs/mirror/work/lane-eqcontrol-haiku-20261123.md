@@ -255,5 +255,12 @@
 - Exact: `MeasureOverride` (the `Children` loop with the `is IVisualText` pattern, the `_layout` arrange, the `SafeComputeInkBoundingBox(...).Height` baseline, and the `foreach` with the `Each` lambda). It moves from generated stub to exact.
 - Ordinal layout: the lambda was `<MeasureOverride>b__32_0` and Mathcad has `b__30_0`. The compiler counts the members before the method, so `HandleMathFormatChanged` and `GetSubscriptFont` moved above `MeasureOverride` (Mathcad order), and the generated `UpdateChildren` stub, which the compiler orders first, became an unmarked placeholder after `ArrangeOverride`. The `PropertyChanged` event moved to the end of the class. With that order the lambda is `b__30_0`.
 - `PropertyChanged` was already checked as exact before this batch (its accessors had no verdict change). The partial now declares it, and its stub pair is gone from the `.g.cs`.
-- Still a placeholder: `UpdateChildren` (protected virtual; Mathcad's body has a `Each`-free layout loop and the `ScriptedTextLayoutManager` build, not attempted here). `ArrangeOverride` is exact.
+- Correction: this entry first called `UpdateChildren` "Each-free" and a placeholder with a layout-only body. That was wrong: its Mathcad body has a `foreach` with an `Each` lambda (`b__32_0`). Batch 35 makes it exact.
 - Gate (project-level): PASS; 3539 checked, zero failures (`.mirror-cache/release-il-209d61aa0a54/release-il.json`).
+
+### Batch 35: Controls.Internal.VisualTextSpan.UpdateChildren
+
+- Exact: `UpdateChildren` (protected virtual), in Mathcad token order after `ArrangeOverride`. The `Children`/`Inlines` guard, the `foreach` over `Inlines` with the `Run` and `Span` branches, the `Subscript` ternary item type, the `defaultSubscriptItem` layout item, and the `Each` lambda `b__32_0` (ordinal set by the member order from batch 34) all match.
+- Shape note: the `Span` pattern variable is declared at loop-body scope, with `if (inline is Span span)` after the `Run` block's `continue`. An `else if` put `span` in a nested scope, which gave `visualTextRun` the wrong local slot (`stloc.s 6` against Mathcad's `stloc.s 7`). Keep this shape; the comment in the code says why.
+- The partial gains `using Quire.Wpf;` for `Subscript`. The stub pair was already removed from the `.g.cs` in batch 34.
+- Gate (project-level): PASS; 3541 checked, zero failures (`.mirror-cache/release-il-2238edebf955/release-il.json`); `UpdateChildren` moved from generated stub to exact.
