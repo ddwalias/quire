@@ -489,6 +489,12 @@ internal partial class AxisModel
         }
     }
 
+    // Declared here, not at the end, so the lambda's display-class ordinal matches Mathcad's (compile-order device).
+    public int GetNumberOfTracesForEquation(IPlotEquation equation)
+    {
+        return _equations.First((IEquationItem eq) => eq.Equation == equation).Traces.ToList().Count();
+    }
+
     public IAxisLimitEditor SecondTickExpression
     {
         get

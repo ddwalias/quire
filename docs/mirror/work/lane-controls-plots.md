@@ -470,3 +470,11 @@
 - Member: `SetLogarithmicScale`. Hand-written: appended to `Mirrored/Controls.Plots.Model.AxisModel.cs`; stub removed from `AxisModel.g.cs`.
 - Shapes: `AssertionE.Failed == (AssertionE)DebugTools.DevAssert(start <= end, null)` (the enum conversion is what Mathcad's `op_Implicit` call needs); the try/catch with `int` locals declared before the `try` matched without changes.
 - Release IL: PASS — 2513 checked, 0 failures.
+
+## Batch 66 — AxisModel.GetNumberOfTracesForEquation (display-class ordinal)
+
+- Member: `GetNumberOfTracesForEquation` (`_equations.First(eq => eq.Equation == equation).Traces.ToList().Count()`). Hand-written: placed in `Mirrored/Controls.Plots.Model.AxisModel.cs` right after the `StartExpression` property; stub removed from `AxisModel.g.cs`.
+- Measured ordinal: at the end of the hand-written file the closure was `<>c__DisplayClass233_0` (Mathcad `213_0`). The Roslyn ordinal counts every member before the method in compile order (generated file first, then hand-written), with a property counting as one plus each accessor. Moving the method to a point with exactly 20 member units after it gave `205_0` when placed after `OnExpressionHasErrorsChanged` (28 units after), and `213_0` after `StartExpression` (20 units after, matching Mathcad). The comment in the file records this.
+- Generated layout: changed (stub removed). MirrorGen was checked after a Release build of `Quire.Controls.Plots` in the worktree: `emit` regenerates `AxisModel.g.cs` byte-identical to the committed file. (A `emit` without a fresh build re-adds the stubs of members implemented since the last build; always build first.)
+- Release IL: PASS — 2516 checked, 0 failures.
+- Left: `SetRange` (lambda closure, Mathcad ordinal `170_0`; the same placement rule applies when implemented).
