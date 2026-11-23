@@ -614,3 +614,10 @@
 - Member: `GetPositions(out ×6)`, no closures. Two drafts were checked: a faithful two-statement form with `double` temps (extra locals, 416 entries against 374), and an inline form that assigns `desiredSize` and `transform` inside the `new Point(...)` arguments to keep Mathcad's evaluation order (422 entries).
 - Cause: Mathcad stores each value once (`stloc.3; ldloca.s 3`) after reading `start.X` into the argument stack. Roslyn compiles `(desiredSize = X).Width` as `dup; stloc.s N; ldloca.s N` with a new temp slot. A separate statement fixes the temp but changes the argument order, so no C# form found reproduces the IL.
 - Result: not landed; `GetPositions` stays a generated stub.
+
+## Batch 87 — PlotLegendItem.OnActivateExecute (blocked on closure ordinal, kept as stub)
+
+- Member: `OnActivateExecute` (one `WpfUtils.ExecuteOnLoad` lambda). The body matches except its closure name. Mathcad: `<OnActivateExecute>b__17_0`; Mathcad's constructor carries ordinal 16 (`<>9__16_1`), `AddTrace` is 19.
+- Measured Quire names: at the top of the class `b__6_0` (only the six generated units count ahead of it); after the hand-written `SourceTrace`, `LegendLabel` and `MiniTraceWidth` properties `b__26_0`. The properties contribute more than their accessors, probably because their own lambdas count, so the simple unit count from batch 58 does not apply here.
+- Result: not landed; `OnActivateExecute` stays a generated stub. Needs the placeholder layout for the type (Mathcad order, lambdas included) before the ordinal can be set.
+- `AddTrace` (lambda ordinal 19, many object-initialiser bindings) is not started.
