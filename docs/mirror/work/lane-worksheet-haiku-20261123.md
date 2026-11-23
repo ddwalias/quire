@@ -143,3 +143,9 @@
 - Implemented in `Mirrored/` (stubs removed). `PostPrintUpdateVisiblePages` reads `_pageRangeOnPrePrint.Value` in the `AssertNotNull(...).Passed` branch and falls back to the full page range; it then clears the field with `= null`.
 - Release IL: PASS (1317 checked, 0 failures) on the first attempt.
 - Probe left for later: `ItemSplitIsNeeded` (out-parameter variant). Mathcad keeps `topLeft.Y` on the stack with `dup` for both `CompareLocation(top, 0)` and `top + height`, the same receiver-sharing shape as `GetCustomSplitItemRenderSize`; not yet measured.
+
+## Batch 21 — WorksheetPageManager SetInsertionPointOnAppropriatePage, HandleItemSizeChanged
+
+- Implemented in `Mirrored/` (stubs removed). `SetInsertionPointOnAppropriatePage` keeps a named `Point` copy and the `double` offset temp, which matches the IL's local order. `HandleItemSizeChanged` reads the location as an argument of `GetPage`: a separate `Point` statement put `ldarg.0` after `get_ItemManager` and failed at #23.
+- Release IL: PASS (1319 checked, 0 failures).
+- Measured probe, `ItemSplitIsNeeded` (out-parameter variant): natural form fails at #17 (call order) and #49 (locals, 71 vs 72 entries). Mathcad computes `topLeft.Y + height` with `dup` sharing `topLeft.Y` before the zero comparison. That is the receiver-sharing shape, so it stays parked (stub kept); the probe edit was reverted and not landed.

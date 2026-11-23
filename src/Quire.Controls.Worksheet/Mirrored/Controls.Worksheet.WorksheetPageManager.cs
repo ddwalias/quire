@@ -426,4 +426,49 @@ internal partial class WorksheetPageManager
         _pageRangeOnPrePrint = null;
         return _worksheetVisiblePages.SetVisiblePages(firstIndex, lastIndex, pageHeight);
     }
+
+    public IWorksheetPage SetInsertionPointOnAppropriatePage(Point insertionPoint)
+    {
+        int pageIndex = GetPageIndex(insertionPoint.Y);
+        AppendNewPageIfNeeded(pageIndex);
+        IWorksheetPage page = Pages[pageIndex];
+        Point location = insertionPoint;
+        if (pageIndex > 0)
+        {
+            double insertionPointOffset = insertionPoint.Y - PageLayout.PageBodyHeight * pageIndex;
+            location = new Point(insertionPoint.X, insertionPointOffset);
+        }
+        ScrollToPageIfNeeded(page);
+        page.InsertionPoint = location;
+        RemoveEmptyPagesAfterLocation(pageIndex);
+        return page;
+    }
+
+    public void HandleItemSizeChanged(IWhiteboardItem item, Size oldSize, Size newSize)
+    {
+        if (oldSize == newSize && !ItemManager.GetItemSplitCheckIsRequired(item))
+        {
+            return;
+        }
+        ItemManager.SetItemSplitCheckIsRequired(item, false);
+        IWorksheetPage oldPage = ItemManager.GetContainingPage(item);
+        if (IsItemSplit(item) && oldPage != null)
+        {
+            IWorksheetPage newPage = GetPage(ItemManager.GetItemWorksheetLocation(item).Y);
+            if (oldPage != newPage)
+            {
+                IWhiteboardItemZombie zombie = _worksheetItemSplitter.GetItemZombieOnPage(item, newPage);
+                if (DebugTools.AssertNotNull(zombie).Passed)
+                {
+                    _worksheetItemSplitter.ReplaceZombieWithRealItem(zombie);
+                }
+            }
+        }
+        if (ItemSplitIsNeeded(item))
+        {
+            ExecuteOrScheduleSplitAttempt(item, oldPage, false);
+            return;
+        }
+        RemoveNonOwnedItemAndZombies(item);
+    }
 }
