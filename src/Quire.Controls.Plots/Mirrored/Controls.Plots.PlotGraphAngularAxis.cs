@@ -179,4 +179,47 @@ internal sealed partial class PlotGraphAngularAxis
     {
         return true;
     }
+
+    public double GetAxisEffectiveStart()
+    {
+        return (OtherAxis as PlotGraphRadialAxis).Start;
+    }
+
+    public double GetAxisEffectiveEnd()
+    {
+        return (OtherAxis as PlotGraphRadialAxis).End;
+    }
+
+    protected override void HandleOrientationChanged()
+    {
+    }
+
+    protected override void PositionTickMarkChanged(int number)
+    {
+    }
+
+    public override void UpdateAxisOriginPositions()
+    {
+    }
+
+    protected override void MouseMoveDraw(DrawingContext context)
+    {
+    }
+
+    public override void MoveToValue(double value)
+    {
+    }
+
+    public override void MoveByValue(double value)
+    {
+    }
+
+    public override bool FindClosestTickValueToZero(ref int index)
+    {
+        return true;
+    }
+
+    protected override void ApplyTickNumber(int value, bool b)
+    {
+    }
 }

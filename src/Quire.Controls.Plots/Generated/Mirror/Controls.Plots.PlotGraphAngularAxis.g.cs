@@ -22,32 +22,16 @@ internal sealed partial class PlotGraphAngularAxis : global::Quire.Controls.Plot
     [global::Quire.Mirror.MirrorStub]
     protected override double GetAxisEndPosition() => base.GetAxisEndPosition();
     [global::Quire.Mirror.MirrorStub]
-    public double GetAxisEffectiveStart() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public double GetAxisEffectiveEnd() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void TickMarksChanged() => base.TickMarksChanged();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleOrientationChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void PositionTickMarkChanged(int number) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void UpdateAxisOriginPositions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void MouseMoveDraw(global::System.Windows.Media.DrawingContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void MoveToValue(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void MoveByValue(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool FindClosestTickValueToZero(ref int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void ApplyTickNumber(int value, bool b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotGraphAngularAxis+Point2ScreenHelperImpl, Ptc.Controls.Plots")]
     public partial class Point2ScreenHelperImpl : global::Quire.Controls.Plots.PlotGraphAxis.Point2ScreenHelper
     {
         [global::Quire.Mirror.MirrorStub]
         public Point2ScreenHelperImpl(global::Quire.Controls.Plots.PlotGraphAngularAxis axisView) : base(default(double)) { }
+        [global::Quire.Mirror.MirrorStub]
+        public override double Point2Screen(double offset) => base.Point2Screen(offset);
+        [global::Quire.Mirror.MirrorStub]
+        internal override bool Contains(double coordinate) => base.Contains(coordinate);
     }
 }

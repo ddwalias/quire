@@ -577,3 +577,10 @@
 - Member: `GetMinLegendPlaceholderHeight()`. The draft matches Mathcad's conditional-branch count (8) once the `(a is PlotTitle || b is PlotLegend) ? true : false` form is kept. The remaining difference is a materialised bool: Mathcad stores the test in a temp and copies it to `flag` (three more instructions, `stloc/ldloc/stloc`), and Roslyn removes that temp. The same shape blocked batch 69 (`CalculateBetterTickmarks`).
 - Result: not landed; the member stays a generated stub.
 - Left in PlotItemPlaceholder: `AdjustPadding(Size)` (not started), `GetMinLegendPlaceholderWidth` already exact in hand-written code.
+
+## Batch 82 — PlotGraphAngularAxis overrides
+
+- Members: `GetAxisEffectiveStart`, `GetAxisEffectiveEnd` (casts of `OtherAxis` to `PlotGraphRadialAxis`), `HandleOrientationChanged`, `PositionTickMarkChanged`, `UpdateAxisOriginPositions`, `MouseMoveDraw`, `MoveToValue`, `MoveByValue`, `FindClosestTickValueToZero` (returns true), `ApplyTickNumber`. Hand-written at the end of `Mirrored/Controls.Plots.PlotGraphAngularAxis.cs`; ten stubs removed from `PlotGraphAngularAxis.g.cs`.
+- No closures or iterators in the group, so placement does not change any ordinal.
+- Generated layout: ten stubs removed. Verified: after a Release build, `emit` regenerates `PlotGraphAngularAxis.g.cs` byte-identical to the committed file.
+- Release IL: full gate PASS — 2566 checked, 0 failures.
