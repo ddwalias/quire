@@ -122,4 +122,11 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
 - Release IL report: `.mirror-cache/release-il-9f066e729adc/release-il.json` (PASS, 196 checked; both module methods exact).
 - `PositionBase.Invalidate` depends on `TreatAsReady`, `SendMessage`, and callback wiring not implemented here. `PositionBase.Kill` depends on the `std::set<Position*>` erase path, still represented only as raw storage.
 
+## Batch 13 — PositionBase.SendMessage
+
+- Owner: Codex, Orca task `task_d36be1a6d18b`; branch `feature/luna-mcdepman`.
+- Member: `PositionBase.SendMessage(NodeStatus)`, implemented from the complete module IL. Mathcad reads `send_messages_` at offset 156, checks and invokes `PosCallback` at offset 80, and passes `position_` at offset 16; the field is now a typed `gcroot` without changing the 216-byte `PositionBase` layout.
+- Release IL report: `.mirror-cache/release-il-126b2a39ebd1/release-il.json` (PASS, 203 checked; selected `Quire.depman.ActionChainMgd`; module `SendMessage` exact).
+- `PositionBase.Invalidate` remains blocked after the exact `ActionChain.IsLocked` check by missing callback wiring for `TreatedReadyInvalidCallback(Position*) -> bool` (field offset 104), then `InterruptCallback(int)` (offset 96) and `PosQueueCallback(Position*)` (offset 88); its body also calls `TreatAsReady(false)`. `TreatAsReady` depends on unimplemented `ActionChain.TreatAsReadyDeps` and the `std::set<Position*>` erase path at offset 136. `Kill` remains parked on that same unproven set erase path.
+
 

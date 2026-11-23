@@ -40,6 +40,7 @@ public:
     void ResetPriority();
     void ClearDParent();
     void SetBasePriority(int priority);
+    void SendMessage(::Quire::Engine::NodeStatus status);
     ::Quire::depman::Scope^ GetScope();
     ::Quire::depman::Scope^ GetEnvScope();
     ::Quire::depman::SEnvironment^ env() const;
@@ -56,7 +57,7 @@ private:
     gcroot<::Quire::depman::Scope^> scope_;         // 0x38 (offset 56)
     gcroot<::Quire::depman::Scope^> env_scope_;     // 0x40 (offset 64)
     void* labeled_dictionary_;                    // 0x48 (offset 72, gcroot<utl_mgd::LabeledDictionary^>)
-    void* pos_callback_;                          // 0x50 (offset 80, gcroot<depman::PosCallback^>)
+    gcroot<::Quire::depman::PosCallback^> pos_callback_; // 0x50 (offset 80)
     void* pos_queue_callback_;                    // 0x58 (offset 88, gcroot<depman::PosQueueCallback^>)
     void* interrupt_callback_;                    // 0x60 (offset 96, gcroot<depman::InterruptCallback^>)
     void* treated_ready_invalid_callback_;        // 0x68 (offset 104, gcroot<depman::TreatedReadyInvalidCallback^>)

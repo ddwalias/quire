@@ -59,6 +59,9 @@ namespace Quire { namespace depman {
     [Quire::Mirror::MirrorOfAttribute("depman.DepNodeCallback, mcdepman")]
     public delegate void DepNodeCallback(long client_handle, long h, Quire::Engine::NodeStatus s);
 
+    [Quire::Mirror::MirrorOfAttribute("depman.PosCallback, mcdepman")]
+    delegate void PosCallback(::depman::Position* h, Quire::Engine::NodeStatus s);
+
     interface class Action;
 
     [Quire::Mirror::MirrorOfAttribute("depman.ActionResult, mcdepman")]

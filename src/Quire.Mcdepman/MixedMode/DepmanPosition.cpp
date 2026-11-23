@@ -18,6 +18,7 @@
 #pragma comment(linker, "/include:?ResetPriority@PositionBase@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?ClearDParent@PositionBase@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?SetBasePriority@PositionBase@depman@@QEAAXH@Z")
+#pragma comment(linker, "/include:?SendMessage@PositionBase@depman@@$$FQEAMXW4NodeStatus@Engine@Quire@@@Z")
 #pragma comment(linker, "/include:?IsLocked@PositionBase@depman@@QEBA_NXZ")
 #pragma comment(linker, "/include:?IsUndefine@PositionBase@depman@@QEAA_NXZ")
 #pragma comment(linker, "/include:?IsChildOnly@PositionBase@depman@@QEAA_NXZ")
@@ -130,6 +131,15 @@ void PositionBase::SetBasePriority(int priority)
 {
     base_priority_ = priority;
     priority_ = std::max(priority_, base_priority_);
+}
+
+void PositionBase::SendMessage(::Quire::Engine::NodeStatus status)
+{
+    if (send_messages_)
+    {
+        if (pos_callback_)
+            pos_callback_->Invoke(position_, status);
+    }
 }
 
 Position* Position::previous()
