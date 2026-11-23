@@ -264,3 +264,9 @@
 - Shape note: the `Span` pattern variable is declared at loop-body scope, with `if (inline is Span span)` after the `Run` block's `continue`. An `else if` put `span` in a nested scope, which gave `visualTextRun` the wrong local slot (`stloc.s 6` against Mathcad's `stloc.s 7`). Keep this shape; the comment in the code says why.
 - The partial gains `using Quire.Wpf;` for `Subscript`. The stub pair was already removed from the `.g.cs` in batch 34.
 - Gate (project-level): PASS; 3541 checked, zero failures (`.mirror-cache/release-il-2238edebf955/release-il.json`); `UpdateChildren` moved from generated stub to exact.
+
+### Batch 36: Controls.SpecTableControl (CurrentIdLabel, CurrentDisplayIdLabel, Activate, FireRequestRemove)
+
+- Exact: the `CurrentIdLabel` and `CurrentDisplayIdLabel` properties (the setter maps `IdLabels.None` to `null` and fires `PropertyChanged`), `Activate(bool)` (`ExecuteOnLoad(this, DelegateFocus)`, a method group with no closure), and `FireRequestRemove()` (the try/catch around `_currentCell = ActiveCell`, then `RequestRemove(this, Direction.Left)`). Their stub pairs are removed from the `.g.cs`; each moved from generated stub to exact.
+- Not in this batch: `DelegateFocus` (its `Focus` lambda is a closure whose ordinal depends on the member layout) and `PersistentData` with its region helpers. The `GetColumnCells` blocker in `ComboBoxTableModel` is unchanged.
+- Gate (project-level): PASS; 3547 checked, zero failures (`.mirror-cache/release-il-31d5d5c66afc/release-il.json`).

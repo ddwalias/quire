@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System;
 using System.ComponentModel;
+using Quire.Services;
 
 namespace Quire.Controls;
 
@@ -404,5 +405,62 @@ public partial class SpecTableControl
             }
             return num;
         }
+    }
+
+    public IdLabels? CurrentIdLabel
+    {
+        get
+        {
+            return _currentIdLabel;
+        }
+        set
+        {
+            _currentIdLabel = value;
+            if (_currentIdLabel == IdLabels.None)
+            {
+                _currentIdLabel = null;
+            }
+
+            FirePropertyChanged("CurrentIdLabel");
+        }
+    }
+
+    public IdLabels? CurrentDisplayIdLabel
+    {
+        get
+        {
+            return _currentDisplayIdLabel;
+        }
+        set
+        {
+            _currentDisplayIdLabel = value;
+            if (_currentDisplayIdLabel == IdLabels.None)
+            {
+                _currentDisplayIdLabel = null;
+            }
+
+            FirePropertyChanged("CurrentDisplayIdLabel");
+        }
+    }
+
+    public void Activate(bool isActive)
+    {
+        if (isActive)
+        {
+            AppServiceRegistry.GetService<IFrameworkElementFacade>().ExecuteOnLoad(this, DelegateFocus);
+        }
+    }
+
+    public void FireRequestRemove()
+    {
+        try
+        {
+            _currentCell = ActiveCell;
+        }
+        catch
+        {
+        }
+
+        RequestRemove(this, Direction.Left);
     }
 }
