@@ -62,3 +62,9 @@
 - `_typeOfThis` and `PageNumberProperty` moved to `Mirrored/` as field initializers (stubs removed). `IsAssociatedWithPage` implemented (no closures). Release IL: PASS (1278 checked, 0 failures).
 - Left as XAML-generated stubs: `InitializeComponent`, `IComponentConnector.Connect`, `_contentLoaded`.
 - Survey, closure-free types checked: `RegionFactory` (large serialization chain, not attempted), `RegionPersistentData` (Accept parked), `WhiteboardItemZombie` (constructor and `HandleZombieLoaded` use lambdas).
+
+## Batch 9 — RegionFactory.CreateFailedRegionPersistentData, CreateTemplatedTextBoxTypedPersistentData
+
+- Both members implemented in `Mirrored/` (stubs removed). The failed-region image URI keeps Mathcad's `Ptc.Controls.Core` resource path, because the IL compares the string constant (the mirrored `FlowDocumentFamilyConverter` does the same). The enum dispatch is a `switch` statement; the switch expression differed at the first local (`stloc.1` vs Mathcad `stloc.0`).
+- Release IL: PASS (1280 checked, 0 failures).
+- Left as stubs: `ConvertToIRegionType`, `ConvertFromIRegionType`, `CreatePlotTypedPersistentData` and the rest of `RegionFactory` (not attempted in this batch).
