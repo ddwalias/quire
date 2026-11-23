@@ -337,7 +337,11 @@ internal partial class SolverAggregate
         }
     }
 
-    private void ClearError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ClearError()
+    {
+        base.SetError(null);
+        _calculatableChildren.Each((global::Quire.Calculation.Core.ICalculatable child) => child.SetError(null));
+    }
 
     private void ParseWrappedRl()
     {
@@ -388,9 +392,24 @@ internal partial class SolverAggregate
         RightOfSolverApply = match.Groups["right_of_solver"].Value;
     }
 
-    public override bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public override bool ContainsError(global::Quire.Calculation.Core.EngineError error)
+    {
+        if (error.ErrorSource == this)
+            return true;
+        return CalculatableChildren.OfType<global::Quire.Calculation.Core.ICalculationErrorOwner>()
+            .Any((global::Quire.Calculation.Core.ICalculationErrorOwner owner) => owner.ContainsError(error));
+    }
 
-    public override void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public override void ShowError(global::Quire.Calculation.Core.EngineError error)
+    {
+        global::Quire.Calculation.Core.ICalculationErrorOwner errorOwner;
+        if (error.ErrorSource == this)
+            errorOwner = WrappedCalculatable as global::Quire.Calculation.Core.ICalculationErrorOwner;
+        else
+            errorOwner = CalculatableChildren.OfType<global::Quire.Calculation.Core.ICalculationErrorOwner>()
+                .FirstOrDefault((global::Quire.Calculation.Core.ICalculationErrorOwner owner) => owner.ContainsError(error));
+        errorOwner?.ShowError(error);
+    }
 
     public event global::System.Action<global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
     public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableRemoved;
