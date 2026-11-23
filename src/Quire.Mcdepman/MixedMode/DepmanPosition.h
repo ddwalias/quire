@@ -36,6 +36,7 @@ public:
     bool Invalidated() const;
     bool TreatedReady() const;
     bool IsBusy();
+    bool IsReady();
     void SetBusy(bool busy);
     void SetNotifyComputing(bool notify);
     void ResetPriority();
@@ -107,6 +108,7 @@ public:
     void UnLock();
     void SetNeedsCheck();
     void Kill();
+    System::Object^ value();
     ::Quire::depman::SharedThreadContext^ GetSharedThreadContext() const;
 
     // ActionChainMgd's reference IL reads these pointer fields at offsets 8, 16, and 24.

@@ -196,6 +196,21 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
   - `PositionBase.Kill` and `TreatAsReady(false)`: require the unproven `std::set<depman::Position*>` erase path at offset 136.
   - `Position.previous` / `Position.next`: dynamic cast emits RTTI type descriptor data differences against Mathcad RTTI; pragmas remain commented out until RTTI descriptor handling is resolved.
 
+## Batch 20 — PositionBase.IsReady and ActionChain.value
+
+- Owner: AGY, Orca task `task_f9ee0c2aa8f9`; branch `feature/luna-mcdepman`.
+- Members:
+  - `ActionChain.value()`: checks `mgd_->env()->needs_check() && !locked_` returning `nullptr`, otherwise returns `next_ ? next_->value() : mgd_->result()`, preserving the 40-byte `ActionChain` layout.
+  - `PositionBase.IsReady()`: checks `!action_chain_` returning `true`, otherwise checks `!is_busy_ && (action_chain_ ? action_chain_->value() : nullptr)` returning `true`, else `false`, preserving the 216-byte `PositionBase` layout.
+- Release IL report: `.mirror-cache/release-il-e994492694fa/release-il.json` (PASS, 215 checked; module `PositionBase.IsReady` and `ActionChain.value` exact).
+- Remaining prerequisites:
+  - `DepManager.add_dep` / `remove_dep`: large unmanaged methods operating directly on multi-level `std::map<SDef, std::map<Position*, pair<ActionChain*, DependencyType>>>` containers with `std_label_set` and custom comparators; native `DepManager` layout and tables remain unported.
+  - `PositionBase.SetEnvScope`: branches on Scope nullness, calling `ActionChain.remove_env_scope` and `ActionChain.add_env_scope` which require `DepManager.remove_dep` and `add_dep`.
+  - `PositionBase.Invalidate`: requires callback wiring for `PosCallback`, `PosQueueCallback`, `InterruptCallback`, and `TreatedReadyInvalidCallback`.
+  - `PositionBase.Kill` and `TreatAsReady(false)`: require the unproven `std::set<depman::Position*>` erase path at offset 136.
+  - `Position.previous` / `Position.next`: dynamic cast emits RTTI type descriptor data differences against Mathcad RTTI; pragmas remain commented out until RTTI descriptor handling is resolved.
+
+
 
 
 

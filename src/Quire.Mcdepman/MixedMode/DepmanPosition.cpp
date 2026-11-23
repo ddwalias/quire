@@ -15,6 +15,7 @@
 #pragma comment(linker, "/include:?Invalidated@PositionBase@depman@@QEBA_NXZ")
 #pragma comment(linker, "/include:?TreatedReady@PositionBase@depman@@QEBA_NXZ")
 #pragma comment(linker, "/include:?IsBusy@PositionBase@depman@@QEAA_NXZ")
+#pragma comment(linker, "/include:?IsReady@PositionBase@depman@@QEAA_NXZ")
 #pragma comment(linker, "/include:?SetNotifyComputing@PositionBase@depman@@QEAAX_N@Z")
 #pragma comment(linker, "/include:?ResetPriority@PositionBase@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?ClearDParent@PositionBase@depman@@QEAAXXZ")
@@ -107,6 +108,15 @@ bool PositionBase::IsChildOnly()
 bool PositionBase::IsBusy()
 {
     return is_busy_;
+}
+
+bool PositionBase::IsReady()
+{
+    if (!action_chain_)
+        return true;
+    if (!is_busy_ && (action_chain_ ? action_chain_->value() : nullptr))
+        return true;
+    return false;
 }
 
 void PositionBase::SetBusy(bool busy)
