@@ -68,8 +68,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     public override int CaretOffset { get => base.CaretOffset; set => base.CaretOffset = value; }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsTabNavigatable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool HideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Core.TextFormat CurrentTextFormat { get => base.CurrentTextFormat; set => base.CurrentTextFormat = value; }

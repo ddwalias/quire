@@ -217,7 +217,17 @@ public partial class RichTextWithEmbeddedItem
         ActiveItem = null;
     }
 
-    // Compile order: this iterator follows the eight methods above it so its state machine is <EnumerateEmbeddedObjectsInRange>d__114 as in Mathcad.
+    public virtual object Clone()
+    {
+        return CloneRichText(null);
+    }
+
+    protected override void OnStyleChanged(ICollection<TextStyleData> TextStyles)
+    {
+        base.OnStyleChanged(TextStyles);
+    }
+
+    // Compile order: this iterator follows the ten methods above it so its state machine is <EnumerateEmbeddedObjectsInRange>d__114 as in Mathcad.
     public override IEnumerable<object> EnumerateEmbeddedObjectsInRange(DocumentTextRange range)
     {
         for (TextPointer curPos = range.Start; curPos != null && curPos.CompareTo(range.End) < 0; curPos = curPos.GetPositionAtOffset(1, LogicalDirection.Forward))
@@ -233,16 +243,6 @@ public partial class RichTextWithEmbeddedItem
                 yield return obj;
             }
         }
-    }
-
-    public virtual object Clone()
-    {
-        return CloneRichText(null);
-    }
-
-    protected override void OnStyleChanged(ICollection<TextStyleData> TextStyles)
-    {
-        base.OnStyleChanged(TextStyles);
     }
 
     public override void EndInit()
@@ -445,6 +445,9 @@ public partial class RichTextWithEmbeddedItem
             e.Effects = DragDropEffects.None;
         }
     }
+
+    // Compile order: positioned so the getter's lambda is <get_IsTabNavigatable>b__149_0 as in Mathcad.
+    public bool IsTabNavigatable => WhiteboardItems.Any((IWhiteboardItem item) => ContainerItemManager.GetIsTabNavigatable(item));
 
     public override void SetSelection(int fromOffset, int toOffset)
     {
