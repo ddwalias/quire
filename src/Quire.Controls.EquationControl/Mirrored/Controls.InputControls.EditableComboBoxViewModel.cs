@@ -5,7 +5,12 @@ using System.Collections.Generic;
 using Quire.Core;
 using Quire.EquationEditor.Tree;
 using System;
+using System.Windows.Media;
+using System.Windows;
 using System.Windows.Input;
+using Quire.Controls.Core;
+using Quire.Controls.Internal;
+using Quire.Wpf;
 namespace Quire.Controls.InputControls;
 
 public partial class EditableComboBoxViewModel
@@ -173,5 +178,93 @@ public partial class EditableComboBoxViewModel
         }
 
         DebugTools.FailAssertion("Unhandled case");
+    }
+
+    public Size PlaceHolderBoxSize
+    {
+        get
+        {
+            return _placeHolderBoxSize;
+        }
+        private set
+        {
+            if (_placeHolderBoxSize == value)
+            {
+                return;
+            }
+            _placeHolderBoxSize = value;
+            OnPropertyChanged("PlaceHolderBoxSize");
+        }
+    }
+
+    public double MidPointBetweenFirstAndSecondRow
+    {
+        get
+        {
+            return _midPointBetweenFirstAndSecondRow;
+        }
+        set
+        {
+            if (DebugTools.DevAssert(value.IsGreaterThanOrEqual(0.0, 1E-05), null).Failed)
+            {
+                return;
+            }
+            if (_midPointBetweenFirstAndSecondRow.IsEqualTo(value, 1E-05))
+            {
+                return;
+            }
+            _midPointBetweenFirstAndSecondRow = value;
+            OnPropertyChanged("MidPointBetweenFirstAndSecondRow");
+        }
+    }
+
+    public double MidPointBetweenFirstAndSecondColumn
+    {
+        get
+        {
+            return _midPointBetweenFirstAndSecondColumn;
+        }
+        set
+        {
+            if (DebugTools.DevAssert(value.IsGreaterThanOrEqual(0.0, 1E-05), null).Failed)
+            {
+                return;
+            }
+            if (_midPointBetweenFirstAndSecondColumn.IsEqualTo(value, 1E-05))
+            {
+                return;
+            }
+            _midPointBetweenFirstAndSecondColumn = value;
+            OnPropertyChanged("MidPointBetweenFirstAndSecondColumn");
+        }
+    }
+
+    public Size TableSize
+    {
+        get
+        {
+            return _tableSize;
+        }
+        set
+        {
+            if (_tableSize.IsEqualTo(value, 1E-05))
+            {
+                return;
+            }
+            _tableSize = value;
+            OnPropertyChanged("TableSize");
+        }
+    }
+
+    public EditableComboBoxViewModel(ComboBoxTableModel tableModel)
+        : base(tableModel)
+    {
+        SetupCommandBindings();
+    }
+
+    public void UpdatePlaceHolderBoxSize(DpiScale dpiScale)
+    {
+        FormattedText formattedText = VisualPlaceholderNode.CreateFormattedCharPlaceholder(new Typeface(new FontFamily("Mathcad UniMath Prime"), FontStyles.Normal, FontWeights.Normal, FontStretches.Normal), WpfUtils.PointsToDips(FontConstants.DefaultMathFontSizeInPoints), FontConstants.DefaultMathFontColor, dpiScale);
+        PlaceHolderBoxSize = new Size(formattedText.Width / 2.0, formattedText.Height / 2.0);
     }
 }

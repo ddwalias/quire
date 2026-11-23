@@ -24,21 +24,11 @@ public partial class EditableComboBoxViewModel : global::Quire.Controls.InputCon
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData> AllCells { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size PlaceHolderBoxSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double MidPointBetweenFirstAndSecondRow { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double MidPointBetweenFirstAndSecondColumn { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size TableSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData>> CellsAdded;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<int, int, bool> RowsDeleted;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<int, int, bool> ColumnsDeleted;
-    [global::Quire.Mirror.MirrorStub]
-    public EditableComboBoxViewModel(global::Quire.Controls.InputControls.ComboBoxTableModel tableModel) : base(default(global::Quire.Controls.InputControls.ComboBoxTableModel)) { }
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.List<global::Quire.Controls.InputControls.ICellData> ExpandComboBoxRowsColumns(int targetRectBottom, int targetRectRight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -53,8 +43,6 @@ public partial class EditableComboBoxViewModel : global::Quire.Controls.InputCon
     public void TextBox_OnPaste(object sender, global::Quire.EquationEditor.Tree.ComboBoxCellDataType cellDataType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetupCommandBindings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UpdatePlaceHolderBoxSize(global::System.Windows.DpiScale dpiScale) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void DeleteRows(int fromIndex, int toIndex, bool assertIfCannotDelete, bool isFinishedEditingMode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

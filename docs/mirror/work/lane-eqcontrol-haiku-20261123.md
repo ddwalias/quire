@@ -123,3 +123,10 @@
 - Exact: `TableTitle`, `SelectedTableRowIndex`, `SelectedNameValuesRowIndex`, the public constructor (`: this(2, 2)`), the private `(rows, columns)` constructor (guard-clause shape: Mathcad's `brfalse` skips the body on the assertion's `Failed`), private `GetCellAt`, `AreCellPositionsValid`, `UpdateTableSize`.
 - Still stubs: `GetColumnCells`, `UpdateComboBoxTable`, `IsValid`, `InsertRow`/`InsertColumn`, and the range helpers. Each uses a lambda or iterator, so they are closures I have not verified yet.
 - Gate (project-level): PASS; 3454 checked (`.mirror-cache/release-il-daaf9e75b317/release-il.json`).
+
+### Batch 19: Controls.InputControls.EditableComboBoxViewModel (placeholder and table sizes, midpoints, constructor, placeholder measurement)
+
+- Exact: `PlaceHolderBoxSize` (guard-clause setter), `MidPointBetweenFirstAndSecondRow` and `...Column` (two guard clauses: the assertion first, then the equality check), `TableSize` (guard-clause setter), the constructor (`: base(tableModel)` and `SetupCommandBindings()`), and `UpdatePlaceHolderBoxSize` (the placeholder measurement).
+- The existing `SelectedCells`, `ClearSelection` and `CreateSelection` in the partial stay as they were. I did not replace them with the batch copies.
+- Still stubs: `AllCells`, the three events (same accessor-declaration concern as SpecTableControl), `ExpandComboBoxRowsColumns`, `PasteSelectedValues`, the paste/copy and delete helpers, and `ProcessConsecutiveIntervalsInReverseOrderAndNotify` (uses lambdas or iterators).
+- Gate (project-level): PASS; 3464 checked (`.mirror-cache/release-il-943ca0b12d75/release-il.json`).
