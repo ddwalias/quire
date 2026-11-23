@@ -24,3 +24,11 @@
 - Release IL: `release_il.py --base main --project Quire.Mcfront12` FAIL on one row only: 249 checked, 243 exact (`.mirror-cache/release-il-326ecf0d7509/release-il.json`). All new members are checked and exact (ParseHex, UintFromObject, ErrorDictFromCondition, ErrorDictFromObject, HasErrors, utl.ToStrng).
 - Remaining mismatch: `<Module>::sscanf` (pinvoke, original 0x060000aa), native row `+0x21: length 8 != original 13176`. The gate's leaf fallback at the nested options helper (RVA 0x9c50) is the cause; maintainer commit 0c5002c69 changes nested native comparison and is not on `main` yet. No manifest entry was added. Re-run after that fix lands on `main`.
 - Unpaired Mathcad members after this batch: 80 (CRT, boost, Windows API, and `NodeMap` optimizer members `NewCENode`, `NewCENodeTopTop`, `GetLastCENode`).
+
+## Batch 4: NodeMap.NewCENode and NodeMap.NewCENodeTopTop
+
+- Owner: Haiku worker, Orca task `task_0074f34ad42b`. Lands separately on top of batch 3 (branch `feature/haiku-mcfront12-batch3-20261123` points at 666591028).
+- Members: `Quire.Engine.NodeMap.NewCENode` and `NewCENodeTopTop` in `MixedMode/Mcfront12Port.cpp`, placed after `NewCENodeGen`. Each stores the `NewCENodeGen` result in a local before returning it, because returning the call directly makes the compiler add a `KeepAlive(this)` that the original does not have.
+- Release IL: `release_il.py --base main --project Quire.Mcfront12` checks 251; both new members are exact. The only failure is the `<Module>::sscanf` boundary row, which the pending maintainer fix addresses (see batch 3).
+- Not landed: `NodeMap.GetLastCENode`. The found-path `KeepAlive` matches the original once the explicit one is removed, but our compiler threads the null check past the loop test (`brfalse` to the return, original to the loop test). Several source forms were tried. The WIP stays out of the tree. It is unpaired and does not block batch 4 (unfinished members outside the changed scope do not block).
+- Remaining unpaired after batch 4: 78 Mathcad members (CRT/boost/std/Win32/utl natives, anonymous-static DocumentLogging initializers, and `GetLastCENode`).

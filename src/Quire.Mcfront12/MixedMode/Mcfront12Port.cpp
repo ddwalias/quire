@@ -1065,6 +1065,33 @@ namespace Quire { namespace Engine {
             return num;
         }
 
+        long NewCENode(long fnode, int priority, System::Collections::ICollection^ static_deps, ::depman::Action^ action)
+        {
+            System::Collections::ArrayList^ deps = Quire::Engine::CollectionUtils::Copy(static_deps);
+            if (m_lasttoptop > 0 && fnode > m_lasttoptop)
+            {
+                deps->Add("_toptop");
+            }
+            // Stored in a local first: returning the call directly makes the compiler add a KeepAlive(this) the original does not have.
+            long result = NewCENodeGen(fnode, priority, deps, nullptr, action);
+            return result;
+        }
+
+        long NewCENodeTopTop(long fnode, int priority, System::Collections::ICollection^ static_deps, ::depman::Action^ action)
+        {
+            System::Collections::ArrayList^ imports = Quire::Engine::CollectionUtils::Copy(static_deps);
+            imports->Add("_imports");
+            if (fnode > m_lasttoptop)
+            {
+                m_lasttoptop = fnode;
+            }
+            System::Collections::ArrayList^ toptop = gcnew System::Collections::ArrayList(1);
+            toptop->Add("_toptop");
+            // Stored in a local first: returning the call directly makes the compiler add a KeepAlive(this) the original does not have.
+            long result = NewCENodeGen(fnode, priority, imports, toptop, action);
+            return result;
+        }
+
         void UpdateCENode(long ce_node, int priority, System::Collections::ICollection^ static_deps, ::depman::Action^ action)
         {
             m_depman->Update(ce_node, action, static_deps, priority);
