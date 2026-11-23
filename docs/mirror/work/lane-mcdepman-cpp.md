@@ -225,6 +225,21 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
   - `PositionBase.Kill` and `TreatAsReady(false)`: require the unproven `std::set<depman::Position*>` erase path at offset 136.
   - `Position.previous` / `Position.next`: dynamic cast emits RTTI type descriptor data differences against Mathcad RTTI; pragmas remain commented out until RTTI descriptor handling is resolved.
 
+## Batch 22 — PositionBase.GetSharedThreadContext
+
+- Owner: AGY, Orca task `task_bb7074a207a6`; branch `feature/luna-mcdepman`.
+- Member: `PositionBase.GetSharedThreadContext()`, reads `env_` at offset 40 via conversion operator to `SEnvironment^` and calls `GetSharedThreadContext()`, maintaining the 216-byte `PositionBase` layout.
+- Release IL report: `.mirror-cache/release-il-cd89abba95e8/release-il.json` (PASS, 219 checked; module `PositionBase.GetSharedThreadContext` exact).
+- Remaining prerequisites:
+  - `DepManager.add_dep` / `remove_dep` / `invalidateChains`: large unmanaged methods operating directly on multi-level `std::map<SDef, std::map<Position*, pair<ActionChain*, DependencyType>>>` containers with `std_label_set` and custom comparators; native `DepManager` layout and tables remain unported.
+  - `PositionBase.InvalidateDeps`: blocked on `DepManager.invalidateChains`.
+  - `PositionBase.EndMove`: blocked on `ActionChain.TreatAsReadyDeps`.
+  - `PositionBase.SetEnvScope`: branches on Scope nullness, calling `ActionChain.remove_env_scope` and `ActionChain.add_env_scope` which require `DepManager.remove_dep` and `add_dep`.
+  - `PositionBase.Invalidate`: requires callback wiring for `PosCallback`, `PosQueueCallback`, `InterruptCallback`, and `TreatedReadyInvalidCallback`.
+  - `PositionBase.Kill` and `TreatAsReady(false)`: require the unproven `std::set<depman::Position*>` erase path at offset 136.
+  - `Position.previous` / `Position.next`: dynamic cast emits RTTI type descriptor data differences against Mathcad RTTI; pragmas remain commented out until RTTI descriptor handling is resolved.
+
+
 
 
 

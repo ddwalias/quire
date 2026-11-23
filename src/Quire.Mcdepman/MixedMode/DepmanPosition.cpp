@@ -34,6 +34,7 @@
 #pragma comment(linker, "/include:?SetScope@PositionBase@depman@@QEAMXPE$AAVScope@2Quire@@@Z")
 #pragma comment(linker, "/include:?GetEnvScope@PositionBase@depman@@QEAMPE$AAVScope@2Quire@@XZ")
 #pragma comment(linker, "/include:?env@PositionBase@depman@@$$FQEBMPE$AAUSEnvironment@2Quire@@XZ")
+#pragma comment(linker, "/include:?GetSharedThreadContext@PositionBase@depman@@$$FQEBMPE$AAVSharedThreadContext@2Quire@@XZ")
 // Uncalled native member functions are stripped by /OPT:REF unless referenced.
 // When referenced by callers in Depman, they will be emitted with exact IL.
 // #pragma comment(linker, "/include:?previous@Position@depman@@$$FQEAAPEAV12@XZ")
@@ -64,7 +65,7 @@ void PositionBase::SetScope(::Quire::depman::Scope^ scope)
 
 ::Quire::depman::SharedThreadContext^ PositionBase::GetSharedThreadContext() const
 {
-    return env_->GetSharedThreadContext();
+    return static_cast<::Quire::depman::SEnvironment^>(env_)->GetSharedThreadContext();
 }
 
 long PositionBase::GetHandle() const
