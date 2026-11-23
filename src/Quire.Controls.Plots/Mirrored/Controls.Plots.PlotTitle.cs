@@ -171,4 +171,22 @@ public partial class PlotTitle
         bool isVertical = ViewModel?.IsVertical ?? false;
         ApplyTemporaryOrientation(isVertical);
     }
+
+    private void HideTitleIfEmpty()
+    {
+        if (ViewModel == null || Title == null)
+        {
+            return;
+        }
+        if (!string.IsNullOrWhiteSpace(Title.GetText()))
+        {
+            return;
+        }
+        if (ViewModel.ShowTitle)
+        {
+            ViewModel.ShowTitle = false;
+            Title.ResetText();
+            ResetWidthConstraints();
+        }
+    }
 }

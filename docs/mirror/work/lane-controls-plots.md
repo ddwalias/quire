@@ -451,3 +451,10 @@
 - Shapes: `ColorConverter.ConvertFromString(...) is Color result` directly gave `stloc.1` at #3 (Quire puts the return local first); the separate object local matched.
 - Release IL: PASS — 2508 checked, 0 failures.
 - Left in AxisModel: `GetNumberOfTracesForEquation` (LINQ lambda closure, needs the ordinal check), `SetLevels` (uses `AxisModelDefinitionCollection`), the XML and data-object helpers, `SetRangeToRadialAxis`/`SetRangeToLinearAxis`/`SetLogarithmicScale`, and the constructor.
+
+## Batch 63 — PlotTitle.HideTitleIfEmpty
+
+- Member: `HideTitleIfEmpty`. Hand-written: appended to `Mirrored/Controls.Plots.PlotTitle.cs`; stub removed from `PlotTitle.g.cs`. The batch 55 attempt (one combined `&&` guard) is superseded.
+- Shapes: `ViewModel == null || Title == null` early return, then a separate `!IsNullOrWhiteSpace` early return, then `if (ViewModel.ShowTitle)` wrapping the body. The combined guard gave a different branch layout.
+- Release IL: PASS — 2509 checked, 0 failures.
+- Left in PlotTitle: only the XAML-generated `InitializeComponent`, `_CreateDelegate` and `Connect` stubs.
