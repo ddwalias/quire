@@ -124,3 +124,10 @@
 - Implemented in `Mirrored/` (stubs removed). `GetPageIndex(double, bool)` declares `gridHeight` from `PageLayout.GridCellSize.Height` directly, so Roslyn's temp holds the `Size`, as Mathcad's does. The `IsLessThan` call uses the extension's default NaN epsilon, which is the constant Mathcad passes.
 - Release IL: PASS (1308 checked, 0 failures).
 - Still stubs in this type: `IsTrailingEmptyPage`, `RemoveItemsFromPage`, `AppendNewPageIfNeeded`, `RemoveAllPages`, `Dispose` (closures), `UpdateVisiblePagesOnScrollChanged`, `PrePrint/PostPrintUpdateVisiblePages`, `GetPagesContaining`, the `Activate*` and `Split*` families.
+
+## Batch 18 — WorksheetPageManager Activate and Split helpers
+
+- Implemented in `Mirrored/` (stubs removed): `CheckIfSplitIsAllowedAndRequireFutureSplitIfNeeded` (static), `ActivateItemPart`, `ActivateMatchingPart`, `ReplaceWithRealItemAndActivateIfNeeded`, and the two-argument `ActivateDescendantParentIfNeeded`.
+- Parked: the four-argument `ActivateDescendantParentIfNeeded` (stub kept). Mathcad evaluates `this` and `activeItem`, then stores the `IWhiteboardItemContainer` into a temp inside the argument list before `dup`/`brtrue` for the `?? topArrangeInfoProvider`. Roslyn stores the temp as a statement before `ldarg.0`, so the first difference is at #24 (`ldloc.1` vs `ldarg.0`). Only an in-argument assignment could match, and that still emits `dup` in a different order.
+- Also parked: `GetCustomSplitItemRenderSize` (Mathcad shares one `First()` receiver across two member reads with `dup`, which Roslyn does not emit from source).
+- Release IL: PASS (1313 checked, 0 failures).

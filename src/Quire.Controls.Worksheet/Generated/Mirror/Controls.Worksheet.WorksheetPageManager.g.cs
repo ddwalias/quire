@@ -56,23 +56,13 @@ internal partial class WorksheetPageManager : global::Quire.Controls.Worksheet.I
     [global::Quire.Mirror.MirrorStub]
     public bool ExecuteOrScheduleSplitAttempt(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.Worksheet.IWorksheetPage prevItemContainingPage = default, bool mustExecuteImmediately = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static bool CheckIfSplitIsAllowedAndRequireFutureSplitIfNeeded(global::Quire.Controls.Core.IWhiteboardItem item, long stamp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IList<int> CalculateItemPageIndices(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Rect itemBoundingRect, out double offsetDiff) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ActivateItemPart(global::Quire.Controls.Core.IWhiteboardItem itemToActivate, int partIndex, bool replaceOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::System.Windows.Rect> GetClippedItemPartRect(global::Quire.Controls.Core.IWhiteboardItem realItem, int itemPartIndex, global::Quire.Controls.Worksheet.IWorksheetItemManager worksheetItemManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Wpf.Printing.PageIndexRange GetPagesContaining(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void ActivateMatchingPart(global::Quire.Controls.Core.IWhiteboardItem itemToActivate, global::System.Windows.Point location, bool replaceOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ReplaceWithRealItemAndActivateIfNeeded(global::Quire.Controls.Worksheet.IWhiteboardItemZombie zombiePart, bool replaceOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void ActivateWorksheetItemPartForcingSplitIfNeeded(global::Quire.Controls.Core.IWhiteboardItem topItem, global::Quire.Controls.Core.IWhiteboardItem intoViewItem, global::System.Windows.Rect intoViewItemRect, bool replaceOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ActivateDescendantParentIfNeeded(global::Quire.Controls.Core.IWhiteboardItem activeItem, global::Quire.Controls.Core.IWhiteboardItem activeDescendant) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ActivateDescendantParentIfNeeded(global::Quire.Controls.Core.IWhiteboardItem activeItem, global::Quire.Controls.Core.IWhiteboardItem activeDescendant, global::System.Windows.Rect activeDescendantRect, bool replaceOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

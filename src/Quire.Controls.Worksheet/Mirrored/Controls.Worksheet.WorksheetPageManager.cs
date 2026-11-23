@@ -297,4 +297,59 @@ internal partial class WorksheetPageManager
     {
         _worksheetVisiblePages.UpdateVisiblePagesOnPageAddedIfNeeded(indexOfFirstAddedPage, verticalOffset, viewportHeight, pageHeight);
     }
+
+    private static bool CheckIfSplitIsAllowedAndRequireFutureSplitIfNeeded(IWhiteboardItem item, long stamp)
+    {
+        if (stamp != ItemManager.GetItemAddMoveRemoveTimestamp(item))
+        {
+            return false;
+        }
+        if (ItemManager.ItemHasPendingSizeChangedEvents(item))
+        {
+            ItemManager.SetItemSplitCheckIsRequired(item, true);
+            return false;
+        }
+        return true;
+    }
+
+    public void ActivateItemPart(IWhiteboardItem itemToActivate, int partIndex, bool replaceOnly)
+    {
+        IWhiteboardItem[] itemParts = _worksheetItemSplitter.GetItemParts(itemToActivate).ToArray();
+        if (!DebugTools.DevAssert(partIndex < itemParts.Length).Passed)
+        {
+            return;
+        }
+        IWhiteboardItemZombie zombie = itemParts[partIndex] as IWhiteboardItemZombie;
+        if (zombie != null)
+        {
+            ReplaceWithRealItemAndActivateIfNeeded(zombie, replaceOnly);
+        }
+    }
+
+    private void ActivateMatchingPart(IWhiteboardItem itemToActivate, Point location, bool replaceOnly)
+    {
+        IWhiteboardItem matchingPart = _worksheetItemSplitter.GetMatchingPart(itemToActivate, location);
+        IWhiteboardItemZombie matchingZombie = matchingPart as IWhiteboardItemZombie;
+        if (matchingZombie != null)
+        {
+            ReplaceWithRealItemAndActivateIfNeeded(matchingZombie, replaceOnly);
+            return;
+        }
+        DebugTools.DevAssert(matchingPart == itemToActivate);
+    }
+
+    private void ReplaceWithRealItemAndActivateIfNeeded(IWhiteboardItemZombie zombiePart, bool replaceOnly)
+    {
+        _worksheetItemSplitter.ReplaceZombieWithRealItem(zombiePart);
+        if (!replaceOnly)
+        {
+            zombiePart.Item.Activate(true);
+        }
+    }
+
+    public void ActivateDescendantParentIfNeeded(IWhiteboardItem activeItem, IWhiteboardItem activeDescendant)
+    {
+        ActivateDescendantParentIfNeeded(activeItem, activeDescendant, Rect.Empty, false);
+    }
+
 }
