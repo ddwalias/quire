@@ -213,3 +213,10 @@
 - `RemoveAllPages` (token row 25): `DebugTools.LogData("Worksheet.RemoveAllPages: Enter"); _worksheetVisiblePages.RemoveAllPages(); Pages.Each(RemoveAllItemsFromPage); Pages.RemoveAll();`. Closure-free (method group). The generated stub moved to the partial. It calls the parked `RemoveAllItemsFromPage` placeholder, so a non-empty page set still reaches that runtime stub.
 - Release IL gate: PASS, 1344 checked, 1344 exact, 0 failures.
 - Next candidates measured read-only: `SplitItemIfNeededAndRemoveEmptyPages` (display class `33_0` with a `SplitAction` conditional and an `ExecuteOnLayoutUpdated` lambda), `AddItemToAppropriatePage` (display class `31_0`, captured struct `itemWorksheetLocation`), `HandleItemMoved` (display class `46_0`, captured struct).
+
+## Batch 32 — WorksheetPageManager VisiblePagesRangeToString
+
+- `VisiblePagesRangeToString(int startingPageNumber = 1)`: `Regex.Replace(string.Join(",", VisiblePages.Select(page => page.PageNumber + startingPageNumber - 1)), ",([0-9]+,)+", "-")`. One captured parameter, so no captured-field ordering issue. Display class `82_0` matches Mathcad.
+- The nested `SplitAction` delegate moved from after `ActivateItemPart` (row 41) to just before `AppendNewPageIfNeeded` (row 66). Its position now sits between rows 63 and 66, which is where Mathcad's display-class and lambda numbering place it. Batch 27's `AppendNewPageIfNeeded` lambda (`b__86_0`) still matches.
+- Release IL gate: PASS, 1347 checked, 1347 exact, 0 failures.
+- `SplitItemIfNeededAndRemoveEmptyPages` remains parked and reverted (display class 37 against 33, and captured-field store order stamp, item, location, this).

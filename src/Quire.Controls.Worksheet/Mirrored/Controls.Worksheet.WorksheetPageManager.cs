@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using Quire.Controls.Core;
 using Quire.Controls.Core.Whiteboard;
@@ -343,9 +344,6 @@ internal partial class WorksheetPageManager
 
     private global::System.Collections.Generic.IList<int> CalculateItemPageIndices(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Rect itemBoundingRect, out double offsetDiff) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetPageManager+SplitAction, Ptc.Controls.Worksheet")]
-    private delegate void SplitAction(global::Quire.Controls.Core.IWhiteboardItem item, long stamp, global::Quire.Controls.Worksheet.IWorksheetPage prevItemContainingPage, bool forceSplitEvenIfNotVisiblePages);
-
     public void ActivateItemPart(IWhiteboardItem itemToActivate, int partIndex, bool replaceOnly)
     {
         IWhiteboardItem[] itemParts = _worksheetItemSplitter.GetItemParts(itemToActivate).ToArray();
@@ -577,7 +575,10 @@ internal partial class WorksheetPageManager
         VisualHelper.ScrollToPage(VisiblePages.First(), targetPage, true);
     }
 
-    public string VisiblePagesRangeToString(int startingPageNumber = 1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public string VisiblePagesRangeToString(int startingPageNumber = 1)
+    {
+        return Regex.Replace(string.Join(",", VisiblePages.Select(page => page.PageNumber + startingPageNumber - 1)), ",([0-9]+,)+", "-");
+    }
 
     public double PrePrintUpdateVisiblePages(PageIndexRange pageRange, double pageHeight)
     {
@@ -605,6 +606,9 @@ internal partial class WorksheetPageManager
         _pageRangeOnPrePrint = null;
         return _worksheetVisiblePages.SetVisiblePages(firstIndex, lastIndex, pageHeight);
     }
+
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetPageManager+SplitAction, Ptc.Controls.Worksheet")]
+    private delegate void SplitAction(global::Quire.Controls.Core.IWhiteboardItem item, long stamp, global::Quire.Controls.Worksheet.IWorksheetPage prevItemContainingPage, bool forceSplitEvenIfNotVisiblePages);
 
     private void AppendNewPageIfNeeded(int pageIndex)
     {
