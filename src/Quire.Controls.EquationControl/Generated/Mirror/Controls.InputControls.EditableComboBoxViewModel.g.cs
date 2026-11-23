@@ -21,16 +21,4 @@ public partial class EditableComboBoxViewModel : global::Quire.Controls.InputCon
     private double _midPointBetweenFirstAndSecondColumn;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Tuple<int, int> _selectedCells;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData> AllCells { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private void SetupCommandBindings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void DeleteRows(int fromIndex, int toIndex, bool assertIfCannotDelete, bool isFinishedEditingMode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void DeleteColumns(int fromIndex, int toIndex, bool assertIfCannotDelete, bool isFinishedEditingMode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DeleteEmptyRows() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DeleteEmptyColumns() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -173,3 +173,11 @@
 ### Still stubs (closure-gated, not landed)
 
 - `AllCells` (ordinal 7), `SetupCommandBindings` (46), `DeleteRows` (display class 61), `DeleteColumns` (63), `DeleteEmptyRows` (73), `DeleteEmptyColumns` (74). Each needs the Mathcad ordinal reproduced by placeholder members in Mathcad order before it, which is the closure-ordinal blocker in the lane notes.
+
+### Batch 26: Controls.InputControls.EditableComboBoxViewModel (AllCells closure, with ordinal placeholders)
+
+- Exact: `AllCells` (`SelectMany` closure `<get_AllCells>b__7_0`, ordinal 7) and the constructor, which moves to the top of the hand-written partial so that it precedes `AllCells` as in Mathcad's member order.
+- Ordinal finding: a lambda's Roslyn ordinal is 1 plus the number of members declared before its method in the merged type. Generated stubs and fields come first (the generated `.g.cs` is compiled first), so the five stub methods in the generated file pushed `AllCells` to 11 and then 56. Moving those five methods into the hand-written partial as unmarked placeholders (`=> throw ...NotImplemented()`) in Mathcad order brought the count to 7.
+- Placeholders now in the partial, in Mathcad order: `SetupCommandBindings` (after `TextBox_OnPaste`), `DeleteRows` (after `CanDeleteRow`), `DeleteColumns` (after `CanDeleteColumn`), `DeleteEmptyRows` and `DeleteEmptyColumns` (after `ProcessConsecutiveIntervalsInReverseOrderAndNotify`). Each of their closures still needs its ordinal checked when implemented: `SetupCommandBindings` is Mathcad `b__46_0..3`, `DeleteRows` display class `61_0`, `DeleteColumns` `63_0`, `DeleteEmptyRows` `73_0`, and `DeleteEmptyColumns` `74_0..2`.
+- Gate (project-level): PASS; 3476 checked, zero failures (`.mirror-cache/release-il-6bc583f323e2/release-il.json`).
+- Still stubs (placeholders): `SetupCommandBindings`, `DeleteRows`, `DeleteColumns`, `DeleteEmptyRows`, `DeleteEmptyColumns`. Their ordinals depend on the members declared before each one in Mathcad order, which the placeholders in the partial now provide only approximately, so each needs its own probe.

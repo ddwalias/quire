@@ -7,6 +7,7 @@ using Quire.EquationEditor.Tree;
 using System;
 using System.Windows.Media;
 using System.Windows;
+using System.Linq;
 using System.Windows.Input;
 using Quire.Controls.Core;
 using Quire.Controls.Internal;
@@ -15,6 +16,14 @@ namespace Quire.Controls.InputControls;
 
 public partial class EditableComboBoxViewModel
 {
+    public EditableComboBoxViewModel(ComboBoxTableModel tableModel)
+        : base(tableModel)
+    {
+        SetupCommandBindings();
+    }
+
+    public IEnumerable<ICellData> AllCells => TableModel.AllRows.SelectMany((ComboBoxRow row) => row.AllCells);
+
 
     public event Action<IEnumerable<ICellData>> CellsAdded;
 
@@ -37,10 +46,14 @@ public partial class EditableComboBoxViewModel
         return TableModel.CanRemoveRow(rowIndex);
     }
 
+    public void DeleteRows(int fromIndex, int toIndex, bool assertIfCannotDelete, bool isFinishedEditingMode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     public bool CanDeleteColumn(int columnIndex)
     {
         return TableModel.CanRemoveColumn(columnIndex);
     }
+
+    public void DeleteColumns(int fromIndex, int toIndex, bool assertIfCannotDelete, bool isFinishedEditingMode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public Quire.DiscreteRect GetTableRect(int cellIndexA, int cellIndexB)
     {
@@ -268,6 +281,8 @@ public partial class EditableComboBoxViewModel
         }
     }
 
+    private void SetupCommandBindings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     public Size PlaceHolderBoxSize
     {
         get
@@ -344,12 +359,6 @@ public partial class EditableComboBoxViewModel
         }
     }
 
-    public EditableComboBoxViewModel(ComboBoxTableModel tableModel)
-        : base(tableModel)
-    {
-        SetupCommandBindings();
-    }
-
     public void UpdatePlaceHolderBoxSize(DpiScale dpiScale)
     {
         FormattedText formattedText = VisualPlaceholderNode.CreateFormattedCharPlaceholder(new Typeface(new FontFamily("Mathcad UniMath Prime"), FontStyles.Normal, FontWeights.Normal, FontStretches.Normal), WpfUtils.PointsToDips(FontConstants.DefaultMathFontSizeInPoints), FontConstants.DefaultMathFontColor, dpiScale);
@@ -385,6 +394,10 @@ public partial class EditableComboBoxViewModel
             notify(fromIndex, num2.Value);
         }
     }
+
+    private void DeleteEmptyRows() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void DeleteEmptyColumns() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public void RemoveOrClearSelectedCells(int cellIndexA, int cellIndexB, bool onlyClearSelectionContent)
     {
