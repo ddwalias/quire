@@ -21,3 +21,9 @@
 - Member: `MatrixNodeInfo.a(string, object)` (private property-change dispatcher for "Size" and "Offset"), in `Mirrored/EquationEditor.Tree.MatrixNodeInfo.ViewportChange.cs`. Stub removed from the `.g.cs` by hand.
 - Release IL: `--project Quire.EquationEditor` PASS, 1075 checked, 0 failures.
 - Still blocked: `MatrixNodeInfo.MatrixFormat` (field `a` clashes with method `a`); `ICloneable.Clone` explicit implementation (Mathcad name `b` clashes with field `b`).
+
+## Batch 3 — Scoping.NavigatorSegment constructor, right state and operator parts
+
+- Members: `NavigatorSegment(NavigatorState, NavigatorState)` constructor, `RightNavigatorState` get/set (field `b` moved to `Mirrored/EquationEditor.Tree.Scoping.NavigatorSegment.cs`), `LeftOperatorPart`, `RightOperatorPart`. Stubs removed from the `.g.cs` by hand.
+- Release IL: `--project Quire.EquationEditor` PASS, 1080 checked, 0 failures.
+- Still blocked: `LeftNavigatorState` (field `a` clashes with method `a`), `NavigatorSegment.a(...)` overloads, and members that read `a`.

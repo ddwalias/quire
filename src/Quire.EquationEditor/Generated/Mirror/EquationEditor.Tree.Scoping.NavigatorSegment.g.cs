@@ -14,11 +14,7 @@ public partial class NavigatorSegment
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.EquationEditor.Tree.Navigation.NavigatorState a_;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.EquationEditor.Tree.Navigation.NavigatorState b;
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState LeftNavigatorState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState RightNavigatorState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool Linearizable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -26,15 +22,9 @@ public partial class NavigatorSegment
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode RightNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<int> LeftOperatorPart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<int> RightOperatorPart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool SegmentIsSingleNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal bool HasNodes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public NavigatorSegment(global::Quire.EquationEditor.Tree.Navigation.NavigatorState leftState, global::Quire.EquationEditor.Tree.Navigation.NavigatorState rightState) { }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.EquationEditor.Tree.Scoping.NavigatorSegment NavigatorSegmentFromLinearSegment(global::Quire.EquationEditor.Tree.Scoping.LinearSegment linearSegment) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
