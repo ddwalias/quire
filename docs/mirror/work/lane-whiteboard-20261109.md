@@ -545,5 +545,20 @@
 - Release IL: PASS — 937 checked, 0 failures (`release-il-c8408fa7bc8b`).
 - Remaining mismatches in this batch: none.
 
+## Batch 42 — WhiteboardViewModel: IsTabNavigatable and TabInto closures
+
+- Members:
+  - `WhiteboardViewModel.IsTabNavigatable` (expression-bodied property getter and closure `<get_IsTabNavigatable>b__236_0`)
+  - `WhiteboardViewModel.TabInto(FocusNavigationDirection)` (method and closures `<TabInto>b__237_0`, `<TabInto>b__237_1`)
+- Layout & Closure Ordinals:
+  - Isolated the 6-position gap in `WhiteboardViewModel` closure ordinals:
+    - Relocated 5 trailing fields (`_maximumWidth`, `_minimumHeight`, `_minimumWidth`, `_itemSizeChangedHandlerMap`, `_enteredRestoreSavedState`) from after `IsTabNavigatable` to line 618 alongside the other member fields, advancing closure ordinals by +5 positions (`b__230_0` -> `b__235_0`).
+    - Relocated nested class `PropertyNames` from after `IsTabNavigatable` to line 585 (after command properties, before backing fields), advancing member ordinals by +1 position (`b__235_0` -> `b__236_0`), while preserving all 13 existing exact command closures at lines 40-130 (`b__10_0` through `b__22_1`).
+- Shapes Release IL requires:
+  - `TabInto` uses ternary expression `(dir == FocusNavigationDirection.Next) ? WhiteboardItems.First(...) : WhiteboardItems.Last(...)`, matching Mathcad's `brfalse.s` branching to `First` with `Last` in the fallthrough path.
+- Release IL: PASS — 944 checked, 0 failures (`release-il-63e7bdd0252d`).
+- Remaining mismatches in this batch: none.
+
+
 
 

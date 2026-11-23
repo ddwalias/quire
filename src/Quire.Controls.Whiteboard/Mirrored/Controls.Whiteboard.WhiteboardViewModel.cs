@@ -583,6 +583,37 @@ public partial class WhiteboardViewModel
 
     public event global::System.Action<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem>> CopyWhiteboardItems;
 
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+PropertyNames, Ptc.Controls.Whiteboard")]
+    public static partial class PropertyNames
+    {
+        [global::Quire.Mirror.MirrorStub]
+        public const string IsFocused = "IsFocused";
+        [global::Quire.Mirror.MirrorStub]
+        public const string InsertionPoint = "InsertionPoint";
+        [global::Quire.Mirror.MirrorStub]
+        public const string IsCrosshairVisible = "IsCrosshairVisible";
+        [global::Quire.Mirror.MirrorStub]
+        public const string ContentWidth = "ContentWidth";
+        [global::Quire.Mirror.MirrorStub]
+        public const string ContentHeight = "ContentHeight";
+        [global::Quire.Mirror.MirrorStub]
+        public const string MinimumWidth = "MinimumWidth";
+        [global::Quire.Mirror.MirrorStub]
+        public const string MinimumHeight = "MinimumHeight";
+        [global::Quire.Mirror.MirrorStub]
+        public const string MaximumWidth = "MaximumWidth";
+        [global::Quire.Mirror.MirrorStub]
+        public const string MaximumHeight = "MaximumHeight";
+        [global::Quire.Mirror.MirrorStub]
+        public const string ActiveItem = "ActiveItem";
+        [global::Quire.Mirror.MirrorStub]
+        public const string SelectedItems = "SelectedItems";
+        [global::Quire.Mirror.MirrorStub]
+        public const string ActiveDescendant = "ActiveDescendant";
+        [global::Quire.Mirror.MirrorStub]
+        public const string SelectedDescendants = "SelectedDescendants";
+    }
+
     protected readonly global::Quire.Controls.Whiteboard.IWhiteboardModel _whiteboardModel;
 
     private static global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager _whiteboardItemMgr;
@@ -614,6 +645,17 @@ public partial class WhiteboardViewModel
     private double _contentHeight;
 
     private double _contentWidth;
+
+    private double _maximumWidth;
+
+    private double _minimumHeight;
+
+    private double _minimumWidth;
+
+    private readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventHandler> _itemSizeChangedHandlerMap;
+
+    private bool _enteredRestoreSavedState;
+
 
     protected WhiteboardViewModel(global::Quire.Controls.Whiteboard.IWhiteboardModel model, bool handleUserInput, global::System.Nullable<global::System.Windows.Size> gridCellSize = default) { }
 
@@ -1143,9 +1185,12 @@ public partial class WhiteboardViewModel
         return new PasteItemsCommand(this, commandName, pasteItemsAtLocation);
     }
 
-    public virtual bool IsTabNavigatable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public virtual bool IsTabNavigatable => WhiteboardItems.Any(item => WhiteboardItemMgr.IsTabNavigatable(item));
 
-    public virtual void TabInto(global::System.Windows.Input.FocusNavigationDirection dir) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void TabInto(global::System.Windows.Input.FocusNavigationDirection dir)
+    {
+        WhiteboardItemMgr.TabInto((dir == FocusNavigationDirection.Next) ? WhiteboardItems.First(item => WhiteboardItemMgr.IsTabNavigatable(item)) : WhiteboardItems.Last(item => WhiteboardItemMgr.IsTabNavigatable(item)), dir);
+    }
 
     public void HandleTabOutOfText(CustomRoutedEventArgs<FocusNavigationDirection> eventArgs)
     {
@@ -1681,46 +1726,7 @@ public partial class WhiteboardViewModel
         }
     }
 
-    private double _maximumWidth;
 
-    private double _minimumHeight;
-
-    private double _minimumWidth;
-
-    private readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventHandler> _itemSizeChangedHandlerMap;
-
-    private bool _enteredRestoreSavedState;
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+PropertyNames, Ptc.Controls.Whiteboard")]
-    public static partial class PropertyNames
-    {
-        [global::Quire.Mirror.MirrorStub]
-        public const string IsFocused = "IsFocused";
-        [global::Quire.Mirror.MirrorStub]
-        public const string InsertionPoint = "InsertionPoint";
-        [global::Quire.Mirror.MirrorStub]
-        public const string IsCrosshairVisible = "IsCrosshairVisible";
-        [global::Quire.Mirror.MirrorStub]
-        public const string ContentWidth = "ContentWidth";
-        [global::Quire.Mirror.MirrorStub]
-        public const string ContentHeight = "ContentHeight";
-        [global::Quire.Mirror.MirrorStub]
-        public const string MinimumWidth = "MinimumWidth";
-        [global::Quire.Mirror.MirrorStub]
-        public const string MinimumHeight = "MinimumHeight";
-        [global::Quire.Mirror.MirrorStub]
-        public const string MaximumWidth = "MaximumWidth";
-        [global::Quire.Mirror.MirrorStub]
-        public const string MaximumHeight = "MaximumHeight";
-        [global::Quire.Mirror.MirrorStub]
-        public const string ActiveItem = "ActiveItem";
-        [global::Quire.Mirror.MirrorStub]
-        public const string SelectedItems = "SelectedItems";
-        [global::Quire.Mirror.MirrorStub]
-        public const string ActiveDescendant = "ActiveDescendant";
-        [global::Quire.Mirror.MirrorStub]
-        public const string SelectedDescendants = "SelectedDescendants";
-    }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+WhiteboardResizingCommand, Ptc.Controls.Whiteboard")]
     public abstract partial class WhiteboardResizingCommand : global::Quire.Controls.Whiteboard.Commands.WhiteboardCommand
