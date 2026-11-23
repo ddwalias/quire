@@ -117,3 +117,9 @@
 
 - `SpecTableControl` event move (8 field-like events): gate PASS, but `add_Changed`/`remove_Changed` are "unchanged and never matched Mathcad (declaration differs)", so the move was reverted rather than landing unverified accessors.
 - `EngineResults` (LINQ `Select` lambda): Release IL differs at the closure. Mathcad names the lambda `<get_EngineResults>b__202_0` in `SpecTableControl+<>c`; Quire's ordinal is different, so the `ldftn` and the `<>c` member have no Mathcad counterpart. The ordinal would need the 201 Mathcad members before it as placeholders in order; reverted, not landed.
+
+### Batch 18: Controls.InputControls.ComboBoxTableModel (row/column index properties, title, private constructor, cell lookup, table resize)
+
+- Exact: `TableTitle`, `SelectedTableRowIndex`, `SelectedNameValuesRowIndex`, the public constructor (`: this(2, 2)`), the private `(rows, columns)` constructor (guard-clause shape: Mathcad's `brfalse` skips the body on the assertion's `Failed`), private `GetCellAt`, `AreCellPositionsValid`, `UpdateTableSize`.
+- Still stubs: `GetColumnCells`, `UpdateComboBoxTable`, `IsValid`, `InsertRow`/`InsertColumn`, and the range helpers. Each uses a lambda or iterator, so they are closures I have not verified yet.
+- Gate (project-level): PASS; 3454 checked (`.mirror-cache/release-il-daaf9e75b317/release-il.json`).
