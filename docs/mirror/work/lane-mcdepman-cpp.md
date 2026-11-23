@@ -255,6 +255,31 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
   - `PositionBase.Kill` and `TreatAsReady(false)`: require the unproven `std::set<depman::Position*>` erase path at offset 136.
   - `Position.previous` / `Position.next`: dynamic cast emits RTTI type descriptor data differences against Mathcad RTTI; pragmas remain commented out until RTTI descriptor handling is resolved.
 
+## Shared Integration Note — SafeEvent and Cross-Assembly gcroot Mapping in MethodAudit
+
+Investigation of `PositionBase.SetBusy`, `PositionBase.WaitReady`, and `PositionBase.PrepareKill` (which access `not_busy_event_` at offset 168 and `ready_event_` at offset 176) identified a precise toolset constraint in `tools/Quire.Tools.MethodAudit/Program.cs`:
+
+1. **Root Cause**:
+   - `Program.cs` lines 198–212 scans candidate types for native `gcroot<...>` specializations:
+     ```csharp
+     var argument = name[gcrootPrefix.Length..^gcrootSuffix.Length].Replace("::", ".");
+     if (!typeNames.TryGetValue((artifact.Name, argument), out var binding)
+         || !reviewed.ContainsKey(argument) || !originals.TryGetValue(binding[1], out var original)) continue;
+     ```
+   - When evaluating `artifact.Name == "Quire.Mcdepman"`, `name` is `"gcroot<Quire::utl_mgd::SafeEvent ^>"`, so `argument` is `"Quire.utl_mgd.SafeEvent"`.
+   - `typeNames` is keyed by `(artifact.Name, type.FullName)`, containing only types declared directly in `artifact.Name` that carry `[MirrorOf]`. Because `SafeEvent` is declared in `Quire.Engine.Utl`, `(Quire.Mcdepman, Quire.utl_mgd.SafeEvent)` is absent from `typeNames`, causing `TryGetValue` to fail.
+   - Furthermore, even if cross-assembly type lookup (`Binding`) is used, line 206 resolves `original` via `originals.TryGetValue(binding[1], out var original)`, where `binding[1]` is `"utl-mgd"`. It then asserts `original.Model.Types.Any(t => t.FullName == mapped)`. But `utl-mgd.dll` is pure managed C# metadata and does not contain native `gcroot<utl_mgd::SafeEvent ^>` TypeDefs. The native `gcroot<utl_mgd::SafeEvent ^>` template specialization actually exists in `mcdepman.dll` (the original counterpart of `Quire.Mcdepman`).
+
+2. **Affected Mcdepman Methods**:
+   - `PositionBase.SetBusy(bool)`: sets `is_busy_` (offset 192), `busy_thread_id_` (offset 196), and calls `not_busy_event_->Reset()` / `not_busy_event_->Set()`.
+   - `PositionBase.WaitReady()`: reads `ready_event_` (offset 176) via conversion operator and calls `SafeWaitHandle::WaitOne()`.
+   - `PositionBase.PrepareKill()`: sets `send_messages_ = false` (offset 156), clears `ready_event_` (offset 176), and calls `ev->Set()`.
+   - `PositionBase.ready()`: reads `labeled_dictionary_` (offset 72, `gcroot<Quire::utl_mgd::LabeledDictionary^>`), which has the identical cross-assembly `gcroot` issue with `Quire.Engine.Utl`.
+
+3. **C++ Implementation Readiness**:
+   - The C++ source implementations for all four methods match Mathcad's original instructions and control flow exactly. Once `MethodAudit` supports cross-assembly `gcroot` type argument resolution against the current module's original counterpart (`originals[currentOriginal]`), these four methods can be linked via `#pragma comment(linker, ...)` and will pass Release IL verification immediately.
+
+
 
 
 
