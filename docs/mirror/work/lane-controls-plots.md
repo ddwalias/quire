@@ -582,5 +582,5 @@
 
 - Members: `GetAxisEffectiveStart`, `GetAxisEffectiveEnd` (casts of `OtherAxis` to `PlotGraphRadialAxis`), `HandleOrientationChanged`, `PositionTickMarkChanged`, `UpdateAxisOriginPositions`, `MouseMoveDraw`, `MoveToValue`, `MoveByValue`, `FindClosestTickValueToZero` (returns true), `ApplyTickNumber`. Hand-written at the end of `Mirrored/Controls.Plots.PlotGraphAngularAxis.cs`; ten stubs removed from `PlotGraphAngularAxis.g.cs`.
 - No closures or iterators in the group, so placement does not change any ordinal.
-- Generated layout: ten stubs removed. Verified: after a Release build, `emit` regenerates `PlotGraphAngularAxis.g.cs` byte-identical to the committed file.
+- Generated layout: ten stubs removed. The first `emit` after the Release build also generated two base-call stubs for the nested `Point2ScreenHelperImpl` overrides (`Point2Screen`, `Contains`), which the applied file lacked; the committed file is the emitted version. A second build and `emit` is byte-identical to it, and the gate passes on the committed state.
 - Release IL: full gate PASS — 2566 checked, 0 failures.
