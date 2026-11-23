@@ -5,6 +5,7 @@ using System.Windows;
 using Quire.Controls.Core;
 using Quire.Controls.Core.Whiteboard;
 using Quire.Wpf;
+using Quire.Wpf.Printing;
 
 namespace Quire.Controls.Worksheet;
 
@@ -352,4 +353,50 @@ internal partial class WorksheetPageManager
         ActivateDescendantParentIfNeeded(activeItem, activeDescendant, Rect.Empty, false);
     }
 
+    public PageIndexRange GetPagesContaining(IWhiteboardItem item)
+    {
+        PageIndexRange pageRange;
+        if (DebugTools.DevAssert(!ItemManager.GetItemSplitCheckIsRequired(item)).Failed)
+        {
+            IList<int> pageIndices = CalculateItemPageIndices(item, ItemManager.GetDescendantBounds(item), out double offsetDiff);
+            pageRange = new PageIndexRange(pageIndices[0], pageIndices[pageIndices.Count - 1]);
+        }
+        else
+        {
+            IList<IWhiteboardItem> itemParts;
+            if (GetWorksheetItemParts(item).IsNotEmpty(out itemParts))
+            {
+                pageRange = new PageIndexRange(
+                    ItemManager.GetContainingPage(itemParts[0]).PageNumber - 1,
+                    ItemManager.GetContainingPage(itemParts[itemParts.Count - 1]).PageNumber - 1);
+            }
+            else
+            {
+                pageRange = new PageIndexRange(GetPageIndex(item));
+            }
+        }
+        return pageRange;
+    }
+
+    public double UpdateVisiblePagesOnScrollChanged(double verticalOffset, double viewportHeight, double pageHeight)
+    {
+        PageIndexRange previousRange = new PageIndexRange(_worksheetVisiblePages.FirstVisiblePageIndex, _worksheetVisiblePages.LastVisiblePageIndex);
+        double newPageOffset = _worksheetVisiblePages.UpdateVisiblePagesOnScrollChanged(verticalOffset, viewportHeight, pageHeight);
+        if (_pageRangeOnPrePrint.HasValue)
+        {
+            PageIndexRange currentRange = new PageIndexRange(_worksheetVisiblePages.FirstVisiblePageIndex, _worksheetVisiblePages.LastVisiblePageIndex);
+            if (DebugTools.DevAssert(_pageRangeOnPrePrint.Value == currentRange).Passed)
+            {
+                newPageOffset = _worksheetVisiblePages.SetVisiblePages(previousRange.FirstIndex, previousRange.LastIndex, pageHeight);
+            }
+            else
+            {
+                newPageOffset = _worksheetVisiblePages.SetVisiblePages(
+                    Math.Min(previousRange.FirstIndex, currentRange.FirstIndex),
+                    Math.Max(previousRange.LastIndex, currentRange.LastIndex),
+                    pageHeight);
+            }
+        }
+        return newPageOffset;
+    }
 }

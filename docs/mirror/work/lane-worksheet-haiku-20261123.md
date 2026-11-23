@@ -131,3 +131,9 @@
 - Parked: the four-argument `ActivateDescendantParentIfNeeded` (stub kept). Mathcad evaluates `this` and `activeItem`, then stores the `IWhiteboardItemContainer` into a temp inside the argument list before `dup`/`brtrue` for the `?? topArrangeInfoProvider`. Roslyn stores the temp as a statement before `ldarg.0`, so the first difference is at #24 (`ldloc.1` vs `ldarg.0`). Only an in-argument assignment could match, and that still emits `dup` in a different order.
 - Also parked: `GetCustomSplitItemRenderSize` (Mathcad shares one `First()` receiver across two member reads with `dup`, which Roslyn does not emit from source).
 - Release IL: PASS (1313 checked, 0 failures).
+
+## Batch 19 — WorksheetPageManager GetPagesContaining, UpdateVisiblePagesOnScrollChanged
+
+- Implemented in `Mirrored/` (stubs removed). `GetPagesContaining` uses the `if (DevAssert(...).Failed)` split on `GetItemSplitCheckIsRequired`, the `IsNotEmpty(out IList<T>)` overload, and `new PageIndexRange(int)` for the default-null end. `UpdateVisiblePagesOnScrollChanged` keeps the pre-print range comparison and the `Math.Min`/`Math.Max` union.
+- Release IL: PASS (1315 checked, 0 failures) on the first attempt.
+- Still stubs: the four-argument `ActivateDescendantParentIfNeeded` (argument-list temp), `GetCustomSplitItemRenderSize` (shared `dup` receiver), closure members, and the `Split`/`Print` families not yet attempted.
