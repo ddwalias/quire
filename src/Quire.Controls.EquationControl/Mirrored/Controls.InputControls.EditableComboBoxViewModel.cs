@@ -267,4 +267,56 @@ public partial class EditableComboBoxViewModel
         FormattedText formattedText = VisualPlaceholderNode.CreateFormattedCharPlaceholder(new Typeface(new FontFamily("Mathcad UniMath Prime"), FontStyles.Normal, FontWeights.Normal, FontStretches.Normal), WpfUtils.PointsToDips(FontConstants.DefaultMathFontSizeInPoints), FontConstants.DefaultMathFontColor, dpiScale);
         PlaceHolderBoxSize = new Size(formattedText.Width / 2.0, formattedText.Height / 2.0);
     }
+
+    internal static void ProcessConsecutiveIntervalsInReverseOrderAndNotify(int fromIndex, int toIndex, Func<int, bool> condition, Action<int, int> notify)
+    {
+        if (fromIndex > toIndex)
+        {
+            int num = fromIndex;
+            fromIndex = toIndex;
+            toIndex = num;
+        }
+        int? num2 = null;
+        for (int num3 = toIndex; num3 >= fromIndex; num3--)
+        {
+            if (condition(num3))
+            {
+                if (!num2.HasValue)
+                {
+                    num2 = num3;
+                }
+            }
+            else if (num2.HasValue)
+            {
+                notify(num3 + 1, num2.Value);
+                num2 = null;
+            }
+        }
+        if (num2.HasValue)
+        {
+            notify(fromIndex, num2.Value);
+        }
+    }
+
+    public void RemoveOrClearSelectedCells(int cellIndexA, int cellIndexB, bool onlyClearSelectionContent)
+    {
+        ClearSelection();
+        DiscreteRect tableRect = GetTableRect(cellIndexA, cellIndexB);
+        bool flag = tableRect.Top <= 1 && tableRect.Bottom == Rows - 1;
+        bool num = tableRect.Top == 0 && tableRect.Bottom == Rows - 1;
+        bool flag2 = tableRect.Left == 0 && tableRect.Right == Columns - 1;
+        onlyClearSelectionContent |= flag2 & flag;
+        if (num && !onlyClearSelectionContent)
+        {
+            DeleteColumns(tableRect.Left, tableRect.Right, assertIfCannotDelete: false, isFinishedEditingMode: false);
+        }
+        else if (flag2 && !onlyClearSelectionContent)
+        {
+            DeleteRows(tableRect.Top, tableRect.Bottom, assertIfCannotDelete: false, isFinishedEditingMode: false);
+        }
+        else
+        {
+            TableModel.ClearSelectedCellsContent(tableRect);
+        }
+    }
 }

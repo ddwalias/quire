@@ -48,10 +48,6 @@ public partial class EditableComboBoxViewModel : global::Quire.Controls.InputCon
     [global::Quire.Mirror.MirrorStub]
     public void DeleteColumns(int fromIndex, int toIndex, bool assertIfCannotDelete, bool isFinishedEditingMode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void RemoveOrClearSelectedCells(int cellIndexA, int cellIndexB, bool onlyClearSelectionContent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static void ProcessConsecutiveIntervalsInReverseOrderAndNotify(int fromIndex, int toIndex, global::System.Func<int, bool> condition, global::System.Action<int, int> notify) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void DeleteEmptyRows() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void DeleteEmptyColumns() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
