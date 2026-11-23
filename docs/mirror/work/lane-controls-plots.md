@@ -628,3 +628,11 @@
 - Generated layout: eight stubs removed. The first `emit` after the build also generated two base-call stubs for the nested `Point2ScreenHelperImpl` overrides (`Point2Screen`, `Contains`), as in batch 82; the committed file is the emitted version and the gate passes on it.
 - Release IL: full gate PASS — 2581 checked, 0 failures.
 - Still stubs in this class: `GetTickMarkElementPosition`, `GetTickMarkPositionByIndex`, `GetTickLine`, `AxisLineGeometry`, `DrawNumbers`.
+
+## Batch 90 — PlotGraphRadialAxis tick helpers
+
+- Members: `GetTickMarkElementPosition` (the element's `DesiredSize.Width` is read inline, so Mathcad's `this` load comes first), `GetTickMarkPositionByIndex` (public), `GetTickLine`, `AxisLineGeometry`, `DrawNumbers` (the `DevAssert` with format arguments and the `i < lastTick` loop as written). Hand-written at the top of the class in `Mirrored/Controls.Plots.PlotGraphRadialAxis.cs`; five stubs removed.
+- A first draft with a local `Size desiredSize` failed on the load order at instruction 0; the inline width form matches.
+- Generated layout: five stubs removed. Verified: after a Release build, `emit` leaves no new lines against HEAD, only the five removals, so the emitted file equals the applied one.
+- Release IL: full gate PASS — 2586 checked, 0 failures.
+- Radial axis: no stubs remain except the XAML-free members already covered; `GetTickMarkElementPosition` is now implemented.

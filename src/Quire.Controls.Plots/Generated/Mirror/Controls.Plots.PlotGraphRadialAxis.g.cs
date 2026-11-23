@@ -16,16 +16,6 @@ internal sealed partial class PlotGraphRadialAxis : global::Quire.Controls.Plots
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Pair<double, double> ClipBounds { get => base.ClipBounds; }
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Point GetTickMarkElementPosition(int index, global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point GetTickMarkPositionByIndex(int index, double tickWidth, double tickHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Geometry GetTickLine(double range, int size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Geometry AxisLineGeometry() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DrawNumbers(global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.Media.Brush stroke) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override double GetAxisStartPosition() => base.GetAxisStartPosition();
     [global::Quire.Mirror.MirrorStub]
     protected override double GetAxisEndPosition() => base.GetAxisEndPosition();

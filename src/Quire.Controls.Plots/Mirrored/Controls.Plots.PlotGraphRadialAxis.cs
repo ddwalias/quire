@@ -12,6 +12,50 @@ namespace Quire.Controls.Plots;
 
 internal sealed partial class PlotGraphRadialAxis
 {
+    private Point GetTickMarkElementPosition(int index, UIElement element)
+    {
+        return GetTickMarkPositionByIndex(index, element.DesiredSize.Width, 3.0);
+    }
+
+    public Point GetTickMarkPositionByIndex(int index, double tickWidth, double tickHeight)
+    {
+        double range = (double)index / (double)(TickMarks - 1);
+        return GetTickMarkPositionByRange(range, tickWidth, tickHeight);
+    }
+
+    private Geometry GetTickLine(double range, int size)
+    {
+        Point tickMarkPositionByRange = GetTickMarkPositionByRange(range, 0.0, 0.0);
+        Point startPoint = new Point(tickMarkPositionByRange.X, tickMarkPositionByRange.Y - (double)size);
+        Point endPoint = new Point(tickMarkPositionByRange.X, tickMarkPositionByRange.Y + (double)size);
+        return new LineGeometry(startPoint, endPoint);
+    }
+
+    private Geometry AxisLineGeometry()
+    {
+        return new LineGeometry(new Point(Radius, Radius), new Point(2.0 * RadiusWTickOffset + 1.1 * TickOffset, Radius));
+    }
+
+    private void DrawNumbers(DrawingContext drawingContext, Brush stroke)
+    {
+        int firstTick = 2;
+        if (Scaling == AxisScaling.Logarithmic)
+        {
+            firstTick = 1;
+        }
+        int lastTick = TickMarks - 1;
+        int labelCount = Labels.Length;
+        if (DebugTools.DevAssert(lastTick <= labelCount, "Tick index limit is {0} > labels array length {1}. It is going to cause an out of range exception.", lastTick, labelCount).Passed)
+        {
+            for (int i = firstTick; i < lastTick; i++)
+            {
+                FormattedText tickValueTextByTickNumber = GetTickValueTextByTickNumber(i, stroke);
+                Point tickMarkPositionByIndex = GetTickMarkPositionByIndex(i, tickValueTextByTickNumber.Width, 3.0);
+                drawingContext.DrawText(tickValueTextByTickNumber, tickMarkPositionByIndex);
+            }
+        }
+    }
+
     protected override void HandleOrientationChanged()
     {
     }
