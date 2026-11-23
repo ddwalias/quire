@@ -104,6 +104,7 @@ public:
     bool IsChildOnly();
     void Lock();
     void UnLock();
+    void SetNeedsCheck();
 
     // ActionChainMgd's reference IL reads these pointer fields at offsets 8, 16, and 24.
     DepManager* dep_manager_;                       // 0x08 (offset 8)

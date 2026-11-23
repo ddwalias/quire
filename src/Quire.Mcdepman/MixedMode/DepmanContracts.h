@@ -136,6 +136,16 @@ namespace Quire { namespace depman {
               m_chain(c)
         {
         }
+
+        void set_needs_check(bool b)
+        {
+            m_needs_check = b;
+        }
+
+        bool needs_check()
+        {
+            return m_needs_check;
+        }
     };
 
     [Quire::Mirror::MirrorOfAttribute("depman.BooleanMediator, mcdepman")]

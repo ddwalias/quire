@@ -162,6 +162,17 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
   - `std::set<depman::Position*>` erase path at offset 136 for `PositionBase.Kill` and `TreatAsReady(false)`.
   - `PositionBase.SetEnvScope`: branches on Scope nullness, calling `ActionChain.remove_env_scope` / `ActionChain.add_env_scope`, updating offset 64, and calling `ActionChain.SetNeedsCheck`.
 
+## Batch 17 — ActionChain.SetNeedsCheck
+
+- Owner: AGY, Orca task `task_ee9512aa8eac`; branch `feature/luna-mcdepman`.
+- Member: `ActionChain.SetNeedsCheck()`, implemented using `loc_->env()->GetSharedThreadContext()->ObtainMutex(false)`, `mgd_->env()->set_needs_check(true)`, and recursion on `next_` inside a `try ... finally` releasing the mutex. Added `set_needs_check(bool)` and `needs_check()` property helpers on `CachingEnv`.
+- Release IL report: `.mirror-cache/release-il-7da89597523f/release-il.json` (PASS, 210 checked; module `SetNeedsCheck` exact).
+- Assessment of env_scope methods:
+  - `ActionChain.remove_env_scope` and `ActionChain.add_env_scope` call into `ActionChainMgd::remove_env_scope` and `ActionChainMgd::add_env_scope`, which require `DepManager.remove_dep` and `DepManager.add_dep`.
+  - Because `DepManager` dependency storage is not yet established, `remove_env_scope` and `add_env_scope` cannot be isolated as self-contained leaves.
+  - `PositionBase.SetEnvScope` branches on Scope nullness and calls both `ActionChain.remove_env_scope` and `ActionChain.add_env_scope` in addition to `SetNeedsCheck`, so it remains blocked on those `DepManager` dependencies.
+
+
 
 
 

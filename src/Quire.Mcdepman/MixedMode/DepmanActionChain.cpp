@@ -10,6 +10,7 @@
 #pragma comment(linker, "/include:?IsChildOnly@ActionChain@depman@@QEAA_NXZ")
 #pragma comment(linker, "/include:?Lock@ActionChain@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?UnLock@ActionChain@depman@@QEAAXXZ")
+#pragma comment(linker, "/include:?SetNeedsCheck@ActionChain@depman@@QEAAXXZ")
 
 namespace Quire { namespace depman {
 
@@ -79,6 +80,21 @@ void ActionChain::UnLock()
     locked_ = false;
     if (next_)
         next_->UnLock();
+}
+
+void ActionChain::SetNeedsCheck()
+{
+    loc_->env()->GetSharedThreadContext()->ObtainMutex(false);
+    try
+    {
+        mgd_->env()->set_needs_check(true);
+        if (next_)
+            next_->SetNeedsCheck();
+    }
+    finally
+    {
+        loc_->env()->GetSharedThreadContext()->ReleaseMutex(false);
+    }
 }
 
 } // namespace depman
