@@ -571,3 +571,9 @@
 - Member: `RegionXmlNode` (property; getter and setter in one generated stub). The getter matches Mathcad exactly. The setter has the same leading difference as `AxisModel.SetXmlNode` (batch 74): Mathcad stores the `value` parameter in a temp before `if (value == null) throw new ArgumentNullException("value")` (`ldarg.1; stloc.0; ldloc.0; brtrue.s`), and Roslyn does not emit it.
 - Result: not landed. Splitting the property to land only the getter would leave the setter as a placeholder, which AGENTS.md reserves for closure and iterator ordinals, so the whole property stays a generated stub.
 - Pattern note: any setter or method with `if (value == null) throw new ArgumentNullException("value")` on an XML node parameter has this shape in Mathcad. Worth checking the same form elsewhere before writing it; the fix is not yet known.
+
+## Batch 81 — PlotItemPlaceholder.GetMinLegendPlaceholderHeight (blocked, kept as stub)
+
+- Member: `GetMinLegendPlaceholderHeight()`. The draft matches Mathcad's conditional-branch count (8) once the `(a is PlotTitle || b is PlotLegend) ? true : false` form is kept. The remaining difference is a materialised bool: Mathcad stores the test in a temp and copies it to `flag` (three more instructions, `stloc/ldloc/stloc`), and Roslyn removes that temp. The same shape blocked batch 69 (`CalculateBetterTickmarks`).
+- Result: not landed; the member stays a generated stub.
+- Left in PlotItemPlaceholder: `AdjustPadding(Size)` (not started), `GetMinLegendPlaceholderWidth` already exact in hand-written code.
