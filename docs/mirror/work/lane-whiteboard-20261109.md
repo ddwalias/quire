@@ -508,3 +508,20 @@
 - Release IL: PASS — 914 checked, 0 failures (`release-il-80412dfed9d5`).
 - Remaining mismatches in this batch: none.
 
+## Batch 40 — Nested command constructors and properties
+
+- Members:
+  - `WhiteboardResizingCommand`: `.ctor(IWhiteboardViewModel, string)`
+  - `RemoveItemsCommand`: `SetInsertionPointToFirstItemsLocation` (getter/setter), `.ctor(IWhiteboardViewModel, string, IDictionary<IWhiteboardItem, Point>)`
+  - `ResizeItemCommand`: `.ctor(IWhiteboardViewModel, IWhiteboardItem, Size, Size, bool, bool, DragMode)`
+  - `ResizeItemCommandWithSideEffects`: `.ctor(IWhiteboardViewModel, IWhiteboardItem, Size, Size, bool, bool)`
+  - `PushItemsDownCommand`: `.ctor(IWhiteboardViewModel, int, IEnumerable<IWhiteboardItem>)`
+  - `SeparateOverlappedItemsCommand`: `.ctor(IWhiteboardViewModel, IEnumerable<IWhiteboardItem>, Dimension, bool, IWhiteboardItemManager)`
+  - `MoveItemsCommand`: `.ctor(whiteboard, item, allowGrowthDownOrRight, newLocation)`, `.ctor(whiteboard, item, newLocation)`, `.ctor(whiteboard, offset, elements[])`, `.ctor(whiteboard, IDictionary<IWhiteboardItem, Vector> elements)`
+  - `MoveItemsCommandWithSideEffects`: `.ctor(whiteboard, offset, allowGrowthDownOrRight, elements[])`
+- Hand-written: `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; `[MirrorStub]` attributes and stubs removed.
+- Shapes Release IL requires: `PushItemsDownCommand` uses `itemsToMove.Count() > 0` with `itemsToMove.ToArray()` passed to `MoveItemsCommand`; `SeparateOverlappedItemsCommand` uses inverted early-return guard `if (!whiteboardItemsSeparator.CanSeparate()) return;`; `MoveItemsCommand` uses field initializers on `_initialLocations` and `_finalLocations`.
+- Release IL: PASS — 927 checked, 0 failures (`release-il-42ca1cc928c8`).
+- Remaining mismatches in this batch: none.
+
+
