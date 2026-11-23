@@ -35,6 +35,7 @@ public:
     bool Invalidated() const;
     bool TreatedReady() const;
     bool IsBusy();
+    void SetBusy(bool busy);
     void SetNotifyComputing(bool notify);
     void ResetPriority();
     void ClearDParent();
@@ -68,7 +69,7 @@ private:
     unsigned char pad_9d_[0x03];                  // 0x9D
     int base_priority_;                           // 0xA0 (offset 160)
     int priority_;                                // 0xA4 (offset 164)
-    void* not_busy_event_;                        // 0xA8 (offset 168, gcroot<utl_mgd::SafeEvent^>)
+    gcroot<::Quire::utl_mgd::SafeEvent^> not_busy_event_; // 0xA8 (offset 168)
     void* ready_event_;                           // 0xB0 (offset 176, gcroot<utl_mgd::SafeEvent^>)
     bool is_dead_;                                // 0xB8 (offset 184)
     unsigned char pad_b9_[0x03];                  // 0xB9
@@ -85,7 +86,7 @@ private:
 
 static_assert(sizeof(PositionBase) == 216, "PositionBase size must be 216 bytes");
 
-// Only the lock flag is recovered: the accessors read the byte at offset 0x20 and nothing else of the class.
+// ActionChainMgd IL accessors establish the pointer, lock flag, and dead flag offsets below.
 class ActionChain {
 private:
     gcroot<::Quire::depman::ActionChainMgd^> mgd_;   // 0x00 (offset 0)
@@ -102,6 +103,9 @@ public:
 
 private:
     bool locked_;                                    // 0x20 (offset 32)
+
+public:
+    bool is_dead_;                                   // 0x21 (offset 33)
 };
 
 static_assert(sizeof(ActionChain) == 40, "ActionChain layout must remain 40 bytes");

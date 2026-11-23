@@ -32,6 +32,13 @@ namespace Quire { namespace depman {
     return result;
 }
 
+bool ActionChainMgd::IsDead()
+{
+    bool result = m_chain_umgd->is_dead_;
+    System::GC::KeepAlive(this);
+    return result;
+}
+
 }} // namespace Quire::depman
 
 namespace depman {

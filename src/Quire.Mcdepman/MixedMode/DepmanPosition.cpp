@@ -92,6 +92,20 @@ bool PositionBase::IsBusy()
     return is_busy_;
 }
 
+void PositionBase::SetBusy(bool busy)
+{
+    is_busy_ = busy;
+    if (busy)
+    {
+        busy_thread_id_ = System::Threading::Thread::CurrentThread->ManagedThreadId;
+        not_busy_event_->Reset();
+    }
+    else
+    {
+        not_busy_event_->Set();
+    }
+}
+
 void PositionBase::SetNotifyComputing(bool notify)
 {
     notify_computing_ = notify;

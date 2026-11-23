@@ -106,6 +106,13 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
 - Owner: Codex / Orca task `task_7a93711d37bc`; branch `feature/luna-mcdepman`.
 - Members: `ActionChainMgd.depman()`, `loc()`, and `next()`. Mathcad Release IL establishes the backing `ActionChain` pointer offsets 8, 16, and 24; named fields replace the same 24-byte padding, and `locked_` remains at offset 32 with a 40-byte size assertion.
 - Release IL report: `.mirror-cache/release-il-f6b67571f8e8/release-il.json` (PASS, 194 checked; selected Quire.depman.ActionChainMgd).
-- Remaining mismatches: none in this batch. The `PositionBase.SetBusy` probe found only native `NativeCppClass` layout metadata (216 bytes), with no managed method body; implementing its SafeEvent behavior still needs native-body evidence.
+- Remaining mismatches: none in this batch. The type-only `PositionBase` listing showed only `NativeCppClass` layout metadata; the full assembly `Module` listing was checked in batch 11 and supplied the `SetBusy` method body.
+
+## Batch 11 — ActionChainMgd.IsDead and PositionBase.SetBusy
+
+- Owner: Codex / Orca task `task_72d2e8bd26b2`; branch `feature/luna-mcdepman`.
+- Members: `ActionChainMgd.IsDead()` reads the IL-proven `ActionChain` byte at offset 33; `PositionBase.SetBusy(bool)` follows the `<Module>` method body at Mathcad token `0x060001c8`, using offsets 192 (`is_busy_`), 196 (`busy_thread_id_`), and 168 (`not_busy_event_`), with the reference `SafeEvent.Reset` / `Set` calls.
+- Release IL report: `.mirror-cache/release-il-adfd92d906ab/release-il.json` (PASS, 195 checked; selected Quire.depman.ActionChainMgd; module `PositionBase.SetBusy` exact).
+- Remaining mismatches: none in this batch.
 
 
