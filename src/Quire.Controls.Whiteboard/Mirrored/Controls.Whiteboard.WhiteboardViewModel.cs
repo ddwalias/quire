@@ -1828,7 +1828,15 @@ public partial class WhiteboardViewModel
 
     protected override void OnDispose() => base.OnDispose();
 
-    protected virtual global::Quire.Controls.Core.IWhiteboardItem GetChildItemFromLocation(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual IWhiteboardItem GetChildItemFromLocation(Point point)
+    {
+        if (WhiteboardItems == null || WhiteboardItems.Count == 0)
+        {
+            return null;
+        }
+
+        return WhiteboardItems.Reverse().FirstOrDefault((IWhiteboardItem whiteboardItem) => GetItemRect(whiteboardItem).ContainsAccountingForMeasurementError(point));
+    }
 
     protected virtual void SelectedItemsChangedHandler(object sender, NotifyCollectionChangedEventArgs e)
     {
@@ -1885,9 +1893,52 @@ public partial class WhiteboardViewModel
         OnPropertyChanged("SelectedItems");
     }
 
-    protected virtual void HandleItemAdded(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void HandleItemAdded(IWhiteboardItem item)
+    {
+        if (HandleUserInput)
+        {
+            item.OnGotFocusEvent += HandleChildItemGotFocus;
+            item.RequestRemove += HandleChildRequestRemove;
+            WhiteboardItemSizeChangedEventHandler handler = WhiteboardItemMgr.HookupSizeChanged(item, HandleChildSizeChanged);
+            _itemSizeChangedHandlerMap.Add(item, handler);
+            IEquationControl eq = item as IEquationControl;
+            if (eq != null)
+            {
+                eq.RootNodeChanged += () => SetEqResizable(eq);
+            }
 
-    protected virtual void HandleItemRemoved(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+            if (item is IWhiteboardControl whiteboardControl)
+            {
+                whiteboardControl.ChildTriggeredResize += ChildTriggeredResizeHandler;
+            }
+        }
+
+        FireChanged();
+    }
+
+    protected virtual void HandleItemRemoved(IWhiteboardItem item)
+    {
+        if (HandleUserInput)
+        {
+            item.OnGotFocusEvent -= HandleChildItemGotFocus;
+            item.GetRegionsOfType<IOleBaseObjectControl>().Each((IOleBaseObjectControl ole) => ole.CloseOle());
+            item.GetRegionsOfType<ISpellCheckRegion>().Each((ISpellCheckRegion text) => text.DisableSpellCheck());
+            item.RequestRemove -= HandleChildRequestRemove;
+            _itemSizeChangedHandlerMap.TryGetValue(item, out WhiteboardItemSizeChangedEventHandler handler);
+            if (handler != null)
+            {
+                WhiteboardItemMgr.UnhookSizeChanged(item, handler);
+            }
+
+            _itemSizeChangedHandlerMap.Remove(item);
+            if (item is IWhiteboardControl whiteboardControl)
+            {
+                whiteboardControl.ChildTriggeredResize -= ChildTriggeredResizeHandler;
+            }
+        }
+
+        FireChanged();
+    }
 
     private void ChildTriggeredResizeHandler(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl whiteboard, global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -1916,7 +1967,19 @@ public partial class WhiteboardViewModel
         }
     }
 
-    protected void SetEqResizable(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void SetEqResizable(IWhiteboardItem item)
+    {
+        IEquationControl eq = item as IEquationControl;
+        if (eq != null)
+        {
+            Action action = () =>
+            {
+                WhiteboardDependencyProperties.SetShowResizeIndicator(eq as DependencyObject, eq.IsShrunk);
+                WhiteboardDependencyProperties.SetUserResizable(eq as DependencyObject, eq.IsResizable);
+            };
+            eq.ExecuteOnRootLoaded(action);
+        }
+    }
 
     protected virtual bool ItemsOverlapped(IEnumerable<IWhiteboardItem> items)
     {

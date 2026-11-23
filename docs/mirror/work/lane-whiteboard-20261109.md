@@ -673,6 +673,30 @@
 - Release IL: PASS — 998 checked, 0 failures (`release-il-eabcb6f94f6d`).
 - Remaining mismatches in this batch: none.
 
+## Batch 49 — WhiteboardViewModel: GetChildItemFromLocation, HandleItemAdded, HandleItemRemoved, SetEqResizable, and closures
+
+- Members:
+  - `WhiteboardViewModel.GetChildItemFromLocation(Point)` and closure `<>c__DisplayClass283_0` (`.ctor`, `<GetChildItemFromLocation>b__0`)
+  - `WhiteboardViewModel.HandleItemAdded(IWhiteboardItem)` and closure `<>c__DisplayClass285_0` (`.ctor`, `<HandleItemAdded>b__0`)
+  - `WhiteboardViewModel.HandleItemRemoved(IWhiteboardItem)` and closures on `<>c` (`<HandleItemRemoved>b__286_0`, `<HandleItemRemoved>b__286_1`)
+  - `WhiteboardViewModel.SetEqResizable(IWhiteboardItem)` and closure `<>c__DisplayClass290_0` (`.ctor`, `<SetEqResizable>b__0`)
+  - `MathboardViewModel.HandleItemAdded(IWhiteboardItem)` (overrides verified exact)
+  - `MathboardViewModel.HandleItemRemoved(IWhiteboardItem)` (overrides verified exact)
+- Hand-written: `src/Quire.Controls.Whiteboard/Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stubs replaced.
+- Ordinals: The aligned member ordering established in Batch 42 successfully aligned every target member and closure:
+  - `GetChildItemFromLocation` (283) -> `<>c__DisplayClass283_0`
+  - `HandleItemAdded` (285) -> `<>c__DisplayClass285_0`
+  - `HandleItemRemoved` (286) -> `<>c.<HandleItemRemoved>b__286_0`, `<>c.<HandleItemRemoved>b__286_1`
+  - `SetEqResizable` (290) -> `<>c__DisplayClass290_0`
+- Shapes Release IL requires:
+  - `GetChildItemFromLocation`: returns null if WhiteboardItems is null or empty; returns `WhiteboardItems.Reverse().FirstOrDefault(whiteboardItem => GetItemRect(whiteboardItem).ContainsAccountingForMeasurementError(point))`.
+  - `HandleItemAdded`: hooks focus, request-remove, and size-changed events when `HandleUserInput` is true; subscribes `SetEqResizable` to equation `RootNodeChanged`; hooks child whiteboard resize event; calls `FireChanged()`.
+  - `HandleItemRemoved`: unhooks focus, closes OLE objects with `CloseOle()`, disables spell check with `DisableSpellCheck()`, unhooks request-remove and size-changed, removes from dictionary, unhooks child whiteboard resize, and calls `FireChanged()`.
+  - `SetEqResizable`: tests `eq != null` and schedules `ExecuteOnRootLoaded` action setting `ShowResizeIndicator` and `UserResizable` via `WhiteboardDependencyProperties`.
+- Release IL: PASS — 1010 checked, 0 failures (`release-il-46ed43fe4740`).
+- Remaining mismatches in this batch: none.
+
+
 
 
 
