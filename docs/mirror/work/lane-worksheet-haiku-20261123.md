@@ -80,3 +80,10 @@
 - Edits that were needed: `conversionAnnotations != null ? conversionAnnotations.ToStrings() : null` (the `?.` form emitted `call` where Mathcad emits `callvirt`); `((IPersistentDataProvider)control).GetRegionPersistentData(...)` (pattern variable differed); `(regionPersistentData as IHasPreSerialize).PreSerialize()`.
 - Unresolved: Mathcad's body is 2 instructions longer before the throw block; not located. Next step: diff the full sequence with `MethodAudit --diff` for `RegionFactory::ConvertToIRegionType`.
 - `ConvertFromIRegionType`: not attempted (larger chain of type tests).
+
+## Batch 11 — RegionFactory.ConvertFromIRegionType
+
+- Implemented in `Mirrored/` (stub removed from `.g.cs`). The shape is the `if`/`else if` `is` chain in Mathcad's order, the `ProtectedItemType` unwrap, and the `ISupportCustomInitialization`, `ISolveBlockControl` and `PlotControlBase` post-checks. The `istextblock` ternary picks `Paragraph` or `TextRegion`.
+- Build fix: `Quire.Controls.Include` (`IncludeWorksheetControl`) is reached through the generated `Mirror.props` closure, so only a `using` was needed. The added `System.Windows.Documents` using made `Paragraph` ambiguous, so it was removed and the plain name resolves to `Quire.Controls.Text.Paragraph`.
+- Release IL: PASS (1282 checked, 1282 exact, 0 failures).
+- Left as stubs: `ConvertToIRegionType` (parked, batch 10 note).
