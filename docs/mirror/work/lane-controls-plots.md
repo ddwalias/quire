@@ -444,3 +444,10 @@
 - Shapes: `if (a && b) { ... }` gave a single trailing `ret` where Mathcad has two early returns; the `||` early-return form matched. `Size newSize = e.NewSize` locals gave `stloc` before the `this` push; inline `e.NewSize.Width` matched.
 - Release IL: PASS — 2505 checked, 0 failures.
 - Left in PlotTitle: `HideTitleIfEmpty` (see batch 55), and the XAML-generated `InitializeComponent`, `_CreateDelegate`, `Connect`.
+
+## Batch 62 — AxisModel grid-line colour and filtered tick labels
+
+- Members: `GridLineColor` (getter with two `try`/`catch` colour lookups; the converted object is a named local before the `is Color` test so the local order matches Mathcad; setter stores the hex string and fires `GridLineColor` when it changes), `UpdateFilteredLabels` (non-short-circuit `flag | flag2 | flag3`, `FilteredLabels` through the property, bottom-tested loop for the middle labels). Hand-written: appended to `Mirrored/Controls.Plots.Model.AxisModel.cs` (adds `using System.Windows.Media;`); stubs removed from `AxisModel.g.cs`.
+- Shapes: `ColorConverter.ConvertFromString(...) is Color result` directly gave `stloc.1` at #3 (Quire puts the return local first); the separate object local matched.
+- Release IL: PASS — 2508 checked, 0 failures.
+- Left in AxisModel: `GetNumberOfTracesForEquation` (LINQ lambda closure, needs the ordinal check), `SetLevels` (uses `AxisModelDefinitionCollection`), the XML and data-object helpers, `SetRangeToRadialAxis`/`SetRangeToLinearAxis`/`SetLogarithmicScale`, and the constructor.

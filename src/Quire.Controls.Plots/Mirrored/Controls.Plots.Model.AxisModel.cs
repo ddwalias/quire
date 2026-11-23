@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Media;
 using Quire.Controls.Core;
 using Quire;
 using Quire.Controls.Plots.Presenter;
@@ -598,5 +599,77 @@ internal partial class AxisModel
             return ((LegendPositions.XLegendPosition)LegendPositionIndex).ToString();
         }
         return ((LegendPositions.YLegendPosition)LegendPositionIndex).ToString();
+    }
+
+    public Color GridLineColor
+    {
+        get
+        {
+            try
+            {
+                // The IL keeps the converted object in its own local before the type test.
+                object gridLine = ColorConverter.ConvertFromString(_gridLineColorHex);
+                if (gridLine is Color result)
+                {
+                    return result;
+                }
+            }
+            catch
+            {
+            }
+            try
+            {
+                object defaultGridLine = ColorConverter.ConvertFromString(PlotCommonConstants.GridlinesDefaultColorHex);
+                if (defaultGridLine is Color result2)
+                {
+                    return result2;
+                }
+            }
+            catch
+            {
+            }
+            return Colors.Gray;
+        }
+        set
+        {
+            string text = value.ToString();
+            if (_gridLineColorHex != text)
+            {
+                _gridLineColorHex = text;
+                OnPropertyChanged("GridLineColor");
+            }
+        }
+    }
+
+    private void UpdateFilteredLabels()
+    {
+        string[] labels = MajorTickMarks.Labels;
+        int num = labels.Length;
+        bool flag = LimitHasErrors(StartExpression);
+        bool flag2 = LimitHasErrors(SecondTickExpression);
+        bool flag3 = LimitHasErrors(EndExpression);
+        if (flag | flag2 | flag3)
+        {
+            FilteredLabels = new string[num];
+            int num2 = num - 1;
+            FilteredLabels[0] = (flag ? ErrorIndicator : labels[0]);
+            if (num2 > 1)
+            {
+                FilteredLabels[1] = (flag2 ? ErrorIndicator : labels[1]);
+            }
+            else
+            {
+                DebugTools.DevAssert(num2 == 1, null);
+            }
+            for (int num3 = 2; num3 < num2; num3++)
+            {
+                FilteredLabels[num3] = string.Empty;
+            }
+            FilteredLabels[num2] = (flag3 ? ErrorIndicator : labels[num2]);
+        }
+        else
+        {
+            FilteredLabels = labels;
+        }
     }
 }
