@@ -9,12 +9,57 @@ namespace Quire.Controls;
 
 public partial class SolveBlockControl
 {
-    public static readonly DependencyProperty IsSolveBlockLabelVisibleProperty = DependencyProperty.Register(
-        "IsSolveBlockLabelVisible", typeof(bool), typeof(SolveBlockControl), new PropertyMetadata(true));
-
     protected override ISerializationStrategy SerializationStrategy { get; set; }
     protected override IDeserializationStrategy DeserializationStrategy { get; set; }
+
     public ITextStyleChangedHandler TextStyleChangedHandler { get; set; }
+
+    public SolveBlockControl(Size? gridCellSize)
+        : base(
+            new SolveBlockViewModel(new SolveBlockModel(), gridCellSize),
+            new ResourceDictionary
+            {
+                Source = new System.Uri("pack://application:,,,/Quire.Controls.SolveBlock;component/SolveBlockDictionary.xaml")
+            })
+    {
+        _sbModel = _model as SolveBlockModel;
+        SerializationStrategy = new SolveBlockSerializationStrategy(this, () => new global::Quire.PersistentDataObjects.solveBlockRegionType());
+        DeserializationStrategy = new SolveBlockDeserializationStrategy(this);
+        if (_sbModel != null)
+            _sbModel.Resources = Resources.MergedDictionaries[0];
+        HookupEvents();
+    }
+
+    private void UpdateGridCellSizeIfNeeded(object sender, RoutedEventArgs e)
+    {
+        Size gridCellSize = WorksheetPropertiesManager.GetWorksheetProperties(this).GridCellSize;
+        if (!GridCellSize.IsEqualTo(gridCellSize))
+            GridCellSize = gridCellSize;
+    }
+
+    private SolveBlockControl(SolveBlockControl original)
+        : base((ISolveBlockViewModel)original.AggregateViewModel.Clone(), null)
+    {
+        _sbModel = (SolveBlockModel)_model;
+        SerializationStrategy = new SolveBlockSerializationStrategy(this, () => new global::Quire.PersistentDataObjects.solveBlockRegionType());
+        DeserializationStrategy = new SolveBlockDeserializationStrategy(this);
+        HookupEvents();
+        if (Resources.MergedDictionaries.Count != original.Resources.MergedDictionaries.Count)
+        {
+            foreach (ResourceDictionary mergedDictionary in original.Resources.MergedDictionaries)
+            {
+                if (!Resources.MergedDictionaries.Contains(mergedDictionary))
+                    Resources.MergedDictionaries.Add(mergedDictionary);
+            }
+        }
+        RegionFactory = original.RegionFactory;
+        IsSolveBlockLabelVisible = original.IsSolveBlockLabelVisible;
+        if (_sbModel != null)
+            _sbModel.Resources = Resources.MergedDictionaries[0];
+    }
+
+    public static readonly DependencyProperty IsSolveBlockLabelVisibleProperty = DependencyProperty.Register(
+        "IsSolveBlockLabelVisible", typeof(bool), typeof(SolveBlockControl), new PropertyMetadata(true));
 
     public bool IsSolveBlockLabelVisible
     {
@@ -66,6 +111,13 @@ public partial class SolveBlockControl
 
     public double SolverIndicatorBottom => SolverIndicatorTop + AggregateViewModel.SectionIndicators[2].Height;
 
+    // Kept after the copy constructor: the parameterless ctor's position shifts the Mathcad closure ordinals.
+    public SolveBlockControl()
+        : this((Size?)null)
+    {
+        Loaded += UpdateGridCellSizeIfNeeded;
+    }
+
     // Keep these members before EngineResults to preserve its Mathcad closure ordinal.
     object global::System.ICloneable.Clone() => Clone();
 
@@ -79,13 +131,6 @@ public partial class SolveBlockControl
     private void HandleChildCalcErrorChanged()
     {
         FirePropertyChanged(global::Quire.Calculation.Core.ErrorChangedEventArgs.GetArgs());
-    }
-
-    private void UpdateGridCellSizeIfNeeded(object sender, RoutedEventArgs e)
-    {
-        Size gridCellSize = WorksheetPropertiesManager.GetWorksheetProperties(this).GridCellSize;
-        if (!GridCellSize.IsEqualTo(gridCellSize))
-            GridCellSize = gridCellSize;
     }
 
     public override global::Quire.Calculation.Core.EngineError Error
