@@ -118,3 +118,9 @@
 - Implemented in `Mirrored/` (stubs removed from `.g.cs`). The crosshair branch in `RemoveItemFromAppropriatePage` reads `_worksheetPageLayout` directly, as the IL reads the field. `PageBodyActivatedHandler` invokes the event without a null check, as the IL does.
 - Release IL: PASS (1306 checked, 0 failures).
 - Still stubs in this type: `GetPageIndex(double, bool)` (uses `DoubleExtension.IsLessThan` with a NaN epsilon; not attempted), `IsTrailingEmptyPage` and `RemoveItemsFromPage` (closures), and the `UpdateVisiblePages*`, `Print*`, `Split*`, `Activate*` members.
+
+## Batch 17 — WorksheetPageManager GetPageIndex(double, bool), UpdateVisiblePagesOnPageAddedIfNeeded
+
+- Implemented in `Mirrored/` (stubs removed). `GetPageIndex(double, bool)` declares `gridHeight` from `PageLayout.GridCellSize.Height` directly, so Roslyn's temp holds the `Size`, as Mathcad's does. The `IsLessThan` call uses the extension's default NaN epsilon, which is the constant Mathcad passes.
+- Release IL: PASS (1308 checked, 0 failures).
+- Still stubs in this type: `IsTrailingEmptyPage`, `RemoveItemsFromPage`, `AppendNewPageIfNeeded`, `RemoveAllPages`, `Dispose` (closures), `UpdateVisiblePagesOnScrollChanged`, `PrePrint/PostPrintUpdateVisiblePages`, `GetPagesContaining`, the `Activate*` and `Split*` families.

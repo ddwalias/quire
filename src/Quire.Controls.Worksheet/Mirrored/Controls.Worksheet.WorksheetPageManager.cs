@@ -276,4 +276,25 @@ internal partial class WorksheetPageManager
     {
         ContentActivated.Invoke();
     }
+
+    public int GetPageIndex(double yOffset, bool roundUpIfNeeded)
+    {
+        if (DebugTools.DevAssert(PageLayout.PageBodyHeight > 0).Failed)
+        {
+            return 0;
+        }
+        double gridHeight = PageLayout.GridCellSize.Height;
+        int pageIndex = (int)(yOffset / PageLayout.PageBodyHeight);
+        double remainder = yOffset - PageLayout.PageBodyHeight * pageIndex;
+        if (roundUpIfNeeded && (PageLayout.PageBodyHeight - remainder).IsLessThan(gridHeight / 2))
+        {
+            pageIndex++;
+        }
+        return pageIndex;
+    }
+
+    public void UpdateVisiblePagesOnPageAddedIfNeeded(int indexOfFirstAddedPage, double verticalOffset, double viewportHeight, double pageHeight)
+    {
+        _worksheetVisiblePages.UpdateVisiblePagesOnPageAddedIfNeeded(indexOfFirstAddedPage, verticalOffset, viewportHeight, pageHeight);
+    }
 }
