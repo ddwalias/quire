@@ -663,7 +663,24 @@ public partial class WhiteboardViewModel
 
     protected internal WhiteboardViewModel(global::Quire.Controls.Whiteboard.IWhiteboardModel model, global::Quire.Controls.Core.IAlignmentGrid grid) { }
 
-    protected void Initialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void Initialize()
+    {
+        _insertionPoint = Grid.ConvertGridCoordinatesToDips(DefaultInsertionPoint);
+        _selectedItems = new ObservableRangeCollection<IWhiteboardItem>();
+        _selectedItems.RangeChanged += SelectedItemsChangedHandler;
+        _whiteboardModel.WhiteboardItems.RangeChanging += (object sender, NotifyCollectionChangedEventArgs args) =>
+        {
+            HandleItemsListChanging(args);
+        };
+        _whiteboardModel.WhiteboardItems.RangeChanged += (object sender, NotifyCollectionChangedEventArgs args) =>
+        {
+            HandleItemsListChanged(args);
+        };
+        if (HandleUserInput)
+        {
+            SetupCommandBindings();
+        }
+    }
 
     private void HandleItemsListChanging(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -1061,7 +1078,18 @@ public partial class WhiteboardViewModel
 
     public virtual void OnRequestMoveAndResize(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl whiteboardControl, global::Quire.Controls.Core.ResizeEventMouseArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public void SelectItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToSelect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SelectItems(IEnumerable<IWhiteboardItem> itemsToSelect)
+    {
+        if (SelectedItems.Any())
+        {
+            itemsToSelect = itemsToSelect.Where(item => !SelectedItems.Contains(item)).ToList();
+        }
+
+        if (itemsToSelect.Any())
+        {
+            SelectedItemsAddNew(itemsToSelect);
+        }
+    }
 
     public void UnSelectItems(IEnumerable<IWhiteboardItem> itemsToDeselect)
     {
@@ -1087,11 +1115,48 @@ public partial class WhiteboardViewModel
         whiteBoard.UpdateSizeLimits(maximumSize);
     }
 
-    private global::System.Windows.Size FindSizeLimit(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private Size FindSizeLimit(IWhiteboardItem whiteboardItem)
+    {
+        List<IWhiteboardItem> list = GetOverlappingItems(whiteboardItem).ToList();
+        WhiteboardItems.Where(item => item is Quire.Controls.Text.IParagraphControl).Each(list.Add);
+        return FindSizeLimit(whiteboardItem, list);
+    }
 
-    private global::System.Windows.Size FindSizeLimit(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToIgnore) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private Size FindSizeLimit(IWhiteboardItem item, IEnumerable<IWhiteboardItem> itemsToIgnore)
+    {
+        double num = double.PositiveInfinity;
+        double num2 = double.PositiveInfinity;
+        Point itemLocation = GetItemLocation(item);
+        Size renderSize = WhiteboardItemMgr.GetRenderSize(item);
+        foreach (IWhiteboardItem whiteboardItem in WhiteboardItems)
+        {
+            if (item != whiteboardItem && !itemsToIgnore.Contains(whiteboardItem))
+            {
+                Point itemLocation2 = GetItemLocation(whiteboardItem);
+                itemLocation2.Offset(0.0, whiteboardItem.VerticalAlignmentOffset);
+                Size renderSize2 = WhiteboardItemMgr.GetRenderSize(whiteboardItem);
+                if (renderSize2.Width + itemLocation2.X > itemLocation.X && itemLocation2.X < itemLocation.X + renderSize.Width && itemLocation2.Y + renderSize2.Height > itemLocation.Y)
+                {
+                    num2 = Math.Min(num2, Math.Max(0.0, itemLocation2.Y - itemLocation.Y));
+                }
+                if (renderSize2.Height + itemLocation2.Y > itemLocation.Y && itemLocation2.Y < itemLocation.Y + renderSize.Height && itemLocation2.X + renderSize2.Width > itemLocation.X)
+                {
+                    num = Math.Min(num, itemLocation2.X - itemLocation.X);
+                }
+                if (itemLocation.X + renderSize.Width == itemLocation2.X && itemLocation.Y + renderSize.Height == itemLocation2.Y)
+                {
+                    num2 = Math.Min(num2, Math.Max(0.0, itemLocation2.Y - itemLocation.Y));
+                }
+            }
+        }
+        return new Size(num, num2);
+    }
 
-    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetOverlappingItems(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private IEnumerable<IWhiteboardItem> GetOverlappingItems(IWhiteboardItem item)
+    {
+        Rect itemRect = GetItemRect(item);
+        return WhiteboardItems.Where(otherItem => otherItem != item && itemRect.IntersectsWith(GetItemRect(otherItem)));
+    }
 
     public virtual bool FindOncePrivate(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

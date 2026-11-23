@@ -559,6 +559,30 @@
 - Release IL: PASS — 944 checked, 0 failures (`release-il-63e7bdd0252d`).
 - Remaining mismatches in this batch: none.
 
+## Batch 43 — WhiteboardViewModel: Initialize, SelectItems, FindSizeLimit, GetOverlappingItems and closures
+
+- Members:
+  - `WhiteboardViewModel.Initialize()` and closures `<Initialize>b__162_0`, `<Initialize>b__162_1`
+  - `WhiteboardViewModel.SelectItems(IEnumerable<IWhiteboardItem>)` and closure `<SelectItems>b__213_0`
+  - `WhiteboardViewModel.FindSizeLimit(IWhiteboardItem)` and closure `<>c.<FindSizeLimit>b__218_0`
+  - `WhiteboardViewModel.FindSizeLimit(IWhiteboardItem, IEnumerable<IWhiteboardItem>)`
+  - `WhiteboardViewModel.GetOverlappingItems(IWhiteboardItem)` and closure `<>c__DisplayClass220_0.<GetOverlappingItems>b__0`
+- Hand-written: `src/Quire.Controls.Whiteboard/Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; stubs replaced.
+- Ordinals: The aligned member ordering established in Batch 42 successfully aligned every member:
+  - `Initialize` (162) -> `<Initialize>b__162_0`, `<Initialize>b__162_1`
+  - `SelectItems` (213) -> `<SelectItems>b__213_0`
+  - `FindSizeLimit` (218) -> `<>c.<FindSizeLimit>b__218_0`
+  - `GetOverlappingItems` (220) -> `<>c__DisplayClass220_0.<GetOverlappingItems>b__0`
+- Shapes Release IL requires:
+  - `SelectItems`: guard `if (SelectedItems.Any())` filters with `.Where(item => !SelectedItems.Contains(item)).ToList()` before `SelectedItemsAddNew(itemsToSelect)`.
+  - `FindSizeLimit(whiteboardItem)`: passes method group `list.Add` to `Each(list.Add)` which emits `ldvirtftn List<T>::Add`.
+  - `FindSizeLimit(item, itemsToIgnore)`: standard foreach over `WhiteboardItems` with double bounding checks and `Math.Min`/`Math.Max`.
+  - `GetOverlappingItems`: captures `itemRect` and `this` producing `<>c__DisplayClass220_0`.
+  - `Initialize`: captures `this` in lambda callbacks for `RangeChanging` and `RangeChanged`.
+- Release IL: PASS — 955 checked, 0 failures (`release-il-aabce411924e`).
+- Remaining mismatches in this batch: none.
+
+
 
 
 
