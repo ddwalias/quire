@@ -216,8 +216,10 @@ class Linked:
 class Comparison:
     """Export-by-export comparison of a candidate image with the original under the original's manifest."""
 
-    def __init__(self, original, candidate, entries):
+    def __init__(self, original, candidate, entries, *, function_extents=None):
         self.o, self.c = original, candidate
+        self.original_extent, self.candidate_extent = function_extents or (
+            original.image.function_extent, candidate.image.function_extent)
         self.entries = entries
         self.entry_at = {e.rva: (n, e) for n, e in entries.items()}
         self.memo = {}
@@ -253,7 +255,7 @@ class Comparison:
         if key in self.memo:
             return self.memo[key]
         self.memo[key] = ("ok", None, 0)  # a cycle verifies
-        eo, ec = self.o.image.function_extent(ao), self.c.image.function_extent(ac)
+        eo, ec = self.original_extent(ao), self.candidate_extent(ac)
         if eo is None or ec is None:
             result = ("mismatch", f"RVA {ac:#x} does not start a candidate function", 0) if ec is None else \
                 ("mismatch", f"original RVA {ao:#x} does not start a function", 0)
@@ -317,7 +319,7 @@ class Comparison:
                 return self.data(ao, ac, (ac, ac + entry.size))
             return self.function(ao, ac)
         if o.executable(ao) and c.executable(ac):
-            if o.image.function_extent(ao) is not None and c.image.function_extent(ac) is not None:
+            if self.original_extent(ao) is not None and self.candidate_extent(ac) is not None:
                 return self.function(ao, ac)
             return "unverified", None, 1
         if not o.executable(ao) and not c.executable(ac) and ac in c.names:

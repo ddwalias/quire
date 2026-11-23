@@ -70,6 +70,18 @@ class Pairing:
 
 class LinkedTests(Pairing, unittest.TestCase):
 
+    def test_recursive_comparison_uses_mixed_mode_leaf_boundaries(self):
+        original_ins = {**caller(0x1100), 0x1100: ("ret", ""), 0x1101: ("int", "3")}
+        candidate_ins = {**caller(0x1200), 0x1200: ("ret", "")}
+        original = Linked(Image({0x1100: 0x1110}, memory=encode(bytearray(0x3000), original_ins)),
+                          original_ins)
+        candidate = Linked(Image({0x1200: 0x1201}, memory=encode(bytearray(0x3000), candidate_ins)),
+                           candidate_ins)
+
+        extents = (lambda rva: (rva, 0x1101), candidate.image.function_extent)
+        comparison = Comparison(original, candidate, {}, function_extents=extents)
+        self.assertEqual(comparison.instructions((0x1000, 0x1006), (0x1000, 0x1006)), ("ok", None, 0))
+
     def test_same_instructions_and_a_call_to_the_same_export_match(self):
         ins = {**caller(0x1100), 0x1100: ("ret", "")}
         exports = {"f": 0x1000, "g": 0x1100}

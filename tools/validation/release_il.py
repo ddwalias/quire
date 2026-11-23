@@ -524,7 +524,10 @@ def compare_native(original, candidate, original_rva, rva):
     # Sized data entries retain byte comparison and avoid inferring an extent from unrelated adjacent data.
     entries = load_targets(TOOLCHAIN_MANIFEST, original.linked.image) if TOOLCHAIN_MANIFEST.is_file() else {}
     entries = {name: entry for name, entry in entries.items() if entry.size is not None and not entry.parked}
-    status, reason, _ = Comparison(original.linked, candidate.linked, entries).instructions(*extents)
+    # Give recursively compared leaf functions the same CLR method boundaries as the entry point.
+    comparison = Comparison(original.linked, candidate.linked, entries,
+                            function_extents=(original.extent, candidate.extent))
+    status, reason, _ = comparison.instructions(*extents)
     return status == 'ok', reason or 'instructions and targets match'
 
 
