@@ -77,4 +77,71 @@ internal partial class WorksheetPageManager
     {
         ItemSplit?.Invoke(whiteboardItem);
     }
+
+    public IWorksheetPage AppendNewPage()
+    {
+        IWorksheetPage page = CreatePage();
+        Pages.Add(page);
+        return page;
+    }
+
+    public int GetTrailingEmptyPageCount()
+    {
+        int trailingEmptyPageCount = 0;
+        for (int pageIndex = Pages.Count - 1; pageIndex > 0; pageIndex--)
+        {
+            if (!IsTrailingEmptyPage(Pages[pageIndex], pageIndex))
+            {
+                break;
+            }
+            trailingEmptyPageCount++;
+        }
+        return trailingEmptyPageCount;
+    }
+
+    public IWorksheetPage GetItemPage(IWhiteboardItem item)
+    {
+        IWorksheetPage containingPage = ItemManager.GetContainingPage(item);
+        if (containingPage != null)
+        {
+            return containingPage;
+        }
+        Point itemLocation = ItemManager.GetItemWorksheetLocation(item);
+        return GetPage(itemLocation.Y);
+    }
+
+    public IList<IWhiteboardItem> GetWorksheetItemParts(IWhiteboardItem item)
+    {
+        return _worksheetItemSplitter.GetItemParts(item);
+    }
+
+    public bool IsItemSplit(IWhiteboardItem item)
+    {
+        return _worksheetItemSplitter.IsItemSplit(item);
+    }
+
+    public void HideZombies(IWhiteboardItem item, bool clearItemClip)
+    {
+        _worksheetItemSplitter.HideZombies(item, clearItemClip);
+    }
+
+    public void ShowZombies(IWhiteboardItem item)
+    {
+        _worksheetItemSplitter.ShowZombies(item);
+    }
+
+    public void UpdateVisiblePagesOnPageRemovedIfNeeded(int indexOfFirstRemovedPage)
+    {
+        _worksheetVisiblePages.UpdateVisiblePagesOnPageRemovedIfNeeded(indexOfFirstRemovedPage);
+    }
+
+    private void RemoveItemFromPage(IWorksheetPage page, IWhiteboardItem item)
+    {
+        RemoveItemsFromPage(page, new[] { item });
+    }
+
+    private IWorksheetPage CreatePage()
+    {
+        return ControlCreator.CreateWorksheetPageControl(PageLayout.GridCellSize);
+    }
 }

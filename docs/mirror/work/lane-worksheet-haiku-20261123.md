@@ -94,3 +94,9 @@
 - The `foreach` over `Children` (`IList`) with `AddRange` is the closure-free bottom-tested loop.
 - Release IL: PASS (1283 checked, 0 failures).
 - Still parked: `PageNumberControl.IsValidTemplateKey` (lambda, `<>c__DisplayClass17_0` ordinal blocker) and the closure-bearing members listed in batch 6 and batch 8 notes.
+
+## Batch 13 — WorksheetPageManager closure-free delegates and page helpers
+
+- Implemented in `Mirrored/` (stubs removed from `.g.cs`): `AppendNewPage`, `GetTrailingEmptyPageCount` (bottom-tested `for` with `break`), `GetItemPage`, `GetWorksheetItemParts`, `IsItemSplit`, `HideZombies`, `ShowZombies`, `UpdateVisiblePagesOnPageRemovedIfNeeded`, `RemoveItemFromPage` (one-item array), `CreatePage`.
+- Release IL: PASS (1293 checked, 0 failures) on the first attempt.
+- Still stubs in this type: `IsTrailingEmptyPage` and `GetPage(double)` (both closure-bearing per the IL scan, or pending), `RemoveItemsFromPage` (closure), and the rest of the list in the batch 13 survey.
