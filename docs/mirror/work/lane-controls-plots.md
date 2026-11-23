@@ -608,3 +608,9 @@
 - Generated layout: two stubs removed. Verified: after a Release build, `emit` regenerates `PlotGraphLinearAxisBase.g.cs` byte-identical.
 - Release IL: full gate PASS — 2573 checked, 0 failures.
 - Still stubs in this class: `ArrowHeadGeometry` (blocked above) and `GetPositions`.
+
+## Batch 86 — PlotGraphLinearAxisBase.GetPositions (blocked, kept as stub)
+
+- Member: `GetPositions(out ×6)`, no closures. Two drafts were checked: a faithful two-statement form with `double` temps (extra locals, 416 entries against 374), and an inline form that assigns `desiredSize` and `transform` inside the `new Point(...)` arguments to keep Mathcad's evaluation order (422 entries).
+- Cause: Mathcad stores each value once (`stloc.3; ldloca.s 3`) after reading `start.X` into the argument stack. Roslyn compiles `(desiredSize = X).Width` as `dup; stloc.s N; ldloca.s N` with a new temp slot. A separate statement fixes the temp but changes the argument order, so no C# form found reproduces the IL.
+- Result: not landed; `GetPositions` stays a generated stub.
