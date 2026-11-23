@@ -73,3 +73,9 @@
 - Measured first mismatch (Release IL gate, 664 checked, 1 failure): `#25` Quire `brfalse.s` vs Mathcad `brtrue.s`; also `Enumerable.First` in Quire where Mathcad calls `Colors.get_Black` first.
 - Mathcad materializes the `dictionary == null || dictionary.Count != 0` condition as a bool on the stack (`ldc.i4.1` / `cgt.un`, then `brtrue`), with no bool local. Two ternary forms (original and reversed `||`) did not reproduce that shape.
 - Next step: find a source form that Roslyn lowers to this branch layout, or leave it parked.
+
+## Parked — three RichTextWithEmbeddedItem members (no candidate this round)
+
+- `GetEmbeddedObjectCaretOffset(object)`: no lambda. Mathcad evaluates `this` before the `TextPointer` temp for `GetInsertionPointAtPointer(ref ...)`. The `ref` argument must be a local, so the first difference is at #25 (`ldarg.0` vs Quire `ldloc.0`). No idiomatic C# form found that puts `this` first.
+- `ValidateURL(Uri)` (static): no lambda. First difference at #9 (Quire `br.s` target 41 vs Mathcad 40); Quire has 59 entries vs Mathcad 56. Mathcad keeps `result` as `Nullable` with `ldloca` plus the constructor call. Not resolved.
+- `OpenHyperlinkUrl(Uri)`: Mathcad IL keeps a literal `ldc.i4.0; brfalse.s` around the `ValidateURL` block (source decompiles as `if (false)`). Roslyn Release removes it, so the branch and call counts cannot match. Parked.
