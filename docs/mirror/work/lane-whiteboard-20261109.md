@@ -582,6 +582,26 @@
 - Release IL: PASS — 955 checked, 0 failures (`release-il-aabce411924e`).
 - Remaining mismatches in this batch: none.
 
+## Batch 44 — WhiteboardViewModel: RestoreSavedState, FindOncePrivate, and closures
+
+- Members:
+  - `WhiteboardViewModel.RestoreSavedState()` and closure `<RestoreSavedState>b__207_0`
+  - `WhiteboardViewModel.FindOncePrivate(string, bool, LogicalDirection, FindOptions, List<Pair<int, int>>)` and closures:
+    - `<>c__DisplayClass221_0.<FindOncePrivate>b__0`
+    - `<>c__DisplayClass221_0.<FindOncePrivate>b__1`
+    - `<>c.<FindOncePrivate>b__221_2`
+    - `WhiteboardControl.FindOncePrivate` (verified exact)
+- Hand-written: `src/Quire.Controls.Whiteboard/Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stubs replaced.
+- Ordinals: The aligned member ordering established in Batch 42 successfully aligned every target member and closure:
+  - `RestoreSavedState` (207) -> `<RestoreSavedState>b__207_0`
+  - `FindOncePrivate` (221) -> `<>c__DisplayClass221_0.<FindOncePrivate>b__0`, `<>c__DisplayClass221_0.<FindOncePrivate>b__1`, `<>c.<FindOncePrivate>b__221_2`
+- Shapes Release IL requires:
+  - `RestoreSavedState`: checks `_enteredRestoreSavedState`, asserts with `DebugTools.FailAssertion`, restores insertion point, restores selection with `_savedSelectionList.Any(item => !SelectedItems.Contains(item))` (capturing `this`), activates item or fallback insertion point, and cleans up in `finally`.
+  - `FindOncePrivate`: ternary expression for `startPoint` evaluates LHS address once (`ldloc.0 ... stfld startPoint`); LINQ pipeline branches on `direction == LogicalDirection.Forward` to filter with `<FindOncePrivate>b__0` or `<FindOncePrivate>b__1` with `.Reverse()`, then projects via `WhiteboardItemSearchRestrictor.TryCreateFindRestrictor` method group and filters non-null restrictors via `<FindOncePrivate>b__221_2` on `<>c`; foreach loop executes `FindOnce` until found or enumeration exhausted.
+- Release IL: PASS — 962 checked, 0 failures (`release-il-bd5c38da097a`).
+- Remaining mismatches in this batch: none.
+
+
 
 
 

@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using Quire;
 using Quire.Controls.Core;
 using Quire.Controls.Core.Whiteboard;
 using Quire.Services;
@@ -1006,7 +1008,61 @@ public partial class WhiteboardViewModel
 
     private double _maximumHeight;
 
-    public virtual void RestoreSavedState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void RestoreSavedState()
+    {
+        bool flag = false;
+        try
+        {
+            if (!_enteredRestoreSavedState)
+            {
+                _enteredRestoreSavedState = true;
+                flag = true;
+            }
+            else if (_savedInsertionPoint.HasValue || _savedActiveItem != null || _savedSelectionList.IsNotEmpty())
+            {
+                DebugTools.FailAssertion("Reentrancy to RestoreSavedState for object " + GetType().Name + " while there is a saved state.");
+                ClearSavedState();
+                return;
+            }
+
+            if (_savedInsertionPoint.HasValue)
+            {
+                InsertionPoint = _savedInsertionPoint.Value;
+                IsCrosshairVisible = true;
+            }
+
+            if (_savedSelectionList.Any(item => !SelectedItems.Contains(item)))
+            {
+                ClearSelectedItems();
+                SelectItems(_savedSelectionList);
+            }
+
+            if (_savedActiveItem != null)
+            {
+                if (WhiteboardItems.Contains(_savedActiveItem))
+                {
+                    ActivateItem(_savedActiveItem);
+                }
+                else
+                {
+                    InsertionPoint = _savedInsertionPoint ?? DefaultInsertionPoint;
+                    _savedIsFocused = true;
+                }
+            }
+
+            if (_savedIsFocused.HasValue)
+            {
+                IsFocused = _savedIsFocused.Value;
+            }
+        }
+        finally
+        {
+            if (flag)
+            {
+                _enteredRestoreSavedState = false;
+            }
+        }
+    }
 
     public void SaveResizeInformation()
     {
@@ -1158,7 +1214,40 @@ public partial class WhiteboardViewModel
         return WhiteboardItems.Where(otherItem => otherItem != item && itemRect.IntersectsWith(GetItemRect(otherItem)));
     }
 
-    public virtual bool FindOncePrivate(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual bool FindOncePrivate(string text, bool startFromCaret, LogicalDirection direction, FindOptions options, List<Pair<int, int>> subscriptPositions)
+    {
+        if (WhiteboardItems == null)
+        {
+            return false;
+        }
+
+        IWhiteboardItem whiteboardItem = ActiveOrSelectedItems.FirstOrDefault();
+        Point startPoint = (whiteboardItem != null)
+            ? GetItemLocation(whiteboardItem)
+            : ((direction == LogicalDirection.Forward)
+                ? new Point(double.NegativeInfinity, double.NegativeInfinity)
+                : new Point(double.PositiveInfinity, double.PositiveInfinity));
+
+        IEnumerable<WhiteboardItemSearchRestrictor> enumerable = ((direction == LogicalDirection.Forward)
+            ? WhiteboardItems.Where(item => _whiteboardModel.PositionComparer.Compare(startPoint, GetItemLocation(item)) <= 0)
+            : WhiteboardItems.Where(item => _whiteboardModel.PositionComparer.Compare(GetItemLocation(item), startPoint) <= 0).Reverse())
+            .Select(WhiteboardItemSearchRestrictor.TryCreateFindRestrictor)
+            .Where(restrictor => restrictor != null);
+
+        bool flag = false;
+        foreach (WhiteboardItemSearchRestrictor item in enumerable)
+        {
+            if (flag)
+            {
+                break;
+            }
+
+            flag = item.FindOnce(text, startFromCaret, direction, options, subscriptPositions);
+            startFromCaret = false;
+        }
+
+        return flag;
+    }
 
     public void FireRequestMaximumSize()
     {
