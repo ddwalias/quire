@@ -94,4 +94,11 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
 - Release IL report: `.mirror-cache/release-il-0aab2241176b/release-il.json` (PASS, 191 checked; selected Quire.depman.ActionChainMgd).
 - Remaining mismatches: none in this batch. Other mcdepman members remain incomplete as listed above.
 
+## Batch 9 — DepTrackingEnv field access
+
+- Owner: Codex / Orca task `task_dd7c54fcfe97`; branch `feature/luna-mcdepman`.
+- Members verified: `DepTrackingEnv` constructor and `loc()`; the reference confirms the pointer field and accessor directly, and the existing mixed-mode implementations match.
+- Release IL report: `.mirror-cache/release-il-9d40c7c55d4e/release-il.json` (PASS, 191 checked; selected Quire.depman.DepTrackingEnv).
+- Remaining mismatches: none in this batch. Other mcdepman members remain incomplete as listed above.
+
 
