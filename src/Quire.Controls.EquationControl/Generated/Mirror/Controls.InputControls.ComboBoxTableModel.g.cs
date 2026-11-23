@@ -19,34 +19,4 @@ public partial class ComboBoxTableModel : global::Quire.Controls.InputControls.I
     private readonly global::Quire.Controls.InputControls.ComboBoxTopRow _topRow;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.List<global::Quire.Controls.InputControls.NameValuesRow> _nameValuesRows;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.View.IReadonlyCellData> GetColumnCells(int columnIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EquationEditor.View.IReadonlyCellData global::Quire.Controls.InputControls.IComboBoxTableModel.GetCellAt(int rowIdx, int colIdx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UpdateComboBoxTable(global::Quire.EquationEditor.Tree.IComboBoxInputControlDataAdapter data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsValid() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData> InsertRow(int rowIndex, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool RemoveRow(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateCellsPositionForShiftedNameValuesRows(int numOfUnchangedRows, global::System.Action<global::Quire.Controls.InputControls.ICellData> updateCellPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData> InsertColumn(int columnIndex, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool RemoveColumn(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ClearSelectedCellsContent(global::Quire.DiscreteRect range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool AreAllSelectedCellsEmpty(global::Quire.DiscreteRect range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UpdateCellsInRangeValues(global::Quire.DiscreteRect range, global::System.Collections.Generic.IList<string> viewStrings) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData> CellsInRange(global::Quire.DiscreteRect range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IEnumerable<T> TakeSubsequence<T>(global::System.Collections.Generic.IEnumerable<T> sequence, int fromIdx, int toIdx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void TrimWhitespacesInUnitCells() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

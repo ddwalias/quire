@@ -200,3 +200,18 @@
 - Gate (project-level): PASS; 3498 checked, zero failures (`.mirror-cache/release-il-d6bb9413c9e2/release-il.json`). Earlier exact rows (AllCells, the events, PasteEditMode, ExpandComboBoxRowsColumns, PasteSelectedValues, TextBox_OnPaste) remain exact.
 - Regeneration: `dotnet build` of `Quire.Componentsmgd` (Release) and `dotnet run -c Release --project tools/Quire.Tools.MirrorGen -- emit` leave `Controls.InputControls.EditableComboBoxViewModel.g.cs` byte-identical (zero diff). The emit also rewrites about 330 unrelated generated files on this worktree, which were reverted; that drift is outside this lane.
 - Dependency note: `DeleteEmptyColumns` calls `TableModel.GetColumnCells`, which is still a generated stub in `ComboBoxTableModel`. The member is Release-IL exact; at run time it reaches that stub until `ComboBoxTableModel.GetColumnCells` is mirrored.
+
+### Batch 28: Controls.InputControls.ComboBoxTableModel (member order, explicit GetCellAt, removal, range helpers)
+
+- Member order: the hand-written partial is in Mathcad token order, and every method stub from the generated file is now a placeholder in the partial in that order (so the generated file keeps only the four fields). The closure rule from batch 27 holds for this type: a lambda ordinal is `methodIndex + 4 fields + properties + events`, with `methodIndex` counted from the first constructor as 0. Checks: `IsValid` 18+4+8 = 30, `InsertRow` 21+4+8 = 33, `RemoveRow` 35, `RemoveColumn` 39, `ClearSelectedCellsContent` 41, `AreAllSelectedCellsEmpty` 42, `CellsInRange` 44 (display class), `TrimWhitespacesInUnitCells` 47, `UpdateCellsPositionForShiftedNameValuesRows` 36 (display class), `GetColumnCells` 26 (display class).
+- Exact, new: `IComboBoxTableModel.GetCellAt` (explicit wrapper), `IsValid`, `RemoveRow`, `RemoveColumn`, `ClearSelectedCellsContent`, `AreAllSelectedCellsEmpty`, `TrimWhitespacesInUnitCells`, `CellsInRange`, `TakeSubsequence<T>`, `UpdateCellsPositionForShiftedNameValuesRows`, `UpdateCellsInRangeValues`.
+- Shapes that the Release IL requires: `cell.Row -= 1` (not `cell.Row--` or `--cell.Row`, which store a temp), and the `if (DevAssert(...).Failed) return;` guard for `UpdateCellsInRangeValues` (`brfalse` past the return).
+- Gate (project-level): PASS; 3521 checked, zero failures (`.mirror-cache/release-il-fbe3a9a25729/release-il.json`).
+- Regeneration: `dotnet run -c Release --project tools/Quire.Tools.MirrorGen -- emit` leaves `Controls.InputControls.ComboBoxTableModel.g.cs` byte-identical (zero diff). Its unrelated drift on the worktree was reverted.
+
+#### Blocker: GetColumnCells (not landed)
+
+- Its Mathcad body is `if (!DevAssert(...).Failed) { IEnumerable<IReadonlyCellData> ... = AllRows.Select(...); return ...; } return Enumerable.Empty<...>();`, with a display class `26_0` that captures `columnIndex`, and Mathcad stores the Select result in local 1 (`stloc.1; ldloc.1; ret`).
+- Roslyn in Release returns the Select result directly, with no stloc/ldloc, in every form tried: a named local, a local declared before the `if`, a direct return, and both block orders. The first difference is at #20 (`brtrue.s` target off by two bytes), and the entry count is 33 against Mathcad's 35.
+- It stays a placeholder in the partial. `DeleteEmptyColumns` still reaches it at run time.
+- Left open: `UpdateComboBoxTable` (display classes `29_0`/`29_1`), `InsertRow` (lambda `<>c` `33_0`), `InsertColumn` (`37_0`). Their ordinals are predicted by the rule above, and each needs its own gate probe.
