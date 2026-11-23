@@ -616,9 +616,21 @@ internal partial class WorksheetPageManager
 
     private void HandlePagebreaksCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void HandlePagebreakAdded(global::Quire.Controls.Core.IWorksheetPageBreak pagebreak) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandlePagebreakAdded(IWorksheetPageBreak pagebreak)
+    {
+        if (pagebreak.NextPage <= 0)
+        {
+            pagebreak.NextPage = GetPageIndex(ItemManager.GetItemWorksheetLocation(pagebreak).Y);
+        }
+        if (pagebreak.NextPage >= Pages.Count)
+        {
+            Pages.Count.UpTo(pagebreak.NextPage, i => AppendNewPage());
+        }
+    }
 
-    private void HandlePagebreakRemoved(global::Quire.Controls.Core.IWorksheetPageBreak pagebreak) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandlePagebreakRemoved(IWorksheetPageBreak pagebreak)
+    {
+    }
 
     private void HandlePagesCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -629,7 +641,20 @@ internal partial class WorksheetPageManager
         RemoveItemsFromPage(page, new[] { item });
     }
 
-    private void RemoveItemsFromPage(global::Quire.Controls.Worksheet.IWorksheetPage page, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void RemoveItemsFromPage(IWorksheetPage page, IEnumerable<IWhiteboardItem> items)
+    {
+        foreach (IWhiteboardItem item in items)
+        {
+            long stamp = ItemManager.GetItemAddMoveRemoveTimestamp(item);
+            ItemManager.SetItemAddMoveRemoveTimestamp(item, ++stamp);
+            RemoveNonOwnedItemAndZombies(item);
+        }
+        page.RemoveItems(items);
+        if (items.Any())
+        {
+            ItemManager.ExecuteOnUnload(items.First(), () => page.UpdateNonPrintableSpaceIndicator(RightEdgeOfPage));
+        }
+    }
 
     private void PageBodyActivatedHandler()
     {

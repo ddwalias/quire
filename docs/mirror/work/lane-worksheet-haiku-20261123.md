@@ -187,3 +187,11 @@
 - Implemented `AppendNewPageIfNeeded` (`requiredPageCount = pageIndex + 1; if (requiredPageCount > Pages.Count) (requiredPageCount - Pages.Count).Times(i => AppendNewPage());`). The lambda captures only `this`, so Roslyn names it `<AppendNewPageIfNeeded>b__N_0`.
 - Ordinal measured: Mathcad `b__86_0`, candidate `b__85_0` with the delegate at the tail. Every ordinal-named lambda in Mathcad fits `token row + 19`, plus 1 for rows after the nested `SplitAction` delegate: Dispose (26 → 45), CalculateItemPageIndices (41 → 60), AppendNewPageIfNeeded (66 → 86), HandlePagebreakAdded (70 → 90), HandlePagesCollectionChanged (72 → 92), RemoveAllItemsFromPage (73 → 93), constructor (80 → 100).
 - Moved the `SplitAction` nested delegate from the tail to just before `ActivateItemPart` (row 42, after row 41). Result: the closure name matches Mathcad. Release IL gate: PASS, 1328 checked, 1328 exact, 0 failures, including the previously exact `IsTrailingEmptyPage`.
+
+## Batch 28 — WorksheetPageManager RemoveItemsFromPage, HandlePagebreakAdded, HandlePagebreakRemoved
+
+- `RemoveItemsFromPage`: foreach with `++stamp` on the item timestamp, `RemoveNonOwnedItemAndZombies`, `page.RemoveItems(items)`, then `if (items.Any()) ItemManager.ExecuteOnUnload(items.First(), () => page.UpdateNonPrintableSpaceIndicator(RightEdgeOfPage))`. Its display class `95_0` matches Mathcad (row 75: 75+19+1).
+- `HandlePagebreakAdded`: `if (NextPage <= 0) NextPage = GetPageIndex(ItemManager.GetItemWorksheetLocation(pagebreak).Y); if (NextPage >= Pages.Count) Pages.Count.UpTo(NextPage, i => AppendNewPage());`. Lambda ordinal `b__90_0` matches.
+- `HandlePagebreakRemoved`: empty body, Mathcad IL is `ret`.
+- Release IL gate: PASS, 1334 checked, 1334 exact, 0 failures.
+- Parked: `RemoveAllItemsFromPage`. Mathcad keeps one list on the stack and passes it to both `OfType` and `Where` via `dup` (no local for it), a receiver-sharing shape that the Roslyn source cannot reproduce without an extra local.
