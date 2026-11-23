@@ -1641,9 +1641,32 @@ public partial class WhiteboardViewModel
         }
     }
 
-    protected global::Quire.Controls.Core.IWhiteboardItem PredictFocus(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected IWhiteboardItem PredictFocus(FocusNavigationDirection direction)
+    {
+        if (WhiteboardItems.Count == 0)
+        {
+            return null;
+        }
 
-    protected virtual global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetItemsAccordingTabNavigateOrder(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsAccordingTabDirection, global::System.Windows.Input.FocusNavigationDirection direction, global::Quire.Controls.Core.IWhiteboardItem startItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        IEnumerable<IWhiteboardItem> whiteboardItems;
+        IEnumerable<IWhiteboardItem> enumerable = (direction == FocusNavigationDirection.Previous)
+            ? WhiteboardItems.Reverse()
+            : (whiteboardItems = WhiteboardItems);
+
+        return GetItemsAccordingTabNavigateOrder(enumerable, direction, ActiveItem).FirstOrDefault(item => WhiteboardItemMgr.IsTabNavigatable(item));
+    }
+
+    protected virtual IEnumerable<IWhiteboardItem> GetItemsAccordingTabNavigateOrder(IEnumerable<IWhiteboardItem> itemsAccordingTabDirection, FocusNavigationDirection direction, IWhiteboardItem startItem)
+    {
+        if (startItem == null)
+        {
+            return (direction == FocusNavigationDirection.Previous)
+                ? itemsAccordingTabDirection.SkipWhile(item => _whiteboardModel.PositionComparer.Compare(InsertionPoint, GetItemLocation(item)) < 0)
+                : itemsAccordingTabDirection.SkipWhile(item => _whiteboardModel.PositionComparer.Compare(InsertionPoint, GetItemLocation(item)) > 0);
+        }
+
+        return itemsAccordingTabDirection.Skip(itemsAccordingTabDirection.IndexOf(startItem) + 1);
+    }
 
     protected virtual bool CanTraverse(FocusNavigationDirection direction)
     {

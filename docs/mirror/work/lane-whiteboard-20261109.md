@@ -601,6 +601,24 @@
 - Release IL: PASS — 962 checked, 0 failures (`release-il-bd5c38da097a`).
 - Remaining mismatches in this batch: none.
 
+## Batch 45 — WhiteboardViewModel: PredictFocus, GetItemsAccordingTabNavigateOrder, and closures
+
+- Members:
+  - `WhiteboardViewModel.PredictFocus(FocusNavigationDirection)` and closure `<>c.<PredictFocus>b__271_0`
+  - `WhiteboardViewModel.GetItemsAccordingTabNavigateOrder(IEnumerable<IWhiteboardItem>, FocusNavigationDirection, IWhiteboardItem)` and closures:
+    - `<GetItemsAccordingTabNavigateOrder>b__272_0`
+    - `<GetItemsAccordingTabNavigateOrder>b__272_1`
+- Hand-written: `src/Quire.Controls.Whiteboard/Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stubs replaced.
+- Ordinals: The aligned member ordering established in Batch 42 successfully aligned every target member and closure:
+  - `PredictFocus` (271) -> `<>c.<PredictFocus>b__271_0`
+  - `GetItemsAccordingTabNavigateOrder` (272) -> `<GetItemsAccordingTabNavigateOrder>b__272_0`, `<GetItemsAccordingTabNavigateOrder>b__272_1`
+- Shapes Release IL requires:
+  - `PredictFocus`: returns early if `WhiteboardItems.Count == 0`; assigns `enumerable` via ternary `(direction == FocusNavigationDirection.Previous) ? WhiteboardItems.Reverse() : (whiteboardItems = WhiteboardItems)` which produces Mathcad's exact `stloc.1; ldloc.1; br.s IL_0028` ternary evaluation sequence into single merge store `stloc.0`; queries first navigatable item with `<>c.<PredictFocus>b__271_0`.
+  - `GetItemsAccordingTabNavigateOrder`: if `startItem == null`, evaluates ternary `(direction == FocusNavigationDirection.Previous) ? SkipWhile(< 0) : SkipWhile(> 0)` which compiles to `beq.s IL_001a` jumping to `<GetItemsAccordingTabNavigateOrder>b__272_0` with `<GetItemsAccordingTabNavigateOrder>b__272_1` in the fallthrough path; if `startItem != null`, computes `itemsAccordingTabDirection.IndexOf(startItem) + 1` via `Quire.EnumerableExtensions.IndexOf` and Skips.
+- Release IL: PASS — 967 checked, 0 failures (`release-il-50469c43fd14`).
+- Remaining mismatches in this batch: none.
+
+
 
 
 
