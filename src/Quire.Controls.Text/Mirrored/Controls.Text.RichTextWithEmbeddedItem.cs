@@ -129,6 +129,14 @@ public partial class RichTextWithEmbeddedItem
 
     private string _copyLinkText;
 
+    private void BindHyperlinkCommands()
+    {
+        CommandBindings.Add(new CommandBinding(HyperlinkCommands.ModifyHyperlink, ModifyHyperlink, CanModifyHyperlink));
+        CommandBindings.Add(new CommandBinding(HyperlinkCommands.RemoveHyperlinks, RemoveHyperlinks, CanRemoveHyperlinks));
+        CommandBindings.Add(new CommandBinding(HyperlinkCommands.OpenHyperlink, OpenHyperlink, CanOpenOrEditOrCopySingleHyperlink));
+        CommandBindings.Add(new CommandBinding(HyperlinkCommands.CopyHyperlink, CopyHyperlink, CanOpenOrEditOrCopySingleHyperlink));
+    }
+
     // Compile order: positioned so the lambdas are <>c__DisplayClass96_0 and <>c__DisplayClass97_0 as in Mathcad.
     private void ExecuteChangeFontColor(object sender, ExecutedRoutedEventArgs e)
     {

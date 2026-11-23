@@ -44,3 +44,10 @@
 - Release IL (project-wide): PASS — 657 checked, 0 failures.
 - Regeneration: `MirrorGen emit` gives the same stub removal; the only difference is the pre-existing `LogDocumentContents` placement drift.
 - Not attempted: `CanModifyHyperlink()` (lambda ordinal 20). The 33 generated fields are compiled before every hand-written member, so ordinal 20 needs the field and method prefix reordered; that is a wider change than one batch.
+
+## Batch 29 — RichTextWithEmbeddedItem.BindHyperlinkCommands
+
+- Member: `private void BindHyperlinkCommands()`, four `CommandBindings.Add(new CommandBinding(...))` calls using method groups only (no lambda, no ordinal). Hand-written in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs` (placed before the font-color pair); stub removed from the `.g.cs`.
+- Placement keeps the earlier ordinals: `<>c__DisplayClass96_0`, `97_0`, `b__149_0`, `d__114` and `d__284` re-measured unchanged.
+- Release IL (project-wide): PASS — 658 checked, 0 failures.
+- Regeneration: `MirrorGen emit` gives the same stub removal; the only difference is the pre-existing `LogDocumentContents` placement drift.
