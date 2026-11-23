@@ -80,4 +80,11 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
 - Remaining Aborter members (2): `Do()` and `Abort()` require `Efi.Symbolics` (`RequestInterrupt` and `UnRequestInterrupt`), which is missing.
 - Remaining SharedThreadContext members (4): `Abort(int32)`, `ClearInterrupt(int32)`, `interrupt(int32)` (require `Efi.Symbolics` / `Aborter`), `ExecuteInterruptibly(ThreadStart, bool)` (requires `SharedThreadContext` interrupt management wiring).
 
+## Batch 7 — CacheKey equality
+
+- Owner: Codex / Orca task `task_dd7c54fcfe97`; branch `feature/luna-mcdepman`.
+- Member: `depman.CacheKey.Equals(object)`, implemented from the original Release IL using the established `DSym.Equals` implementation and CacheKey field types.
+- Release IL report: `.mirror-cache/release-il-b9bd52a597f7/release-il.json` (PASS, 191 checked; selected Quire.depman.CacheKey).
+- Remaining mismatches: none in this batch. Other mcdepman members remain incomplete as listed above; `ActionChainMgd` methods were not selected.
+
 

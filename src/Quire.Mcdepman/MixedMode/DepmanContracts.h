@@ -226,6 +226,15 @@ namespace Quire { namespace depman {
             int symbol_hash = ds.GetHashCode();
             return (int)sm ^ (int)dt ^ symbol_hash;
         }
+
+        virtual bool Equals(System::Object^ other) override
+        {
+            CacheKey^ key = dynamic_cast<CacheKey^>(other);
+            if (key == nullptr)
+                return false;
+
+            return ds.Equals(key->ds) && sm == key->sm && dt == key->dt;
+        }
     };
 
     [Quire::Mirror::MirrorOfAttribute("depman.ActionChainMgd, mcdepman")]
