@@ -164,6 +164,9 @@ public partial class WhiteboardViewModel
 
     public bool OverRightMargin { get; set; }
 
+    // Layout requires CurrentDragMode before SetInsertionPoint to match Mathcad member ordinal |53_0 for local function Focus
+    public DragMode CurrentDragMode { get; set; }
+
     public Point InsertionPoint
     {
         get
@@ -176,7 +179,39 @@ public partial class WhiteboardViewModel
         }
     }
 
-    protected virtual void SetInsertionPoint(global::System.Windows.Point value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void SetInsertionPoint(Point value)
+    {
+        _insertionPoint = _alignmentGrid.GetNearestIntersectionPoint(value);
+        IWhiteboardItem childItemFromLocation = GetChildItemFromLocation(value);
+        if (childItemFromLocation != null && WhiteboardItemMgr.GetCanActivate(childItemFromLocation))
+        {
+            Point itemLocation = GetItemLocation(childItemFromLocation);
+            Point location = new Point(value.X - itemLocation.X, value.Y - (itemLocation.Y + childItemFromLocation.VerticalAlignmentOffset));
+            SimulateItemClickAndFireActivated(childItemFromLocation, location, 1);
+            return;
+        }
+
+        ClearSavedState();
+        IsCrosshairVisible = true;
+        if (ActiveItem != null)
+        {
+            WhiteboardItemMgr.SuppressBringIntoViewIfNeededAndExecute(ActiveItem, Focus, ActiveItem != null);
+        }
+        else
+        {
+            Focus();
+        }
+
+        ClearSelectedItems();
+        ActiveItem = null;
+        OnPropertyChanged("InsertionPoint");
+        FireActivated();
+
+        void Focus()
+        {
+            IsFocused = true;
+        }
+    }
 
     protected void FireActivated()
     {
@@ -275,7 +310,27 @@ public partial class WhiteboardViewModel
         }
     }
 
-    private void DeleteItemIfNeeded(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void DeleteItemIfNeeded(global::Quire.Controls.Core.IWhiteboardItem item)
+    {
+        if (!HandleUserInput)
+        {
+            return;
+        }
+        if (item == null || !WhiteboardItems.Contains(item))
+        {
+            return;
+        }
+        if (!WhiteboardItemMgr.ShouldItemBeDeletedIfEmpty(item) || SelectedItems.Contains(item))
+        {
+            return;
+        }
+        if (item.IsEmpty)
+        {
+            RemoveItemsCommand removeItemsCommand = GetRemoveItemsCommand("Remove Empty Item", GetItemAtLocation(ActiveItem));
+            removeItemsCommand.SetInsertionPointToFirstItemsLocation = false;
+            removeItemsCommand.Execute();
+        }
+    }
 
     public virtual INotifyCollectionRangeChanged<IWhiteboardItem> SelectedItems
     {
@@ -579,9 +634,23 @@ public partial class WhiteboardViewModel
         MinimumSize = FindMinimumSize();
     }
 
-    protected virtual global::System.Windows.Size FindMinimumSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
-    public DragMode CurrentDragMode { get; set; }
+    protected virtual global::System.Windows.Size FindMinimumSize()
+    {
+        double height = StrictMinimumSize.Height;
+        double width = StrictMinimumSize.Width;
+        if (WhiteboardItems != null)
+        {
+            foreach (global::Quire.Controls.Core.IWhiteboardItem item in WhiteboardItems)
+            {
+                if (!WhiteboardItemMgr.GetIgnoreForHorizontalMovementAndWidth(item))
+                {
+                    width = global::System.Math.Max(width, GetItemLocation(item).X + GetItemDesiredSize(item).Width);
+                }
+                height = global::System.Math.Max(height, GetItemLocation(item).Y + GetItemDesiredSize(item).Height + item.VerticalAlignmentOffset);
+            }
+        }
+        return new global::System.Windows.Size(width, height);
+    }
 
     public event global::System.Action<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem>> CopyWhiteboardItems;
 
@@ -1940,7 +2009,60 @@ public partial class WhiteboardViewModel
         FireChanged();
     }
 
-    private void ChildTriggeredResizeHandler(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl whiteboard, global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ChildTriggeredResizeHandler(IWhiteboardControl whiteboard, Size oldSize, Size newSize)
+    {
+        IWhiteboardItem item = whiteboard as IWhiteboardItem;
+        if (item == null)
+        {
+            return;
+        }
+
+        Rect itemRect = WhiteboardItemMgr.GetItemRect(item);
+        global::Quire.Undo.CommandBuffer.ExecuteAndAttach(new ResizeItemCommandWithSideEffects(this, item, oldSize, newSize, false, false));
+        if (newSize.Height.IsLessThanOrEqual(oldSize.Height))
+        {
+            return;
+        }
+
+        double heightIncreased = newSize.Height - oldSize.Height;
+        double num = 0.0;
+        itemRect.Height += heightIncreased;
+        double itemsToPushDownTop = itemRect.Bottom;
+        IEnumerable<IWhiteboardItem> source = WhiteboardItems.Where(other =>
+        {
+            if (other == item)
+            {
+                return false;
+            }
+
+            Rect otherRect = GetItemRect(other);
+            return otherRect.Right.IsGreaterThan(itemRect.Left) &&
+                   otherRect.Left.IsLessThan(itemRect.Right) &&
+                   otherRect.Top.IsLessThanOrEqual(itemRect.Bottom) &&
+                   otherRect.Top.IsGreaterThanOrEqual(itemRect.Bottom - heightIncreased);
+        });
+
+        if (source.Any())
+        {
+            itemsToPushDownTop = source.Min(i => GetItemRect(i).Top);
+            num = itemRect.Bottom - itemsToPushDownTop;
+        }
+
+        if (num > 0.0)
+        {
+            num += Grid.GridCellSize.Height * 0.5;
+            global::Quire.Undo.CommandBuffer.ExecuteAndAttach(new MoveItemsCommandWithSideEffects(this, new Vector(0.0, num), true, WhiteboardItems.Where(other =>
+            {
+                if (other != item)
+                {
+                    Rect otherRect = GetItemRect(other);
+                    return otherRect.Top.IsGreaterThanOrEqual(itemsToPushDownTop);
+                }
+
+                return false;
+            }).ToArray()));
+        }
+    }
 
     protected virtual void HandleItemMoved(IWhiteboardItem item)
     {
@@ -1991,7 +2113,56 @@ public partial class WhiteboardViewModel
         return WhiteboardItemMgr.GetItemRect(item);
     }
 
-    protected virtual void SetupCommandBindings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void SetupCommandBindings()
+    {
+        CreateCommandBinding(EditingCommands.MoveDownByLine, MoveDownCommand.Execute, MoveDownCommand.CanExecute);
+        CreateCommandBinding(EditingCommands.MoveUpByLine, MoveUpCommand.Execute, MoveUpCommand.CanExecute);
+        CreateCommandBinding(EditingCommands.MoveLeftByCharacter, MoveLeftCommand.Execute, MoveLeftCommand.CanExecute);
+        CreateCommandBinding(EditingCommands.MoveRightByCharacter, MoveRightCommand.Execute, MoveRightCommand.CanExecute);
+        CreateCommandBinding(EditingCommands.EnterParagraphBreak, CarriageReturnCommand.Execute);
+        CreateCommandBinding(EditingCommands.TabForward, TraverseForwardCommand.Execute, TraverseForwardCommand.CanExecute);
+        CreateCommandBinding(EditingCommands.TabBackward, TraverseBackwardCommand.Execute, TraverseBackwardCommand.CanExecute);
+        CreateCommandBinding(EditingCommands.Delete, (object param) =>
+        {
+            HandleDelete();
+        }, (object param) => CanDelete());
+        CreateCommandBinding(EditingCommands.Backspace, (object param) =>
+        {
+            HandleBackspace();
+        }, (object param) => CanBackspace());
+        CreateCommandBinding(WhiteboardCommands.DeleteActiveItem, (object param) =>
+        {
+            DeleteActiveItem();
+        }, (object param) => CanDeleteActiveItem());
+        CreateCommandBinding(WhiteboardCommands.DeleteSelectedItems, (object param) =>
+        {
+            DeleteSelectedItems();
+        }, (object param) => CanDeleteSelectedItems());
+        CreateCommandBinding(WhiteboardCommands.DeleteActiveOrSelectedItems, (object param) =>
+        {
+            DeleteActiveOrSelectedItems();
+        }, (object param) => CanDeleteActiveOrSelectedItems());
+        CreateCommandBinding(ApplicationCommands.Copy, (object param) =>
+        {
+            CopySelection();
+        }, (object param) => CanCopySelection());
+        CreateCommandBinding(ApplicationCommands.Cut, (object param) =>
+        {
+            CutSelection();
+        }, (object param) => CanCutSelection());
+        CreateCommandBinding(WhiteboardCommands.SeparateOverlappedItemsVertically, (object param) =>
+        {
+            SeparateOverlappedItems(Dimension.Vertical);
+        }, (object param) => CanSeparateOverlappedItems(Dimension.Vertical));
+        CreateCommandBinding(WhiteboardCommands.SeparateOverlappedItemsHorizontally, (object param) =>
+        {
+            SeparateOverlappedItems(Dimension.Horizontal);
+        }, (object param) => CanSeparateOverlappedItems(Dimension.Horizontal));
+        CreateCommandBinding(WhiteboardCommands.SelectAllRegions, (object param) =>
+        {
+            HandleSelectAll();
+        });
+    }
 
     public virtual bool CanInsertVerticalSpace
     {
@@ -2001,9 +2172,9 @@ public partial class WhiteboardViewModel
         }
     }
 
-    public virtual bool CanDeleteVerticalSpaceAbove { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public virtual bool CanDeleteVerticalSpaceAbove => CanDeleteVerticalSpace(Direction.Above);
 
-    public virtual bool CanDeleteVerticalSpaceBelow { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public virtual bool CanDeleteVerticalSpaceBelow => CanDeleteVerticalSpace(Direction.Below);
 
     public virtual void InsertVerticalSpace(int numberOfLines, bool pushInsertionPoint, bool ignoreItemsOnCurrentLine)
     {
@@ -2023,9 +2194,89 @@ public partial class WhiteboardViewModel
         command.Execute();
     }
 
-    public double LimitOffsetBasedOnItemsToMove(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToMove, double offsetY, global::Quire.Direction direction, global::System.Windows.Point insertionPointLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public double LimitOffsetBasedOnItemsToMove(IEnumerable<IWhiteboardItem> itemsToMove, double offsetY, Direction direction, Point insertionPointLocation)
+    {
+        double height = Grid.GridCellSize.Height;
+        double val = -offsetY;
+        double? num = itemsToMove.Any() ? new double?(itemsToMove.Min(item => GetItemTop(item))) : null;
+        IEnumerable<IWhiteboardItem> source = WhiteboardItems.Except(itemsToMove);
+        double? num2 = source.Any() ? new double?(source.Max(item => GetItemBottom(item))) : null;
+        double num4;
+        double num3;
+        if (direction == Direction.Down)
+        {
+            num3 = num2.HasValue ? Math.Max(insertionPointLocation.Y, num2.Value) : insertionPointLocation.Y;
+            num4 = num.HasValue ? num.Value : ContentHeight;
+        }
+        else
+        {
+            num3 = num2.HasValue ? num2.Value : 0.0;
+            num4 = num.HasValue ? Math.Min(insertionPointLocation.Y, num.Value) : insertionPointLocation.Y;
+        }
+        val = Math.Min(val, num4 - num3);
+        if (val.IsLessThan(0.0))
+        {
+            val = 0.0;
+        }
+        return -((val / height).Floor() * height);
+    }
 
-    protected virtual bool CanDeleteVerticalSpace(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual bool CanDeleteVerticalSpace(Direction direction)
+    {
+        double cellHeight = Grid.GridCellSize.Height;
+        DoubleComparer defaultDoubleComparer = DoubleComparer.DefaultDoubleComparer;
+        if (ActiveOrSelectedItems.Any())
+        {
+            return false;
+        }
+        if (defaultDoubleComparer.Compare(ContentHeight - cellHeight, StrictMinimumSize.Height) < 0)
+        {
+            return false;
+        }
+        if (direction == Direction.Above)
+        {
+            return !WhiteboardItems.Any(item =>
+            {
+                Rect itemRect = GetItemRect(item);
+                itemRect.Y -= item.VerticalAlignmentOffset;
+                if (itemRect.Y.IsEqualTo(InsertionPoint.Y))
+                {
+                    if (itemRect.Left.IsLessThan(InsertionPoint.X))
+                    {
+                        // IL requires goto to match single-exit brtrue.s jump to final ldc.i4.1; ret sequence
+                        goto ReturnTrue;
+                    }
+                }
+                if (itemRect.Y.IsEqualTo(InsertionPoint.Y - cellHeight))
+                {
+                    return itemRect.Right.IsGreaterThanOrEqual(InsertionPoint.X);
+                }
+                return false;
+            ReturnTrue:
+                return true;
+            });
+        }
+        return !WhiteboardItems.Any(item =>
+        {
+            Rect itemRect = GetItemRect(item);
+            itemRect.Y -= item.VerticalAlignmentOffset;
+            if (itemRect.Y.IsEqualTo(InsertionPoint.Y))
+            {
+                if (itemRect.Left.IsGreaterThanOrEqual(InsertionPoint.X))
+                {
+                    // IL requires goto to match single-exit brtrue.s jump to final ldc.i4.1; ret sequence
+                    goto ReturnTrue;
+                }
+            }
+            if (itemRect.Y.IsEqualTo(InsertionPoint.Y + cellHeight))
+            {
+                return itemRect.Right.IsLessThan(InsertionPoint.X);
+            }
+            return false;
+        ReturnTrue:
+            return true;
+        });
+    }
 
         public virtual Size ResizeAndNotify(IEnumerable<IWhiteboardItem> list, Size oldSize)
     {
@@ -2046,7 +2297,35 @@ public partial class WhiteboardViewModel
         return val;
     }
 
-    public virtual bool IsValidLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> newLocations, bool allowGrowthDownOrRight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual bool IsValidLocation(IWhiteboardItem item, IDictionary<IWhiteboardItem, Point> newLocations, bool allowGrowthDownOrRight)
+    {
+        Point point = newLocations[item];
+        if (GetItemIgnoreForHorizontalMovementAndWidth(item))
+        {
+            if (!allowGrowthDownOrRight)
+            {
+                if (point.Y.IsGreaterThanOrEqual(0.0))
+                {
+                    return point.Y.IsLessThanOrEqual(ContentHeight);
+                }
+                return false;
+            }
+            return point.Y.IsGreaterThanOrEqual(0.0);
+        }
+        if (!allowGrowthDownOrRight)
+        {
+            if (point.X.IsGreaterThanOrEqual(0.0) && point.Y.IsGreaterThanOrEqual(0.0) && point.X.IsLessThanOrEqual(ContentWidth))
+            {
+                return point.Y.IsLessThanOrEqual(ContentHeight);
+            }
+            return false;
+        }
+        if (point.X.IsGreaterThanOrEqual(0.0))
+        {
+            return point.Y.IsGreaterThanOrEqual(0.0);
+        }
+        return false;
+    }
 
     CommandBindingCollection IWhiteboardViewModel.CommandBindings
     {

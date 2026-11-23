@@ -696,6 +696,35 @@
 - Release IL: PASS — 1010 checked, 0 failures (`release-il-46ed43fe4740`).
 - Remaining mismatches in this batch: none.
 
+## Batch 50 — WhiteboardViewModel: Vertical Space, Location/Resize handlers, Command Bindings, InsertionPoint, Deletion, and Sizing
+
+- Members:
+  - `WhiteboardViewModel.CanDeleteVerticalSpaceAbove(double)`
+  - `WhiteboardViewModel.CanDeleteVerticalSpaceBelow(double)`
+  - `WhiteboardViewModel.LimitOffsetBasedOnItemsToMove(double)` and closures `<>c.<LimitOffsetBasedOnItemsToMove>b__303_0`, `<LimitOffsetBasedOnItemsToMove>b__303_1`
+  - `WhiteboardViewModel.CanDeleteVerticalSpace(double)` and closures `<>c__DisplayClass304_0::<CanDeleteVerticalSpace>b__0`, `b__1`
+  - `WhiteboardViewModel.IsValidLocation(IWhiteboardItem, Point)`
+  - `WhiteboardViewModel.ChildTriggeredResizeHandler(object, ResizeEventMouseArgs)` and closures `<>c__DisplayClass287_0::<ChildTriggeredResizeHandler>b__0`, `b__1`, `b__2`
+  - `WhiteboardViewModel.SetupCommandBindings()` and closures `<>c.<SetupCommandBindings>b__293_0` through `b__293_18` (all 19 command bindings)
+  - `WhiteboardViewModel.SetInsertionPoint(Point)` and local function `<SetInsertionPoint>g__Focus|53_0`
+  - `WhiteboardViewModel.DeleteItemIfNeeded(IWhiteboardItem)`
+  - `WhiteboardViewModel.FindMinimumSize()`
+- Hand-written: `src/Quire.Controls.Whiteboard/Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stubs replaced.
+- Ordinals:
+  - `LimitOffsetBasedOnItemsToMove` (303) -> `<>c.<LimitOffsetBasedOnItemsToMove>b__303_0/1`
+  - `CanDeleteVerticalSpace` (304) -> `<>c__DisplayClass304_0`
+  - `ChildTriggeredResizeHandler` (287) -> `<>c__DisplayClass287_0`
+  - `SetupCommandBindings` (293) -> `<>c.<SetupCommandBindings>b__293_0..18`
+  - `SetInsertionPoint` local function ordinal index aligned to `|53_0` via property placement.
+- Shapes Release IL requires:
+  - `CanDeleteVerticalSpace`: closures use single boolean return target (`goto ReturnTrue;`) to match Mathcad short branch offsets (`brfalse.s 12`).
+  - `LimitOffsetBasedOnItemsToMove`: local variable ordering `double num4; double num3;` preserves slot order for `sub` instruction.
+  - `ChildTriggeredResizeHandler`: uses `CommandBuffer.ExecuteAndAttach` and direct positive condition (`if (num > 0.0)`) matching `ble.un.s` exit branch.
+  - `DeleteItemIfNeeded`: early guard returns (`if (!HandleUserInput) return;`, etc.) match sequential branch/ret patterns.
+  - `FindMinimumSize`: loops over `WhiteboardItems` accumulating width/height bounds accounting for `VerticalAlignmentOffset` and horizontal movement filters.
+- Release IL: PASS — 6809 checked (1049 in Whiteboard), 0 failures.
+- Remaining mismatches in this batch: none.
+
 
 
 
