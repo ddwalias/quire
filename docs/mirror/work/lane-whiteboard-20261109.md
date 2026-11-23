@@ -636,6 +636,25 @@
 - Release IL: PASS — 983 checked, 0 failures (`release-il-1fc103d7792a`).
 - Remaining mismatches in this batch: none.
 
+## Batch 47 — WhiteboardViewModel: GetInsertionPointAfterCarriageReturn, GetRightMostItemEdge, GetLowestItemEdge, and closures
+
+- Members:
+  - `WhiteboardViewModel.GetInsertionPointAfterCarriageReturn()` and closure `<GetInsertionPointAfterCarriageReturn>b__257_0`
+  - `WhiteboardViewModel.GetRightMostItemEdge(IEnumerable<IWhiteboardItem>)` and closure `<GetRightMostItemEdge>b__258_0`
+  - `WhiteboardViewModel.GetLowestItemEdge(IEnumerable<IWhiteboardItem>)` and closure `<GetLowestItemEdge>b__259_0`
+- Hand-written: `src/Quire.Controls.Whiteboard/Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stubs replaced.
+- Ordinals: The aligned member ordering established in Batch 42 successfully aligned every target member and closure:
+  - `GetInsertionPointAfterCarriageReturn` (257) -> `<GetInsertionPointAfterCarriageReturn>b__257_0`
+  - `GetRightMostItemEdge` (258) -> `<GetRightMostItemEdge>b__258_0`
+  - `GetLowestItemEdge` (259) -> `<GetLowestItemEdge>b__259_0`
+- Shapes Release IL requires:
+  - `GetInsertionPointAfterCarriageReturn`: evaluates `lowestItemEdge` into local 0, passes `ActiveOrSelectedItems.Min((IWhiteboardItem item) => GetItemLocation(item).X)` directly as arg 0 to `new Point(...)` without storing to a local, and computes `lowestItemEdge + Grid.GridCellSize.Height / 2.0` as arg 1, matching Mathcad's exact 2-local 4-stack IL evaluation sequence.
+  - `GetRightMostItemEdge`: returns 0.0 early on `EnumerableExtensions.IsNullOrEmpty(items)`; otherwise returns `items.Max((IWhiteboardItem item) => GetItemRightEdge(item))` capturing `this`.
+  - `GetLowestItemEdge`: returns 0.0 early on `EnumerableExtensions.IsNullOrEmpty(items)`; otherwise returns `items.Max((IWhiteboardItem item) => GetItemBottom(item))` capturing `this`.
+- Release IL: PASS — 989 checked, 0 failures (`release-il-1b8243e26c4a`).
+- Remaining mismatches in this batch: none.
+
+
 
 
 

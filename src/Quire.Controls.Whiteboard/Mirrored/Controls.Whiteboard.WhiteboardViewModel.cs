@@ -1572,11 +1572,31 @@ public partial class WhiteboardViewModel
         }
     }
 
-    protected global::System.Windows.Point GetInsertionPointAfterCarriageReturn() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected Point GetInsertionPointAfterCarriageReturn()
+    {
+        double lowestItemEdge = GetLowestItemEdge(ActiveOrSelectedItems);
+        return new Point(ActiveOrSelectedItems.Min((IWhiteboardItem item) => GetItemLocation(item).X), lowestItemEdge + Grid.GridCellSize.Height / 2.0);
+    }
 
-    protected double GetRightMostItemEdge(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected double GetRightMostItemEdge(IEnumerable<IWhiteboardItem> items)
+    {
+        if (EnumerableExtensions.IsNullOrEmpty(items))
+        {
+            return 0.0;
+        }
 
-    protected double GetLowestItemEdge(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        return items.Max((IWhiteboardItem item) => GetItemRightEdge(item));
+    }
+
+    protected double GetLowestItemEdge(IEnumerable<IWhiteboardItem> items)
+    {
+        if (EnumerableExtensions.IsNullOrEmpty(items))
+        {
+            return 0.0;
+        }
+
+        return items.Max((IWhiteboardItem item) => GetItemBottom(item));
+    }
 
     protected double GetItemBottom(IWhiteboardItem item)
     {
