@@ -182,6 +182,55 @@ internal partial class AxisModel
         return false;
     }
 
+    public void SetRange(double? min, double? max)
+    {
+        // The IL creates the closure only after the readiness test, so the body sits inside the if.
+        if (ExpressionsAreReady)
+        {
+            bool flag;
+            bool labelsUpdated = false;
+            Action onLabelsUpdated = () =>
+            {
+                labelsUpdated = true;
+            };
+            try
+            {
+                TickMarkLabelsUpdated += onLabelsUpdated;
+                double? num = (StartExpression.IsValueValid && !IsStringLabel()) ? new double?(Start) : min;
+                double? num2 = (EndExpression.IsValueValid && !IsStringLabel()) ? new double?(End) : max;
+                switch (Type)
+                {
+                    case AxesType.Angular:
+                        flag = SetRangeToAngularAxis();
+                        break;
+                    case AxesType.Radial:
+                        flag = SetRangeToRadialAxis(min, max);
+                        break;
+                    case AxesType.X:
+                    case AxesType.Y:
+                    case AxesType.Z:
+                        flag = SetRangeToLinearAxis(num.HasValue ? num.Value : StartDefaultByScaling, num2.HasValue ? num2.Value : EndDefault);
+                        break;
+                    default:
+                        flag = false;
+                        break;
+                }
+            }
+            finally
+            {
+                TickMarkLabelsUpdated -= onLabelsUpdated;
+            }
+            if (flag)
+            {
+                if (!labelsUpdated)
+                {
+                    FormatTickMarkValues();
+                }
+                FireRangeChanged();
+            }
+        }
+    }
+
     private static bool LimitHasErrors(IAxisLimitEditor axisLimitEditor)
     {
         return axisLimitEditor != null && axisLimitEditor.HasErrors;
@@ -813,5 +862,4 @@ internal partial class AxisModel
         EndExpression.SetPreCalculatedValue(End);
         SetSecondTickPreCalculatedValue();
         return true;
-    }
-}
+    }}

@@ -478,3 +478,12 @@
 - Generated layout: changed (stub removed). MirrorGen was checked after a Release build of `Quire.Controls.Plots` in the worktree: `emit` regenerates `AxisModel.g.cs` byte-identical to the committed file. (A `emit` without a fresh build re-adds the stubs of members implemented since the last build; always build first.)
 - Release IL: PASS — 2516 checked, 0 failures.
 - Left: `SetRange` (lambda closure, Mathcad ordinal `170_0`; the same placement rule applies when implemented).
+
+## Batch 67 — AxisModel.SetRange (lambda closure ordinal 170)
+
+- Member: `SetRange(double?, double?)`, with the `labelsUpdated` closure and the `TickMarkLabelsUpdated` hook-up in `try`/`finally`. Hand-written: placed ahead of `LimitHasErrors` in `Mirrored/Controls.Plots.Model.AxisModel.cs`; stub removed from `AxisModel.g.cs`.
+- Ordinal: placed at the end of the file, the closure was `233_0`; placed so that exactly 42 member units lie between it and `GetNumberOfTracesForEquation` (which moved from `212_0` to `213_0` when `SetRange` came before it), it is `170_0` as in Mathcad.
+- Shapes: the closure is created only after the readiness test, so the body sits inside `if (ExpressionsAreReady)` (a leading `return` gave the closure creation before the check). The `bool flag` local is declared before the delegate local (Mathcad's slot order is flag 1, delegate 2).
+- Generated layout: changed (stub removed). Verified: after a Release build of `Quire.Controls.Plots`, `emit` regenerates `AxisModel.g.cs` byte-identical to the file committed here.
+- Release IL: PASS — 2519 checked, 0 failures.
+- Left in AxisModel: `SetRangeToLinearAxis` and related done; remaining: `SetLevels`, `SetLogarithmicScale` done; the XML helpers (`SetXmlNode`, `GetXmlNode`, `AddEquation`), the data-object helpers, `UpdateTickMarkValues`, `FormatTickMarkValues`, `BuildTickMarksValues`, `SetLinearScale`, `CalculateBetterTickmarks*`, `RegionXmlNode`, `AxisCalculatables`, `SetDisplayNumberFormat`, `LinearizeStartEnd`, `SetTickMarksByEffectiveValues`, `SetRangeToAngularAxis`, `SetDisplayNumberFormat`, and the constructor.
