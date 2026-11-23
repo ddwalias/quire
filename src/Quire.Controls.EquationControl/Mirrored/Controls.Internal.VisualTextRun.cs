@@ -84,4 +84,35 @@ internal partial class VisualTextRun
 
         base.OnRender(dc);
     }
+
+    protected virtual void UpdateText()
+    {
+        if (string.IsNullOrEmpty(Text) || Font == null)
+        {
+            _formattedText = null;
+            return;
+        }
+
+        string text = Text;
+        CultureInfo currentUICulture = CultureInfo.CurrentUICulture;
+        FlowDirection flowDirection = FlowDirection.LeftToRight;
+        Typeface fontTypeface = Font.FontTypeface;
+        double fontSize = Font.FontSize;
+        Brush foreground = Font.Foreground;
+        TextDecorationCollection textDecorations = Font.TextDecorations;
+        _formattedText = new FormattedText(text, currentUICulture, flowDirection, fontTypeface, fontSize, foreground);
+        _formattedText.SetTextDecorations(textDecorations);
+        if (text == string.Empty)
+        {
+            return;
+        }
+
+        _baseline = _formattedText.Baseline;
+        _superscriptBaseline = _baseline - ExtendedFont.SafeComputeInkBoundingBox(Font.n_Run).Height;
+        _characterWidths.Clear();
+        for (int i = 0; i < text.Length; i++)
+        {
+            _characterWidths.Add(new FormattedText(text.Substring(i, 1), currentUICulture, flowDirection, fontTypeface, fontSize, foreground).WidthIncludingTrailingWhitespace);
+        }
+    }
 }

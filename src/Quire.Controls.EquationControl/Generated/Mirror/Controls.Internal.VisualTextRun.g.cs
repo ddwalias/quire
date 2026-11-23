@@ -11,6 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualTextRun, Ptc.Controls.EquationControl")]
 internal partial class VisualTextRun : global::System.Windows.FrameworkElement, global::Quire.Controls.Internal.IVisualText, global::Quire.Controls.Core.IMathFormatOwner, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void UpdateText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

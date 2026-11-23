@@ -243,3 +243,9 @@
 - Exact: the `Text` property (getter returns `_text`; the setter returns early when the value is unchanged, then sets `_text` and calls `UpdateText()`) and the `PropertyChanged` event. Both stub pairs are removed from the generated file, and both are in the hand-written partial with the `System.ComponentModel` using.
 - Still a stub: `UpdateText` (protected virtual). Its Mathcad body is not attempted in this batch.
 - Gate (project-level): PASS; 3536 checked, zero failures (`.mirror-cache/release-il-fa11980eb547/release-il.json`).
+
+### Batch 33: Controls.Internal.VisualTextRun.UpdateText
+
+- Exact: `UpdateText` (protected virtual), in Mathcad token order after `OnRender`. The guard clauses match Mathcad's `brtrue`/`brfalse` layout, `Font` is read through the property at each use, and the `TextDecorations` local is loaded before the `FormattedText` construction. The baseline is one expression with `SafeComputeInkBoundingBox(...).Height`, since Mathcad loads `_baseline` before the `Rect`.
+- The generated stub pair is removed from the `.g.cs`. The `Text` setter now calls an exact `UpdateText`.
+- Gate (project-level): PASS; 3537 checked, zero failures (`.mirror-cache/release-il-e1a5a1155742/release-il.json`); `UpdateText` moved from generated stub to exact.
