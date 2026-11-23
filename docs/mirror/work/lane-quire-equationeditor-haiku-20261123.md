@@ -84,3 +84,26 @@
 - Still stubs (not in this batch): the constructors (Mathcad stores `algorithm` before the base call, which C# cannot
   express), and `IdLabel` get/set (closure over `CommandBuffer`, needs compile-order placeholders).
 - Release IL: `--project Quire.EquationEditor` PASS, 1398 checked, 0 failures (was 1392).
+
+## Batch 8 — SpecTableModel.a(bool) and HandleInputTagChanged (hand-written)
+
+- Members: `SpecTableModel.HandleInputTagChanged(bool)` (forwards to `a(bool)`) and private `a(bool)`, which
+  stores `m`, enumerates `Columns` with `SetRestrictedReadonly` and invokes the `Action<bool>` field `l`.
+  Stubs removed from the `.g.cs` by hand. Fields `m` and `l` keep their Mathcad names because the type has no
+  method called `l` or `m`, so no field-name rename applies.
+- Release IL: `--project Quire.EquationEditor` PASS, 1400 checked, 0 failures (was 1398).
+
+## Field-collision fixture (for the maintainer; no tool changed here)
+
+- Original: `Ptc.EquationEditor.Tree.MatrixNodeInfo`. Field `a` (type `Ptc.Controls.Core.MatrixFormat`), private
+  method `a(string, object)` (the property-change dispatcher), property `MatrixFormat` get/set that reads and writes
+  field `a` (IL `ldfld`/`stfld` `a`).
+- Candidate (Quire): the same field and method names are needed. C# forbids a field and a method with the same name
+  in one class (CS0102), so MirrorGen writes the field as `a_` (`CSharpWriter.WriteMembers`, `Unique`: a clashing
+  field gets a trailing `_` while no interface or virtual binds to it). The hand-written `MatrixFormat` getter then
+  emits `ldfld a_`.
+- Gate result: `MatrixNodeInfo::MatrixFormat` fails with `field accesses differ ... Quire ldfld a_ , Mathcad ldfld a`.
+- Rule to settle: the gate compares field names as written, so any field renamed by MirrorGen cannot match. A maintainer
+  decision is needed (for example, the gate could compare field accesses by metadata token or by declaring type and
+  signature, not by name). The same rule blocks every member that touches a renamed field (the 140 field-clash
+  rejects of the batch-5 MemberGen run).

@@ -17,6 +17,25 @@ public partial class SpecTableModel
     [MirrorVerified("Release IL")]
     public ISpecTableColumn this[int index] => GetColumn(index);
 
+    public void HandleInputTagChanged(bool isInput) => a(isInput);
+
+    private void a(bool isRestrictedReadonly)
+    {
+        if (m == isRestrictedReadonly)
+        {
+            return;
+        }
+        m = isRestrictedReadonly;
+        foreach (ISpecTableColumn column in Columns)
+        {
+            column.SetRestrictedReadonly(m);
+        }
+        if (l != null)
+        {
+            l(m);
+        }
+    }
+
     partial class a_
     {
         [MirrorVerified("Release IL")]

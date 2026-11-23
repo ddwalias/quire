@@ -90,8 +90,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     [global::Quire.Mirror.MirrorStub]
     public bool IsExtraDataCellOrEmptyScale(global::Quire.EquationEditor.IEquationModel cell) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void HandleInputTagChanged(bool isInput) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void RemoveEmptyColumns() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool IsRowEmpty(int rowIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
