@@ -153,6 +153,64 @@ public partial class RichTextWithEmbeddedItem
         }
     }
 
+    private bool HandleLinkOpsOnPreviewKeyDown(Key key)
+    {
+        _keyDownData = null;
+        if (ActiveItem != null || Selection.IsNotEmpty())
+        {
+            return false;
+        }
+        bool handled = false;
+        if ((Keyboard.Modifiers & ModifierKeys.Shift) == 0 && (Keyboard.Modifiers & ModifierKeys.Control) == 0)
+        {
+            // Return is listed first: Release IL lays out the switch sections in source order.
+            switch (key)
+            {
+                case Key.Return:
+                {
+                    Hyperlink hyperlinkAtCaretPosition = GetHyperlinkAtCaretPosition();
+                    if (hyperlinkAtCaretPosition != null)
+                    {
+                        DisplayHyperlink(hyperlinkAtCaretPosition);
+                        handled = true;
+                    }
+                    break;
+                }
+                case Key.Back:
+                {
+                    if (FunctionalityService.Instance.IsFunctionalityEnabled(EnumFunctionalityKey.RemoveHyperlinkCommand))
+                    {
+                        Hyperlink adjacentHyperlink = CaretPosition.GetAdjacentHyperlink(LogicalDirection.Backward);
+                        if (adjacentHyperlink != null)
+                        {
+                            RemoveHyperlinkUndoableCommand(adjacentHyperlink);
+                            handled = true;
+                        }
+                    }
+                    break;
+                }
+                case Key.Delete:
+                {
+                    if (FunctionalityService.Instance.IsFunctionalityEnabled(EnumFunctionalityKey.RemoveHyperlinkCommand))
+                    {
+                        Hyperlink adjacentHyperlink = CaretPosition.GetAdjacentHyperlink(LogicalDirection.Forward);
+                        if (adjacentHyperlink != null)
+                        {
+                            Selection.Select(adjacentHyperlink.ElementStart, adjacentHyperlink.ElementEnd);
+                            handled = true;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        if (!handled)
+        {
+            CollectKeyDataForPostChangeHyperlinkInsertion(key, Keyboard.Modifiers);
+        }
+        return handled;
+    }
+
     private void BindHyperlinkCommands()
     {
         CommandBindings.Add(new CommandBinding(HyperlinkCommands.ModifyHyperlink, ModifyHyperlink, CanModifyHyperlink));

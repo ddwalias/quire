@@ -79,3 +79,16 @@
 - `GetEmbeddedObjectCaretOffset(object)`: no lambda. Mathcad evaluates `this` before the `TextPointer` temp for `GetInsertionPointAtPointer(ref ...)`. The `ref` argument must be a local, so the first difference is at #25 (`ldarg.0` vs Quire `ldloc.0`). No idiomatic C# form found that puts `this` first.
 - `ValidateURL(Uri)` (static): no lambda. First difference at #9 (Quire `br.s` target 41 vs Mathcad 40); Quire has 59 entries vs Mathcad 56. Mathcad keeps `result` as `Nullable` with `ldloca` plus the constructor call. Not resolved.
 - `OpenHyperlinkUrl(Uri)`: Mathcad IL keeps a literal `ldc.i4.0; brfalse.s` around the `ValidateURL` block (source decompiles as `if (false)`). Roslyn Release removes it, so the branch and call counts cannot match. Parked.
+
+## Batch 32 — RichTextWithEmbeddedItem.HandleLinkOpsOnPreviewKeyDown
+
+- Member: `private bool HandleLinkOpsOnPreviewKeyDown(Key key)`, no lambda, no closure. Hand-written in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stub removed from the `.g.cs`.
+- Key values checked against WPF: Back = 2, Return = 6, Delete = 32 (Space = 18 was the wrong name). Mathcad's switch sections are laid out Return, Back, Delete, so the `switch` lists Return first, with a one-line comment.
+- Release IL (project-wide): PASS — 664 checked, 0 failures.
+- Regeneration: `MirrorGen emit` removes the same stub. The `.g.cs` also shows the pre-existing `LogDocumentContents` placement drift, which is not part of this change. Emit also wrote unrelated whitespace and Generated-directory drift; reverted.
+
+## Probe — CanModifyHyperlink ordinal (blocked, not landed)
+
+- Hand-written implementation gates with `calls differ at #8`: Quire `<CanModifyHyperlink>b__93_0`, Mathcad `<CanModifyHyperlink>b__20_0`. The rest of the body matched up to that point.
+- Cause: `Generated/` compiles before hand-written partials, and the generated class has at least 75 declaration lines (about 25 fields first) before any hand-written member. A partial member therefore cannot reach ordinal 20. The fix needs a MirrorGen change (Mathcad field and member order), not a hand-written reorder.
+- Probe patch kept outside the repo, reversed after measurement.
