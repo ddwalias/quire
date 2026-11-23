@@ -36,6 +36,7 @@
 #pragma comment(linker, "/include:?env@PositionBase@depman@@$$FQEBMPE$AAUSEnvironment@2Quire@@XZ")
 #pragma comment(linker, "/include:?GetSharedThreadContext@PositionBase@depman@@$$FQEBMPE$AAVSharedThreadContext@2Quire@@XZ")
 #pragma comment(linker, "/include:?StartTiming@PositionBase@depman@@QEAAXXZ")
+#pragma comment(linker, "/include:?Kill@PositionBase@depman@@QEAAXXZ")
 // Pragmas for methods blocked on cross-assembly gcroot mapping in MethodAudit (SafeEvent, LabeledDictionary).
 // Source implementations below are exact and ready to be un-commented once MethodAudit supports cross-assembly gcroot:
 // #pragma comment(linker, "/include:?SetBusy@PositionBase@depman@@QEAAX_N@Z")
@@ -56,7 +57,7 @@ System::Collections::ICollection^ PositionBase::GetDefs()
 
 std::set<Position*>& PositionBase::GetDependents()
 {
-    return *reinterpret_cast<std::set<Position*>*>(dependents_);
+    return dependents_;
 }
 
 ::Quire::depman::Scope^ PositionBase::GetScope() { return scope_; }
@@ -173,6 +174,18 @@ void PositionBase::PrepareKill()
     ::Quire::utl_mgd::SafeEvent^ ev = ev_ref;
     ev_ref = nullptr;
     ev->Set();
+}
+
+void PositionBase::Kill()
+{
+    is_dead_ = true;
+    if (dparent_ != nullptr)
+    {
+        auto parent = dparent_;
+        Position* pos = position_;
+        pos->dparent_ = nullptr;
+        parent->dependents_.erase(pos);
+    }
 }
 
 ::Quire::utl_mgd::LabeledDictionary^ PositionBase::ready()

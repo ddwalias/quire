@@ -42,6 +42,7 @@ public:
     void StartTiming();
     void WaitReady();
     void PrepareKill();
+    void Kill();
     ::Quire::utl_mgd::LabeledDictionary^ ready();
     void SetNotifyComputing(bool notify);
     void ResetPriority();
@@ -78,8 +79,8 @@ private:
     void* object_;                                // 0x70 (offset 112, gcroot<System::Object^>)
     int client_handle_;                           // 0x78 (offset 120)
     unsigned char pad_7c_[0x04];                  // 0x7C
-    void* dparent_;                               // 0x80 (offset 128)
-    unsigned char dependents_[0x10];              // 0x88 (offset 136..151, std::set<depman::Position*>)
+    PositionBase* dparent_;                       // 0x80 (offset 128)
+    std::set<Position*> dependents_;              // 0x88 (offset 136..151, std::set<depman::Position*>)
     int lock_count_;                              // 0x98 (offset 152)
     bool send_messages_;                          // 0x9C (offset 156)
     unsigned char pad_9d_[0x03];                  // 0x9D

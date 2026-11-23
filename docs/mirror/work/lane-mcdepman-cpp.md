@@ -255,6 +255,22 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
   - `PositionBase.Kill` and `TreatAsReady(false)`: require the unproven `std::set<depman::Position*>` erase path at offset 136.
   - `Position.previous` / `Position.next`: dynamic cast emits RTTI type descriptor data differences against Mathcad RTTI; pragmas remain commented out until RTTI descriptor handling is resolved.
 
+## Batch 24 — PositionBase.Kill and Native Set Erase Path
+
+- Owner: AGY, Orca task `task_34bbceedeece`; branch `feature/luna-mcdepman`.
+- Member: `depman.PositionBase.Kill()`, sets `is_dead_ = true` (offset 184) and unlinks `position_` (offset 16) from `dparent_->dependents_` (offset 136) via `dparent_->dependents_.erase(pos)`.
+- Details: Replaced raw byte buffer `unsigned char dependents_[0x10]` with exact typed native member `std::set<Position*> dependents_` at offset 136, and `dparent_` typed as `PositionBase*` at offset 128 in `PositionBase`. Aligned `PositionBase::GetDependents()` to return `dependents_` directly. Preserving `auto parent = dparent_;` before resolving `pos` generated exact MSVC instruction sequencing matching Mathcad's evaluation stack and inlined `std::_Tree` helper templates (`_Eqrange` and `_Erase`).
+- Release IL report: `.mirror-cache/release-il-9bd318b045a1/release-il.json` (PASS, 234 checked; module `PositionBase.Kill` and inlined tree templates exact).
+- Remaining prerequisites:
+  - `SafeEvent` cross-assembly `gcroot` binding: `PositionBase.SetBusy`, `PositionBase.WaitReady`, and `PositionBase.PrepareKill` access `not_busy_event_` (offset 168) or `ready_event_` (offset 176); because `SafeEvent` is declared in `Quire.Engine.Utl`, `MethodAudit` currently does not map `gcroot<Quire::utl_mgd::SafeEvent ^>` to `gcroot<utl_mgd::SafeEvent ^>`.
+  - `DepManager.add_dep` / `remove_dep` / `invalidateChains`: large unmanaged methods operating directly on multi-level `std::map<SDef, std::map<Position*, pair<ActionChain*, DependencyType>>>` containers with `std_label_set` and custom comparators; native `DepManager` layout and tables remain unported.
+  - `PositionBase.InvalidateDeps`: blocked on `DepManager.invalidateChains`.
+  - `PositionBase.EndMove`: blocked on `ActionChain.TreatAsReadyDeps`.
+  - `PositionBase.SetEnvScope`: branches on Scope nullness, calling `ActionChain.remove_env_scope` and `ActionChain.add_env_scope` which require `DepManager.remove_dep` and `add_dep`.
+  - `PositionBase.Invalidate`: requires callback wiring for `PosCallback`, `PosQueueCallback`, `InterruptCallback`, and `TreatedReadyInvalidCallback`.
+  - `PositionBase.TreatAsReady(false)`: couples the now-proven `std::set` erase path with `ready_event_` (SafeEvent gcroot) and `dep_manager_->invalidateChains`.
+  - `Position.previous` / `Position.next`: dynamic cast emits RTTI type descriptor data differences against Mathcad RTTI; pragmas remain commented out until RTTI descriptor handling is resolved.
+
 ## Shared Integration Note — SafeEvent and Cross-Assembly gcroot Mapping in MethodAudit
 
 Investigation of `PositionBase.SetBusy`, `PositionBase.WaitReady`, and `PositionBase.PrepareKill` (which access `not_busy_event_` at offset 168 and `ready_event_` at offset 176) identified a precise toolset constraint in `tools/Quire.Tools.MethodAudit/Program.cs`:
@@ -290,9 +306,8 @@ Investigation of remaining unmigrated `PositionBase`, `Position`, and `DepManage
    - **Toolchain / RTTI Constraint**: When compiled with MSVC `/GR`, MSVC synthesizes `$_TypeDescriptor$_extraBytes_*` structures in `<Module>` along with RTTI descriptor data tables. Differences in compiler-generated RTTI descriptor layouts between MSVC toolchain versions cause Release IL verification to detect metadata and data-reference mismatches against Mathcad's original binary. These methods remain preserved as source drafts until compiler RTTI descriptor emissions are normalized.
 
 2. **Native Set Erase Paths (`PositionBase.Kill` and `TreatAsReady(false)`)**:
-   - **Original Implementation**: `PositionBase.Kill` marks `killed_ = true` (offset 184). If `dparent_ != nullptr` (offset 128), it retrieves `Position* pos = position_` (offset 16), clears `pos->dparent_ = nullptr`, and unlinks `pos` from `dparent_->dependents_` (offset 136).
-   - **Container Layout**: Offset 136 holds `std::set<depman::Position*, std::less<depman::Position*>, std::allocator<depman::Position*>> dependents_`. In Mathcad's Release IL, MSVC inlines `std::set::erase` via internal red-black tree helpers `std::_Tree<...>::_Eqrange` (yielding an iterator pair) followed by `std::_Tree<...>::_Erase`.
-   - **Blockers**: Inlining STL tree erase operations requires identical `std::_Tree_node` definitions and allocator frame layouts. Furthermore, `PositionBase.TreatAsReady(false)` couples the set erase path with `ready_event_` (blocked by the `SafeEvent` `gcroot` issue) and `dep_manager_->invalidateChains` (blocked by native `DepManager`).
+   - **Resolved (`PositionBase.Kill`)**: In Batch 24, `PositionBase.Kill` was proven and landed with exact Release IL (234 checked methods passing). Typing `dependents_` as `std::set<Position*>` at offset 136, `dparent_` as `PositionBase*` at offset 128, and sequencing `auto parent = dparent_;` before evaluating `pos` replicates Mathcad's evaluation stack and inlined `std::_Tree` helpers (`_Eqrange` and `_Erase`) with zero differences.
+   - **Remaining Blocker (`TreatAsReady(false)`)**: `PositionBase.TreatAsReady(false)` couples the verified set erase path with `ready_event_` (blocked by the `SafeEvent` cross-assembly `gcroot` issue) and `dep_manager_->invalidateChains` (blocked by native `DepManager`).
 
 3. **Native Dependency Maps (`DepManager` Multi-Level Containers)**:
    - **Blocked Callers**: `PositionBase.InvalidateDeps`, `PositionBase.SetEnvScope`, `PositionBase.EndMove`, and `ActionChain.add_env_scope` / `remove_env_scope` all call directly into `DepManager` methods (`invalidateChains`, `add_dep`, `remove_dep`).
@@ -304,8 +319,8 @@ Investigation of remaining unmigrated `PositionBase`, `Position`, and `DepManage
    - `DepManager` is currently forward-declared in `DepmanContracts.h`; implementing these dependent methods requires fully implementing and validating the native `DepManager` container models and their internal map semantics.
 
 4. **Summary of Member Readiness and Categorization**:
+   - **Landed and Exact** (`PositionBase.Kill`): Exact C++ source and typing in `DepmanPosition.cpp` and `DepmanPosition.h` matching Mathcad Release IL with 234 checked methods.
    - **Preserved `gcroot`-Blocked Drafts** (`PositionBase.SetBusy`, `WaitReady`, `PrepareKill`, `ready`): Exact C++ source is implemented in `DepmanPosition.cpp` and `DepmanPosition.h`. Blocked exclusively on `MethodAudit` cross-assembly `gcroot` binding resolution.
    - **Preserved RTTI Drafts** (`Position.previous`, `Position.next`): Exact C++ source is implemented; blocked on MSVC RTTI type descriptor data parity.
-   - **Set Erase / Tree Inlining Methods** (`PositionBase.Kill`, `PositionBase.TreatAsReady`): Blocked on STL red-black tree erase inlining and dependent events/manager calls.
    - **DepManager Map Consumers** (`PositionBase.InvalidateDeps`, `PositionBase.SetEnvScope`, `PositionBase.EndMove`): Blocked on full native `DepManager` container implementation.
 
