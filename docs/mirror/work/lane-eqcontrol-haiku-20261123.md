@@ -152,3 +152,9 @@
 - The `if (discreteRect.HasValue)` form with a named `DiscreteRect? discreteRect` local put the nullable in slot 1 (Mathcad: slot 2, `valueOrDefault` in slot 1). The `is DiscreteRect pastedRect` pattern form matches the slot layout and the `GetValueOrDefault` shape.
 - Gate (project-level): PASS; 3469 checked (`.mirror-cache/release-il-afea7ba59d29/release-il.json`).
 - Still stubs: `AllCells`, the three events, `ExpandComboBoxRowsColumns`, `PasteSelectedValues`, `TextBox_OnPaste`, `SetupCommandBindings`, `DeleteRows`/`DeleteColumns`/`DeleteEmptyRows`/`DeleteEmptyColumns`.
+
+### Batch 24: Controls.InputControls.EditableComboBoxViewModel (row/column expansion, paste into selection, text-box paste)
+
+- Exact: `ExpandComboBoxRowsColumns` (two `while` loops, which Roslyn emits bottom-tested like Mathcad), `PasteSelectedValues` (struct `FullSize` temp in slot 7, the `DevAssert` bounds check, and the `CellsAdded?.Invoke` null-conditional), and `TextBox_OnPaste` (the `is ICellData` pattern in the if-else shape, and the `MATRIX` branch with `return`).
+- Gate (project-level): PASS; 3472 checked (`.mirror-cache/release-il-bff432f43703/release-il.json`).
+- Still stubs: `AllCells`, the three events, `SetupCommandBindings` (command lambdas), `DeleteRows`/`DeleteColumns` (lambdas capturing the flags), `DeleteEmptyRows`/`DeleteEmptyColumns` (nested lambdas). All five use closures whose `<>c`/`<>c__DisplayClass` and `b__` ordinals are not yet checked.

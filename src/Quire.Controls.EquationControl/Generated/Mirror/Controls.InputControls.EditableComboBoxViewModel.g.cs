@@ -30,12 +30,6 @@ public partial class EditableComboBoxViewModel : global::Quire.Controls.InputCon
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<int, int, bool> ColumnsDeleted;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::Quire.Controls.InputControls.ICellData> ExpandComboBoxRowsColumns(int targetRectBottom, int targetRectRight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<global::Quire.DiscreteRect> PasteSelectedValues(global::Quire.DiscreteRect selectedRect, global::Quire.EquationEditor.Tree.MathNode matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void TextBox_OnPaste(object sender, global::Quire.EquationEditor.Tree.ComboBoxCellDataType cellDataType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void SetupCommandBindings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void DeleteRows(int fromIndex, int toIndex, bool assertIfCannotDelete, bool isFinishedEditingMode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -131,6 +131,51 @@ public partial class EditableComboBoxViewModel
         return false;
     }
 
+    private List<ICellData> ExpandComboBoxRowsColumns(int targetRectBottom, int targetRectRight)
+    {
+        IReadonlyCellData cellAt = GetCellAt(Rows - 1, Columns - 1);
+        List<ICellData> list = new List<ICellData>();
+        if (cellAt == null)
+        {
+            return list;
+        }
+
+        while (Columns <= targetRectRight)
+        {
+            list.AddRange(TableModel.InsertColumn(cellAt.Column, Direction.Right));
+        }
+
+        while (Rows <= targetRectBottom)
+        {
+            list.AddRange(TableModel.InsertRow(cellAt.Row, Direction.Down));
+        }
+
+        return list;
+    }
+
+    private DiscreteRect? PasteSelectedValues(DiscreteRect selectedRect, MathNode matrix)
+    {
+        int rows = ((MatrixNodeInfo)matrix.NodeInfo).FullSize.Rows;
+        int columns = ((MatrixNodeInfo)matrix.NodeInfo).FullSize.Columns;
+        int bottom = selectedRect.Top + rows - 1;
+        int right = selectedRect.Left + columns - 1;
+        List<ICellData> addedCells = ExpandComboBoxRowsColumns(bottom, right);
+        if (DebugTools.DevAssert(bottom < Rows && right < Columns, null).Failed)
+        {
+            return null;
+        }
+
+        DiscreteRect discreteRect = new DiscreteRect(selectedRect.Top, selectedRect.Left, bottom, right);
+        IList<string> viewStrings = TransformMathNodeToComboBoxValues.TransformToViewStrings(matrix);
+        TableModel.UpdateCellsInRangeValues(discreteRect, viewStrings);
+        if (addedCells.IsNotEmpty())
+        {
+            CellsAdded?.Invoke(addedCells);
+        }
+
+        return discreteRect;
+    }
+
     private void PasteEditMode(DiscreteRect sourceRect)
     {
         if (!AreOnlyValuesSelected(sourceRect))
@@ -194,6 +239,27 @@ public partial class EditableComboBoxViewModel
         }
 
         DebugTools.FailAssertion("Unhandled case");
+    }
+
+    public void TextBox_OnPaste(object sender, ComboBoxCellDataType cellDataType)
+    {
+        if (sender is ICellData cellData)
+        {
+            MathNode mathNode = TryReadMathNodeFromClipboard();
+            int cellIndex = MatrixHelper.IndexOf(cellData.Row, cellData.Column, Columns);
+            if (mathNode != null && mathNode.DescriptorName == "MATRIX")
+            {
+                PasteEditMode(GetTableRect(cellIndex, cellIndex));
+                return;
+            }
+
+            cellData.Text = mathNode.TransformToViewStringByType(cellDataType);
+            CreateSelection(cellIndex, cellIndex);
+        }
+        else
+        {
+            DebugTools.FailAssertion("Unhandled case");
+        }
     }
 
     public Size PlaceHolderBoxSize
