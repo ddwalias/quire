@@ -2028,3 +2028,35 @@ namespace Quire { namespace Engine {
     };
 
 }}
+
+#pragma comment(linker, "/include:?ToActionResult@Engine@@$$FYM?AVActionResult@depman@Quire@@PE$AAVObject@System@@0@Z")
+#pragma comment(linker, "/include:?ErrorDictFromMessage@Engine@@$$FYMPE$AAVObject@System@@PE$AAVString@3@II@Z")
+// The original's global functions live in its <Module> under their unqualified-to-Quire names (Engine.X).
+namespace Engine {
+
+    Quire::depman::ActionResult ToActionResult(System::Object^ o, System::Object^ state)
+    {
+        Quire::depman::Action^ action = dynamic_cast<Quire::depman::Action^>(o);
+        if (action != nullptr)
+        {
+            return Quire::depman::ActionResult(action, state);
+        }
+        Quire::depman::ActionResult^ boxed = dynamic_cast<Quire::depman::ActionResult^>(o);
+        if (boxed != nullptr)
+        {
+            return *boxed;
+        }
+        return Quire::depman::ActionResult(o, state);
+    }
+
+    System::Object^ ErrorDictFromMessage(System::String^ msg, unsigned int argument, unsigned int handle)
+    {
+        System::Collections::ArrayList^ errors = gcnew System::Collections::ArrayList();
+        errors->Add(gcnew ::Mpl::Run::AppException(msg, argument, handle));
+        System::Collections::Hashtable^ dictionary = gcnew System::Collections::Hashtable(1);
+        dictionary["%errors"] = errors;
+        return dictionary;
+    }
+
+}
+
