@@ -252,4 +252,41 @@ public abstract partial class PlotGraphLinearAxisBase
         }
         return offset;
     }
+
+    protected FormattedText GetTickValueTextAndPositionByTickNumber(int tickNumber, Brush stroke, out Point start)
+    {
+        double tickPositionByTickNumber = GetTickPositionByTickNumber(tickNumber);
+        Point tickPosition = (Orientation == Orientation.Horizontal) ? new Point(tickPositionByTickNumber, 0.0) : new Point(0.0, tickPositionByTickNumber);
+        FormattedText tickValueTextByTickNumber = GetTickValueTextByTickNumber(tickNumber, stroke);
+        if (Orientation == Orientation.Horizontal)
+        {
+            start = tickPosition + new Vector((-tickValueTextByTickNumber.Width) / 2.0, 3.0);
+        }
+        else
+        {
+            start = tickPosition - new Vector(tickValueTextByTickNumber.Width + 3.0, tickValueTextByTickNumber.Height / 2.0);
+        }
+        return tickValueTextByTickNumber;
+    }
+
+    private void DrawNumbers(DrawingContext drawingContext, Brush stroke)
+    {
+        int firstTick = 2;
+        int lastTick = TickMarks - 1;
+        if (IsDiscrete)
+        {
+            firstTick = 0;
+            lastTick = TickMarks;
+        }
+        else if (Scaling == AxisScaling.Logarithmic)
+        {
+            firstTick = 1;
+        }
+        for (int i = firstTick; i < lastTick; i++)
+        {
+            Point start;
+            FormattedText tickValueText = GetTickValueTextAndPositionByTickNumber(i, stroke, out start);
+            drawingContext.DrawText(tickValueText, start);
+        }
+    }
 }

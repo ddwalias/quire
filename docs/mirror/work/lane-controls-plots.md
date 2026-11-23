@@ -600,3 +600,11 @@
 - Generated layout: four stubs removed. Verified: after a Release build, `emit` regenerates `PlotGraphLinearAxisBase.g.cs` byte-identical to the committed file.
 - Release IL: full gate PASS — 2571 checked, 0 failures.
 - Still stubs in this class: `ArrowHeadGeometry`, `GetTickValueTextAndPositionByTickNumber`, `DrawNumbers`, `GetPositions`.
+
+## Batch 85 — PlotGraphLinearAxisBase.GetTickValueTextAndPositionByTickNumber and DrawNumbers
+
+- Members: `GetTickValueTextAndPositionByTickNumber` (`-width` for the negative offset, as Mathcad's `neg`) and `DrawNumbers` (the `out` variable is declared before the text variable to match Mathcad's slot order). Hand-written at the end of `Mirrored/Controls.Plots.PlotGraphLinearAxisBase.cs`; two stubs removed from `PlotGraphLinearAxisBase.g.cs`.
+- Blocked, kept as stub: `ArrowHeadGeometry`. Mathcad calls `Point..ctor` on an address (`call`) for the struct values, where Roslyn uses `newobj` for `new Point(...)` in these positions (123 against 124 entries).
+- Generated layout: two stubs removed. Verified: after a Release build, `emit` regenerates `PlotGraphLinearAxisBase.g.cs` byte-identical.
+- Release IL: full gate PASS — 2573 checked, 0 failures.
+- Still stubs in this class: `ArrowHeadGeometry` (blocked above) and `GetPositions`.
