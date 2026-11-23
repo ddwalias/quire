@@ -73,3 +73,10 @@
 
 - Implemented in `Mirrored/` as the `is` chain (no closures; stub removed). Release IL: PASS (1281 checked, 0 failures).
 - Left as stubs: `ConvertToIRegionType`, `ConvertFromIRegionType` (not attempted in this batch).
+
+## Parked — RegionFactory.ConvertToIRegionType (code reverted; stub kept)
+
+- Release IL first difference after the decompiled-shape edits: `first difference at #2 (Quire has 137 entries, Mathcad 139): Quire brfalse 126, Mathcad brfalse 128`. Type operations match after these edits: `castclass IPersistentDataProvider` before `GetRegionPersistentData`, `isinst IHasPreSerialize` twice, no `DependencyObject` castclass before `GetBookmarkTag` or `GetIsRegionBorderVisible`; `string.Format` with `((object)control).GetType()` for the exception.
+- Edits that were needed: `conversionAnnotations != null ? conversionAnnotations.ToStrings() : null` (the `?.` form emitted `call` where Mathcad emits `callvirt`); `((IPersistentDataProvider)control).GetRegionPersistentData(...)` (pattern variable differed); `(regionPersistentData as IHasPreSerialize).PreSerialize()`.
+- Unresolved: Mathcad's body is 2 instructions longer before the throw block; not located. Next step: diff the full sequence with `MethodAudit --diff` for `RegionFactory::ConvertToIRegionType`.
+- `ConvertFromIRegionType`: not attempted (larger chain of type tests).
