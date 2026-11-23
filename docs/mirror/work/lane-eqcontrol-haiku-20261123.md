@@ -181,3 +181,14 @@
 - Placeholders now in the partial, in Mathcad order: `SetupCommandBindings` (after `TextBox_OnPaste`), `DeleteRows` (after `CanDeleteRow`), `DeleteColumns` (after `CanDeleteColumn`), `DeleteEmptyRows` and `DeleteEmptyColumns` (after `ProcessConsecutiveIntervalsInReverseOrderAndNotify`). Each of their closures still needs its ordinal checked when implemented: `SetupCommandBindings` is Mathcad `b__46_0..3`, `DeleteRows` display class `61_0`, `DeleteColumns` `63_0`, `DeleteEmptyRows` `73_0`, and `DeleteEmptyColumns` `74_0..2`.
 - Gate (project-level): PASS; 3476 checked, zero failures (`.mirror-cache/release-il-6bc583f323e2/release-il.json`).
 - Still stubs (placeholders): `SetupCommandBindings`, `DeleteRows`, `DeleteColumns`, `DeleteEmptyRows`, `DeleteEmptyColumns`. Their ordinals depend on the members declared before each one in Mathcad order, which the placeholders in the partial now provide only approximately, so each needs its own probe.
+
+### Probe (no landing): SetupCommandBindings closure ordinal
+
+- With the body implemented (four instance lambdas, `CreateCommandBinding` with `ApplicationCommands.Copy`/`Paste`), Quire names them `<SetupCommandBindings>b__55_0..3`; Mathcad names them `b__46_0..3`. The `ldftn` targets and the `CreateCommandBinding` shape otherwise match.
+- Moving the three events (with their six accessors) and the `DeleteRows`/`DeleteColumns` placeholders after `SetupCommandBindings` drops Quire to `b__44`. So the events and the two delete placeholders account for 11 of the 55 preceding members. Mathcad needs `b__46`, which is two members short of the Quire count, and the partial's other members before `SetupCommandBindings` (`GetCellAt`, `CanDeleteRow`, `GetTableRect`, `RemoveOrClearSelectedCells` neighbours) are not yet in Mathcad order.
+- Reverted, not landed. The fix is to put the whole partial in Mathcad's member order (token order in `EditableComboBoxViewModel.members.tsv`, with events and fields counted), not a single move. Evidence is in the probe logs `.mirror-cache/release-il-50b97015ac23/release-il.json` (55) and `.mirror-cache/release-il-3b47ae357624/release-il.json` (44).
+
+### Status at this checkpoint
+
+- Landed for this type: batches 22–26 (TryReadMathNodeFromClipboard, PasteEditMode, ExpandComboBoxRowsColumns/PasteSelectedValues/TextBox_OnPaste, the three events, AllCells). The project gate is PASS with 3476 checked.
+- Remaining for this type, all closure- or ordinal-gated: `SetupCommandBindings`, `DeleteRows`, `DeleteColumns`, `DeleteEmptyRows`, `DeleteEmptyColumns`. They stay as unmarked placeholders in the partial, in Mathcad order.
