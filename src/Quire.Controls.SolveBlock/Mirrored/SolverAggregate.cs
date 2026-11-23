@@ -6,7 +6,9 @@ namespace Quire.Controls;
 internal partial class SolverAggregate
 {
     private const string OdeDefaultAlgorithmString = "adams";
+
     private const string PdeDefaultAlgorithmString = "0";
+
     private static Dictionary<string, string> PdeAlgoToRL = new Dictionary<string, string>
     {
         { "", "0" },
@@ -14,6 +16,7 @@ internal partial class SolverAggregate
         { "centralDifferences", "2" },
         { "5PointDifferences", "3" }
     };
+
     private static Dictionary<string, string> SolvingAlgoToRL = new Dictionary<string, string>
     {
         { "", "smart" },
@@ -24,23 +27,43 @@ internal partial class SolverAggregate
         { "nonlinearInteriorPoint", "interpoint" },
         { "nonlinearActiveSet", "activeset" }
     };
+
     private static Dictionary<string, string> SolvingAlgoOptionsToRL = new Dictionary<string, string>
     {
         { "multiStart", "mstart" },
         { "optimize", "optim" }
     };
+
     private const string SolverFind = "find";
+
     private const string Minerr = "minerr";
+
     private const string Pdesolve = "pdesolve";
+
     private const string Odesolve = "odesolve";
+
     private const string PrognExp = "(progn:0x0000ffff ,%!)";
+
     private const string LambdaExp = "lambda";
+
     public const string RL_NIL = "nil";
+
     private const int DefaultEvalIndex = 2;
+
     private const string UndefineSubscripts = "undefine-subscripts";
 
     private string _rl;
+
     private readonly List<global::Quire.Calculation.Core.ICalculatable> _calculatableChildren;
+
+    public SolverAggregate(global::Quire.Calculation.Core.ICalculatable calculatable)
+        : base(calculatable)
+    {
+        _calculatableChildren = new List<global::Quire.Calculation.Core.ICalculatable>();
+        EquationType = SolveBlockEquationTypes.Solver;
+    }
+
+    public override string Rl => _rl;
 
     // Placed before the auto-properties: the lambda ordinal must be DisplayClass19_0 as in Release IL.
     public void UpdateSolverRL()
@@ -94,35 +117,6 @@ internal partial class SolverAggregate
         return text;
     }
 
-    public string DefinedRl { get; private set; }
-    public string DefinedParams { get; private set; }
-    private string SolverName { get; set; }
-    private string SolverTag { get; set; }
-    private string[] SolverArgs { get; set; }
-    private string LeftOfSolverApply { get; set; }
-    private string RightOfSolverApply { get; set; }
-
-    public SolverAggregate(global::Quire.Calculation.Core.ICalculatable calculatable)
-        : base(calculatable)
-    {
-        _calculatableChildren = new List<global::Quire.Calculation.Core.ICalculatable>();
-        EquationType = SolveBlockEquationTypes.Solver;
-    }
-
-    public override string Rl => _rl;
-
-    public global::Quire.Calculation.Core.ICalculatable LastChild
-    {
-        get
-        {
-            int count = _calculatableChildren.Count;
-            if (count == 0)
-                return null;
-            return ((global::Quire.Controls.SolverAggregateChildWrapper)_calculatableChildren[count - 1])
-                .WrappedCalculatable;
-        }
-    }
-
     private void AddAlgorithmIfRequired(
         global::System.Text.StringBuilder solverRlBuilder,
         global::Quire.Calculation.Core.ICalculatable wrappedCalculatable,
@@ -161,6 +155,36 @@ internal partial class SolverAggregate
         }
     }
 
+    public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> Children =>
+        CalculatableChildren.Cast<global::Quire.Controls.SolverAggregateChildWrapper>()
+            .Collect((global::Quire.Controls.SolverAggregateChildWrapper calc) => calc.WrappedCalculatable);
+
+    public global::Quire.Calculation.Core.ICalculatable LastChild
+    {
+        get
+        {
+            int count = _calculatableChildren.Count;
+            if (count == 0)
+                return null;
+            return ((global::Quire.Controls.SolverAggregateChildWrapper)_calculatableChildren[count - 1])
+                .WrappedCalculatable;
+        }
+    }
+
+    public string DefinedRl { get; private set; }
+
+    public string DefinedParams { get; private set; }
+
+    private string SolverName { get; set; }
+
+    private string SolverTag { get; set; }
+
+    private string[] SolverArgs { get; set; }
+
+    private string LeftOfSolverApply { get; set; }
+
+    private string RightOfSolverApply { get; set; }
+
     public bool IsSolverOfSymbolicContainsFind(string rl)
     {
         var regex = new global::System.Text.RegularExpressions.Regex("\\((?<operator>define-only-symbolic)(?<operatorTag>(?::0x[0-9a-fA-F]{8})?)\\s+(?<resultId>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-resultId))\\s+(?<expression>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-expression))\\s*(?:\\s(?<keywords>(?(\\()(?:\\((?:(?:[^()]*(?<open>\\())+(?:[^()]*(?<close-open>\\)))+)*[^()]*\\)(?(open)(?!)))|[^\\s()]+(?#endof-argmatch))(?#endof-keywords)))?\\s*\\)");
@@ -183,6 +207,14 @@ internal partial class SolverAggregate
     public bool IsSolverOfSymbolicContainsUndefineSubscripts(string rl)
     {
         return rl.Contains("undefine-subscripts");
+    }
+
+    private global::Quire.Controls.SolverAggregateChildWrapperAggregate GetSolverWrappedAggregate()
+    {
+        if (CalculatableChildren.First((global::Quire.Calculation.Core.ICalculatable child) => IsSolverOfSymbolicContainsFind(child.Rl))
+            is global::Quire.Controls.SolverAggregateChildWrapperAggregate result)
+            return result;
+        return null;
     }
 
     protected override void HandleRequestEvaluation(global::Quire.Calculation.Core.ICalculatable calc)
@@ -477,7 +509,9 @@ internal partial class SolverAggregate
     }
 
     public event global::System.Action<global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
+
     public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableRemoved;
+
     public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableMoved;
 
     public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren =>

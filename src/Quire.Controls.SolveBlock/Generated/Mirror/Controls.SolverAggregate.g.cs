@@ -11,8 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.SolverAggregate, Ptc.Controls.SolveBlock")]
 internal partial class SolverAggregate : global::Quire.Controls.SolveBlockCalculatable, global::Quire.Controls.ISolverAggregate, global::Quire.Controls.ISolveBlockCalculatable, global::Quire.Calculation.Core.Support.ICalculatableWrapper, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatable, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatableContainer
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> Children { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.SolverAggregateChildWrapperAggregate GetSolverWrappedAggregate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
