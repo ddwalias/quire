@@ -312,6 +312,9 @@ internal partial class WorksheetPageManager
 
     private global::System.Collections.Generic.IList<int> CalculateItemPageIndices(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Rect itemBoundingRect, out double offsetDiff) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetPageManager+SplitAction, Ptc.Controls.Worksheet")]
+    private delegate void SplitAction(global::Quire.Controls.Core.IWhiteboardItem item, long stamp, global::Quire.Controls.Worksheet.IWorksheetPage prevItemContainingPage, bool forceSplitEvenIfNotVisiblePages);
+
     public void ActivateItemPart(IWhiteboardItem itemToActivate, int partIndex, bool replaceOnly)
     {
         IWhiteboardItem[] itemParts = _worksheetItemSplitter.GetItemParts(itemToActivate).ToArray();
@@ -572,7 +575,14 @@ internal partial class WorksheetPageManager
         return _worksheetVisiblePages.SetVisiblePages(firstIndex, lastIndex, pageHeight);
     }
 
-    private void AppendNewPageIfNeeded(int pageIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void AppendNewPageIfNeeded(int pageIndex)
+    {
+        int requiredPageCount = pageIndex + 1;
+        if (requiredPageCount > Pages.Count)
+        {
+            (requiredPageCount - Pages.Count).Times(i => AppendNewPage());
+        }
+    }
 
     private IWorksheetPage GetPage(double yOffset)
     {
@@ -655,7 +665,4 @@ internal partial class WorksheetPageManager
     }
 
     public WorksheetPageManager(global::Quire.Controls.Worksheet.IWorksheetItemSplitter worksheetItemSplitter) { }
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetPageManager+SplitAction, Ptc.Controls.Worksheet")]
-    private delegate void SplitAction(global::Quire.Controls.Core.IWhiteboardItem item, long stamp, global::Quire.Controls.Worksheet.IWorksheetPage prevItemContainingPage, bool forceSplitEvenIfNotVisiblePages);
 }

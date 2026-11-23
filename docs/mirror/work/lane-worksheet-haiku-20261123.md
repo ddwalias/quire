@@ -181,3 +181,9 @@
 - Release IL gate (project): PASS, 1326 checked, 1326 exact, 0 failures; the 273 "no Quire member pairs" entries and 1239 unfinished generated stubs are skipped as before. All earlier exact members (batches 3–24) stay exact after the reorder.
 - Not verified here: `dotnet run -- emit` (MirrorGen regeneration) needs Release builds of twelve projects that this worktree does not have, so byte-identity of `Generated/` against regeneration was not checked. The hand-written placeholders are unmarked, so the generator omits their stubs by the same rule as the partial's other members.
 - Remaining parked: the 4-argument `ActivateDescendantParentIfNeeded`, `GetSplitVerticalAdjustment`, `ItemSplitIsNeeded` (3-arg), `CalculateItemPageIndices` and the other closure members are placeholders in Mathcad order; they are now at their Mathcad ordinals, so their closure-name probes can be retried.
+
+## Batch 27 — WorksheetPageManager AppendNewPageIfNeeded (closure ordinal)
+
+- Implemented `AppendNewPageIfNeeded` (`requiredPageCount = pageIndex + 1; if (requiredPageCount > Pages.Count) (requiredPageCount - Pages.Count).Times(i => AppendNewPage());`). The lambda captures only `this`, so Roslyn names it `<AppendNewPageIfNeeded>b__N_0`.
+- Ordinal measured: Mathcad `b__86_0`, candidate `b__85_0` with the delegate at the tail. Every ordinal-named lambda in Mathcad fits `token row + 19`, plus 1 for rows after the nested `SplitAction` delegate: Dispose (26 → 45), CalculateItemPageIndices (41 → 60), AppendNewPageIfNeeded (66 → 86), HandlePagebreakAdded (70 → 90), HandlePagesCollectionChanged (72 → 92), RemoveAllItemsFromPage (73 → 93), constructor (80 → 100).
+- Moved the `SplitAction` nested delegate from the tail to just before `ActivateItemPart` (row 42, after row 41). Result: the closure name matches Mathcad. Release IL gate: PASS, 1328 checked, 1328 exact, 0 failures, including the previously exact `IsTrailingEmptyPage`.
