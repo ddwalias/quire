@@ -40,8 +40,6 @@ internal partial class WorksheetPageManager : global::Quire.Controls.Worksheet.I
     [global::Quire.Mirror.MirrorStub]
     private bool ItemSplitIsNeeded(global::Quire.Controls.Core.IWhiteboardItem item, out int itemPageIndex, out global::System.Windows.Rect itemBounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void SplitItemIfNeeded(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.Worksheet.IWorksheetPage prevItemContainingPage = default, bool forceSplitEvenIfNoVisiblePages = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void RemoveAllPages() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }

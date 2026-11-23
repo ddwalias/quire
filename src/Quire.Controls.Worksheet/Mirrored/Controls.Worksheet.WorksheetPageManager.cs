@@ -554,4 +554,58 @@ internal partial class WorksheetPageManager
         }
     }
 
+    public void SplitItemIfNeeded(IWhiteboardItem item, IWorksheetPage prevItemContainingPage = null, bool forceSplitEvenIfNoVisiblePages = false)
+    {
+        ItemManager.SetItemSplitCheckIsRequired(item, false);
+        int itemPageIndex;
+        Rect itemBounds;
+        if (ItemSplitIsNeeded(item, out itemPageIndex, out itemBounds))
+        {
+            IList<int> pageIndices;
+            bool isAnyPageVisible;
+            double offsetDiff;
+            pageIndices = CalculateItemPageIndices(item, itemBounds, out offsetDiff);
+            AppendNewPageIfNeeded(pageIndices.Last());
+            RemoveNonOwnedWhiteboardItem(item, 0, -1);
+            AddNonOwnedWhiteboardItem(item, pageIndices[0], pageIndices[pageIndices.Count - 1]);
+            isAnyPageVisible = _worksheetVisiblePages.IsAnyPageIndexVisible(pageIndices.First(), pageIndices.Last());
+            if (forceSplitEvenIfNoVisiblePages | isAnyPageVisible)
+            {
+                DebugTools.DevAssert(!ItemManager.GetItemSplitCheckIsRequired(item));
+                if (isAnyPageVisible)
+                {
+                    ItemManager.SetItemIsOnVisiblePage(item, true);
+                }
+                IWhiteboardItemZombie zombie;
+                _worksheetItemSplitter.Split(item, itemPageIndex, out zombie, prevItemContainingPage);
+                FireItemSplit(item);
+                if (zombie != null)
+                {
+                    IWhiteboardItemContainer container = zombie.Item as IWhiteboardItemContainer;
+                    if (container != null && container.ActiveItem != null)
+                    {
+                        Size renderSize = ItemManager.GetRenderSize(container.ActiveItem);
+                        ItemManager.BringIntoView(container.ActiveItem, new Rect(default(Point), renderSize));
+                    }
+                }
+            }
+            else
+            {
+                ItemManager.SetItemIsOnVisiblePage(item, false);
+                ItemManager.SetItemSplitCheckIsRequired(item, true);
+            }
+        }
+        else
+        {
+            if (DebugTools.DevAssert(itemPageIndex < Pages.Count).Passed)
+            {
+                IWhiteboardItemZombie existingZombie = _worksheetItemSplitter.GetItemZombieOnPage(item, Pages[itemPageIndex]);
+                if (existingZombie != null)
+                {
+                    _worksheetItemSplitter.ReplaceZombieWithRealItem(existingZombie);
+                }
+            }
+            RemoveNonOwnedItemAndZombies(item);
+        }
+    }
 }

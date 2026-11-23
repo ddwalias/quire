@@ -160,3 +160,9 @@
 - Implemented in `Mirrored/` (stubs removed). Both match the IL with the natural guards: the `IsEmpty` branch with the whiteboard-control check, `parentControl != topItemToActivate` before the ancestor transform, and the `||` range test in `ActivateMatchingPartIfNeeded`.
 - Release IL: PASS (1322 checked, 0 failures).
 - Probe, parked: `GetSplitVerticalAdjustment` (foreach with try/finally). Mathcad's loop-exit is a single conditional branch straight to the `leave` that follows the try (`bgt.un` into `leave.s`). With `if (clipBottom > lim) break;` Roslyn emits a conditional skip plus an unconditional `leave`, one instruction longer (first difference at #11, 69 vs 68 entries; the `if (<=) { add }` form is semantically wrong and differs at the branch target). Stub kept; the source change was reverted and not landed.
+
+## Batch 24 — WorksheetPageManager SplitItemIfNeeded
+
+- Implemented in `Mirrored/` (stub removed). The `forceSplitEvenIfNoVisiblePages | isAnyPageVisible` uses the non-short-circuit `|` that the IL shows. The locals are declared in Mathcad order (`pageIndices`, `isAnyPageVisible`, `offsetDiff`) so the slot numbering matches. `ItemSplitIsNeeded` stays a stub; it is only a call target here.
+- Release IL: PASS (1323 checked, 0 failures) on the first attempt.
+- Parked: `ActivateWorksheetItemPartForcingSplitIfNeeded`. It calls `ExecuteOrScheduleSplitAttempt` (closure stub) and the four-argument `ActivateDescendantParentIfNeeded` (argument-list temp, parked), and its `DevAssert` message is a conditional expression (`intoViewItem == null ? null : intoViewItem.GetType().Name`) that was not measured.
