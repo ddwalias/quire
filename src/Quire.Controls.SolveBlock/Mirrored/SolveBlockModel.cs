@@ -280,6 +280,10 @@ internal partial class SolveBlockModel
             HandleContainerChildrenChanged);
     }
 
+    // Placed before GetWhiteboardItemThatOwnsCalculatable: the lambda ordinal must be b__70_0 as in Release IL.
+    private bool IsChildAboveSolver(global::Quire.Calculation.Core.ICalculatable child) =>
+        CalculatableChildren.TakeWhile(calc => calc != Solver).Contains(child);
+
     private global::Quire.Controls.Core.IWhiteboardItem GetWhiteboardItemThatOwnsCalculatable(
         global::Quire.Calculation.Core.ICalculatable calculatable)
     {

@@ -35,6 +35,4 @@ internal partial class SolveBlockModel : global::Quire.Controls.Mathboard.Aggreg
     private global::Quire.Calculation.Core.ICalculatable GetCalculatableToAddToSolverAggregate(global::Quire.Calculation.Core.ICalculatable calcAddedToModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.ISolveBlockCalculatable CreateCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc, bool forceNotHideable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsChildAboveSolver(global::Quire.Calculation.Core.ICalculatable child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
