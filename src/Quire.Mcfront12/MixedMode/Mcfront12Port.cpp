@@ -1,3 +1,5 @@
+#include <string>
+#include <vcclr.h>
 
 namespace Quire { namespace Engine {
 
@@ -2031,6 +2033,7 @@ namespace Quire { namespace Engine {
 
 #pragma comment(linker, "/include:?ToActionResult@Engine@@$$FYM?AVActionResult@depman@Quire@@PE$AAVObject@System@@0@Z")
 #pragma comment(linker, "/include:?ErrorDictFromMessage@Engine@@$$FYMPE$AAVObject@System@@PE$AAVString@3@II@Z")
+#pragma comment(linker, "/include:?ToStrng@utl@@$$FYM?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PE$AAVObject@System@@@Z")
 // The original's global functions live in its <Module> under their unqualified-to-Quire names (Engine.X).
 namespace Engine {
 
@@ -2060,3 +2063,22 @@ namespace Engine {
 
 }
 
+
+// Engine-side copy of utl::ToStrng(object) for the mixed DLL. The original is a <Module> global of utl.
+namespace utl {
+    std::string ToStrng(System::Object^ o)
+    {
+        if (o == nullptr)
+        {
+            return std::string("<null>");
+        }
+        System::String^ s = o->ToString();
+        if (s->Length > 0)
+        {
+            cli::array<System::Byte>^ bytes = System::Text::Encoding::UTF8->GetBytes(s);
+            pin_ptr<System::Byte> ptr = &bytes[0];
+            return std::string((const char*)ptr);
+        }
+        return std::string("");
+    }
+}
