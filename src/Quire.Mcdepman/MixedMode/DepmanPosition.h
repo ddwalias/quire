@@ -11,6 +11,7 @@ class OrderedListNode;
 
 namespace Quire { namespace depman {
     ref class ActionChainMgd;
+    ref class NodeTimer;
 }}
 
 namespace depman {
@@ -41,6 +42,7 @@ public:
     void ClearDParent();
     void SetBasePriority(int priority);
     void SendMessage(::Quire::Engine::NodeStatus status);
+    void SetTimer(::Quire::depman::NodeTimer^ timer);
     ::Quire::depman::Scope^ GetScope();
     ::Quire::depman::Scope^ GetEnvScope();
     ::Quire::depman::SEnvironment^ env() const;
@@ -81,7 +83,7 @@ private:
     bool treated_ready_;                          // 0xC2 (offset 194)
     bool computing_;                              // 0xC3 (offset 195)
     int busy_thread_id_;                          // 0xC4 (offset 196)
-    void* timer_;                                 // 0xC8 (offset 200, gcroot<depman::NodeTimer^>)
+    gcroot<::Quire::depman::NodeTimer^> timer_;    // 0xC8 (offset 200)
     bool notify_computing_;                       // 0xD0 (offset 208)
     unsigned char pad_d1_[0x07];                  // 0xD1
 };

@@ -1,6 +1,7 @@
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <sdkddkver.h>
+#include "DepmanNodeTimer.h"
 #include "DepmanPosition.h"
 
 #include <algorithm>
@@ -19,6 +20,7 @@
 #pragma comment(linker, "/include:?ClearDParent@PositionBase@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?SetBasePriority@PositionBase@depman@@QEAAXH@Z")
 #pragma comment(linker, "/include:?SendMessage@PositionBase@depman@@$$FQEAMXW4NodeStatus@Engine@Quire@@@Z")
+#pragma comment(linker, "/include:?SetTimer@PositionBase@depman@@$$FQEAMXPE$AAVNodeTimer@2Quire@@@Z")
 #pragma comment(linker, "/include:?IsLocked@PositionBase@depman@@QEBA_NXZ")
 #pragma comment(linker, "/include:?IsUndefine@PositionBase@depman@@QEAA_NXZ")
 #pragma comment(linker, "/include:?IsChildOnly@PositionBase@depman@@QEAA_NXZ")
@@ -140,6 +142,11 @@ void PositionBase::SendMessage(::Quire::Engine::NodeStatus status)
         if (pos_callback_)
             pos_callback_->Invoke(position_, status);
     }
+}
+
+void PositionBase::SetTimer(::Quire::depman::NodeTimer^ timer)
+{
+    timer_ = timer;
 }
 
 Position* Position::previous()

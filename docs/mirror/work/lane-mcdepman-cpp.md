@@ -129,4 +129,11 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
 - Release IL report: `.mirror-cache/release-il-126b2a39ebd1/release-il.json` (PASS, 203 checked; selected `Quire.depman.ActionChainMgd`; module `SendMessage` exact).
 - `PositionBase.Invalidate` remains blocked after the exact `ActionChain.IsLocked` check by missing callback wiring for `TreatedReadyInvalidCallback(Position*) -> bool` (field offset 104), then `InterruptCallback(int)` (offset 96) and `PosQueueCallback(Position*)` (offset 88); its body also calls `TreatAsReady(false)`. `TreatAsReady` depends on unimplemented `ActionChain.TreatAsReadyDeps` and the `std::set<Position*>` erase path at offset 136. `Kill` remains parked on that same unproven set erase path.
 
+## Batch 14 — PositionBase.SetTimer
+
+- Owner: Codex, Orca task `task_b2e9e3cea4dc`; branch `feature/luna-mcdepman`.
+- Member: `PositionBase.SetTimer(NodeTimer^)`, implemented as the field assignment at offset 200 using the existing `NodeTimer` contract; the 216-byte `PositionBase` size assertion remains in place.
+- Release IL report: `.mirror-cache/release-il-abcfb3ac8975/release-il.json` (PASS, 201 checked; selected `Quire.depman.ActionChainMgd`; module `SetTimer` exact).
+- `ActionChain.TreatAsReadyDeps` is not a leaf: its IL enumerates `ActionChainMgd.m_deps`, calls `DepTrackingEnv.Lookup` for matching `%%children` / `value mc_` keys, updates the result dictionary, and recurses through `next`. `Invalidate` still needs callback wiring for `TreatedReadyInvalidCallback(Position*) -> bool` at offset 104, `InterruptCallback(int)` at 96, and `PosQueueCallback(Position*)` at 88, plus `TreatAsReady(false)` and the unproven set erase path at offset 136. A `WaitReady` probe was rejected: its first IL mismatch is the imported `gcroot<Quire::utl_mgd::SafeEvent^>` helper name versus Mathcad's `gcroot<utl_mgd::SafeEvent^>`; no probe code remains. `Kill` remains parked on the unproven set erase path.
+
 
