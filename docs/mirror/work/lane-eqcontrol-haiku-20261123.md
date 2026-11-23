@@ -192,3 +192,11 @@
 
 - Landed for this type: batches 22–26 (TryReadMathNodeFromClipboard, PasteEditMode, ExpandComboBoxRowsColumns/PasteSelectedValues/TextBox_OnPaste, the three events, AllCells). The project gate is PASS with 3476 checked.
 - Remaining for this type, all closure- or ordinal-gated: `SetupCommandBindings`, `DeleteRows`, `DeleteColumns`, `DeleteEmptyRows`, `DeleteEmptyColumns`. They stay as unmarked placeholders in the partial, in Mathcad order.
+
+### Batch 27: Controls.InputControls.EditableComboBoxViewModel (SetupCommandBindings, DeleteRows, DeleteColumns, DeleteEmptyRows, DeleteEmptyColumns)
+
+- Closure ordinal rule, now verified on all five members: a lambda's ordinal `N` is `methodIndex + 5 + properties + events`, where `methodIndex` is the 0-based index of the containing method in Mathcad's token order (`members.tsv`, ctor = 0), `5` is the generated fields, `properties` counts the property declarations up to and including the method's own property (get and set count once), and `events` counts the event declarations before the method. Checks: `AllCells` 1+5+1 = 7; `SetupCommandBindings` 30+5+11 = 46; `DeleteRows` 42+5+11+3 = 61; `DeleteColumns` 44+5+11+3 = 63; `DeleteEmptyRows` 54+5+11+3 = 73; `DeleteEmptyColumns` 55+5+11+3 = 74.
+- Layout: the partial is in Mathcad token order (ctor, AllCells, the property declarations, the methods up to `TextBox_OnPaste`, `SetupCommandBindings`, the events, then the rest). Pure reorder, no member added or removed.
+- Gate (project-level): PASS; 3498 checked, zero failures (`.mirror-cache/release-il-d6bb9413c9e2/release-il.json`). Earlier exact rows (AllCells, the events, PasteEditMode, ExpandComboBoxRowsColumns, PasteSelectedValues, TextBox_OnPaste) remain exact.
+- Regeneration: `dotnet build` of `Quire.Componentsmgd` (Release) and `dotnet run -c Release --project tools/Quire.Tools.MirrorGen -- emit` leave `Controls.InputControls.EditableComboBoxViewModel.g.cs` byte-identical (zero diff). The emit also rewrites about 330 unrelated generated files on this worktree, which were reverted; that drift is outside this lane.
+- Dependency note: `DeleteEmptyColumns` calls `TableModel.GetColumnCells`, which is still a generated stub in `ComboBoxTableModel`. The member is Release-IL exact; at run time it reaches that stub until `ComboBoxTableModel.GetColumnCells` is mirrored.
