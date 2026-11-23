@@ -136,4 +136,16 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
 - Release IL report: `.mirror-cache/release-il-abcfb3ac8975/release-il.json` (PASS, 201 checked; selected `Quire.depman.ActionChainMgd`; module `SetTimer` exact).
 - `ActionChain.TreatAsReadyDeps` is not a leaf: its IL enumerates `ActionChainMgd.m_deps`, calls `DepTrackingEnv.Lookup` for matching `%%children` / `value mc_` keys, updates the result dictionary, and recurses through `next`. `Invalidate` still needs callback wiring for `TreatedReadyInvalidCallback(Position*) -> bool` at offset 104, `InterruptCallback(int)` at 96, and `PosQueueCallback(Position*)` at 88, plus `TreatAsReady(false)` and the unproven set erase path at offset 136. A `WaitReady` probe was rejected: its first IL mismatch is the imported `gcroot<Quire::utl_mgd::SafeEvent^>` helper name versus Mathcad's `gcroot<utl_mgd::SafeEvent^>`; no probe code remains. `Kill` remains parked on the unproven set erase path.
 
+## Batch 15 — PositionBase.SetScope
+
+- Owner: AGY, Orca task `task_91e89a165703`; branch `feature/luna-mcdepman`.
+- Member: `PositionBase.SetScope(Scope^)`, implemented as the field assignment at offset 56 using the existing `Scope` contract; the 216-byte `PositionBase` size assertion remains in place.
+- Release IL report: `.mirror-cache/release-il-8370a77501bd/release-il.json` (PASS, 203 checked; module `SetScope` and `gcroot<Quire::depman::Scope ^>::operator=` exact).
+- Remaining prerequisites:
+  - Callback wiring: `TreatedReadyInvalidCallback(Position*) -> bool` at offset 104, `InterruptCallback(int)` at offset 96, `PosQueueCallback(Position*)` at offset 88 are required for `PositionBase.Invalidate`.
+  - `std::set<depman::Position*>` erase path at offset 136: required for `PositionBase.Kill` and `TreatAsReady(false)`.
+  - `PositionBase.SetEnvScope`: not a leaf; branches on null vs non-null Scope, calling `ActionChain.remove_env_scope` or `ActionChain.add_env_scope`, updating offset 64 (`env_scope_`), and invoking `ActionChain.SetNeedsCheck`.
+  - `PositionBase.Lock` / `UnLock`: call `ActionChain.Lock()` / `ActionChain.UnLock()`.
+
+
 

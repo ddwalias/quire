@@ -43,6 +43,7 @@ public:
     void SetBasePriority(int priority);
     void SendMessage(::Quire::Engine::NodeStatus status);
     void SetTimer(::Quire::depman::NodeTimer^ timer);
+    void SetScope(::Quire::depman::Scope^ scope);
     ::Quire::depman::Scope^ GetScope();
     ::Quire::depman::Scope^ GetEnvScope();
     ::Quire::depman::SEnvironment^ env() const;

@@ -25,6 +25,7 @@
 #pragma comment(linker, "/include:?IsUndefine@PositionBase@depman@@QEAA_NXZ")
 #pragma comment(linker, "/include:?IsChildOnly@PositionBase@depman@@QEAA_NXZ")
 #pragma comment(linker, "/include:?GetScope@PositionBase@depman@@QEAMPE$AAVScope@2Quire@@XZ")
+#pragma comment(linker, "/include:?SetScope@PositionBase@depman@@QEAMXPE$AAVScope@2Quire@@@Z")
 #pragma comment(linker, "/include:?GetEnvScope@PositionBase@depman@@QEAMPE$AAVScope@2Quire@@XZ")
 #pragma comment(linker, "/include:?env@PositionBase@depman@@$$FQEBMPE$AAUSEnvironment@2Quire@@XZ")
 // Uncalled native member functions are stripped by /OPT:REF unless referenced.
@@ -35,6 +36,11 @@
 namespace depman {
 
 ::Quire::depman::Scope^ PositionBase::GetScope() { return scope_; }
+
+void PositionBase::SetScope(::Quire::depman::Scope^ scope)
+{
+    scope_ = scope;
+}
 
 ::Quire::depman::Scope^ PositionBase::GetEnvScope() { return env_scope_; }
 
