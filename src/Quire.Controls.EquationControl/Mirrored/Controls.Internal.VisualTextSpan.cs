@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Documents;
@@ -63,16 +64,6 @@ internal partial class VisualTextSpan
         MathFormat = new MathFormatDobjController(this);
     }
 
-    protected override Size ArrangeOverride(Size finalSize)
-    {
-        for (int num = 0; num < Children.Count; num++)
-        {
-            Children[num].Arrange(_layout.ChildItems[num].Rect);
-        }
-
-        return DesiredSize;
-    }
-
     public void HandleMathFormatChanged(DependencyPropertyChangedEventArgs e)
     {
         if (DebugTools.DevAssert(_font == null, null).Passed)
@@ -90,4 +81,54 @@ internal partial class VisualTextSpan
     {
         return FontManager.GetScaledFont(MathFormat, FontConstants.SubscriptIDFontSizeRatio);
     }
+
+    protected override Size MeasureOverride(Size availableSize)
+    {
+        if (Children.Count == 0)
+        {
+            return new Size(0.0, 0.0);
+        }
+
+        for (int i = 0; i < Children.Count; i++)
+        {
+            UIElement child = Children[i];
+            child.Measure(availableSize);
+            double textBaselineOffset = 0.0;
+            if (child is IVisualText visualText)
+            {
+                textBaselineOffset = visualText.Baseline;
+            }
+
+            _layout.ChildItems[i].Size = child.DesiredSize;
+            _layout.ChildItems[i].TextBaselineOffset = textBaselineOffset;
+        }
+
+        _layout.Arrange();
+        _baseline = _layout.TextBaselineOffset;
+        _superscriptBaseline = _baseline - ExtendedFont.SafeComputeInkBoundingBox(Font.n_Run).Height;
+        _subscriptBaseline = _layout.SubscriptBaseline;
+        _characterWidths.Clear();
+        foreach (IVisualText child in Children)
+        {
+            child.CharacterWidths.Each(cwidth => _characterWidths.Add(cwidth));
+        }
+
+        return _layout.DesiredSize;
+    }
+
+    protected override Size ArrangeOverride(Size finalSize)
+    {
+        for (int num = 0; num < Children.Count; num++)
+        {
+            Children[num].Arrange(_layout.ChildItems[num].Rect);
+        }
+
+        return DesiredSize;
+    }
+
+
+
+    protected virtual void UpdateChildren() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public event PropertyChangedEventHandler PropertyChanged;
 }

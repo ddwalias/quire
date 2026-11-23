@@ -249,3 +249,11 @@
 - Exact: `UpdateText` (protected virtual), in Mathcad token order after `OnRender`. The guard clauses match Mathcad's `brtrue`/`brfalse` layout, `Font` is read through the property at each use, and the `TextDecorations` local is loaded before the `FormattedText` construction. The baseline is one expression with `SafeComputeInkBoundingBox(...).Height`, since Mathcad loads `_baseline` before the `Rect`.
 - The generated stub pair is removed from the `.g.cs`. The `Text` setter now calls an exact `UpdateText`.
 - Gate (project-level): PASS; 3537 checked, zero failures (`.mirror-cache/release-il-e1a5a1155742/release-il.json`); `UpdateText` moved from generated stub to exact.
+
+### Batch 34: Controls.Internal.VisualTextSpan (MeasureOverride, PropertyChanged)
+
+- Exact: `MeasureOverride` (the `Children` loop with the `is IVisualText` pattern, the `_layout` arrange, the `SafeComputeInkBoundingBox(...).Height` baseline, and the `foreach` with the `Each` lambda). It moves from generated stub to exact.
+- Ordinal layout: the lambda was `<MeasureOverride>b__32_0` and Mathcad has `b__30_0`. The compiler counts the members before the method, so `HandleMathFormatChanged` and `GetSubscriptFont` moved above `MeasureOverride` (Mathcad order), and the generated `UpdateChildren` stub, which the compiler orders first, became an unmarked placeholder after `ArrangeOverride`. The `PropertyChanged` event moved to the end of the class. With that order the lambda is `b__30_0`.
+- `PropertyChanged` was already checked as exact before this batch (its accessors had no verdict change). The partial now declares it, and its stub pair is gone from the `.g.cs`.
+- Still a placeholder: `UpdateChildren` (protected virtual; Mathcad's body has a `Each`-free layout loop and the `ScriptedTextLayoutManager` build, not attempted here). `ArrangeOverride` is exact.
+- Gate (project-level): PASS; 3539 checked, zero failures (`.mirror-cache/release-il-209d61aa0a54/release-il.json`).
