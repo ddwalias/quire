@@ -43,6 +43,7 @@ public:
     ::Quire::depman::Scope^ GetScope();
     ::Quire::depman::Scope^ GetEnvScope();
     ::Quire::depman::SEnvironment^ env() const;
+    ::Quire::depman::SharedThreadContext^ GetSharedThreadContext() const;
 
 private:
     DepManager* dep_manager_;                      // 0x08

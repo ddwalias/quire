@@ -115,6 +115,7 @@ namespace Quire { namespace depman {
     };
 
     ref class ActionChainMgd;
+    ref class SharedThreadContext;
 
     [Quire::Mirror::MirrorOfAttribute("depman.CachingEnv, mcdepman")]
     ref class CachingEnv
@@ -283,6 +284,7 @@ namespace Quire { namespace depman {
         }
 
         bool IsDead();
+        SharedThreadContext^ GetSharedThreadContext();
 
         void set_result(System::Object^ r)
         {

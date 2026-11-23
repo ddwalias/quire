@@ -37,6 +37,11 @@ namespace depman {
 
 ::Quire::depman::SEnvironment^ PositionBase::env() const { return env_; }
 
+::Quire::depman::SharedThreadContext^ PositionBase::GetSharedThreadContext() const
+{
+    return env_->GetSharedThreadContext();
+}
+
 long PositionBase::GetHandle() const
 {
     return handle_;

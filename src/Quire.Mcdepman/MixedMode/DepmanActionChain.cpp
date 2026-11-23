@@ -39,6 +39,13 @@ bool ActionChainMgd::IsDead()
     return result;
 }
 
+SharedThreadContext^ ActionChainMgd::GetSharedThreadContext()
+{
+    SharedThreadContext^ result = m_chain_umgd->loc_->env()->GetSharedThreadContext();
+    System::GC::KeepAlive(this);
+    return result;
+}
+
 }} // namespace Quire::depman
 
 namespace depman {

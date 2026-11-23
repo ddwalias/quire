@@ -115,4 +115,11 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
 - Release IL report: `.mirror-cache/release-il-adfd92d906ab/release-il.json` (PASS, 195 checked; selected Quire.depman.ActionChainMgd; module `PositionBase.SetBusy` exact).
 - Remaining mismatches: none in this batch.
 
+## Batch 12 — Shared thread-context accessors
+
+- Owner: Codex / Orca task `task_6d9c7ecedad3`; branch `feature/luna-mcdepman`.
+- Members: `ActionChainMgd.GetSharedThreadContext()` uses the IL-proven `ActionChain.loc` pointer at offset 16; `PositionBase.GetSharedThreadContext()` reads its `SEnvironment` gcroot at offset 40.
+- Release IL report: `.mirror-cache/release-il-9f066e729adc/release-il.json` (PASS, 196 checked; both module methods exact).
+- `PositionBase.Invalidate` depends on `TreatAsReady`, `SendMessage`, and callback wiring not implemented here. `PositionBase.Kill` depends on the `std::set<Position*>` erase path, still represented only as raw storage.
+
 
