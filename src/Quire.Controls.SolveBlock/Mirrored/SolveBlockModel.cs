@@ -263,7 +263,34 @@ internal partial class SolveBlockModel
             ChildCalcErrorChanged();
     }
 
-    private void UpdateWhichItemIsSolver() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void UpdateWhichItemIsSolver()
+    {
+        SolveBlockCalculatable solveBlockCalculatable = CalculatableChildren.OfType<SolveBlockCalculatable>()
+            .FirstOrDefault((SolveBlockCalculatable sbCalc) => sbCalc.EquationType == SolveBlockEquationTypes.Solver);
+        if (solveBlockCalculatable == Solver)
+            return;
+
+        // Release IL puts the else-branch local in the first slot, so it is declared before the null branch.
+        global::Quire.Calculation.Core.ICalculatable solverWrappedCalculatable;
+        if (solveBlockCalculatable == null)
+        {
+            global::Quire.Calculation.Core.ICalculatable wrappedCalculatable = Solver.WrappedCalculatable;
+            SBChildManager.Rewrap(Solver);
+            _solveBlockCalculatableMap[wrappedCalculatable].Commit();
+        }
+        else if (Solver == null)
+        {
+            SBChildManager.Rewrap(solveBlockCalculatable);
+            Solver?.Commit();
+        }
+        else
+        {
+            solverWrappedCalculatable = Solver.WrappedCalculatable;
+            SBChildManager.Rewrap(solveBlockCalculatable, Solver);
+            Solver.Commit();
+            _solveBlockCalculatableMap[solverWrappedCalculatable].Commit();
+        }
+    }
 
     private bool MatchEquationType(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.SolveBlockEquationTypes eqType)
     {
