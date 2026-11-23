@@ -42,6 +42,43 @@ internal partial class SolverAggregate
     private string _rl;
     private readonly List<global::Quire.Calculation.Core.ICalculatable> _calculatableChildren;
 
+    // Placed before the auto-properties: the lambda ordinal must be DisplayClass19_0 as in Release IL.
+    public void UpdateSolverRL()
+    {
+        if (SolverName == null && WrappedCalculatable?.Rl != null)
+            ParseWrappedRl();
+        if (global::Quire.DebugTools.AssertNotNull(SolverName, null).Failed)
+            _rl = "nil";
+        string text = char.ToLowerInvariant(SolverName[0]) + SolverName.Substring(1);
+        bool flag = text == "odesolve";
+        bool flag2 = text == "pdesolve";
+        global::System.Text.StringBuilder solverRlBuilder = new global::System.Text.StringBuilder();
+        solverRlBuilder.Append(LeftOfSolverApply);
+        if (DefinedParams.IsNotEmpty())
+        {
+            if (DefinedParams.Contains(PrognExp) && DefinedParams.Length > PrognExp.Length)
+                DefinedParams = DefinedParams.Substring(0, DefinedParams.Length - PrognExp.Length - 1);
+            solverRlBuilder.Append(DefinedParams);
+        }
+        if (!flag && !flag2)
+            solverRlBuilder.Append("(subscript ");
+        solverRlBuilder.Append("(solveblock").Append(SolverTag).Append(" %@ (")
+            .Append(text)
+            .Append(SolverTag);
+        AddAlgorithmIfRequired(solverRlBuilder, WrappedCalculatable, SolverName);
+        SolverArgs.Each((string arg) =>
+        {
+            solverRlBuilder.Append(" ").Append(arg);
+        });
+        solverRlBuilder.Append("))");
+        if (!flag && !flag2)
+            solverRlBuilder.Append(" mc_ORIGIN)");
+        if (DefinedParams.IsNotEmpty())
+            solverRlBuilder.Append(")");
+        solverRlBuilder.Append(RightOfSolverApply);
+        _rl = solverRlBuilder.ToString();
+    }
+
     // Placed before the auto-properties: the lambda ordinal must be b__20_0 as in Release IL.
     private static string GetSolvingAlgorithmRl(string algorithmString)
     {
