@@ -28,6 +28,27 @@ def inventory(*rows):
 
 
 class ReleaseIlAcceptanceTests(unittest.TestCase):
+    def test_solution_build_retries_only_a_lost_msbuild_node(self):
+        command = ['dotnet', 'build', 'build.slnx', '-c', 'Release', '--no-incremental']
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            log = root / 'build.log'
+            env = {}
+            crash = RuntimeError('MSBUILD : error MSB4166: Child node "15" exited prematurely.')
+            retry = [*command, '-maxcpucount:4']
+            with mock.patch.object(release_il, 'run', side_effect=[crash, None]) as run:
+                release_il.build_solution(command, root, log, 30, env)
+                self.assertEqual(run.call_args_list, [mock.call(command, root, log, 30, env),
+                                                      mock.call(retry, root, log, 30, env)])
+            with mock.patch.object(release_il, 'run', side_effect=RuntimeError('error CS0103: Missing name')) as run:
+                with self.assertRaisesRegex(RuntimeError, 'CS0103'):
+                    release_il.build_solution(command, root, log, 30, env)
+                run.assert_called_once()
+            with mock.patch.object(release_il, 'run', side_effect=[crash, crash]) as run:
+                with self.assertRaisesRegex(RuntimeError, 'MSB4166'):
+                    release_il.build_solution(command, root, log, 30, env)
+                self.assertEqual(run.call_count, 2)
+
     def test_cross_project_reference_uses_the_defining_quire_types_mathcad_binding(self):
         source = (Path(__file__).resolve().parents[1] / 'Quire.Tools.MethodAudit' / 'Program.cs').read_text()
         binding = source.split('string[]? Binding(string assembly, string name)', 1)[1].split('\nstring CanonicalAssembly', 1)[0]

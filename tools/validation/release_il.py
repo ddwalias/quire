@@ -642,6 +642,18 @@ def run(command, cwd, log, timeout, env=None):
         raise RuntimeError(f'command failed ({result.returncode}); see {log}\n{detail}')
 
 
+def build_solution(command, cwd, log, timeout, env):
+    """Retry a lost MSBuild child node once with fewer workers."""
+    try:
+        run(command, cwd, log, timeout, env)
+    except RuntimeError as error:
+        if not re.search(r'\berror MSB4166\b', str(error)):
+            raise
+        with log.open('a', encoding='utf-8') as out:
+            out.write('\nMSBuild child node exited. Retrying the Release build with at most four workers.\n')
+        run([*command, '-maxcpucount:4'], cwd, log, timeout, env)
+
+
 # Mathcad's utl-mgd.dll was compiled and linked by MSVC 19.51.36246 (Visual Studio 18.6.2), per its Rich header.
 MSVC_BUILD = 36246
 LINKER_PRODUCT = 258  # Rich-header product id of the MSVC 14.x linker
@@ -830,9 +842,9 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
             solution.parent.mkdir(parents=True, exist_ok=True)
             solution.write_text('<Solution>\n' + ''.join(f'  <Project Path={quoteattr(str(t.resolve()))} />\n' for t in targets)
                                 + '</Solution>\n', encoding='utf-8')
-            run([dotnet, 'build', solution, '-c', 'Release', '--no-incremental', '-o', assemblies,
-                 '-nologo', '-v:q', '-p:EnableSourceControlManagerQueries=false',
-                 '-p:ShouldUnsetParentConfigurationAndPlatform=false'], root, log, timeout, env)
+            build_solution([dotnet, 'build', solution, '-c', 'Release', '--no-incremental', '-o', assemblies,
+                            '-nologo', '-v:q', '-p:EnableSourceControlManagerQueries=false',
+                            '-p:ShouldUnsetParentConfigurationAndPlatform=false'], root, log, timeout, env)
         for project in projects:
             if reason := msvc_mismatch(assemblies / f'{project}.dll'):
                 raise RuntimeError(f'{project}.dll: {reason}')
