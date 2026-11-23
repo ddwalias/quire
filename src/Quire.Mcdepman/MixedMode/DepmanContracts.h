@@ -6,6 +6,7 @@ void __cdecl operator delete(void* ptr, unsigned __int64 size) noexcept;
 
 namespace depman {
     class ActionChain;
+    class DepManager;
     class Position;
 }
 
@@ -246,6 +247,10 @@ namespace Quire { namespace depman {
         System::Object^ m_state;
         System::Object^ m_result;
         System::Collections::Generic::Dictionary<CacheKey, System::Collections::Generic::HashSet<Scope^>^>^ m_deps;
+
+        ::depman::DepManager* depman();
+        ::depman::Position* loc();
+        ::depman::ActionChain* next();
 
     public:
         ActionChainMgd(::depman::ActionChain* chain, Action^ action, DepTrackingEnv^ env, System::Object^ state)

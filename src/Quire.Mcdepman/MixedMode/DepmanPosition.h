@@ -87,16 +87,24 @@ static_assert(sizeof(PositionBase) == 216, "PositionBase size must be 216 bytes"
 
 // Only the lock flag is recovered: the accessors read the byte at offset 0x20 and nothing else of the class.
 class ActionChain {
+private:
+    gcroot<::Quire::depman::ActionChainMgd^> mgd_;   // 0x00 (offset 0)
+
 public:
     bool IsLocked() const;
     bool IsUndefine();
     bool IsChildOnly();
 
+    // ActionChainMgd's reference IL reads these pointer fields at offsets 8, 16, and 24.
+    DepManager* dep_manager_;                       // 0x08 (offset 8)
+    Position* loc_;                                 // 0x10 (offset 16)
+    ActionChain* next_;                             // 0x18 (offset 24)
+
 private:
-    gcroot<::Quire::depman::ActionChainMgd^> mgd_;   // 0x00 (offset 0)
-    unsigned char pad_08_[0x18];                     // 0x08
     bool locked_;                                    // 0x20 (offset 32)
 };
+
+static_assert(sizeof(ActionChain) == 40, "ActionChain layout must remain 40 bytes");
 
 } // namespace depman
 

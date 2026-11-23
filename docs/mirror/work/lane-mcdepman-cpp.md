@@ -101,4 +101,11 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
 - Release IL report: `.mirror-cache/release-il-9d40c7c55d4e/release-il.json` (PASS, 191 checked; selected Quire.depman.DepTrackingEnv).
 - Remaining mismatches: none in this batch. Other mcdepman members remain incomplete as listed above.
 
+## Batch 10 — ActionChainMgd native pointer accessors
+
+- Owner: Codex / Orca task `task_7a93711d37bc`; branch `feature/luna-mcdepman`.
+- Members: `ActionChainMgd.depman()`, `loc()`, and `next()`. Mathcad Release IL establishes the backing `ActionChain` pointer offsets 8, 16, and 24; named fields replace the same 24-byte padding, and `locked_` remains at offset 32 with a 40-byte size assertion.
+- Release IL report: `.mirror-cache/release-il-f6b67571f8e8/release-il.json` (PASS, 194 checked; selected Quire.depman.ActionChainMgd).
+- Remaining mismatches: none in this batch. The `PositionBase.SetBusy` probe found only native `NativeCppClass` layout metadata (216 bytes), with no managed method body; implementing its SafeEvent behavior still needs native-body evidence.
+
 

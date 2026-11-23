@@ -9,6 +9,31 @@
 #pragma comment(linker, "/include:?IsUndefine@ActionChain@depman@@QEAA_NXZ")
 #pragma comment(linker, "/include:?IsChildOnly@ActionChain@depman@@QEAA_NXZ")
 
+namespace Quire { namespace depman {
+
+::depman::DepManager* ActionChainMgd::depman()
+{
+    auto* result = m_chain_umgd->dep_manager_;
+    System::GC::KeepAlive(this);
+    return result;
+}
+
+::depman::Position* ActionChainMgd::loc()
+{
+    auto* result = m_chain_umgd->loc_;
+    System::GC::KeepAlive(this);
+    return result;
+}
+
+::depman::ActionChain* ActionChainMgd::next()
+{
+    auto* result = m_chain_umgd->next_;
+    System::GC::KeepAlive(this);
+    return result;
+}
+
+}} // namespace Quire::depman
+
 namespace depman {
 
 bool ActionChain::IsLocked() const
