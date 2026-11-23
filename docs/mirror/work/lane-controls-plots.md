@@ -379,3 +379,10 @@
 - Shapes: `IsStringLabel` as an `if` chain or early returns did not match. The two-case string `switch` statement matched because Roslyn emits the `brtrue` string-compare chain Mathcad uses.
 - Release IL: PASS — 2476 checked, 0 failures.
 - Left in AxisModel: `GridLineColor`, the limit-expression setters, `StartValueChanged`, `CreateLogMinorTickmarksPattern`, `AxisCalculatables` (iterator), `SetDoubleValueIfValid` (dup pattern), the constructor, the legend-position and XML helpers, and the tick-mark helpers.
+
+## Batch 55 — PlotTitle default text
+
+- Members: `GetDefaultTitleText` (static, `switch` on `PlotTitleType` returning the three literals and `string.Empty`). Hand-written: appended to `Mirrored/Controls.Plots.PlotTitle.cs`; stub removed from `PlotTitle.g.cs`.
+- Release IL: PASS — 2477 checked, 0 failures.
+- Tried and reverted: `HideTitleIfEmpty`. Its single combined `&&` guard, the early-return form and the nested-if form each differ from Mathcad's layout (Mathcad has 30 entries against 28, with a different branch target at the first test). Left as a stub; needs a closer op-level diff.
+- Left in PlotTitle: `HandleEditingStarted`, `HandleEditingEnded`, `RegisterToEvents`, `TitleSizeChanged` (WPF event and orientation logic), and the XAML-generated `InitializeComponent`, `_CreateDelegate`, `Connect`.

@@ -105,4 +105,19 @@ public partial class PlotTitle
         DebugTools.DevAssert(IsRotationAllowed, "ToggleOrientation was called on a non-rotatable title.");
         new ToggleAxisTitleOrientationCommand(this).Execute();
     }
+
+    private static string GetDefaultTitleText(PlotTitleType type)
+    {
+        switch (type)
+        {
+            case PlotTitleType.Plot:
+                return "Plot Title";
+            case PlotTitleType.XAxis:
+                return "X-axis Title";
+            case PlotTitleType.YAxis:
+                return "Y-axis Title";
+            default:
+                return string.Empty;
+        }
+    }
 }

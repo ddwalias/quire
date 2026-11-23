@@ -14,8 +14,6 @@ public partial class PlotTitle : global::Quire.Controls.Plots.PlotItem, global::
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    private static string GetDefaultTitleText(global::Quire.Controls.Plots.PlotTitleType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void RegisterToEvents(global::Quire.Controls.Text.RichTextTitle title) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void TitleSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
