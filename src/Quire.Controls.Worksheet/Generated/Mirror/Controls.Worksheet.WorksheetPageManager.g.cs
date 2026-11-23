@@ -42,10 +42,6 @@ internal partial class WorksheetPageManager : global::Quire.Controls.Worksheet.I
     [global::Quire.Mirror.MirrorStub]
     public void SplitItemIfNeeded(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.Worksheet.IWorksheetPage prevItemContainingPage = default, bool forceSplitEvenIfNoVisiblePages = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void RemoveItemFromAppropriatePage(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RemoveItemFromAppropriatePage(global::Quire.Controls.Core.IWhiteboardItem item, bool removeEmptyPagesAtTheEnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void RemoveAllPages() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
@@ -88,10 +84,6 @@ internal partial class WorksheetPageManager : global::Quire.Controls.Worksheet.I
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Size GetCustomSplitItemRenderSize(global::Quire.Controls.Core.ICustomSplitItem customSplitItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public int GetPageIndex(double itemLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int GetPageIndex(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public double UpdateVisiblePagesOnScrollChanged(double verticalOffset, double viewportHeight, double pageHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateVisiblePagesOnPageAddedIfNeeded(int indexOfFirstAddedPage, double verticalOffset, double viewportHeight, double pageHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -117,12 +109,6 @@ internal partial class WorksheetPageManager : global::Quire.Controls.Worksheet.I
     private void RemoveAllItemsFromPage(global::Quire.Controls.Worksheet.IWorksheetPage page) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void RemoveItemsFromPage(global::Quire.Controls.Worksheet.IWorksheetPage page, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void PageBodyActivatedHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AddNonOwnedWhiteboardItem(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem, int firstPageIndex, int lastPageIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RemoveNonOwnedWhiteboardItem(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem, int firstPageIndex = 0, int lastPageIndex = -1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public WorksheetPageManager(global::Quire.Controls.Worksheet.IWorksheetItemSplitter worksheetItemSplitter) { }
 

@@ -112,3 +112,9 @@
 - Implemented in `Mirrored/` (stubs removed from `.g.cs`). `RemoveEmptyPagesAfterLocation(int)` is an entry guard followed by a bottom-tested `do`/`while (Pages.Count > 1)` with two early `break`s. `GetPage` uses the public `DebugTools.DevAssert(pageIndex >= 0).Failed` form.
 - Release IL: PASS (1299 checked, 0 failures).
 - Still stubs in this type: `IsTrailingEmptyPage` (closure), `RemoveItemsFromPage` (closure), `HandleItemMoved`, `SplitItemIfNeeded`, the `UpdateVisiblePages*` set, `Dispose`, `ActivateDescendant*`, `GetPagesContaining` and others from the batch 13 survey.
+
+## Batch 16 — WorksheetPageManager RemoveItemFromAppropriatePage (both overloads), GetPageIndex (double and item), AddNonOwnedWhiteboardItem, RemoveNonOwnedWhiteboardItem, PageBodyActivatedHandler
+
+- Implemented in `Mirrored/` (stubs removed from `.g.cs`). The crosshair branch in `RemoveItemFromAppropriatePage` reads `_worksheetPageLayout` directly, as the IL reads the field. `PageBodyActivatedHandler` invokes the event without a null check, as the IL does.
+- Release IL: PASS (1306 checked, 0 failures).
+- Still stubs in this type: `GetPageIndex(double, bool)` (uses `DoubleExtension.IsLessThan` with a NaN epsilon; not attempted), `IsTrailingEmptyPage` and `RemoveItemsFromPage` (closures), and the `UpdateVisiblePages*`, `Print*`, `Split*`, `Activate*` members.

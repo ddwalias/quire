@@ -210,4 +210,70 @@ internal partial class WorksheetPageManager
         }
         VisualHelper.ScrollToPage(VisiblePages.First(), targetPage, true);
     }
+
+    public void RemoveItemFromAppropriatePage(IWhiteboardItem item)
+    {
+        RemoveItemFromAppropriatePage(item, true);
+    }
+
+    public void RemoveItemFromAppropriatePage(IWhiteboardItem item, bool removeEmptyPagesAtTheEnd)
+    {
+        IWorksheetPage page = GetItemPage(item);
+        ItemManager.SetItemIsOnVisiblePage(item, false);
+        RemoveItemFromPage(page, item);
+        if (removeEmptyPagesAtTheEnd)
+        {
+            Point location = new Point(0, 0);
+            if (page.PageBody.IsCrosshairVisible)
+            {
+                location = page.InsertionPoint;
+                location.Y += Pages.IndexOf(page) * _worksheetPageLayout.PageBodyHeight;
+            }
+            RemoveEmptyPagesAfterLocation(location);
+        }
+    }
+
+    public int GetPageIndex(double itemLocation)
+    {
+        return GetPageIndex(itemLocation, true);
+    }
+
+    public int GetPageIndex(IWhiteboardItem whiteboardItem)
+    {
+        IWorksheetPage page = GetItemPage(whiteboardItem);
+        if (DebugTools.AssertNotNull(page, "page is null").Passed
+            && DebugTools.DevAssert(page.PageNumber > 0, "page number is {0}", page.PageNumber).Passed)
+        {
+            return page.PageNumber - 1;
+        }
+        return GetPageIndex(ItemManager.GetItemWorksheetLocation(whiteboardItem).Y);
+    }
+
+    private void AddNonOwnedWhiteboardItem(IWhiteboardItem whiteboardItem, int firstPageIndex, int lastPageIndex)
+    {
+        for (int pageIndex = firstPageIndex; pageIndex <= lastPageIndex; pageIndex++)
+        {
+            if (!Pages[pageIndex].NonOwnedWhiteboardItems.Contains(whiteboardItem))
+            {
+                Pages[pageIndex].NonOwnedWhiteboardItems.Add(whiteboardItem);
+            }
+        }
+    }
+
+    private void RemoveNonOwnedWhiteboardItem(IWhiteboardItem whiteboardItem, int firstPageIndex = 0, int lastPageIndex = -1)
+    {
+        if (lastPageIndex == -1)
+        {
+            lastPageIndex = Pages.Count - 1;
+        }
+        for (int pageIndex = firstPageIndex; pageIndex <= lastPageIndex; pageIndex++)
+        {
+            Pages[pageIndex].NonOwnedWhiteboardItems.Remove(whiteboardItem);
+        }
+    }
+
+    private void PageBodyActivatedHandler()
+    {
+        ContentActivated.Invoke();
+    }
 }
