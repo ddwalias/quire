@@ -144,4 +144,33 @@ internal partial class WorksheetPageManager
     {
         return ControlCreator.CreateWorksheetPageControl(PageLayout.GridCellSize);
     }
+
+    public void RemoveEmptyPagesAfterLocation(Point location)
+    {
+        RemoveEmptyPagesAfterLocation(GetPageIndex(location.Y));
+    }
+
+    private void RemoveNonOwnedItemAndZombies(IWhiteboardItem item)
+    {
+        RemoveNonOwnedWhiteboardItem(item);
+        _worksheetItemSplitter.RemoveZombies(item);
+    }
+
+    public void ScrollToPageIfNeeded(IWorksheetPage targetPage)
+    {
+        if (VisiblePages.IsEmpty() || VisiblePages.Contains(targetPage))
+        {
+            return;
+        }
+        VisualHelper.ScrollToPage(VisiblePages.First(), targetPage);
+    }
+
+    public void GoToPage(IWorksheetPage targetPage)
+    {
+        if (VisiblePages.IsEmpty())
+        {
+            return;
+        }
+        VisualHelper.ScrollToPage(VisiblePages.First(), targetPage, true);
+    }
 }

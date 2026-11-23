@@ -100,3 +100,9 @@
 - Implemented in `Mirrored/` (stubs removed from `.g.cs`): `AppendNewPage`, `GetTrailingEmptyPageCount` (bottom-tested `for` with `break`), `GetItemPage`, `GetWorksheetItemParts`, `IsItemSplit`, `HideZombies`, `ShowZombies`, `UpdateVisiblePagesOnPageRemovedIfNeeded`, `RemoveItemFromPage` (one-item array), `CreatePage`.
 - Release IL: PASS (1293 checked, 0 failures) on the first attempt.
 - Still stubs in this type: `IsTrailingEmptyPage` and `GetPage(double)` (both closure-bearing per the IL scan, or pending), `RemoveItemsFromPage` (closure), and the rest of the list in the batch 13 survey.
+
+## Batch 14 — WorksheetPageManager GoToPage, ScrollToPageIfNeeded, RemoveNonOwnedItemAndZombies, RemoveEmptyPagesAfterLocation(Point)
+
+- Implemented in `Mirrored/` (stubs removed from `.g.cs`). `RemoveNonOwnedItemAndZombies` stays `private`, as the stub declares it.
+- Release IL: PASS (1297 checked, 0 failures).
+- Still stubs: `RemoveEmptyPagesAfterLocation(int)` (loop with `Enumerable.Last`, bottom-tested with an entry guard), `GetPage(double)` (DevAssert with `Array.Empty`), `IsTrailingEmptyPage` (closure).
