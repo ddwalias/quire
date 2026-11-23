@@ -504,4 +504,54 @@ internal partial class WorksheetPageManager
         }
         return clipBounds;
     }
+
+    private void ActivateSplitItemPartContainingDescendant(IWhiteboardItem topItemToActivate, IHasChildArrangeInfoProvider parentControl, IWhiteboardItem activeDescendant, Rect activeDescendantRect, bool replaceOnly)
+    {
+        IUIElementArrangeInfoProvider childArrangeInfoProvider = parentControl.ChildArrangeInfoProvider;
+        Rect ancestorBounds;
+        Point descendantTopLeft;
+        if (activeDescendantRect.IsEmpty)
+        {
+            IWhiteboardControl parentWhiteboard = parentControl as IWhiteboardControl;
+            if (parentWhiteboard != null)
+            {
+                ancestorBounds = parentWhiteboard.GetItemRect(activeDescendant);
+                descendantTopLeft = parentWhiteboard.GetItemLocation(activeDescendant);
+            }
+            else
+            {
+                ancestorBounds = childArrangeInfoProvider.TransformBoundsToAncestor(activeDescendant, parentControl, new Rect(childArrangeInfoProvider.GetRenderSize(activeDescendant)));
+                descendantTopLeft = ancestorBounds.TopLeft;
+            }
+        }
+        else
+        {
+            ancestorBounds = childArrangeInfoProvider.TransformBoundsToAncestor(activeDescendant, parentControl, activeDescendantRect);
+            descendantTopLeft = ancestorBounds.TopLeft;
+        }
+        if (parentControl != topItemToActivate)
+        {
+            ancestorBounds = childArrangeInfoProvider.TransformBoundsToAncestor(parentControl, topItemToActivate, ancestorBounds);
+            descendantTopLeft = childArrangeInfoProvider.TranslatePoint(parentControl, topItemToActivate, descendantTopLeft);
+        }
+        ActivateMatchingPartIfNeeded(topItemToActivate, ancestorBounds, descendantTopLeft, replaceOnly);
+    }
+
+    private void ActivateMatchingPartIfNeeded(IWhiteboardItem topItemToActivate, Rect descendantRect, Point descendantLocation, bool replaceOnly)
+    {
+        if (!IsItemSplit(topItemToActivate))
+        {
+            return;
+        }
+        IWhiteboardItem topLeftPart = _worksheetItemSplitter.GetMatchingPart(topItemToActivate, descendantRect.TopLeft);
+        IWhiteboardItem bottomRightPart = _worksheetItemSplitter.GetMatchingPart(topItemToActivate, descendantRect.BottomRight);
+        int topLeftPageIndex = ItemManager.GetContainingPage(topLeftPart).PageNumber - 1;
+        int bottomRightPageIndex = ItemManager.GetContainingPage(bottomRightPart).PageNumber - 1;
+        int itemPageIndex = ItemManager.GetContainingPage(topItemToActivate).PageNumber - 1;
+        if (itemPageIndex < topLeftPageIndex || bottomRightPageIndex < itemPageIndex)
+        {
+            ActivateMatchingPart(topItemToActivate, descendantLocation, replaceOnly);
+        }
+    }
+
 }

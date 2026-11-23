@@ -154,3 +154,9 @@
 
 - Implemented in `Mirrored/` (stub removed). The `itemPart`/`itemParts` shape matches the IL: the empty-parts branch only takes the real item for index 0, and the out-of-bounds check is an `AssertNotNull` with the two-argument message. `clipBounds = ItemManager.GetItemClipGeometry(itemPart)?.Bounds` matched the `dup`/`brtrue` null-conditional lowering. The stub's third argument (`worksheetItemManager`) is not read by the IL, so the body uses the static `ItemManager`, as the IL does.
 - Release IL: PASS (1320 checked, 0 failures) on the first attempt.
+
+## Batch 23 — WorksheetPageManager ActivateSplitItemPartContainingDescendant, ActivateMatchingPartIfNeeded
+
+- Implemented in `Mirrored/` (stubs removed). Both match the IL with the natural guards: the `IsEmpty` branch with the whiteboard-control check, `parentControl != topItemToActivate` before the ancestor transform, and the `||` range test in `ActivateMatchingPartIfNeeded`.
+- Release IL: PASS (1322 checked, 0 failures).
+- Probe, parked: `GetSplitVerticalAdjustment` (foreach with try/finally). Mathcad's loop-exit is a single conditional branch straight to the `leave` that follows the try (`bgt.un` into `leave.s`). With `if (clipBottom > lim) break;` Roslyn emits a conditional skip plus an unconditional `leave`, one instruction longer (first difference at #11, 69 vs 68 entries; the `if (<=) { add }` form is semantically wrong and differs at the branch target). Stub kept; the source change was reverted and not landed.

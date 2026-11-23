@@ -58,10 +58,6 @@ internal partial class WorksheetPageManager : global::Quire.Controls.Worksheet.I
     [global::Quire.Mirror.MirrorStub]
     private void ActivateDescendantParentIfNeeded(global::Quire.Controls.Core.IWhiteboardItem activeItem, global::Quire.Controls.Core.IWhiteboardItem activeDescendant, global::System.Windows.Rect activeDescendantRect, bool replaceOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void ActivateSplitItemPartContainingDescendant(global::Quire.Controls.Core.IWhiteboardItem topItemToActivate, global::Quire.Controls.Core.IHasChildArrangeInfoProvider parentControl, global::Quire.Controls.Core.IWhiteboardItem activeDescendant, global::System.Windows.Rect activeDescendantRect, bool replaceOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ActivateMatchingPartIfNeeded(global::Quire.Controls.Core.IWhiteboardItem topItemToActivate, global::System.Windows.Rect descendantRect, global::System.Windows.Point descendantLocation, bool replaceOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private double GetSplitVerticalAdjustment(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemParts, global::System.Windows.Rect itemBounds, global::System.Windows.Size itemRenderSize, double itemVerticalOffsetLim) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Size GetCustomSplitItemRenderSize(global::Quire.Controls.Core.ICustomSplitItem customSplitItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
