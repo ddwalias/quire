@@ -136,3 +136,8 @@
 - Exact: `ProcessConsecutiveIntervalsInReverseOrderAndNotify` (internal static; no lambdas inside, only the caller-supplied delegates) and `RemoveOrClearSelectedCells` (its `DeleteColumns`/`DeleteRows` calls are still stubs, but the branch and the flag shapes match).
 - Still stubs, with the first mismatch location where tried: `CopyEditMode` (not attempted yet; uses `WpfClipboard` and `ComboBoxInputControlData`), `DeleteRows`/`DeleteColumns`/`DeleteEmptyRows`/`DeleteEmptyColumns` (lambda closures into the interval helper), `SetupCommandBindings` (command lambdas), `PasteEditMode` and the paste helpers.
 - Gate (project-level): PASS; 3466 checked (`.mirror-cache/release-il-ee007d1c8ca3/release-il.json`).
+
+### Batch 21: Controls.InputControls.EditableComboBoxViewModel (CopyEditMode)
+
+- Exact: `CopyEditMode`. The first attempt (`new ComboBoxInputControlData(...).GetMatrixSExprFromSelection(...)`) emitted `call` where Mathcad emits `callvirt`; storing the data object in a local before the call matches.
+- Gate (project-level): PASS; 3467 checked (`.mirror-cache/release-il-f82ac9b274f4/release-il.json`).

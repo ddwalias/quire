@@ -319,4 +319,23 @@ public partial class EditableComboBoxViewModel
             TableModel.ClearSelectedCellsContent(tableRect);
         }
     }
+
+    private void CopyEditMode()
+    {
+        DiscreteRect tableRect = GetTableRect(SelectedCells.Item1, SelectedCells.Item2);
+        if (!AreOnlyValuesSelected(tableRect))
+        {
+            return;
+        }
+        IComboBoxInputControlDataAdapter comboBoxInputControlDataAdapter = CreateDataAdapter();
+        if (comboBoxInputControlDataAdapter != null)
+        {
+            ComboBoxInputControlData comboBoxInputControlData = new ComboBoxInputControlData(comboBoxInputControlDataAdapter);
+            string matrixSExprFromSelection = comboBoxInputControlData.GetMatrixSExprFromSelection(tableRect);
+            if (DebugTools.DevAssert(matrixSExprFromSelection.IsNotEmpty(), null).Passed)
+            {
+                WpfClipboard.Current.SetSExpression(matrixSExprFromSelection);
+            }
+        }
+    }
 }

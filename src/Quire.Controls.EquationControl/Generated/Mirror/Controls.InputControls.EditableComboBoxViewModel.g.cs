@@ -38,8 +38,6 @@ public partial class EditableComboBoxViewModel : global::Quire.Controls.InputCon
     [global::Quire.Mirror.MirrorStub]
     private void PasteEditMode(global::Quire.DiscreteRect sourceRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void CopyEditMode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void TextBox_OnPaste(object sender, global::Quire.EquationEditor.Tree.ComboBoxCellDataType cellDataType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetupCommandBindings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
