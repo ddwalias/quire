@@ -404,3 +404,11 @@
 - `SetMinWidthHeight` alone: the local function is named `<SetMinWidthHeight>g__Safe|6_0` in Quire vs `g__Safe|5_0` in Mathcad (calls differ at #60; the method also has a "no Mathcad counterpart" row for the Quire local). Moving `GetInitialPlaceholderIndices` after it changed Quire's ordinal to 6 but did not reach 5.
 - `BuildEditableAxisRelatedElements` added: its closure is `<>c__DisplayClass5_0` in Quire vs `<>c__DisplayClass4_0` in Mathcad, and the display class has no Mathcad counterpart.
 - Mathcad's XYPlotStrategy also declares `InitializeAxes` and a private static `InitializeAxisTitle` (not declared in Quire). Their absence, and the stub declarations in `XYPlotStrategy.g.cs` ordering, appear to drive the ordinals. Needs the maintainer's decision on placeholder stubs (AGENTS.md compile-order device) or the ordinal rule for generated stubs.
+
+## XYPlotStrategy ordinal probe — parked (batch 58 candidate, not landed)
+
+- Probe: moved the mapped `InitializeLegendPositions`, `ApplyPlotTemplate` (throwing placeholders), `BuildEditableAxisRelatedElements` and `SetMinWidthHeight` (implemented) from `XYPlotStrategy.g.cs` into `Mirrored/Controls.Plots.XYPlotStrategy.cs` in Mathcad order after `InitializeAxes`/`InitializeAxisTitle`, with `GetInitialPlaceholderIndices` and the constructor last. The generated file kept only the class declaration.
+- Measured ordinal: before (members in `.g.cs` first): local function `g__Safe|6_0` and closure `<>c__DisplayClass5_0`. After the move: `g__Safe|5_0` and `<>c__DisplayClass4_0`, both identical to Mathcad. `BuildEditableAxisRelatedElements` matched.
+- Remaining mismatch in `SetMinWidthHeight` only: the `if (PlotLegendPositions != null)` block stores into local slot 41 where Mathcad uses 40, a one-slot difference from an extra double local earlier in Quire's body. Inlining the array temporaries shifted the first difference to instruction #54 (Quire 485 entries vs Mathcad 493), so the named-local form is correct.
+- Not landed: `SetMinWidthHeight` remains a stub, so no previously exact method is affected. Patch kept in the scratch folder for resuming the local-slot investigation.
+- MirrorGen regeneration of the probe's `.g.cs` was not checked.
