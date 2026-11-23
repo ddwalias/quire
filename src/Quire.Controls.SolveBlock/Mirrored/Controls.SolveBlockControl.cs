@@ -22,6 +22,30 @@ public partial class SolveBlockControl
         set => ((DependencyObject)this).SetValue(IsSolveBlockLabelVisibleProperty, value);
     }
 
+    public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(
+        global::Quire.Serialization.IDeS11NProvider deS11NProvider, object data)
+    {
+        if (data is global::Quire.PersistentDataObjects.solveBlockType solveBlockType2)
+        {
+            global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> result =
+                DeserializationStrategy.SetRegions(solveBlockType2.regions, deS11NProvider);
+            DeserializeRegionsEpilog(deS11NProvider, solveBlockType2);
+            return result;
+        }
+
+        throw new global::System.ArgumentException("should be of solveBlockType");
+    }
+
+    public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider)
+    {
+        global::Quire.PersistentDataObjects.solveBlockType result = new global::Quire.PersistentDataObjects.solveBlockType
+        {
+            Regions = SerializationStrategy.GetRegions(s11NProvider)
+        };
+        SerializeRegionsEpilog(s11NProvider, result);
+        return result;
+    }
+
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GuessValues =>
         _sbModel.GuessValueItems;
 
