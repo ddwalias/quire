@@ -621,3 +621,10 @@
 - Measured Quire names: at the top of the class `b__6_0` (only the six generated units count ahead of it); after the hand-written `SourceTrace`, `LegendLabel` and `MiniTraceWidth` properties `b__26_0`. The properties contribute more than their accessors, probably because their own lambdas count, so the simple unit count from batch 58 does not apply here.
 - Result: not landed; `OnActivateExecute` stays a generated stub. Needs the placeholder layout for the type (Mathcad order, lambdas included) before the ordinal can be set.
 - `AddTrace` (lambda ordinal 19, many object-initialiser bindings) is not started.
+
+## Batch 88 — PlotGraphRadialAxis overrides
+
+- Members: `HandleOrientationChanged`, `PositionTickMarkChanged`, `UpdateAxisOriginPositions`, `MouseMoveDraw`, `MoveToValue`, `MoveByValue`, `FindClosestTickValueToZero` (returns true), `ApplyTickNumber`. Mathcad bodies are empty (same as the angular axis in batch 82). Hand-written at the top of the class in `Mirrored/Controls.Plots.PlotGraphRadialAxis.cs`, so the unit count ahead of any existing hand-written member does not change; eight stubs removed.
+- Generated layout: eight stubs removed. Verified: after a Release build, `emit` regenerates `PlotGraphRadialAxis.g.cs` byte-identical.
+- Release IL: full gate PASS — 2581 checked, 0 failures.
+- Still stubs in this class: `GetTickMarkElementPosition`, `GetTickMarkPositionByIndex`, `GetTickLine`, `AxisLineGeometry`, `DrawNumbers`.

@@ -12,6 +12,39 @@ namespace Quire.Controls.Plots;
 
 internal sealed partial class PlotGraphRadialAxis
 {
+    protected override void HandleOrientationChanged()
+    {
+    }
+
+    protected override void PositionTickMarkChanged(int number)
+    {
+    }
+
+    public override void UpdateAxisOriginPositions()
+    {
+    }
+
+    protected override void MouseMoveDraw(DrawingContext context)
+    {
+    }
+
+    public override void MoveToValue(double value)
+    {
+    }
+
+    public override void MoveByValue(double value)
+    {
+    }
+
+    public override bool FindClosestTickValueToZero(ref int index)
+    {
+        return true;
+    }
+
+    protected override void ApplyTickNumber(int value, bool b)
+    {
+    }
+
     private double Radius => _radius;
 
     private double TickOffset => Radius * 0.2;
