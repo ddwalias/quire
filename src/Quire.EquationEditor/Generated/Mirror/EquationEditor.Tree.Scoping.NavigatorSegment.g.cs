@@ -22,8 +22,6 @@ public partial class NavigatorSegment
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode RightNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool SegmentIsSingleNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     internal bool HasNodes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.EquationEditor.Tree.Scoping.NavigatorSegment NavigatorSegmentFromLinearSegment(global::Quire.EquationEditor.Tree.Scoping.LinearSegment linearSegment) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -27,3 +27,9 @@
 - Members: `NavigatorSegment(NavigatorState, NavigatorState)` constructor, `RightNavigatorState` get/set (field `b` moved to `Mirrored/EquationEditor.Tree.Scoping.NavigatorSegment.cs`), `LeftOperatorPart`, `RightOperatorPart`. Stubs removed from the `.g.cs` by hand.
 - Release IL: `--project Quire.EquationEditor` PASS, 1080 checked, 0 failures.
 - Still blocked: `LeftNavigatorState` (field `a` clashes with method `a`), `NavigatorSegment.a(...)` overloads, and members that read `a`.
+
+## Batch 4 — Scoping.NavigatorSegment.SegmentIsSingleNode
+
+- Member: `SegmentIsSingleNode` getter, in `Mirrored/EquationEditor.Tree.Scoping.NavigatorSegment.cs`, `[SkipLocalsInit]` on the getter because Mathcad has `.initlocals False`. Stub removed from the `.g.cs` by hand.
+- Release IL: `--project Quire.EquationEditor` PASS, 1081 checked, 0 failures (first run failed only on `.initlocals`).
+- Still blocked: `LeftNode`, `RightNode`, `Linearizable` (obfuscated `bq` and `aw` helpers and field `a`), `LeftNavigatorState`.
