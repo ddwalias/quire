@@ -137,17 +137,6 @@ public partial class RichTextWithEmbeddedItem
         CommandBindings.Add(new CommandBinding(HyperlinkCommands.CopyHyperlink, CopyHyperlink, CanOpenOrEditOrCopySingleHyperlink));
     }
 
-    // Compile order: positioned so the lambdas are <>c__DisplayClass96_0 and <>c__DisplayClass97_0 as in Mathcad.
-    private void ExecuteChangeFontColor(object sender, ExecutedRoutedEventArgs e)
-    {
-        ExecuteCommandKeepingSelection(() => CurrentMathFormat.ChangeFontColor((System.Windows.Media.Color)e.Parameter), "ChangeFontColor");
-    }
-
-    private void ExecuteChangeHighlightColor(object sender, ExecutedRoutedEventArgs e)
-    {
-        ExecuteCommandKeepingSelection(() => CurrentMathFormat.ChangeHighlightColor((System.Windows.Media.Color?)e.Parameter), "ChangeHighlightColor");
-    }
-
     private void CopyHyperlink(object sender, ExecutedRoutedEventArgs e)
     {
         Hyperlink hyperlink = CheckAndGetExactlyOneHyperlink();
@@ -184,6 +173,17 @@ public partial class RichTextWithEmbeddedItem
         }
     }
 
+    // Compile order: positioned so the lambdas are <>c__DisplayClass96_0 and <>c__DisplayClass97_0 as in Mathcad.
+    private void ExecuteChangeFontColor(object sender, ExecutedRoutedEventArgs e)
+    {
+        ExecuteCommandKeepingSelection(() => CurrentMathFormat.ChangeFontColor((System.Windows.Media.Color)e.Parameter), "ChangeFontColor");
+    }
+
+    private void ExecuteChangeHighlightColor(object sender, ExecutedRoutedEventArgs e)
+    {
+        ExecuteCommandKeepingSelection(() => CurrentMathFormat.ChangeHighlightColor((System.Windows.Media.Color?)e.Parameter), "ChangeHighlightColor");
+    }
+
     internal static void InsertBaselineOffsetTag(double value, TextPointer insertionPoint)
     {
         Run run = new Run("baselineOffsetTag" + value.ToString(), insertionPoint);
@@ -206,6 +206,45 @@ public partial class RichTextWithEmbeddedItem
                 _textStyleChangedHandler.StyleChanged += OnStyleChanged;
             }
         }
+    }
+
+    // Compile order: positioned so the Sum lambda is <GetCombinedDocumentXaml>b__103_0 as in Mathcad.
+    private static string GetCombinedDocumentXaml(string xaml, IList<string> itemXamls)
+    {
+        if (DebugTools.AssertNotNull(xaml, "Copying rich text w/ embedded item, did not find expected Xaml data format").Failed)
+        {
+            return null;
+        }
+        if (itemXamls == null)
+        {
+            return null;
+        }
+        int num = itemXamls.Sum((string itemXaml) => itemXaml.Length);
+        if (num == 0)
+        {
+            return null;
+        }
+        System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder(xaml.Length + num);
+        int num2 = 0;
+        foreach (string itemXaml in itemXamls)
+        {
+            bool flag = itemXaml.StartsWith("<BlockUIContainer");
+            string text = (flag ? "> </Paragraph>" : "> </Run>");
+            string value = (flag ? "<Paragraph" : "<Run");
+            int num3 = xaml.IndexOf(text, num2);
+            if (string.IsNullOrEmpty(itemXaml))
+            {
+                stringBuilder.Append(xaml, num2, num3 + text.Length - num2);
+            }
+            else
+            {
+                int num4 = xaml.LastIndexOf(value, num3);
+                stringBuilder.Append(xaml, num2, num4 - num2).Append(itemXaml);
+            }
+            num2 = num3 + text.Length;
+        }
+        stringBuilder.Append(xaml, num2, xaml.Length - num2);
+        return stringBuilder.ToString();
     }
 
     public IMathFormat DeserializeMathFormat

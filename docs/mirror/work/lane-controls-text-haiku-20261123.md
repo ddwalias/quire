@@ -51,3 +51,11 @@
 - Placement keeps the earlier ordinals: `<>c__DisplayClass96_0`, `97_0`, `b__149_0`, `d__114` and `d__284` re-measured unchanged.
 - Release IL (project-wide): PASS — 658 checked, 0 failures.
 - Regeneration: `MirrorGen emit` gives the same stub removal; the only difference is the pre-existing `LogDocumentContents` placement drift.
+
+## Batch 30 — RichTextWithEmbeddedItem.GetCombinedDocumentXaml (static)
+
+- Member: `private static string GetCombinedDocumentXaml(string xaml, IList<string> itemXamls)`, with a `Sum` lambda `<GetCombinedDocumentXaml>b__103_0` in `<>c`. Hand-written in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stub removed from the `.g.cs`.
+- Placement: the lambda's ordinal needed 103. Measured moves: before `DeserializeMathFormat` (after `TextStyleChangedHandler`) gives 103; `CopyHyperlink` was moved before the font-color pair so the `96_0`/`97_0` display classes stay correct after the stub removal.
+- Re-measured unchanged: `<>c__DisplayClass96_0`, `97_0`, `b__149_0`, `d__114`, `d__284`.
+- Release IL (project-wide): PASS — 662 checked, 0 failures.
+- Regeneration: `MirrorGen emit` gives the same stub removal; the only difference is the pre-existing `LogDocumentContents` placement drift.
