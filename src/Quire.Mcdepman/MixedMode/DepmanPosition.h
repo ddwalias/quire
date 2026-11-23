@@ -40,6 +40,9 @@ public:
     bool IsReady();
     void SetBusy(bool busy);
     void StartTiming();
+    void WaitReady();
+    void PrepareKill();
+    ::Quire::utl_mgd::LabeledDictionary^ ready();
     void SetNotifyComputing(bool notify);
     void ResetPriority();
     void ClearDParent();

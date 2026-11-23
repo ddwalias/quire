@@ -277,7 +277,8 @@ Investigation of `PositionBase.SetBusy`, `PositionBase.WaitReady`, and `Position
    - `PositionBase.ready()`: reads `labeled_dictionary_` (offset 72, `gcroot<Quire::utl_mgd::LabeledDictionary^>`), which has the identical cross-assembly `gcroot` issue with `Quire.Engine.Utl`.
 
 3. **C++ Implementation Readiness**:
-   - The C++ source implementations for all four methods match Mathcad's original instructions and control flow exactly. Once `MethodAudit` supports cross-assembly `gcroot` type argument resolution against the current module's original counterpart (`originals[currentOriginal]`), these four methods can be linked via `#pragma comment(linker, ...)` and will pass Release IL verification immediately.
+   - The C++ source implementations for all four methods match Mathcad's original instructions and control flow exactly. All four exact C++ source drafts (`PositionBase.SetBusy`, `PositionBase.WaitReady`, `PositionBase.PrepareKill`, and `PositionBase.ready`) are implemented and preserved in `DepmanPosition.cpp` and `DepmanPosition.h` with commented-out linker pragmas; under `/OPT:REF` they do not emit unreferenced symbols or spurious Module methods, keeping the Release IL baseline clean at 222 checked.
+   - Once `MethodAudit` supports cross-assembly `gcroot` type argument resolution against the current module's original counterpart (`originals[currentOriginal]`), these four methods can be linked via `#pragma comment(linker, ...)` and will pass Release IL verification immediately.
 
 
 

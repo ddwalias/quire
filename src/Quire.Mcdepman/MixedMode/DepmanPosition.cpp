@@ -36,6 +36,12 @@
 #pragma comment(linker, "/include:?env@PositionBase@depman@@$$FQEBMPE$AAUSEnvironment@2Quire@@XZ")
 #pragma comment(linker, "/include:?GetSharedThreadContext@PositionBase@depman@@$$FQEBMPE$AAVSharedThreadContext@2Quire@@XZ")
 #pragma comment(linker, "/include:?StartTiming@PositionBase@depman@@QEAAXXZ")
+// Pragmas for methods blocked on cross-assembly gcroot mapping in MethodAudit (SafeEvent, LabeledDictionary).
+// Source implementations below are exact and ready to be un-commented once MethodAudit supports cross-assembly gcroot:
+// #pragma comment(linker, "/include:?SetBusy@PositionBase@depman@@QEAAX_N@Z")
+// #pragma comment(linker, "/include:?WaitReady@PositionBase@depman@@QEAAXXZ")
+// #pragma comment(linker, "/include:?PrepareKill@PositionBase@depman@@QEAAXXZ")
+// #pragma comment(linker, "/include:?ready@PositionBase@depman@@$$FQEAMPE$AAVLabeledDictionary@utl_mgd@Quire@@XZ")
 // Uncalled native member functions are stripped by /OPT:REF unless referenced.
 // When referenced by callers in Depman, they will be emitted with exact IL.
 // #pragma comment(linker, "/include:?previous@Position@depman@@$$FQEAAPEAV12@XZ")
@@ -151,6 +157,29 @@ void PositionBase::StartTiming()
 {
     if (timer_)
         timer_->Start();
+}
+
+void PositionBase::WaitReady()
+{
+    ::Quire::utl_mgd::SafeEvent^ ev = *reinterpret_cast<gcroot<::Quire::utl_mgd::SafeEvent^>*>(&ready_event_);
+    if (ev != nullptr)
+        ev->WaitOne();
+}
+
+void PositionBase::PrepareKill()
+{
+    send_messages_ = false;
+    auto& ev_ref = *reinterpret_cast<gcroot<::Quire::utl_mgd::SafeEvent^>*>(&ready_event_);
+    ::Quire::utl_mgd::SafeEvent^ ev = ev_ref;
+    ev_ref = nullptr;
+    ev->Set();
+}
+
+::Quire::utl_mgd::LabeledDictionary^ PositionBase::ready()
+{
+    if (!is_busy_ && (action_chain_ ? action_chain_->value() : nullptr))
+        return *reinterpret_cast<gcroot<::Quire::utl_mgd::LabeledDictionary^>*>(&labeled_dictionary_);
+    return nullptr;
 }
 
 void PositionBase::SetNotifyComputing(bool notify)
