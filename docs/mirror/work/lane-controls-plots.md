@@ -535,3 +535,10 @@
 - Release IL: `get_AxisCalculatables` exact; full gate PASS — 2547 checked, 0 failures.
 - Left in AxisModel: the constructor, the two blocked tick-mark helpers from batch 69 (placeholders now), and `SetXmlNode` (placeholder; blocked on the Mathcad temp shape, batch 74).
 - SetMinWidthHeight (XYPlotStrategy) remains parked on the slot 41 vs 40 mismatch.
+
+## Batch 76 — AxisModel constructor (blocked, kept as stub)
+
+- Member: `AxisModel(AxesType, PlotType, IPlotTitleModel = null)`. A clean idiomatic draft matches every call and field store except the start. Mathcad's constructor stores the field initialisers (`_equations`, `_markers`, `_showNumbers`, `_gridLineColorHex`) before its `call Object::.ctor()`; Roslyn always emits the base call first, so the constructor cannot match with this field-initialiser layout. Declaring the field stores in the body does not change the base-call position either.
+- Result: not landed; the constructor stays a generated stub. The draft is kept outside the repo, not committed.
+- Left in AxisModel: the constructor (blocked above), the two blocked tick-mark helpers from batch 69 and `SetXmlNode` (both placeholders from batch 75), and the `AxisCalculatables` iterator is done (batch 75).
+- SetMinWidthHeight (XYPlotStrategy) remains parked on the slot 41 vs 40 mismatch.
