@@ -207,3 +207,9 @@
 - `Dispose` implemented in the partial at token row 26: `if (_disposeStatus == Disposed) return; _disposeStatus = Disposing; try { Pages.Each(page => page.Dispose()); _worksheetVisiblePages.Dispose(); Pages.RemoveAll(); _worksheetItemSplitter.Dispose(); } finally { _disposeStatus = Disposed; }`. Lambda `<Dispose>b__45_0` (static, in `<>c`) matches Mathcad.
 - The generated stub for `HandleItemMoved` (row 27) compiled ahead of `Dispose` and made the ordinal 46. It moved into the partial as an unmarked placeholder after `Dispose`, which restores the Mathcad count.
 - Release IL gate: PASS, 1343 checked, 1343 exact, 0 failures.
+
+## Batch 31 — WorksheetPageManager RemoveAllPages
+
+- `RemoveAllPages` (token row 25): `DebugTools.LogData("Worksheet.RemoveAllPages: Enter"); _worksheetVisiblePages.RemoveAllPages(); Pages.Each(RemoveAllItemsFromPage); Pages.RemoveAll();`. Closure-free (method group). The generated stub moved to the partial. It calls the parked `RemoveAllItemsFromPage` placeholder, so a non-empty page set still reaches that runtime stub.
+- Release IL gate: PASS, 1344 checked, 1344 exact, 0 failures.
+- Next candidates measured read-only: `SplitItemIfNeededAndRemoveEmptyPages` (display class `33_0` with a `SplitAction` conditional and an `ExecuteOnLayoutUpdated` lambda), `AddItemToAppropriatePage` (display class `31_0`, captured struct `itemWorksheetLocation`), `HandleItemMoved` (display class `46_0`, captured struct).

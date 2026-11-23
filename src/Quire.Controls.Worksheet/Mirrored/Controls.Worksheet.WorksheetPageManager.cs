@@ -157,6 +157,14 @@ internal partial class WorksheetPageManager
         }
     }
 
+    public void RemoveAllPages()
+    {
+        DebugTools.LogData("Worksheet.RemoveAllPages: Enter");
+        _worksheetVisiblePages.RemoveAllPages();
+        Pages.Each(RemoveAllItemsFromPage);
+        Pages.RemoveAll();
+    }
+
     public void Dispose()
     {
         if (_disposeStatus == DisposeStatus.Disposed)

@@ -39,6 +39,4 @@ internal partial class WorksheetPageManager : global::Quire.Controls.Worksheet.I
     private void SplitItemIfNeededAndRemoveEmptyPages(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point itemWorksheetLocation, long stamp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool ItemSplitIsNeeded(global::Quire.Controls.Core.IWhiteboardItem item, out int itemPageIndex, out global::System.Windows.Rect itemBounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RemoveAllPages() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
