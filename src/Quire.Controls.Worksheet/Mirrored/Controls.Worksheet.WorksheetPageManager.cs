@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using Quire.Controls.Core;
@@ -614,7 +615,21 @@ internal partial class WorksheetPageManager
         return pageIndex;
     }
 
-    private void HandlePagebreaksCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandlePagebreaksCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        switch (e.Action)
+        {
+            case NotifyCollectionChangedAction.Add:
+                e.NewItems.OfType<IWorksheetPageBreak>().Each(HandlePagebreakAdded);
+                break;
+            case NotifyCollectionChangedAction.Remove:
+                e.OldItems.OfType<IWorksheetPageBreak>().Each(HandlePagebreakRemoved);
+                break;
+            default:
+                DebugTools.FailAssertion("Unsupported action: {0}", e.Action);
+                break;
+        }
+    }
 
     private void HandlePagebreakAdded(IWorksheetPageBreak pagebreak)
     {
@@ -632,7 +647,22 @@ internal partial class WorksheetPageManager
     {
     }
 
-    private void HandlePagesCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandlePagesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        switch (e.Action)
+        {
+            case NotifyCollectionChangedAction.Add:
+                e.NewItems.OfType<IWorksheetPage>().Each(page => page.PageBodyActivated += PageBodyActivatedHandler);
+                break;
+            case NotifyCollectionChangedAction.Remove:
+                e.OldItems.OfType<IWorksheetPage>().Each(page => page.PageBodyActivated -= PageBodyActivatedHandler);
+                break;
+            default:
+                DebugTools.FailAssertion("Unsupported action: {0}", e.Action);
+                break;
+        }
+        Pages.EachWithIndex((index, page) => page.PageNumber = index + 1);
+    }
 
     private void RemoveAllItemsFromPage(global::Quire.Controls.Worksheet.IWorksheetPage page) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

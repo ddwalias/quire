@@ -195,3 +195,9 @@
 - `HandlePagebreakRemoved`: empty body, Mathcad IL is `ret`.
 - Release IL gate: PASS, 1334 checked, 1334 exact, 0 failures.
 - Parked: `RemoveAllItemsFromPage`. Mathcad keeps one list on the stack and passes it to both `OfType` and `Where` via `dup` (no local for it), a receiver-sharing shape that the Roslyn source cannot reproduce without an extra local.
+
+## Batch 29 — WorksheetPageManager collection-changed handlers
+
+- `HandlePagebreaksCollectionChanged`: switch on `e.Action` (Add → `NewItems.OfType<IWorksheetPageBreak>().Each(HandlePagebreakAdded)`, Remove → `OldItems…Each(HandlePagebreakRemoved)`, default → `DebugTools.FailAssertion("Unsupported action: {0}", e.Action)`).
+- `HandlePagesCollectionChanged`: the same switch over `IWorksheetPage` (Add subscribes `page.PageBodyActivated += PageBodyActivatedHandler`, Remove unsubscribes), then `Pages.EachWithIndex((index, page) => page.PageNumber = index + 1)`. Lambda ordinals `b__92_1`/`b__92_2` (instance) and `b__92_0` (static in `<>c`) match Mathcad.
+- Release IL gate: PASS, 1341 checked, 1341 exact, 0 failures.
