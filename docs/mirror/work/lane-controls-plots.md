@@ -437,3 +437,10 @@
 - Members: `SetTickMarksPattern`, `ConvertLegendPositionEnumToLegendPositionIndex` (`Enum.Parse` on the X/Y legend enum by `AxesTypeToIndex`), `ConvertLegendPositionIndexToLegendPositionEnum`. Hand-written: appended to `Mirrored/Controls.Plots.Model.AxisModel.cs`; stubs removed from `AxisModel.g.cs`.
 - Release IL: PASS — 2501 checked, 0 failures.
 - Left in AxisModel: `GridLineColor` (try/catch and pattern-matching getter), `GetNumberOfTracesForEquation` (LINQ lambda closure, needs the ordinal check), `SetLevels`, `UpdateFilteredLabels` (needs `Base3DAxisViewModel`-style `FilteredLabels` property), the XML and data-object helpers, and the constructor.
+
+## Batch 61 — PlotTitle event and editing handlers
+
+- Members: `RegisterToEvents` (argument copied to a `FrameworkElement` local before the null test and hook-ups), `TitleSizeChanged` (`ViewModel == null || Visibility == Collapsed` early return; `e.NewSize.Width`/`Height` read inline), `HandleEditingStarted` and `HandleEditingEnded` (`TitleType != YAxis || !IsRotationAllowed` early return; `ViewModel?.IsVertical ?? false`). Hand-written: appended to `Mirrored/Controls.Plots.PlotTitle.cs`; stubs removed from `PlotTitle.g.cs`.
+- Shapes: `if (a && b) { ... }` gave a single trailing `ret` where Mathcad has two early returns; the `||` early-return form matched. `Size newSize = e.NewSize` locals gave `stloc` before the `this` push; inline `e.NewSize.Width` matched.
+- Release IL: PASS — 2505 checked, 0 failures.
+- Left in PlotTitle: `HideTitleIfEmpty` (see batch 55), and the XAML-generated `InitializeComponent`, `_CreateDelegate`, `Connect`.

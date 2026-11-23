@@ -120,4 +120,55 @@ public partial class PlotTitle
                 return string.Empty;
         }
     }
+
+    private void RegisterToEvents(RichTextTitle title)
+    {
+        // The IL holds the argument in a FrameworkElement local for the null test and every hook-up.
+        FrameworkElement element = title;
+        if (element != null)
+        {
+            element.SizeChanged += TitleSizeChanged;
+            element.LostFocus += OnElementOnLostFocus;
+            element.GotFocus += OnElementOnGotFocus;
+        }
+    }
+
+    private void TitleSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (ViewModel == null || Visibility == Visibility.Collapsed)
+        {
+            return;
+        }
+        SetWidthFromContent(e.NewSize.Width);
+        MinHeight = e.NewSize.Height;
+        InvalidateMeasure();
+    }
+
+    private void HandleEditingStarted()
+    {
+        if (TitleType != PlotTitleType.YAxis || !IsRotationAllowed)
+        {
+            return;
+        }
+        _isEditingYAxisTitle = true;
+        if (ViewModel?.IsVertical ?? false)
+        {
+            ApplyTemporaryOrientation(isVertical: false);
+        }
+    }
+
+    private void HandleEditingEnded()
+    {
+        if (TitleType != PlotTitleType.YAxis || !IsRotationAllowed)
+        {
+            return;
+        }
+        if (!_isEditingYAxisTitle)
+        {
+            return;
+        }
+        _isEditingYAxisTitle = false;
+        bool isVertical = ViewModel?.IsVertical ?? false;
+        ApplyTemporaryOrientation(isVertical);
+    }
 }
