@@ -4,7 +4,10 @@ using System.Windows.Media.Imaging;
 using Quire.Controls.Core;
 using Quire.Controls.Core.Serialization;
 using Quire.Controls.Plots;
+using Quire.Controls.Plots.Contour.View;
+using Quire.Controls.Plots.Plot3D.View;
 using Quire.PersistentData;
+using Quire.PersistentDataObjects;
 using Quire.Serialization;
 
 namespace Quire.Controls.Worksheet;
@@ -40,5 +43,31 @@ public partial class RegionFactory
             default:
                 return null;
         }
+    }
+
+    private static IRegionPersistentData CreatePlotTypedPersistentData(plotType plotData)
+    {
+        object item = plotData.Item;
+        if (item is xyPlotType)
+        {
+            return new PlotRegionPersistentData(new XYPlotControl());
+        }
+
+        if (item is polarPlotType)
+        {
+            return new PlotRegionPersistentData(new PolarPlotControl());
+        }
+
+        if (item is contourPlotType)
+        {
+            return new ContourPlotRegionPersistentData(new ContourPlotControl());
+        }
+
+        if (item is Plot3DType)
+        {
+            return new Plot3DRegionPersistentData(new PlotControl3D());
+        }
+
+        return null;
     }
 }

@@ -68,3 +68,8 @@
 - Both members implemented in `Mirrored/` (stubs removed). The failed-region image URI keeps Mathcad's `Ptc.Controls.Core` resource path, because the IL compares the string constant (the mirrored `FlowDocumentFamilyConverter` does the same). The enum dispatch is a `switch` statement; the switch expression differed at the first local (`stloc.1` vs Mathcad `stloc.0`).
 - Release IL: PASS (1280 checked, 0 failures).
 - Left as stubs: `ConvertToIRegionType`, `ConvertFromIRegionType`, `CreatePlotTypedPersistentData` and the rest of `RegionFactory` (not attempted in this batch).
+
+## Batch 10 — RegionFactory.CreatePlotTypedPersistentData
+
+- Implemented in `Mirrored/` as the `is` chain (no closures; stub removed). Release IL: PASS (1281 checked, 0 failures).
+- Left as stubs: `ConvertToIRegionType`, `ConvertFromIRegionType` (not attempted in this batch).
