@@ -635,4 +635,4 @@
 - A first draft with a local `Size desiredSize` failed on the load order at instruction 0; the inline width form matches.
 - Generated layout: five stubs removed. Verified: after a Release build, `emit` leaves no new lines against HEAD, only the five removals, so the emitted file equals the applied one.
 - Release IL: full gate PASS — 2586 checked, 0 failures.
-- Radial axis: no stubs remain except the XAML-free members already covered; `GetTickMarkElementPosition` is now implemented.
+- `PlotGraphRadialAxis.g.cs` now has no `NotImplemented` stubs left.
