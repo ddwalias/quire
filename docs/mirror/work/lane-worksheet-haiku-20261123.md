@@ -149,3 +149,8 @@
 - Implemented in `Mirrored/` (stubs removed). `SetInsertionPointOnAppropriatePage` keeps a named `Point` copy and the `double` offset temp, which matches the IL's local order. `HandleItemSizeChanged` reads the location as an argument of `GetPage`: a separate `Point` statement put `ldarg.0` after `get_ItemManager` and failed at #23.
 - Release IL: PASS (1319 checked, 0 failures).
 - Measured probe, `ItemSplitIsNeeded` (out-parameter variant): natural form fails at #17 (call order) and #49 (locals, 71 vs 72 entries). Mathcad computes `topLeft.Y + height` with `dup` sharing `topLeft.Y` before the zero comparison. That is the receiver-sharing shape, so it stays parked (stub kept); the probe edit was reverted and not landed.
+
+## Batch 22 — WorksheetPageManager GetClippedItemPartRect
+
+- Implemented in `Mirrored/` (stub removed). The `itemPart`/`itemParts` shape matches the IL: the empty-parts branch only takes the real item for index 0, and the out-of-bounds check is an `AssertNotNull` with the two-argument message. `clipBounds = ItemManager.GetItemClipGeometry(itemPart)?.Bounds` matched the `dup`/`brtrue` null-conditional lowering. The stub's third argument (`worksheetItemManager`) is not read by the IL, so the body uses the static `ItemManager`, as the IL does.
+- Release IL: PASS (1320 checked, 0 failures) on the first attempt.

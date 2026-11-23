@@ -471,4 +471,37 @@ internal partial class WorksheetPageManager
         }
         RemoveNonOwnedItemAndZombies(item);
     }
+
+    public Rect? GetClippedItemPartRect(IWhiteboardItem realItem, int itemPartIndex, IWorksheetItemManager worksheetItemManager)
+    {
+        IWhiteboardItem itemPart = null;
+        IList<IWhiteboardItem> itemParts = _worksheetItemSplitter.GetItemParts(realItem);
+        if (itemParts.IsNullOrEmpty())
+        {
+            if (itemPartIndex == 0)
+            {
+                itemPart = realItem;
+            }
+        }
+        else if (itemPartIndex < itemParts.Count)
+        {
+            itemPart = itemParts[itemPartIndex];
+        }
+        if (DebugTools.AssertNotNull(itemPart, "itemPart {0} is out of bounds for realItem {1}", itemPartIndex, realItem).Failed)
+        {
+            return null;
+        }
+        IWhiteboardItemZombie zombie = itemPart as IWhiteboardItemZombie;
+        Rect? clipBounds;
+        if (zombie != null)
+        {
+            Point location;
+            ZombieCreator.ConvertPageLocationAndClipBoundsFromZombieToItem(zombie, out location, out clipBounds);
+        }
+        else
+        {
+            clipBounds = ItemManager.GetItemClipGeometry(itemPart)?.Bounds;
+        }
+        return clipBounds;
+    }
 }

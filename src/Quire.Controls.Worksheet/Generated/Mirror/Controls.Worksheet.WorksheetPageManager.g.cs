@@ -54,8 +54,6 @@ internal partial class WorksheetPageManager : global::Quire.Controls.Worksheet.I
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IList<int> CalculateItemPageIndices(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Rect itemBoundingRect, out double offsetDiff) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::System.Windows.Rect> GetClippedItemPartRect(global::Quire.Controls.Core.IWhiteboardItem realItem, int itemPartIndex, global::Quire.Controls.Worksheet.IWorksheetItemManager worksheetItemManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void ActivateWorksheetItemPartForcingSplitIfNeeded(global::Quire.Controls.Core.IWhiteboardItem topItem, global::Quire.Controls.Core.IWhiteboardItem intoViewItem, global::System.Windows.Rect intoViewItemRect, bool replaceOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ActivateDescendantParentIfNeeded(global::Quire.Controls.Core.IWhiteboardItem activeItem, global::Quire.Controls.Core.IWhiteboardItem activeDescendant, global::System.Windows.Rect activeDescendantRect, bool replaceOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
