@@ -519,3 +519,10 @@
 - Release IL: PASS — 2538 checked, 0 failures.
 - Left in AxisModel: `SetXmlNode` (XML reader), `AxisCalculatables` (iterator), the constructor, and the two blocked tick-mark helpers from batch 69.
 - SetMinWidthHeight (XYPlotStrategy) remains parked on the slot 41 vs 40 mismatch.
+
+## Batch 74 — AxisModel.SetXmlNode (blocked, kept as stub)
+
+- Member: `SetXmlNode(XmlNode, XmlNamespaceManager)`, the `RegionXmlNode` setter's reader. Written idiomatically (descriptive locals, no nullable annotations) and checked: every call, constant and branch matches Mathcad after two fixes (`string.Format("ws:{0}", ...)` for the domain path; `SpiritResolver` via `using Quire.Serialization;`). The only remaining difference is at the start: Mathcad stores the `value` parameter in a temp (`ldarg.1; stloc.0; ldloc.0; brtrue.s`, 458 vs 454 entries). Neither a copied local (`XmlNode node = value;`) nor a `switch (value) { case null: ... }` reproduces it; Roslyn drops or does not emit the temp.
+- Result: not landed; the member stays a generated stub. The clean draft is kept outside the repo, not committed.
+- Left in AxisModel: `AxisCalculatables` (iterator), the constructor, the two blocked tick-mark helpers from batch 69, and `SetXmlNode` (above).
+- SetMinWidthHeight (XYPlotStrategy) remains parked on the slot 41 vs 40 mismatch.
