@@ -399,4 +399,31 @@ internal partial class WorksheetPageManager
         }
         return newPageOffset;
     }
+
+    public double PrePrintUpdateVisiblePages(PageIndexRange pageRange, double pageHeight)
+    {
+        DebugTools.DevAssert(!_pageRangeOnPrePrint.HasValue);
+        _pageRangeOnPrePrint = new PageIndexRange(_worksheetVisiblePages.FirstVisiblePageIndex, _worksheetVisiblePages.LastVisiblePageIndex);
+        int firstIndex = Math.Min(pageRange.FirstIndex, _worksheetVisiblePages.FirstVisiblePageIndex);
+        int lastIndex = Math.Max(pageRange.LastIndex, _worksheetVisiblePages.LastVisiblePageIndex);
+        return _worksheetVisiblePages.SetVisiblePages(firstIndex, lastIndex, pageHeight);
+    }
+
+    public double PostPrintUpdateVisiblePages(double pageHeight)
+    {
+        int firstIndex;
+        int lastIndex;
+        if (DebugTools.AssertNotNull(_pageRangeOnPrePrint).Passed)
+        {
+            firstIndex = _pageRangeOnPrePrint.Value.FirstIndex;
+            lastIndex = _pageRangeOnPrePrint.Value.LastIndex;
+        }
+        else
+        {
+            firstIndex = 0;
+            lastIndex = Pages.Count - 1;
+        }
+        _pageRangeOnPrePrint = null;
+        return _worksheetVisiblePages.SetVisiblePages(firstIndex, lastIndex, pageHeight);
+    }
 }

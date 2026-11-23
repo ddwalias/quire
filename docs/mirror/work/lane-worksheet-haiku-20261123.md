@@ -137,3 +137,9 @@
 - Implemented in `Mirrored/` (stubs removed). `GetPagesContaining` uses the `if (DevAssert(...).Failed)` split on `GetItemSplitCheckIsRequired`, the `IsNotEmpty(out IList<T>)` overload, and `new PageIndexRange(int)` for the default-null end. `UpdateVisiblePagesOnScrollChanged` keeps the pre-print range comparison and the `Math.Min`/`Math.Max` union.
 - Release IL: PASS (1315 checked, 0 failures) on the first attempt.
 - Still stubs: the four-argument `ActivateDescendantParentIfNeeded` (argument-list temp), `GetCustomSplitItemRenderSize` (shared `dup` receiver), closure members, and the `Split`/`Print` families not yet attempted.
+
+## Batch 20 — WorksheetPageManager PrePrintUpdateVisiblePages, PostPrintUpdateVisiblePages
+
+- Implemented in `Mirrored/` (stubs removed). `PostPrintUpdateVisiblePages` reads `_pageRangeOnPrePrint.Value` in the `AssertNotNull(...).Passed` branch and falls back to the full page range; it then clears the field with `= null`.
+- Release IL: PASS (1317 checked, 0 failures) on the first attempt.
+- Probe left for later: `ItemSplitIsNeeded` (out-parameter variant). Mathcad keeps `topLeft.Y` on the stack with `dup` for both `CompareLocation(top, 0)` and `top + height`, the same receiver-sharing shape as `GetCustomSplitItemRenderSize`; not yet measured.
