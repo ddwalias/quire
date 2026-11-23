@@ -228,3 +228,12 @@
 - Exact: `FindClosestChild` (the override with its loops and `out` writes) and `IsBetween` (leaf). The stubs are removed from the generated file and both are in the hand-written partial.
 - Shape note: the decompiled `double x`, `double y` and `Rect val` locals are not in Mathcad's IL. Mathcad reads `hitPoint.X` and `LimitExpressionRect.Right` directly; `Rect val = ...` with `val.Right` put an extra local in the candidate.
 - Gate (project-level): PASS; 3533 checked, zero failures (`.mirror-cache/release-il-8f545cd3fe11/release-il.json`).
+
+### Batch 31: Controls.Internal.Caret (static fields and static initializer)
+
+- Exact: `CARET_WIDTH` (const), the three static `DependencyProperty` fields (`ColorProperty`, `BlinkProperty`, `BlinkPeriodProperty`) and `.cctor`. The `Blink` metadata is an object initializer in the `Register` argument list. Mathcad loads the type tokens before `new FrameworkPropertyMetadata()`, so the metadata cannot be a local assigned first (that order gave a call-order mismatch).
+- Gate (project-level): PASS; 3534 checked, zero failures (`.mirror-cache/release-il-7e9ecbb748de/release-il.json`).
+
+### Parked (not landed): LimitLayoutManager siblings
+
+- `ConjugateLayoutManager.FindClosestChild` (and `VectorizationLayoutManager`, same size): Mathcad reads `hitPoint.X` before `OperatorSymbolRect` in the `X < Left` test, and it merges the `X < 0` and `X < Left` returns into one block. The `||` form matches the read order and the branch, but leaves `.maxstack 2` against Mathcad's `3`. A `Rect` local declared before the `X` read matches the maxstack question no better and changes the call order. Not landed.

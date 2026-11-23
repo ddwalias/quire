@@ -7,6 +7,25 @@ namespace Quire.Controls.Internal;
 
 internal partial class Caret : FrameworkElement
 {
+    public const int CARET_WIDTH = 1;
+
+    public static DependencyProperty ColorProperty;
+
+    public static DependencyProperty BlinkProperty;
+
+    public static DependencyProperty BlinkPeriodProperty;
+
+    static Caret()
+    {
+        ColorProperty = DependencyProperty.Register("Color", typeof(Color), typeof(Caret));
+        BlinkProperty = DependencyProperty.Register("Blink", typeof(bool), typeof(Caret), new FrameworkPropertyMetadata
+        {
+            DefaultValue = false,
+            PropertyChangedCallback = OnBlinkPropertyChanged,
+        });
+        BlinkPeriodProperty = DependencyProperty.Register("BlinkPeriod", typeof(int), typeof(Caret));
+    }
+
     private Line _line = new Line();
     private bool _blink;
 

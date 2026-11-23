@@ -11,12 +11,4 @@ namespace Quire.Controls.Internal;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.Caret, Ptc.Controls.EquationControl")]
 internal partial class Caret : global::System.Windows.FrameworkElement
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const int CARET_WIDTH = 1;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty ColorProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty BlinkProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty BlinkPeriodProperty;
 }
