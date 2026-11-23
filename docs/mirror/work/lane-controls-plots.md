@@ -425,3 +425,15 @@
 - Members: `ValidateAxisLimitExpression` (static, `DevAssert(false, null)` guard), `OnExpressionHasErrorsChanged`, `ClearCustomErrors`, `SetSecondTickPreCalculatedValue`, `SetDoubleValueIfValid` (static, `IsValid()` store), `RemoveEquation`, `StartValueChanged`. Hand-written: appended to `Mirrored/Controls.Plots.Model.AxisModel.cs`; stubs removed from `AxisModel.g.cs`.
 - Release IL: PASS — 2489 checked, 0 failures.
 - Left in AxisModel: `GridLineColor`, the limit-expression setters, `GetNumberOfTracesForEquation` (LINQ `First`), the legend-position converters, `SetRangeError`, `Linearize`, `DealWithZeroLengthRange`, `UpdateFilteredLabels`, the tick-mark and XML helpers, and the constructor.
+
+## Batch 59 — AxisModel limit-expression properties, Linearize, zero-length range, range error
+
+- Members: `StartExpression`, `SecondTickExpression`, `EndExpression` (validate old, unhook, store, pre-calculate, hook, fire), `Linearize`, `DealWithZeroLengthRange` (the `min == max` test is a `beq` to the body, so the radial test is `Type == Radial ? 0 : -1`), `SetRangeError`. Hand-written: appended to `Mirrored/Controls.Plots.Model.AxisModel.cs`; stubs removed from `AxisModel.g.cs`.
+- Shapes: the first `DealWithZeroLengthRange` attempt (`Type != Radial ? -1 : 0`) gave `bne.un` where Mathcad has `beq`; reversing the ternary matched.
+- Release IL: PASS — 2498 checked, 0 failures.
+
+## Batch 60 — AxisModel tick-mark pattern and legend-position converters
+
+- Members: `SetTickMarksPattern`, `ConvertLegendPositionEnumToLegendPositionIndex` (`Enum.Parse` on the X/Y legend enum by `AxesTypeToIndex`), `ConvertLegendPositionIndexToLegendPositionEnum`. Hand-written: appended to `Mirrored/Controls.Plots.Model.AxisModel.cs`; stubs removed from `AxisModel.g.cs`.
+- Release IL: PASS — 2501 checked, 0 failures.
+- Left in AxisModel: `GridLineColor` (try/catch and pattern-matching getter), `GetNumberOfTracesForEquation` (LINQ lambda closure, needs the ordinal check), `SetLevels`, `UpdateFilteredLabels` (needs `Base3DAxisViewModel`-style `FilteredLabels` property), the XML and data-object helpers, and the constructor.

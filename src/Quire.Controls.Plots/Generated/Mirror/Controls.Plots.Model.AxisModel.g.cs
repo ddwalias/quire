@@ -96,15 +96,9 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     [global::Quire.Mirror.MirrorStub]
     private static void CalculateBetterTickmarksWithZeroInRange(ref double start, ref double end, ref int numberOfIntervals) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void SetTickMarksPattern(double startGap, double[] pattern) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void SetXmlNode(global::System.Xml.XmlNode value, global::System.Xml.XmlNamespaceManager nmspmgr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Xml.XmlNode GetXmlNode(string wsNameSpace, string mathNameSpace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private int ConvertLegendPositionEnumToLegendPositionIndex(string enumValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string ConvertLegendPositionIndexToLegendPositionEnum() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void AddEquation(global::Quire.Controls.Plots.Presenter.IPlotEquation equation, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

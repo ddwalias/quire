@@ -575,4 +575,28 @@ internal partial class AxisModel
         SetAxisLimitEditorError(StartExpression, "Ptc.Plots.Axis.MIN_TO_BE_SMALLER_THAN_MAX");
         SetAxisLimitEditorError(EndExpression, "Ptc.Plots.Axis.MAX_TO_BE_GREATER_THAN_MIN");
     }
+
+    public void SetTickMarksPattern(double startGap, double[] pattern)
+    {
+        MajorTickMarks.StartGap = startGap;
+        MajorTickMarks.Pattern = pattern;
+    }
+
+    private int ConvertLegendPositionEnumToLegendPositionIndex(string enumValue)
+    {
+        if (AxesTypeToIndex.Index(Type) == AxesIndex.Range)
+        {
+            return Convert.ToInt32(Enum.Parse(typeof(LegendPositions.XLegendPosition), enumValue));
+        }
+        return Convert.ToInt32(Enum.Parse(typeof(LegendPositions.YLegendPosition), enumValue));
+    }
+
+    private string ConvertLegendPositionIndexToLegendPositionEnum()
+    {
+        if (AxesTypeToIndex.Index(Type) == AxesIndex.Range)
+        {
+            return ((LegendPositions.XLegendPosition)LegendPositionIndex).ToString();
+        }
+        return ((LegendPositions.YLegendPosition)LegendPositionIndex).ToString();
+    }
 }
