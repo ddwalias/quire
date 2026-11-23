@@ -499,3 +499,12 @@
 - Members: `InsertSpaceCommand.Undo` (null-guarded `_moveCommand.Undo()`, insertion-point restore, then size capture, `UndoResize()`, `FireChildCausedResize`); `ResizeItemCommand.DoRedo(bool)` (`_isActiveItem = ActiveItem == _item`, `as` pattern local, `if (doAction) _oldData = StoreResizeData(...) else newSize = CoerceNewSize(...)`, then `SetItemSize`).
 - Hand-written in `Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; stubs and `[MirrorStub]` attributes removed.
 - Release IL: PASS — 909 checked, 0 failures (`release-il-5aa6bf11f3e3`).
+
+## Batch 39 — WhiteboardItemsSeparator.Separate
+
+- Members: `WhiteboardItemsSeparator.Separate()` and closures (`<Separate>b__0`, `<Separate>b__1`, `<Separate>b__2`).
+- Hand-written: `Mirrored/Controls.Whiteboard.WhiteboardItemsSeparator.cs`; stub removed from `Generated/Mirror/Controls.Whiteboard.WhiteboardItemsSeparator.g.cs`.
+- Shapes Release IL requires: ternary operator without negation `prevItemRect.Right.IsEqualTo(currentItemRect.Left) ? _grid.GridCellSize.Width : (prevItemRect.Right - currentItemRect.Left)` in both Horizontal and Vertical offset calculations to match `brtrue.s` branch and single `stloc.s` merge.
+- Release IL: PASS — 914 checked, 0 failures (`release-il-80412dfed9d5`).
+- Remaining mismatches in this batch: none.
+

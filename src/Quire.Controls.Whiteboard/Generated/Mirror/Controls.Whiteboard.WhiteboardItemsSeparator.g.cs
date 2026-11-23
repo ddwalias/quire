@@ -11,6 +11,4 @@ namespace Quire.Controls.Whiteboard;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardItemsSeparator, Ptc.Controls.Whiteboard")]
 public partial class WhiteboardItemsSeparator : global::Quire.Controls.Whiteboard.IWhiteboardItemsSeparator
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Vector> Separate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
