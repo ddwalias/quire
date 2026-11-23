@@ -131,6 +131,22 @@ public partial class EditableComboBoxViewModel
         return false;
     }
 
+    private void PasteEditMode(DiscreteRect sourceRect)
+    {
+        if (!AreOnlyValuesSelected(sourceRect))
+        {
+            return;
+        }
+
+        MathNode matrix = TryReadMathNodeFromClipboard();
+        if (PasteSelectedValues(sourceRect, matrix) is DiscreteRect pastedRect)
+        {
+            int cellIndexA = MatrixHelper.IndexOf(pastedRect.Top, pastedRect.Left, Columns);
+            int cellIndexB = MatrixHelper.IndexOf(pastedRect.Bottom, pastedRect.Right, Columns);
+            CreateSelection(cellIndexA, cellIndexB);
+        }
+    }
+
     private void PasteEditModeBySelection()
     {
         if (!AreThereSelectedCells)

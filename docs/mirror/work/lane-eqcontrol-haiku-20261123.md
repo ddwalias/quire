@@ -141,3 +141,14 @@
 
 - Exact: `CopyEditMode`. The first attempt (`new ComboBoxInputControlData(...).GetMatrixSExprFromSelection(...)`) emitted `call` where Mathcad emits `callvirt`; storing the data object in a local before the call matches.
 - Gate (project-level): PASS; 3467 checked (`.mirror-cache/release-il-f82ac9b274f4/release-il.json`).
+
+### Batch 22: Controls.InputControls.EditableComboBoxViewModel (TryReadMathNodeFromClipboard) — landed as a0d7e2768
+
+- Gate (project-level): PASS; 3468 checked, zero failures.
+
+### Batch 23: Controls.InputControls.EditableComboBoxViewModel (PasteEditMode)
+
+- Exact: `PasteEditMode(DiscreteRect)`. The guard clause shape matches Mathcad's `brtrue` after `ret`.
+- The `if (discreteRect.HasValue)` form with a named `DiscreteRect? discreteRect` local put the nullable in slot 1 (Mathcad: slot 2, `valueOrDefault` in slot 1). The `is DiscreteRect pastedRect` pattern form matches the slot layout and the `GetValueOrDefault` shape.
+- Gate (project-level): PASS; 3469 checked (`.mirror-cache/release-il-afea7ba59d29/release-il.json`).
+- Still stubs: `AllCells`, the three events, `ExpandComboBoxRowsColumns`, `PasteSelectedValues`, `TextBox_OnPaste`, `SetupCommandBindings`, `DeleteRows`/`DeleteColumns`/`DeleteEmptyRows`/`DeleteEmptyColumns`.
