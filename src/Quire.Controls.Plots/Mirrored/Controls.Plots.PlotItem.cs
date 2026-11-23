@@ -145,4 +145,24 @@ public partial class PlotItem
         }
         base.OnPreviewMouseMove(e);
     }
+
+    protected void RegisterOrUnregisterFromBorderEvents(bool register)
+    {
+        if (_border == null)
+        {
+            return;
+        }
+        if (register)
+        {
+            _border.RequestMoveAndResize += RequestMoveAndResize;
+            _border.PreviewMouseMove += BorderPreviewMouseMove;
+            _border.MouseUp += BorderMouseUp;
+        }
+        else
+        {
+            _border.RequestMoveAndResize -= RequestMoveAndResize;
+            _border.PreviewMouseMove -= BorderPreviewMouseMove;
+            _border.MouseUp -= BorderMouseUp;
+        }
+    }
 }

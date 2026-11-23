@@ -584,3 +584,12 @@
 - No closures or iterators in the group, so placement does not change any ordinal.
 - Generated layout: ten stubs removed. The first `emit` after the Release build also generated two base-call stubs for the nested `Point2ScreenHelperImpl` overrides (`Point2Screen`, `Contains`), which the applied file lacked; the committed file is the emitted version. A second build and `emit` is byte-identical to it, and the gate passes on the committed state.
 - Release IL: full gate PASS — 2566 checked, 0 failures.
+
+## Batch 83 — PlotItem.RegisterOrUnregisterFromBorderEvents (exact); Move and OnContentSizeChanged blocked
+
+- Landed member: `RegisterOrUnregisterFromBorderEvents(bool)`. Mathcad starts with `if (_border == null) return;` (early-return form), then `if (register)` with the three `+=` subscriptions and the `-=` else branch. Hand-written at the end of `Mirrored/Controls.Plots.PlotItem.cs`; one stub removed from `PlotItem.g.cs`.
+- Generated layout: one stub removed. Verified: after a Release build, `emit` regenerates `PlotItem.g.cs` byte-identical to the committed file.
+- Release IL: full gate PASS — 2567 checked, 0 failures.
+- Blocked, kept as stubs:
+  - `OnContentSizeChanged`: Mathcad pushes `this` before the `newSize = e.NewSize` store (`ldarg.0; ldarg.2; get_NewSize; stloc.0; ldloca.s 0; get_Width; set_Width`). The two-statement form gives the wrong order; `Width = (newSize = e.NewSize).Width` makes Roslyn add a struct temp (28 entries against 26).
+  - `Move`: Mathcad stores `this` in a temp (`ldarg.0; stloc.3`) before the `is PlotTitle` / `is PlotLegend` tests. Roslyn does not emit that temp.
