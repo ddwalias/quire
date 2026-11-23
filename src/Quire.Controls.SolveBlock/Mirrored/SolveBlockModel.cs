@@ -29,10 +29,16 @@ internal partial class SolveBlockModel
     public global::Quire.Controls.Core.IWhiteboardItem SolverItem { get; private set; }
 
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GuessValueItems =>
-        throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        from item in WhiteboardItems.TakeWhile((global::Quire.Controls.Core.IWhiteboardItem item) => item != SolverItem)
+            .Union(new global::Quire.Controls.Core.IWhiteboardItem[1] { SolverItem })
+        where MatchEquationType(item, global::Quire.Controls.SolveBlockEquationTypes.Definition)
+        select item;
 
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> ConstraintItems =>
-        throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        from item in WhiteboardItems.TakeWhile((global::Quire.Controls.Core.IWhiteboardItem item) => item != SolverItem)
+            .Union(new global::Quire.Controls.Core.IWhiteboardItem[1] { SolverItem })
+        where MatchEquationType(item, global::Quire.Controls.SolveBlockEquationTypes.Constraint)
+        select item;
 
     public override object Clone()
     {
@@ -88,7 +94,7 @@ internal partial class SolveBlockModel
     }
 
     private global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildrenAboveSolver =>
-        throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        CalculatableChildren.TakeWhile((global::Quire.Calculation.Core.ICalculatable child) => child != Solver);
 
     private global::Quire.Calculation.Core.Support.SimpleCalculatable SolverResultDefinition { get; set; }
 
@@ -259,8 +265,24 @@ internal partial class SolveBlockModel
 
     private void UpdateWhichItemIsSolver() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private bool MatchEquationType(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.SolveBlockEquationTypes eqType) =>
-        throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private bool MatchEquationType(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.SolveBlockEquationTypes eqType)
+    {
+        if (item is global::Quire.Calculation.Core.ICalculationHideableChild hideableChild &&
+            hideableChild.HideFromCalculationContext)
+            return eqType == global::Quire.Controls.SolveBlockEquationTypes.Unknown;
+        if (item is global::Quire.Calculation.Core.ICalculatable key && _solveBlockCalculatableMap.ContainsKey(key))
+            return _solveBlockCalculatableMap[key].EquationType == eqType;
+        if (!(item is global::Quire.Calculation.Core.ICalculatableContainer calculatableContainer) ||
+            calculatableContainer is global::Quire.Calculation.Core.ICalculatableAggregate)
+            return false;
+        foreach (global::Quire.Calculation.Core.ICalculatable calculatableChild in calculatableContainer.CalculatableChildren)
+        {
+            if (_solveBlockCalculatableMap.TryGetValue(calculatableChild, out var value) && value.EquationType == eqType)
+                return true;
+        }
+
+        return false;
+    }
 
     private void UpdateTheSolverIfNeededToReflectMovedCalculatable(
         global::Quire.Calculation.Core.ICalculatable movedCalc)
@@ -292,11 +314,30 @@ internal partial class SolveBlockModel
 
     private void TheSolverMoved() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private global::Quire.Calculation.Core.ICalculatable FindSolverChildAfterModelChild(global::Quire.Calculation.Core.ICalculatable modelChild) =>
-        throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private global::Quire.Calculation.Core.ICalculatable FindSolverChildAfterModelChild(global::Quire.Calculation.Core.ICalculatable modelChild)
+    {
+        global::Quire.Calculation.Core.ICalculatable wrappedCalc = GetWrappedCalculatable(modelChild);
+        return CalculatableChildren
+            .TakeWhile((global::Quire.Calculation.Core.ICalculatable calc) => calc != Solver)
+            .Collect((global::Quire.Calculation.Core.ICalculatable calc) => GetWrappedCalculatable(calc))
+            .SkipWhile((global::Quire.Calculation.Core.ICalculatable calc) => calc != wrappedCalc)
+            .Skip(1)
+            .FirstOrDefault((global::Quire.Calculation.Core.ICalculatable calc) => Solver.IsChild(calc));
+    }
 
-    private global::Quire.Calculation.Core.ICalculatable GetCalculatableToAddToSolverAggregate(global::Quire.Calculation.Core.ICalculatable calcAddedToModel) =>
-        throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private global::Quire.Calculation.Core.ICalculatable GetCalculatableToAddToSolverAggregate(global::Quire.Calculation.Core.ICalculatable calcAddedToModel)
+    {
+        if (Solver == null)
+            return null;
+        if (!CalculatableChildren.TakeWhile((global::Quire.Calculation.Core.ICalculatable child) => child != Solver).Contains(calcAddedToModel))
+            return null;
+        if (!(calcAddedToModel is global::Quire.Controls.ISolveBlockCalculatable solveBlockCalculatable))
+            return calcAddedToModel;
+        if (solveBlockCalculatable.EquationType == global::Quire.Controls.SolveBlockEquationTypes.Constraint ||
+            solveBlockCalculatable.EquationType == global::Quire.Controls.SolveBlockEquationTypes.Definition)
+            return solveBlockCalculatable.WrappedCalculatable;
+        return null;
+    }
 
     private global::Quire.Controls.ISolveBlockCalculatable CreateCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc, bool forceNotHideable) =>
         throw global::Quire.Mirror.MirrorStub.NotImplemented();
