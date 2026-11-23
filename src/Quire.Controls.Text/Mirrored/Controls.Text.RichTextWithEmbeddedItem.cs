@@ -39,6 +39,8 @@ public partial class RichTextWithEmbeddedItem
         }
     }
 
+    IUIElementArrangeInfoProvider IHasChildArrangeInfoProvider.ChildArrangeInfoProvider => ContainerItemManager;
+
     private void DispatchCommandToItems(RoutedCommand cmd, object parameter, PropertiesForUpdate propertyForUpdate)
     {
         IEnumerable<IWhiteboardItem> items = SelectedWhiteboardItems.Any() ? SelectedWhiteboardItems : WhiteboardItems;

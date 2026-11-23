@@ -27,3 +27,11 @@
 - Stub removal shifted earlier counts by two; `EnumerateEmbeddedObjectsInRange` was moved after `Clone` and `OnStyleChanged` to keep `d__114`. `get_Lines` stays at `d__284`.
 - Release IL (project-wide): PASS — 650 checked, 0 failures; `get_IsTabNavigatable`, `d__114` and `d__284` are in the report.
 - Regeneration: `MirrorGen emit` gives the same stub removal; the only difference is the pre-existing `LogDocumentContents` placement drift.
+
+## Batch 27 — RichTextWithEmbeddedItem.IHasChildArrangeInfoProvider.ChildArrangeInfoProvider (get)
+
+- Member: explicit `IUIElementArrangeInfoProvider IHasChildArrangeInfoProvider.ChildArrangeInfoProvider => ContainerItemManager;`. Hand-written in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs` (placed before `DispatchCommandToItems`); stub removed from the `.g.cs`.
+- Reference IL: `ldarg.0; call get_ContainerItemManager; ret`, no closure and no ordinal, so placement before the ordinal-bearing members keeps `d__114`, `b__149_0` and `d__284` unchanged (re-measured).
+- Release IL (project-wide): PASS — 651 checked, 0 failures.
+- Regeneration: `MirrorGen emit` gives the same stub removal; the only difference is the pre-existing `LogDocumentContents` placement drift.
+- Parked for later: `CanModifyHyperlink()` (lambda `<CanModifyHyperlink>b__20_0` needs an ordinal of 20, below the generated-stub prefix) and `RemoveInlineRecursively` (lambda, recursive) need the g.cs prefix reordered first.
