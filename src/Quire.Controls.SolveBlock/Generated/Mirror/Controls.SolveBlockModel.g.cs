@@ -14,25 +14,4 @@ internal partial class SolveBlockModel : global::Quire.Controls.Mathboard.Aggreg
     internal static string RlFormat;
     internal static string RlOdeFormat;
     internal static string SolverResultIdName;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GuessValueItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> ConstraintItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int ChildErrorCountTotal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildrenAboveSolver { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    public event global::System.Action ChildCalcErrorChanged;
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateWhichItemIsSolver() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool MatchEquationType(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.SolveBlockEquationTypes eqType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void TheSolverMoved() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.ICalculatable FindSolverChildAfterModelChild(global::Quire.Calculation.Core.ICalculatable modelChild) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.ICalculatable GetCalculatableToAddToSolverAggregate(global::Quire.Calculation.Core.ICalculatable calcAddedToModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.ISolveBlockCalculatable CreateCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc, bool forceNotHideable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

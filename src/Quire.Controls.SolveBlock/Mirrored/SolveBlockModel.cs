@@ -2,68 +2,43 @@ using System.Collections.Generic;
 
 namespace Quire.Controls;
 
+// Members follow Mathcad's metadata token order. The lambda ordinals in <Method>b__N_M names count
+// members in this order, so the order below is load-bearing. Unfinished members are unmarked
+// placeholders in the same slots so that the closures keep their Mathcad ordinals.
 internal partial class SolveBlockModel
 {
-    public override global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable>
-        CalculatableChildren => base.CalculatableChildren;
-
-    protected override void MoveItems(
-        global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) =>
-        base.MoveItems(items);
-
     private readonly global::System.Collections.Generic.IDictionary<global::Quire.Calculation.Core.ICalculatable, global::Quire.Controls.ISolveBlockCalculatable> _solveBlockCalculatableMap =
         new global::System.Collections.Generic.Dictionary<global::Quire.Calculation.Core.ICalculatable, global::Quire.Controls.ISolveBlockCalculatable>();
     private global::Quire.Controls.ISolverAggregate _solver;
-
-    private global::Quire.Controls.SolveBlockChildManager SBChildManager =>
-        (global::Quire.Controls.SolveBlockChildManager)_childManager;
-
-    public global::Quire.Controls.Core.IWhiteboardItem SolverItem { get; private set; }
-    private global::Quire.Calculation.Core.Support.SimpleCalculatable SolverResultDefinition { get; set; }
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.ISolveBlockCalculatable> AllCalculatables =>
-        _solveBlockCalculatableMap.Values;
-    public global::System.Windows.ResourceDictionary Resources { get; set; }
-
-    internal global::Quire.Controls.ISolverAggregate Solver
-    {
-        get => _solver;
-        private set
-        {
-            _solver = value;
-            SolverItem = _solver != null ? GetWhiteboardItemThatOwnsCalculatable(Solver) : null;
-        }
-    }
-
-    public SolveBlockModel()
-        : base(null)
-    {
-    }
-
-    static SolveBlockModel()
-    {
-        RlFormat = "{0} (subscript %0 mc_ORIGIN) {1}";
-        RlOdeFormat = "{0} %0 {1}";
-        SolverResultIdName = "ui_solver_result";
-    }
 
     private const uint GuessValuesSectionIndex = 0;
     private const uint ConstraintSectionIndex = 1;
     private const uint SolverSectionIndex = 2;
     private const int SectionCount = 3;
 
+    public SolveBlockModel()
+        : base(null)
+    {
+    }
+
+    public event global::System.Action ChildCalcErrorChanged;
+
+    private global::Quire.Controls.SolveBlockChildManager SBChildManager =>
+        (global::Quire.Controls.SolveBlockChildManager)_childManager;
+
+    public global::Quire.Controls.Core.IWhiteboardItem SolverItem { get; private set; }
+
+    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GuessValueItems =>
+        throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> ConstraintItems =>
+        throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     public override object Clone()
     {
         var clone = new SolveBlockModel();
         CopyStateTo(clone);
         return clone;
-    }
-
-    protected override global::Quire.Calculation.Core.ICalculatable GetWrappedCalculatable(
-        global::Quire.Calculation.Core.ICalculatable calculatable)
-    {
-        if (!(calculatable is global::Quire.Controls.ISolveBlockCalculatable))
-            return calculatable;
-        return (calculatable as global::Quire.Controls.ISolveBlockCalculatable).WrappedCalculatable;
     }
 
     protected override void AddItems(IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items)
@@ -78,46 +53,64 @@ internal partial class SolveBlockModel
         UpdateWhichItemIsSolver();
     }
 
-    protected override void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable)
+    protected override void MoveItems(
+        global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) =>
+        base.MoveItems(items);
+
+    public override global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable>
+        CalculatableChildren => base.CalculatableChildren;
+
+    public int ChildErrorCountTotal =>
+        (from sbCalc in CalculatableChildren.OfType<global::Quire.Controls.ISolveBlockCalculatable>()
+         select sbCalc.WrappedCalculatable).OfType<global::Quire.Calculation.Core.ICalculatableInfo>()
+        .Sum((global::Quire.Calculation.Core.ICalculatableInfo cinfo) => cinfo.ErrorCount);
+
+    public override string Rl
     {
-        ListenForErrorChanges(calculatable);
-        base.FireCalculatableAdded(calculatable);
-        global::System.Windows.Threading.Dispatcher.CurrentDispatcher.BeginInvoke(
-            (global::System.Windows.Threading.DispatcherPriority)4,
-            (global::System.Delegate)new global::System.Action(FireSectionsMaybeChanged));
-        if (calculatable == Solver)
-            Solver.CommitAllChildren();
+        get
+        {
+            if (Solver == null || global::System.String.IsNullOrEmpty(Solver.DefinedRl))
+                return "nil";
 
-        global::Quire.Calculation.Core.ICalculatable calculatableToAddToSolverAggregate =
-            GetCalculatableToAddToSolverAggregate(calculatable);
-        // Release IL branches to mirroring when a target exists, then falls through to return.
-        if (calculatableToAddToSolverAggregate != null)
-            goto MirrorChild;
-        return;
-
-    MirrorChild:
-        MirrorChildInSolverAggregate(calculatableToAddToSolverAggregate);
+            return global::System.String.Format(
+                "(define {0} {1})", Solver.DefinedRl, SolverResultIdName);
+        }
     }
 
-    protected override void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable)
+    internal global::Quire.Controls.ISolverAggregate Solver
     {
-        if (calculatable == null)
-            throw new global::System.InvalidOperationException(
-                "Logic error: attempting to remove 'null' calculatable should never happen.");
-        StopListeningForErrorChanges(calculatable);
-        base.FireCalculatableRemoved(calculatable);
-        if (Solver != null)
-            Solver.RemoveChild(GetWrappedCalculatable(calculatable));
-        FireSectionsMaybeChanged();
+        get => _solver;
+        private set
+        {
+            _solver = value;
+            SolverItem = _solver != null ? GetWhiteboardItemThatOwnsCalculatable(Solver) : null;
+        }
     }
 
-    protected override void FireCalculatableMoved(global::Quire.Calculation.Core.ICalculatable calculatable)
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildrenAboveSolver =>
+        throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private global::Quire.Calculation.Core.Support.SimpleCalculatable SolverResultDefinition { get; set; }
+
+    private global::Quire.Controls.Core.IWhiteboardItem GetWhiteboardItemThatOwnsCalculatable(
+        global::Quire.Calculation.Core.ICalculatable calculatable)
     {
-        base.FireCalculatableMoved(calculatable);
-        if (Solver != null)
-            UpdateTheSolverIfNeededToReflectMovedCalculatable(calculatable);
-        FireSectionsMaybeChanged();
+        global::Quire.Calculation.Core.ICalculatable wrappedCalculatable = GetWrappedCalculatable(calculatable);
+        foreach (global::Quire.Controls.Core.IWhiteboardItem whiteboardItem in WhiteboardItems)
+        {
+            if (whiteboardItem == wrappedCalculatable)
+                return whiteboardItem;
+            if (whiteboardItem is global::Quire.Calculation.Core.ICalculatableContainer container &&
+                !(container is global::Quire.Calculation.Core.ICalculatableAggregate) &&
+                container.CalculatableChildren.Contains(wrappedCalculatable))
+                return whiteboardItem;
+        }
+
+        return null;
     }
+
+    public IEnumerable<global::Quire.Controls.ISolveBlockCalculatable> AllCalculatables =>
+        _solveBlockCalculatableMap.Values;
 
     public override int BlockSectionCount => SectionCount;
 
@@ -168,138 +161,145 @@ internal partial class SolveBlockModel
         }
     }
 
-    private static bool IsSolverAggregateChildType(SolveBlockEquationTypes eqType)
+    protected override void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable)
     {
-        if (eqType != SolveBlockEquationTypes.Definition)
-            return eqType == SolveBlockEquationTypes.Constraint;
-        return true;
+        ListenForErrorChanges(calculatable);
+        base.FireCalculatableAdded(calculatable);
+        global::System.Windows.Threading.Dispatcher.CurrentDispatcher.BeginInvoke(
+            (global::System.Windows.Threading.DispatcherPriority)4,
+            (global::System.Delegate)new global::System.Action(FireSectionsMaybeChanged));
+        if (calculatable == Solver)
+            Solver.CommitAllChildren();
+
+        global::Quire.Calculation.Core.ICalculatable calculatableToAddToSolverAggregate =
+            GetCalculatableToAddToSolverAggregate(calculatable);
+        // Release IL branches to mirroring when a target exists, then falls through to return.
+        if (calculatableToAddToSolverAggregate != null)
+            goto MirrorChild;
+        return;
+
+    MirrorChild:
+        MirrorChildInSolverAggregate(calculatableToAddToSolverAggregate);
     }
 
-    private static bool IsSolverAggregateChildType(global::Quire.Calculation.Core.ICalculatable modelCalcChild)
+    protected override void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable)
     {
-        global::Quire.Controls.ISolveBlockCalculatable wrapper =
-            modelCalcChild as global::Quire.Controls.ISolveBlockCalculatable;
-        SolveBlockEquationTypes equationType;
-        if (wrapper != null)
-            equationType = wrapper.EquationType;
-        else
-            equationType = SolveBlockCalculatable.GetEquationTypeOfCalc(modelCalcChild);
-        return IsSolverAggregateChildType(equationType);
+        if (calculatable == null)
+            throw new global::System.InvalidOperationException(
+                "Logic error: attempting to remove 'null' calculatable should never happen.");
+        StopListeningForErrorChanges(calculatable);
+        base.FireCalculatableRemoved(calculatable);
+        if (Solver != null)
+            Solver.RemoveChild(GetWrappedCalculatable(calculatable));
+        FireSectionsMaybeChanged();
     }
 
-    private void HandleChildWrapperPropertyChanged(
-        object sender, global::System.ComponentModel.PropertyChangedEventArgs args)
+    protected override void FireCalculatableMoved(global::Quire.Calculation.Core.ICalculatable calculatable)
     {
-        if (args.PropertyName == "EquationType")
+        base.FireCalculatableMoved(calculatable);
+        if (Solver != null)
+            UpdateTheSolverIfNeededToReflectMovedCalculatable(calculatable);
+        FireSectionsMaybeChanged();
+    }
+
+    private void ListenForErrorChanges(global::Quire.Calculation.Core.ICalculatable calculatable)
+    {
+        if (calculatable is not global::Quire.Controls.ISolveBlockCalculatable solveBlockCalculatable)
+            return;
+        if (solveBlockCalculatable.WrappedCalculatable is not global::Quire.Calculation.Core.ICalculatableInfo wrappedCalculatable)
+            return;
+        wrappedCalculatable.PropertyChanged += HandleWrappedCalcPropertyChanged;
+    }
+
+    private void StopListeningForErrorChanges(global::Quire.Calculation.Core.ICalculatable calculatable)
+    {
+        if (calculatable is not global::Quire.Controls.ISolveBlockCalculatable solveBlockCalculatable)
+            return;
+        if (solveBlockCalculatable.WrappedCalculatable is not global::Quire.Calculation.Core.ICalculatableInfo wrappedCalculatable)
+            return;
+        wrappedCalculatable.PropertyChanged -= HandleWrappedCalcPropertyChanged;
+    }
+
+    private void HandleEquationControlCommitted(global::Quire.Calculation.Core.ICalculatable calc)
+    {
+        // Release IL branches directly to the removal body after the shared early return.
+        if (calc != null && calc.Equals(Solver?.WrappedCalculatable))
+            goto RemoveChild;
+        return;
+
+    RemoveChild:
+        Solver?.RemoveChild(calc);
+    }
+
+    private void HandleWrappedCalcPropertyChanged(
+        object sender, global::System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        string propertyName = e.PropertyName;
+        // Release IL branches directly to the selected event body.
+        if (propertyName == "Error")
+            goto ErrorChanged;
+
+        if (propertyName == "IsCommitted")
+            goto Committed;
+        return;
+
+    ErrorChanged:
+        FireChildCalcErrorChanged();
+        return;
+
+    Committed:
+        HandleEquationControlCommitted(sender as global::Quire.Calculation.Core.ICalculatable);
+    }
+
+    private void FireChildCalcErrorChanged()
+    {
+        if (ChildCalcErrorChanged != null)
+            ChildCalcErrorChanged();
+    }
+
+    private void UpdateWhichItemIsSolver() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private bool MatchEquationType(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.SolveBlockEquationTypes eqType) =>
+        throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void UpdateTheSolverIfNeededToReflectMovedCalculatable(
+        global::Quire.Calculation.Core.ICalculatable movedCalc)
+    {
+        if (movedCalc == Solver)
         {
+            TheSolverMoved();
+            return;
+        }
 
-            var eventArgs =
-                (global::Quire.Wpf.PropertyChangedEventArgs<global::Quire.Controls.SolveBlockEquationTypes>)args;
-            global::Quire.Controls.ISolveBlockCalculatable wrapper =
-                (global::Quire.Controls.ISolveBlockCalculatable)sender;
-            if (eventArgs.NewValue == global::Quire.Controls.SolveBlockEquationTypes.Solver)
-            {
-                global::Quire.Calculation.Core.ICalculatable wrappedCalculatable = wrapper.WrappedCalculatable;
-                UpdateWhichItemIsSolver();
-                if (Solver == null || wrappedCalculatable != Solver.WrappedCalculatable)
-                    wrappedCalculatable.Commit();
-            }
-            else if (eventArgs.OldValue == global::Quire.Controls.SolveBlockEquationTypes.Solver)
-            {
-                if (wrapper == Solver)
-                    UpdateWhichItemIsSolver();
-            }
-            else if (!IsSolverAggregateChildType(eventArgs.OldValue) &&
-                     IsSolverAggregateChildType(eventArgs.NewValue))
-            {
-                if (Solver != null && IsChildAboveSolver(wrapper))
-                    MirrorChildInSolverAggregate(wrapper);
-                wrapper.WrappedCalculatable.Commit();
-            }
-            else if (IsSolverAggregateChildType(eventArgs.OldValue) &&
-                     !IsSolverAggregateChildType(eventArgs.NewValue))
-            {
-                if (Solver != null && IsChildAboveSolver(wrapper))
-                    Solver.RemoveChild(GetWrappedCalculatable(wrapper));
-                wrapper.WrappedCalculatable.Commit();
-            }
-
-            FireSectionsMaybeChanged();
+        global::Quire.Calculation.Core.ICalculatable wrappedCalculatable = GetWrappedCalculatable(movedCalc);
+        if (!IsChildAboveSolver(movedCalc))
+        {
+            Solver.RemoveChild(wrappedCalculatable);
+        }
+        else if (Solver.IsChild(wrappedCalculatable))
+        {
+            global::Quire.Calculation.Core.ICalculatable moveBefore =
+                FindSolverChildAfterModelChild(wrappedCalculatable);
+            Solver.MoveChildBefore(moveBefore, wrappedCalculatable);
+        }
+        else if (IsSolverAggregateChildType(movedCalc))
+        {
+            MirrorChildInSolverAggregate(wrappedCalculatable);
+            // Release IL requires a distinct terminal ret after this branch.
+            return;
         }
     }
 
-    public SolveBlockEquationTypes GetSolveBlockEquationType(global::Quire.Controls.Core.IWhiteboardItem item)
-    {
-        if (GuessValueItems.Contains(item))
-            return SolveBlockEquationTypes.Definition;
-        if (ConstraintItems.Contains(item))
-            return SolveBlockEquationTypes.Constraint;
-        if (SolverItem != null && SolverItem.Equals(item))
-            return SolveBlockEquationTypes.Solver;
-        return SolveBlockEquationTypes.Unknown;
-    }
+    private void TheSolverMoved() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public string GetBlockEquationTypeAttributeName(global::Quire.Controls.Core.IWhiteboardItem item)
-    {
-        switch (GetSolveBlockEquationType(item))
-        {
-            case SolveBlockEquationTypes.Constraint:
-                return global::Quire.PersistentDataObjects.solveBlockRegionTypeSolveblockcategory.constraint.ToString();
-            case SolveBlockEquationTypes.Definition:
-                return global::Quire.PersistentDataObjects.solveBlockRegionTypeSolveblockcategory.guessvalue.ToString();
-            case SolveBlockEquationTypes.Solver:
-                return global::Quire.PersistentDataObjects.solveBlockRegionTypeSolveblockcategory.solver.ToString();
-            default:
-                return null;
-        }
-    }
+    private global::Quire.Calculation.Core.ICalculatable FindSolverChildAfterModelChild(global::Quire.Calculation.Core.ICalculatable modelChild) =>
+        throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public override string Rl
-    {
-        get
-        {
-            if (Solver == null || global::System.String.IsNullOrEmpty(Solver.DefinedRl))
-                return "nil";
+    private global::Quire.Calculation.Core.ICalculatable GetCalculatableToAddToSolverAggregate(global::Quire.Calculation.Core.ICalculatable calcAddedToModel) =>
+        throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-            return global::System.String.Format(
-                "(define {0} {1})", Solver.DefinedRl, SolverResultIdName);
-        }
-    }
-
-    protected override global::Quire.Calculation.Core.Support.CalculatableChildHider InitializeChildManager()
-    {
-        return new SolveBlockChildManager(
-            WhiteboardItems,
-            FireCalculatableAdded,
-            FireCalculatableRemoved,
-            FireCalculatableMoved,
-            CreateCalculatableWrapper,
-            LookupCalculatableWrapper,
-            RemoveCalculatableWrapper,
-            HandleChildCalcHiddenStateChanged,
-            HandleContainerChildrenChanged);
-    }
-
-    // Placed before GetWhiteboardItemThatOwnsCalculatable: the lambda ordinal must be b__70_0 as in Release IL.
-    private bool IsChildAboveSolver(global::Quire.Calculation.Core.ICalculatable child) =>
-        CalculatableChildren.TakeWhile(calc => calc != Solver).Contains(child);
-
-    private global::Quire.Controls.Core.IWhiteboardItem GetWhiteboardItemThatOwnsCalculatable(
-        global::Quire.Calculation.Core.ICalculatable calculatable)
-    {
-        global::Quire.Calculation.Core.ICalculatable wrappedCalculatable = GetWrappedCalculatable(calculatable);
-        foreach (global::Quire.Controls.Core.IWhiteboardItem whiteboardItem in WhiteboardItems)
-        {
-            if (whiteboardItem == wrappedCalculatable)
-                return whiteboardItem;
-            if (whiteboardItem is global::Quire.Calculation.Core.ICalculatableContainer container &&
-                !(container is global::Quire.Calculation.Core.ICalculatableAggregate) &&
-                container.CalculatableChildren.Contains(wrappedCalculatable))
-                return whiteboardItem;
-        }
-
-        return null;
-    }
+    private global::Quire.Controls.ISolveBlockCalculatable CreateCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc, bool forceNotHideable) =>
+        throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private void RemoveCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calculatable)
     {
@@ -353,6 +353,37 @@ internal partial class SolveBlockModel
         UpdateWhichItemIsSolver();
     }
 
+    protected override global::Quire.Calculation.Core.ICalculatable GetWrappedCalculatable(
+        global::Quire.Calculation.Core.ICalculatable calculatable)
+    {
+        if (!(calculatable is global::Quire.Controls.ISolveBlockCalculatable))
+            return calculatable;
+        return (calculatable as global::Quire.Controls.ISolveBlockCalculatable).WrappedCalculatable;
+    }
+
+    // Placed in Mathcad token order: the lambda ordinal must be b__70_0 as in Release IL.
+    private bool IsChildAboveSolver(global::Quire.Calculation.Core.ICalculatable child) =>
+        CalculatableChildren.TakeWhile(calc => calc != Solver).Contains(child);
+
+    private static bool IsSolverAggregateChildType(SolveBlockEquationTypes eqType)
+    {
+        if (eqType != SolveBlockEquationTypes.Definition)
+            return eqType == SolveBlockEquationTypes.Constraint;
+        return true;
+    }
+
+    private static bool IsSolverAggregateChildType(global::Quire.Calculation.Core.ICalculatable modelCalcChild)
+    {
+        global::Quire.Controls.ISolveBlockCalculatable wrapper =
+            modelCalcChild as global::Quire.Controls.ISolveBlockCalculatable;
+        SolveBlockEquationTypes equationType;
+        if (wrapper != null)
+            equationType = wrapper.EquationType;
+        else
+            equationType = SolveBlockCalculatable.GetEquationTypeOfCalc(modelCalcChild);
+        return IsSolverAggregateChildType(equationType);
+    }
+
     private global::Quire.Calculation.Core.ICalculatable FindModelChildWhichMatchesSolverChild(
         global::Quire.Calculation.Core.ICalculatable solverChild)
     {
@@ -362,6 +393,81 @@ internal partial class SolveBlockModel
         if (CalculatableChildren.Contains(solverChild))
             return solverChild;
         return null;
+    }
+
+    private void HandleChildWrapperPropertyChanged(
+        object sender, global::System.ComponentModel.PropertyChangedEventArgs args)
+    {
+        if (args.PropertyName == "EquationType")
+        {
+
+            var eventArgs =
+                (global::Quire.Wpf.PropertyChangedEventArgs<global::Quire.Controls.SolveBlockEquationTypes>)args;
+            global::Quire.Controls.ISolveBlockCalculatable wrapper =
+                (global::Quire.Controls.ISolveBlockCalculatable)sender;
+            if (eventArgs.NewValue == global::Quire.Controls.SolveBlockEquationTypes.Solver)
+            {
+                global::Quire.Calculation.Core.ICalculatable wrappedCalculatable = wrapper.WrappedCalculatable;
+                UpdateWhichItemIsSolver();
+                if (Solver == null || wrappedCalculatable != Solver.WrappedCalculatable)
+                    wrappedCalculatable.Commit();
+            }
+            else if (eventArgs.OldValue == global::Quire.Controls.SolveBlockEquationTypes.Solver)
+            {
+                if (wrapper == Solver)
+                    UpdateWhichItemIsSolver();
+            }
+            else if (!IsSolverAggregateChildType(eventArgs.OldValue) &&
+                     IsSolverAggregateChildType(eventArgs.NewValue))
+            {
+                if (Solver != null && IsChildAboveSolver(wrapper))
+                    MirrorChildInSolverAggregate(wrapper);
+                wrapper.WrappedCalculatable.Commit();
+            }
+            else if (IsSolverAggregateChildType(eventArgs.OldValue) &&
+                     !IsSolverAggregateChildType(eventArgs.NewValue))
+            {
+                if (Solver != null && IsChildAboveSolver(wrapper))
+                    Solver.RemoveChild(GetWrappedCalculatable(wrapper));
+                wrapper.WrappedCalculatable.Commit();
+            }
+
+            FireSectionsMaybeChanged();
+        }
+    }
+
+    private void HandleSolverRequestEvaluation(global::Quire.Calculation.Core.ICalculatable calculatable)
+    {
+        if (calculatable != Solver)
+            throw new global::System.InvalidOperationException(
+                "logic error: a handler only for the active solver got called by some other calculatable.");
+
+        if (Solver.IsSolverOfSymbolicContainsFind(Solver.Rl) &&
+            GetWrappedCalculatable(calculatable) is global::Quire.Controls.EquationControl
+            {
+                ContainsSymbolicEvaluation: not false
+            } equationControl && equationControl.CalculatableChildren.Count() > 1)
+        {
+            Solver.AddChildAggregate(equationControl, this);
+        }
+
+        if (!string.IsNullOrEmpty(Solver.DefinedRl))
+        {
+            if (SolverResultDefinition == null)
+            {
+                SolverResultDefinition = new global::Quire.Calculation.Core.Support.SimpleCalculatable();
+                FireCalculatableAdded(SolverResultDefinition);
+            }
+
+            // Release IL uses the literal format call instead of interpolated-string lowering.
+            SolverResultDefinition.Rl = global::System.String.Format(
+                "(define {0} {1})", SolverResultIdName, Solver.DefinedRl);
+            FireSolverResultDefinitionEvaluation();
+        }
+        else
+        {
+            SolverIsNotInADefinition();
+        }
     }
 
     private void FireSolverResultDefinitionEvaluation()
@@ -389,57 +495,46 @@ internal partial class SolveBlockModel
         Solver.InsertChildBefore(insertBefore, GetWrappedCalculatable(newSolverChild));
     }
 
-    private void HandleWrappedCalcPropertyChanged(
-        object sender, global::System.ComponentModel.PropertyChangedEventArgs e)
+
+    public global::System.Windows.ResourceDictionary Resources { get; set; }
+
+    protected override global::Quire.Calculation.Core.Support.CalculatableChildHider InitializeChildManager()
     {
-        string propertyName = e.PropertyName;
-        // Release IL branches directly to the selected event body.
-        if (propertyName == "Error")
-            goto ErrorChanged;
-
-        if (propertyName == "IsCommitted")
-            goto Committed;
-        return;
-
-    ErrorChanged:
-        FireChildCalcErrorChanged();
-        return;
-
-    Committed:
-        HandleEquationControlCommitted(sender as global::Quire.Calculation.Core.ICalculatable);
+        return new SolveBlockChildManager(
+            WhiteboardItems,
+            FireCalculatableAdded,
+            FireCalculatableRemoved,
+            FireCalculatableMoved,
+            CreateCalculatableWrapper,
+            LookupCalculatableWrapper,
+            RemoveCalculatableWrapper,
+            HandleChildCalcHiddenStateChanged,
+            HandleContainerChildrenChanged);
     }
 
-    private void FireChildCalcErrorChanged()
+    public SolveBlockEquationTypes GetSolveBlockEquationType(global::Quire.Controls.Core.IWhiteboardItem item)
     {
-        if (ChildCalcErrorChanged != null)
-            ChildCalcErrorChanged();
+        if (GuessValueItems.Contains(item))
+            return SolveBlockEquationTypes.Definition;
+        if (ConstraintItems.Contains(item))
+            return SolveBlockEquationTypes.Constraint;
+        if (SolverItem != null && SolverItem.Equals(item))
+            return SolveBlockEquationTypes.Solver;
+        return SolveBlockEquationTypes.Unknown;
     }
 
-    private void UpdateTheSolverIfNeededToReflectMovedCalculatable(
-        global::Quire.Calculation.Core.ICalculatable movedCalc)
+    public string GetBlockEquationTypeAttributeName(global::Quire.Controls.Core.IWhiteboardItem item)
     {
-        if (movedCalc == Solver)
+        switch (GetSolveBlockEquationType(item))
         {
-            TheSolverMoved();
-            return;
-        }
-
-        global::Quire.Calculation.Core.ICalculatable wrappedCalculatable = GetWrappedCalculatable(movedCalc);
-        if (!IsChildAboveSolver(movedCalc))
-        {
-            Solver.RemoveChild(wrappedCalculatable);
-        }
-        else if (Solver.IsChild(wrappedCalculatable))
-        {
-            global::Quire.Calculation.Core.ICalculatable moveBefore =
-                FindSolverChildAfterModelChild(wrappedCalculatable);
-            Solver.MoveChildBefore(moveBefore, wrappedCalculatable);
-        }
-        else if (IsSolverAggregateChildType(movedCalc))
-        {
-            MirrorChildInSolverAggregate(wrappedCalculatable);
-            // Release IL requires a distinct terminal ret after this branch.
-            return;
+            case SolveBlockEquationTypes.Constraint:
+                return global::Quire.PersistentDataObjects.solveBlockRegionTypeSolveblockcategory.constraint.ToString();
+            case SolveBlockEquationTypes.Definition:
+                return global::Quire.PersistentDataObjects.solveBlockRegionTypeSolveblockcategory.guessvalue.ToString();
+            case SolveBlockEquationTypes.Solver:
+                return global::Quire.PersistentDataObjects.solveBlockRegionTypeSolveblockcategory.solver.ToString();
+            default:
+                return null;
         }
     }
 
@@ -450,5 +545,12 @@ internal partial class SolveBlockModel
         if (_solveBlockCalculatableMap.TryGetValue(calculatable, out var wrapper))
             return wrapper;
         return null;
+    }
+
+    static SolveBlockModel()
+    {
+        RlFormat = "{0} (subscript %0 mc_ORIGIN) {1}";
+        RlOdeFormat = "{0} %0 {1}";
+        SolverResultIdName = "ui_solver_result";
     }
 }
