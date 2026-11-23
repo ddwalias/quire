@@ -147,5 +147,21 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
   - `PositionBase.SetEnvScope`: not a leaf; branches on null vs non-null Scope, calling `ActionChain.remove_env_scope` or `ActionChain.add_env_scope`, updating offset 64 (`env_scope_`), and invoking `ActionChain.SetNeedsCheck`.
   - `PositionBase.Lock` / `UnLock`: call `ActionChain.Lock()` / `ActionChain.UnLock()`.
 
+## Batch 16 — ActionChain.Lock/UnLock and PositionBase.Lock/UnLock
+
+- Owner: AGY, Orca task `task_bf86bb0b4188`; branch `feature/luna-mcdepman`.
+- Members:
+  - `ActionChain.Lock()`: sets `locked_ = true` at offset 32 and recurses on `next_` (offset 24).
+  - `ActionChain.UnLock()`: sets `locked_ = false` at offset 32 and recurses on `next_` (offset 24).
+  - `PositionBase.Lock()`: invokes `action_chain_->Lock()` at offset 32.
+  - `PositionBase.UnLock()`: invokes `action_chain_->UnLock()` at offset 32 and clears `invalidated_ = false` at offset 193.
+- Layouts: `ActionChain` remains 40 bytes and `PositionBase` remains 216 bytes with exact assertions.
+- Release IL report: `.mirror-cache/release-il-eabfa7b87191/release-il.json` (PASS, 207 checked; all 4 methods exact).
+- Remaining prerequisites:
+  - Callback wiring: `TreatedReadyInvalidCallback(Position*) -> bool` at offset 104, `InterruptCallback(int)` at offset 96, `PosQueueCallback(Position*)` at offset 88 for `PositionBase.Invalidate`.
+  - `std::set<depman::Position*>` erase path at offset 136 for `PositionBase.Kill` and `TreatAsReady(false)`.
+  - `PositionBase.SetEnvScope`: branches on Scope nullness, calling `ActionChain.remove_env_scope` / `ActionChain.add_env_scope`, updating offset 64, and calling `ActionChain.SetNeedsCheck`.
+
+
 
 

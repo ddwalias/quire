@@ -19,6 +19,8 @@
 #pragma comment(linker, "/include:?ResetPriority@PositionBase@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?ClearDParent@PositionBase@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?SetBasePriority@PositionBase@depman@@QEAAXH@Z")
+#pragma comment(linker, "/include:?Lock@PositionBase@depman@@QEAAXXZ")
+#pragma comment(linker, "/include:?UnLock@PositionBase@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?SendMessage@PositionBase@depman@@$$FQEAMXW4NodeStatus@Engine@Quire@@@Z")
 #pragma comment(linker, "/include:?SetTimer@PositionBase@depman@@$$FQEAMXPE$AAVNodeTimer@2Quire@@@Z")
 #pragma comment(linker, "/include:?IsLocked@PositionBase@depman@@QEBA_NXZ")
@@ -153,6 +155,19 @@ void PositionBase::SendMessage(::Quire::Engine::NodeStatus status)
 void PositionBase::SetTimer(::Quire::depman::NodeTimer^ timer)
 {
     timer_ = timer;
+}
+
+void PositionBase::Lock()
+{
+    if (action_chain_)
+        action_chain_->Lock();
+}
+
+void PositionBase::UnLock()
+{
+    if (action_chain_)
+        action_chain_->UnLock();
+    invalidated_ = false;
 }
 
 Position* Position::previous()

@@ -8,6 +8,8 @@
 #pragma comment(linker, "/include:?IsLocked@ActionChain@depman@@QEBA_NXZ")
 #pragma comment(linker, "/include:?IsUndefine@ActionChain@depman@@QEAA_NXZ")
 #pragma comment(linker, "/include:?IsChildOnly@ActionChain@depman@@QEAA_NXZ")
+#pragma comment(linker, "/include:?Lock@ActionChain@depman@@QEAAXXZ")
+#pragma comment(linker, "/include:?UnLock@ActionChain@depman@@QEAAXXZ")
 
 namespace Quire { namespace depman {
 
@@ -63,6 +65,20 @@ bool ActionChain::IsUndefine()
 bool ActionChain::IsChildOnly()
 {
     return mgd_->action()->IsChildOnly();
+}
+
+void ActionChain::Lock()
+{
+    locked_ = true;
+    if (next_)
+        next_->Lock();
+}
+
+void ActionChain::UnLock()
+{
+    locked_ = false;
+    if (next_)
+        next_->UnLock();
 }
 
 } // namespace depman

@@ -44,6 +44,8 @@ public:
     void SendMessage(::Quire::Engine::NodeStatus status);
     void SetTimer(::Quire::depman::NodeTimer^ timer);
     void SetScope(::Quire::depman::Scope^ scope);
+    void Lock();
+    void UnLock();
     ::Quire::depman::Scope^ GetScope();
     ::Quire::depman::Scope^ GetEnvScope();
     ::Quire::depman::SEnvironment^ env() const;
@@ -100,6 +102,8 @@ public:
     bool IsLocked() const;
     bool IsUndefine();
     bool IsChildOnly();
+    void Lock();
+    void UnLock();
 
     // ActionChainMgd's reference IL reads these pointer fields at offsets 8, 16, and 24.
     DepManager* dep_manager_;                       // 0x08 (offset 8)
