@@ -24,12 +24,6 @@ public partial class EditableComboBoxViewModel : global::Quire.Controls.InputCon
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData> AllCells { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData>> CellsAdded;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<int, int, bool> RowsDeleted;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<int, int, bool> ColumnsDeleted;
-    [global::Quire.Mirror.MirrorStub]
     private void SetupCommandBindings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void DeleteRows(int fromIndex, int toIndex, bool assertIfCannotDelete, bool isFinishedEditingMode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

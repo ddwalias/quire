@@ -16,6 +16,12 @@ namespace Quire.Controls.InputControls;
 public partial class EditableComboBoxViewModel
 {
 
+    public event Action<IEnumerable<ICellData>> CellsAdded;
+
+    public event Action<int, int, bool> RowsDeleted;
+
+    public event Action<int, int, bool> ColumnsDeleted;
+
     public void ClearSelection()
     {
         SelectedCells = null;

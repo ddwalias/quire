@@ -158,3 +158,18 @@
 - Exact: `ExpandComboBoxRowsColumns` (two `while` loops, which Roslyn emits bottom-tested like Mathcad), `PasteSelectedValues` (struct `FullSize` temp in slot 7, the `DevAssert` bounds check, and the `CellsAdded?.Invoke` null-conditional), and `TextBox_OnPaste` (the `is ICellData` pattern in the if-else shape, and the `MATRIX` branch with `return`).
 - Gate (project-level): PASS; 3472 checked (`.mirror-cache/release-il-bff432f43703/release-il.json`).
 - Still stubs: `AllCells`, the three events, `SetupCommandBindings` (command lambdas), `DeleteRows`/`DeleteColumns` (lambdas capturing the flags), `DeleteEmptyRows`/`DeleteEmptyColumns` (nested lambdas). All five use closures whose `<>c`/`<>c__DisplayClass` and `b__` ordinals are not yet checked.
+
+### Batch 25: Controls.InputControls.EditableComboBoxViewModel (CellsAdded, RowsDeleted, ColumnsDeleted events)
+
+- Exact: the three field-like events, moved from the generated stub to the hand-written partial. Their add/remove accessors are the Roslyn `CompareExchange` loop (the Mathcad backing field is `CellsAdded`, `RowsDeleted`, `ColumnsDeleted`), and all six accessors are in the checked set.
+- Gate (project-level): PASS; 3472 checked, zero failures (`.mirror-cache/release-il-932ffaddd1b5/release-il.json`).
+
+### Closure probe (no landing): AllCells
+
+- `AllCells => TableModel.AllRows.SelectMany((ComboBoxRow row) => row.AllCells)` is exact in body shape (`ldsfld <>9__N_0`, `ldftn <get_AllCells>b__N_0`, `dup/stsfld`, `SelectMany`), but the closure ordinal differs: Mathcad `<>c::<get_AllCells>b__7_0`, Quire `<>c::<get_AllCells>b__56_0` (the Mathcad field is `<>9__7_0`). The method's position in the merged type decides the number, so the Quire ordinal moves with every member before it.
+- Reverted, not landed. Evidence: `.mirror-cache/release-il-df314d65fdda/release-il.json`.
+- Mathcad ordinals for the other closures in this type, for the record: `SetupCommandBindings` `b__46_0..3`; `DeleteRows` display class `61_0`; `DeleteColumns` `63_0`; `DeleteEmptyRows` `73_0` and `b__73_2`; `DeleteEmptyColumns` `74_0..2`.
+
+### Still stubs (closure-gated, not landed)
+
+- `AllCells` (ordinal 7), `SetupCommandBindings` (46), `DeleteRows` (display class 61), `DeleteColumns` (63), `DeleteEmptyRows` (73), `DeleteEmptyColumns` (74). Each needs the Mathcad ordinal reproduced by placeholder members in Mathcad order before it, which is the closure-ordinal blocker in the lane notes.
