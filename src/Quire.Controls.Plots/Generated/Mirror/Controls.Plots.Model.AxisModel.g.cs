@@ -46,8 +46,6 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     [global::Quire.Mirror.MirrorStub]
     private global::System.Nullable<bool> _isLinearizedRangeAssertEnabled;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> AxisCalculatables { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Func<global::Quire.Controls.Plots.Presenter.IAxisModel, global::System.Xml.XmlNode, global::Quire.Controls.Plots.Presenter.IPlotEquation> RequestAddEquation;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action Changed;
@@ -63,12 +61,6 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     public event global::System.Action TickMarkLabelsUpdated;
     [global::Quire.Mirror.MirrorStub]
     public AxisModel(global::Quire.Controls.Plots.Presenter.AxesType axisType, global::Quire.Controls.Plots.Presenter.PlotType plotType, global::Quire.Controls.Plots.IPlotTitleModel axisTitleModel = default) { }
-    [global::Quire.Mirror.MirrorStub]
-    internal void CalculateBetterTickmarks(ref double start, ref double end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void CalculateBetterTickmarksWithZeroInRange(ref double start, ref double end, ref int numberOfIntervals) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetXmlNode(global::System.Xml.XmlNode value, global::System.Xml.XmlNamespaceManager nmspmgr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.AxisModel+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames

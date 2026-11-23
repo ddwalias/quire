@@ -19,6 +19,28 @@ namespace Quire.Controls.Plots.Model;
 
 internal partial class AxisModel
 {
+    public IEnumerable<ICalculatable> AxisCalculatables
+    {
+        get
+        {
+            if (StartExpression != null)
+            {
+                yield return StartExpression;
+            }
+            if (SecondTickExpression != null)
+            {
+                yield return SecondTickExpression;
+            }
+            if (EndExpression != null)
+            {
+                yield return EndExpression;
+            }
+        }
+    }
+    internal void CalculateBetterTickmarks(ref double start, ref double end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void CalculateBetterTickmarksWithZeroInRange(ref double start, ref double end, ref int numberOfIntervals) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SetXmlNode(XmlNode value, XmlNamespaceManager nmspmgr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     public IPlotTitleModel AxisTitleModel { get; set; }
 
     public AxisMarkersCollection Markers => _markers;
@@ -599,6 +621,7 @@ internal partial class AxisModel
         xmlElement.SetAttribute("end", End.ToString(CultureInfo.InvariantCulture));
         return xmlElement;
     }
+
 
     public void SetRange(double? min, double? max)
     {

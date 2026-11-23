@@ -526,3 +526,12 @@
 - Result: not landed; the member stays a generated stub. The clean draft is kept outside the repo, not committed.
 - Left in AxisModel: `AxisCalculatables` (iterator), the constructor, the two blocked tick-mark helpers from batch 69, and `SetXmlNode` (above).
 - SetMinWidthHeight (XYPlotStrategy) remains parked on the slot 41 vs 40 mismatch.
+
+## Batch 75 — AxisModel.AxisCalculatables (iterator ordinal)
+
+- Member: `AxisCalculatables` getter (`yield return` of Start, SecondTick and End expressions, each behind a null test). Hand-written: placed at the top of the class body in `Mirrored/Controls.Plots.Model.AxisModel.cs`; stub removed from `AxisModel.g.cs`.
+- Iterator ordinal: the state machine is `<get_AxisCalculatables>d__N`. Placed at the top, Quire emitted `d__44` (Mathcad `d__41`); placed after the hand-written members it emitted `d__169`. The three unfinished stubs that follow it in Mathcad order (`CalculateBetterTickmarks`, `CalculateBetterTickmarksWithZeroInRange`, `SetXmlNode`) were still counted ahead of it, so they are declared as unmarked placeholders right after the iterator (Mathcad order) and removed from `AxisModel.g.cs`. The placeholders sit before `SetRange` and `GetNumberOfTracesForEquation`, so those ordinals are unchanged.
+- Generated layout: four stubs removed (`AxisCalculatables`, and the three placeholders above). Verified: after a Release build, `emit` regenerates `AxisModel.g.cs` byte-identical to the committed file.
+- Release IL: `get_AxisCalculatables` exact; full gate PASS — 2547 checked, 0 failures.
+- Left in AxisModel: the constructor, the two blocked tick-mark helpers from batch 69 (placeholders now), and `SetXmlNode` (placeholder; blocked on the Mathcad temp shape, batch 74).
+- SetMinWidthHeight (XYPlotStrategy) remains parked on the slot 41 vs 40 mismatch.
