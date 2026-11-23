@@ -467,4 +467,112 @@ internal partial class AxisModel
             SecondTickExpression.IsDefaultValue = true;
         }
     }
+
+    public IAxisLimitEditor StartExpression
+    {
+        get
+        {
+            return _startExpression;
+        }
+        set
+        {
+            ValidateAxisLimitExpression(_startExpression);
+            if (_startExpression != null)
+            {
+                _startExpression.HasErrorsChanged -= OnExpressionHasErrorsChanged;
+            }
+            _startExpression = value;
+            _startExpression.SetPreCalculatedValue(Start);
+            _startExpression.HasErrorsChanged += OnExpressionHasErrorsChanged;
+            OnPropertyChanged("StartExpression");
+        }
+    }
+
+    public IAxisLimitEditor SecondTickExpression
+    {
+        get
+        {
+            return _secondTickExpression;
+        }
+        set
+        {
+            ValidateAxisLimitExpression(_secondTickExpression);
+            if (_secondTickExpression != null)
+            {
+                _secondTickExpression.HasErrorsChanged -= OnExpressionHasErrorsChanged;
+            }
+            _secondTickExpression = value;
+            SetSecondTickPreCalculatedValue();
+            _secondTickExpression.HasErrorsChanged += OnExpressionHasErrorsChanged;
+            OnPropertyChanged("SecondTickExpression");
+        }
+    }
+
+    public IAxisLimitEditor EndExpression
+    {
+        get
+        {
+            return _endExpression;
+        }
+        set
+        {
+            ValidateAxisLimitExpression(_endExpression);
+            if (_endExpression != null)
+            {
+                _endExpression.HasErrorsChanged -= OnExpressionHasErrorsChanged;
+            }
+            _endExpression = value;
+            _endExpression.SetPreCalculatedValue(End);
+            _endExpression.HasErrorsChanged += OnExpressionHasErrorsChanged;
+            OnPropertyChanged("EndExpression");
+        }
+    }
+
+    private double Linearize(double value)
+    {
+        if (Scaling != AxisScaling.Linear)
+        {
+            if (!(value > 0.0))
+            {
+                return double.NegativeInfinity;
+            }
+            return Math.Log10(value);
+        }
+        return value;
+    }
+
+    private void DealWithZeroLengthRange(ref double min, ref double max)
+    {
+        if (min != max)
+        {
+            return;
+        }
+        if (min < 0.0)
+        {
+            max = 0.0;
+            if (Type != AxesType.Radial)
+            {
+                min *= 2.0;
+            }
+        }
+        else if (min > 0.0)
+        {
+            min = 0.0;
+            if (Type != AxesType.Radial)
+            {
+                max *= 2.0;
+            }
+        }
+        else
+        {
+            min = Type == AxesType.Radial ? 0 : -1;
+            max = 1.0;
+        }
+    }
+
+    private void SetRangeError()
+    {
+        SetAxisLimitEditorError(StartExpression, "Ptc.Plots.Axis.MIN_TO_BE_SMALLER_THAN_MAX");
+        SetAxisLimitEditorError(EndExpression, "Ptc.Plots.Axis.MAX_TO_BE_GREATER_THAN_MIN");
+    }
 }
