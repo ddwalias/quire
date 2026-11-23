@@ -280,13 +280,32 @@ Investigation of `PositionBase.SetBusy`, `PositionBase.WaitReady`, and `Position
    - The C++ source implementations for all four methods match Mathcad's original instructions and control flow exactly. All four exact C++ source drafts (`PositionBase.SetBusy`, `PositionBase.WaitReady`, `PositionBase.PrepareKill`, and `PositionBase.ready`) are implemented and preserved in `DepmanPosition.cpp` and `DepmanPosition.h` with commented-out linker pragmas; under `/OPT:REF` they do not emit unreferenced symbols or spurious Module methods, keeping the Release IL baseline clean at 222 checked.
    - Once `MethodAudit` supports cross-assembly `gcroot` type argument resolution against the current module's original counterpart (`originals[currentOriginal]`), these four methods can be linked via `#pragma comment(linker, ...)` and will pass Release IL verification immediately.
 
+## Native Dependencies, Set Erase Paths, and Navigation RTTI Investigation
 
+Investigation of remaining unmigrated `PositionBase`, `Position`, and `DepManager` members revealed three distinct architectural boundaries in native C++ and mixed-mode compilation:
 
+1. **Navigation RTTI Evidence (`Position.previous` and `Position.next`)**:
+   - **Original Implementation**: Mathcad Release IL for `depman.Position.previous` (offset 224, `prev_`) and `depman.Position.next` (offset 232, `next_`) loads `OrderedListNode<PositionBase>::prev_` or `next_`, pushes 0, passes TypeDescriptor pointers `??_R0?AV?$OrderedListNode@VPositionBase@depman@@@@@8` and `??_R0?AVPosition@depman@@@8`, and calls `__RTDynamicCast`.
+   - **C++ Source**: In source, this is `return dynamic_cast<Position*>(prev_);` and `return dynamic_cast<Position*>(next_);`.
+   - **Toolchain / RTTI Constraint**: When compiled with MSVC `/GR`, MSVC synthesizes `$_TypeDescriptor$_extraBytes_*` structures in `<Module>` along with RTTI descriptor data tables. Differences in compiler-generated RTTI descriptor layouts between MSVC toolchain versions cause Release IL verification to detect metadata and data-reference mismatches against Mathcad's original binary. These methods remain preserved as source drafts until compiler RTTI descriptor emissions are normalized.
 
+2. **Native Set Erase Paths (`PositionBase.Kill` and `TreatAsReady(false)`)**:
+   - **Original Implementation**: `PositionBase.Kill` marks `killed_ = true` (offset 184). If `dparent_ != nullptr` (offset 128), it retrieves `Position* pos = position_` (offset 16), clears `pos->dparent_ = nullptr`, and unlinks `pos` from `dparent_->dependents_` (offset 136).
+   - **Container Layout**: Offset 136 holds `std::set<depman::Position*, std::less<depman::Position*>, std::allocator<depman::Position*>> dependents_`. In Mathcad's Release IL, MSVC inlines `std::set::erase` via internal red-black tree helpers `std::_Tree<...>::_Eqrange` (yielding an iterator pair) followed by `std::_Tree<...>::_Erase`.
+   - **Blockers**: Inlining STL tree erase operations requires identical `std::_Tree_node` definitions and allocator frame layouts. Furthermore, `PositionBase.TreatAsReady(false)` couples the set erase path with `ready_event_` (blocked by the `SafeEvent` `gcroot` issue) and `dep_manager_->invalidateChains` (blocked by native `DepManager`).
 
+3. **Native Dependency Maps (`DepManager` Multi-Level Containers)**:
+   - **Blocked Callers**: `PositionBase.InvalidateDeps`, `PositionBase.SetEnvScope`, `PositionBase.EndMove`, and `ActionChain.add_env_scope` / `remove_env_scope` all call directly into `DepManager` methods (`invalidateChains`, `add_dep`, `remove_dep`).
+   - **Container Architecture**: Disassembly of `DepManager` reveals that it is an unmanaged engine class managing multi-level associative containers:
+     - `std::map<SDef, std::map<Position*, std::pair<ActionChain*, DependencyType>, value_less<Position>>> forward_deps_`: Maps symbol definitions to dependent positions and action chains.
+     - `std::map<SDef, std::map<Position*, DefinitionType, value_less<Position>>> def_table_`: Maps symbol definitions to declaring positions and their definition types.
+     - `std::deque<std::pair<SDef, Position*>> work_queue_`: Queue for topological cascade invalidations.
+   - Custom comparators (`value_less<Position>`) sort by position sequence ordinals rather than pointer addresses to ensure deterministic recomputation.
+   - `DepManager` is currently forward-declared in `DepmanContracts.h`; implementing these dependent methods requires fully implementing and validating the native `DepManager` container models and their internal map semantics.
 
-
-
-
-
+4. **Summary of Member Readiness and Categorization**:
+   - **Preserved `gcroot`-Blocked Drafts** (`PositionBase.SetBusy`, `WaitReady`, `PrepareKill`, `ready`): Exact C++ source is implemented in `DepmanPosition.cpp` and `DepmanPosition.h`. Blocked exclusively on `MethodAudit` cross-assembly `gcroot` binding resolution.
+   - **Preserved RTTI Drafts** (`Position.previous`, `Position.next`): Exact C++ source is implemented; blocked on MSVC RTTI type descriptor data parity.
+   - **Set Erase / Tree Inlining Methods** (`PositionBase.Kill`, `PositionBase.TreatAsReady`): Blocked on STL red-black tree erase inlining and dependent events/manager calls.
+   - **DepManager Map Consumers** (`PositionBase.InvalidateDeps`, `PositionBase.SetEnvScope`, `PositionBase.EndMove`): Blocked on full native `DepManager` container implementation.
 
