@@ -512,6 +512,94 @@ internal partial class AxisModel
         DefaultTickMarks = AxisModelDefinitionCollection.Instance[Type, PlotType].TickMarksDefault;
     }
 
+    private XmlNode GetXmlNode(string wsNameSpace, string mathNameSpace)
+    {
+        XmlDocument xmlDocument = new XmlDocument();
+        XmlElement xmlElement = xmlDocument.CreateElement(AxisXmlNodeName, wsNameSpace);
+        xmlElement.SetAttribute("rank", "1");
+        XmlElement xmlElement2 = xmlDocument.CreateElement("axisLine", wsNameSpace);
+        xmlElement.AppendChild(xmlElement2);
+        if (AxesType.Z != Type)
+        {
+            xmlElement.SetAttribute("legend-position", ConvertLegendPositionIndexToLegendPositionEnum());
+        }
+        xmlElement2.SetAttribute("position", Position.ToString().ToLower());
+        xmlElement2.SetAttribute("positionticmark", PositionTickMark.ToString());
+        xmlElement2.SetAttribute("legendWidth", LegendWidth.ToString(CultureInfo.InvariantCulture));
+        XmlElement xmlElement3 = xmlDocument.CreateElement("axisGrid", wsNameSpace);
+        xmlElement.AppendChild(xmlElement3);
+        XmlElement xmlElement4 = xmlDocument.CreateElement("gridFrequency", wsNameSpace);
+        xmlElement3.AppendChild(xmlElement4);
+        xmlElement4.AppendChild(xmlDocument.CreateTextNode(MajorTickMarks.Count.ToString()));
+        XmlElement xmlElement5 = xmlDocument.CreateElement("gridLabels", wsNameSpace);
+        xmlElement3.AppendChild(xmlElement5);
+        xmlElement5.SetAttribute("display", XmlConvert.ToString(ShowNumbers));
+        XmlElement xmlElement6 = xmlDocument.CreateElement("gridLines", wsNameSpace);
+        xmlElement3.AppendChild(xmlElement6);
+        xmlElement6.SetAttribute("display", XmlConvert.ToString(ShowGridLines));
+        xmlElement6.SetAttribute("color", GridLineColor.ToString());
+        XmlElement xmlElement7 = xmlDocument.CreateElement("tickMarks", wsNameSpace);
+        xmlElement3.AppendChild(xmlElement7);
+        xmlElement7.SetAttribute("display", XmlConvert.ToString(MajorTickMarks.Show));
+        if (AxisTitleModel != null)
+        {
+            XmlNode newChild = xmlDocument.ImportNode(AxisTitleModel.RegionXmlNode, deep: true);
+            xmlElement.AppendChild(newChild);
+        }
+        XmlElement xmlElement8 = xmlDocument.CreateElement("markers", wsNameSpace);
+        xmlElement.AppendChild(xmlElement8);
+        foreach (AxisMarker marker in Markers)
+        {
+            using XmlNodeWriter xmlWriter = new XmlNodeWriter(xmlElement8);
+            axisBaseTypeMarker.XmlSerializer.Serialize(xmlWriter, marker.GetDataObject(ResultManager.Instance));
+        }
+        if (IsDisplayNumberFormatLocal)
+        {
+            using XmlNodeWriter writer = new XmlNodeWriter(xmlElement);
+            ResultFormat resultFormat = new ResultFormat(DisplayNumberFormat, null, wsNameSpace);
+            resultFormat.RootNodeFormatName = "numberFormat";
+            resultFormat.WriteXml(writer);
+        }
+        XmlElement xmlElement9 = xmlDocument.CreateElement(DomainXmlNodeName, wsNameSpace);
+        xmlElement.AppendChild(xmlElement9);
+        xmlElement9.SetAttribute("scale-type", Scaling.ToString().ToLower());
+        xmlElement9.SetAttribute("auto-scale", XmlConvert.ToString(value: true));
+        XmlElement xmlElement10 = xmlDocument.CreateElement("startValue", wsNameSpace);
+        xmlElement9.AppendChild(xmlElement10);
+        if (StartExpression.IsDefaultValue)
+        {
+            XmlElement newChild2 = XmlWorksheetData.CreateMLElement(xmlDocument, "placeholder", mathNameSpace);
+            xmlElement10.AppendChild(newChild2);
+        }
+        else
+        {
+            xmlElement10.AppendChild(xmlDocument.ImportNode(StartExpression.RegionXmlNode, deep: true));
+            ResultManager.Instance.CreateResultRef(xmlElement10, StartExpression);
+        }
+        if (!SecondTickExpression.IsDefaultValue)
+        {
+            XmlElement xmlElement11 = xmlDocument.CreateElement("secondTickValue", wsNameSpace);
+            xmlElement9.AppendChild(xmlElement11);
+            xmlElement11.AppendChild(xmlDocument.ImportNode(SecondTickExpression.RegionXmlNode, deep: true));
+            ResultManager.Instance.CreateResultRef(xmlElement11, SecondTickExpression);
+        }
+        XmlElement xmlElement12 = xmlDocument.CreateElement("endValue", wsNameSpace);
+        xmlElement9.AppendChild(xmlElement12);
+        if (EndExpression.IsDefaultValue)
+        {
+            XmlElement newChild3 = XmlWorksheetData.CreateMLElement(xmlDocument, "placeholder", mathNameSpace);
+            xmlElement12.AppendChild(newChild3);
+        }
+        else
+        {
+            xmlElement12.AppendChild(xmlDocument.ImportNode(EndExpression.RegionXmlNode, deep: true));
+            ResultManager.Instance.CreateResultRef(xmlElement12, EndExpression);
+        }
+        xmlElement.SetAttribute("start", Start.ToString(CultureInfo.InvariantCulture));
+        xmlElement.SetAttribute("end", End.ToString(CultureInfo.InvariantCulture));
+        return xmlElement;
+    }
+
     public void SetRange(double? min, double? max)
     {
         // The IL creates the closure only after the readiness test, so the body sits inside the if.

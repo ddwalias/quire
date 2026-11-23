@@ -69,8 +69,6 @@ internal partial class AxisModel : global::Quire.Controls.Plots.Presenter.IAxisM
     private static void CalculateBetterTickmarksWithZeroInRange(ref double start, ref double end, ref int numberOfIntervals) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetXmlNode(global::System.Xml.XmlNode value, global::System.Xml.XmlNamespaceManager nmspmgr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Xml.XmlNode GetXmlNode(string wsNameSpace, string mathNameSpace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.AxisModel+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames

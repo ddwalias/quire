@@ -511,3 +511,11 @@
 - Release IL: PASS — 2537 checked, 0 failures (last run, after batch 72).
 - Still stubs: `GetXmlNode`, `SetXmlNode` (large XML writer/reader), `AxisCalculatables` (iterator), `AddEquation` is done, the constructor, and the two blocked tick-mark helpers from batch 69.
 - SetMinWidthHeight (XYPlotStrategy) remains parked on the slot 41 vs 40 mismatch.
+
+## Batch 73 — AxisModel.GetXmlNode
+
+- Member: `GetXmlNode(string wsNameSpace, string mathNameSpace)`, the `RegionXmlNode` getter's writer. Hand-written: placed ahead of `SetRange` in `Mirrored/Controls.Plots.Model.AxisModel.cs` (keeps the `SetRange` 170 and `GetNumberOfTracesForEquation` 213 ordinals); stub removed from `AxisModel.g.cs`.
+- Generated layout: one stub removed. Verified: after a Release build of `Quire.Controls.Plots`, `emit` leaves `AxisModel.g.cs` as HEAD minus exactly that stub and its `[MirrorStub]` attribute.
+- Release IL: PASS — 2538 checked, 0 failures.
+- Left in AxisModel: `SetXmlNode` (XML reader), `AxisCalculatables` (iterator), the constructor, and the two blocked tick-mark helpers from batch 69.
+- SetMinWidthHeight (XYPlotStrategy) remains parked on the slot 41 vs 40 mismatch.
