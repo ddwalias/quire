@@ -565,3 +565,9 @@
 - Members: `SetEquation(AxesIndex, IEquationItem)` and `CopyMinMaxAndUnitsResults(EngineResult)`. Both draft bodies match except one constant: the comparison with `SynchronizationStatus.Synchronized` is `ldc.i4.3` in Mathcad and `ldc.i4.1` in Quire.
 - Cause: the enum value differs between the two sides. Mathcad `Ptc.Calculation.Core.SynchronizationStatus` is `Pending = 0, Synchronized = 3` (reference.py). Quire `Quire.Calculation.Core.SynchronizationStatus` (`src/Quire.Calculation.Core/ICalculatable.cs`) is `Pending, Synchronized` (0, 1).
 - Result: not landed; both stay generated stubs. The fix is in `Quire.Calculation.Core` (give `Synchronized` the Mathcad value 3), which is outside this lane's assembly. Needs the maintainer or the owning lane. Any other Plots member that compares `SynchronizationStatus` will show the same mismatch until then.
+
+## Batch 80 — TraceModel RegionXmlNode (blocked on the setter, kept as stub)
+
+- Member: `RegionXmlNode` (property; getter and setter in one generated stub). The getter matches Mathcad exactly. The setter has the same leading difference as `AxisModel.SetXmlNode` (batch 74): Mathcad stores the `value` parameter in a temp before `if (value == null) throw new ArgumentNullException("value")` (`ldarg.1; stloc.0; ldloc.0; brtrue.s`), and Roslyn does not emit it.
+- Result: not landed. Splitting the property to land only the getter would leave the setter as a placeholder, which AGENTS.md reserves for closure and iterator ordinals, so the whole property stays a generated stub.
+- Pattern note: any setter or method with `if (value == null) throw new ArgumentNullException("value")` on an XML node parameter has this shape in Mathcad. Worth checking the same form elsewhere before writing it; the fix is not yet known.
