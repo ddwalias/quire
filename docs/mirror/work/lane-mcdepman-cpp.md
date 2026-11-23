@@ -172,6 +172,17 @@ Remaining mismatches: none in this two-member spike. Remaining migration: the re
   - Because `DepManager` dependency storage is not yet established, `remove_env_scope` and `add_env_scope` cannot be isolated as self-contained leaves.
   - `PositionBase.SetEnvScope` branches on Scope nullness and calls both `ActionChain.remove_env_scope` and `ActionChain.add_env_scope` in addition to `SetNeedsCheck`, so it remains blocked on those `DepManager` dependencies.
 
+## Batch 18 — ActionChain.Kill
+
+- Owner: AGY, Orca task `task_55d9f959f91d`; branch `feature/luna-mcdepman`.
+- Member: `ActionChain.Kill()`, sets `is_dead_ = true` at offset 33 and recurses on `next_` (offset 24), maintaining the 40-byte `ActionChain` layout.
+- Release IL report: `.mirror-cache/release-il-200d28736594/release-il.json` (PASS, 211 checked; module `ActionChain.Kill` exact).
+- Inspection of DepManager.add_dep / remove_dep and PositionBase.StartTiming:
+  - `DepManager.add_dep` and `remove_dep` are large unmanaged methods operating on a multi-level `std::map<SDef, std::map<Position*, pair<ActionChain*, DependencyType>>>` structure with `std_label_set` and custom comparators; `DepManager` layout and native dependency tables remain unported.
+  - A `PositionBase.StartTiming` probe was rejected: dereferencing `gcroot<Quire::depman::NodeTimer^>` emits template operator `..PE$AAVNodeTimer@depman@Quire@@` instead of Mathcad's `..PE$AAUNodeTimer@depman@@` (identical to the rejected `WaitReady` probe in Batch 14); no probe code remains.
+  - `PositionBase.Kill` remains parked on the unproven `std::set<depman::Position*>` erase path at offset 136.
+
+
 
 
 

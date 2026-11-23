@@ -11,6 +11,7 @@
 #pragma comment(linker, "/include:?Lock@ActionChain@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?UnLock@ActionChain@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?SetNeedsCheck@ActionChain@depman@@QEAAXXZ")
+#pragma comment(linker, "/include:?Kill@ActionChain@depman@@QEAAXXZ")
 
 namespace Quire { namespace depman {
 
@@ -95,6 +96,13 @@ void ActionChain::SetNeedsCheck()
     {
         loc_->env()->GetSharedThreadContext()->ReleaseMutex(false);
     }
+}
+
+void ActionChain::Kill()
+{
+    is_dead_ = true;
+    if (next_)
+        next_->Kill();
 }
 
 } // namespace depman
