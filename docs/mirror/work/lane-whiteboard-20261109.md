@@ -858,6 +858,20 @@
 - Runtime Verification: Verified on STA thread with real `WhiteboardViewModel`; confirmed `Crosshair` child in `WhiteboardCanvas.Children`, validated `Canvas.Left` and `Canvas.Top` dynamically track `vm.InsertionPoint` (with grid snapping), and verified `Visibility` toggles between `Visible` and `Collapsed` via `vm.IsCrosshairVisible`.
 - Remaining mismatches in this batch: none.
 
+## Batch 58 — WhiteboardViewModel: OnPropertyChanged and OnDispose Exact Release IL
+
+- Members:
+  - `WhiteboardViewModel.OnPropertyChanged(string)`
+  - `WhiteboardViewModel.OnDispose()`
+- Hand-written:
+  - `src/Quire.Controls.Whiteboard/Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`
+- Shapes Release IL requires:
+  - `OnPropertyChanged`: calls `base.OnPropertyChanged(propertyName)`, checks `propertyName == "ActiveItem"` emitting `brfalse.s` to fire `ActiveDescendant` and `SelectedDescendants`, then checks `propertyName == "SelectedItems"` to fire `SelectedDescendants`.
+  - `OnDispose`: calls `ClearSelectedItems()`, unhooks and nulls `_activeItem` if non-null, calls `ClearSavedState()`, initializes `StringBuilder`, iterates over `WhiteboardItems.OfType<IDisposable>()` disposing items with `try`/`catch` logging exception formats, asserts `DebugTools.DevAssert(stringBuilder.Length == 0, stringBuilder.ToString())`, and disposes `_whiteboardModel` and `_alignmentGrid`. Matches exact 4-local slot order (`[0] StringBuilder, [1] IEnumerator<IDisposable>, [2] IDisposable, [3] Exception`).
+- Release IL: PASS — 1126 checked in Whiteboard, 0 failures, 0 skipped (`release-il-b12e5668e920`). 100% exact parity achieved across all 1126 members of `Quire.Controls.Whiteboard`.
+- Remaining mismatches in this batch: none.
+
+
 
 
 

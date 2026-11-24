@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -297,7 +298,19 @@ public partial class WhiteboardViewModel
         }
     }
 
-    protected override void OnPropertyChanged(string propertyName) => base.OnPropertyChanged(propertyName);
+    protected override void OnPropertyChanged(string propertyName)
+    {
+        base.OnPropertyChanged(propertyName);
+        if (propertyName == "ActiveItem")
+        {
+            OnPropertyChanged("ActiveDescendant");
+            OnPropertyChanged("SelectedDescendants");
+        }
+        if (propertyName == "SelectedItems")
+        {
+            OnPropertyChanged("SelectedDescendants");
+        }
+    }
 
     private void ChildWhiteboardPropertyChangedHandler(object sender, global::System.ComponentModel.PropertyChangedEventArgs e)
     {
@@ -2113,7 +2126,31 @@ public partial class WhiteboardViewModel
         }
     }
 
-    protected override void OnDispose() => base.OnDispose();
+    protected override void OnDispose()
+    {
+        ClearSelectedItems();
+        if (_activeItem != null)
+        {
+            UnhookActiveItem(_activeItem);
+            _activeItem = null;
+        }
+        ClearSavedState();
+        StringBuilder stringBuilder = new StringBuilder();
+        foreach (IDisposable item in WhiteboardItems.OfType<IDisposable>())
+        {
+            try
+            {
+                item.Dispose();
+            }
+            catch (Exception ex)
+            {
+                stringBuilder.AppendFormat("Exception when disposing item {0}) : {1}\n", item.GetType().Name, ex.Message);
+            }
+        }
+        DebugTools.DevAssert(stringBuilder.Length == 0, stringBuilder.ToString());
+        _whiteboardModel.Dispose();
+        _alignmentGrid.Dispose();
+    }
 
     protected virtual IWhiteboardItem GetChildItemFromLocation(Point point)
     {
