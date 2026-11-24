@@ -3,6 +3,7 @@ using Quire.Calculation.Core;
 using Quire.Controls.Core;
 using Quire.Controls.Core.IORegions;
 using Quire.Controls.Core.Whiteboard;
+using Quire.Controls.Internal;
 using Quire.Core;
 using Quire.EquationEditor;
 using Quire.EquationEditor.Tree.Navigation;
@@ -183,6 +184,28 @@ public partial class EquationControl
             }
 
             return false;
+        }
+    }
+
+    public double SymbolicResultsWidth
+    {
+        get
+        {
+            if (!ContainsSymbolicEvaluation)
+            {
+                return 0.0;
+            }
+
+            var node = _model.EvaluationRoot;
+            while (node[0].DescriptorName == "SYMBOLIC_EVALUATION")
+            {
+                node = node[0];
+            }
+
+            var symbolicNode = node[2];
+            var visualNode = _map.AssociateNode(symbolicNode) as VisualMathNode;
+            var origin = visualNode.TranslatePoint(new Point(0, 0), _view);
+            return ViewFullWidth - origin.X;
         }
     }
 }

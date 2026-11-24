@@ -324,3 +324,9 @@
 - Exact: `ContainsSymbolicEvaluation` (the evaluation root is tested with `!= null` as the outer branch, so the null case falls through to one final `return false`; inside, a `||` of the root's descriptor and its first child's descriptor against `"SYMBOLIC_EVALUATION"`). The first form (`if (root == null) return false;` then two returns) gave a `brtrue` where Mathcad has `brfalse`, so the null guard is written as the positive branch. `IsResizable` (`ContainsSymbolicEvaluation && SymbolicResultsWidth > RecommendedSymbolicResultsWidth`, returning `!IsEmbedded`, else `false`); its `ble.un` comparison matches Mathcad. Both are appended at the end of the partial, and their stub pairs are removed from the `.g.cs`.
 - Left out: `SymbolicResultsWidth` (stub; not on the path of these two) and `TextBaselineOffset` (needs its own probe).
 - Gate (project-level): PASS; 3581 checked, zero failures (`.mirror-cache/release-il-a85e499eaa0b/release-il.json`).
+
+### Batch 46: Controls.EquationControl (SymbolicResultsWidth)
+
+- Exact: `SymbolicResultsWidth` (a `!ContainsSymbolicEvaluation` guard returning `0.0`; a `while` walking down the first child while its descriptor is `SYMBOLIC_EVALUATION`; the third child mapped through `_map.AssociateNode` and `as VisualMathNode`; `TranslatePoint(new Point(0, 0), _view)`; `ViewFullWidth - origin.X`). It is the runtime dependency of `IsResizable` (batch 45) and is now real rather than a stub. Its stub pair is removed from the `.g.cs`; the partial gains `using Quire.Controls.Internal;` for `VisualMathNode`.
+- Left out: `TextBaselineOffset` (the `FindCommonVisualAncestor` / `TransformToVisual` path, which has its own probe).
+- Gate (project-level): PASS; 3582 checked, zero failures (`.mirror-cache/release-il-b4516b373053/release-il.json`).
