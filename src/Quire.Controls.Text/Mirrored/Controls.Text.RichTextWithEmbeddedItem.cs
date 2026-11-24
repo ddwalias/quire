@@ -2375,4 +2375,16 @@ private static void RequestNavigateHandler(object sender, System.Windows.Navigat
         }
     }
 }
+
+    static RichTextWithEmbeddedItem()
+    {
+        OpenFileCommand = new RoutedUICommand();
+        _internetURLSchemes = new string[3] { System.Uri.UriSchemeHttps, System.Uri.UriSchemeHttp, System.Uri.UriSchemeFtp };
+        _supportedURLSchemes = _internetURLSchemes.Concat(new string[2] { System.Uri.UriSchemeFile, System.Uri.UriSchemeMailto }).ToArray();
+        _typeOfThis = typeof(RichTextWithEmbeddedItem);
+        EmbeddedMathRootPadding = new Thickness(2, 0, 2, 0);
+        TabOutOfTextEvent = EventManager.RegisterRoutedEvent("TabOutOfText", RoutingStrategy.Bubble, typeof(CustomRoutedEventHandler<FocusNavigationDirection>), _typeOfThis);
+        HyperlinkCanHaveToolTipProperty = DependencyProperty.Register("HyperlinkCanHaveToolTip", typeof(bool), _typeOfThis, new PropertyMetadata((object)true));
+        EventManager.RegisterClassHandler(_typeOfThis, Hyperlink.RequestNavigateEvent, new RequestNavigateEventHandler(RequestNavigateHandler));
+    }
 }

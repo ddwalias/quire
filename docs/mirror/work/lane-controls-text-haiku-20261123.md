@@ -149,3 +149,18 @@
 - Ordinal finding: the stub removal and the move of `ClearSavedState` first shifted the iterator and `AddItems`/`RemoveItems`/`MoveItems` lambdas one lower. Moving the closure-free `GetHyperlinkFromTextPointer` ahead of the iterator restored 114 and 128-130 while ResetCaret stayed 132.
 - Release IL (project-wide): PASS — 681 checked, 0 failures.
 - Regeneration: `MirrorGen emit` gives the same ResetCaret stub removal plus the pre-existing `LogDocumentContents` placement drift and a blank line in `CustomSplitRichTextWithEmbeddedItem.g.cs`. Emit output was reverted; those two drift items are not part of this change.
+
+## Batch 41 — RichTextWithEmbeddedItem static constructor (TabOutOfTextEvent)
+
+- Owner: haiku-controls-text-high. Member: `static RichTextWithEmbeddedItem()` (Mathcad `.cctor`, 7 stores, no closures). Hand-written at the end of `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; no generated stub involved (`.cctor` is not generated).
+- Fixes the null `TabOutOfTextEvent` (and the other statics: `OpenFileCommand`, URL scheme arrays, `_typeOfThis`, `EmbeddedMathRootPadding`, `HyperlinkCanHaveToolTipProperty`, class handler for `Hyperlink.RequestNavigateEvent`).
+- Compiled `.cctor` dumped from the Release build: same store order and `ldnull`/`ldftn` form as Mathcad.
+- Release IL (project-wide): PASS — 682 checked, 0 failures. The gate compares `.cctor` for this type.
+- Regeneration: `MirrorGen emit` adds no change from this candidate; only the pre-existing `LogDocumentContents` placement drift and the CustomSplit blank line appear. Emit output reverted.
+
+### Blocked: RichTextBase static constructor (CaretLeavesTextAreaEvent)
+
+- Mathcad `RichTextBase..cctor` has 23 stores, including 5 lambdas `<.cctor>b__81_0..4` (`compareRuns` plus 4 DependencyProperty callbacks). The gate checks `.cctor` for this type, so an exact copy is required.
+- The lambda number is the count of members before the constructor in compile order. The generated prefix alone has 106 counted members before any hand-written code, so a partial constructor gets `b__107`–`b__298` (start/end of partial) and cannot reach Mathcad's `b__81`.
+- Tried and reverted: named static helpers instead of lambdas. The gate fails them as "no Mathcad counterpart", so this is not a workaround.
+- Unblock needs a class-wide Mathcad-order placeholder pass for RichTextBase (move about 26 counted generated stubs behind the constructor as unmarked placeholders). Not started.
