@@ -336,6 +336,88 @@ public partial class RichTextWithEmbeddedItem
         _richTextWithEmbededItemCloneHelper = _defaultCloneHelper;
     }
 
+    private string InlayXamlWithEmbeddedItems(DocumentTextRange rangeToSerialize, string xaml, out RichTextEmbeddedItemsInfo richTextEmbeddedItemsInfoData, List<IWhiteboardItem> embeddedEquationItems)
+    {
+        richTextEmbeddedItemsInfoData = RichTextEmbeddedItemsInfo.None;
+        if (DebugTools.DevAssert(rangeToSerialize.IsNotEmpty() && xaml != null, null).Failed)
+        {
+            return null;
+        }
+        IList<string> list = new List<string>();
+        TextPointer textPointer = rangeToSerialize.Start;
+        while (textPointer.CompareTo(rangeToSerialize.End) < 0)
+        {
+            // An if/else-if on a local, not a switch: Release IL tests Text first and falls through into its body.
+            TextPointerContext pointerContext = textPointer.GetPointerContext(LogicalDirection.Forward);
+            if (pointerContext == TextPointerContext.Text)
+            {
+                if ((textPointer.CompareTo(rangeToSerialize.Start) == 0 || textPointer.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementStart) && textPointer.GetTextInRun(LogicalDirection.Forward) == " ")
+                {
+                    list.Add(string.Empty);
+                }
+            }
+            else if (pointerContext == TextPointerContext.EmbeddedElement)
+            {
+                // Declared first: Release IL numbers textElement before the container locals; adjacentElement gets no local.
+                TextElement textElement;
+                DependencyObject adjacentElement = textPointer.GetAdjacentElement(LogicalDirection.Backward);
+                InlineUIContainer inlineUIContainer = adjacentElement as InlineUIContainer;
+                BlockUIContainer blockUIContainer = adjacentElement as BlockUIContainer;
+                if (inlineUIContainer != null)
+                {
+                    textElement = inlineUIContainer;
+                    IWhiteboardItemInTextWrapper wrapper = GetWrapper(inlineUIContainer.Child);
+                    if (wrapper != null)
+                    {
+                        richTextEmbeddedItemsInfoData |= RichTextEmbeddedItemsInfo.HasEmbeddedMath;
+                        if (embeddedEquationItems.Contains(wrapper.WrappedItem))
+                        {
+                            embeddedEquationItems.Remove(wrapper.WrappedItem);
+                        }
+                        else
+                        {
+                            DebugTools.FailAssertion("Found embedded element, that wasn't listed by SelectedItems() method.");
+                        }
+                    }
+                    else
+                    {
+                        richTextEmbeddedItemsInfoData |= RichTextEmbeddedItemsInfo.HasImages;
+                    }
+                }
+                else
+                {
+                    textElement = blockUIContainer;
+                    richTextEmbeddedItemsInfoData |= RichTextEmbeddedItemsInfo.HasImages;
+                }
+                if (textElement != null)
+                {
+                    System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+                    using (Quire.MindTouch.IO.ChunkedMemoryStream chunkedMemoryStream = new Quire.MindTouch.IO.ChunkedMemoryStream())
+                    {
+                        using (System.IO.StreamWriter streamWriter = Quire.Xml.XmlHelper.CreateStreamWriterForXamlCopy(chunkedMemoryStream, leaveOpen: true))
+                        {
+                            DocumentAttachedProperties.SetIsInCopy(this, value: true);
+                            System.Windows.Markup.XamlWriter.Save(textElement, streamWriter);
+                            streamWriter.Flush();
+                            DocumentAttachedProperties.ClearIsInCopy(this);
+                        }
+                        chunkedMemoryStream.Position = 0L;
+                        xmlDocument.Load(chunkedMemoryStream);
+                    }
+                    list.Add(xmlDocument.InnerXml);
+                }
+                else
+                {
+                    list.Add(string.Empty);
+                    DebugTools.FailAssertion("Found embedded element, that isn't 'InlineUIContainer' nor 'BlockUIContainer'.");
+                }
+            }
+            textPointer = textPointer.GetPositionAtOffset(1);
+        }
+        DebugTools.DevAssert(embeddedEquationItems.IsNullOrEmpty(), "Some embedded equations weren't found during previous loop. The XAML we will create will lack 'non-found' equations.");
+        return GetCombinedDocumentXaml(xaml, list);
+    }
+
     private void BindHyperlinkCommands()
     {
         CommandBindings.Add(new CommandBinding(HyperlinkCommands.ModifyHyperlink, ModifyHyperlink, CanModifyHyperlink));

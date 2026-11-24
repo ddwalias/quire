@@ -96,8 +96,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     protected override void CopyingHandler(object sender, global::System.Windows.DataObjectCopyingEventArgs e) => base.CopyingHandler(sender, e);
     [global::Quire.Mirror.MirrorStub]
-    private string InlayXamlWithEmbeddedItems(global::System.Windows.Documents.TextRange rangeToSerialize, string xaml, out global::Quire.RichTextEmbeddedItemsInfo richTextEmbeddedItemsInfoData, global::System.Collections.Generic.List<global::Quire.Controls.Core.IWhiteboardItem> embeddedEquationItems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void PastingHandler(object sender, global::System.Windows.DataObjectPastingEventArgs e) => base.PastingHandler(sender, e);
     [global::Quire.Mirror.MirrorStub]
     protected override void PrePasting() => base.PrePasting();

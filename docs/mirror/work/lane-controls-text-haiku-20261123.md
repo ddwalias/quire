@@ -105,3 +105,10 @@
 - Member: `protected void CloneContent(...)`, no lambda, no closure. Uses `using (new CommandScope(new CompoundCommand()))`, a `foreach` over `WhiteboardItems.Reverse()`, and a `using` declaration for the popup. Hand-written in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stub removed from the `.g.cs`. The `export` parameter is unused, as in Mathcad.
 - Release IL (project-wide): PASS — 666 checked, 0 failures (first try).
 - Regeneration: `MirrorGen emit` gives the same stub removal plus the pre-existing `LogDocumentContents` placement drift. Emit output elsewhere was reverted. The solution build's 14 errors are in `tests/Quire.Mirror.Tests` (pre-existing).
+
+## Batch 35 — RichTextWithEmbeddedItem.InlayXamlWithEmbeddedItems
+
+- Member: `private string InlayXamlWithEmbeddedItems(DocumentTextRange, string, out RichTextEmbeddedItemsInfo, List<IWhiteboardItem>)`, no lambda. Hand-written in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stub removed from the `.g.cs`.
+- Two shapes differ from the obvious source: (1) Release IL tests `Text` first with `bne.un` and falls through, so the dispatch is an if/else-if on a `TextPointerContext` local, not a `switch` (a `switch` gave `beq` tests with the body placed later); (2) `textElement` is declared first, so its local number matches Mathcad's. `adjacentElement` keeps no local (Roslyn `dup`s it), as in Mathcad.
+- Release IL (project-wide): PASS — 667 checked, 0 failures.
+- Regeneration: `MirrorGen emit` gives the same stub removal plus the pre-existing `LogDocumentContents` placement drift. Emit output elsewhere was reverted. The solution build's 14 errors are in `tests/Quire.Mirror.Tests` (pre-existing).
