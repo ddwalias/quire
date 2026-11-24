@@ -33,6 +33,24 @@ internal abstract partial class VisualMathNode
 
     public virtual double TextBaselineY => 0.0;
 
+    public bool IsValid
+    {
+        get => (bool)GetValue(IsValidProperty);
+        set => SetValue(IsValidProperty, value);
+    }
+
+    public bool ShowAlignmentPoint
+    {
+        get => (bool)GetValue(ShowAlignmentPointProperty);
+        set => SetValue(ShowAlignmentPointProperty, value);
+    }
+
+    public bool ShowOperatorOnlyWhenActive
+    {
+        get => (bool)GetValue(ShowOperatorOnlyWhenActiveProperty);
+        set => SetValue(ShowOperatorOnlyWhenActiveProperty, value);
+    }
+
     private static void OnShowOperatorOnlyWhenActiveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var node = d as VisualMathNode;

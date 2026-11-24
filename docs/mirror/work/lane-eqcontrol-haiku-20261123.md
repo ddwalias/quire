@@ -458,3 +458,9 @@
 - Runtime dependency cleared: `DepthBelowBaseline` (batch 66) no longer throws at run time, because `TextBaselineY` is implemented.
 - Unchanged: the `VisualMathNode` constructor (IL-structural mismatch, batch 65); `MathFormat` stays null at run time, so `DeserializeMathFormat` still throws `NullReferenceException`; `GetColumnCells` stays parked (`DeleteEmptyColumns`).
 - Gate (project-level): PASS; 3680 checked, zero failures (`.mirror-cache/release-il-cb037d505f48/release-il.json`).
+
+### Batch 68: Controls.Internal.VisualMathNode (IsValid, ShowAlignmentPoint, ShowOperatorOnlyWhenActive)
+
+- Exact (6 accessors, 3 properties): each property is a non-virtual dependency-property wrapper (`get => (bool)GetValue(XProperty)`, `set => SetValue(XProperty, value)`) over the static DPs registered in batch 65. Stub pairs removed from the `.g.cs`; the bodies live in the hand-written partial.
+- Unchanged: the `VisualMathNode` constructor (IL-structural mismatch, batch 65); `MathFormat` stays null at run time, so `DeserializeMathFormat` still throws `NullReferenceException`; `GetColumnCells` stays parked (`DeleteEmptyColumns`).
+- Gate (project-level): PASS; 3686 checked, zero failures (`.mirror-cache/release-il-72e57c88afa8/release-il.json`).
