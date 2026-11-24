@@ -126,10 +126,6 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.EngineResult EngineResultForSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IMathFormat DeserializeMathFormat { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> DeserializeLabeledIdFormat { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> RequestEvaluation;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Func<global::Quire.Calculation.Core.ICalculatable, string, global::Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore;
@@ -217,8 +213,6 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
     public int IncrementComponentCookieMultiThreaded(bool isAutoCalc = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HandleSizeChanged(global::System.Windows.Vector offset, bool changeWidth, bool changeHeight, bool resizeInProgress) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ReadDeserializationFormatsForPaste() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnTemplateChanged(global::System.Windows.Controls.ControlTemplate oldTemplate, global::System.Windows.Controls.ControlTemplate newTemplate) => base.OnTemplateChanged(oldTemplate, newTemplate);
     [global::Quire.Mirror.MirrorStub]

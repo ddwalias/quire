@@ -422,3 +422,10 @@
 - Runtime dependency (not an IL mismatch): `ReadDeserializationFormatsForPaste` is still a generated stub, so the `FirstPropertyForXamlSerialization` setter throws `NotImplementedException` until that method is implemented.
 - Left out: `Warnings` (its getter's lambda is a closure with a compiler-assigned ordinal, `<get_Warnings>b__588_0`, so it needs a compile-order probe).
 - Gate (project-level): PASS; 3670 checked, zero failures (`.mirror-cache/release-il-1e6211496e6e/release-il.json`).
+
+### Batch 63: Controls.EquationControl (ReadDeserializationFormatsForPaste, DeserializeMathFormat, DeserializeLabeledIdFormat)
+
+- Exact (3 accessors): `ReadDeserializationFormatsForPaste` (`DebugTools.DevAssert(...)` over `MathFormatForPaste.Instance` and its two document formats, `.Failed` checked for an early return, then sets `DeserializeMathFormat` and `DeserializeLabeledIdFormat` from the instance); `DeserializeMathFormat` setter (`_view.MathFormat.SetPropertiesFrom(value, true)` after the null guard); `DeserializeLabeledIdFormat` setter (`SetValue(AttachedProperties.LabeledIdFormatProperty, value)`, with the local typed `DependencyObject` as Mathcad's IL requires; `var` gave `VisualMathRegionNode` and failed). Stub pairs removed from the `.g.cs`.
+- Runtime dependency (not an IL mismatch): `VisualMathNode.MathFormat` is still a generated stub, so the `DeserializeMathFormat` setter throws `NotImplementedException` at run time until that getter is implemented.
+- Runtime dependency still parked: `GetColumnCells` (stloc/ldloc elision); its `DeleteEmptyColumns` dependency stays visible.
+- Gate (project-level): PASS; 3673 checked, zero failures (`.mirror-cache/release-il-64a12096c843/release-il.json`).

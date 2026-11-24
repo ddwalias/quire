@@ -577,4 +577,42 @@ public partial class EquationControl
     }
 
     public int WarningsCount => _model.Warnings?.Count ?? 0;
+
+    public IMathFormat DeserializeMathFormat
+    {
+        set
+        {
+            if (_view == null || value == null)
+            {
+                return;
+            }
+
+            _view.MathFormat.SetPropertiesFrom(value, true);
+        }
+    }
+
+    public IDictionary<IdLabels, ExtendedFont> DeserializeLabeledIdFormat
+    {
+        set
+        {
+            DependencyObject view = _view;
+            if (view == null || value == null)
+            {
+                return;
+            }
+
+            view.SetValue(AttachedProperties.LabeledIdFormatProperty, value);
+        }
+    }
+
+    private void ReadDeserializationFormatsForPaste()
+    {
+        if (DebugTools.DevAssert(MathFormatForPaste.Instance != null && MathFormatForPaste.Instance.DocumentMathFormat != null && MathFormatForPaste.Instance.DocumentLabeledIdFormat != null).Failed)
+        {
+            return;
+        }
+
+        DeserializeMathFormat = MathFormatForPaste.Instance.DocumentMathFormat;
+        DeserializeLabeledIdFormat = MathFormatForPaste.Instance.DocumentLabeledIdFormat;
+    }
 }
