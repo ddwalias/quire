@@ -199,6 +199,6 @@
 ## Batch 45 — RichTextBase.GetPointerToAddDictionary (with GetSpellingErrorAtPosition in parameter)
 
 - `GetPointerToAddDictionary` is implemented from the Mathcad IL as a closure-free method: `GetIsEnabled(this) && IsNotEmpty && Selection.IsEmpty`, then `GetSpellingErrorAtPosition(CaretPosition, out SpellingError)`.
-- `GetSpellingErrorAtPosition` takes `[in] TextPointer&` in the Mathcad IL, so the Quire parameter is now `in TextPointer`. Its one caller, `HandleSetCurrentProofingLanguage`'s helper at line 606 region, passes the local without a call-site `in` keyword, as with `GetInsertionPointAtPointer`.
+- `GetSpellingErrorAtPosition` takes `[in] TextPointer&` in the Mathcad IL, so the Quire parameter is now `in TextPointer`. Its existing caller in `LoadXamlContent` passes the local without a call-site `in` keyword, as with `GetInsertionPointAtPointer`.
 - Release IL (project-wide): PASS — 691 checked, 0 failures. No `.g.cs` stubs existed for these members.
 - Parked: `Activate` (closure `<Activate>b__261_0`, body `Focus()`). The body is simple, but Mathcad numbers the lambda 261 and the current placement gives 103; closing that gap needs the Mathcad-order placeholder layout before line 142, not an edit in place.
