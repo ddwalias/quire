@@ -826,6 +826,23 @@
 - Runtime Load: Verified via `SolveBlockControl` instantiation and `WhiteboardCanvas` visual tree inspection on STA thread.
 - Remaining mismatches in this batch: none.
 
+## Batch 56 — Quire-Authored EquationTypeIndicatorControl Resource
+
+- Resource: `mathboard/equationtypeindicatorcontrol.xaml`
+- Hand-written / authored per D21:
+  - `src/Quire.Controls.Whiteboard/mathboard/equationtypeindicatorcontrol.xaml`
+- Content & Capabilities:
+  - Root `<UserControl>` without `x:Class` to avoid duplicate method/connector definitions while enabling MSBuild `MarkupCompilePass1` to compile into assembly BAML.
+  - Resource dictionary declaring `<Wpf:DecreaseValueByParameterConverter x:Key="decreaseValueByParameterConverter" />` from `Quire.Core`.
+  - Content: `<Grid x:Name="MainGrid">` with 1 row and 2 columns (Auto, *).
+  - Rotated `TextBlock` (`LayoutTransform` RotateTransform Angle 270) bound to `Text`, visibility bound to ancestor `Mathboard:EquationTypeIndicatorControl`.
+  - Three bracket `Line` elements (`Stroke="#FF1E90FF"`, `StrokeThickness="1"`) with bottom line using `DecreaseValueByParameterConverter` with parameter 0.5.
+  - Satisfies `EquationTypeIndicatorControl.InitializeComponent()` runtime resource URI `/Quire.Controls.Whiteboard;component/mathboard/equationtypeindicatorcontrol.xaml` and wires `MainGrid` connector without runtime `IOException`.
+- Release IL: PASS — 1124 checked in Whiteboard, 0 failures (`release-il-133ec4330879`).
+- Runtime Load: Verified via `new EquationTypeIndicatorControl()` instantiation on STA thread; confirmed `Content` is `Grid` named `MainGrid`.
+- Remaining mismatches in this batch: none.
+
+
 
 
 
