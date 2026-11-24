@@ -519,3 +519,11 @@
 - Runtime dependency: `BuildChildren` on the linear outfix and unary nodes now uses the implemented indexers (`Child` is set when `index == 0`). Other indexes still throw `ArgumentOutOfRangeException` through the base.
 - Unchanged: `ScreenBounds` stays a stub (batch 72 mismatch), so `ScreenInkBounds` still throws; the `VisualMathNode` constructor is unmatched (batch 65), so `MathFormat` stays null and `DeserializeMathFormat` still throws `NullReferenceException`; `GetColumnCells` stays parked (`DeleteEmptyColumns`).
 - Gate (project-level): PASS; 3714 checked, zero failures (`.mirror-cache/release-il-2ea5a0ee5497/release-il.json`).
+
+### Batch 76: EquationControl+EquationControlChildCalculatable (RlIndex)
+
+- Exact (2 accessors): `RlIndex` is an auto-property of the nested `private partial class EquationControlChildCalculatable` (`<RlIndex>k__BackingField`; get loads the field, set stores it). The hand-written partial is `src/Quire.Controls.EquationControl/Mirrored/Controls.EquationControl.EquationControlChildCalculatable.cs`. Stub pair removed from the `.g.cs`.
+- Still open (not landed): the `VisualNthRootOperatorNode` and `VisualDerivativeOperatorNodeBase` indexer setters (batch 75 notes). Their Mathcad bodies compute the scaled font size on the evaluation stack and store a `Nullable<double>` and a `double` in the reverse order (`stloc.1`/`stloc.2`) inside a `DevAssert` expression. The natural C# order is different, so these need a stack-order probe before they can match. Their getters are not useful alone: `_nodeChildren` is set only by the unmatched constructors.
+- Parked and unchanged: `ComponentCookieMultiThreaded`, `History`, `Warnings`, `MatrixRows`, `MatrixColumns`, and the `CurrentNode*` group (see batches 60 to 65).
+- Runtime dependencies still visible: `ScreenBounds` stub (`ScreenInkBounds` throws); the `VisualMathNode` constructor unmatched (`MathFormat` null, `DeserializeMathFormat` throws `NullReferenceException`, `AlignmentPoint` is `(0, 0)`); `GetColumnCells` parked (`DeleteEmptyColumns`); the NthRoot and Derivative indexer setters forward to base and throw `ArgumentOutOfRangeException`.
+- Gate (project-level): PASS; 3716 checked, zero failures (`.mirror-cache/release-il-1bb728559d86/release-il.json`).

@@ -864,8 +864,6 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
         [global::Quire.Mirror.MirrorStub]
         private global::Quire.Controls.EquationControl _parent;
         [global::Quire.Mirror.MirrorStub]
-        public int RlIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
         public EquationControlChildCalculatable(global::Quire.Controls.EquationControl parent) { }
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.Controls.EquationControl.EquationControlChildCalculatable Clone(global::Quire.Controls.EquationControl newParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
