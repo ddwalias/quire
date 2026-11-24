@@ -80,7 +80,7 @@ public partial class RichTextBase
     private global::System.Collections.Generic.IList<string> _undoRunsTextStyleKey;
     private global::System.Windows.Markup.XmlLanguage _currentProofingLanguage;
     public double[] CustomScriptsSizesForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    public virtual int CaretOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public virtual int CaretOffset { get => GetInsertionPointAtPointer(CaretPosition); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     public int SelectionStart { get => GetInsertionPointAtPointer(Selection.Start); }
     public int SelectionEnd { get => GetInsertionPointAtPointer(Selection.End); }
     public virtual double VerticalAlignmentOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

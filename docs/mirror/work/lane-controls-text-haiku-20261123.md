@@ -202,3 +202,9 @@
 - `GetSpellingErrorAtPosition` takes `[in] TextPointer&` in the Mathcad IL, so the Quire parameter is now `in TextPointer`. Its existing caller in `LoadXamlContent` passes the local without a call-site `in` keyword, as with `GetInsertionPointAtPointer`.
 - Release IL (project-wide): PASS — 691 checked, 0 failures. No `.g.cs` stubs existed for these members.
 - Parked: `Activate` (closure `<Activate>b__261_0`, body `Focus()`). The body is simple, but Mathcad numbers the lambda 261 and the current placement gives 103; closing that gap needs the Mathcad-order placeholder layout before line 142, not an edit in place.
+
+## Batch 46 — RichTextBase.CaretOffset getter
+
+- `get_CaretOffset` is implemented as `GetInsertionPointAtPointer(CaretPosition)`. The property stays `public virtual` because `RichTextWithEmbeddedItem` overrides it (the generated override fails to compile otherwise). The setter stays a placeholder.
+- Release IL (project-wide): PASS — 692 checked, 0 failures.
+- Parked: `ToggleRangeToState`. Mathcad stores the end pointer with `stloc.0` and reloads it with `ldloc.0` before `newobj TextRange`, with the start pointer kept on the stack. The idiomatic argument list differs at IL offset #6. Assignment-expression forms emit `dup` instead, so there is no C# shape found yet; keep the placeholder.
