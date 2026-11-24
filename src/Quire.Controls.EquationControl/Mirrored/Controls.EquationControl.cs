@@ -158,4 +158,31 @@ public partial class EquationControl
     }
 
     public bool IsShrunk => IsResizable && IsExceedsWidthConstrain;
+
+    public bool ContainsSymbolicEvaluation
+    {
+        get
+        {
+            var root = _model.EvaluationRoot;
+            if (root != null)
+            {
+                return root.DescriptorName == "SYMBOLIC_EVALUATION" || root[0].DescriptorName == "SYMBOLIC_EVALUATION";
+            }
+
+            return false;
+        }
+    }
+
+    public bool IsResizable
+    {
+        get
+        {
+            if (ContainsSymbolicEvaluation && SymbolicResultsWidth > RecommendedSymbolicResultsWidth)
+            {
+                return !IsEmbedded;
+            }
+
+            return false;
+        }
+    }
 }

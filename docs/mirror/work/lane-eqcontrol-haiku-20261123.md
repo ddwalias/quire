@@ -318,3 +318,9 @@
 - Exact: `ErrorCode` (a `CalculationError` null check, then `!string.IsNullOrEmpty` on its `ErrorCode`, returning that code or `""`; the three `get_CalculationError` calls are repeated, as in Mathcad, since there is no local); `IsShrunk` (`IsResizable && IsExceedsWidthConstrain`, which Roslyn lowers to the `brfalse` shape Mathcad uses). Both are appended at the end of the partial, and their stub pairs are removed from the `.g.cs`.
 - Left out: `IsResizable` (reads `ContainsSymbolicEvaluation`, `SymbolicResultsWidth` and a static threshold before a dependency-property path), `ContainsSymbolicEvaluation` (a loop over the evaluation root with a `_map` lookup), and `TextBaselineOffset` (a `FindCommonVisualAncestor` / `TransformToVisual` struct path, the same shape as the `TextBaselineY` fallback).
 - Gate (project-level): PASS; 3579 checked, zero failures (`.mirror-cache/release-il-03dafd60c943/release-il.json`).
+
+### Batch 45: Controls.EquationControl (ContainsSymbolicEvaluation, IsResizable)
+
+- Exact: `ContainsSymbolicEvaluation` (the evaluation root is tested with `!= null` as the outer branch, so the null case falls through to one final `return false`; inside, a `||` of the root's descriptor and its first child's descriptor against `"SYMBOLIC_EVALUATION"`). The first form (`if (root == null) return false;` then two returns) gave a `brtrue` where Mathcad has `brfalse`, so the null guard is written as the positive branch. `IsResizable` (`ContainsSymbolicEvaluation && SymbolicResultsWidth > RecommendedSymbolicResultsWidth`, returning `!IsEmbedded`, else `false`); its `ble.un` comparison matches Mathcad. Both are appended at the end of the partial, and their stub pairs are removed from the `.g.cs`.
+- Left out: `SymbolicResultsWidth` (stub; not on the path of these two) and `TextBaselineOffset` (needs its own probe).
+- Gate (project-level): PASS; 3581 checked, zero failures (`.mirror-cache/release-il-a85e499eaa0b/release-il.json`).
