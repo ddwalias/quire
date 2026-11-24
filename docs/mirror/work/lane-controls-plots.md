@@ -688,3 +688,12 @@
 - Release IL: full gate PASS — 2629 checked, 0 failures.
 - MirrorGen emit: 2 deletions, equal to the applied edit.
 - Remaining in this class: the protected constructor (`{ }` stub-marked, Mathcad body is `base()` only) and the abstract `InitializeTransform`/`TrackStart`/`Track`/`TrackEnd` (abstract, no body).
+
+## Batch 97 — PlotDataObjectCreator enum converters (5 members)
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Members: `ConvertBackgroundType`, `ConvertScaling`, `ConvertAxisPosition`, `ConvertTraceType`, `ConvertSymbol`. Each is a plain enum-to-enum `switch` with an `ArgumentOutOfRangeException` default, written in the same style as the already-exact `ConvertLineStyle` overloads. Hand-written in `Mirrored/PlotDataObjects.PlotDataObjectCreator.cs`; five stubs removed from the generated file.
+- Parameter type: `ConvertTraceType` uses the fully qualified `Quire.Calculation.Core.Trace2DResults.TraceType` to match the generated signature (`using` alone does not bring the `Trace2DResults` name into scope).
+- Release IL: full gate PASS — 2634 checked, 0 failures; all five are listed exact.
+- MirrorGen emit: 10 deletions (5 stubs + attributes), equal to the applied edit.
+- Still a stub: `FillPlotBaseType` (larger body, reads the plot control's axes and trace collections).

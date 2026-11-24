@@ -12,15 +12,5 @@ namespace Quire.PlotDataObjects;
 internal static partial class PlotDataObjectCreator
 {
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.PersistentDataObjects.BackgroundType ConvertBackgroundType(global::Quire.Controls.Core.BackgroundTypeE backgroundTypeE) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.PersistentDataObjects.scaleType ConvertScaling(global::Quire.Controls.Plots.Presenter.AxisScaling axisScaling) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.PersistentDataObjects.axisBaseTypeAxisLinePosition ConvertAxisPosition(global::Quire.Controls.Plots.Presenter.Positions position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static void FillPlotBaseType(global::Quire.PersistentDataObjects.plotBaseType plotBaseType, global::Quire.Controls.Plots.PlotControl plotControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.PersistentDataObjects.traceStyleEnumCommonType ConvertTraceType(global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.PersistentDataObjects.traceSymbolType ConvertSymbol(global::Quire.Controls.Plots.Presenter.TraceSymbol traceSymbol) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -18,6 +18,117 @@ namespace Quire.PlotDataObjects;
 
 internal static partial class PlotDataObjectCreator
 {
+    private static BackgroundType ConvertBackgroundType(BackgroundTypeE backgroundTypeE)
+    {
+        switch (backgroundTypeE)
+        {
+            case BackgroundTypeE.Undefined:
+                return BackgroundType.undefined;
+            case BackgroundTypeE.Paper:
+                return BackgroundType.paper;
+            case BackgroundTypeE.White:
+                return BackgroundType.white;
+            case BackgroundTypeE.Transparent:
+                return BackgroundType.transparent;
+            default:
+                throw new ArgumentOutOfRangeException("backgroundTypeE");
+        }
+    }
+
+    private static scaleType ConvertScaling(AxisScaling axisScaling)
+    {
+        switch (axisScaling)
+        {
+            case AxisScaling.Linear:
+                return scaleType.linear;
+            case AxisScaling.Logarithmic:
+                return scaleType.logarithmic;
+            default:
+                throw new ArgumentOutOfRangeException("axisScaling");
+        }
+    }
+
+    private static axisBaseTypeAxisLinePosition ConvertAxisPosition(Positions position)
+    {
+        switch (position)
+        {
+            case Positions.Origin:
+                return axisBaseTypeAxisLinePosition.origin;
+            case Positions.Top:
+                return axisBaseTypeAxisLinePosition.top;
+            case Positions.Bottom:
+                return axisBaseTypeAxisLinePosition.bottom;
+            case Positions.Left:
+                return axisBaseTypeAxisLinePosition.left;
+            case Positions.Right:
+                return axisBaseTypeAxisLinePosition.right;
+            case Positions.TickNumberLock:
+                return axisBaseTypeAxisLinePosition.ticknumberlock;
+            default:
+                throw new ArgumentOutOfRangeException("position");
+        }
+    }
+
+    private static traceStyleEnumCommonType ConvertTraceType(Quire.Calculation.Core.Trace2DResults.TraceType traceType)
+    {
+        switch (traceType)
+        {
+            case Quire.Calculation.Core.Trace2DResults.TraceType.Lines:
+                return traceStyleEnumCommonType.lines;
+            case Quire.Calculation.Core.Trace2DResults.TraceType.Columns:
+                return traceStyleEnumCommonType.columns;
+            case Quire.Calculation.Core.Trace2DResults.TraceType.Effects:
+                return traceStyleEnumCommonType.effects;
+            case Quire.Calculation.Core.Trace2DResults.TraceType.Boxes:
+                return traceStyleEnumCommonType.boxes;
+            case Quire.Calculation.Core.Trace2DResults.TraceType.Bars:
+                return traceStyleEnumCommonType.bars;
+            case Quire.Calculation.Core.Trace2DResults.TraceType.Errors:
+                return traceStyleEnumCommonType.errors;
+            case Quire.Calculation.Core.Trace2DResults.TraceType.Stems:
+                return traceStyleEnumCommonType.stems;
+            case Quire.Calculation.Core.Trace2DResults.TraceType.Waterfall:
+                return traceStyleEnumCommonType.waterfall;
+            default:
+                throw new ArgumentOutOfRangeException("traceType");
+        }
+    }
+
+    private static traceSymbolType ConvertSymbol(TraceSymbol traceSymbol)
+    {
+        switch (traceSymbol)
+        {
+            case TraceSymbol.rectangle:
+                return traceSymbolType.rectangle;
+            case TraceSymbol.rhombus:
+                return traceSymbolType.rhombus;
+            case TraceSymbol.star:
+                return traceSymbolType.star;
+            case TraceSymbol.circle:
+                return traceSymbolType.circle;
+            case TraceSymbol.x:
+                return traceSymbolType.x;
+            case TraceSymbol.none:
+                return traceSymbolType.none;
+            case TraceSymbol.point:
+                return traceSymbolType.point;
+            case TraceSymbol.plus:
+                return traceSymbolType.plus;
+            case TraceSymbol.filledRectangle:
+                return traceSymbolType.filledRectangle;
+            case TraceSymbol.filledRhombus:
+                return traceSymbolType.filledRhombus;
+            case TraceSymbol.filledTriangle:
+                return traceSymbolType.filledTriangle;
+            case TraceSymbol.triangle:
+                return traceSymbolType.triangle;
+            case TraceSymbol.filledStar:
+                return traceSymbolType.filledStar;
+            default:
+                throw new ArgumentOutOfRangeException("traceSymbol");
+        }
+    }
+
     public static traceLineStyle ConvertLineStyle(LineStyle lineStyle)
     {
         switch (lineStyle)
