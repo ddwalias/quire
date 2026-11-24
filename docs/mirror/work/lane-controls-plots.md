@@ -748,3 +748,11 @@
 - Release IL: full gate PASS — 2660 checked, 0 failures; first attempt with the wrong attribute spelling failed to compile and was reverted before the real attempt.
 - MirrorGen emit: deletions only (seven stubs with attributes), equal to the applied edit.
 - Still stubs: the no-argument `InitializeLimitEquation()`, `ShowGridLinesChanged`, `GridLineColorChanged`, `TickmarksChanged`, `CreateTickmarksPropertyMetadata`, `Dispatch`, `InitializeLimitLabel`.
+
+## Batch 104 — PlotGraphAxisBase InitializeLimitLabel
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Members: `InitializeLimitLabel(Control, MouseButtonEventHandler)` (protected; adds the label to `VisualChildren`, sets font size/family/foreground/padding, hooks the mouse handler). Added to the existing hand-written partial `Mirrored/Controls.Plots.PlotGraphAxisBase.cs` (new `using System.Windows.Input;`); one stub removed from the generated file.
+- Release IL: full gate PASS — 2661 checked, 0 failures, 2661 exact.
+- MirrorGen emit: deletions only (the one stub with its attribute), equal to the applied edit. The first emit restored the stub because `bin/Release` was stale; rebuilding the Plots Release project before emit kept the removal.
+- Still stubs: the no-argument `InitializeLimitEquation()`, `ShowGridLinesChanged`, `GridLineColorChanged`, `TickmarksChanged`, `CreateTickmarksPropertyMetadata`, `Dispatch`.

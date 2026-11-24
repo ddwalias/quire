@@ -71,6 +71,4 @@ public abstract partial class PlotGraphAxisBase : global::System.Windows.Framewo
     protected static global::System.Windows.FrameworkPropertyMetadata CreateTickmarksPropertyMetadata(int defaultValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void Dispatch(global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void InitializeLimitLabel(global::System.Windows.Controls.Control limitLabel, global::System.Windows.Input.MouseButtonEventHandler eventHandler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

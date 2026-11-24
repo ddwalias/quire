@@ -4,6 +4,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Quire.Controls;
 using Quire.Controls.Core;
@@ -166,6 +167,16 @@ public abstract partial class PlotGraphAxisBase
     public void HideEndExpression()
     {
         HideLimit(EndExpressionEqn);
+    }
+
+    protected void InitializeLimitLabel(Control limitLabel, MouseButtonEventHandler eventHandler)
+    {
+        VisualChildren.Add(limitLabel);
+        limitLabel.FontSize = 8.0;
+        limitLabel.FontFamily = FontConstants.DefaultMathFontFamily;
+        limitLabel.Foreground = NumbersBrush.CloneCurrentValue();
+        limitLabel.Padding = new Thickness(0.0);
+        limitLabel.MouseLeftButtonDown += eventHandler;
     }
 
     protected virtual void TickMarksChanged()
