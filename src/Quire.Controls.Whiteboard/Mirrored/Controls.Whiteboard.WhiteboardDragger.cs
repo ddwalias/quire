@@ -237,9 +237,24 @@ public partial class WhiteboardDragger
         e.Handled = true;
     }
 
-    // Blocked on Roslyn devirtualization of newobj to call (Mathcad IL requires callvirt on WhiteboardCommand.Execute)
-    [global::Quire.Mirror.MirrorStub]
-    private void DropTargetDrop(object sender, DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void DropTargetDrop(object sender, DragEventArgs e)
+    {
+        IWhiteboardViewModel whiteboardViewModel = e.Data.GetData(_dataFormat.Name) as IWhiteboardViewModel;
+        if (_whiteboardControl == null || whiteboardViewModel == null || whiteboardViewModel.ActiveOrSelectedItems.Count() == 0)
+        {
+            return;
+        }
+        Point position = e.GetPosition(_whiteboardControl);
+        Vector offset = new Vector(position.X - _startLocation.X, position.Y - _startLocation.Y);
+        Commands.WhiteboardCommand whiteboardCommand = new WhiteboardViewModel.MoveItemsCommand(whiteboardViewModel, offset, whiteboardViewModel.ActiveOrSelectedItems.ToArray());
+        whiteboardCommand.Execute();
+        whiteboardViewModel.CurrentDragMode = DragMode.None;
+        whiteboardViewModel.ActiveOrSelectedItems.Each((IWhiteboardItem item) =>
+        {
+            _whiteboardItemManager.SetRenderTransform(item, null);
+        });
+        e.Handled = true;
+    }
 
     private void DropTargetDragEnter(object sender, DragEventArgs e)
     {

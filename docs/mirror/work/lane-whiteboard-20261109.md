@@ -753,6 +753,29 @@
 - Release IL: PASS — 1074 checked in Whiteboard, 0 failures.
 - Remaining mismatches in this batch: none.
 
+## Batch 52 — WhiteboardDragger DropTargetDrop & WhiteboardViewModel Commands Constructors: RemoveSelectedItemsCommand, PasteItemsCommand, MoveItemsCommand, InsertSpaceCommand, DeleteSpaceCommand
+
+- Members:
+  - `WhiteboardDragger.DropTargetDrop(object, DragEventArgs)` and closure `<DropTargetDrop>b__36_0`
+  - `WhiteboardViewModel.RemoveSelectedItemsCommand..ctor(IWhiteboardViewModel, string)` and closure `<>c__DisplayClass2_0::<.ctor>b__0`
+  - `WhiteboardViewModel.PasteItemsCommand..ctor(IWhiteboardViewModel, string, IDictionary<IWhiteboardItem, Point>)` and closure `<>c__DisplayClass3_0::<.ctor>b__0`
+  - `WhiteboardViewModel.MoveItemsCommand..ctor(IWhiteboardViewModel, Vector, bool, IWhiteboardItem[])`
+  - `WhiteboardViewModel.MoveItemsCommand..ctor(IWhiteboardViewModel, Vector, bool, IEnumerable<IWhiteboardItem>)` and closure `<>c__DisplayClass8_0::<.ctor>b__0`
+  - `WhiteboardViewModel.MoveItemsCommand..ctor(IWhiteboardViewModel, IDictionary<IWhiteboardItem, Vector>, bool)` and closure `<>c__DisplayClass9_0::<.ctor>b__0`
+  - `WhiteboardViewModel.InsertSpaceCommand..ctor(IWhiteboardViewModel, int, bool, IWhiteboardItem[])`
+  - `WhiteboardViewModel.InsertSpaceCommand..ctor(IWhiteboardViewModel, int, bool, bool, IWhiteboardItem[])` and closures `<>c__DisplayClass5_0::<.ctor>b__0`, `b__1`
+  - `WhiteboardViewModel.DeleteSpaceCommand..ctor(IWhiteboardViewModel, int, Direction)` and closures `<>c__DisplayClass5_0::<.ctor>b__0`, `b__1`
+- Hand-written:
+  - `src/Quire.Controls.Whiteboard/Mirrored/Controls.Whiteboard.WhiteboardDragger.cs`
+  - `src/Quire.Controls.Whiteboard/Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`
+- Shapes Release IL requires:
+  - `WhiteboardDragger.DropTargetDrop`: devirtualization avoided by storing new `MoveItemsCommand` into `Commands.WhiteboardCommand` base variable before calling `Execute()`.
+  - `MoveItemsCommand` constructors: direct references without aliasing `this` to local variable avoids creating capture field instead of `<>4__this`.
+  - `InsertSpaceCommand` constructors: inlining `(double)numberOfLines * _viewModel.Grid.GridCellSize.Height` avoids extra temporary local.
+  - `DeleteSpaceCommand..ctor`: `(enumerable.Count() > 0)` and `-num2` preserves exact opcode sequence and eliminates extra `ldc.r8 0.0; sub`.
+- Release IL: PASS — 1098 checked in Whiteboard, 0 failures (`release-il-e1b030ae2452`).
+- Remaining mismatches in this batch: none.
+
 
 
 

@@ -2610,12 +2610,18 @@ public partial class WhiteboardViewModel
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+RemoveSelectedItemsCommand, Ptc.Controls.Whiteboard")]
     public partial class RemoveSelectedItemsCommand : global::Quire.Controls.Whiteboard.Commands.WhiteboardCommand
     {
-        [global::Quire.Mirror.MirrorStub]
         protected readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> _itemsAtLocations;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::Quire.Undo.CompoundCommand _nestedCommand;
-        [global::Quire.Mirror.MirrorStub]
-        public RemoveSelectedItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, string commandName) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
+        private readonly global::Quire.Undo.CompoundCommand _nestedCommand = new global::Quire.Undo.CompoundCommand();
+
+        public RemoveSelectedItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, string commandName)
+            : base(viewModel, commandName)
+        {
+            _itemsAtLocations = new global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point>();
+            _viewModel.SelectedItems.Each((global::Quire.Controls.Core.IWhiteboardItem item) =>
+            {
+                _itemsAtLocations.Add(item, _viewModel.GetItemLocation(item));
+            });
+        }
         public override bool Do()
         {
             bool result;
@@ -2650,14 +2656,17 @@ public partial class WhiteboardViewModel
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+PasteItemsCommand, Ptc.Controls.Whiteboard")]
     public partial class PasteItemsCommand : global::Quire.Controls.Whiteboard.WhiteboardViewModel.WhiteboardResizingCommand
     {
-        [global::Quire.Mirror.MirrorStub]
         protected readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> _itemsAtLocation;
-        [global::Quire.Mirror.MirrorStub]
         private readonly global::Quire.Controls.Whiteboard.WhiteboardViewModel.AddItemsCommand _addItemsCommand;
-        [global::Quire.Mirror.MirrorStub]
         private readonly global::Quire.Controls.Core.IWhiteboardItem _itemToActivate;
-        [global::Quire.Mirror.MirrorStub]
-        public PasteItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, string commandName, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> pasteItemsAtLocation) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
+
+        public PasteItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, string commandName, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> pasteItemsAtLocation)
+            : base(viewModel, commandName)
+        {
+            _itemsAtLocation = new global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point>(pasteItemsAtLocation);
+            _itemToActivate = _itemsAtLocation.Keys.FirstOrDefault((global::Quire.Controls.Core.IWhiteboardItem item) => WhiteboardItemMgr.IsItemActivated(item));
+            _addItemsCommand = new AddItemsCommand(_viewModel, "Add Whiteboard Items", _itemsAtLocation);
+        }
         protected override bool DoWithResize()
         {
             if (!_addItemsCommand.Do())
@@ -2785,13 +2794,10 @@ public partial class WhiteboardViewModel
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+MoveItemsCommand, Ptc.Controls.Whiteboard")]
     public partial class MoveItemsCommand : global::Quire.Controls.Whiteboard.WhiteboardViewModel.WhiteboardResizingCommand
     {
-        [global::Quire.Mirror.MirrorStub]
         private readonly global::System.Collections.Generic.List<global::Quire.Controls.Core.IWhiteboardItem> _list;
         private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> _initialLocations = new global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point>();
         private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> _finalLocations = new global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point>();
-        [global::Quire.Mirror.MirrorStub]
         private global::Quire.Controls.Core.IWhiteboardItem[] _selectedItems;
-        [global::Quire.Mirror.MirrorStub]
         private global::Quire.Controls.Core.IWhiteboardItem _activeItem;
         private readonly bool _allowGrowthDownOrRight;
         public MoveItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, global::Quire.Controls.Core.IWhiteboardItem item, bool allowGrowthDownOrRight, global::System.Windows.Point newLocation)
@@ -2802,12 +2808,36 @@ public partial class WhiteboardViewModel
             _finalLocations[item] = newLocation;
             _allowGrowthDownOrRight = allowGrowthDownOrRight;
         }
-        [global::Quire.Mirror.MirrorStub]
-        public MoveItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, global::System.Windows.Vector offset, bool allowGrowthDownOrRight, params global::Quire.Controls.Core.IWhiteboardItem[] elements) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public MoveItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, global::System.Windows.Vector offset, bool allowGrowthDownOrRight, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> elements) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public MoveItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Vector> elements, bool allowGrowthDownOrRight) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
+        public MoveItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, global::System.Windows.Vector offset, bool allowGrowthDownOrRight, params global::Quire.Controls.Core.IWhiteboardItem[] elements)
+            : this(whiteboard, offset, allowGrowthDownOrRight, (global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem>)elements)
+        {
+        }
+        public MoveItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, global::System.Windows.Vector offset, bool allowGrowthDownOrRight, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> elements)
+            : base(whiteboard, "Move Items")
+        {
+            IEnumerable<IWhiteboardItem> collection = _viewModel.SortItemsByLocation(elements, offset.Y > 0.0 || (offset.Y == 0.0 && offset.X > 0.0));
+            _list = new List<IWhiteboardItem>(collection);
+            _list.Each((IWhiteboardItem item) =>
+            {
+                _initialLocations[item] = _viewModel.GetItemLocation(item);
+                _finalLocations[item] = _initialLocations[item] + offset;
+            });
+            _allowGrowthDownOrRight = allowGrowthDownOrRight;
+        }
+        public MoveItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Vector> elements, bool allowGrowthDownOrRight)
+            : base(whiteboard, "Move Items")
+        {
+            IEnumerable<IWhiteboardItem> keys = elements.Keys;
+            Vector value = elements.ElementAt(0).Value;
+            keys = _viewModel.SortItemsByLocation(keys, value.Y > 0.0 || (value.Y == 0.0 && value.X > 0.0));
+            _list = new List<IWhiteboardItem>(keys);
+            _list.Each((IWhiteboardItem item) =>
+            {
+                _initialLocations[item] = _viewModel.GetItemLocation(item);
+                _finalLocations[item] = _initialLocations[item] + elements[item];
+            });
+            _allowGrowthDownOrRight = allowGrowthDownOrRight;
+        }
         public MoveItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point newLocation)
             : this(whiteboard, item, false, newLocation)
         {
@@ -2989,18 +3019,58 @@ public partial class WhiteboardViewModel
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+InsertSpaceCommand, Ptc.Controls.Whiteboard")]
     public partial class InsertSpaceCommand : global::Quire.Controls.Whiteboard.WhiteboardViewModel.WhiteboardResizingCommand
     {
-        [global::Quire.Mirror.MirrorStub]
         private readonly global::Quire.Controls.Whiteboard.WhiteboardViewModel.MoveItemsCommand _moveCommand;
-        [global::Quire.Mirror.MirrorStub]
         private global::System.Windows.Vector _offset;
-        [global::Quire.Mirror.MirrorStub]
         private readonly global::System.Windows.Point _insertionPoint;
-        [global::Quire.Mirror.MirrorStub]
         private readonly bool _pushInsertionPoint;
-        [global::Quire.Mirror.MirrorStub]
-        public InsertSpaceCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, int numberOfLines, bool pushInsertionPoint, params global::Quire.Controls.Core.IWhiteboardItem[] checkVerticalOnlyItems) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public InsertSpaceCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, int numberOfLines, bool pushInsertionPoint, bool ignoreItemsOnCurrentLine, params global::Quire.Controls.Core.IWhiteboardItem[] checkVerticalOnlyItems) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
+        public InsertSpaceCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, int numberOfLines, bool pushInsertionPoint, params global::Quire.Controls.Core.IWhiteboardItem[] checkVerticalOnlyItems)
+            : this(whiteboard, numberOfLines, pushInsertionPoint, false, checkVerticalOnlyItems)
+        {
+        }
+        public InsertSpaceCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, int numberOfLines, bool pushInsertionPoint, bool ignoreItemsOnCurrentLine, params global::Quire.Controls.Core.IWhiteboardItem[] checkVerticalOnlyItems)
+            : base(whiteboard, "Insert Space")
+        {
+            _offset = new Vector(0.0, (double)numberOfLines * _viewModel.Grid.GridCellSize.Height);
+            _insertionPoint = _viewModel.InsertionPoint;
+            IEnumerable<IWhiteboardItem> source = _viewModel.WhiteboardItems.SkipWhile((IWhiteboardItem item) =>
+            {
+                Rect itemRect = ViewModel.GetItemRect(item);
+                itemRect.Y -= item.VerticalAlignmentOffset;
+                double y = itemRect.Y;
+                Point insertionPoint = _insertionPoint;
+                if (!y.IsLessThan(insertionPoint.Y))
+                {
+                    if (checkVerticalOnlyItems != null && !checkVerticalOnlyItems.Contains(item, null))
+                    {
+                        double y2 = itemRect.Y;
+                        insertionPoint = _insertionPoint;
+                        if (y2.IsEqualTo(insertionPoint.Y))
+                        {
+                            double x = itemRect.X;
+                            insertionPoint = _insertionPoint;
+                            return x.IsLessThan(insertionPoint.X);
+                        }
+                    }
+                    return false;
+                }
+                return true;
+            });
+            if (ignoreItemsOnCurrentLine)
+            {
+                source = source.SkipWhile((IWhiteboardItem item) =>
+                {
+                    Rect itemRect = ViewModel.GetItemRect(item);
+                    double value = itemRect.Top - item.VerticalAlignmentOffset;
+                    Point insertionPoint = _insertionPoint;
+                    return value.IsEqualTo(insertionPoint.Y);
+                });
+            }
+            if (source.Count() > 0)
+            {
+                _moveCommand = new MoveItemsCommand(_viewModel, _offset, true, source.ToArray());
+            }
+            _pushInsertionPoint = pushInsertionPoint;
+        }
         protected override bool DoWithResize()
         {
             _viewModel.FireRequestMaximumSize();
@@ -3046,18 +3116,43 @@ public partial class WhiteboardViewModel
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+DeleteSpaceCommand, Ptc.Controls.Whiteboard")]
     public partial class DeleteSpaceCommand : global::Quire.Controls.Whiteboard.Commands.WhiteboardCommand
     {
-        [global::Quire.Mirror.MirrorStub]
         private readonly global::Quire.Direction _direction;
-        [global::Quire.Mirror.MirrorStub]
         private readonly global::Quire.Controls.Whiteboard.WhiteboardViewModel.MoveItemsCommand _moveCommand;
-        [global::Quire.Mirror.MirrorStub]
         private global::System.Windows.Vector _offset;
-        [global::Quire.Mirror.MirrorStub]
         private readonly double _oldHeight;
-        [global::Quire.Mirror.MirrorStub]
         private global::System.Windows.Point _insertionPoint;
-        [global::Quire.Mirror.MirrorStub]
-        public DeleteSpaceCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, int numberOfLines, global::Quire.Direction direction) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
+        public DeleteSpaceCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, int numberOfLines, global::Quire.Direction direction)
+            : base(whiteboard, "Delete Space")
+        {
+            _direction = direction;
+            _oldHeight = _viewModel.ContentHeight;
+            _insertionPoint = _viewModel.InsertionPoint;
+            double height = _viewModel.Grid.GridCellSize.Height;
+            DoubleComparer comparer = DoubleComparer.DefaultDoubleComparer;
+            WhiteboardItemsCollection whiteboardItems = _viewModel.WhiteboardItems;
+            IEnumerable<IWhiteboardItem> enumerable = ((_direction == Direction.Down) ? whiteboardItems.Where((IWhiteboardItem item) =>
+            {
+                DoubleComparer doubleComparer = comparer;
+                Point itemLocation = _viewModel.GetItemLocation(item);
+                return doubleComparer.Compare(itemLocation.Y, _insertionPoint.Y) == 1;
+            }) : whiteboardItems.Where((IWhiteboardItem item) =>
+            {
+                DoubleComparer doubleComparer = comparer;
+                Point itemLocation = _viewModel.GetItemLocation(item);
+                return doubleComparer.Compare(itemLocation.Y, _insertionPoint.Y) >= 0;
+            }));
+            _offset = new Vector(0.0, -((double)numberOfLines * height));
+            if (numberOfLines > 1)
+            {
+                _offset.Y = ((enumerable.Count() > 0) ? ((direction == Direction.Down) ? (_offset.Y = _viewModel.LimitOffsetBasedOnItemsToMove(enumerable, _offset.Y, direction, _viewModel.InsertionPoint)) : _offset.Y) : Math.Max(_offset.Y, LimitOffsetBasedOnMinimumHeight()));
+                double num2 = ((_direction == Direction.Down) ? (_viewModel.ContentHeight - _insertionPoint.Y) : _insertionPoint.Y);
+                _offset.Y = Math.Max(-num2, _offset.Y);
+            }
+            if (enumerable.Count() > 0 && _offset.Y != 0.0)
+            {
+                _moveCommand = new MoveItemsCommand(_viewModel, _offset, true, enumerable.ToArray());
+            }
+        }
         public override bool Do()
         {
             if (_insertionPoint.Y < _viewModel.Grid.GridCellSize.Height && _direction == Direction.Above)
