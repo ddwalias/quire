@@ -1,14 +1,153 @@
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
 using Quire.Controls.Core;
+using Quire.Controls.Plots.Plot3D.ViewModel;
+using Quire.Services;
 using Quire.Wpf;
 
 namespace Quire.Controls.Plots.Plot3D.Tools;
 
 public abstract partial class BaseTrackball : IBaseTrackball
 {
+    private IHasCameraTransform _transformOwner;
+
+    private ITrackingHelper _trackingHelper;
+
+    protected MatrixTransform3D ScaleTransform { get; private set; }
+
+    protected Transform3D BaseTransform { get; private set; }
+
+    protected bool IsTracking => CurrentTrackingInfo != null;
+
+    protected double CurrentScale
+    {
+        get
+        {
+            if (ScaleTransform == null)
+            {
+                return 0.0;
+            }
+            return ScaleTransform.Matrix.M44;
+        }
+    }
+
+    public Transform3D CameraTransform
+    {
+        get
+        {
+            if (_transformOwner == null)
+            {
+                return null;
+            }
+            return _transformOwner.CameraTransform;
+        }
+        protected set
+        {
+            if (_transformOwner != null)
+            {
+                _transformOwner.CameraTransform = value;
+            }
+            else
+            {
+                DebugTools.FailAssertion(null, Array.Empty<object>());
+            }
+        }
+    }
+
+    internal ITrackingHelper TrackingHelper
+    {
+        get
+        {
+            if (_trackingHelper == null)
+            {
+                ITrackingHelperFactory trackingHelperFactory = AppServiceRegistry.GetService<ITrackingHelperFactory>() ?? DummyTrackingHelperFactory.Instance;
+                _trackingHelper = trackingHelperFactory.CreateHelper(this);
+            }
+            return _trackingHelper;
+        }
+    }
+
+    public Viewport3D Viewport { get; private set; }
+
+    protected FrameworkElement MouseEventsSource { get; private set; }
+
+    public void Attach(FrameworkElement mouseEventsSource, IHasCameraTransform hasCameraTransform, Viewport3D viewport)
+    {
+        DebugTools.DevAssert(MouseEventsSource == null && _transformOwner == null && !IsTracking, null);
+        MouseEventsSource = mouseEventsSource;
+        _transformOwner = hasCameraTransform;
+        _transformOwner.ResetTrackball += Reset;
+        Viewport = viewport;
+        CurrentTrackingInfo = null;
+        MouseEventsSource.MouseDown += OnMouseDown;
+        MouseEventsSource.MouseUp += OnMouseUp;
+        MouseEventsSource.MouseMove += OnMouseMove;
+        MouseEventsSource.MouseWheel += OnMouseWheel;
+        DebugTools.DevAssert(MouseEventsSource != null && _transformOwner != null, null);
+        TrackingHelper.Attach();
+        Reset();
+    }
+
+    public void Reset()
+    {
+        MatrixTransform3D matrixTransform3D = CameraTransform != null ? new MatrixTransform3D(CameraTransform.Value) : new MatrixTransform3D();
+        Matrix3D value = matrixTransform3D.Value;
+        Matrix3D matrix = new Matrix3D
+        {
+            M44 = value.M44
+        };
+        value.M44 = 1.0;
+        matrixTransform3D.Matrix = value;
+        ((Freezable)matrixTransform3D).Freeze();
+        BaseTransform = CloneAndFreeze(matrixTransform3D);
+        Transform3DGroup transform3DGroup = new Transform3DGroup();
+        transform3DGroup.Children.Add(matrixTransform3D);
+        transform3DGroup.Children.Add(InitializeTransform());
+        transform3DGroup.Children.Add(ScaleTransform = new MatrixTransform3D(matrix));
+        CameraTransform = transform3DGroup;
+        TrackingHelper.Reset();
+    }
+
+    protected static TTransform3D CloneAndFreeze<TTransform3D>(TTransform3D source) where TTransform3D : Transform3D
+    {
+        Transform3D transform3D = source.CloneCurrentValue();
+        if (((Freezable)transform3D).CanFreeze)
+        {
+            ((Freezable)transform3D).Freeze();
+        }
+        else
+        {
+            DebugTools.FailAssertion(null, Array.Empty<object>());
+        }
+        return transform3D as TTransform3D;
+    }
+
+    public virtual void Detach()
+    {
+        TrackingHelper.Detach();
+        if (MouseEventsSource != null)
+        {
+            MouseEventsSource.MouseDown -= OnMouseDown;
+            MouseEventsSource.MouseUp -= OnMouseUp;
+            MouseEventsSource.MouseMove -= OnMouseMove;
+            MouseEventsSource.MouseWheel -= OnMouseWheel;
+            MouseEventsSource = null;
+        }
+        if (IsTracking)
+        {
+            Mouse.Capture(MouseEventsSource, CaptureMode.None);
+            CurrentTrackingInfo = null;
+        }
+        if (_transformOwner != null)
+        {
+            _transformOwner.ResetTrackball -= Reset;
+            _transformOwner = null;
+        }
+    }
+
     protected virtual void UpdateCurrentTrackingInfo(Point current)
     {
         CurrentTrackingInfo.LastPosition = current;

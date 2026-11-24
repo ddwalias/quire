@@ -671,3 +671,12 @@
 - Release IL: first draft (local cache, `if (!...)` block, separate `offset` statement) failed on receiver/load order; the final form PASS — 2611 checked, 0 failures.
 - MirrorGen emit after the build changed nothing beyond the staged stub removal; other emit noise reverted.
 - Still stubs in this class: `Attach`, `Reset`, `CloneAndFreeze`, `Detach`, `TrackStart`/`Track`/`TrackEnd` (abstract, not needed), `InitializeTransform` (abstract).
+
+## Batch 95 — BaseTrackball attach/reset/detach cluster (4 methods, 10 properties/fields)
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Members: `Attach`, `Reset`, `CloneAndFreeze<T>`, `Detach` (methods); `ScaleTransform`, `BaseTransform`, `IsTracking`, `CurrentScale`, `CameraTransform`, `TrackingHelper`, `Viewport`, `MouseEventsSource` (properties); fields `_transformOwner`, `_trackingHelper`. Hand-written in `Mirrored/Controls.Plots.Plot3D.Tools.BaseTrackball.cs`; 14 stubs removed from the generated file (property stubs with their accessors, and the fields).
+- Shapes Mathcad needs: `Reset` has no local for `transform3DGroup.Children` (read the property at each use) and assigns the scale transform inside the argument (`Children.Add(ScaleTransform = new MatrixTransform3D(matrix))`), so the initializer temp is slot 4 and the dup temp slot 5, as in Mathcad. A declared `value2` local shifted the slots and failed.
+- Release IL: after the change, the full gate PASS — 2628 checked, 0 failures.
+- MirrorGen emit: 28 deletions (14 stubs + attributes), equal to the applied edit; other emit noise reverted.
+- Still stubs in this class: `Model3DBoundingBox`, `MouseUp`/`MouseWheel` event accessors (generated), the constructor and `InitializeTransform`/`TrackStart`/`Track`/`TrackEnd` (abstract, unchanged).

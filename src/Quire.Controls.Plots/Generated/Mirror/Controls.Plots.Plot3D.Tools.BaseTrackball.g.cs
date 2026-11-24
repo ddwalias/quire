@@ -12,27 +12,7 @@ namespace Quire.Controls.Plots.Plot3D.Tools;
 public abstract partial class BaseTrackball : global::Quire.Controls.Plots.Plot3D.Tools.IBaseTrackball
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.Plot3D.ViewModel.IHasCameraTransform _transformOwner;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelper _trackingHelper;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Media.Media3D.Matrix3D _previousTransform;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Media.Media3D.MatrixTransform3D ScaleTransform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Media.Media3D.Transform3D BaseTransform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected bool IsTracking { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected double CurrentScale { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Transform3D CameraTransform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelper TrackingHelper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.Viewport3D Viewport { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.FrameworkElement MouseEventsSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Media3D.Rect3D Model3DBoundingBox { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -40,15 +20,7 @@ public abstract partial class BaseTrackball : global::Quire.Controls.Plots.Plot3
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::System.Windows.Media.Media3D.Matrix3D> MouseWheel;
     [global::Quire.Mirror.MirrorStub]
-    public void Attach(global::System.Windows.FrameworkElement mouseEventsSource, global::Quire.Controls.Plots.Plot3D.ViewModel.IHasCameraTransform hasCameraTransform, global::System.Windows.Controls.Viewport3D viewport) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected abstract global::System.Windows.Media.Media3D.Transform3D InitializeTransform();
-    [global::Quire.Mirror.MirrorStub]
-    public void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected static TTransform3D CloneAndFreeze<TTransform3D>(TTransform3D source) where TTransform3D : global::System.Windows.Media.Media3D.Transform3D => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Detach() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected abstract bool TrackStart(global::System.Windows.Point current, bool useTimer);
     [global::Quire.Mirror.MirrorStub]
