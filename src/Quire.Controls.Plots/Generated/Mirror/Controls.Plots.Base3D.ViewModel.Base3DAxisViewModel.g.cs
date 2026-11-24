@@ -12,21 +12,9 @@ namespace Quire.Controls.Plots.Base3D.ViewModel;
 public abstract partial class Base3DAxisViewModel : global::Quire.Controls.Core.ViewModelBase, global::Quire.Controls.Plots.Base3D.ViewModel.IPlotAxisViewModel3D, global::Quire.Controls.Plots.ViewModel.IAxisViewModel, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
-    private bool _isActive;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isHighlighted;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Color _lineColor;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Plots.Presenter.IPlotAxisView _plotAxisView;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.Media.Color _defaultLineColor;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.Media.Color _higlightedLineColor;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.Media.Color _activeLineColor;
     [global::Quire.Mirror.MirrorStub]
     private double _height;
     [global::Quire.Mirror.MirrorStub]
@@ -41,8 +29,6 @@ public abstract partial class Base3DAxisViewModel : global::Quire.Controls.Core.
     public bool IsActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsHighlighted { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Color LineColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.SizeChangedEventHandler ViewSizeChanged { private get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

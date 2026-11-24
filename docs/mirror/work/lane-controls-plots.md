@@ -724,3 +724,11 @@
 - Release IL: full gate PASS — 2645 checked, 0 failures; first try.
 - MirrorGen emit: deletions only (five stubs with their attributes), equal to the applied edit.
 - Still stubs in this class: `UpdateLineColor`, `HookupView`, `GetTickInterval`, `StartExpressionValueChanged` (depend on the `IsActive`/`IsHighlighted`/`LineColor`/`PlotAxisModel` property stubs), the constructor, and the property/event accessors.
+
+## Batch 101 — Base3DAxisViewModel LineColor and colour fields
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Members: the `LineColor` property (private setter with the `Equals` guard and `FirePropertyChanged`), and the fields `_lineColor`, `_defaultLineColor`, `_higlightedLineColor`, `_activeLineColor`. Also the `_isActive`/`_isHighlighted` backing fields. Hand-written in `Mirrored/Controls.Plots.Base3D.ViewModel.Base3DAxisViewModel.cs`; the matching stubs removed from the generated file.
+- Release IL: full gate PASS — 2648 checked, 0 failures.
+- Still stubs, deliberately: `IsActive`, `IsHighlighted` and `UpdateLineColor`. `UpdateLineColor` is `LineColor = <cond>` with the receiver loaded first and a `brtrue` layout into the active arm. Roslyn normalizes `!a ? x : y` into `a ? y : x`, which puts the active arm first, so every expression form I tried mismatched at the field-access order. The stub is kept so the `IsActive`/`IsHighlighted` setters are not hand-written against a non-exact body.
+- MirrorGen emit: the target file changes match the applied removals; other emit noise reverted.
