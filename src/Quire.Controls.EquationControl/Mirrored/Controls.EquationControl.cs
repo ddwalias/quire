@@ -520,4 +520,31 @@ public partial class EquationControl
         get => _model.EquationXmlNode;
         private set => _model.EquationXmlNode = value;
     }
+
+    public string CurrentNodeLabel
+    {
+        get
+        {
+            if (_model.Mode == EquationEditModeEnum.Normal && _model.NavigatorState.Current != null)
+            {
+                return _model.NavigatorState.Current.Label;
+            }
+
+            return null;
+        }
+    }
+
+    public string SelectedOperator
+    {
+        get
+        {
+            var current = _model.CurrentModeNavigatorState.Current;
+            if (current.NoLogicOnlyVisual)
+            {
+                current = current.Parent;
+            }
+
+            return current.OperatorSExpName;
+        }
+    }
 }

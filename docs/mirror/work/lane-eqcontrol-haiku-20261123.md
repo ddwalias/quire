@@ -402,3 +402,10 @@
 
 - Exact (5 accessors): `Algorithm` (get `CurrentNode?.Algorithm`; set `CurrentNode.Algorithm = value`, with no null check, as in Mathcad); `AlgorithmOptions` (get `CurrentNode?.AlgorithmOptions`, the same null-safe shape as `Algorithm`); `EquationXmlNode` (get and private set through `_model`). Stub pairs removed from the `.g.cs` with indentation intact.
 - Gate (project-level): PASS; 3664 checked, zero failures (`.mirror-cache/release-il-79dd70a5e32a/release-il.json`).
+
+### Batch 60: Controls.EquationControl (CurrentNodeLabel, SelectedOperator)
+
+- Exact (2 accessors): `CurrentNodeLabel` (`Mode == EquationEditModeEnum.Normal && NavigatorState.Current != null` returns the label, else `null`); `SelectedOperator` (step to the parent when the current node is `NoLogicOnlyVisual`, then return `OperatorSExpName`). Stub pairs removed from the `.g.cs` with indentation intact.
+- Parked: `MatrixRows` and `MatrixColumns`. The IL is `(MatrixNodeInfo)(GetNearestAncestor("MATRIX") ?? throw ...).NodeInfo`, which Mathcad compiles as `dup; brtrue.s; ldstr; newobj; throw` with no `pop`. Current Roslyn emits `pop` before the throw, so the branch offsets differ by one instruction. The shape is not expressible with a throw expression in current C#; they stay as stubs.
+- Left out: `CurrentNodeNodeSide` and `CurrentNodeCaretSide` (a nullable-enum local whose type the IL does not show in the excerpt); `CurrentNodeOperatorPartIndex` (a `Nullable<int>` local with `GetValueOrDefault(-1)`, its own probe).
+- Gate (project-level): PASS; 3666 checked, zero failures (`.mirror-cache/release-il-ecf71741b347/release-il.json`).
