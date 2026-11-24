@@ -47,7 +47,7 @@ public partial class SimpleCalculatable
     public virtual void SetSynchronizationStatus(SynchronizationStatus syncStatus)
     {
         _syncStatus = syncStatus;
-        if (syncStatus == (SynchronizationStatus)3 && Synchronized != null)
+        if (syncStatus == SynchronizationStatus.Synchronized && Synchronized != null)
         {
             Synchronized(this);
         }

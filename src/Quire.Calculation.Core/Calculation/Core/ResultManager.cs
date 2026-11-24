@@ -297,7 +297,7 @@ public partial class ResultManager : IResultManager
     private int AddOldResult(IResultNode resultNode, ICalculatableResultOwner calculatable)
     {
         _oldResultKey--;
-        _results.Add(_oldResultKey, new Pair<EngineResult, ICalculatableResultOwner>(new EngineResult(resultNode, null, (SynchronizationStatus)3), calculatable));
+        _results.Add(_oldResultKey, new Pair<EngineResult, ICalculatableResultOwner>(new EngineResult(resultNode, null, SynchronizationStatus.Synchronized), calculatable));
         return _oldResultKey;
     }
 
@@ -339,7 +339,7 @@ public partial class ResultManager : IResultManager
             try
             {
                 DispatchResult(second, result.Value.First, isScriptingRunWorksheetOpen);
-                if (result.Value.First.SynchronizationStatus == (SynchronizationStatus)3)
+                if (result.Value.First.SynchronizationStatus == SynchronizationStatus.Synchronized)
                 {
                     second.SetStatusSynchronized();
                 }

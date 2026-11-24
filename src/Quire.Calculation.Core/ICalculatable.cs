@@ -1,9 +1,10 @@
 namespace Quire.Calculation.Core;
 
+// Values match Mathcad's Ptc.Calculation.Core.SynchronizationStatus: comparisons and constants compile into callers.
 public enum SynchronizationStatus
 {
-    Pending,
-    Synchronized,
+    Pending = 0,
+    Synchronized = 3,
 }
 
 public enum CalculatingStatus

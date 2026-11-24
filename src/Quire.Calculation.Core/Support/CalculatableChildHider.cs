@@ -243,7 +243,7 @@ public partial class CalculatableChildHider
         {
             _fireCalculatableRemoved(calc);
             calc.SetCalculatingStatus((CalculatingStatus)2);
-            calc.SetSynchronizationStatus((SynchronizationStatus)3);
+            calc.SetSynchronizationStatus(SynchronizationStatus.Synchronized);
             return;
         }
         _fireCalculatableAdded(calc);
