@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using Quire.Controls;
 using Quire.Controls.Core;
 using Quire.Controls.Plots.ViewModel;
@@ -182,5 +183,22 @@ public abstract partial class PlotGraphAxisBase
     protected virtual void TickMarksChanged()
     {
         throw new NotImplementedException();
+    }
+
+    protected static FrameworkPropertyMetadata CreateTickmarksPropertyMetadata(int defaultValue)
+    {
+        return new FrameworkPropertyMetadata(defaultValue, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsRender, TickmarksChanged);
+    }
+
+    protected void Dispatch(Action action)
+    {
+        if (Dispatcher.CheckAccess())
+        {
+            action();
+        }
+        else
+        {
+            Dispatcher.Invoke(DispatcherPriority.Normal, action);
+        }
     }
 }

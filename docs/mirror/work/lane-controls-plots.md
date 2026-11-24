@@ -756,3 +756,11 @@
 - Release IL: full gate PASS — 2661 checked, 0 failures, 2661 exact.
 - MirrorGen emit: deletions only (the one stub with its attribute), equal to the applied edit. The first emit restored the stub because `bin/Release` was stale; rebuilding the Plots Release project before emit kept the removal.
 - Still stubs: the no-argument `InitializeLimitEquation()`, `ShowGridLinesChanged`, `GridLineColorChanged`, `TickmarksChanged`, `CreateTickmarksPropertyMetadata`, `Dispatch`.
+
+## Batch 105 — PlotGraphAxisBase tick-mark metadata and Dispatch
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Members: `CreateTickmarksPropertyMetadata(int)` (a single `FrameworkPropertyMetadata` return with the method group `TickmarksChanged`; Roslyn emits the same static delegate cache as Mathcad) and `Dispatch(Action)` (`Dispatcher.CheckAccess()` then `Dispatcher.Invoke(DispatcherPriority.Normal, action)`). Added to the existing hand-written partial `Mirrored/Controls.Plots.PlotGraphAxisBase.cs` (new `using System.Windows.Threading;`); two stubs removed.
+- Release IL: full gate PASS — 2663 checked, 0 failures, 2663 exact.
+- MirrorGen emit: deletions only (the two stubs with attributes), equal to the applied edit. The Plots Release DLL was rebuilt before emit; other emit noise reverted.
+- Still stubs: the no-argument `InitializeLimitEquation()`, `ShowGridLinesChanged`, `GridLineColorChanged`, `TickmarksChanged`.
