@@ -205,6 +205,23 @@ public abstract partial class PlotGraphAxisBase
         HideLimit(SecondTickExpressionEqn);
     }
 
+    // Compile-order device: the setter's closure display class is <>c__DisplayClass58_0 in Mathcad. Its ordinal
+    // counts the members declared before it, so the property sits between HideSecondTickExpression and HideEndExpression.
+    public int TickMarks
+    {
+        get
+        {
+            return (int)GetValue(TickMarksProperty);
+        }
+        set
+        {
+            Dispatch(() =>
+            {
+                SetValue(TickMarksProperty, value);
+            });
+        }
+    }
+
     public void HideEndExpression()
     {
         HideLimit(EndExpressionEqn);

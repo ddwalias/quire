@@ -48,8 +48,6 @@ public abstract partial class PlotGraphAxisBase : global::System.Windows.Framewo
     [global::Quire.Mirror.MirrorStub]
     protected internal readonly global::System.Windows.Controls.Label _lastLabel;
     [global::Quire.Mirror.MirrorStub]
-    public int TickMarks { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected abstract void UnhookFromViewModel();
     [global::Quire.Mirror.MirrorStub]
     protected abstract void HookToViewModel();

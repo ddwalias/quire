@@ -823,3 +823,12 @@
 - Release IL: full gate PASS — 2678 checked, 0 failures, 2678 exact.
 - MirrorGen emit: deletions only (the one stub with its attribute). Other emit noise reverted.
 - Still stubs in this type: none listed as non-XAML. `CreateNumberFormat` and other members remain as in earlier checkpoints.
+
+## Batch 113 — PlotGraphAxisBase TickMarks (closure ordinal resolved by member placement)
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Members: `TickMarks` property (getter `GetValue`, setter forwards `SetValue` inside a `Dispatch` lambda). Added to the existing hand-written partial `Mirrored/Controls.Plots.PlotGraphAxisBase.cs`; one stub removed.
+- Closure ordinal: the setter's display class ordinal counts members declared earlier in the type (one per member). Placed after `HideSecondTickExpression` and before `HideEndExpression`, the setter's display class is `<>c__DisplayClass58_0`, matching Mathcad. The earlier placements (before `LineColorChanged`: 44, before `TickMarksChanged`: 60) did not match. This is a compile-order device, commented in the file.
+- Release IL: full gate PASS — 2682 checked, 0 failures, 2682 exact.
+- MirrorGen emit: deletions only (the one stub with its attribute). Other emit noise reverted.
+- Blocked: `PlotModel3D.ComputeTotalTracesSynchronizationStatus` still needs the same kind of placement test (its lambda is `b__96_0` against Mathcad's `b__67_0`).
