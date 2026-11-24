@@ -546,6 +546,79 @@ public partial class EquationControl
         _model.VisibleLhsOfDefinitionChanged += HandleVisibleLhsOfDefinitionChanged;
     }
 
+    private void OnModelRequestEvaluation(IEquationModel obj)
+    {
+        FireRequestEvaluation(true);
+    }
+
+    private void FireRequestRemove(Direction direction)
+    {
+        RequestRemove.Invoke(this, direction);
+    }
+
+    private void OnModelEquationChanged(bool shouldRegenerate)
+    {
+        _model_EquationChanged();
+    }
+
+    private void HandleModelIsRestrictedReadonlyChanged(bool isRestrictedReadonly)
+    {
+        if (isRestrictedReadonly)
+        {
+            UnBindEditingCommands();
+        }
+        else
+        {
+            BindEditingCommands();
+        }
+    }
+
+    private void HandleNumericResultChanged(IResultNode resultValue)
+    {
+        UpdateEngineResult(resultValue);
+        ResultChanged?.Invoke(resultValue);
+    }
+
+    private void FireExpressionValueChanged()
+    {
+        if (ExpressionValueChanged != null)
+        {
+            ExpressionValueChanged(this);
+        }
+    }
+
+    private void HandleCalculationErrorChanged(Quire.Wpf.PropertyChangedEventArgs<EngineError> eventArgs)
+    {
+        UpdateEngineResult(_model.CalculationError);
+        FirePropertyChanged(ErrorChangedEventArgs.GetArgs());
+        UpdateLhsVisibleOnView();
+    }
+
+    public void FireContentChangedEvents()
+    {
+        FireContentAndRegionChangedEvents(IORegionChangeType.Content);
+    }
+
+    private void OnViewVisualParentChanged(Quire.EquationEditor.View.IVisualMathRegionNode sender, DependencyObject oldParent, DependencyObject newParent)
+    {
+        if (newParent == null)
+        {
+            return;
+        }
+
+        if (OnAdornedElementReady != null)
+        {
+            OnAdornedElementReady(this, null);
+        }
+    }
+
+    private void HandleVisibleLhsOfDefinitionChanged(Visibility visibility)
+    {
+        FirePropertyChanged(new System.ComponentModel.PropertyChangedEventArgs("VisibleLhsOfDefinition"));
+        FireContentChangedEvents();
+        UpdateLhsVisibleOnView();
+    }
+
     public bool InCustomInitialization
     {
         get => _model.InCustomInitialization;
