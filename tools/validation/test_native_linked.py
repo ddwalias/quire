@@ -257,6 +257,157 @@ class ReviewRegressionTests(Pairing, unittest.TestCase):
         self.assertIn("arr+0x4", fingerprint(4))
         self.assertNotEqual(fingerprint(4), fingerprint(8))
 
+    def test_manifest_interior_data_reference_verifies(self):
+        o = {0x1000: ("lea", f"rcx,[{at(0x2110)}h]"), 0x1007: ("ret", "")}
+        c = {0x1000: ("lea", f"rcx,[{at(0x2210)}h]"), 0x1007: ("ret", "")}
+        mo, mc = bytearray(0x3000), bytearray(0x3000)
+        mo[0x2100:0x2140] = mc[0x2200:0x2240] = b"A" * 64
+        names = {0x2200: {"table"}, 0x2240: {"next"}}
+        entries = {"table": Entry(rva=0x2100, size=64)}
+        functions = {0x1000: 0x1008}
+        r = self.pair(o, c, functions, functions, c_names=names, entries=entries, o_memory=mo, c_memory=mc)
+        self.assertTrue(r.ok, r.reason)
+        self.assertEqual(r.unverified, 0)
+
+    def test_manifest_interior_data_reference_altered_bytes_is_a_mismatch(self):
+        o = {0x1000: ("lea", f"rcx,[{at(0x2110)}h]"), 0x1007: ("ret", "")}
+        c = {0x1000: ("lea", f"rcx,[{at(0x2210)}h]"), 0x1007: ("ret", "")}
+        mo, mc = bytearray(0x3000), bytearray(0x3000)
+        mo[0x2100:0x2140] = b"A" * 64
+        mc[0x2200:0x2240] = b"B" * 64
+        names = {0x2200: {"table"}, 0x2240: {"next"}}
+        entries = {"table": Entry(rva=0x2100, size=64)}
+        functions = {0x1000: 0x1008}
+        r = self.pair(o, c, functions, functions, c_names=names, entries=entries, o_memory=mo, c_memory=mc)
+        self.assertFalse(r.ok)
+        self.assertIn("bytes differ", r.reason)
+
+    def test_manifest_interior_data_reference_wrong_offset_is_a_mismatch(self):
+        o = {0x1000: ("lea", f"rcx,[{at(0x2110)}h]"), 0x1007: ("ret", "")}
+        c = {0x1000: ("lea", f"rcx,[{at(0x2208)}h]"), 0x1007: ("ret", "")}
+        mo, mc = bytearray(0x3000), bytearray(0x3000)
+        mo[0x2100:0x2140] = mc[0x2200:0x2240] = bytes(range(64))
+        names = {0x2200: {"table"}, 0x2240: {"next"}}
+        entries = {"table": Entry(rva=0x2100, size=64)}
+        functions = {0x1000: 0x1008}
+        r = self.pair(o, c, functions, functions, c_names=names, entries=entries, o_memory=mo, c_memory=mc)
+        self.assertFalse(r.ok)
+        self.assertIn("candidate interior offset +0x8 != original +0x10", r.reason)
+
+    def test_manifest_interior_data_repeated_data_wrong_offset_mismatches_loudly(self):
+        o = {0x1000: ("lea", f"rcx,[{at(0x2110)}h]"), 0x1007: ("ret", "")}
+        c = {0x1000: ("lea", f"rcx,[{at(0x2220)}h]"), 0x1007: ("ret", "")}
+        mo, mc = bytearray(0x3000), bytearray(0x3000)
+        mo[0x2000:0x2300] = b"A" * 0x300
+        mc[0x2000:0x2300] = b"A" * 0x300
+        names = {0x2200: {"table"}, 0x2240: {"next"}}
+        entries = {"table": Entry(rva=0x2100, size=64)}
+        functions = {0x1000: 0x1008}
+        r = self.pair(o, c, functions, functions, c_names=names, entries=entries, o_memory=mo, c_memory=mc)
+        self.assertFalse(r.ok)
+        self.assertIn("candidate interior offset +0x20 != original +0x10", r.reason)
+
+    def test_interior_data_repeated_data_without_manifest_entry_fails_closed(self):
+        o = {0x1000: ("lea", f"rcx,[{at(0x2110)}h]"), 0x1007: ("ret", "")}
+        c = {0x1000: ("lea", f"rcx,[{at(0x2220)}h]"), 0x1007: ("ret", "")}
+        mo, mc = bytearray(0x3000), bytearray(0x3000)
+        mo[0x2000:0x2300] = b"A" * 0x300
+        mc[0x2000:0x2300] = b"A" * 0x300
+        names = {0x2200: {"table"}, 0x2240: {"next"}}
+        functions = {0x1000: 0x1008}
+        r = self.pair(o, c, functions, functions, c_names=names, o_memory=mo, c_memory=mc)
+        self.assertEqual((r.ok, r.unverified), (True, 1))
+
+    def test_manifest_interior_data_rejects_wrong_candidate_symbol(self):
+        o = {0x1000: ("lea", f"rcx,[{at(0x2110)}h]"), 0x1007: ("ret", "")}
+        c = {0x1000: ("lea", f"rcx,[{at(0x2210)}h]"), 0x1007: ("ret", "")}
+        mo, mc = bytearray(0x3000), bytearray(0x3000)
+        mo[0x2100:0x2140] = mc[0x2200:0x2240] = b"A" * 64
+        names = {0x2200: {"table_cand"}, 0x2240: {"next"}}
+        entries = {"table_orig": Entry(rva=0x2100, size=64)}
+        functions = {0x1000: 0x1008}
+        r = self.pair(o, c, functions, functions, c_names=names, entries=entries, o_memory=mo, c_memory=mc)
+        self.assertFalse(r.ok)
+        self.assertIn("candidate target ['table_cand'] is not table_orig", r.reason)
+
+    def test_manifest_interior_data_rejects_offset_beyond_size(self):
+        o = {0x1000: ("lea", f"rcx,[{at(0x2150)}h]"), 0x1007: ("ret", "")}
+        c = {0x1000: ("lea", f"rcx,[{at(0x2250)}h]"), 0x1007: ("ret", "")}
+        names = {0x2200: {"table"}, 0x2300: {"next"}}
+        entries = {"table": Entry(rva=0x2100, size=32)}
+        functions = {0x1000: 0x1008}
+        r = self.pair(o, c, functions, functions, c_names=names, entries=entries)
+        self.assertEqual((r.ok, r.unverified), (True, 1))
+
+    def test_manifest_interior_parked_data_requires_candidate_size(self):
+        o = {0x1000: ("lea", f"rcx,[{at(0x2110)}h]"), 0x1007: ("ret", "")}
+        c = {0x1000: ("lea", f"rcx,[{at(0x2210)}h]"), 0x1007: ("ret", "")}
+        functions = {0x1000: 0x1008}
+        entries = {"parked_table": Entry(rva=0x2100, size=64, parked=True)}
+        # Candidate defines table at 0x2200, but next symbol starts at 0x2220 (extent is only 32 bytes)
+        short_names = {0x2200: {"parked_table"}, 0x2220: {"other"}}
+        r_short = self.pair(o, c, functions, functions, c_names=short_names, entries=entries)
+        self.assertFalse(r_short.ok)
+        self.assertIn("size 32 != manifest 64", r_short.reason)
+
+        long_names = {0x2200: {"parked_table"}, 0x2260: {"other"}}
+        r_long = self.pair(o, c, functions, functions, c_names=long_names, entries=entries)
+        self.assertFalse(r_long.ok)
+        self.assertIn("size 96 != manifest 64", r_long.reason)
+
+        # Candidate defines table with full 64 bytes (next symbol at 0x2240)
+        full_names = {0x2200: {"parked_table"}, 0x2240: {"other"}}
+        r_full = self.pair(o, c, functions, functions, c_names=full_names, entries=entries)
+        self.assertTrue(r_full.ok, r_full.reason)
+        self.assertEqual(r_full.unverified, 0)
+
+    def test_manifest_interior_data_with_subsymbols_inside_table(self):
+        # Candidate table has an interior map symbol between table start and target offset
+        o = {0x1000: ("lea", f"rcx,[{at(0x2120)}h]"), 0x1007: ("ret", "")}
+        c = {0x1000: ("lea", f"rcx,[{at(0x2220)}h]"), 0x1007: ("ret", "")}
+        mo, mc = bytearray(0x3000), bytearray(0x3000)
+        mo[0x2100:0x2140] = mc[0x2200:0x2240] = bytes(range(64))
+        # Candidate map contains an interior symbol at 0x2210 inside the 64-byte table
+        names = {0x2200: {"table"}, 0x2210: {"table$sub"}, 0x2240: {"next"}}
+        entries = {"table": Entry(rva=0x2100, size=64)}
+        functions = {0x1000: 0x1008}
+        r = self.pair(o, c, functions, functions, c_names=names, entries=entries, o_memory=mo, c_memory=mc)
+        self.assertTrue(r.ok, r.reason)
+        self.assertEqual(r.unverified, 0)
+
+    def test_manifest_overlapping_entries_resolves_and_fails_closed(self):
+        # Manifest has an outer table (0x2100, size 0x100) and an inner table (0x2140, size 0x20)
+        entries = {
+            "outer": Entry(rva=0x2100, size=0x100),
+            "inner": Entry(rva=0x2140, size=0x20),
+        }
+        functions = {0x1000: 0x1008}
+        mo, mc = bytearray(0x3000), bytearray(0x3000)
+        mo[0x2100:0x2200] = mc[0x2300:0x2400] = b"X" * 0x100
+
+        # Case 1: ao = 0x2180 falls in outer only, past inner's end
+        o1 = {0x1000: ("lea", f"rcx,[{at(0x2180)}h]"), 0x1007: ("ret", "")}
+        c1 = {0x1000: ("lea", f"rcx,[{at(0x2380)}h]"), 0x1007: ("ret", "")}
+        names1 = {0x2300: {"outer"}, 0x2400: {"next"}}
+        r1 = self.pair(o1, c1, functions, functions, c_names=names1, entries=entries, o_memory=mo, c_memory=mc)
+        self.assertTrue(r1.ok, r1.reason)
+        self.assertEqual(r1.unverified, 0)
+
+        # Case 2: ao = 0x2150 falls in both outer (+0x50) and inner (+0x10)
+        # Candidate targets inner table at 0x2340 + 0x10 = 0x2350
+        o2 = {0x1000: ("lea", f"rcx,[{at(0x2150)}h]"), 0x1007: ("ret", "")}
+        c2 = {0x1000: ("lea", f"rcx,[{at(0x2350)}h]"), 0x1007: ("ret", "")}
+        names2 = {0x2340: {"inner"}, 0x2360: {"next"}}
+        r2 = self.pair(o2, c2, functions, functions, c_names=names2, entries=entries, o_memory=mo, c_memory=mc)
+        self.assertTrue(r2.ok, r2.reason)
+        self.assertEqual(r2.unverified, 0)
+
+        # Case 3: ao = 0x2150, candidate references wrong offset (+0x18)
+        c3 = {0x1000: ("lea", f"rcx,[{at(0x2358)}h]"), 0x1007: ("ret", "")}
+        r3 = self.pair(o2, c3, functions, functions, c_names=names2, entries=entries, o_memory=mo, c_memory=mc)
+        self.assertFalse(r3.ok)
+        self.assertIn("candidate interior offset +0x18 != original +0x10", r3.reason)
+
 
 class SimilarityTests(unittest.TestCase):
     """The near-miss score native_permute.py ranks candidates by."""

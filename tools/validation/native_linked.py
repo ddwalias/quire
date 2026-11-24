@@ -222,6 +222,11 @@ class Comparison:
             original.image.function_extent, candidate.image.function_extent)
         self.entries = entries
         self.entry_at = {e.rva: (n, e) for n, e in entries.items()}
+        self.data_entries = [(e.rva, n, e) for n, e in entries.items() if e.size is not None]
+        self.c_rva_by_name = {}
+        for rva, names in self.c.names.items():
+            for name in names:
+                self.c_rva_by_name.setdefault(name, []).append(rva)
         self.memo = {}
 
     def export(self, name):
@@ -313,11 +318,57 @@ class Comparison:
             name, entry = self.entry_at[ao]
             if anonymous(name) not in c.names.get(ac, set()):
                 return "mismatch", f"candidate target {sorted(c.names.get(ac, set())) or hex(ac)} is not {name}", 0
-            if entry.toolchain or entry.parked:
+            if entry.toolchain:
+                return "ok", None, 0
+            if entry.parked:
+                if entry.size is not None:
+                    cand_size = c.symbol_extent(ac)[1] - ac
+                    if not c.image.contains(ac, entry.size) or cand_size != entry.size:
+                        return "mismatch", f"candidate parked data {name} size {cand_size} != manifest {entry.size}", 0
                 return "ok", None, 0
             if entry.size is not None:
                 return self.data(ao, ac, (ac, ac + entry.size))
             return self.function(ao, ac)
+        matching_entries = [
+            (start_o, name, entry)
+            for start_o, name, entry in self.data_entries
+            if start_o < ao < start_o + entry.size
+        ]
+        if matching_entries:
+            mismatches = []
+            for start_o, name, entry in matching_entries:
+                offset_o = ao - start_o
+                cand_starts = self.c_rva_by_name.get(anonymous(name), [])
+                if not cand_starts:
+                    k_c = bisect.bisect_right(c.starts, ac) - 1
+                    cand_target = c.starts[k_c] if k_c >= 0 else None
+                    cand_names = sorted(c.names.get(cand_target, set())) if cand_target is not None else hex(ac)
+                    mismatches.append(f"candidate target {cand_names} is not {name}")
+                    continue
+                matched_start = None
+                for start_c in cand_starts:
+                    offset_c = ac - start_c
+                    if offset_c == offset_o:
+                        matched_start = start_c
+                        break
+                    if 0 <= offset_c < entry.size:
+                        mismatches.append(f"candidate interior offset +{offset_c:#x} != original +{offset_o:#x}")
+                if matched_start is not None:
+                    if entry.toolchain:
+                        return "ok", None, 0
+                    if entry.parked:
+                        cand_size = c.symbol_extent(matched_start)[1] - matched_start
+                        if not c.image.contains(matched_start, entry.size) or cand_size != entry.size:
+                            return "mismatch", f"candidate parked data {name} size {cand_size} != manifest {entry.size}", 0
+                        return "ok", None, 0
+                    return self.data(start_o, matched_start, (matched_start, matched_start + entry.size))
+                if not mismatches:
+                    k_c = bisect.bisect_right(c.starts, ac) - 1
+                    cand_target = c.starts[k_c] if k_c >= 0 else None
+                    cand_names = sorted(c.names.get(cand_target, set())) if cand_target is not None else hex(ac)
+                    mismatches.append(f"candidate target {cand_names} is not {name}")
+            reason = next((m for m in mismatches if "offset" in m), mismatches[0] if mismatches else "unverified")
+            return "mismatch", reason, 0
         if o.executable(ao) and c.executable(ac):
             if self.original_extent(ao) is not None and self.candidate_extent(ac) is not None:
                 return self.function(ao, ac)

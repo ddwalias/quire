@@ -249,7 +249,12 @@
   },
   "mcdepman.dll": {
     "sha256": "7c510fadb0d735ecae5a564efc0a572de21119825188d124dfd040519248a87a",
-    "targets": {},
+    "targets": {
+      "?_Tail_masks@?1??_Avx2_tail_mask_32@?A0x@@YA?AT__m256i@@_K@Z@4QBIB": {
+        "rva": "0x1b930",
+        "size": 64
+      }
+    },
     "managed": {
       "delete[]": {
         "size": 32,
