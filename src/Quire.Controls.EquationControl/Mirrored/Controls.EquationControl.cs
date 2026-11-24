@@ -272,4 +272,30 @@ public partial class EquationControl
     public CalculatingStatus CalculatingStatus => (CalculatingStatus)GetValue(CalculatingStatusProperty);
 
     public SynchronizationStatus SynchronizationStatus => (SynchronizationStatus)GetValue(SynchronizationStatusProperty);
+
+    public int ErrorCount
+    {
+        get
+        {
+            if (Error == null)
+            {
+                return _model.ScriptingError?.ResourceString != null ? 1 : 0;
+            }
+
+            return 1;
+        }
+    }
+
+    public string ErrorText
+    {
+        get
+        {
+            if (GetErrorDisplayText != null)
+            {
+                return string.Concat(GetErrorDisplayText(_model.CalculationError), _model.ScriptingError?.ResourceString);
+            }
+
+            return ErrorCode;
+        }
+    }
 }

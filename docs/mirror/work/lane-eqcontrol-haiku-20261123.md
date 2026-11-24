@@ -352,3 +352,8 @@
 - Exact: `ErrorVisible` (Mathcad's own body is `throw new NotImplementedException()`, so the member throws the same; the original does not implement it either); `Error` (`_model.CalculationError`); `EngineWarnings` (`_model.EngineWarnings`); `Mode` (`_model.Mode`); `CurrentNode` (`_model.NavigatorState.Current`); `VerticalAlignmentOffset` (`-TextBaselineOffset`); `CalculatingStatus` and `SynchronizationStatus` (`(T)GetValue(TProperty)`, the unbox of the dependency property). The partial gains `using System;`, `using System.Collections.Generic;` and `using Quire.EquationEditor.Tree;`. The eight stub pairs are removed from the `.g.cs`.
 - Left out: `ErrorCount` (its body reads `Error` and the `ScriptingError` resource string, with a conditional that needs a shape probe) and `ErrorText` (a delegate invocation with a `dup` branch).
 - Gate (project-level): PASS; 3593 checked, zero failures (`.mirror-cache/release-il-41486776a3b6/release-il.json`).
+
+### Batch 51: Controls.EquationControl (ErrorCount, ErrorText)
+
+- Exact: `ErrorCount` (`if (Error == null) return _model.ScriptingError?.ResourceString != null ? 1 : 0; return 1;`; the `return 1` block is last, which is the branch order Mathcad uses, and the first attempt with `if (Error != null) return 1;` first gave a `brfalse` where Mathcad has `brtrue`); `ErrorText` (`GetErrorDisplayText` delegate invoked on `_model.CalculationError`, concatenated with the `ScriptingError?.ResourceString`, else `ErrorCode`). Both are appended at the end of the partial; their stub pairs are removed from the `.g.cs`.
+- Gate (project-level): PASS; 3595 checked, zero failures (`.mirror-cache/release-il-cfd1fa01d00b/release-il.json`).
