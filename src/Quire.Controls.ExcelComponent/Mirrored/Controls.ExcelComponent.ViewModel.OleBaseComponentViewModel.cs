@@ -1376,4 +1376,9 @@ public abstract partial class OleBaseComponentViewModel
             ReconcileOutputItemsLocations();
         }
     }
+
+    protected void PostClone()
+    {
+        WhiteboardItems.Each(HandleItemAdded);
+    }
 }

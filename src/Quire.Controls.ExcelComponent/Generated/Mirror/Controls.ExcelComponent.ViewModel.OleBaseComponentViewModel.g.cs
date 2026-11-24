@@ -63,6 +63,4 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     private bool CheckCanDeleteInOutput(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData FillOleComponentResizeData(global::System.Windows.Size oldSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void PostClone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

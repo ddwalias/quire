@@ -105,3 +105,9 @@
 - Not landed: `ChartContainerModel.SetRect` (Mathcad copies the `Int32Rect` argument to a temporary before the `constrained.` ToString, with no `dup`; `(val = rectInPixels).ToString()` emits `dup`, and a separate `val = rectInPixels` statement cannot reproduce `ldstr; ldarg.1; stloc.0; ldloca.s 0`).
 - Not landed: `ChartContainerModel.ApplyImageFrozenState` (the original keeps an outer `finally` region with only `endfinally`; an empty `finally {}`, and nesting the `try/catch` in an outer `try/finally {}`, are both elided by Release. The finally must contain something that compiles to nothing in Release, probably a `[Conditional("DEBUG")]` call, not yet identified).
 - Both stubs remain generated.
+
+## Batch 70 (task_6e88f45786a3, branch `feature/excelcomponent-high`)
+
+- Landed: `OleBaseComponentViewModel.PostClone` (`WhiteboardItems.Each(HandleItemAdded)`, method-group delegate, no closure); Release IL PASS for the changed member.
+- Not landed: `ChartComponentCalculatableWrapper.IdentifierToChartType`. Mathcad's `hasValue` is `HasValue` followed by `ldc.i4.0; cgt.un`, and natural C# forms (`index.HasValue`, `index.HasValue != false`) are emitted without it. The enum value `Invalid = 1` already matches.
+- Survey of closure/COM/iterator-free candidates: `ChartTraceCalculatable.ShowError` (lambda), `ExcelContainerViewModel.RecalculateMinimalSize`/`EstablishInitialSize` (not reached), `ChartComponentModel.UpdateChartMinMaxCalculatable` (not reached). Most `OleBaseComponentViewModel` members use lambdas (`Init`, `IndicateHiddenErrors`, `SetOleContainerItem`, `Measure`, `CheckCanDeleteIn*`, `SetInitialSize`).
