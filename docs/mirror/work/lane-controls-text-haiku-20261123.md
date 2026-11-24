@@ -92,3 +92,10 @@
 - Hand-written implementation gates with `calls differ at #8`: Quire `<CanModifyHyperlink>b__93_0`, Mathcad `<CanModifyHyperlink>b__20_0`. The rest of the body matched up to that point.
 - Cause: `Generated/` compiles before hand-written partials, and the generated class has at least 75 declaration lines (about 25 fields first) before any hand-written member. A partial member therefore cannot reach ordinal 20. The fix needs a MirrorGen change (Mathcad field and member order), not a hand-written reorder.
 - Probe patch kept outside the repo, reversed after measurement.
+
+## Batch 33 — RichTextWithEmbeddedItem.FindOncePrivate
+
+- Member: `public override bool FindOncePrivate(string, bool, LogicalDirection, FindOptions, List<Pair<int,int>>)`, no lambda, no closure (foreach over `Cast` and `Reverse`). Hand-written in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stub removed from the `.g.cs`.
+- Measured mismatch: the first try (ternary assigning `textPointer`) failed on a block one byte short. Release IL stores `textPointer` in each arm of `if (direction == Forward)`, so the source is an if/else with an assignment in each arm, with a one-line comment.
+- Release IL (project-wide): PASS — 665 checked, 0 failures.
+- Regeneration: `MirrorGen emit` gives the same stub removal plus the pre-existing `LogDocumentContents` placement drift; emit-written drift outside `Generated/` was reverted. The solution build's 14 errors are in `tests/Quire.Mirror.Tests` (pre-existing, unrelated).

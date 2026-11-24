@@ -211,6 +211,101 @@ public partial class RichTextWithEmbeddedItem
         return handled;
     }
 
+    public override bool FindOncePrivate(string text, bool startFromCaret, LogicalDirection direction, FindOptions options, List<Pair<int, int>> subscriptPositions)
+    {
+        bool findInText = (options & FindOptions.FindInText) == FindOptions.FindInText;
+        if (!findInText && WhiteboardItems.Count == 0)
+        {
+            return false;
+        }
+        TextPointer textPointer = direction == LogicalDirection.Forward ? Document.ContentStart : Document.ContentEnd;
+        if (startFromCaret)
+        {
+            if (ActiveItem == null)
+            {
+                textPointer = CaretPosition;
+            }
+            else
+            {
+                IWhiteboardItemInText item = (IWhiteboardItemInText)ActiveItem;
+                if (FindInEmbeddedItem(item, text, startFromCaret, direction, options, subscriptPositions))
+                {
+                    return true;
+                }
+                InlineUIContainer container = GetContainer(item);
+                if (DebugTools.AssertNotNull(container, "The active embedded item is not hosted in the document.").Passed)
+                {
+                    // Each arm assigns textPointer: Release IL stores in both branches, not after a ternary.
+                    if (direction == LogicalDirection.Forward)
+                    {
+                        textPointer = container.ElementEnd.GetInsertionPosition(LogicalDirection.Forward);
+                    }
+                    else
+                    {
+                        textPointer = container.ElementStart.GetInsertionPosition(LogicalDirection.Backward);
+                    }
+                }
+            }
+        }
+        if (direction == LogicalDirection.Forward)
+        {
+            foreach (IWhiteboardItemInText item2 in WhiteboardItems.Cast<IWhiteboardItemInText>())
+            {
+                InlineUIContainer container2 = GetContainer(item2);
+                if (container2 == null)
+                {
+                    continue;
+                }
+                TextPointer insertionPosition = container2.ElementStart.GetInsertionPosition(LogicalDirection.Backward);
+                if (insertionPosition.CompareTo(textPointer) >= 0)
+                {
+                    if (findInText && FindInRange(textPointer, insertionPosition, text, direction, options, subscriptPositions))
+                    {
+                        return true;
+                    }
+                    if (FindInEmbeddedItem(item2, text, startFromCaret: false, direction, options, subscriptPositions))
+                    {
+                        ActiveItem = item2;
+                        return true;
+                    }
+                    textPointer = container2.ElementEnd.GetInsertionPosition(LogicalDirection.Forward);
+                }
+            }
+            if (findInText)
+            {
+                return FindInRange(textPointer, Document.ContentEnd, text, direction, options, subscriptPositions);
+            }
+            return false;
+        }
+        foreach (IWhiteboardItemInText item3 in WhiteboardItems.Reverse().Cast<IWhiteboardItemInText>())
+        {
+            InlineUIContainer container3 = GetContainer(item3);
+            if (container3 == null)
+            {
+                continue;
+            }
+            TextPointer insertionPosition2 = container3.ElementEnd.GetInsertionPosition(LogicalDirection.Forward);
+            if (insertionPosition2.CompareTo(textPointer) <= 0)
+            {
+                if (findInText && FindInRange(insertionPosition2, textPointer, text, direction, options, subscriptPositions))
+                {
+                    return true;
+                }
+                if (FindInEmbeddedItem(item3, text, startFromCaret: false, direction, options, subscriptPositions))
+                {
+                    ActiveItem = item3;
+                    return true;
+                }
+                textPointer = container3.ElementStart.GetInsertionPosition(LogicalDirection.Backward);
+            }
+        }
+        if (findInText)
+        {
+            return FindInRange(Document.ContentStart, textPointer, text, direction, options, subscriptPositions);
+        }
+        return false;
+    }
+
     private void BindHyperlinkCommands()
     {
         CommandBindings.Add(new CommandBinding(HyperlinkCommands.ModifyHyperlink, ModifyHyperlink, CanModifyHyperlink));
