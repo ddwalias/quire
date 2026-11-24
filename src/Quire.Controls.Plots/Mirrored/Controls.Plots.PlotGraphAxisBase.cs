@@ -225,6 +225,16 @@ public abstract partial class PlotGraphAxisBase
         throw new NotImplementedException();
     }
 
+    protected static void TickmarksChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        PlotGraphAxis plotGraphAxis = (PlotGraphAxis)d;
+        if (plotGraphAxis != null)
+        {
+            plotGraphAxis.TickMarksChanged();
+            plotGraphAxis.FireTickMarksChanged();
+        }
+    }
+
     protected static FrameworkPropertyMetadata CreateTickmarksPropertyMetadata(int defaultValue)
     {
         return new FrameworkPropertyMetadata(defaultValue, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsRender, TickmarksChanged);
