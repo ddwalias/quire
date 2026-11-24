@@ -16,8 +16,6 @@ public partial class RealNumberCalculatable : global::Quire.Controls.Plots.Model
     [global::Quire.Mirror.MirrorStub]
     private double _value;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.SynchronizationStatus _synchronizationStatus;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.CalculatingStatus _calculatingStatus;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.EngineError _engineError;
@@ -43,8 +41,6 @@ public partial class RealNumberCalculatable : global::Quire.Controls.Plots.Model
     public bool InterceptAndUpdateResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool UseICalculatableToRestoreResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.SynchronizationStatus SynchronizationStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.CalculatingStatus CalculatingStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -83,8 +79,6 @@ public partial class RealNumberCalculatable : global::Quire.Controls.Plots.Model
     public void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetStatusSynchronized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus computingStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

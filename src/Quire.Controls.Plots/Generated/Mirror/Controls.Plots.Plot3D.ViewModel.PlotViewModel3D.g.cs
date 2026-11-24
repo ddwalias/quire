@@ -44,8 +44,6 @@ public sealed partial class PlotViewModel3D : global::Quire.Controls.Plots.ViewM
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.Base3D.ViewModel.IPlotAxisViewModel3D ActiveAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.SynchronizationStatus SynchronizationStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.PersistentDataObjects.plotType XamlDataObject { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Media3D.Transform3D CameraTransform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

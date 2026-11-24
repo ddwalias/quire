@@ -789,3 +789,11 @@
 - Release IL: full gate PASS — 2670 checked, 0 failures, 2670 exact.
 - MirrorGen emit: deletions only in `PlotCalculatable.g.cs` (eight lines, equal to the applied removals). Other emit noise reverted.
 - Still blocked/stubbed, not changed here: `PlotModel3D.ComputeTotalTracesSynchronizationStatus`, the `SynchronizationStatus` properties on `AxisLimitEditor`, `RealNumberCalculatable`, `PlotViewModel3D`, `PlotEquation`, and `SetSynchronizationStatus` on `AxisLimitEditor`/`RealNumberCalculatable`.
+
+## Batch 109 — SynchronizationStatus members on RealNumberCalculatable, PlotEquation, PlotViewModel3D
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Members: `RealNumberCalculatable.SynchronizationStatus` (getter), `RealNumberCalculatable.SetSynchronizationStatus` (`!=` guard then `OnPropertyChanged("SynchronizationStatus")`), and its backing field (new partial `Mirrored/Controls.Plots.Model.RealNumberCalculatable.cs`); `PlotEquation.SynchronizationStatus` (combined `_exp`/`_scaling` status; added to the existing `Mirrored/Controls.Plots.PlotEquation.cs`); `PlotViewModel3D.SynchronizationStatus` (`Model.SynchronizationStatus`; added to the existing `Mirrored/Controls.Plots.Plot3D.ViewModel.PlotViewModel3D.cs`). Four stubs removed in each generated file set (six for RealNumberCalculatable's field, property, method; two each for the other two).
+- Release IL: full gate PASS — 2674 checked, 0 failures, 2674 exact.
+- MirrorGen emit: deletions only, equal to the applied removals. Other emit noise reverted.
+- Still stubbed, not touched: `PlotModel3D.ComputeTotalTracesSynchronizationStatus`, `AxisLimitEditor.SynchronizationStatus` and `SetSynchronizationStatus`. `Controls.Mathboard.AggregateMathboardControl` in another lane still compares against the literal `3`; not in this assembly.

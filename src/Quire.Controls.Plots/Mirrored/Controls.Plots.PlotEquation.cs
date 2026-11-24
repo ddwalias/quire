@@ -3,6 +3,7 @@
 
 using System;
 using System.Windows;
+using Quire.Calculation.Core;
 using Quire.Controls.Core;
 using Quire.Controls.Plots.Presenter;
 
@@ -10,6 +11,18 @@ namespace Quire.Controls.Plots;
 
 public partial class PlotEquation
 {
+    public SynchronizationStatus SynchronizationStatus
+    {
+        get
+        {
+            if (_exp.SynchronizationStatus != SynchronizationStatus.Pending && _scaling.SynchronizationStatus != SynchronizationStatus.Pending)
+            {
+                return SynchronizationStatus.Synchronized;
+            }
+            return SynchronizationStatus.Pending;
+        }
+    }
+
     public Visibility ScalingHeaderVisibility
     {
         get

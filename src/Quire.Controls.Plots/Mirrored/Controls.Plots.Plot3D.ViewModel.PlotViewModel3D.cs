@@ -2,12 +2,15 @@
 #pragma warning disable
 
 using System.Windows;
+using Quire.Calculation.Core;
 using Quire.Controls.Plots.Base3D.ViewModel;
 
 namespace Quire.Controls.Plots.Plot3D.ViewModel;
 
 public sealed partial class PlotViewModel3D
 {
+    public SynchronizationStatus SynchronizationStatus => Model.SynchronizationStatus;
+
     internal Base3DAxisViewModel XAxisViewModel { get; private set; }
 
     internal Base3DAxisViewModel YAxisViewModel { get; private set; }

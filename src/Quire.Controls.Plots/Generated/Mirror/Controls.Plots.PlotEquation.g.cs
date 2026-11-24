@@ -58,8 +58,6 @@ public partial class PlotEquation : global::Quire.Controls.Plots.PlotEquationBas
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IEquationControl FocusedEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.SynchronizationStatus SynchronizationStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.CalculatingStatus CalculatingStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Core.IEquationControl ScalingEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
