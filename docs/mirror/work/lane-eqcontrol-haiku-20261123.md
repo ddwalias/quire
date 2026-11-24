@@ -300,3 +300,9 @@
 - Exact: `DataExchangeModel` and `TypeoverSExpression` (direct reads of `_model`); `ErrorSExpression` (`if (_model.ErrorNode != null) return ...SExpression; return "";`, two `ret`s as in Mathcad); `CurrentNodeIsNumeric` (`CurrentModeNavigatorState.Current.DescriptorName == "NUMERIC"`); `ViewFullWidth` (`_view.ActualWidth`) and `ViewClippedWidth` (`_view.DesiredSize.Width`, with the temporary `Size` local that Roslyn makes for the struct call). None has a closure, and they are appended at the end of the partial. Their stub pairs are removed from the `.g.cs`.
 - Left out: `IsEmbedded` (getter and setter both need mirroring; the getter is a `GetValue` unbox, not yet checked for the setter) and `ErrorCode` (involves `IsNullOrEmpty` and a conditional that needs its own shape probe).
 - Gate (project-level): PASS; 3569 checked, zero failures (`.mirror-cache/release-il-bf9d2637edf4/release-il.json`).
+
+### Batch 42: Controls.EquationControl (EquationType, RegionType, CurrentNodeCaretPosition, CurrentNodeIsIdentifier)
+
+- Exact: `EquationType` (a direct read of `_model`); `RegionType` (the constant `"equation"`); `CurrentNodeCaretPosition` (`CurrentModeNavigatorState.CaretPosition.GetValueOrDefault(-1)`, with the struct temporaries Roslyn makes, as in Mathcad); `CurrentNodeIsIdentifier` (`DescriptorName == "IDENTIFIER"`, the same shape as batch 41's `CurrentNodeIsNumeric`). None has a closure; they are appended at the end of the partial, and their stub pairs are removed from the `.g.cs`.
+- Left out: `CurrentNodeSExpression`, `CurrentNodeLabel`, `CurrentNodeCaretSide`, `CurrentNodeNodeSide`, `CurrentNodeOperatorPartIndex` (each has a multi-branch shape on `Mode` that needs its own probe), and the matrix getters (they throw `InvalidOperationException` on a non-matrix node, a body that is not yet verified).
+- Gate (project-level): PASS; 3573 checked, zero failures (`.mirror-cache/release-il-704846407bba/release-il.json`).

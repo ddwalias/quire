@@ -113,4 +113,12 @@ public partial class EquationControl
     internal double ViewFullWidth => _view.ActualWidth;
 
     internal double ViewClippedWidth => _view.DesiredSize.Width;
+
+    public EquationTypes EquationType => _model.EquationType;
+
+    public string RegionType => "equation";
+
+    public int CurrentNodeCaretPosition => _model.CurrentModeNavigatorState.CaretPosition.GetValueOrDefault(-1);
+
+    public bool CurrentNodeIsIdentifier => _model.CurrentModeNavigatorState.Current.DescriptorName == "IDENTIFIER";
 }
