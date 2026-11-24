@@ -413,4 +413,42 @@ public partial class EquationControl
     public EngineResult EngineResult { get; set; }
 
     public MathFormat MathFormat { get; private set; }
+
+    private IList<TableCoordinate> CurrentNestedResultMatrixPosition
+    {
+        get => (IList<TableCoordinate>)GetValue(CurrentNestedResultMatrixPositionProperty);
+        set => SetValue(CurrentNestedResultMatrixPositionProperty, value);
+    }
+
+    public NumberFormat CurrentNumberFormat
+    {
+        get => _currentNumberFormat;
+        set
+        {
+            _currentNumberFormat = value;
+            FirePropertyChanged(new System.ComponentModel.PropertyChangedEventArgs("CurrentNumberFormat"));
+        }
+    }
+
+    public MatrixFormat CurrentMatrixFormat
+    {
+        get => _currentMatrixFormat;
+        set
+        {
+            _currentMatrixFormat = value;
+            FirePropertyChanged(new System.ComponentModel.PropertyChangedEventArgs("CurrentMatrixFormat"));
+        }
+    }
+
+    public MathFormat CurrentMathFormat
+    {
+        get => MathFormat;
+        set => throw new NotImplementedException();
+    }
+
+    public StaticMathFormat LocalMathFormatForXamlSerialization
+    {
+        get => MathFormat.ToStaticMathFormat();
+        set => MathFormat.FromStaticMathFormat(value);
+    }
 }
