@@ -40,6 +40,7 @@
 #pragma comment(linker, "/include:?TreatAsReady@PositionBase@depman@@QEAAX_N@Z")
 #pragma comment(linker, "/include:?OnDep@PositionBase@depman@@QEAAXPEAVPosition@2@@Z")
 #pragma comment(linker, "/include:?depctl@DepManager@depman@@QEAAXH@Z")
+#pragma comment(linker, "/include:?EndMove@PositionBase@depman@@QEAA_NXZ")
 // Pragmas for methods blocked on cross-assembly gcroot mapping in MethodAudit (SafeEvent, LabeledDictionary).
 // Source implementations below are exact and ready to be un-commented once MethodAudit supports cross-assembly gcroot:
 // #pragma comment(linker, "/include:?SetBusy@PositionBase@depman@@QEAAX_N@Z")
@@ -285,6 +286,29 @@ void PositionBase::UnLock()
 
 void PositionBase::BeginMove()
 {
+}
+
+bool PositionBase::EndMove()
+{
+    if (!action_chain_)
+        return false;
+
+    auto old_deps = dynamic_cast<System::Collections::Generic::Dictionary<::Quire::depman::CacheKey, __int64>^>(static_cast<System::Object^>(object_));
+    auto new_deps = action_chain_->TreatAsReadyDeps(nullptr);
+    if (!old_deps)
+        return new_deps != nullptr;
+    if (!new_deps)
+        return true;
+
+    for each (auto key in old_deps->Keys)
+    {
+        __int64 val;
+        if (!new_deps->TryGetValue(key, val))
+            return true;
+        if (val != old_deps[key])
+            return true;
+    }
+    return false;
 }
 
 Position* Position::previous()

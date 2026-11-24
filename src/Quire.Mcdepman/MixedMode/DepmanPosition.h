@@ -56,6 +56,7 @@ public:
     void Lock();
     void UnLock();
     void BeginMove();
+    bool EndMove();
     System::Collections::ICollection^ GetDefs();
     std::set<Position*>& GetDependents();
     ::Quire::depman::Scope^ GetScope();

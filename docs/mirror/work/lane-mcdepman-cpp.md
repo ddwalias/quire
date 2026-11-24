@@ -386,6 +386,25 @@ Investigation of remaining unmigrated `PositionBase`, `Position`, and `DepManage
   - Full associative container implementation (`def_table_`, `forward_deps_`, `SDef` keys, `lower_bound_ne`, `AddLabels`) blocking `DepManager.resolve`, `is_bound`, `find_def`, `find_def_nodead`, `add_def`, `remove_def`, `add_dep`, `remove_dep`, `find_all_deps`, and `invalidateChains`.
   - Compiler RTTI descriptor emissions for `Position.previous` and `Position.next`.
 
+## Batch 28 — PositionBase.EndMove and Container Architecture Deep-Dive
+
+- Owner: AGY, Orca task `task_384b3a73a4e3`; branch `feature/luna-mcdepman`.
+- Members mirrored and verified:
+  - `depman.PositionBase.EndMove()`
+- Release IL report: PASS; 253 checked (`.mirror-cache/release-il-486fdb7f0afa/release-il.json`).
+- Architecture and implementation:
+  - Disassembled `PositionBase.EndMove()` (token `0x060001d1`, 70 IL instructions). It inspects dependency changes by comparing `object_` (`Dictionary<CacheKey, __int64>^`) against `action_chain_->TreatAsReadyDeps(nullptr)`.
+  - Structuring the key inspection as two separate `if` statements (`if (!new_deps->TryGetValue(key, val)) return true; if (val != old_deps[key]) return true;`) matches Mathcad's exact branch offsets and double return blocks byte-for-byte.
+- Container Dependency Findings:
+  - Investigated native evidence for all container dependencies: outer node allocation (`std::_Alloc_construct_ptr::_Allocate`) allocates 104 bytes (32-byte `_Tree_node` header, 56-byte `SDef` key, and 8-byte inner map pointer).
+  - Disassembled and analyzed helper templates `lookup<Map>` (token `0x06000054`) and `lower_bound_ne<Map>` (token `0x06000055`), which lower-bounds keys with predecessor fallback to resolve preceding calculations.
+  - Confirmed that `PositionBase.InvalidateDeps` (requires `invalidateChains`) and `PositionBase.SetEnvScope` (requires `remove_env_scope` / `add_env_scope` and `remove_dep` / `add_dep`) are blocked on full multi-level associative container implementations.
+- Remaining dependencies:
+  - Cross-assembly `gcroot` resolution in `MethodAudit` (`SafeEvent`, `LabeledDictionary`).
+  - Full associative container implementation (`def_table_`, `forward_deps_`, `SDef` keys, `lower_bound_ne`, `AddLabels`) for `resolve`, `find_def`, `find_def_nodead`, `add_def`, `remove_def`, `add_dep`, `remove_dep`, and `invalidateChains`.
+  - Compiler RTTI descriptor emissions for `Position.previous` and `Position.next`.
+
+
 
 
 
