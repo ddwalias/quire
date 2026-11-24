@@ -72,6 +72,8 @@ public abstract partial class BaseTrackball : IBaseTrackball
 
     public Viewport3D Viewport { get; private set; }
 
+    public Rect3D Model3DBoundingBox => PlotCommonConstants.Plot3DBoundingBox;
+
     protected FrameworkElement MouseEventsSource { get; private set; }
 
     public void Attach(FrameworkElement mouseEventsSource, IHasCameraTransform hasCameraTransform, Viewport3D viewport)

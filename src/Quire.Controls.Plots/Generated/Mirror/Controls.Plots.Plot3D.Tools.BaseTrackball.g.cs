@@ -14,8 +14,6 @@ public abstract partial class BaseTrackball : global::Quire.Controls.Plots.Plot3
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Media.Media3D.Matrix3D _previousTransform;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Rect3D Model3DBoundingBox { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::System.Windows.Media.Media3D.Matrix3D> MouseUp;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::System.Windows.Media.Media3D.Matrix3D> MouseWheel;
