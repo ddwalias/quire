@@ -11,18 +11,4 @@ namespace Quire.Controls.ExcelComponent.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.Model.ChartComponentModel, Ptc.Controls.ExcelComponent")]
 public partial class ChartComponentModel : global::Quire.Controls.ExcelComponent.Model.OleBaseComponentModel, global::Quire.Controls.ExcelComponent.Model.IChartComponentModel, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentModel, global::Quire.Controls.Mathboard.IAggregateMathboardModel, global::Quire.Controls.Mathboard.IMathboardModel, global::Quire.Controls.Whiteboard.IWhiteboardModel, global::System.ICloneable, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Controls.Mathboard.IVerticalWhiteboardSections
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Collections.Generic.IEnumerable<string> ComponentErrors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatablesConnectedToTheEngine { get => base.CalculatablesConnectedToTheEngine; }
-    [global::Quire.Mirror.MirrorStub]
-    internal override global::Quire.Controls.ExcelComponent.View.IOleContainerItem OleContainerItem { get => base.OleContainerItem; set => base.OleContainerItem = value; }
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.ExcelComponent.Model.SimpleChartCalculatable> ConnectedDefaultLimits { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal event global::System.Action RequestUpdateIdentifierLabels;
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateAllTraces(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapperToCommit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateChartMinMaxCalculatable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
