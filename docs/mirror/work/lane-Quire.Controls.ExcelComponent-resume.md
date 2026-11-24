@@ -155,3 +155,9 @@
 - `AppEvents` setter, blocked: the Release IL differs only in the interop delegate constructor. Mathcad calls `AppEvents_WorkbookActivateEventHandler(object, native uint)`; a C# delegate construction emits `IntPtr`. `Dispose` (`AppEvents = null; base.Dispose();`) depends on this setter, so it stays a stub; making it exact while the setter throws would turn a no-op into a runtime exception.
 - `OnWorkbookActivate`: lambdas (`DoActionWithLock`, `Dispatcher.BeginInvoke`); blocked on closure ordinals.
 
+## Batch 80 (OleBaseComponentViewModel.SetInitialSize), branch `scratch/excel-next3` from main `c89f8b6ea`
+
+- Exact: `OleBaseComponentViewModel.SetInitialSize` (sizing runtime path). Width is read before the content height, matching Mathcad's local order. Release IL PASS: 1096 checked, 1096 exact, 0 failures; generated stub -> exact. Regeneration: emit leaves the generated file unchanged.
+- Blocked, `ExcelComponentModel.ComponentErrors` (simple `yield` getter, no lambdas): the iterator class is `<get_ComponentErrors>d__4` in Mathcad but `d__6` in Quire. The Mathcad index is its member ordinal in compile order; a getter in `Mirrored/` follows every `Generated/` member, so it needs a compile-order placement like `ChartComponentModel` (`00_` file).
+- Blocked, `ChartTraceCalculatable.Rl` and `ExcelComponentModel.Rl`: both build the calculation string with `InlineArray5<object>` / `InlineArray6<object>` (`System.Runtime.CompilerServices`, compiler-synthesized) and a `ReadOnlySpan<object?>` conversion. No Quire type or source form produces this yet. These are the Mathcad calculation-string runtime path, so they remain stubs and the runtime dependency is documented.
+

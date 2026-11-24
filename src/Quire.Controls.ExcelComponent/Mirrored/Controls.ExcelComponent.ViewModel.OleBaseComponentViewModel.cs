@@ -1377,6 +1377,40 @@ public abstract partial class OleBaseComponentViewModel
         }
     }
 
+    internal void SetInitialSize()
+    {
+        DebugTools.DevAssert(IsInputSectionVisible && (IsOutputSectionVisible || !OutputSectionExists), null);
+        Size oleContainerItemInitialSize = OleContainerItemInitialSize;
+        double sectionTop = GetSectionInitialHeight();
+        OleContainerItemTop = sectionTop;
+        InputSectionIndicator.Height = OleContainerItemTop;
+        double inputSectionsHeight = InputSectionActualHeight + (OutputSectionExists ? sectionTop : 0.0);
+        double width = oleContainerItemInitialSize.Width;
+        double contentHeight = oleContainerItemInitialSize.Height + inputSectionsHeight;
+        SetItemSize(OleContainerItem, oleContainerItemInitialSize);
+        MinimumSize = FindMinimumSize();
+        double outputOverflow = 0.0;
+        if (OutputSectionExists)
+        {
+            double outputHeight = contentHeight - OutputSectionActualTop;
+            if (DebugTools.DevAssert(outputHeight.IsGreaterThanOrEqual(SectionsMinimumHeight), null).Passed)
+            {
+                OutputSectionActualHeight = outputHeight;
+            }
+            else
+            {
+                outputOverflow = SectionsMinimumHeight - outputHeight;
+                OutputSectionActualHeight = SectionsMinimumHeight;
+            }
+        }
+        else
+        {
+            OutputSectionActualHeight = SectionsMinimumHeight;
+        }
+        ContentSize = new Size(width, contentHeight + outputOverflow);
+        SetRestrictedArea();
+    }
+
     protected void PostClone()
     {
         WhiteboardItems.Each(HandleItemAdded);

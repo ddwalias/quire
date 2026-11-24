@@ -54,8 +54,6 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Size Measure(global::System.Windows.Size availableSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal void SetInitialSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Size ResizeAndNotify(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> list, global::System.Windows.Size oldSize) => base.ResizeAndNotify(list, oldSize);
     [global::Quire.Mirror.MirrorStub]
     private bool CheckCanDeleteInInput() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
