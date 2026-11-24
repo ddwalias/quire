@@ -527,3 +527,11 @@
 - Parked and unchanged: `ComponentCookieMultiThreaded`, `History`, `Warnings`, `MatrixRows`, `MatrixColumns`, and the `CurrentNode*` group (see batches 60 to 65).
 - Runtime dependencies still visible: `ScreenBounds` stub (`ScreenInkBounds` throws); the `VisualMathNode` constructor unmatched (`MathFormat` null, `DeserializeMathFormat` throws `NullReferenceException`, `AlignmentPoint` is `(0, 0)`); `GetColumnCells` parked (`DeleteEmptyColumns`); the NthRoot and Derivative indexer setters forward to base and throw `ArgumentOutOfRangeException`.
 - Gate (project-level): PASS; 3716 checked, zero failures (`.mirror-cache/release-il-1bb728559d86/release-il.json`).
+
+### Batch 77: Controls.EquationControl (OnSExpressionChanging)
+
+- Exact (1 method): `OnSExpressionChanging(string)` is a public method that null-checks the field-like `SExpressionChanging` event and invokes it (the same shape as `FireMeasureOverideCompleted`). It is in the hand-written partial `Mirrored/Controls.EquationControl.cs`, and its stub pair is removed from the `.g.cs`.
+- Still open: `EquationSExpression`. The getter is an exact forward to `_model.EquationSExpression`, but the setter depends on `FireRequestEvaluation`, which uses compiler-cached `<>c` lambdas (`<>9__430_0`, `<FireRequestEvaluation>b__430_0/1`) and needs ordinal matching. A property cannot be half hand-written, so the whole property stays a stub.
+- Resumed-probe status after the machine restart: the NthRoot setter probe patch is preserved in scratchpad (`batch77_nthroot_setter_probe.patch`); it still fails one entry (stack order of the scaled font size), so it stays unmatched. The `VisualNthRootOperatorNode` and `VisualDerivativeOperatorNodeBase` indexer setters forward to base and throw `ArgumentOutOfRangeException`.
+- Runtime dependencies still visible: `ScreenBounds` stub (`ScreenInkBounds` throws); the `VisualMathNode` constructor unmatched (`MathFormat` null, `DeserializeMathFormat` throws `NullReferenceException`, `AlignmentPoint` is `(0, 0)`); `GetColumnCells` parked (`DeleteEmptyColumns`); `EquationSExpression` setter stub.
+- Gate (project-level): PASS; 3717 checked, zero failures (`.mirror-cache/release-il-78fb53559a0b/release-il.json`).

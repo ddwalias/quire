@@ -324,8 +324,6 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
     [global::Quire.Mirror.MirrorStub]
     private void FireContentAndRegionChangedEvents(global::Quire.Controls.Core.IORegions.IORegionChangeType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void OnSExpressionChanging(string SExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void SetRegionResultFormat(global::System.Xml.XmlNode xmlElement, string ns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void CreateFakeEngineResults() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

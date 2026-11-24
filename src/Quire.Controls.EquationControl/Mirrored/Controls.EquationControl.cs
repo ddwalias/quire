@@ -470,6 +470,14 @@ public partial class EquationControl
         set => EquationPresenter.WasSuspendedRegenerate = value;
     }
 
+    public void OnSExpressionChanging(string SExpression)
+    {
+        if (SExpressionChanging != null)
+        {
+            SExpressionChanging(SExpression);
+        }
+    }
+
     public bool InCustomInitialization
     {
         get => _model.InCustomInitialization;
