@@ -134,3 +134,10 @@
 - Ordinal finding (measured with the gate): Release lambda ordinals count class members in file order, and an earlier member's closure ordinals shift when a lambda method is placed before it. Quire's ordinals were 91-93 at the first placement (before the font-colour members), 287-289 at the class end, and 128-130 after `EnumerateEmbeddedObjectsInRange` and `GetCombinedDocumentXaml` once three closure-free members (`RemoveItem`, `SaveState`, `AddItem`) were moved ahead of `ExecuteChangeFontColor`. That move restores the font-colour, iterator and `GetCombinedDocumentXaml` ordinals (96/97, 114, 103).
 - Release IL (project-wide): PASS — 675 checked, 0 failures.
 - Regeneration: `MirrorGen emit` gives the same three stub removals plus the pre-existing `LogDocumentContents` placement drift. Emit output elsewhere was reverted. The solution build's 14 errors are in `tests/Quire.Mirror.Tests` (pre-existing).
+
+## Batch 39 — RichTextWithEmbeddedItem.TabInto(FocusNavigationDirection)
+
+- Member: `public void TabInto(FocusNavigationDirection dir)`, two non-capturing lambdas (`<TabInto>b__150_0/1`, in `<>c`). Hand-written after `IsTabNavigatable` in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stub removed from the `.g.cs`.
+- Ordinal finding: removing the `TabInto` stub from the generated prefix lowers every later hand-written lambda ordinal by one (fonts 96->95, iterator 114->113, `GetCombinedDocumentXaml` 103->102, `AddItems` 128->127). Restored by moving the closure-free `SetSelection` override ahead of the font-colour block. `TabInto` itself matches `b__150`.
+- Release IL (project-wide): PASS — 678 checked, 0 failures.
+- Regeneration: `MirrorGen emit` gives the same stub removal plus the pre-existing `LogDocumentContents` placement drift. Emit output elsewhere was reverted. The solution build's 14 errors are in `tests/Quire.Mirror.Tests` (pre-existing).

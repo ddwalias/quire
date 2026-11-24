@@ -597,6 +597,14 @@ public partial class RichTextWithEmbeddedItem
     }
 
     // Compile order: positioned so the lambdas are <>c__DisplayClass96_0 and <>c__DisplayClass97_0 as in Mathcad.
+    // Compile-order device: keeps the earlier closure ordinals (the TabInto stub removal lowers them by one).
+    public override void SetSelection(int fromOffset, int toOffset)
+    {
+        ActiveItem = null;
+        Activate(true);
+        base.SetSelection(fromOffset, toOffset);
+    }
+
     // Compile-order device: these three members come before the font-colour and iterator closures so their Release ordinals match.
     public void RemoveItem(IWhiteboardItem item)
     {
@@ -958,11 +966,10 @@ public partial class RichTextWithEmbeddedItem
     // Compile order: positioned so the getter's lambda is <get_IsTabNavigatable>b__149_0 as in Mathcad.
     public bool IsTabNavigatable => WhiteboardItems.Any((IWhiteboardItem item) => ContainerItemManager.GetIsTabNavigatable(item));
 
-    public override void SetSelection(int fromOffset, int toOffset)
+    // Compile order: TabInto's lambdas are <TabInto>b__150_0/1 in Mathcad, right after IsTabNavigatable's b__149_0.
+    public void TabInto(FocusNavigationDirection dir)
     {
-        ActiveItem = null;
-        Activate(true);
-        base.SetSelection(fromOffset, toOffset);
+        ContainerItemManager.TabInto(dir == FocusNavigationDirection.Next ? WhiteboardItems.First((IWhiteboardItem item) => ContainerItemManager.IsTabNavigatable(item)) : WhiteboardItems.Last((IWhiteboardItem item) => ContainerItemManager.IsTabNavigatable(item)), dir);
     }
 
     private void OpenHyperlink(object sender, ExecutedRoutedEventArgs e)
