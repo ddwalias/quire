@@ -27,10 +27,10 @@ partial class Triple<T1, T2, T3>
         set => m_Datum3 = value;
     }
 
-    public Triple(T1 datum1, T2 datum2, T3 datum3)
+    public Triple(T1 first, T2 second, T3 third)
     {
-        m_Datum1 = datum1;
-        m_Datum2 = datum2;
-        m_Datum3 = datum3;
+        m_Datum1 = first;
+        m_Datum2 = second;
+        m_Datum3 = third;
     }
 }

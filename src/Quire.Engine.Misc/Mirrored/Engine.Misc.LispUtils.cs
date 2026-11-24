@@ -1,6 +1,10 @@
 #nullable disable
 #pragma warning disable
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+
 namespace Quire.Engine.Misc;
 
 partial class LispUtils
@@ -19,33 +23,33 @@ partial class LispUtils
     private static string[] s_Definers = "define|global|define-eval|lambda".Split("|".ToCharArray());
     public static void badSyntax(string msg, string str, int pos)
     {
-        string nearby_text;
-        int num = global::Quire.Engine.Misc.FileUtils.ComputeLineNumber(str, pos, out nearby_text);
-        global::System.Console.WriteLine("Bad syntax ({0}) @ pos={1} line={2}\n Context (line {2}): {3}", msg, pos, num, nearby_text);
-        throw new global::System.Exception("bad_syntax");
+        string nearbyText;
+        int num = FileUtils.ComputeLineNumber(str, pos, out nearbyText);
+        Console.WriteLine("Bad syntax ({0}) @ pos={1} line={2}\n Context (line {2}): {3}", msg, pos, num, nearbyText);
+        throw new Exception("bad_syntax");
     }
     private static void Dbg(string str)
     {
         if (s_Debug)
         {
-            global::System.Console.WriteLine(str);
+            Console.WriteLine(str);
         }
     }
     public static bool scanExpression(string str, ref int startPos, out int endPos)
     {
-        int startPos2 = startPos;
+        int exprStart = startPos;
         endPos = startPos;
-        if (!findExpressionStart(str, ref startPos2))
+        if (!findExpressionStart(str, ref exprStart))
         {
             return false;
         }
-        int startPos3 = startPos2;
-        if (!skipExpression(str, ref startPos3))
+        int exprEnd = exprStart;
+        if (!skipExpression(str, ref exprEnd))
         {
             return false;
         }
-        startPos = startPos2;
-        endPos = startPos3;
+        startPos = exprStart;
+        endPos = exprEnd;
         return true;
     }
     public static bool skipExpression(string str, ref int startPos)
@@ -65,24 +69,24 @@ partial class LispUtils
     public static bool skipList(string str, ref int startPos)
     {
         bool flag = false;
-        int startPos2 = startPos;
+        int cursor = startPos;
         int num = 0;
         Dbg("skipList entered, level=0, pos=" + startPos);
-        if (!findExpressionStart(str, ref startPos2))
+        if (!findExpressionStart(str, ref cursor))
         {
             Dbg("skipList found no start.");
             return false;
         }
-        if (!str[startPos2].Equals(s_OpenParen))
+        if (!str[cursor].Equals(s_OpenParen))
         {
-            Dbg("str=" + str + " pos=" + startPos2 + " ch=" + str[startPos2]);
-            badSyntax("missing open paren at start of skipList", str, startPos2);
+            Dbg("str=" + str + " pos=" + cursor + " ch=" + str[cursor]);
+            badSyntax("missing open paren at start of skipList", str, cursor);
         }
         num++;
-        for (startPos2++; startPos2 < str.Length; startPos2++)
+        for (cursor++; cursor < str.Length; cursor++)
         {
-            char c = str[startPos2];
-            Dbg("pos=" + startPos2 + " ch=" + c + " level=" + num);
+            char c = str[cursor];
+            Dbg("pos=" + cursor + " ch=" + c + " level=" + num);
             if (flag)
             {
                 flag = false;
@@ -93,21 +97,21 @@ partial class LispUtils
             }
             else if (c.Equals(s_CommentChar))
             {
-                if (!skipLine(str, ref startPos2))
+                if (!skipLine(str, ref cursor))
                 {
                     break;
                 }
-                Dbg("stringList skipped comment; pos=" + startPos2 + " str[pos]=" + str[startPos2] + " level=" + num);
-                startPos2--;
+                Dbg("stringList skipped comment; pos=" + cursor + " str[pos]=" + str[cursor] + " level=" + num);
+                cursor--;
             }
             else if (c.Equals(s_StringQuote))
             {
-                if (!skipString(str, ref startPos2))
+                if (!skipString(str, ref cursor))
                 {
                     break;
                 }
-                Dbg("stringList skipped string; pos=" + startPos2 + " str[pos]=" + str[startPos2] + " level=" + num);
-                startPos2--;
+                Dbg("stringList skipped string; pos=" + cursor + " str[pos]=" + str[cursor] + " level=" + num);
+                cursor--;
             }
             else if (c.Equals(s_OpenParen))
             {
@@ -118,13 +122,13 @@ partial class LispUtils
                 num--;
                 if (num == 0)
                 {
-                    startPos = startPos2 + 1;
+                    startPos = cursor + 1;
                     Dbg("Leaving skipList @ " + startPos);
                     return true;
                 }
             }
         }
-        Dbg("Leaving failing skipList @ " + startPos2 + "/" + str.Length);
+        Dbg("Leaving failing skipList @ " + cursor + "/" + str.Length);
         return false;
     }
     public static bool skipAtom(string str, ref int startPos)
@@ -255,14 +259,14 @@ partial class LispUtils
         Dbg("skipString failing @ " + i);
         return false;
     }
-    public static global::System.Collections.Generic.Queue<string> scanExpressionLine(string s)
+    public static Queue<string> scanExpressionLine(string s)
     {
         int cursor = 0;
         return scanExpressionLine(s, ref cursor);
     }
-    public static global::System.Collections.Generic.Queue<string> scanExpressionLine(string s, ref int cursor)
+    public static Queue<string> scanExpressionLine(string s, ref int cursor)
     {
-        global::System.Collections.Generic.Queue<string> queue = new global::System.Collections.Generic.Queue<string>();
+        Queue<string> queue = new Queue<string>();
         int startPos = cursor;
         int endPos = cursor;
         if (!findExpressionStart(s, ref startPos))
@@ -290,18 +294,18 @@ partial class LispUtils
         cursor = endPos;
         return queue;
     }
-    public static global::System.Collections.Generic.Queue<string> scanExpressionLine(string s, ref int cursor, bool permitXML)
+    public static Queue<string> scanExpressionLine(string s, ref int cursor, bool permitXML)
     {
-        global::Quire.Engine.Misc.LispUtils.LinePartition linePartition = partitionExpressionLine(s, ref cursor, permitXML);
+        LispUtils.LinePartition linePartition = partitionExpressionLine(s, ref cursor, permitXML);
         if (linePartition != null)
         {
             return linePartition.Segments();
         }
         return null;
     }
-    public static global::Quire.Engine.Misc.LispUtils.LinePartition partitionExpressionLine(string s, ref int cursor, bool permitXML)
+    public static LispUtils.LinePartition partitionExpressionLine(string s, ref int cursor, bool permitXML)
     {
-        global::Quire.Engine.Misc.LispUtils.LinePartition linePartition = new global::Quire.Engine.Misc.LispUtils.LinePartition(s);
+        LispUtils.LinePartition linePartition = new LispUtils.LinePartition(s);
         int startPos = cursor;
         int endPos = cursor;
         Dbg(string.Format("* Looking at {0}", s[startPos]));
@@ -346,121 +350,121 @@ partial class LispUtils
         cursor = endPos;
         return linePartition;
     }
-    public static global::System.Collections.Generic.Queue<string> scanExpressions(string s)
+    public static Queue<string> scanExpressions(string s)
     {
         return scanExpressions(s, 0);
     }
-    public static global::System.Collections.Generic.Queue<string> scanExpressions(string s, int startPos)
+    public static Queue<string> scanExpressions(string s, int startPos)
     {
-        global::System.Collections.Generic.Queue<string> queue = new global::System.Collections.Generic.Queue<string>();
-        int startPos2 = startPos;
+        Queue<string> queue = new Queue<string>();
+        int cursor = startPos;
         int endPos = startPos;
         while (true)
         {
-            bool flag = scanExpression(s, ref startPos2, out endPos);
+            bool flag = scanExpression(s, ref cursor, out endPos);
             Dbg(flag ? "scanExpressions found expression" : "scanExpressions found no expression");
             if (!flag)
             {
                 break;
             }
             Dbg("s=" + s);
-            Dbg("i=" + startPos2);
+            Dbg("i=" + cursor);
             Dbg("e=" + endPos);
-            queue.Enqueue(s.Substring(startPos2, endPos - startPos2));
-            startPos2 = endPos;
+            queue.Enqueue(s.Substring(cursor, endPos - cursor));
+            cursor = endPos;
         }
         return queue;
     }
     private static void PrettyPrint(string exp)
     {
-        global::System.Console.WriteLine(PrettyString(exp));
+        Console.WriteLine(PrettyString(exp));
     }
     public static string PrettyString(string exp)
     {
         return PrettyStringTop(exp, 0);
     }
-    public static string PrettyStringTop(string exp, int target_indentation)
+    public static string PrettyStringTop(string exp, int targetIndentation)
     {
-        global::System.IO.TextWriter textWriter = new global::System.IO.StringWriter();
+        TextWriter textWriter = new StringWriter();
         int spos = 0;
         int epos = exp.Length;
-        PrettyStringWorker(exp, true, ref spos, ref epos, target_indentation, textWriter);
+        PrettyStringWorker(exp, true, ref spos, ref epos, targetIndentation, textWriter);
         return textWriter.ToString();
     }
-    public static bool IsDefinerName(string op_name)
+    public static bool IsDefinerName(string opName)
     {
         foreach (string text in s_Definers)
         {
-            if (op_name == text)
+            if (opName == text)
             {
                 return true;
             }
         }
         return false;
     }
-    public static string IdentifierName(string op_name)
+    public static string IdentifierName(string opName)
     {
-        int num = op_name.IndexOfAny(s_SymbolSeps);
+        int num = opName.IndexOfAny(s_SymbolSeps);
         if (num >= 0)
         {
-            return op_name.Substring(0, num);
+            return opName.Substring(0, num);
         }
-        return op_name;
+        return opName;
     }
-    private static void PrettyStringWorker(string exp, bool top, ref int spos, ref int epos, int indent, global::System.IO.TextWriter writer)
+    private static void PrettyStringWorker(string exp, bool top, ref int spos, ref int epos, int indent, TextWriter writer)
     {
-        int num = 0;
-        int num2 = global::System.Int32.MaxValue;
-        bool flag = false;
+        int count = 0;
+        int remaining = Int32.MaxValue;
+        bool startNewLine = false;
         while (findExpressionStart(exp, ref spos))
         {
-            if ((num > 0) & top)
+            if ((count > 0) & top)
             {
-                throw new global::System.Exception("More than one expression");
+                throw new Exception("More than one expression");
             }
             int endPos = spos;
             if (exp[spos] == s_CloseParen)
             {
                 if (top)
                 {
-                    throw new global::System.Exception("Extra close paren at top level.");
+                    throw new Exception("Extra close paren at top level.");
                 }
                 return;
             }
             if (exp[spos] == s_CommentChar)
             {
-                throw new global::System.Exception("Pretty printer doesn't handle comments.");
+                throw new Exception("Pretty printer doesn't handle comments.");
             }
             if (!scanExpression(exp, ref spos, out endPos))
             {
-                throw new global::System.Exception("Incomplete expression.");
+                throw new Exception("Incomplete expression.");
             }
-            if (flag)
+            if (startNewLine)
             {
                 IndentTo(indent, writer);
             }
-            else if (num > 0)
+            else if (count > 0)
             {
                 writer.Write(" ");
             }
-            bool flag2 = exp[spos] == s_OpenParen;
-            if (flag2 && num == 0)
+            bool isList = exp[spos] == s_OpenParen;
+            if (isList && count == 0)
             {
-                flag = true;
+                startNewLine = true;
             }
-            num2--;
-            if (num2 <= 0)
+            remaining--;
+            if (remaining <= 0)
             {
-                flag = true;
+                startNewLine = true;
             }
-            if (flag2)
+            if (isList)
             {
                 writer.Write(s_OpenParen);
                 spos++;
                 PrettyStringWorker(exp, false, ref spos, ref epos, indent + 1, writer);
                 if (exp[spos] != s_CloseParen)
                 {
-                    throw new global::System.Exception("Missing close paren");
+                    throw new Exception("Missing close paren");
                 }
                 spos++;
                 writer.Write(s_CloseParen);
@@ -468,42 +472,42 @@ partial class LispUtils
             else
             {
                 string text = exp.Substring(spos, endPos - spos);
-                string text2 = IdentifierName(text);
-                if (num == 0)
+                string head = IdentifierName(text);
+                if (count == 0)
                 {
-                    if (IsDefinerName(text2))
+                    if (IsDefinerName(head))
                     {
-                        num2 = 1;
+                        remaining = 1;
                         indent++;
                     }
-                    else if (text2 == "progn")
+                    else if (head == "progn")
                     {
-                        flag = true;
+                        startNewLine = true;
                         indent++;
                     }
-                    else if (text2 == "op_matrix")
+                    else if (head == "op_matrix")
                     {
-                        num2 = 2;
+                        remaining = 2;
                         indent++;
                     }
                     else if (text.Length > 8)
                     {
-                        flag = true;
+                        startNewLine = true;
                         indent += 3;
                     }
                     else
                     {
-                        num2 = 1;
+                        remaining = 1;
                         indent = indent + text.Length + 1;
                     }
                 }
                 writer.Write("{0}", text);
             }
             spos = endPos;
-            num++;
+            count++;
         }
     }
-    public static void IndentTo(int n, global::System.IO.TextWriter writer)
+    public static void IndentTo(int n, TextWriter writer)
     {
         writer.Write("\n");
         for (int i = 0; i < n; i++)
@@ -514,7 +518,7 @@ partial class LispUtils
     public static string SelfTest(string[] args)
     {
         bool flag = false;
-        bool flag2 = false;
+        bool prettyPrintMode = false;
         foreach (string text in args)
         {
             if (text.Equals("--selftest"))
@@ -533,48 +537,48 @@ partial class LispUtils
             }
             if (text.Equals("-pp"))
             {
-                flag2 = !flag2;
+                prettyPrintMode = !prettyPrintMode;
                 continue;
             }
-            global::System.Console.WriteLine("arg=" + text);
+            Console.WriteLine("arg=" + text);
             try
             {
-                string text2 = global::Quire.Engine.Misc.FileUtils.ExpandUnicode(text);
+                string expanded = FileUtils.ExpandUnicode(text);
                 if (flag)
                 {
                     int cursor = 0;
                     while (true)
                     {
-                        global::System.Collections.Generic.Queue<string> queue = scanExpressionLine(text2, ref cursor);
+                        Queue<string> queue = scanExpressionLine(expanded, ref cursor);
                         if (queue == null)
                         {
                             goto EndTry;
                         }
                         foreach (string item in queue)
                         {
-                            global::System.Console.WriteLine(" exp=" + item);
+                            Console.WriteLine(" exp=" + item);
                         }
-                        global::System.Console.WriteLine("--------------------");
+                        Console.WriteLine("--------------------");
                     }
                 }
-                if (flag2)
+                if (prettyPrintMode)
                 {
-                    PrettyPrint(text2);
+                    PrettyPrint(expanded);
                     goto EndTry;
                 }
-                foreach (string item2 in scanExpressions(text2))
+                foreach (string expression in scanExpressions(expanded))
                 {
-                    global::System.Console.WriteLine(" exp=" + item2);
+                    Console.WriteLine(" exp=" + expression);
                 }
             EndTry:
                 ;
             }
-            catch (global::System.Exception ex)
+            catch (Exception ex)
             {
-                global::System.Console.WriteLine("Error: " + ex);
+                Console.WriteLine("Error: " + ex);
             }
         }
-        if (flag | flag2)
+        if (flag | prettyPrintMode)
         {
             return "Done.";
         }
@@ -585,7 +589,7 @@ partial class LispUtils
     partial class LinePartition
     {
         private string m_Line;
-        private global::System.Collections.Generic.Queue<global::Quire.Engine.Misc.Pair<int, int>> m_Locs = new global::System.Collections.Generic.Queue<global::Quire.Engine.Misc.Pair<int, int>>();
+        private Queue<Pair<int, int>> m_Locs = new Queue<Pair<int, int>>();
         public string Line => m_Line;
         public int Count => m_Locs.Count;
         public LinePartition(string line)
@@ -594,31 +598,31 @@ partial class LispUtils
         }
         public void PutSegment(int startPos, int endPos)
         {
-            m_Locs.Enqueue(new global::Quire.Engine.Misc.Pair<int, int>(startPos, endPos));
+            m_Locs.Enqueue(new Pair<int, int>(startPos, endPos));
         }
         public string PeekSegment()
         {
-            global::Quire.Engine.Misc.Pair<int, int> pair = m_Locs.Peek();
+            Pair<int, int> pair = m_Locs.Peek();
             int first = pair.First;
             int second = pair.Second;
             return m_Line.Substring(first, second - first);
         }
         public string TakeSegment()
         {
-            global::Quire.Engine.Misc.Pair<int, int> pair = m_Locs.Dequeue();
+            Pair<int, int> pair = m_Locs.Dequeue();
             int first = pair.First;
             int second = pair.Second;
             return m_Line.Substring(first, second - first);
         }
-        public global::System.Collections.Generic.Queue<string> Segments()
+        public Queue<string> Segments()
         {
             return SegmentsFrom(0);
         }
-        public global::System.Collections.Generic.Queue<string> SegmentsFrom(int n)
+        public Queue<string> SegmentsFrom(int n)
         {
-            global::System.Collections.Generic.Queue<string> queue = new global::System.Collections.Generic.Queue<string>();
+            Queue<string> queue = new Queue<string>();
             int num = 0;
-            foreach (global::Quire.Engine.Misc.Pair<int, int> loc in m_Locs)
+            foreach (Pair<int, int> loc in m_Locs)
             {
                 if (num >= n)
                 {
@@ -636,7 +640,7 @@ partial class LispUtils
         public string JoinedTextFrom(int n)
         {
             int num = m_Line.Length;
-            int num2 = m_Line.Length;
+            int end = m_Line.Length;
             if (n >= m_Locs.Count)
             {
                 return "";
@@ -645,16 +649,16 @@ partial class LispUtils
             {
                 n = 0;
             }
-            int num3 = -1;
-            foreach (global::Quire.Engine.Misc.Pair<int, int> loc in m_Locs)
+            int index = -1;
+            foreach (Pair<int, int> loc in m_Locs)
             {
-                if (++num3 == n)
+                if (++index == n)
                 {
                     num = loc.First;
                 }
-                num2 = loc.Second;
+                end = loc.Second;
             }
-            return m_Line.Substring(num, num2 - num);
+            return m_Line.Substring(num, end - num);
         }
     }
 }

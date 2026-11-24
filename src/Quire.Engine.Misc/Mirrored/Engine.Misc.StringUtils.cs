@@ -88,20 +88,20 @@ partial class StringUtils
         StringBuilder stringBuilder = new StringBuilder();
         int num = 0;
         int length = substr.Length;
-        int num2;
-        while ((num2 = str.IndexOf(substr, num)) >= 0)
+        int matchIndex;
+        while ((matchIndex = str.IndexOf(substr, num)) >= 0)
         {
-            stringBuilder.Append(str, num, num2 - num);
+            stringBuilder.Append(str, num, matchIndex - num);
             stringBuilder.Append(replacement);
-            num = num2 + length;
+            num = matchIndex + length;
         }
         stringBuilder.Append(str, num, str.Length - num);
         return stringBuilder.ToString();
     }
 
-    public static bool SameLines(string str1, string str2)
+    public static bool SameLines(string leftText, string rightText)
     {
-        return SameLines(str1, str2, 0, str1.Length, 0, str2.Length);
+        return SameLines(leftText, rightText, 0, leftText.Length, 0, rightText.Length);
     }
 
     private static bool IsWhitespace(char ch)
@@ -113,34 +113,34 @@ partial class StringUtils
         return true;
     }
 
-    public static bool SameLines(string str1, string str2, int start1, int end1, int start2, int end2)
+    public static bool SameLines(string leftText, string rightText, int leftStart, int leftEnd, int rightStart, int rightEnd)
     {
         List<string> list = new List<string>();
-        List<string> list2 = new List<string>();
-        foreach (string text in str1.Split('\n', StringSplitOptions.None))
+        List<string> rightLines = new List<string>();
+        foreach (string leftLine in leftText.Split('\n', StringSplitOptions.None))
         {
-            string text3 = text.Trim();
-            if (text3 != "")
+            string leftTrimmed = leftLine.Trim();
+            if (leftTrimmed != "")
             {
-                list.Add(text3);
+                list.Add(leftTrimmed);
             }
         }
-        foreach (string text2 in str2.Split('\n', StringSplitOptions.None))
+        foreach (string rightLine in rightText.Split('\n', StringSplitOptions.None))
         {
-            string text4 = text2.Trim();
-            if (text4 != "")
+            string rightTrimmed = rightLine.Trim();
+            if (rightTrimmed != "")
             {
-                list2.Add(text4);
+                rightLines.Add(rightTrimmed);
             }
         }
-        if (list.Count != list2.Count)
+        if (list.Count != rightLines.Count)
         {
             return false;
         }
         int count = list.Count;
         for (int j = 0; j < count; j++)
         {
-            if (list[j] != list2[j])
+            if (list[j] != rightLines[j])
             {
                 return false;
             }
@@ -244,7 +244,7 @@ partial class StringUtils
 {
     public static string ToCommandString(string[] args)
     {
-        var stringBuilder = new global::System.Text.StringBuilder();
+        var stringBuilder = new StringBuilder();
         foreach (string text in args)
         {
             if (stringBuilder.Length > 0)

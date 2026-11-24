@@ -1,6 +1,11 @@
 #nullable disable
 #pragma warning disable
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+
 namespace Quire.Engine.Misc;
 
 partial class XmlUtils
@@ -30,38 +35,38 @@ partial class XmlUtils
     }
     public static void BadSyntax(string str, int pos, string msg)
     {
-        throw new global::System.Exception(string.Format("bad_syntax\t{0}\tpos={1}\ttext={2}", msg, pos, str));
+        throw new Exception(string.Format("bad_syntax\t{0}\tpos={1}\ttext={2}", msg, pos, str));
     }
-    private static void BadSyntax(string str, int pos, string fmt, object obj0)
+    private static void BadSyntax(string str, int pos, string fmt, object first)
     {
-        BadSyntax(str, pos, string.Format(fmt, obj0));
+        BadSyntax(str, pos, string.Format(fmt, first));
     }
-    private static void BadSyntax(string str, int pos, string fmt, object obj0, object obj1)
+    private static void BadSyntax(string str, int pos, string fmt, object first, object second)
     {
-        BadSyntax(str, pos, string.Format(fmt, obj0, obj1));
+        BadSyntax(str, pos, string.Format(fmt, first, second));
     }
-    private static void BadSyntax(string str, int pos, string fmt, object obj0, object obj1, object obj2)
+    private static void BadSyntax(string str, int pos, string fmt, object first, object second, object third)
     {
-        BadSyntax(str, pos, string.Format(fmt, obj0, obj1, obj2));
+        BadSyntax(str, pos, string.Format(fmt, first, second, third));
     }
     private static void Dbg(string str)
     {
         if (s_Debug)
         {
-            global::System.Console.WriteLine(str);
+            Console.WriteLine(str);
         }
     }
-    private static void Dbg(string fmt, object obj0)
+    private static void Dbg(string fmt, object first)
     {
-        Dbg(string.Format(fmt, obj0));
+        Dbg(string.Format(fmt, first));
     }
-    private static void Dbg(string fmt, object obj0, object obj1)
+    private static void Dbg(string fmt, object first, object second)
     {
-        Dbg(string.Format(fmt, obj0, obj1));
+        Dbg(string.Format(fmt, first, second));
     }
-    private static void Dbg(string fmt, object obj0, object obj1, object obj2)
+    private static void Dbg(string fmt, object first, object second, object third)
     {
-        Dbg(string.Format(fmt, obj0, obj1, obj2));
+        Dbg(string.Format(fmt, first, second, third));
     }
     public static bool LookingAtText(string str, int scanPos, string text)
     {
@@ -120,18 +125,18 @@ partial class XmlUtils
     }
     public static bool ScanElement(string str, ref int startPos, out int endPos)
     {
-        int startPos2 = startPos;
+        int elementStart = startPos;
         endPos = startPos;
-        if (!FindElementStart(str, ref startPos2))
+        if (!FindElementStart(str, ref elementStart))
         {
             return false;
         }
-        int scanPos = startPos2;
+        int scanPos = elementStart;
         if (!SkipElement(str, ref scanPos))
         {
             return false;
         }
-        startPos = startPos2;
+        startPos = elementStart;
         endPos = scanPos;
         return true;
     }
@@ -176,45 +181,45 @@ partial class XmlUtils
     }
     public static bool ScanTag(string str, ref int startPos, out int endPos, out string elementName, out bool isEmpty, out bool isClosing)
     {
-        bool flag = false;
-        bool flag2 = false;
-        int num = startPos;
-        int num2 = num;
+        bool sawSlash = false;
+        bool closingTag = false;
+        int tagStart = startPos;
+        int cursor = tagStart;
         elementName = null;
         endPos = startPos;
         isEmpty = false;
         isClosing = false;
-        if (num2 == str.Length || !str[num2].Equals(s_OpenAngle))
+        if (cursor == str.Length || !str[cursor].Equals(s_OpenAngle))
         {
             BadSyntax(str, startPos, "Tag must start with '<'");
         }
-        num2++;
-        if (num2 == str.Length)
+        cursor++;
+        if (cursor == str.Length)
         {
             BadSyntax(str, startPos, "Premature end of stream while reading tag.");
         }
-        if (str[num2].Equals(s_Slash))
+        if (str[cursor].Equals(s_Slash))
         {
-            num2++;
-            flag2 = true;
+            cursor++;
+            closingTag = true;
         }
-        else if (str[num2].Equals(s_Excl))
+        else if (str[cursor].Equals(s_Excl))
         {
             return false;
         }
         int i;
-        if (!ScanTagName(str, ref num2, out i))
+        if (!ScanTagName(str, ref cursor, out i))
         {
             BadSyntax(str, startPos, "Missing tag name.");
         }
-        string text = str.Substring(num2, i - num2);
+        string text = str.Substring(cursor, i - cursor);
         endPos = startPos;
         for (; i < str.Length; i++)
         {
             char c = str[i];
             if (c.Equals(s_Slash))
             {
-                flag = true;
+                sawSlash = true;
                 continue;
             }
             if (c.Equals(s_CloseAngle))
@@ -224,14 +229,14 @@ partial class XmlUtils
                     BadSyntax(str, startPos, "Missing tag name.");
                 }
                 elementName = text;
-                isEmpty = flag;
-                isClosing = flag2;
-                startPos = num;
+                isEmpty = sawSlash;
+                isClosing = closingTag;
+                startPos = tagStart;
                 endPos = i + 1;
                 Dbg("Found tag {0} @ {1}", str.Substring(startPos, endPos - startPos), endPos);
                 return true;
             }
-            flag = false;
+            sawSlash = false;
             if (c.Equals(s_SingleQuote) || c.Equals(s_DoubleQuote))
             {
                 if (!ScanAttributeString(str, ref i))
@@ -307,7 +312,7 @@ partial class XmlUtils
     {
         if (elementName == null || elementName.Length == 0)
         {
-            throw new global::System.Exception("Matching null tag?");
+            throw new Exception("Matching null tag?");
         }
         int num = 1;
         for (int i = scanPos; i < str.Length; i++)
@@ -317,14 +322,14 @@ partial class XmlUtils
             {
                 continue;
             }
-            string elementName2;
+            string foundName;
             int endPos;
             int startPos = i;
             bool isEmpty;
             bool isClosing;
-            if (ScanTag(str, ref startPos, out endPos, out elementName2, out isEmpty, out isClosing))
+            if (ScanTag(str, ref startPos, out endPos, out foundName, out isEmpty, out isClosing))
             {
-                if (elementName2 != null && elementName2.Equals(elementName) && !isEmpty)
+                if (foundName != null && foundName.Equals(elementName) && !isEmpty)
                 {
                     if (isClosing)
                     {
@@ -360,15 +365,15 @@ partial class XmlUtils
     }
     public static bool SkipBracketedSGML(string str, ref int scanPos)
     {
-        int scanPos2 = scanPos;
-        if (SkipSgmlComment(str, ref scanPos2))
+        int probePos = scanPos;
+        if (SkipSgmlComment(str, ref probePos))
         {
-            scanPos = scanPos2;
+            scanPos = probePos;
             return true;
         }
-        if (SkipCDATA(str, ref scanPos2))
+        if (SkipCDATA(str, ref probePos))
         {
-            scanPos = scanPos2;
+            scanPos = probePos;
             return true;
         }
         return false;
@@ -410,31 +415,31 @@ partial class XmlUtils
         }
         return false;
     }
-    private static bool FindCandidateXmlnsAttr(string str, ref int scan_pos)
+    private static bool FindCandidateXmlnsAttr(string str, ref int scanPos)
     {
-        int num = scan_pos;
+        int searchPos = scanPos;
         while (true)
         {
-            int num2 = str.IndexOf(s_xmlns, num);
-            int num3 = num2;
-            if (num3 < 0)
+            int xmlnsPos = str.IndexOf(s_xmlns, searchPos);
+            int cursor = xmlnsPos;
+            if (cursor < 0)
             {
                 return false;
             }
-            while (num3 > num)
+            while (cursor > searchPos)
             {
-                num3--;
-                if (str[num3].Equals(s_CloseAngle))
+                cursor--;
+                if (str[cursor].Equals(s_CloseAngle))
                 {
                     break;
                 }
-                if (str[num3].Equals(s_OpenAngle))
+                if (str[cursor].Equals(s_OpenAngle))
                 {
-                    scan_pos = num3;
+                    scanPos = cursor;
                     return true;
                 }
             }
-            num = num2 + s_xmlns.Length;
+            searchPos = xmlnsPos + s_xmlns.Length;
         }
     }
     public static string StripXmlnsAttrs(string str)
@@ -443,19 +448,19 @@ partial class XmlUtils
         {
             return str;
         }
-        global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder();
-        global::System.Collections.Generic.Queue<global::Quire.Engine.Misc.Triple<int, int, int>> skipAttrs;
+        StringBuilder stringBuilder = new StringBuilder();
+        Queue<Triple<int, int, int>> skipAttrs;
         int num = 0;
-        int num2 = num;
-        while (FindCandidateXmlnsAttr(str, ref num2))
+        int scanPos = num;
+        while (FindCandidateXmlnsAttr(str, ref scanPos))
         {
-            stringBuilder.Append(str.Substring(num, num2 - num));
-            num = num2;
-            if (!FindXmlnsAttrs(str, ref num2, out skipAttrs))
+            stringBuilder.Append(str.Substring(num, scanPos - num));
+            num = scanPos;
+            if (!FindXmlnsAttrs(str, ref scanPos, out skipAttrs))
             {
                 return str;
             }
-            foreach (global::Quire.Engine.Misc.Triple<int, int, int> item in skipAttrs)
+            foreach (Triple<int, int, int> item in skipAttrs)
             {
                 int first = item.First;
                 _ = item.Second;
@@ -463,15 +468,15 @@ partial class XmlUtils
                 stringBuilder.Append(str.Substring(num, first - num));
                 num = third;
             }
-            num2 = num;
+            scanPos = num;
         }
-        stringBuilder.Append(str.Substring(num2));
+        stringBuilder.Append(str.Substring(scanPos));
         return stringBuilder.ToString();
     }
-    public static bool EquivalentXml(string xml1, string xml2)
+    public static bool EquivalentXml(string leftXml, string rightXml)
     {
-        string text = TightenXmlWhitespace(xml1);
-        string value = TightenXmlWhitespace(xml2);
+        string text = TightenXmlWhitespace(leftXml);
+        string value = TightenXmlWhitespace(rightXml);
         return text.Equals(value);
     }
     public static string TightenXmlWhitespace(string rawstr)
@@ -480,7 +485,7 @@ partial class XmlUtils
         int i = 0;
         int length = text.Length;
         bool flag = false;
-        global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         for (; i < length; i++)
         {
             char value = text[i];
@@ -543,14 +548,14 @@ partial class XmlUtils
         }
         return stringBuilder.ToString();
     }
-    public static bool FindXmlnsAttrs(string str, ref int scanPos, out global::System.Collections.Generic.Queue<global::Quire.Engine.Misc.Triple<int, int, int>> skipAttrs)
+    public static bool FindXmlnsAttrs(string str, ref int scanPos, out Queue<Triple<int, int, int>> skipAttrs)
     {
         int num = scanPos;
         int i;
-        int num2 = -1;
-        int num3 = 0;
+        int attrNameStart = -1;
+        int equalsPos = 0;
         string text;
-        skipAttrs = new global::System.Collections.Generic.Queue<global::Quire.Engine.Misc.Triple<int, int, int>>();
+        skipAttrs = new Queue<Triple<int, int, int>>();
         if (num == str.Length || !str[num].Equals(s_OpenAngle))
         {
             BadSyntax(str, scanPos, "Tag must start with '<'");
@@ -578,22 +583,22 @@ partial class XmlUtils
             char value = str[i];
             if (value.Equals(s_Slash))
             {
-                num2 = -1;
+                attrNameStart = -1;
                 continue;
             }
             if (s_WhitepaceChars.IndexOf(value) >= 0)
             {
-                num2 = -1;
+                attrNameStart = -1;
                 continue;
             }
             if (value.Equals(s_EqualSign))
             {
-                num3 = i;
+                equalsPos = i;
                 continue;
             }
             if (value.Equals(s_CloseAngle))
             {
-                num2 = -1;
+                attrNameStart = -1;
                 if (text == null)
                 {
                     BadSyntax(str, scanPos, "Missing tag name.");
@@ -607,19 +612,19 @@ partial class XmlUtils
                 {
                     BadSyntax(str, i, "Bad string literal.");
                 }
-                if (num2 >= 0)
+                if (attrNameStart >= 0)
                 {
-                    string text2 = str.Substring(num2, num3 - num2);
-                    if (text2.Equals("xmlns") || text2.StartsWith("xmlns:"))
+                    string attrName = str.Substring(attrNameStart, equalsPos - attrNameStart);
+                    if (attrName.Equals("xmlns") || attrName.StartsWith("xmlns:"))
                     {
-                        skipAttrs.Enqueue(new global::Quire.Engine.Misc.Triple<int, int, int>(BackOverWhitespace(str, num2), num2, i));
+                        skipAttrs.Enqueue(new Triple<int, int, int>(BackOverWhitespace(str, attrNameStart), attrNameStart, i));
                     }
                 }
                 i--;
             }
-            else if (num2 < 0)
+            else if (attrNameStart < 0)
             {
-                num2 = i;
+                attrNameStart = i;
             }
         }
         BadSyntax(str, scanPos, "Missing '>' in tag.");
@@ -693,45 +698,45 @@ partial class XmlUtils
     {
         return UnorderedEqual(actual, expected, false);
     }
-    public static bool UnorderedEqual(string xml1, string xml2, bool exact)
+    public static bool UnorderedEqual(string leftXml, string rightXml, bool exact)
     {
-        if (xml1.Equals(xml2))
+        if (leftXml.Equals(rightXml))
         {
             return true;
         }
         int startPos = 0;
-        int startPos2 = 0;
+        int rightStart = 0;
         int endPos;
-        int endPos2;
+        int rightEnd;
         string elementName;
-        string elementName2;
+        string rightName;
         bool isEmpty;
-        bool isEmpty2;
+        bool rightIsEmpty;
         bool isClosing;
-        bool isClosing2;
-        if (!ScanTag(xml1, ref startPos, out endPos, out elementName, out isEmpty, out isClosing))
+        bool rightIsClosing;
+        if (!ScanTag(leftXml, ref startPos, out endPos, out elementName, out isEmpty, out isClosing))
         {
             return false;
         }
-        if (!ScanTag(xml2, ref startPos2, out endPos2, out elementName2, out isEmpty2, out isClosing2))
+        if (!ScanTag(rightXml, ref rightStart, out rightEnd, out rightName, out rightIsEmpty, out rightIsClosing))
         {
             return false;
         }
-        if (isClosing || isClosing2)
+        if (isClosing || rightIsClosing)
         {
             return false;
         }
-        if (elementName != elementName2)
+        if (elementName != rightName)
         {
             return false;
         }
-        string text = OrderedArbitrarily(xml1);
-        string text2 = OrderedArbitrarily(xml2);
+        string leftOrdered = OrderedArbitrarily(leftXml);
+        string rightOrdered = OrderedArbitrarily(rightXml);
         if (exact)
         {
-            return text == text2;
+            return leftOrdered == rightOrdered;
         }
-        return EquivalentXml(text, text2);
+        return EquivalentXml(leftOrdered, rightOrdered);
     }
     public static string OrderedArbitrarily(string xml)
     {
@@ -757,16 +762,16 @@ partial class XmlUtils
         {
             BadSyntax(xml, startPos, "Element in unexpected format.");
         }
-        global::System.Collections.SortedList sortedList = new global::System.Collections.SortedList();
-        int startPos2 = endPos;
-        int endPos2;
-        while (startPos2 < num && ScanElement(xml, ref startPos2, out endPos2))
+        SortedList sortedList = new SortedList();
+        int cursor = endPos;
+        int elementEnd;
+        while (cursor < num && ScanElement(xml, ref cursor, out elementEnd))
         {
-            string text = xml.Substring(startPos2, endPos2 - startPos2);
+            string text = xml.Substring(cursor, elementEnd - cursor);
             sortedList.Add(text, text);
-            startPos2 = endPos2;
+            cursor = elementEnd;
         }
-        global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.Append(xml, 0, endPos);
         foreach (string value in sortedList.GetValueList())
         {
@@ -782,15 +787,15 @@ partial class XmlUtils
         s_TestNum = 0;
         s_TestPos = 0;
     }
-    public static void TestCheck(string str, bool result, bool expected_result, int expected_pos)
+    public static void TestCheck(string str, bool result, bool expectedResult, int expectedPos)
     {
-        if (result != expected_result)
+        if (result != expectedResult)
         {
-            global::System.Console.WriteLine("Test #{0} failed. res={1}, expected={2}, pos={3}", s_TestNum, result, expected_result, s_TestPos);
+            Console.WriteLine("Test #{0} failed. res={1}, expected={2}, pos={3}", s_TestNum, result, expectedResult, s_TestPos);
         }
-        else if (!expected_result || s_TestPos != expected_pos)
+        else if (!expectedResult || s_TestPos != expectedPos)
         {
-            global::System.Console.WriteLine("Test #{0} failed. pos={1}, expected={2}", s_TestNum, s_TestPos, expected_pos);
+            Console.WriteLine("Test #{0} failed. pos={1}, expected={2}", s_TestNum, s_TestPos, expectedPos);
         }
         else
         {
@@ -815,9 +820,9 @@ partial class XmlUtils
     public static void TestFinalize()
     {
         string text = (s_TestsPassed == s_TestsDone) ? "Passed." : "Failed.";
-        global::System.Console.WriteLine("{0} {1}/{2} tests succeeded.", text, s_TestsPassed, s_TestsDone);
+        Console.WriteLine("{0} {1}/{2} tests succeeded.", text, s_TestsPassed, s_TestsDone);
     }
-    public static void SelfTest(string[] ignored_data)
+    public static void SelfTest(string[] ignoredData)
     {
         TestInit();
         string str;
@@ -843,16 +848,16 @@ partial class XmlUtils
         TestCheck(TightenXmlWhitespace("<foo  x='3'  >  <bar >  abc\n   def   </bar> </foo>") == "<foo x='3'><bar>abc def</bar></foo>");
         TestFinalize();
         string text = "<x y=\"alpha\">a xmlns=\"gack\" or xmlns:zowie=\"grumble\" is cool.<q/></x>";
-        string text2 = "<x xmlns=\"foo\" y=\"alpha\" xmlns:zip=\"xyz\">a xmlns=\"gack\" or xmlns:zowie=\"grumble\" is cool.<q xmlns:zing=\"hm\"/></x>";
-        global::System.Console.WriteLine("Trying Xmlns tests...");
-        string text3 = StripXmlnsAttrs(text2);
-        if (text3.Equals(text))
+        string input = "<x xmlns=\"foo\" y=\"alpha\" xmlns:zip=\"xyz\">a xmlns=\"gack\" or xmlns:zowie=\"grumble\" is cool.<q xmlns:zing=\"hm\"/></x>";
+        Console.WriteLine("Trying Xmlns tests...");
+        string actual = StripXmlnsAttrs(input);
+        if (actual.Equals(text))
         {
-            global::System.Console.WriteLine("OK: {0} ==> {1}", text2, text3);
+            Console.WriteLine("OK: {0} ==> {1}", input, actual);
         }
         else
         {
-            global::System.Console.WriteLine("FAILED: {0} != {1}", text3, text);
+            Console.WriteLine("FAILED: {0} != {1}", actual, text);
         }
     }
     public XmlUtils() { }

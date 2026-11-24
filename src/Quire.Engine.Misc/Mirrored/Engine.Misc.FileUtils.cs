@@ -1,6 +1,10 @@
 #nullable disable
 #pragma warning disable
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Text;
 
 namespace Quire.Engine.Misc;
 
@@ -133,23 +137,23 @@ partial class FileUtils
 
 partial class FileUtils
 {
-    public static global::System.IO.StreamReader StreamToPath(string path)
+    public static StreamReader StreamToPath(string path)
     {
-        return new global::System.IO.StreamReader(path, global::System.Text.Encoding.UTF8, true);
+        return new StreamReader(path, Encoding.UTF8, true);
     }
-    public static void ReadExpanded(string path, global::System.IO.TextWriter _out)
+    public static void ReadExpanded(string path, TextWriter _out)
     {
-        global::System.Collections.Generic.Stack<global::System.IO.StreamReader> stack = new global::System.Collections.Generic.Stack<global::System.IO.StreamReader>();
-        global::System.Collections.Generic.Stack<string> stack2 = new global::System.Collections.Generic.Stack<string>();
-        global::System.Collections.Generic.Stack<bool> stack3 = new global::System.Collections.Generic.Stack<bool>();
+        Stack<StreamReader> stack = new Stack<StreamReader>();
+        Stack<string> pathStack = new Stack<string>();
+        Stack<bool> preambleFlags = new Stack<bool>();
         try
         {
-            global::System.IO.StreamReader streamReader = StreamToPath(path);
-            bool flag = false;
-            int num = 0;
+            StreamReader streamReader = StreamToPath(path);
+            bool inPreamble = false;
+            int commentDepth = 0;
             stack.Push(streamReader);
-            stack2.Push(path);
-            stack3.Push(flag);
+            pathStack.Push(path);
+            preambleFlags.Push(inPreamble);
             while (streamReader != null)
             {
                 string text = streamReader.ReadLine();
@@ -157,42 +161,42 @@ partial class FileUtils
                 {
                     if (text.IndexOf("/*") >= 0 && text.Trim() == "/*")
                     {
-                        num++;
+                        commentDepth++;
                     }
                     else if (text.IndexOf("*/") >= 0 && text.Trim() == "*/")
                     {
-                        num--;
+                        commentDepth--;
                     }
                     else
                     {
-                        if (num != 0)
+                        if (commentDepth != 0)
                         {
                             continue;
                         }
-                        string text2 = ProcessInclude(text, out var isReference);
-                        if (text2 != null)
+                        string includePath = ProcessInclude(text, out var isReference);
+                        if (includePath != null)
                         {
-                            string directoryName = global::System.IO.Path.GetDirectoryName(path);
+                            string directoryName = Path.GetDirectoryName(path);
                             if (directoryName == null)
                             {
                                 continue;
                             }
-                            string text3 = global::System.IO.Path.Combine(directoryName, text2);
+                            string includedPath = Path.Combine(directoryName, includePath);
                             if (directoryName != null)
                             {
-                                streamReader = StreamToPath(text3);
-                                path = text3;
-                                flag = isReference;
+                                streamReader = StreamToPath(includedPath);
+                                path = includedPath;
+                                inPreamble = isReference;
                                 stack.Push(streamReader);
-                                stack2.Push(text3);
-                                stack3.Push(flag);
-                                if (flag)
+                                pathStack.Push(includedPath);
+                                preambleFlags.Push(inPreamble);
+                                if (inPreamble)
                                 {
                                     SkipPast(streamReader, "### END PREAMBLE ###");
                                 }
                             }
                         }
-                        else if (flag && text.StartsWith("### BEGIN TEST CASE"))
+                        else if (inPreamble && text.StartsWith("### BEGIN TEST CASE"))
                         {
                             SkipPast(streamReader, "### END TEST CASE");
                         }
@@ -204,25 +208,25 @@ partial class FileUtils
                 }
                 else
                 {
-                    if (num > 0)
+                    if (commentDepth > 0)
                     {
-                        throw new global::System.Exception(string.Format("End of file within comment."));
+                        throw new Exception(string.Format("End of file within comment."));
                     }
                     stack.Pop();
-                    stack2.Pop();
-                    stack3.Pop();
+                    pathStack.Pop();
+                    preambleFlags.Pop();
                     streamReader.Dispose();
                     if (stack.Count > 0)
                     {
                         streamReader = stack.Peek();
-                        path = stack2.Peek();
-                        flag = stack3.Peek();
+                        path = pathStack.Peek();
+                        inPreamble = preambleFlags.Peek();
                     }
                     else
                     {
                         streamReader = null;
                         path = null;
-                        flag = false;
+                        inPreamble = false;
                     }
                 }
             }
@@ -237,7 +241,7 @@ partial class FileUtils
     }
     public static string ReadExpanded(string path)
     {
-        global::System.IO.StringWriter stringWriter = new global::System.IO.StringWriter();
+        StringWriter stringWriter = new StringWriter();
         ReadExpanded(path, stringWriter);
         stringWriter.Close();
         return stringWriter.ToString();
@@ -253,18 +257,18 @@ partial class FileUtils
         if (text.StartsWith("#include") || text.StartsWith("#reference"))
         {
             isReference = text.StartsWith("#reference");
-            int num = text.IndexOf('"');
-            int num2 = text.LastIndexOf('"');
-            if (num == -1 || num2 - num < 2)
+            int openQuote = text.IndexOf('"');
+            int closeQuote = text.LastIndexOf('"');
+            if (openQuote == -1 || closeQuote - openQuote < 2)
             {
-                throw new global::System.Exception("bad #include directive");
+                throw new Exception("bad #include directive");
             }
-            return text.Substring(num + 1, num2 - num - 1);
+            return text.Substring(openQuote + 1, closeQuote - openQuote - 1);
         }
         isReference = false;
         return null;
     }
-    private static void SkipPast(global::System.IO.StreamReader r, string seek)
+    private static void SkipPast(StreamReader r, string seek)
     {
         string text;
         do
@@ -275,14 +279,14 @@ partial class FileUtils
     }
     public static string ContractUnicode(string str)
     {
-        global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < str.Length; i++)
         {
             char c = str[i];
-            uint num = c;
+            uint code = c;
             char ascii = '\0';
             string charName = null;
-            if (num < 128)
+            if (code < 128)
             {
                 stringBuilder.Append(c);
             }
@@ -304,31 +308,31 @@ partial class FileUtils
             }
             else
             {
-                stringBuilder.AppendFormat("\\u{0:x4}", num);
+                stringBuilder.AppendFormat("\\u{0:x4}", code);
             }
         }
         return stringBuilder.ToString();
     }
     public static string ExpandUnicode(string str)
     {
-        global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder();
-        global::System.Text.StringBuilder stringBuilder2 = new global::System.Text.StringBuilder();
-        bool flag = false;
-        bool flag2 = false;
-        bool flag3 = false;
-        bool flag4 = false;
-        int num = 0;
-        while (num < str.Length)
+        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder pending = new StringBuilder();
+        bool isEscaped = false;
+        bool isGreekEscape = false;
+        bool isUnicodeEscape = false;
+        bool isNamedEscape = false;
+        int index = 0;
+        while (index < str.Length)
         {
-            char c = str[num];
-            num++;
-            char unicode = '\0';
-            if (flag)
+            char c = str[index];
+            index++;
+            char converted = '\0';
+            if (isEscaped)
             {
-                flag = false;
-                if (AsciiToUnicode(c, ref unicode))
+                isEscaped = false;
+                if (AsciiToUnicode(c, ref converted))
                 {
-                    stringBuilder.Append(unicode);
+                    stringBuilder.Append(converted);
                     continue;
                 }
                 switch (c)
@@ -346,33 +350,33 @@ partial class FileUtils
                     stringBuilder.Append('\n');
                     break;
                 case '\r':
-                    if (num < str.Length && str[num] == '\n')
+                    if (index < str.Length && str[index] == '\n')
                     {
-                        num++;
+                        index++;
                     }
                     break;
                 case '\t':
                 case ' ':
                 {
-                    int num2 = num;
-                    while (num2 < str.Length)
+                    int scan = index;
+                    while (scan < str.Length)
                     {
-                        char c2 = str[num2];
-                        num2++;
-                        if (c2 == '\n')
+                        char scanChar = str[scan];
+                        scan++;
+                        if (scanChar == '\n')
                         {
                             break;
                         }
-                        if (c2 == '\r')
+                        if (scanChar == '\r')
                         {
-                            if (num2 < str.Length && str[num2] == '\n')
+                            if (scan < str.Length && str[scan] == '\n')
                             {
-                                num2++;
+                                scan++;
                             }
                         }
-                        else if (c2 != ' ' && c2 != '\t')
+                        else if (scanChar != ' ' && scanChar != '\t')
                         {
-                            throw new global::System.Exception(global::System.String.Format("Bad escape sequence: {0}", StringUtils.CharNames(str.Substring(num - 2, num2 - num + 2))));
+                            throw new Exception(String.Format("Bad escape sequence: {0}", StringUtils.CharNames(str.Substring(index - 2, scan - index + 2))));
                         }
                         else
                         {
@@ -380,7 +384,7 @@ partial class FileUtils
                         }
                         break;
                     }
-                    num = num2;
+                    index = scan;
                     break;
                 }
                 case '[':
@@ -400,13 +404,13 @@ partial class FileUtils
                     stringBuilder.Append('⁺');
                     break;
                 case 'g':
-                    flag2 = true;
+                    isGreekEscape = true;
                     break;
                 case '&':
-                    flag4 = true;
+                    isNamedEscape = true;
                     break;
                 case 'u':
-                    flag3 = true;
+                    isUnicodeEscape = true;
                     break;
                 default:
                     stringBuilder.AppendFormat("\\{0}", c);
@@ -415,59 +419,59 @@ partial class FileUtils
                     break;
                 }
             }
-            else if (flag2)
+            else if (isGreekEscape)
             {
-                flag2 = false;
-                char unicode2 = '\0';
-                if (GreekShortcutKeyToUnicode(c, ref unicode2))
+                isGreekEscape = false;
+                char greekChar = '\0';
+                if (GreekShortcutKeyToUnicode(c, ref greekChar))
                 {
-                    stringBuilder.Append(unicode2);
+                    stringBuilder.Append(greekChar);
                     continue;
                 }
-                num--;
+                index--;
                 stringBuilder.AppendFormat("\\g{0}", c);
             }
-            else if (flag3)
+            else if (isUnicodeEscape)
             {
-                bool flag5 = false;
+                bool hexDigitsDone = false;
                 if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))
                 {
-                    stringBuilder2.Append(c);
-                    if (stringBuilder2.Length == 4)
+                    pending.Append(c);
+                    if (pending.Length == 4)
                     {
-                        flag5 = true;
+                        hexDigitsDone = true;
                     }
                 }
                 else
                 {
-                    num--;
-                    stringBuilder.AppendFormat("\\u{0}", stringBuilder2);
-                    stringBuilder2.Length = 0;
-                    flag3 = false;
+                    index--;
+                    stringBuilder.AppendFormat("\\u{0}", pending);
+                    pending.Length = 0;
+                    isUnicodeEscape = false;
                 }
-                if (flag5)
+                if (hexDigitsDone)
                 {
-                    stringBuilder.Append((char)global::System.Int32.Parse(stringBuilder2.ToString(), global::System.Globalization.NumberStyles.AllowHexSpecifier));
-                    stringBuilder2.Length = 0;
-                    flag3 = false;
+                    stringBuilder.Append((char)Int32.Parse(pending.ToString(), NumberStyles.AllowHexSpecifier));
+                    pending.Length = 0;
+                    isUnicodeEscape = false;
                 }
             }
-            else if (flag4)
+            else if (isNamedEscape)
             {
                 if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_')
                 {
-                    stringBuilder2.Append(c);
+                    pending.Append(c);
                     continue;
                 }
-                string text = stringBuilder2.ToString();
-                stringBuilder2.Length = 0;
-                flag4 = false;
+                string text = pending.ToString();
+                pending.Length = 0;
+                isNamedEscape = false;
                 if (c == ';')
                 {
-                    string unicode3 = null;
-                    if (CharNameToUnicodeString(text, ref unicode3))
+                    string charNameValue = null;
+                    if (CharNameToUnicodeString(text, ref charNameValue))
                     {
-                        stringBuilder.Append(unicode3);
+                        stringBuilder.Append(charNameValue);
                     }
                     else
                     {
@@ -476,13 +480,13 @@ partial class FileUtils
                 }
                 else
                 {
-                    num--;
+                    index--;
                     stringBuilder.AppendFormat("\\&{0}", text);
                 }
             }
             else if (c.Equals('\\'))
             {
-                flag = true;
+                isEscaped = true;
             }
             else
             {
@@ -562,32 +566,32 @@ partial class FileUtils
         {
             InitNamedCharMap();
         }
-        bool flag = false;
-        foreach (global::Quire.Engine.Misc.Pair<string, char> item in s_LongUnicodeToShortcutKeyTable)
+        bool found = false;
+        foreach (Pair<string, char> item in s_LongUnicodeToShortcutKeyTable)
         {
             string first = item.First;
             char second = item.Second;
             if (str.Length >= pos + first.Length)
             {
-                bool flag2 = false;
+                bool mismatch = false;
                 for (int i = 0; i < first.Length; i++)
                 {
                     if (str[pos + i] != first[i])
                     {
-                        flag2 = true;
+                        mismatch = true;
                         break;
                     }
                 }
-                if (!flag2)
+                if (!mismatch)
                 {
                     shortcutKey = second;
                     pos += first.Length - 1;
-                    flag = true;
+                    found = true;
                     break;
                 }
             }
         }
-        return flag;
+        return found;
     }
     public static bool UnicodeToGreekShortcutKey(char unicode, ref char greekShortcut)
     {
@@ -604,62 +608,62 @@ partial class FileUtils
     }
     public static int ComputeLineNumber(string str, int pos)
     {
-        string nearby_text;
-        return ComputeLineNumber(str, pos, out nearby_text);
+        string nearbyText;
+        return ComputeLineNumber(str, pos, out nearbyText);
     }
-    public static int ComputeLineNumber(string str, int pos, out string nearby_text)
+    public static int ComputeLineNumber(string str, int pos, out string nearbyText)
     {
-        string pointer_text;
-        return ComputeLineNumber(str, pos, out nearby_text, out pointer_text);
+        string pointerText;
+        return ComputeLineNumber(str, pos, out nearbyText, out pointerText);
     }
-    public static int ComputeLineNumber(string str, int pos, out string nearby_text, out string pointer_text)
+    public static int ComputeLineNumber(string str, int pos, out string nearbyText, out string pointerText)
     {
-        global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder();
-        global::System.Text.StringBuilder stringBuilder2 = new global::System.Text.StringBuilder();
-        int num = 1;
-        int num2 = 0;
-        int num3 = pos;
-        if (num3 < 0)
+        StringBuilder nearby = new StringBuilder();
+        StringBuilder pointer = new StringBuilder();
+        int lineNumber = 1;
+        int index = 0;
+        int end = pos;
+        if (end < 0)
         {
-            num3 = 0;
+            end = 0;
         }
-        if (num3 > str.Length)
+        if (end > str.Length)
         {
-            num3 = str.Length;
+            end = str.Length;
         }
-        while (num2 < num3)
+        while (index < end)
         {
-            char c = str[num2];
-            if (c == '\n')
+            char ch = str[index];
+            if (ch == '\n')
             {
-                num++;
-                stringBuilder.Length = 0;
-                stringBuilder2.Length = 0;
+                lineNumber++;
+                nearby.Length = 0;
+                pointer.Length = 0;
             }
             else
             {
-                stringBuilder2.Append(' ');
-                stringBuilder.Append(c);
+                pointer.Append(' ');
+                nearby.Append(ch);
             }
-            num2++;
+            index++;
         }
-        stringBuilder2.Append("^");
-        if (num2 < str.Length)
+        pointer.Append("^");
+        if (index < str.Length)
         {
-            while (num2 < str.Length)
+            while (index < str.Length)
             {
-                char c2 = str[num2];
-                if (c2 == '\n' || c2 == '\r')
+                char ch = str[index];
+                if (ch == '\n' || ch == '\r')
                 {
                     break;
                 }
-                stringBuilder.Append(c2);
-                num2++;
+                nearby.Append(ch);
+                index++;
             }
         }
-        nearby_text = stringBuilder.ToString();
-        pointer_text = stringBuilder2.ToString();
-        return num;
+        nearbyText = nearby.ToString();
+        pointerText = pointer.ToString();
+        return lineNumber;
     }
     public FileUtils() { }
 }
@@ -671,10 +675,10 @@ partial class FileUtils
         _ = s_CharMappings.Length;
         for (int i = 0; i < s_CharMappings.Length; i += 2)
         {
-            char c = s_CharMappings[i];
-            char c2 = s_CharMappings[i + 1];
-            s_UnicodeToAsciiTable[c2] = c;
-            s_AsciiToUnicodeTable[c] = c2;
+            char ascii = s_CharMappings[i];
+            char unicode = s_CharMappings[i + 1];
+            s_UnicodeToAsciiTable[unicode] = ascii;
+            s_AsciiToUnicodeTable[ascii] = unicode;
         }
     }
     private static void InitNamedCharMap()
@@ -682,56 +686,56 @@ partial class FileUtils
         _ = s_NameMappings.Length;
         for (int i = 0; i < s_NameMappings.Length; i += 4)
         {
-            string shortcut_key = s_NameMappings[i];
-            string long_shortcut_key = s_NameMappings[i + 1];
-            string unicode_string = s_NameMappings[i + 2];
-            string char_name = s_NameMappings[i + 3];
+            string shortcutKey = s_NameMappings[i];
+            string longShortcutKey = s_NameMappings[i + 1];
+            string unicodeString = s_NameMappings[i + 2];
+            string charName = s_NameMappings[i + 3];
 
-            if (char_name != null)
+            if (charName != null)
             {
-                s_CharNameToUnicodeStringTable[char_name] = unicode_string;
+                s_CharNameToUnicodeStringTable[charName] = unicodeString;
             }
 
-            if (unicode_string != null && unicode_string.Length == 1)
+            if (unicodeString != null && unicodeString.Length == 1)
             {
-                s_UnicodeToCharNameTable[unicode_string[0]] = char_name;
+                s_UnicodeToCharNameTable[unicodeString[0]] = charName;
             }
 
-            if (long_shortcut_key != null)
+            if (longShortcutKey != null)
             {
-                if (long_shortcut_key.Length != 1)
+                if (longShortcutKey.Length != 1)
                 {
-                    throw new global::System.Exception(global::System.String.Format("Greek Name Table init failed for char \"{0}\": \"{1}\".Length != 1", char_name, long_shortcut_key));
+                    throw new Exception(String.Format("Greek Name Table init failed for char \"{0}\": \"{1}\".Length != 1", charName, longShortcutKey));
                 }
-                char c = long_shortcut_key[0];
-                if (unicode_string != null)
+                char longShortcutChar = longShortcutKey[0];
+                if (unicodeString != null)
                 {
-                    s_LongUnicodeToShortcutKeyTable.Add(new Pair<string, char>(unicode_string, c));
+                    s_LongUnicodeToShortcutKeyTable.Add(new Pair<string, char>(unicodeString, longShortcutChar));
                 }
                 else
                 {
-                    throw new global::System.ArgumentNullException("unicode_string", "Input shouldn't be null.");
+                    throw new ArgumentNullException("unicode_string", "Input shouldn't be null.");
                 }
             }
 
-            if (shortcut_key != null)
+            if (shortcutKey != null)
             {
-                if (shortcut_key.Length != 1)
+                if (shortcutKey.Length != 1)
                 {
-                    throw new global::System.Exception("Greek Name Table init failed(2).");
+                    throw new Exception("Greek Name Table init failed(2).");
                 }
-                char c2 = shortcut_key[0];
-                if (unicode_string != null && unicode_string.Length != 1)
+                char shortcutChar = shortcutKey[0];
+                if (unicodeString != null && unicodeString.Length != 1)
                 {
-                    throw new global::System.Exception(global::System.String.Format("Greek Name Table init failed for char \"{0}\": \"{1}\".Length != 1", char_name, unicode_string));
+                    throw new Exception(String.Format("Greek Name Table init failed for char \"{0}\": \"{1}\".Length != 1", charName, unicodeString));
                 }
-                if (unicode_string == null)
+                if (unicodeString == null)
                 {
-                    throw new global::System.ArgumentNullException("unicode_string", "Input shouldn't be null.");
+                    throw new ArgumentNullException("unicode_string", "Input shouldn't be null.");
                 }
-                char c3 = unicode_string[0];
-                s_GreekShortcutKeyToUnicodeTable[c2] = c3;
-                s_UnicodeToGreekShortcutKeyTable[c3] = c2;
+                char unicodeChar = unicodeString[0];
+                s_GreekShortcutKeyToUnicodeTable[shortcutChar] = unicodeChar;
+                s_UnicodeToGreekShortcutKeyTable[unicodeChar] = shortcutChar;
             }
         }
         s_bNamedCharMapInitialized = true;

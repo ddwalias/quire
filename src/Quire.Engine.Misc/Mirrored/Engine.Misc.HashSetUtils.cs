@@ -6,6 +6,6 @@ namespace Quire.Engine.Misc;
 
 partial class HashSetUtils
 {
-    public static T[] HashSetToArray<T>(ref global::System.Collections.Generic.HashSet<T> hash) => hash.ToArray();
+    public static T[] HashSetToArray<T>(ref HashSet<T> hash) => hash.ToArray();
     public HashSetUtils() { }
 }

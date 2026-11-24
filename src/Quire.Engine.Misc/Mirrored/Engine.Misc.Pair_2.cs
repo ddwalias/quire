@@ -20,9 +20,9 @@ partial class Pair<T1, T2>
         set => m_Datum2 = value;
     }
 
-    public Pair(T1 f, T2 s)
+    public Pair(T1 first, T2 second)
     {
-        m_Datum1 = f;
-        m_Datum2 = s;
+        m_Datum1 = first;
+        m_Datum2 = second;
     }
 }
