@@ -142,3 +142,9 @@
 - Regeneration: emit does not re-emit `ApplyImageFrozenState`. The only `ChartContainerModel.g.cs` drift is the pre-existing `IDataExchangeModel.Unlock` item. `ChartComponentModel.g.cs` is unchanged.
 - Remaining mismatches in the project: none introduced by this batch.
 
+## Batch 78 (ExcelContainerModel lifecycle), branch `scratch/excel-next` from main `6e4abd9b8`
+
+- Exact: `ExcelContainerModel.CheckServerStatus`, `OnOleClosedSync`, `DoDeactivate` (hand-written in the Mirrored partial; generated stubs removed in the same change). Release IL gate PASS: 1094 checked, 1094 exact, 0 failures, 3 verdict changes (generated stub -> exact). Regeneration: emit leaves `ExcelContainerModel.g.cs` unchanged; no churn from this batch.
+- Runtime caveat: `OnOleClosedSync` uses `_postOleClosedTimer`, which only the stubbed constructor would create, so it throws at runtime until the constructor is mirrored.
+- Still blocked, with reason: `GetValues`/`SetValues` (lambdas and dynamic COM), `CalculateWorkbook`/`GetSelection` (dynamic COM casts), `Dispose` (calls the stubbed `AppEvents` setter, which needs COM event wiring), `IsDisconnected` (LINQ `Select` lambda and ordinal), `OleSiteManager.DisposeOleSiteInstances` (no Quire `OleSite` type), `ComponentErrors`/`SetIdentifierLabels`/`AddItems`/`RemoveItems` (iterator or lambda shapes).
+

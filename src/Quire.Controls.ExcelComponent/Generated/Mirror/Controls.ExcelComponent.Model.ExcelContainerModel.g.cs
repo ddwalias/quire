@@ -54,13 +54,7 @@ public partial class ExcelContainerModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     public string GetSelection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override global::Quire.OLE.OleResult CheckServerStatus(bool forceRun) => base.CheckServerStatus(forceRun);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnOleClosedSync() => base.OnOleClosedSync();
-    [global::Quire.Mirror.MirrorStub]
     private void OnWorkbookActivate(global::Quire.Microsoft.Office.Interop.Excel.Workbook activeWb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void DoDeactivate() => base.DoDeactivate();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<bool> IsExcelCalculationManualModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -305,6 +305,66 @@ public partial class ExcelContainerModel
         }
     }
 
+    protected override OleResult CheckServerStatus(bool forceRun)
+    {
+        OleResult oleResult = base.CheckServerStatus(forceRun);
+        if (oleResult != OleResult.Success)
+        {
+            return oleResult;
+        }
+        try
+        {
+            Application safeApplication = GetSafeApplication(forceRun);
+            safeApplication.Interactive = safeApplication.Interactive;
+            return OleResult.Success;
+        }
+        catch (COMException)
+        {
+            return OleResult.UnknownFailure;
+        }
+        catch
+        {
+            return OleResult.Success;
+        }
+    }
+
+    protected override void OnOleClosedSync()
+    {
+        base.OnOleClosedSync();
+        if (IsDeactivateInitiatedFromMathcad)
+        {
+            _postOleClosedTimer.Interval = TimeSpan.Zero;
+        }
+        else
+        {
+            _postOleClosedTimer.Interval = TimeSpan.FromMilliseconds(_appBehaviorOptions.DelayRecalculationInMsecAfterCloseExcel);
+        }
+        _postOleClosedTimer.Start();
+    }
+
+    protected override void DoDeactivate()
+    {
+        try
+        {
+            IsDeactivateInitiatedFromMathcad = true;
+            Workbook safeWorkBook = GetSafeWorkBook(forceRun: false);
+            Application safeApplication = GetSafeApplication(forceRun: false);
+            safeWorkBook.Close(Type.Missing, Type.Missing, Type.Missing);
+            if (safeApplication != null && safeApplication.Visible && !safeApplication.UserControl && !HasVisibleWindow(safeApplication.Windows))
+            {
+                safeApplication.Visible = false;
+            }
+        }
+        catch
+        {
+            base.DoDeactivate();
+        }
+        finally
+        {
+            IsDeactivateInitiatedFromMathcad = false;
+        }
+    }
+
     private void PostOleClosed(object sender, EventArgs args)
     {
         _postOleClosedTimer.Stop();
