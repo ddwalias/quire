@@ -335,3 +335,9 @@
 
 - Exact: `TextBaselineOffset` (a `FindCommonVisualAncestor(_view) == null` guard returning `_view.TextBaselineY`; otherwise `_view.TransformToVisual(this).Transform(point).Y`, where the `Point` is a local assigned inside the argument, `Point point; ... Transform(point = new Point(0, _view.TextBaselineY)).Y`). The plain `new Point(...)` argument gave `newobj` where Mathcad builds the struct in place in a local (`ldloca.s`, `call .ctor`, `ldloc.0`), so the local-assignment form is kept with a one-line comment. Appended at the end of the partial; its stub pair is removed from the `.g.cs`.
 - Gate (project-level): PASS; 3583 checked, zero failures (`.mirror-cache/release-il-31e80c182a50/release-il.json`).
+
+### Batch 48: Controls.EquationControl (IsExceedsWidthConstrain)
+
+- Exact: `IsExceedsWidthConstrain` (a `double` local from `IsEmbedded ? ResizeIndicatorWidth : 0.0`, then `ViewFullWidth > ActualWidth && ViewClippedWidth < ViewFullWidth - resizeIndicatorWidth`). Appended at the end of the partial; its stub pair is removed from the `.g.cs`.
+- Depends at run time on `ResizeIndicatorWidth` (still a stub); only the embedded branch reads it. Left out: `ResizeIndicatorWidth` (a `ControlTemplate.FindName` / `ColumnDefinition` path, its own probe).
+- Gate (project-level): PASS; 3584 checked, zero failures (`.mirror-cache/release-il-5e194eab754a/release-il.json` for the same member on 3879a01dc; re-run on d9ffeae05 at this commit).

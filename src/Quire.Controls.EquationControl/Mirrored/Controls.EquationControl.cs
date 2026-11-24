@@ -223,4 +223,13 @@ public partial class EquationControl
             return _view.TransformToVisual(this).Transform(point = new Point(0, _view.TextBaselineY)).Y;
         }
     }
+
+    public bool IsExceedsWidthConstrain
+    {
+        get
+        {
+            double resizeIndicatorWidth = IsEmbedded ? ResizeIndicatorWidth : 0.0;
+            return ViewFullWidth > ActualWidth && ViewClippedWidth < ViewFullWidth - resizeIndicatorWidth;
+        }
+    }
 }
