@@ -128,3 +128,8 @@
 - Batch 71 landed on main as `3df2ab89f` (UI slot released by coordinator).
 - `ChartContainerModel.SetRect`: the reference loads the rectangle with `ldarg.1; stloc.0; ldloca.s 0; constrained.`. The explicit same-type cast `((Int32Rect)rectInPixels).ToString()` reproduces that sequence (scratch probe, Release IL). Release IL PASS (`1044 checked`).
 - `ApplyImageFrozenState` remains blocked: a `[Conditional("DEBUG")]` call in `finally` preserves the region (probe), but the reference shows no call target, so no helper is justified; see checkpoint note above.
+
+## Batch 73 (CommitPre), branch `feature/excelcomponent-high`
+
+- `ChartComponentModel.CommitPre` is exact. The fields and the marked constructor move to `src/Quire.Controls.ExcelComponent/00_ChartComponentModel.CompileOrder.cs` so the closure is numbered `<CommitPre>b__5_0`. The constructor stays `[MirrorStub]` with its existing body: a throwing placeholder would break `ChartComponentControl` construction. Release IL PASS (`1048 checked`, 1048 exact, 0 failures; generated stub -> exact).
+- Remaining unfinished, newly visible as missing (16 lambdas, Mathcad side, no Quire partner yet): `ChartComponentModel+<>c` closures `<Commit>b__7_0`, `<UpdateAllTraces>b__36_0,1,2,3,5,6,7,8,9,11`, `<UpdateChartMinMaxCalculatable>b__37_0,1,2,3`, and `<get_ConnectedDefaultLimits>b__28_0`. Their owners (`Commit`, `UpdateAllTraces`, `UpdateChartMinMaxCalculatable`, `ConnectedDefaultLimits`) are generated stubs on main; none was exact or paired before. They are visible because the compile-order file adds a non-capturing lambda and so a `<>c` class. Missing count 37 -> 53 for this reason; no previously exact method dropped out.
