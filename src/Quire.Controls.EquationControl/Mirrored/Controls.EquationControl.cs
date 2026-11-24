@@ -1,4 +1,5 @@
 using System.Windows;
+using System.Windows.Controls;
 using Quire.Calculation.Core;
 using Quire.Controls.Core;
 using Quire.Controls.Core.IORegions;
@@ -230,6 +231,20 @@ public partial class EquationControl
         {
             double resizeIndicatorWidth = IsEmbedded ? ResizeIndicatorWidth : 0.0;
             return ViewFullWidth > ActualWidth && ViewClippedWidth < ViewFullWidth - resizeIndicatorWidth;
+        }
+    }
+
+    public double ResizeIndicatorWidth
+    {
+        get
+        {
+            var indicatorColumn = Template.FindName("PART_ResizeIndicatorColumn", this) as ColumnDefinition;
+            if (indicatorColumn != null)
+            {
+                return indicatorColumn.ActualWidth;
+            }
+
+            return 0.0;
         }
     }
 }

@@ -341,3 +341,8 @@
 - Exact: `IsExceedsWidthConstrain` (a `double` local from `IsEmbedded ? ResizeIndicatorWidth : 0.0`, then `ViewFullWidth > ActualWidth && ViewClippedWidth < ViewFullWidth - resizeIndicatorWidth`). Appended at the end of the partial; its stub pair is removed from the `.g.cs`.
 - Depends at run time on `ResizeIndicatorWidth` (still a stub); only the embedded branch reads it. Left out: `ResizeIndicatorWidth` (a `ControlTemplate.FindName` / `ColumnDefinition` path, its own probe).
 - Gate (project-level): PASS; 3584 checked, zero failures (`.mirror-cache/release-il-5e194eab754a/release-il.json` for the same member on 3879a01dc; re-run on d9ffeae05 at this commit).
+
+### Batch 49: Controls.EquationControl (ResizeIndicatorWidth)
+
+- Exact: `ResizeIndicatorWidth` (`Template.FindName("PART_ResizeIndicatorColumn", this) as ColumnDefinition`; a non-null column returns its `ActualWidth`, otherwise `0.0`). It is the run-time dependency of `IsExceedsWidthConstrain` (batch 48), now implemented instead of a stub. Its stub pair is removed from the `.g.cs`; the partial gains `using System.Windows.Controls;` for `ColumnDefinition`.
+- Gate (project-level): PASS; 3585 checked, zero failures (`.mirror-cache/release-il-59128e9b146a/release-il.json`).
