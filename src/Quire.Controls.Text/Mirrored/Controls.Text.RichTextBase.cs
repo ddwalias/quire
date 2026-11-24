@@ -315,7 +315,17 @@ public partial class RichTextBase
 
     public bool IsFullySubscript(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected void BuildSubscriptPositions(global::System.Windows.Documents.TextRange range, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private global::System.Windows.Documents.TextPointer GetPointerToAddDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private TextPointer GetPointerToAddDictionary()
+    {
+        TextPointer pointer = null;
+        if (SpellCheck.GetIsEnabled(this) && IsNotEmpty && Selection.IsEmpty)
+        {
+            SpellingError spellingError;
+            pointer = GetSpellingErrorAtPosition(CaretPosition, out spellingError);
+        }
+
+        return pointer;
+    }
     protected virtual void PostPasting() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public virtual IList<IRegionPersistentData> SetRegionPersistentData(IDeS11NProvider d11NProvider, object data)
@@ -603,7 +613,7 @@ public partial class RichTextBase
     public SpellingError GetSpellingErrorInPosition(ref TextPointer position)
     {
         SpellingError spellingError;
-        GetSpellingErrorAtPosition(ref position, out spellingError);
+        GetSpellingErrorAtPosition(position, out spellingError);
         return spellingError;
     }
 
@@ -1299,7 +1309,7 @@ public partial class RichTextBase
         return false;
     }
 
-    private TextPointer GetSpellingErrorAtPosition(ref TextPointer textPointer, out SpellingError spellingError)
+    private TextPointer GetSpellingErrorAtPosition(in TextPointer textPointer, out SpellingError spellingError)
     {
         spellingError = null;
         if (DebugTools.AssertNotNull(textPointer).Failed)
