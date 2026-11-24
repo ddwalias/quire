@@ -5,6 +5,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Quire.Controls;
 using Quire.Controls.Core;
 using Quire.Controls.Plots.ViewModel;
 
@@ -93,6 +94,47 @@ public abstract partial class PlotGraphAxisBase
         else
         {
             DebugTools.DevAssert(false, null);
+        }
+    }
+
+    private void InitializeLimitEquation(EquationControl limitEquation)
+    {
+        limitEquation.Style = new Style(typeof(EquationControl));
+        HideLimit(limitEquation);
+        limitEquation.IsKeyboardFocusWithinChanged += LimitEditorLostFocus;
+        limitEquation.SExpressionChanging += LimitEquationSExpressionChanging;
+        VisualChildren.Add(limitEquation);
+    }
+
+    private void LimitEquationSExpressionChanging(string sExpression)
+    {
+        LimitSExpressionChanging = true;
+    }
+
+    private void LimitEditorLostFocus(object sender, DependencyPropertyChangedEventArgs e)
+    {
+        if (StartExpressionEqn.IsKeyboardFocusWithin || EndExpressionEqn.IsKeyboardFocusWithin || SecondTickExpressionEqn.IsKeyboardFocusWithin)
+        {
+            ShowLimitsExpressions();
+        }
+        else
+        {
+            HideLimitsExpressions();
+        }
+    }
+
+    protected static void ShowLimit(UIElement limit)
+    {
+        limit.Opacity = 1.0;
+        limit.IsHitTestVisible = true;
+    }
+
+    private static void HideLimit(EquationControl limit)
+    {
+        if (!limit.IsKeyboardFocusWithin && limit.ErrorCount == 0)
+        {
+            limit.Opacity = 0.0;
+            limit.IsHitTestVisible = false;
         }
     }
 }

@@ -58,16 +58,6 @@ public abstract partial class PlotGraphAxisBase : global::System.Windows.Framewo
     [global::Quire.Mirror.MirrorStub]
     protected void InitializeLimitEquation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void InitializeLimitEquation(global::Quire.Controls.EquationControl limitEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void LimitEquationSExpressionChanging(string sExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void LimitEditorLostFocus(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected static void ShowLimit(global::System.Windows.UIElement limit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void HideLimit(global::Quire.Controls.EquationControl limit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected abstract void ShowLimitsExpressions();
     [global::Quire.Mirror.MirrorStub]
     public void ShowStartExpression() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

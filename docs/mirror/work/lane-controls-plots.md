@@ -732,3 +732,11 @@
 - Release IL: full gate PASS — 2648 checked, 0 failures.
 - Still stubs, deliberately: `IsActive`, `IsHighlighted` and `UpdateLineColor`. `UpdateLineColor` is `LineColor = <cond>` with the receiver loaded first and a `brtrue` layout into the active arm. Roslyn normalizes `!a ? x : y` into `a ? y : x`, which puts the active arm first, so every expression form I tried mismatched at the field-access order. The stub is kept so the `IsActive`/`IsHighlighted` setters are not hand-written against a non-exact body.
 - MirrorGen emit: the target file changes match the applied removals; other emit noise reverted.
+
+## Batch 102 — PlotGraphAxisBase limit-equation helpers (5 members)
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Members: `InitializeLimitEquation(EquationControl)`, `LimitEquationSExpressionChanging`, `LimitEditorLostFocus`, `ShowLimit`, `HideLimit`. No closures; method-group handlers only. Added to the existing hand-written partial `Mirrored/Controls.Plots.PlotGraphAxisBase.cs` (new `using Quire.Controls;`); five stubs removed.
+- Release IL: full gate PASS — 2653 checked, 0 failures; first try.
+- MirrorGen emit: deletions only (five stubs with attributes), equal to the applied edit.
+- Still stubs: the no-argument `InitializeLimitEquation()` (uses `CommandScope`/`CompoundCommand` and `EquationControlWithTransform`), `ShowStartExpression`/`HideStartExpression` and siblings, `TickMarksChanged`/`TickmarksChanged`, `Dispatch`, `InitializeLimitLabel`, and the `DependencyProperty` change handlers.
