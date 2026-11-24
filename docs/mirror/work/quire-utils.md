@@ -1,7 +1,9 @@
 # Quire.Utils checkpoint
 
-- Owner: dispatched worker `task_91423dd05532`.
-- Branch: `feature/utils-20261114`.
-- Members: all 37 managed members across all 12 types of `utilsmgd` are implemented in hand-written sources (`BMPFormatter` 2, `COMStreamAdaptor` 17, `ImageConverter` 4, `ImageFormatter` 5, `JPEGFormatter` 5, `PNGFormatter` 2, `TransformHelper` 2, and 5 interfaces with 0 method bodies). No `MirrorStub` markers or unowned stubs remain.
-- Release IL report: `PYTHONUTF8=1 python tools/validation/release_il.py --base main --project Quire.Utils` — PASS; 37 checked, 37 exact, 0 failures, 0 unfinished (report: `.mirror-cache/release-il-af534eff485f/release-il.json`).
-- Remaining mismatches: none. Exact Release IL parity with Mathcad Prime 12.0.1.0 `utilsmgd.dll`.
+- Owner: task_9ee658a973f2 (Orca worker for assembly `Quire.Utils`).
+- Branch: `feature/haiku-engine-misc-high` (worktree reused from Quire.Engine.Misc; lands via `lane_merge.py`).
+- Members: all managed members of `utilsmgd` are implemented in hand-written sources (`BMPFormatter` 2, `COMStreamAdaptor` 17, `ImageConverter` 4, `ImageFormatter` 5, `JPEGFormatter` 5, `PNGFormatter` 2, `TransformHelper` 2, plus 5 interfaces with abstract declarations only). No `MirrorStub` markers remain.
+- Release IL report: `PYTHONUTF8=1 python tools/validation/release_il.py --base main --project Quire.Utils --all` → PASS; 42 checked, 37 exact, 5 declaration-only, 0 failures, 0 missing, 0 skipped, 0 unfinished.
+- Batch: `ImageConverter.ImageStreamToImageStream` parameter and local names made meaningful (`inputSource`, `outputTarget`, `inputStream`, `outputStream`). The `using (x = …)` assignment form is kept on purpose: the Release IL stores each stream into a pre-declared local, and the using-declaration form mismatches (`stloc.0` vs `dup`).
+- Overlap: no active lane or worktree touches `src/Quire.Utils`; the only prior checkpoint (`feature/utils-20261114`) is historical. No UI landing overlaps.
+- Remaining mismatches: none.

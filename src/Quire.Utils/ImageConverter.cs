@@ -43,17 +43,18 @@ public partial class ImageConverter
         return new COMStreamAdaptor((IStream)obj);
     }
 
-    public void ImageStreamToImageStream(ImageFormatter formatter, object _inStream, object _outStream)
+    public void ImageStreamToImageStream(ImageFormatter formatter, object inputSource, object outputTarget)
     {
-        Stream stream;
-        Stream stream2;
-        using (stream = GetStream(_inStream, true))
+        // Assign pre-declared locals: the Release IL stores each stream before its try block.
+        Stream inputStream;
+        Stream outputStream;
+        using (inputStream = GetStream(inputSource, true))
         {
-            using (stream2 = GetStream(_outStream, false))
+            using (outputStream = GetStream(outputTarget, false))
             {
-                using (Image img = Image.FromStream(stream))
+                using (Image img = Image.FromStream(inputStream))
                 {
-                    SaveImageToStream(img, formatter, stream2);
+                    SaveImageToStream(img, formatter, outputStream);
                 }
             }
         }
