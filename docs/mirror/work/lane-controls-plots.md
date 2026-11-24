@@ -644,3 +644,12 @@
 - Generated layout: after a Release build, `emit` also regenerated the nested `PropertyNames` struct (ten `[MirrorStub]` const fields). That block was missing from HEAD, so the committed `.g.cs` is the emitted version. Emit noise in other projects was reverted.
 - Release IL: full gate PASS — 2594 checked, 0 failures, 8 verdict changes. The 2 unverified items are `PlotControlBase` members, not in this change.
 - Still stubs in this class: none from the eight above.
+
+## Batch 92 — BaseTrackball helpers (9 members)
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit only; not landed, no slot yet).
+- Members: `GetPositionRelativeToViewport`, `FireMouseUp`, `FireMouseWheel`, `HandleMouseWheel`, `ScaleFromTicks`, `AddScale`, `SetScale`, `IsTrackingDifferentButton`, `CoercePosition`. No closures. Hand-written in `Mirrored/Controls.Plots.Plot3D.Tools.BaseTrackball.cs`; nine stubs removed from the generated file.
+- Shapes Mathcad needs: `FireMouseUp`/`FireMouseWheel` copy the event into a local before the null test (`stloc.0; ldloc.0; brfalse`), so the code uses local handler variables instead of `?.Invoke`. `HandleMouseWheel` uses an early return on `IsTracking`, not `if (!IsTracking)`.
+- Release IL: first draft had three mismatches (the three shapes above); after the change the full gate PASS — 2603 checked, 0 failures.
+- MirrorGen emit after the build changed only the nine removals in the target file; other emit noise reverted.
+- Still stubs in this class: `Attach`, `Reset`, `CloneAndFreeze`, `Detach`, `UpdateCurrentTrackingInfo`, the `OnMouse*` handlers, `HandleMouseDown`/`HandleMouseUp`/`HandleMouseMove`, `TrackStart`/`Track`/`TrackEnd` and `InitializeTransform`. Not attempted in this batch.
