@@ -662,3 +662,12 @@
 - Release IL: after the early-return change, the full gate PASS — 2610 checked, 0 failures.
 - MirrorGen emit after the build changed only the seven removals; other emit noise reverted.
 - Still stubs in this class: `UpdateCurrentTrackingInfo` (needs the `DocumentAttachedProperties.GetZoom` helper and `DoubleComparer`), `Attach`, `Reset`, `CloneAndFreeze`, `Detach`, `TrackStart`/`Track`/`TrackEnd`, `InitializeTransform`.
+
+## Batch 94 — BaseTrackball.UpdateCurrentTrackingInfo
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Member: `UpdateCurrentTrackingInfo` (protected virtual, no closures). Hand-written in `Mirrored/Controls.Plots.Plot3D.Tools.BaseTrackball.cs` (new `using Quire.Controls.Core;`); one stub removed from the generated file.
+- Shapes Mathcad needs: `CurrentTrackingInfo` is re-read through the property at each use (no local cache), the `HasSignificantMove` guard is an early return, and the offset is computed inside the setter expression so the receiver is loaded first (`stloc` + `ldloca` for `Vector.Length`).
+- Release IL: first draft (local cache, `if (!...)` block, separate `offset` statement) failed on receiver/load order; the final form PASS — 2611 checked, 0 failures.
+- MirrorGen emit after the build changed nothing beyond the staged stub removal; other emit noise reverted.
+- Still stubs in this class: `Attach`, `Reset`, `CloneAndFreeze`, `Detach`, `TrackStart`/`Track`/`TrackEnd` (abstract, not needed), `InitializeTransform` (abstract).

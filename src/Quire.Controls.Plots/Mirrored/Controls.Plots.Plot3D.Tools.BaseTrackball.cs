@@ -2,12 +2,25 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
+using Quire.Controls.Core;
 using Quire.Wpf;
 
 namespace Quire.Controls.Plots.Plot3D.Tools;
 
 public abstract partial class BaseTrackball : IBaseTrackball
 {
+    protected virtual void UpdateCurrentTrackingInfo(Point current)
+    {
+        CurrentTrackingInfo.LastPosition = current;
+        if (CurrentTrackingInfo.HasSignificantMove)
+        {
+            return;
+        }
+        double zoom = DocumentAttachedProperties.GetZoom(Viewport);
+        double threshold = 5.0 / zoom;
+        CurrentTrackingInfo.HasSignificantMove = 1 == DoubleComparer.DefaultDoubleComparer.Compare((current - CurrentTrackingInfo.CaptureStartPosition).Length, threshold);
+    }
+
     private void OnMouseDown(object sender, MouseButtonEventArgs args)
     {
         HandleMouseDown(GetPositionRelativeToViewport(args), args.ChangedButton, useTimer: true);

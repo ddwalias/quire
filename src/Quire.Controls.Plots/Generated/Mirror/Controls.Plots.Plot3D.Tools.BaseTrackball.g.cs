@@ -50,8 +50,6 @@ public abstract partial class BaseTrackball : global::Quire.Controls.Plots.Plot3
     [global::Quire.Mirror.MirrorStub]
     public virtual void Detach() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected virtual void UpdateCurrentTrackingInfo(global::System.Windows.Point current) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected abstract bool TrackStart(global::System.Windows.Point current, bool useTimer);
     [global::Quire.Mirror.MirrorStub]
     protected abstract bool Track(global::System.Windows.Point current);
