@@ -478,6 +478,31 @@ public partial class EquationControl
         }
     }
 
+    public void Cut() => _view.FireCut();
+    public void Copy() => _view.FireCopy();
+    public void Paste() => _view.FirePaste();
+    public void Backspace() => _view.FireDeleteLeft();
+    public void Delete() => _view.FireDeleteRight();
+    public void ContractScope() => _view.FireContractScope();
+    public void ExpandScope() => _view.FireExpandScope();
+    public void ExpandScopeLeft() => _view.FireScopeLeft();
+    public void ExpandScopeRight() => _view.FireScopeRight();
+    public void ExitGroupOnRight() => _view.FireExitGroupRight();
+    public void FullyExpandScope() => _view.FireFullyExpandScope();
+    public void FullyContractScope() => _view.FireFullyContractScope();
+    public void TransformCharacter() => _view.FireGreek();
+    public void NavigateLeft() => _view.FireMoveLeft();
+    public void NavigateLeftByTerm() => _view.FireMoveLeftByTerm();
+    public void NavigateRight() => _view.FireMoveRight();
+    public void NavigateRightByTerm() => _view.FireMoveRightByTerm();
+    public void NavigateUp() => _view.FireMoveUp();
+    public void NavigateDown() => _view.FireMoveDown();
+    public void NavigateRegionEnd() => _view.FireMoveToRegionEnd();
+    public void NavigateRegionStart() => _view.FireMoveToRegionStart();
+    public void ScopeHome() => _view.FireMoveToStart();
+    public void ScopeEnd() => _view.FireMoveToEnd();
+    public void Pi() => _view.AutomateKeypress('π');
+
     public bool InCustomInitialization
     {
         get => _model.InCustomInitialization;
