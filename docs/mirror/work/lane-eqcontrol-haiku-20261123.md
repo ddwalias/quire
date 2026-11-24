@@ -464,3 +464,11 @@
 - Exact (6 accessors, 3 properties): each property is a non-virtual dependency-property wrapper (`get => (bool)GetValue(XProperty)`, `set => SetValue(XProperty, value)`) over the static DPs registered in batch 65. Stub pairs removed from the `.g.cs`; the bodies live in the hand-written partial.
 - Unchanged: the `VisualMathNode` constructor (IL-structural mismatch, batch 65); `MathFormat` stays null at run time, so `DeserializeMathFormat` still throws `NullReferenceException`; `GetColumnCells` stays parked (`DeleteEmptyColumns`).
 - Gate (project-level): PASS; 3686 checked, zero failures (`.mirror-cache/release-il-72e57c88afa8/release-il.json`).
+
+### Batch 69: Controls.Internal.VisualMathNode (AlignmentPoint, ScreenCenterPoint)
+
+- Exact (2 getters): `AlignmentPoint` (`=> _alignmentPoint`; `_alignmentPoint` is declared by hand, batch 65) and `ScreenCenterPoint` (`center = new Point(ActualWidth / 2, ActualHeight / 2)` as its own statement, then `return PointToScreen(center)`; the statement form emits the in-place constructor on a local before `this` is loaded, which is the Mathcad order). Stub pairs removed from the `.g.cs`.
+- Runtime dependency: `AlignmentPoint` returns `_alignmentPoint`, which is `(0, 0)` until the constructor runs (constructor unmatched, batch 65).
+- Probe, not landed: `ComboBoxTableModel.GetColumnCells` with a failure-last layout (`if (!DevAssert(...).Failed) { IEnumerable<IReadonlyCellData> cells = AllRows.Select(row => row.GetCellAt(columnIndex)); return cells; } return Enumerable.Empty<IReadonlyCellData>();`). The display class `<>c__DisplayClass26_0` and its lambda now match, and the bounds check matches. The only difference left is the `stloc.1; ldloc.1` pair before `ret`, which Roslyn elides in Release even with an explicitly typed local (33 entries against Mathcad's 35). It stays parked. Patch saved outside the repo.
+- Unchanged: the `VisualMathNode` constructor (IL-structural mismatch, batch 65); `MathFormat` stays null at run time, so `DeserializeMathFormat` still throws `NullReferenceException`; `GetColumnCells` stays parked, and its `DeleteEmptyColumns` dependency stays visible.
+- Gate (project-level): PASS; 3688 checked, zero failures (`.mirror-cache/release-il-6df6afd3b76e/release-il.json`).

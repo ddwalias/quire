@@ -51,6 +51,18 @@ internal abstract partial class VisualMathNode
         set => SetValue(ShowOperatorOnlyWhenActiveProperty, value);
     }
 
+    public Point AlignmentPoint => _alignmentPoint;
+
+    public Point ScreenCenterPoint
+    {
+        get
+        {
+            Point center;
+            center = new Point(ActualWidth / 2, ActualHeight / 2);
+            return PointToScreen(center);
+        }
+    }
+
     private static void OnShowOperatorOnlyWhenActiveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var node = d as VisualMathNode;
