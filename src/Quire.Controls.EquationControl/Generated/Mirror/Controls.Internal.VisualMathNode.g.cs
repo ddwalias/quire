@@ -20,17 +20,11 @@ internal abstract partial class VisualMathNode : global::Quire.Controls.Internal
     [global::Quire.Mirror.MirrorStub]
     protected static global::Quire.Controls.Core.IFontManager FontManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.EquationEditor.View.IVisualMathNode[] NavigatableParts { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> CoreElements { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> CoreElementsTopLine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Rect ScreenBounds { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::System.Windows.Rect ScreenInkBounds { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual double InkedHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public abstract double EffectiveBaselineY { get; }
     [global::Quire.Mirror.MirrorStub]

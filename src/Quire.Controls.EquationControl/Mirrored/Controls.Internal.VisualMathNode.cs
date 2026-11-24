@@ -8,6 +8,7 @@ using System;
 using System.Windows;
 using Quire.Controls.Core;
 using Quire.EquationEditor.Tree;
+using Quire.EquationEditor.View;
 
 namespace Quire.Controls.Internal;
 
@@ -78,6 +79,12 @@ internal abstract partial class VisualMathNode
     }
 
     public virtual INodeInfo NodeInfo { get; set; }
+
+    public virtual double InkedHeight => ActualHeight;
+
+    public virtual Rect ScreenInkBounds => ScreenBounds;
+
+    public virtual IVisualMathNode[] NavigatableParts => throw new NotImplementedException();
 
     public Point ScreenCenterPoint
     {

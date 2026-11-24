@@ -479,3 +479,11 @@
 - Not landed: `ScreenBounds` (its Mathcad IL stores a `Point` local between two `PointToScreen` calls and then passes it to the `Rect` constructor, the same elision risk as `GetColumnCells`).
 - Unchanged: the `VisualMathNode` constructor (IL-structural mismatch, batch 65); `MathFormat` stays null at run time, so `DeserializeMathFormat` still throws `NullReferenceException`; `GetColumnCells` stays parked (`DeleteEmptyColumns`).
 - Gate (project-level): PASS; 3696 checked, zero failures (`.mirror-cache/release-il-8b3ae334d189/release-il.json`).
+
+### Batch 71: Controls.Internal.VisualMathNode (InkedHeight, ScreenInkBounds, NavigatableParts)
+
+- Exact (3 members): `InkedHeight` (virtual getter returning `ActualHeight`); `ScreenInkBounds` (virtual getter returning `ScreenBounds`); `NavigatableParts` (virtual getter whose body is `throw new NotImplementedException()`, which is Mathcad's own behaviour, so it is exact and not a stub). Stub pairs removed from the `.g.cs`.
+- Runtime dependency (not an IL mismatch): `ScreenInkBounds` calls `ScreenBounds`, which is still a stub, so it throws `NotImplementedException` at run time until `ScreenBounds` is implemented (its Mathcad IL carries the same stloc/ldloc elision risk as `GetColumnCells`).
+- Not landed: `CoreElements` and `CoreElementsTopLine` (compiler iterator state machines `<get_CoreElements>d__43` and `d__45`; these need ordinal matching).
+- Unchanged: the `VisualMathNode` constructor (IL-structural mismatch, batch 65); `MathFormat` stays null at run time, so `DeserializeMathFormat` still throws `NullReferenceException`; `GetColumnCells` stays parked (`DeleteEmptyColumns`).
+- Gate (project-level): PASS; 3699 checked, zero failures (`.mirror-cache/release-il-d4c8ade78187/release-il.json`).
