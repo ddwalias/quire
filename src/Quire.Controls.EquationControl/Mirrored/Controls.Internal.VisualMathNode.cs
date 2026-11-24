@@ -4,11 +4,41 @@
 #nullable disable
 #pragma warning disable
 
+using System.Windows;
 using Quire.Controls.Core;
 
 namespace Quire.Controls.Internal;
 
 internal abstract partial class VisualMathNode
 {
+    private static readonly string OperatorFontFamilyName = "Mathcad UniMath Prime";
+
+    protected Point _alignmentPoint;
+
+    public static readonly DependencyProperty IsValidProperty = DependencyProperty.Register("IsValid", typeof(bool), typeof(VisualMathNode), new FrameworkPropertyMetadata(true));
+
+    public static readonly DependencyProperty ShowAlignmentPointProperty = DependencyProperty.Register("ShowAlignmentPoint", typeof(bool), typeof(VisualMathNode), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender));
+
+    public static readonly DependencyProperty ShowOperatorOnlyWhenActiveProperty = DependencyProperty.Register("ShowOperatorOnlyWhenActive", typeof(bool), typeof(VisualMathNode), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnShowOperatorOnlyWhenActiveChanged)));
+
+    static VisualMathNode()
+    {
+        global::Quire.Controls.EquationControl.ActiveElementOpacityProperty.AddOwner(typeof(VisualMathNode));
+        global::Quire.Controls.EquationControl.ActiveNonNavigatableElementOpacityProperty.AddOwner(typeof(VisualMathNode));
+    }
+
     public IMathFormatDobjController MathFormat { get; private set; }
+
+    private static void OnShowOperatorOnlyWhenActiveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        var node = d as VisualMathNode;
+        if (node != null)
+        {
+            node.OnShowOperatorOnlyWhenActiveChanged((bool)e.NewValue);
+        }
+    }
+
+    protected virtual void OnShowOperatorOnlyWhenActiveChanged(bool value)
+    {
+    }
 }
