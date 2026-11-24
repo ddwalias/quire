@@ -448,6 +448,43 @@ public partial class ExcelContainerModel
         }
     }
 
+    public bool? IsExcelCalculationManualModel()
+    {
+        bool? result = null;
+        Application safeApplication = GetSafeApplication(forceRun: false);
+        if (safeApplication != null)
+        {
+            bool visible = safeApplication.Visible;
+            if (visible && safeApplication.ActiveWorkbook != null)
+            {
+                result = IsExcelCalculationManualModel(safeApplication);
+            }
+            else
+            {
+                Workbook safeWorkBook = GetSafeWorkBook(forceRun: false);
+                if (safeWorkBook != null)
+                {
+                    Window window = safeWorkBook.Windows[1];
+                    if (window != null)
+                    {
+                        bool visible2 = window.Visible;
+                        try
+                        {
+                            window.Visible = true;
+                            result = IsExcelCalculationManualModel(safeApplication);
+                        }
+                        finally
+                        {
+                            window.Visible = visible2;
+                            safeApplication.Visible = visible;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
     private static bool? IsExcelCalculationManualModel(Application application)
     {
         try

@@ -56,8 +56,6 @@ public partial class ExcelContainerModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     private void OnWorkbookActivate(global::Quire.Microsoft.Office.Interop.Excel.Workbook activeWb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<bool> IsExcelCalculationManualModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void CalculateWorkbook(bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void Dispose() => base.Dispose();

@@ -148,3 +148,10 @@
 - Runtime caveat: `OnOleClosedSync` uses `_postOleClosedTimer`, which only the stubbed constructor would create, so it throws at runtime until the constructor is mirrored.
 - Still blocked, with reason: `GetValues`/`SetValues` (lambdas and dynamic COM), `CalculateWorkbook`/`GetSelection` (dynamic COM casts), `Dispose` (calls the stubbed `AppEvents` setter, which needs COM event wiring), `IsDisconnected` (LINQ `Select` lambda and ordinal), `OleSiteManager.DisposeOleSiteInstances` (no Quire `OleSite` type), `ComponentErrors`/`SetIdentifierLabels`/`AddItems`/`RemoveItems` (iterator or lambda shapes).
 
+## Batch 79 (ExcelContainerModel), branch `scratch/excel-manual` from main `206449430`
+
+- Candidate: `ExcelContainerModel.IsExcelCalculationManualModel()` is exact. The result is assigned and returned once, which matches the reference Release IL (an early-return form differed in branch layout). Release IL PASS: 1095 checked, 1095 exact, 0 failures; generated stub -> exact. Regeneration: emit leaves `ExcelContainerModel.g.cs` unchanged.
+- Constructor, blocked by D5: the reference base call is `new PtcOleInterop.OleSite()`. `Ptc.OleInterop` is C++/CLI and deferred (D5), so no Quire expression produces that IL. The `OleClosedSync` lambda `<.ctor>b__22_0` also needs a compile-order placement. The timer dependency therefore stays documented: `_postOleClosedTimer` is created only by this constructor.
+- `AppEvents` setter, blocked: the Release IL differs only in the interop delegate constructor. Mathcad calls `AppEvents_WorkbookActivateEventHandler(object, native uint)`; a C# delegate construction emits `IntPtr`. `Dispose` (`AppEvents = null; base.Dispose();`) depends on this setter, so it stays a stub; making it exact while the setter throws would turn a no-op into a runtime exception.
+- `OnWorkbookActivate`: lambdas (`DoActionWithLock`, `Dispatcher.BeginInvoke`); blocked on closure ordinals.
+
