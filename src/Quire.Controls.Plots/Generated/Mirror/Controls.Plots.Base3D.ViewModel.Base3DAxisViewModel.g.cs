@@ -76,21 +76,11 @@ public abstract partial class Base3DAxisViewModel : global::Quire.Controls.Core.
     [global::Quire.Mirror.MirrorStub]
     protected Base3DAxisViewModel(global::Quire.Controls.Plots.Presenter.AxesType axisType, global::Quire.Controls.Plots.Presenter.PlotType plotType) { }
     [global::Quire.Mirror.MirrorStub]
-    private void FireRangeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void InitializeLimitExpression(global::Quire.Controls.Plots.Presenter.IAxisLimitEditor limitExpression, global::System.Action limitValueChangedHandler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void StartExpressionValueChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateLineColor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HookupView(global::Quire.Controls.Plots.Presenter.IPlotAxisView axisView) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleTraverse(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool CanTraverse(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

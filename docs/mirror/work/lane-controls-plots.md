@@ -716,3 +716,11 @@
 - Release IL: full gate PASS — 2640 checked, 0 failures.
 - MirrorGen emit: removes only the `UpdateSurfaceFill` stub and attribute, equal to the applied edit.
 - `PlotTrace3D` now has no `NotImplemented` stubs for the visual path; the constructor's `UpdateVisualData` call no longer throws.
+
+## Batch 100 — Base3DAxisViewModel event helpers (5 members)
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Members: `FireRangeChanged`, `InitializeLimitExpression`, `FireCalculatableAdded`, `HandleTraverse`, `CanTraverse`. No closures; each is a null-checked event or field invocation. New hand-written partial `Mirrored/Controls.Plots.Base3D.ViewModel.Base3DAxisViewModel.cs`; five stubs removed from the generated file.
+- Release IL: full gate PASS — 2645 checked, 0 failures; first try.
+- MirrorGen emit: deletions only (five stubs with their attributes), equal to the applied edit.
+- Still stubs in this class: `UpdateLineColor`, `HookupView`, `GetTickInterval`, `StartExpressionValueChanged` (depend on the `IsActive`/`IsHighlighted`/`LineColor`/`PlotAxisModel` property stubs), the constructor, and the property/event accessors.
