@@ -169,7 +169,8 @@ public sealed class MetadataLoader
             var setter = a.Setter.IsNil ? null : methods[a.Setter];
             var index = (getter?.Params ?? setter?.Params.RemoveAt(setter.Params.Length - 1) ?? []);
             type.Properties.Add(new PropertyModel(_md.GetString(p.Name), sig.ReturnType, getter, setter, index)
-                { Status = Bodiless((getter ?? setter)?.Abstract == true, Status(p.GetCustomAttributes(), out var pe)), Evidence = pe });
+                { Status = Bodiless((getter ?? setter)?.Abstract == true, Status(p.GetCustomAttributes(), out var pe)), Evidence = pe,
+                  HandWrittenStub = IsHandWrittenStub(p.GetCustomAttributes()) });
         }
         foreach (var eh in td.GetEvents())
         {
@@ -178,7 +179,8 @@ public sealed class MetadataLoader
             accessors.Add(a.Adder); accessors.Add(a.Remover);
             type.Events.Add(new EventModel(_md.GetString(e.Name), DecodeEntity(e.Type)!,
                 a.Adder.IsNil ? null : methods[a.Adder], a.Remover.IsNil ? null : methods[a.Remover])
-                { Status = Bodiless(a.Adder.IsNil ? false : methods[a.Adder].Abstract, Status(e.GetCustomAttributes(), out var ee)), Evidence = ee });
+                { Status = Bodiless(a.Adder.IsNil ? false : methods[a.Adder].Abstract, Status(e.GetCustomAttributes(), out var ee)), Evidence = ee,
+                  HandWrittenStub = IsHandWrittenStub(e.GetCustomAttributes()) });
         }
         // Obfuscated assemblies can lose property and event rows while keeping their special-name accessors.
         // Rebuild them, so the accessors are declared as the properties and events they were written as.
@@ -217,7 +219,8 @@ public sealed class MetadataLoader
             object? value = (fa & FieldAttributes.Literal) != 0 && !f.GetDefaultValue().IsNil ? ReadConstant(f.GetDefaultValue()) : null;
             type.Fields.Add(new FieldModel(name, f.DecodeSignature(_sigs, null), FieldAccess(fa),
                 (fa & FieldAttributes.Static) != 0, (fa & FieldAttributes.InitOnly) != 0, (fa & FieldAttributes.Literal) != 0, value)
-                { Status = Status(f.GetCustomAttributes(), out var fe), Evidence = fe });
+                { Status = Status(f.GetCustomAttributes(), out var fe), Evidence = fe,
+                  HandWrittenStub = IsHandWrittenStub(f.GetCustomAttributes()) });
         }
         return type;
     }
@@ -310,7 +313,8 @@ public sealed class MetadataLoader
             impls.TryGetValue(mh, out var list) ? [.. list] : [],
             (a & MethodAttributes.PinvokeImpl) != 0 || (m.ImplAttributes & MethodImplAttributes.InternalCall) != 0,
             methodAttrs.Contains("System.Runtime.CompilerServices.ExtensionAttribute"),
-            initOnly) { ReturnMarshalU1 = returnMarshalU1, Status = Bodiless((a & MethodAttributes.Abstract) != 0, Status(m.GetCustomAttributes(), out var me)), Evidence = me };
+            initOnly) { ReturnMarshalU1 = returnMarshalU1, Status = Bodiless((a & MethodAttributes.Abstract) != 0, Status(m.GetCustomAttributes(), out var me)), Evidence = me,
+                HandWrittenStub = IsHandWrittenStub(m.GetCustomAttributes()) };
     }
 
     /// <summary>An abstract member without a status attribute has no body to analyze: its declaration is all there is.</summary>
@@ -321,6 +325,7 @@ public sealed class MetadataLoader
     private MemberStatus Status(CustomAttributeHandleCollection handles, out string? evidence)
     {
         evidence = null;
+        if (IsHandWrittenStub(handles)) return MemberStatus.Stub;
         foreach (var h in handles)
         {
             var ca = _md.GetCustomAttribute(h);
@@ -342,6 +347,12 @@ public sealed class MetadataLoader
             return status;
         }
         return MemberStatus.Unclassified;
+    }
+
+    private bool IsHandWrittenStub(CustomAttributeHandleCollection handles)
+    {
+        var names = AttributeNames(handles);
+        return names.Contains("Quire.Mirror.MirrorStubAttribute") && names.Contains("Quire.Mirror.MirrorBlockedAttribute");
     }
 
     private ImmutableArray<GenericParam> GenericParams(GenericParameterHandleCollection handles)

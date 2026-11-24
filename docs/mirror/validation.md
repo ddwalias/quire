@@ -215,6 +215,9 @@ align source order when the compiler emits different numeric suffixes. Every mem
 accessors and nested types included, across partial files in compile order (`Generated/`
 first), so generated stubs precede hand-written members. Placeholder stubs declared in
 the hand-written file keep Mathcad's order while members are unfinished.
+When a hand-written placeholder needs a non-throwing body, keep `[MirrorStub]` so the IL gate
+reports it as unfinished and add `[MirrorBlocked("reason")]` so MirrorGen preserves the declaration
+instead of generating a duplicate. Remove both attributes when the member is implemented.
 
 A body that is only a `MirrorStub` throw before and after is unchanged even when the
 source file it records moved; it stays unfinished and is checked once implemented. A new

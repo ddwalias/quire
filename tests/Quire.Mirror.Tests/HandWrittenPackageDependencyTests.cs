@@ -1,3 +1,4 @@
+using System.IO;
 using Quire.Tools.MirrorGen;
 
 namespace Quire.Mirror.Tests;

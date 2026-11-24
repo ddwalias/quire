@@ -53,6 +53,7 @@ public interface IHasStatus
 
 public sealed record FieldModel(string Name, TypeSig Type, Access Access, bool Static, bool ReadOnly, bool Const, object? Value) : IHasStatus
 {
+    public bool HandWrittenStub { get; init; }
     public MemberStatus Status { get; init; }
     public string? Evidence { get; init; }
     public bool Stub => Status == MemberStatus.Stub;
@@ -63,6 +64,7 @@ public sealed record MethodModel(
     TypeSig Return, ImmutableArray<ParamModel> Params, ImmutableArray<GenericParam> GenericParams,
     ImmutableArray<(TypeSig Interface, string Method)> Implements, bool Extern, bool Extension, bool InitOnly) : IHasStatus
 {
+    public bool HandWrittenStub { get; init; }
     public bool IsConstructor => Name is ".ctor" or ".cctor";
     public bool ReturnMarshalU1 { get; init; }
     public MemberStatus Status { get; init; }
@@ -72,6 +74,7 @@ public sealed record MethodModel(
 
 public sealed record PropertyModel(string Name, TypeSig Type, MethodModel? Getter, MethodModel? Setter, ImmutableArray<ParamModel> Index) : IHasStatus
 {
+    public bool HandWrittenStub { get; init; }
     public MemberStatus Status { get; init; }
     public string? Evidence { get; init; }
     public bool Stub => Status == MemberStatus.Stub;
@@ -79,6 +82,7 @@ public sealed record PropertyModel(string Name, TypeSig Type, MethodModel? Gette
 
 public sealed record EventModel(string Name, TypeSig Type, MethodModel? Adder, MethodModel? Remover) : IHasStatus
 {
+    public bool HandWrittenStub { get; init; }
     public MemberStatus Status { get; init; }
     public string? Evidence { get; init; }
     public bool Stub => Status == MemberStatus.Stub;

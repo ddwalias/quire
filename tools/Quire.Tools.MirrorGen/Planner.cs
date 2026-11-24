@@ -246,7 +246,7 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
         // The base's constructors as they will exist: Mathcad's (generated, or skipped because hand-written code
         // declares them) plus any only hand-written code has.
         var handCtors = b.Project != null && handWritten.Find(b) is { } hb
-            ? hb.Methods.Where(c => c.Name == ".ctor" && !c.Stub) : [];
+            ? hb.Methods.Where(c => c.Name == ".ctor" && (!c.Stub || c.HandWrittenStub)) : [];
         var ctors = b.Methods.Where(c => c.Name == ".ctor" && !c.Static).Concat(handCtors)
             .Where(Accessible)
             .Where(c => c.Params.All(p => p.Type is not ByRefSig))
@@ -271,7 +271,7 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
 
     public MethodModel? HandConstructor(TypeModel t) =>
         handWritten.Find(t) is { } hw
-            ? hw.Methods.Where(c => c.Name == ".ctor" && !c.Stub && c.Params.All(p => p.Type is not ByRefSig)
+            ? hw.Methods.Where(c => c.Name == ".ctor" && (!c.Stub || c.HandWrittenStub) && c.Params.All(p => p.Type is not ByRefSig)
                     && !handWritten.ChainsInSource(t, c.Params.Length))  // chaining to it could reach a stub and loop
                 .OrderBy(c => c.Params.Count(p => !p.HasDefault)).FirstOrDefault()
             : null;
@@ -322,7 +322,7 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
             // Hand-written parts of a mirrored interface can declare members Mathcad's doesn't have.
             var hwIt = it.Project != null ? handWritten.Find(it) : null;
             var members = AllMethods(it).Select(m => (Iface: it, Member: m))
-                .Concat(hwIt == null ? [] : AllMethods(hwIt).Where(m => !m.Stub).Select(m => (Iface: hwIt, Member: m)))
+                .Concat(hwIt == null ? [] : AllMethods(hwIt).Where(m => !m.Stub || m.HandWrittenStub).Select(m => (Iface: hwIt, Member: m)))
                 .DistinctBy(x => Key(x.Member, []) + "->" + x.Member.Return);
             foreach (var (owner, im) in members.Where(x => x.Member.Abstract && !x.Member.Static))
             {
@@ -388,9 +388,9 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
             // by porting Mathcad's own member.
             var inherited = handWritten.InheritedNames(hw);
             var inheritedMethods = handWritten.InheritedMethodKeys(hw);
-            var stubKeys = hw.Methods.Where(m => m.Stub).Select(HandWritten.MethodKey).ToHashSet();
-            var stubNames = hw.Properties.Where(p => p.Stub).Select(p => p.Name).Concat(hw.Events.Where(e => e.Stub).Select(e => e.Name))
-                .Concat(hw.Fields.Where(f => f.Stub).Select(f => f.Name)).ToHashSet();
+            var stubKeys = hw.Methods.Where(m => m.Stub && !m.HandWrittenStub).Select(HandWritten.MethodKey).ToHashSet();
+            var stubNames = hw.Properties.Where(p => p.Stub && !p.HandWrittenStub).Select(p => p.Name).Concat(hw.Events.Where(e => e.Stub && !e.HandWrittenStub).Select(e => e.Name))
+                .Concat(hw.Fields.Where(f => f.Stub && !f.HandWrittenStub).Select(f => f.Name)).ToHashSet();
             void Inherited(object member, string what) { Skip.Add(member); t.Notes.Add($"{what} not generated: inherited from the hand-written base"); }
             foreach (var m in t.Methods.Where(m => !m.IsConstructor && inheritedMethods.Contains(HandWritten.MethodKey(m)) && !stubKeys.Contains(HandWritten.MethodKey(m)))) Inherited(m, $"method {m.Name}");
             foreach (var p in t.Properties.Where(p => inherited.Contains(p.Name) && !stubNames.Contains(p.Name))) Inherited(p, $"property {p.Name}");
@@ -550,8 +550,8 @@ public sealed class HandWritten
 
     /// <summary>Names of the non-method members a hand-written type inherits from its hand-written bases.</summary>
     public HashSet<string> InheritedNames(TypeModel t) =>
-        [.. HandBases(t).SelectMany(b => b.Properties.Where(p => !p.Stub).Select(p => p.Name)
-            .Concat(b.Events.Where(e => !e.Stub).Select(e => e.Name))
+        [.. HandBases(t).SelectMany(b => b.Properties.Where(p => !p.Stub || p.HandWrittenStub).Select(p => p.Name)
+            .Concat(b.Events.Where(e => !e.Stub || e.HandWrittenStub).Select(e => e.Name))
             .Concat(HandFields(b).Where(f => f.Access != Access.Private).Select(f => f.Name)))];
 
     /// <summary>Signature keys of the methods a hand-written type inherits from its hand-written bases.</summary>
@@ -577,7 +577,7 @@ public sealed class HandWritten
 
     /// <summary>Hand-written fields. A field-like event's backing field shares its name but not its [MirrorStub].</summary>
     private static IEnumerable<FieldModel> HandFields(TypeModel t) =>
-        t.Fields.Where(f => !f.Stub && !f.Name.StartsWith('<') && !t.Events.Any(e => e.Name == f.Name));
+        t.Fields.Where(f => (!f.Stub || f.HandWrittenStub) && !f.Name.StartsWith('<') && !t.Events.Any(e => e.Name == f.Name));
 
     public static string MethodKey(MethodModel m) =>
         $"{Canonical.MethodName(m)}`{m.GenericParams.Length}({string.Join(",", m.Params.Select(p => p.Type))})";
@@ -586,9 +586,9 @@ public sealed class HandWritten
 
     /// <summary>Non-stub methods and accessors. [MirrorStub] sits on a property or event, not on its accessors.</summary>
     private static IEnumerable<MethodModel> HandMethodsOf(TypeModel t) =>
-        t.Methods.Where(m => !m.Stub)
-            .Concat(t.Properties.Where(p => !p.Stub).SelectMany(p => new[] { p.Getter, p.Setter }))
-            .Concat(t.Events.Where(e => !e.Stub).SelectMany(e => new[] { e.Adder, e.Remover }))
+        t.Methods.Where(m => !m.Stub || m.HandWrittenStub)
+            .Concat(t.Properties.Where(p => !p.Stub || p.HandWrittenStub).SelectMany(p => new[] { p.Getter, p.Setter }))
+            .Concat(t.Events.Where(e => !e.Stub || e.HandWrittenStub).SelectMany(e => new[] { e.Adder, e.Remover }))
             .OfType<MethodModel>().Where(m => !m.Name.StartsWith('<'));
 
     public HashSet<string> MethodKeys(TypeModel q) => [.. HandMethods(q).Select(MethodKey)];
@@ -608,12 +608,12 @@ public sealed class HandWritten
         [.. HandMethods(q).Where(m => m.Access == Access.Public && !m.Static).Select(m => MethodKey(m) + "->" + m.Return)];
 
     public HashSet<string> MethodNames(TypeModel q) =>
-        Find(q) is { } t ? [.. t.Methods.Where(m => !m.Stub && !m.Name.StartsWith('<')).Select(m => m.Name)] : [];
+        Find(q) is { } t ? [.. t.Methods.Where(m => (!m.Stub || m.HandWrittenStub) && !m.Name.StartsWith('<')).Select(m => m.Name)] : [];
 
     public HashSet<string> NonMethodNames(TypeModel q) =>
         Find(q) is { } t
             ? [.. HandFields(t).Select(f => f.Name)
-                .Concat(t.Properties.Where(p => !p.Stub).Select(p => p.Name))
-                .Concat(t.Events.Where(e => !e.Stub).Select(e => e.Name))]
+                .Concat(t.Properties.Where(p => !p.Stub || p.HandWrittenStub).Select(p => p.Name))
+                .Concat(t.Events.Where(e => !e.Stub || e.HandWrittenStub).Select(e => e.Name))]
             : [];
 }
