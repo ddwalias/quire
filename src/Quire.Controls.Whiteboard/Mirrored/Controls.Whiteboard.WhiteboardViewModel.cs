@@ -449,7 +449,47 @@ public partial class WhiteboardViewModel
 
     public bool ForbidGrowingMovementRight { get; set; }
 
-    public virtual void HandleGridCellSizeChanged(global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected readonly global::Quire.Controls.Whiteboard.IWhiteboardModel _whiteboardModel;
+
+    private static global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager _whiteboardItemMgr;
+
+    protected global::System.Windows.Point _insertionPoint;
+
+    private global::Quire.Controls.Core.IWhiteboardItem _activeItem;
+
+    private global::Quire.Wpf.IObservableRangeCollection<global::Quire.Controls.Core.IWhiteboardItem> _selectedItems;
+
+    protected global::Quire.Controls.Core.IAlignmentGrid _alignmentGrid;
+
+    private bool _isFocused;
+
+    private bool _isCrosshairVisible;
+
+    private global::System.Nullable<global::System.Windows.Point> _savedInsertionPoint;
+
+    private global::Quire.Controls.Core.IWhiteboardItem _savedActiveItem;
+
+    private global::System.Nullable<bool> _savedIsFocused;
+
+    public virtual void HandleGridCellSizeChanged(global::System.Windows.Size oldSize, global::System.Windows.Size newSize)
+    {
+        Grid.GridCellSize = newSize;
+        foreach (IWhiteboardItem item in WhiteboardItems.ToList())
+        {
+            Point itemLocation = GetItemLocation(item);
+            Point value = new Point(itemLocation.X / oldSize.Width, itemLocation.Y / oldSize.Height);
+            SetItemLocation(item, Grid.ConvertGridCoordinatesToDips(value));
+        }
+
+        if (IsCrosshairVisible)
+        {
+            Point oldInsertionPoint = new Point(InsertionPoint.X / oldSize.Width, InsertionPoint.Y / oldSize.Height);
+            WhiteboardItemMgr.ExecuteInBackground(() =>
+            {
+                InsertionPoint = Grid.ConvertGridCoordinatesToDips(oldInsertionPoint);
+            }, asynch: true);
+        }
+    }
 
     public bool IsSelected { private get; set; }
 
@@ -692,28 +732,6 @@ public partial class WhiteboardViewModel
         [global::Quire.Mirror.MirrorStub]
         public const string SelectedDescendants = "SelectedDescendants";
     }
-
-    protected readonly global::Quire.Controls.Whiteboard.IWhiteboardModel _whiteboardModel;
-
-    private static global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager _whiteboardItemMgr;
-
-    protected global::System.Windows.Point _insertionPoint;
-
-    private global::Quire.Controls.Core.IWhiteboardItem _activeItem;
-
-    private global::Quire.Wpf.IObservableRangeCollection<global::Quire.Controls.Core.IWhiteboardItem> _selectedItems;
-
-    protected global::Quire.Controls.Core.IAlignmentGrid _alignmentGrid;
-
-    private bool _isFocused;
-
-    private bool _isCrosshairVisible;
-
-    private global::System.Nullable<global::System.Windows.Point> _savedInsertionPoint;
-
-    private global::Quire.Controls.Core.IWhiteboardItem _savedActiveItem;
-
-    private global::System.Nullable<bool> _savedIsFocused;
 
     private global::System.Windows.Size _savedMaxSize;
 
@@ -1317,7 +1335,63 @@ public partial class WhiteboardViewModel
         return val;
     }
 
-    public virtual void OnRequestMoveAndResize(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl whiteboardControl, global::Quire.Controls.Core.ResizeEventMouseArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void OnRequestMoveAndResize(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl whiteboardControl, global::Quire.Controls.Core.ResizeEventMouseArgs args)
+    {
+        IWhiteboardItem item = args.SourceElement as IWhiteboardItem;
+        if (item != null && WhiteboardItems.Contains(item))
+        {
+            CurrentDragMode = args.DragMode;
+            switch (CurrentDragMode)
+            {
+                case DragMode.ResizeLeft:
+                case DragMode.ResizeRight:
+                case DragMode.ResizeBottom:
+                case DragMode.ResizeBottomRight:
+                    if (whiteboardControl is WhiteboardControl whiteboardControl2)
+                    {
+                        Point startPosition = args.SourceElement.TranslatePoint(args.StartPoint, whiteboardControl2);
+                        bool preserveAspectRatio;
+                        FrameworkElement resizableElement = FrameworkElementFacade.GetResizableElement(args.SourceElement, CurrentDragMode, out preserveAspectRatio);
+                        WhiteboardItemResizer whiteboardItemResizer = new WhiteboardItemResizer(whiteboardControl2, startPosition, CurrentDragMode, resizableElement, preserveAspectRatio, args.Automation);
+                        if (args.SourceElement is IWhiteboardControl whiteBoard)
+                        {
+                            UpdateSizeLimit(whiteBoard);
+                        }
+
+                        whiteboardItemResizer.DragDone += (Size oldSize, Size newSize, bool widthIsAuto, bool heightIsAuto, DragMode dragMode) =>
+                        {
+                            ResizeItemCommand resizeItemCommand = new ResizeItemCommand(this, item, oldSize, newSize, widthIsAuto, heightIsAuto, dragMode);
+                            resizeItemCommand.Execute();
+                        };
+                        args.Resizer = whiteboardItemResizer;
+                    }
+                    break;
+                case DragMode.Move:
+                {
+                    bool flag = WhiteboardItemMgr.IsItemSelected(item);
+                    if (WhiteboardItemMgr.IsItemActivated(item))
+                    {
+                        SelectItem(item);
+                    }
+
+                    WhiteboardDragger.MouseDown(whiteboardControl);
+                    if (flag)
+                    {
+                        WhiteboardDragger.Default.OnNoDrag += ActivateItem;
+                    }
+                    break;
+                }
+            }
+
+            args.Handled = true;
+
+            void ActivateItem()
+            {
+                this.ActivateItem(item);
+                WhiteboardDragger.Default.OnNoDrag -= ActivateItem;
+            }
+        }
+    }
 
     public void SelectItems(IEnumerable<IWhiteboardItem> itemsToSelect)
     {
@@ -1550,7 +1624,35 @@ public partial class WhiteboardViewModel
 
     public event global::System.EventHandler Changed;
 
-    public virtual bool HandleMouseDown(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl sender, global::System.Windows.Point position, global::System.Windows.Input.MouseButton button) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual bool HandleMouseDown(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl sender, global::System.Windows.Point position, global::System.Windows.Input.MouseButton button)
+    {
+        bool result = false;
+        if ((Keyboard.Modifiers & ModifierKeys.Shift) == 0 && (Keyboard.Modifiers & ModifierKeys.Control) == 0)
+        {
+            if (IsValidInsertionPoint(position))
+            {
+                InsertionPoint = position;
+            }
+
+            if (ActiveItem != null)
+            {
+                return false;
+            }
+
+            WhiteboardControl whiteboardControl = sender as WhiteboardControl;
+            if (whiteboardControl != null)
+            {
+                WhiteboardSelectionDragger whiteboardSelectionDragger = new WhiteboardSelectionDragger(whiteboardControl, position);
+                whiteboardSelectionDragger.DragDone += rect =>
+                {
+                    TrySelectRegionsInBounds(rect, whiteboardControl);
+                };
+                result = true;
+            }
+        }
+
+        return result;
+    }
 
     public virtual void PreviewMouseLeftButtonDownHandler(object sender, MouseButtonEventArgs eventArgs)
     {

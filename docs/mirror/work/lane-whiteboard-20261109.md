@@ -793,6 +793,26 @@
 - Release IL: PASS — 1114 checked in Whiteboard (all 4 constructors and 12 lambdas exact), 0 failures (`release-il-2f9dc143202f`).
 - Remaining mismatches in this batch: none.
 
+## Batch 54 — Final WhiteboardViewModel Stubs: HandleGridCellSizeChanged, OnRequestMoveAndResize, HandleMouseDown
+
+- Members:
+  - `WhiteboardViewModel.HandleGridCellSizeChanged(Size, Size)` and closure `<>c__DisplayClass105_0::<HandleGridCellSizeChanged>b__0`
+  - `WhiteboardViewModel.OnRequestMoveAndResize(IWhiteboardControl, ResizeEventMouseArgs)` and closure `<>c__DisplayClass212_0::<OnRequestMoveAndResize>b__1`, local function `<OnRequestMoveAndResize>g__ActivateItem|0`
+  - `WhiteboardViewModel.HandleMouseDown(IWhiteboardControl, Point, MouseButton)` and closure `<>c__DisplayClass243_0::<HandleMouseDown>b__0`
+- Hand-written:
+  - `src/Quire.Controls.Whiteboard/Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`
+- Shapes Release IL requires:
+  - Syntax ordinals: 11 uninitialized fields repositioned after `ForbidGrowingMovementRight` / `SetInsertionPoint` and directly before `HandleGridCellSizeChanged`, aligning syntax ordinal 105 for `HandleGridCellSizeChanged` (`DisplayClass105_0`) while keeping all preceding and subsequent ordinals intact (`b__10_0`..`b__20_0`, `|53_0`, `184`, `212`, `243`).
+  - `OnRequestMoveAndResize`:
+    - Structured as positive guard `if (item != null && WhiteboardItems.Contains(item)) { ... args.Handled = true; }` to produce single exit jump `brfalse IL_014e`.
+    - Declared `bool preserveAspectRatio;` before `FrameworkElement resizableElement = FrameworkElementFacade.GetResizableElement(...)` to position `preserveAspectRatio` at slot 4 and `resizableElement` at slot 5.
+    - Assigned to named local `ResizeItemCommand resizeItemCommand = new ...; resizeItemCommand.Execute();` to produce virtual dispatch `callvirt` on `WhiteboardCommand::Execute()`.
+  - `HandleMouseDown`:
+    - Assigned to named local `WhiteboardSelectionDragger whiteboardSelectionDragger = new ...; whiteboardSelectionDragger.DragDone += ...;` to preserve `callvirt` on `add_DragDone`.
+- Release IL: PASS — 1124 checked in Whiteboard, 0 failures (`release-il-6da8352fedb5`). 0 generated stubs remaining in `Quire.Controls.Whiteboard`.
+- Remaining mismatches in this batch: none.
+
+
 
 
 
