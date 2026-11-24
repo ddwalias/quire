@@ -117,6 +117,38 @@ internal abstract partial class VisualMathNode
 
     public virtual IVisualMathNode[] NavigatableParts => throw new NotImplementedException();
 
+    public virtual void ModifyChildMathFormat(int childIndex, MathFormatValues childMathFormat)
+    {
+    }
+
+    public virtual void BuildChildren(IVisualMathNode[] children)
+    {
+        for (int i = 0; i < children.Length; i++)
+        {
+            this[i] = children[i];
+        }
+    }
+
+    internal void ArrangeMathNode(Rect rect)
+    {
+        Arrange(rect);
+    }
+
+    internal void MeasureMathNode(Size size)
+    {
+        Measure(size);
+    }
+
+    protected virtual Size MeasureStaticLayout(Size availableSize)
+    {
+        return base.MeasureOverride(availableSize);
+    }
+
+    protected virtual Size ArrangeStaticLayout(Size finalSize)
+    {
+        return base.ArrangeOverride(finalSize);
+    }
+
     public Point ScreenCenterPoint
     {
         get

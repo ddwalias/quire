@@ -38,21 +38,9 @@ internal abstract partial class VisualMathNode : global::Quire.Controls.Internal
     [global::Quire.Mirror.MirrorStub]
     protected VisualMathNode() { }
     [global::Quire.Mirror.MirrorStub]
-    public virtual void ModifyChildMathFormat(int childIndex, global::Quire.Controls.Core.MathFormatValues childMathFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void BuildChildren(global::Quire.EquationEditor.View.IVisualMathNode[] children) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void ArrangeMathNode(global::System.Windows.Rect rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void MeasureMathNode(global::System.Windows.Size size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual global::System.Windows.Size ArrangeStaticLayout(global::System.Windows.Size finalSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
     [global::Quire.Mirror.MirrorStub]

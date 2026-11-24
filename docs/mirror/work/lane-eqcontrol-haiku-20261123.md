@@ -495,3 +495,11 @@
 - Not landed: `OperandChanged` (its instance overload is called with `callvirt` on a non-virtual method, which Roslyn emits as `call`); `CoreElements` and `CoreElementsTopLine` (iterator state machines).
 - Unchanged: the `VisualMathNode` constructor (IL-structural mismatch, batch 65); `MathFormat` stays null at run time, so `DeserializeMathFormat` still throws `NullReferenceException`; `GetColumnCells` stays parked (`DeleteEmptyColumns`).
 - Gate (project-level): PASS; 3702 checked, zero failures (`.mirror-cache/release-il-4de36e0c9fcd/release-il.json`).
+
+### Batch 73: Controls.Internal.VisualMathNode (ModifyChildMathFormat, BuildChildren, ArrangeMathNode, MeasureMathNode, MeasureStaticLayout, ArrangeStaticLayout)
+
+- Exact (6 members): `ModifyChildMathFormat` (virtual, empty body); `BuildChildren` (virtual; bottom-tested `for` loop that assigns `this[i] = children[i]`); `ArrangeMathNode` and `MeasureMathNode` (internal, single `UIElement.Arrange` and `Measure` calls); `MeasureStaticLayout` and `ArrangeStaticLayout` (protected virtual, `base.MeasureOverride` and `base.ArrangeOverride`). Stub pairs removed from the `.g.cs`.
+- Runtime dependency (not an IL mismatch): `BuildChildren` assigns through the indexer `this[int]`, whose setter is still a stub, so `BuildChildren` throws `NotImplementedException` at run time until the indexer is implemented.
+- Not landed: `ArrangeChild`. Its Mathcad IL calls `ArrangeMathNode` with `callvirt` on a non-virtual method, which Roslyn emits as `call`, so the shape differs. Left for a probe.
+- Unchanged: the `VisualMathNode` constructor (IL-structural mismatch, batch 65); `MathFormat` stays null at run time, so `DeserializeMathFormat` still throws `NullReferenceException`; `ScreenBounds` stays a stub (batch 72 mismatch), so `ScreenInkBounds` still throws at run time; `GetColumnCells` stays parked (`DeleteEmptyColumns`).
+- Gate (project-level): PASS; 3708 checked, zero failures (`.mirror-cache/release-il-40edb88dbfdc/release-il.json`).
