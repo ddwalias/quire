@@ -117,3 +117,8 @@
 - Not implemented: `ExcelContainerViewModel.EstablishInitialSize` and `RecalculateMinimalSize`. Both cast COM members through `dynamic` (`(double)(dynamic)range.Width`, `((_Worksheet)(Worksheet)(dynamic)...)`), so the compiler-generated `CallSite` fields and their order must be reproduced first. This is a COM/dynamic blocker.
 - Not implemented: `ChartComponentModel.UpdateChartMinMaxCalculatable`. It is a LINQ query with `ToDictionary` and `FirstOrDefault` lambdas, `Each` lambdas and captured loop locals, so the closure ordinals are the blocker recorded above.
 - No code batch is ready, so no UI landing slot was requested and nothing was landed for this round.
+
+## Batch 71 (task_47c307b8299d, branch `feature/excelcomponent-high`)
+
+- Ready, awaiting UI landing slot: `ChartComponentCalculatableWrapper.TraceAffectsCalcData` (Mathcad `NotComputing` is Quire `CalculatingStatus.Idle` = 2). Release IL PASS (`1043 checked`).
+- Still blocked: `ChartComponentCalculatableWrapper.HandleRequestEvaluation` (LINQ/`Each` lambda in the original), `EngineResultForSerialization` (`Select` lambda), `SetIdentifierLabels` (`Any` lambda), `ChartContainerModel.CurrentTraceIds` (iterator getter/setter), and `ChartContainerModel.ClearTracesAndLimits` (depends on `CurrentTraceIds`).

@@ -23,6 +23,4 @@ internal partial class ChartComponentCalculatableWrapper : global::Quire.Control
     protected override void HandleRequestEvaluation(global::Quire.Calculation.Core.ICalculatable calc) => base.HandleRequestEvaluation(calc);
     [global::Quire.Mirror.MirrorStub]
     internal static global::Quire.Controls.ExcelComponent.Model.ChartWrapperType IdentifierToChartType(string identifier, global::System.Nullable<uint> index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal bool TraceAffectsCalcData(global::Quire.Controls.ExcelComponent.Model.IChartTraceCalculatable trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

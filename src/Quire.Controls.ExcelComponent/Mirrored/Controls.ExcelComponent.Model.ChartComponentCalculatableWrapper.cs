@@ -293,4 +293,13 @@ internal partial class ChartComponentCalculatableWrapper
     {
         base.SetIdentifierLabels(idLabelMap);
     }
+
+    internal bool TraceAffectsCalcData(IChartTraceCalculatable trace)
+    {
+        if (!trace.ErrorOwners.Contains(this) && trace.SyncStatus == SynchronizationStatus.Synchronized)
+        {
+            return trace.CalcStatus != CalculatingStatus.Idle;
+        }
+        return true;
+    }
 }
