@@ -137,4 +137,39 @@ public abstract partial class PlotGraphAxisBase
             limit.IsHitTestVisible = false;
         }
     }
+
+    public void ShowStartExpression()
+    {
+        ShowLimit(StartExpressionEqn);
+    }
+
+    public void ShowSecondTickExpression()
+    {
+        ShowLimit(SecondTickExpressionEqn);
+    }
+
+    public void ShowEndExpression()
+    {
+        ShowLimit(EndExpressionEqn);
+    }
+
+    public void HideStartExpression()
+    {
+        HideLimit(StartExpressionEqn);
+    }
+
+    public void HideSecondTickExpression()
+    {
+        HideLimit(SecondTickExpressionEqn);
+    }
+
+    public void HideEndExpression()
+    {
+        HideLimit(EndExpressionEqn);
+    }
+
+    protected virtual void TickMarksChanged()
+    {
+        throw new NotImplementedException();
+    }
 }

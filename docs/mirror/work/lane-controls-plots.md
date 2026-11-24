@@ -740,3 +740,11 @@
 - Release IL: full gate PASS — 2653 checked, 0 failures; first try.
 - MirrorGen emit: deletions only (five stubs with attributes), equal to the applied edit.
 - Still stubs: the no-argument `InitializeLimitEquation()` (uses `CommandScope`/`CompoundCommand` and `EquationControlWithTransform`), `ShowStartExpression`/`HideStartExpression` and siblings, `TickMarksChanged`/`TickmarksChanged`, `Dispatch`, `InitializeLimitLabel`, and the `DependencyProperty` change handlers.
+
+## Batch 103 — PlotGraphAxisBase show/hide expression wrappers (7 members)
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Members: `ShowStartExpression`, `ShowSecondTickExpression`, `ShowEndExpression`, `HideStartExpression`, `HideSecondTickExpression`, `HideEndExpression` (one-line wrappers over the exact `ShowLimit`/`HideLimit`), and `TickMarksChanged` (protected virtual, Mathcad body `throw new NotImplementedException()`). Hand-written in the existing `Mirrored/Controls.Plots.PlotGraphAxisBase.cs`; seven stubs removed.
+- Release IL: full gate PASS — 2660 checked, 0 failures; first attempt with the wrong attribute spelling failed to compile and was reverted before the real attempt.
+- MirrorGen emit: deletions only (seven stubs with attributes), equal to the applied edit.
+- Still stubs: the no-argument `InitializeLimitEquation()`, `ShowGridLinesChanged`, `GridLineColorChanged`, `TickmarksChanged`, `CreateTickmarksPropertyMetadata`, `Dispatch`, `InitializeLimitLabel`.
