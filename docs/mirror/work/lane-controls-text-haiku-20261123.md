@@ -175,3 +175,15 @@
 - Release IL (project-wide): PASS — 688 checked, 0 failures, rebased on origin/main 1d118a237 (no Controls.Text change between the base and main).
 - Regeneration: `MirrorGen emit` (full Release build plus the copied Quire.Componentsmgd Release output from the main checkout) leaves `RichTextBase.g.cs` exactly as hand-edited (182 deleted lines, no stubs re-added). It also writes the pre-existing drift across the repo (LogDocumentContents placement, CustomSplit blank line, and other projects); that drift was reverted and is not part of this change.
 - Not verified: the counter rule is still empirical. Each layout change needs a gate run. The lambda numbers are reached by these measured positions only.
+
+## Batch 43 — nested and class-level constant stubs (RichTextBase.PropertyNames.CurrentTextFormat, RichTextWithEmbeddedItem.InternalLinkPrefix, RichTextWithEmbeddedItem.PropertyNames.ActiveItem)
+
+- Constants moved from the generated files to the hand-written partials (same names and values, same modifiers); their `[MirrorStub]` lines are removed from the `.g.cs` in the same change. Constants have no IL, so the gate counts are unchanged.
+- Release IL (project-wide): PASS — 688 checked, 0 failures.
+- Regeneration: `MirrorGen emit` (fresh Release build of Quire.Controls.Text) keeps the constants hand-written and adds no stubs back. It writes the pre-existing `LogDocumentContents` placement drift, which is not in this change and was reverted.
+
+### Parked (not landed)
+
+- `GetEmbeddedObjectCaretOffset` (closure-free): the Mathcad IL evaluates `this` before `textElement.ElementStart` for the `ref TextPointer` argument, which needs a temporary inside the argument list. An ordinary local form differs at IL offset #25. Parked until a shape that matches is found.
+- `GetPotentialLinkEndPosition`: lambdas plus `goto`-based lowering of a key switch. Not attempted.
+- `RemoveInlineRecursively` (lambda display class): needs a Mathcad-order placeholder layout for RichTextWithEmbeddedItem first, like RichTextBase; inserting one counted member before the target shifts every later closure.

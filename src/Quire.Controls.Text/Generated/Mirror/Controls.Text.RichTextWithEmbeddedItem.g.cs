@@ -12,8 +12,6 @@ namespace Quire.Controls.Text;
 public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.RichTextBase, global::Quire.Controls.Core.IRichTextWithEmbeddedItem, global::Quire.Controls.Core.IRichTextBase, global::Quire.Controls.Core.ISearchableRegion, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Core.ITextFormatOwner, global::Quire.Core.ICurrentTextFormatProperty, global::Quire.Core.ITextFormatCreation, global::Quire.Controls.Core.ISpellCheckRegion, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer, global::Quire.Controls.Core.Serialization.IHasRegionsWithConverterAnnotations, global::Quire.Controls.Core.IMathFormatDeserializationProvider, global::Quire.Core.IMaybeHasPointThatSnapsToPixel, global::Quire.Controls.Core.IHasChildArrangeInfoProvider, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculationHideableChild, global::Quire.Controls.Core.IRegionFactoryOwner, global::Quire.Calculation.Core.ICalculationErrorOwner, global::System.ICloneable, global::Quire.Controls.Core.ICurrentNumberFormatProperty, global::Quire.Controls.Core.ICurrentMatrixFormatProperty, global::Quire.Controls.Core.ICurrentMathFormatProperty, global::Quire.Controls.Core.IMathFormatForDeserialization, global::Quire.ISpecialCopyType, global::Quire.Controls.Core.Whiteboard.IHideFromCalculationButtonStatus
 {
     [global::Quire.Mirror.MirrorStub]
-    internal const string InternalLinkPrefix = "#";
-    [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.IDictionary<int, global::System.Collections.Generic.IDictionary<int, global::System.Windows.Media.Brush>> _hyperlinkDictionary;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand OpenFileCommand;
@@ -144,8 +142,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.RichTextWithEmbeddedItem+PropertyNames, Ptc.Controls.Text")]
     public static partial class PropertyNames
     {
-        [global::Quire.Mirror.MirrorStub]
-        public const string ActiveItem = "ActiveItem";
     }
     [global::Quire.Mirror.MirrorStub]
     private void LogDocumentContents(string suffix = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -31,8 +31,6 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.RichTextBase+PropertyNames, Ptc.Controls.Text")]
     public static partial class PropertyNames
     {
-        [global::Quire.Mirror.MirrorStub]
-        public const string CurrentTextFormat = "CurrentTextFormat";
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.RichTextBase+SyncTextChangedCommand, Ptc.Controls.Text")]

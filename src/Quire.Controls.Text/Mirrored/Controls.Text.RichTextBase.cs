@@ -25,6 +25,11 @@ namespace Quire.Controls.Text;
 
 public partial class RichTextBase
 {
+    public static partial class PropertyNames
+    {
+        public const string CurrentTextFormat = "CurrentTextFormat";
+    }
+
     private static readonly global::System.Type _typeOfThis = typeof(RichTextBase);
     public static readonly global::System.Windows.RoutedEvent SpellCheckTimerStartEvent = EventManager.RegisterRoutedEvent("SpellCheckTimerStart", RoutingStrategy.Bubble, typeof(RoutedEventHandler), _typeOfThis);
     public static readonly global::System.Windows.Input.RoutedUICommand AddToDictionaryCommand = new RoutedUICommandWithFunctionalityKey("Add To Dictionary", "AddToDictionary", _typeOfThis, (Quire.FunctionalitiesLimitation.EnumFunctionalityKey)777);

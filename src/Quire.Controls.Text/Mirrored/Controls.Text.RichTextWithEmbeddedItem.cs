@@ -25,6 +25,13 @@ namespace Quire.Controls.Text;
 
 public partial class RichTextWithEmbeddedItem
 {
+    internal const string InternalLinkPrefix = "#";
+
+    public static partial class PropertyNames
+    {
+        public const string ActiveItem = "ActiveItem";
+    }
+
 
     private partial struct PreviewKeyDownData
     {
