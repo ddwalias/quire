@@ -503,6 +503,30 @@ public partial class EquationControl
     public void ScopeEnd() => _view.FireMoveToEnd();
     public void Pi() => _view.AutomateKeypress('π');
 
+    private void CanCopy(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e) => _view.FireCanCopy(sender, e);
+
+    private void CanCut(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e) => _view.FireCanCut(sender, e);
+
+    private void CanPaste(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e) => _view.FireCanPaste(sender, e);
+
+    private void CanPerformColumnOperations(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e) => _view.FireCanPerformColumnOperations(sender, e);
+
+    private void CanPerformIdLabelOperations(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e) => _view.FireCanPerformIdLabelOperations(sender, e);
+
+    private void CanPerformLinearNaryOperations(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e) => _view.FireCanPerformLinearNaryOperations(sender, e);
+
+    private void CanPerformRowOperations(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e) => _view.FireCanPerformRowOperations(sender, e);
+
+    private void CanNavigateToOppositeOfScope(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e) => _view.FireCanNavigateToOppositeOfScope(sender, e);
+
+    public void InsertUnitMonomial(System.Collections.Generic.IEnumerable<Quire.Calculation.Core.Unit> unitMonomial) => _view.FireInsertUnitMonomial(unitMonomial);
+
+    private void OnTraverse(System.Windows.Input.ExecutedRoutedEventArgs e, Direction direction) => _view.FireTraversalRequest(e, direction);
+
+    private void OnTraverseBackward(object sender, System.Windows.Input.ExecutedRoutedEventArgs e) => OnTraverse(e, Direction.Left);
+
+    private void OnTraverseForward(object sender, System.Windows.Input.ExecutedRoutedEventArgs e) => OnTraverse(e, Direction.Right);
+
     public bool InCustomInitialization
     {
         get => _model.InCustomInitialization;
