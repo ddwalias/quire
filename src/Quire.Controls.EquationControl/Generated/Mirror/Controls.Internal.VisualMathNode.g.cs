@@ -48,8 +48,6 @@ internal abstract partial class VisualMathNode : global::Quire.Controls.Internal
     [global::Quire.Mirror.MirrorStub]
     public virtual double InkedHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public virtual double TextBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public abstract double EffectiveBaselineY { get; }
     [global::Quire.Mirror.MirrorStub]
     public abstract double EffectiveScriptBaselineY { get; }

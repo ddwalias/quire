@@ -31,6 +31,8 @@ internal abstract partial class VisualMathNode
 
     public double DepthBelowBaseline => DesiredSize.Height - TextBaselineY;
 
+    public virtual double TextBaselineY => 0.0;
+
     private static void OnShowOperatorOnlyWhenActiveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var node = d as VisualMathNode;

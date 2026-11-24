@@ -451,3 +451,10 @@
 - Runtime dependency (not an IL mismatch): `VisualMathNode.TextBaselineY` is still a generated stub, so `DepthBelowBaseline` throws `NotImplementedException` at run time until `TextBaselineY` is implemented.
 - Unchanged: the `VisualMathNode` constructor (IL-structural mismatch, see batch 65); `MathFormat` stays null at run time; `GetColumnCells` stays parked (`DeleteEmptyColumns`).
 - Gate (project-level): PASS; 3679 checked, zero failures (`.mirror-cache/release-il-c2d03e88c747/release-il.json`).
+
+### Batch 67: Controls.Internal.VisualMathNode (TextBaselineY)
+
+- Exact (1 virtual getter): `TextBaselineY` (`public virtual`, returns `0.0`; Mathcad IL is `ldc.r8 0.0; ret`). Stub pair removed from the `.g.cs`; the body lives in the hand-written partial. Subclasses that override it (`VisualTextNode`, `VisualPlaceholderNode`, and others) still call `base.TextBaselineY` through the generated stubs, which are unchanged.
+- Runtime dependency cleared: `DepthBelowBaseline` (batch 66) no longer throws at run time, because `TextBaselineY` is implemented.
+- Unchanged: the `VisualMathNode` constructor (IL-structural mismatch, batch 65); `MathFormat` stays null at run time, so `DeserializeMathFormat` still throws `NullReferenceException`; `GetColumnCells` stays parked (`DeleteEmptyColumns`).
+- Gate (project-level): PASS; 3680 checked, zero failures (`.mirror-cache/release-il-cb037d505f48/release-il.json`).
