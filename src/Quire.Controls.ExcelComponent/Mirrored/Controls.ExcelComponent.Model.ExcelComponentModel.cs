@@ -9,24 +9,10 @@ namespace Quire.Controls.ExcelComponent.Model;
 
 public partial class ExcelComponentModel
 {
-    public EngineError GetError(ICalculatable calculatable)
-    {
-        return GetWrapper(calculatable).Error;
-    }
-
-    public ExcelComponentEquationType GetEquationType(ICalculatable calculatable)
-    {
-        return GetExcelComponentCalculatableWrapper(calculatable).ExcelComponentEquationType;
-    }
-
     private IExcelComponentCalculatableWrapper GetExcelComponentCalculatableWrapper(ICalculatable calc)
     {
         return (IExcelComponentCalculatableWrapper)GetWrapper(calc);
     }
-
-    private NodeHandleMapper _nodeHandleMapper = new NodeHandleMapper();
-
-    private readonly HashSet<IOleBaseComponentCalculatableWrapper> _wasOutput = new HashSet<IOleBaseComponentCalculatableWrapper>();
 
     public event Func<bool> QueryHiddenFromCalculationContext;
 
@@ -215,25 +201,6 @@ public partial class ExcelComponentModel
     private string GetOutputDefineLeftHandSide(ICalculatable eq)
     {
         return _nodeHandleMapper.GetReplacedRl(GetWrapper(eq), GetWrapper(eq).LhsExpression);
-    }
-
-    public override object Clone()
-    {
-        ExcelComponentModel excelComponentModel = new ExcelComponentModel();
-        CopyStateTo(excelComponentModel);
-        return excelComponentModel;
-    }
-
-    private static bool IsValidItem(IExcelComponentCalculatableWrapper wrapper)
-    {
-        OleWrapperCustomErrorType customErrorType = wrapper.CustomErrorType;
-        bool flag = wrapper.IsInputEquation || wrapper.IsOutputEquation;
-        DebugTools.DevAssert(wrapper.IsUnknownEquation || flag == (customErrorType != OleWrapperCustomErrorType.Formatting), null);
-        if (flag && customErrorType != OleWrapperCustomErrorType.Placement)
-        {
-            return customErrorType != OleWrapperCustomErrorType.Formatting;
-        }
-        return false;
     }
 
     private bool CheckComponentEnabledCalcItems(bool checkOutputOnly)
