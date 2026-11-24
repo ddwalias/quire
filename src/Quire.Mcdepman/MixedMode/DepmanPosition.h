@@ -28,7 +28,7 @@ public:
 
     long GetHandle() const;
     int GetPriority() const;
-    bool IsDead();
+    __declspec(noinline) bool IsDead();
     bool IsLocked() const;
     bool IsUndefine();
     bool IsChildOnly();

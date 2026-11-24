@@ -2,16 +2,64 @@
 
 void __cdecl operator delete(void* ptr, unsigned __int64 size) noexcept;
 
+#include <map>
 #include "../../Quire.Native.Utl/utl.h"
+
+namespace Quire { namespace depman {
+    [Quire::Mirror::MirrorOfAttribute("depman.ResolveMode, mcdepman")]
+    public enum class ResolveMode
+    {
+        AT = 0,
+        BEFORE = 1,
+        AT_OR_BEFORE = 2
+    };
+}}
+
+template <typename T>
+struct value_less {
+    bool operator()(const T* a, const T* b) const {
+        return a->ord_val_ < b->ord_val_;
+    }
+};
+
+template <typename Map>
+typename Map::iterator lower_bound_ne(const typename Map::key_type& key, Map& m)
+{
+    if (m.empty())
+        return m.end();
+
+    auto it = m.lower_bound(key);
+    if (it == m.end())
+    {
+        auto last = m.end();
+        --last;
+        return last;
+    }
+    if (it != m.begin())
+    {
+        --it;
+        return it;
+    }
+    return m.end();
+}
 
 namespace depman {
     class ActionChain;
     class Position;
 
+    enum DefinitionType {
+        DEF = 0,
+        UNDEF = 1
+    };
+
+    typedef std::map<Position*, DefinitionType, value_less<Position>> DefMap;
+
     class DepManager {
     public:
         virtual ~DepManager();
         void depctl(int cmd);
+        DefMap::iterator find_def(DefMap* defs, Position* pos, ::Quire::depman::ResolveMode mode);
+        Position* find_def_nodead(DefMap* defs, Position* r, ::Quire::depman::ResolveMode m);
 
     private:
         unsigned char pad_08_[32]; // 0x08..0x28 (def_table_ and forward_deps_)
@@ -34,14 +82,6 @@ namespace Quire { namespace depman {
         NORMAL = 0,
         CHILD_ONLY = 1,
         EXCLUDE_CHILD = 2
-    };
-
-    [Quire::Mirror::MirrorOfAttribute("depman.ResolveMode, mcdepman")]
-    public enum class ResolveMode
-    {
-        AT = 0,
-        BEFORE = 1,
-        AT_OR_BEFORE = 2
     };
 
     [Quire::Mirror::MirrorOfAttribute("depman.Scope, mcdepman")]

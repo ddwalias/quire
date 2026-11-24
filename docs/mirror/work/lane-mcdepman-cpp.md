@@ -404,6 +404,29 @@ Investigation of remaining unmigrated `PositionBase`, `Position`, and `DepManage
   - Full associative container implementation (`def_table_`, `forward_deps_`, `SDef` keys, `lower_bound_ne`, `AddLabels`) for `resolve`, `find_def`, `find_def_nodead`, `add_def`, `remove_def`, `add_dep`, `remove_dep`, and `invalidateChains`.
   - Compiler RTTI descriptor emissions for `Position.previous` and `Position.next`.
 
+## Batch 29 — DepManager Container Prerequisites: find_def, find_def_nodead, lower_bound_ne, and value_less
+
+- Owner: AGY, Orca task `task_2e559af11e7a`; branch `feature/luna-mcdepman`.
+- Members mirrored and verified:
+  - `depman.DepManager.find_def(DefMap*, Position*, ResolveMode)`
+  - `depman.DepManager.find_def_nodead(DefMap*, Position*, ResolveMode)`
+  - Container prerequisite template `lower_bound_ne<Map>`
+  - Container comparison predicate `value_less<Position>`
+  - Typedef `DefMap` (`std::map<Position*, DefinitionType, value_less<Position>>`)
+  - Enum `DefinitionType` (`DEF = 0, UNDEF = 1`)
+- Release IL report: PASS; 260 checked (`.mirror-cache/release-il-1cd6959a87bc/release-il.json`).
+- Architecture and implementation:
+  - Disassembled `depman.DepManager.find_def` (57 bytes) and `find_def_nodead` (127 bytes).
+  - Defined container comparison predicate `value_less<Position>` comparing sequence ordinals `a->ord_val_ < b->ord_val_` at offset 240 of `OrderedListNode<PositionBase>`.
+  - Implemented `lower_bound_ne` template providing predecessor lookup on associative map iterators: checks `m.lower_bound(key)`, if `end()` decrements from end, else if not `begin()` decrements iterator to return predecessor, matching Mathcad's inlined `_Find_lower_bound` byte-for-byte.
+  - Implemented `find_def`: resolves definition positions by checking `mode != BEFORE` -> `defs->find(pos)` and `mode != AT && it == defs->end()` -> `lower_bound_ne(pos, *defs)`.
+  - Implemented `find_def_nodead`: filters dead definitions by iterating `while (pos->IsDead()) { cur = pos; next = find_def(defs, cur, BEFORE); if (next == defs->end()) return nullptr; pos = next->first; }`. Marking `PositionBase::IsDead()` with `__declspec(noinline)` prevents cross-function inlining and replicates Mathcad's exact 127-byte instruction sequence, 6 branch targets, and local frame.
+- Remaining dependencies:
+  - Cross-assembly `gcroot` resolution in `MethodAudit` (`SafeEvent`, `LabeledDictionary`).
+  - Multi-level associative container structures (`def_table_`, `forward_deps_`, `SDef` keys, `AddLabels`) for remaining `DepManager` methods (`resolve`, `add_def`, `remove_def`, `add_dep`, `remove_dep`, and `invalidateChains`).
+  - Compiler RTTI descriptor emissions for `Position.previous` and `Position.next`.
+
+
 
 
 

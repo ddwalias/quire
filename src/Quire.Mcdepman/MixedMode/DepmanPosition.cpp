@@ -41,6 +41,8 @@
 #pragma comment(linker, "/include:?OnDep@PositionBase@depman@@QEAAXPEAVPosition@2@@Z")
 #pragma comment(linker, "/include:?depctl@DepManager@depman@@QEAAXH@Z")
 #pragma comment(linker, "/include:?EndMove@PositionBase@depman@@QEAA_NXZ")
+#pragma comment(linker, "/include:?find_def@DepManager@depman@@QEAM?AV?$_Tree_iterator@V?$_Tree_val@U?$_Tree_simple_types@U?$pair@QEAVPosition@depman@@W4DefinitionType@2@@std@@@std@@@std@@@std@@PEAV?$map@PEAVPosition@depman@@W4DefinitionType@2@U?$value_less@VPosition@depman@@@@V?$allocator@U?$pair@QEAVPosition@depman@@W4DefinitionType@2@@std@@@std@@@4@PEAVPosition@2@W4ResolveMode@2Quire@@@Z")
+#pragma comment(linker, "/include:?find_def_nodead@DepManager@depman@@QEAMPEAVPosition@2@PEAV?$map@PEAVPosition@depman@@W4DefinitionType@2@U?$value_less@VPosition@depman@@@@V?$allocator@U?$pair@QEAVPosition@depman@@W4DefinitionType@2@@std@@@std@@@std@@PEAV32@W4ResolveMode@2Quire@@@Z")
 // Pragmas for methods blocked on cross-assembly gcroot mapping in MethodAudit (SafeEvent, LabeledDictionary).
 // Source implementations below are exact and ready to be un-commented once MethodAudit supports cross-assembly gcroot:
 // #pragma comment(linker, "/include:?SetBusy@PositionBase@depman@@QEAAX_N@Z")
@@ -324,6 +326,40 @@ Position* Position::next()
 void DepManager::depctl(int cmd)
 {
     enabled_ = (cmd == 0);
+}
+
+DefMap::iterator DepManager::find_def(DefMap* defs, Position* pos, ::Quire::depman::ResolveMode mode)
+{
+    auto it = defs->end();
+    if (mode != ::Quire::depman::ResolveMode::BEFORE)
+        it = defs->find(pos);
+
+    if (mode != ::Quire::depman::ResolveMode::AT && it == defs->end())
+        it = lower_bound_ne(pos, *defs);
+
+    return it;
+}
+
+Position* DepManager::find_def_nodead(DefMap* defs, Position* r, ::Quire::depman::ResolveMode m)
+{
+    if (!defs)
+        return nullptr;
+
+    auto it = find_def(defs, r, m);
+    if (it != defs->end())
+    {
+        auto pos = it->first;
+        while (pos->IsDead())
+        {
+            auto cur = pos;
+            auto next = find_def(defs, cur, ::Quire::depman::ResolveMode::BEFORE);
+            if (next == defs->end())
+                return nullptr;
+            pos = next->first;
+        }
+        return pos;
+    }
+    return nullptr;
 }
 
 } // namespace depman
