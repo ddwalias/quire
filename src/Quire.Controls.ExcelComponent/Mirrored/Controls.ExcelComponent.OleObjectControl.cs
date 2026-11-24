@@ -241,6 +241,18 @@ public partial class OleObjectControl
 
     public bool CanToggleAutoResize => View.ViewModel.CanToggleAutoResize;
 
+    // Placed before the properties that follow it: Release IL numbers the closure as <Activate>b__42_0.
+    public void Activate(bool isActive)
+    {
+        if (isActive)
+        {
+            WpfUtils.ExecuteOnLoad(this, () =>
+            {
+                Focus();
+            });
+        }
+    }
+
     public SubElementToResizeData SubElementToResizeData => new SubElementToResizeData(View, serializeDimensions: true, isFullSize: true);
 
     public ResizeToFitState ResizeState

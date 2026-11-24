@@ -21,6 +21,4 @@ public partial class OleObjectControl : global::System.Windows.Controls.ContentC
     public static readonly global::System.Windows.Input.RoutedUICommand UpdateOleObjectLinkCommand;
     [global::Quire.Mirror.MirrorStub]
     private OleObjectControl(global::Quire.Controls.ExcelComponent.View.OleObject content) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Activate(bool isActive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
