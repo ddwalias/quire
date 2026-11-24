@@ -90,4 +90,27 @@ public partial class EquationControl
     public bool InterceptAndUpdateResult => false;
 
     public bool UseICalculatableToRestoreResult => false;
+
+    public IDataExchangeModel DataExchangeModel => _model.DataExchangeModel;
+
+    public string ErrorSExpression
+    {
+        get
+        {
+            if (_model.ErrorNode != null)
+            {
+                return _model.ErrorNode.SExpression;
+            }
+
+            return "";
+        }
+    }
+
+    public string TypeoverSExpression => _model.TypeoverSExpression;
+
+    public bool CurrentNodeIsNumeric => _model.CurrentModeNavigatorState.Current.DescriptorName == "NUMERIC";
+
+    internal double ViewFullWidth => _view.ActualWidth;
+
+    internal double ViewClippedWidth => _view.DesiredSize.Width;
 }

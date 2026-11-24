@@ -294,3 +294,9 @@
 - Exact: six getters. `IsScriptableControl` and `AtLeftEdge()` read `_model`; `ScopeDirection` is `_model.ScopeSide`; `CanHideFromCalculationContext`, `InterceptAndUpdateResult` and `UseICalculatableToRestoreResult` return constants (`true`, `false`, `false`). None has a closure, and they are appended at the end of the partial. Their stub pairs are removed from the `.g.cs`.
 - Left out on purpose: `ErrorVisible` (Mathcad throws `NotImplementedException`, so mirroring it would be a placeholder, not an exact body) and `ComponentCookieMultiThreaded` (a compiler-generated backing field that needs an auto-property shape).
 - Gate (project-level): PASS; 3563 checked, zero failures (`.mirror-cache/release-il-d43be3e9e435/release-il.json`).
+
+### Batch 41: Controls.EquationControl (DataExchangeModel, ErrorSExpression, TypeoverSExpression, CurrentNodeIsNumeric, ViewFullWidth, ViewClippedWidth)
+
+- Exact: `DataExchangeModel` and `TypeoverSExpression` (direct reads of `_model`); `ErrorSExpression` (`if (_model.ErrorNode != null) return ...SExpression; return "";`, two `ret`s as in Mathcad); `CurrentNodeIsNumeric` (`CurrentModeNavigatorState.Current.DescriptorName == "NUMERIC"`); `ViewFullWidth` (`_view.ActualWidth`) and `ViewClippedWidth` (`_view.DesiredSize.Width`, with the temporary `Size` local that Roslyn makes for the struct call). None has a closure, and they are appended at the end of the partial. Their stub pairs are removed from the `.g.cs`.
+- Left out: `IsEmbedded` (getter and setter both need mirroring; the getter is a `GetValue` unbox, not yet checked for the setter) and `ErrorCode` (involves `IsNullOrEmpty` and a conditional that needs its own shape probe).
+- Gate (project-level): PASS; 3569 checked, zero failures (`.mirror-cache/release-il-bf9d2637edf4/release-il.json`).
