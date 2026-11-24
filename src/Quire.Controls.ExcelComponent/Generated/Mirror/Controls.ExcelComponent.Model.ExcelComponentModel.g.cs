@@ -21,6 +21,4 @@ public partial class ExcelComponentModel : global::Quire.Controls.ExcelComponent
     protected override void AddItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => base.AddItems(items);
     [global::Quire.Mirror.MirrorStub]
     protected override void RemoveItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => base.RemoveItems(items);
-    [global::Quire.Mirror.MirrorStub]
-    private bool CheckComponentEnabledCalcItems(bool checkOutputOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

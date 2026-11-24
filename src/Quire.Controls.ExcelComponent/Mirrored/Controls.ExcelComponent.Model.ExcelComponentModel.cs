@@ -235,4 +235,22 @@ public partial class ExcelComponentModel
         }
         return false;
     }
+
+    private bool CheckComponentEnabledCalcItems(bool checkOutputOnly)
+    {
+        // Release IL tests the null-guarded delegate result as one value, so the guard stays a ternary.
+        if (!(QueryHiddenFromCalculationContext == null ? false : QueryHiddenFromCalculationContext()))
+        {
+            if (OutputsConnectedToTheEngine.Count() <= 0)
+            {
+                if (!checkOutputOnly)
+                {
+                    return InputsConnectedToTheEngine.Count() > 0;
+                }
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
 }
