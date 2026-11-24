@@ -37,6 +37,7 @@
 #pragma comment(linker, "/include:?GetSharedThreadContext@PositionBase@depman@@$$FQEBMPE$AAVSharedThreadContext@2Quire@@XZ")
 #pragma comment(linker, "/include:?StartTiming@PositionBase@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?Kill@PositionBase@depman@@QEAAXXZ")
+#pragma comment(linker, "/include:?TreatAsReady@PositionBase@depman@@QEAAX_N@Z")
 // Pragmas for methods blocked on cross-assembly gcroot mapping in MethodAudit (SafeEvent, LabeledDictionary).
 // Source implementations below are exact and ready to be un-commented once MethodAudit supports cross-assembly gcroot:
 // #pragma comment(linker, "/include:?SetBusy@PositionBase@depman@@QEAAX_N@Z")
@@ -185,6 +186,31 @@ void PositionBase::Kill()
         Position* pos = position_;
         pos->dparent_ = nullptr;
         parent->dependents_.erase(pos);
+    }
+}
+
+void PositionBase::TreatAsReady(bool b)
+{
+    treated_ready_ = b;
+    if (b)
+    {
+        invalidated_ = false;
+        if (action_chain_ != nullptr)
+        {
+            __int64 chain = reinterpret_cast<__int64>(action_chain_);
+            object_ = reinterpret_cast<ActionChain*>(chain)->TreatAsReadyDeps(nullptr);
+        }
+        if (dparent_ != nullptr)
+        {
+            auto parent = dparent_;
+            Position* pos = position_;
+            pos->dparent_ = nullptr;
+            parent->dependents_.erase(pos);
+        }
+    }
+    else
+    {
+        object_ = nullptr;
     }
 }
 

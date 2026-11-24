@@ -43,6 +43,7 @@ public:
     void WaitReady();
     void PrepareKill();
     void Kill();
+    void TreatAsReady(bool b);
     ::Quire::utl_mgd::LabeledDictionary^ ready();
     void SetNotifyComputing(bool notify);
     void ResetPriority();
@@ -76,7 +77,7 @@ private:
     void* pos_queue_callback_;                    // 0x58 (offset 88, gcroot<depman::PosQueueCallback^>)
     void* interrupt_callback_;                    // 0x60 (offset 96, gcroot<depman::InterruptCallback^>)
     void* treated_ready_invalid_callback_;        // 0x68 (offset 104, gcroot<depman::TreatedReadyInvalidCallback^>)
-    void* object_;                                // 0x70 (offset 112, gcroot<System::Object^>)
+    gcroot<System::Object^> object_;              // 0x70 (offset 112, gcroot<System::Object^>)
     int client_handle_;                           // 0x78 (offset 120)
     unsigned char pad_7c_[0x04];                  // 0x7C
     PositionBase* dparent_;                       // 0x80 (offset 128)
@@ -117,6 +118,7 @@ public:
     void SetNeedsCheck();
     void Kill();
     System::Object^ value();
+    System::Collections::Generic::Dictionary<::Quire::depman::CacheKey, __int64>^ TreatAsReadyDeps(System::Collections::Generic::Dictionary<::Quire::depman::CacheKey, __int64>^ d);
     ::Quire::depman::SharedThreadContext^ GetSharedThreadContext() const;
 
     // ActionChainMgd's reference IL reads these pointer fields at offsets 8, 16, and 24.

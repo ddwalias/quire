@@ -100,22 +100,7 @@ namespace Quire { namespace depman {
         bool IsChildOnly();
     };
 
-    [Quire::Mirror::MirrorOfAttribute("depman.DepTrackingEnv, mcdepman")]
-    ref class DepTrackingEnv
-    {
-        ::depman::Position* m_loc;
-
-    public:
-        DepTrackingEnv(::depman::Position* p)
-            : m_loc(p)
-        {
-        }
-
-        ::depman::Position* loc()
-        {
-            return m_loc;
-        }
-    };
+    ref class DepTrackingEnv;
 
     ref class ActionChainMgd;
     ref class SharedThreadContext;
@@ -209,8 +194,35 @@ namespace Quire { namespace depman {
         }
     };
 
-    enum class DependencyType
+    [Quire::Mirror::MirrorOfAttribute("depman.DependencyType, mcdepman")]
+    public enum class DependencyType
     {
+        Static = 0,
+        Dynamic = 1,
+        All = 2
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("depman.OnDep, mcdepman")]
+    public delegate void OnDep(Scope^ scope, DSym sym, ScopingMode sm, DependencyType dt);
+
+    [Quire::Mirror::MirrorOfAttribute("depman.DepTrackingEnv, mcdepman")]
+    public ref class DepTrackingEnv
+    {
+        ::depman::Position* m_loc;
+
+    public:
+        DepTrackingEnv(::depman::Position* p)
+            : m_loc(p)
+        {
+        }
+
+        ::depman::Position* loc()
+        {
+            return m_loc;
+        }
+
+        [Quire::Mirror::MirrorStubAttribute]
+        virtual ::depman::Position* Lookup(System::String^ name, ScopingMode scoping_mode, DependencyType deptype, OnDep^ on_dep_callback);
     };
 
     [Quire::Mirror::MirrorOfAttribute("depman.CacheKey, mcdepman")]
@@ -298,6 +310,7 @@ namespace Quire { namespace depman {
 
         bool IsDead();
         SharedThreadContext^ GetSharedThreadContext();
+        System::Collections::Generic::Dictionary<CacheKey, __int64>^ TreatAsReadyDeps(System::Collections::Generic::Dictionary<CacheKey, __int64>^ d);
 
         void set_result(System::Object^ r)
         {

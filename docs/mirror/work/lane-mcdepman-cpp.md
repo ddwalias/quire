@@ -324,3 +324,22 @@ Investigation of remaining unmigrated `PositionBase`, `Position`, and `DepManage
    - **Preserved RTTI Drafts** (`Position.previous`, `Position.next`): Exact C++ source is implemented; blocked on MSVC RTTI type descriptor data parity.
    - **DepManager Map Consumers** (`PositionBase.InvalidateDeps`, `PositionBase.SetEnvScope`, `PositionBase.EndMove`): Blocked on full native `DepManager` container implementation.
 
+## Batch 25 — TreatAsReady and TreatAsReadyDeps
+
+- Owner: AGY, Orca task `task_2d8f33262504`; branch `feature/luna-mcdepman`.
+- Members mirrored and verified:
+  - `depman.PositionBase.TreatAsReady(bool)`
+  - `depman.ActionChain.TreatAsReadyDeps(Dictionary<CacheKey, __int64>)`
+  - `depman.ActionChainMgd.TreatAsReadyDeps(Dictionary<CacheKey, __int64>)`
+- Release IL report: PASS; 242 checked (`.mirror-cache/release-il-41e19258c17b/release-il.json`).
+- Architecture and implementation:
+  - Disassembly of `PositionBase.TreatAsReady(bool)` revealed that it does not interact with `SafeEvent` or `DepManager`. It sets `treated_ready_`, clears `invalidated_`, delegates dependency recording to `action_chain_->TreatAsReadyDeps(nullptr)`, assigns the result to `object_` (`gcroot<System::Object^>` at offset 112), and detaches from `dparent_` using the verified `std::set<Position*>` erase path from Batch 24.
+  - In `PositionBase.TreatAsReady`, evaluating `__int64 chain = reinterpret_cast<__int64>(action_chain_);` produces Mathcad's exact 3-local frame (`[Position*, int64, pair]`) and 81-entry Release IL byte-for-byte.
+  - `ActionChainMgd.TreatAsReadyDeps` constructs `DepTrackingEnv`, filters keys starting with `"%%children"` or `"value mc_"`, calls `env->Lookup(...)` to record position pointers, and recursively chains `next()->TreatAsReadyDeps(d)`. Declaring `virtual Lookup(...)` on `DepTrackingEnv` produces `callvirt` matching Mathcad's exact 97-entry Release IL.
+  - `DepTrackingEnv.Lookup` is declared with `[MirrorStubAttribute]` and throws `MirrorStub::NotImplemented()` to serve as an audited placeholder stub until symbol tracking is fully completed.
+- Remaining dependencies:
+  - Cross-assembly `gcroot` resolution in `MethodAudit` (`SafeEvent`, `LabeledDictionary`) blocking `PositionBase.SetBusy`, `WaitReady`, `PrepareKill`, and `ready` (exact C++ source drafts preserved in `DepmanPosition.cpp`).
+  - Native `DepManager` multi-level associative container maps blocking `InvalidateDeps`, `SetEnvScope`, `EndMove`, and `ActionChain.add_env_scope` / `remove_env_scope`.
+  - Compiler RTTI descriptor emissions for `Position.previous` and `Position.next`.
+
+

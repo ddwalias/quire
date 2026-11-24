@@ -52,6 +52,34 @@ SharedThreadContext^ ActionChainMgd::GetSharedThreadContext()
     return result;
 }
 
+System::Collections::Generic::Dictionary<CacheKey, __int64>^ ActionChainMgd::TreatAsReadyDeps(System::Collections::Generic::Dictionary<CacheKey, __int64>^ d)
+{
+    DepTrackingEnv^ env = gcnew DepTrackingEnv(loc());
+    if (d == nullptr)
+        d = gcnew System::Collections::Generic::Dictionary<CacheKey, __int64>();
+
+    for each (CacheKey key in m_deps->Keys)
+    {
+        if (key.ds.full->StartsWith("%%children") || key.ds.full->StartsWith("value mc_"))
+        {
+            ::depman::Position* p = env->Lookup(key.ds.full, key.sm, key.dt, nullptr);
+            d[key] = reinterpret_cast<__int64>(p);
+        }
+    }
+
+    if (next() != nullptr)
+    {
+        return next()->TreatAsReadyDeps(d);
+    }
+
+    return d;
+}
+
+::depman::Position* DepTrackingEnv::Lookup(System::String^ /*name*/, ScopingMode /*scoping_mode*/, DependencyType /*deptype*/, OnDep^ /*on_dep_callback*/)
+{
+    throw Quire::Mirror::MirrorStub::NotImplemented();
+}
+
 }} // namespace Quire::depman
 
 namespace depman {
@@ -117,6 +145,11 @@ System::Object^ ActionChain::value()
     if (mgd_->env()->needs_check() && !locked_)
         return nullptr;
     return next_ ? next_->value() : mgd_->result();
+}
+
+System::Collections::Generic::Dictionary<::Quire::depman::CacheKey, __int64>^ ActionChain::TreatAsReadyDeps(System::Collections::Generic::Dictionary<::Quire::depman::CacheKey, __int64>^ d)
+{
+    return mgd_->TreatAsReadyDeps(d);
 }
 
 } // namespace depman
