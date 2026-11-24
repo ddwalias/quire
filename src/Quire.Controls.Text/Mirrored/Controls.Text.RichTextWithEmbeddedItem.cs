@@ -597,6 +597,22 @@ public partial class RichTextWithEmbeddedItem
     }
 
     // Compile order: positioned so the lambdas are <>c__DisplayClass96_0 and <>c__DisplayClass97_0 as in Mathcad.
+    // Compile-order device: these three members come before the font-colour and iterator closures so their Release ordinals match.
+    public void RemoveItem(IWhiteboardItem item)
+    {
+        RemoveEmbeddedItem(item as IWhiteboardItemInText);
+    }
+
+    private void SaveState()
+    {
+        _savedActiveItem = ActiveItem;
+    }
+
+    public void AddItem(IWhiteboardItem item)
+    {
+        AddEmbeddedItem(item as IWhiteboardItemInText, true);
+    }
+
     private void ExecuteChangeFontColor(object sender, ExecutedRoutedEventArgs e)
     {
         ExecuteCommandKeepingSelection(() => CurrentMathFormat.ChangeFontColor((System.Windows.Media.Color)e.Parameter), "ChangeFontColor");
@@ -749,16 +765,6 @@ public partial class RichTextWithEmbeddedItem
         return GetLineStartPosition(doc.ContentEnd, 0);
     }
 
-    public void RemoveItem(IWhiteboardItem item)
-    {
-        RemoveEmbeddedItem(item as IWhiteboardItemInText);
-    }
-
-    private void SaveState()
-    {
-        _savedActiveItem = ActiveItem;
-    }
-
     public void UNITTEST_ExecuteAddItemToListCommand(IWhiteboardItemInText item)
     {
         ExecuteAddItemToListCommand(item);
@@ -804,9 +810,29 @@ public partial class RichTextWithEmbeddedItem
         RemoveHyperlinkUndoableCommand(GetContextLinks());
     }
 
-    public void AddItem(IWhiteboardItem item)
+    // Compile-order device: lambda ordinals 128-130 follow the members above in Release IL.
+    protected virtual void AddItems(IEnumerable<IWhiteboardItemInText> items)
     {
-        AddEmbeddedItem(item as IWhiteboardItemInText, true);
+        items.Each((IWhiteboardItemInText item) =>
+        {
+            _childManager.ChildAdded(item);
+        });
+    }
+
+    protected virtual void RemoveItems(IEnumerable<IWhiteboardItemInText> items)
+    {
+        items.Each((IWhiteboardItemInText item) =>
+        {
+            _childManager.ChildRemoved(item);
+        });
+    }
+
+    protected virtual void MoveItems(IEnumerable<IWhiteboardItemInText> items)
+    {
+        items.Each((IWhiteboardItemInText item) =>
+        {
+            _childManager.ChildMoved(item);
+        });
     }
 
     private void CanExecuteMathFormatCommands(object sender, CanExecuteRoutedEventArgs e)

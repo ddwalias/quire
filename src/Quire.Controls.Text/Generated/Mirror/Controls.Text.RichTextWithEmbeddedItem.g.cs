@@ -108,12 +108,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     protected override void OnLostFocus(global::System.Windows.RoutedEventArgs e) => base.OnLostFocus(e);
     [global::Quire.Mirror.MirrorStub]
-    protected virtual void AddItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItemInText> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void RemoveItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItemInText> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void MoveItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItemInText> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ResetCaretPositionWhenNecessary(global::System.Windows.Documents.TextPointer referenceLineStartPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void HandleTextChanged(object sender, global::System.Windows.Controls.TextChangedEventArgs args) => base.HandleTextChanged(sender, args);
