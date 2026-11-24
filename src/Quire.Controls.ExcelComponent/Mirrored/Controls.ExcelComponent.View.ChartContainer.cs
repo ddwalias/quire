@@ -151,4 +151,27 @@ public partial class ChartContainer
         }
     }
 
+    private void ApplyRect(Size size, bool allowEmpty)
+    {
+        if (!SiteCreated)
+        {
+            DebugTools.LogData("ChartContainer.ApplyRect: Early return (siteCreated == false)");
+            return;
+        }
+        // Declared before the rectangle so the out temporary takes local slot 0, as in the Release IL.
+        Size scale;
+        Int32Rect renderRectInPixels = GetRenderRectInPixels(size, out scale);
+        DebugTools.LogData("ChartContainer.ApplyRect: Start: " + ((Int32Rect)renderRectInPixels).ToString() + " (was: " + ((Int32Rect)RenderRectInPixels).ToString() + ")");
+        if (renderRectInPixels.IsEmpty)
+        {
+            DebugTools.DevAssert(allowEmpty, null);
+        }
+        else if (renderRectInPixels != RenderRectInPixels)
+        {
+            RenderRectInPixels = renderRectInPixels;
+            PublicModel.SetRect(renderRectInPixels);
+        }
+        DebugTools.LogData("ChartContainer.ApplyRect: End: " + ((Int32Rect)renderRectInPixels).ToString());
+    }
+
 }

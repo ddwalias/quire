@@ -13,6 +13,4 @@ public partial class ChartContainer : global::Quire.Controls.ExcelComponent.View
 {
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.PersistentData.chartContainerType GetOlePersistentData(global::Quire.Serialization.IS11NProvider s11NProvider, string uniqueId) => base.GetOlePersistentData(s11NProvider, uniqueId);
-    [global::Quire.Mirror.MirrorStub]
-    private void ApplyRect(global::System.Windows.Size size, bool allowEmpty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
