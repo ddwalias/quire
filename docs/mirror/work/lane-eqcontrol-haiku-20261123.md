@@ -362,3 +362,9 @@
 
 - Exact: `ActiveElementOpacity` (`get => (double)GetValue(ActiveElementOpacityProperty)`, `set => SetValue(ActiveElementOpacityProperty, value)`). The dependency-property group is already in place: the hand-written static constructor registers `ActiveElementOpacityProperty` (and `ActiveNonNavigatableElementOpacityProperty`, which has no property on Mathcad's EquationControl), so the static initialization is unchanged. The property's stub pair is removed from the `.g.cs`.
 - Gate (project-level): PASS; 3597 checked, zero failures (`.mirror-cache/release-il-1b7ec26bf553/release-il.json`).
+
+### Batch 53: Controls.EquationControl (IsResizableInputControl, CalcIsDisabled, ResultScalingSExpression, ProhibitComboBox, ProhibitInputControl, AllowExpressionsOnly, IsMathFormatHandledLocally, OverrideIdLabelByResolvedForDefinitionLhs, CurrentError, EquationSExpressionWithResolvedLabels)
+
+- Exact: `IsResizableInputControl` and `CalcIsDisabled` (dependency-property get `(bool)GetValue(...)`, set `SetValue(..., value)`; both properties are registered in the hand-written static constructor, which is unchanged); `ResultScalingSExpression`, `ProhibitComboBox`, `ProhibitInputControl`, `AllowExpressionsOnly`, `IsMathFormatHandledLocally`, `OverrideIdLabelByResolvedForDefinitionLhs` (`_model` get and set delegations); `CurrentError` (`Error`); `EquationSExpressionWithResolvedLabels` (`_model` get). Stub pairs removed from the `.g.cs`.
+- Left out: `EquationSExpression` (its setter calls `OnSExpressionChanging`, `SetEquationSExpression` and `FireRequestEvaluation`, a separate probe), `CurrentCaretInsertionType` and `CalcIsDisabled`-like attached ones beyond this group.
+- Gate (project-level): PASS; 3615 checked, zero failures (`.mirror-cache/release-il-9763d94ad339/release-il.json`).

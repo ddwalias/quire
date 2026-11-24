@@ -304,4 +304,56 @@ public partial class EquationControl
         get => (double)GetValue(ActiveElementOpacityProperty);
         set => SetValue(ActiveElementOpacityProperty, value);
     }
+
+    public bool IsResizableInputControl
+    {
+        get => (bool)GetValue(IsResizableInputControlProperty);
+        set => SetValue(IsResizableInputControlProperty, value);
+    }
+
+    public bool CalcIsDisabled
+    {
+        get => (bool)GetValue(CalcIsDisabledProperty);
+        set => SetValue(CalcIsDisabledProperty, value);
+    }
+
+    public string ResultScalingSExpression
+    {
+        get => _model.ResultScalingSExpression;
+        set => _model.ResultScalingSExpression = value;
+    }
+
+    public bool ProhibitComboBox
+    {
+        get => _model.ProhibitComboBox;
+        set => _model.ProhibitComboBox = value;
+    }
+
+    public bool ProhibitInputControl
+    {
+        get => _model.ProhibitInputControl;
+        set => _model.ProhibitInputControl = value;
+    }
+
+    public bool AllowExpressionsOnly
+    {
+        get => _model.AllowExpressionsOnly;
+        set => _model.AllowExpressionsOnly = value;
+    }
+
+    public bool IsMathFormatHandledLocally
+    {
+        get => _model.IsMathFormatHandledLocally;
+        set => _model.IsMathFormatHandledLocally = value;
+    }
+
+    public bool OverrideIdLabelByResolvedForDefinitionLhs
+    {
+        get => _model.OverrideIdLabelByResolvedForDefinitionLhs;
+        set => _model.OverrideIdLabelByResolvedForDefinitionLhs = value;
+    }
+
+    public EngineError CurrentError => Error;
+
+    public string EquationSExpressionWithResolvedLabels => _model.EquationSExpressionWithResolvedLabels;
 }
