@@ -444,3 +444,10 @@
 - Runtime dependency (not an IL mismatch): `MathFormat` stays null until the constructor is matched. `DeserializeMathFormat` (batch 63) therefore throws `NullReferenceException` at run time. `IsValidProperty` is now initialized.
 - Runtime dependency still parked: `GetColumnCells` (stloc/ldloc elision); its `DeleteEmptyColumns` dependency stays visible.
 - Gate (project-level): PASS; 3678 checked, zero failures (`.mirror-cache/release-il-a930dc38eb76/release-il.json`).
+
+### Batch 66: Controls.Internal.VisualMathNode (DepthBelowBaseline)
+
+- Exact (1 getter): `DepthBelowBaseline` => `DesiredSize.Height - TextBaselineY` (`DesiredSize` is copied to a `Size` temporary before `get_Height`, which Roslyn emits for struct property access; `TextBaselineY` is a `callvirt`). Stub pair removed from the `.g.cs`; the body lives in the hand-written partial.
+- Runtime dependency (not an IL mismatch): `VisualMathNode.TextBaselineY` is still a generated stub, so `DepthBelowBaseline` throws `NotImplementedException` at run time until `TextBaselineY` is implemented.
+- Unchanged: the `VisualMathNode` constructor (IL-structural mismatch, see batch 65); `MathFormat` stays null at run time; `GetColumnCells` stays parked (`DeleteEmptyColumns`).
+- Gate (project-level): PASS; 3679 checked, zero failures (`.mirror-cache/release-il-c2d03e88c747/release-il.json`).

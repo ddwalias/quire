@@ -29,6 +29,8 @@ internal abstract partial class VisualMathNode
 
     public IMathFormatDobjController MathFormat { get; private set; }
 
+    public double DepthBelowBaseline => DesiredSize.Height - TextBaselineY;
+
     private static void OnShowOperatorOnlyWhenActiveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var node = d as VisualMathNode;

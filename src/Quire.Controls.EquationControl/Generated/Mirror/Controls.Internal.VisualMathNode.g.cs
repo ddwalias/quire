@@ -20,8 +20,6 @@ internal abstract partial class VisualMathNode : global::Quire.Controls.Internal
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Controls.Core.IFontManager _fontManager;
     [global::Quire.Mirror.MirrorStub]
-    public double DepthBelowBaseline { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.EquationEditor.Tree.INodeInfo NodeInfo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
