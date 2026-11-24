@@ -111,3 +111,9 @@
 - Landed: `OleBaseComponentViewModel.PostClone` (`WhiteboardItems.Each(HandleItemAdded)`, method-group delegate, no closure); Release IL PASS for the changed member.
 - Not landed: `ChartComponentCalculatableWrapper.IdentifierToChartType`. Mathcad's `hasValue` is `HasValue` followed by `ldc.i4.0; cgt.un`, and natural C# forms (`index.HasValue`, `index.HasValue != false`) are emitted without it. The enum value `Invalid = 1` already matches.
 - Survey of closure/COM/iterator-free candidates: `ChartTraceCalculatable.ShowError` (lambda), `ExcelContainerViewModel.RecalculateMinimalSize`/`EstablishInitialSize` (not reached), `ChartComponentModel.UpdateChartMinMaxCalculatable` (not reached). Most `OleBaseComponentViewModel` members use lambdas (`Init`, `IndicateHiddenErrors`, `SetOleContainerItem`, `Measure`, `CheckCanDeleteIn*`, `SetInitialSize`).
+
+## Sizing and chart targets (task_f005bb7df84b, branch `feature/excelcomponent-high`)
+
+- Not implemented: `ExcelContainerViewModel.EstablishInitialSize` and `RecalculateMinimalSize`. Both cast COM members through `dynamic` (`(double)(dynamic)range.Width`, `((_Worksheet)(Worksheet)(dynamic)...)`), so the compiler-generated `CallSite` fields and their order must be reproduced first. This is a COM/dynamic blocker.
+- Not implemented: `ChartComponentModel.UpdateChartMinMaxCalculatable`. It is a LINQ query with `ToDictionary` and `FirstOrDefault` lambdas, `Each` lambdas and captured loop locals, so the closure ordinals are the blocker recorded above.
+- No code batch is ready, so no UI landing slot was requested and nothing was landed for this round.
