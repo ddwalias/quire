@@ -187,3 +187,11 @@
 - `GetEmbeddedObjectCaretOffset` (closure-free): the Mathcad IL evaluates `this` before `textElement.ElementStart` for the `ref TextPointer` argument, which needs a temporary inside the argument list. An ordinary local form differs at IL offset #25. Parked until a shape that matches is found.
 - `GetPotentialLinkEndPosition`: lambdas plus `goto`-based lowering of a key switch. Not attempted.
 - `RemoveInlineRecursively` (lambda display class): needs a Mathcad-order placeholder layout for RichTextWithEmbeddedItem first, like RichTextBase; inserting one counted member before the target shifts every later closure.
+
+## Batch 44 — RichTextBase.SelectionStart and SelectionEnd (with GetInsertionPointAtPointer parameter fix)
+
+- `SelectionStart` and `SelectionEnd` are implemented as non-virtual getters that call `GetInsertionPointAtPointer(Selection.Start)` and `GetInsertionPointAtPointer(Selection.End)`. The Mathcad IL declares both accessors without `virtual` and calls them with `call`, so `virtual` was wrong.
+- `GetInsertionPointAtPointer` has an `[in]` parameter in the Mathcad IL (`TextPointer&`), so the placeholder signature is now `in TextPointer`. Its callers (`HandleReplace`, `PrePasting`) now pass the value directly, which gives the same temporary and `ldloca` shape as `ref <temp>`.
+- The member and its placeholder stay unmarked, with no stubs removed from the `.g.cs`; no stub lines existed for these members.
+- Release IL (project-wide): PASS — 690 checked, 0 failures.
+- Not verified here: regeneration with `MirrorGen emit` after this change (the gate passed; emit drift check still to run before the landing request).

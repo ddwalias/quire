@@ -81,8 +81,8 @@ public partial class RichTextBase
     private global::System.Windows.Markup.XmlLanguage _currentProofingLanguage;
     public double[] CustomScriptsSizesForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     public virtual int CaretOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    public int SelectionStart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    public int SelectionEnd { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public int SelectionStart { get => GetInsertionPointAtPointer(Selection.Start); }
+    public int SelectionEnd { get => GetInsertionPointAtPointer(Selection.End); }
     public virtual double VerticalAlignmentOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     public event global::System.Action<global::Quire.Controls.Core.IWhiteboardItem> OnGotFocusEvent;
@@ -131,7 +131,7 @@ public partial class RichTextBase
     private void ExecuteTextChangedAndReactivateCommand(global::System.Windows.Controls.TextChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void OnPreviewBackspace(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public global::Quire.Core.TextFormat GetTextFormatForWholeDocument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected internal int GetInsertionPointAtPointer(ref global::System.Windows.Documents.TextPointer pointer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected internal int GetInsertionPointAtPointer(in global::System.Windows.Documents.TextPointer pointer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public virtual global::System.Collections.Generic.IEnumerable<object> EnumerateEmbeddedObjectsInRange(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private global::System.Windows.Documents.TextRange GetRangeIfMatch(global::System.Windows.Documents.TextRange originalRange, string text, int index, global::System.StringComparison comparisonType, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private global::System.Windows.Documents.TextRange SearchWholeWordRuns(global::System.Windows.Documents.TextRange originalRange, string text, global::System.Windows.Documents.LogicalDirection direction, global::System.StringComparison comparisonType, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -1075,7 +1075,7 @@ public partial class RichTextBase
         int? index = FindUtilities.GetIndexInText(GetTextInRange(new DocumentTextRange(start, end)), text, direction, options);
         if (index.HasValue)
         {
-            int offset = GetInsertionPointAtPointer(ref start) - originalRangeStartPoint;
+            int offset = GetInsertionPointAtPointer(start) - originalRangeStartPoint;
             return GetRangeIfMatch(originalRange, text, offset + index.Value, comparisonType, subscriptPositions);
         }
         return null;
