@@ -12,8 +12,6 @@ namespace Quire.Controls.Plots.Model;
 internal abstract partial class PlotCalculatable : global::Quire.Controls.Plots.Model.IPlotCalculatable, global::Quire.Calculation.Core.ICalculatableInfo, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculationHideableChild, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Controls.Plots.Model.IHasNumberOfPoints, global::Quire.Calculation.Core.ICalcWithCache
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.SynchronizationStatus _synchronizationStatus;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.CalculatingStatus _calculatingStatus;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.EngineError _error;
@@ -29,8 +27,6 @@ internal abstract partial class PlotCalculatable : global::Quire.Controls.Plots.
     public abstract string Rl { get; }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.EngineError CurrentError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.SynchronizationStatus SynchronizationStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.CalculatingStatus CalculatingStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -121,10 +117,6 @@ internal abstract partial class PlotCalculatable : global::Quire.Controls.Plots.
     protected virtual void OnPlotCalculatableError(global::Quire.Controls.Plots.Model.EngineErrorEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool IsApplicationCustomError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetStatusSynchronized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

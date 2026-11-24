@@ -111,8 +111,7 @@ internal partial class PlotEquationModel3D : PlotEquationModelBase, IPlotEquatio
         new DoActionWhenEquationProxyChanged(this, () =>
         {
             _equationProxy.SetDataObject(value);
-            // IL requires value 3; Mathcad Ptc.Calculation.Core defines Synchronized = 3.
-            if (Trace != null && Trace.SynchronizationStatus != (SynchronizationStatus)3)
+            if (Trace != null && Trace.SynchronizationStatus != SynchronizationStatus.Synchronized)
             {
                 _equationProxy.Commit();
             }

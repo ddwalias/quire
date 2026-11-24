@@ -780,3 +780,12 @@
 - Release IL: full gate PASS — 2666 checked, 0 failures, 2666 exact; first try.
 - MirrorGen emit: deletions only (the one stub with its attribute), equal to the applied edit. Other emit noise reverted.
 - Still stubs: `TickmarksChanged` (needs `PlotGraphAxis.TickMarksChanged`/`FireTickMarksChanged`), and the stubs in `PlotGraphAxis` that `ShowGridLinesChanged`/`GridLineColorChanged` now call.
+
+## Batch 108 — SynchronizationStatus follow-up (PlotCalculatable, comparison cleanup)
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Members: `PlotCalculatable.SynchronizationStatus` (backing field initialised to `Synchronized`, getter, private setter with the `!=` guard and `FirePropertyChanged`), `SetSynchronizationStatus`, and `SetStatusSynchronized` (copies `TreatAsUpToDate` to a local before invoking; the `?.Invoke` form mismatched the Mathcad IL). New hand-written partial `Mirrored/Controls.Plots.Model.PlotCalculatable.cs`; four generated stubs removed (field, property, two methods).
+- Cleanup now that the enum is correct: `BaseMarker` and `PlotEquationModel3D` compare against `SynchronizationStatus.Synchronized` instead of the literal `(SynchronizationStatus)3`. The Release IL is unchanged.
+- Release IL: full gate PASS — 2670 checked, 0 failures, 2670 exact.
+- MirrorGen emit: deletions only in `PlotCalculatable.g.cs` (eight lines, equal to the applied removals). Other emit noise reverted.
+- Still blocked/stubbed, not changed here: `PlotModel3D.ComputeTotalTracesSynchronizationStatus`, the `SynchronizationStatus` properties on `AxisLimitEditor`, `RealNumberCalculatable`, `PlotViewModel3D`, `PlotEquation`, and `SetSynchronizationStatus` on `AxisLimitEditor`/`RealNumberCalculatable`.

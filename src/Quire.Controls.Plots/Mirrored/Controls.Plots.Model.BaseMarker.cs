@@ -127,8 +127,7 @@ public partial class BaseMarker : IBaseMarker, INotifyPropertyChanged
             new DoActionWhenEquationProxyChanged(this, () =>
             {
                 _equationProxy.EquationXmlNode = value;
-                // Release IL compares against 3 (SynchronizationStatus.Synchronized in Mathcad)
-                if (Calculatable.SynchronizationStatus != (SynchronizationStatus)3)
+                if (Calculatable.SynchronizationStatus != SynchronizationStatus.Synchronized)
                 {
                     Calculatable.Commit();
                 }
