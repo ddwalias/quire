@@ -117,6 +117,12 @@ internal abstract partial class VisualMathNode
 
     public virtual IVisualMathNode[] NavigatableParts => throw new NotImplementedException();
 
+    public virtual IVisualMathNode this[int index]
+    {
+        get => throw new ArgumentOutOfRangeException("index");
+        set => throw new ArgumentOutOfRangeException("index");
+    }
+
     public virtual void ModifyChildMathFormat(int childIndex, MathFormatValues childMathFormat)
     {
     }

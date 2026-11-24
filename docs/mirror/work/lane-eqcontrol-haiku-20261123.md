@@ -503,3 +503,10 @@
 - Not landed: `ArrangeChild`. Its Mathcad IL calls `ArrangeMathNode` with `callvirt` on a non-virtual method, which Roslyn emits as `call`, so the shape differs. Left for a probe.
 - Unchanged: the `VisualMathNode` constructor (IL-structural mismatch, batch 65); `MathFormat` stays null at run time, so `DeserializeMathFormat` still throws `NullReferenceException`; `ScreenBounds` stays a stub (batch 72 mismatch), so `ScreenInkBounds` still throws at run time; `GetColumnCells` stays parked (`DeleteEmptyColumns`).
 - Gate (project-level): PASS; 3708 checked, zero failures (`.mirror-cache/release-il-40edb88dbfdc/release-il.json`).
+
+### Batch 74: Controls.Internal.VisualMathNode (indexer this[int])
+
+- Exact (get and set): the base indexer's accessors both `throw new ArgumentOutOfRangeException("index")`, which is Mathcad's own base behaviour (`ldstr "index"; newobj ArgumentOutOfRangeException(string); throw`). The stub pair is removed from the `.g.cs`; the body lives in the hand-written partial.
+- Effect on the runtime dependency: `BuildChildren` (batch 73) no longer throws `NotImplementedException`. It now throws `ArgumentOutOfRangeException` for any node that does not override the indexer, which is how Mathcad's base node behaves. The subclass overrides (`VisualMatrixNode`, `VisualTransposeNode` and others) are still generated stubs, so their indexer and `BuildChildren` paths still throw `NotImplementedException` until those overrides are mirrored.
+- Unchanged: `ScreenBounds` stays a stub (batch 72 mismatch), so `ScreenInkBounds` still throws at run time; the `VisualMathNode` constructor is unmatched (batch 65), so `MathFormat` stays null and `DeserializeMathFormat` still throws `NullReferenceException`; `GetColumnCells` stays parked (`DeleteEmptyColumns`).
+- Gate (project-level): PASS; 3710 checked, zero failures (`.mirror-cache/release-il-6e0cf582db3d/release-il.json`).
