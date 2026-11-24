@@ -776,6 +776,23 @@
 - Release IL: PASS — 1098 checked in Whiteboard, 0 failures (`release-il-e1b030ae2452`).
 - Remaining mismatches in this batch: none.
 
+## Batch 53 — WhiteboardViewModel Constructors & Event/Field Initializers
+
+- Members:
+  - `WhiteboardViewModel..ctor(IWhiteboardModel)`
+  - `WhiteboardViewModel..ctor(IWhiteboardModel, bool, Size?)` and closures `<>c::<.ctor>b__159_0`, `b__159_1`, `b__159_2`, `b__159_3`
+  - `WhiteboardViewModel..ctor(WhiteboardViewModel)` and closures `<>c::<.ctor>b__160_0`, `b__160_1`, `b__160_2`, `b__160_3`
+  - `WhiteboardViewModel..ctor(IWhiteboardModel, IAlignmentGrid)` and closures `<>c::<.ctor>b__161_0`, `b__161_1`, `b__161_2`, `b__161_3`
+- Hand-written:
+  - `src/Quire.Controls.Whiteboard/Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`
+- Shapes Release IL requires:
+  - `ChildCausedResize`, `RequestMaximumSize`, `RequestActivatePartContainingChild`, and `CopyWhiteboardItems` events initialized with `= delegate { };` in declaration order with `_savedSelectionList` and `_itemSizeChangedHandlerMap` preceding `CopyWhiteboardItems`, matching Mathcad constructor pre-base-init sequence exactly.
+  - Generates `<>c::<.ctor>b__159_0..3`, `<>c::<.ctor>b__160_0..3`, and `<>c::<.ctor>b__161_0..3` on `<>c` at exact ordinals 159, 160, and 161.
+  - `WhiteboardViewModel(IWhiteboardModel)` chains to `: this(model, true, null)`.
+  - Copy constructor clones `_whiteboardModel`, recreates `_alignmentGrid`, and restores all size bounds and view state fields before calling `Initialize()`.
+- Release IL: PASS — 1114 checked in Whiteboard (all 4 constructors and 12 lambdas exact), 0 failures (`release-il-2f9dc143202f`).
+- Remaining mismatches in this batch: none.
+
 
 
 

@@ -19,7 +19,11 @@ namespace Quire.Controls.Whiteboard;
 
 public partial class WhiteboardViewModel
 {
-    internal WhiteboardViewModel(global::Quire.Controls.Whiteboard.IWhiteboardModel model) { }
+    [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+    internal WhiteboardViewModel(global::Quire.Controls.Whiteboard.IWhiteboardModel model)
+        : this(model, true, null)
+    {
+    }
 
     internal void HandleChildSizeChangedUnitTestWrapper(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Size oldSize, global::System.Windows.Size newSize)
     {
@@ -144,13 +148,13 @@ public partial class WhiteboardViewModel
         }
     }
 
-    public event global::System.Action<global::System.Windows.Size, global::System.Windows.Size> ChildCausedResize;
+    public event global::System.Action<global::System.Windows.Size, global::System.Windows.Size> ChildCausedResize = delegate { };
 
-    public event global::System.Action RequestMaximumSize;
+    public event global::System.Action RequestMaximumSize = delegate { };
 
     public event global::System.Action Activated;
 
-    public event global::System.Action<global::Quire.Controls.Core.IWhiteboardItem> RequestActivatePartContainingChild;
+    public event global::System.Action<global::Quire.Controls.Core.IWhiteboardItem> RequestActivatePartContainingChild = delegate { };
 
     public event global::System.Action<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem>> RequestBringIntoView;
 
@@ -652,7 +656,11 @@ public partial class WhiteboardViewModel
         return new global::System.Windows.Size(width, height);
     }
 
-    public event global::System.Action<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem>> CopyWhiteboardItems;
+    private global::System.Collections.Generic.List<global::Quire.Controls.Core.IWhiteboardItem> _savedSelectionList = new global::System.Collections.Generic.List<global::Quire.Controls.Core.IWhiteboardItem>();
+
+    private readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventHandler> _itemSizeChangedHandlerMap = new global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventHandler>();
+
+    public event global::System.Action<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem>> CopyWhiteboardItems = delegate { };
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+PropertyNames, Ptc.Controls.Whiteboard")]
     public static partial class PropertyNames
@@ -703,8 +711,6 @@ public partial class WhiteboardViewModel
 
     private global::System.Nullable<global::System.Windows.Point> _savedInsertionPoint;
 
-    private global::System.Collections.Generic.List<global::Quire.Controls.Core.IWhiteboardItem> _savedSelectionList;
-
     private global::Quire.Controls.Core.IWhiteboardItem _savedActiveItem;
 
     private global::System.Nullable<bool> _savedIsFocused;
@@ -723,16 +729,45 @@ public partial class WhiteboardViewModel
 
     private double _minimumWidth;
 
-    private readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventHandler> _itemSizeChangedHandlerMap;
-
     private bool _enteredRestoreSavedState;
 
+    protected WhiteboardViewModel(global::Quire.Controls.Whiteboard.IWhiteboardModel model, bool handleUserInput, global::System.Nullable<global::System.Windows.Size> gridCellSize = default)
+    {
+        HandleUserInput = handleUserInput;
+        _whiteboardModel = model;
+        _alignmentGrid = new global::Quire.Controls.Core.AlignmentGrid(gridCellSize);
+        Initialize();
+    }
 
-    protected WhiteboardViewModel(global::Quire.Controls.Whiteboard.IWhiteboardModel model, bool handleUserInput, global::System.Nullable<global::System.Windows.Size> gridCellSize = default) { }
+    protected WhiteboardViewModel(global::Quire.Controls.Whiteboard.WhiteboardViewModel original)
+    {
+        _whiteboardModel = (global::Quire.Controls.Whiteboard.IWhiteboardModel)original._whiteboardModel.Clone();
+        _alignmentGrid = new global::Quire.Controls.Core.AlignmentGrid(original._alignmentGrid.GridCellSize);
+        HandleUserInput = original.HandleUserInput;
+        OverRightMargin = original.OverRightMargin;
+        _activeItem = null;
+        _savedActiveItem = null;
+        _isFocused = false;
+        _savedIsFocused = false;
+        _isCrosshairVisible = false;
+        _savedInsertionPoint = original._savedInsertionPoint;
+        ForbidGrowingMovementRight = original.ForbidGrowingMovementRight;
+        _contentHeight = original._contentHeight;
+        _contentWidth = original._contentWidth;
+        _maximumHeight = original._maximumHeight;
+        _maximumWidth = original._maximumWidth;
+        _minimumHeight = original._minimumHeight;
+        _minimumWidth = original._minimumWidth;
+        Initialize();
+    }
 
-    protected WhiteboardViewModel(global::Quire.Controls.Whiteboard.WhiteboardViewModel original) { }
-
-    protected internal WhiteboardViewModel(global::Quire.Controls.Whiteboard.IWhiteboardModel model, global::Quire.Controls.Core.IAlignmentGrid grid) { }
+    protected internal WhiteboardViewModel(global::Quire.Controls.Whiteboard.IWhiteboardModel model, global::Quire.Controls.Core.IAlignmentGrid grid)
+    {
+        _whiteboardModel = model;
+        _alignmentGrid = grid;
+        HandleUserInput = true;
+        Initialize();
+    }
 
     protected void Initialize()
     {
