@@ -99,3 +99,9 @@
 - Blocked (not attempted): `ChartComponentModel.CommitPre` (lambda numbered `b__22_0` instead of `b__5_0`). Generated members always compile before the hand-written partial, so reducing the ordinal needs moving generated declarations by hand; a parked draft is not landed.
 - Blocked: `ChartContainerModelUtils.WaitForChartImagesReady` (Mathcad discards the `Stopwatch` argument with `ldarg.1; pop`; `_ = sw;`, `(object)sw` and `sw ?? sw` are all elided in Release).
 - Remaining stub-bearing files: 26 generated files; most remaining members use closures (ordinal-sensitive), COM `dynamic` calls, iterators, or the parked `_VtblGap*` placeholders.
+
+## Resume batch 70 attempt (task_4a30272f201a, branch `feature/excelcomponent-high`)
+
+- Not landed: `ChartContainerModel.SetRect` (Mathcad copies the `Int32Rect` argument to a temporary before the `constrained.` ToString, with no `dup`; `(val = rectInPixels).ToString()` emits `dup`, and a separate `val = rectInPixels` statement cannot reproduce `ldstr; ldarg.1; stloc.0; ldloca.s 0`).
+- Not landed: `ChartContainerModel.ApplyImageFrozenState` (the original keeps an outer `finally` region with only `endfinally`; an empty `finally {}`, and nesting the `try/catch` in an outer `try/finally {}`, are both elided by Release. The finally must contain something that compiles to nothing in Release, probably a `[Conditional("DEBUG")]` call, not yet identified).
+- Both stubs remain generated.
