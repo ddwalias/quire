@@ -89,7 +89,7 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
     private static string _unitLabel;
     [global::Quire.Mirror.MirrorStub]
     public string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool HideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -121,15 +121,15 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
     public global::System.Nullable<global::Quire.Controls.Core.IdLabels> CurrentDisplayIdLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.EngineResult EngineResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorStub]
     public string EquationSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlNode EquationXmlNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-            [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorStub]
     public string[] History { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string CurrentNodeLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-                [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.CaretInsertionTypes CurrentNodeCaretInsertionType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string[] HighlightedOperands { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -165,7 +165,7 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
     public int WarningsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.List<global::System.ValueTuple<global::Quire.EquationEditor.RedefinitionWarning, global::Quire.EquationEditor.Tree.MathNode, global::Quire.EquationEditor.View.IVisualMathNode>> Warnings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorStub]
     public bool IsMatrixResized { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int[] VisibleMatrixCellRange { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -183,7 +183,7 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
     public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> DeserializeLabeledIdFormat { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.BookmarkTags.IBookmarksManager BookmarksManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.MatrixFormat ResultMatrixFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.NumberFormat DisplayNumberFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
