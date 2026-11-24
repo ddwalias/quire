@@ -814,3 +814,12 @@
 - Release IL: full gate PASS — 2677 checked, 0 failures, 2677 exact. The earlier blocker (IEquationControl not inheriting ICalculatableInfo) is resolved on current main; no compile failure.
 - MirrorGen emit: deletions only (the two stubs with attributes). Other emit noise reverted.
 - Still stubs: the `SynchronizationStatus == Pending` consumer inside the other AxisLimitEditor members (not in this batch).
+
+## Batch 112 — PlotDataObjectCreator.FillPlotBaseType
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Members: `FillPlotBaseType(plotBaseType, PlotControl)`, the save path for a plot's legend, graph size and traces (called by `CreatePlotDataObject`). Added to the existing hand-written partial `Mirrored/PlotDataObjects.PlotDataObjectCreator.cs`, after `CreateNumberFormat`; one stub removed.
+- Shape: the graph size is an object initializer on `new SizeType`. Declaring a `SizeType` local and a separate `Size` local compiled to a different IL layout (extra locals and an extra `newobj` position); the initializer matches Mathcad.
+- Release IL: full gate PASS — 2678 checked, 0 failures, 2678 exact.
+- MirrorGen emit: deletions only (the one stub with its attribute). Other emit noise reverted.
+- Still stubs in this type: none listed as non-XAML. `CreateNumberFormat` and other members remain as in earlier checkpoints.

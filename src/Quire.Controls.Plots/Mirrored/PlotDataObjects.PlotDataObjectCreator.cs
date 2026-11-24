@@ -343,6 +343,22 @@ internal static partial class PlotDataObjectCreator
         return new resultFormatType();
     }
 
+    private static void FillPlotBaseType(plotBaseType plotBaseType, PlotControl plotControl)
+    {
+        plotBaseType.legend = new plotBaseTypeLegend();
+        plotBaseType.graphsize = new SizeType
+        {
+            height = plotControl.Model.GraphSize.Height,
+            width = plotControl.Model.GraphSize.Width
+        };
+        plotBaseType.traces = new trace2DType[plotControl.Traces.Length];
+        for (int i = 0; i < plotControl.Traces.Length; i++)
+        {
+            IPlotTrace plotTrace = plotControl.Traces[i];
+            plotBaseType.traces[i] = CreateTrace(plotTrace);
+        }
+    }
+
     private static trace2DType CreateTrace(IPlotTrace plotTrace)
     {
         trace2DType trace2DType2 = new trace2DType();

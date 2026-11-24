@@ -11,6 +11,4 @@ namespace Quire.PlotDataObjects;
 [global::Quire.Mirror.MirrorOf("PlotDataObjects.PlotDataObjectCreator, Ptc.Controls.Plots")]
 internal static partial class PlotDataObjectCreator
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static void FillPlotBaseType(global::Quire.PersistentDataObjects.plotBaseType plotBaseType, global::Quire.Controls.Plots.PlotControl plotControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
