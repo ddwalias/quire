@@ -169,6 +169,25 @@ public partial class PlotTrace3D
         AddOrRemoveFromVisual(_symbolTraceVisual, ShouldShowSymbols);
     }
 
+    private void UpdateSurfaceFill()
+    {
+        if (ViewModel.VisualDataTypeOrDefault != TraceType3D.Surface)
+        {
+            return;
+        }
+        if (DebugTools.AssertNotNull(_surfaceFillVisual, null).Failed)
+        {
+            return;
+        }
+        bool hasValue = SurfaceFill.HasValue;
+        GeometryModel3D geometryModel3D = _surfaceFillVisual.Content as GeometryModel3D;
+        if (DebugTools.AssertNotNull(geometryModel3D, null).Passed & hasValue)
+        {
+            geometryModel3D.Material = geometryModel3D.BackMaterial = Tools3D.MaterialForColor(SurfaceFill.Value);
+        }
+        AddOrRemoveFromVisual(_surfaceFillVisual, hasValue);
+    }
+
     private ModelVisual3D CreateSolidMesh()
     {
         Point3DCollection vertices = ViewModel.VisualData.Vertices;

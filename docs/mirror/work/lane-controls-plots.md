@@ -707,3 +707,12 @@
 - Runtime note: `UpdateVisualData` (exact) calls `UpdateSurfaceFill`, which still throws `NotImplemented`. The constructor's path through `UpdateVisualData` will throw until `UpdateSurfaceFill` is done. It threw before this batch too, so the change does not add a new failure path, but the batch is not end-to-end functional.
 - Release IL: full gate PASS — 2639 checked, 0 failures.
 - MirrorGen emit: deletions only (five members with their attributes), equal to the applied edit.
+
+## Batch 99 — PlotTrace3D.UpdateSurfaceFill (completes batch 98)
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Member: `UpdateSurfaceFill`. Hand-written in `Mirrored/Controls.Plots.Plot3D.View.PlotTrace3D.cs`; its stub removed from the generated file.
+- Shape Mathcad needs: `geometryModel3D.Material = geometryModel3D.BackMaterial = Tools3D.MaterialForColor(SurfaceFill.Value);`, a single chained statement. Roslyn lowers `recv.Material = (recv.BackMaterial = X)` to `recv; recv; X; dup; stloc tmp; set_BackMaterial; ldloc tmp; set_Material`, which is exactly the Mathcad sequence (the temp is slot 3). The earlier `Material material` variants declared a real local, which shifted the slots and failed. The same pattern is already exact in `PlotGraphAngularAxis`.
+- Release IL: full gate PASS — 2640 checked, 0 failures.
+- MirrorGen emit: removes only the `UpdateSurfaceFill` stub and attribute, equal to the applied edit.
+- `PlotTrace3D` now has no `NotImplemented` stubs for the visual path; the constructor's `UpdateVisualData` call no longer throws.

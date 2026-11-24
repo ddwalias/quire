@@ -26,7 +26,5 @@ public partial class PlotTrace3D : global::System.IDisposable
     [global::Quire.Mirror.MirrorStub]
     internal PlotTrace3D(global::Quire.Controls.Plots.Plot3D.ViewModel.IPlotTraceViewModel3D viewModel) { }
     [global::Quire.Mirror.MirrorStub]
-    private void UpdateSurfaceFill() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
 }
