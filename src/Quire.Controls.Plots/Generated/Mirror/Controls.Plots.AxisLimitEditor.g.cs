@@ -58,8 +58,6 @@ public partial class AxisLimitEditor : global::Quire.Controls.Plots.Presenter.IA
     [global::Quire.Mirror.MirrorStub]
     public bool UseICalculatableToRestoreResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.SynchronizationStatus SynchronizationStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.CalculatingStatus CalculatingStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int ErrorCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -125,8 +123,6 @@ public partial class AxisLimitEditor : global::Quire.Controls.Plots.Presenter.IA
     public void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetStatusSynchronized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus computingStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

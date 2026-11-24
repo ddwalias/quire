@@ -806,3 +806,11 @@
 - MirrorGen emit: deletions only (the one stub with its attribute). Other emit noise reverted.
 - Blocked, not committed: the `TickMarks` property. Its setter wraps `SetValue` in a lambda passed to `Dispatch`; Roslyn names the display class `<>c__DisplayClass60_0` where Mathcad has `58_0`. The member ordinal in the type is two higher in Quire, and I found no member to remove or reorder inside this assembly. The property stub stays. The getter alone cannot be declared without the setter stub.
 - Still stubs: `TickMarks`, `InitializeComponent`/`Connect`/`_CreateDelegate` (XAML-generated, skipped), and the other members listed for this type.
+
+## Batch 111 — AxisLimitEditor SynchronizationStatus members (retry on current main)
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Members: `AxisLimitEditor.SynchronizationStatus` (forwards to `_eq.SynchronizationStatus`) and `SetSynchronizationStatus` (forwards to `_eq.SetSynchronizationStatus`). New hand-written partial `Mirrored/Controls.Plots.AxisLimitEditor.cs`; two stubs removed.
+- Release IL: full gate PASS — 2677 checked, 0 failures, 2677 exact. The earlier blocker (IEquationControl not inheriting ICalculatableInfo) is resolved on current main; no compile failure.
+- MirrorGen emit: deletions only (the two stubs with attributes). Other emit noise reverted.
+- Still stubs: the `SynchronizationStatus == Pending` consumer inside the other AxisLimitEditor members (not in this batch).
