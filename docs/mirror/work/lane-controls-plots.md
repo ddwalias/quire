@@ -697,3 +697,13 @@
 - Release IL: full gate PASS — 2634 checked, 0 failures; all five are listed exact.
 - MirrorGen emit: 10 deletions (5 stubs + attributes), equal to the applied edit.
 - Still a stub: `FillPlotBaseType` (larger body, reads the plot control's axes and trace collections).
+
+## Batch 98 — PlotTrace3D visual members (5 of 6)
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Members landed exact: `FireVisualChanged`, `UpdateLineStyle`, `UpdateSymbol`, `CreateSolidMesh`, `UpdateVisualData`. Hand-written in `Mirrored/Controls.Plots.Plot3D.View.PlotTrace3D.cs` (usings added: `System.Linq`, `Quire.Controls.Plots.Plot3D.Model`, `Quire.Media3D`, `Quire.Media3D.Wires`); five stubs removed from the generated file.
+- Shapes Mathcad needs: guards in `UpdateLineStyle`/`UpdateSymbol` are early returns (`if (Visual == null || X == null) return;`); `UpdateVisualData` declares `wireBase` before `surfaceFillVisual` (local slot order).
+- Still a stub: `UpdateSurfaceFill`. It is not exact. Early-return guards and the local order match; the remaining difference is the `geometryModel3D.BackMaterial = material` pair. Mathcad loads the `geometryModel3D` receiver twice and stores the material with a single `dup; stloc` before `set_BackMaterial`, then `set_Material`. Roslyn adds an extra `dup; stloc.3` for the outer assignment in each expression form tried (two statements, `Material material;` declared first, and the chained `geometryModel3D.Material = material = geometryModel3D.BackMaterial = ...`). Left as a stub rather than landing a non-exact body.
+- Runtime note: `UpdateVisualData` (exact) calls `UpdateSurfaceFill`, which still throws `NotImplemented`. The constructor's path through `UpdateVisualData` will throw until `UpdateSurfaceFill` is done. It threw before this batch too, so the change does not add a new failure path, but the batch is not end-to-end functional.
+- Release IL: full gate PASS — 2639 checked, 0 failures.
+- MirrorGen emit: deletions only (five members with their attributes), equal to the applied edit.

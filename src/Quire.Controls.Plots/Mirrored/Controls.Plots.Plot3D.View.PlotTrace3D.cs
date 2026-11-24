@@ -3,10 +3,14 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using Quire.Controls.Plots.Plot3D.Model;
 using Quire.Controls.Plots.Plot3D.ViewModel;
 using Quire.Controls.Plots.Presenter;
+using Quire.Media3D;
+using Quire.Media3D.Wires;
 
 namespace Quire.Controls.Plots.Plot3D.View;
 
@@ -135,6 +139,110 @@ public partial class PlotTrace3D
                 UpdateSurfaceFill();
                 break;
         }
+    }
+
+    private void FireVisualChanged(Visual3D oldVisual, Visual3D newVisual)
+    {
+        if (VisualChanged != null)
+        {
+            VisualChanged(this, oldVisual, newVisual);
+        }
+    }
+
+    private void UpdateLineStyle()
+    {
+        if (Visual == null || _linesTraceVisual == null)
+        {
+            return;
+        }
+        DebugTools.DevAssert(LineStyle == LineStyle.Solid || LineStyle == LineStyle.None, "Only LineStyle.Solid is supported in PlotTrace3D");
+        AddOrRemoveFromVisual(_linesTraceVisual, ShouldShowLines);
+    }
+
+    private void UpdateSymbol()
+    {
+        if (Visual == null || _symbolTraceVisual == null)
+        {
+            return;
+        }
+        DebugTools.DevAssert(Symbol == TraceSymbol.point || Symbol == TraceSymbol.none, "Only TraceSymbol.point is supported in PlotTrace3D");
+        AddOrRemoveFromVisual(_symbolTraceVisual, ShouldShowSymbols);
+    }
+
+    private ModelVisual3D CreateSolidMesh()
+    {
+        Point3DCollection vertices = ViewModel.VisualData.Vertices;
+        Int32Collection indices = ViewModel.VisualData.Indices;
+        int num = indices.Count();
+        DebugTools.DevAssert(num % 4 == 0, null);
+        Int32Collection int32Collection = new Int32Collection(num * 6 / 4);
+        for (int i = 0; i < indices.Count; i += 4)
+        {
+            int32Collection.Add(indices[i + 2]);
+            int32Collection.Add(indices[i + 1]);
+            int32Collection.Add(indices[i]);
+            int32Collection.Add(indices[i]);
+            int32Collection.Add(indices[i + 3]);
+            int32Collection.Add(indices[i + 2]);
+        }
+        MeshGeometry3D geometry = new MeshGeometry3D
+        {
+            Positions = vertices,
+            TriangleIndices = int32Collection
+        };
+        Material material = Tools3D.MaterialForColor(ViewModel.SurfaceFill);
+        return new ModelVisual3D
+        {
+            Content = new GeometryModel3D(geometry, material)
+            {
+                BackMaterial = material
+            }
+        };
+    }
+
+    private void UpdateVisualData()
+    {
+        PlotTraceVisualData3D visualData = ViewModel.VisualData;
+        Point3DCollection vertices = visualData.Vertices;
+        WireBase wireBase;
+        ModelVisual3D surfaceFillVisual = null;
+        switch (visualData.TraceType)
+        {
+            case TraceType3D.Curve:
+                wireBase = new WireLines
+                {
+                    Lines = vertices
+                };
+                break;
+            case TraceType3D.Surface:
+                wireBase = new WireRectMesh
+                {
+                    TriangleIndices = visualData.Indices,
+                    Positions = vertices
+                };
+                surfaceFillVisual = CreateSolidMesh();
+                break;
+            default:
+                wireBase = null;
+                break;
+        }
+        if (wireBase != null)
+        {
+            wireBase.Thickness = RenderThickness;
+            wireBase.Color = RenderColor;
+        }
+        _symbolTraceVisual = new WirePoints
+        {
+            Positions = visualData.FilteredVertices,
+            Color = RenderColor,
+            Thickness = RenderThickness
+        };
+        _linesTraceVisual = wireBase;
+        _surfaceFillVisual = surfaceFillVisual;
+        Visual = new ModelVisual3D();
+        UpdateLineStyle();
+        UpdateSymbol();
+        UpdateSurfaceFill();
     }
 
     private void UpdateLineWeight()
