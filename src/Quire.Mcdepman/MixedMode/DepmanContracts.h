@@ -3,7 +3,43 @@
 void __cdecl operator delete(void* ptr, unsigned __int64 size) noexcept;
 
 #include <map>
+#include <set>
+#include <string>
 #include "../../Quire.Native.Utl/utl.h"
+
+namespace Engine { namespace Unmanaged {
+    template <template <typename> class Alloc = std::allocator, typename CharT = wchar_t>
+    struct label_set : public std::set<std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>>, std::less<std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>>>, Alloc<std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>>>>
+    {
+        typedef std::set<std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>>, std::less<std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>>>, Alloc<std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>>>> base_set;
+
+        bool is_wild_;
+
+        label_set() : is_wild_(false) {}
+
+        void add(const CharT* s, size_t len)
+        {
+            if (s[0] == L'*' && s[1] == 0)
+            {
+                is_wild_ = true;
+                return;
+            }
+            this->insert(std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>>(s, len));
+        }
+
+        bool operator<(const label_set& other) const
+        {
+            if (other.is_wild_ && !is_wild_)
+                return true;
+            if (!other.is_wild_ && is_wild_)
+                return false;
+            return (const base_set&)*this < (const base_set&)other;
+        }
+    };
+
+    typedef label_set<std::allocator, wchar_t> std_label_set;
+    static_assert(sizeof(std_label_set) == 24, "std_label_set size must be 24 bytes");
+}}
 
 namespace Quire { namespace depman {
     [Quire::Mirror::MirrorOfAttribute("depman.ResolveMode, mcdepman")]
@@ -21,6 +57,15 @@ struct value_less {
         return a->ord_val_ < b->ord_val_;
     }
 };
+
+template <typename Map>
+typename Map::mapped_type lookup(const typename Map::key_type& k, Map& m)
+{
+    auto it = m.find(k);
+    if (it == m.end())
+        return nullptr;
+    return it->second;
+}
 
 template <typename Map>
 typename Map::iterator lower_bound_ne(const typename Map::key_type& key, Map& m)
@@ -52,7 +97,44 @@ namespace depman {
         UNDEF = 1
     };
 
+    enum DependencyType {
+        DEP_NORMAL = 0
+    };
+
+    struct SDef {
+        int scope_id;
+        std::wstring name;
+        Engine::Unmanaged::std_label_set labels;
+
+        SDef(int s, const std::wstring& n, const Engine::Unmanaged::std_label_set& l)
+            : scope_id(s), name(n), labels(l) {}
+
+        SDef(const SDef& other)
+            : scope_id(other.scope_id), name(other.name), labels(other.labels) {}
+
+        bool operator<(const SDef& other) const
+        {
+            if (scope_id < other.scope_id)
+                return true;
+            if (scope_id > other.scope_id)
+                return false;
+            if (name < other.name)
+                return true;
+            if (other.name < name)
+                return false;
+            if (labels < other.labels)
+                return true;
+            return false;
+        }
+    };
+
+    static_assert(sizeof(SDef) == 64, "SDef size must be 64 bytes");
+
     typedef std::map<Position*, DefinitionType, value_less<Position>> DefMap;
+    typedef std::map<SDef, DefMap*> DefTable;
+
+    typedef std::map<Position*, std::pair<ActionChain*, DependencyType>, value_less<Position>> ForwardDepMap;
+    typedef std::map<SDef, ForwardDepMap*> ForwardDepTable;
 
     class DepManager {
     public:
@@ -60,9 +142,11 @@ namespace depman {
         void depctl(int cmd);
         DefMap::iterator find_def(DefMap* defs, Position* pos, ::Quire::depman::ResolveMode mode);
         Position* find_def_nodead(DefMap* defs, Position* r, ::Quire::depman::ResolveMode m);
+        Position* find_next_def(const SDef& name, Position* r);
 
     private:
-        unsigned char pad_08_[32]; // 0x08..0x28 (def_table_ and forward_deps_)
+        DefTable def_table_;
+        ForwardDepTable forward_deps_;
         bool enabled_;             // 0x28 (offset 40)
         unsigned char pad_29_[15]; // 0x29..0x38 (to 56 bytes)
     };

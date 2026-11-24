@@ -426,6 +426,29 @@ Investigation of remaining unmigrated `PositionBase`, `Position`, and `DepManage
   - Multi-level associative container structures (`def_table_`, `forward_deps_`, `SDef` keys, `AddLabels`) for remaining `DepManager` methods (`resolve`, `add_def`, `remove_def`, `add_dep`, `remove_dep`, and `invalidateChains`).
   - Compiler RTTI descriptor emissions for `Position.previous` and `Position.next`.
 
+## Batch 30 — DepManager.find_next_def, lookup template, and SDef / label_set container infrastructure
+
+- Owner: AGY, Orca task `task_173fd4feb95b`; branch `feature/luna-mcdepman`.
+- Members mirrored and verified:
+  - `depman.DepManager.find_next_def(const SDef&, Position*)`
+  - Associative container lookup helper `lookup<Map>(const Map::key_type&, Map&)`
+  - Compound definition identifier `depman.SDef` (size 64 bytes) and comparison operator `depman.SDef.<`
+  - Domain set class `Engine::Unmanaged::label_set<Alloc, CharT>` (size 24 bytes) and comparison operator `label_set.<`
+  - Associative container typedefs `DefTable` (`std::map<SDef, DefMap*>`), `ForwardDepMap`, and `ForwardDepTable`
+  - Native targets: AVX2 tail mask `?_Tail_masks...` at RVA 0x1b930 (size 64) verified via manifest-backed native comparator (no managed thunk bypass)
+- Release IL report: PASS; 273 checked (`.mirror-cache/release-il-ae273dea22dc/release-il.json`).
+- Architecture and implementation:
+  - Disassembled `depman.DepManager.find_next_def` (token `0x06000042`, 76 IL instructions): looks up definition map for `name` via `lookup(name, def_table_)`, finds `defs->upper_bound(r)`, and returns `it->first` if not `UNDEF`, matching Mathcad Release IL byte-for-byte.
+  - Implemented `lookup<Map>` template (token `0x06000054`): checks `m.find(k)`, returns `nullptr` on `end()`, otherwise `it->second`.
+  - Reconstructed `Engine::Unmanaged::label_set`: inherits from `std::set<std::basic_string<CharT>>` with `bool is_wild_` at offset 16 (24 bytes total). Implemented `operator<` with short-circuit wildcard ranking (`if (other.is_wild_ && !is_wild_) return true; if (!other.is_wild_ && is_wild_) return false; return (const base_set&)*this < (const base_set&)other;`).
+  - Reconstructed `depman::SDef` (64 bytes): `int scope_id` at offset 0, `std::wstring name` at offset 8 (32 bytes), `std_label_set labels` at offset 40 (24 bytes). Structured `operator<` with lexicographical field comparisons (`scope_id`, `name`, `labels`), which inlines `label_set::operator<` to match Mathcad's exact 117-byte instruction sequence.
+  - AVX2 tail mask `?_Tail_masks...` verified at interior offsets via manifest-backed native comparator on landed main (no `__std_mismatch_2` bypass in `internal-targets.json`).
+- Remaining dependencies:
+  - Cross-assembly `gcroot` resolution in `MethodAudit` (`SafeEvent`, `LabeledDictionary`).
+  - Remaining `DepManager` methods requiring `PositionBase` interaction or full multi-level mutations (`resolve`, `is_bound`, `add_def`, `remove_def`, `add_dep`, `remove_dep`, `find_all_deps`, and `invalidateChains`).
+  - Compiler RTTI descriptor emissions for `Position.previous` and `Position.next`.
+
+
 
 
 

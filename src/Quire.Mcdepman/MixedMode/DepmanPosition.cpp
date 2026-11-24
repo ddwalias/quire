@@ -43,6 +43,7 @@
 #pragma comment(linker, "/include:?EndMove@PositionBase@depman@@QEAA_NXZ")
 #pragma comment(linker, "/include:?find_def@DepManager@depman@@QEAM?AV?$_Tree_iterator@V?$_Tree_val@U?$_Tree_simple_types@U?$pair@QEAVPosition@depman@@W4DefinitionType@2@@std@@@std@@@std@@@std@@PEAV?$map@PEAVPosition@depman@@W4DefinitionType@2@U?$value_less@VPosition@depman@@@@V?$allocator@U?$pair@QEAVPosition@depman@@W4DefinitionType@2@@std@@@std@@@4@PEAVPosition@2@W4ResolveMode@2Quire@@@Z")
 #pragma comment(linker, "/include:?find_def_nodead@DepManager@depman@@QEAMPEAVPosition@2@PEAV?$map@PEAVPosition@depman@@W4DefinitionType@2@U?$value_less@VPosition@depman@@@@V?$allocator@U?$pair@QEAVPosition@depman@@W4DefinitionType@2@@std@@@std@@@std@@PEAV32@W4ResolveMode@2Quire@@@Z")
+#pragma comment(linker, "/include:?find_next_def@DepManager@depman@@QEAAPEAVPosition@2@AEBUSDef@2@PEAV32@@Z")
 // Pragmas for methods blocked on cross-assembly gcroot mapping in MethodAudit (SafeEvent, LabeledDictionary).
 // Source implementations below are exact and ready to be un-commented once MethodAudit supports cross-assembly gcroot:
 // #pragma comment(linker, "/include:?SetBusy@PositionBase@depman@@QEAAX_N@Z")
@@ -358,6 +359,18 @@ Position* DepManager::find_def_nodead(DefMap* defs, Position* r, ::Quire::depman
             pos = next->first;
         }
         return pos;
+    }
+    return nullptr;
+}
+
+Position* DepManager::find_next_def(const SDef& name, Position* r)
+{
+    auto defs = lookup(name, def_table_);
+    if (defs)
+    {
+        auto it = defs->upper_bound(r);
+        if (it != defs->end() && it->second != DefinitionType::UNDEF)
+            return it->first;
     }
     return nullptr;
 }
