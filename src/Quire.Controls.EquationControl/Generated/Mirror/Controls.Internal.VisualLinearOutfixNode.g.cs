@@ -32,8 +32,6 @@ internal partial class VisualLinearOutfixNode : global::Quire.Controls.Internal.
     [global::Quire.Mirror.MirrorStub]
     private static readonly double SymbolEdge;
     [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => base[index]; set => base[index] = value; }
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Internal.VisualMathNode[] NodeChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Size DesiredSizeWithoutFences { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

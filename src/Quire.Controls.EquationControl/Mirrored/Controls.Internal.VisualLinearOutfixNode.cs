@@ -27,4 +27,28 @@ internal partial class VisualLinearOutfixNode
             Children.Add(_rightFence);
         }
     }
+
+    public override IVisualMathNode this[int index]
+    {
+        get
+        {
+            if (index == 0)
+            {
+                return Child;
+            }
+
+            return null;
+        }
+
+        set
+        {
+            if (index == 0)
+            {
+                Child = value;
+                return;
+            }
+
+            base[index] = value;
+        }
+    }
 }

@@ -24,8 +24,6 @@ internal partial class VisualLinearUnaryNode : global::Quire.Controls.Internal.V
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Rect ScreenInkBounds { get => base.ScreenInkBounds; }
     [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => base[index]; set => base[index] = value; }
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Internal.VisualMathNode Child { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     global::Quire.EquationEditor.View.IVisualMathNode global::Quire.EquationEditor.View.IVisualUnaryOperatorNode.Child { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
