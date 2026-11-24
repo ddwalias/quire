@@ -121,4 +121,26 @@ public partial class EquationControl
     public int CurrentNodeCaretPosition => _model.CurrentModeNavigatorState.CaretPosition.GetValueOrDefault(-1);
 
     public bool CurrentNodeIsIdentifier => _model.CurrentModeNavigatorState.Current.DescriptorName == "IDENTIFIER";
+
+    public bool IsEmbedded
+    {
+        get => (bool)GetValue(IsEmbeddedProperty);
+        set => SetValue(IsEmbeddedProperty, value);
+    }
+
+    public double TextBaselineY => _view.TextBaselineY;
+
+    public bool IsAdornedElementReady
+    {
+        get
+        {
+            UIElement view = _view;
+            if (view != null)
+            {
+                return WpfUtils.GetVisualParent(view) != null;
+            }
+
+            return false;
+        }
+    }
 }

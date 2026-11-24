@@ -306,3 +306,9 @@
 - Exact: `EquationType` (a direct read of `_model`); `RegionType` (the constant `"equation"`); `CurrentNodeCaretPosition` (`CurrentModeNavigatorState.CaretPosition.GetValueOrDefault(-1)`, with the struct temporaries Roslyn makes, as in Mathcad); `CurrentNodeIsIdentifier` (`DescriptorName == "IDENTIFIER"`, the same shape as batch 41's `CurrentNodeIsNumeric`). None has a closure; they are appended at the end of the partial, and their stub pairs are removed from the `.g.cs`.
 - Left out: `CurrentNodeSExpression`, `CurrentNodeLabel`, `CurrentNodeCaretSide`, `CurrentNodeNodeSide`, `CurrentNodeOperatorPartIndex` (each has a multi-branch shape on `Mode` that needs its own probe), and the matrix getters (they throw `InvalidOperationException` on a non-matrix node, a body that is not yet verified).
 - Gate (project-level): PASS; 3573 checked, zero failures (`.mirror-cache/release-il-704846407bba/release-il.json`).
+
+### Batch 43: Controls.EquationControl (IsEmbedded, TextBaselineY, IsAdornedElementReady)
+
+- Exact: `IsEmbedded` (a `GetValue` unbox getter and a `SetValue` setter on the dependency property); `TextBaselineY` (a direct read of `_view.TextBaselineY`); `IsAdornedElementReady` (a `UIElement`-typed local holding `_view`, then `WpfUtils.GetVisualParent(view) != null` under a null guard; Mathcad's local is `System.Windows.UIElement`, so the local is declared with that type and not `var`). None has a closure; they are appended at the end of the partial, and their stub pairs are removed from the `.g.cs`.
+- Left out: `ErrorCode` (involves `IsNullOrEmpty` and a conditional that needs its own shape probe).
+- Gate (project-level): PASS; 3577 checked, zero failures (`.mirror-cache/release-il-34c4c22c72ba/release-il.json`).
