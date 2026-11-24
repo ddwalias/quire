@@ -119,3 +119,11 @@
 - Names are qualified where the partial's imports clash: `Quire.Core.TextFormat`, `Quire.Wpf.HyperlinkExtensions` (not the local `Controls.Text.HyperlinkExtensions`), `System.Windows.Documents.Paragraph` (not the local `Controls.Text.Paragraph`).
 - Release IL (project-wide): PASS — 668 checked, 0 failures (first try).
 - Regeneration: `MirrorGen emit` gives the same stub removal plus the pre-existing `LogDocumentContents` placement drift. Emit output was reverted. The solution build's 14 errors are in `tests/Quire.Mirror.Tests` (pre-existing).
+
+## Batch 37 — RichTextWithEmbeddedItem.ValidateURL (static)
+
+- Member: `private static NavigateUrlErrorWarningKeys? ValidateURL(System.Uri)`, no lambda. Hand-written in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stub removed from the `.g.cs`.
+- The earlier mismatch (#9, 59 vs 56 entries) came from `return FileNotExist` inside `try`, which added a separate return temp. Release IL assigns into the `result` local and returns once at the end, so the `try` body assigns (commented). Measured with the IL decoder: Quire's `Nullable` assignments already match Mathcad's `ldloca` + constructor form.
+- Release IL (project-wide): PASS — 669 checked, 0 failures.
+- Regeneration: `MirrorGen emit` gives the same stub removal plus the pre-existing `LogDocumentContents` placement drift. Emit output was reverted. The solution build's 14 errors are in `tests/Quire.Mirror.Tests` (pre-existing).
+- Parked during this batch: `LogDocumentContents` (Mathcad `[Conditional("DEBUG")]`, Release body empty but compiled with `.maxstack 6` and locals; an empty hand-written body gives `.maxstack 8`). Not landed.

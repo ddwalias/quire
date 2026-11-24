@@ -517,6 +517,41 @@ public partial class RichTextWithEmbeddedItem
         return hyperlink;
     }
 
+    private static NavigateUrlErrorWarningKeys? ValidateURL(System.Uri absolutePath)
+    {
+        NavigateUrlErrorWarningKeys? result = null;
+        if (absolutePath == null)
+        {
+            result = NavigateUrlErrorWarningKeys.UnsupportedUrlFormat;
+        }
+        else if (!_supportedURLSchemes.Contains(absolutePath.Scheme))
+        {
+            result = NavigateUrlErrorWarningKeys.UnsupportedUrlProtocol;
+        }
+        else if (absolutePath.IsFile)
+        {
+            try
+            {
+                System.IO.FileInfo fileInfo = new System.IO.FileInfo(absolutePath.LocalPath);
+                System.IO.DirectoryInfo directoryInfo = new System.IO.DirectoryInfo(absolutePath.LocalPath);
+                if (!fileInfo.Exists && !directoryInfo.Exists)
+                {
+                    // Assigns instead of returning from inside try: Release IL keeps one result local, with no separate return temp.
+                    result = NavigateUrlErrorWarningKeys.FileNotExist;
+                }
+            }
+            catch (System.Security.SecurityException)
+            {
+                result = NavigateUrlErrorWarningKeys.AccessSecurityIssue;
+            }
+            catch (System.Exception)
+            {
+                result = NavigateUrlErrorWarningKeys.UnsupportedUrlFormat;
+            }
+        }
+        return result;
+    }
+
     private void BindHyperlinkCommands()
     {
         CommandBindings.Add(new CommandBinding(HyperlinkCommands.ModifyHyperlink, ModifyHyperlink, CanModifyHyperlink));
