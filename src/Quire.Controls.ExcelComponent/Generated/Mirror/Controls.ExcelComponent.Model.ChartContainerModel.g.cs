@@ -27,6 +27,4 @@ public partial class ChartContainerModel : global::Quire.Controls.ExcelComponent
     private void SetTrace(uint traceId, global::Quire.IMatrixValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ClearTracesAndLimits() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ApplyImageFrozenState(global::System.Nullable<bool> frozenOverride = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -366,6 +366,32 @@ public partial class ChartContainerModel
         }
     }
 
+    private void ApplyImageFrozenState(bool? frozenOverride = null)
+    {
+        bool shouldFreeze = frozenOverride ?? IsImageFrozen;
+        DebugTools.LogData(string.Format("ChartContainerModel.ApplyImageFrozenState: {0}: Start", shouldFreeze));
+        try
+        {
+            if (shouldFreeze)
+            {
+                ChartObject.setFreezeImage();
+            }
+            else
+            {
+                ChartObject.setUnFreezeImage();
+            }
+        }
+        catch (Exception ex)
+        {
+            DebugTools.FailAssertion(ex);
+        }
+        finally
+        {
+            // Debug.Assert is [Conditional("DEBUG")]: the call keeps the empty finally region in Release IL.
+            System.Diagnostics.Debug.Assert(true);
+        }
+    }
+
     private void SetHelpServerPathIfRunning()
     {
         if (IsOleSiteManagerRunning && HelpServerPath.IsNotEmpty())
