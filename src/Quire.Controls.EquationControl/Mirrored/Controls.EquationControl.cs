@@ -356,4 +356,48 @@ public partial class EquationControl
     public EngineError CurrentError => Error;
 
     public string EquationSExpressionWithResolvedLabels => _model.EquationSExpressionWithResolvedLabels;
+
+    public bool ShowLhsOfDefinitionForXamlSerialization
+    {
+        get => VisibleLhsOfDefinition == Visibility.Visible;
+        set
+        {
+            if (!value)
+            {
+                _model.ToggleVisibleLhsOfDefinition(Visibility.Hidden);
+            }
+        }
+    }
+
+    public Visibility VisibleLhsOfDefinition => _model.VisibleLhsOfDefinition;
+
+    public Visibility VisibleLhsOfDefinitionForXamlSerialization
+    {
+        get => VisibleLhsOfDefinition;
+        set
+        {
+            if (VisibleLhsOfDefinition != value)
+            {
+                _model.ToggleVisibleLhsOfDefinition(value);
+            }
+        }
+    }
+
+    public CaretInsertionTypes CurrentCaretInsertionType
+    {
+        get => (CaretInsertionTypes)GetValue(CurrentCaretInsertionTypeProperty);
+        set => SetValue(CurrentCaretInsertionTypeProperty, value);
+    }
+
+    public MatrixFormat ResultMatrixFormat
+    {
+        get => (MatrixFormat)GetValue(ResultMatrixFormatProperty);
+        set => SetValue(ResultMatrixFormatProperty, value);
+    }
+
+    public NumberFormat DisplayNumberFormat
+    {
+        get => (NumberFormat)GetValue(DisplayNumberFormatProperty);
+        set => SetValue(DisplayNumberFormatProperty, value);
+    }
 }
