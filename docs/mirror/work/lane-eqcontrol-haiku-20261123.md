@@ -429,3 +429,10 @@
 - Runtime dependency (not an IL mismatch): `VisualMathNode.MathFormat` is still a generated stub, so the `DeserializeMathFormat` setter throws `NotImplementedException` at run time until that getter is implemented.
 - Runtime dependency still parked: `GetColumnCells` (stloc/ldloc elision); its `DeleteEmptyColumns` dependency stays visible.
 - Gate (project-level): PASS; 3673 checked, zero failures (`.mirror-cache/release-il-64a12096c843/release-il.json`).
+
+### Batch 64: Controls.Internal.VisualMathNode (MathFormat)
+
+- Exact (1 property, get and private set): `MathFormat` is a non-virtual auto-property (`{ get; private set; }`), in the hand-written partial `src/Quire.Controls.EquationControl/Mirrored/Controls.Internal.VisualMathNode.cs`. Mathcad's getter is `final`, so its callers use `call`; a `virtual` getter made Roslyn emit `callvirt` and failed 32 call-site comparisons. Stub pair removed from `Controls.Internal.VisualMathNode.g.cs`.
+- Runtime dependency (not an IL mismatch): the constructor that assigns `MathFormat` (`new MathFormatDobjController(this)` plus the trigger/style setup) is still a no-op stub, so `MathFormat` stays null until the constructor is implemented. `DeserializeMathFormat` (batch 63) will now throw a `NullReferenceException` rather than `NotImplementedException` until then.
+- Runtime dependency still parked: `GetColumnCells` (stloc/ldloc elision); its `DeleteEmptyColumns` dependency stays visible.
+- Gate (project-level): PASS; 3675 checked, zero failures (`.mirror-cache/release-il-c5df7c9c77d6/release-il.json`).
