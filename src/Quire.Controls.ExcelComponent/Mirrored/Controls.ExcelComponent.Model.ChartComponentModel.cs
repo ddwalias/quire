@@ -9,11 +9,6 @@ public partial class ChartComponentModel
 {
     private ChartContainer ChartContainerItem => (ChartContainer)OleContainerItem;
 
-    internal void CommitPost()
-    {
-        _chartMinMaxCalc.Commit();
-    }
-
     protected override void FireCalculatableAdded(ICalculatable calculatable)
     {
         IChartComponentCalculatableWrapper chartComponentCalculatableWrapper = calculatable as IChartComponentCalculatableWrapper;

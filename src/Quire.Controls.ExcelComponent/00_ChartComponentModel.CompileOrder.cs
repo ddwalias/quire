@@ -25,4 +25,15 @@ public partial class ChartComponentModel
     {
         ConnectedDefaultLimits.Each(limit => limit.Commit());
     }
+
+    internal void CommitPost()
+    {
+        _chartMinMaxCalc.Commit();
+    }
+
+    public override void Commit()
+    {
+        CalculatablesConnectedToTheEngine.Each(calc => calc.Commit());
+        base.Commit();
+    }
 }

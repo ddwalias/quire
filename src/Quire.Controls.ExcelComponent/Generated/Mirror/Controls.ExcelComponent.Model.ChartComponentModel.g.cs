@@ -22,8 +22,6 @@ public partial class ChartComponentModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     internal event global::System.Action RequestUpdateIdentifierLabels;
     [global::Quire.Mirror.MirrorStub]
-    public override void Commit() => base.Commit();
-    [global::Quire.Mirror.MirrorStub]
     private void UpdateAllTraces(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapperToCommit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateChartMinMaxCalculatable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
