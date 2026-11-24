@@ -12,25 +12,13 @@ namespace Quire.Controls.Internal;
 internal abstract partial class VisualMathNode : global::Quire.Controls.Internal.VisualNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode, global::Quire.Controls.Core.IBaselinedVisual, global::Quire.Controls.Core.INotifyMeasureOverride, global::Quire.Controls.Core.IMathFormatOwner, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
-    private bool _hideSubNodesFromClicks;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _hideFromClicks;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.ExtendedFont _font;
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Controls.Core.IFontManager _fontManager;
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.EquationEditor.Tree.INodeInfo NodeInfo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual bool IsMonoLine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected static global::Quire.Controls.Core.IFontManager FontManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HideSubTreeFromClicks { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HideFromClicks { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.EquationEditor.View.IVisualMathNode[] NavigatableParts { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

@@ -472,3 +472,10 @@
 - Probe, not landed: `ComboBoxTableModel.GetColumnCells` with a failure-last layout (`if (!DevAssert(...).Failed) { IEnumerable<IReadonlyCellData> cells = AllRows.Select(row => row.GetCellAt(columnIndex)); return cells; } return Enumerable.Empty<IReadonlyCellData>();`). The display class `<>c__DisplayClass26_0` and its lambda now match, and the bounds check matches. The only difference left is the `stloc.1; ldloc.1` pair before `ret`, which Roslyn elides in Release even with an explicitly typed local (33 entries against Mathcad's 35). It stays parked. Patch saved outside the repo.
 - Unchanged: the `VisualMathNode` constructor (IL-structural mismatch, batch 65); `MathFormat` stays null at run time, so `DeserializeMathFormat` still throws `NullReferenceException`; `GetColumnCells` stays parked, and its `DeleteEmptyColumns` dependency stays visible.
 - Gate (project-level): PASS; 3688 checked, zero failures (`.mirror-cache/release-il-6df6afd3b76e/release-il.json`).
+
+### Batch 70: Controls.Internal.VisualMathNode (HideSubTreeFromClicks, HideFromClicks, IsMonoLine, NodeInfo)
+
+- Exact (8 accessors, 4 members): `HideSubTreeFromClicks` and `HideFromClicks` are plain field accessors over `_hideSubNodesFromClicks` and `_hideFromClicks`, which are declared by hand; `IsMonoLine` is a virtual getter returning `false` and a virtual setter that throws `NotImplementedException` (Mathcad's own setter, so this is exact, not a stub); `NodeInfo` is a virtual auto-property with the compiler backing field `<NodeInfo>k__BackingField`. Stub pairs removed from the `.g.cs`.
+- Not landed: `ScreenBounds` (its Mathcad IL stores a `Point` local between two `PointToScreen` calls and then passes it to the `Rect` constructor, the same elision risk as `GetColumnCells`).
+- Unchanged: the `VisualMathNode` constructor (IL-structural mismatch, batch 65); `MathFormat` stays null at run time, so `DeserializeMathFormat` still throws `NullReferenceException`; `GetColumnCells` stays parked (`DeleteEmptyColumns`).
+- Gate (project-level): PASS; 3696 checked, zero failures (`.mirror-cache/release-il-8b3ae334d189/release-il.json`).

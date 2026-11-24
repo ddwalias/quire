@@ -4,8 +4,10 @@
 #nullable disable
 #pragma warning disable
 
+using System;
 using System.Windows;
 using Quire.Controls.Core;
+using Quire.EquationEditor.Tree;
 
 namespace Quire.Controls.Internal;
 
@@ -52,6 +54,30 @@ internal abstract partial class VisualMathNode
     }
 
     public Point AlignmentPoint => _alignmentPoint;
+
+    private bool _hideSubNodesFromClicks;
+
+    private bool _hideFromClicks;
+
+    public bool HideSubTreeFromClicks
+    {
+        get => _hideSubNodesFromClicks;
+        set => _hideSubNodesFromClicks = value;
+    }
+
+    public bool HideFromClicks
+    {
+        get => _hideFromClicks;
+        set => _hideFromClicks = value;
+    }
+
+    public virtual bool IsMonoLine
+    {
+        get => false;
+        set => throw new NotImplementedException();
+    }
+
+    public virtual INodeInfo NodeInfo { get; set; }
 
     public Point ScreenCenterPoint
     {
