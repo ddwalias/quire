@@ -143,4 +143,19 @@ public partial class EquationControl
             return false;
         }
     }
+
+    public string ErrorCode
+    {
+        get
+        {
+            if (_model.CalculationError != null && !string.IsNullOrEmpty(_model.CalculationError.ErrorCode))
+            {
+                return _model.CalculationError.ErrorCode;
+            }
+
+            return "";
+        }
+    }
+
+    public bool IsShrunk => IsResizable && IsExceedsWidthConstrain;
 }

@@ -312,3 +312,9 @@
 - Exact: `IsEmbedded` (a `GetValue` unbox getter and a `SetValue` setter on the dependency property); `TextBaselineY` (a direct read of `_view.TextBaselineY`); `IsAdornedElementReady` (a `UIElement`-typed local holding `_view`, then `WpfUtils.GetVisualParent(view) != null` under a null guard; Mathcad's local is `System.Windows.UIElement`, so the local is declared with that type and not `var`). None has a closure; they are appended at the end of the partial, and their stub pairs are removed from the `.g.cs`.
 - Left out: `ErrorCode` (involves `IsNullOrEmpty` and a conditional that needs its own shape probe).
 - Gate (project-level): PASS; 3577 checked, zero failures (`.mirror-cache/release-il-34c4c22c72ba/release-il.json`).
+
+### Batch 44: Controls.EquationControl (ErrorCode, IsShrunk)
+
+- Exact: `ErrorCode` (a `CalculationError` null check, then `!string.IsNullOrEmpty` on its `ErrorCode`, returning that code or `""`; the three `get_CalculationError` calls are repeated, as in Mathcad, since there is no local); `IsShrunk` (`IsResizable && IsExceedsWidthConstrain`, which Roslyn lowers to the `brfalse` shape Mathcad uses). Both are appended at the end of the partial, and their stub pairs are removed from the `.g.cs`.
+- Left out: `IsResizable` (reads `ContainsSymbolicEvaluation`, `SymbolicResultsWidth` and a static threshold before a dependency-property path), `ContainsSymbolicEvaluation` (a loop over the evaluation root with a `_map` lookup), and `TextBaselineOffset` (a `FindCommonVisualAncestor` / `TransformToVisual` struct path, the same shape as the `TextBaselineY` fallback).
+- Gate (project-level): PASS; 3579 checked, zero failures (`.mirror-cache/release-il-03dafd60c943/release-il.json`).
