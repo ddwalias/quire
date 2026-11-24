@@ -62,9 +62,5 @@ public abstract partial class PlotGraphAxisBase : global::System.Windows.Framewo
     [global::Quire.Mirror.MirrorStub]
     protected abstract void HideLimitsExpressions();
     [global::Quire.Mirror.MirrorStub]
-    private static void ShowGridLinesChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void GridLineColorChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected static void TickmarksChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

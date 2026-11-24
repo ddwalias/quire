@@ -99,6 +99,32 @@ public abstract partial class PlotGraphAxisBase
         }
     }
 
+    private static void ShowGridLinesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is PlotGraphAxis plotGraphAxis)
+        {
+            plotGraphAxis.FireShowGridLinesChanged();
+        }
+    }
+
+    private static void GridLineColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        Color color = (Color)e.NewValue;
+        if (d is PlotGraphAxis plotGraphAxis)
+        {
+            plotGraphAxis.GridLineBrush.Color = color;
+            plotGraphAxis.GridLineColorPropertyChanged();
+        }
+        else if (d is PlotGraphAxisBase plotGraphAxisBase)
+        {
+            plotGraphAxisBase.GridLineBrush.Color = color;
+        }
+        else
+        {
+            DebugTools.DevAssert(false, null);
+        }
+    }
+
     private void InitializeLimitEquation(EquationControl limitEquation)
     {
         limitEquation.Style = new Style(typeof(EquationControl));

@@ -764,3 +764,11 @@
 - Release IL: full gate PASS — 2663 checked, 0 failures, 2663 exact.
 - MirrorGen emit: deletions only (the two stubs with attributes), equal to the applied edit. The Plots Release DLL was rebuilt before emit; other emit noise reverted.
 - Still stubs: the no-argument `InitializeLimitEquation()`, `ShowGridLinesChanged`, `GridLineColorChanged`, `TickmarksChanged`.
+
+## Batch 106 — PlotGraphAxisBase grid-line change handlers
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Members: `ShowGridLinesChanged` and `GridLineColorChanged` (private static `DependencyProperty` callbacks). They call the generated stubs `PlotGraphAxis.FireShowGridLinesChanged` and `GridLineColorPropertyChanged`, which stay stubs until the `PlotGraphAxis` batch. Added to the existing hand-written partial `Mirrored/Controls.Plots.PlotGraphAxisBase.cs`, after `LineColorChanged`; two stubs removed.
+- Release IL: full gate PASS — 2665 checked, 0 failures, 2665 exact.
+- MirrorGen emit: deletions only (the two stubs with attributes), equal to the applied edit. Other emit noise reverted.
+- Still stubs: the no-argument `InitializeLimitEquation()` and `TickmarksChanged` (needs `PlotGraphAxis.TickMarksChanged`/`FireTickMarksChanged`).
