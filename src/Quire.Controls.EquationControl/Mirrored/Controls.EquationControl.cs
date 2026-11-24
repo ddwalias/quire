@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using Quire.Calculation.Core;
@@ -7,6 +9,7 @@ using Quire.Controls.Core.Whiteboard;
 using Quire.Controls.Internal;
 using Quire.Core;
 using Quire.EquationEditor;
+using Quire.EquationEditor.Tree;
 using Quire.EquationEditor.Tree.Navigation;
 using Quire.Services;
 using Quire.Wpf;
@@ -247,4 +250,26 @@ public partial class EquationControl
             return 0.0;
         }
     }
+
+    public bool ErrorVisible
+    {
+        get
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public EngineError Error => _model.CalculationError;
+
+    public IList<EngineRedefInfo> EngineWarnings => _model.EngineWarnings;
+
+    public EquationEditModeEnum Mode => _model.Mode;
+
+    internal MathNode CurrentNode => _model.NavigatorState.Current;
+
+    public double VerticalAlignmentOffset => -TextBaselineOffset;
+
+    public CalculatingStatus CalculatingStatus => (CalculatingStatus)GetValue(CalculatingStatusProperty);
+
+    public SynchronizationStatus SynchronizationStatus => (SynchronizationStatus)GetValue(SynchronizationStatusProperty);
 }

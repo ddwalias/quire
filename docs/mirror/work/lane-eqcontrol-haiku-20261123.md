@@ -346,3 +346,9 @@
 
 - Exact: `ResizeIndicatorWidth` (`Template.FindName("PART_ResizeIndicatorColumn", this) as ColumnDefinition`; a non-null column returns its `ActualWidth`, otherwise `0.0`). It is the run-time dependency of `IsExceedsWidthConstrain` (batch 48), now implemented instead of a stub. Its stub pair is removed from the `.g.cs`; the partial gains `using System.Windows.Controls;` for `ColumnDefinition`.
 - Gate (project-level): PASS; 3585 checked, zero failures (`.mirror-cache/release-il-59128e9b146a/release-il.json`).
+
+### Batch 50: Controls.EquationControl (ErrorVisible, Error, EngineWarnings, Mode, CurrentNode, VerticalAlignmentOffset, CalculatingStatus, SynchronizationStatus)
+
+- Exact: `ErrorVisible` (Mathcad's own body is `throw new NotImplementedException()`, so the member throws the same; the original does not implement it either); `Error` (`_model.CalculationError`); `EngineWarnings` (`_model.EngineWarnings`); `Mode` (`_model.Mode`); `CurrentNode` (`_model.NavigatorState.Current`); `VerticalAlignmentOffset` (`-TextBaselineOffset`); `CalculatingStatus` and `SynchronizationStatus` (`(T)GetValue(TProperty)`, the unbox of the dependency property). The partial gains `using System;`, `using System.Collections.Generic;` and `using Quire.EquationEditor.Tree;`. The eight stub pairs are removed from the `.g.cs`.
+- Left out: `ErrorCount` (its body reads `Error` and the `ScriptingError` resource string, with a conditional that needs a shape probe) and `ErrorText` (a delegate invocation with a `dup` branch).
+- Gate (project-level): PASS; 3593 checked, zero failures (`.mirror-cache/release-il-41486776a3b6/release-il.json`).
