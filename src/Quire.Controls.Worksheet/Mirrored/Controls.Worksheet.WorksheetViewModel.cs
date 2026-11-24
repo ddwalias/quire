@@ -21,6 +21,132 @@ namespace Quire.Controls.Worksheet;
 
 internal partial class WorksheetViewModel
 {
+    public bool DisplayGrid
+    {
+        get
+        {
+            return _displayGrid;
+        }
+        set
+        {
+            if (_displayGrid == value)
+            {
+                return;
+            }
+            _displayGrid = value;
+            OnPropertyChanged(nameof(DisplayGrid));
+            FireChanged();
+        }
+    }
+
+    public bool DisplayHFGrid
+    {
+        get
+        {
+            return _displayHFGrid;
+        }
+        set
+        {
+            if (_displayHFGrid == value)
+            {
+                return;
+            }
+            _displayHFGrid = value;
+            OnPropertyChanged(nameof(DisplayHFGrid));
+            FireChanged();
+        }
+    }
+
+    public bool DisplayFrame
+    {
+        get
+        {
+            return _displayFrame;
+        }
+        set
+        {
+            if (_displayFrame == value)
+            {
+                return;
+            }
+            _displayFrame = value;
+            OnPropertyChanged(nameof(DisplayFrame));
+            FireChanged();
+        }
+    }
+
+    public bool DisplayHeaderFrame
+    {
+        get
+        {
+            return _displayHeaderFrame;
+        }
+        set
+        {
+            if (_displayHeaderFrame == value)
+            {
+                return;
+            }
+            _displayHeaderFrame = value;
+            OnPropertyChanged(nameof(DisplayHeaderFrame));
+            FireChanged();
+        }
+    }
+
+    public bool DisplayFooterFrame
+    {
+        get
+        {
+            return _displayFooterFrame;
+        }
+        set
+        {
+            if (_displayFooterFrame == value)
+            {
+                return;
+            }
+            _displayFooterFrame = value;
+            OnPropertyChanged(nameof(DisplayFooterFrame));
+            FireChanged();
+        }
+    }
+
+    public bool UseMajorGridLines
+    {
+        get
+        {
+            return _useMajorGrid;
+        }
+        set
+        {
+            if (_useMajorGrid == value)
+            {
+                return;
+            }
+            _useMajorGrid = value;
+            OnPropertyChanged(nameof(UseMajorGridLines));
+            FireChanged();
+        }
+    }
+
+    public bool UseHFMajorGridLines
+    {
+        get
+        {
+            return _useHFMajorGridLines;
+        }
+        set
+        {
+            if (_useHFMajorGridLines == value)
+            {
+                return;
+            }
+            _useHFMajorGridLines = value;
+            OnPropertyChanged(nameof(UseHFMajorGridLines));
+            FireChanged();
+        }
+    }
+
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetViewModel+WorksheetCommand, Ptc.Controls.Worksheet")]
     internal abstract partial class WorksheetCommand : global::Quire.Undo.IUndoableCommand
     {
