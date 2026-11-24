@@ -253,9 +253,238 @@ public partial class ChartComponentModel
             }
         }
 
-    private void UpdateAllTraces(IChartComponentCalculatableWrapper wrapperToCommit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void UpdateAllTraces(IChartComponentCalculatableWrapper wrapperToCommit)
+    {
+        SortedDictionary<uint, ChartTraceCalculatable> sortedDictionary = new SortedDictionary<uint, ChartTraceCalculatable>();
+        IEnumerable<IChartComponentCalculatableWrapper> source = from IChartComponentCalculatableWrapper wrapper in WhiteboardItems.OfType<ICalculatable>().Select(GetWrapper)
+            where !wrapper.HideFromCalculationContext && wrapper.IsTraceOrCommonExpression()
+            select wrapper;
+        IDictionary<IChartComponentCalculatableWrapper, bool> primaryDict = source.ToDictionary((IChartComponentCalculatableWrapper wrapper) => wrapper, (IChartComponentCalculatableWrapper wrapper) => false);
+        primaryDict.Keys.Each((IChartComponentCalculatableWrapper wrapper) =>
+        {
+            if (wrapper.CustomErrorType == OleWrapperCustomErrorType.Placement)
+            {
+                wrapper.SetCustomError(null);
+            }
+        });
+        Action<ChartTraceCalculatable, IChartComponentCalculatableWrapper> action = (ChartTraceCalculatable traceCalc, IChartComponentCalculatableWrapper wrapper) =>
+        {
+            if (wrapper == null)
+            {
+                return;
+            }
+            if (wrapper.ChartWrapperType == ChartWrapperType.XTrace || wrapper.ChartWrapperType == ChartWrapperType.XCommon)
+            {
+                if (traceCalc.XCalculatable == null)
+                {
+                    traceCalc.XCalculatable = wrapper;
+                    primaryDict[wrapper] = true;
+                }
+            }
+            else if (traceCalc.YCalculatable == null)
+            {
+                traceCalc.YCalculatable = wrapper;
+                primaryDict[wrapper] = true;
+            }
+        };
+        foreach (IChartComponentCalculatableWrapper item in source.Where((IChartComponentCalculatableWrapper wrapper) => wrapper.ChartWrapperType.IsIndexedTraceType()))
+        {
+            if (!DebugTools.AssertNotNull(item.TraceId, null).Failed)
+            {
+                uint value = item.TraceId.Value;
+                if (!sortedDictionary.TryGetValue(value, out var value2))
+                {
+                    // Chained so the new trace is stored in value2 before the indexer setter, as Release IL does.
+                    sortedDictionary[value] = value2 = new ChartTraceCalculatable(_chartMinMaxCalc);
+                }
+                action(value2, item);
+            }
+        }
+        IChartComponentCalculatableWrapper arg = source.FirstOrDefault((IChartComponentCalculatableWrapper wrapper) => wrapper.ChartWrapperType == ChartWrapperType.XCommon);
+        IChartComponentCalculatableWrapper arg2 = source.FirstOrDefault((IChartComponentCalculatableWrapper wrapper) => wrapper.ChartWrapperType == ChartWrapperType.YCommon);
+        if (!sortedDictionary.ContainsKey(1u))
+        {
+            sortedDictionary.Add(1u, new ChartTraceCalculatable(_chartMinMaxCalc));
+        }
+        foreach (ChartTraceCalculatable value4 in sortedDictionary.Values)
+        {
+            action(value4, arg);
+            action(value4, arg2);
+        }
+        List<uint> list = new List<uint>();
+        foreach (KeyValuePair<uint, ChartTraceCalculatable> traceCalculatable in _traceCalculatables)
+        {
+            uint key = traceCalculatable.Key;
+            if (!sortedDictionary.ContainsKey(key) || sortedDictionary[key].XCalculatable == null || sortedDictionary[key].YCalculatable == null)
+            {
+                list.Add(key);
+            }
+        }
+        foreach (uint item2 in list)
+        {
+            ChartTraceCalculatable chartTraceCalculatable2 = _traceCalculatables[item2];
+            _traceCalculatables.Remove(item2);
+            if (DebugTools.AssertNotNull(ChartContainerItem, null).Passed)
+            {
+                Exception ex = ChartContainerItem.PublicModel.RemoveTrace(item2);
+                if (ex != null)
+                {
+                    DebugTools.FailAssertion(ex);
+                }
+            }
+            base.FireCalculatableRemoved(chartTraceCalculatable2);
+            chartTraceCalculatable2.Dispose();
+        }
+        List<ChartTraceCalculatable> list2 = new List<ChartTraceCalculatable>();
+        foreach (KeyValuePair<uint, ChartTraceCalculatable> item3 in sortedDictionary)
+        {
+            uint key2 = item3.Key;
+            ChartTraceCalculatable value3 = item3.Value;
+            if (value3.XCalculatable != null && value3.YCalculatable != null)
+            {
+                if (!_traceCalculatables.ContainsKey(key2))
+                {
+                    _traceCalculatables.Add(key2, value3);
+                    base.FireCalculatableAdded(value3);
+                    list2.Add(value3);
+                    continue;
+                }
+                ChartTraceCalculatable chartTraceCalculatable3 = _traceCalculatables[key2];
+                IChartComponentCalculatableWrapper xCalculatable = value3.XCalculatable;
+                IChartComponentCalculatableWrapper yCalculatable = value3.YCalculatable;
+                value3.Dispose();
+                if (chartTraceCalculatable3.XCalculatable != xCalculatable || chartTraceCalculatable3.YCalculatable != yCalculatable)
+                {
+                    chartTraceCalculatable3.XCalculatable = xCalculatable;
+                    chartTraceCalculatable3.YCalculatable = yCalculatable;
+                    list2.Add(chartTraceCalculatable3);
+                }
+                else if (chartTraceCalculatable3.XCalculatable == wrapperToCommit || chartTraceCalculatable3.YCalculatable == wrapperToCommit)
+                {
+                    list2.Add(chartTraceCalculatable3);
+                }
+            }
+            else
+            {
+                value3.Dispose();
+            }
+        }
+        sortedDictionary.Clear();
+        bool flag = false;
+        if (ChartContainerItem != null)
+        {
+            flag = _traceCalculatables.IsNotEmpty() && ChartContainerItem.PublicModel.CurrentTraceIds.IsNullOrEmpty();
+            ChartContainerItem.PublicModel.CurrentTraceIds = _traceCalculatables.Keys;
+        }
+        primaryDict.Each((KeyValuePair<IChartComponentCalculatableWrapper, bool> pair) =>
+        {
+            IChartComponentCalculatableWrapper key3 = pair.Key;
+            if (pair.Value)
+            {
+                DebugTools.DevAssert(key3.CustomErrorType != OleWrapperCustomErrorType.Placement, null);
+            }
+            else
+            {
+                key3.SetCustomError("chart_duplicate_trace_expression");
+            }
+        });
+        if (flag)
+        {
+            Commit();
+        }
+        else
+        {
+            list2.Each((ChartTraceCalculatable calc) =>
+            {
+                calc.Commit();
+            });
+        }
+        if (DebugTools.IsDebug)
+        {
+            source.Where((IChartComponentCalculatableWrapper wrapper) => wrapper.IsTraceOrCommonExpression()).Each((IChartComponentCalculatableWrapper currWrapper) =>
+            {
+                DebugTools.DevAssert(_traceCalculatables.Values.Any((ChartTraceCalculatable traceCalc) => traceCalc.XCalculatable == currWrapper || traceCalc.YCalculatable == currWrapper) == currWrapper.HasAssociatedTraces(), null);
+            });
+        }
+    }
 
-    private void UpdateChartMinMaxCalculatable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void UpdateChartMinMaxCalculatable()
+    {
+        IEnumerable<IChartComponentCalculatableWrapper> source = from IChartComponentCalculatableWrapper wrapper in WhiteboardItems.OfType<ICalculatable>().Select(GetWrapper)
+            where !wrapper.HideFromCalculationContext && wrapper.IsLimitExpression()
+            select wrapper;
+        IDictionary<IChartComponentCalculatableWrapper, bool> dictionary = source.ToDictionary((IChartComponentCalculatableWrapper wrapper) => wrapper, (IChartComponentCalculatableWrapper wrapper) => false);
+        dictionary.Keys.Each((IChartComponentCalculatableWrapper wrapper) =>
+        {
+            if (wrapper.CustomErrorType == OleWrapperCustomErrorType.Placement)
+            {
+                wrapper.SetCustomError(null);
+            }
+        });
+        bool flag = false;
+        ChartWrapperType[] array = new ChartWrapperType[6]
+        {
+            ChartWrapperType.XMin,
+            ChartWrapperType.XMax,
+            ChartWrapperType.YMin,
+            ChartWrapperType.YMax,
+            ChartWrapperType.Y2Min,
+            ChartWrapperType.Y2Max
+        };
+        foreach (ChartWrapperType chartWrapperType in array)
+        {
+            ChartWrapperType currType = chartWrapperType;
+            IChartComponentCalculatableWrapper chartComponentCalculatableWrapper = source.FirstOrDefault((IChartComponentCalculatableWrapper wrapper) => wrapper.ChartWrapperType == currType);
+            if (chartComponentCalculatableWrapper != null)
+            {
+                dictionary[chartComponentCalculatableWrapper] = true;
+            }
+            if (_chartMinMaxCalc.SetLimit(currType, chartComponentCalculatableWrapper))
+            {
+                flag = true;
+            }
+        }
+        foreach (KeyValuePair<IChartComponentCalculatableWrapper, bool> item in dictionary)
+        {
+            IChartComponentCalculatableWrapper key = item.Key;
+            if (item.Value)
+            {
+                DebugTools.DevAssert(key.CustomErrorType != OleWrapperCustomErrorType.Placement, null);
+                if (!key.IsConnectedToTheEngine)
+                {
+                    InternalAddCalculatableAndEvaluate(key);
+                }
+            }
+            else
+            {
+                if (key.IsConnectedToTheEngine)
+                {
+                    base.FireCalculatableRemoved(key);
+                }
+                key.SetCustomError("chart_duplicate_limit_expression");
+            }
+        }
+        foreach (KeyValuePair<ChartWrapperType, SimpleChartCalculatable> defaultLimit in _defaultLimits)
+        {
+            ChartWrapperType key2 = defaultLimit.Key;
+            SimpleChartCalculatable value = defaultLimit.Value;
+            if (_chartMinMaxCalc.GetLimit(key2) != null)
+            {
+                if (value.IsConnectedToTheEngine)
+                {
+                    base.FireCalculatableRemoved(value);
+                }
+            }
+            else if (!value.IsConnectedToTheEngine)
+            {
+                InternalAddCalculatableAndEvaluate(value);
+            }
+        }
+        if (flag)
+        {
+            _chartMinMaxCalc.Commit();
+        }
+    }
 
         private void InternalAddCalculatableAndEvaluate(IOleBaseComponentCalculatableChild calc)
         {
