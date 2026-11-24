@@ -551,3 +551,11 @@
 - Not landed: `BuildAndExecCutCmd` and `BuildAndExecPasteCmd` (not yet probed); `EquationSExpression` setter (needs `FireRequestEvaluation`'s compiler-cached lambdas).
 - Unchanged: the `VisualMathNode` constructor unmatched (`MathFormat` null, `DeserializeMathFormat` throws `NullReferenceException`); `ScreenBounds` stub; `GetColumnCells` parked (`DeleteEmptyColumns`); NthRoot and Derivative indexer setters forward to base and throw `ArgumentOutOfRangeException`.
 - Gate (project-level): PASS; 3753 checked, zero failures (`.mirror-cache/release-il-de5d0f5f6a3d/release-il.json`).
+
+### Batch 80: Controls.EquationControl (HookupToEvents)
+
+- Exact (1 method): `HookupToEvents` subscribes the 14 model events and the view's `VisualParentChanged` event with `+=` in Mathcad's order (`ldftn` plus `newobj Action` plus `add_X`, the same shape Roslyn emits for a method-group `+=`). Stub pair removed from the `.g.cs`; the body is in `Mirrored/Controls.EquationControl.cs`.
+- Run-time risk (not an IL mismatch): the handlers it subscribes to are still stubs (`OnModelRequestEvaluation`, `FocusWhenAble`, `HandleScopeChanged`, `HandleNavigatorStateChanged`, `OnViewVisualParentChanged` and the others). Nothing calls `HookupToEvents` yet (the constructor is still a stub), so there is no run-time effect today. Once the constructor is implemented, any model event raises a stub handler and throws `NotImplementedException`. The two must land together, or the handlers first.
+- Still open on the command-subscription path: `BindEditingCommands`, `BindCommands` and `UnBindEditingCommands` (stubs); `BuildAndExecCutCmd` and `BuildAndExecPasteCmd` (stubs with three-lambda display classes, closure-ordinal matching needed).
+- Unchanged: the `VisualMathNode` constructor unmatched (`MathFormat` null, `DeserializeMathFormat` throws `NullReferenceException`); `EquationSExpression` setter (needs `FireRequestEvaluation`); `ScreenBounds` stub; `GetColumnCells` parked (`DeleteEmptyColumns`); NthRoot and Derivative indexer setters.
+- Gate (project-level): PASS; 3754 checked, zero failures (`.mirror-cache/release-il-28c078653dcb/release-il.json`).

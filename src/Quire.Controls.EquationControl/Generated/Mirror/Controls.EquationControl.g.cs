@@ -368,8 +368,6 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Rect GetLabeledScreenInkBounds(string nodeLabel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HookupToEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void UnhookFromModelEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void DetachFromModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

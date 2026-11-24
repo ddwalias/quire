@@ -527,6 +527,25 @@ public partial class EquationControl
 
     private void OnTraverseForward(object sender, System.Windows.Input.ExecutedRoutedEventArgs e) => OnTraverse(e, Direction.Right);
 
+    private void HookupToEvents()
+    {
+        _model.RequestEvaluation += OnModelRequestEvaluation;
+        _model.RequestRemoveEquation += FireRequestRemove;
+        _model.RequestFocus += FocusWhenAble;
+        _model.EquationChanged += OnModelEquationChanged;
+        _model.RestrictedReadonlyChanged += HandleModelIsRestrictedReadonlyChanged;
+        _model.NavigatorStateChanged += HandleNavigatorStateChanged;
+        _model.ScopeChanged += HandleScopeChanged;
+        _model.TypeoverChanged += HandleTypeoverChanged;
+        _model.NumericResultChanged += HandleNumericResultChanged;
+        _model.ExpressionValueChanged += FireExpressionValueChanged;
+        _model.CalculationErrorChanged += HandleCalculationErrorChanged;
+        _model.WarningsOccurred += HandleWarningOccured;
+        _model.ContentChanged += FireContentChangedEvents;
+        _view.VisualParentChanged += OnViewVisualParentChanged;
+        _model.VisibleLhsOfDefinitionChanged += HandleVisibleLhsOfDefinitionChanged;
+    }
+
     public bool InCustomInitialization
     {
         get => _model.InCustomInitialization;
