@@ -812,6 +812,21 @@
 - Release IL: PASS — 1124 checked in Whiteboard, 0 failures (`release-il-6da8352fedb5`). 0 generated stubs remaining in `Quire.Controls.Whiteboard`.
 - Remaining mismatches in this batch: none.
 
+## Batch 55 — Quire-Authored WhiteboardCanvas Resource
+
+- Resource: `whiteboard/whiteboardcanvas.xaml`
+- Hand-written / authored per D21:
+  - `src/Quire.Controls.Whiteboard/whiteboard/whiteboardcanvas.xaml`
+- Content & Capabilities:
+  - Root `Canvas` (matching `WhiteboardCanvas` base type) configured with `Focusable="True"` and `Cursor="Arrow"`.
+  - Resources: `BooleanToVisibilityConverter` (`booleanToVisibilityConverter`), `WhiteboardItemsControlCanvasStyle` targeting `Canvas` (setting Background `#00FFFFFF`, `Panel.IsItemsHost="True"`, `AllowDrop="True"`, `Focusable="True"`, and bindings to `ContentWidth` and `ContentHeight`), and `WhiteboardItemStyle`.
+  - Content: `ItemsControl` binding to `WhiteboardItems` with an `ItemsPanelTemplate` containing `Whiteboard:ItemsControlCanvas` styled with `WhiteboardItemsControlCanvasStyle`.
+  - Note on Crosshair: In original Mathcad XAML, a `<Core:Crosshair>` element was included; however, `Quire.Controls.Core` does not currently provide `crosshair.xaml` (instantiating `Quire.Controls.Core.Crosshair` triggers runtime `IOException: Cannot locate resource 'crosshair.xaml'`). Omitted `<Core:Crosshair>` to allow clean runtime load and hosting of whiteboard items and child controls.
+- Release IL: PASS — 1124 checked in Whiteboard, 0 failures (`release-il-7c5f3a336e1f`).
+- Runtime Load: Verified via `SolveBlockControl` instantiation and `WhiteboardCanvas` visual tree inspection on STA thread.
+- Remaining mismatches in this batch: none.
+
+
 
 
 
