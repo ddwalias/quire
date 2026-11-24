@@ -56,8 +56,6 @@ public abstract partial class PlotGraphAxisBase : global::System.Windows.Framewo
     [global::Quire.Mirror.MirrorStub]
     protected PlotGraphAxisBase() { }
     [global::Quire.Mirror.MirrorStub]
-    protected void InitializeLimitEquation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected abstract void ShowLimitsExpressions();
     [global::Quire.Mirror.MirrorStub]
     protected abstract void HideLimitsExpressions();

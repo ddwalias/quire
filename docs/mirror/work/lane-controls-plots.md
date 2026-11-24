@@ -772,3 +772,11 @@
 - Release IL: full gate PASS — 2665 checked, 0 failures, 2665 exact.
 - MirrorGen emit: deletions only (the two stubs with attributes), equal to the applied edit. Other emit noise reverted.
 - Still stubs: the no-argument `InitializeLimitEquation()` and `TickmarksChanged` (needs `PlotGraphAxis.TickMarksChanged`/`FireTickMarksChanged`).
+
+## Batch 107 — PlotGraphAxisBase no-argument InitializeLimitEquation
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; slot to be requested).
+- Members: `InitializeLimitEquation()` (protected). Creates the three `EquationControlWithTransform(8.0)` limit editors inside `using (new CommandScope(new CompoundCommand()))`, then calls the one-argument helper for each. Added to the existing hand-written partial `Mirrored/Controls.Plots.PlotGraphAxisBase.cs` (new `using Quire.Undo;`); one stub removed.
+- Release IL: full gate PASS — 2666 checked, 0 failures, 2666 exact; first try.
+- MirrorGen emit: deletions only (the one stub with its attribute), equal to the applied edit. Other emit noise reverted.
+- Still stubs: `TickmarksChanged` (needs `PlotGraphAxis.TickMarksChanged`/`FireTickMarksChanged`), and the stubs in `PlotGraphAxis` that `ShowGridLinesChanged`/`GridLineColorChanged` now call.

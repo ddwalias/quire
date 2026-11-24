@@ -10,6 +10,7 @@ using System.Windows.Threading;
 using Quire.Controls;
 using Quire.Controls.Core;
 using Quire.Controls.Plots.ViewModel;
+using Quire.Undo;
 
 namespace Quire.Controls.Plots;
 
@@ -122,6 +123,19 @@ public abstract partial class PlotGraphAxisBase
         else
         {
             DebugTools.DevAssert(false, null);
+        }
+    }
+
+    protected void InitializeLimitEquation()
+    {
+        using (new CommandScope(new CompoundCommand()))
+        {
+            _startEquation = new EquationControlWithTransform(8.0);
+            InitializeLimitEquation(StartExpressionEqn);
+            _secondTickEquation = new EquationControlWithTransform(8.0);
+            InitializeLimitEquation(SecondTickExpressionEqn);
+            _endEquation = new EquationControlWithTransform(8.0);
+            InitializeLimitEquation(EndExpressionEqn);
         }
     }
 
