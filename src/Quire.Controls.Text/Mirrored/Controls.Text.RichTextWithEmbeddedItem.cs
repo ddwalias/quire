@@ -418,6 +418,105 @@ public partial class RichTextWithEmbeddedItem
         return GetCombinedDocumentXaml(xaml, list);
     }
 
+    private Hyperlink EditLinkUndoableCommand(HyperlinkEditState hyperlinkState, DocumentTextRange convertToLinkRange, bool skipOneInsertionPosition = false)
+    {
+        Hyperlink hyperlink = null;
+        using (new CommandScope("Edit\\Insert hyperlink item"))
+        {
+            Quire.Core.TextFormat textFormat = null;
+            bool flag = false;
+            TextPointer insertionPosition = CaretPosition;
+            using (DeclareChangeBlock())
+            {
+                Dictionary<int, System.Windows.Media.Brush> dictionary = new Dictionary<int, System.Windows.Media.Brush>();
+                foreach (Inline item in Selection.EnumerateInlinesInRange<Inline>())
+                {
+                    dictionary[((object)item).GetHashCode()] = item.Foreground;
+                }
+                if (convertToLinkRange.IsNotEmpty())
+                {
+                    if (hyperlinkState.UserChangedText)
+                    {
+                        textFormat = new Quire.Core.TextFormat(convertToLinkRange, onlyFirstRun: true);
+                        convertToLinkRange.Text = string.Empty;
+                        insertionPosition = convertToLinkRange.Start;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            TextPointer textPointer = convertToLinkRange.Start;
+                            TextPointer textPointer2 = convertToLinkRange.End;
+                            List<Hyperlink> hyperlinksInRange = GetHyperlinksInRange(convertToLinkRange);
+                            if (hyperlinksInRange.IsNotEmpty())
+                            {
+                                DebugTools.DevAssert(hyperlinkState.PerformedLinkEditOperation == LinkEditOperation.Edit && hyperlinksInRange.Count == 1, null);
+                                int offsetToPosition = Document.ContentStart.GetOffsetToPosition(textPointer);
+                                int offsetToPosition2 = Document.ContentEnd.GetOffsetToPosition(textPointer2);
+                                RemoveHyperlinkUndoableCommand(hyperlinksInRange);
+                                textPointer = Document.ContentStart.GetPositionAtOffset(offsetToPosition) ?? Document.ContentStart;
+                                textPointer2 = Document.ContentEnd.GetPositionAtOffset(offsetToPosition2) ?? Document.ContentEnd;
+                            }
+                            if (DebugTools.DevAssert(textPointer.CompareTo(textPointer2) < 0 && new DocumentTextRange(textPointer, textPointer2).Text.Length > 0, null).Failed)
+                            {
+                                flag = true;
+                            }
+                            else if (textPointer.Parent == textPointer2.Parent && textPointer2.Parent is BlockUIContainer blockUIContainer)
+                            {
+                                BlockCollection parentBlocks = blockUIContainer.GetParentBlocks();
+                                if (DebugTools.AssertNotNull(parentBlocks, null).Passed)
+                                {
+                                    UIElement child = blockUIContainer.Child;
+                                    blockUIContainer.Child = null;
+                                    InlineUIContainer childInline = new InlineUIContainer(child);
+                                    hyperlink = Quire.Wpf.HyperlinkExtensions.CreateLink(hyperlinkState.UserInputUri, childInline);
+                                    System.Windows.Documents.Paragraph paragraph = new System.Windows.Documents.Paragraph();
+                                    paragraph.Inlines.Add(hyperlink);
+                                    parentBlocks.InsertBefore(blockUIContainer, paragraph);
+                                    parentBlocks.Remove(blockUIContainer);
+                                }
+                            }
+                            else
+                            {
+                                hyperlink = Quire.Wpf.HyperlinkExtensions.CreateLink(hyperlinkState.UserInputUri, textPointer, textPointer2);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            DebugTools.FailAssertion(ex);
+                            flag = true;
+                        }
+                    }
+                }
+                else
+                {
+                    flag = DebugTools.DevAssert(hyperlinkState.PerformedLinkEditOperation == LinkEditOperation.Insert, null).Failed;
+                }
+                if (!flag)
+                {
+                    if (hyperlink == null)
+                    {
+                        hyperlink = Quire.Wpf.HyperlinkExtensions.CreateLink(hyperlinkState.UserInputUri, new Run(hyperlinkState.UserInputText), insertionPosition);
+                        textFormat?.ApplyTextFormat(new DocumentTextRange(hyperlink.ContentStart, hyperlink.ContentEnd));
+                    }
+                    _hyperlinkDictionary.Add(((object)hyperlink).GetHashCode(), dictionary);
+                    hyperlink.ClearForegroundInDepth();
+                    TextPointer insertionPosition2 = hyperlink.ElementEnd.GetInsertionPosition(LogicalDirection.Forward);
+                    TextPointer textPointer3 = skipOneInsertionPosition ? insertionPosition2.GetNextInsertionPosition(LogicalDirection.Forward) : null;
+                    SetCaretPositionAndClearSuggestedX(textPointer3 ?? insertionPosition2);
+                }
+            }
+            if (flag)
+            {
+                while (CommandBuffer.CanUndo)
+                {
+                    CommandBuffer.Undo();
+                }
+            }
+        }
+        return hyperlink;
+    }
+
     private void BindHyperlinkCommands()
     {
         CommandBindings.Add(new CommandBinding(HyperlinkCommands.ModifyHyperlink, ModifyHyperlink, CanModifyHyperlink));

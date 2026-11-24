@@ -112,3 +112,10 @@
 - Two shapes differ from the obvious source: (1) Release IL tests `Text` first with `bne.un` and falls through, so the dispatch is an if/else-if on a `TextPointerContext` local, not a `switch` (a `switch` gave `beq` tests with the body placed later); (2) `textElement` is declared first, so its local number matches Mathcad's. `adjacentElement` keeps no local (Roslyn `dup`s it), as in Mathcad.
 - Release IL (project-wide): PASS — 667 checked, 0 failures.
 - Regeneration: `MirrorGen emit` gives the same stub removal plus the pre-existing `LogDocumentContents` placement drift. Emit output elsewhere was reverted. The solution build's 14 errors are in `tests/Quire.Mirror.Tests` (pre-existing).
+
+## Batch 36 — RichTextWithEmbeddedItem.EditLinkUndoableCommand
+
+- Member: `private Hyperlink EditLinkUndoableCommand(HyperlinkEditState, DocumentTextRange, bool skipOneInsertionPosition = false)`, no lambda. Uses `using` scopes, a `try`/`catch`, and a pattern variable. Hand-written in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stub removed from the `.g.cs`.
+- Names are qualified where the partial's imports clash: `Quire.Core.TextFormat`, `Quire.Wpf.HyperlinkExtensions` (not the local `Controls.Text.HyperlinkExtensions`), `System.Windows.Documents.Paragraph` (not the local `Controls.Text.Paragraph`).
+- Release IL (project-wide): PASS — 668 checked, 0 failures (first try).
+- Regeneration: `MirrorGen emit` gives the same stub removal plus the pre-existing `LogDocumentContents` placement drift. Emit output was reverted. The solution build's 14 errors are in `tests/Quire.Mirror.Tests` (pre-existing).
