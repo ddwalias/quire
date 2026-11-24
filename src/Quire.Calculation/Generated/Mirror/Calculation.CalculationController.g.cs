@@ -67,25 +67,15 @@ public partial class CalculationController
         [global::Quire.Mirror.MirrorStub]
         protected global::Quire.Calculation.CalculationController.EngineOptions _engineOptions;
         [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.Text.RegularExpressions.Regex _resolvedIdRegEx;
-        [global::Quire.Mirror.MirrorStub]
         protected readonly global::System.Func<global::Quire.Calculation.Core.ICalculatable, bool> _isCalcInContext;
         [global::Quire.Mirror.MirrorStub]
         private int _cookie;
-        [global::Quire.Mirror.MirrorStub]
-        protected global::System.Windows.Threading.DispatcherPriority ResultDispatchingPriority { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        protected bool IsComponentCookieUpToDate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> RequestEvaluation;
         [global::Quire.Mirror.MirrorStub]
         public event global::System.Func<global::Quire.Calculation.Core.ICalculatable, string, global::Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore;
         [global::Quire.Mirror.MirrorStub]
         public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> TreatAsUpToDate;
-        [global::Quire.Mirror.MirrorStub]
-        public DispatchedEngineCallbackHandler(global::Quire.Calculation.Core.ICalculatable calculatable, global::System.Windows.Threading.Dispatcher dispatcher, global::System.Func<global::Quire.Calculation.Core.ICalculatable, bool> isCalcInContext, global::Quire.Calculation.CalculationController.EngineOptions engineOptions) { }
         [global::Quire.Mirror.MirrorStub]
         public void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
@@ -110,8 +100,6 @@ public partial class CalculationController
         public virtual void SetRedefinitionWarnings(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> warnings) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public virtual void SetIdentifierLabels(global::System.Collections.Generic.IDictionary<global::Quire.Calculation.Core.ResolvedId, string[]> idLabelMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        protected void IncrementComponentCookie() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public virtual void SetSynchronizedNoResultNoError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
