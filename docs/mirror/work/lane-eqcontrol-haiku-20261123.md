@@ -409,3 +409,9 @@
 - Parked: `MatrixRows` and `MatrixColumns`. The IL is `(MatrixNodeInfo)(GetNearestAncestor("MATRIX") ?? throw ...).NodeInfo`, which Mathcad compiles as `dup; brtrue.s; ldstr; newobj; throw` with no `pop`. Current Roslyn emits `pop` before the throw, so the branch offsets differ by one instruction. The shape is not expressible with a throw expression in current C#; they stay as stubs.
 - Left out: `CurrentNodeNodeSide` and `CurrentNodeCaretSide` (a nullable-enum local whose type the IL does not show in the excerpt); `CurrentNodeOperatorPartIndex` (a `Nullable<int>` local with `GetValueOrDefault(-1)`, its own probe).
 - Gate (project-level): PASS; 3666 checked, zero failures (`.mirror-cache/release-il-ecf71741b347/release-il.json`).
+
+### Batch 61: Controls.EquationControl (Rl)
+
+- Exact (1 accessor): `Rl` (`if (AllowExpressionsOnly || !_isForEngineCalculation) return MathNodeToRlTransformer.Default.SetRlidAndTransform(_model.EquationRoot); return _rl;`; `Default` is a static readonly field, read with `ldsfld`). Stub pair removed from the `.g.cs`; the partial gains `using Quire.EquationEditor.Tree.Transform;`.
+- Parked: `History` (`new List<string>(_model.VisualHistory).ToArray()` is the right source, but Mathcad compiles `ToArray` as `callvirt` on the non-virtual `List<string>.ToArray`, where current Roslyn emits `call`; the instruction differs, so it stays as a stub. The model member is `VisualHistory`, not `History`).
+- Gate (project-level): PASS; 3667 checked, zero failures (`.mirror-cache/release-il-496362b95c57/release-il.json`).

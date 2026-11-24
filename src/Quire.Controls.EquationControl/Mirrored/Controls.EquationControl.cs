@@ -12,6 +12,7 @@ using Quire.Core;
 using Quire.EquationEditor;
 using Quire.EquationEditor.Tree;
 using Quire.EquationEditor.Tree.Navigation;
+using Quire.EquationEditor.Tree.Transform;
 using Quire.Services;
 using Quire.Wpf;
 
@@ -545,6 +546,19 @@ public partial class EquationControl
             }
 
             return current.OperatorSExpName;
+        }
+    }
+
+    public string Rl
+    {
+        get
+        {
+            if (AllowExpressionsOnly || !_isForEngineCalculation)
+            {
+                return MathNodeToRlTransformer.Default.SetRlidAndTransform(_model.EquationRoot);
+            }
+
+            return _rl;
         }
     }
 }
