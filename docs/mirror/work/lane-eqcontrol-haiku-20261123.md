@@ -387,3 +387,8 @@
 - Runtime dependency (not an IL mismatch): `FirePropertyChanged` is still a generated stub, so the `CurrentNumberFormat` and `CurrentMatrixFormat` setters throw `NotImplementedException` at run time until it is implemented.
 - Left out: `CalculatableChildren` (the backing-list field name to confirm), `HideFromCalculationContext` (its setter builds an undoable command), `History`, `EquationSExpression`, `SymbolicEvalKeywordsVisibilityState` (own probes).
 - Gate (project-level): PASS; 3648 checked, zero failures (`.mirror-cache/release-il-1858c823e46c/release-il.json`).
+
+### Batch 57: Controls.EquationControl (FirePropertyChanged)
+
+- Exact: `FirePropertyChanged(System.ComponentModel.PropertyChangedEventArgs e)` (the standard event raise: copy the `PropertyChanged` event field to a local, and if it is non-null, invoke it with `(this, e)`). This resolves the batch 56 run-time dependency: the `CurrentNumberFormat` and `CurrentMatrixFormat` setters now call a real implementation instead of throwing. The stub pair is removed from the `.g.cs`; the `PropertyChanged` event declaration is unchanged.
+- Gate (project-level): PASS; 3649 checked, zero failures (`.mirror-cache/release-il-79b20090027a/release-il.json`).

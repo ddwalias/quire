@@ -502,8 +502,6 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
     [global::Quire.Mirror.MirrorStub]
     private void FocusWhenAble(global::Quire.EquationEditor.IEquationModel notUsed) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void FirePropertyChanged(global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal void FireRequestEvaluation(bool force = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void FireRequestEvaluationControlOnly() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

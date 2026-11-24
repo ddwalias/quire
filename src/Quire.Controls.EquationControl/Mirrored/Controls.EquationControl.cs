@@ -451,4 +451,13 @@ public partial class EquationControl
         get => MathFormat.ToStaticMathFormat();
         set => MathFormat.FromStaticMathFormat(value);
     }
+
+    private void FirePropertyChanged(System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        var handler = PropertyChanged;
+        if (handler != null)
+        {
+            handler(this, e);
+        }
+    }
 }
