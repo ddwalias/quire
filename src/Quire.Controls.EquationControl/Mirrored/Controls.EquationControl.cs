@@ -78,4 +78,16 @@ public partial class EquationControl
     public bool IsScoped => _model.Mode == EquationEditModeEnum.Scope;
 
     public bool IsTypeover => _model.Mode == EquationEditModeEnum.Typeover;
+
+    public bool IsScriptableControl => _model.IsScriptableControl;
+
+    public bool AtLeftEdge => _model.AtLeftEdge();
+
+    public Direction ScopeDirection => _model.ScopeSide;
+
+    public bool CanHideFromCalculationContext => true;
+
+    public bool InterceptAndUpdateResult => false;
+
+    public bool UseICalculatableToRestoreResult => false;
 }

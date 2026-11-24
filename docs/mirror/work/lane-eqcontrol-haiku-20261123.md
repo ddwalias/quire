@@ -288,3 +288,9 @@
 - Exact: the five flag getters. `IsCommitted` is `!_model.IsExpressionValueModified`; `IsSelected` calls `WhiteboardDependencyProperties.GetIsSelected(this)`; `IsReadonly` and `IsScoped` / `IsTypeover` (`Scope` and `Typeover` of `EquationEditModeEnum`) read `_model`. None has a closure, and they are appended at the end of the partial, so no existing closure ordinal moves. Their stub pairs are removed from the `.g.cs`.
 - The `EquationControl` reference decompile is empty in the cache (`.cs` is 0 bytes), so the IL was read directly from `Ptc.Controls.EquationControl.il`.
 - Gate (project-level): PASS; 3557 checked, zero failures (`.mirror-cache/release-il-0c1b730c7c11/release-il.json`).
+
+### Batch 40: Controls.EquationControl (IsScriptableControl, AtLeftEdge, ScopeDirection, CanHideFromCalculationContext, InterceptAndUpdateResult, UseICalculatableToRestoreResult)
+
+- Exact: six getters. `IsScriptableControl` and `AtLeftEdge()` read `_model`; `ScopeDirection` is `_model.ScopeSide`; `CanHideFromCalculationContext`, `InterceptAndUpdateResult` and `UseICalculatableToRestoreResult` return constants (`true`, `false`, `false`). None has a closure, and they are appended at the end of the partial. Their stub pairs are removed from the `.g.cs`.
+- Left out on purpose: `ErrorVisible` (Mathcad throws `NotImplementedException`, so mirroring it would be a placeholder, not an exact body) and `ComponentCookieMultiThreaded` (a compiler-generated backing field that needs an auto-property shape).
+- Gate (project-level): PASS; 3563 checked, zero failures (`.mirror-cache/release-il-d43be3e9e435/release-il.json`).
