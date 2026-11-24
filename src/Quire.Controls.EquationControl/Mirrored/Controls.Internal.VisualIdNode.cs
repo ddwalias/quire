@@ -68,4 +68,59 @@ internal partial class VisualIdNode
             return ((IVisualText)Children[0]).SuperscriptBaseline;
         }
     }
+
+    public double CaretNormalHeight
+    {
+        get
+        {
+            if (Children.Count == 0)
+            {
+                return 0.0;
+            }
+            ExtendedFont font = ((VisualTextSpan)Children[0]).Font;
+            return font.FontSize * font.GlyphTypeface.Height;
+        }
+    }
+
+    public double CaretNormalOffset
+    {
+        get
+        {
+            if (Children.Count == 0)
+            {
+                return 0.0;
+            }
+            ExtendedFont font = ((VisualTextSpan)Children[0]).Font;
+            double num = font.FontSize * font.GlyphTypeface.Baseline;
+            return EffectiveBaselineY - num;
+        }
+    }
+
+    public double CaretSubscriptHeight
+    {
+        get
+        {
+            if (Children.Count == 0)
+            {
+                return 0.0;
+            }
+            ExtendedFont subscriptFont = ((VisualTextSpan)Children[0]).GetSubscriptFont();
+            return subscriptFont.FontSize * subscriptFont.GlyphTypeface.Height;
+        }
+    }
+
+    public double CaretSubscriptOffset
+    {
+        get
+        {
+            if (Children.Count == 0)
+            {
+                return 0.0;
+            }
+            VisualTextSpan visualTextSpan = (VisualTextSpan)Children[0];
+            ExtendedFont subscriptFont = visualTextSpan.GetSubscriptFont();
+            double num = subscriptFont.FontSize * subscriptFont.GlyphTypeface.Baseline;
+            return visualTextSpan.SubscriptBaseline - num;
+        }
+    }
 }

@@ -277,3 +277,8 @@
 - Exact: the static constructor (`.cctor`), which assigns all 61 command fields in Mathcad order (`_typeOfThis`, the `RoutedUICommand`s and `RoutedCommand`s, the input gestures, and the two class input bindings). The 61 field declarations move from the `.g.cs` into the partial without the stub attribute, as batch 31 did for `Caret`.
 - Usings added for the helper types: `Quire.Wpf` (Gestures, RoutedUICommandWithFunctionalityKey), `Quire.FunctionalitiesLimitation`, `Quire.Controls.Core`, and `System.Windows.Documents` (EditingCommands).
 - Gate (project-level): PASS; 3548 checked, zero failures (`.mirror-cache/release-il-9f6bb75ba21b/release-il.json`); the `.cctor` is checked and matches.
+
+### Batch 38: Controls.Internal.VisualIdNode (CaretNormalHeight, CaretNormalOffset, CaretSubscriptHeight, CaretSubscriptOffset)
+
+- Exact: the four caret getters. Each returns 0 when `Children` is empty, reads the first child as a `VisualTextSpan`, and computes from its `Font`, `GetSubscriptFont()` and `SubscriptBaseline`, with `EffectiveBaselineY` for the normal offset. None has a closure. Their stub pairs are removed from the `.g.cs`; each moved from generated stub to exact.
+- Gate (project-level): PASS; 3552 checked, zero failures (`.mirror-cache/release-il-2f67e256b9f6/release-il.json`).

@@ -12,14 +12,6 @@ namespace Quire.Controls.Internal;
 internal partial class VisualIdNode : global::Quire.Controls.Internal.VisualMathNode, global::Quire.EquationEditor.View.IVisualIdNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
     [global::Quire.Mirror.MirrorStub]
-    public double CaretNormalHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double CaretNormalOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double CaretSubscriptHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double CaretSubscriptOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Rect ScreenInkBounds { get => base.ScreenInkBounds; }
     [global::Quire.Mirror.MirrorStub]
     private void SetMathFormatPropertiesFromLabelFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
