@@ -1,6 +1,8 @@
 #nullable disable
 #pragma warning disable
 
+using System.ComponentModel;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using Quire.Calculation.Core;
@@ -11,6 +13,62 @@ namespace Quire.Controls.Plots.Plot3D.ViewModel;
 
 internal partial class PlotTraceViewModel3D
 {
+    private void FirePropertyChanged(string propertyName)
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    public bool ChangeSymbol(TraceSymbol value)
+    {
+        Symbol = value;
+        return Symbol == value;
+    }
+
+    public void UserChangedStyle()
+    {
+        _model.UserChangedStyle();
+    }
+
+    public bool IsOwnModel(IPlotTraceModel3D model)
+    {
+        return _model.Equals(model);
+    }
+
+    private void ModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        string propertyName = e.PropertyName;
+        if (propertyName != null)
+        {
+            if (propertyName == "VisualData")
+            {
+                CommandManager.InvalidateRequerySuggested();
+            }
+            if (TypeDescriptor.GetProperties(this)[propertyName] != null)
+            {
+                FirePropertyChanged(propertyName);
+            }
+        }
+    }
+
+    public bool ChangeLineStyle(LineStyle value)
+    {
+        LineStyle = value;
+        return LineStyle == value;
+    }
+
+    public TraceStyleState? DoStyleChangeCommand()
+    {
+        return null;
+    }
+
+    public void UndoStyleChangeCommand(TraceStyleState? doData)
+    {
+        DebugTools.DevAssert(!doData.HasValue, null);
+    }
+
     public ICalculatableInfo CalculatableInfo => _model;
 
     public PlotTraceVisualData3D VisualData => _model.VisualData;

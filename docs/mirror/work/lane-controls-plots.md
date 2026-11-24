@@ -636,3 +636,11 @@
 - Generated layout: five stubs removed. Verified: after a Release build, `emit` leaves no new lines against HEAD, only the five removals, so the emitted file equals the applied one.
 - Release IL: full gate PASS — 2586 checked, 0 failures.
 - `PlotGraphRadialAxis.g.cs` now has no `NotImplemented` stubs left.
+
+## Batch 91 — PlotTraceViewModel3D (8 members)
+
+- Owner: haiku-plots-20261123. Branch: `prep/haiku-plots-next-3`, to land as `feature/haiku-plots-20261123`.
+- Members: `FirePropertyChanged`, `ChangeSymbol`, `UserChangedStyle`, `IsOwnModel`, `ModelPropertyChanged`, `ChangeLineStyle`, `DoStyleChangeCommand`, `UndoStyleChangeCommand`. No closures. Hand-written at the top of the class in `Mirrored/Controls.Plots.Plot3D.ViewModel.PlotTraceViewModel3D.cs`; eight stubs removed. Usings added: `System.ComponentModel`, `System.Windows.Input`.
+- Generated layout: after a Release build, `emit` also regenerated the nested `PropertyNames` struct (ten `[MirrorStub]` const fields). That block was missing from HEAD, so the committed `.g.cs` is the emitted version. Emit noise in other projects was reverted.
+- Release IL: full gate PASS — 2594 checked, 0 failures, 8 verdict changes. The 2 unverified items are `PlotControlBase` members, not in this change.
+- Still stubs in this class: none from the eight above.

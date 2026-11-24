@@ -17,26 +17,30 @@ internal partial class PlotTraceViewModel3D : global::Quire.Controls.Plots.Plot3
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
     public PlotTraceViewModel3D(global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D model) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool ChangeSymbol(global::Quire.Controls.Plots.Presenter.TraceSymbol value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UserChangedStyle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsOwnModel(global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D model) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool ChangeLineStyle(global::Quire.Controls.Plots.Presenter.LineStyle value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::Quire.Controls.Plots.Presenter.TraceStyleState> DoStyleChangeCommand() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UndoStyleChangeCommand(global::System.Nullable<global::Quire.Controls.Plots.Presenter.TraceStyleState> doData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.ViewModel.PlotTraceViewModel3D+PropertyNames, Ptc.Controls.Plots")]
     [global::System.Runtime.InteropServices.StructLayout(global::System.Runtime.InteropServices.LayoutKind.Sequential, Size = 1)]
     public partial struct PropertyNames
     {
+        [global::Quire.Mirror.MirrorStub]
+        public const string Color = "Color";
+        [global::Quire.Mirror.MirrorStub]
+        public const string RenderColor = "RenderColor";
+        [global::Quire.Mirror.MirrorStub]
+        public const string LineWeight = "LineWeight";
+        [global::Quire.Mirror.MirrorStub]
+        public const string LineStyle = "LineStyle";
+        [global::Quire.Mirror.MirrorStub]
+        public const string Symbol = "Symbol";
+        [global::Quire.Mirror.MirrorStub]
+        public const string VisualData = "VisualData";
+        [global::Quire.Mirror.MirrorStub]
+        public const string CommonRange = "CommonRange";
+        [global::Quire.Mirror.MirrorStub]
+        public const string SurfaceFill = "SurfaceFill";
+        [global::Quire.Mirror.MirrorStub]
+        public const string NumberOfPoints = "NumberOfPoints";
+        [global::Quire.Mirror.MirrorStub]
+        public const string IsNumOfPointsMutable = "IsNumOfPointsMutable";
     }
 }
