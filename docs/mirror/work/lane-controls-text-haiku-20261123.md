@@ -164,3 +164,14 @@
 - The lambda number is the count of members before the constructor in compile order. The generated prefix alone has 106 counted members before any hand-written code, so a partial constructor gets `b__107`–`b__298` (start/end of partial) and cannot reach Mathcad's `b__81`.
 - Tried and reverted: named static helpers instead of lambdas. The gate fails them as "no Mathcad counterpart", so this is not a workaround.
 - Unblock needs a class-wide Mathcad-order placeholder pass for RichTextBase (move about 26 counted generated stubs behind the constructor as unmarked placeholders). Not started.
+
+## Batch 42 — RichTextBase Mathcad-order placeholder pass and static constructor (CaretLeavesTextAreaEvent)
+
+- Owner: haiku-controls-text-high. Scratch branch scratch/rtb-placeholder-main (not pushed), based on origin/main.
+- Placeholders: the 91 class-level `[MirrorStub]` members of `Generated/Mirror/Controls.Text.RichTextBase.g.cs` (methods and fields) moved to `Mirrored/Controls.Text.RichTextBase.cs` as unmarked placeholders, in their generated order, with the same signatures. 13 stubs inside nested classes stay generated.
+- Static statics: the 16 Mathcad field-initializer statics (`_typeOfThis`, the events, commands, collections, `compareRuns`) are field initializers in the partial in Mathcad's IL order. The static constructor holds the remaining registrations (`HeightProperty`/`FontFamily`/`FontSize` overrides, `CaretLeavesTextAreaEvent` and the other `AddOwner`s, four lambdas, class handler, input bindings).
+- Compile-order devices: the static constructor sits after 65 placeholders, so its closures are `<.cctor>b__81_0..4`; `HandleSetCurrentProofingLanguage` (a placeholder) sits after `ClearSelectedRegionFormatProperties` so its closures keep `113`/`114`.
+- Measured: placing the constructor at the top of the class gives closures `b__3`; after 78 placeholders `b__94`; after 67 `b__83`; after 65 `b__81`. Each placeholder before the constructor added one, and the constructor added one to every later closure (ClearSelected 113 -> 114), which the compensating move fixed.
+- Release IL (project-wide): PASS — 688 checked, 0 failures, rebased on origin/main 1d118a237 (no Controls.Text change between the base and main).
+- Regeneration: `MirrorGen emit` (full Release build plus the copied Quire.Componentsmgd Release output from the main checkout) leaves `RichTextBase.g.cs` exactly as hand-edited (182 deleted lines, no stubs re-added). It also writes the pre-existing drift across the repo (LogDocumentContents placement, CustomSplit blank line, and other projects); that drift was reverted and is not part of this change.
+- Not verified: the counter rule is still empirical. Each layout change needs a gate run. The lambda numbers are reached by these measured positions only.

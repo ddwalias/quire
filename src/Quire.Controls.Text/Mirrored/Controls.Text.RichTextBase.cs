@@ -25,6 +25,120 @@ namespace Quire.Controls.Text;
 
 public partial class RichTextBase
 {
+    private static readonly global::System.Type _typeOfThis = typeof(RichTextBase);
+    public static readonly global::System.Windows.RoutedEvent SpellCheckTimerStartEvent = EventManager.RegisterRoutedEvent("SpellCheckTimerStart", RoutingStrategy.Bubble, typeof(RoutedEventHandler), _typeOfThis);
+    public static readonly global::System.Windows.Input.RoutedUICommand AddToDictionaryCommand = new RoutedUICommandWithFunctionalityKey("Add To Dictionary", "AddToDictionary", _typeOfThis, (Quire.FunctionalitiesLimitation.EnumFunctionalityKey)777);
+    public static readonly global::System.Windows.Input.RoutedUICommand SetCurrentProofingLanguageCommand = new RoutedUICommandWithFunctionalityKey("Set Current Proofing Language", "SetCurrentProofingLanguage", _typeOfThis, (Quire.FunctionalitiesLimitation.EnumFunctionalityKey)778);
+    public static readonly global::System.Windows.Input.RoutedUICommand ClearTextFormatCommand = new RoutedUICommandWithFunctionalityKey("Clear Text Format", "ClearTextFormat", _typeOfThis, (Quire.FunctionalitiesLimitation.EnumFunctionalityKey)785);
+    public static readonly global::System.Windows.Input.RoutedUICommand ApplyTextStyleCommand = new RoutedUICommandWithFunctionalityKey("Apply Text Style", "ApplyTextStyle", _typeOfThis, (Quire.FunctionalitiesLimitation.EnumFunctionalityKey)786);
+    public static readonly global::System.Windows.Input.RoutedUICommand TextStyleCreateFromCommand = new RoutedUICommandWithFunctionalityKey("Create Text Style from", "TextStyleCreateFrom", _typeOfThis, (Quire.FunctionalitiesLimitation.EnumFunctionalityKey)790);
+    public static readonly global::System.Windows.Input.RoutedUICommand ToggleSubscriptCommand = new RoutedUICommandWithFunctionalityKey("Toggle Subscript", "ToggleSubscript", _typeOfThis, (Quire.FunctionalitiesLimitation.EnumFunctionalityKey)791);
+    public static readonly global::System.Windows.Input.RoutedUICommand ToggleSuperscriptCommand = new RoutedUICommandWithFunctionalityKey("Toggle Superscript", "ToggleSuperscript", _typeOfThis, (Quire.FunctionalitiesLimitation.EnumFunctionalityKey)792);
+    internal static readonly global::System.Windows.DependencyPropertyKey TextScriptStatePropertyKey = DependencyProperty.RegisterReadOnly("TextScriptState", typeof(ScriptState), _typeOfThis, new PropertyMetadata((object)ScriptState.None));
+    public static readonly global::System.Windows.DependencyProperty TextScriptStateProperty = TextScriptStatePropertyKey.DependencyProperty;
+    private static readonly global::System.Collections.Generic.HashSet<global::System.Windows.Threading.DispatcherTimer> _pendingSpellCheckTimers = new System.Collections.Generic.HashSet<System.Windows.Threading.DispatcherTimer>();
+    private static readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Text.RichTextBase, int> ScopeRefCounts = new System.Collections.Generic.Dictionary<RichTextBase, int>();
+    private static readonly global::System.Collections.Generic.List<global::Quire.Controls.Text.RichTextBase> ActiveScopes = new System.Collections.Generic.List<RichTextBase>();
+    private static readonly global::System.Collections.Generic.Queue<global::Quire.Controls.Text.RichTextBase> SerializedObjectsToReleaseFromScope = new System.Collections.Generic.Queue<RichTextBase>();
+    public static global::System.Func<global::System.Windows.Documents.Run, global::System.Windows.Documents.Run, bool> compareRuns = (Run run1, Run run2) => run1.FontFamily == run2.FontFamily && run1.FontSize == run2.FontSize && run1.FontWeight == run2.FontWeight && run1.Foreground == run2.Foreground && run1.Background == run2.Background && run1.Tag == run2.Tag && run1.TextDecorations?.Count == run2.TextDecorations?.Count;
+    private const double FontSizeResetToCreateRun = 14.67d;
+    public static readonly global::System.Windows.RoutedEvent ContentChangedEvent;
+    public static readonly global::System.Windows.RoutedEvent CaretLeavesTextAreaEvent;
+    public static readonly global::System.Windows.DependencyProperty IsInPrintingProperty;
+    public static readonly global::System.Windows.DependencyProperty IsInCopyProperty;
+    public static readonly global::System.Windows.DependencyProperty WpfRecreateScriptsProperty;
+    public static readonly global::System.Windows.DependencyProperty IsInSerializationProperty;
+    public static readonly global::System.Windows.DependencyProperty RevertCoerceAfterSerializationProcessProperty;
+    private global::Quire.Core.TextFormat _textFormat;
+    protected global::Quire.Core.TextFormat _textFormatInitialization;
+    private bool _isEndOfLine;
+    private global::System.Windows.IDataObject _pasteDataObject;
+    private global::System.Windows.Documents.TextPointer _lastCaretPosition;
+    private global::System.Windows.Media.Brush _cachedDocumentHighlightColor;
+    private bool _isInSaving;
+    private readonly global::System.Windows.Threading.DispatcherTimer _spellCheckActivationTimer;
+    private static bool _contextMenuOpening;
+    private int _textChangeCounter;
+    private global::System.Nullable<global::System.ValueTuple<int, int>> _spellingErrorRange;
+    protected global::Quire.Undo.CommandScope _pastingCommandScope;
+    private static global::Quire.Undo.CommandScope _isInCopyUndesiredCommandScope;
+    private readonly global::System.Collections.Generic.Queue<double> _splitData;
+    private global::System.Collections.Generic.List<global::System.ValueTuple<int, int>> _cacheSelectedScriptElementsOffsets;
+    protected int _changeLevel;
+    private global::System.Nullable<global::System.ValueTuple<global::Quire.Controls.Text.ScriptState, double>> _reviveScriptAfterBackspaceData;
+    private global::System.Collections.Generic.List<global::System.Windows.Documents.TextPointer> _cachedInsertionPoints;
+    protected global::System.Nullable<double> _cachedBaseline;
+    private double _cachedVerticalAlignmentOffset;
+    private global::Quire.Core.TextFormat _currentTextFormat;
+    private string _oldTextFormatStyleKey;
+    private string _redoTextFormatStyleKey;
+    private global::System.Collections.Generic.IList<string> _undoRunsTextStyleKey;
+    private global::System.Windows.Markup.XmlLanguage _currentProofingLanguage;
+    public double[] CustomScriptsSizesForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public virtual int CaretOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public int SelectionStart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public int SelectionEnd { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public virtual double VerticalAlignmentOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+    public event global::System.Action<global::Quire.Controls.Core.IWhiteboardItem> OnGotFocusEvent;
+    public event global::System.Action<global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Direction> RequestRemove;
+    private static void ContextMenuOpened(object sender, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public RichTextBase() { }
+    private void InitializeFeatureFlagCommandBindings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void SetStyleFromTextStyles(global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> textStyles) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleApplyTextStyle(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void DoApplyTextStyle_internal(global::Quire.TextStyleData styleData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleClearTextFormat(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ClearFormatPropertiesInRange(global::Quire.Core.TextFormat textFormat, global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    // Compile-order device: placed after the placeholders that precede it in Mathcad so the closures are <.cctor>b__81_*.
+    static RichTextBase()
+    {
+        HeightProperty.OverrideMetadata(_typeOfThis, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnProhibitedPropertyChanged)));
+        FontFamilyProperty.OverrideMetadata(_typeOfThis, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnInheritedOnlyPropertyChanged)));
+        FontSizeProperty.OverrideMetadata(_typeOfThis, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnInheritedOnlyPropertyChanged)));
+        ContentChangedEvent = CommonRoutedEvents.ContentChangedEvent.AddOwner(_typeOfThis);
+        CaretLeavesTextAreaEvent = CommonRoutedEvents.CaretLeavesTextAreaEvent.AddOwner(_typeOfThis);
+        WhiteboardDependencyProperties.IsSelectedProperty.OverrideMetadata(_typeOfThis, new FrameworkPropertyMetadata(new PropertyChangedCallback((sender, args) => ((RichTextBase)sender).IsSelectedChangedHandler())));
+        IsInPrintingProperty = DocumentAttachedProperties.IsInPrintingProperty.AddOwner(_typeOfThis, new FrameworkPropertyMetadata(new PropertyChangedCallback((obj, args) => ((RichTextBase)obj).OnIsInPrintingPropertyChanged(args))));
+        IsInCopyProperty = DocumentAttachedProperties.IsInCopyProperty.AddOwner(_typeOfThis, new FrameworkPropertyMetadata(new PropertyChangedCallback((obj, args) => ((RichTextBase)obj).OnIsInCopyPropertyChanged(args))));
+        RevertCoerceAfterSerializationProcessProperty = CustomScriptRunBase.RevertCoerceAfterSerializationProcessProperty.AddOwner(_typeOfThis);
+        IsInSerializationProperty = CustomScriptRunBase.IsInSerializationProperty.AddOwner(_typeOfThis);
+        WpfRecreateScriptsProperty = CustomScriptRunBase.WpfRecreateScriptsProperty.AddOwner(_typeOfThis);
+        AttachedProperties.IsOnVisiblePageProperty.OverrideMetadata(_typeOfThis, new FrameworkPropertyMetadata(new PropertyChangedCallback((sender, args) => ((RichTextBase)sender).HandleIsOnVisiblePageChanged())));
+        WorksheetPropertiesManager.RegisterToWorksheetPropertyNotifications(_typeOfThis);
+        EventManager.RegisterClassHandler(typeof(ContextMenu), ContextMenu.OpenedEvent, new RoutedEventHandler(ContextMenuOpened));
+        CommandManager.RegisterClassInputBinding(_typeOfThis, new InputBinding(new Quire.FunctionalitiesLimitation.InputBindingFunctionalityCommandWrapper(ToggleSubscriptCommand), Gestures.CtrlMinus));
+        CommandManager.RegisterClassInputBinding(_typeOfThis, new InputBinding(new Quire.FunctionalitiesLimitation.InputBindingFunctionalityCommandWrapper(ToggleSubscriptCommand), Gestures.CtrlNumpadMinus));
+        CommandManager.RegisterClassInputBinding(_typeOfThis, new InputBinding(new Quire.FunctionalitiesLimitation.InputBindingFunctionalityCommandWrapper(ToggleSuperscriptCommand), Gestures.CtrlPlus));
+        CommandManager.RegisterClassInputBinding(_typeOfThis, new InputBinding(new Quire.FunctionalitiesLimitation.InputBindingFunctionalityCommandWrapper(ToggleSuperscriptCommand), Gestures.CtrlNumpadPlus));
+    }
+
+    private void HandleToggleSubscriptCommand(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleToggleSuperscriptCommand(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleToggleSubSuperScriptCommand(global::System.Func<global::Quire.Controls.Text.ScriptState, global::Quire.Controls.Text.ScriptState> computeToggleToState) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void ToggleRunElementAccordingToScriptState(global::System.Windows.Controls.TextChangedEventArgs argsChanges) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void RecalculateTextScriptState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected override void OnMouseMove(global::System.Windows.Input.MouseEventArgs args) => base.OnMouseMove(args);
+    private bool WasScriptElementDeletedOnChangeEvent(global::System.Windows.Controls.TextChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void UpdateCurrentRuns(global::System.Windows.Documents.TextRange range, bool isNewRun = false, bool textRemoved = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal global::System.Windows.Markup.XmlLanguage ComputeProofingLanguage(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual global::Quire.Undo.IUndoableCommand CreateTextChangedCommand(global::System.Windows.Controls.TextChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ExecuteTextChangedAndReactivateCommand(global::System.Windows.Controls.TextChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnPreviewBackspace(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::Quire.Core.TextFormat GetTextFormatForWholeDocument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected internal int GetInsertionPointAtPointer(ref global::System.Windows.Documents.TextPointer pointer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual global::System.Collections.Generic.IEnumerable<object> EnumerateEmbeddedObjectsInRange(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private global::System.Windows.Documents.TextRange GetRangeIfMatch(global::System.Windows.Documents.TextRange originalRange, string text, int index, global::System.StringComparison comparisonType, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private global::System.Windows.Documents.TextRange SearchWholeWordRuns(global::System.Windows.Documents.TextRange originalRange, string text, global::System.Windows.Documents.LogicalDirection direction, global::System.StringComparison comparisonType, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private bool SubscriptsMatch(global::System.Windows.Documents.TextRange foundRange, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> findTextSubscriptsList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private bool IsInvalidOperation(global::Quire.Controls.Core.FindReplaceQuery query, global::System.Collections.Generic.List<global::System.Windows.Documents.Run> selectionRuns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ToggleRangeToState(global::System.Windows.Documents.TextPointer startPointer, int startOffset, int endOffset, global::Quire.Controls.Text.ScriptState state) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private double CalculateBaseline() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void Activate(bool isActive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetTextFormatPropertyValue(global::System.Windows.DependencyProperty property, object value, bool isUndoRedo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void Dispose() { }
+    internal static global::System.Windows.Documents.TextPointer GetTextBoundary(global::System.Windows.Documents.LogicalDirection direction, out string partialText, global::Quire.Controls.Text.TextFromRunsStops stopFlags, global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     private void VerifyInsertionPositions()
     {
         if (!DebugTools.DebugVerificationsAllowed)
@@ -191,6 +305,8 @@ public partial class RichTextBase
             Document.Blocks.Each(block => block.ClearTextFormatPropsRecursively((TextElement x) => true, TextFormat.ClearFormatPropsList));
         }
     }
+    // Compile-order device: moved behind ClearSelectedRegionFormatProperties so its closures keep Release ordinals 113-114.
+    private void HandleSetCurrentProofingLanguage(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public bool IsFullySubscript(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected void BuildSubscriptPositions(global::System.Windows.Documents.TextRange range, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
