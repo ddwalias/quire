@@ -14,7 +14,14 @@
 
 Affected dependents (`lane_merge` revalidates them): every project whose reference closure reaches Quire.Calculation.Core, including the UI projects Quire.Controls.*, Quire.EquationEditor, Quire.Calculation and Quire. Not run locally; they need a UI landing slot.
 
+## CalculatingStatus (second batch)
+
+- Mathcad `Ptc.Calculation.Core.CalculatingStatus` is `NotComputing = 2, Computing = 1` (reference.py IL). Quire `Calculating = 1` already matches `Computing`. Quire `Idle` was 0 and is now 2 (`NotComputing`). Quire usages back the mapping: new calculatables and removed children are set to 2 (`SimpleCalculatable`, `CalculatableChildHider`, `IncludedCalculatableWrapper`), and the engine reports 1 while computing.
+- Names are kept (`Idle`, `Calculating`); renaming would break `Quire.Controls.Include` (another lane). No repo code names `Idle` or prints or parses the enum by name, and the only name-based reference in a dependent is `CalculatingStatus.Calculating` (1, unchanged).
+- Zero-default fields (`SpecTableCalculatableWrapper.g`, `IncludeWorksheetCalculatableHandler._calculatingStatus` before its ctor sets it) read numeric 0 before and after this change, so their runtime values do not change.
+- Gate: `--project Quire.Calculation.Core --all` PASS, 824 checked, 574 exact, 0 failures, 0 missing, 0 unfinished, 0 skipped.
+
 ## Remaining
 
-- `CalculatingStatus` has the same class of mismatch: Quire `Idle = 0, Calculating = 1`; Mathcad `NotComputing = 2, Computing = 1`. Not changed here: `Idle = 0` is the zero default and a change needs a separate decision. Callers keep their `(CalculatingStatus)2` casts.
-- Stale comments in other assemblies still say Quire has not assigned 3 (`Quire.Controls/IO/IOManager.cs`); those owners should drop them when they touch those files.
+- `Quire.Controls/IO/IOManager.cs` still has a stale comment about Quire not yet assigning 3; its owner should drop it.
+- Dependents are revalidated by `lane_merge`; they need the UI landing slot.

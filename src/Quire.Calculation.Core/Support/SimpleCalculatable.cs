@@ -7,7 +7,7 @@ namespace Quire.Calculation.Core.Support;
 
 public partial class SimpleCalculatable
 {
-    private CalculatingStatus _calculatingStatus = (CalculatingStatus)2;
+    private CalculatingStatus _calculatingStatus = CalculatingStatus.Idle;
 
     private IResultNode _evaluationResult = new EmptySimpleResultNode();
 

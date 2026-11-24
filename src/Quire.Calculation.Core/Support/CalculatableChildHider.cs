@@ -242,7 +242,7 @@ public partial class CalculatableChildHider
         if (hideFromCalculationContext)
         {
             _fireCalculatableRemoved(calc);
-            calc.SetCalculatingStatus((CalculatingStatus)2);
+            calc.SetCalculatingStatus(CalculatingStatus.Idle);
             calc.SetSynchronizationStatus(SynchronizationStatus.Synchronized);
             return;
         }

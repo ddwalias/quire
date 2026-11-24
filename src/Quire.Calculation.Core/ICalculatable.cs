@@ -7,10 +7,11 @@ public enum SynchronizationStatus
     Synchronized = 3,
 }
 
+// Idle is Mathcad's CalculatingStatus.NotComputing (2) and Calculating is Computing (1); values are compiled into callers.
 public enum CalculatingStatus
 {
-    Idle,
-    Calculating,
+    Idle = 2,
+    Calculating = 1,
 }
 
 /// <summary>A worksheet item the engine calculates (math region, plot, solve block…).</summary>
