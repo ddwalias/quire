@@ -597,6 +597,11 @@ public partial class RichTextWithEmbeddedItem
     }
 
     // Compile order: positioned so the lambdas are <>c__DisplayClass96_0 and <>c__DisplayClass97_0 as in Mathcad.
+    private void ClearSavedState()
+    {
+        _savedActiveItem = null;
+    }
+
     // Compile-order device: keeps the earlier closure ordinals (the TabInto stub removal lowers them by one).
     public override void SetSelection(int fromOffset, int toOffset)
     {
@@ -714,11 +719,6 @@ public partial class RichTextWithEmbeddedItem
         visitor.Visit(this);
     }
 
-    private void ClearSavedState()
-    {
-        _savedActiveItem = null;
-    }
-
     private void ClearState()
     {
         ActiveItem = null;
@@ -735,6 +735,16 @@ public partial class RichTextWithEmbeddedItem
     }
 
     // Compile order: this iterator follows the ten methods above it so its state machine is <EnumerateEmbeddedObjectsInRange>d__114 as in Mathcad.
+    // Compile-order device: placed before the iterator so the iterator and AddItems/RemoveItems/MoveItems lambda ordinals match Release.
+    private Hyperlink GetHyperlinkFromTextPointer(TextPointer ptr)
+    {
+        if (ptr == null)
+        {
+            return null;
+        }
+        return TextPointerExtensions.GetTextElementFromTextPointer<Hyperlink>(ptr);
+    }
+
     public override IEnumerable<object> EnumerateEmbeddedObjectsInRange(DocumentTextRange range)
     {
         for (TextPointer curPos = range.Start; curPos != null && curPos.CompareTo(range.End) < 0; curPos = curPos.GetPositionAtOffset(1, LogicalDirection.Forward))
@@ -848,13 +858,20 @@ public partial class RichTextWithEmbeddedItem
         e.CanExecute = CurrentMathFormat != null;
     }
 
-    private Hyperlink GetHyperlinkFromTextPointer(TextPointer ptr)
+    private void ResetCaretPositionWhenNecessary(TextPointer referenceLineStartPosition)
     {
-        if (ptr == null)
+        if (referenceLineStartPosition.GetPointerContext(LogicalDirection.Backward) != TextPointerContext.EmbeddedElement)
         {
-            return null;
+            return;
         }
-        return TextPointerExtensions.GetTextElementFromTextPointer<Hyperlink>(ptr);
+        TextPointer leftOfElement = referenceLineStartPosition.GetNextInsertionPosition(LogicalDirection.Backward);
+        ContainerItemManager.ExecuteInBackground(() =>
+        {
+            if (CaretPosition.CompareTo(referenceLineStartPosition) >= 0)
+            {
+                CaretPosition = leftOfElement;
+            }
+        }, asynch: true);
     }
 
     private void HandleChildItemRequestRemove(IWhiteboardItem item, Direction dir)

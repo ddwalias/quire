@@ -141,3 +141,11 @@
 - Ordinal finding: removing the `TabInto` stub from the generated prefix lowers every later hand-written lambda ordinal by one (fonts 96->95, iterator 114->113, `GetCombinedDocumentXaml` 103->102, `AddItems` 128->127). Restored by moving the closure-free `SetSelection` override ahead of the font-colour block. `TabInto` itself matches `b__150`.
 - Release IL (project-wide): PASS — 678 checked, 0 failures.
 - Regeneration: `MirrorGen emit` gives the same stub removal plus the pre-existing `LogDocumentContents` placement drift. Emit output elsewhere was reverted. The solution build's 14 errors are in `tests/Quire.Mirror.Tests` (pre-existing).
+
+## Batch 40 — RichTextWithEmbeddedItem.ResetCaretPositionWhenNecessary (private)
+
+- Member: `private void ResetCaretPositionWhenNecessary(TextPointer referenceLineStartPosition)`, one lambda (`<ResetCaretPositionWhenNecessary>b__0` in `<>c__DisplayClass132_0`). Hand-written in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stub removed from the `.g.cs`.
+- Mathcad's member table puts `OnPreviewEnter` (no closure) between `MoveItems` and `ResetCaretPositionWhenNecessary`, so the display class 131 gap belongs to that position. Quire keeps `OnPreviewEnter` where it is: the closure count matches 132 without moving it.
+- Ordinal finding: the stub removal and the move of `ClearSavedState` first shifted the iterator and `AddItems`/`RemoveItems`/`MoveItems` lambdas one lower. Moving the closure-free `GetHyperlinkFromTextPointer` ahead of the iterator restored 114 and 128-130 while ResetCaret stayed 132.
+- Release IL (project-wide): PASS — 681 checked, 0 failures.
+- Regeneration: `MirrorGen emit` gives the same ResetCaret stub removal plus the pre-existing `LogDocumentContents` placement drift and a blank line in `CustomSplitRichTextWithEmbeddedItem.g.cs`. Emit output was reverted; those two drift items are not part of this change.
