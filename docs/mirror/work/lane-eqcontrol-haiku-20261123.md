@@ -397,3 +397,8 @@
 
 - Exact (10 accessors): `CalculatableChildren` (returns the `_calculatableChildren` list as `IEnumerable<ICalculatable>`, covariant, no IL); `WasSuspendedRegenerate` (static get and set on `EquationPresenter.WasSuspendedRegenerate`); `InCustomInitialization` (`_model` get and set through `ISupportCustomInitialization`); `CurrentIdLabel` and `CurrentDisplayIdLabel` (store the field, then if `GetValueOrDefault() == IdLabels.None` (value 6) clear it to null, then `FirePropertyChanged`, which is now implemented, as in batch 57); `CurrentNodeCaretInsertionType` (`_model.CurrentModeNavigatorState.CaretInsertionType`). Stub pairs removed from the `.g.cs` with indentation intact.
 - Gate (project-level): PASS; 3659 checked, zero failures (`.mirror-cache/release-il-2f2593ce5e07/release-il.json`).
+
+### Batch 59: Controls.EquationControl (Algorithm, AlgorithmOptions, EquationXmlNode)
+
+- Exact (5 accessors): `Algorithm` (get `CurrentNode?.Algorithm`; set `CurrentNode.Algorithm = value`, with no null check, as in Mathcad); `AlgorithmOptions` (get `CurrentNode?.AlgorithmOptions`, the same null-safe shape as `Algorithm`); `EquationXmlNode` (get and private set through `_model`). Stub pairs removed from the `.g.cs` with indentation intact.
+- Gate (project-level): PASS; 3664 checked, zero failures (`.mirror-cache/release-il-79dd70a5e32a/release-il.json`).

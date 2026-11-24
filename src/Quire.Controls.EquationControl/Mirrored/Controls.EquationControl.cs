@@ -506,4 +506,18 @@ public partial class EquationControl
     }
 
     public CaretInsertionTypes CurrentNodeCaretInsertionType => _model.CurrentModeNavigatorState.CaretInsertionType;
+
+    public string Algorithm
+    {
+        get => CurrentNode?.Algorithm;
+        set => CurrentNode.Algorithm = value;
+    }
+
+    public AlgorithmOptions AlgorithmOptions => CurrentNode?.AlgorithmOptions;
+
+    public System.Xml.XmlNode EquationXmlNode
+    {
+        get => _model.EquationXmlNode;
+        private set => _model.EquationXmlNode = value;
+    }
 }
