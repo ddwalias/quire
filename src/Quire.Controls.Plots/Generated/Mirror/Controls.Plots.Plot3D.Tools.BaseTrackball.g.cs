@@ -50,20 +50,6 @@ public abstract partial class BaseTrackball : global::Quire.Controls.Plots.Plot3
     [global::Quire.Mirror.MirrorStub]
     public virtual void Detach() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void OnMouseDown(object sender, global::System.Windows.Input.MouseButtonEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleMouseDown(global::System.Windows.Point rawLocation, global::System.Windows.Input.MouseButton mouseButton, bool useTimer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnMouseUp(object sender, global::System.Windows.Input.MouseButtonEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleMouseUp(global::System.Windows.Point rawLocation, global::System.Windows.Input.MouseButton mouseButton) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnMouseMove(object sender, global::System.Windows.Input.MouseEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleMouseMove(global::System.Windows.Point rawLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnMouseWheel(object sender, global::System.Windows.Input.MouseWheelEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected virtual void UpdateCurrentTrackingInfo(global::System.Windows.Point current) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected abstract bool TrackStart(global::System.Windows.Point current, bool useTimer);

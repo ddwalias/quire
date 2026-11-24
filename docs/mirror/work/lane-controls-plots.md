@@ -653,3 +653,12 @@
 - Release IL: first draft had three mismatches (the three shapes above); after the change the full gate PASS — 2603 checked, 0 failures.
 - MirrorGen emit after the build changed only the nine removals in the target file; other emit noise reverted.
 - Still stubs in this class: `Attach`, `Reset`, `CloneAndFreeze`, `Detach`, `UpdateCurrentTrackingInfo`, the `OnMouse*` handlers, `HandleMouseDown`/`HandleMouseUp`/`HandleMouseMove`, `TrackStart`/`Track`/`TrackEnd` and `InitializeTransform`. Not attempted in this batch.
+
+## Batch 93 — BaseTrackball mouse handlers (7 members)
+
+- Owner: haiku-plots-20261123. Branch: `feature/haiku-plots-20261123` (local commit; not landed, slot requested).
+- Members: `OnMouseDown`, `HandleMouseDown`, `OnMouseUp`, `HandleMouseUp`, `OnMouseMove`, `HandleMouseMove`, `OnMouseWheel`. No closures. Hand-written in `Mirrored/Controls.Plots.Plot3D.Tools.BaseTrackball.cs` (new `using Quire.Wpf;` for `WpfUtils`); seven stubs removed from the generated file.
+- Shapes Mathcad needs: `HandleMouseDown`, `HandleMouseUp` and `HandleMouseMove` return early on their guard conditions (`if (IsTrackingDifferentButton(...)) return;`, `if (!IsTracking || IsTrackingDifferentButton(...)) return;`, `if (!IsTracking) return;`), not nested `if` blocks. A first draft with nested `if` blocks failed on the first branch.
+- Release IL: after the early-return change, the full gate PASS — 2610 checked, 0 failures.
+- MirrorGen emit after the build changed only the seven removals; other emit noise reverted.
+- Still stubs in this class: `UpdateCurrentTrackingInfo` (needs the `DocumentAttachedProperties.GetZoom` helper and `DoubleComparer`), `Attach`, `Reset`, `CloneAndFreeze`, `Detach`, `TrackStart`/`Track`/`TrackEnd`, `InitializeTransform`.

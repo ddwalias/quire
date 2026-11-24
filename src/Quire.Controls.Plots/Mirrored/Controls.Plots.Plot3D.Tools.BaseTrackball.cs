@@ -2,11 +2,90 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
+using Quire.Wpf;
 
 namespace Quire.Controls.Plots.Plot3D.Tools;
 
 public abstract partial class BaseTrackball : IBaseTrackball
 {
+    private void OnMouseDown(object sender, MouseButtonEventArgs args)
+    {
+        HandleMouseDown(GetPositionRelativeToViewport(args), args.ChangedButton, useTimer: true);
+        if (IsTracking)
+        {
+            Mouse.Capture(MouseEventsSource, CaptureMode.Element);
+        }
+    }
+
+    public void HandleMouseDown(Point rawLocation, MouseButton mouseButton, bool useTimer)
+    {
+        if (IsTrackingDifferentButton(mouseButton))
+        {
+            return;
+        }
+        Point position = CoercePosition(rawLocation);
+        if (TrackStart(position, useTimer))
+        {
+            CurrentTrackingInfo = new TrackingInfo
+            {
+                TrackingButton = mouseButton,
+                CaptureStartPosition = position,
+                LastPosition = position
+            };
+            _previousTransform = CameraTransform.Value;
+        }
+    }
+
+    private void OnMouseUp(object sender, MouseButtonEventArgs args)
+    {
+        bool wasTracking = IsTracking;
+        HandleMouseUp(GetPositionRelativeToViewport(args), args.ChangedButton);
+        if (wasTracking && !IsTracking)
+        {
+            Mouse.Capture(MouseEventsSource, CaptureMode.None);
+        }
+        args.Handled = false;
+    }
+
+    public void HandleMouseUp(Point rawLocation, MouseButton mouseButton)
+    {
+        if (!IsTracking || IsTrackingDifferentButton(mouseButton))
+        {
+            return;
+        }
+        Point current = CoercePosition(rawLocation);
+        UpdateCurrentTrackingInfo(current);
+        TrackEnd(current);
+        FireMouseUp();
+        CurrentTrackingInfo = null;
+    }
+
+    private void OnMouseMove(object sender, MouseEventArgs args)
+    {
+        HandleMouseMove(GetPositionRelativeToViewport(args));
+    }
+
+    public void HandleMouseMove(Point rawLocation)
+    {
+        if (!IsTracking)
+        {
+            return;
+        }
+        Point current = CoercePosition(rawLocation);
+        UpdateCurrentTrackingInfo(current);
+        if (CurrentTrackingInfo.HasSignificantMove)
+        {
+            Track(current);
+        }
+    }
+
+    private void OnMouseWheel(object sender, MouseWheelEventArgs args)
+    {
+        _previousTransform = CameraTransform.Value;
+        HandleMouseWheel(args.Delta / WpfUtils.MouseWheelScrollDelta);
+        args.Handled = true;
+    }
+
     protected Point GetPositionRelativeToViewport(MouseEventArgs args)
     {
         return args.GetPosition(Viewport);
