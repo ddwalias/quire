@@ -30,8 +30,6 @@ public abstract partial class OleBaseComponentViewModel : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     private void Init() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private double AlignHeightWithGridLines(double height, bool isOleContainerItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void IndicateHiddenErrors() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetOleContainerItem(global::Quire.Controls.ExcelComponent.View.IOleContainerItem container) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

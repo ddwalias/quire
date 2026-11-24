@@ -1411,6 +1411,21 @@ public abstract partial class OleBaseComponentViewModel
         SetRestrictedArea();
     }
 
+    private double AlignHeightWithGridLines(double height, bool isOleContainerItem)
+    {
+        // Single exit: Release IL returns the value through one local, an early return differs.
+        double alignedHeight;
+        if (!isOleContainerItem || ShouldAlignOleContainerItemWithGridLines)
+        {
+            alignedHeight = Math.Round(height / _alignmentGrid.GridCellSize.Height) * _alignmentGrid.GridCellSize.Height;
+        }
+        else
+        {
+            alignedHeight = height;
+        }
+        return alignedHeight;
+    }
+
     protected void PostClone()
     {
         WhiteboardItems.Each(HandleItemAdded);
