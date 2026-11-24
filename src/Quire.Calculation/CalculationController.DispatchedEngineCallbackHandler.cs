@@ -28,7 +28,7 @@ public partial class CalculationController
             get
             {
                 // Separate `is` and `as` checks: a pattern variable compiles to a different branch shape than Mathcad's IL.
-                DispatcherPriority? priority = _encapsulatedCalculatable is ICalcWithPriority ? (_encapsulatedCalculatable as ICalcWithPriority).ResultsProcessingPriority : (DispatcherPriority?)null;
+                DispatcherPriority? priority = (_encapsulatedCalculatable is ICalcWithPriority) ? (_encapsulatedCalculatable as ICalcWithPriority).ResultsProcessingPriority : (DispatcherPriority?)null;
                 if (!priority.HasValue)
                 {
                     return CalcResultsProcessingPriorities.DefaultResultDispatchPriority_Background;
@@ -67,6 +67,78 @@ public partial class CalculationController
             {
                 _cookie = calculatableWithDataExchange.IncrementComponentCookieMultiThreaded(false);
             }
+        }
+
+        protected void DispatchedSetSynchronizationStatus(SynchronizationStatus status)
+        {
+            // Guard clauses: Mathcad's IL returns from each failed check instead of branching around one combined condition.
+            if (!_isCalcInContext(_encapsulatedCalculatable))
+            {
+                return;
+            }
+            if (!IsComponentCookieUpToDate)
+            {
+                return;
+            }
+            _encapsulatedCalculatable.SetSynchronizationStatus(status);
+            if (_encapsulatedCalculatable is ICalculatableResultOwner { InterceptAndUpdateResult: not false, EngineResult: var engineResult } calculatableResultOwner)
+            {
+                calculatableResultOwner.EngineResult = new EngineResult(engineResult, status);
+            }
+        }
+
+        protected virtual void DispatchedSetResult(IResultNode result)
+        {
+            // Guard clauses: Mathcad's IL returns from each failed check instead of branching around one combined condition.
+            if (!_isCalcInContext(_encapsulatedCalculatable))
+            {
+                return;
+            }
+            if (!IsComponentCookieUpToDate)
+            {
+                return;
+            }
+            _encapsulatedCalculatable.SetResult(result);
+            if (_encapsulatedCalculatable is ICalculatableResultOwner { InterceptAndUpdateResult: not false, EngineResult: var engineResult } calculatableResultOwner)
+            {
+                calculatableResultOwner.EngineResult = new EngineResult(engineResult, result);
+            }
+        }
+
+        protected virtual void DispatchedSetError(EngineError error)
+        {
+            // Guard clauses: Mathcad's IL returns from each failed check instead of branching around one combined condition.
+            if (!_isCalcInContext(_encapsulatedCalculatable))
+            {
+                return;
+            }
+            if (!IsComponentCookieUpToDate)
+            {
+                return;
+            }
+            if (_encapsulatedCalculatable is ICalculatableResultOwner { InterceptAndUpdateResult: not false, EngineResult: var engineResult } calculatableResultOwner)
+            {
+                calculatableResultOwner.EngineResult = new EngineResult(engineResult, CloneError(error));
+            }
+            _encapsulatedCalculatable.SetError(error);
+        }
+
+        protected EngineError CloneError(EngineError error)
+        {
+            if (error == null)
+            {
+                return null;
+            }
+            EngineError engineError = error.Clone();
+            if (engineError.ErrorSource == _encapsulatedCalculatable || !(_encapsulatedCalculatable is ICalculatableAggregateWithComponent))
+            {
+                ResultManager.ErrorHandlesToSerialNumber(engineError, Rl);
+            }
+            else
+            {
+                DebugTools.AssertNotNull(engineError.ErrorSource, null);
+            }
+            return engineError;
         }
     }
 }
