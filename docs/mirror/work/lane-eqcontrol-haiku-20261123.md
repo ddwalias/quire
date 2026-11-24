@@ -357,3 +357,8 @@
 
 - Exact: `ErrorCount` (`if (Error == null) return _model.ScriptingError?.ResourceString != null ? 1 : 0; return 1;`; the `return 1` block is last, which is the branch order Mathcad uses, and the first attempt with `if (Error != null) return 1;` first gave a `brfalse` where Mathcad has `brtrue`); `ErrorText` (`GetErrorDisplayText` delegate invoked on `_model.CalculationError`, concatenated with the `ScriptingError?.ResourceString`, else `ErrorCode`). Both are appended at the end of the partial; their stub pairs are removed from the `.g.cs`.
 - Gate (project-level): PASS; 3595 checked, zero failures (`.mirror-cache/release-il-cfd1fa01d00b/release-il.json`).
+
+### Batch 52: Controls.EquationControl (ActiveElementOpacity)
+
+- Exact: `ActiveElementOpacity` (`get => (double)GetValue(ActiveElementOpacityProperty)`, `set => SetValue(ActiveElementOpacityProperty, value)`). The dependency-property group is already in place: the hand-written static constructor registers `ActiveElementOpacityProperty` (and `ActiveNonNavigatableElementOpacityProperty`, which has no property on Mathcad's EquationControl), so the static initialization is unchanged. The property's stub pair is removed from the `.g.cs`.
+- Gate (project-level): PASS; 3597 checked, zero failures (`.mirror-cache/release-il-1b7ec26bf553/release-il.json`).

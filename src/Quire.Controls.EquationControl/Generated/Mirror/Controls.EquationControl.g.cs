@@ -112,8 +112,6 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
     [global::Quire.Mirror.MirrorStub]
     public bool IsWithinSolveBlock { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public double ActiveElementOpacity { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.NumberFormat CurrentNumberFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.MatrixFormat CurrentMatrixFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

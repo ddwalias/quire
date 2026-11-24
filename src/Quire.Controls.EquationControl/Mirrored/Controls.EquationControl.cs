@@ -298,4 +298,10 @@ public partial class EquationControl
             return ErrorCode;
         }
     }
+
+    public double ActiveElementOpacity
+    {
+        get => (double)GetValue(ActiveElementOpacityProperty);
+        set => SetValue(ActiveElementOpacityProperty, value);
+    }
 }
