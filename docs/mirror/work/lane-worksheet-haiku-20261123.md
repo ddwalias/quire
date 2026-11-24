@@ -220,3 +220,9 @@
 - The nested `SplitAction` delegate moved from after `ActivateItemPart` (row 41) to just before `AppendNewPageIfNeeded` (row 66). Its position now sits between rows 63 and 66, which is where Mathcad's display-class and lambda numbering place it. Batch 27's `AppendNewPageIfNeeded` lambda (`b__86_0`) still matches.
 - Release IL gate: PASS, 1347 checked, 1347 exact, 0 failures.
 - `SplitItemIfNeededAndRemoveEmptyPages` remains parked and reverted (display class 37 against 33, and captured-field store order stamp, item, location, this).
+
+## Batch 33 — WorksheetPageManager HandleItemMoved
+
+- `HandleItemMoved(item, oldLocation)`: page is `GetContainingPage(item) ?? GetPage(oldLocation.Y)`; captured `location` and `stamp` locals; `AppendNewPageIfNeeded`; the stamp update as `ItemManager.SetItemAddMoveRemoveTimestamp(item, ++stamp)` (captured-field increment as an argument matches the Mathcad temp-local shape, where the statement-level `long newStamp` form did not); same-page branch removes zombies, moves the item and registers `ExecuteOnLoad(item, () => SplitItemIfNeededAndRemoveEmptyPages(item, location, stamp))`; other branch removes from page and re-adds.
+- Runtime dependency: the `ExecuteOnLoad` closure calls the parked `SplitItemIfNeededAndRemoveEmptyPages`, which is still a stub at runtime. The IL of `HandleItemMoved` itself does not depend on it.
+- Release IL gate: PASS, 1350 checked, 1350 exact, 0 failures.

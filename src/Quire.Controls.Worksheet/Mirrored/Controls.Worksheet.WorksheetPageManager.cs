@@ -186,7 +186,32 @@ internal partial class WorksheetPageManager
         }
     }
 
-    public void HandleItemMoved(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point oldLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void HandleItemMoved(IWhiteboardItem item, Point oldLocation)
+    {
+        IWorksheetPage page = ItemManager.GetContainingPage(item) ?? GetPage(oldLocation.Y);
+        Point location;
+        long stamp;
+        location = ItemManager.GetItemWorksheetLocation(item);
+        double itemY = location.Y;
+        int pageIndex = GetPageIndex(itemY);
+        AppendNewPageIfNeeded(pageIndex);
+        IWorksheetPage newPage = Pages[pageIndex];
+        stamp = ItemManager.GetItemAddMoveRemoveTimestamp(item);
+        ItemManager.SetItemAddMoveRemoveTimestamp(item, ++stamp);
+        if (page == newPage)
+        {
+            RemoveNonOwnedItemAndZombies(item);
+            double yOffset = itemY - PageLayout.PageBodyHeight * pageIndex;
+            Point newLocation = new Point(location.X, yOffset);
+            ItemManager.SetItemLocation(item, newLocation);
+            ItemManager.ExecuteOnLoad(item, () => SplitItemIfNeededAndRemoveEmptyPages(item, location, stamp));
+        }
+        else
+        {
+            RemoveItemFromPage(page, item);
+            AddItemToAppropriatePage(item);
+        }
+    }
 
     public IWorksheetPage SetInsertionPointOnAppropriatePage(Point insertionPoint)
     {
