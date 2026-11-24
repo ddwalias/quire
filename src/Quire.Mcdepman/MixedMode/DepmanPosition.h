@@ -30,7 +30,7 @@ public:
     int GetPriority() const;
     __declspec(noinline) bool IsDead();
     bool IsLocked() const;
-    bool IsUndefine();
+    __declspec(noinline) bool IsUndefine();
     bool IsChildOnly();
     long GetClientHandle() const;
     int GetBasePriority() const;

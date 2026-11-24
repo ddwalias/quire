@@ -9,22 +9,26 @@ void __cdecl operator delete(void* ptr, unsigned __int64 size) noexcept;
 
 namespace Engine { namespace Unmanaged {
     template <template <typename> class Alloc = std::allocator, typename CharT = wchar_t>
-    struct label_set : public std::set<std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>>, std::less<std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>>>, Alloc<std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>>>>
+    class label_set : public std::set<std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>>, std::less<std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>>>, Alloc<std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>>>>
     {
-        typedef std::set<std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>>, std::less<std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>>>, Alloc<std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>>>> base_set;
+    public:
+        typedef std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>> string_type;
+        typedef std::set<string_type, std::less<string_type>, Alloc<string_type>> base_set;
 
         bool is_wild_;
 
-        label_set() : is_wild_(false) {}
+        __forceinline label_set() : base_set(typename base_set::key_compare(), Alloc<string_type>()), is_wild_(false) {}
+        __forceinline label_set(const label_set& other) : base_set(other), is_wild_(other.is_wild_) {}
+        __forceinline ~label_set() = default;
 
         void add(const CharT* s, size_t len)
         {
-            if (s[0] == L'*' && s[1] == 0)
+            if (bool is_wild = (s[0] == 42 && s[1] == 0))
             {
                 is_wild_ = true;
                 return;
             }
-            this->insert(std::basic_string<CharT, std::char_traits<CharT>, Alloc<CharT>>(s, len));
+            this->insert(string_type(s, len));
         }
 
         bool operator<(const label_set& other) const
@@ -37,8 +41,41 @@ namespace Engine { namespace Unmanaged {
         }
     };
 
-    typedef label_set<std::allocator, wchar_t> std_label_set;
+    struct std_label_set : public label_set<std::allocator, wchar_t> {
+        __forceinline std_label_set() : label_set<std::allocator, wchar_t>() {}
+        std_label_set(const std_label_set& other)
+            : label_set<std::allocator, wchar_t>(other) {}
+        ~std_label_set() = default;
+    };
     static_assert(sizeof(std_label_set) == 24, "std_label_set size must be 24 bytes");
+
+    namespace {
+        template <typename Set>
+        bool subset(const Set& a, const Set& b)
+        {
+            if (a.size() > b.size())
+                return false;
+            return std::includes(b.begin(), b.end(), a.begin(), a.end());
+        }
+    }
+
+    template <typename Set>
+    bool _unifies(const Set& a, const Set& b)
+    {
+        if (&a == &b)
+            return true;
+        if (a.is_wild_)
+        {
+            if (b.is_wild_)
+                return true;
+            return subset((const typename Set::base_set&)a, (const typename Set::base_set&)b);
+        }
+        if (b.is_wild_)
+        {
+            return subset((const typename Set::base_set&)b, (const typename Set::base_set&)a);
+        }
+        return (const typename Set::base_set&)a == (const typename Set::base_set&)b;
+    }
 }}
 
 namespace Quire { namespace depman {
@@ -48,6 +85,58 @@ namespace Quire { namespace depman {
         AT = 0,
         BEFORE = 1,
         AT_OR_BEFORE = 2
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("depman.DSym, mcdepman")]
+    public value struct DSym
+    {
+        System::String^ name;
+        Quire::utl_mgd::LabelSet^ labels;
+
+    private:
+        System::String^ m_full;
+
+    public:
+        DSym(System::String^ symbol)
+            : name(Quire::utl_mgd::LabelUtils::SplitName(symbol)),
+              labels(Quire::utl_mgd::LabelTrie::InternLabels(symbol)) {}
+
+        property bool wild
+        {
+            bool get() { return labels->Wild(); }
+        }
+
+        property System::String^ full
+        {
+            System::String^ get()
+            {
+                if (m_full == nullptr)
+                    m_full = name + labels->ToString();
+
+                return m_full;
+            }
+        }
+
+        virtual int GetHashCode() override
+        {
+            return full->GetHashCode();
+        }
+
+        virtual bool Equals(System::Object^ other) override
+        {
+            DSym^ symbol = dynamic_cast<DSym^>(other);
+            if (symbol == nullptr)
+                return false;
+
+            if (labels != symbol->labels)
+                return false;
+
+            // Release IL keeps the failed name comparison as the final branch.
+            if (!name->Equals(symbol->name))
+                return false;
+
+            return true;
+        }
     };
 }}
 
@@ -136,6 +225,8 @@ namespace depman {
     typedef std::map<Position*, std::pair<ActionChain*, DependencyType>, value_less<Position>> ForwardDepMap;
     typedef std::map<SDef, ForwardDepMap*> ForwardDepTable;
 
+    void AddLabels(::Quire::depman::DSym ds, Engine::Unmanaged::std_label_set& lb);
+
     class DepManager {
     public:
         virtual ~DepManager();
@@ -143,6 +234,8 @@ namespace depman {
         DefMap::iterator find_def(DefMap* defs, Position* pos, ::Quire::depman::ResolveMode mode);
         Position* find_def_nodead(DefMap* defs, Position* r, ::Quire::depman::ResolveMode m);
         Position* find_next_def(const SDef& name, Position* r);
+        int is_bound(int scope, ::Quire::depman::DSym ds, Position* position, ::Quire::depman::ResolveMode mode);
+        Position* resolve(int scope, ::Quire::depman::DSym ds, Position* position, ::Quire::depman::ResolveMode mode);
 
     private:
         DefTable def_table_;
@@ -276,58 +369,6 @@ namespace Quire { namespace depman {
         void RemoveCallback(Quire::Engine::BooleanCallback^ b);
         void WaitValueTrue(int timeout);
         property bool Value { bool get(); }
-    };
-
-    [Quire::Mirror::MirrorOfAttribute("depman.DSym, mcdepman")]
-    public value struct DSym
-    {
-        System::String^ name;
-        Quire::utl_mgd::LabelSet^ labels;
-
-    private:
-        System::String^ m_full;
-
-    public:
-        DSym(System::String^ symbol)
-            : name(Quire::utl_mgd::LabelUtils::SplitName(symbol)),
-              labels(Quire::utl_mgd::LabelTrie::InternLabels(symbol)) {}
-
-        property bool wild
-        {
-            bool get() { return labels->Wild(); }
-        }
-
-        property System::String^ full
-        {
-            System::String^ get()
-            {
-                if (m_full == nullptr)
-                    m_full = name + labels->ToString();
-
-                return m_full;
-            }
-        }
-
-        virtual int GetHashCode() override
-        {
-            return full->GetHashCode();
-        }
-
-        virtual bool Equals(System::Object^ other) override
-        {
-            DSym^ symbol = dynamic_cast<DSym^>(other);
-            if (symbol == nullptr)
-                return false;
-
-            if (labels != symbol->labels)
-                return false;
-
-            // Release IL keeps the failed name comparison as the final branch.
-            if (!name->Equals(symbol->name))
-                return false;
-
-            return true;
-        }
     };
 
     [Quire::Mirror::MirrorOfAttribute("depman.DependencyType, mcdepman")]

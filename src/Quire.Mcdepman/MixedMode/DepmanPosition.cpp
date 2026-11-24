@@ -1,6 +1,7 @@
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <sdkddkver.h>
+#include <vcclr.h>
 #include "DepmanNodeTimer.h"
 #include "DepmanPosition.h"
 
@@ -44,6 +45,9 @@
 #pragma comment(linker, "/include:?find_def@DepManager@depman@@QEAM?AV?$_Tree_iterator@V?$_Tree_val@U?$_Tree_simple_types@U?$pair@QEAVPosition@depman@@W4DefinitionType@2@@std@@@std@@@std@@@std@@PEAV?$map@PEAVPosition@depman@@W4DefinitionType@2@U?$value_less@VPosition@depman@@@@V?$allocator@U?$pair@QEAVPosition@depman@@W4DefinitionType@2@@std@@@std@@@4@PEAVPosition@2@W4ResolveMode@2Quire@@@Z")
 #pragma comment(linker, "/include:?find_def_nodead@DepManager@depman@@QEAMPEAVPosition@2@PEAV?$map@PEAVPosition@depman@@W4DefinitionType@2@U?$value_less@VPosition@depman@@@@V?$allocator@U?$pair@QEAVPosition@depman@@W4DefinitionType@2@@std@@@std@@@std@@PEAV32@W4ResolveMode@2Quire@@@Z")
 #pragma comment(linker, "/include:?find_next_def@DepManager@depman@@QEAAPEAVPosition@2@AEBUSDef@2@PEAV32@@Z")
+// #pragma comment(linker, "/include:?AddLabels@depman@@YMXUDSym@1Quire@@AEAUstd_label_set@Unmanaged@Engine@@@Z")
+// #pragma comment(linker, "/include:?resolve@DepManager@depman@@QEAMPEAVPosition@2@HUDSym@2Quire@@PEAV32@W4ResolveMode@25@@Z")
+// #pragma comment(linker, "/include:?is_bound@DepManager@depman@@QEAMHHUDSym@2Quire@@PEAVPosition@2@W4ResolveMode@24@@Z")
 // Pragmas for methods blocked on cross-assembly gcroot mapping in MethodAudit (SafeEvent, LabeledDictionary).
 // Source implementations below are exact and ready to be un-commented once MethodAudit supports cross-assembly gcroot:
 // #pragma comment(linker, "/include:?SetBusy@PositionBase@depman@@QEAAX_N@Z")
@@ -123,7 +127,7 @@ bool PositionBase::IsLocked() const
     return action_chain_ && action_chain_->IsLocked();
 }
 
-bool PositionBase::IsUndefine()
+__declspec(noinline) bool PositionBase::IsUndefine()
 {
     return action_chain_ && action_chain_->IsUndefine();
 }
@@ -373,6 +377,81 @@ Position* DepManager::find_next_def(const SDef& name, Position* r)
             return it->first;
     }
     return nullptr;
+}
+
+void AddLabels(::Quire::depman::DSym ds, Engine::Unmanaged::std_label_set& lb)
+{
+    const wchar_t* pStar = nullptr;
+    const wchar_t __unaligned* p1 = nullptr;
+    const wchar_t* p2 = nullptr;
+    size_t len = 0;
+    for each (System::String^ s in ds.labels->Labels())
+    {
+        pin_ptr<const wchar_t> p = PtrToStringChars(s);
+        p2 = p;
+        p1 = p2;
+        while (*(const short __unaligned*)p1)
+            p1++;
+        len = p1 - p2;
+#pragma warning(push)
+#pragma warning(disable: 4189)
+        size_t n = len;
+#pragma warning(pop)
+        lb.add(p2, len);
+    }
+    if (ds.wild)
+    {
+        pStar = L"*";
+        while (*(const short __unaligned*)++pStar)
+            ;
+        lb.add(L"*", pStar - L"*");
+    }
+}
+
+int DepManager::is_bound(int scope, ::Quire::depman::DSym ds, Position* position, ::Quire::depman::ResolveMode mode)
+{
+    Position* p = resolve(scope, ds, position, mode);
+    if (!p || p->IsUndefine())
+        return 0;
+    return 1;
+}
+
+Position* DepManager::resolve(int scope, ::Quire::depman::DSym ds, Position* position, ::Quire::depman::ResolveMode mode)
+{
+    pin_ptr<const wchar_t> p = PtrToStringChars(ds.name);
+    Engine::Unmanaged::std_label_set labels = Engine::Unmanaged::std_label_set();
+    AddLabels(ds, labels);
+    if (labels.is_wild_)
+    {
+        Position* best = nullptr;
+        SDef key(scope, std::wstring(p), Engine::Unmanaged::std_label_set());
+        for (auto it = def_table_.lower_bound(key); it != def_table_.end(); ++it)
+        {
+            if (it->first.scope_id != scope)
+                break;
+            if (!(it->first.name.compare(p) == 0))
+                break;
+
+            if (Engine::Unmanaged::_unifies<Engine::Unmanaged::label_set<std::allocator, wchar_t>>(it->first.labels, labels))
+            {
+                Position* cand = find_def_nodead(it->second, position, mode);
+                if (cand)
+                {
+                    if (!best)
+                        best = cand;
+                    else if (best->ord_val_ < cand->ord_val_)
+                        best = cand;
+                }
+            }
+        }
+        return best;
+    }
+    else
+    {
+        SDef key(scope, std::wstring(p), labels);
+        DefMap* defs = lookup(key, def_table_);
+        return find_def_nodead(defs, position, mode);
+    }
 }
 
 } // namespace depman

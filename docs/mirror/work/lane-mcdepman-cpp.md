@@ -448,6 +448,32 @@ Investigation of remaining unmigrated `PositionBase`, `Position`, and `DepManage
   - Remaining `DepManager` methods requiring `PositionBase` interaction or full multi-level mutations (`resolve`, `is_bound`, `add_def`, `remove_def`, `add_dep`, `remove_dep`, `find_all_deps`, and `invalidateChains`).
   - Compiler RTTI descriptor emissions for `Position.previous` and `Position.next`.
 
+## Batch 31 — DepManager.is_bound, SDef/std_label_set lifecycle, and AddLabels/resolve candidate evidence
+
+- Owner: AGY, Orca task `task_173fd4feb95b`; branch `feature/luna-mcdepman`.
+- Members mirrored and verified:
+  - `depman.DepManager.is_bound(int, DSym, Position*, ResolveMode)`: **EXACT PASS** (token `0x06000045`, 27 bytes, 0 differences).
+  - `Engine.Unmanaged.std_label_set.{ctor}` (copy constructor): **EXACT PASS**.
+  - `Engine.Unmanaged.std_label_set.{dtor}`: **EXACT PASS**.
+  - `depman.SDef.{dtor}`: **EXACT PASS** (inlined 72-byte `_Erase_tree` and `_Freenode0` body matching Mathcad byte-for-byte).
+  - `depman.AddLabels(DSym, std_label_set&)`: All 76 instructions matched byte-for-byte; only local 0 metadata modopt differs (`System.Char*` vs `System.Char* modopt(IsConst)`).
+  - `Engine.Unmanaged.label_set<Alloc, CharT>.add(const CharT*, size_t)`: 3 conditional branches matched (`bne.un.s`, `brtrue.s`, `brfalse.s`), disassembling to 157 bytes.
+  - `depman.DepManager.resolve(int, DSym, Position*, ResolveMode)`: candidate implementation complete; comparison `best->ord_val_ < cand->ord_val_` aligned; calls `_Tree.{ctor}` vs Mathcad toolchain emitting `std.set.{ctor}` at RVA 0x8db8.
+  - `Engine.Unmanaged._unifies<label_set>`: signature matched `class Engine::Unmanaged::label_set<class std::allocator,wchar_t>`. Unpaired call to `?A0x4efd0dd5.subset` vs Mathcad's `?A0x5eb2b5b1.subset` represents toolchain-level anonymous TU hash normalization in `MethodAudit`.
+- Release IL report: PASS; 273 checked (`.mirror-cache/release-il-93de073a7816/release-il.json`).
+- Architecture and implementation:
+  - Disassembled `depman.DepManager.is_bound` (token `0x06000045`, 27 bytes). Marked `PositionBase::IsUndefine()` as `__declspec(noinline)` to prevent cross-function inlining, reproducing Mathcad's exact 27-byte instruction sequence and call target byte-for-byte.
+  - Inlining `std_label_set::~std_label_set()` by declaring `~std_label_set() = default;` without `__declspec(noinline)` ensures MSVC inlines the tree destruction directly into `SDef.{dtor}`, matching Mathcad's 72-byte destruction sequence.
+  - Declared `__forceinline label_set()`, `__forceinline label_set(const label_set&)`, and `__forceinline ~label_set()` on template base `label_set`, eliminating spurious `label_set.{ctor}` and `label_set.{dtor}` from `<Module>` metadata while retaining explicit `std_label_set.{ctor}` and `{dtor}`.
+  - Implemented `depman.AddLabels`: pin pointer `pin_ptr<const wchar_t> p = PtrToStringChars(s);` and pointer traversal `while (*(const short __unaligned*)p1) p1++;` generates all 76 IL instructions matching Mathcad byte-for-byte.
+- Preserved scratch patch for maintainer review:
+  - `native_linked_interior_data.patch` preserved in scratch directory with manifest-backed interior data verification and regression test suite covering offset mismatch, altered bytes, repeated data, and boundary validation.
+- Remaining dependencies:
+  - Anonymous TU hash normalization in `MethodAudit` for `<Module>` methods (`?A0x4efd0dd5.subset` vs `?A0x5eb2b5b1.subset`).
+  - MSVC STL constructor inlining difference in `DepManager.resolve` (`_Tree.{ctor}` vs `std.set.{ctor}`).
+  - Cross-assembly `gcroot` resolution in `MethodAudit` (`SafeEvent`, `LabeledDictionary`).
+
+
 
 
 
