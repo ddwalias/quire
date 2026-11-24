@@ -90,3 +90,12 @@
 - Remaining (batch 66 report): 125 generated-stub members not verified.
 - Batch 67: `ExcelComponentControl`: implemented all 4 constructor overloads in `src/Quire.Controls.ExcelComponent/Mirrored/Controls.ExcelComponent.ExcelComponentControl.cs` (`.ctor()`, `.ctor(Size?)`, `.ctor(bool, Size?)`, `.ctor(ExcelComponentControl)`). Reordered member declarations (`ExcelContainer`, `ResultOwners`, `ExcelIdentifier`) to align constructors at member ordinals 13 and 14, matching closures `<.ctor>b__13_0`, `<>c::<.ctor>b__13_1`, and `<>c::<.ctor>b__14_0` exactly. All remaining stubs removed from `Generated/Mirror/Controls.ExcelComponent.ExcelComponentControl.g.cs` (`ExcelComponentControl` completely finished). Release IL PASS (`1038 checked`, 0 failures; `.mirror-cache/release-il-9754cfb3b2bd/release-il.json`).
 - Remaining (batch 67 report): 121 generated-stub members not verified.
+
+## Resume by task_6fe37f47ca87 (branch `feature/excelcomponent-high`, from main f0c28ddc5)
+
+- Ownership: claimed by coordinator instruction (msg_57f4982a0ae0). The previous lane's last commit was 21 Nov (batch 67); no active branch advanced it.
+- Batch 68 (landed): `View.OleObject`-side `OleObjectControl.Activate`. Its closure is numbered `<Activate>b__42_0` only when the member sits before `SubElementToResizeData` in the hand-written partial; the end of the class gives `b__84_0`, and `NavigateIntoItem` gives `b__21_0`.
+- Batch 69 (landed): `ExcelComponentModel.CheckComponentEnabledCalcItems`. Release IL tests the null-guarded delegate as one value, so the guard is a ternary inside an inverted `if`.
+- Blocked (not attempted): `ChartComponentModel.CommitPre` (lambda numbered `b__22_0` instead of `b__5_0`). Generated members always compile before the hand-written partial, so reducing the ordinal needs moving generated declarations by hand; a parked draft is not landed.
+- Blocked: `ChartContainerModelUtils.WaitForChartImagesReady` (Mathcad discards the `Stopwatch` argument with `ldarg.1; pop`; `_ = sw;`, `(object)sw` and `sw ?? sw` are all elided in Release).
+- Remaining stub-bearing files: 26 generated files; most remaining members use closures (ordinal-sensitive), COM `dynamic` calls, iterators, or the parked `_VtblGap*` placeholders.
