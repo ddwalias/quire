@@ -270,3 +270,10 @@
 - Exact: the `CurrentIdLabel` and `CurrentDisplayIdLabel` properties (the setter maps `IdLabels.None` to `null` and fires `PropertyChanged`), `Activate(bool)` (`ExecuteOnLoad(this, DelegateFocus)`, a method group with no closure), and `FireRequestRemove()` (the try/catch around `_currentCell = ActiveCell`, then `RequestRemove(this, Direction.Left)`). Their stub pairs are removed from the `.g.cs`; each moved from generated stub to exact.
 - Not in this batch: `DelegateFocus` (its `Focus` lambda is a closure whose ordinal depends on the member layout) and `PersistentData` with its region helpers. The `GetColumnCells` blocker in `ComboBoxTableModel` is unchanged.
 - Gate (project-level): PASS; 3547 checked, zero failures (`.mirror-cache/release-il-31d5d5c66afc/release-il.json`).
+
+### Batch 37: Controls.EquationCommands (static command fields and static constructor)
+
+- Cause: every command field in `EquationCommands` was a generated `MirrorStub` with no initializer, so `InsertOperator` (and the other commands) stayed null. The SolveBlock harness reached `SetupCommandBindings` with a null `InsertOperator`.
+- Exact: the static constructor (`.cctor`), which assigns all 61 command fields in Mathcad order (`_typeOfThis`, the `RoutedUICommand`s and `RoutedCommand`s, the input gestures, and the two class input bindings). The 61 field declarations move from the `.g.cs` into the partial without the stub attribute, as batch 31 did for `Caret`.
+- Usings added for the helper types: `Quire.Wpf` (Gestures, RoutedUICommandWithFunctionalityKey), `Quire.FunctionalitiesLimitation`, `Quire.Controls.Core`, and `System.Windows.Documents` (EditingCommands).
+- Gate (project-level): PASS; 3548 checked, zero failures (`.mirror-cache/release-il-9f6bb75ba21b/release-il.json`); the `.cctor` is checked and matches.
