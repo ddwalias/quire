@@ -16,6 +16,8 @@ internal abstract partial class VisualMathNode
 {
     private static readonly string OperatorFontFamilyName = "Mathcad UniMath Prime";
 
+    private ExtendedFont _font;
+
     protected Point _alignmentPoint;
 
     public static readonly DependencyProperty IsValidProperty = DependencyProperty.Register("IsValid", typeof(bool), typeof(VisualMathNode), new FrameworkPropertyMetadata(true));
@@ -55,6 +57,35 @@ internal abstract partial class VisualMathNode
     }
 
     public Point AlignmentPoint => _alignmentPoint;
+
+    protected static void SetOperatorFontProperties(IMathFormat mathFormat)
+    {
+        mathFormat.FontFamilyName = OperatorFontFamilyName;
+        mathFormat.IsItalic = false;
+        mathFormat.IsBold = false;
+        mathFormat.IsUnderline = false;
+    }
+
+    protected void FireMeasureOverideCompleted()
+    {
+        if (MeasureOverideCompleted != null)
+        {
+            MeasureOverideCompleted();
+        }
+    }
+
+    public virtual void HandleMathFormatChanged(DependencyPropertyChangedEventArgs e)
+    {
+        if (DebugTools.DevAssert(_font == null, null).Passed)
+        {
+            return;
+        }
+
+        if (e.Property != MathFormatAttachedProperties.HighlightColorProperty)
+        {
+            _font = null;
+        }
+    }
 
     private bool _hideSubNodesFromClicks;
 

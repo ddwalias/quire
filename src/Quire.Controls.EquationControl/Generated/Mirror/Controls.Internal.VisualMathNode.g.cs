@@ -12,8 +12,6 @@ namespace Quire.Controls.Internal;
 internal abstract partial class VisualMathNode : global::Quire.Controls.Internal.VisualNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode, global::Quire.Controls.Core.IBaselinedVisual, global::Quire.Controls.Core.INotifyMeasureOverride, global::Quire.Controls.Core.IMathFormatOwner, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.ExtendedFont _font;
-    [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Controls.Core.IFontManager _fontManager;
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -50,8 +48,6 @@ internal abstract partial class VisualMathNode : global::Quire.Controls.Internal
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
     [global::Quire.Mirror.MirrorStub]
-    protected void FireMeasureOverideCompleted() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
     [global::Quire.Mirror.MirrorStub]
     protected virtual global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -67,8 +63,4 @@ internal abstract partial class VisualMathNode : global::Quire.Controls.Internal
     public double ArrangeChild(global::Quire.Controls.Internal.VisualMathNode child, double xPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal abstract global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint);
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void HandleMathFormatChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected static void SetOperatorFontProperties(global::Quire.Controls.Core.IMathFormat mathFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

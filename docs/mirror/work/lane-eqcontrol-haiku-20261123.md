@@ -487,3 +487,11 @@
 - Not landed: `CoreElements` and `CoreElementsTopLine` (compiler iterator state machines `<get_CoreElements>d__43` and `d__45`; these need ordinal matching).
 - Unchanged: the `VisualMathNode` constructor (IL-structural mismatch, batch 65); `MathFormat` stays null at run time, so `DeserializeMathFormat` still throws `NullReferenceException`; `GetColumnCells` stays parked (`DeleteEmptyColumns`).
 - Gate (project-level): PASS; 3699 checked, zero failures (`.mirror-cache/release-il-d4c8ade78187/release-il.json`).
+
+### Batch 72: Controls.Internal.VisualMathNode (SetOperatorFontProperties, FireMeasureOverideCompleted, HandleMathFormatChanged)
+
+- Exact (3 members): `SetOperatorFontProperties` (protected static; sets `FontFamilyName` from `OperatorFontFamilyName` and `IsItalic`, `IsBold`, `IsUnderline` to `false` through `Nullable<bool>`); `FireMeasureOverideCompleted` (`if (MeasureOverideCompleted != null) MeasureOverideCompleted();` on the field-like event's backing field); `HandleMathFormatChanged` (virtual; `DevAssert(_font == null, null).Passed` guard, then clears `_font` unless the property is `HighlightColorProperty`). `_font` is declared by hand. Stub pairs removed from the `.g.cs`.
+- Mismatch recorded (ScreenBounds, not landed): the natural form `new Rect(PointToScreen(new Point(0,0)), PointToScreen(new Point(ActualWidth, ActualHeight)))` fails with one difference (17 entries against Mathcad's 19). Mathcad keeps the bottom-right point in a `stloc.0`/`ldloc.0` pair before the `Rect` constructor, and Roslyn elides it in Release. Reordering the calls changes the call order, so it does not match either. `ScreenBounds` stays a stub, and `ScreenInkBounds` (batch 71) therefore throws `NotImplementedException` at run time.
+- Not landed: `OperandChanged` (its instance overload is called with `callvirt` on a non-virtual method, which Roslyn emits as `call`); `CoreElements` and `CoreElementsTopLine` (iterator state machines).
+- Unchanged: the `VisualMathNode` constructor (IL-structural mismatch, batch 65); `MathFormat` stays null at run time, so `DeserializeMathFormat` still throws `NullReferenceException`; `GetColumnCells` stays parked (`DeleteEmptyColumns`).
+- Gate (project-level): PASS; 3702 checked, zero failures (`.mirror-cache/release-il-4de36e0c9fcd/release-il.json`).
