@@ -378,4 +378,19 @@ public partial class ChartContainerModel
             ChartObject.setHelpPath(text);
         }
     }
+
+    public void SetRect(Int32Rect rectInPixels)
+    {
+        try
+        {
+            DebugTools.LogData("ChartContainer.ApplyRect: Start: " + ((Int32Rect)rectInPixels).ToString());
+            ChartObject.setRect(rectInPixels.Width, rectInPixels.Height);
+            DebugTools.LogData("ChartContainer.ApplyRect: End: " + ((Int32Rect)rectInPixels).ToString());
+        }
+        catch (Exception ex)
+        {
+            DebugTools.LogData("ChartContainer.ApplyRect: Failed: " + ex.Message);
+            DebugTools.FailAssertion(ex);
+        }
+    }
 }

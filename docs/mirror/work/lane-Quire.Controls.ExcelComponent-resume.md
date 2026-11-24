@@ -122,3 +122,9 @@
 
 - Ready, awaiting UI landing slot: `ChartComponentCalculatableWrapper.TraceAffectsCalcData` (Mathcad `NotComputing` is Quire `CalculatingStatus.Idle` = 2). Release IL PASS (`1043 checked`).
 - Still blocked: `ChartComponentCalculatableWrapper.HandleRequestEvaluation` (LINQ/`Each` lambda in the original), `EngineResultForSerialization` (`Select` lambda), `SetIdentifierLabels` (`Any` lambda), `ChartContainerModel.CurrentTraceIds` (iterator getter/setter), and `ChartContainerModel.ClearTracesAndLimits` (depends on `CurrentTraceIds`).
+
+## Batch 72 (SetRect), branch `feature/excelcomponent-high`
+
+- Batch 71 landed on main as `3df2ab89f` (UI slot released by coordinator).
+- `ChartContainerModel.SetRect`: the reference loads the rectangle with `ldarg.1; stloc.0; ldloca.s 0; constrained.`. The explicit same-type cast `((Int32Rect)rectInPixels).ToString()` reproduces that sequence (scratch probe, Release IL). Release IL PASS (`1044 checked`).
+- `ApplyImageFrozenState` remains blocked: a `[Conditional("DEBUG")]` call in `finally` preserves the region (probe), but the reference shows no call target, so no helper is justified; see checkpoint note above.
