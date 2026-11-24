@@ -842,6 +842,23 @@
 - Runtime Load: Verified via `new EquationTypeIndicatorControl()` instantiation on STA thread; confirmed `Content` is `Grid` named `MainGrid`.
 - Remaining mismatches in this batch: none.
 
+## Batch 57 — WhiteboardCanvas Crosshair Integration
+
+- Resource: `whiteboard/whiteboardcanvas.xaml`
+- Hand-written / authored per D21:
+  - `src/Quire.Controls.Whiteboard/whiteboard/whiteboardcanvas.xaml`
+- Crosshair Integration & Provisional Visual Geometry:
+  - Re-integrated `<Core:Crosshair>` into `WhiteboardCanvas` following `Quire.Controls.Core` landing `crosshair.xaml` (`0149fc5e5`).
+  - Added XML namespace `xmlns:Core="clr-namespace:Quire.Controls.Core;assembly=Quire.Controls.Core"`.
+  - Added element `<Core:Crosshair Canvas.Left="{Binding Path=InsertionPoint.X}" Canvas.Top="{Binding Path=InsertionPoint.Y}" Visibility="{Binding Path=IsCrosshairVisible, Converter={StaticResource booleanToVisibilityConverter}}" />`.
+  - Provisional visual geometry documentation:
+    - The underlying `Quire.Controls.Core.Crosshair` is authored with provisional 20x20 canvas geometry (`Line X1="0" Y1="10" X2="20" Y2="10"` and `Line X1="10" Y1="0" X2="10" Y2="20"` in black stroke, `IsHitTestVisible="False"`), not reusing Mathcad's proprietary resource (D21).
+    - In `WhiteboardCanvas`, the crosshair tracks the view-model's grid-snapped insertion point coordinates (`InsertionPoint.X`, `InsertionPoint.Y`) via canvas positioning properties (`Canvas.Left`, `Canvas.Top`), and its visibility is governed by `IsCrosshairVisible` through `BooleanToVisibilityConverter`.
+- Release IL: PASS — 1124 checked in Whiteboard, 0 failures (`release-il-7de5c67e32e1`).
+- Runtime Verification: Verified on STA thread with real `WhiteboardViewModel`; confirmed `Crosshair` child in `WhiteboardCanvas.Children`, validated `Canvas.Left` and `Canvas.Top` dynamically track `vm.InsertionPoint` (with grid snapping), and verified `Visibility` toggles between `Visible` and `Collapsed` via `vm.IsCrosshairVisible`.
+- Remaining mismatches in this batch: none.
+
+
 
 
 

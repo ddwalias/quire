@@ -1,5 +1,6 @@
 <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Core="clr-namespace:Quire.Controls.Core;assembly=Quire.Controls.Core"
     xmlns:Whiteboard="clr-namespace:Quire.Controls.Whiteboard"
     Focusable="True"
     Cursor="Arrow">
@@ -23,6 +24,7 @@
       </Style>
     </ResourceDictionary>
   </FrameworkElement.Resources>
+  <Core:Crosshair Canvas.Left="{Binding Path=InsertionPoint.X}" Canvas.Top="{Binding Path=InsertionPoint.Y}" Visibility="{Binding Path=IsCrosshairVisible, Converter={StaticResource booleanToVisibilityConverter}}" />
   <ItemsControl ItemsSource="{Binding Path=WhiteboardItems}">
     <ItemsControl.ItemsPanel>
       <ItemsPanelTemplate>
