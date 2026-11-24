@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using Quire.Calculation.Core;
 using Quire.Controls.Core;
 using Quire.Controls.Core.IORegions;
+using Quire.Controls.Core.BookmarkTags;
 using Quire.Controls.Core.Whiteboard;
 using Quire.Controls.Internal;
 using Quire.Core;
@@ -400,4 +401,16 @@ public partial class EquationControl
         get => (NumberFormat)GetValue(DisplayNumberFormatProperty);
         set => SetValue(DisplayNumberFormatProperty, value);
     }
+
+    public bool IsWithinSolveBlock { get; set; }
+
+    private bool IsResizingMatrix { get; set; }
+
+    public int? ComponentHandle { get; set; }
+
+    public IBookmarksManager BookmarksManager { get; set; }
+
+    public EngineResult EngineResult { get; set; }
+
+    public MathFormat MathFormat { get; private set; }
 }

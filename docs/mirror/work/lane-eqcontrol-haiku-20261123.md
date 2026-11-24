@@ -374,3 +374,9 @@
 - Exact (11 accessors): `ShowLhsOfDefinitionForXamlSerialization` (get `VisibleLhsOfDefinition == Visibility.Visible`; set toggles to `Visibility.Hidden` only when the value is false); `VisibleLhsOfDefinition` (`_model.VisibleLhsOfDefinition`); `VisibleLhsOfDefinitionForXamlSerialization` (get delegates; set toggles on `!=`); `CurrentCaretInsertionType`, `ResultMatrixFormat`, `DisplayNumberFormat` (dependency-property get with unbox or castclass, set `SetValue`). Stub pairs removed from the `.g.cs` with the indentation kept intact.
 - Left out: `CurrentNodeCaretInsertionType` (a field read on the `NavigatorState` value, the field name to confirm); `SymbolicEvalKeywordsVisibilityState` (its setter adds and removes region and model event handlers, its own probe).
 - Gate (project-level): PASS; 3626 checked, zero failures (`.mirror-cache/release-il-3f8d027b820c/release-il.json`).
+
+### Batch 55: Controls.EquationControl (IsWithinSolveBlock, IsResizingMatrix, ComponentHandle, BookmarksManager, EngineResult, MathFormat)
+
+- Exact (12 accessors): six compiler-generated auto-properties whose Mathcad accessors are plain `ldfld`/`stfld` on `<Name>k__BackingField`. `IsWithinSolveBlock`, `IsResizingMatrix` (private), `ComponentHandle` (`int?`), `BookmarksManager`, `EngineResult` are `{ get; set; }`; `MathFormat` is `{ get; private set; }`. The partial gains `using Quire.Controls.Core.BookmarkTags;`. Stub pairs removed from the `.g.cs` with the indentation kept intact.
+- Left out: `ComponentCookieMultiThreaded` (Mathcad has a getter and no setter, so the backing field is written in a constructor; needs its own probe).
+- Gate (project-level): PASS; 3638 checked, zero failures (`.mirror-cache/release-il-7677026b336b/release-il.json`).
