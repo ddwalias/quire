@@ -208,4 +208,19 @@ public partial class EquationControl
             return ViewFullWidth - origin.X;
         }
     }
+
+    public double TextBaselineOffset
+    {
+        get
+        {
+            if (FindCommonVisualAncestor(_view) == null)
+            {
+                return _view.TextBaselineY;
+            }
+
+            // Release IL builds the point in a local before the call; a plain new Point(...) argument does not match.
+            Point point;
+            return _view.TransformToVisual(this).Transform(point = new Point(0, _view.TextBaselineY)).Y;
+        }
+    }
 }

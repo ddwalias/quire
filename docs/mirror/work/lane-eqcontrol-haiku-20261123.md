@@ -330,3 +330,8 @@
 - Exact: `SymbolicResultsWidth` (a `!ContainsSymbolicEvaluation` guard returning `0.0`; a `while` walking down the first child while its descriptor is `SYMBOLIC_EVALUATION`; the third child mapped through `_map.AssociateNode` and `as VisualMathNode`; `TranslatePoint(new Point(0, 0), _view)`; `ViewFullWidth - origin.X`). It is the runtime dependency of `IsResizable` (batch 45) and is now real rather than a stub. Its stub pair is removed from the `.g.cs`; the partial gains `using Quire.Controls.Internal;` for `VisualMathNode`.
 - Left out: `TextBaselineOffset` (the `FindCommonVisualAncestor` / `TransformToVisual` path, which has its own probe).
 - Gate (project-level): PASS; 3582 checked, zero failures (`.mirror-cache/release-il-b4516b373053/release-il.json`).
+
+### Batch 47: Controls.EquationControl (TextBaselineOffset)
+
+- Exact: `TextBaselineOffset` (a `FindCommonVisualAncestor(_view) == null` guard returning `_view.TextBaselineY`; otherwise `_view.TransformToVisual(this).Transform(point).Y`, where the `Point` is a local assigned inside the argument, `Point point; ... Transform(point = new Point(0, _view.TextBaselineY)).Y`). The plain `new Point(...)` argument gave `newobj` where Mathcad builds the struct in place in a local (`ldloca.s`, `call .ctor`, `ldloc.0`), so the local-assignment form is kept with a one-line comment. Appended at the end of the partial; its stub pair is removed from the `.g.cs`.
+- Gate (project-level): PASS; 3583 checked, zero failures (`.mirror-cache/release-il-31e80c182a50/release-il.json`).
