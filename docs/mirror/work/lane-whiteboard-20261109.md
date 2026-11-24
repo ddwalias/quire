@@ -725,6 +725,34 @@
 - Release IL: PASS — 6809 checked (1049 in Whiteboard), 0 failures.
 - Remaining mismatches in this batch: none.
 
+## Batch 51 — WhiteboardViewModel & Commands: HandleItemsListChanging, SelectContiguous, NavigateInto, AddItemsCommand, RemoveItemsCommand, MoveItemsCommand
+
+- Members:
+  - `WhiteboardViewModel.HandleItemsListChanging(NotifyCollectionChangedEventArgs)` and closure `<>c.<HandleItemsListChanging>b__163_0`
+  - `WhiteboardViewModel.SelectContiguous(IWhiteboardItem)` and closures `<>c__DisplayClass184_0::<SelectContiguous>b__0`, `b__1`, `b__2`
+  - `WhiteboardViewModel.NavigateInto(Direction, Point)`
+  - `WhiteboardViewModel.AddItemsCommand..ctor(IWhiteboardViewModel, string, IWhiteboardItem)`
+  - `WhiteboardViewModel.AddItemsCommand..ctor(IWhiteboardViewModel, string, IDictionary<IWhiteboardItem, Point>)`
+  - `WhiteboardViewModel.AddItemsCommand.DoWithResize()` and closures `<DoWithResize>b__5_0`, `<DoWithResize>b__5_1`, `<>c__DisplayClass5_0::<DoWithResize>b__2`, `<>c::<DoWithResize>b__5_3`
+  - `WhiteboardViewModel.RemoveItemsCommand.Do()` and closure `<Do>b__8_0`
+  - `WhiteboardViewModel.MoveItemsCommand.CheckMovementWithoutGrowth(IDictionary<IWhiteboardItem, Point>)` and closure `<>c__DisplayClass16_0::<CheckMovementWithoutGrowth>b__0`
+  - `WhiteboardViewModel.MoveItemsCommand.Undo()` and closure `<Undo>b__18_0`
+- Hand-written: `src/Quire.Controls.Whiteboard/Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`; placeholder stubs replaced.
+- Ordinals:
+  - `HandleItemsListChanging` (163) -> `<>c.<HandleItemsListChanging>b__163_0`
+  - `SelectContiguous` (184) -> `<>c__DisplayClass184_0::<SelectContiguous>b__0..2`
+  - `AddItemsCommand` (5) -> `<>c__DisplayClass5_0::<DoWithResize>b__2`, `<>c::<DoWithResize>b__5_3`
+  - `MoveItemsCommand` (16) -> `<>c__DisplayClass16_0::<CheckMovementWithoutGrowth>b__0`
+- Shapes Release IL requires:
+  - `HandleItemsListChanging`: switch statement on `args.Action` with `Remove`/`Move` actions disabling change handling via `OfType<IWhiteboardItem>().Each(...)`.
+  - `SelectContiguous`: handles active item shortcut, index traversal with `0.UpTo`, `UpTo`, or `DownTo` blocks adding to selection list.
+  - `NavigateInto`: checks child at location, snaps to nearest intersection if null, transforms relative coordinates for child whiteboard controls.
+  - `AddItemsCommand`: checks `IsNullOrEmpty`, captures insertion point, sets up item addition and asynchronous resize, manages item activation and empty-item cache.
+  - `RemoveItemsCommand`: deselects, removes from model, manages `ActiveItem` clearing/restoration, updates insertion point.
+  - `MoveItemsCommand`: validates movement without growth via `_list.All(...)`; undo restores locations in reverse order and updates size limits.
+- Release IL: PASS — 1074 checked in Whiteboard, 0 failures.
+- Remaining mismatches in this batch: none.
+
 
 
 

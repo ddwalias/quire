@@ -753,7 +753,24 @@ public partial class WhiteboardViewModel
         }
     }
 
-    private void HandleItemsListChanging(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleItemsListChanging(NotifyCollectionChangedEventArgs args)
+    {
+        switch (args.Action)
+        {
+            case NotifyCollectionChangedAction.Remove:
+            case NotifyCollectionChangedAction.Move:
+                args.OldItems.OfType<IWhiteboardItem>().Each((IWhiteboardItem item) =>
+                {
+                    WhiteboardItemMgr.SetHandleChangesEnabled(item, false);
+                });
+                break;
+            default:
+                DebugTools.FailAssertion("Unsupported action: {0}", args.Action);
+                break;
+            case NotifyCollectionChangedAction.Add:
+                break;
+        }
+    }
 
     private void HandleItemsListChanged(NotifyCollectionChangedEventArgs e)
     {
@@ -894,7 +911,43 @@ public partial class WhiteboardViewModel
         }
     }
 
-    public void SelectContiguous(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SelectContiguous(IWhiteboardItem item)
+    {
+        if (item == ActiveItem)
+        {
+            SelectItem(ActiveItem);
+            return;
+        }
+        int num = WhiteboardItems.IndexOf(item);
+        List<IWhiteboardItem> itemsToSelect = new List<IWhiteboardItem>();
+        if (ActiveItem == null && SelectedItems.IsEmpty())
+        {
+            0.UpTo(num, (int i) =>
+            {
+                itemsToSelect.Add(WhiteboardItems[i]);
+            });
+        }
+        else
+        {
+            int num2 = WhiteboardItems.IndexOf(FirstSelectedItem ?? ActiveItem);
+            if (num2 < num)
+            {
+                num2.UpTo(num, (int i) =>
+                {
+                    itemsToSelect.Add(WhiteboardItems[i]);
+                });
+            }
+            else
+            {
+                num2.DownTo(num, (int i) =>
+                {
+                    itemsToSelect.Add(WhiteboardItems[i]);
+                });
+            }
+        }
+        ClearSelectedItems();
+        SelectItems(itemsToSelect);
+    }
 
     public void SelectRegionsInBounds(Rect rect)
     {
@@ -1146,7 +1199,35 @@ public partial class WhiteboardViewModel
         MinimumSize = _savedMinSize;
     }
 
-    public virtual global::System.Nullable<global::System.Windows.Vector> NavigateInto(global::Quire.Direction direction, global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual Vector? NavigateInto(Direction direction, Point point)
+    {
+        Vector? result = null;
+        IWhiteboardItem childItemFromLocation = GetChildItemFromLocation(point);
+        if (childItemFromLocation == null)
+        {
+            point = _alignmentGrid.GetNearestIntersectionPoint(point);
+            childItemFromLocation = GetChildItemFromLocation(point);
+        }
+        if (childItemFromLocation == null)
+        {
+            InsertionPoint = point;
+        }
+        else
+        {
+            IWhiteboardControl whiteboardControl = childItemFromLocation as IWhiteboardControl;
+            if (whiteboardControl != null)
+            {
+                Point itemLocation = GetItemLocation(childItemFromLocation);
+                Point point2 = new TranslateTransform(-itemLocation.X, -itemLocation.Y).Transform(point);
+                result = whiteboardControl.NavigateInto(direction, point2);
+            }
+            else
+            {
+                result = childItemFromLocation.NavigateIntoItem(direction);
+            }
+        }
+        return result;
+    }
 
     public Point GetNavigationStartLocation(Direction direction)
     {
@@ -2382,18 +2463,65 @@ public partial class WhiteboardViewModel
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+AddItemsCommand, Ptc.Controls.Whiteboard")]
     public partial class AddItemsCommand : global::Quire.Controls.Whiteboard.WhiteboardViewModel.WhiteboardResizingCommand
     {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> _itemsAtLocations;
-        [global::Quire.Mirror.MirrorStub]
-        private global::System.Windows.Point _insertionPoint;
-        [global::Quire.Mirror.MirrorStub]
+        private readonly IDictionary<IWhiteboardItem, Point> _itemsAtLocations;
+        private Point _insertionPoint;
         private readonly bool _shouldActivate;
-        [global::Quire.Mirror.MirrorStub]
-        public AddItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, string commandName, global::Quire.Controls.Core.IWhiteboardItem item) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public AddItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, string commandName, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> itemsAtLocations) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
-        [global::Quire.Mirror.MirrorStub]
-        protected override bool DoWithResize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public AddItemsCommand(IWhiteboardViewModel viewModel, string commandName, IWhiteboardItem item)
+            : this(viewModel, commandName, new Dictionary<IWhiteboardItem, Point> { { item, viewModel.InsertionPoint } })
+        {
+            _shouldActivate = true;
+        }
+        public AddItemsCommand(IWhiteboardViewModel viewModel, string commandName, IDictionary<IWhiteboardItem, Point> itemsAtLocations)
+            : base(viewModel, commandName)
+        {
+            _itemsAtLocations = itemsAtLocations;
+            _insertionPoint = viewModel.InsertionPoint;
+        }
+        protected override bool DoWithResize()
+        {
+            if (_itemsAtLocations.IsNullOrEmpty())
+            {
+                return false;
+            }
+            _insertionPoint = _viewModel.InsertionPoint;
+            _itemsAtLocations.Each((KeyValuePair<IWhiteboardItem, Point> itemAtLocation) =>
+            {
+                _viewModel.AddItemAtLocation(itemAtLocation.Key, itemAtLocation.Value);
+            });
+            WhiteboardItemMgr.ExecuteInBackground(() =>
+            {
+                _viewModel.ResizeAndNotify(_itemsAtLocations.Keys, _viewModel.ContentSize);
+            }, true);
+            if (_shouldActivate)
+            {
+                Dictionary<IWhiteboardItem, bool> shouldItemBeDeletedIfEmptyCache = new Dictionary<IWhiteboardItem, bool>(_itemsAtLocations.Count);
+                _itemsAtLocations.Each((KeyValuePair<IWhiteboardItem, Point> itemAtLocation) =>
+                {
+                    IWhiteboardItem key2 = itemAtLocation.Key;
+                    shouldItemBeDeletedIfEmptyCache.Add(key2, WhiteboardItemMgr.ShouldItemBeDeletedIfEmpty(key2));
+                    WhiteboardItemMgr.SetShouldItemBeDeletedIfEmpty(itemAtLocation.Key, false);
+                });
+                IWhiteboardItem key = _itemsAtLocations.First().Key;
+                if (_viewModel.ActiveItem == key)
+                {
+                    _viewModel.ActivateActiveItem();
+                }
+                else
+                {
+                    _viewModel.ActiveItem = key;
+                }
+                shouldItemBeDeletedIfEmptyCache.Each((KeyValuePair<IWhiteboardItem, bool> itemAtLocation) =>
+                {
+                    IWhiteboardItem key2 = itemAtLocation.Key;
+                    WhiteboardItemMgr.ClearShouldItemBeDeletedIfEmpty(key2);
+                    if (WhiteboardItemMgr.ShouldItemBeDeletedIfEmpty(key2) != itemAtLocation.Value)
+                    {
+                        WhiteboardItemMgr.SetShouldItemBeDeletedIfEmpty(key2, itemAtLocation.Value);
+                    }
+                });
+            }
+            return true;
+        }
         public override void Undo()
         {
             _viewModel.GetRemoveItemsCommand("Remove Items", _itemsAtLocations).Do();
@@ -2431,8 +2559,39 @@ public partial class WhiteboardViewModel
             _insertionPoint = _viewModel.InsertionPoint;
             _itemsAtLocations = itemsAtLocations;
         }
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override bool Do()
+        {
+            ViewModel.UnSelectItems(_itemsAtLocations.Keys);
+            _itemsAtLocations.Each((KeyValuePair<IWhiteboardItem, Point> itemAtLocation) =>
+            {
+                IWhiteboardItem key = itemAtLocation.Key;
+                WhiteboardItemMgr.DeselectItem(key);
+                ViewModel._whiteboardModel.RemoveItem(key);
+                if (ViewModel._activeItem == key)
+                {
+                    bool flag = WhiteboardItemMgr.ShouldItemBeDeletedIfEmpty(key);
+                    WhiteboardItemMgr.SetShouldItemBeDeletedIfEmpty(key, false);
+                    ViewModel.ActiveItem = null;
+                    WhiteboardItemMgr.ClearShouldItemBeDeletedIfEmpty(key);
+                    if (WhiteboardItemMgr.ShouldItemBeDeletedIfEmpty(key) != flag)
+                    {
+                        WhiteboardItemMgr.SetShouldItemBeDeletedIfEmpty(key, flag);
+                    }
+                }
+            });
+            if (ViewModel.HandleUserInput)
+            {
+                if (SetInsertionPointToFirstItemsLocation)
+                {
+                    ViewModel.InsertionPoint = _itemsAtLocations.First().Value;
+                }
+                else if (!ViewModel.IsSelected)
+                {
+                    ViewModel.InsertionPoint = _insertionPoint;
+                }
+            }
+            return true;
+        }
         public override void Undo()
         {
             Commands.WhiteboardCommand command = new AddItemsCommand(_viewModel, "Add Item", _itemsAtLocations);
@@ -2715,8 +2874,10 @@ public partial class WhiteboardViewModel
             return true;
         }
 
-        [global::Quire.Mirror.MirrorStub]
-        private bool CheckMovementWithoutGrowth(global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> newLocations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        private bool CheckMovementWithoutGrowth(IDictionary<IWhiteboardItem, Point> newLocations)
+        {
+            return _list.All((IWhiteboardItem item) => _viewModel.IsValidLocation(item, newLocations, false));
+        }
         private bool MoveItems()
         {
             bool moved = false;
@@ -2740,8 +2901,21 @@ public partial class WhiteboardViewModel
             return moved;
         }
 
-        [global::Quire.Mirror.MirrorStub]
-        public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override void Undo()
+        {
+            UndoResize();
+            _list.Reverse<IWhiteboardItem>().Each((IWhiteboardItem item) =>
+            {
+                _viewModel.SetItemLocation(item, _initialLocations[item]);
+            });
+            _viewModel.SelectItems(_selectedItems);
+            if (_activeItem != null)
+            {
+                _viewModel.ActiveItem = _activeItem;
+            }
+            _viewModel.ResizeAndNotify(_list, _viewModel.ContentSize);
+            _viewModel.UpdateSizeLimits(_viewModel.MaximumSize);
+        }
         public override void Redo()
         {
             BackupTheSize();
