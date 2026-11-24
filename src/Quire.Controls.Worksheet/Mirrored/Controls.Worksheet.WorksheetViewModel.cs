@@ -21,6 +21,62 @@ namespace Quire.Controls.Worksheet;
 
 internal partial class WorksheetViewModel
 {
+    public bool OleObjectAutoResize
+    {
+        get
+        {
+            return _oleObjectAutoResize;
+        }
+        set
+        {
+            if (_oleObjectAutoResize == value)
+            {
+                return;
+            }
+            _oleObjectAutoResize = value;
+            OnPropertyChanged(nameof(OleObjectAutoResize));
+            FireChanged();
+        }
+    }
+
+    public bool IsSolveBlockLabelVisible
+    {
+        get
+        {
+            return _isSolveBlockLabelVisible;
+        }
+        set
+        {
+            if (_isSolveBlockLabelVisible == value)
+            {
+                return;
+            }
+            _isSolveBlockLabelVisible = value;
+            OnPropertyChanged(nameof(IsSolveBlockLabelVisible));
+            FireChanged();
+        }
+    }
+
+    public bool IsFirstPageHeaderFooterDifferent
+    {
+        get
+        {
+            return _isDifferentFirstPage;
+        }
+        set
+        {
+            if (_isDifferentFirstPage == value)
+            {
+                return;
+            }
+            _isDifferentFirstPage = value;
+            OnPropertyChanged(nameof(IsFirstPageHeaderFooterDifferent));
+            UpdateFirstPageHeaderFooter();
+            UpdateActiveSectionForDifferentFirstPage();
+            FireChanged();
+        }
+    }
+
     public bool DisplayGrid
     {
         get
