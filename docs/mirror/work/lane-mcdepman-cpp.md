@@ -342,4 +342,34 @@ Investigation of remaining unmigrated `PositionBase`, `Position`, and `DepManage
   - Native `DepManager` multi-level associative container maps blocking `InvalidateDeps`, `SetEnvScope`, `EndMove`, and `ActionChain.add_env_scope` / `remove_env_scope`.
   - Compiler RTTI descriptor emissions for `Position.previous` and `Position.next`.
 
+## Batch 26 — PositionBase.OnDep and DepManager Associative Container Architecture
+
+- Owner: AGY, Orca task `task_2bbcc7c19064`; branch `feature/luna-mcdepman`.
+- Members mirrored and verified:
+  - `depman.PositionBase.OnDep(Position* p)`
+- Release IL report: PASS; 250 checked (`.mirror-cache/release-il-b189661a6bae/release-il.json`).
+- Architecture and implementation:
+  - Disassembly of `PositionBase.OnDep(Position* p)` (token `0x060001cd`, 93 bytes, 57 IL instructions) revealed that it handles reverse dependency registration without touching `SafeEvent` or `DepManager`.
+  - It calls `TreatAsReady(false)`, captures `const int priority = p->priority_;` (offset 164), updates `priority_ = std::max(priority_, priority)`, and if `p->dparent_ == nullptr` (offset 128), inserts `p` into `dependents_` (offset 136) via `dependents_.insert(p)` and sets `p->dparent_ = position_` (offset 16).
+  - Explicit typing of `const int priority = p->priority_;` generates the exact MSVC `modopt(System.Runtime.CompilerServices.IsConst)` local signature and 4-local evaluation frame `[int32* modopt(IsConst)* modopt(IsImplicitlyDereferenced), int32* modopt(IsConst)*, int32 modopt(IsConst), pair<...>]` matching Mathcad Release IL byte-for-byte.
+- DepManager associative container technical analysis:
+  - Disassembly and layout inspection of unmanaged `depman::DepManager` (size 56 bytes / `0x38`, vtable `??_7DepManager@depman@@6B@` with 1 entry `virtual ~DepManager()`):
+    - `0x00` (0): `vptr`
+    - `0x08` (8): `std::map<SDef, std::map<Position*, DefinitionType, value_less<Position>>*> def_table_;` (16 bytes, maps symbol definition to pointer to inner map of declaring positions and definition types).
+    - `0x18` (24): `std::map<SDef, std::map<Position*, std::pair<ActionChain*, DependencyType>, value_less<Position>>*> forward_deps_;` (16 bytes, maps symbol definition to pointer to inner map of dependent positions and action chains).
+    - `0x28` (40): `bool enabled_;` (1 byte, initialized to `true` / `1`).
+    - `0x29`..`0x37`: padding (15 bytes to 56 bytes).
+  - Inner containers are heap-allocated pointer-stored maps (`std::map<Position*, ...>*`) ordered by `value_less<Position>` (comparing sequence ordinals `ord_val_` at offset 240 of `OrderedListNode<PositionBase>`).
+  - Key `SDef` (size 56 bytes / `0x38`):
+    - `0x00` (0): `int scope_id;`
+    - `0x08` (8): `std::wstring name;` (32 bytes)
+    - `0x28` (40): `Engine::Unmanaged::std_label_set labels;` (16 bytes)
+    - Lexicographical ordering: `(scope_id < other.scope_id) ? true : (scope_id > other.scope_id) ? false : (name < other.name) ? true : (name > other.name) ? false : (labels < other.labels)`.
+  - Invalidation cascades (`invalidateChains`): traverses `forward_deps_`, collecting matching inner maps into a `std::vector<std::map<Position*, ...>*>`, tracking visited positions in a `std::set<Position*>`, and queuing dependent action chains.
+- Remaining dependencies:
+  - Cross-assembly `gcroot` resolution in `MethodAudit` (`SafeEvent`, `LabeledDictionary`) blocking `PositionBase.SetBusy`, `WaitReady`, `PrepareKill`, and `ready` (exact C++ source drafts preserved in `DepmanPosition.cpp`).
+  - Full native `DepManager` multi-level associative container layout and map methods blocking `PositionBase.InvalidateDeps`, `PositionBase.SetEnvScope`, `PositionBase.EndMove`, and `ActionChain.add_env_scope` / `remove_env_scope`.
+  - Compiler RTTI descriptor emissions for `Position.previous` and `Position.next`.
+
+
 

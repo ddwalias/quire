@@ -44,6 +44,7 @@ public:
     void PrepareKill();
     void Kill();
     void TreatAsReady(bool b);
+    void OnDep(Position* p);
     ::Quire::utl_mgd::LabeledDictionary^ ready();
     void SetNotifyComputing(bool notify);
     void ResetPriority();

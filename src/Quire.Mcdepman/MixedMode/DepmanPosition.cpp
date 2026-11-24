@@ -38,6 +38,7 @@
 #pragma comment(linker, "/include:?StartTiming@PositionBase@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?Kill@PositionBase@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?TreatAsReady@PositionBase@depman@@QEAAX_N@Z")
+#pragma comment(linker, "/include:?OnDep@PositionBase@depman@@QEAAXPEAVPosition@2@@Z")
 // Pragmas for methods blocked on cross-assembly gcroot mapping in MethodAudit (SafeEvent, LabeledDictionary).
 // Source implementations below are exact and ready to be un-commented once MethodAudit supports cross-assembly gcroot:
 // #pragma comment(linker, "/include:?SetBusy@PositionBase@depman@@QEAAX_N@Z")
@@ -211,6 +212,18 @@ void PositionBase::TreatAsReady(bool b)
     else
     {
         object_ = nullptr;
+    }
+}
+
+void PositionBase::OnDep(Position* p)
+{
+    TreatAsReady(false);
+    const int priority = p->priority_;
+    priority_ = std::max(priority_, priority);
+    if (p->dparent_ == nullptr)
+    {
+        dependents_.insert(p);
+        p->dparent_ = position_;
     }
 }
 
