@@ -306,6 +306,36 @@ public partial class RichTextWithEmbeddedItem
         return false;
     }
 
+    protected void CloneContent(RichTextWithEmbeddedItem original, IEngineeringDocument engDoc, bool export = false)
+    {
+        if (engDoc != null)
+        {
+            _richTextWithEmbededItemCloneHelper = new ItemToImagesRichTextWithEmbededItemCloneHelper(engDoc);
+        }
+        using (new CommandScope(new CompoundCommand()))
+        {
+            CloneContent(original);
+            foreach (IWhiteboardItem item2 in original.WhiteboardItems.Reverse())
+            {
+                IWhiteboardItemInText whiteboardItemInText = item2 as IWhiteboardItemInText;
+                if (DebugTools.AssertNotNull(whiteboardItemInText, null).Failed)
+                {
+                    return;
+                }
+                int embeddedItemSymbolOffset = original.GetEmbeddedItemSymbolOffset(whiteboardItemInText);
+                Rect? boundsConstraint = null;
+                if (DebugTools.DevAssert(whiteboardItemInText is FrameworkElement, null).Passed && WhiteboardDependencyProperties.GetShowResizeIndicator(whiteboardItemInText as FrameworkElement))
+                {
+                    boundsConstraint = new Rect(ContainerItemManager.GetRenderSize(whiteboardItemInText));
+                }
+                using CopyWidgetBase popup = _richTextWithEmbededItemCloneHelper.CreatePopup();
+                IWhiteboardItemInText item = _richTextWithEmbededItemCloneHelper.Clone(whiteboardItemInText, boundsConstraint, popup);
+                ReplacePlaceholderWithEmbeddedItem(item, embeddedItemSymbolOffset);
+            }
+        }
+        _richTextWithEmbededItemCloneHelper = _defaultCloneHelper;
+    }
+
     private void BindHyperlinkCommands()
     {
         CommandBindings.Add(new CommandBinding(HyperlinkCommands.ModifyHyperlink, ModifyHyperlink, CanModifyHyperlink));

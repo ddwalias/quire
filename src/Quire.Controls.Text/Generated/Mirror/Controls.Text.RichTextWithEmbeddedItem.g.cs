@@ -138,8 +138,6 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.PersistentDataObjects.textType DoGetRegionPersistentDataInternal(global::Quire.Serialization.IS11NProvider s11NProvider) => base.DoGetRegionPersistentDataInternal(s11NProvider);
     [global::Quire.Mirror.MirrorStub]
-    protected void CloneContent(global::Quire.Controls.Text.RichTextWithEmbeddedItem original, global::Quire.Controls.Core.IEngineeringDocument engDoc, bool export = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ToggleHideFromCalculationContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateHideFromCalculationButton() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

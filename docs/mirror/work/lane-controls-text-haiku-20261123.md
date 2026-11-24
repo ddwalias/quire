@@ -99,3 +99,9 @@
 - Measured mismatch: the first try (ternary assigning `textPointer`) failed on a block one byte short. Release IL stores `textPointer` in each arm of `if (direction == Forward)`, so the source is an if/else with an assignment in each arm, with a one-line comment.
 - Release IL (project-wide): PASS — 665 checked, 0 failures.
 - Regeneration: `MirrorGen emit` gives the same stub removal plus the pre-existing `LogDocumentContents` placement drift; emit-written drift outside `Generated/` was reverted. The solution build's 14 errors are in `tests/Quire.Mirror.Tests` (pre-existing, unrelated).
+
+## Batch 34 — RichTextWithEmbeddedItem.CloneContent(RichTextWithEmbeddedItem, IEngineeringDocument, bool export)
+
+- Member: `protected void CloneContent(...)`, no lambda, no closure. Uses `using (new CommandScope(new CompoundCommand()))`, a `foreach` over `WhiteboardItems.Reverse()`, and a `using` declaration for the popup. Hand-written in `Mirrored/Controls.Text.RichTextWithEmbeddedItem.cs`; stub removed from the `.g.cs`. The `export` parameter is unused, as in Mathcad.
+- Release IL (project-wide): PASS — 666 checked, 0 failures (first try).
+- Regeneration: `MirrorGen emit` gives the same stub removal plus the pre-existing `LogDocumentContents` placement drift. Emit output elsewhere was reverted. The solution build's 14 errors are in `tests/Quire.Mirror.Tests` (pre-existing).
