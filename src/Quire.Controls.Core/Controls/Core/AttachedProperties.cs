@@ -71,12 +71,16 @@ public static partial class AttachedProperties
         PageElementXamlHelperProperty.OverrideMetadata(typeof(FrameworkElement), new PropertyMetadata(new FrameworkElementXamlHelper()));
     }
 
-    // Parked: Mathcad calls DependencyObject.SetValue/GetValue with `call` on the guarded parameter; Roslyn emits `callvirt`.
-    [MirrorStub]
-    public static void SetRegisterCommandBindings(UIElement element, CommandBindingCollection value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void SetRegisterCommandBindings(UIElement element, CommandBindingCollection value)
+    {
+        // Release IL calls SetValue with call on the guarded parameter; a null-conditional receiver emits call where a plain instance call emits callvirt.
+        element?.SetValue(RegisterCommandBindingsProperty, value);
+    }
 
-    [MirrorStub]
-    public static CommandBindingCollection GetRegisterCommandBindings(UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static CommandBindingCollection GetRegisterCommandBindings(UIElement element)
+    {
+        return (CommandBindingCollection)element?.GetValue(RegisterCommandBindingsProperty);
+    }
 
     private static void OnRegisterCommandBindingChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
     {
@@ -438,12 +442,15 @@ public static partial class AttachedProperties
         }
     }
 
-    // Parked: same `call`-versus-`callvirt` difference as SetRegisterCommandBindings.
-    [MirrorStub]
-    public static void SetIsBringToView(DependencyObject depObj, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void SetIsBringToView(DependencyObject depObj, bool value)
+    {
+        depObj?.SetValue(IsBringToViewProperty, value);
+    }
 
-    [MirrorStub]
-    public static bool GetIsBringToView(DependencyObject depObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static bool GetIsBringToView(DependencyObject depObj)
+    {
+        return (bool)(depObj?.GetValue(IsBringToViewProperty) ?? (object)false);
+    }
 
     public static void SuppressBringIntoViewIfNeededAndExecute(DependencyObject depObj, Action action, bool suppressBringToView)
     {
