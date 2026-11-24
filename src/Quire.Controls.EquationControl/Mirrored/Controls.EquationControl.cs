@@ -460,4 +460,50 @@ public partial class EquationControl
             handler(this, e);
         }
     }
+
+    public IEnumerable<ICalculatable> CalculatableChildren => _calculatableChildren;
+
+    public static bool WasSuspendedRegenerate
+    {
+        get => EquationPresenter.WasSuspendedRegenerate;
+        set => EquationPresenter.WasSuspendedRegenerate = value;
+    }
+
+    public bool InCustomInitialization
+    {
+        get => _model.InCustomInitialization;
+        set => _model.InCustomInitialization = value;
+    }
+
+    public IdLabels? CurrentIdLabel
+    {
+        get => _currentIdLabel;
+        set
+        {
+            _currentIdLabel = value;
+            if (_currentIdLabel.GetValueOrDefault() == IdLabels.None)
+            {
+                _currentIdLabel = null;
+            }
+
+            FirePropertyChanged(new System.ComponentModel.PropertyChangedEventArgs("CurrentIdLabel"));
+        }
+    }
+
+    public IdLabels? CurrentDisplayIdLabel
+    {
+        get => _currentDisplayIdLabel;
+        set
+        {
+            _currentDisplayIdLabel = value;
+            if (_currentDisplayIdLabel.GetValueOrDefault() == IdLabels.None)
+            {
+                _currentDisplayIdLabel = null;
+            }
+
+            FirePropertyChanged(new System.ComponentModel.PropertyChangedEventArgs("CurrentDisplayIdLabel"));
+        }
+    }
+
+    public CaretInsertionTypes CurrentNodeCaretInsertionType => _model.CurrentModeNavigatorState.CaretInsertionType;
 }

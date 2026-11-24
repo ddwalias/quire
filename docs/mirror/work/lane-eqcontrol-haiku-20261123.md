@@ -392,3 +392,8 @@
 
 - Exact: `FirePropertyChanged(System.ComponentModel.PropertyChangedEventArgs e)` (the standard event raise: copy the `PropertyChanged` event field to a local, and if it is non-null, invoke it with `(this, e)`). This resolves the batch 56 run-time dependency: the `CurrentNumberFormat` and `CurrentMatrixFormat` setters now call a real implementation instead of throwing. The stub pair is removed from the `.g.cs`; the `PropertyChanged` event declaration is unchanged.
 - Gate (project-level): PASS; 3649 checked, zero failures (`.mirror-cache/release-il-79b20090027a/release-il.json`).
+
+### Batch 58: Controls.EquationControl (CalculatableChildren, WasSuspendedRegenerate, InCustomInitialization, CurrentIdLabel, CurrentDisplayIdLabel, CurrentNodeCaretInsertionType)
+
+- Exact (10 accessors): `CalculatableChildren` (returns the `_calculatableChildren` list as `IEnumerable<ICalculatable>`, covariant, no IL); `WasSuspendedRegenerate` (static get and set on `EquationPresenter.WasSuspendedRegenerate`); `InCustomInitialization` (`_model` get and set through `ISupportCustomInitialization`); `CurrentIdLabel` and `CurrentDisplayIdLabel` (store the field, then if `GetValueOrDefault() == IdLabels.None` (value 6) clear it to null, then `FirePropertyChanged`, which is now implemented, as in batch 57); `CurrentNodeCaretInsertionType` (`_model.CurrentModeNavigatorState.CaretInsertionType`). Stub pairs removed from the `.g.cs` with indentation intact.
+- Gate (project-level): PASS; 3659 checked, zero failures (`.mirror-cache/release-il-2f2593ce5e07/release-il.json`).
