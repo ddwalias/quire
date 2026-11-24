@@ -561,4 +561,20 @@ public partial class EquationControl
             return _rl;
         }
     }
+
+    public bool FirstPropertyForXamlSerialization
+    {
+        get
+        {
+            DebugTools.DevAssert(_isForEngineCalculation);
+            return true;
+        }
+        set
+        {
+            InCustomInitialization = value;
+            ReadDeserializationFormatsForPaste();
+        }
+    }
+
+    public int WarningsCount => _model.Warnings?.Count ?? 0;
 }

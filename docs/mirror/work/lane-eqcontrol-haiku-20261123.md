@@ -415,3 +415,10 @@
 - Exact (1 accessor): `Rl` (`if (AllowExpressionsOnly || !_isForEngineCalculation) return MathNodeToRlTransformer.Default.SetRlidAndTransform(_model.EquationRoot); return _rl;`; `Default` is a static readonly field, read with `ldsfld`). Stub pair removed from the `.g.cs`; the partial gains `using Quire.EquationEditor.Tree.Transform;`.
 - Parked: `History` (`new List<string>(_model.VisualHistory).ToArray()` is the right source, but Mathcad compiles `ToArray` as `callvirt` on the non-virtual `List<string>.ToArray`, where current Roslyn emits `call`; the instruction differs, so it stays as a stub. The model member is `VisualHistory`, not `History`).
 - Gate (project-level): PASS; 3667 checked, zero failures (`.mirror-cache/release-il-496362b95c57/release-il.json`).
+
+### Batch 62: Controls.EquationControl (FirstPropertyForXamlSerialization, WarningsCount)
+
+- Exact (3 accessors): `FirstPropertyForXamlSerialization` (get: `DebugTools.DevAssert(_isForEngineCalculation)` with the result discarded, then `return true`; set: `InCustomInitialization = value`, then `ReadDeserializationFormatsForPaste()`); `WarningsCount` (`_model.Warnings?.Count ?? 0`, using the `dup`/`brtrue` form). Stub pairs removed from the `.g.cs`.
+- Runtime dependency (not an IL mismatch): `ReadDeserializationFormatsForPaste` is still a generated stub, so the `FirstPropertyForXamlSerialization` setter throws `NotImplementedException` until that method is implemented.
+- Left out: `Warnings` (its getter's lambda is a closure with a compiler-assigned ordinal, `<get_Warnings>b__588_0`, so it needs a compile-order probe).
+- Gate (project-level): PASS; 3670 checked, zero failures (`.mirror-cache/release-il-1e6211496e6e/release-il.json`).
