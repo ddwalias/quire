@@ -4,6 +4,7 @@ using Quire.Controls.Core;
 using Quire.Controls.Core.IORegions;
 using Quire.Controls.Core.Whiteboard;
 using Quire.Core;
+using Quire.EquationEditor;
 using Quire.EquationEditor.Tree.Navigation;
 using Quire.Services;
 using Quire.Wpf;
@@ -67,4 +68,14 @@ public partial class EquationControl
         {
         }
     }
+
+    public bool IsCommitted => !_model.IsExpressionValueModified;
+
+    public bool IsSelected => WhiteboardDependencyProperties.GetIsSelected(this);
+
+    public bool IsReadonly => _model.IsReadonly;
+
+    public bool IsScoped => _model.Mode == EquationEditModeEnum.Scope;
+
+    public bool IsTypeover => _model.Mode == EquationEditModeEnum.Typeover;
 }

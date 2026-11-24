@@ -282,3 +282,9 @@
 
 - Exact: the four caret getters. Each returns 0 when `Children` is empty, reads the first child as a `VisualTextSpan`, and computes from its `Font`, `GetSubscriptFont()` and `SubscriptBaseline`, with `EffectiveBaselineY` for the normal offset. None has a closure. Their stub pairs are removed from the `.g.cs`; each moved from generated stub to exact.
 - Gate (project-level): PASS; 3552 checked, zero failures (`.mirror-cache/release-il-2f67e256b9f6/release-il.json`).
+
+### Batch 39: Controls.EquationControl (IsCommitted, IsSelected, IsReadonly, IsScoped, IsTypeover)
+
+- Exact: the five flag getters. `IsCommitted` is `!_model.IsExpressionValueModified`; `IsSelected` calls `WhiteboardDependencyProperties.GetIsSelected(this)`; `IsReadonly` and `IsScoped` / `IsTypeover` (`Scope` and `Typeover` of `EquationEditModeEnum`) read `_model`. None has a closure, and they are appended at the end of the partial, so no existing closure ordinal moves. Their stub pairs are removed from the `.g.cs`.
+- The `EquationControl` reference decompile is empty in the cache (`.cs` is 0 bytes), so the IL was read directly from `Ptc.Controls.EquationControl.il`.
+- Gate (project-level): PASS; 3557 checked, zero failures (`.mirror-cache/release-il-0c1b730c7c11/release-il.json`).
