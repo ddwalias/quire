@@ -371,5 +371,21 @@ Investigation of remaining unmigrated `PositionBase`, `Position`, and `DepManage
   - Full native `DepManager` multi-level associative container layout and map methods blocking `PositionBase.InvalidateDeps`, `PositionBase.SetEnvScope`, `PositionBase.EndMove`, and `ActionChain.add_env_scope` / `remove_env_scope`.
   - Compiler RTTI descriptor emissions for `Position.previous` and `Position.next`.
 
+## Batch 27 — DepManager Layout and depctl
+
+- Owner: AGY, Orca task `task_546ad987383e`; branch `feature/luna-mcdepman`.
+- Members mirrored and verified:
+  - `depman.DepManager.depctl(int)`
+- Release IL report: PASS; 251 checked (`.mirror-cache/release-il-52373e865a95/release-il.json`).
+- Architecture and implementation:
+  - Disassembled `depman.DepManager.depctl` (token `0x06000053`, 14 entries, 10 IL instructions). It acts as the dependency controller for disabling/enabling dependency tracking: `enabled_ = (cmd == 0);`.
+  - Defined unmanaged `depman::DepManager` class layout (56 bytes, `static_assert(sizeof(DepManager) == 56)`): vptr at offset 0, 32-byte storage buffer for `def_table_` and `forward_deps_` (offsets 8..39), `bool enabled_` at offset 40 (`0x28`), and 15 bytes of trailing padding (offsets 41..55).
+  - `#pragma comment(linker, "/include:?depctl@DepManager@depman@@QEAAXH@Z")` emits `depman.DepManager.depctl` matching Mathcad Release IL byte-for-byte.
+- Remaining dependencies:
+  - Cross-assembly `gcroot` resolution in `MethodAudit` (`SafeEvent`, `LabeledDictionary`) blocking `PositionBase.SetBusy`, `WaitReady`, `PrepareKill`, and `ready` (exact C++ source drafts preserved in `DepmanPosition.cpp`).
+  - Full associative container implementation (`def_table_`, `forward_deps_`, `SDef` keys, `lower_bound_ne`, `AddLabels`) blocking `DepManager.resolve`, `is_bound`, `find_def`, `find_def_nodead`, `add_def`, `remove_def`, `add_dep`, `remove_dep`, `find_all_deps`, and `invalidateChains`.
+  - Compiler RTTI descriptor emissions for `Position.previous` and `Position.next`.
+
+
 
 

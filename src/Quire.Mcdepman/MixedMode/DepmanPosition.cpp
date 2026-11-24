@@ -39,6 +39,7 @@
 #pragma comment(linker, "/include:?Kill@PositionBase@depman@@QEAAXXZ")
 #pragma comment(linker, "/include:?TreatAsReady@PositionBase@depman@@QEAAX_N@Z")
 #pragma comment(linker, "/include:?OnDep@PositionBase@depman@@QEAAXPEAVPosition@2@@Z")
+#pragma comment(linker, "/include:?depctl@DepManager@depman@@QEAAXH@Z")
 // Pragmas for methods blocked on cross-assembly gcroot mapping in MethodAudit (SafeEvent, LabeledDictionary).
 // Source implementations below are exact and ready to be un-commented once MethodAudit supports cross-assembly gcroot:
 // #pragma comment(linker, "/include:?SetBusy@PositionBase@depman@@QEAAX_N@Z")
@@ -294,6 +295,11 @@ Position* Position::previous()
 Position* Position::next()
 {
     return dynamic_cast<Position*>(next_);
+}
+
+void DepManager::depctl(int cmd)
+{
+    enabled_ = (cmd == 0);
 }
 
 } // namespace depman

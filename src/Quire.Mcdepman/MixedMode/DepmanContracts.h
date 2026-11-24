@@ -6,8 +6,20 @@ void __cdecl operator delete(void* ptr, unsigned __int64 size) noexcept;
 
 namespace depman {
     class ActionChain;
-    class DepManager;
     class Position;
+
+    class DepManager {
+    public:
+        virtual ~DepManager();
+        void depctl(int cmd);
+
+    private:
+        unsigned char pad_08_[32]; // 0x08..0x28 (def_table_ and forward_deps_)
+        bool enabled_;             // 0x28 (offset 40)
+        unsigned char pad_29_[15]; // 0x29..0x38 (to 56 bytes)
+    };
+
+    static_assert(sizeof(DepManager) == 56, "DepManager size must be 56 bytes");
 }
 
 namespace Quire { namespace utl {
