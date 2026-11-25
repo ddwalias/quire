@@ -44,16 +44,6 @@ public partial class WorksheetControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     public bool PreRecalculateAll { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool ShowScriptableControlsWarningDialog { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool DisableScriptableControls { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsScriptingRunWorksheetOpen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsScriptingRunWorksheetRecalculate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string CustomPathToPythonDir { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private static global::System.Type TypeOfThis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Core.TextFormat CurrentTextFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

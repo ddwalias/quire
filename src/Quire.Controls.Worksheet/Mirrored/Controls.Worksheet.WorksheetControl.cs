@@ -77,6 +77,36 @@ public partial class WorksheetControl
         set => SetValue(BookmarksManagerProperty, value);
     }
 
+    public bool ShowScriptableControlsWarningDialog
+    {
+        get => (bool)GetValue(ShowScriptableControlsWarningDialogProperty);
+        set => SetValue(ShowScriptableControlsWarningDialogProperty, value);
+    }
+
+    public bool DisableScriptableControls
+    {
+        get => (bool)GetValue(DisableScriptableControlsProperty);
+        set => SetValue(DisableScriptableControlsProperty, value);
+    }
+
+    public bool IsScriptingRunWorksheetOpen
+    {
+        get => (bool)GetValue(IsScriptingRunWorksheetOpenProperty);
+        set => SetValue(IsScriptingRunWorksheetOpenProperty, value);
+    }
+
+    public bool IsScriptingRunWorksheetRecalculate
+    {
+        get => (bool)GetValue(IsScriptingRunWorksheetRecalculateProperty);
+        set => SetValue(IsScriptingRunWorksheetRecalculateProperty, value);
+    }
+
+    public string CustomPathToPythonDir
+    {
+        get => (string)GetValue(CustomPathToPythonDirProperty);
+        set => SetValue(CustomPathToPythonDirProperty, value);
+    }
+
     public NumberFormat CurrentNumberFormat
     {
         get => _currentNumberFormat;
