@@ -86,6 +86,16 @@ public partial class WorksheetControlDebugger
                 HandlerOnActiveTabChanged);
         }
 
+        private void HandlerOnActiveTabChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (_isDebuggingEnabled)
+            {
+                UnSubscribeEvents();
+                FillDataForDebugging(e.NewValue as global::Quire.Controls.Core.IEngineeringDocument);
+                SubscribeEvents();
+            }
+        }
+
         public virtual void Dispose()
         {
             global::Quire.DebugTools.DevAssert(_isDebuggingEnabled, "Debugging already disabled.");
