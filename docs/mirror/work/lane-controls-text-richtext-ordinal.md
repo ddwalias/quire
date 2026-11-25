@@ -44,7 +44,7 @@ The two anchors inside nested `RichTextBase.SyncTextChangedCommand` are `.ctor` 
 
 ## RichTextWithEmbeddedItem anchors
 
-Derived from `Ptc.Controls.Text.RichTextWithEmbeddedItem.il` and its root method order. The duplicate `DisplayClass52` and `DisplayClass53` anchors belong to `GetPotentialLinkEndPosition`.
+Derived from `Ptc.Controls.Text.RichTextWithEmbeddedItem.il` and its root method order. Ordinal 52 is `TryPostChangeHyperlinkInsertion`; ordinal 53 is `GetPotentialLinkEndPosition`.
 
 | IL method index | Member | Closure ordinal N | Offset N − index |
 |---:|---|---:|---:|
@@ -123,3 +123,17 @@ Derived from `Ptc.Controls.Text.RichTextWithEmbeddedItem.il` and its root method
 - Implemented `TryPostChangeHyperlinkInsertion`; closure `<TryPostChangeHyperlinkInsertion>b__0` matches ordinal 52. The nested guards retain the shared exit block required by the reference Release IL.
 - Release IL report: `.mirror-cache/release-il-49e0c48e699c/release-il.json` — PASS, 718 checked, zero failures; 51 generated stubs, 41 no-pair members, 22 unchanged/unmatched.
 - Release build succeeded; MirrorGen `emit` left `Controls.Text.RichTextWithEmbeddedItem.g.cs` byte-identical.
+
+
+## RichTextWithEmbeddedItem ordinal 53 blocker
+
+- Attempted `GetPotentialLinkEndPosition` with separate predicates and reordered the static/capturing lambda declarations; the ordinal 53 closure names aligned, but Release IL still differed at normalized instruction 25: C# emits `callvirt TextPointer.CompareTo`, while Mathcad emits `call`.
+- Reverted the method to its unmarked placeholder. The ordinal 52 slice remains exact and the current Release IL report is `.mirror-cache/release-il-1a6da0e9c216/release-il.json` — PASS, 718 checked, zero failures.
+
+
+## RichTextWithEmbeddedItem slice 3
+
+- Implemented `OnPreviewTabForward` (closures 90/91), `ExecuteAddItemToListCommand` (117), `ExecuteRemoveItemFromListCommand` (118), `RestoreTextBoxContent`, `RemoveInlineRecursively` (166), `HideFromCalculationContext` getter/setter (219/220), `ToggleHideFromCalculationContext` (221), and `UpdateHideFromCalculationButton` (230).
+- The two clone-helper fields were moved before the 219/220 anchors so both closures match; the Release IL gate reports 750 checked, zero failures at `.mirror-cache/release-il-8e55d35085c0/release-il.json`.
+- Remaining closure blockers: `GetPotentialLinkEndPosition` at 53 (`callvirt TextPointer.CompareTo` vs Mathcad's `call`), `GetWhiteboardItemsInRange` at 257 (11 no-counterpart rows for its generated anonymous type/lambdas; report `.mirror-cache/release-il-e66c2a7f7514/release-il.json`), and `IsInvalidOperation` at 235 (candidate closure allocation aligns, but the count guard branches to instruction 33 instead of 18). Each failed attempt was reverted to its placeholder.
+- The Mathcad/Framework API exposes `TextPointer.CompareTo(TextPointer)` only as an instance member, so there is no matching explicit static-call form available in C#.

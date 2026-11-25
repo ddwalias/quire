@@ -976,7 +976,29 @@ private static void RequestNavigateHandler(object sender, System.Windows.Navigat
         return item;
     }
 
-    private void OnPreviewTabForward(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnPreviewTabForward(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        if (ActiveItem == null)
+        {
+            return;
+        }
+
+        if (((IWhiteboardItemInText)ActiveItem).CanTraverse((FocusNavigationDirection)0))
+        {
+            return;
+        }
+
+        e.Handled = true;
+        IWhiteboardItem whiteboardItem = WhiteboardItems.SkipWhile((IWhiteboardItem item) => item != ActiveItem).Skip(1).FirstOrDefault(item => ContainerItemManager.IsTabNavigatable(item));
+        if (whiteboardItem != null)
+        {
+            ContainerItemManager.TabInto(whiteboardItem, (FocusNavigationDirection)0);
+        }
+        else
+        {
+            RaiseEvent(new CustomRoutedEventArgs<FocusNavigationDirection>(TabOutOfTextEvent, (FocusNavigationDirection)0));
+        }
+    }
 
     private void OnPreviewTabBackward(object sender, ExecutedRoutedEventArgs e)
     {
@@ -1258,11 +1280,73 @@ private static void RequestNavigateHandler(object sender, System.Windows.Navigat
         item.RequestRemove -= HandleChildItemRequestRemove;
     }
 
-    private void ExecuteAddItemToListCommand(global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ExecuteAddItemToListCommand(global::Quire.Controls.Core.IWhiteboardItemInText item)
+    {
+        if (WhiteboardItems.Contains(item))
+        {
+            return;
+        }
 
-    private void ExecuteRemoveItemFromListCommand(global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        InlineUIContainer container = GetContainer(item);
+        if (DebugTools.AssertNotNull(container, "Adding an embedded item that is not hosted in the document.").Failed)
+        {
+            return;
+        }
 
-    private void RestoreTextBoxContent(global::Quire.Controls.Core.IWhiteboardItemInText item, int offset, bool isItemActive, bool isRedo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        int offset = textType.GetOffsetToPosition(Document, container.ElementStart);
+        bool isItemActive = ContainerItemManager.IsItemActivated(item);
+        DelegateFunction0<bool> doMethod = () =>
+        {
+            AddItemToList(item);
+            if (isItemActive)
+            {
+                item.Activate(isActive: true);
+            }
+
+            return true;
+        };
+        Delegate0 undoMethod = () => RemoveItemFromList(item);
+        Delegate0 redoMethod = () => RestoreTextBoxContent(item, offset, isItemActive, isRedo: true);
+        CommandBuffer.Execute(new UndoableCommand("Add embedded item to list", doMethod, undoMethod, redoMethod));
+    }
+
+    private void ExecuteRemoveItemFromListCommand(global::Quire.Controls.Core.IWhiteboardItemInText item)
+    {
+        int offset;
+        bool isItemActive;
+        if (!WhiteboardItems.Contains(item))
+        {
+            return;
+        }
+
+        offset = _itemOffsetMap[item];
+        isItemActive = ContainerItemManager.IsItemActivated(item);
+        DelegateFunction0<bool> doMethod = () =>
+        {
+            RemoveItemFromList(item);
+            return true;
+        };
+        Delegate0 undoMethod = () => RestoreTextBoxContent(item, offset, isItemActive, isRedo: false);
+        CommandBuffer.Execute(new UndoableCommand("Remove embedded item from list", doMethod, undoMethod));
+    }
+
+    private void RestoreTextBoxContent(global::Quire.Controls.Core.IWhiteboardItemInText item, int offset, bool isItemActive, bool isRedo)
+    {
+        if (textType.GetPositionAtOffset(Document, offset).GetAdjacentElement(LogicalDirection.Forward) is InlineUIContainer container)
+        {
+            SetItem(container, item);
+            AddItemToList(item);
+            CommitItem(item);
+            if (isItemActive)
+            {
+                item.Activate(isActive: true);
+            }
+            else if (isRedo)
+            {
+                ContainerItemManager.ExecuteInBackground(() => Focus(), asynch: true);
+            }
+        }
+    }
 
     private void UpdateItemOffsetMap()
     {
@@ -1793,7 +1877,15 @@ private static void RequestNavigateHandler(object sender, System.Windows.Navigat
         }
     }
 
-    private static bool RemoveInlineRecursively(global::System.Windows.Documents.InlineCollection inlines, global::System.Windows.Documents.Inline inlineToRemove) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static bool RemoveInlineRecursively(global::System.Windows.Documents.InlineCollection inlines, global::System.Windows.Documents.Inline inlineToRemove)
+    {
+        if (!inlines.Remove(inlineToRemove))
+        {
+            return inlines.OfType<Span>().Any((Span span) => RemoveInlineRecursively(span.Inlines, inlineToRemove));
+        }
+
+        return true;
+    }
 
     private void LogDocumentContents(string suffix = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -2129,20 +2221,76 @@ private static void RequestNavigateHandler(object sender, System.Windows.Navigat
         _richTextWithEmbededItemCloneHelper = _defaultCloneHelper;
     }
 
-    public bool CanHideFromCalculationContext => !WhiteboardItems.OfType<ICalculationHideableChild>().IsNullOrEmpty();
-
-    public bool HideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-
+    // Compile-order device: these fields precede the ordinal 219/220 closure anchors.
     private readonly global::Quire.Controls.Text.IRichTextWithEmbededItemCloneHelper _defaultCloneHelper;
 
     private global::Quire.Core.ISnapToPixelHelper _snappingHelper;
+
+    public bool CanHideFromCalculationContext => !WhiteboardItems.OfType<ICalculationHideableChild>().IsNullOrEmpty();
+
+    public bool HideFromCalculationContext
+    {
+        get => !WhiteboardItems.OfType<ICalculationHideableChild>().Any((ICalculationHideableChild hideable) => !hideable.HideFromCalculationContext);
+        set
+        {
+            IEnumerable<ICalculationHideableChild> hideableChangeList = from hideable in WhiteboardItems.OfType<ICalculationHideableChild>()
+                where hideable.HideFromCalculationContext != value
+                select hideable;
+            if (!hideableChangeList.Any())
+            {
+                return;
+            }
+
+            CompoundCommand nestedCommand = new CompoundCommand();
+            DelegateFunction0<bool> doMethod = () =>
+            {
+                using (new CommandScope(nestedCommand))
+                {
+                    hideableChangeList.Each((ICalculationHideableChild hideable) => hideable.HideFromCalculationContext = value);
+                }
+
+                FirePropertyChanged(new System.ComponentModel.PropertyChangedEventArgs("HideFromCalculationContext"));
+                return true;
+            };
+            Delegate0 undoMethod = () =>
+            {
+                nestedCommand.Undo();
+                FirePropertyChanged(new System.ComponentModel.PropertyChangedEventArgs("HideFromCalculationContext"));
+            };
+            Delegate0 redoMethod = () =>
+            {
+                nestedCommand.Redo();
+                FirePropertyChanged(new System.ComponentModel.PropertyChangedEventArgs("HideFromCalculationContext"));
+            };
+            CommandBuffer.Execute(new UndoableCommand("Change HideFromCalculationContext on RichText with embedded items", doMethod, undoMethod, redoMethod));
+        }
+    }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.RichTextWithEmbeddedItem+PreviewKeyDownData, Ptc.Controls.Text")]
     private partial struct PreviewKeyDownData
     {
     }
 
-    private void ToggleHideFromCalculationContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ToggleHideFromCalculationContext()
+    {
+        IEnumerable<IWhiteboardItem> source = SelectionContainsEmbeddedItemsOnly ? SelectedWhiteboardItems : WhiteboardItems;
+        IEnumerable<ICalculationHideableChild> visibleItems = from hideable in source.OfType<ICalculationHideableChild>()
+            where !hideable.HideFromCalculationContext
+            select hideable;
+        using (new CommandScope("Changing HideFromCalculationContext"))
+        {
+            if (visibleItems.Any())
+            {
+                visibleItems.Each((ICalculationHideableChild hideable) => hideable.HideFromCalculationContext = true);
+            }
+            else
+            {
+                source.OfType<ICalculationHideableChild>().Each((ICalculationHideableChild hideable) => hideable.HideFromCalculationContext = false);
+            }
+        }
+
+        UpdateHideFromCalculationButton();
+    }
 
     private void OnToggleHideFromCalculationContext(object sender, ExecutedRoutedEventArgs e)
     {
@@ -2174,7 +2322,35 @@ private static void RequestNavigateHandler(object sender, System.Windows.Navigat
         }
     }
 
-    private void UpdateHideFromCalculationButton() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void UpdateHideFromCalculationButton()
+    {
+        List<ICalculationHideableChild> items = new List<ICalculationHideableChild>();
+        if (ActiveItem != null)
+        {
+            if (ActiveItem is ICalculationHideableChild item)
+            {
+                items.Add(item);
+            }
+        }
+        else if (SelectionContainsEmbeddedItemsOnly)
+        {
+            items.AddRange(SelectedWhiteboardItems.OfType<ICalculationHideableChild>());
+        }
+        else
+        {
+            items.AddRange(WhiteboardItems.OfType<ICalculationHideableChild>());
+        }
+
+        bool hasHideableItems = items.Any();
+        bool hideFromCalculationButtonChecked = true;
+        if (!hasHideableItems || items.Any((ICalculationHideableChild item) => !item.HideFromCalculationContext))
+        {
+            hideFromCalculationButtonChecked = false;
+        }
+
+        HideFromCalculationButtonEnabled = hasHideableItems;
+        HideFromCalculationButtonChecked = hideFromCalculationButtonChecked;
+    }
 
     public bool ContainsError(EngineError error)
     {
