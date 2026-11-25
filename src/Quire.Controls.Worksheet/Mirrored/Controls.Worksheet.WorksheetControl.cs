@@ -141,6 +141,30 @@ public partial class WorksheetControl
         set => SetValue(DefaultUnitSystemProperty, value);
     }
 
+    public global::Quire.Controls.Core.NumberFormat DisplayNumberFormat
+    {
+        get => (global::Quire.Controls.Core.NumberFormat)GetValue(DisplayNumberFormatProperty);
+        set => SetValue(DisplayNumberFormatProperty, value);
+    }
+
+    public global::Quire.Controls.Core.MatrixFormat ResultMatrixFormat
+    {
+        get => (global::Quire.Controls.Core.MatrixFormat)GetValue(ResultMatrixFormatProperty);
+        set => SetValue(ResultMatrixFormatProperty, value);
+    }
+
+    public string FilePath
+    {
+        get => DocumentAttachedProperties.GetFilePath(this);
+        set => DocumentAttachedProperties.SetFilePath(this, value);
+    }
+
+    public bool SimplifyUnitSystem
+    {
+        get => GetDispatchedProperty<bool>((global::Quire.DelegateFunction1<object, DependencyProperty>)GetValue, SimplifyUnitSystemProperty);
+        set => SetValue(SimplifyUnitSystemProperty, value);
+    }
+
     public UnitSystems CustomBaseUnitSystem
     {
         get => (UnitSystems)GetValue(CustomBaseUnitSystemProperty);
