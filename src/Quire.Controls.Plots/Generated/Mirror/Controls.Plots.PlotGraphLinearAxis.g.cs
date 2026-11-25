@@ -20,8 +20,6 @@ internal partial class PlotGraphLinearAxis : global::Quire.Controls.Plots.PlotGr
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty PositionProperty;
     [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Controls.GridSplitter Splitter { get => base.Splitter; set => base.Splitter = value; }
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Plots.Presenter.Positions Position { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public PlotGraphLinearAxis(global::Quire.Controls.Plots.EquationList equationList, global::Quire.Controls.Plots.PlotTitle axisTitle = default) : base(default(global::Quire.Controls.Plots.EquationList), default(int), default(double)) { }
@@ -42,13 +40,7 @@ internal partial class PlotGraphLinearAxis : global::Quire.Controls.Plots.PlotGr
     [global::Quire.Mirror.MirrorStub]
     private void PlotGraphAxis_SizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override bool ShouldArrangeConvertedEquationsHorizontally() => base.ShouldArrangeConvertedEquationsHorizontally();
-    [global::Quire.Mirror.MirrorStub]
     protected override void SetOtherAxis(global::Quire.Controls.Plots.PlotGraphAxis value) => base.SetOtherAxis(value);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleStartChanged() => base.HandleStartChanged();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void HandleEndChanged() => base.HandleEndChanged();
     [global::Quire.Mirror.MirrorStub]
     protected override void PositionTickMarkChanged(int tickNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -64,11 +56,7 @@ internal partial class PlotGraphLinearAxis : global::Quire.Controls.Plots.PlotGr
     [global::Quire.Mirror.MirrorStub]
     private void FireCalcPositionTickMarkNeeded(global::Quire.Controls.Plots.Presenter.Positions newPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override void HandleDiscreteChanged() => base.HandleDiscreteChanged();
-    [global::Quire.Mirror.MirrorStub]
     public override void UpdateAxisOriginPositions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void TickMarksChanged() => base.TickMarksChanged();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Media.LineGeometry GetTickLineByTickNumber(int totalTickNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -79,10 +67,6 @@ internal partial class PlotGraphLinearAxis : global::Quire.Controls.Plots.PlotGr
     public override bool FindClosestTickValueToZero(ref int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void MouseMoveDraw(global::System.Windows.Media.DrawingContext drawingContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnMouseEnter(global::System.Windows.Input.MouseEventArgs e) => base.OnMouseEnter(e);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnMouseLeave(global::System.Windows.Input.MouseEventArgs e) => base.OnMouseLeave(e);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
     [global::Quire.Mirror.MirrorStub]
@@ -105,8 +89,6 @@ internal partial class PlotGraphLinearAxis : global::Quire.Controls.Plots.PlotGr
     internal void FixateSize(double savedLength) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void FixateSizeOfRowsInner() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override double GetPerpendicularAxisPositionRatio() => base.GetPerpendicularAxisPositionRatio();
     [global::Quire.Mirror.MirrorStub]
     internal bool ReleaseAutoReSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

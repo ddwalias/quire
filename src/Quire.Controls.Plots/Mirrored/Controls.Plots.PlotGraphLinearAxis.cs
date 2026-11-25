@@ -52,4 +52,89 @@ internal partial class PlotGraphLinearAxis
         : this(null)
     {
     }
+
+    public override GridSplitter Splitter
+    {
+        get
+        {
+            return _splitter;
+        }
+        set
+        {
+            if (_splitter == value)
+            {
+                return;
+            }
+            if (_splitter != null)
+            {
+                _splitter.DragCompleted -= Splitter_DragCompleted;
+                _splitter.DragDelta -= Splitter_DragDelta;
+            }
+            _splitter = value;
+            if (value != null)
+            {
+                _splitter.DragCompleted += Splitter_DragCompleted;
+                _splitter.DragDelta += Splitter_DragDelta;
+                InitializeColOrRowIndexProperties();
+                FixateSizeOfRowsInner();
+            }
+        }
+    }
+
+    protected override bool ShouldArrangeConvertedEquationsHorizontally()
+    {
+        return Orientation == Orientation.Horizontal;
+    }
+
+    protected override void HandleStartChanged()
+    {
+        base.HandleStartChanged();
+        CalcOriginPositioning();
+    }
+
+    protected override void HandleEndChanged()
+    {
+        base.HandleEndChanged();
+        CalcOriginPositioning();
+    }
+
+    protected override void HandleDiscreteChanged()
+    {
+        ScaleEdgeEvenly = IsDiscrete;
+        CalcOriginPositioning();
+    }
+
+    protected override void TickMarksChanged()
+    {
+        if (OtherLinearAxis != null && OtherLinearAxis.PositionTickMark > TickMarks)
+        {
+            OtherLinearAxis.Position = OtherLinearAxis.Orientation == Orientation.Vertical ? Positions.Right : Positions.Top;
+        }
+        CalcOriginPositioning();
+    }
+
+    protected override void OnMouseEnter(MouseEventArgs e)
+    {
+        base.OnMouseEnter(e);
+        if (OtherAxis != null)
+        {
+            e.Handled = true;
+            AddAdorner();
+        }
+    }
+
+    protected override void OnMouseLeave(MouseEventArgs e)
+    {
+        base.OnMouseLeave(e);
+        RemoveAdorner();
+    }
+
+    public override double GetPerpendicularAxisPositionRatio()
+    {
+        if (OtherAxis == null)
+        {
+            return base.GetPerpendicularAxisPositionRatio();
+        }
+        return GetTickRelativePosition(OtherAxis.PositionTickMark);
+    }
 }
