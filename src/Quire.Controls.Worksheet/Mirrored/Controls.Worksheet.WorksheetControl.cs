@@ -107,6 +107,34 @@ public partial class WorksheetControl
         set => SetValue(CustomPathToPythonDirProperty, value);
     }
 
+    public bool PreRecalculateAll
+    {
+        get => DocumentAttachedProperties.GetPreRecalculateAll(this);
+        set
+        {
+            DebugTools.LogData("WorksheetControl.PreRecalculateAll: " + PreRecalculateAll + "=>" + value);
+            DocumentAttachedProperties.SetPreRecalculateAll(this, value);
+        }
+    }
+
+    public bool CacheWorksheet
+    {
+        get => DocumentAttachedProperties.GetCacheWorksheet(this);
+        set => DocumentAttachedProperties.SetCacheWorksheet(this, value);
+    }
+
+    public global::Quire.Controls.CalculationOptions DocCalculationOptions
+    {
+        get => DocumentAttachedProperties.GetDocCalculationOptions(this);
+        set => DocumentAttachedProperties.SetDocCalculationOptions(this, value);
+    }
+
+    public global::Quire.Controls.CalculationVariables DocCalculationVariables
+    {
+        get => DocumentAttachedProperties.GetDocCalculationVariables(this);
+        set => DocumentAttachedProperties.SetDocCalculationVariables(this, value);
+    }
+
     public NumberFormat CurrentNumberFormat
     {
         get => _currentNumberFormat;
