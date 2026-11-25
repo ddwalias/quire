@@ -68,17 +68,11 @@ internal partial class TraceModel : global::Quire.Controls.Plots.Model.PlotCalcu
     [global::Quire.Mirror.MirrorStub]
     internal TraceModel(global::Quire.Controls.Plots.Presenter.PlotType plotType, global::Quire.Controls.Plots.Presenter.IEquationItem rangeEquationItem, global::Quire.Controls.Plots.Presenter.IEquationItem resultEquationItem, global::Quire.Controls.Plots.Presenter.IAxisModel rangeAxisModel, global::Quire.Controls.Plots.Presenter.IAxisModel resultAxisModel, global::System.Windows.Size viewPortDpi) { }
     [global::Quire.Mirror.MirrorStub]
-    public void SetEquation(global::Quire.Controls.Plots.Presenter.AxesIndex axis, global::Quire.Controls.Plots.Presenter.IEquationItem equationItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void UpdatePlottingPointsForDisplay() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnPlotCalculatableError(global::Quire.Controls.Plots.Model.EngineErrorEventArgs args) => base.OnPlotCalculatableError(args);
     [global::Quire.Mirror.MirrorStub]
     public override void SetResult(global::Quire.Calculation.Core.IResultNode result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool AnalyzeResultData(global::Quire.Calculation.Core.IVectorListResultNode xResult, global::Quire.Calculation.Core.IVectorListResultNode yResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Calculation.Core.EngineResult CopyMinMaxAndUnitsResults(global::Quire.Calculation.Core.EngineResult source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.TraceModel+TraceAnalyzedData, Ptc.Controls.Plots")]
     private partial struct TraceAnalyzedData

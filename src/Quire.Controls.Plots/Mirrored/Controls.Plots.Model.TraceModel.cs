@@ -185,6 +185,16 @@ internal partial class TraceModel
         }
     }
 
+    protected override void OnPlotCalculatableError(EngineErrorEventArgs args)
+    {
+        base.OnPlotCalculatableError(args);
+        IsNumOfPointsMutable = false;
+        if (args.EngineError != null)
+        {
+            ClearPoints();
+        }
+    }
+
     private void FireResultValidChanged(bool resultValid)
     {
         if (ResultValidChanged != null)
@@ -250,6 +260,16 @@ internal partial class TraceModel
     public IPlotEquation GetEquation(AxesIndex axis)
     {
         return _equations[(int)axis].Equation;
+    }
+
+    public void SetEquation(AxesIndex axis, IEquationItem equationItem)
+    {
+        SetEquationWithoutCommit(axis, equationItem);
+        SetIsCommitted(value: false);
+        if (SynchronizationStatus == SynchronizationStatus.Synchronized)
+        {
+            CommitIfEquationsNotEmpty();
+        }
     }
 
     public PointCollection GetPlottingPointsForDisplay()
@@ -362,6 +382,20 @@ internal partial class TraceModel
     private void EquationControlRequestEvaluation()
     {
         Commit();
+    }
+
+    private static EngineResult CopyMinMaxAndUnitsResults(EngineResult source)
+    {
+        IResultNode resultNode = null;
+        if (source.ResultNode is ITrace2DResultNode trace2DResultNode)
+        {
+            resultNode = new Trace2DResultNode(trace2DResultNode.RangeAxisInfo, trace2DResultNode.ResultAxisInfo, new TraceDataPoints(), trace2DResultNode.TraceResultType);
+        }
+        else
+        {
+            DebugTools.FailAssertion(null, Array.Empty<object>());
+        }
+        return new EngineResult(resultNode, null, SynchronizationStatus.Synchronized);
     }
 
     public void ResetIsTypeDefault(bool? value = null)
