@@ -22,4 +22,7 @@ public partial class StringToComboBoxMathTransformerForConvertor
 
         return global::System.Text.RegularExpressions.Regex.Replace(value.ToUpper(), "E(?!" + b + ")", "E+");
     }
+
+    [global::Quire.Mirror.MirrorVerified("Release IL")]
+    protected override string SignExpr => b;
 }

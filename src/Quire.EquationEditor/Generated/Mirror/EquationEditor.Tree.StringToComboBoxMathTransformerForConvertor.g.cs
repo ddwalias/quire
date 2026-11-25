@@ -16,8 +16,6 @@ public partial class StringToComboBoxMathTransformerForConvertor : global::Quire
     protected static readonly string m;
     private static readonly string n;
     [global::Quire.Mirror.MirrorStub]
-    protected override string SignExpr { get => base.SignExpr; }
-    [global::Quire.Mirror.MirrorStub]
     internal override bool bm(string A_0, out global::System.ValueTuple<bool, string> A_1) => base.bm(A_0, out A_1);
     [global::Quire.Mirror.MirrorStub]
     internal override bool bn(string A_0, out global::System.ValueTuple<bool, string, bool, string> A_1) => base.bn(A_0, out A_1);

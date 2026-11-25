@@ -93,6 +93,12 @@
   method called `l` or `m`, so no field-name rename applies.
 - Release IL: `--project Quire.EquationEditor` PASS, 1400 checked, 0 failures (was 1398).
 
+## Batch 9 — StringToComboBoxMathTransformerForConvertor.SignExpr (hand-written)
+
+- Member: `StringToComboBoxMathTransformerForConvertor.SignExpr` override, which returns `StringToComboBoxMathTransformer.b` (uncollided field `b`).
+  Stub removed from `Generated/Mirror/EquationEditor.Tree.StringToComboBoxMathTransformerForConvertor.g.cs`.
+- Release IL: `--project Quire.EquationEditor` PASS, 1401 checked, 0 failures (was 1400).
+
 ## Field-collision fixture (for the maintainer; no tool changed here)
 
 - Original: `Ptc.EquationEditor.Tree.MatrixNodeInfo`. Field `a` (type `Ptc.Controls.Core.MatrixFormat`), private
