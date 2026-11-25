@@ -964,6 +964,25 @@
 - Release IL: PASS — 2821 checked in Plots, 0 failures.
 - Remaining mismatches in this batch: none.
 
+## Batch 121 — PlotEquationWOUnit remaining members
+
+- Owner: agy-whiteboard-2. Branch: `feature/agy-plots`.
+- Members:
+  - `PlotEquationWOUnit`: `_plotCalculatableError`, `RequestRemove`, `RequestEvaluation`, `_scaling`, `_typeOfThis`, `CalcIsDisabledProperty`, `DisplayNumberFormatProperty`, `.ctor`, `static .cctor`, `OnTraversedFocusEvent`, `BindCommands`, `OnPreviewGotKeyboardFocus`, `HandleNavigateToEquationStart`, `HandleNavigateToEquationEnd`, `HandleBackspace`, `HandleDelete`, `OnRequestEvaluation`, `EquationSExpression`, `SetRegionXmlNode`, `SetExpressionXmlNode`, `SetExpressionSExpression`, `GetRegionXmlNode`, `GetDataObject`, `SetDataObject`, `NavigateRegionEnd`, `NavigateRegionStart`, `Commit()`, `Commit(bool fireEvent)`, `Units`, `ScalingEquation`, `RegionErrorCount`, `FireRequestEvaluation`, `FireRequestRemove`, `DelegateFocus`, `ScalingRl`, `PlotCalculatableError`, `ContainedEquationControls`, `InitializeComponent`, `_CreateDelegate`, `IComponentConnector.Connect`, `IPlotEquation.ActualWidth`, `IPlotEquation.ActualHeight`
+- Hand-written:
+  - `Mirrored/Controls.Plots.PlotEquationWOUnit.cs`
+- Shapes:
+  - `PlotEquationWOUnit`:
+    - Arranged fields and properties in exact Mathcad order (`_plotCalculatableError`, `RequestRemove`, `RequestEvaluation`, `_scaling`, `_typeOfThis`, `CalcIsDisabledProperty`, `DisplayNumberFormatProperty`, `ActiveEquation`, `_errorFrame`, `_exp`, `_contentLoaded`).
+    - Positioned `_errorFrame` before `ContainedEquationControls` to achieve exact compiler-generated iterator ordinal `<get_ContainedEquationControls>d__85`.
+    - Used ternary guard `if (!(value == null ? false : value.Count < 1))` in `set_Units` to match Mathcad's `brfalse.s / clt / brtrue.s` instruction sequence.
+    - Used non-early-return wrapper `if (_plotCalculatableError != value)` in `set_PlotCalculatableError` to match Mathcad's single exit `ret`.
+    - Used `if (AssertionE.Failed == (AssertionE)DebugTools.DevAssert(equationData.math.Length > 0, null)) return;` in `SetDataObject` matching `ldc.i4.1 / cgt.un / bne.un.s / ret`.
+    - Implemented explicit interface properties `IPlotEquation.ActualWidth` and `ActualHeight`.
+- Release IL: PASS — 2867 checked in Plots, 0 failures.
+- Remaining mismatches in this batch: none.
+
+
 
 
 
