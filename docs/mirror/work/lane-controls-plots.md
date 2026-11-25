@@ -1001,6 +1001,27 @@
 - Release IL: PASS — 2908 checked in Plots, 0 failures.
 - Remaining mismatches in this batch: none.
 
+## Batch 123 — RealNumberCalculatable remaining members
+
+- Owner: agy-whiteboard-2. Branch: `feature/agy-plots`.
+- Members:
+  - `RealNumberCalculatable`:
+    - `PropertyNames` (`Value`, `ErrorCount`, `ErrorCode`, `ErrorText`, `Error`)
+    - Fields: `_equationProxy`, `_value`, `_calculatingStatus`, `_engineError`, `_customErrors`, `_error`, `_hideFromCalculationContext`, `_overrideHideFromCalculation`
+    - Properties & Methods: `EquationProxy`, `ProxyRequestEvaluation`, `Value`, `RequestEvaluation`, `GetValueOfIdentifierBefore`, `TreatAsUpToDate`, `Rl`, `Commit`, `SetStatusSynchronized`, `SetCalculatingStatus`, `SetResult`, `FirstCustomError`, `UpdateError`, `SetError`, `ClearEngineError`, `SetIdentifierLabels`, `SetAutoSelectAlgorithm`, `SetRedefinitionWarnings`, `SetCustomError`, `ClearCustomErrors`, `EngineResult`, `InterceptAndUpdateResult`, `UseICalculatableToRestoreResult`, `RestoreResult`, `PropertyChanged`, `OnPropertyChanged`, `CalculatingStatus`, `ErrorCount`, `ErrorSExpression`, `ErrorCode`, `ErrorText`, `IsCommitted`, `Error`, `CanHideFromCalculationContext`, `HideFromCalculationContext`, `ContainsError`, `RequestShowError`, `ShowError`, `CurrentError`, `OverrideHideFromCalculation`, `.ctor`.
+- Hand-written:
+  - `Mirrored/Controls.Plots.Model.RealNumberCalculatable.cs`
+- Shapes:
+  - `RealNumberCalculatable`:
+    - Mapped `CalculatingStatus.NotComputing` to `CalculatingStatus.Idle` (2) per D20 enum mapping.
+    - Preserved exact field ordering and constructor initializers (`_calculatingStatus`, `_customErrors`, `_overrideHideFromCalculation`).
+    - Handled `ContainsError` delegating to `Equals(error.ErrorSource)` matching `callvirt Object::Equals(object)`.
+    - Formatted `SetResult` branches with early returns matching Mathcad IL `ret` targets.
+    - Used `flag |= _customErrors.Remove(item)` in `ClearCustomErrors` foreach loop matching bitwise-OR sequence.
+- Release IL: PASS — 2956 checked in Plots, 0 failures.
+- Remaining mismatches in this batch: none.
+
+
 
 
 
