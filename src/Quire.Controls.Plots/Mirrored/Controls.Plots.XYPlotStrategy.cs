@@ -43,9 +43,55 @@ internal partial class XYPlotStrategy
         primaryResultAxis.AxisTitle.Header = primaryResultAxis.AxisTitle.Resources["YAxisTitle.Header"] as string;
     }
 
-    public void InitializeLegendPositions(PlotControl plot, out PlotItemPlaceholder[] rangeLegendsPositions, out PlotItemPlaceholder[] resultLegendsPositions, out PlotItemPlaceholder[] titlePositions, out PlotItemPlaceholder[] plotLegendPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void InitializeLegendPositions(PlotControl plot, out PlotItemPlaceholder[] rangeLegendsPositions, out PlotItemPlaceholder[] resultLegendsPositions, out PlotItemPlaceholder[] titlePositions, out PlotItemPlaceholder[] plotLegendPositions)
+    {
+        rangeLegendsPositions = new PlotItemPlaceholder[6];
+        resultLegendsPositions = new PlotItemPlaceholder[6];
+        titlePositions = new PlotItemPlaceholder[2];
+        plotLegendPositions = new PlotItemPlaceholder[5];
+        rangeLegendsPositions[0] = plot.Template.FindName("PART_X0", plot) as PlotItemPlaceholder;
+        rangeLegendsPositions[1] = plot.Template.FindName("PART_X1", plot) as PlotItemPlaceholder;
+        resultLegendsPositions[0] = plot.Template.FindName("PART_Y0", plot) as PlotItemPlaceholder;
+        resultLegendsPositions[1] = plot.Template.FindName("PART_SharedY1", plot) as PlotItemPlaceholder;
+        rangeLegendsPositions[2] = plot.Template.FindName("PART_X2", plot) as PlotItemPlaceholder;
+        rangeLegendsPositions[3] = plot.Template.FindName("PART_X3", plot) as PlotItemPlaceholder;
+        rangeLegendsPositions[4] = plot.Template.FindName("PART_X4", plot) as PlotItemPlaceholder;
+        rangeLegendsPositions[5] = plot.Template.FindName("PART_X5", plot) as PlotItemPlaceholder;
+        resultLegendsPositions[2] = plot.Template.FindName("PART_Y2", plot) as PlotItemPlaceholder;
+        resultLegendsPositions[3] = plot.Template.FindName("PART_Y3", plot) as PlotItemPlaceholder;
+        resultLegendsPositions[4] = plot.Template.FindName("PART_Y4", plot) as PlotItemPlaceholder;
+        resultLegendsPositions[5] = plot.Template.FindName("PART_Y5", plot) as PlotItemPlaceholder;
+        titlePositions[0] = plot.Template.FindName("PART_TitleBottom", plot) as PlotItemPlaceholder;
+        titlePositions[1] = plot.Template.FindName("PART_TitleTop", plot) as PlotItemPlaceholder;
+        plotLegendPositions[0] = plot.Template.FindName("PART_PlotLegendBelow", plot) as PlotItemPlaceholder;
+        plotLegendPositions[1] = plot.Template.FindName("PART_PlotLegendTopLeft", plot) as PlotItemPlaceholder;
+        plotLegendPositions[2] = plot.Template.FindName("PART_PlotLegendTopRight", plot) as PlotItemPlaceholder;
+        plotLegendPositions[3] = plot.Template.FindName("PART_PlotLegendBottomLeft", plot) as PlotItemPlaceholder;
+        plotLegendPositions[4] = plot.Template.FindName("PART_PlotLegendBottomRight", plot) as PlotItemPlaceholder;
+    }
 
-    public void ApplyPlotTemplate(PlotControl plot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void ApplyPlotTemplate(PlotControl plot)
+    {
+        if (plot.Template.FindName("PART_xSplitter", plot) is PlotGridSplitter xSplitter)
+        {
+            xSplitter.Axis = plot.RangeAxis;
+            xSplitter.MouseDownAuxiliary += plot.HandlePlotGridSplitterMouseDown;
+        }
+        if (plot.Template.FindName("PART_ySplitter", plot) is PlotGridSplitter ySplitter)
+        {
+            ySplitter.Axis = plot.PrimaryResultAxis;
+            ySplitter.MouseDownAuxiliary += plot.HandlePlotGridSplitterMouseDown;
+        }
+        plot.XAxisTitlePlaceholder = plot.Template.FindName("PART_XAxisTitle", plot) as PlotItemPlaceholder;
+        plot.YAxisTitlePlaceholder = plot.Template.FindName("PART_YAxisTitle", plot) as PlotItemPlaceholder;
+        if (DebugTools.AssertNotNull(plot.XAxisTitlePlaceholder, null).Passed && DebugTools.AssertNotNull(plot.YAxisTitlePlaceholder, null).Passed)
+        {
+            plot.XAxisTitlePlaceholder.Content = plot.RangeAxis.AxisTitle;
+            plot.YAxisTitlePlaceholder.Content = plot.PrimaryResultAxis.AxisTitle;
+            plot.XAxisTitlePlaceholder.Visibility = !plot.RangeAxis.AxisTitle.ViewModel.ShowTitle ? Visibility.Collapsed : Visibility.Visible;
+            plot.YAxisTitlePlaceholder.Visibility = !plot.PrimaryResultAxis.AxisTitle.ViewModel.ShowTitle ? Visibility.Collapsed : Visibility.Visible;
+        }
+    }
 
     public List<EquationControl> BuildEditableAxisRelatedElements(PlotControl plot)
     {
