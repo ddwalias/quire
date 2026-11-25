@@ -88,8 +88,8 @@ internal partial class XYPlotStrategy
         {
             plot.XAxisTitlePlaceholder.Content = plot.RangeAxis.AxisTitle;
             plot.YAxisTitlePlaceholder.Content = plot.PrimaryResultAxis.AxisTitle;
-            plot.XAxisTitlePlaceholder.Visibility = !plot.RangeAxis.AxisTitle.ViewModel.ShowTitle ? Visibility.Collapsed : Visibility.Visible;
-            plot.YAxisTitlePlaceholder.Visibility = !plot.PrimaryResultAxis.AxisTitle.ViewModel.ShowTitle ? Visibility.Collapsed : Visibility.Visible;
+            plot.XAxisTitlePlaceholder.Visibility = plot.RangeAxis.AxisTitle.ViewModel.ShowTitle ? Visibility.Visible : Visibility.Collapsed;
+            plot.YAxisTitlePlaceholder.Visibility = plot.PrimaryResultAxis.AxisTitle.ViewModel.ShowTitle ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 
