@@ -2,6 +2,7 @@
 #pragma warning disable
 
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -13,6 +14,39 @@ namespace Quire.Controls.Plots.Plot3D.ViewModel;
 
 internal partial class PlotTraceViewModel3D
 {
+    public partial struct PropertyNames
+    {
+        public const string Color = "Color";
+
+        public const string RenderColor = "RenderColor";
+
+        public const string LineWeight = "LineWeight";
+
+        public const string LineStyle = "LineStyle";
+
+        public const string Symbol = "Symbol";
+
+        public const string VisualData = "VisualData";
+
+        public const string CommonRange = "CommonRange";
+
+        public const string SurfaceFill = "SurfaceFill";
+
+        public const string NumberOfPoints = "NumberOfPoints";
+
+        public const string IsNumOfPointsMutable = "IsNumOfPointsMutable";
+    }
+
+    private readonly IPlotTraceModel3D _model;
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    public PlotTraceViewModel3D(IPlotTraceModel3D model)
+    {
+        _model = model;
+        _model.PropertyChanged += ModelPropertyChanged;
+    }
+
     private void FirePropertyChanged(string propertyName)
     {
         if (PropertyChanged != null)

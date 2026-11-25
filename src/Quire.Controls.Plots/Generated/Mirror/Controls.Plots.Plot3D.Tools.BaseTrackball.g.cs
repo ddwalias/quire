@@ -11,23 +11,6 @@ namespace Quire.Controls.Plots.Plot3D.Tools;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.Tools.BaseTrackball, Ptc.Controls.Plots")]
 public abstract partial class BaseTrackball : global::Quire.Controls.Plots.Plot3D.Tools.IBaseTrackball
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Media3D.Matrix3D _previousTransform;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::System.Windows.Media.Media3D.Matrix3D> MouseUp;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::System.Windows.Media.Media3D.Matrix3D> MouseWheel;
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract global::System.Windows.Media.Media3D.Transform3D InitializeTransform();
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract bool TrackStart(global::System.Windows.Point current, bool useTimer);
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract bool Track(global::System.Windows.Point current);
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract bool TrackEnd(global::System.Windows.Point current);
-    [global::Quire.Mirror.MirrorStub]
-    protected BaseTrackball() { }
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.Tools.BaseTrackball+TrackingInfo, Ptc.Controls.Plots")]
     protected partial class TrackingInfo
     {

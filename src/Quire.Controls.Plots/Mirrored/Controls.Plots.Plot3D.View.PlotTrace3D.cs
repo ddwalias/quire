@@ -16,10 +16,21 @@ namespace Quire.Controls.Plots.Plot3D.View;
 
 public partial class PlotTrace3D
 {
-    static PlotTrace3D()
-    {
-        _emptyPoint3DCollection = new Point3DCollection();
-    }
+    internal event Action<PlotTrace3D, Visual3D, Visual3D> VisualChanged;
+
+    private double _baseLineThickness = 1.0;
+
+    internal IPlotTraceViewModel3D ViewModel { get; private set; }
+
+    private ModelVisual3D _visual;
+
+    private WireBase _linesTraceVisual;
+
+    private WireBase _symbolTraceVisual;
+
+    private ModelVisual3D _surfaceFillVisual;
+
+    private static readonly Point3DCollection _emptyPoint3DCollection = new Point3DCollection();
 
     public double BaseLineThickness
     {
@@ -37,8 +48,6 @@ public partial class PlotTrace3D
     private bool ShouldShowSymbols => Symbol != TraceSymbol.none;
 
     private bool ShouldShowLines => LineStyle != LineStyle.None;
-
-    internal IPlotTraceViewModel3D ViewModel { get; private set; }
 
     private double RenderThickness => Thickness * BaseLineThickness;
 
@@ -114,7 +123,11 @@ public partial class PlotTrace3D
         }
     }
 
-    internal event Action<PlotTrace3D, Visual3D, Visual3D> VisualChanged;
+    internal PlotTrace3D(IPlotTraceViewModel3D viewModel)
+    {
+        ViewModel = viewModel;
+        ViewModel.PropertyChanged += ViewModelPropertyChanged;
+    }
 
     private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs args)
     {
@@ -303,4 +316,7 @@ public partial class PlotTrace3D
         }
     }
 
+    public void Dispose()
+    {
+    }
 }

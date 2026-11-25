@@ -14,13 +14,25 @@ public abstract partial class BaseTrackball : IBaseTrackball
 {
     private IHasCameraTransform _transformOwner;
 
-    private ITrackingHelper _trackingHelper;
+    public event Action<Matrix3D> MouseUp;
+
+    public event Action<Matrix3D> MouseWheel;
 
     protected MatrixTransform3D ScaleTransform { get; private set; }
 
     protected Transform3D BaseTransform { get; private set; }
 
     protected bool IsTracking => CurrentTrackingInfo != null;
+
+    protected TrackingInfo CurrentTrackingInfo { get; private set; }
+
+    private ITrackingHelper _trackingHelper;
+
+    private Matrix3D _previousTransform;
+
+    public Viewport3D Viewport { get; private set; }
+
+    protected FrameworkElement MouseEventsSource { get; private set; }
 
     protected double CurrentScale
     {
@@ -70,11 +82,7 @@ public abstract partial class BaseTrackball : IBaseTrackball
         }
     }
 
-    public Viewport3D Viewport { get; private set; }
-
     public Rect3D Model3DBoundingBox => PlotCommonConstants.Plot3DBoundingBox;
-
-    protected FrameworkElement MouseEventsSource { get; private set; }
 
     public void Attach(FrameworkElement mouseEventsSource, IHasCameraTransform hasCameraTransform, Viewport3D viewport)
     {
@@ -92,6 +100,8 @@ public abstract partial class BaseTrackball : IBaseTrackball
         TrackingHelper.Attach();
         Reset();
     }
+
+    protected abstract Transform3D InitializeTransform();
 
     public void Reset()
     {
@@ -300,12 +310,20 @@ public abstract partial class BaseTrackball : IBaseTrackball
         return false;
     }
 
+    protected abstract bool TrackStart(Point current, bool useTimer);
+
+    protected abstract bool Track(Point current);
+
+    protected abstract bool TrackEnd(Point current);
+
     protected virtual Point CoercePosition(Point rawPosition)
     {
         return rawPosition;
     }
 
-    protected TrackingInfo CurrentTrackingInfo { get; private set; }
+    protected BaseTrackball()
+    {
+    }
 
     protected partial class TrackingInfo
     {

@@ -920,4 +920,30 @@
 - Release IL: PASS — 2774 checked in Plots, 0 failures.
 - Remaining mismatches in this batch: none.
 
+## Batch 119 — BaseTrackball, PlotTrace3D, and PlotTraceViewModel3D remaining members
+
+- Owner: agy-whiteboard-2. Branch: `feature/agy-plots`.
+- Members:
+  - `BaseTrackball`: `_previousTransform`, `MouseUp` event, `MouseWheel` event, `InitializeTransform`, `TrackStart`, `Track`, `TrackEnd`, `.ctor`
+  - `PlotTrace3D`: `_baseLineThickness`, `_visual`, `_linesTraceVisual`, `_symbolTraceVisual`, `_surfaceFillVisual`, `_emptyPoint3DCollection`, `.ctor(IPlotTraceViewModel3D)`, `Dispose`
+  - `PlotTraceViewModel3D`: `PropertyNames` (10 const strings), `_model`, `PropertyChanged` event, `.ctor(IPlotTraceModel3D)`
+- Hand-written:
+  - `Mirrored/Controls.Plots.Plot3D.Tools.BaseTrackball.cs`
+  - `Mirrored/Controls.Plots.Plot3D.View.PlotTrace3D.cs`
+  - `Mirrored/Controls.Plots.Plot3D.ViewModel.PlotTraceViewModel3D.cs`
+- Shapes:
+  - `BaseTrackball`:
+    - Arranged fields and properties (`_transformOwner`, `MouseUp`, `MouseWheel`, `ScaleTransform`, `BaseTransform`, `CurrentTrackingInfo`, `_trackingHelper`, `_previousTransform`, `Viewport`, `MouseEventsSource`) to match Mathcad IL field layout.
+    - Declared abstract methods and protected constructor in matching token sequence.
+  - `PlotTrace3D`:
+    - Declared `VisualChanged`, `_baseLineThickness = 1.0;`, `ViewModel`, `_visual`, `_linesTraceVisual`, `_symbolTraceVisual`, `_surfaceFillVisual`, `_emptyPoint3DCollection` to match exact field layout.
+    - Used static inline initialization for `_emptyPoint3DCollection` without explicit static constructor, emitting `beforefieldinit` to match Mathcad IL.
+    - Implemented constructor wiring and empty `Dispose()` method.
+  - `PlotTraceViewModel3D`:
+    - Declared partial struct `PropertyNames` with 10 const string fields.
+    - Implemented `_model`, `PropertyChanged` event, and constructor subscription.
+- Release IL: PASS — 2791 checked in Plots, 0 failures.
+- Remaining mismatches in this batch: none.
+
+
 

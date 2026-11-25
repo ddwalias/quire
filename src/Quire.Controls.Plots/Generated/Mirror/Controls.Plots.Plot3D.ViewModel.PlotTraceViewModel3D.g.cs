@@ -11,36 +11,9 @@ namespace Quire.Controls.Plots.Plot3D.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.ViewModel.PlotTraceViewModel3D, Ptc.Controls.Plots")]
 internal partial class PlotTraceViewModel3D : global::Quire.Controls.Plots.Plot3D.ViewModel.IPlotTraceViewModel3D, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Plots.Presenter.IPlotTraceStyle, global::Quire.Controls.Plots.Traces.ISymbolProperties, global::Quire.Controls.Plots.Model.IHasNumberOfPoints
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D _model;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public PlotTraceViewModel3D(global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D model) { }
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.ViewModel.PlotTraceViewModel3D+PropertyNames, Ptc.Controls.Plots")]
     [global::System.Runtime.InteropServices.StructLayout(global::System.Runtime.InteropServices.LayoutKind.Sequential, Size = 1)]
     public partial struct PropertyNames
     {
-        [global::Quire.Mirror.MirrorStub]
-        public const string Color = "Color";
-        [global::Quire.Mirror.MirrorStub]
-        public const string RenderColor = "RenderColor";
-        [global::Quire.Mirror.MirrorStub]
-        public const string LineWeight = "LineWeight";
-        [global::Quire.Mirror.MirrorStub]
-        public const string LineStyle = "LineStyle";
-        [global::Quire.Mirror.MirrorStub]
-        public const string Symbol = "Symbol";
-        [global::Quire.Mirror.MirrorStub]
-        public const string VisualData = "VisualData";
-        [global::Quire.Mirror.MirrorStub]
-        public const string CommonRange = "CommonRange";
-        [global::Quire.Mirror.MirrorStub]
-        public const string SurfaceFill = "SurfaceFill";
-        [global::Quire.Mirror.MirrorStub]
-        public const string NumberOfPoints = "NumberOfPoints";
-        [global::Quire.Mirror.MirrorStub]
-        public const string IsNumOfPointsMutable = "IsNumOfPointsMutable";
     }
 }

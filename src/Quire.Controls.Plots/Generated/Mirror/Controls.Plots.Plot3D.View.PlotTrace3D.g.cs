@@ -11,20 +11,4 @@ namespace Quire.Controls.Plots.Plot3D.View;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.View.PlotTrace3D, Ptc.Controls.Plots")]
 public partial class PlotTrace3D : global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private double _baseLineThickness;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Media3D.ModelVisual3D _visual;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Media3D.WireBase _linesTraceVisual;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Media3D.WireBase _symbolTraceVisual;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Media3D.ModelVisual3D _surfaceFillVisual;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.Media.Media3D.Point3DCollection _emptyPoint3DCollection;
-    [global::Quire.Mirror.MirrorStub]
-    internal PlotTrace3D(global::Quire.Controls.Plots.Plot3D.ViewModel.IPlotTraceViewModel3D viewModel) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Dispose() { }
 }
