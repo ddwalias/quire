@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Windows;
 using Quire;
 using Quire.Calculation.Core;
+using Quire.Calculation.Core.Support;
 using Quire.Undo;
 using Quire.Controls.Plots.Model;
 
@@ -51,7 +52,18 @@ public partial class PlotViewModelBase<TModel>
         }
     }
 
-    protected virtual void BindCommandsAndEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void BindCommandsAndEvents()
+    {
+        if (DebugTools.AssertNotNull(Model, null, Array.Empty<object>()).Failed)
+        {
+            return;
+        }
+        Model.PropertyChanged += ModelPropertyChangedInner;
+        Model.Changed += OnModelChanged;
+        Model.DeserializationEnded += OnModelDeserializationEnded;
+        CreateCommandBinding(ShowAxisExpressionsCommand, ShowAxisExpressionsCommandExecute);
+        _childHider = new CalculatableChildHider(CollectHiddenAndVisibleCalculatables(), FireCalculatableAdded, FireCalculatableRemoved, null, false);
+    }
 
     protected override void ModelPropertyChanged(string propertyName) => base.ModelPropertyChanged(propertyName);
 
@@ -109,7 +121,43 @@ public partial class PlotViewModelBase<TModel>
         }
     }
 
-    public bool HideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    internal IEnumerable<ICalculatable> CollectHiddenAndVisibleCalculatables()
+    {
+        return Model.GetHiddenAndVisibleCalculatables();
+    }
+
+    public bool HideFromCalculationContext
+    {
+        get
+        {
+            return CalcIsDisabled;
+        }
+        set
+        {
+            if (!(CalcIsDisabled == value))
+            {
+                CompoundCommand cmd = new CompoundCommand();
+                DelegateFunction0<bool> doMethod = () =>
+                {
+                    CalcIsDisabled = value;
+                    using (new CommandScope(cmd))
+                    {
+                        foreach (ICalculatable calculatable in CollectHiddenAndVisibleCalculatables())
+                        {
+                            ((ICalculationHideableChild)calculatable).HideFromCalculationContext = value;
+                        }
+                    }
+                    return true;
+                };
+                Delegate0 undoMethod = () =>
+                {
+                    cmd.Undo();
+                    CalcIsDisabled = !value;
+                };
+                CommandBuffer.Execute(new UndoableCommand("Change HideFromCalculationContext", doMethod, undoMethod), null);
+            }
+        }
+    }
 
     public bool PendingActivation
     {
@@ -146,8 +194,6 @@ public partial class PlotViewModelBase<TModel>
     {
         ShowControlLevelErrorFrameForNestedError = Model.HasError && !AreAxisExpressionsVisible;
     }
-
-    internal global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CollectHiddenAndVisibleCalculatables() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private void ComputeAreAxisExpresionsVisible()
     {
@@ -297,7 +343,10 @@ public partial class PlotViewModelBase<TModel>
         _childHider.ChildRemoved(calculatable);
     }
 
-    public void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void Commit()
+    {
+        CollectHiddenAndVisibleCalculatables().Each(calculatable => calculatable.Commit());
+    }
 
     protected void ModelPlotCalculatableError(object sender, EngineErrorEventArgs e)
     {
