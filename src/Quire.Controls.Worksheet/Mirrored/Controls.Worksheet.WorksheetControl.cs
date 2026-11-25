@@ -893,4 +893,38 @@ public partial class WorksheetControl
             _viewModel.ActivateFooter(InsertionPoint);
         }
     }
+
+    public void PrePrintUpdateWorksheetLayout(global::Quire.Wpf.Printing.PageIndexRange pageRange)
+    {
+        RemoveHandler(global::Quire.Controls.Text.RichTextBase.SpellCheckTimerStartEvent, _handleSpellCheckTimerStartEvent);
+        double paddingTopOffset = PageManager.PrePrintUpdateVisiblePages(
+            pageRange,
+            _viewModel.WorksheetPageLayoutDisplayHeight);
+        AddHandler(global::Quire.Controls.Text.RichTextBase.SpellCheckTimerStartEvent, _handleSpellCheckTimerStartEvent);
+        UpdateVisiblePagesControlPaddingTop(paddingTopOffset);
+    }
+
+    public void PostPrintUpdateWorksheetLayout()
+    {
+        double paddingTopOffset = PageManager.PostPrintUpdateVisiblePages(_viewModel.WorksheetPageLayoutDisplayHeight);
+        UpdateVisiblePagesControlPaddingTop(paddingTopOffset);
+    }
+
+    public void TraverseWhiteboardItems(
+        IEnumerable<IWhiteboardItem> wbiCollection,
+        Func<IWhiteboardItem, bool, bool> function,
+        bool isWorksheetContentItems)
+    {
+        _viewModel.TraverseWhiteboardItems(wbiCollection, function, isWorksheetContentItems);
+    }
+
+    public void TraverseWhiteboardItems(Func<IWhiteboardItem, bool, bool> function)
+    {
+        _viewModel.TraverseWhiteboardItems(function);
+    }
+
+    public void WaitForChartImagesReady()
+    {
+        global::Quire.Controls.ExcelComponent.View.ChartComponentUtils.WaitForChartImagesReady(WorksheetItems);
+    }
 }

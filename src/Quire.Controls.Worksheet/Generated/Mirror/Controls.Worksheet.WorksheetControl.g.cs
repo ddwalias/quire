@@ -30,16 +30,6 @@ public partial class WorksheetControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     public void PrePrintUpdateWorksheetLayout(global::Quire.Wpf.Printing.Win32PrintRange printRange, global::Quire.Wpf.Printing.PageIndexRange pageRange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void PrePrintUpdateWorksheetLayout(global::Quire.Wpf.Printing.PageIndexRange pageRange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void PostPrintUpdateWorksheetLayout() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void TraverseWhiteboardItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> wbiCollection, global::System.Func<global::Quire.Controls.Core.IWhiteboardItem, bool, bool> function, bool isWorksheetContentItems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void TraverseWhiteboardItems(global::System.Func<global::Quire.Controls.Core.IWhiteboardItem, bool, bool> function) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WaitForChartImagesReady() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void DoActivate(object sender = default, global::System.Windows.RoutedEventArgs e = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HookupToViewModelEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
