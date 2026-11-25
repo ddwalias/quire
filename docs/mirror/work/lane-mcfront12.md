@@ -1,5 +1,10 @@
 # Mcfront12 lane checkpoint
 
+## Parked `NodeMap.GetLastCENode` codegen check (2026-11-25)
+
+- Rechecked current `main`: `release_il.py --base main --project Quire.Mcfront12` passes with 251 checked and 0 failures; 77 members have no Quire pair.
+- A C++/CLI body can produce the boxed-`Int32` return signature, but still differs in jump-threaded control flow (49 vs. 47 IL entries) and `GC.KeepAlive` placement. Reverted the experiment; keep this member parked.
+
 - Owner: AGY, Orca task `task_5ef210cf3d6a`.
 - Branch: `feature/mcfront12-agy`.
 - Members: Quire.Mcfront12 project split established as C++/CLI (`/clr:NetCore` targeting net10.0-windows); independent engine support types implemented matching `mcfront12.dll`:

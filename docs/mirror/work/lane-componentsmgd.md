@@ -1,5 +1,12 @@
 # Componentsmgd lane checkpoint
 
+## Batch 2 — McxComponent accessors (2026-11-25)
+
+- Owner: AGY; branch `feature/componentsmgd-yield-2`.
+- Exact members: `McxComponent.ThreadsPerDocument`, `Origin`, `CWD`, `Executive`, `LastError`, and `ShouldScale`; the `PROGIDS`/`MultiThreaded` initialization also pairs exactly.
+- Release IL: `python tools/validation/release_il.py --base main --project Quire.Componentsmgd` PASS; 90 checked, 0 failures (`.mirror-cache/release-il-1f7f755e2e5d/release-il.json`).
+- Remaining: 19 stubs (10 `McxComponent`, 8 `VSDataValue`, 1 `VSValueFactory`). The 9 `VSDataValue`/`VSValueFactory` methods use `Mathcad.IMatrixValue` across the `interop.mathcad` boundary noted below; the 10 `McxComponent` methods remain to triage.
+
 - Owner: Componentsmgd lane; branch `feature/componentsmgd-agy`.
 - Target: `src/Quire.Componentsmgd` (C# net10.0-windows, original assembly `componentsmgd.dll`).
 

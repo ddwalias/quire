@@ -11,20 +11,4 @@ namespace Quire.Components;
 [global::Quire.Mirror.MirrorOf("Mathcad.Components.VSDataValue, componentsmgd")]
 public partial class VSDataValue : global::Quire.Automation.MatrixValue, global::Quire.VSINTERFACESLib.IVSDataType, global::Quire.VSINTERFACESLib.IVSUnitData, global::Quire.Components.IPersistStream, global::Quire.Components.IPersist, global::Quire.Components.IVSPersistStream
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.VSINTERFACESLib.IVSDataType GetElement(uint row, uint col) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetElement(uint row, uint col, global::Quire.VSINTERFACESLib.IVSDataType elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.VSINTERFACESLib.IVSDataType GetSubmatrix(uint srow, uint scol, global::Quire.VSINTERFACESLib.VSDATABOUNDS bounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetSubmatrix(uint drow, uint dcol, global::Quire.VSINTERFACESLib.IVSDataType mat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Load(global::System.Runtime.InteropServices.ComTypes.IStream pStm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Load(global::System.Runtime.InteropServices.ComTypes.IStream pStm, bool old) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Save(global::System.Runtime.InteropServices.ComTypes.IStream pStm, bool fClearDirty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Save(global::System.Runtime.InteropServices.ComTypes.IStream pStm, bool fClearDirty, bool old) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

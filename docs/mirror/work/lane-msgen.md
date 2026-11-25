@@ -1,5 +1,10 @@
 # Msgen lane checkpoint
 
+## Parked `CtxtMod.EndCtxt` codegen check (2026-11-25)
+
+- Rechecked on current `main`: `release_il.py --base main --project Quire.Msgen` passes with 453 checked and 0 failures (7 unfinished stubs).
+- A C++/CLI implementation calling `MetaObj::FinishClosure` remains one instruction short: Mathcad emits `conv.u1` immediately before the call; explicit `Byte` casts and an `int` local are folded away by the candidate compiler. Reverted the experiment; keep this member parked unless an IL-level compiler shape is found.
+
 ## Batch 26 (review only: gcroot CurrAsm/Callable; nothing landed)
 
 - Owner: AGY, Orca task `task_32a5b7651a22`. Branch `feature/msgen-agy-2`, from current `main`.
