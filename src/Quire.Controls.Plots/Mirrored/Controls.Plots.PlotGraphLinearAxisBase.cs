@@ -303,14 +303,12 @@ public abstract partial class PlotGraphLinearAxisBase
             {
                 startPoint = new Point(0.0, 5.0);
             }
-            PathFigure[] array = new PathFigure[1]
+            PathFigure[] array = new PathFigure[1];
+            array[0] = new PathFigure
             {
-                new PathFigure
-                {
-                    StartPoint = startPoint,
-                    IsClosed = true,
-                    IsFilled = true
-                }
+                StartPoint = startPoint,
+                IsClosed = true,
+                IsFilled = true
             };
             if (Orientation == Orientation.Horizontal)
             {
@@ -347,8 +345,15 @@ public abstract partial class PlotGraphLinearAxisBase
         Size result = base.MeasureOverride(availableSize);
         if (double.IsInfinity(result.Width) || double.IsInfinity(result.Height))
         {
-            GetPositions(out var firstEqnPosition, out var secondEqnPosition, out var lastEqnPosition, out var firstLabelPosition, out var secondLabelPosition, out var lastLabelPosition);
+            // Mathcad keeps the six position locals in slots before the bounds rectangle and builds the rectangle first.
+            Point firstEqnPosition;
+            Point secondEqnPosition;
+            Point lastEqnPosition;
+            Point firstLabelPosition;
+            Point secondLabelPosition;
+            Point lastLabelPosition;
             Rect labelsBounds = new Rect(0.0, 0.0, 0.0, 0.0);
+            GetPositions(out firstEqnPosition, out secondEqnPosition, out lastEqnPosition, out firstLabelPosition, out secondLabelPosition, out lastLabelPosition);
             labelsBounds.Union(StartEquationRectangle(firstEqnPosition));
             labelsBounds.Union(EndEquationRectangle(lastEqnPosition));
             labelsBounds.Union(SecondExpressionEquation(secondEqnPosition));
