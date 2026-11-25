@@ -18,6 +18,27 @@ public partial class WorksheetControl
 {
     public bool HasScriptingControls { get; set; }
 
+    public NumberFormat CurrentNumberFormat
+    {
+        get => _currentNumberFormat;
+        set
+        {
+            _currentNumberFormat = value;
+            FirePropertyChanged(nameof(CurrentNumberFormat));
+        }
+    }
+
+    public MatrixFormat CurrentMatrixFormat
+    {
+        get => _currentMatrixFormat;
+        set
+        {
+            _currentMatrixFormat = value;
+            FirePropertyChanged(nameof(CurrentMatrixFormat));
+        }
+    }
+
+
     public List<UnitDescriptor> CustomBaseUnitDescriptors { get; set; }
 
     public List<UnitDescriptor> CustomDerivedUnitDescriptors { get; set; }
