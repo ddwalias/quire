@@ -314,7 +314,27 @@ public partial class RichTextBase
     private void HandleSetCurrentProofingLanguage(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public bool IsFullySubscript(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected void BuildSubscriptPositions(global::System.Windows.Documents.TextRange range, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void BuildSubscriptPositions(global::System.Windows.Documents.TextRange range, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions)
+    {
+        int startOffset = GetInsertionPointAtPointer(range.Start);
+        int endOffset = GetInsertionPointAtPointer(range.End);
+        foreach (SubscriptRun subscriptRun in range.EnumerateRunsInRange().OfType<SubscriptRun>())
+        {
+            int runStart = Math.Max(startOffset, GetInsertionPointAtPointer(subscriptRun.ContentStart)) - startOffset;
+            int runEnd = Math.Min(endOffset, GetInsertionPointAtPointer(subscriptRun.ContentEnd)) - 1 - startOffset;
+            int lastIndex = subscriptPositions.Count - 1;
+            if (subscriptPositions.Count > 0 && runStart == subscriptPositions[lastIndex].Second + 1)
+            {
+                runStart = subscriptPositions[lastIndex].First;
+                subscriptPositions.RemoveAt(lastIndex);
+            }
+
+            if (runStart <= runEnd)
+            {
+                subscriptPositions.Add(new global::Quire.Pair<int, int>(runStart, runEnd));
+            }
+        }
+    }
     private TextPointer GetPointerToAddDictionary()
     {
         TextPointer pointer = null;

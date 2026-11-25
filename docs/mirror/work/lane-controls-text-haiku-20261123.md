@@ -208,3 +208,11 @@
 - `get_CaretOffset` is implemented as `GetInsertionPointAtPointer(CaretPosition)`. The property stays `public virtual` because `RichTextWithEmbeddedItem` overrides it (the generated override fails to compile otherwise). The setter stays a placeholder.
 - Release IL (project-wide): PASS — 692 checked, 0 failures.
 - Parked: `ToggleRangeToState`. Mathcad stores the end pointer with `stloc.0` and reloads it with `ldloc.0` before `newobj TextRange`, with the start pointer kept on the stack. The idiomatic argument list differs at IL offset #6. Assignment-expression forms emit `dup` instead, so there is no C# shape found yet; keep the placeholder.
+
+## Batch 47 — RichTextBase.BuildSubscriptPositions
+
+- Owner: haiku-controls-text-high. Branch feature/haiku-controls-text-high, based on origin/main e769dd8fb.
+- Implemented from the Mathcad IL in idiomatic form: start and end offsets via GetInsertionPointAtPointer, a foreach over EnumerateRunsInRange().OfType<SubscriptRun>(), merging adjacent runs with the last pair, and adding the non-empty pair. No closure. The Release IL matches with no shape adjustment.
+- Release IL (project-wide): PASS — 693 checked, 0 failures. No generated stub existed for this member.
+- Runtime dependency: GetInsertionPointAtPointer is still a placeholder, so this member throws at runtime until it lands. It is IL-exact now and becomes runtime-correct when GetInsertionPointAtPointer is mirrored.
+- Parked this batch (see the earlier entries): CalculateBaseline (callvirt on a new TextRange), SubscriptsMatch (shared return block), GetTextBoundary (argument-order mismatch), GetRangeIfMatch (dup on a stack temp).
