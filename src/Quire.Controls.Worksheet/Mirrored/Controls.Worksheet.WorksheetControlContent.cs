@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using Quire.Controls.Core;
 using Quire.Controls.Core.Whiteboard;
+using Quire.Wpf;
 
 namespace Quire.Controls.Worksheet;
 
@@ -163,6 +164,57 @@ public partial class WorksheetControlContent
             _selectedItems.Clear();
         }
     }
+
+    private static IWorksheetItemManager WorksheetItemManager => WorksheetViewModel.ItemManager;
+
+    IContainerItemManager IWhiteboardItemContainer.ContainerItemManager => WorksheetItemManager;
+
+    IWhiteboardItemManager IWhiteboardControl.WhiteboardItemManager => WorksheetItemManager;
+
+    IUIElementArrangeInfoProvider IHasChildArrangeInfoProvider.ChildArrangeInfoProvider => WorksheetItemManager;
+
+    public Point DefaultInsertionPoint => default;
+
+    public bool IsCrosshairVisible
+    {
+        get => ActiveOrSelectedItems.Count() == 0;
+        set => throw new NotImplementedException();
+    }
+
+    public WhiteboardItemsCollection WhiteboardItems => _model.WhiteboardItems;
+
+    public ObservableRangeCollection<IWorksheetPageBreak> PageBreaks => _model.PageBreaks;
+
+    public Size GridCellSize
+    {
+        get => _worksheetGrid.GridCellSize;
+        set => throw new NotImplementedException();
+    }
+
+    public bool CanAddItems => true;
+
+    public INotifyCollectionRangeChanged<IWhiteboardItem> SelectedItems => _selectedItems;
+
+    public bool IsTabNavigatable => throw new NotImplementedException();
+
+    public bool ForbidGrowingMovementRight
+    {
+        set => throw new NotImplementedException();
+    }
+
+    public Point GetItemLocation(IWhiteboardItem item) => _model.GetItemWorksheetLocation(item);
+
+    public Rect GetItemRect(IWhiteboardItem item) => WorksheetItemManager.GetItemRect(item);
+
+    public Point GetItemLocation(IWorksheetPageBreak pageBreak) => _model.GetItemWorksheetLocation(pageBreak);
+
+    public void SetItemLocation(IWorksheetPageBreak pageBreak, Point location) => _model.SetItemWorksheetLocation(pageBreak, location);
+
+    public void SaveResizeInformation() => throw new NotImplementedException();
+
+    public void RestoreResizeInformation() => throw new NotImplementedException();
+
+    public void SeparateOverlappedItems(Dimension dimension) => throw new NotImplementedException();
 
     internal abstract partial class WorksheetContentCommand : global::Quire.Undo.IUndoableCommand
     {
