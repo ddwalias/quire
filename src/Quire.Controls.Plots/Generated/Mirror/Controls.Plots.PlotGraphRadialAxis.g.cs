@@ -11,6 +11,7 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotGraphRadialAxis, Ptc.Controls.Plots")]
 internal sealed partial class PlotGraphRadialAxis : global::Quire.Controls.Plots.PlotGraphAxis
 {
+
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotGraphRadialAxis+Point2ScreenHelperImpl, Ptc.Controls.Plots")]
     public partial class Point2ScreenHelperImpl : global::Quire.Controls.Plots.PlotGraphAxis.Point2ScreenHelper
     {
