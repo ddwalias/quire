@@ -202,20 +202,13 @@ public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.
         [global::Quire.Mirror.MirrorStub]
         protected readonly global::Quire.Controls.Worksheet.IWorksheetContent _worksheetContent;
         [global::Quire.Mirror.MirrorStub]
-        protected global::Quire.Controls.Worksheet.WorksheetControlContent WorksheetContent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        protected WorksheetContentCommand(global::Quire.Controls.Worksheet.IWorksheetContent worksheetContent, string name) { }
-        [global::Quire.Mirror.MirrorStub]
         public abstract bool Do();
         [global::Quire.Mirror.MirrorStub]
         public abstract void Undo();
         [global::Quire.Mirror.MirrorStub]
         public abstract void Redo();
-        [global::Quire.Mirror.MirrorStub]
-        public bool Execute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
+
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlContent+DeleteSelectedItemsCommand, Ptc.Controls.Worksheet")]
     internal partial class DeleteSelectedItemsCommand : global::Quire.Controls.Worksheet.WorksheetControlContent.WorksheetContentCommand

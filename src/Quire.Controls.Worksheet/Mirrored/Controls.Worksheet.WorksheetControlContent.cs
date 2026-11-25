@@ -163,4 +163,23 @@ public partial class WorksheetControlContent
             _selectedItems.Clear();
         }
     }
+
+    internal abstract partial class WorksheetContentCommand : global::Quire.Undo.IUndoableCommand
+    {
+        protected WorksheetControlContent WorksheetContent => _worksheetContent as WorksheetControlContent;
+
+        public string Name { get; private set; }
+
+        protected WorksheetContentCommand(IWorksheetContent worksheetContent, string name)
+        {
+            Name = name;
+            _worksheetContent = worksheetContent;
+        }
+
+        public bool Execute()
+        {
+            return global::Quire.Undo.CommandBuffer.Execute(this);
+        }
+    }
 }
+
