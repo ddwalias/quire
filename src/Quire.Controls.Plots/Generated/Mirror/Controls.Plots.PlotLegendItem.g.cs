@@ -11,18 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotLegendItem, Ptc.Controls.Plots")]
 public partial class PlotLegendItem : global::System.Windows.Controls.UserControl, global::Quire.Controls.Plots.Presenter.IPlotLegendItem, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    public PlotLegendItem(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void OnActivateExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddTrace() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlNode GetRegionXmlNode(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetRegionXmlNode(global::Quire.Serialization.IDeS11NProvider d11NProvider, global::System.Xml.XmlNode legendLabelItemNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

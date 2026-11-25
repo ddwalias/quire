@@ -11,17 +11,6 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.MarkersPanel, Ptc.Controls.Plots")]
 public partial class MarkersPanel : global::System.Windows.Controls.Panel
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty HorizontalRangeHelperProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty VerticalRangeHelperProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty VerticalValueProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty HorizontalValueProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty EquationControlTransformProperty;
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.MarkersPanel+DraggingScope, Ptc.Controls.Plots")]
     private partial class DraggingScope : global::System.IDisposable
     {

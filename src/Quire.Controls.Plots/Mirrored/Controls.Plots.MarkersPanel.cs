@@ -70,6 +70,16 @@ public partial class MarkersPanel
 
     private DraggingScope _draggingScope;
 
+    public static readonly DependencyProperty HorizontalRangeHelperProperty = DependencyProperty.Register("HorizontalRangeHelper", typeof(IValueToScreen), typeof(MarkersPanel), new PropertyMetadata(HandleRangeHelperChanged));
+
+    public static readonly DependencyProperty VerticalRangeHelperProperty = DependencyProperty.Register("VerticalRangeHelper", typeof(IValueToScreen), typeof(MarkersPanel), new PropertyMetadata(HandleRangeHelperChanged));
+
+    public static readonly DependencyProperty VerticalValueProperty = DependencyProperty.RegisterAttached("VerticalValue", typeof(double), typeof(MarkersPanel), new FrameworkPropertyMetadata(double.NaN, FrameworkPropertyMetadataOptions.AffectsParentArrange | FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+    public static readonly DependencyProperty HorizontalValueProperty = DependencyProperty.RegisterAttached("HorizontalValue", typeof(double), typeof(MarkersPanel), new FrameworkPropertyMetadata(double.NaN, FrameworkPropertyMetadataOptions.AffectsParentArrange | FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+    public static readonly DependencyProperty EquationControlTransformProperty = DependencyProperty.RegisterAttached("EquationControlTransform", typeof(EquationControlWithTransform), typeof(MarkersPanel), new PropertyMetadata(EquationControlTransformChanged));
+
     public IValueToScreen HorizontalRangeHelper
     {
         get => (IValueToScreen)GetValue(HorizontalRangeHelperProperty);

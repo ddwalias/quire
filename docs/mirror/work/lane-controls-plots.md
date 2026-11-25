@@ -883,3 +883,20 @@
 - Release IL: PASS — 2751 checked in Plots, 0 failures.
 - Remaining mismatches in this batch: none.
 
+## Batch 117 — MarkersPanel, PlotLegendItem
+
+- Owner: agy-whiteboard-2. Branch: `feature/agy-plots`.
+- Members:
+  - `MarkersPanel`: `HorizontalRangeHelperProperty`, `VerticalRangeHelperProperty`, `VerticalValueProperty`, `HorizontalValueProperty`, `EquationControlTransformProperty` (and `.cctor`)
+  - `PlotLegendItem`: `.ctor(IPlotTrace)`, `OnActivateExecute`, `AddTrace`, `GetRegionXmlNode`, `SetRegionXmlNode`, `InitializeComponent`, `IComponentConnector.Connect`
+- Hand-written:
+  - `Mirrored/Controls.Plots.MarkersPanel.cs`
+  - `Mirrored/Controls.Plots.PlotLegendItem.cs`
+- Shapes:
+  - `MarkersPanel`: Static field initializers for attached properties with `new FrameworkPropertyMetadata(double.NaN, FrameworkPropertyMetadataOptions.AffectsParentArrange | FrameworkPropertyMetadataOptions.BindsTwoWayByDefault)` emit `ldc.i4 264` matching Mathcad IL.
+  - `PlotLegendItem`:
+    - Moved XAML-generated fields (`LegendItemStackPanel`, `MiniTraceLegend`, `LegendItemLabelPlaceholder`, `_contentLoaded`) and stubs (`InitializeComponent`, `Connect`) to the bottom of the partial class, restoring exact member ordinals for closures (`<.ctor>b__16_0`, `<OnActivateExecute>b__17_0`, `<AddTrace>b__19_0`).
+    - Guard branches in `OnActivateExecute`, `OnLegendLabelLostFocus`, `SetRegionXmlNode`, and `.ctor` lambda use early return on null (`if (LegendLabel == null) return;`), matching Mathcad's `brtrue.s` skip patterns.
+- Release IL: PASS — 2763 checked in Plots, 0 failures.
+- Remaining mismatches in this batch: none.
+
