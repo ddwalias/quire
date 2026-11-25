@@ -880,7 +880,48 @@ public partial class EquationControl
         }
     }
 
-    private global::System.Windows.Input.CommandBindingCollection NonEditableCommandBindings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    private CommandBindingCollection NonEditableCommandBindings
+    {
+        get
+        {
+            return _nonEditableCommandBindings ??= new CommandBindingCollection
+            {
+                new CommandBinding(ApplicationCommands.Undo, UndoRedoHelper.HandleUndoCommand, UndoRedoHelper.CanExecuteUndoCommand),
+                new CommandBinding(ApplicationCommands.Redo, UndoRedoHelper.HandleRedoCommand, UndoRedoHelper.CanExecuteRedoCommand),
+                new CommandBinding(ApplicationCommands.Copy, OnCopy, CanCopy),
+                new CommandBinding(EquationCommands.NavigateLeft, OnNavigateLeft, CanNavigateLeft),
+                new CommandBinding(EquationCommands.NavigateRight, OnNavigateRight, CanNavigateRight),
+                new CommandBinding(EquationCommands.NavigateUp, OnNavigateUp, CanNavigateUp),
+                new CommandBinding(EquationCommands.NavigateDown, OnNavigateDown, CanNavigateDown),
+                new CommandBinding(EquationCommands.NavigateLeftByTerm, OnNavigateLeftByTerm, CanNavigateLeft),
+                new CommandBinding(EquationCommands.NavigateRightByTerm, OnNavigateRightByTerm, CanNavigateRight),
+                new CommandBinding(EquationCommands.NavigateToEquationStart, OnNavigateToEquationStart),
+                new CommandBinding(EquationCommands.NavigateToEquationEnd, OnNavigateToEquationEnd),
+                new CommandBinding(EquationCommands.NavigateToStartOfScope, OnNavigateToStartOfScope),
+                new CommandBinding(EquationCommands.NavigateToEndOfScope, OnNavigateToEndOfScope),
+                new CommandBinding(EquationCommands.NavigateToOppositeOfScope, OnNavigateToOppositeOfScope, CanNavigateToOppositeOfScope),
+                new CommandBinding(EquationCommands.ScopeLeft, OnScopeLeft),
+                new CommandBinding(EquationCommands.ScopeRight, OnScopeRight),
+                new CommandBinding(EquationCommands.ExpandScope, OnExpandScope),
+                new CommandBinding(EquationCommands.ContractScope, OnContractScope),
+                new CommandBinding(EquationCommands.FullyExpandScope, OnFullyExpandScope),
+                new CommandBinding(EquationCommands.FullyContractScope, OnFullyContractScope),
+                new CommandBinding(EquationCommands.RegionHistory, OnRegionHistory),
+                new CommandBinding(EquationCommands.Commit, OnCommit),
+                new CommandBinding(EquationCommands.ToggleHideFromCalculationContext, OnToggleHideFromCalculationContext),
+                new CommandBinding(EquationCommands.Traverse, OnTraverseForward, CanTraverseForward),
+                new CommandBinding(EquationCommands.BackwardsTraverse, OnTraverseBackward, CanTraverseBackward),
+                new CommandBinding(EquationCommands.ClearResultFormat, OnClearResultFormat, CanClearResultFormat),
+                new CommandBinding(EquationCommands.SetNumberFormatFieldCommand, OnSetNumberFormatField),
+                new CommandBinding(EquationCommands.SetMatrixFormatFieldCommand, OnSetMatrixFormatField),
+                new CommandBinding(MathFormat.ClearMathFormatCommand, ExecuteClearMathFormat, CanClearMathFormat),
+                new CommandBinding(MathFormat.IncreaseFontSizeCommand, ExecuteIncreaseFontSize),
+                new CommandBinding(MathFormat.DecreaseFontSizeCommand, ExecuteDecreaseFontSize),
+                new CommandBinding(MathFormat.ChangeFontColorCommand, ExecuteChangeFontColor),
+                new CommandBinding(MathFormat.ChangeHighlightColorCommand, ExecuteChangeHighlightColor)
+            };
+        }
+    }
 
     private CommandBindingCollection EditableCommandBindings
     {

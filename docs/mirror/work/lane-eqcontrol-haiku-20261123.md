@@ -635,3 +635,9 @@
 - The `.ctor(string)` and `.ctor(string, bool)` stubs are `MirrorBlocked` with `: this()` / `: this(sExpression)` chains; without the chains their field initializers duplicate the lambdas.
 - Release IL: PASS, 3787 checked, zero failures (`.mirror-cache/release-il-ba9fbc30c4ab/release-il.json`).
 - Remaining: `UpdateLhsVisibleOnView` (IL shape); the closure-gated stubs listed in batches 83-86; 1211 generated stubs in total.
+
+## Batch 92
+
+- Owner: haiku-equationcontrol-20261123; branch `haiku-equationcontrol-20261123-b92` (stacked on batch 91 `9877dd373`).
+- Members: `NonEditableCommandBindings` implemented as `??=` over a 33-binding `CommandBindingCollection` initializer, the same shape as `EditableCommandBindings`; stub removed from the `.g.cs`.
+- Release IL: PASS, 3788 checked, zero failures (`.mirror-cache/release-il-4a7c1bad2243/release-il.json`).
