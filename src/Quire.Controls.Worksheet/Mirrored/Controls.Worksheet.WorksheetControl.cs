@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Markup;
 using Quire.Controls.Core;
@@ -7,13 +8,191 @@ using Quire.Controls.Core.Whiteboard;
 using Quire.Controls.Core.IORegions;
 using Quire.Calculation.Core;
 using Quire.Core;
-using Quire.Wpf;
+using Quire.Services;
 using Microsoft.Win32;
 
 namespace Quire.Controls.Worksheet;
 
 public partial class WorksheetControl
 {
+    public bool HasScriptingControls { get; set; }
+
+    public List<UnitDescriptor> CustomBaseUnitDescriptors { get; set; }
+
+    public List<UnitDescriptor> CustomDerivedUnitDescriptors { get; set; }
+
+    public ITextStylesManager TextStylesManager { get; set; }
+
+    public SymbolicEngine SymbolicEngine => _model.SymbolicEngine;
+
+    public string DisplayFilePath
+    {
+        get => _viewModel.DisplayFilePath;
+        set => _viewModel.DisplayFilePath = value;
+    }
+
+    public bool OleObjectAutoResize
+    {
+        get => _viewModel.OleObjectAutoResize;
+        set => _viewModel.OleObjectAutoResize = value;
+    }
+
+    public bool IsSavedWorksheet
+    {
+        set => _viewModel.IsSavedWorksheet = value;
+    }
+
+    public bool IsWorksheetContentScoped
+    {
+        get
+        {
+            if (IsContentActive)
+            {
+                return ActiveItem == null;
+            }
+            return false;
+        }
+    }
+
+    public IEnumerable<IIORegionBase> IORegions => WorksheetItems.OfType<IIORegionBase>();
+
+    public IIOItemCollection Inputs => InputOutputRegionManager.Inputs;
+
+    public IIOItemCollection Outputs => InputOutputRegionManager.Outputs;
+
+    public MathFormat MathFormat { get; private set; }
+
+    public ExtendedFont Font => AppServiceRegistry.GetService<IFontManager>().GetFont(MathFormat);
+
+    public StaticMathFormat InitialMathFormat => new(FontConstants.DefaultMathFormat);
+
+    public MathFormat CurrentMathFormat
+    {
+        get => MathFormat;
+        set => throw new NotImplementedException();
+    }
+
+    public bool ContainsSymbolicEvaluation => _model.ContainsSymbolicEvaluation;
+
+    public PageLayoutMode WorksheetPageLayoutMode
+    {
+        get => _viewModel.WorksheetPageLayoutMode;
+        set => _viewModel.WorksheetPageLayoutMode = value;
+    }
+
+    public bool EnableEditCurrentPageNumber
+    {
+        get => _viewModel.EnableEditCurrentPageNumber;
+        set => _viewModel.EnableEditCurrentPageNumber = value;
+    }
+
+    public TextFormat ContentTextFormat
+    {
+        get => _viewModel.ContentTextFormat;
+        set => _viewModel.ContentTextFormat = value;
+    }
+
+    public StaticMathFormat ContentMathFormat
+    {
+        set => _viewModel.ContentMathFormat = value;
+    }
+
+    public TextFormat HeaderTextFormat
+    {
+        get => _viewModel.HeaderTextFormat;
+        set => _viewModel.HeaderTextFormat = value;
+    }
+
+    public TextFormat FooterTextFormat
+    {
+        get => _viewModel.FooterTextFormat;
+        set => _viewModel.FooterTextFormat = value;
+    }
+
+    public TextFormat FirstPageHeaderTextFormat
+    {
+        get => _viewModel.FirstPageHeaderTextFormat;
+        set => _viewModel.FirstPageHeaderTextFormat = value;
+    }
+
+    public TextFormat FirstPageFooterTextFormat
+    {
+        get => _viewModel.FirstPageFooterTextFormat;
+        set => _viewModel.FirstPageFooterTextFormat = value;
+    }
+
+    public bool IsFirstPageHeaderFooterDifferent
+    {
+        get => _viewModel.IsFirstPageHeaderFooterDifferent;
+        set => _viewModel.IsFirstPageHeaderFooterDifferent = value;
+    }
+
+    public bool DisplayGrid
+    {
+        get => _viewModel.DisplayGrid;
+        set => _viewModel.DisplayGrid = value;
+    }
+
+    public bool IsSolveBlockLabelVisible
+    {
+        get => _viewModel.IsSolveBlockLabelVisible;
+        set => _viewModel.IsSolveBlockLabelVisible = value;
+    }
+
+    public bool DisplayHFGrid
+    {
+        get => _viewModel.DisplayHFGrid;
+        set => _viewModel.DisplayHFGrid = value;
+    }
+
+    public bool DisplayFrame
+    {
+        get => _viewModel.DisplayFrame;
+        set => _viewModel.DisplayFrame = value;
+    }
+
+    public bool DisplayHeaderFrame
+    {
+        get => _viewModel.DisplayHeaderFrame;
+        set => _viewModel.DisplayHeaderFrame = value;
+    }
+
+    public bool DisplayFooterFrame
+    {
+        get => _viewModel.DisplayFooterFrame;
+        set => _viewModel.DisplayFooterFrame = value;
+    }
+
+    public bool UseMajorGridLines
+    {
+        get => _viewModel.UseMajorGridLines;
+        set => _viewModel.UseMajorGridLines = value;
+    }
+
+    public bool UseHFMajorGridLines
+    {
+        get => _viewModel.UseHFMajorGridLines;
+        set => _viewModel.UseHFMajorGridLines = value;
+    }
+
+    public bool HideFromCalculationButtonEnabled
+    {
+        get => _viewModel.HideFromCalculationButtonEnabled;
+        set => _viewModel.HideFromCalculationButtonEnabled = value;
+    }
+
+    public bool HideFromCalculationButtonChecked
+    {
+        get => _viewModel.HideFromCalculationButtonChecked;
+        set => _viewModel.HideFromCalculationButtonChecked = value;
+    }
+
+    public bool IsCalculationsEnabled
+    {
+        get => _viewModel.IsCalculationsEnabled;
+        set => _viewModel.IsCalculationsEnabled = value;
+    }
+
     public bool IsCalculating => _viewModel.IsCalculating;
 
     public System.Windows.Point InsertionPoint => _viewModel.InsertionPoint;
