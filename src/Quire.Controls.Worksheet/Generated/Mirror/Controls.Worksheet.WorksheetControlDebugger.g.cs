@@ -18,13 +18,9 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
     [global::Quire.Mirror.MirrorStub]
     public const string WorksheetControlUICommand = "WorksheetControl UI Debugging Command";
     [global::Quire.Mirror.MirrorStub]
-    private readonly bool _isDebugMode;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Worksheet.WorksheetControlDebugger.WorksheetControlUI _worksheetControlUI;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Worksheet.WorksheetControlDebugger.VisibleObjects _visibleObjects;
-    [global::Quire.Mirror.MirrorStub]
-    private WorksheetControlDebugger() { }
     [global::Quire.Mirror.MirrorStub]
     public void OnModeChanged(object spiritMainWindow, global::System.Windows.DependencyProperty activeDocumentProperty, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

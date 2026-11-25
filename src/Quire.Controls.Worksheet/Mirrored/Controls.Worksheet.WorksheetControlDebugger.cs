@@ -6,7 +6,19 @@ namespace Quire.Controls.Worksheet;
 
 public partial class WorksheetControlDebugger
 {
+    private readonly bool _isDebugMode = global::Quire.DebugTools.IsDebug;
+
     public static WorksheetControlDebugger Instance => _instance ?? (_instance = new WorksheetControlDebugger());
+
+    private WorksheetControlDebugger()
+    {
+        if (!_isDebugMode)
+        {
+            return;
+        }
+
+        Application.Current.MainWindow.Closing += OnSpiritMainWindowClosing;
+    }
 
     private void DestroyInstance()
     {
