@@ -1021,6 +1021,27 @@
 - Release IL: PASS — 2956 checked in Plots, 0 failures.
 - Remaining mismatches in this batch: none.
 
+## Batch 124 — PlotCalculatable remaining members
+
+- Owner: agy-whiteboard-2. Branch: `feature/agy-plots`.
+- Members:
+  - `PlotCalculatable`:
+    - `PropertyNames` (`CalculatingStatus`, `Error`, `HideFromCalculationContext`, `SynchronizationStatus`, `IsNumOfPointsMutable`, `NumberOfPoints`, `.ctor`)
+    - Fields: `_synchronizationStatus`, `_calculatingStatus`, `_error`, `_hideFromCalculationContext`, `_nodeHandleMapper`, `_numberOfPoints`, `_isNumOfPointsMutable`
+    - Events: `PropertyChanged`, `RequestEvaluation`, `GetValueOfIdentifierBefore`, `TreatAsUpToDate`, `PlotCalculatableError`, `Changed`
+    - Properties & Methods: `FireRequestEvaluation`, `BeforeRequestEvaluation`, `Rl`, `Commit`, `SetResult`, `SetIdentifierLabels`, `SetAutoSelectAlgorithm`, `SetRedefinitionWarnings`, `CurrentError`, `SynchronizationStatus`, `CalculatingStatus`, `EngineResult`, `Error`, `Result`, `EngineWarnings`, `ErrorCode`, `ErrorText`, `ErrorSExpression`, `CanHideFromCalculationContext`, `HideFromCalculationContext`, `InterceptAndUpdateResult`, `EquationWithError`, `UseICalculatableToRestoreResult`, `ErrorCount`, `IsCommitted`, `NumberOfPoints`, `IsNumOfPointsMutable`, `FirePropertyChanged`, `OnChanged`, `ContainsError`, `SetHideFromCalculationContext`, `RestoreResult`, `SetCalculatingStatus`, `SetError`, `OnTraceEquationSExpressionChanged`, `CleanErrors`, `ClearEquationError`, `PreprocessEquationSpecificError`, `OnEquationSpecificError`, `FindChildWithMatchingId`, `OnPlotCalculatableError`, `IsApplicationCustomError`, `SetStatusSynchronized`, `SetSynchronizationStatus`, `ShowError`, `ClearNodeHandleMapper`, `GetReplacedRl(IEquationControl)`, `GetReplacedRl(IEquationControl, string)`, `AttachOnTraceEquationSExpressionChanged`, `DetachOnTraceEquationSExpressionChanged`, `.ctor`, closure `<>c__DisplayClass56_0`.
+- Hand-written:
+  - `Mirrored/Controls.Plots.Model.PlotCalculatable.cs`
+- Shapes:
+  - `PlotCalculatable`:
+    - Mapped `CalculatingStatus.NotComputing` to `CalculatingStatus.Idle` (2) per D20 enum mapping.
+    - Repositioned uninitialized fields `_numberOfPoints` and `_isNumOfPointsMutable` after `IsCommitted` and before `NumberOfPoints`, aligning syntax ordinal 56 for `HideFromCalculationContext` (`DisplayClass56_0`).
+    - Used `Action<ICalculatable> treatAsUpToDate = TreatAsUpToDate; if (treatAsUpToDate != null) treatAsUpToDate(this);` in `SetStatusSynchronized` to emit `stloc.0 / ldloc.0` instead of `dup`.
+    - Formatted `OnPlotCalculatableError`, `SetIdentifierLabels`, `SetError`, and `ClearEquationError` matching exact Mathcad Release IL branch structures.
+- Release IL: PASS — 3017 checked in Plots, 0 failures.
+- Remaining mismatches in this batch: none.
+
+
 
 
 
