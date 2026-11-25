@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using Quire;
 using Quire.Calculation.Core;
+using Quire.Undo;
 using Quire.Controls.Plots.Model;
 
 namespace Quire.Controls.Plots.ViewModel;
@@ -154,15 +156,55 @@ public partial class PlotViewModelBase<TModel>
 
     private bool CalculateAreAxisExpressionsVisible => PendingActivation || IsActiveRegion || ShowAxisExpressions;
 
-    public bool ShowAxisExpressions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public bool ShowAxisExpressions
+    {
+        get
+        {
+            return Model.ShowAxisExpressions;
+        }
+        set
+        {
+            Model.ShowAxisExpressions = value;
+        }
+    }
 
     public bool IsCalculating => Model != null && Model.IsCalculating;
 
-    public global::Quire.Controls.Core.BackgroundTypeE PlotBackgroundType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public global::Quire.Controls.Core.BackgroundTypeE PlotBackgroundType
+    {
+        get
+        {
+            return Model.PlotBackgroundType;
+        }
+        set
+        {
+            Model.PlotBackgroundType = value;
+        }
+    }
 
-    public double GraphWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public double GraphWidth
+    {
+        get
+        {
+            return Model.GraphWidth;
+        }
+        set
+        {
+            Model.GraphWidth = Math.Max(value, CurrentMinimalGraphWidth);
+        }
+    }
 
-    public double GraphHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public double GraphHeight
+    {
+        get
+        {
+            return Model.GraphHeight;
+        }
+        set
+        {
+            Model.GraphHeight = value;
+        }
+    }
 
     public static readonly global::System.Windows.Input.RoutedCommand ShowAxisExpressionsCommand;
 
@@ -170,7 +212,25 @@ public partial class PlotViewModelBase<TModel>
 
     internal event global::System.Action DeserializationEnded;
 
-    private void ShowAxisExpressionsCommandExecute(object arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ShowAxisExpressionsCommandExecute(object arg)
+    {
+        if (AssertionE.Failed == (AssertionE)DebugTools.DevAssert(arg is bool, null, Array.Empty<object>()))
+        {
+            return;
+        }
+        bool oldState = ShowAxisExpressions;
+        CommandBuffer.Execute(new UndoableCommand(
+            "Set ShowAxisExpressions",
+            () =>
+            {
+                ShowAxisExpressions = GetNewValue(IsActiveRegion, ShowAxisExpressions, arg);
+                return true;
+            },
+            () =>
+            {
+                ShowAxisExpressions = oldState;
+            }));
+    }
 
     internal void OnGraphSizeChanged(Size newSize)
     {
@@ -206,7 +266,21 @@ public partial class PlotViewModelBase<TModel>
 
     private double _currentMinimalGraphWidth;
 
-    public double CurrentMinimalGraphWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public double CurrentMinimalGraphWidth
+    {
+        get
+        {
+            return _currentMinimalGraphWidth;
+        }
+        set
+        {
+            _currentMinimalGraphWidth = value;
+            if (_currentMinimalGraphWidth > GraphWidth)
+            {
+                GraphWidth = _currentMinimalGraphWidth;
+            }
+        }
+    }
 
     protected void OnCalculatableAdded(ICalculatable calculatable)
     {
@@ -218,7 +292,10 @@ public partial class PlotViewModelBase<TModel>
         _childHider.ChildAdded(calculatable);
     }
 
-    protected void OnCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void OnCalculatableRemoved(ICalculatable calculatable)
+    {
+        _childHider.ChildRemoved(calculatable);
+    }
 
     public void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
