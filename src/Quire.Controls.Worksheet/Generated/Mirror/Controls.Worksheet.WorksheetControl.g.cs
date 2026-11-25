@@ -26,8 +26,6 @@ public partial class WorksheetControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
-    public T GetDispatchedProperty<T>(global::Quire.DelegateFunction1<object, global::System.Windows.DependencyProperty> del, global::System.Windows.DependencyProperty property) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public WorksheetControl(global::Quire.Controls.Core.ITextStylesManager textStylesManager) { }
     [global::Quire.Mirror.MirrorStub]
     private static bool CheckForScriptableControls(object item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

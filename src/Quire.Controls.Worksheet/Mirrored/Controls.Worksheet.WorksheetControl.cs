@@ -529,6 +529,15 @@ public partial class WorksheetControl
         remove => RemoveHandler(ChangedEvent, value);
     }
 
+    public T GetDispatchedProperty<T>(DelegateFunction1<object, DependencyProperty> del, DependencyProperty property)
+    {
+        return (T)((global::System.Windows.Threading.DispatcherObject)this).Dispatcher.Invoke(
+            (global::System.Windows.Threading.DispatcherPriority)10,
+            new TimeSpan(0, 0, 5),
+            (Delegate)del,
+            (object)property);
+    }
+
     public bool IsContentActive => _viewModel.IsContentActive;
 
     public bool IsAutoCalcChecked
