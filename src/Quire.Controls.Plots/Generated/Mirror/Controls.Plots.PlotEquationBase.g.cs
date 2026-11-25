@@ -11,10 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotEquationBase, Ptc.Controls.Plots")]
 public abstract partial class PlotEquationBase : global::System.Windows.Controls.UserControl, global::Quire.Controls.Plots.Presenter.IPlotEquationBase, global::Quire.Controls.Core.ICurrentMathFormatProperty, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.IMathFormatOwner, global::Quire.Controls.Core.ISupportCustomInitialization, global::Quire.Controls.Core.IMathFormatForDeserialization
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IEquationControl> ContainedEquationControls { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.Controls.Core.IEquationControl Expression { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.Controls.Core.IEquationControl ScalingEquation { get; }
 }

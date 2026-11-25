@@ -54,6 +54,8 @@ public abstract partial class PlotEquationBase
         }
     }
 
+    public abstract IEquationControl Expression { get; }
+
     public virtual bool InCustomInitialization
     {
         get
@@ -66,6 +68,8 @@ public abstract partial class PlotEquationBase
             ScalingEquation.InCustomInitialization = value;
         }
     }
+
+    public abstract IEquationControl ScalingEquation { get; }
 
     public IMathFormat DeserializeMathFormat
     {
@@ -130,6 +134,8 @@ public abstract partial class PlotEquationBase
             SExpressionValueChanged();
         }
     }
+
+    public abstract IEnumerable<IEquationControl> ContainedEquationControls { get; }
 
     protected void AttachSExpressionValueChanged()
     {

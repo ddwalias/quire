@@ -945,5 +945,25 @@
 - Release IL: PASS — 2791 checked in Plots, 0 failures.
 - Remaining mismatches in this batch: none.
 
+## Batch 120 — PlotEquationBase properties and PlotLegend members
+
+- Owner: agy-whiteboard-2. Branch: `feature/agy-plots-120`.
+- Members:
+  - `PlotEquationBase`: `ContainedEquationControls`, `Expression`, `ScalingEquation` (3 abstract properties)
+  - `PlotLegend`: `Columns`, `IPlotLegend.LegendWidth` (unmarked placeholder stub), `SetLegendWidthWhenLayoutReady`, `PlotLegendSizeChanged`, `PlotLegendWidthChanged`, `SetMinMaxWidth(double, double)`, `AddNewItemToPlotLegend`, `PlotLegendItemSizeChanged`, `RemoveTraceFromPlotLegend`, `FindByTrace`, `UpdateDefaultLegendLabelsAfterIndex`, `InitializeComponent`, `_CreateDelegate`, `IComponentConnector.Connect`
+- Hand-written:
+  - `Mirrored/Controls.Plots.PlotEquationBase.cs`
+  - `Mirrored/Controls.Plots.PlotLegend.cs`
+- Shapes:
+  - `PlotEquationBase`:
+    - Declared abstract properties `ContainedEquationControls`, `Expression`, `ScalingEquation` in matching order.
+  - `PlotLegend`:
+    - Placed XAML-generated fields `PlotLegendGrid` and `_contentLoaded` at bottom of partial class alongside `InitializeComponent`, `_CreateDelegate`, and `Connect` to align closure ordinals `<SetMinMaxWidth>b__37_0` and `<>c__DisplayClass41_0::<FindByTrace>b__0`.
+    - Declared `IPlotLegend.LegendWidth` setter as unmarked placeholder stub (`set => throw MirrorStub.NotImplemented();`) to avoid unmapped explicit interface namespace prefix in compiler-generated closure name.
+    - Used early-return guard `if (e.PreviousSize.Width.Equals(e.NewSize.Width)) return;` in `PlotLegendSizeChanged` matching Mathcad's `brfalse.s / ret` pattern.
+- Release IL: PASS — 2821 checked in Plots, 0 failures.
+- Remaining mismatches in this batch: none.
+
+
 
 
