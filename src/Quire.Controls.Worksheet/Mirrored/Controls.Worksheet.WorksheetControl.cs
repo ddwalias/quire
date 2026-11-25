@@ -16,6 +16,8 @@ namespace Quire.Controls.Worksheet;
 
 public partial class WorksheetControl
 {
+    private static global::System.Type TypeOfThis => _typeOfThis ?? (_typeOfThis = typeof(WorksheetControl));
+
     public bool HasScriptingControls { get; set; }
 
     public string HelpServerPath
@@ -465,6 +467,12 @@ public partial class WorksheetControl
 
     public Size GridCellSize => PageLayout.GridCellSize;
 
+    internal string DisplayedFileNameText => GetDisplayedText<IFileNameControl>();
+
+    internal string DisplayedFilePathText => GetDisplayedText<IFilePathControl>();
+
+    internal string DisplayedSavedDateText => GetDisplayedText<ISavedDateControl>();
+
     public bool IsContentActive => _viewModel.IsContentActive;
 
     public bool IsAutoCalcChecked
@@ -491,6 +499,24 @@ public partial class WorksheetControl
                 _viewModel.IsAutoCalcOn = value;
             }
         }
+    }
+
+    public bool IsRegionBorderShown
+    {
+        get => _viewModel.IsRegionBorderShown;
+        set => _viewModel.IsRegionBorderShown = value;
+    }
+
+    private string GetDisplayedText<TTextBox>() where TTextBox : class, ITemplatedTextBox
+    {
+        TTextBox displayedText = _viewModel.Header.WhiteboardItems.OfType<TTextBox>().FirstOrDefault()
+            ?? _viewModel.Footer.WhiteboardItems.OfType<TTextBox>().FirstOrDefault();
+        if (displayedText == null)
+        {
+            return null;
+        }
+
+        return displayedText.Text;
     }
 
     public int CurrentPageNumber => _viewModel.CurrentPageNumber;
