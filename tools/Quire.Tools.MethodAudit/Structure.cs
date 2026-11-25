@@ -304,7 +304,8 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         // Ordinals are dropped from each name as it is appended, not from string literals: their text is the body's.
         string hash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(text.ToString())));
         // Generated stubs throw MirrorStub.NotImplemented(file, member), the file from [CallerFilePath].
-        bool stub = shape.Count == 4 && shape[0] == "ldstr" && shape[1] == "ldstr" && shape[3] == "throw"
+        // MSVC C++/CLI passes both literals itself and leaves an unreachable ret after the throw.
+        bool stub = (shape.Count == 4 || shape.Count == 5 && shape[4] == "ret") && shape[0] == "ldstr" && shape[1] == "ldstr" && shape[3] == "throw"
             && shape[2].StartsWith("call ", StringComparison.Ordinal) && shape[2].Contains("Quire.Mirror.MirrorStub::NotImplemented", StringComparison.Ordinal);
         return new(hash.ToLowerInvariant(), stub);
     }
