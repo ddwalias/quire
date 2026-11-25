@@ -381,7 +381,6 @@ Position* DepManager::find_next_def(const SDef& name, Position* r)
 
 void AddLabels(::Quire::depman::DSym ds, Engine::Unmanaged::std_label_set& lb)
 {
-    const wchar_t* pStar = nullptr;
     const wchar_t __unaligned* p1 = nullptr;
     const wchar_t* p2 = nullptr;
     size_t len = 0;
@@ -401,10 +400,7 @@ void AddLabels(::Quire::depman::DSym ds, Engine::Unmanaged::std_label_set& lb)
     }
     if (ds.wild)
     {
-        pStar = L"*";
-        while (*(const short __unaligned*)++pStar)
-            ;
-        lb.add(L"*", pStar - L"*");
+        lb.add(L"*", wcslen(L"*"));
     }
 }
 
@@ -452,6 +448,16 @@ Position* DepManager::resolve(int scope, ::Quire::depman::DSym ds, Position* pos
         DefMap* defs = lookup(key, def_table_);
         return find_def_nodead(defs, position, mode);
     }
+}
+
+void DepManager::add_dep(int, ::Quire::depman::DSym, Position*, ActionChain*, DependencyType)
+{
+    throw Quire::Mirror::MirrorStub::NotImplemented(L"DepmanPosition.cpp", L"add_dep");
+}
+
+void DepManager::remove_dep(int, ::Quire::depman::DSym, Position*, ActionChain*)
+{
+    throw Quire::Mirror::MirrorStub::NotImplemented(L"DepmanPosition.cpp", L"remove_dep");
 }
 
 } // namespace depman

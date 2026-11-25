@@ -17,13 +17,19 @@ namespace Engine { namespace Unmanaged {
 
         bool is_wild_;
 
-        __forceinline label_set() : base_set(typename base_set::key_compare(), Alloc<string_type>()), is_wild_(false) {}
+        __forceinline label_set(const typename base_set::key_compare& comp = typename base_set::key_compare(), const Alloc<string_type>& alloc = Alloc<string_type>())
+            : base_set(comp, alloc), is_wild_(false) {}
         __forceinline label_set(const label_set& other) : base_set(other), is_wild_(other.is_wild_) {}
         __forceinline ~label_set() = default;
 
+        static bool is_wild(const CharT* s)
+        {
+            return s[0] == 42 && s[1] == 0;
+        }
+
         void add(const CharT* s, size_t len)
         {
-            if (bool is_wild = (s[0] == 42 && s[1] == 0))
+            if (is_wild(s))
             {
                 is_wild_ = true;
                 return;
@@ -42,8 +48,11 @@ namespace Engine { namespace Unmanaged {
     };
 
     struct std_label_set : public label_set<std::allocator, wchar_t> {
-        __forceinline std_label_set() : label_set<std::allocator, wchar_t>() {}
+        __forceinline std_label_set(const typename base_set::key_compare& comp = typename base_set::key_compare(), std::allocator<string_type> alloc = std::allocator<string_type>())
+            : label_set<std::allocator, wchar_t>(comp, alloc) {}
         std_label_set(const std_label_set& other)
+            : label_set<std::allocator, wchar_t>(other) {}
+        __forceinline std_label_set(const label_set<std::allocator, wchar_t>& other)
             : label_set<std::allocator, wchar_t>(other) {}
         ~std_label_set() = default;
     };
@@ -198,6 +207,9 @@ namespace depman {
         SDef(int s, const std::wstring& n, const Engine::Unmanaged::std_label_set& l)
             : scope_id(s), name(n), labels(l) {}
 
+        SDef(int s, const std::wstring& n, const Engine::Unmanaged::label_set<std::allocator, wchar_t>& l)
+            : scope_id(s), name(n), labels(l) {}
+
         SDef(const SDef& other)
             : scope_id(other.scope_id), name(other.name), labels(other.labels) {}
 
@@ -236,6 +248,8 @@ namespace depman {
         Position* find_next_def(const SDef& name, Position* r);
         int is_bound(int scope, ::Quire::depman::DSym ds, Position* position, ::Quire::depman::ResolveMode mode);
         Position* resolve(int scope, ::Quire::depman::DSym ds, Position* position, ::Quire::depman::ResolveMode mode);
+        void add_dep(int scope, ::Quire::depman::DSym ds, Position* pos, ActionChain* ac, DependencyType deptype);
+        void remove_dep(int scope, ::Quire::depman::DSym ds, Position* pos, ActionChain* ac);
 
     private:
         DefTable def_table_;
@@ -360,6 +374,11 @@ namespace Quire { namespace depman {
         {
             return m_needs_check;
         }
+
+        DepTrackingEnv^ GetDepTrackingEnv()
+        {
+            return m_env;
+        }
     };
 
     [Quire::Mirror::MirrorOfAttribute("depman.BooleanMediator, mcdepman")]
@@ -381,6 +400,9 @@ namespace Quire { namespace depman {
 
     [Quire::Mirror::MirrorOfAttribute("depman.OnDep, mcdepman")]
     public delegate void OnDep(Scope^ scope, DSym sym, ScopingMode sm, DependencyType dt);
+
+    [Quire::Mirror::MirrorOfAttribute("depman.StringVoid, mcdepman")]
+    public delegate void StringVoid(System::String^ s);
 
     [Quire::Mirror::MirrorOfAttribute("depman.DepTrackingEnv, mcdepman")]
     public ref class DepTrackingEnv
@@ -493,6 +515,22 @@ namespace Quire { namespace depman {
         {
             m_result = r;
         }
+
+        ~ActionChainMgd()
+        {
+            delete m_action;
+            System::GC::KeepAlive(this);
+        }
+        void ClearDeps();
+        void UnregisterDeps();
+        void RegisterDeps();
+        void OnUnload();
+        void add_env_scope(Scope^ s);
+        void remove_env_scope(Scope^ s);
+        void AddStaticDep(System::String^ name);
+        void GetDeps(StringVoid^ f);
+        void add_dep(Scope^ scope, DSym sym, ScopingMode sm, DependencyType dt);
+        OnDep^ on_dep();
     };
 
     [Quire::Mirror::MirrorOfAttribute("depman.DepException, mcdepman")]

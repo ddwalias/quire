@@ -473,6 +473,43 @@ Investigation of remaining unmigrated `PositionBase`, `Position`, and `DepManage
   - MSVC STL constructor inlining difference in `DepManager.resolve` (`_Tree.{ctor}` vs `std.set.{ctor}`).
   - Cross-assembly `gcroot` resolution in `MethodAudit` (`SafeEvent`, `LabeledDictionary`).
 
+## Batch 32 — ActionChain cluster, ActionChainMgd dependencies lifecycle, AddLabels and label_set.add
+
+- Owner: AGY, Orca task `task_173fd4feb95b`; branch `feature/luna-mcdepman`.
+- Members mirrored and verified:
+  - All 11 `depman.ActionChain` unmanaged methods:
+    - `depman.ActionChain.clear_result`: **EXACT PASS**
+    - `depman.ActionChain.{dtor}`: **EXACT PASS**
+    - `depman.ActionChain.__delDtor`: **EXACT PASS**
+    - `depman.ActionChain.OnUnload`: **EXACT PASS**
+    - `depman.ActionChain.add_env_scope`: **EXACT PASS**
+    - `depman.ActionChain.remove_env_scope`: **EXACT PASS**
+    - `depman.ActionChain.UnregisterDeps`: **EXACT PASS**
+    - `depman.ActionChain.RegisterDeps`: **EXACT PASS**
+    - `depman.ActionChain.GetDeps`: **EXACT PASS**
+    - `depman.ActionChain.AddStaticDep`: **EXACT PASS**
+    - `depman.ActionChain.ClearDeps`: **EXACT PASS**
+  - Managed `Quire.depman.ActionChainMgd` members:
+    - `ActionChainMgd::GetDeps`: **EXACT PASS** (47 entries, byte-for-byte exact loop inversion via `while (enumerator.MoveNext())`).
+    - `ActionChainMgd::add_dep`: **EXACT PASS** (71 entries, byte-for-byte exact; `CacheKey key(sym, sm, dt)` inlines constructor without `initobj`).
+    - `ActionChainMgd::on_dep`: **EXACT PASS**.
+    - `ActionChainMgd::OnUnload`: **EXACT PASS**.
+    - `ActionChainMgd::add_env_scope`: **EXACT PASS**.
+    - `ActionChainMgd::remove_env_scope`: **EXACT PASS**.
+    - `ActionChainMgd::UnregisterDeps`: **EXACT PASS**.
+    - `ActionChainMgd::RegisterDeps`: **EXACT PASS**.
+    - `ActionChainMgd::ClearDeps`: **EXACT PASS**.
+    - `ActionChainMgd::AddStaticDep`: **EXACT PASS**.
+    - `ActionChainMgd::~ActionChainMgd` / `Dispose`: **EXACT PASS**.
+  - Supporting contracts:
+    - `depman.StringVoid` delegate (token `0x06000300`): **EXACT PASS**.
+    - `depman.CachingEnv.GetDepTrackingEnv`: **EXACT PASS**.
+  - Exact standalone helpers:
+    - `depman.AddLabels`: **EXACT PASS** (76 instructions byte-for-byte exact; idiomatic `wcslen(L"*")` reproduces Mathcad's exact local 0 `System.Char* modopt(IsConst)` metadata).
+    - `Engine.Unmanaged.label_set<Alloc, CharT>.add`: **EXACT PASS** (157 bytes, 3 conditional branches byte-for-byte exact via inlined `static bool is_wild(const CharT*)` helper).
+- Release IL report: 398 passed out of 400 checked.
+- Remaining mismatches / concrete blockers:
+  - `depman.DepManager.add_dep` & `depman.DepManager.remove_dep`: MSVC x64 C++17 evaluation order differences (`_Try_emplace` vs `new ForwardDepMap()` sequencing and multi-level try/fault unwinding on `forward_deps_`).
 
 
 
@@ -480,3 +517,6 @@ Investigation of remaining unmigrated `PositionBase`, `Position`, and `DepManage
 
 
 
+
+
+\n

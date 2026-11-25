@@ -112,6 +112,7 @@ private:
     gcroot<::Quire::depman::ActionChainMgd^> mgd_;   // 0x00 (offset 0)
 
 public:
+    ~ActionChain();
     bool IsLocked() const;
     bool IsUndefine();
     bool IsChildOnly();
@@ -119,6 +120,15 @@ public:
     void UnLock();
     void SetNeedsCheck();
     void Kill();
+    void clear_result();
+    void OnUnload();
+    void add_env_scope(::Quire::depman::Scope^ s);
+    void remove_env_scope(::Quire::depman::Scope^ s);
+    void UnregisterDeps();
+    void RegisterDeps();
+    void GetDeps(::Quire::depman::StringVoid^ f);
+    void AddStaticDep(System::String^ name);
+    void ClearDeps();
     System::Object^ value();
     System::Collections::Generic::Dictionary<::Quire::depman::CacheKey, __int64>^ TreatAsReadyDeps(System::Collections::Generic::Dictionary<::Quire::depman::CacheKey, __int64>^ d);
     ::Quire::depman::SharedThreadContext^ GetSharedThreadContext() const;
