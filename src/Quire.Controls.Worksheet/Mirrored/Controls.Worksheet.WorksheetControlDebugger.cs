@@ -148,6 +148,27 @@ public partial class WorksheetControlDebugger
 
     private sealed partial class WorksheetControlUI
     {
+        protected override void DestructUI()
+        {
+            DestroyDebugWindow();
+        }
+
+        private void WorksheetControlUIDebugClosed(object sender, EventArgs e)
+        {
+            AskCloseInstance();
+        }
+
+        private void DestroyDebugWindow()
+        {
+            if (_win != null)
+            {
+                _win.Closed -= WorksheetControlUIDebugClosed;
+                _grid = null;
+                _win.Close();
+                _win = null;
+            }
+        }
+
         private void UpdateWindowCellWorksheetItemsCanvas(PropertyName propertyName, string text)
         {
             UpdateDebugWindowCell(propertyName, CoordinateSystemName.WorksheetItems, text);
