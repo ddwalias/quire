@@ -583,3 +583,10 @@
 - Release IL: PASS, 3766 checked, zero failures.
 - Runtime dependency: `GetNestedPositionForMatrix`, `AreTableCoordinateListsEqual`, `IncreaseEquationWidthIfNessessary`, `BringCurrentNodeIntoView` and `GetFormatForMatrix` are still stubs. `HookupToEvents` is not called yet, so these handlers are not reached at run time.
 - Remaining: `HandleScopeChanged` (107 IL) uses `<>c__DisplayClass403_0`/`b__0`, so it is parked on the closure ordinal like `HandleWarningOccured`. `FocusWhenAble` has two closures (`DisplayClass428_0`), also parked.
+
+## Batch 84
+
+- Owner: haiku-equationcontrol-20261123; branch feature/haiku-equationcontrol-20261123 (on batch 83).
+- Members: `_model_EquationChanged`, `FireContentAndRegionChangedEvents` (IORegionChanged null-check idiom), `OnVisibleWarningMessageChanged`, `ClearExpressionValueModified`; stub pairs removed from the `.g.cs`.
+- Release IL: PASS, 3770 checked, zero failures.
+- Remaining: `UpdateLhsVisibleOnView` (106 IL, nested bool/Visibility logic) and the `UpdateEngineResult` overloads are still stubs; `FireContentChangedEvents` and the `OnModelEquationChanged` path now reach the implemented `FireContentAndRegionChangedEvents` and `_model_EquationChanged`.

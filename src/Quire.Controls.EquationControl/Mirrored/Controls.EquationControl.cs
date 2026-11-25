@@ -619,6 +619,25 @@ public partial class EquationControl
         UpdateLhsVisibleOnView();
     }
 
+    private void _model_EquationChanged() => RaiseEvent(new RoutedEventArgs(ChangedEvent));
+
+    private void FireContentAndRegionChangedEvents(IORegionChangeType type)
+    {
+        RaiseEvent(new RoutedEventArgs(ContentChangedEvent));
+        if (IORegionChanged != null)
+        {
+            IORegionChanged.Invoke(this, type);
+        }
+    }
+
+    private void OnVisibleWarningMessageChanged() => UpdateLhsVisibleOnView();
+
+    private void ClearExpressionValueModified()
+    {
+        _model.IsExpressionValueModified = false;
+        FirePropertyChanged(new System.ComponentModel.PropertyChangedEventArgs("IsCommitted"));
+    }
+
     private void HandleNavigatorStateChanged(NavigatorStateChangeEventArgs arg)
     {
         NavigatorState navigatorState = arg.NavigatorState;
