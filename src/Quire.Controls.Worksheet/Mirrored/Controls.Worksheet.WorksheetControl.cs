@@ -457,7 +457,41 @@ public partial class WorksheetControl
 
     public WorksheetPageLayout PageLayout => _viewModel.PageLayout;
 
+    public double NonprintableSpaceButtonPosition => _viewModel.NonprintableSpaceButtonPosition.Top;
+
+    public global::System.Windows.Media.Color PageBackgroundColor => PageLayout.PageBackgroundColor;
+
+    public Size PageSizeValue => new(PageLayout.PageWidth, PageLayout.PageHeight);
+
+    public Size GridCellSize => PageLayout.GridCellSize;
+
     public bool IsContentActive => _viewModel.IsContentActive;
+
+    public bool IsAutoCalcChecked
+    {
+        get
+        {
+            if (!useSavedAutoCalcStateOnLoad)
+            {
+                return _viewModel.IsAutoCalcChecked;
+            }
+
+            return true;
+        }
+        set { }
+    }
+
+    public bool IsAutoCalcOn
+    {
+        get => _viewModel.IsAutoCalcOn;
+        set
+        {
+            if (value != _viewModel.IsAutoCalcOn)
+            {
+                _viewModel.IsAutoCalcOn = value;
+            }
+        }
+    }
 
     public int CurrentPageNumber => _viewModel.CurrentPageNumber;
 
