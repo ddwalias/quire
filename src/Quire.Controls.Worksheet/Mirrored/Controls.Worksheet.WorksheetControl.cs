@@ -65,6 +65,18 @@ public partial class WorksheetControl
         set => SetValue(ShowInputOutputDesignationProperty, value);
     }
 
+    public IIORegionManager InputOutputRegionManager
+    {
+        get => (IIORegionManager)GetValue(InputOutputRegionManagerProperty);
+        set => SetValue(InputOutputRegionManagerProperty, value);
+    }
+
+    public global::Quire.Controls.Core.BookmarkTags.IBookmarksManager BookmarksManager
+    {
+        get => (global::Quire.Controls.Core.BookmarkTags.IBookmarksManager)GetValue(BookmarksManagerProperty);
+        set => SetValue(BookmarksManagerProperty, value);
+    }
+
     public NumberFormat CurrentNumberFormat
     {
         get => _currentNumberFormat;
