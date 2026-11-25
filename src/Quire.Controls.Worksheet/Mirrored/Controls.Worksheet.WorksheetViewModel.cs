@@ -594,6 +594,23 @@ internal partial class WorksheetViewModel
         return SelectedItems.Count() > 0;
     }
 
+    private void CopySelection()
+    {
+        if (!CanCopySelection())
+        {
+            return;
+        }
+        try
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
+            ActiveSection.CopySelection();
+        }
+        finally
+        {
+            Mouse.OverrideCursor = null;
+        }
+    }
+
     private void CutSelection()
     {
         if (!CanCutSelection())
@@ -1667,5 +1684,34 @@ internal partial class WorksheetViewModel
             return true;
         }
         return false;
+    }
+
+    public IFileNameControl CreateFileNameControl()
+    {
+        IFileNameControl fileNameControl = ControlCreator.CreateFileNameControl(GetCurrentTextFormat());
+        AddItemAtInsertionPointAndActivate(fileNameControl, "Add FileName Region");
+        return fileNameControl;
+    }
+
+    public IFilePathControl CreateFilePathControl()
+    {
+        IFilePathControl filePathControl = ControlCreator.CreateFilePathControl(GetCurrentTextFormat());
+        AddItemAtInsertionPointAndActivate(filePathControl, "Add FilePath Region");
+        return filePathControl;
+    }
+
+    private int GetPageIndex(double yOffset)
+    {
+        if (PageLayout.PageBodyHeight != 0.0)
+        {
+            return (int)((yOffset + PageLayout.GridCellSize.Height / 2.0) / PageLayout.PageBodyHeight);
+        }
+        return 0;
+    }
+
+    private void UpdateWorksheetGridSize()
+    {
+        double num = (double)Pages.Count * PageLayout.PageBodyHeight;
+        _worksheetGrid.GridArea = new Rect(new Size(WidthWithNonprintableSpace, num));
     }
 }
