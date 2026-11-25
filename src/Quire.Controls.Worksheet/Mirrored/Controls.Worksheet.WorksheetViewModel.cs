@@ -15,6 +15,7 @@ using Quire.Controls.ExcelComponent.View;
 using Quire.Controls.Text;
 using Quire.Controls.Worksheet.Printing;
 using Quire.Controls.Core.Whiteboard;
+using Quire.Controls.Mathboard;
 using Quire.Core;
 using Quire.IO;
 using Quire.PersistentData;
@@ -1713,5 +1714,28 @@ internal partial class WorksheetViewModel
     {
         double num = (double)Pages.Count * PageLayout.PageBodyHeight;
         _worksheetGrid.GridArea = new Rect(new Size(WidthWithNonprintableSpace, num));
+    }
+
+    public IAggregateMathboardControl CreateSolveBlockControl()
+    {
+        IAggregateMathboardControl aggregateMathboardControl = ControlCreator.CreateSolveBlockControl(_worksheetGrid.GridCellSize);
+        AddItemAtInsertionPointAndActivate(aggregateMathboardControl, "Add SolveBlock");
+        return aggregateMathboardControl;
+    }
+
+    private ICollapsibleAreaControl CreateCollapsibleAreaControl()
+    {
+        ICollapsibleAreaControl collapsibleAreaControl = ControlCreator.CreateCollapsibleAreaControl(_worksheetGrid.GridCellSize);
+        double majorGridLines = PageLayout.MajorGridLines;
+        ItemManager.SetHeight(collapsibleAreaControl, majorGridLines);
+        AddItemAtInsertionPointAndActivate(collapsibleAreaControl, "Add CollapsibleArea");
+        return collapsibleAreaControl;
+    }
+
+    public void ActivateContent(Point insertionPoint)
+    {
+        MakeContentActive();
+        WorksheetContent.InsertionPoint = insertionPoint;
+        SetInsertionPointOnAppropriatePage(WorksheetContent.InsertionPoint);
     }
 }

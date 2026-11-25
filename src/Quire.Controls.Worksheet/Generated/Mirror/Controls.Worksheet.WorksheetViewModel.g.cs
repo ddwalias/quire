@@ -154,15 +154,11 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.ISpecTableControl CreateSpecTableControl(global::System.Nullable<global::Quire.TableCoordinate> dimensions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Mathboard.IAggregateMathboardControl CreateSolveBlockControl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Mathboard.IAggregateMathboardControl CreateExcelComponentControl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.ExcelComponent.IOleObjectControl CreateOleObjectControl(global::Quire.Controls.ExcelComponent.OleObjectControlCreationMethod creationMethod) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Mathboard.IAggregateMathboardControl CreateChartComponentControl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.ICollapsibleAreaControl CreateCollapsibleAreaControl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Text.IParagraphControl CreateTextBlockControl(string text = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -215,8 +211,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     public void ActivateHeader(global::System.Windows.Point pt) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ActivateFooter(global::System.Windows.Point pt) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ActivateContent(global::System.Windows.Point insertionPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ExpandToIncludePoint(global::System.Windows.Point pointToInclude) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
