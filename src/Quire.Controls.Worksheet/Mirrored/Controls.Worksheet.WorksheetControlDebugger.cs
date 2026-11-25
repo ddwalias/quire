@@ -54,4 +54,28 @@ public partial class WorksheetControlDebugger
         Application.Current.MainWindow.Closing -= OnSpiritMainWindowClosing;
         DestroyInstance();
     }
+
+    private abstract partial class DebuggedObject
+    {
+        public event CloseInstance AskedCloseInstance;
+
+        private void InvokeAskedCloseInstance()
+        {
+            CloseInstance askedCloseInstance = AskedCloseInstance;
+            if (askedCloseInstance != null)
+            {
+                askedCloseInstance();
+            }
+        }
+
+        protected virtual void AskCloseInstance()
+        {
+            InvokeAskedCloseInstance();
+        }
+
+        protected virtual void InitializeUI()
+        {
+            SubscribeEvents();
+        }
+    }
 }

@@ -40,8 +40,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         [global::Quire.Mirror.MirrorStub]
         private global::System.Windows.DependencyObject _spiritMainWindowDependencyObject;
         [global::Quire.Mirror.MirrorStub]
-        public event global::Quire.Controls.Worksheet.WorksheetControlDebugger.DebuggedObject.CloseInstance AskedCloseInstance;
-        [global::Quire.Mirror.MirrorStub]
         protected DebuggedObject(object spiritMainWindow, global::System.Windows.DependencyProperty activeDocumentProperty) { }
         [global::Quire.Mirror.MirrorStub]
         private void FillDataForDebugging(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -53,12 +51,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         private void HandlerOnActiveTabChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public virtual void Dispose() { }
-        [global::Quire.Mirror.MirrorStub]
-        private void InvokeAskedCloseInstance() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        protected virtual void AskCloseInstance() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        protected virtual void InitializeUI() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         protected abstract void DestructUI();
         [global::Quire.Mirror.MirrorStub]
