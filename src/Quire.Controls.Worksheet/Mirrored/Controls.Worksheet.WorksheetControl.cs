@@ -473,6 +473,44 @@ public partial class WorksheetControl
 
     internal string DisplayedSavedDateText => GetDisplayedText<ISavedDateControl>();
 
+    public bool FileNameIsShown
+    {
+        get => IsRegionDisplayed<IFileNameControl>();
+        set
+        {
+            if (!IsContentActive)
+            {
+                if (value)
+                {
+                    WorksheetCommands.NewFileNameRegion.Execute(null, this);
+                }
+                else
+                {
+                    WorksheetCommands.RemoveFileNameRegion.Execute(null, this);
+                }
+            }
+        }
+    }
+
+    public bool FilePathIsShown
+    {
+        get => IsRegionDisplayed<IFilePathControl>();
+        set
+        {
+            if (!IsContentActive)
+            {
+                if (value)
+                {
+                    WorksheetCommands.NewFilePathRegion.Execute(null, this);
+                }
+                else
+                {
+                    WorksheetCommands.RemoveFilePathRegion.Execute(null, this);
+                }
+            }
+        }
+    }
+
     public bool IsContentActive => _viewModel.IsContentActive;
 
     public bool IsAutoCalcChecked
@@ -517,6 +555,30 @@ public partial class WorksheetControl
         }
 
         return displayedText.Text;
+    }
+
+    private bool IsRegionDisplayed<TTextBox>() where TTextBox : class, ITemplatedTextBox
+    {
+        if (_viewModel.IsFirstPageHeaderFooterDifferent)
+        {
+            if (IsFirstPageHeaderActive && _viewModel.FirstPageHeader != null)
+            {
+                return _viewModel.FirstPageHeader.WhiteboardItems.OfType<TTextBox>().Any();
+            }
+            if (IsFirstPageFooterActive && _viewModel.FirstPageFooter != null)
+            {
+                return _viewModel.FirstPageFooter.WhiteboardItems.OfType<TTextBox>().Any();
+            }
+        }
+        if (!IsHeaderActive || !_viewModel.Header.WhiteboardItems.OfType<TTextBox>().Any())
+        {
+            if (IsFooterActive)
+            {
+                return _viewModel.Footer.WhiteboardItems.OfType<TTextBox>().Any();
+            }
+            return false;
+        }
+        return true;
     }
 
     public int CurrentPageNumber => _viewModel.CurrentPageNumber;
