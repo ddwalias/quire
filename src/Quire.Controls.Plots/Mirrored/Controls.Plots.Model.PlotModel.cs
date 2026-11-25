@@ -8,6 +8,14 @@ namespace Quire.Controls.Plots.Model;
 
 internal partial class PlotModel
 {
+    public IAxisModel rangeAxis => _rangeAxis;
+
+    public IAxisModel PrimaryResultAxis => _primaryResultAxis;
+
+    public IPlotTitleModel PlotTitleModel => _plotTitleModel;
+
+    public IPlotLegendModel PlotLegendModel => _plotLegendModel;
+
     public void FireDeserializationStarted()
     {
         if (DeserializationStarted != null)
