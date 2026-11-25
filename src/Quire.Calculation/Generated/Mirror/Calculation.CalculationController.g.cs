@@ -65,36 +65,16 @@ public partial class CalculationController
     [global::Quire.Mirror.MirrorOf("Ptc.Calculation.CalculationController+DispatchedEngineCallbackHandlerHideableChildWithCache, Ptc.Calculation")]
     private partial class DispatchedEngineCallbackHandlerHideableChildWithCache : global::Quire.Calculation.CalculationController.DispatchedEngineCallbackHandler
     {
-        [global::Quire.Mirror.MirrorStub]
-        public DispatchedEngineCallbackHandlerHideableChildWithCache(global::Quire.Calculation.Core.ICalculatable calculatable, global::System.Windows.Threading.Dispatcher dispatcher, global::System.Func<global::Quire.Calculation.Core.ICalculatable, bool> isCalcInContext, global::Quire.Calculation.CalculationController.EngineOptions engineOptions) : base(default(global::Quire.Calculation.Core.ICalculatable), default(global::System.Windows.Threading.Dispatcher), default(global::System.Func<global::Quire.Calculation.Core.ICalculatable, bool>), default(global::Quire.Calculation.CalculationController.EngineOptions)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override void SetSynchronizedWithResultNoError(global::Quire.Calculation.Core.SimpleResultNode result) => base.SetSynchronizedWithResultNoError(result);
-        [global::Quire.Mirror.MirrorStub]
-        public override void SetRedefinitionWarnings(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> warnings) => base.SetRedefinitionWarnings(warnings);
-        [global::Quire.Mirror.MirrorStub]
-        protected override void ProcessAlgorithms(global::System.Collections.IDictionary results, global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> handleToICalculatableMap) => base.ProcessAlgorithms(results, handleToICalculatableMap);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Calculation.CalculationController+DispatchedEngineCallbackHandlerChildWithCache, Ptc.Calculation")]
     private partial class DispatchedEngineCallbackHandlerChildWithCache : global::Quire.Calculation.CalculationController.DispatchedEngineCallbackHandler
     {
-        [global::Quire.Mirror.MirrorStub]
-        public DispatchedEngineCallbackHandlerChildWithCache(global::Quire.Calculation.Core.ICalculatable calculatable, global::System.Windows.Threading.Dispatcher dispatcher, global::System.Func<global::Quire.Calculation.Core.ICalculatable, bool> isCalcInContext, global::Quire.Calculation.CalculationController.EngineOptions engineOptions) : base(default(global::Quire.Calculation.Core.ICalculatable), default(global::System.Windows.Threading.Dispatcher), default(global::System.Func<global::Quire.Calculation.Core.ICalculatable, bool>), default(global::Quire.Calculation.CalculationController.EngineOptions)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override void SetSynchronizedWithResultNoError(global::Quire.Calculation.Core.SimpleResultNode result) => base.SetSynchronizedWithResultNoError(result);
-        [global::Quire.Mirror.MirrorStub]
-        public override void SetRedefinitionWarnings(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> warnings) => base.SetRedefinitionWarnings(warnings);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Calculation.CalculationController+DispatchedEngineCallbackHandlerAggregateWithCache, Ptc.Calculation")]
     private partial class DispatchedEngineCallbackHandlerAggregateWithCache : global::Quire.Calculation.CalculationController.DispatchedEngineCallbackHandler
     {
-        [global::Quire.Mirror.MirrorStub]
-        public DispatchedEngineCallbackHandlerAggregateWithCache(global::Quire.Calculation.Core.ICalculatable calculatable, global::System.Windows.Threading.Dispatcher dispatcher, global::System.Func<global::Quire.Calculation.Core.ICalculatable, bool> isCalcInContext, global::Quire.Calculation.CalculationController.EngineOptions engineOptions) : base(default(global::Quire.Calculation.Core.ICalculatable), default(global::System.Windows.Threading.Dispatcher), default(global::System.Func<global::Quire.Calculation.Core.ICalculatable, bool>), default(global::Quire.Calculation.CalculationController.EngineOptions)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override void SetSynchronizedWithResultNoError(global::Quire.Calculation.Core.SimpleResultNode result) => base.SetSynchronizedWithResultNoError(result);
-        [global::Quire.Mirror.MirrorStub]
-        public override void SetRedefinitionWarnings(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> warnings) => base.SetRedefinitionWarnings(warnings);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Calculation.CalculationController+EngineCallbackHandlerNoOP, Ptc.Calculation")]
