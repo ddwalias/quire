@@ -289,4 +289,78 @@ public abstract partial class PlotGraphLinearAxisBase
             drawingContext.DrawText(tickValueText, start);
         }
     }
+
+    private Geometry ArrowHeadGeometry
+    {
+        get
+        {
+            Point startPoint = Orientation != Orientation.Horizontal ? new Point(0.0, 5.0) : new Point(Length(fullSize: false), 0.0);
+            PathFigure[] array = new PathFigure[1]
+            {
+                new PathFigure
+                {
+                    StartPoint = startPoint,
+                    IsClosed = true,
+                    IsFilled = true
+                }
+            };
+            if (Orientation == Orientation.Horizontal)
+            {
+                array[0].Segments.Add(new LineSegment(new Point(startPoint.X, startPoint.Y + 2.5), isStroked: true));
+                array[0].Segments.Add(new LineSegment(new Point(startPoint.X + 5.0, startPoint.Y), isStroked: true));
+                array[0].Segments.Add(new LineSegment(new Point(startPoint.X, startPoint.Y - 2.5), isStroked: true));
+            }
+            else
+            {
+                array[0].Segments.Add(new LineSegment(new Point(startPoint.X + 2.5, startPoint.Y), isStroked: true));
+                array[0].Segments.Add(new LineSegment(new Point(startPoint.X, startPoint.Y - 5.0), isStroked: true));
+                array[0].Segments.Add(new LineSegment(new Point(startPoint.X - 2.5, startPoint.Y), isStroked: true));
+            }
+            return new PathGeometry(array);
+        }
+    }
+
+    protected override Size ArrangeOverride(Size finalSize)
+    {
+        GetPositions(out var firstEqnPosition, out var secondEqnPosition, out var lastEqnPosition, out var firstLabelPosition, out var secondLabelPosition, out var lastLabelPosition);
+        StartExpressionEqn.Arrange(StartEquationRectangle(firstEqnPosition));
+        EndExpressionEqn.Arrange(EndEquationRectangle(lastEqnPosition));
+        ArrangeSecondTickExpressionEqn(secondEqnPosition);
+        _firstLabel.Arrange(FirstLabelRectangle(firstLabelPosition));
+        _lastLabel.Arrange(LastLabelRectangle(lastLabelPosition));
+        _secondLabel.Arrange(SecondLabelRectangle(secondLabelPosition));
+        Size result = base.ArrangeOverride(finalSize);
+        DebugTools.DevAssert(IsMeasureValid, null);
+        return result;
+    }
+
+    protected override Size MeasureOverride(Size availableSize)
+    {
+        Size result = base.MeasureOverride(availableSize);
+        if (double.IsInfinity(result.Width) || double.IsInfinity(result.Height))
+        {
+            Rect labelsBounds = new Rect(0.0, 0.0, 0.0, 0.0);
+            GetPositions(out var firstEqnPosition, out var secondEqnPosition, out var lastEqnPosition, out var firstLabelPosition, out var secondLabelPosition, out var lastLabelPosition);
+            labelsBounds.Union(StartEquationRectangle(firstEqnPosition));
+            labelsBounds.Union(EndEquationRectangle(lastEqnPosition));
+            labelsBounds.Union(SecondExpressionEquation(secondEqnPosition));
+            labelsBounds.Union(FirstLabelRectangle(firstLabelPosition));
+            labelsBounds.Union(LastLabelRectangle(lastLabelPosition));
+            labelsBounds.Union(SecondLabelRectangle(secondLabelPosition));
+            if (double.IsInfinity(result.Width))
+            {
+                result.Width = labelsBounds.Width;
+            }
+            if (double.IsInfinity(result.Height))
+            {
+                result.Height = labelsBounds.Height;
+            }
+        }
+        return result;
+    }
+
+    protected override void OnRender(DrawingContext drawingContext)
+    {
+        Draw(drawingContext, LineBrush, PlotGraphAxisBase.NumbersBrush, LineBrush, 0.5);
+    }
 }

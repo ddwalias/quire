@@ -12,13 +12,5 @@ namespace Quire.Controls.Plots;
 public abstract partial class PlotGraphLinearAxisBase : global::Quire.Controls.Plots.PlotGraphAxis
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Geometry ArrowHeadGeometry { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
-    [global::Quire.Mirror.MirrorStub]
     private void GetPositions(out global::System.Windows.Point firstEqnPosition, out global::System.Windows.Point secondEqnPosition, out global::System.Windows.Point lastEqnPosition, out global::System.Windows.Point firstLabelPosition, out global::System.Windows.Point secondLabelPosition, out global::System.Windows.Point last_labelPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
 }
