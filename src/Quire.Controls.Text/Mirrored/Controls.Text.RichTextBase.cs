@@ -2047,7 +2047,10 @@ public partial class RichTextBase
 
     private global::System.Windows.Markup.XmlLanguage _currentProofingLanguage;
 
-    public bool IsFullySubscript(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public bool IsFullySubscript(global::System.Windows.Documents.TextRange range)
+    {
+        return range.EnumerateRunsInRange().All(run => run.GetType() == typeof(SubscriptRun));
+    }
 
     protected void BuildSubscriptPositions(global::System.Windows.Documents.TextRange range, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions)
     {

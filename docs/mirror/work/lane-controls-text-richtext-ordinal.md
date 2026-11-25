@@ -64,4 +64,10 @@ The two anchors inside nested `RichTextBase.SyncTextChangedCommand` are `.ctor` 
 
 - Implemented `SetTextFormatPropertyValue`; its closure anchor at ordinal 284 now matches.
 - Release IL report: `.mirror-cache/release-il-8b940b406f48/release-il.json` — PASS, 711 checked, zero failures; 73 generated stubs, 43 no-pair members, 3 unchanged/unmatched.
+- Landed as `e3a64cf36f8d9aa264bf45151ef64b4bbf53f166`; lane receipt: `C:/Projects/Quire/.mirror-cache/receipts/gate-il-66841c8de9b0.json`. MirrorGen `emit` left the target generated file byte-identical; unrelated emitter output was reverted.
+
+## Slice 5
+
+- Implemented `IsFullySubscript`; its closure anchor at ordinal 297 now matches.
+- Release IL report: `.mirror-cache/release-il-155c2a18f60e/release-il.json` — PASS, 713 checked, zero failures; 72 generated stubs, 42 no-pair members, 3 unchanged/unmatched.
 - Remaining: continue the later `RichTextBase` anchors and reorder `RichTextWithEmbeddedItem`; `IsInvalidOperation` remains pending. Request a landing slot before each merge.
