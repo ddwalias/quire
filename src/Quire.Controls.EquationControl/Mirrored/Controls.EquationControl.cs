@@ -619,6 +619,45 @@ public partial class EquationControl
         UpdateLhsVisibleOnView();
     }
 
+    private void HandleNavigatorStateChanged(NavigatorStateChangeEventArgs arg)
+    {
+        NavigatorState navigatorState = arg.NavigatorState;
+        if (navigatorState.Equals(NavigatorState.Empty))
+        {
+            CurrentIdLabel = null;
+            CurrentDisplayIdLabel = null;
+        }
+        else
+        {
+            MathNode currentNode = arg.NavigatorState.Current;
+            if (_model.ResolvedLabelOverridesIdLabel(currentNode))
+            {
+                CurrentIdLabel = IdLabels.None;
+                CurrentDisplayIdLabel = ((IdentifierNodeInfo)currentNode.NodeInfo).ResolvedIdLabel;
+            }
+            else
+            {
+                CurrentIdLabel = MathNode.Utilities.IdLabelOfNode(currentNode);
+                CurrentDisplayIdLabel = MathNode.Utilities.DisplayIdLabelOfNode(currentNode);
+            }
+        }
+
+        if (!IsResizingMatrix)
+        {
+            IList<TableCoordinate> nestedPosition = GetNestedPositionForMatrix(arg.NavigatorState.Current);
+            if (!AreTableCoordinateListsEqual(CurrentNestedResultMatrixPosition, nestedPosition))
+            {
+                CurrentNestedResultMatrixPosition = nestedPosition;
+            }
+
+            CurrentMatrixFormat = GetFormatForMatrix(arg.NavigatorState.Current);
+        }
+
+        BringCurrentNodeIntoView(arg.NavigatorState.Current);
+        CurrentCaretInsertionType = arg.NavigatorState.CaretInsertionType;
+        IncreaseEquationWidthIfNessessary(arg.NavigatorState);
+    }
+
     private void HandleTypeoverChanged(TypeoverChangeEventArgs arg)
     {
         CurrentIdLabel = null;

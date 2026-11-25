@@ -372,8 +372,6 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
     [global::Quire.Mirror.MirrorStub]
     private void HandleScopeChanged(global::Quire.EquationEditor.Equation.ScopeStateChangeEventArgs arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HandleNavigatorStateChanged(global::Quire.EquationEditor.NavigatorStateChangeEventArgs arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void HandleSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);

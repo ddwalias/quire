@@ -575,3 +575,11 @@
 - Release IL: PASS, 3765 checked, zero failures (`gate_b82b`).
 - Remaining mismatches / blockers: `HandleWarningOccured` (21 IL) is left as a stub: its `Warnings?.CollectAsList(w => w.Item1.Original)` lambda is `<HandleWarningOccured>b__674_0` against Mathcad `b__400_0`. The ordinal counts every member in the class including generated stubs (validation.md), so it is parked with the other closure ordinals.
 - Runtime dependency: `HandleTypeoverChanged` calls `BringCurrentNodeIntoView` and `GetFormatForMatrix` (both stubs), so typeover changes will still throw until those land. `HandleWarningOccured` calls `UpdateEngineResult(IEnumerable<EngineRedefInfo>)`, which is also a stub.
+
+## Batch 83
+
+- Owner: haiku-equationcontrol-20261123; branch feature/haiku-equationcontrol-20261123 (on batch 82, base main e769dd8fb).
+- Members: `HandleNavigatorStateChanged` (88 IL) implemented in `Mirrored/Controls.EquationControl.cs`; stub pair removed from the `.g.cs`. No lambda, so no ordinal issue.
+- Release IL: PASS, 3766 checked, zero failures.
+- Runtime dependency: `GetNestedPositionForMatrix`, `AreTableCoordinateListsEqual`, `IncreaseEquationWidthIfNessessary`, `BringCurrentNodeIntoView` and `GetFormatForMatrix` are still stubs. `HookupToEvents` is not called yet, so these handlers are not reached at run time.
+- Remaining: `HandleScopeChanged` (107 IL) uses `<>c__DisplayClass403_0`/`b__0`, so it is parked on the closure ordinal like `HandleWarningOccured`. `FocusWhenAble` has two closures (`DisplayClass428_0`), also parked.
