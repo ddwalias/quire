@@ -422,22 +422,6 @@ public abstract partial class PlotGraphAxis : global::Quire.Controls.Plots.PlotG
     public partial class Point2ScreenHelper
     {
         [global::Quire.Mirror.MirrorStub]
-        protected double _firstTickPostion;
-        [global::Quire.Mirror.MirrorStub]
-        protected double _lastTickPositoin;
-        [global::Quire.Mirror.MirrorStub]
-        protected double _start;
-        [global::Quire.Mirror.MirrorStub]
-        protected double _end;
-        [global::Quire.Mirror.MirrorStub]
-        protected double _axisLenght;
-        [global::Quire.Mirror.MirrorStub]
-        public Point2ScreenHelper(double size) { }
-        [global::Quire.Mirror.MirrorStub]
-        public Point2ScreenHelper(global::Quire.Controls.Plots.PlotGraphAxis axis) { }
-        [global::Quire.Mirror.MirrorStub]
-        public virtual double Point2Screen(double offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         internal virtual bool Contains(double coordinate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }
