@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Markup;
 using Quire.Calculation.Core;
 using Quire.Controls.Core;
@@ -14,6 +16,8 @@ using Quire.Controls.Worksheet.Printing;
 using Quire.Controls.Core.Whiteboard;
 using Quire.Core;
 using Quire.IO;
+using Quire.PersistentData;
+using Quire.PersistentDataObjects;
 using Quire.Wpf;
 using Quire.Wpf.Printing;
 
@@ -587,6 +591,25 @@ internal partial class WorksheetViewModel
     private bool CanCutSelection()
     {
         return SelectedItems.Count() > 0;
+    }
+
+    private void CutSelection()
+    {
+        if (!CanCutSelection())
+        {
+            return;
+        }
+        try
+        {
+            IList<IWhiteboardItem> items = new List<IWhiteboardItem>(SelectedItems);
+            Mouse.OverrideCursor = Cursors.Wait;
+            ActiveSection.CutSelection();
+            HandlePageWideSizableDeletion(items);
+        }
+        finally
+        {
+            Mouse.OverrideCursor = null;
+        }
     }
 
     private Rect GetItemRect(IWhiteboardItem item)
@@ -1498,4 +1521,68 @@ internal partial class WorksheetViewModel
             DebugTools.AssertNotNull(page.FooterZombie, null);
         }
     }
+
+    private static void ShowWaitCursor(Action action)
+    {
+        Cursor overrideCursor = MouseFacadeService.ShowWaitCursor();
+        try
+        {
+            action();
+        }
+        finally
+        {
+            MouseFacadeService.SetOverrideCursor(overrideCursor);
+        }
+    }
+
+    private bool CanCreateExcelComponent()
+    {
+        if (CanCreateControlOfType<IExcelComponentControl>())
+        {
+            return OleUtils.CanCreateExcelContainer();
+        }
+        return false;
+    }
+
+    private string GetMessageResource(worksheetMessageIdType id)
+    {
+        string key = string.Empty;
+        if (id == worksheetMessageIdType.ScriptableWarning)
+        {
+            key = "WorksheetMessages.ContainsScriptableObjects";
+        }
+        return ((string)_pasteHandler.WorksheetMessages[key]).Replace("\\n", "\n");
+    }
+
+    public void HandleControlEnter()
+    {
+        if (ActiveOrSelectedItems.Count() == 0)
+        {
+            InsertPageBreak();
+        }
+        else if (ActiveItem != null)
+        {
+            ToggleItemSelection(ActiveItem, includeActiveItem: true);
+        }
+        else
+        {
+            ToggleItemSelection(SelectedItems.Last(), includeActiveItem: true);
+        }
+    }
+
+    public void HandleTab(FocusNavigationDirection direction)
+    {
+        IWhiteboardItem whiteboardItem = FindNextItemForTabNavigation(direction);
+        if (whiteboardItem == null)
+        {
+            return;
+        }
+        ItemManager.TabInto(whiteboardItem, direction);
+    }
+
+    public void InsertPageBreak()
+    {
+        InsertPageBreak(InsertionPoint);
+    }
+
 }
