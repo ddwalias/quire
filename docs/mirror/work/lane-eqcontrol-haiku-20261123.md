@@ -641,3 +641,11 @@
 - Owner: haiku-equationcontrol-20261123; branch `haiku-equationcontrol-20261123-b92` (stacked on batch 91 `9877dd373`).
 - Members: `NonEditableCommandBindings` implemented as `??=` over a 33-binding `CommandBindingCollection` initializer, the same shape as `EditableCommandBindings`; stub removed from the `.g.cs`.
 - Release IL: PASS, 3788 checked, zero failures (`.mirror-cache/release-il-4a7c1bad2243/release-il.json`).
+
+## Batch 93
+
+- Owner: haiku-equationcontrol-20261123; branch `haiku-equationcontrol-20261123-b93` (from main 46107d34f).
+- Members: `FocusWhenAble` (closure class `DisplayClass428_0`) and `FireRequestEvaluation` (closures `b__430_0/1`), both exact.
+- Layout: the four ambiguous fields `_isForEngineCalculation`, `_matrixResizeAdorner`, `_temporaryResultMatrixFormatShouldClear`, `_nestedMatrixPositionWhichFormatShouldClear` now sit after `FireRequestEvaluation`; this is the placement the closure ordinals of `FocusWhenAble` (428) and `FireRequestEvaluation` (430) need.
+- Release IL: PASS, 3795 checked, zero failures (`.mirror-cache/release-il-29d4061f4f6b/release-il.json`).
+- Open: `HandleWarningOccured` measures closure 401 against Mathcad 400 (one non-method member too many before it, in the 275-297 band); kept as a stub. `HandleScopeChanged`, `IncreaseEquationWidthIfNessessary`, `BringCurrentNodeIntoView`, `Warnings` (588) and `UpdateLhsVisibleOnView` are not implemented yet.

@@ -333,10 +333,13 @@ public partial class EquationControl
     private void OnTraversedFocusEvent(object sender, global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.FocusNavigationDirection> args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void HandleExpressionValueChanged(global::Quire.Controls.Core.IEquationControl equation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public EquationControl() : this((Quire.EquationEditor.IEquationModel)null) { }
+
     [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Constructor body not mirrored yet; the this() chain keeps the field initializers out of this constructor.")]
     public EquationControl(string sExpression) : this() { }
+
     [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Constructor body not mirrored yet; the this() chain keeps the field initializers out of this constructor.")]
     public EquationControl(string sExpression, bool isForEngineCalculation) : this(sExpression) { }
+
     public static global::Quire.Controls.EquationControl CreateWithTextInput(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public double TextBaselineY => _view.TextBaselineY;
     public bool AtLeftEdge => _model.AtLeftEdge();
@@ -465,10 +468,6 @@ public partial class EquationControl
     public void RestoreResult() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public event global::System.Action<string> SExpressionChanging;
     public event global::System.Action<global::Quire.Controls.Core.IEquationControl> ExpressionValueChanged;
-    private readonly bool _isForEngineCalculation = true;
-    private global::Quire.Controls.ControlAdorners.MatrixResizeAdorner _matrixResizeAdorner;
-    private bool _temporaryResultMatrixFormatShouldClear;
-    private global::System.Collections.Generic.IList<global::Quire.TableCoordinate> _nestedMatrixPositionWhichFormatShouldClear;
     public EquationTypes EquationType => _model.EquationType;
     public global::System.Windows.Media.ScaleTransform GetTransformBasedOnNumericNodeHeight(double desiredHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -767,6 +766,7 @@ public partial class EquationControl
     }
 
     private void HandleWarningOccured() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     private void OnVisibleWarningMessageChanged() => UpdateLhsVisibleOnView();
 
     private void HandleTypeoverChanged(TypeoverChangeEventArgs arg)
@@ -846,7 +846,31 @@ public partial class EquationControl
     public event global::System.Action RequestFocus;
     private global::System.Windows.Input.CommandBindingCollection _nonEditableCommandBindings;
     private global::System.Windows.Input.CommandBindingCollection _editableCommandBindings;
-    private void FocusWhenAble(global::Quire.EquationEditor.IEquationModel notUsed) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void FocusWhenAble(IEquationModel notUsed)
+    {
+        Activate(isActive: true);
+        _view.FireActivated(setLogicalFocus: false);
+        Action action = RequestFocus ?? (() =>
+        {
+            _view.Focus();
+        });
+        Quire.EquationEditor.View.IVisualNode viewRootNode = _view.RootNode;
+        RoutedEventHandler loadedHandler = null;
+        loadedHandler = delegate
+        {
+            action();
+            viewRootNode.Loaded -= loadedHandler;
+        };
+        if (viewRootNode != null && !viewRootNode.IsLoaded)
+        {
+            viewRootNode.Loaded += loadedHandler;
+        }
+        else
+        {
+            action();
+        }
+    }
 
     private void FirePropertyChanged(System.ComponentModel.PropertyChangedEventArgs e)
     {
@@ -857,8 +881,38 @@ public partial class EquationControl
         }
     }
 
-    internal void FireRequestEvaluation(bool force = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal void FireRequestEvaluation(bool force = true)
+    {
+        ClearExpressionValueModified();
+        _model.ResultScalingModified = false;
+        IEnumerable<ICalculatable> items = UpdateAggregateFromModel();
+        if (force)
+        {
+            CalculatableChildren.Each((ICalculatable child) =>
+            {
+                child.Commit();
+            });
+            FireRequestEvaluationControlOnly();
+            return;
+        }
+        items.Each((ICalculatable calc) =>
+        {
+            if (calc == this)
+            {
+                FireRequestEvaluationControlOnly();
+            }
+            else
+            {
+                calc.Commit();
+            }
+        });
+    }
+
     internal void FireRequestEvaluationControlOnly() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private readonly bool _isForEngineCalculation = true;
+    private global::Quire.Controls.ControlAdorners.MatrixResizeAdorner _matrixResizeAdorner;
+    private bool _temporaryResultMatrixFormatShouldClear;
+    private global::System.Collections.Generic.IList<global::Quire.TableCoordinate> _nestedMatrixPositionWhichFormatShouldClear;
 
     private void FireRequestRemove(Direction direction)
     {
