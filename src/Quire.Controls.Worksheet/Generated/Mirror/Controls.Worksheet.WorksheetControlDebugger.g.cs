@@ -78,20 +78,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         [global::Quire.Mirror.MirrorStub]
         private void UpdateDebugWindowCell(global::Quire.Controls.Worksheet.WorksheetControlDebugger.WorksheetControlUI.PropertyName propertyName, global::Quire.Controls.Worksheet.WorksheetControlDebugger.WorksheetControlUI.CoordinateSystemName coordinateSystemName, string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
-        private void UpdateWindowCellWorksheetItemsCanvas(global::Quire.Controls.Worksheet.WorksheetControlDebugger.WorksheetControlUI.PropertyName propertyName, string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void UpdateWindowCellWorksheet(global::Quire.Controls.Worksheet.WorksheetControlDebugger.WorksheetControlUI.PropertyName propertyName, string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void UpdateDebugWindowCellPage(global::Quire.Controls.Worksheet.WorksheetControlDebugger.WorksheetControlUI.PropertyName propertyName, string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void UpdateDebugWindowCellScrollViewer(global::Quire.Controls.Worksheet.WorksheetControlDebugger.WorksheetControlUI.PropertyName propertyName, string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void UpdateDebugWindowCellHeaderFooter(global::Quire.Controls.Worksheet.WorksheetControlDebugger.WorksheetControlUI.PropertyName propertyName, string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void UpdateDebugWindowCellsAll(global::Quire.Controls.Worksheet.WorksheetControlDebugger.WorksheetControlUI.PropertyName propertyName, string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private global::System.Windows.Point TranslatePoint(global::System.Windows.Point point, object source, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         private void OnWorksheetViewModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private void OnWorksheetContentInsertionPointSet() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

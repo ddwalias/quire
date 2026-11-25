@@ -145,4 +145,45 @@ public partial class WorksheetControlDebugger
             SubscribeEvents();
         }
     }
+
+    private sealed partial class WorksheetControlUI
+    {
+        private void UpdateWindowCellWorksheetItemsCanvas(PropertyName propertyName, string text)
+        {
+            UpdateDebugWindowCell(propertyName, CoordinateSystemName.WorksheetItems, text);
+        }
+
+        private void UpdateWindowCellWorksheet(PropertyName propertyName, string text)
+        {
+            UpdateDebugWindowCell(propertyName, CoordinateSystemName.Worksheet, text);
+        }
+
+        private void UpdateDebugWindowCellPage(PropertyName propertyName, string text)
+        {
+            UpdateDebugWindowCell(propertyName, CoordinateSystemName.Page, text);
+        }
+
+        private void UpdateDebugWindowCellScrollViewer(PropertyName propertyName, string text)
+        {
+            UpdateDebugWindowCell(propertyName, CoordinateSystemName.ScrollViewer, text);
+        }
+
+        private void UpdateDebugWindowCellHeaderFooter(PropertyName propertyName, string text)
+        {
+            UpdateDebugWindowCell(propertyName, CoordinateSystemName.HeaderFooter, text);
+        }
+
+        private void UpdateDebugWindowCellsAll(PropertyName propertyName, string text)
+        {
+            for (int index = 1; index < _coordinateSystemNameEnumCount; index++)
+            {
+                UpdateDebugWindowCell(propertyName, (CoordinateSystemName)index, text);
+            }
+        }
+
+        private Point TranslatePoint(Point point, object source, object target)
+        {
+            return global::Quire.Controls.Whiteboard.WhiteboardViewModel.WhiteboardItemMgr.TranslatePoint(source, target, point);
+        }
+    }
 }
