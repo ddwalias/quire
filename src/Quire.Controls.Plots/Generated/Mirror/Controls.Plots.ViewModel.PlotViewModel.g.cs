@@ -15,5 +15,19 @@ internal partial class PlotViewModel : global::Quire.Controls.Core.ViewModelBase
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.PlotViewModel+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames
     {
+        [global::Quire.Mirror.MirrorStub]
+        public const string IsActive = "IsActive";
+        [global::Quire.Mirror.MirrorStub]
+        public const string SelectedTraces = "SelectedTraces";
+        [global::Quire.Mirror.MirrorStub]
+        public const string SelectedColor = "SelectedColor";
+        [global::Quire.Mirror.MirrorStub]
+        public const string SelectedLineStyle = "SelectedLineStyle";
+        [global::Quire.Mirror.MirrorStub]
+        public const string SelectedLineWeight = "SelectedLineWeight";
+        [global::Quire.Mirror.MirrorStub]
+        public const string SelectedTracesType = "SelectedTracesType";
+        [global::Quire.Mirror.MirrorStub]
+        public const string SelectedTracesSymbol = "SelectedTracesSymbol";
     }
 }
