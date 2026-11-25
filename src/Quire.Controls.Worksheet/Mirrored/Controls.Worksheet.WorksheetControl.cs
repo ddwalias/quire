@@ -18,6 +18,33 @@ public partial class WorksheetControl
 {
     public bool HasScriptingControls { get; set; }
 
+    public string HelpServerPath
+    {
+        get => _helpServerPath;
+        set
+        {
+            if (_helpServerPath == value)
+            {
+                return;
+            }
+            _helpServerPath = value;
+            FirePropertyChanged(nameof(HelpServerPath));
+        }
+    }
+
+    public bool useSavedAutoCalcStateOnLoad
+    {
+        get => _useSavedAutoCalcStateOnLoad;
+        set
+        {
+            if (value != _useSavedAutoCalcStateOnLoad)
+            {
+                _useSavedAutoCalcStateOnLoad = value;
+                FirePropertyChanged("IsAutoCalcChecked");
+            }
+        }
+    }
+
     public NumberFormat CurrentNumberFormat
     {
         get => _currentNumberFormat;
