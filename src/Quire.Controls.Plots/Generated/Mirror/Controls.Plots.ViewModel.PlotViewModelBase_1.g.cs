@@ -16,6 +16,10 @@ public partial class PlotViewModelBase<TModel> : global::Quire.Controls.Core.Vie
     internal partial class PropertyNames
     {
         [global::Quire.Mirror.MirrorStub]
+        internal const string AreAxisExpressionsVisible = "AreAxisExpressionsVisible";
+        [global::Quire.Mirror.MirrorStub]
+        internal const string ShowControlLevelErrorFrameForNestedError = "ShowControlLevelErrorFrameForNestedError";
+        [global::Quire.Mirror.MirrorStub]
         internal const string PlotCalculatableError = "PlotCalculatableError";
         [global::Quire.Mirror.MirrorStub]
         internal const string PlotBackgroundType = "PlotBackgroundType";
