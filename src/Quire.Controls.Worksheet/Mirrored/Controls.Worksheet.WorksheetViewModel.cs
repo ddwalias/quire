@@ -1738,4 +1738,53 @@ internal partial class WorksheetViewModel
         WorksheetContent.InsertionPoint = insertionPoint;
         SetInsertionPointOnAppropriatePage(WorksheetContent.InsertionPoint);
     }
+
+    private void ApplyFirstPageHeaderFooterToInactive(IWorksheetPage page)
+    {
+        page.Header = page.FirstPageHeaderZombie;
+        page.Footer = page.FirstPageFooterZombie;
+        ShowIfPresent(page.FirstPageHeaderZombie);
+        ShowIfPresent(page.FirstPageFooterZombie);
+        CollapseIfPresent(page.HeaderZombie);
+        CollapseIfPresent(page.FooterZombie);
+    }
+
+    private void ApplyRegularHeaderFooterToInactive(IWorksheetPage page)
+    {
+        page.Header = page.HeaderZombie;
+        page.Footer = page.FooterZombie;
+        CollapseIfPresent(page.FirstPageHeaderZombie);
+        CollapseIfPresent(page.FirstPageFooterZombie);
+        ShowIfPresent(page.HeaderZombie);
+        ShowIfPresent(page.FooterZombie);
+    }
+
+    private void UpdateHeaderFooterTops()
+    {
+        double num = (CurrentPageNumber - 1) * PageLayout.DisplayHeight;
+        HeaderTop = num;
+        FooterTop = num + PageLayout.PageMargin.Top + PageLayout.PageBodyHeight;
+    }
+
+    private TextFormat GetCurrentTextFormat()
+    {
+        TextFormat result = ContentTextFormat;
+        if (ActiveSection == FirstPageHeader)
+        {
+            result = FirstPageHeaderTextFormat;
+        }
+        else if (ActiveSection == FirstPageFooter)
+        {
+            result = FirstPageFooterTextFormat;
+        }
+        else if (IsHeaderActive)
+        {
+            result = HeaderTextFormat;
+        }
+        else if (IsFooterActive)
+        {
+            result = FooterTextFormat;
+        }
+        return result;
+    }
 }
