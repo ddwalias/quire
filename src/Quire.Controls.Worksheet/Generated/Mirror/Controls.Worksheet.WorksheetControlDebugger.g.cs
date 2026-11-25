@@ -42,8 +42,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         [global::Quire.Mirror.MirrorStub]
         protected DebuggedObject(object spiritMainWindow, global::System.Windows.DependencyProperty activeDocumentProperty) { }
         [global::Quire.Mirror.MirrorStub]
-        private void FillDataForDebugging(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         protected abstract void DestructUI();
         [global::Quire.Mirror.MirrorStub]
         protected abstract void SubscribeEvents();

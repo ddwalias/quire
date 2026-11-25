@@ -35,3 +35,4 @@
 - Batch 19 (`WorksheetControlDebugger.DebuggedObject`): `Dispose` and `UnSubscribeOnActiveTabChangedEvent` are exact. Release IL PASS, 1632 checked, 0 failures (`.mirror-cache/release-il-8a23c5a8cc0a/release-il.json`).
 - Batch 20 (`WorksheetControlDebugger.DebuggedObject`): `SubscribeOnActiveTabChangedEvent` is exact. Release IL PASS, 1633 checked, 0 failures (`.mirror-cache/release-il-289fd55f2a9f/release-il.json`).
 - Batch 21 (`WorksheetControlDebugger.DebuggedObject`): `HandlerOnActiveTabChanged` is exact. Release IL PASS, 1634 checked, 0 failures (`.mirror-cache/release-il-be4f4b30133b/release-il.json`).
+- Batch 22 (`WorksheetControlDebugger.DebuggedObject`): `FillDataForDebugging` is exact. The `WorksheetVisualHelper` local preserves Mathcad's `callvirt`; direct invocation from `new WorksheetVisualHelper()` emitted `call`. Release IL PASS, 1635 checked, 0 failures (`.mirror-cache/release-il-a045defa7b69/release-il.json`).
