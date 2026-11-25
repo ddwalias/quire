@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -148,6 +149,16 @@ public partial class WorksheetControlDebugger
 
     private sealed partial class WorksheetControlUI
     {
+        private readonly int _propertyNameEnumCount = global::System.Enum.GetNames(typeof(PropertyName)).Count();
+        private readonly int _coordinateSystemNameEnumCount = global::System.Enum.GetNames(typeof(CoordinateSystemName)).Count();
+
+        public WorksheetControlUI(object spiritMainWindow, DependencyProperty activeDocumentProperty)
+            : base(spiritMainWindow, activeDocumentProperty)
+        {
+            InitializeDebugWindow();
+            base.InitializeUI();
+        }
+
         protected override void DestructUI()
         {
             DestroyDebugWindow();

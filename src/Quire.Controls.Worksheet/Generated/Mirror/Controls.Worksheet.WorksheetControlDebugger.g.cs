@@ -58,12 +58,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         [global::Quire.Mirror.MirrorStub]
         private global::System.Windows.Controls.Grid _grid;
         [global::Quire.Mirror.MirrorStub]
-        private readonly int _propertyNameEnumCount;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly int _coordinateSystemNameEnumCount;
-        [global::Quire.Mirror.MirrorStub]
-        public WorksheetControlUI(object spiritMainWindow, global::System.Windows.DependencyProperty activeDocumentProperty) : base(default(object), default(global::System.Windows.DependencyProperty)) { }
-        [global::Quire.Mirror.MirrorStub]
         protected override void SubscribeEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         protected override void UnSubscribeEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
