@@ -6,11 +6,16 @@ using System.Windows;
 using Quire.Controls.Plots.Model;
 using Quire.Controls.Plots.Presenter;
 using Quire.Controls.Plots.View;
+using Quire.Wpf;
 
 namespace Quire.Controls.Plots;
 
 public partial class XYPlotControl
 {
+    private readonly PlotGraphLinearAxis _xAxis;
+
+    private readonly PlotGraphLinearAxis _yAxis;
+
     public IEnumerable<AxisMarker> VerticalMarkersForSerialization
     {
         get
@@ -66,6 +71,26 @@ public partial class XYPlotControl
     static XYPlotControl()
     {
         PlotControlBase.HasOriginPositioningProperty.OverrideMetadata(typeof(XYPlotControl), new PropertyMetadata(true, PlotControlBase.HasOriginPositioningPropertyChanged));
+    }
+
+    public override void EndInit()
+    {
+        base.EndInit();
+        if (Model != null && _xAxis != null && _yAxis != null)
+        {
+            if (_xAxis.EquationList?.Visibility == Visibility.Visible || _yAxis.EquationList?.Visibility == Visibility.Visible)
+            {
+                FixateAxesSizeAtDeserialization();
+                return;
+            }
+            WpfUtils.ExecuteOnLoad(this, () =>
+            {
+                if (Graph.ActualWidth > 0.0 && Graph.ActualHeight > 0.0)
+                {
+                    FixateAxesSizeAtDeserialization();
+                }
+            });
+        }
     }
 
     protected override void PostInitializeResizeEventsAfterLoading()

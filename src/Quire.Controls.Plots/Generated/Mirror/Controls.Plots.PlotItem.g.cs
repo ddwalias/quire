@@ -11,8 +11,5 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotItem, Ptc.Controls.Plots")]
 public partial class PlotItem : global::System.Windows.Controls.UserControl
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal void Move(global::Quire.Controls.Plots.PlotItemPlaceholder plotItemPlaceholderAtNewPosition, global::Quire.Controls.Plots.PlotItemPlaceholder plotItemPlaceholderAtOldPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void OnContentSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
 }

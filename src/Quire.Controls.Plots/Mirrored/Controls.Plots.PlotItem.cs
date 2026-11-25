@@ -165,4 +165,35 @@ public partial class PlotItem
             _border.MouseUp -= BorderMouseUp;
         }
     }
+
+    internal void Move(PlotItemPlaceholder plotItemPlaceholderAtNewPosition, PlotItemPlaceholder plotItemPlaceholderAtOldPosition)
+    {
+        if (plotItemPlaceholderAtNewPosition != null)
+        {
+            if (plotItemPlaceholderAtOldPosition != null)
+            {
+                plotItemPlaceholderAtOldPosition.Content = null;
+                ((DependencyObject)plotItemPlaceholderAtOldPosition).ClearValue(UIElement.VisibilityProperty);
+            }
+            plotItemPlaceholderAtNewPosition.Content = this;
+            plotItemPlaceholderAtNewPosition.Visibility = this switch
+            {
+                PlotTitle plotTitle => plotTitle.ViewModel.ShowTitle ? Visibility.Visible : Visibility.Collapsed,
+                PlotLegend plotLegend => plotLegend.ViewModel.ShowPlotLegend ? Visibility.Visible : Visibility.Collapsed,
+                _ => Visibility.Visible
+            };
+        }
+    }
+
+    protected void OnContentSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (IsWidthExplicitlySet)
+        {
+            return;
+        }
+        if (e.WidthChanged && e.NewSize.Width != Width)
+        {
+            Width = e.NewSize.Width;
+        }
+    }
 }

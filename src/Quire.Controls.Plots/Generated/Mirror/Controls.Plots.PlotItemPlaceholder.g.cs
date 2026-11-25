@@ -11,8 +11,5 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotItemPlaceholder, Ptc.Controls.Plots")]
 public partial class PlotItemPlaceholder : global::System.Windows.Controls.ContentControl
 {
-    [global::Quire.Mirror.MirrorStub]
-    private void AdjustPadding(global::System.Windows.Size expectedRenderSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public double GetMinLegendPlaceholderHeight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
 }

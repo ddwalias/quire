@@ -71,6 +71,52 @@ public partial class PlotItemPlaceholder
         AdjustPadding(_expectedRenderSize);
     }
 
+    private void AdjustPadding(Size expectedRenderSize)
+    {
+        if (Content == null && (string)Tag != "0" && (string)Tag != "1")
+        {
+            return;
+        }
+        DebugTools.DevAssert(Visibility != Visibility.Collapsed, null);
+        if (SnapToGrid)
+        {
+            double num;
+            double num2;
+            FrameworkElement frameworkElement = Content as FrameworkElement;
+            if (HasContent && DebugTools.AssertNotNull(frameworkElement, null).Passed)
+            {
+                bool flag = IsPlotTitleOrientationSwapped(frameworkElement);
+                num = (flag ? frameworkElement.DesiredSize.Height : frameworkElement.DesiredSize.Width);
+                num2 = (flag ? frameworkElement.DesiredSize.Width : frameworkElement.DesiredSize.Height);
+                if (frameworkElement.IsArrangeValid && frameworkElement.IsMeasureValid)
+                {
+                    double x = (flag ? (num - (frameworkElement.Margin.Top + frameworkElement.Margin.Bottom)) : (num - (frameworkElement.Margin.Left + frameworkElement.Margin.Right)));
+                    double x2 = (flag ? (num2 - (frameworkElement.Margin.Left + frameworkElement.Margin.Right)) : (num2 - (frameworkElement.Margin.Top + frameworkElement.Margin.Bottom)));
+                    DebugTools.DevAssert(_doubleComparer.Compare(x, frameworkElement.ActualWidth) == 0, null);
+                    DebugTools.DevAssert(_doubleComparer.Compare(x2, frameworkElement.ActualHeight) == 0, null);
+                }
+            }
+            else
+            {
+                num = expectedRenderSize.Width - (Padding.Left + Padding.Right);
+                num2 = expectedRenderSize.Height - (Padding.Top + Padding.Bottom);
+            }
+            double contentDimension = num + Margin.Left + Margin.Right;
+            double halfPaddingValue = GetHalfPaddingValue(contentDimension, GridCellSize.Width);
+            double contentDimension2 = num2 + Margin.Top + Margin.Bottom;
+            double halfPaddingValue2 = GetHalfPaddingValue(contentDimension2, GridCellSize.Height);
+            Thickness padding = Padding;
+            if (_doubleComparer.Compare(padding.Left, halfPaddingValue) != 0 || _doubleComparer.Compare(padding.Top, halfPaddingValue2) != 0 || _doubleComparer.Compare(padding.Right, halfPaddingValue) != 0 || _doubleComparer.Compare(padding.Bottom, halfPaddingValue2) != 0)
+            {
+                Padding = new Thickness(halfPaddingValue, halfPaddingValue2, halfPaddingValue, halfPaddingValue2);
+            }
+        }
+        else
+        {
+            Padding = new Thickness(0.0);
+        }
+    }
+
     private static bool IsPlotTitleOrientationSwapped(FrameworkElement element)
     {
         if (!(element is PlotTitle { IsRotationAllowed: not false }))
@@ -129,6 +175,41 @@ public partial class PlotItemPlaceholder
             }
         }
         return num2 + Margin.Left + Margin.Right;
+    }
+
+    public double GetMinLegendPlaceholderHeight()
+    {
+        if (Visibility == Visibility.Collapsed)
+        {
+            return 0.0;
+        }
+        FrameworkElement frameworkElement = Content as FrameworkElement;
+        double height;
+        bool flag = HasContent && DebugTools.AssertNotNull(frameworkElement, null).Passed;
+        if (flag)
+        {
+            bool flag2;
+            if (frameworkElement is PlotTitle || frameworkElement is PlotLegend)
+            {
+                flag2 = true;
+            }
+            else
+            {
+                flag2 = false;
+            }
+            flag = flag2;
+        }
+        if (flag)
+        {
+            double num = (IsPlotTitleOrientationSwapped(frameworkElement) ? (frameworkElement.MinWidth + frameworkElement.Margin.Left + frameworkElement.Margin.Right) : (frameworkElement.MinHeight + frameworkElement.Margin.Top + frameworkElement.Margin.Bottom));
+            return num + 2.0 * GetHalfPaddingValue(num, GridCellSize.Height) + Margin.Top + Margin.Bottom;
+        }
+        height = _expectedRenderSize.Height;
+        if (IsArrangeValid)
+        {
+            DebugTools.DevAssert(_doubleComparer.Compare(height, ActualHeight) == 0, null);
+        }
+        return height + Margin.Top + Margin.Bottom;
     }
 
     private static double GetHalfPaddingValue(double contentDimension, double gridCellDimension)

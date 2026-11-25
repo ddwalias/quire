@@ -11,10 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.XYPlotControl, Ptc.Controls.Plots")]
 public partial class XYPlotControl : global::Quire.Controls.Plots.PlotControl
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Plots.PlotGraphLinearAxis _xAxis;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Plots.PlotGraphLinearAxis _yAxis;
-    [global::Quire.Mirror.MirrorStub]
-    public override void EndInit() => base.EndInit();
 }

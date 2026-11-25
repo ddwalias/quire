@@ -861,3 +861,25 @@
 - Release IL: PASS — 2744 checked in Plots, 0 failures.
 - Remaining mismatches in this batch: none.
 
+## Batch 116 — BaseMarkerViewModel, PlotItem, PlotItemPlaceholder, XYPlotControl
+
+- Owner: agy-whiteboard-2. Branch: `feature/agy-plots`.
+- Members:
+  - `BaseMarkerViewModel`: `ActivateCommand` static field (`PlotViewModel.ActivateCommand`)
+  - `PlotItem`: `Move`, `OnContentSizeChanged`
+  - `PlotItemPlaceholder`: `AdjustPadding(Size)`, `GetMinLegendPlaceholderHeight()`
+  - `XYPlotControl`: `_xAxis`, `_yAxis` fields, `EndInit()`
+- Hand-written:
+  - `Mirrored/Controls.Plots.ViewModel.BaseMarkerViewModel.cs`
+  - `Mirrored/Controls.Plots.PlotItem.cs`
+  - `Mirrored/Controls.Plots.PlotItemPlaceholder.cs`
+  - `Mirrored/Controls.Plots.XYPlotControl.cs`
+- Shapes:
+  - `PlotItem.Move`: `this switch { ... }` with positive ternaries `ShowTitle ? Visible : Collapsed`.
+  - `PlotItem.OnContentSizeChanged`: `if (IsWidthExplicitlySet) return; if (e.WidthChanged && e.NewSize.Width != Width) Width = e.NewSize.Width;` matches Mathcad's early return and setter.
+  - `PlotItemPlaceholder.AdjustPadding`: Local slots 0 and 1 assigned by declaring `double num; double num2;` before `frameworkElement`. Positive ternary `flag ? Height : Width` matches Mathcad branch order.
+  - `PlotItemPlaceholder.GetMinLegendPlaceholderHeight`: Local variable order (`FrameworkElement frameworkElement`, `double height`, `bool flag`, `bool flag2`, `double num`), with struct temporaries `Thickness` and `Size` using slots 5 and 6 via direct `GridCellSize.Height`.
+  - `XYPlotControl.EndInit`: Positive null-check guard `if (Model != null && _xAxis != null && _yAxis != null)` wraps the body, jumping to final `ret` on null without early ret. Null-conditional `?.` expressions `_xAxis.EquationList?.Visibility == Visibility.Visible` match Mathcad's `dup; brtrue.s ...; pop; ldc.i4.0; ... ceq`.
+- Release IL: PASS — 2751 checked in Plots, 0 failures.
+- Remaining mismatches in this batch: none.
+

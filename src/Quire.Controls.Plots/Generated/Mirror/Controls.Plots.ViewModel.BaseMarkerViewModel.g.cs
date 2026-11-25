@@ -11,8 +11,7 @@ namespace Quire.Controls.Plots.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.BaseMarkerViewModel, Ptc.Controls.Plots")]
 public abstract partial class BaseMarkerViewModel : global::Quire.Controls.Core.ViewModelBase, global::Quire.Controls.Plots.Model.IBaseMarker, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.AttachedBehavior.IActivator
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Input.RoutedCommand ActivateCommand;
+
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.BaseMarkerViewModel+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames

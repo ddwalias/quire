@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Windows.Input;
 using System.Windows.Media;
 using Quire.Controls.Core;
 using Quire.Controls.Plots.Model;
@@ -18,6 +19,8 @@ public abstract partial class BaseMarkerViewModel
     private bool _isActive;
 
     private NumberFormat _displayNumberFormat;
+
+    public static readonly RoutedCommand ActivateCommand = PlotViewModel.ActivateCommand;
 
     protected BaseMarkerViewModel(BaseMarker baseMarker)
     {
