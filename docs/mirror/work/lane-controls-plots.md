@@ -842,5 +842,22 @@
   - Events: `ValueChanged`, `HasErrorsChanged`, `RequestEvaluation`, `GetValueOfIdentifierBefore`, `TreatAsUpToDate`, `PropertyChanged`
 - Hand-written: `Mirrored/Controls.Plots.AxisLimitEditor.cs`; corresponding generated stubs removed from `Generated/Mirror/Controls.Plots.AxisLimitEditor.g.cs`.
 - Release IL: PASS — 2707 checked in Plots, 0 failures.
+## Batch 115 — AxisLimitEditor remainder
+
+- Owner: agy-whiteboard-2. Branch: `feature/agy-plots`.
+- Members:
+  - Properties: `IsWaitingForEngineResponse` (get/set), `CalculatedValue` (get/set), `PreCalculatedValue` (get/set), `IsValueValid`, `IsDefaultValue` (get/set), `HasErrors` (get/set), `RegionXmlNode` (get/set)
+  - Constructor & lifecycle: `AxisLimitEditor(.ctor)`, `HookupEquationChangedEvents`, `UnhookEquationChangedEvents`
+  - Calculation & formatting: `SetCalculatedValueField`, `SetIsDefaultValueInternal`, `ResetCalculatedValue`, `SetPreCalculatedValue`, `EquationChanged`, `EquationSExpressionChanging`, `CreateNewSExpIfIsDefaultValueIsTrue`
+  - Errors: `SetNonCalculationRelatedCustomError`, `SetCalculationRelatedCustomError`, `SetCustomError`, `ClearNonCalculationRelatedCustomErrors`, `ClearAllCustomErrors`, `SetResult`, `SetError`
+  - Evaluation & hide: `EqRequestEvaluation`, `Commit`, `SetHideFromCalculationContext`, `UpdateHideFromCalculationContextToDefaultValue`
+  - Serialization: `GetDataObject`, `SetEquationExpressionXml`, `SetDataObject`
+- Closure ordinal: `HideFromCalculationContext` property setter uses `DisplayClass79_0` in Mathcad; kept as a generated stub in `AxisLimitEditor.g.cs` pending ordinal alignment. All other 31 members in `AxisLimitEditor` mirrored and verified exact.
+- Shapes:
+  - `SetIsDefaultValueInternal`: early return on `if (_isDefaultValue == newValue) return;` emits `bne.un.s`.
+  - `CreateNewSExpIfIsDefaultValueIsTrue`: `NumberFormat numberFormat = (_currentNumberFormatProperty == null) ? null : _currentNumberFormatProperty.CurrentNumberFormat;` emits `brfalse.s` branching to `ldnull`.
+  - `GetDataObject`: `valueType.InnerXml = ((resultManager == null) ? null : (flag ? ... : null));` and `valueType.EquationSExpression = ((resultManager != null) ? null : (flag ? ... : null));` match Mathcad's `brfalse.s` / `brtrue.s` branching to `ldnull`.
+  - `SetEquationExpressionXml`: `XmlNode xmlNode = value.OwnerDocument.CreateElement("math", "ws");` types local 0 as `XmlNode`.
+- Release IL: PASS — 2744 checked in Plots, 0 failures.
 - Remaining mismatches in this batch: none.
 
