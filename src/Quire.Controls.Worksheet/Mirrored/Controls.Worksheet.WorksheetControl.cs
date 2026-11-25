@@ -511,6 +511,24 @@ public partial class WorksheetControl
         }
     }
 
+    public event Action DictionaryUpdated
+    {
+        add => _viewModel.DictionaryUpdated += value;
+        remove => _viewModel.DictionaryUpdated -= value;
+    }
+
+    public event Action StartingPageNumberChanged
+    {
+        add => _viewModel.StartingPageNumberChanged += value;
+        remove => _viewModel.StartingPageNumberChanged -= value;
+    }
+
+    public event RoutedEventHandler Changed
+    {
+        add => AddHandler(ChangedEvent, value);
+        remove => RemoveHandler(ChangedEvent, value);
+    }
+
     public bool IsContentActive => _viewModel.IsContentActive;
 
     public bool IsAutoCalcChecked

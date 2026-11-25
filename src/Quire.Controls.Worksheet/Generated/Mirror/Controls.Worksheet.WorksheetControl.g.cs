@@ -24,12 +24,6 @@ public partial class WorksheetControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     public bool IsFirstPageFooterActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action DictionaryUpdated;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action StartingPageNumberChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Windows.RoutedEventHandler Changed;
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
     public T GetDispatchedProperty<T>(global::Quire.DelegateFunction1<object, global::System.Windows.DependencyProperty> del, global::System.Windows.DependencyProperty property) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
