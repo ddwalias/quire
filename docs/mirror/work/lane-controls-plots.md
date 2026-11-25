@@ -1041,6 +1041,28 @@
 - Release IL: PASS — 3017 checked in Plots, 0 failures.
 - Remaining mismatches in this batch: none.
 
+## Batch 125 — PlotEquation remaining members
+
+- Owner: agy-whiteboard-2. Branch: `feature/agy-plots`.
+- Members:
+  - `PlotEquation`:
+    - Fields: `_navigateToEquationStart`, `_errorFrame`, `_viewModel`, `_propertyChangedNotificationHandler`, `_scalingHeaderVisibilityPropertyKey`, `ScalingHeaderVisibilityProperty`, `_typeOfThis`, `CalcIsDisabledProperty`, `DisplayNumberFormatProperty`, `EmptySExpression`, `_exp`, `_scaling`, `_contentLoaded`
+    - Events: `RequestRemove`, `RequestEvaluation`, `ScalingChanged`
+    - Constructors: `.ctor` (with lambda `<.ctor>b__12_0`), `.cctor`
+    - Properties & Methods: `ComputeBaseLine`, `MeasureOverride`, `ContainedEquationControls` (iterator `<get_ContainedEquationControls>d__15`), `OnSubEquationExpressionChanged` (display class `<>c__DisplayClass16_0` and `<OnSubEquationExpressionChanged>b__16_1`), `PlotCalculatableErrorChanged`, `OnTraversedFocusEvent`, `ScalingHeaderVisibility`, `BindCommands`, `CanNavigateRight`, `CanNavigateLeft`, `OnNavigateRight`, `OnNavigateLeft`, `OnPreviewGotKeyboardFocus`, `HandleNavigateToEquationStart`, `HandleNavigateToEquationEnd`, `HandleBackspace`, `HandleDelete`, `CanNavigate`, `NavigateToExp`, `NavigateToScaling`, `ShowOrHideScaling`, `ShowScaling`, `HideScaling`, `ShowScalingHeader`, `HideScalingHeader`, `OnRequestEvaluation`, `FormatPlotEquationSExpression`, `ScalingRl`, `EquationSExpression`, `Exp`, `Expression`, `Scaling`, `ScalingItem`, `IsScalingEmpty`, `IsExpEmpty`, `IsPlotEquationEmpty`, `ScalingChangedByUser`, `UserScalingExpression`, `EmptyPlotEquationSExp`, `SetDataObject`, `SetRegionXmlNode`, `SetScalingXmlNode`, `SetScalingSExpression`, `SetExpressionXmlNode`, `SetExpressionSExpression`, `GetRegionXmlNode`, `GetUserScalingExpression`, `GetExpXml`, `AtLeftEdge`, `RegionErrorSExp`, `RegionErrorCode`, `ViewModel`, `PlotCalculatableError`, `TextBaselineOffset`, `ActiveEquation`, `FocusedEquation`, `SynchronizationStatus`, `CalculatingStatus`, `ScalingEquation`, `FireScalingChanged`, `Units`, `RegionErrorCount`, `ExpressionItem`, `DisplayNumberFormat`, `Commit`, `Commit(bool)`, `CommitEquationAvoidingEvents`, `FireRequestEvaluation`, `FireRequestRemove`, `DelegateFocus`, `OnRequestFocus`, `MergeScalingExpression`, `MergeUnitMonomial`, `GetDataObject`, `NavigateRegionEnd`, `NavigateRegionStart`, `InitializeComponent`, `_CreateDelegate`, `IComponentConnector.Connect`, `IPlotEquation.ActualWidth`, `IPlotEquation.ActualHeight`.
+- Hand-written:
+  - `Mirrored/Controls.Plots.PlotEquation.cs`
+- Shapes:
+  - `PlotEquation`:
+    - Aligned member syntax ordinals to match Mathcad's `<.ctor>b__12_0`, `<get_ContainedEquationControls>d__15`, and `<>c__DisplayClass16_0` by placing the 10 fields and `ComputeBaseLine`/`MeasureOverride` before `.ctor`, and moving events `RequestRemove`/`RequestEvaluation` out of the class header.
+    - Used pattern matching `(new Regex(...) switch { var r => r }).Match(value)` in `set_EquationSExpression` to preserve `callvirt` on `Regex.Match` without allocating a local slot.
+    - Used `if (equationData.math.Length < 2) return;` in `SetDataObject` to match Mathcad's inverted branch `bge.s`.
+    - Used local variable assignment `IEquationControl result` in `GetUserScalingExpression` to match Mathcad's `stloc.0 / ldloc.0 / ret` shape.
+    - Used `if (IsVisible) return;` and explicit `PlotControl plotControl = ...; if (plotControl != null)` in `OnRequestFocus` to match Mathcad's `stloc.0 / ldloc.0` and branch structure.
+- Release IL: PASS — 3109 checked in Plots, 0 failures.
+- Remaining mismatches in this batch: none.
+
+
 
 
 
