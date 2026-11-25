@@ -1,9 +1,13 @@
 #nullable disable
 #pragma warning disable
 
+using System;
+using System.CodeDom.Compiler;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Markup;
 using System.Windows.Media;
 using Quire.Controls.Plots.Model;
 using Quire.Controls.Plots.PlotCommands;
@@ -14,15 +18,16 @@ namespace Quire.Controls.Plots;
 
 public partial class PlotTitle
 {
-    private bool _isEditingYAxisTitle;
-    public static readonly DependencyProperty TitleTypeProperty = DependencyProperty.Register("TitleType", typeof(PlotTitleType), typeof(PlotTitle), new FrameworkPropertyMetadata(PlotTitleType.Plot));
-    internal ContentPresenter PART_TitleHost;
-
     public PlotTitleViewModel ViewModel { get; private set; }
 
     public bool IsRotationAllowed { get; private set; }
 
     public RichTextTitle Title { get; private set; }
+
+    private bool _isEditingYAxisTitle;
+    public static readonly DependencyProperty TitleTypeProperty = DependencyProperty.Register("TitleType", typeof(PlotTitleType), typeof(PlotTitle), new FrameworkPropertyMetadata(PlotTitleType.Plot));
+    internal ContentPresenter PART_TitleHost;
+    private bool _contentLoaded;
 
     public PlotTitleType TitleType
     {
@@ -63,49 +68,6 @@ public partial class PlotTitle
         DataContext = ViewModel;
     }
 
-    private void SetWidthFromContent(double newWidth)
-    {
-        Width = newWidth;
-        MinWidth = newWidth;
-    }
-
-    private void ResetWidthConstraints()
-    {
-        Width = double.NaN;
-        MinWidth = 0.0;
-    }
-
-    private void OnElementOnGotFocus(object sender, RoutedEventArgs e)
-    {
-        HandleEditingStarted();
-    }
-
-    private void OnElementOnLostFocus(object sender, RoutedEventArgs e)
-    {
-        HandleEditingEnded();
-        HideTitleIfEmpty();
-    }
-
-    private void ApplyTemporaryOrientation(bool isVertical)
-    {
-        LayoutTransform = (isVertical ? new RotateTransform(270.0) : Transform.Identity);
-    }
-
-    private void InitializeYAxisOrientationSupport()
-    {
-        IsRotationAllowed = true;
-        if (Title != null)
-        {
-            Title.ToggleOrientationRequest = ToggleOrientation;
-        }
-    }
-
-    public void ToggleOrientation()
-    {
-        DebugTools.DevAssert(IsRotationAllowed, "ToggleOrientation was called on a non-rotatable title.");
-        new ToggleAxisTitleOrientationCommand(this).Execute();
-    }
-
     private static string GetDefaultTitleText(PlotTitleType type)
     {
         switch (type)
@@ -144,6 +106,29 @@ public partial class PlotTitle
         InvalidateMeasure();
     }
 
+    private void SetWidthFromContent(double newWidth)
+    {
+        Width = newWidth;
+        MinWidth = newWidth;
+    }
+
+    private void ResetWidthConstraints()
+    {
+        Width = double.NaN;
+        MinWidth = 0.0;
+    }
+
+    private void OnElementOnGotFocus(object sender, RoutedEventArgs e)
+    {
+        HandleEditingStarted();
+    }
+
+    private void OnElementOnLostFocus(object sender, RoutedEventArgs e)
+    {
+        HandleEditingEnded();
+        HideTitleIfEmpty();
+    }
+
     private void HandleEditingStarted()
     {
         if (TitleType != PlotTitleType.YAxis || !IsRotationAllowed)
@@ -172,6 +157,11 @@ public partial class PlotTitle
         ApplyTemporaryOrientation(isVertical);
     }
 
+    private void ApplyTemporaryOrientation(bool isVertical)
+    {
+        LayoutTransform = (isVertical ? new RotateTransform(270.0) : Transform.Identity);
+    }
+
     private void HideTitleIfEmpty()
     {
         if (ViewModel == null || Title == null)
@@ -187,6 +177,56 @@ public partial class PlotTitle
             ViewModel.ShowTitle = false;
             Title.ResetText();
             ResetWidthConstraints();
+        }
+    }
+
+    private void InitializeYAxisOrientationSupport()
+    {
+        IsRotationAllowed = true;
+        if (Title != null)
+        {
+            Title.ToggleOrientationRequest = ToggleOrientation;
+        }
+    }
+
+    public void ToggleOrientation()
+    {
+        DebugTools.DevAssert(IsRotationAllowed, "ToggleOrientation was called on a non-rotatable title.");
+        new ToggleAxisTitleOrientationCommand(this).Execute();
+    }
+
+    [DebuggerNonUserCode]
+    [GeneratedCode("PresentationBuildTasks", "10.0.11.0")]
+    public void InitializeComponent()
+    {
+        if (_contentLoaded)
+        {
+            return;
+        }
+        _contentLoaded = true;
+        Uri resourceLocator = new Uri("/Quire.Controls.Plots;component/plottitle.xaml", UriKind.Relative);
+        Application.LoadComponent(this, resourceLocator);
+    }
+
+    [DebuggerNonUserCode]
+    [GeneratedCode("PresentationBuildTasks", "10.0.11.0")]
+    internal Delegate _CreateDelegate(Type delegateType, string handler)
+    {
+        return Delegate.CreateDelegate(delegateType, this, handler);
+    }
+
+    [DebuggerNonUserCode]
+    [GeneratedCode("PresentationBuildTasks", "10.0.11.0")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    void IComponentConnector.Connect(int connectionId, object target)
+    {
+        if (connectionId == 1)
+        {
+            PART_TitleHost = (ContentPresenter)target;
+        }
+        else
+        {
+            _contentLoaded = true;
         }
     }
 }

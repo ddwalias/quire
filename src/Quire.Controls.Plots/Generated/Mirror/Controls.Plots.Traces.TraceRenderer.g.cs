@@ -11,21 +11,6 @@ namespace Quire.Controls.Plots.Traces;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Traces.TraceRenderer, Ptc.Controls.Plots")]
 internal abstract partial class TraceRenderer
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected static readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Plots.Presenter.TraceSymbol, global::Quire.Controls.Plots.Traces.Symbol> _GeometryTransformationDictionary;
-    [global::Quire.Mirror.MirrorStub]
-    internal static readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Plots.Presenter.LineStyle, global::System.Windows.Media.DashStyle> _TraceLineDictionary;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::Quire.Controls.Plots.Presenter.IPlotTrace _ownerTrace;
-    [global::Quire.Mirror.MirrorStub]
-    private const int StartNewCollectionAfter = 500;
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract void OnRender(global::System.Windows.Media.DrawingContext drawingContext);
-    [global::Quire.Mirror.MirrorStub]
-    protected void DrawSymbolGeometry(global::System.Windows.Media.DrawingContext drawingContext, global::Quire.Controls.Plots.Presenter.TraceSymbol symbol) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void BreakPolylineIfItIsTooLong(global::System.Collections.Generic.IList<global::System.Windows.Point> plottingPoints, int plottingPointsCount, int index, global::System.Windows.Point screenPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Traces.TraceRenderer+DrawGeometryDelegate, Ptc.Controls.Plots")]
     protected delegate void DrawGeometryDelegate(global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.Media.PointCollection pointCollection);
 }

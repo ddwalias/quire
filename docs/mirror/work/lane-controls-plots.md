@@ -900,3 +900,24 @@
 - Release IL: PASS — 2763 checked in Plots, 0 failures.
 - Remaining mismatches in this batch: none.
 
+## Batch 118 — PlotTitle and TraceRenderer remaining members
+
+- Owner: agy-whiteboard-2. Branch: `feature/agy-plots`.
+- Members:
+  - `PlotTitle`: `_contentLoaded`, `InitializeComponent`, `_CreateDelegate`, `IComponentConnector.Connect`
+  - `TraceRenderer`: `_GeometryTransformationDictionary`, `_TraceLineDictionary`, `_ownerTrace`, `StartNewCollectionAfter`, `OnRender`, `DrawSymbolGeometry`, `BreakPolylineIfItIsTooLong`
+- Hand-written:
+  - `Mirrored/Controls.Plots.PlotTitle.cs`
+  - `Mirrored/Controls.Plots.Traces.TraceRenderer.cs`
+- Shapes:
+  - `PlotTitle`:
+    - Moved auto-properties (`ViewModel`, `IsRotationAllowed`, `Title`) before `_isEditingYAxisTitle` to match Mathcad's field backing order.
+    - Implemented `InitializeComponent` with early exit guard on `_contentLoaded`.
+    - Implemented `_CreateDelegate` and `Connect` with exact BAML connector branching.
+  - `TraceRenderer`:
+    - Maintained exact member declaration order from `members.tsv` (`.ctor`, `Render`, `OnRender`, `DrawGeometry`, `CreateSymbols`, `DrawSymbolGeometry`, `CreateSymbolsGeometryDictionary`, `CreateTraceLineDictionary`, properties, `AddNewScreenPointCollection`, `SetScreenPoints`, `BreakPolylineIfItIsTooLong`, `TotalPointCount`).
+    - Exact closure parity: `DrawSymbolGeometry` lambda aligns to `<>c__DisplayClass10_0::<DrawSymbolGeometry>b__0` and `BreakPolylineIfItIsTooLong` lambda aligns to `<>c::<BreakPolylineIfItIsTooLong>b__31_0`.
+- Release IL: PASS — 2774 checked in Plots, 0 failures.
+- Remaining mismatches in this batch: none.
+
+

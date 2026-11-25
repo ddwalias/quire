@@ -9,26 +9,13 @@ namespace Quire.Controls.Plots.Traces;
 
 internal abstract partial class TraceRenderer
 {
-    protected Brush FillBrush => new SolidColorBrush(_ownerTrace.RenderColor);
+    protected static readonly Dictionary<TraceSymbol, Symbol> _GeometryTransformationDictionary = CreateSymbolsGeometryDictionary();
 
-    protected Pen LinePen => new Pen
-    {
-        Brush = FillBrush,
-        Thickness = _ownerTrace.LineWeight,
-        DashCap = PenLineCap.Round,
-        DashStyle = _TraceLineDictionary[_ownerTrace.LineStyle],
-        LineJoin = PenLineJoin.Bevel
-    };
+    internal static readonly Dictionary<LineStyle, DashStyle> _TraceLineDictionary = CreateTraceLineDictionary();
 
-    protected Pen SymbolPen => new Pen(FillBrush, _ownerTrace.LineWeight);
+    protected readonly IPlotTrace _ownerTrace;
 
-    public IList<PointCollection> ScreenPoints { get; private set; }
-
-    public bool HasPoints { get; private set; }
-
-    private PointCollection LastScreenPointCollection => ScreenPoints[ScreenPoints.Count - 1];
-
-    protected int TotalPointCount { get; private set; }
+    private const int StartNewCollectionAfter = 500;
 
     protected TraceRenderer(IPlotTrace ownerTrace)
     {
@@ -39,6 +26,8 @@ internal abstract partial class TraceRenderer
     {
         OnRender(drawingContext);
     }
+
+    protected abstract void OnRender(DrawingContext drawingContext);
 
     protected void DrawGeometry(DrawingContext drawingContext, DrawGeometryDelegate drawGeometryDelegate)
     {
@@ -67,6 +56,15 @@ internal abstract partial class TraceRenderer
                 drawingContext.DrawGeometry(brush, symbolPen, symbolGeometry.Create(item, _ownerTrace));
             }
         }
+    }
+
+    protected void DrawSymbolGeometry(DrawingContext drawingContext, TraceSymbol symbol)
+    {
+        DrawGeometryDelegate drawGeometryDelegate = (DrawingContext dc, PointCollection pointCollection) =>
+        {
+            CreateSymbols(dc, pointCollection, symbol);
+        };
+        DrawGeometry(drawingContext, drawGeometryDelegate);
     }
 
     private static Dictionary<TraceSymbol, Symbol> CreateSymbolsGeometryDictionary()
@@ -101,6 +99,25 @@ internal abstract partial class TraceRenderer
             { LineStyle.DashDotDot, DashStyles.DashDotDot }
         };
     }
+
+    protected Brush FillBrush => new SolidColorBrush(_ownerTrace.RenderColor);
+
+    protected Pen LinePen => new Pen
+    {
+        Brush = FillBrush,
+        Thickness = _ownerTrace.LineWeight,
+        DashCap = PenLineCap.Round,
+        DashStyle = _TraceLineDictionary[_ownerTrace.LineStyle],
+        LineJoin = PenLineJoin.Bevel
+    };
+
+    protected Pen SymbolPen => new Pen(FillBrush, _ownerTrace.LineWeight);
+
+    public IList<PointCollection> ScreenPoints { get; private set; }
+
+    public bool HasPoints { get; private set; }
+
+    private PointCollection LastScreenPointCollection => ScreenPoints[ScreenPoints.Count - 1];
 
     private void AddNewScreenPointCollection()
     {
@@ -139,4 +156,16 @@ internal abstract partial class TraceRenderer
             }
         }
     }
+
+    private void BreakPolylineIfItIsTooLong(IList<Point> plottingPoints, int plottingPointsCount, int index, Point screenPoint)
+    {
+        if (LastScreenPointCollection.Count >= 500 && index + 1 < plottingPointsCount && !plottingPoints[index + 1].IsNaN())
+        {
+            AddNewScreenPointCollection();
+            LastScreenPointCollection.Add(screenPoint);
+        }
+        TotalPointCount = ScreenPoints.Sum((PointCollection pc) => pc.Count);
+    }
+
+    protected int TotalPointCount { get; private set; }
 }
