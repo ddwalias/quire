@@ -590,3 +590,10 @@
 - Members: `_model_EquationChanged`, `FireContentAndRegionChangedEvents` (IORegionChanged null-check idiom), `OnVisibleWarningMessageChanged`, `ClearExpressionValueModified`; stub pairs removed from the `.g.cs`.
 - Release IL: PASS, 3770 checked, zero failures.
 - Remaining: `UpdateLhsVisibleOnView` (106 IL, nested bool/Visibility logic) and the `UpdateEngineResult` overloads are still stubs; `FireContentChangedEvents` and the `OnModelEquationChanged` path now reach the implemented `FireContentAndRegionChangedEvents` and `_model_EquationChanged`.
+
+## Batch 85
+
+- Owner: haiku-equationcontrol-20261123; branch feature/haiku-equationcontrol-20261123 (on batch 84).
+- Members: the four `UpdateEngineResult` overloads (`SynchronizationStatus`, `IResultNode`, `EngineError`, `IEnumerable<EngineRedefInfo>`). Each copies `EngineResult` to a local before the constructor call, which the Release IL shows.
+- Release IL: PASS, 3774 checked, zero failures.
+- Remaining: `UpdateLhsVisibleOnView` (106 IL) is a stub. `HandleWarningOccured` (lambda ordinal) and `HandleScopeChanged`/`FocusWhenAble` (closures) stay parked.

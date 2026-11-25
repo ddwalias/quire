@@ -619,6 +619,41 @@ public partial class EquationControl
         UpdateLhsVisibleOnView();
     }
 
+    private void UpdateEngineResult(SynchronizationStatus syncStatus)
+    {
+        var engineResult = EngineResult;
+        EngineResult = new EngineResult(engineResult, syncStatus);
+    }
+
+    private void UpdateEngineResult(IResultNode result)
+    {
+        if (result is IEmptyResultNode && EngineResult.Errors != null && EngineResult.Errors.Count > 0)
+        {
+            return;
+        }
+
+        var engineResult = EngineResult;
+        EngineResult = new EngineResult(engineResult, result);
+    }
+
+    private void UpdateEngineResult(EngineError error)
+    {
+        EngineError clone = null;
+        if (error != null)
+        {
+            clone = error.Clone();
+        }
+
+        var engineResult = EngineResult;
+        EngineResult = new EngineResult(engineResult, clone);
+    }
+
+    private void UpdateEngineResult(IEnumerable<EngineRedefInfo> warnings)
+    {
+        var engineResult = EngineResult;
+        EngineResult = new EngineResult(engineResult, warnings);
+    }
+
     private void _model_EquationChanged() => RaiseEvent(new RoutedEventArgs(ChangedEvent));
 
     private void FireContentAndRegionChangedEvents(IORegionChangeType type)

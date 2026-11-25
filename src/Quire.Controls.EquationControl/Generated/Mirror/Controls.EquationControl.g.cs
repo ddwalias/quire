@@ -200,14 +200,6 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
     [global::Quire.Mirror.MirrorStub]
     private void UpdateCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus calculatingStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void UpdateEngineResult(global::Quire.Calculation.Core.SynchronizationStatus syncStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateEngineResult(global::Quire.Calculation.Core.IResultNode result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateEngineResult(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateEngineResult(global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.EngineRedefInfo> warnings) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> UpdateAggregateFromModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int IncrementComponentCookieMultiThreaded(bool isAutoCalc = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
