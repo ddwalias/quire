@@ -76,6 +76,16 @@ public partial class WorksheetControlDebugger
                 HandlerOnActiveTabChanged);
         }
 
+        private void SubscribeOnActiveTabChangedEvent(DependencyProperty activeDocumentProperty, DependencyObject spiritMainWindowDependencyObject)
+        {
+            _activeDocumentProperty = activeDocumentProperty;
+            _spiritMainWindowDependencyObject = spiritMainWindowDependencyObject;
+            global::Quire.Wpf.DependencyPropertyChangeManager.AddPropertyChangedHandler(
+                _activeDocumentProperty,
+                _spiritMainWindowDependencyObject,
+                HandlerOnActiveTabChanged);
+        }
+
         public virtual void Dispose()
         {
             global::Quire.DebugTools.DevAssert(_isDebuggingEnabled, "Debugging already disabled.");
