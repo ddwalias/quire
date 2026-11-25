@@ -1945,7 +1945,34 @@ public partial class RichTextBase
 
     private global::System.Collections.Generic.IList<string> _undoRunsTextStyleKey;
 
-    public void SetTextFormatPropertyValue(global::System.Windows.DependencyProperty property, object value, bool isUndoRedo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetTextFormatPropertyValue(global::System.Windows.DependencyProperty property, object value, bool isUndoRedo)
+    {
+        if (isUndoRedo)
+        {
+            return;
+        }
+
+        using (new CommandScope("SetTextFormatPropertyValue"))
+        {
+            TextFormat.ApplyPropertyValueFormat(property, value, TextFormat.TextRange(this));
+            object oldValue = ((DependencyObject)Document).GetValue(property);
+            object newValue = value;
+            CommandBuffer.Execute(new UndoableCommandWithSideEffects("Update the property of the FlowDocument of this control", () =>
+            {
+                TextFormat.SetTextFormat(property, newValue, Document);
+                ClearTextFormatCache();
+                return true;
+            }, () =>
+            {
+                TextFormat.SetTextFormat(property, oldValue, Document);
+                ClearTextFormatCache();
+            }, () =>
+            {
+                TextFormat.SetTextFormat(property, newValue, Document);
+                ClearTextFormatCache();
+            }));
+        }
+    }
 
     public virtual string GetHelpContext()
     {

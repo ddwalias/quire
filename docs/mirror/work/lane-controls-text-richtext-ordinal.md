@@ -59,4 +59,9 @@ The two anchors inside nested `RichTextBase.SyncTextChangedCommand` are `.ctor` 
 - Implemented `Activate`; callback closure `<Activate>b__261_0` matches at ordinal 261.
 - Release IL report: `.mirror-cache/release-il-cebf9a722ab6/release-il.json` — PASS, 706 checked, zero failures; 74 generated stubs, 43 no-pair members, 3 unchanged/unmatched.
 - `IsInvalidOperation` (ordinal 235) remains a placeholder. The idiomatic decompilation did not match closure allocation/control-flow IL under the current compiler and was reverted to keep the gate clean.
-- Remaining: continue the later `RichTextBase` anchors and reorder `RichTextWithEmbeddedItem`; request a landing slot before each merge.
+
+## Slice 4
+
+- Implemented `SetTextFormatPropertyValue`; its closure anchor at ordinal 284 now matches.
+- Release IL report: `.mirror-cache/release-il-8b940b406f48/release-il.json` — PASS, 711 checked, zero failures; 73 generated stubs, 43 no-pair members, 3 unchanged/unmatched.
+- Remaining: continue the later `RichTextBase` anchors and reorder `RichTextWithEmbeddedItem`; `IsInvalidOperation` remains pending. Request a landing slot before each merge.
