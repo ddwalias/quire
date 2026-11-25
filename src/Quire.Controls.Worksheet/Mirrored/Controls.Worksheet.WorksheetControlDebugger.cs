@@ -59,6 +59,19 @@ public partial class WorksheetControlDebugger
     {
         public event CloseInstance AskedCloseInstance;
 
+        protected DebuggedObject(object spiritMainWindow, DependencyProperty activeDocumentProperty)
+        {
+            global::Quire.DebugTools.DevAssert(!_isDebuggingEnabled, "Debugging already enabled.");
+            _isDebuggingEnabled = true;
+            DependencyObject spiritMainWindowDependencyObject = spiritMainWindow as DependencyObject;
+            global::Quire.DebugTools.DevAssert(spiritMainWindowDependencyObject != null, "SpiritMainWindow should be DependencyObject.");
+            global::Quire.Controls.Core.IEngineeringDocument engineeringDocument =
+                spiritMainWindowDependencyObject.GetValue(activeDocumentProperty) as global::Quire.Controls.Core.IEngineeringDocument;
+            global::Quire.DebugTools.DevAssert(engineeringDocument != null, "IEngineeringDocument should not be null.");
+            FillDataForDebugging(engineeringDocument);
+            SubscribeOnActiveTabChangedEvent(activeDocumentProperty, spiritMainWindowDependencyObject);
+        }
+
         private void InvokeAskedCloseInstance()
         {
             CloseInstance askedCloseInstance = AskedCloseInstance;
