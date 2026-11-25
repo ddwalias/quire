@@ -99,8 +99,6 @@ public partial class CalculationController
         [global::Quire.Mirror.MirrorStub]
         public virtual void SetSynchronizedWithErrorNoResult(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
-        protected virtual void DispatchedSetSyncResultAndError(global::Quire.Calculation.Core.IResultNode result, global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         public virtual void SetAutoSelectAlgorithm(global::System.Collections.Generic.IDictionary<int, string> autoAlgorithmMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private global::System.Collections.IDictionary ParentGlobalErrorResultsDictionary(int handle, global::Quire.Engine.IEngine engine, global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> handleToICalculatableMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

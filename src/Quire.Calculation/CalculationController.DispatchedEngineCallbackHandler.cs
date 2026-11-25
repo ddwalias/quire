@@ -140,5 +140,26 @@ public partial class CalculationController
             }
             return engineError;
         }
+
+        protected virtual void DispatchedSetSyncResultAndError(IResultNode result, EngineError error)
+        {
+            if (!_isCalcInContext(_encapsulatedCalculatable))
+            {
+                return;
+            }
+            if (!IsComponentCookieUpToDate)
+            {
+                return;
+            }
+            if (_encapsulatedCalculatable is ICalculatableResultOwner { InterceptAndUpdateResult: not false } calculatableResultOwner)
+            {
+                EngineError engineError = CloneError(error);
+                EngineErrorCollection errorCollection = engineError == null ? null : new EngineErrorCollection { engineError };
+                calculatableResultOwner.EngineResult = new EngineResult(result, errorCollection, SynchronizationStatus.Synchronized);
+            }
+            _encapsulatedCalculatable.SetError(error);
+            _encapsulatedCalculatable.SetResult(result);
+            _encapsulatedCalculatable.SetSynchronizationStatus(SynchronizationStatus.Synchronized);
+        }
     }
 }
