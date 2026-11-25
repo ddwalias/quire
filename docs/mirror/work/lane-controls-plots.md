@@ -832,3 +832,15 @@
 - Release IL: full gate PASS — 2682 checked, 0 failures, 2682 exact.
 - MirrorGen emit: deletions only (the one stub with its attribute). Other emit noise reverted.
 - Blocked: `PlotModel3D.ComputeTotalTracesSynchronizationStatus` still needs the same kind of placement test (its lambda is `b__96_0` against Mathcad's `b__67_0`).
+
+## Batch 114 — AxisLimitEditor members and events
+
+- Owner: agy-whiteboard-2. Branch: `feature/agy-plots`.
+- Members:
+  - Properties & simple members: `Rl`, `CanHideFromCalculationContext`, `CurrentError`, `EngineResult` (getter/setter), `InterceptAndUpdateResult`, `UseICalculatableToRestoreResult`, `CalculatingStatus`, `ErrorCount`, `ErrorSExpression`, `ErrorCode`, `ErrorText`, `IsCommitted`, `Error`, `RestoreResult`
+  - Methods: `SetIdentifierLabels`, `SetAutoSelectAlgorithm`, `SetRedefinitionWarnings`, `SetStatusSynchronized`, `SetCalculatingStatus`, `ContainsError`, `ShowError`, `FireValueChanged`, `FireHasErrorsChanged`, `FirePropertyChanged`
+  - Events: `ValueChanged`, `HasErrorsChanged`, `RequestEvaluation`, `GetValueOfIdentifierBefore`, `TreatAsUpToDate`, `PropertyChanged`
+- Hand-written: `Mirrored/Controls.Plots.AxisLimitEditor.cs`; corresponding generated stubs removed from `Generated/Mirror/Controls.Plots.AxisLimitEditor.g.cs`.
+- Release IL: PASS — 2707 checked in Plots, 0 failures.
+- Remaining mismatches in this batch: none.
+
