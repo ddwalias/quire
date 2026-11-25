@@ -1767,7 +1767,16 @@ public partial class RichTextBase
 
     private double _cachedVerticalAlignmentOffset;
 
-    public virtual void Activate(bool isActive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void Activate(bool isActive)
+    {
+        if (isActive)
+        {
+            global::Quire.Services.AppServiceRegistry.GetService<global::Quire.Controls.Core.IFrameworkElementFacade>().ExecuteOnLoad(this, () =>
+            {
+                Focus();
+            });
+        }
+    }
 
     public Vector? NavigateIntoItem(Direction direction)
     {

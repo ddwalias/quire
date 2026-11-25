@@ -52,4 +52,11 @@ The two anchors inside nested `RichTextBase.SyncTextChangedCommand` are `.ctor` 
 
 - Implemented `EnumerateEmbeddedObjectsInRange`; iterator closure `<EnumerateEmbeddedObjectsInRange>d__217` now matches at ordinal 217. The current compiler omits the iterator-field clear emitted by Mathcad, so the method explicitly clears `curPos` after the loop to preserve Release IL.
 - Release IL report: `.mirror-cache/release-il-0ad0645d1d89/release-il.json` — PASS, 704 checked, zero failures; 75 generated stubs, 44 no-pair members, 3 unchanged/unmatched.
+- Landed as `1d387175dfb61de9d0e83ac6e2a6bcd5e4e484b8`; lane receipt: `C:/Projects/Quire/.mirror-cache/receipts/gate-il-747b359a7178.json`. MirrorGen `emit` left the target generated file byte-identical; unrelated emitter output was reverted.
+
+## Slice 3
+
+- Implemented `Activate`; callback closure `<Activate>b__261_0` matches at ordinal 261.
+- Release IL report: `.mirror-cache/release-il-cebf9a722ab6/release-il.json` — PASS, 706 checked, zero failures; 74 generated stubs, 43 no-pair members, 3 unchanged/unmatched.
+- `IsInvalidOperation` (ordinal 235) remains a placeholder. The idiomatic decompilation did not match closure allocation/control-flow IL under the current compiler and was reverted to keep the gate clean.
 - Remaining: continue the later `RichTextBase` anchors and reorder `RichTextWithEmbeddedItem`; request a landing slot before each merge.
