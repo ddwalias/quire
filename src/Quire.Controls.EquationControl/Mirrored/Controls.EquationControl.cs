@@ -619,7 +619,65 @@ public partial class EquationControl
         UpdateLhsVisibleOnView();
     }
 
-    private static bool AreTableCoordinateListsEqual(IList<TableCoordinate> oneNestedMatrixPosition, IList<TableCoordinate> theOtherNestedMatrixPosition)
+private IList<TableCoordinate> GetNestedPositionForMatrix(MathNode node)
+    {
+        List<TableCoordinate> nestedPosition = null;
+        if (node == null)
+        {
+            return nestedPosition;
+        }
+
+        if (_model.EvaluationRoot == null
+            || _model.EvaluationRoot.DescriptorName != "EVALUATION"
+            || _model.EvaluationRoot[1].DescriptorName != "RSCALE"
+            || _model.EvaluationRoot[1][0].DescriptorName != "MATRIX")
+        {
+            return nestedPosition;
+        }
+
+        MathNode matrix = node.DescriptorName == "MATRIX" ? node : node.GetNearestAncestor("MATRIX");
+        if (matrix == null)
+        {
+            return nestedPosition;
+        }
+
+        MathNode entry = _model.EvaluationRoot[1][0];
+        if (matrix == entry)
+        {
+            return nestedPosition;
+        }
+
+        if (!matrix.IsDescendentOf(entry))
+        {
+            return nestedPosition;
+        }
+
+        nestedPosition = new List<TableCoordinate>();
+        MathNode current = entry;
+        do
+        {
+            MatrixNodeInfo info = current.NodeInfo as MatrixNodeInfo;
+            int cellIndex = matrix.GetMatrixCellIndex(current);
+            int row = info.ViewportOffset.Row + cellIndex / info.ViewportSize.Columns;
+            int column = info.ViewportOffset.Column + cellIndex % info.ViewportSize.Columns;
+            nestedPosition.Add(new TableCoordinate(row, column));
+            current = current[cellIndex];
+            if (current.DescriptorName == "SCALE" && current[0].DescriptorName == "MATRIX")
+            {
+                current = current[0];
+            }
+        }
+        while (current != matrix);
+
+        if (nestedPosition.Count != 0)
+        {
+            return nestedPosition;
+        }
+
+        return null;
+    }
+
+        private static bool AreTableCoordinateListsEqual(IList<TableCoordinate> oneNestedMatrixPosition, IList<TableCoordinate> theOtherNestedMatrixPosition)
     {
         bool areEqual = true;
         if (oneNestedMatrixPosition == null && theOtherNestedMatrixPosition == null)

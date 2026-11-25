@@ -658,8 +658,6 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.IList<int> GetMatrixPathFromRoot(global::Quire.EquationEditor.View.IVisualMatrixNode visualMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IList<global::Quire.TableCoordinate> GetNestedPositionForMatrix(global::Quire.EquationEditor.Tree.MathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.IList<global::Quire.TableCoordinate> GetNestedPositionForVisualMatrix(global::Quire.EquationEditor.View.IVisualMatrixNode visualMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void CreateOrClearTemporaryResultMatrixFormat(bool create) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

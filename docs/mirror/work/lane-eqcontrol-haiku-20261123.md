@@ -611,3 +611,8 @@
 - Owner: haiku-equationcontrol-20261123; branch feature/haiku-equationcontrol-20261123 (on main c83700b81).
 - Members: `AreTableCoordinateListsEqual` (static helper, 78 IL) implemented; stub pair removed from the `.g.cs`. No lambda.
 - Release IL: PASS, 3778 checked, zero failures.
+
+## Batch 88
+
+- Members: `GetNestedPositionForMatrix` (193 IL) implemented; stub pair removed. No lambda. The count test is `Count != 0`, which Roslyn emits as the single `brfalse` the IL uses.
+- Release IL: PASS, 3779 checked, zero failures.
