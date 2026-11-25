@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Quire.Calculation.Core;
 using Quire.Controls.Core;
 using Quire.Controls.Core.IORegions;
@@ -751,6 +752,53 @@ public partial class EquationControl
         }
 
         return areEqual;
+    }
+
+    private CommandBindingCollection EditableCommandBindings
+    {
+        get
+        {
+            return _editableCommandBindings ??= new CommandBindingCollection
+            {
+            new CommandBinding(ApplicationCommands.Cut, OnCut, CanCut),
+            new CommandBinding(ApplicationCommands.Paste, OnPaste, CanPaste),
+            new CommandBinding(EquationCommands.Backspace, OnBackspace),
+            new CommandBinding(EquationCommands.Delete, OnDelete),
+            new CommandBinding(EquationCommands.TransformCharacter, OnTransformCharacter),
+            new CommandBinding(EquationCommands.ToggleSubscript, OnToggleSubscript),
+            new CommandBinding(EquationCommands.ToggleVisibleLhsOfDefinition, OnToggleVisibleLhsOfDefinition, CanToggleVisibleLhsOfDefinition),
+            new CommandBinding(EquationCommands.ConvertToOperator, OnConvertToOperator),
+            new CommandBinding(EquationCommands.InsertOperator, OnInsertOperator),
+            new CommandBinding(EquationCommands.SwitchLineBreak, OnSwitchToLineBreakOperator, CanSwitchToLineBreakOperator),
+            new CommandBinding(EquationCommands.InsertEvaluation, OnInsertEvaluation),
+            new CommandBinding(EquationCommands.InsertSymbolicEvaluation, OnInsertSymbolicEvaluation),
+            new CommandBinding(EquationCommands.InsertValue, OnInsertValue),
+            new CommandBinding(EquationCommands.InsertId, OnInsertId),
+            new CommandBinding(EquationCommands.InsertString, OnInsertString),
+            new CommandBinding(EquationCommands.InsertInputControl, OnInsertInputControl, CanInsertInputControl),
+            new CommandBinding(EquationCommands.InsertMatrix, OnInsertMatrix),
+            new CommandBinding(EquationCommands.InsertFunction, OnInsertFunction, CanInsertFunction),
+            new CommandBinding(EquationCommands.InsertKeyword, OnInsertKeyword, CanInsertKeywordOrModifier),
+            new CommandBinding(EquationCommands.InsertModifier, OnInsertModifier, CanInsertKeywordOrModifier),
+            new CommandBinding(EquationCommands.InsertRow, OnInsertRow, CanPerformRowOperations),
+            new CommandBinding(EquationCommands.InsertColumn, OnInsertMatrixColumn, CanPerformColumnOperations),
+            new CommandBinding(EquationCommands.DeleteRow, OnDeleteRow, CanPerformRowOperations),
+            new CommandBinding(EquationCommands.DeleteColumn, OnDeleteMatrixColumn, CanPerformColumnOperations),
+            new CommandBinding(EquationCommands.ClearCells, OnClearCells, CanPerformCearCellsOperation),
+            new CommandBinding(EquationCommands.SplitLinearNaryLine, OnSplitLinearNaryLine, CanPerformLinearNaryOperations),
+            new CommandBinding(EquationCommands.InsertPi, OnInsertPi),
+            new CommandBinding(EquationCommands.InsertInfinity, OnInsertInfinity),
+            new CommandBinding(EquationCommands.SetIdLabel, OnSetIdLabel, CanPerformIdLabelOperations),
+            new CommandBinding(EquationCommands.UnsetIdLabel, OnUnsetIdLabel, CanPerformIdLabelOperations),
+            new CommandBinding(EquationCommands.ToggleIdLabel, OnToggleIdLabel, CanPerformIdLabelOperations),
+            new CommandBinding(EquationCommands.ToggleUnitIdLabel, OnToggleUnitIdLabel, CanPerformIdLabelOperations),
+            new CommandBinding(RegionCommands.Replace, OnReplace, CanReplace),
+            new CommandBinding(EquationCommands.ChangeAlgorithm, ChangeAlgorithm),
+            new CommandBinding(EquationCommands.ToggleAlgorithmOptionMultiStart, ToggleAlgorithmOption),
+            new CommandBinding(EquationCommands.ToggleAlgorithmOptionOptimize, ToggleAlgorithmOption),
+            new CommandBinding(EquationCommands.ToggleSymbolicEvalKeywordsVisibilityState, ToggleSymbolicKeywordsVisibility),
+            };
+        }
     }
 
     private void BindCommands()

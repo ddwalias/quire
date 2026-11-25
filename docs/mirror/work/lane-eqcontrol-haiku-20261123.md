@@ -621,3 +621,8 @@
 
 - Members: `GetFormatForMatrix` (136 IL) implemented; stub pair removed. No lambda. The `??` ancestor lookup and the foreach early return match.
 - Release IL: PASS, 3780 checked, zero failures.
+
+## Batch 90
+
+- Members: `EditableCommandBindings` (378 IL) implemented as `??=` over a `CommandBindingCollection` initializer (37 bindings); stub pair removed. Gate PASS, 3781 checked.
+- Parked: `NonEditableCommandBindings` (1213 IL). Its `Undo`/`Redo` handlers are cached in `<>O` as `<1>__`/`<3>__` in Mathcad, because the constructor caches `EngineErrorMessages.GetDisplayMessage` as `<0>__`. The constructor is blocked by its lambda ordinals (`<.ctor>b__152_*`), so our cache index is 0 and does not match. Also blocked on the constructor are the other constructor-only cache names.
