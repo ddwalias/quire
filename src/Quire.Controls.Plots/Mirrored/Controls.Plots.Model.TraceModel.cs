@@ -366,7 +366,25 @@ internal partial class TraceModel
         _plottingPointsFilter.PlottingPoints = value;
     }
 
-    public void UpdatePlottingPointsForDisplay() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void UpdatePlottingPointsForDisplay()
+    {
+        PointCollection points = _plottingPointsFilter.FilteredPointsCollection;
+        WpfUtils.DoWork(() =>
+        {
+            if (_axes[0].Scaling == AxisScaling.Logarithmic || _axes[1].Scaling == AxisScaling.Logarithmic)
+            {
+                points = CalculateLogTransformPoints(points);
+            }
+
+            if (PlotType == PlotType.Polar)
+            {
+                points = CalculateRadialTransformByOffset(points);
+                points = CalculatePolarTransformPoints(points);
+            }
+        });
+        DebugTools.DevAssert(points.Count == PlottingPointsCount, null);
+        _plottingPointsForDisplay = new PlottingPointsForDisplay(_plottingPointsFilter.FilteredPointsCollection, points);
+    }
 
     public PointCollection GetPlottingPointsForDisplay()
     {
