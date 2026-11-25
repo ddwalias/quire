@@ -927,4 +927,9 @@ public partial class WorksheetControl
     {
         global::Quire.Controls.ExcelComponent.View.ChartComponentUtils.WaitForChartImagesReady(WorksheetItems);
     }
+
+    object IWorksheetControl.FindResource(object key)
+    {
+        return FindResource(key);
+    }
 }

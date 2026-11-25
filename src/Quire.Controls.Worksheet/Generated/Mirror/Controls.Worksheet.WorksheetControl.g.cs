@@ -39,6 +39,4 @@ public partial class WorksheetControl : global::System.Windows.Controls.ContentC
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object global::Quire.Controls.Worksheet.IWorksheetControl.FindResource(object key) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
