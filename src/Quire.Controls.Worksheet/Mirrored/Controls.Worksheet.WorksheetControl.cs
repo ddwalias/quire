@@ -9,6 +9,7 @@ using Quire.Controls.Core.IORegions;
 using Quire.Calculation.Core;
 using Quire.Core;
 using Quire.Services;
+using Quire.Wpf;
 using Microsoft.Win32;
 
 namespace Quire.Controls.Worksheet;

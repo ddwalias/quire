@@ -24,19 +24,9 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Worksheet.WorksheetControlDebugger.VisibleObjects _visibleObjects;
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Worksheet.WorksheetControlDebugger Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private WorksheetControlDebugger() { }
     [global::Quire.Mirror.MirrorStub]
-    private void DestroyInstance() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void OnModeChanged(object spiritMainWindow, global::System.Windows.DependencyProperty activeDocumentProperty, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnAskedCloseInstanceOfWorksheetControlUIDebuggedObjects() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnAskedCloseInstanceOfVisibleObjectsDebuggedObjects() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnSpiritMainWindowClosing(object sender, global::System.ComponentModel.CancelEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlDebugger+DebuggedObject, Ptc.Controls.Worksheet")]
     private abstract partial class DebuggedObject : global::System.IDisposable
