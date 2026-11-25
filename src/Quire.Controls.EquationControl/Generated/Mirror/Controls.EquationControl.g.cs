@@ -656,8 +656,6 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
     [global::Quire.Mirror.MirrorStub]
     internal void UpdateMatrixForResizeAdorner(global::Quire.EquationEditor.View.IVisualMatrixNode matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static bool AreTableCoordinateListsEqual(global::System.Collections.Generic.IList<global::Quire.TableCoordinate> oneNestedMatrixPosition, global::System.Collections.Generic.IList<global::Quire.TableCoordinate> theOtherNestedMatrixPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.IList<int> GetMatrixPathFromRoot(global::Quire.EquationEditor.View.IVisualMatrixNode visualMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IList<global::Quire.TableCoordinate> GetNestedPositionForMatrix(global::Quire.EquationEditor.Tree.MathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

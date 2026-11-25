@@ -619,6 +619,38 @@ public partial class EquationControl
         UpdateLhsVisibleOnView();
     }
 
+    private static bool AreTableCoordinateListsEqual(IList<TableCoordinate> oneNestedMatrixPosition, IList<TableCoordinate> theOtherNestedMatrixPosition)
+    {
+        bool areEqual = true;
+        if (oneNestedMatrixPosition == null && theOtherNestedMatrixPosition == null)
+        {
+            return true;
+        }
+
+        if (oneNestedMatrixPosition == null || theOtherNestedMatrixPosition == null)
+        {
+            return false;
+        }
+
+        if (oneNestedMatrixPosition.Count != theOtherNestedMatrixPosition.Count)
+        {
+            areEqual = false;
+        }
+        else
+        {
+            for (int i = 0; i < theOtherNestedMatrixPosition.Count; i++)
+            {
+                if (!theOtherNestedMatrixPosition[i].Equals(oneNestedMatrixPosition[i]))
+                {
+                    areEqual = false;
+                    break;
+                }
+            }
+        }
+
+        return areEqual;
+    }
+
     private void BindCommands()
     {
         CommandBindings.AddRange(NonEditableCommandBindings);

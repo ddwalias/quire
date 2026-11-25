@@ -605,3 +605,9 @@
 - Release IL: PASS, 3777 checked, zero failures.
 - Runtime dependency: the binding members call `EditableCommandBindings` and `NonEditableCommandBindings`, which are still stubs, so binding throws until those land. Nothing calls `BindCommands` yet.
 - Parked: `UpdateLhsVisibleOnView` (106 IL). Its first condition is materialized as a bool (`ldc.i4.1`/`ldc.i4.0`) and tested after the second, which the natural ternary chain does not reproduce. Probe at scratchpad `updatelhs_probe.patch`.
+
+## Batch 87
+
+- Owner: haiku-equationcontrol-20261123; branch feature/haiku-equationcontrol-20261123 (on main c83700b81).
+- Members: `AreTableCoordinateListsEqual` (static helper, 78 IL) implemented; stub pair removed from the `.g.cs`. No lambda.
+- Release IL: PASS, 3778 checked, zero failures.
