@@ -46,4 +46,10 @@ The two anchors inside nested `RichTextBase.SyncTextChangedCommand` are `.ctor` 
 
 - Reordered the direct declarations through `GetInsertionPointAtPointer` in Mathcad method order, with non-method declarations interleaved to hit the anchor offsets. Implemented `GetInsertionPointAtPointer` from the reference shape; its closure emits `<GetInsertionPointAtPointer>b__207_0`.
 - Release IL report: `.mirror-cache/release-il-f742d506ade8/release-il.json` — PASS, 695 checked, zero failures; 76 generated stubs, 44 no-pair members, 3 unchanged/unmatched.
-- Remaining: continue the later `RichTextBase` slice and reorder `RichTextWithEmbeddedItem`; request a landing slot before each merge.
+- Landed as `58b12a5a47adeeb9bb25735ba6ae3d971b8231f2`; lane receipt: `C:/Projects/Quire/.mirror-cache/receipts/gate-il-b1ea435585cc.json`. MirrorGen `emit` left the target generated file byte-identical; unrelated emitter output was reverted.
+
+## Slice 2
+
+- Implemented `EnumerateEmbeddedObjectsInRange`; iterator closure `<EnumerateEmbeddedObjectsInRange>d__217` now matches at ordinal 217. The current compiler omits the iterator-field clear emitted by Mathcad, so the method explicitly clears `curPos` after the loop to preserve Release IL.
+- Release IL report: `.mirror-cache/release-il-0ad0645d1d89/release-il.json` — PASS, 704 checked, zero failures; 75 generated stubs, 44 no-pair members, 3 unchanged/unmatched.
+- Remaining: continue the later `RichTextBase` anchors and reorder `RichTextWithEmbeddedItem`; request a landing slot before each merge.

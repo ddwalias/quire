@@ -1367,7 +1367,22 @@ public partial class RichTextBase
 
     public IEnumerable<object> SelectedEmbeddedObjects => EnumerateEmbeddedObjectsInRange(Selection);
 
-    public virtual global::System.Collections.Generic.IEnumerable<object> EnumerateEmbeddedObjectsInRange(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual global::System.Collections.Generic.IEnumerable<object> EnumerateEmbeddedObjectsInRange(global::System.Windows.Documents.TextRange range)
+    {
+        TextPointer curPos = range.Start;
+        while (curPos is not null && curPos.CompareTo(range.End) < 0)
+        {
+            if (curPos.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.EmbeddedElement)
+            {
+                yield return curPos.GetAdjacentElement(LogicalDirection.Forward);
+            }
+
+            curPos = curPos.GetPositionAtOffset(1, LogicalDirection.Forward);
+        }
+
+        // Preserve Mathcad's iterator completion cleanup in Release IL.
+        curPos = null;
+    }
 
     public bool HighlightAll(string text, FindOptions options)
     {
