@@ -84,19 +84,11 @@ internal partial class PlotModel : global::Quire.Controls.Plots.Presenter.IPlotM
     [global::Quire.Mirror.MirrorStub]
     public void DeserializeEpilog(bool isConvertedFromMathcad14) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void FireDeserializationFinished() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void FireDeserializationStarted() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Presenter.ITraceModel AddTrace(global::Quire.Controls.Plots.Presenter.IAxisModel axis1, global::Quire.Controls.Plots.Presenter.IEquationItem equation1, global::Quire.Controls.Plots.Presenter.IAxisModel axis2, global::Quire.Controls.Plots.Presenter.IEquationItem equation2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void AddTrace(global::Quire.Controls.Plots.Presenter.ITraceModel newTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void RemoveTrace(global::Quire.Controls.Plots.Presenter.ITraceModel trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.Trace2DResults.TraceType GetDefaultTraceType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Presenter.ITraceModel FirstTraceInAppearanceOrder() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.PlotModel+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames
