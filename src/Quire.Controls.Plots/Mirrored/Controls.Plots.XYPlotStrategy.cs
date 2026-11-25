@@ -107,7 +107,77 @@ internal partial class XYPlotStrategy
         return editableAxisRelatedElements;
     }
 
-    public void SetMinWidthHeight(PlotControl plot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetMinWidthHeight(PlotControl plot)
+    {
+        double minLegendPlaceholderWidth = plot.YAxisTitlePlaceholder.GetMinLegendPlaceholderWidth();
+        double minLegendPlaceholderHeight = plot.YAxisTitlePlaceholder.GetMinLegendPlaceholderHeight();
+        double minLegendPlaceholderWidth2 = plot.XAxisTitlePlaceholder.GetMinLegendPlaceholderWidth();
+        double minLegendPlaceholderHeight2 = plot.XAxisTitlePlaceholder.GetMinLegendPlaceholderHeight();
+        double minLegendPlaceholderWidth3 = plot.XLegendsPositions[0].GetMinLegendPlaceholderWidth();
+        double minLegendPlaceholderWidth4 = plot.XLegendsPositions[1].GetMinLegendPlaceholderWidth();
+        double titleWidth = new double[2]
+        {
+            plot.PlotTitlePositions[0].GetMinLegendPlaceholderWidth(),
+            plot.PlotTitlePositions[1].GetMinLegendPlaceholderWidth()
+        }.Max();
+        double plotLegendWidth = 0.0;
+        double plotLegendColumnsWidth = 0.0;
+        if (plot.PlotLegendPositions != null)
+        {
+            plotLegendWidth = plot.PlotLegendPositions[0].GetMinLegendPlaceholderWidth();
+            double minLegendPlaceholderWidth5 = plot.PlotLegendPositions[1].GetMinLegendPlaceholderWidth();
+            double minLegendPlaceholderWidth6 = plot.PlotLegendPositions[2].GetMinLegendPlaceholderWidth();
+            double minLegendPlaceholderWidth7 = plot.PlotLegendPositions[3].GetMinLegendPlaceholderWidth();
+            double minLegendPlaceholderWidth8 = plot.PlotLegendPositions[4].GetMinLegendPlaceholderWidth();
+            plotLegendColumnsWidth = new double[4] { minLegendPlaceholderWidth5, minLegendPlaceholderWidth6, minLegendPlaceholderWidth7, minLegendPlaceholderWidth8 }.Max();
+        }
+        double plotLegendMaxWidth = Math.Max(plotLegendWidth, plotLegendColumnsWidth);
+        double rangeLegendWidth = new double[6] { minLegendPlaceholderWidth3, minLegendPlaceholderWidth4, plot.GraphMinWidth, titleWidth, minLegendPlaceholderWidth2, plotLegendMaxWidth }.Max();
+        double minLegendPlaceholderWidth9 = plot.XLegendsPositions[2].GetMinLegendPlaceholderWidth();
+        double minLegendPlaceholderWidth10 = plot.XLegendsPositions[3].GetMinLegendPlaceholderWidth();
+        double minLegendPlaceholderWidth11 = plot.XLegendsPositions[4].GetMinLegendPlaceholderWidth();
+        double minLegendPlaceholderWidth12 = plot.XLegendsPositions[5].GetMinLegendPlaceholderWidth();
+        double resultLegendWidth = new double[4] { minLegendPlaceholderWidth9, minLegendPlaceholderWidth10, minLegendPlaceholderWidth11, minLegendPlaceholderWidth12 }.Max();
+        double minLegendPlaceholderWidth13 = plot.YLegendsPositions[0].GetMinLegendPlaceholderWidth();
+        double minLegendPlaceholderWidth14 = plot.YLegendsPositions[1].GetMinLegendPlaceholderWidth();
+        double perpendicularAxisPositionRatio = plot.RangeAxis.GetPerpendicularAxisPositionRatio();
+        double num3 = plot.YLegendsPositions[2].GetMinLegendPlaceholderWidth() - plot.GraphMinWidth * perpendicularAxisPositionRatio;
+        double num4 = plot.YLegendsPositions[3].GetMinLegendPlaceholderWidth() - plot.GraphMinWidth * (1.0 - perpendicularAxisPositionRatio);
+        double num5 = plot.YLegendsPositions[4].GetMinLegendPlaceholderWidth() - plot.GraphMinWidth * perpendicularAxisPositionRatio;
+        double num6 = plot.YLegendsPositions[5].GetMinLegendPlaceholderWidth() - plot.GraphMinWidth * (1.0 - perpendicularAxisPositionRatio);
+        double yLegendOverflowWidth = new double[5] { num3, num4, num5, num6, 0.0 }.Max();
+        plot.MinWidth = Safe(minLegendPlaceholderWidth) + Safe(minLegendPlaceholderWidth13) + Safe(rangeLegendWidth) + Safe(minLegendPlaceholderWidth14) + Safe(resultLegendWidth) + Safe(yLegendOverflowWidth);
+        double minLegendPlaceholderHeight3 = plot.YLegendsPositions[0].GetMinLegendPlaceholderHeight();
+        double minLegendPlaceholderHeight4 = plot.YLegendsPositions[1].GetMinLegendPlaceholderHeight();
+        double yLegendHeight = new double[4] { minLegendPlaceholderHeight3, minLegendPlaceholderHeight4, plot.GraphMinHeight, minLegendPlaceholderHeight }.Max();
+        double minLegendPlaceholderHeight5 = plot.YLegendsPositions[2].GetMinLegendPlaceholderHeight();
+        double minLegendPlaceholderHeight6 = plot.YLegendsPositions[3].GetMinLegendPlaceholderHeight();
+        double minLegendPlaceholderHeight7 = plot.YLegendsPositions[4].GetMinLegendPlaceholderHeight();
+        double minLegendPlaceholderHeight8 = plot.YLegendsPositions[5].GetMinLegendPlaceholderHeight();
+        double yLegendsColumnHeight = new double[4] { minLegendPlaceholderHeight5, minLegendPlaceholderHeight6, minLegendPlaceholderHeight7, minLegendPlaceholderHeight8 }.Max();
+        double perpendicularAxisPositionRatio2 = plot.PrimaryResultAxis.GetPerpendicularAxisPositionRatio();
+        double num8 = plot.XLegendsPositions[2].GetMinLegendPlaceholderHeight() - plot.GraphMinHeight * (1.0 - perpendicularAxisPositionRatio2);
+        double num9 = plot.XLegendsPositions[3].GetMinLegendPlaceholderHeight() - plot.GraphMinHeight * (1.0 - perpendicularAxisPositionRatio2);
+        double num10 = plot.XLegendsPositions[4].GetMinLegendPlaceholderHeight() - plot.GraphMinHeight * perpendicularAxisPositionRatio2;
+        double num11 = plot.XLegendsPositions[5].GetMinLegendPlaceholderHeight() - plot.GraphMinHeight * perpendicularAxisPositionRatio2;
+        double xLegendOverflowHeight = new double[5] { num8, num9, num10, num11, 0.0 }.Max();
+        double value4 = new double[2]
+        {
+            plot.PlotTitlePositions[0].GetMinLegendPlaceholderHeight(),
+            plot.PlotTitlePositions[1].GetMinLegendPlaceholderHeight()
+        }.Max();
+        double value5 = plot.PlotLegendPositions != null ? plot.PlotLegendPositions[0].GetMinLegendPlaceholderHeight() : 0.0;
+        Size gridCellSize = plot.GridCellSize;
+        plot.MinHeight = Safe(gridCellSize.Height) + Safe(value4) + Safe(minLegendPlaceholderHeight2) + Safe(value5) + Safe(Math.Max(yLegendHeight, yLegendsColumnHeight + xLegendOverflowHeight));
+        static double Safe(double result)
+        {
+            if (!double.IsNaN(result))
+            {
+                return result;
+            }
+            return 0.0;
+        }
+    }
 
     public void GetInitialPlaceholderIndices(PlotControl plot, out int xLegendIndex, out int yLegendIndex, out int plotTitleIndex, out int plotLegendIndex)
     {
