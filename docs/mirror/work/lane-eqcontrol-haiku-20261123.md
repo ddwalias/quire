@@ -626,3 +626,12 @@
 
 - Members: `EditableCommandBindings` (378 IL) implemented as `??=` over a `CommandBindingCollection` initializer (37 bindings); stub pair removed. Gate PASS, 3781 checked.
 - Parked: `NonEditableCommandBindings` (1213 IL). Its `Undo`/`Redo` handlers are cached in `<>O` as `<1>__`/`<3>__` in Mathcad, because the constructor caches `EngineErrorMessages.GetDisplayMessage` as `<0>__`. The constructor is blocked by its lambda ordinals (`<.ctor>b__152_*`), so our cache index is 0 and does not match. Also blocked on the constructor are the other constructor-only cache names.
+
+## Batch 91
+
+- Owner: haiku-equationcontrol-20261123; branch `haiku-equationcontrol-20261123-b91` (from main 34b5cc435).
+- Compile order: every outer-class member now lives in the hand-written partial in Mathcad order (unmarked `throw` placeholders for unfinished members; `Generated/` keeps only the nested-type shells). The constructor ordinal is 152 (`<.ctor>b__152_0`, `<>c::<.ctor>b__152_1/2`), measured on the built assembly.
+- Members: the model constructor `.ctor(IEquationModel)` with its three lambdas, and the field initializers it runs (`_rl`, `_calculatableChildren`, `_isSymbolicEvalKeywordsShown`, `_isForEngineCalculation`, the `RequestRemove` and `OnGotFocusEvent` `delegate { }` initializers).
+- The `.ctor(string)` and `.ctor(string, bool)` stubs are `MirrorBlocked` with `: this()` / `: this(sExpression)` chains; without the chains their field initializers duplicate the lambdas.
+- Release IL: PASS, 3787 checked, zero failures (`.mirror-cache/release-il-ba9fbc30c4ab/release-il.json`).
+- Remaining: `UpdateLhsVisibleOnView` (IL shape); the closure-gated stubs listed in batches 83-86; 1211 generated stubs in total.
