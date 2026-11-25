@@ -2,6 +2,7 @@
 #pragma warning disable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -63,7 +64,7 @@ internal partial class PlotModel
 
     public global::Quire.Controls.Plots.Presenter.IPlotEquation ActiveEquation { get; set; }
 
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.ITraceModel> Traces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public IEnumerable<ITraceModel> Traces => _traces;
 
     public string RegionSExpression
     {
@@ -120,7 +121,16 @@ internal partial class PlotModel
 
     public event global::System.Action DeserializationStarted;
 
-    public void DeserializeEpilog(bool isConvertedFromMathcad14) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void DeserializeEpilog(bool isConvertedFromMathcad14)
+    {
+        if (isConvertedFromMathcad14)
+        {
+            foreach (ITraceModel trace in Traces)
+            {
+                trace.ResetIsTypeDefault(trace.Type == TraceType.Lines || trace.Type == TraceType.Waterfall);
+            }
+        }
+    }
 
     public void FireDeserializationFinished()
     {
