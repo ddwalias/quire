@@ -1,6 +1,7 @@
 #nullable disable
 #pragma warning disable
 
+using System.ComponentModel;
 using System.Linq;
 using Quire.Calculation.Core.Trace2DResults;
 using Quire.Controls.Plots.Presenter;
@@ -33,7 +34,13 @@ internal partial class PlotModel
 
     public bool ShowAxisExpressions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
-    private void Notify(string propName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void Notify(string propName)
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propName));
+        }
+    }
 
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 
@@ -95,11 +102,19 @@ internal partial class PlotModel
         }
     }
 
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> AxesLimitsExpressions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> AxesLimitsExpressions => _rangeAxis.AxisCalculatables.Union(_primaryResultAxis.AxisCalculatables);
 
-    public global::Quire.Controls.Plots.Presenter.ITraceModel AddTrace(global::Quire.Controls.Plots.Presenter.IAxisModel axis1, global::Quire.Controls.Plots.Presenter.IEquationItem equation1, global::Quire.Controls.Plots.Presenter.IAxisModel axis2, global::Quire.Controls.Plots.Presenter.IEquationItem equation2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public ITraceModel AddTrace(IAxisModel axis1, IEquationItem equation1, IAxisModel axis2, IEquationItem equation2)
+    {
+        ITraceModel newTrace = new TraceModel(Type, equation1, equation2, axis1, axis2, _viewPortDpi);
+        AddTrace(newTrace);
+        return newTrace;
+    }
 
-    public void AddTrace(global::Quire.Controls.Plots.Presenter.ITraceModel newTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void AddTrace(ITraceModel newTrace)
+    {
+        _traces.Add(newTrace);
+    }
 
     public void RemoveTrace(ITraceModel trace)
     {
