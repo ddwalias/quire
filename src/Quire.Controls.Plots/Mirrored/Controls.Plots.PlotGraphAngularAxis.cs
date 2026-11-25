@@ -222,4 +222,62 @@ internal sealed partial class PlotGraphAngularAxis
     protected override void ApplyTickNumber(int value, bool b)
     {
     }
+
+    public override Pair<double, double> ClipBounds => ((PlotGraphAxis)(OtherAxis as PlotGraphRadialAxis)).ClipBounds;
+
+    protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)
+    {
+        Size desiredSize = OtherAxis._lastLabel.DesiredSize;
+        if (desiredSize != Size.Empty && OtherAxis is PlotGraphRadialAxis)
+        {
+            Rect labelRect = new Rect(desiredSize);
+            int index = OtherAxis.TickMarks - 1;
+            Point tickMarkPositionByIndex = (OtherAxis as PlotGraphRadialAxis).GetTickMarkPositionByIndex(index, desiredSize.Width, 3.0);
+            labelRect.X = tickMarkPositionByIndex.X;
+            labelRect.Y = tickMarkPositionByIndex.Y;
+            if (labelRect.Contains(hitTestParameters.HitPoint))
+            {
+                GeneralTransform generalTransform = TransformToVisual(OtherAxis);
+                return VisualTreeHelper.HitTest(OtherAxis, generalTransform.Transform(hitTestParameters.HitPoint));
+            }
+        }
+        return base.HitTestCore(hitTestParameters);
+    }
+
+    protected override double GetAxisStartPosition()
+    {
+        Point tickMarkPositionByIndex = (OtherAxis as PlotGraphRadialAxis).GetTickMarkPositionByIndex(0, 0.0, 0.0);
+        return tickMarkPositionByIndex.X;
+    }
+
+    protected override double GetAxisEndPosition()
+    {
+        Point tickMarkPositionByIndex = (OtherAxis as PlotGraphRadialAxis).GetTickMarkPositionByIndex(OtherAxis.TickMarks - 1, 0.0, 0.0);
+        return tickMarkPositionByIndex.X;
+    }
+
+    protected override void TickMarksChanged()
+    {
+    }
+
+    public partial class Point2ScreenHelperImpl
+    {
+        public Point2ScreenHelperImpl(PlotGraphAngularAxis axisView)
+            : base(axisView)
+        {
+            _start = axisView.OtherAxis.LinearizedStart;
+            _end = axisView.OtherAxis.LinearizedEnd;
+            _axisLenght = _end - _start;
+        }
+
+        public override double Point2Screen(double offset)
+        {
+            return offset / _axisLenght * (_lastTickPositoin - _firstTickPostion) + _firstTickPostion;
+        }
+
+        internal override bool Contains(double coordinate)
+        {
+            return true;
+        }
+    }
 }

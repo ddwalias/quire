@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots;
 
 internal sealed partial class PlotGraphRadialAxis
 {
+    private double _radius;
+
     private Point GetTickMarkElementPosition(int index, UIElement element)
     {
         return GetTickMarkPositionByIndex(index, element.DesiredSize.Width, 3.0);
@@ -209,5 +211,47 @@ internal sealed partial class PlotGraphRadialAxis
     private Point GetTickMarkPositionByRange(double range, double tickWidth, double tickHeight)
     {
         return new Point(Radius + range * RadiusWTickOffset - tickWidth / 2.0, Radius + tickHeight);
+    }
+
+    public override Pair<double, double> ClipBounds
+    {
+        get
+        {
+            Pair<double, double> clipBounds = base.ClipBounds;
+            double range = clipBounds.Second - clipBounds.First;
+            return new Pair<double, double>(-range, range);
+        }
+    }
+
+    protected override double GetAxisStartPosition()
+    {
+        return 2.0 * Radius - GetTickMarkPositionByIndex(0, 0.0, 0.0).X;
+    }
+
+    protected override double GetAxisEndPosition()
+    {
+        return TickOffset;
+    }
+
+    protected override void TickMarksChanged()
+    {
+    }
+
+    public partial class Point2ScreenHelperImpl
+    {
+        public Point2ScreenHelperImpl(PlotGraphRadialAxis axisView)
+            : base(axisView)
+        {
+        }
+
+        public override double Point2Screen(double offset)
+        {
+            return offset / _axisLenght * (_lastTickPositoin - _firstTickPostion) + _firstTickPostion;
+        }
+
+        internal override bool Contains(double coordinate)
+        {
+            return true;
+        }
     }
 }

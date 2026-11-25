@@ -12,26 +12,10 @@ namespace Quire.Controls.Plots;
 internal sealed partial class PlotGraphAngularAxis : global::Quire.Controls.Plots.PlotGraphAxis
 {
     [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Pair<double, double> ClipBounds { get => base.ClipBounds; }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.HitTestResult HitTestCore(global::System.Windows.Media.PointHitTestParameters hitTestParameters) => base.HitTestCore(hitTestParameters);
-    [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::Quire.Controls.EquationControl> CollectElementsForTraversal() => base.CollectElementsForTraversal();
-    [global::Quire.Mirror.MirrorStub]
-    protected override double GetAxisStartPosition() => base.GetAxisStartPosition();
-    [global::Quire.Mirror.MirrorStub]
-    protected override double GetAxisEndPosition() => base.GetAxisEndPosition();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void TickMarksChanged() => base.TickMarksChanged();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotGraphAngularAxis+Point2ScreenHelperImpl, Ptc.Controls.Plots")]
     public partial class Point2ScreenHelperImpl : global::Quire.Controls.Plots.PlotGraphAxis.Point2ScreenHelper
     {
-        [global::Quire.Mirror.MirrorStub]
-        public Point2ScreenHelperImpl(global::Quire.Controls.Plots.PlotGraphAngularAxis axisView) : base(default(double)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override double Point2Screen(double offset) => base.Point2Screen(offset);
-        [global::Quire.Mirror.MirrorStub]
-        internal override bool Contains(double coordinate) => base.Contains(coordinate);
     }
 }

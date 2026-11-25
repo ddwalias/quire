@@ -11,25 +11,8 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotGraphRadialAxis, Ptc.Controls.Plots")]
 internal sealed partial class PlotGraphRadialAxis : global::Quire.Controls.Plots.PlotGraphAxis
 {
-    [global::Quire.Mirror.MirrorStub]
-    private double _radius;
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Pair<double, double> ClipBounds { get => base.ClipBounds; }
-    [global::Quire.Mirror.MirrorStub]
-    protected override double GetAxisStartPosition() => base.GetAxisStartPosition();
-    [global::Quire.Mirror.MirrorStub]
-    protected override double GetAxisEndPosition() => base.GetAxisEndPosition();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void TickMarksChanged() => base.TickMarksChanged();
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotGraphRadialAxis+Point2ScreenHelperImpl, Ptc.Controls.Plots")]
     public partial class Point2ScreenHelperImpl : global::Quire.Controls.Plots.PlotGraphAxis.Point2ScreenHelper
     {
-        [global::Quire.Mirror.MirrorStub]
-        public Point2ScreenHelperImpl(global::Quire.Controls.Plots.PlotGraphRadialAxis axisView) : base(default(double)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override double Point2Screen(double offset) => base.Point2Screen(offset);
-        [global::Quire.Mirror.MirrorStub]
-        internal override bool Contains(double coordinate) => base.Contains(coordinate);
     }
 }
