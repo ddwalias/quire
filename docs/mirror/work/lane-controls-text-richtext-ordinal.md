@@ -42,6 +42,43 @@ Outer `RichTextBase` anchors (29 positions, ordered by IL method index):
 
 The two anchors inside nested `RichTextBase.SyncTextChangedCommand` are `.ctor` (nested method index 0, ordinal 9, offset 9) and `Undo` (index 1, ordinal 10, offset 9). This makes 31 anchors total; nested-class offsets use that nested type's method stream.
 
+## RichTextWithEmbeddedItem anchors
+
+Derived from `Ptc.Controls.Text.RichTextWithEmbeddedItem.il` and its root method order. The duplicate `DisplayClass52` and `DisplayClass53` anchors belong to `GetPotentialLinkEndPosition`.
+
+| IL method index | Member | Closure ordinal N | Offset N − index |
+|---:|---|---:|---:|
+| 17 | `CanModifyHyperlink` | 20 | 3 |
+| 42 | `GetPotentialLinkEndPosition` display class | 52 | 10 |
+| 42 | `GetPotentialLinkEndPosition` | 53 | 11 |
+| 54 | `.ctor` | 86 | 32 |
+| 58 | `OnPreviewTabForward` | 90 | 32 |
+| 64 | `ExecuteChangeFontColor` display class | 96 | 32 |
+| 65 | `ExecuteChangeHighlightColor` display class | 97 | 32 |
+| 70 | `GetCombinedDocumentXaml` | 103 | 33 |
+| 77 | `set_CaretOffset` display class | 113 | 36 |
+| 78 | `EnumerateEmbeddedObjectsInRange` iterator | 114 | 36 |
+| 81 | `ExecuteAddItemToListCommand` display class | 117 | 36 |
+| 82 | `ExecuteRemoveItemFromListCommand` display class | 118 | 36 |
+| 83 | `RestoreTextBoxContent` | 119 | 36 |
+| 87 | `OnLostFocus` | 123 | 36 |
+| 92 | `AddItems` | 128 | 36 |
+| 93 | `RemoveItems` | 129 | 36 |
+| 94 | `MoveItems` | 130 | 36 |
+| 96 | `ResetCaretPositionWhenNecessary` display class | 132 | 36 |
+| 102 | `CreateTextChangedCommand` | 138 | 36 |
+| 109 | `get_IsTabNavigatable` | 149 | 40 |
+| 110 | `TabInto` | 150 | 40 |
+| 126 | `RemoveInlineRecursively` display class | 166 | 40 |
+| 138 | `Activate` | 179 | 41 |
+| 167 | `get_HideFromCalculationContext` | 219 | 52 |
+| 168 | `set_HideFromCalculationContext` display class | 220 | 52 |
+| 169 | `ToggleHideFromCalculationContext` | 221 | 52 |
+| 176 | `UpdateHideFromCalculationButton` | 230 | 54 |
+| 195 | `GetWhiteboardItemsInRange` display class | 257 | 62 |
+| 196 | `HandleSelectionChanged` display class | 258 | 62 |
+| 215 | `get_Lines` iterator | 284 | 69 |
+
 ## Slice 1
 
 - Reordered the direct declarations through `GetInsertionPointAtPointer` in Mathcad method order, with non-method declarations interleaved to hit the anchor offsets. Implemented `GetInsertionPointAtPointer` from the reference shape; its closure emits `<GetInsertionPointAtPointer>b__207_0`.
@@ -71,3 +108,11 @@ The two anchors inside nested `RichTextBase.SyncTextChangedCommand` are `.ctor` 
 - Implemented `IsFullySubscript`; its closure anchor at ordinal 297 now matches.
 - Release IL report: `.mirror-cache/release-il-155c2a18f60e/release-il.json` — PASS, 713 checked, zero failures; 72 generated stubs, 42 no-pair members, 3 unchanged/unmatched.
 - Remaining: continue the later `RichTextBase` anchors and reorder `RichTextWithEmbeddedItem`; `IsInvalidOperation` remains pending. Request a landing slot before each merge.
+
+
+## RichTextWithEmbeddedItem slice 1
+
+- Reordered the direct declarations into Mathcad IL method order, including unmarked placeholders, and implemented `CanModifyHyperlink`; closure `<CanModifyHyperlink>b__20_0` now matches ordinal 20.
+- Kept `_savedActiveItem` after the closure anchors. Placing it before the color-command closures shifted subsequent ordinals by one; this position preserves the anchors listed above.
+- Release IL report: `.mirror-cache/release-il-61d293b4ba80/release-il.json` — PASS, 715 checked, zero failures; 52 generated stubs, 41 no-pair members, 22 unchanged/unmatched.
+- Release build succeeded; MirrorGen `emit` left `Controls.Text.RichTextWithEmbeddedItem.g.cs` byte-identical.
