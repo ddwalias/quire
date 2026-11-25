@@ -982,6 +982,26 @@
 - Release IL: PASS — 2867 checked in Plots, 0 failures.
 - Remaining mismatches in this batch: none.
 
+## Batch 122 — EvaluativeEquationControl remaining members
+
+- Owner: agy-whiteboard-2. Branch: `feature/agy-plots`.
+- Members:
+  - `EvaluativeEquationControl`:
+    - 41 exact members: `_expressionTransform`, `_resultTransform`, `_formatter`, `IsUserSetValueProperty`, `EquationProxyProperty`, `RealResultValueProperty`, `IsActiveProperty`, `RequestRemoveEvent`, `ErrorProperty`, `DisplayNumberFormatProperty`, `_equationControl`, `_formattedResult`, `_contentLoaded`, `.cctor`, `.ctor`, `FixCollapsedEqOnLoaded`, `EquationRequestEvaluation`, `EditingEquationChanged`, `FormattedResultChanged`, `add_RequestEvaluation`, `remove_RequestEvaluation`, `EquationXmlNode`, `EquationSExpression`, `UpdateError`, `ResultSExpression`, `Rl`, `IsUserSetValue`, `SetNonUserSetSExpressionWithoutNotification`, `IsCleared`, `IsCommitted`, `OnGotFocus`, `ShouldSerializeProperty`, `EquationProxy`, `RealResultValue`, `UpdateEquationVisibility`, `IsActive`, `Error`, `DisplayNumberFormatChanged(DependencyObject, DependencyPropertyChangedEventArgs)`, `DisplayNumberFormatChanged(string, object)`, `CreateFormatter`, `DisplayNumberFormat`, `FormatResult`, `EquationControlRequestFocus`, `EquationControlRequestRemove`, `InitializeComponent`, `IComponentConnector.Connect`.
+    - 5 parked stubs: `IsUserSetValueChanged`, `RealResultValueChanged`, `IsActiveChanged`, `ErrorChanged`, `FontSizeChanged` (parked due to Roslyn 10 dup vs legacy stloc peephole stack optimization).
+- Hand-written:
+  - `Mirrored/Controls.Plots.EvaluativeEquationControl.cs`
+- Shapes:
+  - `EvaluativeEquationControl`:
+    - Arranged fields and properties in exact Mathcad order.
+    - Used early guard `if (AssertionE.Failed == (AssertionE)DebugTools.DevAssert(uIElement != null, null)) return;` in `FixCollapsedEqOnLoaded` and `FormatResult` matching `ldc.i4.1 / cgt.un / bne.un.s / ret`.
+    - Used `flag ? Visibility.Visible : Visibility.Collapsed` in `UpdateEquationVisibility` to match Mathcad's `brfalse.s / ldc.i4.0 / br.s / ldc.i4.2` pattern.
+    - Used early exit `if (_contentLoaded) return; _contentLoaded = true;` in `InitializeComponent`.
+    - Used explicit `string.Format("(eval {0})", _equationControl.Rl)` to prevent C# 10 `DefaultInterpolatedStringHandler` lowering.
+- Release IL: PASS — 2908 checked in Plots, 0 failures.
+- Remaining mismatches in this batch: none.
+
+
 
 
 
