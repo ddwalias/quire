@@ -21,6 +21,74 @@ namespace Quire.Controls.Worksheet;
 
 internal partial class WorksheetViewModel
 {
+    public int CurrentPageNumber
+    {
+        get
+        {
+            return _currentPageNumber;
+        }
+        private set
+        {
+            if (_currentPageNumber == value)
+            {
+                return;
+            }
+            _currentPageNumber = value;
+            UpdateHeaderFooterTops();
+            OnPropertyChanged(nameof(CurrentPageNumber));
+        }
+    }
+
+    public string DisplayFilePath
+    {
+        get
+        {
+            return _displayFilePath;
+        }
+        set
+        {
+            if (_displayFilePath == value)
+            {
+                return;
+            }
+            _displayFilePath = value;
+            OnPropertyChanged(nameof(DisplayFilePath));
+        }
+    }
+
+    public bool IsAutoCalcOn
+    {
+        get
+        {
+            return _model.IsAutoCalcOn;
+        }
+        set
+        {
+            if (_model.IsAutoCalcOn != value)
+            {
+                _model.IsAutoCalcOn = value;
+                OnPropertyChanged(nameof(IsAutoCalcOn));
+                OnPropertyChanged("IsAutoCalcChecked");
+            }
+        }
+    }
+
+    public bool IsCalculationsEnabled
+    {
+        get
+        {
+            return _model.IsCalculationsEnabled;
+        }
+        set
+        {
+            if (_model.IsCalculationsEnabled != value)
+            {
+                _model.IsCalculationsEnabled = value;
+                OnPropertyChanged(nameof(IsCalculationsEnabled));
+            }
+        }
+    }
+
     public bool OleObjectAutoResize
     {
         get
