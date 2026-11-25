@@ -135,6 +135,36 @@ public partial class WorksheetControl
         set => DocumentAttachedProperties.SetDocCalculationVariables(this, value);
     }
 
+    public UnitSystems DefaultUnitSystem
+    {
+        get => (UnitSystems)GetValue(DefaultUnitSystemProperty);
+        set => SetValue(DefaultUnitSystemProperty, value);
+    }
+
+    public UnitSystems CustomBaseUnitSystem
+    {
+        get => (UnitSystems)GetValue(CustomBaseUnitSystemProperty);
+        set => SetValue(CustomBaseUnitSystemProperty, value);
+    }
+
+    public string WorksheetName
+    {
+        get => (string)GetValue(WorksheetNameProperty);
+        set => SetValue(WorksheetNameProperty, value);
+    }
+
+    public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> LabeledIdFormat
+    {
+        get => (global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont>)GetValue(LabeledIdFormatProperty);
+        set => SetValue(LabeledIdFormatProperty, value);
+    }
+
+    public TextFormat TextFormat
+    {
+        get => (TextFormat)GetValue(TextFormatProperty);
+        set => SetValue(TextFormatProperty, value);
+    }
+
     public NumberFormat CurrentNumberFormat
     {
         get => _currentNumberFormat;
