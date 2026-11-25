@@ -203,9 +203,80 @@ void ActionChainMgd::ClearDeps()
     System::GC::KeepAlive(this);
 }
 
-::depman::Position* DepTrackingEnv::Lookup(System::String^ /*name*/, ScopingMode /*scoping_mode*/, DependencyType /*deptype*/, OnDep^ /*on_dep_callback*/)
+::depman::Position* DepTrackingEnv::Lookup(System::String^ name, ScopingMode scoping_mode, DependencyType deptype, OnDep^ on_dep_callback)
 {
-    throw Quire::Mirror::MirrorStub::NotImplemented();
+    DSym ds(name);
+    int name_starts_with_percent = (ds.name->Length > 0 && ds.name[0] == '%') ? 1 : 0;
+    bool stop_after_current_scope = name_starts_with_percent != 0;
+    bool found_in_current_scope = false;
+    ::depman::Position* result = nullptr;
+    Scope^ scope = nullptr;
+
+    if (scoping_mode == ScopingMode::NORMAL || scoping_mode == ScopingMode::CHILD_ONLY)
+    {
+        scope = m_loc->GetEnvScope();
+        if (on_dep_callback != nullptr)
+            on_dep_callback(scope, ds, scoping_mode, deptype);
+
+        if (scope != nullptr)
+        {
+            result = m_loc->env()->Lookup(scope, ds);
+            if (result != nullptr)
+            {
+                if (!result->IsChildOnly())
+                    goto FoundInCurrentScope;
+                result = nullptr;
+            }
+            if (stop_after_current_scope)
+                goto FoundInCurrentScope;
+        }
+    }
+    goto AfterCurrentScope;
+
+FoundInCurrentScope:
+    found_in_current_scope = true;
+    goto AfterCurrentScope;
+
+ReturnResult:
+    System::GC::KeepAlive(this);
+    return result;
+
+OnlyCurrentScope:
+    if (result != nullptr)
+        goto CheckUndefine;
+    goto ReturnResult;
+
+AfterCurrentScope:
+    if (scoping_mode != ScopingMode::CHILD_ONLY && !found_in_current_scope)
+        goto SearchParentScopes;
+    goto OnlyCurrentScope;
+
+SearchParentScopes:
+    scope = m_loc->GetScope();
+    if (scope == nullptr)
+        goto OnlyCurrentScope;
+    while (true)
+    {
+        if (on_dep_callback != nullptr)
+            on_dep_callback(scope, ds, scoping_mode, deptype);
+
+        result = m_loc->env()->Lookup(scope, ds);
+        if (result != nullptr)
+            goto CheckUndefine;
+
+        if (!stop_after_current_scope)
+        {
+            scope = scope->Parent;
+            if (scope != nullptr)
+                continue;
+        }
+        goto ReturnResult;
+    }
+
+CheckUndefine:
+    if (result != nullptr && result->IsUndefine())
+        result = nullptr;
+    goto ReturnResult;
 }
 
 }} // namespace Quire::depman

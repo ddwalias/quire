@@ -415,7 +415,7 @@ int DepManager::is_bound(int scope, ::Quire::depman::DSym ds, Position* position
 Position* DepManager::resolve(int scope, ::Quire::depman::DSym ds, Position* position, ::Quire::depman::ResolveMode mode)
 {
     pin_ptr<const wchar_t> p = PtrToStringChars(ds.name);
-    Engine::Unmanaged::std_label_set labels = Engine::Unmanaged::std_label_set();
+    Engine::Unmanaged::std_label_set labels;
     AddLabels(ds, labels);
     if (labels.is_wild_)
     {
@@ -450,14 +450,23 @@ Position* DepManager::resolve(int scope, ::Quire::depman::DSym ds, Position* pos
     }
 }
 
-void DepManager::add_dep(int, ::Quire::depman::DSym, Position*, ActionChain*, DependencyType)
+void DepManager::add_dep(int scope, ::Quire::depman::DSym ds, Position* pos, ActionChain* ac, DependencyType deptype)
 {
-    throw Quire::Mirror::MirrorStub::NotImplemented(L"DepmanPosition.cpp", L"add_dep");
+    (void)scope;
+    (void)ds;
+    (void)pos;
+    (void)ac;
+    (void)deptype;
+    throw ::Quire::Mirror::MirrorStub::NotImplemented(gcnew System::String(L"DepmanPosition.cpp"), gcnew System::String(L"add_dep"));
 }
 
-void DepManager::remove_dep(int, ::Quire::depman::DSym, Position*, ActionChain*)
+void DepManager::remove_dep(int scope, ::Quire::depman::DSym ds, Position* pos, ActionChain* ac)
 {
-    throw Quire::Mirror::MirrorStub::NotImplemented(L"DepmanPosition.cpp", L"remove_dep");
+    (void)scope;
+    (void)ds;
+    (void)pos;
+    (void)ac;
+    throw ::Quire::Mirror::MirrorStub::NotImplemented(gcnew System::String(L"DepmanPosition.cpp"), gcnew System::String(L"remove_dep"));
 }
 
 } // namespace depman

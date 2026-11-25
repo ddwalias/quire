@@ -420,7 +420,6 @@ namespace Quire { namespace depman {
             return m_loc;
         }
 
-        [Quire::Mirror::MirrorStubAttribute]
         virtual ::depman::Position* Lookup(System::String^ name, ScopingMode scoping_mode, DependencyType deptype, OnDep^ on_dep_callback);
     };
 
