@@ -67,6 +67,88 @@ public partial class WorksheetControl
         set => SetValue(ShowInputOutputDesignationProperty, value);
     }
 
+    public bool IsHeaderActive
+    {
+        get => _viewModel.IsHeaderActive;
+        set
+        {
+            if (value == IsHeaderActive)
+            {
+                return;
+            }
+            if (value)
+                ActivateHeader();
+            else
+                ActivateContent();
+        }
+    }
+
+    public bool IsFooterActive
+    {
+        get => _viewModel.IsFooterActive;
+        set
+        {
+            if (value == IsFooterActive)
+            {
+                return;
+            }
+            if (value)
+                ActivateFooter();
+            else
+                ActivateContent();
+        }
+    }
+
+    public bool IsFirstPageHeaderActive
+    {
+        get => _viewModel.IsFirstPageHeaderActive;
+        set
+        {
+            if (value == IsFirstPageHeaderActive)
+            {
+                return;
+            }
+            if (value)
+                ActivateHeader();
+            else
+                ActivateContent();
+        }
+    }
+
+    public bool IsFirstPageFooterActive
+    {
+        get => _viewModel.IsFirstPageFooterActive;
+        set
+        {
+            if (value == IsFirstPageFooterActive)
+            {
+                return;
+            }
+            if (value)
+                ActivateFooter();
+            else
+                ActivateContent();
+        }
+    }
+
+    public TextFormat CurrentTextFormat
+    {
+        get => _currentTextFormat;
+        set
+        {
+            if (_currentTextFormat != null)
+            {
+                _currentTextFormat.FormatChanged -= HandleCurrentTextFormattingChanged;
+            }
+            if (value != null)
+            {
+                value.FormatChanged += HandleCurrentTextFormattingChanged;
+                _currentTextFormat = value;
+            }
+            FirePropertyChanged("CurrentTextFormat");
+        }
+    }
+
     public IIORegionManager InputOutputRegionManager
     {
         get => (IIORegionManager)GetValue(InputOutputRegionManagerProperty);
